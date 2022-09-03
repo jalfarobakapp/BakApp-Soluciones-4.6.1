@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<EnvioDTE version="1.0" xmlns="http://www.sii.cl/SiiDte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sii.cl/SiiDte EnvioDTE_v10.xsd">
+  <SetDTE ID="ID123fc289554a492994617bcd6788220e">
+    <Caratula version="1.0">
+      <RutEmisor>78004470-5</RutEmisor>
+      <RutEnvia>9128166-K</RutEnvia>
+      <RutReceptor>79514800-0</RutReceptor>
+      <FchResol>2012-12-28</FchResol>
+      <NroResol>130</NroResol>
+      <TmstFirmaEnv>2017-01-27T16:40:51</TmstFirmaEnv>
+      
+    <SubTotDTE><TpoDTE>33</TpoDTE><NroDTE>1</NroDTE></SubTotDTE></Caratula>
+    
+  <DTE version="1.0">
+      <Documento ID="F1285064T33">
+        <Encabezado>
+          <IdDoc>
+            <TipoDTE>33</TipoDTE>
+            <Folio>1285064</Folio>
+            <FchEmis>2017-01-27</FchEmis>
+            <TermPagoGlosa>33 Cliente Cta. Cte. 60 Días.</TermPagoGlosa>
+            <FchVenc>2017-03-28</FchVenc>
+          </IdDoc>
+          <Emisor>
+            <RUTEmisor>78004470-5</RUTEmisor>
+            <RznSoc>IMPORTADORA ITALFRENOS SPA.</RznSoc>
+            <GiroEmis>IMPORTADORA ITALFRENOS SPA.</GiroEmis>
+            <Acteco>502080</Acteco>
+            <DirOrigen>Gran Avenida Jose Miguel Carrera # 7399</DirOrigen>
+            <CmnaOrigen>Lo Espejo</CmnaOrigen>
+            <CiudadOrigen>Santiago</CiudadOrigen>
+            <CdgVendedor>S200-22-JUAN CHAVEZ</CdgVendedor>
+          </Emisor>
+          <Receptor>
+            <RUTRecep>79514800-0</RUTRecep>
+            <RznSocRecep>SIERRALTA Y CIA LTDA</RznSocRecep>
+            <Extranjero />
+            <GiroRecep>VENTA DE REPUESTOS</GiroRecep>
+            <Contacto>69828160</Contacto>
+            <DirRecep>AVDA BRASIL 24</DirRecep>
+            <CmnaRecep>SANTIAGO</CmnaRecep>
+            <CiudadRecep>SANTIAGO</CiudadRecep>
+          </Receptor>
+          <Totales>
+            <MntNeto>192054</MntNeto>
+            <MntExe>0</MntExe>
+            <TasaIVA>19</TasaIVA>
+            <IVA>36490</IVA>
+            <MntTotal>228544</MntTotal>
+          </Totales>
+        </Encabezado>
+        <Detalle>
+          <NroLinDet>1</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>LF-RCLF00038</VlrCodigo>
+          </CdgItem>
+          <NmbItem>LIQUIDO FR.TRW 1/2 LT. DOT 3</NmbItem>
+          <QtyItem>30.00</QtyItem>
+          <UnmdItem>UN</UnmdItem>
+          <PrcItem>1535.00</PrcItem>
+          <MontoItem>46050</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>2</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>DF-037-H</VlrCodigo>
+          </CdgItem>
+          <NmbItem>D.FR.SUZUKI VITARA 88--&gt;/SAMURAI 89/93 /JIMNY 98--&gt; 290mm</NmbItem>
+          <QtyItem>4.00</QtyItem>
+          <UnmdItem>UN</UnmdItem>
+          <PrcItem>8254.00</PrcItem>
+          <MontoItem>33016</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>3</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>PF-DP-790-GTX</VlrCodigo>
+          </CdgItem>
+          <NmbItem>PAS.FR.SUZUKI VITARA 1.6  88-&gt;</NmbItem>
+          <QtyItem>4.00</QtyItem>
+          <UnmdItem>UN</UnmdItem>
+          <PrcItem>7233.00</PrcItem>
+          <MontoItem>28932</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>4</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>FH-9931-A</VlrCodigo>
+          </CdgItem>
+          <NmbItem>JGO.PATIN SUZUKI MARUTI/ALTO 03--&gt; 180x30mm</NmbItem>
+          <QtyItem>4.00</QtyItem>
+          <UnmdItem>UN</UnmdItem>
+          <PrcItem>4494.00</PrcItem>
+          <MontoItem>17976</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>5</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>FH-1167-A</VlrCodigo>
+          </CdgItem>
+          <NmbItem>JGO.PATIN SAMSUNG SM3 /NISSAN SENTRA 85/90 203X35mm</NmbItem>
+          <QtyItem>4.00</QtyItem>
+          <UnmdItem>UN</UnmdItem>
+          <PrcItem>4880.00</PrcItem>
+          <MontoItem>19520</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>6</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>TF-146-GTX</VlrCodigo>
+          </CdgItem>
+          <NmbItem>TAMB.FR.SAMSUNG SM3 SEDAN 05--&gt; 203mm</NmbItem>
+          <QtyItem>4.00</QtyItem>
+          <UnmdItem>UN</UnmdItem>
+          <PrcItem>7650.00</PrcItem>
+          <MontoItem>30600</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>7</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>PF-D-1415-GTX</VlrCodigo>
+          </CdgItem>
+          <NmbItem>PAS.FR.SUZUKI VITARA TRAS. 09-&gt;</NmbItem>
+          <QtyItem>2.00</QtyItem>
+          <UnmdItem>UN</UnmdItem>
+          <PrcItem>7980.00</PrcItem>
+          <MontoItem>15960</MontoItem>
+        </Detalle>
+        <TED version="1.0">
+          <DD>
+            <RE>78004470-5</RE>
+            <TD>33</TD>
+            <F>1285064</F>
+            <FE>2017-01-27</FE>
+            <RR>79514800-0</RR>
+            <RSR>SIERRALTA Y CIA LTDA</RSR>
+            <MNT>228544</MNT>
+            <IT1>LIQUIDO FR.TRW 1/2 LT. DOT 3</IT1>
+            <CAF version="1.0">
+              <DA>
+                <RE>78004470-5</RE>
+                <RS>IMPORTADORA ITAL FRENOS LIMITADA</RS>
+                <TD>33</TD>
+                <RNG>
+                  <D>1254001</D>
+                  <H>1313000</H>
+                </RNG>
+                <FA>2016-07-01</FA>
+                <RSAPK>
+                  <M>zuhEPF2vpfY2xGemmnMBinQ/lWiq/3kKapA3GoujPav44sacKPZEpCM/FEJJpV+eYmCnCk6fWRzA7I+jZMRaFQ==</M>
+                  <E>Aw==</E>
+                </RSAPK>
+                <IDK>300</IDK>
+              </DA>
+              <FRMA algoritmo="SHA1withRSA">I2V9OxB2ps9ntSEaAjHQbIg99n8RhQgtjK0vK7BWTs8rDVTbJPW9+eEyIZ4YL7PYduHq9bOUg7amX3xeeKlRVg==</FRMA>
+            </CAF>
+            <TSTED>2017-01-27T12:33:12</TSTED>
+          </DD>
+          <FRMT algoritmo="SHA1withRSA">KR202f2yEkx7W3U1fvLh7VbwsocjdrUJ3zmDKBuJr25zEh6RL+u2UUKcVg7sg/CCRwCWUBlP5ujPecnZ4D5Ufg==</FRMT>
+        </TED>
+        <TmstFirma>2017-01-27T12:33:13</TmstFirma>
+      </Documento><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI="#F1285064T33"><Transforms><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>mxy1nOVlZT+iLuhnViAhNmblRXs=</DigestValue></Reference></SignedInfo><SignatureValue>
+Rzfwlyno4qs2Td9xh0CxwqJBb0TCOcaR0IPJ52EFLlldGI7iMowmP81roJ3WJk26
+UTh5e7JHkrs1Pog211N9qVMsDwJ2Ff4hPirLfd3lA5FDXSOl3/fQc8ef00FYs3Mt
+BWRCk1QDZJ3QvZcUEmGPWFskXBoDhqMBr2SwBLXIhEk=
+</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>
+3MwBxPYR0er8VbSabAYSGg3Ma9QypQwuFETj522Tv3ZJCSU+OdjbQGu73+bfj6gq
+zxGuNintgo5vY3hyTTc80R/wkSZAcpUTy8FZ5GEAxOdlwamYbdvfqtbL1+kfZBb4
+8Vg6qnXKhvuUA6KYlU9+6XZ3OG+Zv5fAQYEh4JMbW70=
+</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>
+MIIGUzCCBTugAwIBAgIKJdUllQAAAAQpuTANBgkqhkiG9w0BAQUFADCB0jELMAkG
+A1UEBhMCQ0wxHTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQH
+EwhTYW50aWFnbzEUMBIGA1UEChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9y
+aWRhZCBDZXJ0aWZpY2Fkb3JhMTAwLgYDVQQDEydFLUNFUlRDSElMRSBDQSBGSVJN
+QSBFTEVDVFJPTklDQSBTSU1QTEUxJzAlBgkqhkiG9w0BCQEWGHNjbGllbnRlc0Bl
+LWNlcnRjaGlsZS5jbDAeFw0xNjA2MjgyMTAzNDZaFw0xOTA2MjgyMTAzNDZaMIHW
+MQswCQYDVQQGEwJDTDEiMCAGA1UECBMZTUVUUk9QT0xJVEFOQSBERSBTQU5USUFH
+TzERMA8GA1UEBxMIU2FudGlhZ28xJDAiBgNVBAoTG0lNUE9SVEFET1JBIElUQUxG
+UkVOT1MgTFREQTEhMB8GA1UECxMYSU1QT1JUQURPUkEgREUgUkVQVUVTVE9TMSEw
+HwYDVQQDExhGcmFuY28gSmhvbiBHaGV6YSBDYW50b24xJDAiBgkqhkiG9w0BCQEW
+FWpwaW50b0BlLWNlcnRjaGlsZS5jbDCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkC
+gYEA3MwBxPYR0er8VbSabAYSGg3Ma9QypQwuFETj522Tv3ZJCSU+OdjbQGu73+bf
+j6gqzxGuNintgo5vY3hyTTc80R/wkSZAcpUTy8FZ5GEAxOdlwamYbdvfqtbL1+kf
+ZBb48Vg6qnXKhvuUA6KYlU9+6XZ3OG+Zv5fAQYEh4JMbW70CAwEAAaOCAqcwggKj
+MD0GCSsGAQQBgjcVBwQwMC4GJisGAQQBgjcVCILcgy+Fk4xmhdWdF4Li3CeB7+w8
+YYGa5xWGr+AVAgFkAgEEMB0GA1UdDgQWBBRx1mKDCt4W5QBFVypMNjHrORJ+jDAL
+BgNVHQ8EBAMCBPAwHwYDVR0jBBgwFoAUeOE+n9ISs3o8jc0wDlOzQykHs1UwPgYD
+VR0fBDcwNTAzoDGgL4YtaHR0cDovL2NybC5lLWNlcnRjaGlsZS5jbC9lY2VydGNo
+aWxlY2FGRVMuY3JsMDoGCCsGAQUFBwEBBC4wLDAqBggrBgEFBQcwAYYeaHR0cDov
+L29jc3AuZWNlcnRjaGlsZS5jbC9vY3NwMCMGA1UdEQQcMBqgGAYIKwYBBAHBAQGg
+DBYKMDkxMjgxNjYtSzAjBgNVHRIEHDAaoBgGCCsGAQQBwQECoAwWCjk2OTI4MTgw
+LTUwggFNBgNVHSAEggFEMIIBQDCCATwGCCsGAQQBw1IFMIIBLjAtBggrBgEFBQcC
+ARYhaHR0cDovL3d3dy5lLWNlcnRjaGlsZS5jbC9DUFMuaHRtMIH8BggrBgEFBQcC
+AjCB7x6B7ABDAGUAcgB0AGkAZgBpAGMAYQBkAG8AIABGAGkAcgBtAGEAIABTAGkA
+bQBwAGwAZQAuACAASABhACAAcwBpAGQAbwAgAHYAYQBsAGkAZABhAGQAbwAgAGUA
+bgAgAGYAbwByAG0AYQAgAHAAcgBlAHMAZQBuAGMAaQBhAGwALAAgAHEAdQBlAGQA
+YQBuAGQAbwAgAGgAYQBiAGkAbABpAHQAYQBkAG8AIABlAGwAIABDAGUAcgB0AGkA
+ZgBpAGMAYQBkAG8AIABwAGEAcgBhACAAdQBzAG8AIAB0AHIAaQBiAHUAdABhAHIA
+aQBvMA0GCSqGSIb3DQEBBQUAA4IBAQBa+Oida/ROt+ocGb4Jn/eSoCkzvPz/Af2u
+3fV4/JJJ+iPCGiFfs0JNzgH5K1cmJivr0TqtCyEUPl2ipZixkiJ678k6rv93dzRP
+wVsyrsbTh3Ce5jLd5tKkw+ZYyKk0QTAnIRxf7V+4fY+aZkmxhI2cQjkuYhZCv7M2
+uIktQFeDFgEcl+vR01V4ug819NhZHnI48oKRxkbxwSIPJVE1W8sJfIHcdYeR2Crv
+hkL6cNDNoBF1YTqlhElCPncqQc0lPqydt0g0HcojsAShfaAxltQNsNRdUCy6nCWj
+gZRSui4qPNnW/m+K+QT+5+M9RV9U+MN6GJcrUIYt3CAruY+FFEQ8
+</X509Certificate></X509Data></KeyInfo></Signature>
+    </DTE></SetDTE><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI="#ID123fc289554a492994617bcd6788220e"><Transforms><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>S7o4c3JGrs6g1YvuYCI8aOxygx0=</DigestValue></Reference></SignedInfo><SignatureValue>
+aOMEmHkLweSuRkQSBVl3c/ub225/9f6f785zsVGXGm74lzgdQQdV73/z8LVUkrlt
+3U4NDFVWPe4lA5kDNMgLyr0j8+5bZNp36ioKy/2t9lcXXFBlIenaovZqK2AwYdFb
+Anw/oG0VkBqRNIP5c9ItrWiA/aMl7PesUkkBa+yvbzU=
+</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>
+3MwBxPYR0er8VbSabAYSGg3Ma9QypQwuFETj522Tv3ZJCSU+OdjbQGu73+bfj6gq
+zxGuNintgo5vY3hyTTc80R/wkSZAcpUTy8FZ5GEAxOdlwamYbdvfqtbL1+kfZBb4
+8Vg6qnXKhvuUA6KYlU9+6XZ3OG+Zv5fAQYEh4JMbW70=
+</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>
+MIIGUzCCBTugAwIBAgIKJdUllQAAAAQpuTANBgkqhkiG9w0BAQUFADCB0jELMAkG
+A1UEBhMCQ0wxHTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQH
+EwhTYW50aWFnbzEUMBIGA1UEChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9y
+aWRhZCBDZXJ0aWZpY2Fkb3JhMTAwLgYDVQQDEydFLUNFUlRDSElMRSBDQSBGSVJN
+QSBFTEVDVFJPTklDQSBTSU1QTEUxJzAlBgkqhkiG9w0BCQEWGHNjbGllbnRlc0Bl
+LWNlcnRjaGlsZS5jbDAeFw0xNjA2MjgyMTAzNDZaFw0xOTA2MjgyMTAzNDZaMIHW
+MQswCQYDVQQGEwJDTDEiMCAGA1UECBMZTUVUUk9QT0xJVEFOQSBERSBTQU5USUFH
+TzERMA8GA1UEBxMIU2FudGlhZ28xJDAiBgNVBAoTG0lNUE9SVEFET1JBIElUQUxG
+UkVOT1MgTFREQTEhMB8GA1UECxMYSU1QT1JUQURPUkEgREUgUkVQVUVTVE9TMSEw
+HwYDVQQDExhGcmFuY28gSmhvbiBHaGV6YSBDYW50b24xJDAiBgkqhkiG9w0BCQEW
+FWpwaW50b0BlLWNlcnRjaGlsZS5jbDCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkC
+gYEA3MwBxPYR0er8VbSabAYSGg3Ma9QypQwuFETj522Tv3ZJCSU+OdjbQGu73+bf
+j6gqzxGuNintgo5vY3hyTTc80R/wkSZAcpUTy8FZ5GEAxOdlwamYbdvfqtbL1+kf
+ZBb48Vg6qnXKhvuUA6KYlU9+6XZ3OG+Zv5fAQYEh4JMbW70CAwEAAaOCAqcwggKj
+MD0GCSsGAQQBgjcVBwQwMC4GJisGAQQBgjcVCILcgy+Fk4xmhdWdF4Li3CeB7+w8
+YYGa5xWGr+AVAgFkAgEEMB0GA1UdDgQWBBRx1mKDCt4W5QBFVypMNjHrORJ+jDAL
+BgNVHQ8EBAMCBPAwHwYDVR0jBBgwFoAUeOE+n9ISs3o8jc0wDlOzQykHs1UwPgYD
+VR0fBDcwNTAzoDGgL4YtaHR0cDovL2NybC5lLWNlcnRjaGlsZS5jbC9lY2VydGNo
+aWxlY2FGRVMuY3JsMDoGCCsGAQUFBwEBBC4wLDAqBggrBgEFBQcwAYYeaHR0cDov
+L29jc3AuZWNlcnRjaGlsZS5jbC9vY3NwMCMGA1UdEQQcMBqgGAYIKwYBBAHBAQGg
+DBYKMDkxMjgxNjYtSzAjBgNVHRIEHDAaoBgGCCsGAQQBwQECoAwWCjk2OTI4MTgw
+LTUwggFNBgNVHSAEggFEMIIBQDCCATwGCCsGAQQBw1IFMIIBLjAtBggrBgEFBQcC
+ARYhaHR0cDovL3d3dy5lLWNlcnRjaGlsZS5jbC9DUFMuaHRtMIH8BggrBgEFBQcC
+AjCB7x6B7ABDAGUAcgB0AGkAZgBpAGMAYQBkAG8AIABGAGkAcgBtAGEAIABTAGkA
+bQBwAGwAZQAuACAASABhACAAcwBpAGQAbwAgAHYAYQBsAGkAZABhAGQAbwAgAGUA
+bgAgAGYAbwByAG0AYQAgAHAAcgBlAHMAZQBuAGMAaQBhAGwALAAgAHEAdQBlAGQA
+YQBuAGQAbwAgAGgAYQBiAGkAbABpAHQAYQBkAG8AIABlAGwAIABDAGUAcgB0AGkA
+ZgBpAGMAYQBkAG8AIABwAGEAcgBhACAAdQBzAG8AIAB0AHIAaQBiAHUAdABhAHIA
+aQBvMA0GCSqGSIb3DQEBBQUAA4IBAQBa+Oida/ROt+ocGb4Jn/eSoCkzvPz/Af2u
+3fV4/JJJ+iPCGiFfs0JNzgH5K1cmJivr0TqtCyEUPl2ipZixkiJ678k6rv93dzRP
+wVsyrsbTh3Ce5jLd5tKkw+ZYyKk0QTAnIRxf7V+4fY+aZkmxhI2cQjkuYhZCv7M2
+uIktQFeDFgEcl+vR01V4ug819NhZHnI48oKRxkbxwSIPJVE1W8sJfIHcdYeR2Crv
+hkL6cNDNoBF1YTqlhElCPncqQc0lPqydt0g0HcojsAShfaAxltQNsNRdUCy6nCWj
+gZRSui4qPNnW/m+K+QT+5+M9RV9U+MN6GJcrUIYt3CAruY+FFEQ8
+</X509Certificate></X509Data></KeyInfo></Signature>
+  
+</EnvioDTE>

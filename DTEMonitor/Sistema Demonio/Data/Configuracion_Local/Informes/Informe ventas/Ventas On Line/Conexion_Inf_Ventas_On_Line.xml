@@ -1,0 +1,8 @@
+<?xml version="1.0" standalone="yes"?>
+<Ds_Inf_Ventas_OnLine xmlns="http://tempuri.org/Ds_Inf_Ventas_OnLine.xsd">
+  <Tbl_Sel_Conexion>
+    <Rut>79514800-0</Rut>
+    <NombreConexion>SIERRALTA EXTERNO PRUEBAS 2</NombreConexion>
+    <BaseDeDatos>SIERRALTA_PRB2</BaseDeDatos>
+  </Tbl_Sel_Conexion>
+</Ds_Inf_Ventas_OnLine>

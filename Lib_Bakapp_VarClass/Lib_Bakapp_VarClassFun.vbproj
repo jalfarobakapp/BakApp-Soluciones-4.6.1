@@ -1,0 +1,373 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3365BE15-8AF7-412D-8500-D07C446F550D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Lib_Bakapp_VarClassFunc</RootNamespace>
+    <AssemblyName>Lib_Bakapp_VarClassFunc</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\Librerias\Lib_Bakapp_Excel\bin\Debug\</OutputPath>
+    <DocumentationFile>Lib_Bakapp_VarClassFunc.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Lib_Bakapp_VarClassFunc.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=10.5.3700.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\SAP BusinessObjects\Crystal Reports for .NET Framework 4.0\Common\SAP BusinessObjects Enterprise XI 4.0\win32_x86\dotnet\CrystalDecisions.Windows.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar.Design, Version=11.7.0.0, Culture=neutral, PublicKeyToken=90f470f34c89ccaf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DotNetBar for Windows Forms\DevComponents.DotNetBar.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar.Keyboard, Version=11.7.0.0, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DotNetBar for Windows Forms\DevComponents.DotNetBar.Keyboard.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar.Layout, Version=11.7.0.0, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DotNetBar for Windows Forms\DevComponents.DotNetBar.Layout.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar.Layout.Design, Version=11.7.0.0, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DotNetBar for Windows Forms\DevComponents.DotNetBar.Layout.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar.Schedule, Version=11.7.0.0, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DotNetBar for Windows Forms\DevComponents.DotNetBar.Schedule.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar.SuperGrid, Version=11.7.0.0, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DotNetBar for Windows Forms\DevComponents.DotNetBar.SuperGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar2, Version=11.7.0.0, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL" />
+    <Reference Include="DevComponents.Instrumentation, Version=11.7.0.0, Culture=neutral, PublicKeyToken=f90dc37c26666a67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DotNetBar for Windows Forms\DevComponents.Instrumentation.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.Instrumentation.Design, Version=11.7.0.0, Culture=neutral, PublicKeyToken=76cb4c6eb576bca5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DotNetBar for Windows Forms\DevComponents.Instrumentation.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.SuperGrid.Design, Version=11.7.0.0, Culture=neutral, PublicKeyToken=26d81176cfa2b486, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DotNetBar for Windows Forms\DevComponents.SuperGrid.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.TreeGX, Version=11.7.0.0, Culture=neutral, PublicKeyToken=055db68f670cfeab, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DotNetBar for Windows Forms\DevComponents.TreeGX.dll</HintPath>
+    </Reference>
+    <Reference Include="Excel">
+      <HintPath>..\..\..\..\..\.Net Librerias especiales\Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\..\..\..\..\.Net Librerias especiales\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Outlook, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="PdfSharp">
+      <HintPath>..\..\..\..\..\.Net Librerias especiales\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Clases\BarCode.vb" />
+    <Compile Include="Clases\Clase Funciones formato\Cl_Funciones_Formatos.vb" />
+    <Compile Include="Clases\Clase Funciones formato\Cl_Imprimir_documento.vb" />
+    <Compile Include="Clases\Clase Funciones formato\Ds documento\Ds_documento_imp.Designer.vb">
+      <DependentUpon>Ds_documento_imp.xsd</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Clases\Clase Funciones formato\Sql_funciones\Rs_fx_SQL.Designer.vb">
+      <DependentUpon>Rs_fx_SQL.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Clases\Class_Conectar_Base_BakApp.vb" />
+    <Compile Include="Clases\Class_Importar_Excel.vb" />
+    <Compile Include="Clases\Class_Outlook.vb" />
+    <Compile Include="Clases\Class_SQL.vb" />
+    <Compile Include="Clases\Creacion de documento\Clase_Crear_Documento.vb" />
+    <Compile Include="Clases\Creacion de documento\Clase_Crear_Documento_Htm.vb" />
+    <Compile Include="Clases\Creacion de documento\Clase_Crear_Documento_PDF.vb" />
+    <Compile Include="Clases\Creacion de documento\Clase_EliminarAnular_Documento.vb" />
+    <Compile Include="Clases\Creacion de documento\Consultas SQL\Rc_ConsultasSQL.Designer.vb">
+      <DependentUpon>Rc_ConsultasSQL.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Clases\Creacion de documento\Datos Ds paso\Ds_Matriz_Documentos.Designer.vb">
+      <DependentUpon>Ds_Matriz_Documentos.xsd</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Clases\Creacion de documento\Datos Ds paso\Ds_Matriz_Documentos.vb">
+      <DependentUpon>Ds_Matriz_Documentos.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Clases\Encrypta Sistema\Dst_Llave_Sistema_.Designer.vb">
+      <DependentUpon>Dst_Llave_Sistema_.xsd</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Clases\Encrypta Sistema\Md_Encrypta.vb" />
+    <Compile Include="DataSet\DatosBakApp.Designer.vb">
+      <DependentUpon>DatosBakApp.xsd</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="DataSet\DatosBakApp.vb">
+      <DependentUpon>DatosBakApp.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\DsFiltros.Designer.vb">
+      <DependentUpon>DsFiltros.xsd</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Formularios\Form Filtro para informes\Frm_FiltroInf_Mt.Designer.vb">
+      <DependentUpon>Frm_FiltroInf_Mt.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Form Filtro para informes\Frm_FiltroInf_Mt.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\Form Filtro para informes\Frm_Filtro_ProductosClass.Designer.vb">
+      <DependentUpon>Frm_Filtro_ProductosClass.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Form Filtro para informes\Frm_Filtro_ProductosClass.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\Form para reportes\Frm_VerReportes.Designer.vb">
+      <DependentUpon>Frm_VerReportes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Form para reportes\Frm_VerReportes.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\Form de espera\Frm_Form_Esperar.designer.vb">
+      <DependentUpon>Frm_Form_Esperar.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Form de espera\Frm_Form_Esperar.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\Form Tabla de paso\Frm_CargarTablasDePAso.designer.vb">
+      <DependentUpon>Frm_CargarTablasDePAso.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Form Tabla de paso\Frm_CargarTablasDePAso.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\Form InputBox_Bk\Frm_InpunBox_Bk.Designer.vb">
+      <DependentUpon>Frm_InpunBox_Bk.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Form InputBox_Bk\Frm_InpunBox_Bk.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\Form InputBox_Bk\Mod_Fx.vb" />
+    <Compile Include="Funciones\Entidad\Recursos\Recursos_Entidad.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Recursos_Entidad.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Funciones\Funciones_Comunes.vb" />
+    <Compile Include="Funciones\Funciones_Especiales_BakApp.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Variables\Mod_Variables_Globales.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Clases\Clase Funciones formato\Sql_funciones\Rs_fx_SQL.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Rs_fx_SQL.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Clases\Creacion de documento\Consultas SQL\Rc_ConsultasSQL.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Rc_ConsultasSQL.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Form Filtro para informes\Frm_FiltroInf_Mt.resx">
+      <DependentUpon>Frm_FiltroInf_Mt.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Form Filtro para informes\Frm_Filtro_ProductosClass.resx">
+      <DependentUpon>Frm_Filtro_ProductosClass.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Form para reportes\Frm_VerReportes.resx">
+      <DependentUpon>Frm_VerReportes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Form de espera\Frm_Form_Esperar.resx">
+      <DependentUpon>Frm_Form_Esperar.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Form Tabla de paso\Frm_CargarTablasDePAso.resx">
+      <DependentUpon>Frm_CargarTablasDePAso.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Form InputBox_Bk\Frm_InpunBox_Bk.resx">
+      <DependentUpon>Frm_InpunBox_Bk.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Funciones\Entidad\Recursos\Recursos_Entidad.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Recursos_Entidad.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Clases\Clase Funciones formato\Ds documento\Ds_documento_imp.xsc">
+      <DependentUpon>Ds_documento_imp.xsd</DependentUpon>
+    </None>
+    <None Include="Clases\Clase Funciones formato\Ds documento\Ds_documento_imp.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Ds_documento_imp.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Clases\Clase Funciones formato\Ds documento\Ds_documento_imp.xss">
+      <DependentUpon>Ds_documento_imp.xsd</DependentUpon>
+    </None>
+    <None Include="Clases\Creacion de documento\Datos Ds paso\Ds_Matriz_Documentos.xsc">
+      <DependentUpon>Ds_Matriz_Documentos.xsd</DependentUpon>
+    </None>
+    <None Include="Clases\Creacion de documento\Datos Ds paso\Ds_Matriz_Documentos.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Ds_Matriz_Documentos.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Clases\Creacion de documento\Datos Ds paso\Ds_Matriz_Documentos.xss">
+      <DependentUpon>Ds_Matriz_Documentos.xsd</DependentUpon>
+    </None>
+    <None Include="Clases\Encrypta Sistema\Dst_Llave_Sistema_.xsc">
+      <DependentUpon>Dst_Llave_Sistema_.xsd</DependentUpon>
+    </None>
+    <None Include="Clases\Encrypta Sistema\Dst_Llave_Sistema_.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Dst_Llave_Sistema_.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Clases\Encrypta Sistema\Dst_Llave_Sistema_.xss">
+      <DependentUpon>Dst_Llave_Sistema_.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\DatosBakApp.xsc">
+      <DependentUpon>DatosBakApp.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\DatosBakApp.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DatosBakApp.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\DatosBakApp.xss">
+      <DependentUpon>DatosBakApp.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\DsFiltros.xsc">
+      <DependentUpon>DsFiltros.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\DsFiltros.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DsFiltros.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\DsFiltros.xss">
+      <DependentUpon>DsFiltros.xsd</DependentUpon>
+    </None>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Clases\Clase Funciones formato\Sql_funciones\SQLQuery_Documento_Enc.sql" />
+    <None Include="Clases\Clase Funciones formato\Sql_funciones\SQLQuery_Datos_Entidad.sql" />
+    <Content Include="Clases\Creacion de documento\Consultas SQL\Crear Htm document.htm" />
+    <Content Include="Clases\Creacion de documento\Consultas SQL\Crear Htm document_Sp.htm" />
+    <None Include="Clases\Creacion de documento\Consultas SQL\Traer Datos Documento.sql" />
+    <None Include="Clases\Creacion de documento\Consultas SQL\Revisar sutentatorio.sql" />
+    <None Include="Clases\Creacion de documento\Consultas SQL\Eliminar documento.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Funciones\Entidad\Recursos\Sql\Datos\SqlQuery_Datos_Entidad.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Formularios\Especiales Gestion\Documentos\" />
+    <Folder Include="Formularios\Especiales Gestion\Entidades\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+</Project>

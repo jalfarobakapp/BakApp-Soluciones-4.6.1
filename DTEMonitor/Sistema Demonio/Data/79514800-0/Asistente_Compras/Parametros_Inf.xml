@@ -1,0 +1,50 @@
+<?xml version="1.0" standalone="yes"?>
+<DatosCompra xmlns="http://tempuri.org/DatosCompra.xsd">
+  <Parametros_Inf_2>
+    <CodFuncionario>010</CodFuncionario>
+    <Koen />
+    <Suen />
+    <Chk_Ent_Fisica>0</Chk_Ent_Fisica>
+    <Chk_Cargar_Rotacion_Estacional>false</Chk_Cargar_Rotacion_Estacional>
+    <Dtp_Fecha_Estacional_Desde>2018-10-20T13:00:54.2274171-03:00</Dtp_Fecha_Estacional_Desde>
+    <Dtp_Fecha_Estacional_Hasta>2018-10-20T13:00:54.2274171-03:00</Dtp_Fecha_Estacional_Hasta>
+    <Input_Tiempo_Reposicion>3</Input_Tiempo_Reposicion>
+    <Input_Dias_a_Abastecer>30</Input_Dias_a_Abastecer>
+    <Chk_Mostrar_Solo_Stock_Critico>1</Chk_Mostrar_Solo_Stock_Critico>
+    <Chk_Sabado>true</Chk_Sabado>
+    <Chk_Domingo>false</Chk_Domingo>
+    <Chk_Restar_Stok_Bodega>true</Chk_Restar_Stok_Bodega>
+    <Chk_Sacar_Productos_Sin_Rotacion>1</Chk_Sacar_Productos_Sin_Rotacion>
+    <Rdb_Ud1_Compra>true</Rdb_Ud1_Compra>
+    <Rdb_Ud2_Compra>false</Rdb_Ud2_Compra>
+    <Rdb_Productos_Todos>0</Rdb_Productos_Todos>
+    <Rdb_Productos_Vendidos_Los_Ultimos_Dias>1</Rdb_Productos_Vendidos_Los_Ultimos_Dias>
+    <Rdb_Productos_Con_Movimientos_De_Venta>0</Rdb_Productos_Con_Movimientos_De_Venta>
+    <Dtp_Fecha_Movimientos_Desde>2018-10-19T11:12:43-03:00</Dtp_Fecha_Movimientos_Desde>
+    <Dtp_Fecha_Movimientos_Hasta>2018-10-19T11:12:43-03:00</Dtp_Fecha_Movimientos_Hasta>
+    <Rdb_Productos_Seleccionar>0</Rdb_Productos_Seleccionar>
+    <Rdb_Productos_Ranking>false</Rdb_Productos_Ranking>
+    <Input_Productos_Ranking>100</Input_Productos_Ranking>
+    <Rdb_Productos_Proveedor>false</Rdb_Productos_Proveedor>
+    <Chk_Traer_Productos_De_Reemplazo>1</Chk_Traer_Productos_De_Reemplazo>
+    <Cmb_Cantidad_Dias_Ultima_Venta>180</Cmb_Cantidad_Dias_Ultima_Venta>
+    <Rd_Costo_Ultima_GRC>1</Rd_Costo_Ultima_GRC>
+    <Rd_Costo_Lista_Proveedor>0</Rd_Costo_Lista_Proveedor>
+    <Chk_No_Considera_Con_Stock_Pedido_OCC_NVI>true</Chk_No_Considera_Con_Stock_Pedido_OCC_NVI>
+    <Chk_Quitar_Bloqueados_Compra>true</Chk_Quitar_Bloqueados_Compra>
+    <Dtp_Fecha_Tope_Proveedores_Automaticos>2018-07-01T11:12:43-04:00</Dtp_Fecha_Tope_Proveedores_Automaticos>
+    <Chk_Advertir_Rotacion>false</Chk_Advertir_Rotacion>
+    <Input_Dias_Advertencia_Rotacion>7</Input_Dias_Advertencia_Rotacion>
+    <Cmb_Proyeccion_Metodo_Abastecer>1</Cmb_Proyeccion_Metodo_Abastecer>
+    <Input_Proyeccion_Tiempo_a_Abastecer>0</Input_Proyeccion_Tiempo_a_Abastecer>
+    <Cmb_Proyeccion_Tiempo_Reposicion>1</Cmb_Proyeccion_Tiempo_Reposicion>
+    <Input_Proyeccion_Tiempo_Reposicion>0</Input_Proyeccion_Tiempo_Reposicion>
+    <Rdb_Proyeccion_Rotacion_Diaria>false</Rdb_Proyeccion_Rotacion_Diaria>
+    <Rdb_Proyeccion_Rotacion_Efectiva>false</Rdb_Proyeccion_Rotacion_Efectiva>
+    <Input_Proyeccion_Redondeo>0</Input_Proyeccion_Redondeo>
+    <Chk_Quitar_Ventas_Calzadas>false</Chk_Quitar_Ventas_Calzadas>
+    <Chk_Rotacion_Con_Ent_Excluidas>false</Chk_Rotacion_Con_Ent_Excluidas>
+    <Rdb_Agrupar_x_Asociados>false</Rdb_Agrupar_x_Asociados>
+    <Rdb_Agrupar_x_Reemplazos>false</Rdb_Agrupar_x_Reemplazos>
+  </Parametros_Inf_2>
+</DatosCompra>

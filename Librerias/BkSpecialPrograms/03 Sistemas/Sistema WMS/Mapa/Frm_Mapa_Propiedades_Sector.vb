@@ -1,0 +1,3 @@
+Public Class Frm_Mapa_Propiedades_Sector
+
+End Class

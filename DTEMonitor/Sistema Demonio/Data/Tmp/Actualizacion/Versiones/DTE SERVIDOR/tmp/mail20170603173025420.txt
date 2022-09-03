@@ -1,0 +1,272 @@
+Return-Path: <SRS0=40RvCD=4S=sii.cl=mipyme@sirrep.cl>
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id KfcFHKn1FVkzuw8AqFaw+A
+	; Fri, 12 May 2017 14:49:29 -0300
+Return-path: <SRS0=40RvCD=4S=sii.cl=mipyme@sirrep.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Fri, 12 May 2017 14:49:29 -0300
+Received: from rapel12.sii.cl ([200.10.251.90])
+	by srv150.tuhosting.cl with esmtp (Exim 4.89)
+	(envelope-from <mipyme@sii.cl>)
+	id 1d9Egz-004LGP-73
+	for notificacionsii@sirrep.cl; Fri, 12 May 2017 14:49:29 -0300
+X-IronPort-AV: E=Sophos;i="5.38,330,1491274800"; 
+   d="xml'?scan'208";a="624984169"
+Received: from alhuex201.sii.cl ([192.168.134.70])
+  by rapel12.sii.cl with ESMTP; 12 May 2017 14:51:11 -0300
+Message-ID: <2087243002.1494611471500.JavaMail.root@alhuex201.sii.cl>
+Date: Fri, 12 May 2017 14:51:11 -0300 (CLST)
+From: mipyme@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: Envio DTE - Emisor:76128838-5  Receptor:79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_749665_2112086895.1494611471499"
+
+------=_Part_749665_2112086895.1494611471499
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+Facturacion Electronica - Envio de DTE
+======================================
+
+Adjunto puede encontrar el Archivo XML de Envio de Documentos Tributarios 
+Electronicos generado para usted por el Emisor de la referencia.
+
+----------------------------------------------------------------------------
+
+Esta es una aplicacion automatica, por lo tanto no conteste este correo ni
+haga consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue
+mas claro en cualquier aplicacion.
+
+------=_Part_749665_2112086895.1494611471499
+Content-Type: application/octet-stream; name=EnvMiPERCP300502049.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=EnvMiPERCP300502049.xml
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<EnvioDTE xmlns="http://www.sii.cl/SiiDte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sii.cl/SiiDte EnvioDTE_v10.xsd" version="1.0">
+<SetDTE ID="SDTE300502049">
+  <Caratula version="1.0">
+    <RutEmisor>76128838-5</RutEmisor>
+    <RutEnvia>48080155-5</RutEnvia>
+    <RutReceptor>79514800-0</RutReceptor>
+    <FchResol>2014-10-21</FchResol>
+    <NroResol>99</NroResol>
+    <TmstFirmaEnv>2017-05-12T14:50:44</TmstFirmaEnv>
+    <SubTotDTE>
+      <TpoDTE>33</TpoDTE>
+      <NroDTE>1</NroDTE>
+    </SubTotDTE>
+  </Caratula>
+<DTE xmlns="http://www.sii.cl/SiiDte" version="1.0">
+  <!-- O Win32 Trident 7 plugin VERSION: v20161228 -->
+<Documento ID="MiPE76128838-26565">
+    <Encabezado>
+      <IdDoc>
+        <TipoDTE>33</TipoDTE>
+        <Folio>804</Folio>
+        <FchEmis>2017-05-12</FchEmis>
+      </IdDoc>
+      <Emisor>
+        <RUTEmisor>76128838-5</RUTEmisor>
+        <RznSoc>COMERCIAL G&amp;S LIMITADA</RznSoc>
+        <GiroEmis>IMPORTADORA Y COMERCIALIZADORA DE REPUESTOS PARA VEHICULOS</GiroEmis>
+        <Acteco>503000</Acteco>
+        <CdgSIISucur>076287728</CdgSIISucur>
+        <DirOrigen>EJERCITO LIBERTADOR 3201</DirOrigen>
+        <CmnaOrigen>PUENTE ALTO</CmnaOrigen>
+        <CiudadOrigen>SANTIAGO</CiudadOrigen>
+      </Emisor>
+      <Receptor>
+        <RUTRecep>79514800-0</RUTRecep>
+        <RznSocRecep>SIERRALTA Y COMPANIA LIMITADA</RznSocRecep>
+        <GiroRecep>VENTA DE PARTES, PIEZAS Y ACCESORIOS</GiroRecep>
+        <Contacto>226982816</Contacto>
+        <DirRecep>AV BRASIL 24</DirRecep>
+        <CmnaRecep>SANTIAGO</CmnaRecep>
+        <CiudadRecep>STGO</CiudadRecep>
+      </Receptor>
+      <Totales>
+        <MntNeto>167412</MntNeto>
+        <TasaIVA>19.00</TasaIVA>
+        <IVA>31808</IVA>
+        <MntTotal>199220</MntTotal>
+      </Totales>
+    </Encabezado>
+    <Detalle>
+      <NroLinDet>1</NroLinDet>
+      <NmbItem>LIMPIA CARBURADOR ABRO</NmbItem>
+      <QtyItem>24.00</QtyItem>
+      <PrcItem>1750.00</PrcItem>
+      <MontoItem>42000</MontoItem>
+    </Detalle>
+    <Detalle>
+      <NroLinDet>2</NroLinDet>
+      <NmbItem>GRASA ROD. VALV.</NmbItem>
+      <QtyItem>24.00</QtyItem>
+      <PrcItem>1100.00</PrcItem>
+      <MontoItem>26400</MontoItem>
+    </Detalle>
+    <Detalle>
+      <NroLinDet>3</NroLinDet>
+      <NmbItem>LIMPIA INJ. BENZ</NmbItem>
+      <QtyItem>12.00</QtyItem>
+      <PrcItem>1616.00</PrcItem>
+      <MontoItem>19392</MontoItem>
+    </Detalle>
+    <Detalle>
+      <NroLinDet>4</NroLinDet>
+      <NmbItem>SILICONA GREY ABRO</NmbItem>
+      <QtyItem>36.00</QtyItem>
+      <PrcItem>1245.00</PrcItem>
+      <MontoItem>44820</MontoItem>
+    </Detalle>
+    <Detalle>
+      <NroLinDet>5</NroLinDet>
+      <NmbItem>LIMP.  SISTEMAS DE FRENOS</NmbItem>
+      <QtyItem>12.00</QtyItem>
+      <PrcItem>2900.00</PrcItem>
+      <MontoItem>34800</MontoItem>
+    </Detalle>
+<TED version="1.0"><DD><RE>76128838-5</RE><TD>33</TD><F>804</F><FE>2017-05-12</FE><RR>79514800-0</RR><RSR>SIERRALTA Y COMPANIA LIMITADA</RSR><MNT>199220</MNT><IT1>LIMPIA CARBURADOR ABRO</IT1><CAF version="1.0"><DA><RE>76128838-5</RE><RS>COMERCIAL G&amp;S LIMITADA</RS><TD>33</TD><RNG><D>804</D><H>804</H></RNG><FA>2017-05-12</FA><RSAPK><M>zhZGOXimZjf4kasWajgssJUe2rY9RdTrJJmLpvM8S2sp8JEs26ZB5rUZINl5ZpmJRs98b12Np7zn2TEffl7+2w==</M><E>Aw==</E></RSAPK><IDK>300</IDK></DA><FRMA algoritmo="SHA1withRSA">Hc1q/4kzV3e0XePxFK2Vg4yMZH3M/DwkFj3XA6/EYieW5Fl3CaTXner6iyHSmSsa7h61Mga5ZKssirDz8GU7Aw==</FRMA></CAF><TSTED>2017-05-12T14:50:38</TSTED></DD><FRMT algoritmo="SHA1withRSA">SEbLgLHS3eddS08cTlz1G3vv0uGeQhPIj2iSzlCiZkbBnw/buu3FH3HOP6BGuX0Zj9qfrZtPabWutsQY1hTk5A==</FRMT></TED>
+    <TmstFirma>2017-05-12T14:50:38</TmstFirma>
+
+  </Documento>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI="#MiPE76128838-26565"><Transforms><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>+0bn35ypff3Ity0IKkjvHzPpCUo=</DigestValue></Reference></SignedInfo>
+<SignatureValue>k1jYNF7i3ZKVMaIyF2/2TZL+28CwqzEQvOP0d9yZbRMHRD00oIkMHvSmd6TdjZ34goHPr3khhe1OaN7ko+lNG9XesvkcvkTcIJK3hj+4JHxd9M0TO++fnNhtTeoudLHb+auDMGsjJ/yIh9dKUrPOD/oowvAOPC/3CzBqGP0Zvck=</SignatureValue>
+<KeyInfo>
+<KeyValue>
+<RSAKeyValue>
+<Modulus>r0i+RETJRvkEfCv7Ie9kU/oqkzIQZXtcVHWIlyMIdfwLYKuoyOuFJLPtdl6IfYgDfaFXfYAM7ixmiFguYvYEjJ1onlplxpQ2xsQi9QDDIJaGGRA1ZgGsEF92fNEZduEM2SUrWrrZeXMD7GYAgTAq7MC7Vjd2rKcWYLo1SV+8NGM=</Modulus>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
+</KeyValue>
+<X509Data>
+<X509Certificate>
+MIIGgTCCBWmgAwIBAgIKG7p5JgAAAAVk2DANBgkqhkiG9w0BAQUFADCB0jELMAkGA1UEBhMCQ0wx
+HTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQHEwhTYW50aWFnbzEUMBIGA1UE
+ChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9yaWRhZCBDZXJ0aWZpY2Fkb3JhMTAwLgYDVQQD
+EydFLUNFUlRDSElMRSBDQSBGSVJNQSBFTEVDVFJPTklDQSBTSU1QTEUxJzAlBgkqhkiG9w0BCQEW
+GHNjbGllbnRlc0BlLWNlcnRjaGlsZS5jbDAeFw0xNjA5MjgyMDE4MDRaFw0xOTA5MjgyMDE4MDRa
+MIIBAzELMAkGA1UEBhMCQ0wxIzAhBgNVBAgTGk1FVFJPUE9MSVRBTkEgREUgU0FOVElBR08gMRMw
+EQYDVQQHEwpDb3JkaWxsZXJhMSIwIAYDVQQKExlDT01FUkNJQUwgRyBZIFMgTElNSVRBREEgMUMw
+QQYDVQQLEzpJTVBPUlRBRE9SQSBZIENPTUVSQ0lBTElaQURPUkEgREUgUkVQVUVTVE9TIFBBUkEg
+VkVISUNVTE9TMSkwJwYDVQQDEyBSVUJFTiBFTlJJUVVFIFNhbGF6YXIgZGUgbGEgSmFyYTEmMCQG
+CSqGSIb3DQEJARYXcnMtZGVsYWphcmFAaG90bWFpbC5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0A
+MIGJAoGBAK9IvkREyUb5BHwr+yHvZFP6KpMyEGV7XFR1iJcjCHX8C2CrqMjrhSSz7XZeiH2IA32h
+V32ADO4sZohYLmL2BIydaJ5aZcaUNsbEIvUAwyCWhhkQNWYBrBBfdnzRGXbhDNklK1q62XlzA+xm
+AIEwKuzAu1Y3dqynFmC6NUlfvDRjAgMBAAGjggKnMIICozA9BgkrBgEEAYI3FQcEMDAuBiYrBgEE
+AYI3FQiC3IMvhZOMZoXVnReC4twnge/sPGGBmucVhq/gFQIBZAIBBDAdBgNVHQ4EFgQUSOOYS59u
+UTOgbHLchGQcwa500awwCwYDVR0PBAQDAgTwMB8GA1UdIwQYMBaAFHjhPp/SErN6PI3NMA5Ts0Mp
+B7NVMD4GA1UdHwQ3MDUwM6AxoC+GLWh0dHA6Ly9jcmwuZS1jZXJ0Y2hpbGUuY2wvZWNlcnRjaGls
+ZWNhRkVTLmNybDA6BggrBgEFBQcBAQQuMCwwKgYIKwYBBQUHMAGGHmh0dHA6Ly9vY3NwLmVjZXJ0
+Y2hpbGUuY2wvb2NzcDAjBgNVHREEHDAaoBgGCCsGAQQBwQEBoAwWCjA3NTQ1MDM4LTkwIwYDVR0S
+BBwwGqAYBggrBgEEAcEBAqAMFgo5NjkyODE4MC01MIIBTQYDVR0gBIIBRDCCAUAwggE8BggrBgEE
+AcNSBTCCAS4wLQYIKwYBBQUHAgEWIWh0dHA6Ly93d3cuZS1jZXJ0Y2hpbGUuY2wvQ1BTLmh0bTCB
+/AYIKwYBBQUHAgIwge8egewAQwBlAHIAdABpAGYAaQBjAGEAZABvACAARgBpAHIAbQBhACAAUwBp
+AG0AcABsAGUALgAgAEgAYQAgAHMAaQBkAG8AIAB2AGEAbABpAGQAYQBkAG8AIABlAG4AIABmAG8A
+cgBtAGEAIABwAHIAZQBzAGUAbgBjAGkAYQBsACwAIABxAHUAZQBkAGEAbgBkAG8AIABoAGEAYgBp
+AGwAaQB0AGEAZABvACAAZQBsACAAQwBlAHIAdABpAGYAaQBjAGEAZABvACAAcABhAHIAYQAgAHUA
+cwBvACAAdAByAGkAYgB1AHQAYQByAGkAbzANBgkqhkiG9w0BAQUFAAOCAQEAeZyOzJq2/LE9LxM1
+PkDjIeqck5kJo1TTDreIXoEcc54pl4hSvk1+500fzUNbvz5+WvdDF2ykfuYPqV95zMyY2n5qAhjH
+3KDsgpS067JH8TmTILkM5JuOJk8hKQG38wlkYATfngr5col5UbL6eXhGoAE7ht9DY1fBXgnrp9G/
+5A2fGQHm7HyfW+Cy0BdpoPxO5NXzprpyNaCOm/jLXQ5wju6biBCh3yZwbUzYnv34QOR2ulqDITTC
+5LzR8H2SvarlaQ2fVxyVE7bKHQZ6tIfpS22G7l9XjwRmoGWMzXPSMAbx7lQzHWWFTO5GE4XFrYBr
+XybBlJAyJRYALD1en0forg==
+</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature></DTE>
+</SetDTE>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference URI="#SDTE300502049">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>2kXqF1b9wAEqt5oismG7HltsikY=</DigestValue>
+</Reference>
+</SignedInfo>
+<SignatureValue>l9xMSllSqv/UAoLpg2tDJEzo335laqQLikgVPpjefa9O6YshRDFKvHbEEEUZQrRZ
+gdL0aECwx952keAl77ezq/PrqQw5eZnkHWwBqVlvY9/nSg2CNheWNiXvqRK2DmDt
+s1KvrXDjJNdijGwr+Z9s24LE6n0x6NX70DxSO54UtopbwbkIEEG1FgycjYDoCPVJ
+6gzwg2xyyHwDNOlHMDzIJvkqpNbwbYCfJGrpULVGFwg7pyJNQQq2d1btNWpAtK8o
+6rNDsJuWQmHMvWldFePhyf1jzFJOravnvOcsh2uaddv8WvsQRQGw7QB0Yb4bP7PA
+tb+6jDQd1l4GkbgRSW/G1g==</SignatureValue>
+<KeyInfo>
+<KeyValue>
+<RSAKeyValue>
+<Modulus>
+vUSZwnTtsvIdpQ5q2hq53klOqJpf4xEXdId5mZBsDiCC7rYW17IXZsRmULwNbg80
+I+8op1lw3tG/f7wnAD70SbiF+XtAmpDtFWxBuifOA7yt5LQ61UYeZUumdBhcoWGP
+FXXmQCHHEyhZzl264AhbyKhReae6+KG1tk3YDcdNXwCbzdp90+3r4Jj9iNgxKpE3
+KWYmJQtQ9mWqZlDKVef1PdHzVtALOJrI72hG6A4FV9tGRQ8xluTByCqw+hx4fkXZ
+irF1DT3uQsF3l79nGrtU6520DRTPoNWimzUkeVsEp8auTbU6KMjj4Umk4rbVo5kw
+gRP4WlsONi0RBkMa7uRsnQ==
+</Modulus>
+<Exponent>
+AQAB
+</Exponent>
+</RSAKeyValue>
+</KeyValue>
+<X509Data>
+<X509Certificate>
+MIIEZDCCA0ygAwIBAgIBRDANBgkqhkiG9w0BAQUFADCBpTEUMBIGA1UEAxMLU0lJ
+LUNBLTIwMTM
+xGjAYBgNVBAcTEVNhbnRpYWdvIGRlIENoaWxlMR0wGwYDVQQIExRS
+ZWdpb24gTWV0cm9wb2xpdG
+FuYTELMAkGA1UEBhMCQ0wxHDAaBgkqhkiG9w0BCQEW
+DXNpaS1jYUBzaWkuY2wxJzAlBgNVBAoTH
+lNlcnZpY2lvIGRlIEltcHVlc3RvcyBJ
+bnRlcm5vczAeFw0xNzAzMjIxNjMwMjdaFw0xOTAzMjIx
+NjMwMjdaMIHRMSQwIgYD
+VQQLExtTdWJkaXJlY2Npb24gZGUgSW5mb3JtYXRpY2ExJzAlBgNVBAo
+THlNlcnZp
+Y2lvIGRlIEltcHVlc3RvcyBJbnRlcm5vczELMAkGA1UEBhMCQ0wxHTAbBgNVBAgT
+F
+FJlZ2lvbiBNZXRyb3BvbGl0YW5hMRowGAYDVQQHExFTYW50aWFnbyBkZSBDaGls
+ZTEeMBwGCSqG
+SIb3DQEJARYPbWxhY29zdGVAc2lpLmNsMRgwFgYDVQQDEw9GQUNU
+VVJBQ0lPTiBTSUkwggEiMA0
+GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC9RJnC
+dO2y8h2lDmraGrneSU6oml/jERd0h3mZkG
+wOIILuthbXshdmxGZQvA1uDzQj7yin
+WXDe0b9/vCcAPvRJuIX5e0CakO0VbEG6J84DvK3ktDrVR
+h5lS6Z0GFyhYY8VdeZA
+IccTKFnOXbrgCFvIqFF5p7r4obW2TdgNx01fAJvN2n3T7evgmP2I2DEq
+kTcpZiYl
+C1D2ZapmUMpV5/U90fNW0As4msjvaEboDgVX20ZFDzGW5MHIKrD6HHh+RdmKsXUN
+Pe
+5CwXeXv2cau1TrnbQNFM+g1aKbNSR5WwSnxq5NtTooyOPhSaTittWjmTCBE/ha
+Ww42LREGQxru5
+GydAgMBAAGjcTBvMAkGA1UdEwQCMAAwPQYDVR0RBDYwNKAYBggr
+BgEEAcEBAaAMEwo0ODA4MDE1
+NS01oBgGCCsGAQQBwQEDoAwTCjYwODAzMDAwLUsw
+IwYDVR0SBBwwGqAYBggrBgEEAcEBAqAMEwo
+2MDgwMzAwMC1LMA0GCSqGSIb3DQEB
+BQUAA4IBAQCltLIBMlvpHbdSttl+QC6pZPBsl2U2VKLThg
+IEE4lCDGCIB7UoPb3k
+evEY2AepxKxNy64SvqXKpsXwfRIcdudcQOIIhk77WnsWP3x0HiyAqmn4U
+Ri7DNa0
+Hk4bcQXsdAGHGYqPUisQltPeaqzoGyhlATLfo8XyaMeB3/1jlAGyWaczWCP8Fv40
+rO4
+QEUqIqUf5XFeC2TiJPfFp/LB5zYkZKNeAVnqZXZtQAaRHrqxnDd4DNy8BAe6c
+Al/YZsDh/1JWRb
+gySVQK2M4HOU172feqEGkLOoy3bcMSKxj9Wqxsjg3kzcm+Uo0F
+ymekuMCa1XFJ1OWVu0E2zB2Xp
+dIMZTjU
+</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature></EnvioDTE>
+
+------=_Part_749665_2112086895.1494611471499--
+

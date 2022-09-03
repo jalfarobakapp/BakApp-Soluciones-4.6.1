@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DS_Nodos" targetNamespace="http://tempuri.org/DS_Nodos.xsd" xmlns:mstns="http://tempuri.org/DS_Nodos.xsd" xmlns="http://tempuri.org/DS_Nodos.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DS_Nodos" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="DS_Nodos" msprop:Generator_DataSetName="DS_Nodos" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Arbol_Asociacion" msprop:Generator_UserTableName="Arbol_Asociacion" msprop:Generator_RowDeletedName="Arbol_AsociacionRowDeleted" msprop:Generator_RowChangedName="Arbol_AsociacionRowChanged" msprop:Generator_RowClassName="Arbol_AsociacionRow" msprop:Generator_RowChangingName="Arbol_AsociacionRowChanging" msprop:Generator_RowEvArgName="Arbol_AsociacionRowChangeEvent" msprop:Generator_RowEvHandlerName="Arbol_AsociacionRowChangeEventHandler" msprop:Generator_TableClassName="Arbol_AsociacionDataTable" msprop:Generator_TableVarName="tableArbol_Asociacion" msprop:Generator_RowDeletingName="Arbol_AsociacionRowDeleting" msprop:Generator_TablePropName="Arbol_Asociacion">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Seleccion" msprop:Generator_UserColumnName="Seleccion" msprop:Generator_ColumnVarNameInTable="columnSeleccion" msprop:Generator_ColumnPropNameInRow="Seleccion" msprop:Generator_ColumnPropNameInTable="SeleccionColumn" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Descripcion" msprop:Generator_UserColumnName="Descripcion" msprop:Generator_ColumnVarNameInTable="columnDescripcion" msprop:Generator_ColumnPropNameInRow="Descripcion" msprop:Generator_ColumnPropNameInTable="DescripcionColumn" type="xs:string" />
+              <xs:element name="Codigo_Nodo" msprop:Generator_UserColumnName="Codigo_Nodo" msprop:Generator_ColumnVarNameInTable="columnCodigo_Nodo" msprop:Generator_ColumnPropNameInRow="Codigo_Nodo" msprop:Generator_ColumnPropNameInTable="Codigo_NodoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Identificador_Nodo" msprop:Generator_UserColumnName="Identificador_Nodo" msprop:Generator_ColumnVarNameInTable="columnIdentificador_Nodo" msprop:Generator_ColumnPropNameInRow="Identificador_Nodo" msprop:Generator_ColumnPropNameInTable="Identificador_NodoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Identificacdor_NodoPadre" msprop:Generator_UserColumnName="Identificacdor_NodoPadre" msprop:Generator_ColumnVarNameInTable="columnIdentificacdor_NodoPadre" msprop:Generator_ColumnPropNameInRow="Identificacdor_NodoPadre" msprop:Generator_ColumnPropNameInTable="Identificacdor_NodoPadreColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Nuevo_Item" msprop:Generator_UserColumnName="Nuevo_Item" msprop:Generator_ColumnVarNameInTable="columnNuevo_Item" msprop:Generator_ColumnPropNameInRow="Nuevo_Item" msprop:Generator_ColumnPropNameInTable="Nuevo_ItemColumn" type="xs:boolean" default="true" />
+              <xs:element name="Es_Padre" msprop:Generator_UserColumnName="Es_Padre" msprop:Generator_ColumnVarNameInTable="columnEs_Padre" msprop:Generator_ColumnPropNameInRow="Es_Padre" msprop:Generator_ColumnPropNameInTable="Es_PadreColumn" type="xs:boolean" default="false" />
+              <xs:element name="Es_Seleccionable" msprop:Generator_UserColumnName="Es_Seleccionable" msprop:Generator_ColumnVarNameInTable="columnEs_Seleccionable" msprop:Generator_ColumnPropNameInRow="Es_Seleccionable" msprop:Generator_ColumnPropNameInTable="Es_SeleccionableColumn" type="xs:boolean" default="true" minOccurs="0" />
+              <xs:element name="Prod_Ass" msprop:Generator_UserColumnName="Prod_Ass" msprop:Generator_ColumnVarNameInTable="columnProd_Ass" msprop:Generator_ColumnPropNameInRow="Prod_Ass" msprop:Generator_ColumnPropNameInTable="Prod_AssColumn" type="xs:int" default="0" minOccurs="0" />
+              <xs:element name="Es_Ubicacion" msprop:Generator_UserColumnName="Es_Ubicacion" msprop:Generator_ColumnVarNameInTable="columnEs_Ubicacion" msprop:Generator_ColumnPropNameInRow="Es_Ubicacion" msprop:Generator_ColumnPropNameInTable="Es_UbicacionColumn" type="xs:boolean" default="false" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

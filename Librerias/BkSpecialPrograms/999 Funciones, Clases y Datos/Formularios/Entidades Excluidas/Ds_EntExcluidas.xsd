@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Ds_EntExcluidas" targetNamespace="http://tempuri.org/Ds_EntExcluidas.xsd" xmlns:mstns="http://tempuri.org/Ds_EntExcluidas.xsd" xmlns="http://tempuri.org/Ds_EntExcluidas.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Ds_EntExcluidas" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="Ds_EntExcluidas" msprop:Generator_DataSetName="Ds_EntExcluidas" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Entidades_Exc" msprop:Generator_UserTableName="Entidades_Exc" msprop:Generator_RowDeletedName="Entidades_ExcRowDeleted" msprop:Generator_RowChangedName="Entidades_ExcRowChanged" msprop:Generator_RowClassName="Entidades_ExcRow" msprop:Generator_RowChangingName="Entidades_ExcRowChanging" msprop:Generator_RowEvArgName="Entidades_ExcRowChangeEvent" msprop:Generator_RowEvHandlerName="Entidades_ExcRowChangeEventHandler" msprop:Generator_TableClassName="Entidades_ExcDataTable" msprop:Generator_TableVarName="tableEntidades_Exc" msprop:Generator_RowDeletingName="Entidades_ExcRowDeleting" msprop:Generator_TablePropName="Entidades_Exc">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Excluida" msprop:Generator_UserColumnName="Excluida" msprop:Generator_ColumnPropNameInRow="Excluida" msprop:Generator_ColumnVarNameInTable="columnExcluida" msprop:Generator_ColumnPropNameInTable="ExcluidaColumn" type="xs:string" default="" />
+              <xs:element name="Funcionario" msprop:Generator_UserColumnName="Funcionario" msprop:Generator_ColumnPropNameInRow="Funcionario" msprop:Generator_ColumnVarNameInTable="columnFuncionario" msprop:Generator_ColumnPropNameInTable="FuncionarioColumn" type="xs:string" default="" />
+              <xs:element name="Codigo" msprop:Generator_UserColumnName="Codigo" msprop:Generator_ColumnPropNameInRow="Codigo" msprop:Generator_ColumnVarNameInTable="columnCodigo" msprop:Generator_ColumnPropNameInTable="CodigoColumn" type="xs:string" default="" />
+              <xs:element name="Sucursal" msprop:Generator_UserColumnName="Sucursal" msprop:Generator_ColumnPropNameInRow="Sucursal" msprop:Generator_ColumnVarNameInTable="columnSucursal" msprop:Generator_ColumnPropNameInTable="SucursalColumn" type="xs:string" default="" />
+              <xs:element name="Razon" msprop:Generator_UserColumnName="Razon" msprop:Generator_ColumnPropNameInRow="Razon" msprop:Generator_ColumnVarNameInTable="columnRazon" msprop:Generator_ColumnPropNameInTable="RazonColumn" type="xs:string" default="" />
+              <xs:element name="Exc" msprop:Generator_UserColumnName="Exc" msprop:Generator_ColumnVarNameInTable="columnExc" msprop:Generator_ColumnPropNameInRow="Exc" msprop:Generator_ColumnPropNameInTable="ExcColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Entidades_Exc" />
+      <xs:field xpath="mstns:Codigo" />
+      <xs:field xpath="mstns:Sucursal" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

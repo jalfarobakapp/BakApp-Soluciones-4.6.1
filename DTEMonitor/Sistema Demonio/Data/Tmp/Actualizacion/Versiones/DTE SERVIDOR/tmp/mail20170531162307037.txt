@@ -1,0 +1,134 @@
+Return-Path: <SRS0=cruDdu=45=amazonses.com=0100015c372c207c-0983ea79-1805-48cb-b42d-008b805ecfa7-000000@sirrep.cl>
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id qaVqJHqmJFnqqAEAqFaw+A
+	; Tue, 23 May 2017 17:15:38 -0400
+Return-path: <SRS0=cruDdu=45=amazonses.com=0100015c372c207c-0983ea79-1805-48cb-b42d-008b805ecfa7-000000@sirrep.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Tue, 23 May 2017 17:15:38 -0400
+Received: from a8-62.smtp-out.amazonses.com ([54.240.8.62])
+	by srv150.tuhosting.cl with esmtps (TLSv1:AES128-SHA:128)
+	(Exim 4.89)
+	(envelope-from <0100015c372c207c-0983ea79-1805-48cb-b42d-008b805ecfa7-000000@amazonses.com>)
+	id 1dDH9U-000SQp-Ax
+	for notificacionsii@sirrep.cl; Tue, 23 May 2017 17:15:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=3dear6aubwrnniphennlsvalctbjtu6c; d=docele.cl; t=1495574258;
+	h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Description;
+	bh=DAnn4EWlaPCJU3wFjVBKWrKN8jXCGY9PK94oe86eFt4=;
+	b=ecoTY+vA9VacFXqUULNRPmQCjwwRHafQO9b1HWiS0xKC0u8f2bqP3yuXAOSQv/Yu
+	WwLIg10xkMYwhSx+sOCko/P5tnGFkLlfMobHmyMQ7F+y+14r3fkdfGxwVag+ArWpigu
+	tQM+hHSl25moVnGfI1CDyZ/ILy6vhN8iRSFc+Xb0=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=224i4yxa5dv7c2xz3womw6peuasteono; d=amazonses.com; t=1495574258;
+	h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Description:Feedback-ID;
+	bh=DAnn4EWlaPCJU3wFjVBKWrKN8jXCGY9PK94oe86eFt4=;
+	b=Delw6m3xhprq9/ouVCPcxxQBcpIISOh2RaVc53xZqG14pRP2Ac0LyLluL0XrW8+i
+	6T67vuhwQJ1znnAitQmJQyWPAz35lDZlesuX/1shnbA11Z7cLrF5UjzfD//tEnc0gzD
+	5GXBHCy7N11x6IEiFzUIDTfq7I77B5eXJkRMxKAw=
+Date: Tue, 23 May 2017 21:17:37 +0000
+From: Docele-Intercambio <intercambio@docele.cl>
+To: Facele-ReplyTo <intercambio.automotrizgyg@docele.cl>, 
+	Facele-To <notificacionsii@sirrep.cl>, 
+	Facele-To <notificacionsii@sirrep.cl>
+Message-ID: <0100015c372c207c-0983ea79-1805-48cb-b42d-008b805ecfa7-000000@email.amazonses.com>
+Subject: Acuse_Recibo DTE: AUTOMOTRIZ G Y G LTDA
+MIME-Version: 1.0
+Content-Type: multipart/alternativo; 
+	boundary="----=_Part_142_316949519.1495574207323"
+Content-Description: 1495574207351_474124.eml
+X-SES-Outgoing: 2017.05.23-54.240.8.62
+Feedback-ID: 1.us-east-1.AvEogEnvBJwk0qA/pAAA78OZb5vz4WgPASCVHq0Q/34=:AmazonSES
+
+------=_Part_142_316949519.1495574207323
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+
+Cuidemos el medio ambiente... Piense antes de imprimir.
+
+Descarga de Responsabilidad:
+La informaci=EF=BF=BDn contenida en este mensaje, incluyendo archivos adjun=
+tos, es confidencial, de conocimiento y uso exclusivo por su(s) destinatari=
+o(s) de acuerdo a los fines autorizados, ella no puede ser divulgada, copia=
+da, reproducida ni distribuida a otra(s) persona(s) distinta(s) de su(s) de=
+stinatario(s). El uso no autorizado de la informaci=EF=BF=BDn contenida en =
+este mensaje o en sus archivos adjuntos, har=EF=BF=BD responsable a quien l=
+o ejecute de las sanciones que correspondan conforme a las normas legales p=
+ertinentes. Si ha recibido este mensaje por error, por favor elim=EF=BF=BDn=
+elo junto con sus archivos adjuntos y notifique a info@facele.cl.
+
+Equipo FACELE.
+ <a href=3D"mailto:info@facele.cl.cl">info@facele.cl</a>
+------=_Part_142_316949519.1495574207323
+Content-Type: application/octet-stream; name=archivo_intercambio-633991.xml
+Content-Transfer-Encoding: 7bit
+Content-ID: Facele-1495574207323
+Content-Disposition: attachment; filename=archivo_intercambio-633991.xml
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<RespuestaDTE version="1.0" xmlns="http://www.sii.cl/SiiDte">
+<Resultado ID="ResultadoDTE-698899">
+<Caratula version="1.0">
+<RutResponde>79617100-6</RutResponde>
+<RutRecibe>79514800-0</RutRecibe>
+<IdRespuesta>698899</IdRespuesta>
+<NroDetalles>1</NroDetalles>
+<NmbContacto>Recepcion</NmbContacto>
+<FonoContacto>(56 2) 23346746</FonoContacto>
+<MailContacto>info@facele.cl</MailContacto>
+<TmstFirmaResp>2017-05-23T17:16:47</TmstFirmaResp></Caratula>
+<RecepcionEnvio>
+<NmbEnvio>envio-1-1495572042319.eml</NmbEnvio>
+<FchRecep>2017-05-23T17:16:45</FchRecep>
+<CodEnvio>698899</CodEnvio>
+<EnvioDTEID>SetDoc</EnvioDTEID>
+<Digest>7rCuX1qdI8U95uvGemGK/D7gCN8=</Digest>
+<EstadoRecepEnv>0</EstadoRecepEnv>
+<RecepEnvGlosa>Envio Recibido Conforme.</RecepEnvGlosa>
+<NroDTE>1</NroDTE>
+<RecepcionDTE>
+<TipoDTE>33</TipoDTE>
+<Folio>231744</Folio>
+<FchEmis>2017-05-23</FchEmis>
+<RUTEmisor>79514800-0</RUTEmisor>
+<RUTRecep>79617100-6</RUTRecep>
+<MntTotal>115685</MntTotal>
+<EstadoRecepDTE>0</EstadoRecepDTE>
+<RecepDTEGlosa>DTE Recibido OK</RecepDTEGlosa>
+</RecepcionDTE>
+</RecepcionEnvio>
+</Resultado>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI="#ResultadoDTE-698899"><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>07CEbaw9ys0jUUXMucMhDZGEyVM=</DigestValue></Reference></SignedInfo><SignatureValue>b8sAKjll2oLzz8xoX/CIcQheKJ/dV86egQlxAqFlnxVNgYwMA11YpNUGcB8GIWUmKa15Kwz+8Oys
+IvY3nnFHWZ0k5xTCKUXYoebmHdMaeNcUKu+6cgNWUqPA9QTONNxcjBqCKj28LtG5tf4AsfYxNyDc
+zdelmXBUFw6j0Le9590=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>5eI/+S5fELjHt4DNUq47tb2MS5pcaYM7o3FicSWqEgD7dLVFrZ8HkOTaGGfo7d9GuxLc0+q+ARmR
+vqZXKftggsKZ3f0b+JmoM5KQs2MxTmK+J6GgMcLxrK+cCtNLHYlA8XPtVGHrzh6pxMeAzB9vmnZz
+ouOehkbF/euh5DMLZxM=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIGUDCCBTigAwIBAgIKOdmY5QAAAAQ6ATANBgkqhkiG9w0BAQUFADCB0jELMAkGA1UEBhMCQ0wx
+HTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQHEwhTYW50aWFnbzEUMBIGA1UE
+ChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9yaWRhZCBDZXJ0aWZpY2Fkb3JhMTAwLgYDVQQD
+EydFLUNFUlRDSElMRSBDQSBGSVJNQSBFTEVDVFJPTklDQSBTSU1QTEUxJzAlBgkqhkiG9w0BCQEW
+GHNjbGllbnRlc0BlLWNlcnRjaGlsZS5jbDAeFw0xNjA3MDIxODIwMTdaFw0xNzA3MDIxODIwMTda
+MIHTMQswCQYDVQQGEwJDTDEjMCEGA1UECBMaTUVUUk9QT0xJVEFOQSBERSBTQU5USUFHTyAxETAP
+BgNVBAcTCFNhbnRpYWdvMTIwMAYDVQQKEylGQUNUVVJBQ0lPTiBFTEVDVFJPTklDQSBJTlRSRUdS
+QUNJT04gUy5BLjEUMBIGA1UECxMLRkFDVFVSQUNJT04xGzAZBgNVBAMTEkRJTk8gR0lSQVJESSBM
+QVZJTjElMCMGCSqGSIb3DQEJARYWY2VydGlmaWNhZG9zQGZhY2VsZS5jbDCBnzANBgkqhkiG9w0B
+AQEFAAOBjQAwgYkCgYEA5eI/+S5fELjHt4DNUq47tb2MS5pcaYM7o3FicSWqEgD7dLVFrZ8HkOTa
+GGfo7d9GuxLc0+q+ARmRvqZXKftggsKZ3f0b+JmoM5KQs2MxTmK+J6GgMcLxrK+cCtNLHYlA8XPt
+VGHrzh6pxMeAzB9vmnZzouOehkbF/euh5DMLZxMCAwEAAaOCAqcwggKjMD0GCSsGAQQBgjcVBwQw
+MC4GJisGAQQBgjcVCILcgy+Fk4xmhdWdF4Li3CeB7+w8YYPmtRODo70hAgFkAgEEMB0GA1UdDgQW
+BBQ47hUWcOb+wbBN7VdIpyqhgEq8cjALBgNVHQ8EBAMCBPAwHwYDVR0jBBgwFoAUeOE+n9ISs3o8
+jc0wDlOzQykHs1UwPgYDVR0fBDcwNTAzoDGgL4YtaHR0cDovL2NybC5lLWNlcnRjaGlsZS5jbC9l
+Y2VydGNoaWxlY2FGRVMuY3JsMDoGCCsGAQUFBwEBBC4wLDAqBggrBgEFBQcwAYYeaHR0cDovL29j
+c3AuZWNlcnRjaGlsZS5jbC9vY3NwMCMGA1UdEQQcMBqgGAYIKwYBBAHBAQGgDBYKMDg0NjI5ODMt
+OTAjBgNVHRIEHDAaoBgGCCsGAQQBwQECoAwWCjk2OTI4MTgwLTUwggFNBgNVHSAEggFEMIIBQDCC
+ATwGCCsGAQQBw1IFMIIBLjAtBggrBgEFBQcCARYhaHR0cDovL3d3dy5lLWNlcnRjaGlsZS5jbC9D
+UFMuaHRtMIH8BggrBgEFBQcCAjCB7x6B7ABDAGUAcgB0AGkAZgBpAGMAYQBkAG8AIABGAGkAcgBt
+AGEAIABTAGkAbQBwAGwAZQAuACAASABhACAAcwBpAGQAbwAgAHYAYQBsAGkAZABhAGQAbwAgAGUA
+bgAgAGYAbwByAG0AYQAgAHAAcgBlAHMAZQBuAGMAaQBhAGwALAAgAHEAdQBlAGQAYQBuAGQAbwAg
+AGgAYQBiAGkAbABpAHQAYQBkAG8AIABlAGwAIABDAGUAcgB0AGkAZgBpAGMAYQBkAG8AIABwAGEA
+cgBhACAAdQBzAG8AIAB0AHIAaQBiAHUAdABhAHIAaQBvMA0GCSqGSIb3DQEBBQUAA4IBAQA7HpQO
+rDrJGfz+X82WFxpS4GJesMwuNPLLrwpjcj26/aFHDrGZUgACNgQAJgX2uih/0h+P5UM/6dA7lrtf
+Hnzry3zXOvGi3NGJYtiR303FP1RWkGb9Cl0VbgX5IB4yWxl/bTird3+G95JS8CrkNoQOn4slJh1M
+88Gd1u+1Ezb0nN9hFhumlh8+38i5V7gvvyTv/2ugGfIDrAwQrJoEohylR1BMf2sQ1Bk+rdpp2fcQ
+GbGufeedCqSE/KS0FZbSQ8kmF01bL1o9n6dwMvTuPG941I21aFvFL0V7Dz2Lut0SoMCzUPkG8bNV
+DEm6z7linSaVwTHUkdrLwDOtVFc9O1rR</X509Certificate></X509Data></KeyInfo></Signature></RespuestaDTE>
+------=_Part_142_316949519.1495574207323--

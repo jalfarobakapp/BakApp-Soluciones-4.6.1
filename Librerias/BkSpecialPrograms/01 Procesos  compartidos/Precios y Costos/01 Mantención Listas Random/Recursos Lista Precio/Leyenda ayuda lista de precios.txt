@@ -1,0 +1,17 @@
+1) La anotación <x>V indica al sistema dos posibles situaciones (opciones) dependiendo de si x en un código de lista de precio/costo o es un código de producto.
+
+1a. Código de lista de precio
+En este caso la anotación <x>V indica al sistema obtener el valor de la variable “V" de la lista de precio o costo “x”, corresponde a los tres últimos caract. de la lista referenciada. Ejemplo: <01C>PP01UD*1.25. Obtendrá el valor de PP01UD desde la lista TABPP01C.
+
+1b. Código de producto.
+En este caso la anotación <x>V indica al sistema obtener el valor de la variable "V" del valor de esa misma variable evaluada para el producto referenciado en la misma lista. Si la variable en el producto referenciado se obtiene por ecuación y es dinámica será entonces evaluada automáticamente. Por ejemplo:
+Como ecuación de codigo1 se escribe <codigo2>pp01ud y código2 tiene como ecuación x+y el valor de codigo1 será x+y.
+
+2) La anotación modo rango [r1.r2, arg, resul] permite asignar el valor "resul" a la columna, condicionado a que "arg" se encuentre ente “r1” y “r2”. Se puede indicar varios rangos en la ecuación y el primero que cumpla será el resultado final. Valores para rangos de fecha: HOY, FE= Fecha Emisión, FUV=Fecha Ult.
+Vencimiento, FIV=Fecha 1er Venc. FE+n=FE más ´n´ días (formato fio de es dígitos, rellenar con ceros por izquierda si es necesario)
+
+3) La anotación {x} será transformada por el sistema al momento de la evaluación en (1 -x/100), “x" puede ser un número o una ecuación.
+
+4) La ecuación grabada en minúsculas indica al sistema que ella debe ser evaluada al registrarse el documento,
+
+5) La pertenencia indica a que concepto está referida la variable y puede ser a.-Producto, b.-Entidad, c.-Concepto de documento comercia, d.-Concepto de la orden e.-Concepto de lista de precio

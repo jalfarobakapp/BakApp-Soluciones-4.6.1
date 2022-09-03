@@ -1,0 +1,204 @@
+Return-Path: <SRS0=9xcMOs=47=fac2.facturachile.cl=bounces+3743797-70c3-notificacionsii=sirrep.cl@sirrep.cl>
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id +SZ1OTIBJ1mQjAIAqFaw+A
+	; Thu, 25 May 2017 12:07:14 -0400
+Return-path: <SRS0=9xcMOs=47=fac2.facturachile.cl=bounces+3743797-70c3-notificacionsii=sirrep.cl@sirrep.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Thu, 25 May 2017 12:07:14 -0400
+Received: from o1.fc2.facturachile.cl ([167.89.45.119])
+	by srv150.tuhosting.cl with esmtps (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+	(Exim 4.89)
+	(envelope-from <bounces+3743797-70c3-notificacionsii=sirrep.cl@fac2.facturachile.cl>)
+	id 1dDvIA-000hx9-EL
+	for notificacionsii@sirrep.cl; Thu, 25 May 2017 12:07:14 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; 
+	d=facturachile.cl; h=content-type:mime-version:subject:from:to; 
+	s=s1; bh=WgZEYWBPBo9uJUo9JCbZRbHGQlU=; b=DaWHjLcot6UbVfbXOrJMMJU
+	v94p3An8WJKAEp0tBGpWyU3umffn5Ktit0NkAV1ettuzEKnTF86lYfqOXUKu+Az0
+	JixYOsG4Svd9byMaV4oDk1deKqTMxb8tUUSqgOgOwEdL/AAK2hc//hPW/qUkRqcn
+	O21IGwCTnyICzcgfhN/M=
+Received: by filter0546p1mdw1.sendgrid.net with SMTP id filter0546p1mdw1-24688-5927019A-77
+        2017-05-25 16:08:58.91156818 +0000 UTC
+Received: from [192.168.1.156] (unknown [200.54.212.179])
+	by ismtpd0003p1iad1.sendgrid.net (SG) with ESMTP id he_y9e9ZROmUYBsKc5sfnw
+	for <notificacionsii@sirrep.cl>; Thu, 25 May 2017 16:08:58.570 +0000 (UTC)
+Content-Type: multipart/mixed;
+ boundary="----=_NextPart_41250945.790602458488"
+MIME-Version: 1.0
+Subject: =?utf-8?Q?Acuse_de_recibo_de_documentos_electr=C3=B3nicos?=
+Message-ID: <59800eb8-8c00-42a1-b628-69195b0c1e07@mail.dll>
+Date: Thu, 25 May 2017 12:12:24 -0400
+From: <facturacion@facturachile.cl>
+To: <notificacionsii@sirrep.cl>
+X-SG-EID: hyGGk41vrP2s7/6Yc6j/79SIxoWS2HMJ/33M57rZvQN/+4YQI+TbwywDUCMp7erpsCRqnk31y596ae
+ WEaY2JUs1yD3lOjU/PNprdZlfiA2z5JB4cxPd2smsu2+ik2mtEDLG+V3EI1zAiWdEd6eSGBPvk0edx
+ mnfwCd96a/pgN6fImmEGSJb7V3l3Z7Kuk889/bz4DSmOxjlZ3g6QwI5mCE28pKaF4JwTMlJr+3AMg5
+ Y=
+
+------=_NextPart_41250945.790602458488
+Content-Type: text/html;
+ charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div align=3D"center" style=3D"font-family: 'Trebuchet MS', Helvetica, Aria=
+l, Verdana, sans-serif;"></div><div align=3D"center" style=3D"font-family: =
+'Trebuchet MS', Helvetica, Arial, Verdana, sans-serif;"><br></div><div alig=
+n=3D"center"><div align=3D"center"><p class=3D"MsoNormal" style=3D"font-fam=
+ily: 'Trebuchet MS', Helvetica, Arial, Verdana, sans-serif;"><font color=3D=
+"#000033"><b>Notificacion de Recepcion de DTEs.</b><o:p></o:p></font></p><p=
+ class=3D"MsoNormal" style=3D"font-family: 'Trebuchet MS', Helvetica, Arial=
+, Verdana, sans-serif;"><font color=3D"#000033">Este mensaje de correo elec=
+tronico y sus documentos adjuntos estan dirigidos EXCLUSIVAMENTE a los dest=
+inatarios especificados.&nbsp;</font></p><p class=3D"MsoNormal" style=3D"fo=
+nt-family: 'Trebuchet MS', Helvetica, Arial, Verdana, sans-serif;"><font co=
+lor=3D"#000033">La informacion contenida puede ser CONFIDENCIAL y/o estar L=
+EGALMENTE PROTEGIDA y no necesariamente refleja la opinion de FacturaChile.=
+</font></p><p class=3D"MsoNormal" style=3D"font-family: 'Trebuchet MS', Hel=
+vetica, Arial, Verdana, sans-serif;"><font color=3D"#000033">Si usted recib=
+e este mensaje por ERROR, por favor comuniqueselo inmediatamente al remiten=
+te y ELIMINELO ya que usted NO ESTA AUTORIZADO al</font></p><p class=3D"Mso=
+Normal" style=3D"font-family: 'Trebuchet MS', Helvetica, Arial, Verdana, sa=
+ns-serif;"><font color=3D"#000033">&nbsp;uso, revelacion, distribucion, imp=
+resion o copia de toda o alguna parte de la informacion contenida.&nbsp;<o:=
+p></o:p></font></p><font color=3D"#000033"><span calibri","sans-serif";mso-=
+fareast-font-family:=3D"" calibri;mso-fareast-theme-font:minor-latin;mso-bi=
+di-font-family:"times=3D"" new=3D"" roman";=3D"" color:#1f497d;mso-ansi-lan=
+guage:es-cl;mso-fareast-language:en-us;mso-bidi-language:=3D"" ar-sa"=3D"" =
+style=3D"font-family: 'Trebuchet MS', Helvetica, Arial, Verdana, sans-serif=
+; font-size: 11pt;">Gracias.</span><br></font></div><div align=3D"center" s=
+tyle=3D"font-family: 'Trebuchet MS', Helvetica, Arial, Verdana, sans-serif;=
+"><font color=3D"#000033"><br></font></div><div align=3D"center" style=3D"f=
+ont-family: 'Trebuchet MS', Helvetica, Arial, Verdana, sans-serif;"><font c=
+olor=3D"#000033"><br></font></div><div align=3D"center" style=3D"font-famil=
+y: 'Trebuchet MS', Helvetica, Arial, Verdana, sans-serif;"><font color=3D"#=
+000033"><br></font></div><div align=3D"center" style=3D"font-family: 'Trebu=
+chet MS', Helvetica, Arial, Verdana, sans-serif;"><table class=3D"MsoNormal=
+Table" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"550" style=
+=3D"width: 412.5pt;"><tbody><tr><td width=3D"550" style=3D"width: 412.5pt; =
+padding: 0cm;"></td></tr><tr style=3D"height: 37.5pt;"><td width=3D"500" va=
+lign=3D"top" style=3D"width: 375pt; padding: 0cm; height: 37.5pt;"><p class=
+=3D"MsoNormal" align=3D"center" style=3D"text-align: center;"><font color=
+=3D"#000033">Este correo electr=C3=B3nico fue enviado a trav=C3=A9s de&nbsp=
+;<b>FacturaChile</b><br><br><b>Derechos Reservados</b></font><font color=3D=
+"#1f497d"><u5:p></u5:p></font><o:p></o:p></p></td></tr></tbody></table></di=
+v></div><img src=3D"http://fc2.facturachile.cl/wf/open?upn=3D5jVDDDfTlFTLDb=
+axjQGrB-2B-2BIMqLaI5mxE0sjidK1JLaIZONL7e-2F6i4lEcAH8W77zLm15J-2FPL2vlNd-2Ff=
+oM3N0LZuYACTZqBPK-2F8x-2BDyvoUC3KRqJRoFmA9Cy1-2FgPe-2FdXqFfuWBidcKVxDaAqAWx=
+4Jm6vPeYNmK63AMjI1E-2BnBb0QRRu9qf62AGvcLArz-2FJVTunbWX3pyks5tRYRaeG3eSM3Zab=
+3gU0olK5ySKMMTMlvw-3D" alt=3D"" width=3D"1" height=3D"1" border=3D"0" style=
+=3D"height:1px !important;width:1px !important;border-width:0 !important;ma=
+rgin-top:0 !important;margin-bottom:0 !important;margin-right:0 !important;=
+margin-left:0 !important;padding-top:0 !important;padding-bottom:0 !importa=
+nt;padding-right:0 !important;padding-left:0 !important;"/>
+
+------=_NextPart_41250945.790602458488
+Content-Type: application/octet-stream;
+ name="RDTE2017052512122411054.xml"
+Content-Disposition: attachment;
+ filename="RDTE2017052512122411054.xml"
+Content-Transfer-Encoding: base64
+
+PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iSVNPLTg4NTktMSIgc3Rh
+bmRhbG9uZT0ieWVzIj8+DQo8UmVzcHVlc3RhRFRFIHhtbG5zPSJodHRwOi8v
+d3d3LnNpaS5jbC9TaWlEdGUiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5v
+cmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhzaTpzY2hlbWFMb2NhdGlv
+bj0iaHR0cDovL3d3dy5zaWkuY2wvU2lpRHRlIFJlc3BTSUlfdjEwLnhzZCIg
+dmVyc2lvbj0iMS4wIj4NCjxSZXN1bHRhZG8gSUQ9IlJEVEUyMDE3MDUyNTEy
+MTIyNDExMDU0Ij4NCjxDYXJhdHVsYSB2ZXJzaW9uPSIxLjAiPg0KPFJ1dFJl
+c3BvbmRlPjcyODk2MzItNzwvUnV0UmVzcG9uZGU+DQo8UnV0UmVjaWJlPjc5
+NTE0ODAwLTA8L1J1dFJlY2liZT4NCjxJZFJlc3B1ZXN0YT4yMDE3MDUyNTEy
+MTIyNDExMDU0PC9JZFJlc3B1ZXN0YT4NCjxOcm9EZXRhbGxlcz4xPC9Ocm9E
+ZXRhbGxlcz4NCjxUbXN0RmlybWFSZXNwPjIwMTctMDUtMjVUMTI6MTI6MjQ8
+L1Rtc3RGaXJtYVJlc3A+DQo8L0NhcmF0dWxhPg0KPFJlY2VwY2lvbkVudmlv
+PjxObWJFbnZpbz5Tb2JyZVJlY2VwdG9yLnhtbDwvTm1iRW52aW8+PEZjaFJl
+Y2VwPjIwMTctMDUtMjVUMTI6MTI6MjQ8L0ZjaFJlY2VwPjxDb2RFbnZpbz4y
+MDE3MDUyNTEyMTIyNDExMDU0PC9Db2RFbnZpbz48RW52aW9EVEVJRD5TZXRE
+b2M8L0VudmlvRFRFSUQ+PERpZ2VzdD5wL0FTbXFMcDltTVNMZytXSDVIMTB5
+WkF3R1k9PC9EaWdlc3Q+PFJ1dEVtaXNvcj43OTUxNDgwMC0wPC9SdXRFbWlz
+b3I+PFJ1dFJlY2VwdG9yPjcyODk2MzItNzwvUnV0UmVjZXB0b3I+PEVzdGFk
+b1JlY2VwRW52PjA8L0VzdGFkb1JlY2VwRW52PjxSZWNlcEVudkdsb3NhPkVu
+dmlvIFJlY2liaWRvIENvbmZvcm1lPC9SZWNlcEVudkdsb3NhPjxOcm9EVEU+
+MTwvTnJvRFRFPjxSZWNlcGNpb25EVEU+PFRpcG9EVEU+MzM8L1RpcG9EVEU+
+PEZvbGlvPjIzMTgxNDwvRm9saW8+PEZjaEVtaXM+MjAxNy0wNS0yNTwvRmNo
+RW1pcz48UlVURW1pc29yPjc5NTE0ODAwLTA8L1JVVEVtaXNvcj48UlVUUmVj
+ZXA+NzI4OTYzMi03PC9SVVRSZWNlcD48TW50VG90YWw+MzY3NTY8L01udFRv
+dGFsPjxFc3RhZG9SZWNlcERURT4wPC9Fc3RhZG9SZWNlcERURT48UmVjZXBE
+VEVHbG9zYT5EVEUgUmVjaWJpZG8gT0s8L1JlY2VwRFRFR2xvc2E+PC9SZWNl
+cGNpb25EVEU+PC9SZWNlcGNpb25FbnZpbz48L1Jlc3VsdGFkbz4NCjxTaWdu
+YXR1cmUgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvMDkveG1sZHNp
+ZyMiPjxTaWduZWRJbmZvPjxDYW5vbmljYWxpemF0aW9uTWV0aG9kIEFsZ29y
+aXRobT0iaHR0cDovL3d3dy53My5vcmcvVFIvMjAwMS9SRUMteG1sLWMxNG4t
+MjAwMTAzMTUiIC8+PFNpZ25hdHVyZU1ldGhvZCBBbGdvcml0aG09Imh0dHA6
+Ly93d3cudzMub3JnLzIwMDAvMDkveG1sZHNpZyNyc2Etc2hhMSIgLz48UmVm
+ZXJlbmNlIFVSST0iI1JEVEUyMDE3MDUyNTEyMTIyNDExMDU0Ij48VHJhbnNm
+b3Jtcz48VHJhbnNmb3JtIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcv
+MjAwMC8wOS94bWxkc2lnI2VudmVsb3BlZC1zaWduYXR1cmUiIC8+PC9UcmFu
+c2Zvcm1zPjxEaWdlc3RNZXRob2QgQWxnb3JpdGhtPSJodHRwOi8vd3d3Lncz
+Lm9yZy8yMDAwLzA5L3htbGRzaWcjc2hhMSIgLz48RGlnZXN0VmFsdWU+c1A3
+a3BySzNhemtJYnFvR2tta29lS2I3T1RRPTwvRGlnZXN0VmFsdWU+PC9SZWZl
+cmVuY2U+PC9TaWduZWRJbmZvPjxTaWduYXR1cmVWYWx1ZT5XdC9XbHprTWNa
+U2NmSGxacDN4aDM4QXF3RHRmWmFDTEFveThpV2VlTUNadTNpSmdBZnJMS1pZ
+bzAvamdGbmdKcm42ZHhZaEpBMjFDNFBJcGthUXMrMXl6QWY5cVA1ZjJ1TWZD
+YUhRSi8yQzM2V1R5NS9GOXEzRlJkNjVXR0tkVFJzeWVzY1EyRFZuQVFSbWFZ
+T3dEWk1EamZwMTdnbVFhK1lMUjlnR3Qvd0k9PC9TaWduYXR1cmVWYWx1ZT48
+S2V5SW5mbz48S2V5VmFsdWU+PFJTQUtleVZhbHVlPjxNb2R1bHVzPnhNSWxN
+ZnFGeU9FajRHVDJ2MkpVbUNkaHh2eDVUaDZudG5BTkMwb1hlRVkrZFdVczNo
+QVcveWt5d3hXN2RONEZxd0Foek9jY1Zaa1JiaUVJWGFoNXBHNC9teDlySTUz
+QXZSbFNhcFV4RUIxdzV6QmtoWHY5elFxZmJKNWV1bFUvWDc4dU9xaDdlVGZo
+TWhUM2VHTFRZN0kvQzc2cThRc2hubE9tNUhnTFJsTT08L01vZHVsdXM+PEV4
+cG9uZW50PkFRQUI8L0V4cG9uZW50PjwvUlNBS2V5VmFsdWU+PC9LZXlWYWx1
+ZT48WDUwOURhdGE+PFg1MDlDZXJ0aWZpY2F0ZT5NSUlHUURDQ0JTaWdBd0lC
+QWdJS0VjWDhaUUFBQUFRT2R6QU5CZ2txaGtpRzl3MEJBUVVGQURDQjBqRUxN
+QWtHDQpBMVVFQmhNQ1Ewd3hIVEFiQmdOVkJBZ1RGRkpsWjJsdmJpQk5aWFJ5
+YjNCdmJHbDBZVzVoTVJFd0R3WURWUVFIDQpFd2hUWVc1MGFXRm5iekVVTUJJ
+R0ExVUVDaE1MUlMxRFJWSlVRMGhKVEVVeElEQWVCZ05WQkFzVEYwRjFkRzl5
+DQphV1JoWkNCRFpYSjBhV1pwWTJGa2IzSmhNVEF3TGdZRFZRUURFeWRGTFVO
+RlVsUkRTRWxNUlNCRFFTQkdTVkpODQpRU0JGVEVWRFZGSlBUa2xEUVNCVFNV
+MVFURVV4SnpBbEJna3Foa2lHOXcwQkNRRVdHSE5qYkdsbGJuUmxjMEJsDQpM
+V05sY25SamFHbHNaUzVqYkRBZUZ3MHhOakEyTVRZeU1ETTNNekJhRncweE9U
+QTJNVFl5TURNM016QmFNSUhEDQpNUXN3Q1FZRFZRUUdFd0pEVERFak1DRUdB
+MVVFQ0JNYVRVVlVVazlRVDB4SlZFRk9RU0JFUlNCVFFVNVVTVUZIDQpUeUF4
+RVRBUEJnTlZCQWNUQ0ZOaGJuUnBZV2R2TVNjd0pRWURWUVFLRXg1QlFrVk1R
+VkpFVHlCUVFWUlNTVU5KDQpUeUJQVmtsRlJFOGdVa1ZaUlZNeENqQUlCZ05W
+QkFzTUFTb3hKekFsQmdOVkJBTVRIa0ZDUlV4QlVrUlBJRkJCDQpWRkpKUTBs
+UElFOVdTVVZFVHlCU1JWbEZVekVlTUJ3R0NTcUdTSWIzRFFFSkFSWVBZMlox
+Wlc1MFpYTkFZMk56DQpMbU5zTUlHZk1BMEdDU3FHU0liM0RRRUJBUVVBQTRH
+TkFEQ0JpUUtCZ1FERXdpVXgrb1hJNFNQZ1pQYS9ZbFNZDQpKMkhHL0hsT0hx
+ZTJjQTBMU2hkNFJqNTFaU3plRUJiL0tUTERGYnQwM2dXckFDSE01eHhWbVJG
+dUlRaGRxSG1rDQpiaitiSDJzam5jQzlHVkpxbFRFUUhYRG5NR1NGZS8zTkNw
+OXNubDY2VlQ5ZnZ5NDZxSHQ1TitFeUZQZDRZdE5qDQpzajhMdnFyeEN5R2VV
+NmJrZUF0R1V3SURBUUFCbzRJQ3B6Q0NBcU13UFFZSkt3WUJCQUdDTnhVSEJE
+QXdMZ1ltDQpLd1lCQkFHQ054VUlndHlETDRXVGpHYUYxWjBYZ3VMY0o0SHY3
+RHhoZ2N1ZUZJYW9nbGdDQVdRQ0FRUXdIUVlEDQpWUjBPQkJZRUZGSHpUeVpN
+ejNQK280MmdYOG91MXBGbDBRSHBNQXNHQTFVZER3UUVBd0lFOERBZkJnTlZI
+U01FDQpHREFXZ0JSNDRUNmYwaEt6ZWp5TnpUQU9VN05ES1FlelZUQStCZ05W
+SFI4RU56QTFNRE9nTWFBdmhpMW9kSFJ3DQpPaTh2WTNKc0xtVXRZMlZ5ZEdO
+b2FXeGxMbU5zTDJWalpYSjBZMmhwYkdWallVWkZVeTVqY213d09nWUlLd1lC
+DQpCUVVIQVFFRUxqQXNNQ29HQ0NzR0FRVUZCekFCaGg1b2RIUndPaTh2YjJO
+emNDNWxZMlZ5ZEdOb2FXeGxMbU5zDQpMMjlqYzNBd0l3WURWUjBSQkJ3d0dx
+QVlCZ2dyQmdFRUFjRUJBYUFNRmdvd056STRPVFl6TWkwM01DTUdBMVVkDQpF
+Z1FjTUJxZ0dBWUlLd1lCQkFIQkFRS2dEQllLT1RZNU1qZ3hPREF0TlRDQ0FV
+MEdBMVVkSUFTQ0FVUXdnZ0ZBDQpNSUlCUEFZSUt3WUJCQUhEVWdVd2dnRXVN
+QzBHQ0NzR0FRVUZCd0lCRmlGb2RIUndPaTh2ZDNkM0xtVXRZMlZ5DQpkR05v
+YVd4bExtTnNMME5RVXk1b2RHMHdnZndHQ0NzR0FRVUZCd0lDTUlIdkhvSHNB
+RU1BWlFCeUFIUUFhUUJtDQpBR2tBWXdCaEFHUUFid0FnQUVZQWFRQnlBRzBB
+WVFBZ0FGTUFhUUJ0QUhBQWJBQmxBQzRBSUFCSUFHRUFJQUJ6DQpBR2tBWkFC
+dkFDQUFkZ0JoQUd3QWFRQmtBR0VBWkFCdkFDQUFaUUJ1QUNBQVpnQnZBSElB
+YlFCaEFDQUFjQUJ5DQpBR1VBY3dCbEFHNEFZd0JwQUdFQWJBQXNBQ0FBY1FC
+MUFHVUFaQUJoQUc0QVpBQnZBQ0FBYUFCaEFHSUFhUUJzDQpBR2tBZEFCaEFH
+UUFid0FnQUdVQWJBQWdBRU1BWlFCeUFIUUFhUUJtQUdrQVl3QmhBR1FBYndB
+Z0FIQUFZUUJ5DQpBR0VBSUFCMUFITUFid0FnQUhRQWNnQnBBR0lBZFFCMEFH
+RUFjZ0JwQUc4d0RRWUpLb1pJaHZjTkFRRUZCUUFEDQpnZ0VCQUxBaDNxWWxZ
+Rm1ZeUhpbzFtTE5SNFUxNFJTc1g4QmhpWlhEalRiWnNpWWI5NmtoYkxoRGxC
+dHhRWlNUDQpiTERGSFkzUW5zanpyTlFCdDR5WGxzc0JTRkhlT0xHR1hUUENM
+OXkwSnVraFFZNWVaWk1YVDNTZjRrWjJRNUJZDQpkN2JrTHNydjJhVE53WFNQ
+endzYVdRM2RSME1SZXE4M3o1bXR3V2RUVVdtb2xBRWZqckZ3Rk9aOU5mZ24x
+YnBvDQpWMFZYRWdDMlU3TDFjQmN2SFVhQmdEYWhUditvcmFxeUJhdVhuanBL
+Rllza2ZOM2JSbW5QbVVsMm91ZlpWZHBVDQpKRlZ5UnNQOE1uUEJGSG9YeEtr
+Sng1a1FJdWxHR0EyYnFZRGNDT1JWWGFNUVVtRmMxeDNnMEVha3Q5cFVJNEl1
+DQorbXRHRE1kSGhzeGNiSWt2TDk0aDhvL1c0TEU9PC9YNTA5Q2VydGlmaWNh
+dGU+PC9YNTA5RGF0YT48L0tleUluZm8+PC9TaWduYXR1cmU+PC9SZXNwdWVz
+dGFEVEU+DQo=
+
+------=_NextPart_41250945.790602458488--
+

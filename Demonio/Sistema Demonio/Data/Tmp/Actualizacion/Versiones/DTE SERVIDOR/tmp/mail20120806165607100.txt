@@ -1,0 +1,108 @@
+Return-path: <siidte_reparo@sii.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Fri, 03 Aug 2012 16:32:26 -0400
+Received: from rapel11.sii.cl ([200.10.252.90] helo=mailin.sii.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.77)
+	(envelope-from <siidte_reparo@sii.cl>)
+	id 1SxOXJ-0005P1-D8
+	for notificacionsii@sirrep.cl; Fri, 03 Aug 2012 16:32:21 -0400
+X-IronPort-AV: E=Sophos;i="4.77,708,1336363200"; 
+   d="xml'?txt'?scan'208";a="207907989"
+Received: from dte.sii.cl (HELO dte) ([146.20.1.104])
+  by mailout.sii.cl with ESMTP; 03 Aug 2012 16:20:09 -0400
+Message-ID: <28507061.1344025825695.JavaMail.root@dte>
+Date: Fri, 3 Aug 2012 16:30:25 -0400 (CLT)
+From: siidte_reparo@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: Produccion - Resultado de Revision Envio 422248444 - 79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_3789562_29768851.1344025825694"
+
+------=_Part_3789562_29768851.1344025825694
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+SII de Chile - Validacion de DTE
+================================
+
+En el archivo adjunto esta el resultado del proceso de revision y validacion
+del envio de Documentos Tributarios Electronicos realizado por su empresa al
+Servicio de Impuestos Internos de Chile.
+
+----------------------------------------------------------------------------
+
+Este es una aplicacion automatica. No conteste este correo ni haga 
+consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue 
+mas claro en cualquier aplicacion.
+
+
+------=_Part_3789562_29768851.1344025825694
+Content-Type: text/plain; name=DTEMAIL0422248444.txt
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL0422248444.txt
+
+Resultado de Validacion de Envio de DTE
+=======================================
+
+Rut de Empresa Emisora   : 79514800-0
+Rut que Realizo el Envio : 12628844-1
+Identificador de Envio   :  422248444
+Fecha de Recepcion       : 03/08/2012 16:30:44
+Estado del Envio         : EPR - Envio Procesado
+
+Estadisticas del Envio
+======================
+Tipo DTE  Informados  Rechazos  Reparos  Aceptados
+--------------------------------------------------
+   33              1         0        1          0
+
+Detalle de Rechazos y Reparos de DTE
+====================================
+
+ Folio       Tipo  Estado
+ ------------------------------------------------------------------------------
+ 200113       33   RPR - DTE Aceptado con Reparos
+     (HED-2-210) Monto Neto No Cuadra con Detalle : [239415.0000] <> [452229.0000]
+     (DET L[1] -1-200) Valor Detalle Distinto a Precio * Cantidad : [106407.0000] <> [186212.0000]
+     (DET L[2] -1-200) Valor Detalle Distinto a Precio * Cantidad : [133008.0000] <> [266017.0000]
+
+
+------=_Part_3789562_29768851.1344025825694
+Content-Type: application/octet-stream; name=DTEMAIL0422248444.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL0422248444.xml
+
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<RESULTADO_ENVIO>
+ <IDENTIFICACION>
+  <RUTEMISOR>79514800-0</RUTEMISOR>
+  <RUTENVIA>12628844-1</RUTENVIA>
+  <TRACKID>422248444</TRACKID>
+  <TMSTRECEPCION>03/08/2012 16:30:44</TMSTRECEPCION>
+  <ESTADO>EPR - Envio Procesado</ESTADO>
+ </IDENTIFICACION>
+ <ESTADISTICA>
+  <SUBTOTAL>
+   <TIPODOC>33</TIPODOC>
+   <INFORMADO>1</INFORMADO>
+   <REPARO>1</REPARO>
+  </SUBTOTAL>
+ </ESTADISTICA>
+ <REVISIONENVIO>
+  <REVISIONDTE>
+   <FOLIO>0000200113</FOLIO>
+   <TIPODTE>33</TIPODTE>
+   <ESTADO>RPR - DTE Aceptado con Reparos</ESTADO>
+   <DETALLE>(HED-2-210) Monto Neto No Cuadra con Detalle : [239415.0000] &lt;&gt; [452229.0000]</DETALLE>
+   <DETALLE>(DET L[1] -1-200) Valor Detalle Distinto a Precio * Cantidad : [106407.0000] &lt;&gt; [186212.0000]</DETALLE>
+   <DETALLE>(DET L[2] -1-200) Valor Detalle Distinto a Precio * Cantidad : [133008.0000] &lt;&gt; [266017.0000]</DETALLE>
+  </REVISIONDTE>
+ </REVISIONENVIO>
+</RESULTADO_ENVIO>
+
+------=_Part_3789562_29768851.1344025825694--
+

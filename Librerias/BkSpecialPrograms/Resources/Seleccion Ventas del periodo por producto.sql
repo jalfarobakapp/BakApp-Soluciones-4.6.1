@@ -1,0 +1,38 @@
+DECLARE 
+@Codigo char(13),
+@FECHAINICIO as date,
+@FECHATERMINO as date
+
+Set @Codigo = '#Codigo#'
+Set @FECHAINICIO  = '#Fecha1#'
+Set @FECHATERMINO = '#Fecha2#'
+-- SELECCION DE VENTAS DE UN PERIODO
+
+SELECT TIDO,NUDO,FEEMLI as Fecha,ENDO,SUENDO,
+       ISNULL((SELECT TOP 1 NOKOEN FROM MAEEN WHERE KOEN = MD.ENDO AND SUEN = MD.SUENDO),'') AS NOKOEN,
+       CASE UDTRPR WHEN 1 THEN UD01PR ELSE UD02PR END AS 'UD',
+       CASE UDTRPR WHEN 1 THEN ROUND(SUM(CASE TIDO 
+					            WHEN 'NCE' THEN - 1 * CAPRCO1 
+								WHEN 'NCV' THEN - 1 * CAPRCO1 
+								WHEN 'NCX' THEN - 1 * CAPRCO1 
+								WHEN 'NCZ' THEN - 1 * CAPRCO1 
+								WHEN 'NEV' THEN - 1 * CAPRCO1 
+								ELSE CAPRCO1 END), 0) ELSE CAPRCO2 END AS 'CANTIDAD',
+	   CASE UDTRPR WHEN 1 THEN ROUND(SUM(CASE TIDO 
+					            WHEN 'NCE' THEN - 1 * PPPRBR 
+								WHEN 'NCV' THEN - 1 * PPPRBR 
+								WHEN 'NCX' THEN - 1 * PPPRBR 
+								WHEN 'NCZ' THEN - 1 * PPPRBR 
+								WHEN 'NEV' THEN - 1 * PPPRBR 
+								ELSE PPPRBR END), 0) ELSE PPPRBR END AS 'TOTAL',	   
+       --CASE UDTRPR WHEN 1 THEN PPPRNERE1 ELSE PPPRNERE2 END AS 'NetoUnit'
+	   VANELI,VAIVLI,VABRLI
+FROM         MAEDDO AS MD
+WHERE     (MD.TIDO IN ('FCV', 'FDB', 'FDV', 'FDX', 'FDZ', 'FEV', 'FVL', 'FVT', 'FVX', 
+                               'FVZ', 'FEE', 'BLV', 'NCE', 'NCV', 'NCX', 'NCZ', 'NEV')) AND 
+                      (MD.FEEMLI BETWEEN @FECHAINICIO AND @FECHATERMINO) AND 
+                      (MD.EMPRESA = '01') AND 
+                      (MD.SULIDO IN (select KOSU FROM TABSU)) AND
+                      (MD.KOPRCT = @Codigo)
+ORDER BY FEEMLI DESC					  
+                      

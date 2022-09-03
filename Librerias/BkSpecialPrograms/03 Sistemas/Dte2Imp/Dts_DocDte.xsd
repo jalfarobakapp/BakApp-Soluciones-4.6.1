@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Dts_DocDte" targetNamespace="http://tempuri.org/Dts_DocDte.xsd" xmlns:mstns="http://tempuri.org/Dts_DocDte.xsd" xmlns="http://tempuri.org/Dts_DocDte.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Dts_DocDte" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="Dts_DocDte" msprop:Generator_DataSetName="Dts_DocDte" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Emisor" msprop:Generator_UserTableName="Emisor" msprop:Generator_RowDeletedName="EmisorRowDeleted" msprop:Generator_RowChangedName="EmisorRowChanged" msprop:Generator_RowClassName="EmisorRow" msprop:Generator_RowChangingName="EmisorRowChanging" msprop:Generator_RowEvArgName="EmisorRowChangeEvent" msprop:Generator_RowEvHandlerName="EmisorRowChangeEventHandler" msprop:Generator_TableClassName="EmisorDataTable" msprop:Generator_TableVarName="tableEmisor" msprop:Generator_RowDeletingName="EmisorRowDeleting" msprop:Generator_TablePropName="Emisor">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RUTEmisor" msprop:Generator_UserColumnName="RUTEmisor" msprop:Generator_ColumnVarNameInTable="columnRUTEmisor" msprop:Generator_ColumnPropNameInRow="RUTEmisor" msprop:Generator_ColumnPropNameInTable="RUTEmisorColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="RznSoc" msprop:Generator_UserColumnName="RznSoc" msprop:Generator_ColumnVarNameInTable="columnRznSoc" msprop:Generator_ColumnPropNameInRow="RznSoc" msprop:Generator_ColumnPropNameInTable="RznSocColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="GiroEmis" msprop:Generator_UserColumnName="GiroEmis" msprop:Generator_ColumnVarNameInTable="columnGiroEmis" msprop:Generator_ColumnPropNameInRow="GiroEmis" msprop:Generator_ColumnPropNameInTable="GiroEmisColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Telefono" msprop:Generator_UserColumnName="Telefono" msprop:Generator_ColumnVarNameInTable="columnTelefono" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Telefono" msprop:Generator_ColumnPropNameInTable="TelefonoColumn" type="xs:string" default="''" minOccurs="0" />
+              <xs:element name="CorreoEmisor" msprop:Generator_UserColumnName="CorreoEmisor" msprop:Generator_ColumnVarNameInTable="columnCorreoEmisor" msprop:Generator_ColumnPropNameInRow="CorreoEmisor" msprop:Generator_ColumnPropNameInTable="CorreoEmisorColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Acteco" msprop:Generator_UserColumnName="Acteco" msprop:Generator_ColumnVarNameInTable="columnActeco" msprop:Generator_ColumnPropNameInRow="Acteco" msprop:Generator_ColumnPropNameInTable="ActecoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Sucursal" msprop:Generator_UserColumnName="Sucursal" msprop:Generator_ColumnVarNameInTable="columnSucursal" msprop:Generator_ColumnPropNameInRow="Sucursal" msprop:Generator_ColumnPropNameInTable="SucursalColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="DirOrigen" msprop:Generator_UserColumnName="DirOrigen" msprop:Generator_ColumnVarNameInTable="columnDirOrigen" msprop:Generator_ColumnPropNameInRow="DirOrigen" msprop:Generator_ColumnPropNameInTable="DirOrigenColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="CmnaOrigen" msprop:Generator_UserColumnName="CmnaOrigen" msprop:Generator_ColumnVarNameInTable="columnCmnaOrigen" msprop:Generator_ColumnPropNameInRow="CmnaOrigen" msprop:Generator_ColumnPropNameInTable="CmnaOrigenColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="CiudadOrigen" msprop:Generator_UserColumnName="CiudadOrigen" msprop:Generator_ColumnPropNameInRow="CiudadOrigen" msprop:Generator_ColumnVarNameInTable="columnCiudadOrigen" msprop:Generator_ColumnPropNameInTable="CiudadOrigenColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="CdgVendedor" msprop:Generator_UserColumnName="CdgVendedor" msprop:Generator_ColumnPropNameInRow="CdgVendedor" msprop:Generator_ColumnVarNameInTable="columnCdgVendedor" msprop:Generator_ColumnPropNameInTable="CdgVendedorColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="IdAdicEmisor" msprop:Generator_UserColumnName="IdAdicEmisor" msprop:Generator_ColumnPropNameInRow="IdAdicEmisor" msprop:Generator_ColumnVarNameInTable="columnIdAdicEmisor" msprop:Generator_ColumnPropNameInTable="IdAdicEmisorColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

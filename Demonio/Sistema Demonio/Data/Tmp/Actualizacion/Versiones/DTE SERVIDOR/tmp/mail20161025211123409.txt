@@ -1,0 +1,341 @@
+Return-Path: <dtechilectra@enel.com>
+Delivered-To: notificacionsii@sirrep.cl
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id wK1XOeArClhVLA4AqFaw+A
+	for <notificacionsii@sirrep.cl>; Fri, 21 Oct 2016 11:53:31 -0300
+Return-path: <dtechilectra@enel.com>
+Received: from mxrelay2.enel.com ([207.169.253.3])
+	by srv150.tuhosting.cl with esmtp (Exim 4.86)
+	(envelope-from <dtechilectra@enel.com>)
+	id 1bxbCL-003u1F-P5
+	for notificacionsii@sirrep.cl; Fri, 21 Oct 2016 11:53:31 -0300
+Received: from el0ahmdtea02.risorse.enel ([10.104.0.4]) by mxrelay2.enel.com with Microsoft SMTPSVC(8.5.9600.16384);
+	 Fri, 21 Oct 2016 17:56:45 +0200
+Message-ID: <8777879.1477065400922.JavaMail.tomcat@el0ahmdtea02.risorse.enel>
+Date: Fri, 21 Oct 2016 12:56:40 -0300 (CLT)
+From: dtechilectra@enel.com
+To: notificacionsii@sirrep.cl
+To: dtechilectra.envios@enel.com
+Subject: =?ISO-8859-1?Q?Chilectra_S.A._env=EDa_FACTURA_ELEC?=
+ =?ISO-8859-1?Q?TRONICA_N=B016023243_en_formato_XML.?=
+MIME-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_51163_9694530.1477065400815"
+X-OriginalArrivalTime: 21 Oct 2016 15:56:45.0787 (UTC) FILETIME=[B976B2B0:01D22BB3]
+
+------=_Part_51163_9694530.1477065400815
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+
+chilectra
+
+------=_Part_51163_9694530.1477065400815
+Content-Type: text/xml; name=dte-968005707-35-2984114.xml; 
+	charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment; filename=dte-968005707-35-2984114.xml
+
+<?xml version=3D"1.0" encoding=3D"ISO-8859-1"?>
+<EnvioDTE xmlns=3D"http://www.sii.cl/SiiDte" xmlns:xsi=3D"http://www.w3.org=
+/2001/XMLSchema-instance" version=3D"1.0" xsi:schemaLocation=3D"http://www.=
+sii.cl/SiiDte EnvioDTE_v10.xsd">
+<SetDTE ID=3D"SetDTE-2984114">
+<Caratula version=3D"1.0">
+<RutEmisor>96800570-7</RutEmisor>
+<RutEnvia>11226003-K</RutEnvia>
+<RutReceptor>79514800-0</RutReceptor>
+<FchResol>2006-03-29</FchResol>
+<NroResol>35</NroResol>
+<TmstFirmaEnv>2016-10-21T12:56:40</TmstFirmaEnv>
+<SubTotDTE><TpoDTE>33</TpoDTE><NroDTE>1</NroDTE></SubTotDTE>
+</Caratula>
+<DTE version=3D"1.0">
+<Documento ID=3D"F16023243T33">
+<Encabezado>
+<IdDoc>
+<TipoDTE>33</TipoDTE>
+<Folio>16023243</Folio>
+<FchEmis>2016-10-20</FchEmis>
+<IndServicio>1</IndServicio>
+<FchCancel>2016-11-03</FchCancel>
+<PeriodoDesde>2016-09-15</PeriodoDesde>
+<PeriodoHasta>2016-10-17</PeriodoHasta>
+<FchVenc>2016-11-03</FchVenc>
+
+</IdDoc>
+<Emisor>
+<RUTEmisor>96800570-7</RUTEmisor>
+<RznSoc>Chilectra S.A.</RznSoc>
+<GiroEmis>Dist. y Vta. Energ El=E9ct, Art. El=E9ct. Hog, Dep, Esparc, Comp<=
+/GiroEmis>
+<Acteco>401030</Acteco>
+<DirOrigen>SANTA ROSA 76 PISO 8</DirOrigen>
+<CmnaOrigen>SANTIAGO</CmnaOrigen>
+<CiudadOrigen>SANTIAGO</CiudadOrigen>
+</Emisor>
+<Receptor>
+<RUTRecep>79514800-0</RUTRecep>
+<CdgIntRecep>185835-1</CdgIntRecep>
+<RznSocRecep>SIERRALTA Y CIA</RznSocRecep>
+<GiroRecep>COMERCIAL</GiroRecep>
+<DirRecep>AVDA BRASIL 24</DirRecep>
+<CmnaRecep>SANTIAGO</CmnaRecep>
+<CiudadRecep>SANTIAGO</CiudadRecep>
+<DirPostal>AVDA BRASIL 24</DirPostal>
+<CmnaPostal>SANTIAGO</CmnaPostal>
+<CiudadPostal>SANTIAGO</CiudadPostal>
+</Receptor>
+<Transporte><DirDest>AVDA BRASIL 24</DirDest>
+<CmnaDest>SANTIAGO</CmnaDest>
+<CiudadDest>SANTIAGO</CiudadDest>
+</Transporte>
+
+<Totales>
+<MntNeto>27032</MntNeto>
+<TasaIVA>19.00</TasaIVA>
+<IVA>5136</IVA>
+<MntTotal>32168</MntTotal>
+<MontoNF>0</MontoNF>
+<MontoPeriodo>32168</MontoPeriodo>
+<SaldoAnterior>0</SaldoAnterior>
+<VlrPagar>32168</VlrPagar>
+</Totales>
+
+</Encabezado>
+
+<Detalle>
+<NroLinDet>1</NroLinDet>
+<NmbItem>ARRIENDO DE MEDIDOR</NmbItem>
+<UnmdRef>FIJO</UnmdRef>
+<UnmdItem>FIJO</UnmdItem>
+<MontoItem>361</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>2</NroLinDet>
+<NmbItem>CARGO FIJO</NmbItem>
+<UnmdRef>FIJO</UnmdRef>
+<UnmdItem>FIJO</UnmdItem>
+<MontoItem>620</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>3</NroLinDet>
+<NmbItem>CARGO =DANICO POR USO DEL SISTEMA TRONCAL</NmbItem>
+<MontoItem>328</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>4</NroLinDet>
+<NmbItem>ENERGIA BASE     264 KWH</NmbItem>
+<UnmdRef>KWH</UnmdRef>
+<UnmdItem>KWH</UnmdItem>
+<MontoItem>25723</MontoItem>
+</Detalle>
+<TED version=3D"1.0"><DD><RE>96800570-7</RE><TD>33</TD><F>16023243</F><FE>2=
+016-10-20</FE><RR>79514800-0</RR><RSR>SIERRALTA Y CIA</RSR><MNT>32168</MNT>=
+<IT1>ARRIENDO DE MEDIDOR</IT1><CAF version=3D"1.0"><DA><RE>96800570-7</RE><=
+RS>CHILECTRA S.A.</RS><TD>33</TD><RNG><D>15993001</D><H>16593000</H></RNG><=
+FA>2016-09-22</FA><RSAPK><M>vxkHsE0+8I7tYaR6xthF6ODV9qXDQJWxc6AEbrvOaojT4v+=
+bshTsZR67o5gOUSUouZLutmOBdJzqRdO4xILJRQ=3D=3D</M><E>Aw=3D=3D</E></RSAPK><ID=
+K>300</IDK></DA><FRMA algoritmo=3D"SHA1withRSA">ikK5btNkpAYpuYzRW07SFXiE0Mj=
++RqsFcyjdkxcz3HMqwgVHihQ11LQ7EXp1PoSBA7Qit+rvO5BvxXKhaAvgEg=3D=3D</FRMA></C=
+AF><TSTED>2016-10-20T12:44:08</TSTED></DD><FRMT algoritmo=3D"SHA1withRSA">k=
+1rs8YgVXNleGnPBiJRF/Jzm28um9/E+mQtqgu0SlzgX8aKby0yPIDHz6swvdYGqjOPQqM/sVWiI=
+K4tXRzp/yw=3D=3D</FRMT></TED>
+<TmstFirma>2016-10-20T12:44:08</TmstFirma></Documento><Signature xmlns=3D"h=
+ttp://www.w3.org/2000/09/xmldsig#">
+  <SignedInfo>
+    <CanonicalizationMethod Algorithm=3D"http://www.w3.org/TR/2001/REC-xml-=
+c14n-20010315"/>
+    <SignatureMethod Algorithm=3D"http://www.w3.org/2000/09/xmldsig#rsa-sha=
+1"/>
+    <Reference URI=3D"#F16023243T33">
+      <Transforms>
+        <Transform Algorithm=3D"http://www.w3.org/TR/2001/REC-xml-c14n-2001=
+0315#WithComments"/>
+      </Transforms>
+      <DigestMethod Algorithm=3D"http://www.w3.org/2000/09/xmldsig#sha1"/>
+      <DigestValue>Jn524Abv2utiXKH0+xHGuyCpp8Y=3D</DigestValue>
+    </Reference>
+  </SignedInfo>
+  <SignatureValue>
+    iPBPnuYlgwocQImvb0p8ZaRFiPgFVw5Fx9nhqeXWdtaAbAa1eXPzuduJadw40/x2f4Z/adJ=
+c
+    F4fWJq+O59/nCGCaoiffG2Cj2BZGHZiR/IyCvOPHzGFiT9wtBQsj2lShHYlDXoKuWDHPHrg=
+Q
+    5dHry4xByARLISDCqbcNaXGNiwQ=3D
+  </SignatureValue>
+  <KeyInfo>
+    <KeyValue>
+      <RSAKeyValue>
+        <Modulus>
+          vezX4hAKl577a0/ySSISJ5opK4AY2O/9kZS4+2pjLBsVPsYGGjrhiWKp9EG6ZMw60=
+X
+          3jyPt5zdggrm+FCdwslczuRcuqQ8BUpswP+mHtJDeQoqG6aHi/9IOjQffOCM5VlDE=
+e
+          UsxWjhMiaFdN7d5TYXLZ3CuJnqbX8AneZX3xfa8=3D
+        </Modulus>
+        <Exponent>AQAB</Exponent>
+      </RSAKeyValue>
+    </KeyValue>
+    <X509Data>
+      <X509Certificate>
+MIIGUjCCBTqgAwIBAgIKG2ZELAAAAAMrOjANBgkqhkiG9w0BAQUFADCB0jELMAkGA1UEBhMCQ0w=
+x
+HTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQHEwhTYW50aWFnbzEUMBIGA1U=
+E
+ChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9yaWRhZCBDZXJ0aWZpY2Fkb3JhMTAwLgYDVQQ=
+D
+EydFLUNFUlRDSElMRSBDQSBGSVJNQSBFTEVDVFJPTklDQSBTSU1QTEUxJzAlBgkqhkiG9w0BCQE=
+W
+GHNjbGllbnRlc0BlLWNlcnRjaGlsZS5jbDAeFw0xNTEyMjMxNTQzMjNaFw0xODEyMjIxNTQzMjN=
+a
+MIHVMQswCQYDVQQGEwJDTDEjMCEGA1UECBMaTUVUUk9QT0xJVEFOQSBERSBTQU5USUFHTyAxETA=
+P
+BgNVBAcTCFNhbnRpYWdvMSowKAYDVQQKEyFDaHJpc3RpYW4gQ2FybG9zIE1hcmNvdHRpIEhlcm1=
+h
+bm4xCjAIBgNVBAsMASoxKjAoBgNVBAMTIUNocmlzdGlhbiBDYXJsb3MgTWFyY290dGkgSGVybWF=
+u
+bjEqMCgGCSqGSIb3DQEJARYbY2hyaXN0aWFuLm1hcmNvdHRpQGVuZWwuY29tMIGfMA0GCSqGSIb=
+3
+DQEBAQUAA4GNADCBiQKBgQC97NfiEAqXnvtrT/JJIhInmikrgBjY7/2RlLj7amMsGxU+xgYaOuG=
+J
+Yqn0QbpkzDrRfePI+3nN2CCub4UJ3CyVzO5Fy6pDwFSmzA/6Ye0kN5CiobpoeL/0g6NB984IzlW=
+U
+MR5SzFaOEyJoV03t3lNhctncK4meptfwCd5lffF9rwIDAQABo4ICpzCCAqMwPQYJKwYBBAGCNxU=
+H
+BDAwLgYmKwYBBAGCNxUIgtyDL4WTjGaF1Z0XguLcJ4Hv7DxhgcueFIaoglgCAWQCAQQwHQYDVR0=
+O
+BBYEFNNAEEnQDNMi+R3OZwXB+L4Uls+8MAsGA1UdDwQEAwIE8DAfBgNVHSMEGDAWgBR44T6f0hK=
+z
+ejyNzTAOU7NDKQezVTA+BgNVHR8ENzA1MDOgMaAvhi1odHRwOi8vY3JsLmUtY2VydGNoaWxlLmN=
+s
+L2VjZXJ0Y2hpbGVjYUZFUy5jcmwwOgYIKwYBBQUHAQEELjAsMCoGCCsGAQUFBzABhh5odHRwOi8=
+v
+b2NzcC5lY2VydGNoaWxlLmNsL29jc3AwIwYDVR0RBBwwGqAYBggrBgEEAcEBAaAMFgoxMTIyNjA=
+w
+My1LMCMGA1UdEgQcMBqgGAYIKwYBBAHBAQKgDBYKOTY5MjgxODAtNTCCAU0GA1UdIASCAUQwggF=
+A
+MIIBPAYIKwYBBAHDUgUwggEuMC0GCCsGAQUFBwIBFiFodHRwOi8vd3d3LmUtY2VydGNoaWxlLmN=
+s
+L0NQUy5odG0wgfwGCCsGAQUFBwICMIHvHoHsAEMAZQByAHQAaQBmAGkAYwBhAGQAbwAgAEYAaQB=
+y
+AG0AYQAgAFMAaQBtAHAAbABlAC4AIABIAGEAIABzAGkAZABvACAAdgBhAGwAaQBkAGEAZABvACA=
+A
+ZQBuACAAZgBvAHIAbQBhACAAcAByAGUAcwBlAG4AYwBpAGEAbAAsACAAcQB1AGUAZABhAG4AZAB=
+v
+ACAAaABhAGIAaQBsAGkAdABhAGQAbwAgAGUAbAAgAEMAZQByAHQAaQBmAGkAYwBhAGQAbwAgAHA=
+A
+YQByAGEAIAB1AHMAbwAgAHQAcgBpAGIAdQB0AGEAcgBpAG8wDQYJKoZIhvcNAQEFBQADggEBAC6=
+A
+e+eEl5bBASwyQo4gVSQvJkiisGCv/K/4PhfgKKFF9saiIkqfKQ5TwlyqU1+fBvJPsI4STj92PTA=
+4
+ERRy2FIMTb7J6upSQ2idDl+w7Lba19D+9Da0zdy8S2ZNnZHPngDs8VTWERQUH4HCdv/JKet3499=
+m
+seD8ZAPQdaEKxfJRkKAOeug4spXmnWYnLGDbhcnqfG+im3k5dKYvxLzKe2wltvWx2ueBB/dYQX1=
+7
+gB+Q98hmroXQFM9THdkMPkTNBLMfIxbZYFk+v2zQYh/4xmAw89BzQNho/M1gE1YOUVXphA/Cy4G=
+A
+bi/mWy8jiMARC21ASNbH/LOjqfJsWBGvZbA=3D
+      </X509Certificate>
+    </X509Data>
+  </KeyInfo>
+</Signature></DTE></SetDTE>
+<Signature xmlns=3D"http://www.w3.org/2000/09/xmldsig#">
+  <SignedInfo>
+    <CanonicalizationMethod Algorithm=3D"http://www.w3.org/TR/2001/REC-xml-=
+c14n-20010315"/>
+    <SignatureMethod Algorithm=3D"http://www.w3.org/2000/09/xmldsig#rsa-sha=
+1"/>
+    <Reference URI=3D"#SetDTE-2984114">
+      <Transforms>
+        <Transform Algorithm=3D"http://www.w3.org/TR/2001/REC-xml-c14n-2001=
+0315#WithComments"/>
+      </Transforms>
+      <DigestMethod Algorithm=3D"http://www.w3.org/2000/09/xmldsig#sha1"/>
+      <DigestValue>Vh7xmLKvP4gaMUIKiInd2f3J8Mk=3D</DigestValue>
+    </Reference>
+  </SignedInfo>
+  <SignatureValue>
+    mpJHkFDG3aMSNlbbkfMiQFPdnh4oydtbiQPcfhraw1JsXgsJ010dQPLMPsOQtAVUKolMRo/=
+b
+    TkkWpR98IAM8WwLbgyOFJnKIgq4PVEpO87qvlJb3p8C2x9KSUvPONQc8JkauCS3MzgGyJSt=
+l
+    A9gB2eST8wxfMheAmA1lh0iLNTo=3D
+  </SignatureValue>
+  <KeyInfo>
+    <KeyValue>
+      <RSAKeyValue>
+        <Modulus>
+          vezX4hAKl577a0/ySSISJ5opK4AY2O/9kZS4+2pjLBsVPsYGGjrhiWKp9EG6ZMw60=
+X
+          3jyPt5zdggrm+FCdwslczuRcuqQ8BUpswP+mHtJDeQoqG6aHi/9IOjQffOCM5VlDE=
+e
+          UsxWjhMiaFdN7d5TYXLZ3CuJnqbX8AneZX3xfa8=3D
+        </Modulus>
+        <Exponent>AQAB</Exponent>
+      </RSAKeyValue>
+    </KeyValue>
+    <X509Data>
+      <X509Certificate>
+MIIGUjCCBTqgAwIBAgIKG2ZELAAAAAMrOjANBgkqhkiG9w0BAQUFADCB0jELMAkGA1UEBhMCQ0w=
+x
+HTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQHEwhTYW50aWFnbzEUMBIGA1U=
+E
+ChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9yaWRhZCBDZXJ0aWZpY2Fkb3JhMTAwLgYDVQQ=
+D
+EydFLUNFUlRDSElMRSBDQSBGSVJNQSBFTEVDVFJPTklDQSBTSU1QTEUxJzAlBgkqhkiG9w0BCQE=
+W
+GHNjbGllbnRlc0BlLWNlcnRjaGlsZS5jbDAeFw0xNTEyMjMxNTQzMjNaFw0xODEyMjIxNTQzMjN=
+a
+MIHVMQswCQYDVQQGEwJDTDEjMCEGA1UECBMaTUVUUk9QT0xJVEFOQSBERSBTQU5USUFHTyAxETA=
+P
+BgNVBAcTCFNhbnRpYWdvMSowKAYDVQQKEyFDaHJpc3RpYW4gQ2FybG9zIE1hcmNvdHRpIEhlcm1=
+h
+bm4xCjAIBgNVBAsMASoxKjAoBgNVBAMTIUNocmlzdGlhbiBDYXJsb3MgTWFyY290dGkgSGVybWF=
+u
+bjEqMCgGCSqGSIb3DQEJARYbY2hyaXN0aWFuLm1hcmNvdHRpQGVuZWwuY29tMIGfMA0GCSqGSIb=
+3
+DQEBAQUAA4GNADCBiQKBgQC97NfiEAqXnvtrT/JJIhInmikrgBjY7/2RlLj7amMsGxU+xgYaOuG=
+J
+Yqn0QbpkzDrRfePI+3nN2CCub4UJ3CyVzO5Fy6pDwFSmzA/6Ye0kN5CiobpoeL/0g6NB984IzlW=
+U
+MR5SzFaOEyJoV03t3lNhctncK4meptfwCd5lffF9rwIDAQABo4ICpzCCAqMwPQYJKwYBBAGCNxU=
+H
+BDAwLgYmKwYBBAGCNxUIgtyDL4WTjGaF1Z0XguLcJ4Hv7DxhgcueFIaoglgCAWQCAQQwHQYDVR0=
+O
+BBYEFNNAEEnQDNMi+R3OZwXB+L4Uls+8MAsGA1UdDwQEAwIE8DAfBgNVHSMEGDAWgBR44T6f0hK=
+z
+ejyNzTAOU7NDKQezVTA+BgNVHR8ENzA1MDOgMaAvhi1odHRwOi8vY3JsLmUtY2VydGNoaWxlLmN=
+s
+L2VjZXJ0Y2hpbGVjYUZFUy5jcmwwOgYIKwYBBQUHAQEELjAsMCoGCCsGAQUFBzABhh5odHRwOi8=
+v
+b2NzcC5lY2VydGNoaWxlLmNsL29jc3AwIwYDVR0RBBwwGqAYBggrBgEEAcEBAaAMFgoxMTIyNjA=
+w
+My1LMCMGA1UdEgQcMBqgGAYIKwYBBAHBAQKgDBYKOTY5MjgxODAtNTCCAU0GA1UdIASCAUQwggF=
+A
+MIIBPAYIKwYBBAHDUgUwggEuMC0GCCsGAQUFBwIBFiFodHRwOi8vd3d3LmUtY2VydGNoaWxlLmN=
+s
+L0NQUy5odG0wgfwGCCsGAQUFBwICMIHvHoHsAEMAZQByAHQAaQBmAGkAYwBhAGQAbwAgAEYAaQB=
+y
+AG0AYQAgAFMAaQBtAHAAbABlAC4AIABIAGEAIABzAGkAZABvACAAdgBhAGwAaQBkAGEAZABvACA=
+A
+ZQBuACAAZgBvAHIAbQBhACAAcAByAGUAcwBlAG4AYwBpAGEAbAAsACAAcQB1AGUAZABhAG4AZAB=
+v
+ACAAaABhAGIAaQBsAGkAdABhAGQAbwAgAGUAbAAgAEMAZQByAHQAaQBmAGkAYwBhAGQAbwAgAHA=
+A
+YQByAGEAIAB1AHMAbwAgAHQAcgBpAGIAdQB0AGEAcgBpAG8wDQYJKoZIhvcNAQEFBQADggEBAC6=
+A
+e+eEl5bBASwyQo4gVSQvJkiisGCv/K/4PhfgKKFF9saiIkqfKQ5TwlyqU1+fBvJPsI4STj92PTA=
+4
+ERRy2FIMTb7J6upSQ2idDl+w7Lba19D+9Da0zdy8S2ZNnZHPngDs8VTWERQUH4HCdv/JKet3499=
+m
+seD8ZAPQdaEKxfJRkKAOeug4spXmnWYnLGDbhcnqfG+im3k5dKYvxLzKe2wltvWx2ueBB/dYQX1=
+7
+gB+Q98hmroXQFM9THdkMPkTNBLMfIxbZYFk+v2zQYh/4xmAw89BzQNho/M1gE1YOUVXphA/Cy4G=
+A
+bi/mWy8jiMARC21ASNbH/LOjqfJsWBGvZbA=3D
+      </X509Certificate>
+    </X509Data>
+  </KeyInfo>
+</Signature></EnvioDTE>
+------=_Part_51163_9694530.1477065400815--
+

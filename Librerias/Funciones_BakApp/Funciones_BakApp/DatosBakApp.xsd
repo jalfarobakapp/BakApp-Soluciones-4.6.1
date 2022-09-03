@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DatosBakApp" targetNamespace="http://tempuri.org/DatosBakApp.xsd" xmlns:mstns="http://tempuri.org/DatosBakApp.xsd" xmlns="http://tempuri.org/DatosBakApp.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DatosBakApp" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="DatosBakApp" msprop:Generator_DataSetName="DatosBakApp" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Themas" msprop:Generator_UserTableName="Themas" msprop:Generator_RowDeletedName="ThemasRowDeleted" msprop:Generator_RowChangedName="ThemasRowChanged" msprop:Generator_RowClassName="ThemasRow" msprop:Generator_RowChangingName="ThemasRowChanging" msprop:Generator_RowEvArgName="ThemasRowChangeEvent" msprop:Generator_RowEvHandlerName="ThemasRowChangeEventHandler" msprop:Generator_TableClassName="ThemasDataTable" msprop:Generator_TableVarName="tableThemas" msprop:Generator_RowDeletingName="ThemasRowDeleting" msprop:Generator_TablePropName="Themas">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Cod_Estilo" msprop:Generator_UserColumnName="Cod_Estilo" msprop:Generator_ColumnVarNameInTable="columnCod_Estilo" msprop:Generator_ColumnPropNameInRow="Cod_Estilo" msprop:Generator_ColumnPropNameInTable="Cod_EstiloColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Color" msprop:Generator_UserColumnName="Color" msprop:Generator_ColumnVarNameInTable="columnColor" msprop:Generator_ColumnPropNameInRow="Color" msprop:Generator_ColumnPropNameInTable="ColorColumn" type="xs:int" minOccurs="0" />
+              <xs:element name="Nombre_Estilo" msprop:Generator_UserColumnName="Nombre_Estilo" msprop:Generator_ColumnVarNameInTable="columnNombre_Estilo" msprop:Generator_ColumnPropNameInRow="Nombre_Estilo" msprop:Generator_ColumnPropNameInTable="Nombre_EstiloColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Tbl_Base_BakApp" msprop:Generator_UserTableName="Tbl_Base_BakApp" msprop:Generator_RowDeletedName="Tbl_Base_BakAppRowDeleted" msprop:Generator_RowChangedName="Tbl_Base_BakAppRowChanged" msprop:Generator_RowClassName="Tbl_Base_BakAppRow" msprop:Generator_RowChangingName="Tbl_Base_BakAppRowChanging" msprop:Generator_RowEvArgName="Tbl_Base_BakAppRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_Base_BakAppRowChangeEventHandler" msprop:Generator_TableClassName="Tbl_Base_BakAppDataTable" msprop:Generator_TableVarName="tableTbl_Base_BakApp" msprop:Generator_RowDeletingName="Tbl_Base_BakAppRowDeleting" msprop:Generator_TablePropName="Tbl_Base_BakApp">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="BaseDeDatos" msprop:Generator_UserColumnName="BaseDeDatos" msprop:Generator_ColumnVarNameInTable="columnBaseDeDatos" msprop:Generator_ColumnPropNameInRow="BaseDeDatos" msprop:Generator_ColumnPropNameInTable="BaseDeDatosColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Conf_Impresora_Local" msprop:Generator_UserTableName="Conf_Impresora_Local" msprop:Generator_RowDeletedName="Conf_Impresora_LocalRowDeleted" msprop:Generator_RowChangedName="Conf_Impresora_LocalRowChanged" msprop:Generator_RowClassName="Conf_Impresora_LocalRow" msprop:Generator_RowChangingName="Conf_Impresora_LocalRowChanging" msprop:Generator_RowEvArgName="Conf_Impresora_LocalRowChangeEvent" msprop:Generator_RowEvHandlerName="Conf_Impresora_LocalRowChangeEventHandler" msprop:Generator_TableClassName="Conf_Impresora_LocalDataTable" msprop:Generator_TableVarName="tableConf_Impresora_Local" msprop:Generator_RowDeletingName="Conf_Impresora_LocalRowDeleting" msprop:Generator_TablePropName="Conf_Impresora_Local">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Modulo" msprop:Generator_UserColumnName="Modulo" msprop:Generator_ColumnPropNameInRow="Modulo" msprop:Generator_ColumnVarNameInTable="columnModulo" msprop:Generator_ColumnPropNameInTable="ModuloColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Impresora" msprop:Generator_UserColumnName="Impresora" msprop:Generator_ColumnPropNameInRow="Impresora" msprop:Generator_ColumnVarNameInTable="columnImpresora" msprop:Generator_ColumnPropNameInTable="ImpresoraColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Tbl_Nombre_Equipo" msprop:Generator_UserTableName="Tbl_Nombre_Equipo" msprop:Generator_RowDeletedName="Tbl_Nombre_EquipoRowDeleted" msprop:Generator_RowChangedName="Tbl_Nombre_EquipoRowChanged" msprop:Generator_RowClassName="Tbl_Nombre_EquipoRow" msprop:Generator_RowChangingName="Tbl_Nombre_EquipoRowChanging" msprop:Generator_RowEvArgName="Tbl_Nombre_EquipoRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_Nombre_EquipoRowChangeEventHandler" msprop:Generator_TableClassName="Tbl_Nombre_EquipoDataTable" msprop:Generator_TableVarName="tableTbl_Nombre_Equipo" msprop:Generator_RowDeletingName="Tbl_Nombre_EquipoRowDeleting" msprop:Generator_TablePropName="Tbl_Nombre_Equipo">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Nombre_Equipo" msprop:Generator_UserColumnName="Nombre_Equipo" msprop:Generator_ColumnVarNameInTable="columnNombre_Equipo" msprop:Generator_ColumnPropNameInRow="Nombre_Equipo" msprop:Generator_ColumnPropNameInTable="Nombre_EquipoColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Ruta_Imagen" msprop:Generator_UserTableName="Ruta_Imagen" msprop:Generator_RowDeletedName="Ruta_ImagenRowDeleted" msprop:Generator_TableClassName="Ruta_ImagenDataTable" msprop:Generator_RowChangedName="Ruta_ImagenRowChanged" msprop:Generator_RowClassName="Ruta_ImagenRow" msprop:Generator_RowChangingName="Ruta_ImagenRowChanging" msprop:Generator_RowEvArgName="Ruta_ImagenRowChangeEvent" msprop:Generator_RowEvHandlerName="Ruta_ImagenRowChangeEventHandler" msprop:Generator_TablePropName="Ruta_Imagen" msprop:Generator_TableVarName="tableRuta_Imagen" msprop:Generator_RowDeletingName="Ruta_ImagenRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Archivo" msdata:Caption="Modulo" msprop:Generator_UserColumnName="Archivo" msprop:Generator_ColumnPropNameInRow="Archivo" msprop:Generator_ColumnVarNameInTable="columnArchivo" msprop:Generator_ColumnPropNameInTable="ArchivoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Ruta" msdata:Caption="Impresora" msprop:Generator_UserColumnName="Ruta" msprop:Generator_ColumnPropNameInRow="Ruta" msprop:Generator_ColumnVarNameInTable="columnRuta" msprop:Generator_ColumnPropNameInTable="RutaColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

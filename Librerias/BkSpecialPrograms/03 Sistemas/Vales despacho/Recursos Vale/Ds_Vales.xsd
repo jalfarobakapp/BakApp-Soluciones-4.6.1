@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Ds_Vales" targetNamespace="http://tempuri.org/Ds_Vales.xsd" xmlns:mstns="http://tempuri.org/Ds_Vales.xsd" xmlns="http://tempuri.org/Ds_Vales.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Ds_Vales" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="Ds_Vales" msprop:Generator_DataSetName="Ds_Vales" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Tbl_Configuracion" msprop:Generator_UserTableName="Tbl_Configuracion" msprop:Generator_RowDeletedName="Tbl_ConfiguracionRowDeleted" msprop:Generator_RowChangedName="Tbl_ConfiguracionRowChanged" msprop:Generator_RowClassName="Tbl_ConfiguracionRow" msprop:Generator_RowChangingName="Tbl_ConfiguracionRowChanging" msprop:Generator_RowEvArgName="Tbl_ConfiguracionRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_ConfiguracionRowChangeEventHandler" msprop:Generator_TableClassName="Tbl_ConfiguracionDataTable" msprop:Generator_TableVarName="tableTbl_Configuracion" msprop:Generator_RowDeletingName="Tbl_ConfiguracionRowDeleting" msprop:Generator_TablePropName="Tbl_Configuracion">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Impresora_pred" msprop:Generator_UserColumnName="Impresora_pred" msprop:Generator_ColumnPropNameInRow="Impresora_pred" msprop:Generator_ColumnVarNameInTable="columnImpresora_pred" msprop:Generator_ColumnPropNameInTable="Impresora_predColumn" type="xs:string" default="" minOccurs="0" />
+              <xs:element name="Ruta_Imagen" msprop:Generator_UserColumnName="Ruta_Imagen" msprop:Generator_ColumnPropNameInRow="Ruta_Imagen" msprop:Generator_ColumnVarNameInTable="columnRuta_Imagen" msprop:Generator_ColumnPropNameInTable="Ruta_ImagenColumn" type="xs:string" default="" minOccurs="0" />
+              <xs:element name="Rdb_Retira_Cliente" msprop:Generator_UserColumnName="Rdb_Retira_Cliente" msprop:Generator_ColumnPropNameInRow="Rdb_Retira_Cliente" msprop:Generator_ColumnVarNameInTable="columnRdb_Retira_Cliente" msprop:Generator_ColumnPropNameInTable="Rdb_Retira_ClienteColumn" type="xs:boolean" default="false" minOccurs="0" />
+              <xs:element name="Rdb_Despacho_Domicilio" msprop:Generator_UserColumnName="Rdb_Despacho_Domicilio" msprop:Generator_ColumnPropNameInRow="Rdb_Despacho_Domicilio" msprop:Generator_ColumnVarNameInTable="columnRdb_Despacho_Domicilio" msprop:Generator_ColumnPropNameInTable="Rdb_Despacho_DomicilioColumn" type="xs:boolean" default="false" minOccurs="0" />
+              <xs:element name="Rdb_Ambos" msprop:Generator_UserColumnName="Rdb_Ambos" msprop:Generator_ColumnPropNameInRow="Rdb_Ambos" msprop:Generator_ColumnVarNameInTable="columnRdb_Ambos" msprop:Generator_ColumnPropNameInTable="Rdb_AmbosColumn" type="xs:boolean" default="false" minOccurs="0" />
+              <xs:element name="Chk_VerMarcadas" msprop:Generator_UserColumnName="Chk_VerMarcadas" msprop:Generator_ColumnVarNameInTable="columnChk_VerMarcadas" msprop:Generator_ColumnPropNameInRow="Chk_VerMarcadas" msprop:Generator_ColumnPropNameInTable="Chk_VerMarcadasColumn" type="xs:boolean" default="false" minOccurs="0" />
+              <xs:element name="Chk_VerActivas" msprop:Generator_UserColumnName="Chk_VerActivas" msprop:Generator_ColumnVarNameInTable="columnChk_VerActivas" msprop:Generator_ColumnPropNameInRow="Chk_VerActivas" msprop:Generator_ColumnPropNameInTable="Chk_VerActivasColumn" type="xs:boolean" default="false" minOccurs="0" />
+              <xs:element name="Chk_VerCerradas" msprop:Generator_UserColumnName="Chk_VerCerradas" msprop:Generator_ColumnVarNameInTable="columnChk_VerCerradas" msprop:Generator_ColumnPropNameInRow="Chk_VerCerradas" msprop:Generator_ColumnPropNameInTable="Chk_VerCerradasColumn" type="xs:boolean" default="false" minOccurs="0" />
+              <xs:element name="Chk_VerNulas" msprop:Generator_UserColumnName="Chk_VerNulas" msprop:Generator_ColumnVarNameInTable="columnChk_VerNulas" msprop:Generator_ColumnPropNameInRow="Chk_VerNulas" msprop:Generator_ColumnPropNameInTable="Chk_VerNulasColumn" type="xs:boolean" default="false" minOccurs="0" />
+              <xs:element name="Segundos_Actualizacion" msprop:Generator_UserColumnName="Segundos_Actualizacion" msprop:Generator_ColumnVarNameInTable="columnSegundos_Actualizacion" msprop:Generator_ColumnPropNameInRow="Segundos_Actualizacion" msprop:Generator_ColumnPropNameInTable="Segundos_ActualizacionColumn" type="xs:int" default="10" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

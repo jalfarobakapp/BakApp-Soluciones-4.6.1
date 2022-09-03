@@ -1,0 +1,102 @@
+Return-Path: <SRS0=jSh6aF=4R=desis.cl=dtemelhuish@sirrep.cl>
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id AekjDNzHFFn/ig0AqFaw+A
+	; Thu, 11 May 2017 17:21:48 -0300
+Return-path: <SRS0=jSh6aF=4R=desis.cl=dtemelhuish@sirrep.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Thu, 11 May 2017 17:21:48 -0300
+Received: from ns21.desis.cl ([190.98.228.163] helo=mail.sertic.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.89)
+	(envelope-from <dtemelhuish@desis.cl>)
+	id 1d8uao-003jjA-KM
+	for notificacionsii@sirrep.cl; Thu, 11 May 2017 17:21:48 -0300
+Received: from wsdtemail.facturacion.cl (ns14.desis.cl [200.74.172.230])
+	by mail.sertic.cl (Postfix) with ESMTPA id DA86AC7C007
+	for <notificacionsii@sirrep.cl>; Thu, 11 May 2017 17:34:48 -0300 (CLT)
+From: AUTOMOTORA MELHUISH SPA <dtemelhuish@desis.cl>
+To: notificacionsii@sirrep.cl
+Message-ID: <31628185.47.1494534211592.JavaMail.root@wsdtemail.facturacion.cl>
+Subject: Respuesta DTE
+MIME-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_46_23142800.1494534211512"
+Content-Transfer-Encoding: 7bit
+X-Mailer: WSDTE - [http://www.desis.cl/]
+Date: Thu, 11 May 2017 17:34:48 -0300 (CLT)
+
+------=_Part_46_23142800.1494534211512
+Content-Type: text/html; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+
+Adjunto Acuse de Recibo del Envio
+------=_Part_46_23142800.1494534211512
+Content-Type: application/octet-stream; name=Respuesta_SobreReceptor.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=Respuesta_SobreReceptor.xml
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<RespuestaDTE xmlns="http://www.sii.cl/SiiDte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.sii.cl/SiiDte RespuestaEnvioDTE_v10.xsd">
+	<Resultado ID="RespEnvio">
+		<Caratula version="1.0">
+			<RutResponde>76281300-9</RutResponde>
+			<RutRecibe>79514800-0</RutRecibe>
+			<IdRespuesta>48236</IdRespuesta>
+			<NroDetalles>1</NroDetalles>
+			<TmstFirmaResp>2017-05-11T17:23:31</TmstFirmaResp>
+		</Caratula>
+		<RecepcionEnvio>
+			<NmbEnvio>SobreReceptor.xml</NmbEnvio>
+			<FchRecep>2017-05-11T17:23:31</FchRecep>
+			<CodEnvio>48236</CodEnvio>
+			<EnvioDTEID>SetDoc</EnvioDTEID>
+			<RutEmisor>79514800-0</RutEmisor>
+			<RutReceptor>76281300-9</RutReceptor>
+			<EstadoRecepEnv>0</EstadoRecepEnv>
+			<RecepEnvGlosa>Envio Recibido Conforme</RecepEnvGlosa>
+			<NroDTE>1</NroDTE>
+			<RecepcionDTE>
+				<TipoDTE>33</TipoDTE>
+				<Folio>231537</Folio>
+				<FchEmis>2017-05-11</FchEmis>
+				<RUTEmisor>79514800-0</RUTEmisor>
+				<RUTRecep>76281300-9</RUTRecep>
+				<MntTotal>7098</MntTotal>
+				<EstadoRecepDTE>0</EstadoRecepDTE>
+				<RecepDTEGlosa>DTE Aceptado OK (Documento Recibido por el SII. Datos Coinciden con los Registrados)</RecepDTEGlosa>
+			</RecepcionDTE>
+		</RecepcionEnvio>
+	</Resultado>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI="#RespEnvio"><Transforms><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>Fy/hEzOnQjSIhEE/krt9GQGoZK4=</DigestValue></Reference></SignedInfo><SignatureValue>lnq5MRIbGKi9higoYD9/JuVrM2lze8ptdVRTGju5dcH1TyiYLHqhHUljptPpMKWH4jKEEEozdJ3m
+oMGD/uGrayl/NfcAwA+3BWPlsropp4GjCTeXqln8aZwEeUSqMCKOTItIKZhsSlqagjmwVjWAmYZJ
+KIuunGgdFGZTPj9vWA8=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>obi5vCAun8JX3ta6YjwDi0EH5DfRtuKYRYpUqnIgI12EMKbqxpynfChH92WGFLwWJdVlw5sBScqL
+lT+aS+wASGVlhlqeWZed012lnH+WYad7kblHJ6seclPTXJOqQ8lRJ1fC5/Wj2OGSM77H0bvr8EWM
+6PDR2R1EO1II2C/eeRU=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIGRzCCBS+gAwIBAgIKdx4WTAAAAAKYnDANBgkqhkiG9w0BAQUFADCB0jELMAkGA1UEBhMCQ0wx
+HTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQHEwhTYW50aWFnbzEUMBIGA1UE
+ChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9yaWRhZCBDZXJ0aWZpY2Fkb3JhMTAwLgYDVQQD
+EydFLUNFUlRDSElMRSBDQSBGSVJNQSBFTEVDVFJPTklDQSBTSU1QTEUxJzAlBgkqhkiG9w0BCQEW
+GHNjbGllbnRlc0BlLWNlcnRjaGlsZS5jbDAeFw0xNTA3MjAxMTUzMTlaFw0xODA3MTkxMTUzMTla
+MIHKMQswCQYDVQQGEwJDTDEKMAgGA1UECAwBKjERMA8GA1UEBxMIU0FOVElBR08xNjA0BgNVBAoT
+LVNFUlZJQ0lPUyBFTiBURUNOT0xPR0lBUyBERSBJTkYuIFkgQ09NLiBMVERBLjEXMBUGA1UECxMO
+RmFjdHVyYWNpb24uY2wxIDAeBgNVBAMTF0Zlcm5hbmRvIE1lbGh1aXNoIFphbmNhMSkwJwYJKoZI
+hvcNAQkBFhpmb3JtdWxhcmlvc0BmYWN0dXJhY2lvbi5jbDCBnzANBgkqhkiG9w0BAQEFAAOBjQAw
+gYkCgYEAobi5vCAun8JX3ta6YjwDi0EH5DfRtuKYRYpUqnIgI12EMKbqxpynfChH92WGFLwWJdVl
+w5sBScqLlT+aS+wASGVlhlqeWZed012lnH+WYad7kblHJ6seclPTXJOqQ8lRJ1fC5/Wj2OGSM77H
+0bvr8EWM6PDR2R1EO1II2C/eeRUCAwEAAaOCAqcwggKjMAsGA1UdDwQEAwIE8DAdBgNVHQ4EFgQU
+yxx4cXTK6CVCsVqBpKSiOjI4I9wwHwYDVR0jBBgwFoAUeOE+n9ISs3o8jc0wDlOzQykHs1UwPgYD
+VR0fBDcwNTAzoDGgL4YtaHR0cDovL2NybC5lLWNlcnRjaGlsZS5jbC9lY2VydGNoaWxlY2FGRVMu
+Y3JsMDoGCCsGAQUFBwEBBC4wLDAqBggrBgEFBQcwAYYeaHR0cDovL29jc3AuZWNlcnRjaGlsZS5j
+bC9vY3NwMD0GCSsGAQQBgjcVBwQwMC4GJisGAQQBgjcVCILcgy+Fk4xmhdWdF4Li3CeB7+w8YYHL
+nhSGqIJYAgFkAgEEMCMGA1UdEQQcMBqgGAYIKwYBBAHBAQGgDBYKMTI4NjQzODEtODAjBgNVHRIE
+HDAaoBgGCCsGAQQBwQECoAwWCjk2OTI4MTgwLTUwggFNBgNVHSAEggFEMIIBQDCCATwGCCsGAQQB
+w1IFMIIBLjAtBggrBgEFBQcCARYhaHR0cDovL3d3dy5lLWNlcnRjaGlsZS5jbC9DUFMuaHRtMIH8
+BggrBgEFBQcCAjCB7x6B7ABDAGUAcgB0AGkAZgBpAGMAYQBkAG8AIABGAGkAcgBtAGEAIABTAGkA
+bQBwAGwAZQAuACAASABhACAAcwBpAGQAbwAgAHYAYQBsAGkAZABhAGQAbwAgAGUAbgAgAGYAbwBy
+AG0AYQAgAHAAcgBlAHMAZQBuAGMAaQBhAGwALAAgAHEAdQBlAGQAYQBuAGQAbwAgAGgAYQBiAGkA
+bABpAHQAYQBkAG8AIABlAGwAIABDAGUAcgB0AGkAZgBpAGMAYQBkAG8AIABwAGEAcgBhACAAdQBz
+AG8AIAB0AHIAaQBiAHUAdABhAHIAaQBvMA0GCSqGSIb3DQEBBQUAA4IBAQC8UAP6mIvmBV79J/pZ
+mo0Qkydd801SE6BZ753QEeHKH1tXSRif8TkaqZlmRRsTPAEZCCiW9zox/FxJK5k/MrKuccfRKpx4
+5uZxATrXqgRlhXty1bgXApG8UKxqu1JbZAX8KrLaBYcbXBI7SdbAiOZW8xZJenLbxXKPl3dy8y7e
+lSa2gMrMr8gqciUL+LiIV6UKXrapo4MBaaR+OJ763Ce4DxhZYvkkTXXEYW4XfFPueRnzL6zp9q17
+3Dd7BGu47QQwFvXetrl3QwQ2TRjtVcAixsnJdg8XR2RaYMzGm1IzIsb+Wq6yC/JVltiu3sWd/nFH
+PqcWHOjg6ZerKkOPSbjh</X509Certificate></X509Data></KeyInfo></Signature></RespuestaDTE>
+------=_Part_46_23142800.1494534211512--

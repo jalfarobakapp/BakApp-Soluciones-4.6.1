@@ -1,0 +1,25 @@
+USE [#Base#]
+
+CREATE TABLE [dbo].[Zw_DTE_Trackid](
+	[Id]                    [int] IDENTITY(1,1) NOT NULL,
+	[Id_Dte]		        [int]          NOT NULL DEFAULT (0),
+	[Idmaeedo]		        [int]          NOT NULL DEFAULT (0),
+	[Trackid]		        [varchar](20)  NOT NULL DEFAULT (''),
+	[Informado]		        [bit]          NOT NULL DEFAULT (0),
+	[Aceptado]		        [bit]          NOT NULL DEFAULT (0),
+	[Rechazado]		        [bit]          NOT NULL DEFAULT (0),
+	[Reparo]		        [bit]          NOT NULL DEFAULT (0),
+	[Estado]		        [varchar](20)  NOT NULL DEFAULT (''),
+	[Glosa]			        [varchar](200) NOT NULL DEFAULT (''),
+	[Respuesta]		        [varchar](max) NOT NULL DEFAULT (''),
+	[FechaEnvSII]	        [datetime]     NULL,
+    [AmbienteCertificacion]	[bit]          NOT NULL DEFAULT (0),   
+    [MailToDiablito]	    [bit]          NOT NULL DEFAULT (0),   
+    [ErrorMailToDiablito]	[bit]          NOT NULL DEFAULT (0),   
+    [Procesar]             	[bit]          NOT NULL DEFAULT (0),   
+    [Procesado]            	[bit]          NOT NULL DEFAULT (0),   
+    [MailEnviado]       	[bit]          NOT NULL DEFAULT (0),   
+    [ErrorEnviarMail]      	[bit]          NOT NULL DEFAULT (0),   
+    [EnviarMail]          	[bit]          NOT NULL DEFAULT (0),   
+    [Intentos]            	[int]          NOT NULL DEFAULT (0),   
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]

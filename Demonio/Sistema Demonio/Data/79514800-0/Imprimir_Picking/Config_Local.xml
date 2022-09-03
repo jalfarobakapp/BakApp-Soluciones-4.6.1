@@ -1,0 +1,16 @@
+<?xml version="1.0" standalone="yes"?>
+<Ds_Config_Picking xmlns="http://tempuri.org/Ds_Config_Picking.xsd">
+  <Tbl_Configuracion>
+    <Impresora>PDFCreator</Impresora>
+    <RutaImagen />
+    <Timer_Monitoreo_Doc>false</Timer_Monitoreo_Doc>
+    <Timer_Monitoreo_Mail>false</Timer_Monitoreo_Mail>
+    <Timer_Monitoreo_Impresion>false</Timer_Monitoreo_Impresion>
+    <Timer_Monitoreo_SolProdBod>false</Timer_Monitoreo_SolProdBod>
+    <Timer_Prestashop>true</Timer_Prestashop>
+    <Input_Tiempo_Correo>1</Input_Tiempo_Correo>
+    <Input_Tiempo_Impresion>2</Input_Tiempo_Impresion>
+    <Input_Tiempo_Sol_Bodega>1</Input_Tiempo_Sol_Bodega>
+    <Input_Tiempo_Prestashop>5</Input_Tiempo_Prestashop>
+  </Tbl_Configuracion>
+</Ds_Config_Picking>

@@ -1,0 +1,174 @@
+<DTE version="1.0">
+	<Documento ID="F259133T33">
+		<Encabezado>
+			<IdDoc>
+				<TipoDTE>33</TipoDTE>
+				<Folio>259133</Folio>
+				<FchEmis>2020-08-10</FchEmis>
+			</IdDoc>
+			<Emisor>
+				<RUTEmisor>79514800-0</RUTEmisor>
+				<RznSoc>SIERRALTA Y CIA LTDA.</RznSoc>
+				<GiroEmis>REPUESTOS Y ACCESORIOS AUTOMOTRICES</GiroEmis>
+				<Acteco>503000</Acteco>
+				<DirOrigen>AV. BRASIL 24</DirOrigen>
+				<CmnaOrigen>SANTIAGO</CmnaOrigen>
+				<CiudadOrigen>REGION METROPOLITANA</CiudadOrigen>
+			</Emisor>
+			<Receptor>
+				<RUTRecep>76532471-8</RUTRecep>
+				<RznSocRecep>COMERCIAL BUSAN LTDA.</RznSocRecep>
+				<GiroRecep>VENTA DE REPUESTOS</GiroRecep>
+				<DirRecep>AV JOSE MIGUEL CARRERA 7485</DirRecep>
+				<CmnaRecep>LA CISTERNA</CmnaRecep>
+				<CiudadRecep>REGION METROPOL</CiudadRecep>
+			</Receptor>
+			<Totales>
+				<MntNeto>15320</MntNeto>
+				<TasaIVA>19</TasaIVA>
+				<IVA>2911</IVA>
+				<MntTotal>18231</MntTotal>
+			</Totales>
+		</Encabezado>
+		<Detalle>
+			<NroLinDet>1</NroLinDet>
+			<CdgItem>
+				<TpoCodigo>CPCS</TpoCodigo>
+				<VlrCodigo>CH2</VlrCodigo>
+			</CdgItem>
+			<NmbItem>METAL BANCADA 025 JGO.</NmbItem>
+			<DscItem/>
+			<QtyItem>2</QtyItem>
+			<UnmdItem>UN</UnmdItem>
+			<PrcItem>4139.0000</PrcItem>
+			<DescuentoMonto>2317</DescuentoMonto>
+			<MontoItem>5960</MontoItem>
+		</Detalle>
+		<Detalle>
+			<NroLinDet>2</NroLinDet>
+			<CdgItem>
+				<TpoCodigo>CPCS</TpoCodigo>
+				<VlrCodigo>IND</VlrCodigo>
+			</CdgItem>
+			<NmbItem>FILTRO DE AIRE</NmbItem>
+			<DscItem/>
+			<QtyItem>2</QtyItem>
+			<UnmdItem>UN</UnmdItem>
+			<PrcItem>5403.0000</PrcItem>
+			<DescuentoMonto>3026</DescuentoMonto>
+			<MontoItem>7780</MontoItem>
+		</Detalle>
+		<Detalle>
+			<NroLinDet>3</NroLinDet>
+			<CdgItem>
+				<TpoCodigo>CPCS</TpoCodigo>
+				<VlrCodigo>CHN</VlrCodigo>
+			</CdgItem>
+			<NmbItem>FILTRO DE AIRE</NmbItem>
+			<DscItem/>
+			<QtyItem>1</QtyItem>
+			<UnmdItem>UN</UnmdItem>
+			<PrcItem>2194.0000</PrcItem>
+			<DescuentoMonto>614</DescuentoMonto>
+			<MontoItem>1580</MontoItem>
+		</Detalle>
+		<TED version="1.0">
+			<DD>
+				<RE>79514800-0</RE>
+				<TD>33</TD>
+				<F>259133</F>
+				<FE>2020-08-10</FE>
+				<RR>76532471-8</RR>
+				<RSR>COMERCIAL BUSAN LTDA.</RSR>
+				<MNT>18231</MNT>
+				<IT1>METAL BANCADA 025 JGO.</IT1>
+				<CAF version="1.0">
+					<DA>
+						<RE>79514800-0</RE>
+						<RS>SIERRALTA Y COMPANIA LIMITADA</RS>
+						<TD>33</TD>
+						<RNG>
+							<D>258740</D>
+							<H>259139</H>
+						</RNG>
+						<FA>2020-07-02</FA>
+						<RSAPK>
+							<M>mlzwBQ1PdEaRvfvxHiQFDbg3+1t548eKpvp3TZ3BXcso9z6L/RGHa/SXy4BuROl2VcSPINtTB4OO9j3a/mlBJQ==</M>
+							<E>Aw==</E>
+						</RSAPK>
+						<IDK>300</IDK>
+					</DA>
+					<FRMA algoritmo="SHA1withRSA">OJaIsjSEMv7O6Qn/7kbVg7pM26yvRkqxvCnSAEkarOLqbNe9D8F6Ho6o3VK9vkCNiMrEhVfvGPvcwgG6GyioSw==</FRMA>
+				</CAF>
+				<TSTED>2020-08-10T21:53:37</TSTED>
+			</DD>
+			<FRMT algoritmo="SHA1withRSA">U3JcMWuGVSQftg/xADks7xA3AWtN78K3hnIcQhECUx2ZAfeWqNtYHsEvHUG/13vo
+				SmT7mJaB+2O87hj82eek4w==</FRMT>
+		</TED>
+		<TmstFirma>2020-08-10T21:53:37</TmstFirma>
+	</Documento>
+	<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+		<SignedInfo>
+			<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+			<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+			<Reference URI="#F259133T33">
+				<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+				<DigestValue>NhjksVZ0QApXrUdgxb4/AySkF6E=</DigestValue>
+			</Reference>
+		</SignedInfo>
+		<SignatureValue>
+			dmf4kt/alM+++sBoMtS9/CAZ+A561l/gVcfWzxyMs5essF6gV3YdwTZU/Y6ZDHm+Aa0AG8Ge5O35
+			cMEEcukfZ/jOh9CqUg+ia3dwQeFJvkz7FKOiWlt2GUM5tBDIkbLcTrgKdeJJhkU290jF5NIKsN65
+			r/eYOsoNTRLrOvVC6iFRABmBNXF/avOb2NvvTqA8oNtMLQtNmcBJlqdcSQgDPRombMGBodSkd5tY
+			JdV6WyXp5HiHLndnEftjvnk73DqQUQ/nhJ+yRY1HxTDz8hXTw6lX2FtpxplwdCZHhwyhWPSeAK92
+			FCx+JJ4jynwjHsL1gX9GdWYuSi3cm3RX+G420g==
+		</SignatureValue>
+		<KeyInfo>
+			<KeyValue>
+				<RSAKeyValue>
+					<Modulus>
+						hNsFTVKTflHxwTrVm5aP0ROeBpstwxnfps4tiNxo6FftN9C2SimY7rUA7a22Xcjl42C3lhBPVJ/E
+						nfxtGR8nJz0hyNavprGKn+5D7Q8KVIuUpFIwGdi/t1CYCOwf95/JIV7Ay/MX6+nad/x5HukNz+6V
+						TRlceBymKc5wylIXhRf2ZShOBMOlAjwKRNsQyFvHZjt3aLqrQJjB/IGmtxYxwOnH0pXQR4qgXwx0
+						HKLTffwHwMglVipqTZg5gl19WazKNaT59t+xqg/KHP7W9Nq9kcUsMrfESY73aW7D1kADzK0kadHT
+						ivhfUXyBKWPSZJbJos3wh6v5CObSIn/mD7OPow==
+					</Modulus>
+					<Exponent>AQAB</Exponent>
+				</RSAKeyValue>
+			</KeyValue>
+			<X509Data>
+				<X509Certificate>
+					MIIGTTCCBTWgAwIBAgIICjh/y0SUiqIwDQYJKoZIhvcNAQELBQAwga8xCzAJBgNVBAYTAkNMMRQw
+					EgYDVQQKDAtFLVNpZ24gUy5BLjE5MDcGA1UECwwwVGVybXMgb2YgdXNlIGF0IHd3dy5lc2lnbi1s
+					YS5jb20vYWN1ZXJkb3RlcmNlcm9zMSswKQYDVQQDDCJFLVNpZ24gQ2xhc3MgMiBGaXJtYSBUcmli
+					dXRhcmlhIENBMSIwIAYJKoZIhvcNAQkBFhNlLXNpZ25AZXNpZ24tbGEuY29tMB4XDTIwMDQyMTE5
+					MjQwMFoXDTIzMDQyMTE5MjQwMFowgawxCzAJBgNVBAYTAkNMMRQwEgYDVQQKDAtFLVNpZ24gUy5B
+					LjE5MDcGA1UECwwwVGVybXMgb2YgdXNlIGF0IHd3dy5lc2lnbi1sYS5jb20vYWN1ZXJkb3RlcmNl
+					cm9zMSYwJAYDVQQDDB1KVUFOIFBBQkxPIFNJRVJSQUxUQSBPUkVaWk9MSTEkMCIGCSqGSIb3DQEJ
+					ARYVanBzaWVycmFsdGFAc2lycmVwLmNsMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA
+					hNsFTVKTflHxwTrVm5aP0ROeBpstwxnfps4tiNxo6FftN9C2SimY7rUA7a22Xcjl42C3lhBPVJ/E
+					nfxtGR8nJz0hyNavprGKn+5D7Q8KVIuUpFIwGdi/t1CYCOwf95/JIV7Ay/MX6+nad/x5HukNz+6V
+					TRlceBymKc5wylIXhRf2ZShOBMOlAjwKRNsQyFvHZjt3aLqrQJjB/IGmtxYxwOnH0pXQR4qgXwx0
+					HKLTffwHwMglVipqTZg5gl19WazKNaT59t+xqg/KHP7W9Nq9kcUsMrfESY73aW7D1kADzK0kadHT
+					ivhfUXyBKWPSZJbJos3wh6v5CObSIn/mD7OPowIDAQABo4ICbDCCAmgwgYAGCCsGAQUFBwEBBHQw
+					cjBKBggrBgEFBQcwAoY+aHR0cDovL3BraS5lc2lnbi1sYS5jb20vY2FjZXJ0cy9wa2lDbGFzczJG
+					aXJtYVRyaWJ1dGFyaWFDQS5jcnQwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmVzaWduLWxhLmNv
+					bTAdBgNVHQ4EFgQUmLvIOzt3Y/ZS8MgORvUjrUkT+l0wDAYDVR0TAQH/BAIwADAfBgNVHSMEGDAW
+					gBT5SvrCx27C5xKcV0U1hBptKOlKpDCByAYDVR0gBIHAMIG9MIG6BgwrBgEEAYLKagEEAQIwgakw
+					fgYIKwYBBQUHAgIwch5wAEMAZQByAHQAaQBmAGkAYwBhAGQAbwAgAHAAYQByAGEAIAB1AHMAbwAg
+					AFQAcgBpAGIAdQB0AGEAcgBpAG8ALAAgAEMAbwBtAGUAcgBjAGkAbwAsACAAUABhAGcAbwBzACAA
+					eQAgAE8AdAByAG8AczAnBggrBgEFBQcCARYbaHR0cDovL3d3dy5lc2lnbi1sYS5jb20vY3BzMFEG
+					A1UdHwRKMEgwRqBEoEKGQGh0dHA6Ly9wa2kuZXNpZ24tbGEuY29tL2NybC9wa2lDbGFzczJGaXJt
+					YVRyaWJ1dGFyaWEvZW5kdXNlci5jcmwwDgYDVR0PAQH/BAQDAgWgMB0GA1UdJQQWMBQGCCsGAQUF
+					BwMCBggrBgEFBQcDBDAjBgNVHREEHDAaoBgGCCsGAQQBwQEBoAwWCjEyNjI4ODQ0LTEwIwYDVR0S
+					BBwwGqAYBggrBgEEAcEBAqAMFgo5OTU1MTc0MC1LMA0GCSqGSIb3DQEBCwUAA4IBAQA2m6rVt/sb
+					B4v4KQQqTkw36QYAYwo98QF6SnHyyqGAg7U/RmYeTYO7ck5Km3mgngo4BFe/v2PIiE/4ul88cGLV
+					4CJrC4z2CCVGNmXJBzCh2EgWD6621jPqnvD0ecYFbW7JOEJG/cIcYmFIxqHXsP1WO/7IncELzY3G
+					aBQCeWG8r6MZI1nNYgBHMIcmMWBG2kF79AetLxh/FWwVNiV6H/f0QJRrxkqBP15cd5QgXA41a3nu
+					6R2T1S01T1Ze9ccLP3R94t3e8A3h3a9BsdysrkTrNyElVmGMDfJWN3VcSVihMpagZsEKCtZZd55H
+					mKuLMHMK0MDFv/wxzjnNRlu4mRZV
+				</X509Certificate>
+			</X509Data>
+		</KeyInfo>
+	</Signature>
+</DTE>

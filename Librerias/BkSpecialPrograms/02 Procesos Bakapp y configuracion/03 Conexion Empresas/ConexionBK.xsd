@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ConexionBK" targetNamespace="http://tempuri.org/ConexionBK.xsd" xmlns:mstns="http://tempuri.org/ConexionBK.xsd" xmlns="http://tempuri.org/ConexionBK.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ConexionBK" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="ConexionBK" msprop:Generator_DataSetName="ConexionBK" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="CnBakApp" msprop:Generator_UserTableName="CnBakApp" msprop:Generator_RowDeletedName="CnBakAppRowDeleted" msprop:Generator_RowChangedName="CnBakAppRowChanged" msprop:Generator_RowClassName="CnBakAppRow" msprop:Generator_RowChangingName="CnBakAppRowChanging" msprop:Generator_RowEvArgName="CnBakAppRowChangeEvent" msprop:Generator_RowEvHandlerName="CnBakAppRowChangeEventHandler" msprop:Generator_TableClassName="CnBakAppDataTable" msprop:Generator_TableVarName="tableCnBakApp" msprop:Generator_RowDeletingName="CnBakAppRowDeleting" msprop:Generator_TablePropName="CnBakApp">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TipoConexion" msprop:Generator_UserColumnName="TipoConexion" msprop:Generator_ColumnPropNameInRow="TipoConexion" msprop:Generator_ColumnVarNameInTable="columnTipoConexion" msprop:Generator_ColumnPropNameInTable="TipoConexionColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="NombreConexion" msprop:Generator_UserColumnName="NombreConexion" msprop:Generator_ColumnPropNameInRow="NombreConexion" msprop:Generator_ColumnVarNameInTable="columnNombreConexion" msprop:Generator_ColumnPropNameInTable="NombreConexionColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Rut" msprop:Generator_UserColumnName="Rut" msprop:Generator_ColumnPropNameInRow="Rut" msprop:Generator_ColumnVarNameInTable="columnRut" msprop:Generator_ColumnPropNameInTable="RutColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Razon" msprop:Generator_UserColumnName="Razon" msprop:Generator_ColumnPropNameInRow="Razon" msprop:Generator_ColumnVarNameInTable="columnRazon" msprop:Generator_ColumnPropNameInTable="RazonColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="NombreCorto" msprop:Generator_UserColumnName="NombreCorto" msprop:Generator_ColumnPropNameInRow="NombreCorto" msprop:Generator_ColumnVarNameInTable="columnNombreCorto" msprop:Generator_ColumnPropNameInTable="NombreCortoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Servidor" msprop:Generator_UserColumnName="Servidor" msprop:Generator_ColumnPropNameInRow="Servidor" msprop:Generator_ColumnVarNameInTable="columnServidor" msprop:Generator_ColumnPropNameInTable="ServidorColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Puerto" msprop:Generator_UserColumnName="Puerto" msprop:Generator_ColumnPropNameInRow="Puerto" msprop:Generator_ColumnVarNameInTable="columnPuerto" msprop:Generator_ColumnPropNameInTable="PuertoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Usuario" msprop:Generator_UserColumnName="Usuario" msprop:Generator_ColumnPropNameInRow="Usuario" msprop:Generator_ColumnVarNameInTable="columnUsuario" msprop:Generator_ColumnPropNameInTable="UsuarioColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Clave" msprop:Generator_UserColumnName="Clave" msprop:Generator_ColumnPropNameInRow="Clave" msprop:Generator_ColumnVarNameInTable="columnClave" msprop:Generator_ColumnPropNameInTable="ClaveColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="BaseDeDatos" msprop:Generator_UserColumnName="BaseDeDatos" msprop:Generator_ColumnPropNameInRow="BaseDeDatos" msprop:Generator_ColumnVarNameInTable="columnBaseDeDatos" msprop:Generator_ColumnPropNameInTable="BaseDeDatosColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Base_BakApp" msprop:Generator_UserColumnName="Base_BakApp" msprop:Generator_ColumnVarNameInTable="columnBase_BakApp" msprop:Generator_ColumnPropNameInRow="Base_BakApp" msprop:Generator_ColumnPropNameInTable="Base_BakAppColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Conectado" msprop:Generator_UserColumnName="Conectado" msprop:Generator_ColumnPropNameInRow="Conectado" msprop:Generator_ColumnVarNameInTable="columnConectado" msprop:Generator_ColumnPropNameInTable="ConectadoColumn" type="xs:boolean" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1">
+      <xs:selector xpath=".//mstns:CnBakApp" />
+      <xs:field xpath="mstns:NombreConexion" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

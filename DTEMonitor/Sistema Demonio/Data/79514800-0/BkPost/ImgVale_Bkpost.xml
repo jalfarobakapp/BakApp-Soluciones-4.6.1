@@ -1,0 +1,7 @@
+<?xml version="1.0" standalone="yes"?>
+<DatosBakApp xmlns="http://tempuri.org/DatosBakApp.xsd">
+  <Ruta_Imagen>
+    <Archivo>Imagen Logo</Archivo>
+    <Ruta>C:\BakApp\Empresas\Sierralta\Imagenes\Logo Chevrolet.jpg</Ruta>
+  </Ruta_Imagen>
+</DatosBakApp>

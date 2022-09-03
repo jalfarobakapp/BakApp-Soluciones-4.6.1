@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A3BEAECD-5426-4BCA-81AF-117CEFC56593}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HEFESTO.DTE.SERIALIZATION</RootNamespace>
+    <AssemblyName>HEFESTO.DTE.SERIALIZATION</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BOLETAS\HEFBoleta.cs" />
+    <Compile Include="CLASSES\HEFExtranjero.cs" />
+    <Compile Include="CLASSES\HEFRetenedor.cs" />
+    <Compile Include="CLASSES\HEFCdgItem.cs" />
+    <Compile Include="CLASSES\HEFDetalle.cs" />
+    <Compile Include="CLASSES\HEFDocumento.cs" />
+    <Compile Include="CLASSES\HEFDscRcgGlobal.cs" />
+    <Compile Include="CLASSES\HEFDTE.cs" />
+    <Compile Include="CLASSES\HEFEmisor.cs" />
+    <Compile Include="CLASSES\HEFEncabezado.cs" />
+    <Compile Include="CLASSES\HEFIdDoc.cs" />
+    <Compile Include="CLASSES\HEFImptoReten.cs" />
+    <Compile Include="CLASSES\HEFMntPagos.cs" />
+    <Compile Include="CLASSES\HEFReceptor.cs" />
+    <Compile Include="CLASSES\HEFReferencia.cs" />
+    <Compile Include="CLASSES\HEFTed.cs" />
+    <Compile Include="CLASSES\HEFTotales.cs" />
+    <Compile Include="CLASSES\HEFTransporte.cs" />
+    <Compile Include="ENTIDADES\Respuesta.cs" />
+    <Compile Include="EXPORTACION\HEFExportacion.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\HEFESTO.DTE.SERIALIZATION.dll" />
+    <Content Include="bin\Debug\HEFESTO.DTE.SERIALIZATION.pdb" />
+    <Content Include="obj\Debug\HEFESTO.DTE.SERIALIZATION.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\HEFESTO.DTE.SERIALIZATION.dll" />
+    <Content Include="obj\Debug\HEFESTO.DTE.SERIALIZATION.pdb" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Debug\HEFESTO.DTE.SERIALIZATION.csprojResolveAssemblyReference.cache" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
+    <Folder Include="obj\Debug\TempPE\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

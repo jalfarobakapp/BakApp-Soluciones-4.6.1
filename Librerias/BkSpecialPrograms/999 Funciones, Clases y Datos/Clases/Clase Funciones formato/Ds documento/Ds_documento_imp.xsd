@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Ds_documento_imp" targetNamespace="http://tempuri.org/Ds_documento_imp.xsd" xmlns:mstns="http://tempuri.org/Ds_documento_imp.xsd" xmlns="http://tempuri.org/Ds_documento_imp.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Ds_documento_imp" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="Ds_documento_imp" msprop:Generator_UserDSName="Ds_documento_imp" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Tbl_Observaciones_doc" msprop:Generator_UserTableName="Tbl_Observaciones_doc" msprop:Generator_RowDeletedName="Tbl_Observaciones_docRowDeleted" msprop:Generator_TableClassName="Tbl_Observaciones_docDataTable" msprop:Generator_RowChangedName="Tbl_Observaciones_docRowChanged" msprop:Generator_RowClassName="Tbl_Observaciones_docRow" msprop:Generator_RowChangingName="Tbl_Observaciones_docRowChanging" msprop:Generator_RowEvArgName="Tbl_Observaciones_docRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_Observaciones_docRowChangeEventHandler" msprop:Generator_TablePropName="Tbl_Observaciones_doc" msprop:Generator_TableVarName="tableTbl_Observaciones_doc" msprop:Generator_RowDeletingName="Tbl_Observaciones_docRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Observaciones" msprop:Generator_UserColumnName="Observaciones" msprop:Generator_ColumnPropNameInRow="Observaciones" msprop:Generator_ColumnVarNameInTable="columnObservaciones" msprop:Generator_ColumnPropNameInTable="ObservacionesColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Direccion_Desp" msprop:Generator_UserColumnName="Direccion_Desp" msprop:Generator_ColumnPropNameInRow="Direccion_Desp" msprop:Generator_ColumnVarNameInTable="columnDireccion_Desp" msprop:Generator_ColumnPropNameInTable="Direccion_DespColumn" type="xs:string" default="" />
+              <xs:element name="Comuna_Desp" msprop:Generator_UserColumnName="Comuna_Desp" msprop:Generator_ColumnPropNameInRow="Comuna_Desp" msprop:Generator_ColumnVarNameInTable="columnComuna_Desp" msprop:Generator_ColumnPropNameInTable="Comuna_DespColumn" type="xs:string" default="" />
+              <xs:element name="Ciudad_Desp" msprop:Generator_UserColumnName="Ciudad_Desp" msprop:Generator_ColumnPropNameInRow="Ciudad_Desp" msprop:Generator_ColumnVarNameInTable="columnCiudad_Desp" msprop:Generator_ColumnPropNameInTable="Ciudad_DespColumn" type="xs:string" default="" />
+              <xs:element name="Telefono_Desp" msprop:Generator_UserColumnName="Telefono_Desp" msprop:Generator_ColumnPropNameInRow="Telefono_Desp" msprop:Generator_ColumnVarNameInTable="columnTelefono_Desp" msprop:Generator_ColumnPropNameInTable="Telefono_DespColumn" type="xs:string" default="" />
+              <xs:element name="Horario_Desp" msprop:Generator_UserColumnName="Horario_Desp" msprop:Generator_ColumnPropNameInRow="Horario_Desp" msprop:Generator_ColumnVarNameInTable="columnHorario_Desp" msprop:Generator_ColumnPropNameInTable="Horario_DespColumn" type="xs:string" default="" />
+              <xs:element name="Fecha_Desp" msprop:Generator_UserColumnName="Fecha_Desp" msprop:Generator_ColumnPropNameInRow="Fecha_Desp" msprop:Generator_ColumnVarNameInTable="columnFecha_Desp" msprop:Generator_ColumnPropNameInTable="Fecha_DespColumn" type="xs:dateTime" default="1500-01-01T00:00:00-03:00" minOccurs="0" />
+              <xs:element name="Contacto_Desp" msprop:Generator_UserColumnName="Contacto_Desp" msprop:Generator_ColumnPropNameInRow="Contacto_Desp" msprop:Generator_ColumnVarNameInTable="columnContacto_Desp" msprop:Generator_ColumnPropNameInTable="Contacto_DespColumn" type="xs:string" default="" />
+              <xs:element name="Contacto_Desp_Fono" msprop:Generator_UserColumnName="Contacto_Desp_Fono" msprop:Generator_ColumnPropNameInRow="Contacto_Desp_Fono" msprop:Generator_ColumnVarNameInTable="columnContacto_Desp_Fono" msprop:Generator_ColumnPropNameInTable="Contacto_Desp_FonoColumn" type="xs:string" default="" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Tbl_Encabezado_doc" msprop:Generator_UserTableName="Tbl_Encabezado_doc" msprop:Generator_RowDeletedName="Tbl_Encabezado_docRowDeleted" msprop:Generator_TableClassName="Tbl_Encabezado_docDataTable" msprop:Generator_RowChangedName="Tbl_Encabezado_docRowChanged" msprop:Generator_RowClassName="Tbl_Encabezado_docRow" msprop:Generator_RowChangingName="Tbl_Encabezado_docRowChanging" msprop:Generator_RowEvArgName="Tbl_Encabezado_docRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_Encabezado_docRowChangeEventHandler" msprop:Generator_TablePropName="Tbl_Encabezado_doc" msprop:Generator_TableVarName="tableTbl_Encabezado_doc" msprop:Generator_RowDeletingName="Tbl_Encabezado_docRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Tipo_Doc" msprop:Generator_UserColumnName="Tipo_Doc" msprop:Generator_ColumnPropNameInRow="Tipo_Doc" msprop:Generator_ColumnVarNameInTable="columnTipo_Doc" msprop:Generator_ColumnPropNameInTable="Tipo_DocColumn" type="xs:string" default="" />
+              <xs:element name="Nro_Doc" msprop:Generator_UserColumnName="Nro_Doc" msprop:Generator_ColumnPropNameInRow="Nro_Doc" msprop:Generator_ColumnVarNameInTable="columnNro_Doc" msprop:Generator_ColumnPropNameInTable="Nro_DocColumn" type="xs:string" default="" />
+              <xs:element name="FechaEmision_Doc" msprop:Generator_UserColumnName="FechaEmision_Doc" msprop:Generator_ColumnPropNameInRow="FechaEmision_Doc" msprop:Generator_ColumnVarNameInTable="columnFechaEmision_Doc" msprop:Generator_ColumnPropNameInTable="FechaEmision_DocColumn" type="xs:dateTime" default="1500-01-01T00:00:00-03:00" minOccurs="0" />
+              <xs:element name="HoraEmision_Doc" msprop:Generator_UserColumnName="HoraEmision_Doc" msprop:Generator_ColumnPropNameInRow="HoraEmision_Doc" msprop:Generator_ColumnVarNameInTable="columnHoraEmision_Doc" msprop:Generator_ColumnPropNameInTable="HoraEmision_DocColumn" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

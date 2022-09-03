@@ -1,0 +1,631 @@
+Return-Path: <SRS0=y1iIEt=4V=custodium.com=automarcorecepcion@sirrep.cl>
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id IaUuKrdrGVkrUgoAqFaw+A
+	; Mon, 15 May 2017 04:49:59 -0400
+Return-path: <SRS0=y1iIEt=4V=custodium.com=automarcorecepcion@sirrep.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Mon, 15 May 2017 04:49:59 -0400
+Received: from smtp-05.custodium.com ([146.82.91.193])
+	by srv150.tuhosting.cl with esmtp (Exim 4.89)
+	(envelope-from <automarcorecepcion@custodium.com>)
+	id 1dABhX-002soA-G5
+	for notificacionsii@sirrep.cl; Mon, 15 May 2017 04:49:59 -0400
+Received: from apps3.acepta.com (unknown [172.16.14.91])
+	by smtp-05.custodium.com (Postfix) with ESMTP id AD7B5DC068
+	for <notificacionsii@sirrep.cl>; Mon, 15 May 2017 04:40:36 -0400 (CLT)
+Date: Mon, 15 May 2017 04:53:28 -0400 (CLT)
+From: IMPORTADORA AUTOMARCO LIMITADA <automarcorecepcion@custodium.com>
+To: SIERRALTA Y COMPANIA LIMITADA <notificacionsii@sirrep.cl>
+Message-ID: <EnvioDTE-84854200-8-79514800-0-20170515-045328-476D80FD@apps3.acepta.com>
+Subject: Envio de DTEs -
+ EnvioDTE-84854200-8-79514800-0-20170515-045328-476D80FD
+MIME-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_596087_928278871.1494838408297"
+
+------=_Part_596087_928278871.1494838408297
+Content-Type: text/html; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+
+<html>
+<head>
+	<title>Intercambio - Envio de DTEs</title>
+	<style type="text/css">
+		div.page {
+			margin: 0 10px;
+			padding: 0;
+			width: 640px;
+		}
+
+		div.left {
+			margin: 0;
+			padding: 0 20px 0 0;
+			width: 300px;
+			float: left;
+		}
+
+		div.right {
+			margin: 0;
+			padding: 0 0 0 20px;
+			width: 300px;
+			float: right;
+		}
+
+		div.both {
+			margin: 0;
+			padding: 0;
+			clear: both;
+		}
+
+		div.footer {
+			margin: 0;
+			padding: 10px 0;
+		}
+
+		p.copyright {
+			text-align: center;
+			font-size: 9px;
+		}
+
+		span.certification {
+			color: red;
+		}
+
+		body {
+			font-family: Geneva, Verdana, sans-serif;
+			font-size: 11px;
+			color: #000;
+			background-color: #fff;
+		}
+
+		h1 {
+			margin: 0;
+			padding: 5px 0;
+			font-size: 15px;
+			color: #999;
+			border-bottom: 1px solid #999;
+		}
+
+		h2 {
+			margin: 0;
+			padding: 10px 0 5px;
+			font-size: 13px;
+		}
+
+		p {
+			margin: 0;
+			padding: 1px 0;
+		}
+
+		table {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			text-align: right;
+			border-top: 1px solid #999;
+			border-bottom: 1px solid #999;
+		}
+
+		th {
+			margin: 0;
+			padding: 3px 5px;
+			border-bottom: 1px solid #999;
+			font-size: 11px;
+		}
+
+		td {
+			margin: 0;
+			padding: 2px 5px;
+			vertical-align: top;
+			font-size: 11px;
+		}
+
+		th.url, td.url {
+			text-align: center;
+		}
+
+		td.rut {
+			white-space: nowrap;
+		}
+	</style>
+</head>
+<body>
+<div class="page">
+	<h1>Producci&oacute;n
+		&middot; Intercambio &middot; Env&iacute;o de DTEs</h1>
+
+	<div class="left">
+		<h2>Emisor</h2>
+
+		<p>IMPORTADORA AUTOMARCO LIMITADA</p>
+
+		<p>RUT 84854200-8</p>
+	</div>
+
+	<div class="right">
+		<h2>Receptor</h2>
+
+		<p>SIERRALTA Y COMPANIA LIMITADA</p>
+
+		<p>RUT 79514800-0</p>
+	</div>
+
+	<div class="both">
+		<h2>Detalle</h2>
+
+		<table cellspacing="0" cellpadding="5">
+			<tr>
+				<th class="url">URL</th>
+				<th>Emisor</th>
+				<th>Tipo</th>
+				<th>Folio</th>
+				<th>Fecha</th>
+				<th>Monto</th>
+			</tr>
+						<tr>
+							<td class="url"><a href="http://automarco1705.acepta.com/v01/1D929E2B23B5C0D924CF804B594336F27E59B037?k=6a21dfbee963f8150dfb07dd4d5e433c">abrir</a></td>
+							<td class="rut">84854200-8</td>
+							<td>33</td>
+							<td>128088</td>
+							<td>12/05/2017</td>
+							<td>619.628</td>
+						</tr>
+						
+		</table>
+	</div>
+
+	<div class="footer">
+		<p>Este correo adjunta Documentos Tributarios Electr&oacute;nicos (DTE) para el receptor electr&oacute;nico
+			indicado. Por favor responda con un acuse de recibo (RespuestaDTE) conforme al modelo de intercambio de
+			Factura Electr&oacute;nica del SII.</p>
+
+		<br/>
+
+		<p class="copyright">
+			Servicios de Facturaci&oacute;n Electr&oacute;nica de <a href="http://www.acepta.com">ACEPTA COM S A</a>
+		</p>
+	</div>
+</div>
+</body>
+</html>
+
+------=_Part_596087_928278871.1494838408297
+Content-Type: application/octet-stream; 
+	name=EnvioDTE-84854200-8-79514800-0-20170515-045328-476D80FD.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; 
+	filename=EnvioDTE-84854200-8-79514800-0-20170515-045328-476D80FD.xml
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<EnvioDTE xmlns="http://www.sii.cl/SiiDte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.sii.cl/SiiDte EnvioDTE_v10.xsd">
+<SetDTE ID="EnvioDTE-84854200-8-79514800-0-20170515-045328-476D80FD">
+<Caratula version="1.0">
+<RutEmisor>84854200-8</RutEmisor>
+<RutEnvia>5544700-4</RutEnvia>
+<RutReceptor>79514800-0</RutReceptor>
+<FchResol>2007-10-30</FchResol>
+<NroResol>125</NroResol>
+<TmstFirmaEnv>2017-05-15T04:53:28</TmstFirmaEnv>
+<SubTotDTE>
+<TpoDTE>33</TpoDTE>
+<NroDTE>1</NroDTE>
+</SubTotDTE>
+</Caratula>
+<DTE xmlns="http://www.sii.cl/SiiDte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0">
+      <Documento ID="T33F128088">
+        <Encabezado>
+          <IdDoc>
+            <TipoDTE>33</TipoDTE>
+            <Folio>128088</Folio>
+            <FchEmis>2017-05-12</FchEmis>
+          </IdDoc>
+          <Emisor>
+            <RUTEmisor>84854200-8</RUTEmisor>
+            <RznSoc>Importadora Automarco Ltda.</RznSoc>
+            <GiroEmis>Importadora</GiroEmis>
+            <Telefono>8734100</Telefono>
+            <CorreoEmisor>automarco@automarco.com</CorreoEmisor>
+            <Acteco>503000</Acteco>
+            <DirOrigen>Las Esteras No 2750</DirOrigen>
+            <CmnaOrigen>Quilicura</CmnaOrigen>
+            <CiudadOrigen>SANTIAGO</CiudadOrigen>
+            <CdgVendedor>0003</CdgVendedor>
+          </Emisor>
+          <Receptor>
+            <RUTRecep>79514800-0</RUTRecep>
+            <RznSocRecep>SIERRALTA Y CIA. LTDA.</RznSocRecep>
+            <GiroRecep>REPUESTOS AUTOMOTRICES</GiroRecep>
+            <DirRecep>AVDA.BRASIL 24</DirRecep>
+            <CmnaRecep>SANTIAGO CENTRO</CmnaRecep>
+            <CiudadRecep>SANTIAGO</CiudadRecep>
+          </Receptor>
+          <Totales>
+            <MntNeto>520696</MntNeto>
+            <TasaIVA>19.00</TasaIVA>
+            <IVA>98932</IVA>
+            <MntTotal>619628</MntTotal>
+          </Totales>
+        </Encabezado>
+        <Detalle>
+          <NroLinDet>1</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>10283-0</VlrCodigo>
+          </CdgItem>
+          <NmbItem>CHAMPION RA7YC</NmbItem>
+          <QtyItem>200</QtyItem>
+          <UnmdItem>C/U</UnmdItem>
+          <PrcItem>840</PrcItem>
+          <MontoItem>168000</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>2</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>10391-8</VlrCodigo>
+          </CdgItem>
+          <NmbItem>CHAMPION RN12YC</NmbItem>
+          <QtyItem>20</QtyItem>
+          <UnmdItem>C/U</UnmdItem>
+          <PrcItem>790</PrcItem>
+          <MontoItem>15800</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>3</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>10999-1</VlrCodigo>
+          </CdgItem>
+          <NmbItem>GRANT 0.75 1615 SJ-410</NmbItem>
+          <QtyItem>2</QtyItem>
+          <UnmdItem>JGO</UnmdItem>
+          <PrcItem>9400</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>3760</DescuentoMonto>
+          <MontoItem>15040</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>4</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>11060-4</VlrCodigo>
+          </CdgItem>
+          <NmbItem>GRANT 1.00 1615 SJ-410</NmbItem>
+          <QtyItem>2</QtyItem>
+          <UnmdItem>JGO</UnmdItem>
+          <PrcItem>9400</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>3760</DescuentoMonto>
+          <MontoItem>15040</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>5</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>11661-0</VlrCodigo>
+          </CdgItem>
+          <NmbItem>CORREA DIST. 95x19x905</NmbItem>
+          <QtyItem>3</QtyItem>
+          <UnmdItem>C/U</UnmdItem>
+          <PrcItem>6890</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>4134</DescuentoMonto>
+          <MontoItem>16536</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>6</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>11726-9</VlrCodigo>
+          </CdgItem>
+          <NmbItem>GRANT STD 1615 SJ-410</NmbItem>
+          <QtyItem>2</QtyItem>
+          <UnmdItem>JGO</UnmdItem>
+          <PrcItem>9400</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>3760</DescuentoMonto>
+          <MontoItem>15040</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>7</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>12233-5</VlrCodigo>
+          </CdgItem>
+          <NmbItem>FARO SELLADO H-6054 CAR-PAR</NmbItem>
+          <QtyItem>12</QtyItem>
+          <UnmdItem>C/U</UnmdItem>
+          <PrcItem>3740</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>8976</DescuentoMonto>
+          <MontoItem>35904</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>8</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>12464-8</VlrCodigo>
+          </CdgItem>
+          <NmbItem>GRANT STD S-5332 SUZUKI CELERIO 1.0 K10B</NmbItem>
+          <QtyItem>1</QtyItem>
+          <UnmdItem>C/U</UnmdItem>
+          <PrcItem>14920</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>2984</DescuentoMonto>
+          <MontoItem>11936</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>9</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>13160-1</VlrCodigo>
+          </CdgItem>
+          <NmbItem>GRANT 1.00 P-1650 SUZUKI FORZA 1.3</NmbItem>
+          <QtyItem>1</QtyItem>
+          <UnmdItem>C/U</UnmdItem>
+          <PrcItem>15320</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>3064</DescuentoMonto>
+          <MontoItem>12256</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>10</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>13299-3</VlrCodigo>
+          </CdgItem>
+          <NmbItem>GRANT STD 1653 SUZUKY FRO</NmbItem>
+          <QtyItem>2</QtyItem>
+          <UnmdItem>JGO</UnmdItem>
+          <PrcItem>6990</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>2796</DescuentoMonto>
+          <MontoItem>11184</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>11</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>13381-7</VlrCodigo>
+          </CdgItem>
+          <NmbItem>GRANT STD P-1650 SUZUKI FORZA 1.3</NmbItem>
+          <QtyItem>2</QtyItem>
+          <UnmdItem>C/U</UnmdItem>
+          <PrcItem>15320</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>6128</DescuentoMonto>
+          <MontoItem>24512</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>12</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>13385-K</VlrCodigo>
+          </CdgItem>
+          <NmbItem>GRANT 0.50 P-1650 SUZUKI FORZA 1.3</NmbItem>
+          <QtyItem>2</QtyItem>
+          <UnmdItem>C/U</UnmdItem>
+          <PrcItem>15320</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>6128</DescuentoMonto>
+          <MontoItem>24512</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>13</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>13646-8</VlrCodigo>
+          </CdgItem>
+          <NmbItem>CORREA DIST.5382XS SUZUKI</NmbItem>
+          <QtyItem>3</QtyItem>
+          <UnmdItem>C/U</UnmdItem>
+          <PrcItem>10990</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>6594</DescuentoMonto>
+          <MontoItem>26376</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>14</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>14985-3</VlrCodigo>
+          </CdgItem>
+          <NmbItem>FARO SELLADO H-6024 CAR-PAR</NmbItem>
+          <QtyItem>12</QtyItem>
+          <UnmdItem>C/U</UnmdItem>
+          <PrcItem>3300</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>7920</DescuentoMonto>
+          <MontoItem>31680</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>15</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>15484-9</VlrCodigo>
+          </CdgItem>
+          <NmbItem>GRANT STD 1614 SUZUKY ST</NmbItem>
+          <QtyItem>2</QtyItem>
+          <UnmdItem>JGO</UnmdItem>
+          <PrcItem>7450</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>2980</DescuentoMonto>
+          <MontoItem>11920</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>16</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>16322-8</VlrCodigo>
+          </CdgItem>
+          <NmbItem>CORREA DIST. 5318 XS</NmbItem>
+          <QtyItem>5</QtyItem>
+          <UnmdItem>C/U</UnmdItem>
+          <PrcItem>7490</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>7490</DescuentoMonto>
+          <MontoItem>29960</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>17</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>16324-4</VlrCodigo>
+          </CdgItem>
+          <NmbItem>CORREA DIST.5637XS SUZUKI ALTO 106 x 1&quot;</NmbItem>
+          <QtyItem>5</QtyItem>
+          <UnmdItem>C/U</UnmdItem>
+          <PrcItem>9990</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>9990</DescuentoMonto>
+          <MontoItem>39960</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>18</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>18544-2</VlrCodigo>
+          </CdgItem>
+          <NmbItem>GRANT 0.50 1615 SJ-410</NmbItem>
+          <QtyItem>2</QtyItem>
+          <UnmdItem>JGO</UnmdItem>
+          <PrcItem>9400</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>3760</DescuentoMonto>
+          <MontoItem>15040</MontoItem>
+        </Detalle>
+        <SubTotInfo>
+          <NroSTI>1</NroSTI>
+          <GlosaSTI>SUBTOTAL</GlosaSTI>
+          <ValSubtotSTI>520696</ValSubtotSTI>
+        </SubTotInfo>
+        <Referencia>
+          <NroLinRef>1</NroLinRef>
+          <TpoDocRef>802</TpoDocRef>
+          <FolioRef>071594</FolioRef>
+          <FchRef>2017-05-11</FchRef>
+        </Referencia>
+        <TED version="1.0">
+          <DD>
+            <RE>84854200-8</RE>
+            <TD>33</TD>
+            <F>128088</F>
+            <FE>2017-05-12</FE>
+            <RR>79514800-0</RR>
+            <RSR>SIERRALTA Y CIA. LTDA.</RSR>
+            <MNT>619628</MNT>
+            <IT1>CHAMPION RA7YC</IT1>
+            <CAF version="1.0">
+              <DA>
+                <RE>84854200-8</RE>
+                <RS>IMPORTADORA AUTOMARCO LIMITADA</RS>
+                <TD>33</TD>
+                <RNG>
+                  <D>127500</D>
+                  <H>142499</H>
+                </RNG>
+                <FA>2017-04-25</FA>
+                <RSAPK>
+                  <M>0LgbOCLWN6TzQuOCycxm9mMyvzf/QqjSOhOdbcTljsSmn/6pYNdrNJW/4bAVpJDV676NWm/xkJxrD4dteMkyuQ==</M>
+                  <E>Aw==</E>
+                </RSAPK>
+                <IDK>300</IDK>
+              </DA>
+              <FRMA algoritmo="SHA1withRSA">Rkq3k67WZ4aL5tSf8eIQFwcm0pzcwUslVUZy8pgnxMunpR1Xk3cSHCD+zyO2c6Yp9ThigiWaTVtJca9uHEA7hg==</FRMA>
+            </CAF>
+            <TSTED>2017-05-12T12:26:38</TSTED>
+          </DD>
+          <FRMT algoritmo="SHA1withRSA">hU7vlWeOenJVV9Z6qh9YMc8e0usuEWV9FDtnEOPNa01ed/l0ntqAR9ATUtn6Ky3ZnYR9D56y0G+h
++Au1mW9TxA==</FRMT>
+        </TED>
+        <TmstFirma>2017-05-12T12:26:38</TmstFirma>
+      </Documento>
+      <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+	<SignedInfo>
+		<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"></CanonicalizationMethod>
+		<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"></SignatureMethod>
+		<Reference URI="#T33F128088">
+			<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"></DigestMethod>
+			<DigestValue>1oAPXENvybvHYoMbglWcH2IEA6U=</DigestValue>
+		</Reference>
+	</SignedInfo>
+	<SignatureValue>HBOzQzRMWlSB3f2U0JTm3Qux9sz6jmCDdBE3KA0oYuvP1dykZOc6+jaGB3Vhk1rKqEnVBkFgYW8b
+8OcDpLy8U/UAqH8ninFL0bI2G44BnH8dnCUQii1lXwJhcX8cim05s/WDLxvGC0+ILKBR88YnXQ5p
+wsYl1cSwrDuXXv9tPDY=</SignatureValue>
+	<KeyInfo>
+		<KeyValue>
+			<RSAKeyValue>
+				<Modulus>pccnM8cR67WpHBGkTC1l1ZmrdQlqqZ+MSgK9a+dMxswmTzqguDT9Pje2j6dNVsDrOE4wvax9VKLy
+r4j1ZhIOAFYeU7BVR9JD0cYJJLJDjLQa/r46zH/hK+hl0VPPFZmDF/JvvbqDsS61yBbBzTcM24/t
+5LioIDAIMaPIK8RDZNE=</Modulus>
+				<Exponent>AQAB</Exponent>
+			</RSAKeyValue>
+		</KeyValue>
+		<X509Data>
+			<X509Certificate>MIIF4DCCBMigAwIBAgICFjYwDQYJKoZIhvcNAQEFBQAwgaYxCzAJBgNVBAYTAkNMMRgwFgYDVQQK
+Ew9BY2VwdGEuY29tIFMuQS4xSDBGBgNVBAMTP0FjZXB0YS5jb20gQXV0b3JpZGFkIENlcnRpZmlj
+YWRvcmEgQ2xhc2UgMyBQZXJzb25hIE5hdHVyYWwgLSBHMzEeMBwGCSqGSIb3DQEJARYPaW5mb0Bh
+Y2VwdGEuY29tMRMwEQYDVQQFEwo5NjkxOTA1MC04MB4XDTE1MDgzMTIwMjU1NFoXDTE4MDgzMTIw
+MjU1NFowgY8xCzAJBgNVBAYTAkNMMRgwFgYDVQQMEw9QRVJTT05BIE5BVFVSQUwxJjAkBgNVBAMT
+HUhFQ1RPUiBQQVRSSUNJTyBURUxMTyBBQ0VWRURPMSowKAYJKoZIhvcNAQkBFhtqYWltZS5jYWJl
+emFzQGF1dG9tYXJjby5jb20xEjAQBgNVBAUTCTk3Njc0MzItOTCBnzANBgkqhkiG9w0BAQEFAAOB
+jQAwgYkCgYEApccnM8cR67WpHBGkTC1l1ZmrdQlqqZ+MSgK9a+dMxswmTzqguDT9Pje2j6dNVsDr
+OE4wvax9VKLyr4j1ZhIOAFYeU7BVR9JD0cYJJLJDjLQa/r46zH/hK+hl0VPPFZmDF/JvvbqDsS61
+yBbBzTcM24/t5LioIDAIMaPIK8RDZNECAwEAAaOCAq8wggKrMB8GA1UdIwQYMBaAFLa7ixO5N2ff
+8E3H1bhWmd9mmpHOMB0GA1UdDgQWBBTccWU0sQpc6OOmcgu11OVz45+eHzALBgNVHQ8EBAMCBPAw
+HQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMBEGCWCGSAGG+EIBAQQEAwIFoDCB8wYDVR0g
+BIHrMIHoMIHlBgorBgEEAbVrh2oCMIHWMCgGCCsGAQUFBwIBFhxodHRwOi8vd3d3LmFjZXB0YS5j
+b20vQ1BTLUczMIGpBggrBgEFBQcCAjCBnDAWFg9BY2VwdGEuY29tIFMuQS4wAwIBAhqBgUVsIHRp
+dHVsYXIgaGEgc2lkbyB2YWxpZGFkbyBlbiBmb3JtYSBwcmVzZW5jaWFsLCBxdWVkYW5kbyBoYWJp
+bGl0YWRvIGVsIENlcnRpZmljYWRvIHBhcmEgdXNvIHRyaWJ1dGFyaW8sIHBhZ29zLCBjb21lcmNp
+byB5IG90cm9zLjBaBgNVHRIEUzBRoBgGCCsGAQQBwQECoAwWCjk2OTE5MDUwLTigJAYIKwYBBQUH
+CAOgGDAWDAo5NjkxOTA1MC04BggrBgEEAcEBAoEPaW5mb0BhY2VwdGEuY29tMGQGA1UdEQRdMFug
+FwYIKwYBBAHBAQGgCxYJOTc2NzQzMi05oCMGCCsGAQUFBwgDoBcwFQwJOTc2NzQzMi05BggrBgEE
+AcEBAoEbamFpbWUuY2FiZXphc0BhdXRvbWFyY28uY29tMDwGCCsGAQUFBwEBBDAwLjAsBggrBgEF
+BQcwAYYgaHR0cDovL29jc3AuYWNlcHRhLmNvbS9DbGFzZTMtRzMwNAYDVR0fBC0wKzApoCegJYYj
+aHR0cDovL2NybC5hY2VwdGEuY29tL0NsYXNlMy1HMy5jcmwwDQYJKoZIhvcNAQEFBQADggEBAIqz
+im+EU0CVZCzlWxNhp3JVRljpBcH0vE3xANTfUyNiQkaQ5hons/+QDi/uLT1v+B8Bq8gs2yL0byZN
+3m44Fljegf1CLXATX2eHIXl/5jlho+Y39BDlOntdiYRWcjYx1IwR6wd4De2jBHg79d7c3TmjA1ga
+yVYT4qSWjDNdQOutiX88j/9IEJydIwu0pqOb1zRfzmvDtnHdA6H7aaQBNP7q7uJqUrIHhNkhD6tM
+5z1dUgTwnbHpOC2B1/BqsZyZLNhLR17XzZD5BWyeTwxn/8Qv6CJOuehNElwRrnmMe8sDRDFiSx4D
+XK9/VteActZ7TN6XbH5T8RmSaM6nKvN/sZQ=</X509Certificate>
+		</X509Data>
+	</KeyInfo>
+</Signature>
+    </DTE></SetDTE>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"></CanonicalizationMethod><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"></SignatureMethod><Reference URI="#EnvioDTE-84854200-8-79514800-0-20170515-045328-476D80FD"><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"></DigestMethod><DigestValue>0kuJC5Rw0gLbZMfGb8FLFUxymuk=</DigestValue></Reference></SignedInfo><SignatureValue>QJTriulGQ7Iuxh5czpPJY7eQv8mMVzM3NkqibKx6CUv6mqAxitKvQrSqFJVuPieRpjPDBo1i34IW
+HpcmW6hb41Z49NbQ8ZsmSinnmlpksj8IjNpErg1C5LyM5HJUv40RkwXx6Ab0a2xg3qPFpVq5Nj9k
+wihiMR/RMkh8/vpc4c3NErkDu6c646ELuDu3BFfQd16iGTyI1CwDKcDMcot15MBp611iow4oXkWA
+Y2ofvEQxcu385hRz3njPc6C2JF6LSdEZid4RXbiSNUwtPScZovcBX0D23qQobuQp/PoGaly/VR86
+ca8BCVfldkt6FiXOwOmLsTLoQx3I07SYz3Kjvw==</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>lFOmbrg9OkK2yG7URNP9kaVZQLRvqYF4llzwx5YsJJ9l7pmmkrQxzHNy3kGPdBtX2LIE6GdX11br
+qdGjBIs39SaptmIM0AHvQ5pe/5n/kKUw/hJebUo94RiNTaaKhYw3XcEZ2PcOkZkYNPRYGdNWGzyj
+/5dI5r6wi3JVZRGI2a1mgNFS96sG84nQstYz1PMts7MUuiEK+ibRnmgKAmBKAj2cbHKcqkn9BzEO
+8O83dYX6EQRxSyE2KRONqw7misVop0gcnVIiQm/vOs74rcGZ2t848X6vaVgrYsU+cQYETf7OrArh
+vUpFU+0Iv+br9fxXIR9bxnGFj+ZbaNgAPfaDZQ==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIF7zCCBNegAwIBAgIBFDANBgkqhkiG9w0BAQsFADCBpjELMAkGA1UEBhMCQ0wxGDAWBgNVBAoT
+D0FjZXB0YS5jb20gUy5BLjFIMEYGA1UEAxM/QWNlcHRhLmNvbSBBdXRvcmlkYWQgQ2VydGlmaWNh
+ZG9yYSBDbGFzZSAyIFBlcnNvbmEgTmF0dXJhbCAtIEc0MR4wHAYJKoZIhvcNAQkBFg9pbmZvQGFj
+ZXB0YS5jb20xEzARBgNVBAUTCjk2OTE5MDUwLTgwHhcNMTYxMDA3MTkxNzU4WhcNMTkxMDA3MTkx
+NzU4WjCBhjELMAkGA1UEBhMCQ0wxGDAWBgNVBAwTD1BFUlNPTkEgTkFUVVJBTDEfMB0GA1UEAxMW
+UEFCTE8gSVpRVUlFUkRPIFdBTEtFUjEoMCYGCSqGSIb3DQEJARYZcGFibG9penF1aWVyZG93QGdt
+YWlsLmNvbTESMBAGA1UEBRMJNTU0NDcwMC00MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+AQEAlFOmbrg9OkK2yG7URNP9kaVZQLRvqYF4llzwx5YsJJ9l7pmmkrQxzHNy3kGPdBtX2LIE6GdX
+11brqdGjBIs39SaptmIM0AHvQ5pe/5n/kKUw/hJebUo94RiNTaaKhYw3XcEZ2PcOkZkYNPRYGdNW
+Gzyj/5dI5r6wi3JVZRGI2a1mgNFS96sG84nQstYz1PMts7MUuiEK+ibRnmgKAmBKAj2cbHKcqkn9
+BzEO8O83dYX6EQRxSyE2KRONqw7misVop0gcnVIiQm/vOs74rcGZ2t848X6vaVgrYsU+cQYETf7O
+rArhvUpFU+0Iv+br9fxXIR9bxnGFj+ZbaNgAPfaDZQIDAQABo4ICRDCCAkAwHwYDVR0jBBgwFoAU
+ZaWrPj/ItlFtEX5fwwoH5kOgCLYwHQYDVR0OBBYEFKp8iBzLRiGHokqiR7ocmLIYH65iMAsGA1Ud
+DwQEAwIE8DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwEQYJYIZIAYb4QgEBBAQDAgWg
+MHUGA1UdIARuMGwwagYIKwYBBAG1awIwXjAxBggrBgEFBQcCARYlaHR0cHM6Ly9hY2c0LmFjZXB0
+YS5jb20vQ1BTLUFjZXB0YWNvbTApBggrBgEFBQcCAjAdMBYWD0FjZXB0YS5jb20gUy5BLjADAgEJ
+GgNUQkQwWgYDVR0SBFMwUaAYBggrBgEEAcEBAqAMFgo5NjkxOTA1MC04oCQGCCsGAQUFBwgDoBgw
+FgwKOTY5MTkwNTAtOAYIKwYBBAHBAQKBD2luZm9AYWNlcHRhLmNvbTBiBgNVHREEWzBZoBcGCCsG
+AQQBwQEBoAsWCTU1NDQ3MDAtNKAjBggrBgEFBQcIA6AXMBUMCTU1NDQ3MDAtNAYIKwYBBAHBAQKB
+GXBhYmxvaXpxdWllcmRvd0BnbWFpbC5jb20wRwYIKwYBBQUHAQEEOzA5MDcGCCsGAQUFBzABhito
+dHRwczovL2FjZzQuYWNlcHRhLmNvbS9hY2c0L29jc3AvQ2xhc2UyLUc0MD8GA1UdHwQ4MDYwNKAy
+oDCGLmh0dHBzOi8vYWNnNC5hY2VwdGEuY29tL2FjZzQvY3JsL0NsYXNlMi1HNC5jcmwwDQYJKoZI
+hvcNAQELBQADggEBAL0/jTzpAMmxX7v5w/dFYyQmTZPxN7fxWxKyf0np751stBTHnUExiFv+wqIv
+E3iE5Znr8tMoeWwpDz+V0hgKqQDUtZipGbN2XNW19yS6JgenoNbv6dUbVpJwuYJeYcjhtXoePo64
+AoP5cqM/xtcyVkePs2Y/fpBvehXC0qwq1zpxQkMNt+p+3UJqVH12qsMKBUw038Q+t4YIPG18W74c
+KObVaxGG5A/YyTWsGM2Nupmc10p/yXgAZLDptlWA4h7/HHFJT8wRvAdBzhXo1IRsDrfBZ4cI93ts
+fH0PdMlRqFg1zc3e+hA66nqxtua75CK21+fwx6cMP+rm7kRfVWA6tf4=</X509Certificate></X509Data></KeyInfo></Signature></EnvioDTE>
+------=_Part_596087_928278871.1494838408297--

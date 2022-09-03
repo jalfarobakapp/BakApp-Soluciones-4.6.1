@@ -1,0 +1,148 @@
+Return-Path: <SRS0=xcHX5p=46=sii.cl=mipyme@sirrep.cl>
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id IcZQGZnAJVlsbwUAqFaw+A
+	; Wed, 24 May 2017 13:19:21 -0400
+Return-path: <SRS0=xcHX5p=46=sii.cl=mipyme@sirrep.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Wed, 24 May 2017 13:19:21 -0400
+Received: from rapel12.sii.cl ([200.10.251.90])
+	by srv150.tuhosting.cl with esmtp (Exim 4.89)
+	(envelope-from <mipyme@sii.cl>)
+	id 1dDZwP-001Vcf-9F
+	for notificacionsii@sirrep.cl; Wed, 24 May 2017 13:19:21 -0400
+X-IronPort-AV: E=Sophos;i="5.38,387,1491274800"; 
+   d="xml'?scan'208";a="632884489"
+Received: from ulmo.sii.cl (HELO ulmo) ([10.20.1.72])
+  by rapel12.sii.cl with ESMTP; 24 May 2017 13:20:51 -0400
+Message-ID: <1908306366.1495646451957.JavaMail.root@ulmo>
+Date: Wed, 24 May 2017 13:20:51 -0400 (GMT-04:00)
+From: mipyme@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: Acuse de Recibo Nro. 166901884 - Receptor: 13503460-6
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_1009_663627662.1495646451944"
+
+------=_Part_1009_663627662.1495646451944
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+Facturacion Electronica - Acuse de Recibo de Envio de DTE
+=========================================================
+
+En el archivo adjunto puede encontrar el resultado del proceso de revision y
+validacion de un envio de Documentos Tributarios Electronicos que Usted
+realizo.
+
+----------------------------------------------------------------------------
+
+Esta es una aplicacion automatica, por lo tanto no conteste este correo ni
+haga consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue
+mas claro en cualquier aplicacion.
+
+------=_Part_1009_663627662.1495646451944
+Content-Type: application/octet-stream; name=ACUSE0166901884.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=ACUSE0166901884.xml
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<RespuestaDTE xmlns="http://www.sii.cl/SiiDte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.sii.cl/SiiDte RespuestaEnvioDTE_v10.xsd">
+  <Resultado ID="RespuestaDTEMiPE">
+     <Caratula version="1.0">
+      <RutResponde>13503460-6</RutResponde>
+      <RutRecibe>79514800-0</RutRecibe>
+      <IdRespuesta>166901884</IdRespuesta>
+      <NroDetalles>1</NroDetalles>
+      <TmstFirmaResp>2017-05-24T13:14:40</TmstFirmaResp>
+    </Caratula>
+    <RecepcionEnvio>
+      <NmbEnvio>1SobreReceptor.xml</NmbEnvio>
+      <FchRecep>2017-05-24T13:14:38</FchRecep>
+      <CodEnvio>255833573</CodEnvio>
+      <EnvioDTEID>SetDoc</EnvioDTEID>
+      <Digest>Ui1Azaxz1SKP/An68DtrK/lwPcc=</Digest>
+      <RutEmisor>79514800-0</RutEmisor>
+      <RutReceptor>13503460-6</RutReceptor>
+      <EstadoRecepEnv>0</EstadoRecepEnv>
+      <RecepEnvGlosa>ERC - Envio Recibido</RecepEnvGlosa>
+      <NroDTE>1</NroDTE>
+      <RecepcionDTE>
+        <TipoDTE>33</TipoDTE>
+        <Folio>231771</Folio>
+        <FchEmis>2017-05-24</FchEmis>
+        <RUTEmisor>79514800-0</RUTEmisor>
+        <RUTRecep>13503460-6</RUTRecep>
+        <MntTotal>36401</MntTotal>
+        <EstadoRecepDTE>99</EstadoRecepDTE>
+        <RecepDTEGlosa>DRD-Diferente al SII</RecepDTEGlosa>
+      </RecepcionDTE>
+    </RecepcionEnvio>
+  </Resultado>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference URI="#RespuestaDTEMiPE">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>1f7/SHOOS9wRMglAEdlKF+iyAK0=</DigestValue>
+</Reference>
+</SignedInfo>
+<SignatureValue>XAfo450XQvtBV+MX5KtkbqCc3PqvH5nBgmmXw9g6XWUOKUKM4RuWAwAj1d5Fz5a/
+cXtUKh+IXsWElTU634yxsXnz99iQJ9FRy1RpbAX9p7gB3srFQbJxeI5UaYP1Mb4p
+OOiU7/bY/wZCr90/s/PPG1Op/kDkrkiD/XthBqJ29SCKji4xaqmZ0m4hlbv0NO6L
+UElhVuyf+DnWXSBuKJ+C/ay36t8sKMQ8ANgRiTwXTmWLdUN01j2/Q98YjYCWMVzo
+/IcxCQAq55dtxZYaCXJFgmSUO6yXcbsoNHsSwYF+xIZKTMlTLG4qvNoYvfrnVd3V
+q7e1ApVbQoczliffuLFWJA==</SignatureValue>
+<KeyInfo>
+<KeyValue>
+<RSAKeyValue>
+<Modulus>
+vUSZwnTtsvIdpQ5q2hq53klOqJpf4xEXdId5mZBsDiCC7rYW17IXZsRmULwNbg80
+I+8op1lw3tG/f7wnAD70SbiF+XtAmpDtFWxBuifOA7yt5LQ61UYeZUumdBhcoWGP
+FXXmQCHHEyhZzl264AhbyKhReae6+KG1tk3YDcdNXwCbzdp90+3r4Jj9iNgxKpE3
+KWYmJQtQ9mWqZlDKVef1PdHzVtALOJrI72hG6A4FV9tGRQ8xluTByCqw+hx4fkXZ
+irF1DT3uQsF3l79nGrtU6520DRTPoNWimzUkeVsEp8auTbU6KMjj4Umk4rbVo5kw
+gRP4WlsONi0RBkMa7uRsnQ==
+</Modulus>
+<Exponent>
+AQAB
+</Exponent>
+</RSAKeyValue>
+</KeyValue>
+<X509Data>
+<X509Certificate>MIIEZDCCA0ygAwIBAgIBRDANBgkqhkiG9w0BAQUFADCBpTEUMBIGA1UEAxMLU0lJ
+LUNBLTIwMTMxGjAYBgNVBAcTEVNhbnRpYWdvIGRlIENoaWxlMR0wGwYDVQQIExRS
+ZWdpb24gTWV0cm9wb2xpdGFuYTELMAkGA1UEBhMCQ0wxHDAaBgkqhkiG9w0BCQEW
+DXNpaS1jYUBzaWkuY2wxJzAlBgNVBAoTHlNlcnZpY2lvIGRlIEltcHVlc3RvcyBJ
+bnRlcm5vczAeFw0xNzAzMjIxNjMwMjdaFw0xOTAzMjIxNjMwMjdaMIHRMSQwIgYD
+VQQLExtTdWJkaXJlY2Npb24gZGUgSW5mb3JtYXRpY2ExJzAlBgNVBAoTHlNlcnZp
+Y2lvIGRlIEltcHVlc3RvcyBJbnRlcm5vczELMAkGA1UEBhMCQ0wxHTAbBgNVBAgT
+FFJlZ2lvbiBNZXRyb3BvbGl0YW5hMRowGAYDVQQHExFTYW50aWFnbyBkZSBDaGls
+ZTEeMBwGCSqGSIb3DQEJARYPbWxhY29zdGVAc2lpLmNsMRgwFgYDVQQDEw9GQUNU
+VVJBQ0lPTiBTSUkwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC9RJnC
+dO2y8h2lDmraGrneSU6oml/jERd0h3mZkGwOIILuthbXshdmxGZQvA1uDzQj7yin
+WXDe0b9/vCcAPvRJuIX5e0CakO0VbEG6J84DvK3ktDrVRh5lS6Z0GFyhYY8VdeZA
+IccTKFnOXbrgCFvIqFF5p7r4obW2TdgNx01fAJvN2n3T7evgmP2I2DEqkTcpZiYl
+C1D2ZapmUMpV5/U90fNW0As4msjvaEboDgVX20ZFDzGW5MHIKrD6HHh+RdmKsXUN
+Pe5CwXeXv2cau1TrnbQNFM+g1aKbNSR5WwSnxq5NtTooyOPhSaTittWjmTCBE/ha
+Ww42LREGQxru5GydAgMBAAGjcTBvMAkGA1UdEwQCMAAwPQYDVR0RBDYwNKAYBggr
+BgEEAcEBAaAMEwo0ODA4MDE1NS01oBgGCCsGAQQBwQEDoAwTCjYwODAzMDAwLUsw
+IwYDVR0SBBwwGqAYBggrBgEEAcEBAqAMEwo2MDgwMzAwMC1LMA0GCSqGSIb3DQEB
+BQUAA4IBAQCltLIBMlvpHbdSttl+QC6pZPBsl2U2VKLThgIEE4lCDGCIB7UoPb3k
+evEY2AepxKxNy64SvqXKpsXwfRIcdudcQOIIhk77WnsWP3x0HiyAqmn4URi7DNa0
+Hk4bcQXsdAGHGYqPUisQltPeaqzoGyhlATLfo8XyaMeB3/1jlAGyWaczWCP8Fv40
+rO4QEUqIqUf5XFeC2TiJPfFp/LB5zYkZKNeAVnqZXZtQAaRHrqxnDd4DNy8BAe6c
+Al/YZsDh/1JWRbgySVQK2M4HOU172feqEGkLOoy3bcMSKxj9Wqxsjg3kzcm+Uo0F
+ymekuMCa1XFJ1OWVu0E2zB2XpdIMZTjU</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature></RespuestaDTE>
+
+------=_Part_1009_663627662.1495646451944--
+

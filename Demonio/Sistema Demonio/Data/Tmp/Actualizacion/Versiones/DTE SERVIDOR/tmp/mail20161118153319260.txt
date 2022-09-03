@@ -1,0 +1,110 @@
+Return-Path: <siidte_reparo@sii.cl>
+Delivered-To: notificacionsii@sirrep.cl
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id 1kfyCDl3K1g9KwoAqFaw+A
+	for <notificacionsii@sirrep.cl>; Tue, 15 Nov 2016 17:59:37 -0300
+Return-path: <siidte_reparo@sii.cl>
+Received: from rapel12.sii.cl ([200.10.251.90] helo=mailin02.sii.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.86)
+	(envelope-from <siidte_reparo@sii.cl>)
+	id 1c6kpM-002oAi-Up
+	for notificacionsii@sirrep.cl; Tue, 15 Nov 2016 17:59:37 -0300
+X-IronPort-AV: E=Sophos;i="5.22,559,1449543600"; 
+   d="xml'?txt'?scan'208";a="651585685"
+Received: from dte.sii.cl (HELO dte) ([146.20.1.104])
+  by mailout02.sii.cl with ESMTP; 15 Nov 2016 18:58:01 -0300
+Message-ID: <4145085.1479247248918.JavaMail.root@dte>
+Date: Tue, 15 Nov 2016 19:00:48 -0300 (CLST)
+From: siidte_reparo@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: [SII-Consumo de Folios-REPARO] TipoEnvio=Automatico TrackID=1818611480 Rut=79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_2207_29162475.1479247248917"
+
+------=_Part_2207_29162475.1479247248917
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+SII de Chile - Validacion de DTE ( Consumo de Folios )
+======================================================
+
+En el archivo adjunto esta el resultado del proceso de revision y validacion
+del envio de Documentos Tributarios Electronicos realizado por su empresa al
+Servicio de Impuestos Internos de Chile.
+
+----------------------------------------------------------------------------
+
+Este es una aplicacion automatica. No conteste este correo ni haga
+consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue
+mas claro en cualquier aplicacion.
+
+
+
+------=_Part_2207_29162475.1479247248917
+Content-Type: text/plain; name=FOLMAIL1818611480_79514800_REPARO.txt
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; 
+	filename=FOLMAIL1818611480_79514800_REPARO.txt
+
+Resultado de Validacion de Envio de Consumo de Folios
+=====================================================
+Identificador de Envio      : 1818611480
+Rut de Empresa Emisora      : 79514800-0
+Rut que Realizo el Envio    : 12628844-1
+Fecha de Recepcion          : 2016-11-15T18:59:23
+Tamano del archivo          : 5623
+Tipo de Envio               : Automatico
+
+Resultado de envio           
+=============================
+Estado del envio            : REPARO
+Errores                     : 0
+Reparos                     : 1
+
+Los reparos del envio son:   
+=============================
++------------------------------------------------------------------------------+
+| 201 |Secuencia de Envio Invalida                                             |
+|Secuencia 0 no valida. Es menor o igual a 0 del envio numero 1818611204       |
++------------------------------------------------------------------------------+
+
+------=_Part_2207_29162475.1479247248917
+Content-Type: application/octet-stream; 
+	name=FOLMAIL1818611480_79514800_REPARO.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; 
+	filename=FOLMAIL1818611480_79514800_REPARO.xml
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ResultadoConsumoFolios xmlns="http://www.sii.cl/SiiDte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sii.cl/SiiDte ResultadoConsumoFolios_v10.xsd" version="1.0">
+    <DocumentoResultadoConsumoFolios ID="documento">
+        <Identificacion>
+            <Envio>
+                <TrackId>1818611480</TrackId>
+                <RutEmisor>79514800-0</RutEmisor>
+                <RutEnvia>12628844-1</RutEnvia>
+                <TmstRecepcion>2016-11-15T18:59:23</TmstRecepcion>
+                <TamanoArchivo>5623</TamanoArchivo>
+                <TipoEnvio>Automatico</TipoEnvio>
+            </Envio>
+        </Identificacion>
+        <Resultado>
+            <Estado>REPARO</Estado>
+            <CantidadReparos>1</CantidadReparos>
+            <Reparos>
+                <Reparo>
+                    <Codigo>201</Codigo>
+                    <Descripcion>Secuencia de Envio Invalida</Descripcion>
+                    <Detalle>Secuencia 0 no valida. Es menor o igual a 0 del envio numero 1818611204</Detalle>
+                </Reparo>
+            </Reparos>
+        </Resultado>
+    </DocumentoResultadoConsumoFolios>
+</ResultadoConsumoFolios>
+
+------=_Part_2207_29162475.1479247248917--
+

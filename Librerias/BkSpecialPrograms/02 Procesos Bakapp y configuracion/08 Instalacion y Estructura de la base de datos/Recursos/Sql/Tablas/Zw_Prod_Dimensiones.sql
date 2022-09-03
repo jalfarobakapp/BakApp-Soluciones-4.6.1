@@ -1,0 +1,13 @@
+USE [#Base#]
+
+CREATE TABLE [dbo].[Zw_Prod_Dimensiones](
+	[Codigo] [char](13) NOT NULL DEFAULT (''),
+	[Peso] [float] NOT NULL DEFAULT (0),
+	[Alto] [float] NOT NULL DEFAULT (0),
+	[Largo] [float] NOT NULL DEFAULT (0),
+	[Ancho] [float] NOT NULL DEFAULT (0),
+ CONSTRAINT [PK_Zw_Prod_Dimensiones] PRIMARY KEY CLUSTERED 
+(
+	[Codigo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]

@@ -1,0 +1,21 @@
+BEGIN TRY
+ DROP TABLE #Paso1
+ END TRY
+ BEGIN CATCH
+END CATCH
+
+Select #CODIGO# As CODIGO,#DESCRIPCION# As DESCRIPCION,
+       DATENAME(MONTH,FEEMLI) AS Mes,DATENAME(YEAR,FEEMLI) As Ano,SUM(VANELI) As VANELI,
+       CONVERT(int, MONTH(FEEMLI)) As Orden
+Into #Paso1
+From Zw_TblPasoMAF
+Where 1 > 0
+#Filtro_Sql#
+Group By #CODIGO#,#DESCRIPCION#,FEEMLI
+Select CODIGO,DESCRIPCION,Mes,Ano,Orden,Sum(VANELI) As Total
+From #Paso1
+Group By CODIGO,DESCRIPCION,Mes,Ano,Orden
+Order By Ano,Orden
+
+
+Drop Table #Paso1

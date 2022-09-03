@@ -1,0 +1,204 @@
+Return-Path: <SRS0=ZC4SEE=4X=gmail.com=repuestossucava@sirrep.cl>
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id 4W+AFuOfHFlAcAIAqFaw+A
+	; Wed, 17 May 2017 15:09:23 -0400
+Return-path: <SRS0=ZC4SEE=4X=gmail.com=repuestossucava@sirrep.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Wed, 17 May 2017 15:09:23 -0400
+Received: from mail-qt0-f176.google.com ([209.85.216.176])
+	by srv150.tuhosting.cl with esmtps (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+	(Exim 4.89)
+	(envelope-from <repuestossucava@gmail.com>)
+	id 1dB4K3-000fgg-5F
+	for notificacionsii@sirrep.cl; Wed, 17 May 2017 15:09:23 -0400
+Received: by mail-qt0-f176.google.com with SMTP id c13so17671417qtc.1
+        for <notificacionsii@sirrep.cl>; Wed, 17 May 2017 12:11:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:mime-version:thread-index
+         :content-language;
+        bh=aNiAah80gWOpQHEszp/8wGKNdQVXm1KdrCYKEPgKkYU=;
+        b=tsXaYaQVemE2FxxQSYybFuv1OrqlXtCdROz2eSec+D3vE3sYI2NQA5mkFkiaYDiwBs
+         5StWIgQP8FyRVIPBwSHbQHtjJ6yJyOVADiRndwikltkwE7qOJgvQc/YObe6tyGER5o0X
+         UK4eCgpjoKTelQqouYfwbvOGKMLpqj8C0zx/rshor+z9iYPY4gVj4Ugu1xV0jRvS71GR
+         71OMholOe6GmaQvTuQGijC4xXhvHw7dp8W7mA5GFw+lOKTv6BMMMFHpaIy7dDlEJjyY4
+         twT4FuIs9m7Pid9yRhq8NT248BCT1rXQ0s59ViRgdFIqCDRTI6Jb3oa7n9KgxRGRgFBg
+         Zjqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :thread-index:content-language;
+        bh=aNiAah80gWOpQHEszp/8wGKNdQVXm1KdrCYKEPgKkYU=;
+        b=W7MCEiVomOFk0j+8kN4jSgPkgYaFvCXYj7GN4PThpX2XBhLPO0iqL7Ea6ZzDvuWG+V
+         Q6gOW9wxRpCVL/A5d9Kt9s79AwkP/BLsyGaeqsln0COtjlzGJBw+WpHm+lx0XQSWkUc1
+         bP7TVZt7bfbLRO7ygZvvycXEhYwwdAZoZFhn+XcqjnyG5qGRGh0lOf97fx3RVrokaCnq
+         wROyQ4t//H6s65Sl8/K5XSKJyeaMGAAq42HpRBrE9EOoWBE5ZHI+q5gwAi/QIi7b3nh4
+         W7wJepuji9iIu9fFifop9+hwJmUrwySmD+8Fi21oT6LISpO01ZCh2D/VBkgXxheNfZrP
+         gqgw==
+X-Gm-Message-State: AODbwcCb3xg1H8JUBQTaZGc4oAymJGOZ1B0tUDH2mrt6HraKKXfq+DwF
+	SkxGwpHFae2zQlQz
+X-Received: by 10.200.56.216 with SMTP id g24mr297225qtc.267.1495048276474;
+        Wed, 17 May 2017 12:11:16 -0700 (PDT)
+Received: from SERVIDOR ([164.77.56.114])
+        by smtp.gmail.com with ESMTPSA id r40sm2073781qkr.13.2017.05.17.12.11.15
+        for <notificacionsii@sirrep.cl>
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 17 May 2017 12:11:15 -0700 (PDT)
+From: "Sociedad Castro e Hijos Ltda" <repuestossucava@gmail.com>
+To: <notificacionsii@sirrep.cl>
+Subject: =?iso-8859-1?Q?Recepci=F3n_de_Documentos_Electr=F3nicos?=
+Date: Wed, 17 May 2017 15:11:11 -0400
+Message-ID: <01f001d2cf41$599dbfa0$0cd93ee0$@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+	boundary="----=_NextPart_000_01F1_01D2CF1F.D28E90A0"
+X-Mailer: Microsoft Outlook 15.0
+Thread-Index: AdLPQViJxW93nK/XSBS9jSBdIQF6Ug==
+Content-Language: es
+
+This is a multipart message in MIME format.
+
+------=_NextPart_000_01F1_01D2CF1F.D28E90A0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_001_01F2_01D2CF1F.D28E90A0"
+
+
+------=_NextPart_001_01F2_01D2CF1F.D28E90A0
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+
+En archivo adjunto se encuentra detalle de documentos recibidos. 
+
+
+
+------=_NextPart_001_01F2_01D2CF1F.D28E90A0
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV=3D"Content-Type" CONTENT=3D"text/html; =
+charset=3Diso-8859-1">
+<META NAME=3D"Generator" CONTENT=3D"MS Exchange Server version =
+rmj.rmm.rup.rpr">
+<TITLE></TITLE>
+</HEAD>
+<BODY>
+<!-- Converted from text/rtf format -->
+
+<P><FONT FACE=3D"Calibri">En archivo adjunto se encuentra detalle de =
+documentos recibidos.</FONT>
+</P>
+<BR>
+
+</BODY>
+</HTML>
+------=_NextPart_001_01F2_01D2CF1F.D28E90A0--
+
+------=_NextPart_000_01F1_01D2CF1F.D28E90A0
+Content-Type: text/xml;
+	name="RS79514800-0SetDoc.xml"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+	filename="RS79514800-0SetDoc.xml"
+
+<?xml version=3D"1.0" encoding=3D"ISO-8859-1"?>
+<RespuestaDTE xmlns=3D"http://www.sii.cl/SiiDte" =
+xmlns:xsi=3D"http://www.w3.org/2001/XMLSchema-instance" =
+xsi:schemaLocation=3D"http://www.sii.cl/SiiDte =
+RespuestaEnvioDTE_v10.xsd" version=3D"1.0">
+	<Resultado ID=3D"r1945">
+		<Caratula version=3D"1.0">
+			<RutResponde>76261679-3</RutResponde>
+			<RutRecibe>79514800-0</RutRecibe>
+			<IdRespuesta>1945</IdRespuesta>
+			<NroDetalles>1</NroDetalles>
+			<NmbContacto>CHRISTIAN CASTRO LEIVA</NmbContacto>
+			<FonoContacto>45-2215567</FonoContacto>
+			<MailContacto>repuestossucava@gmail.com</MailContacto>
+			<TmstFirmaResp>2017-05-17T15:11:10</TmstFirmaResp>
+		</Caratula>
+		<RecepcionEnvio>=20
+			<NmbEnvio>SobreReceptor.xml</NmbEnvio>
+			<FchRecep>2017-05-11T13:37:14</FchRecep>
+			<CodEnvio>1945</CodEnvio>
+			<EnvioDTEID>SetDoc</EnvioDTEID>
+			<Digest>jmCySAUL4eWJQ1qrQjlfKThMiWs=3D</Digest>
+			<RutEmisor>79514800-0</RutEmisor>
+			<RutReceptor>76261679-3</RutReceptor>
+			<EstadoRecepEnv>0</EstadoRecepEnv>
+			<RecepEnvGlosa>0:Recibido Conforme.</RecepEnvGlosa>
+			<NroDTE>1</NroDTE>
+			<RecepcionDTE>
+				<TipoDTE>33</TipoDTE>
+				<Folio>231530</Folio>
+				<FchEmis>2017-05-11</FchEmis>
+				<RUTEmisor>79514800-0</RUTEmisor>
+				<RUTRecep>76261679-3</RUTRecep>
+				<MntTotal>130610</MntTotal>
+				<EstadoRecepDTE>0</EstadoRecepDTE>
+				<RecepDTEGlosa>DTE Recibido OK</RecepDTEGlosa>
+			</RecepcionDTE>
+		</RecepcionEnvio>
+	</Resultado>
+<Signature =
+xmlns=3D"http://www.w3.org/2000/09/xmldsig#"><SignedInfo><Canonicalizatio=
+nMethod Algorithm=3D"http://www.w3.org/TR/2001/REC-xml-c14n-20010315" =
+/><SignatureMethod =
+Algorithm=3D"http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference =
+URI=3D"#r1945"><Transforms><Transform =
+Algorithm=3D"http://www.w3.org/TR/2001/REC-xml-c14n-20010315" =
+/></Transforms><DigestMethod =
+Algorithm=3D"http://www.w3.org/2000/09/xmldsig#sha1" =
+/><DigestValue>QhzGxFWN63ND9w1FnMB1DMvIQPM=3D</DigestValue></Reference></=
+SignedInfo><SignatureValue>WbpZk8PstUiYSNXD3B7PRnH7RKR3W4/JdFEgAYMU0zvWYK=
+w/VXPrbIih74HwJHkMZeOmTTiSpaFwo9SHw89sz5E5N+n4J4SPImxUEG7wD/toO+afCPCx2sQ=
+ChpybVm5liE25BNcY7APLEBs1dzXTg2F36+ANCfAG4Y7UB0J/Gms=3D</SignatureValue><=
+KeyInfo><KeyValue =
+xmlns=3D"http://www.w3.org/2000/09/xmldsig#"><RSAKeyValue><Modulus>lSbmZQ=
+EVCvvhgWLO6WdbeR942sMFWN5Wt8txv1wy6tHlux+n3hrKLG9+7i4HMxjgSRj9zAwY/BXHNAx=
+iGfP92Fmu62gsn8QvJoKMgEUe4bBunmRfFbomMzqVjO/2wHBX/F2JRD8EXXfHDv1Zize2a+wY=
+A2JQ+vtUyEZXHUoIK1k=3D</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></=
+KeyValue><X509Data =
+xmlns=3D"http://www.w3.org/2000/09/xmldsig#"><X509Certificate>MIIGWzCCBUO=
+gAwIBAgIKJHTtTwAAAAQGHTANBgkqhkiG9w0BAQUFADCB0jELMAkG
+A1UEBhMCQ0wxHTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQH
+EwhTYW50aWFnbzEUMBIGA1UEChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9y
+aWRhZCBDZXJ0aWZpY2Fkb3JhMTAwLgYDVQQDEydFLUNFUlRDSElMRSBDQSBGSVJN
+QSBFTEVDVFJPTklDQSBTSU1QTEUxJzAlBgkqhkiG9w0BCQEWGHNjbGllbnRlc0Bl
+LWNlcnRjaGlsZS5jbDAeFw0xNjA2MTQxNDI4MjNaFw0xOTA2MTQxNDI4MjNaMIHe
+MQswCQYDVQQGEwJDTDEaMBgGA1UECAwRREUgTEEgQVJBVUNBTsONQSAxDzANBgNV
+BAcTBkNhdXRpbjElMCMGA1UEChMcU29jaWVkYWQgQ2FzdHJvIGUgSGlqb3MgTHRk
+YTEqMCgGA1UECxMhVmVudGEgZGUgcmVwdWVzdG9zIGRlIGF1dG9tb3ZpbGVzMScw
+JQYDVQQDEx5IdWdvIEh1bWJlcnRvIENhc3RybyBUYXNzaXN0cm8xJjAkBgkqhkiG
+9w0BCQEWF2NoY2FzdHJvbGVpdmFAZ21haWwuY29tMIGfMA0GCSqGSIb3DQEBAQUA
+A4GNADCBiQKBgQCVJuZlARUK++GBYs7pZ1t5H3jawwVY3la3y3G/XDLq0eW7H6fe
+Gsosb37uLgczGOBJGP3MDBj8Fcc0DGIZ8/3YWa7raCyfxC8mgoyARR7hsG6eZF8V
+uiYzOpWM7/bAcFf8XYlEPwRdd8cO/VmLN7Zr7BgDYlD6+1TIRlcdSggrWQIDAQAB
+o4ICpzCCAqMwPQYJKwYBBAGCNxUHBDAwLgYmKwYBBAGCNxUIgtyDL4WTjGaF1Z0X
+guLcJ4Hv7DxhgcueFIaoglgCAWQCAQQwHQYDVR0OBBYEFOnaEM378z3xe1DV6NqF
+wwVl67p9MAsGA1UdDwQEAwIE8DAfBgNVHSMEGDAWgBR44T6f0hKzejyNzTAOU7ND
+KQezVTA+BgNVHR8ENzA1MDOgMaAvhi1odHRwOi8vY3JsLmUtY2VydGNoaWxlLmNs
+L2VjZXJ0Y2hpbGVjYUZFUy5jcmwwOgYIKwYBBQUHAQEELjAsMCoGCCsGAQUFBzAB
+hh5odHRwOi8vb2NzcC5lY2VydGNoaWxlLmNsL29jc3AwIwYDVR0RBBwwGqAYBggr
+BgEEAcEBAaAMFgowOTM0NzU3Ni0zMCMGA1UdEgQcMBqgGAYIKwYBBAHBAQKgDBYK
+OTY5MjgxODAtNTCCAU0GA1UdIASCAUQwggFAMIIBPAYIKwYBBAHDUgUwggEuMC0G
+CCsGAQUFBwIBFiFodHRwOi8vd3d3LmUtY2VydGNoaWxlLmNsL0NQUy5odG0wgfwG
+CCsGAQUFBwICMIHvHoHsAEMAZQByAHQAaQBmAGkAYwBhAGQAbwAgAEYAaQByAG0A
+YQAgAFMAaQBtAHAAbABlAC4AIABIAGEAIABzAGkAZABvACAAdgBhAGwAaQBkAGEA
+ZABvACAAZQBuACAAZgBvAHIAbQBhACAAcAByAGUAcwBlAG4AYwBpAGEAbAAsACAA
+cQB1AGUAZABhAG4AZABvACAAaABhAGIAaQBsAGkAdABhAGQAbwAgAGUAbAAgAEMA
+ZQByAHQAaQBmAGkAYwBhAGQAbwAgAHAAYQByAGEAIAB1AHMAbwAgAHQAcgBpAGIA
+dQB0AGEAcgBpAG8wDQYJKoZIhvcNAQEFBQADggEBAJzbS1ShjqZqP+EyDS8gMLDV
+gDN2x6/4acmV9crWRPrMfEkfc69EEQvQddsQubk5XLFrQz+jHHeFZsWZbfJE0iRQ
+wG6Cignzz2TiPiM2sUYBafwI/L125+A+U2kfsfgm5jd+jG9aouOi/U7L8qXf8Zv8
+tbPVJq63KJ2jNzs8yqE2NZIu6+0uVVmMD9mtAZTePmw61BzGeQA5Td2QLiQapfDL
+M6rrU4RgjDXyhq3WCHQ8loUcGlicnAEWsik7ksErMmu5J6Iz2nw3JN0K+AkdIft5
+mDDiNMWG5CXWgh9cX2Sir+VSuMvCAnO+hv32tmA8BvMaIublY4+Ab5YBN5PTCok=3D</X509C=
+ertificate></X509Data></KeyInfo></Signature></RespuestaDTE>
+  
+------=_NextPart_000_01F1_01D2CF1F.D28E90A0--
+

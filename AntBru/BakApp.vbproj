@@ -1,0 +1,1190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E6765375-303D-4802-9846-0471171555FB}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>BakApp.My.MyApplication</StartupObject>
+    <RootNamespace>BakApp</RootNamespace>
+    <AssemblyName>BakApp_Soluciones</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <TargetZone>Internet</TargetZone>
+    <GenerateManifests>true</GenerateManifests>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+    <ApplicationIcon>New_Bakapp_Icon.ico</ApplicationIcon>
+    <SignManifests>false</SignManifests>
+    <ManifestCertificateThumbprint>224354525754AA37B8D2F5A8ADB177CC55AC672B</ManifestCertificateThumbprint>
+    <ManifestKeyFile>BakApp_Soluciones_TemporaryKey.pfx</ManifestKeyFile>
+    <SignAssembly>false</SignAssembly>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile />
+    <PublishUrl>ftp://201.148.105.132/Actualizaciones Bakapp/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>true</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>http://www.bakapp.cl/bakapp.cl/Descargas/Actualizaciones Bakapp/</InstallUrl>
+    <UpdateUrl>http://www.bakapp.cl/bakapp.cl/Descargas/Actualizaciones Bakapp/</UpdateUrl>
+    <ProductName>Bakapp</ProductName>
+    <PublisherName>Bakapp</PublisherName>
+    <SuiteName>Bakapp</SuiteName>
+    <MinimumRequiredVersion>1.0.0.0</MinimumRequiredVersion>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>BakApp_Soluciones.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
+    <PlatformTarget>x86</PlatformTarget>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>MixedRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>BakApp_Soluciones.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevComponents.DotNetBar.Keyboard, Version=11.7.0.0, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL" />
+    <Reference Include="DevComponents.DotNetBar2, Version=11.7.0.0, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="z_Menu Principal\Clases\Cl_Notificaciones.vb" />
+    <Compile Include="z_Menu Principal\Clases\Modulo_Demonio.vb" />
+    <Compile Include="z_Menu Principal\Clases\Modulo_Documentos.vb" />
+    <Compile Include="z_Menu Principal\Clases\Modulo_Notificaciones.vb" />
+    <Compile Include="z_Menu Principal\Clases\Mod_Variables.vb" />
+    <Compile Include="z_Menu Principal\Frm_Menu.Designer.vb">
+      <DependentUpon>Frm_Menu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\Frm_Menu.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Acreditacion\Clave_Administrador.Designer.vb">
+      <DependentUpon>Clave_Administrador.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Acreditacion\Clave_Administrador.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Acreditacion\Conexion\Crear_Conexion.Designer.vb">
+      <DependentUpon>Crear_Conexion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Acreditacion\Conexion\Crear_Conexion.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Acreditacion\Conexion\Empresas_conectadas.Designer.vb">
+      <DependentUpon>Empresas_conectadas.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Acreditacion\Conexion\Empresas_conectadas.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Acreditacion\Login.Designer.vb">
+      <DependentUpon>Login.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Acreditacion\Login.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\Menu.Designer.vb">
+      <DependentUpon>Menu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\Menu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Compras\SolAsisCompraModos.Designer.vb">
+      <DependentUpon>SolAsisCompraModos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Compras\SolAsisCompraModos.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Compras\SolCompras.Designer.vb">
+      <DependentUpon>SolCompras.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Compras\SolCompras.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Compras\Modulo_Compras.Designer.vb">
+      <DependentUpon>Modulo_Compras.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Compras\Modulo_Compras.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Compras\SolCompras_Documentos.Designer.vb">
+      <DependentUpon>SolCompras_Documentos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Compras\SolCompras_Documentos.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Despachos\Sistema_Despachos.designer.vb">
+      <DependentUpon>Sistema_Despachos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Despachos\Sistema_Despachos.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Informes\Informes Especiales\Informes_Especial_Cliente.Designer.vb">
+      <DependentUpon>Informes_Especial_Cliente.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Informes\Informes Especiales\Informes_Especial_Cliente.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Informes\Modulo_Informes.Designer.vb">
+      <DependentUpon>Modulo_Informes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Informes\Modulo_Informes.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Informes\InformesCompra.Designer.vb">
+      <DependentUpon>InformesCompra.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Informes\InformesCompra.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Informes\InformesStock.designer.vb">
+      <DependentUpon>InformesStock.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Informes\InformesStock.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Informes\InformesVenta.Designer.vb">
+      <DependentUpon>InformesVenta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Informes\InformesVenta.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Menu Extra\Frm_Menu_Extra.Designer.vb">
+      <DependentUpon>Frm_Menu_Extra.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Menu Extra\Frm_Menu_Extra.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Entidades\Entidades_menu.Designer.vb">
+      <DependentUpon>Entidades_menu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Entidades\Entidades_menu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Entidades\Tablas_Clasificaciones_Entidades\Tablas_Clasificaciones_Ent.Designer.vb">
+      <DependentUpon>Tablas_Clasificaciones_Ent.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Entidades\Tablas_Clasificaciones_Entidades\Tablas_Clasificaciones_Ent.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Modulo_Parametros.Designer.vb">
+      <DependentUpon>Modulo_Parametros.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Modulo_Parametros.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Productos\Cambiar código de producto\Cambiar_Codigos_Mnu.Designer.vb">
+      <DependentUpon>Cambiar_Codigos_Mnu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Productos\Cambiar código de producto\Cambiar_Codigos_Mnu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Productos\Crear productos\Mant_Productos.Designer.vb">
+      <DependentUpon>Mant_Productos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Productos\Crear productos\Mant_Productos.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Productos\Ubicacion productos\Mnu_Ubic_Prod.Designer.vb">
+      <DependentUpon>Mnu_Ubic_Prod.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Productos\Ubicacion productos\Mnu_Ubic_Prod.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Productos\Tablas_Clasificaciones_Productos\Tablas_Clasificaciones_Pro.Designer.vb">
+      <DependentUpon>Tablas_Clasificaciones_Pro.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Productos\Tablas_Clasificaciones_Productos\Tablas_Clasificaciones_Pro.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Precios y costos\Menu Mant Precios Costos\Modulo_Lista_Precios_Costos.Designer.vb">
+      <DependentUpon>Modulo_Lista_Precios_Costos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Precios y costos\Menu Mant Precios Costos\Modulo_Lista_Precios_Costos.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Precios y costos\PreciosCostos.Designer.vb">
+      <DependentUpon>PreciosCostos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Precios y costos\PreciosCostos.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Productos\Productos.Designer.vb">
+      <DependentUpon>Productos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Productos\Productos.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Tablas Sistema BakApp\Arbol_Clasificaciones.Designer.vb">
+      <DependentUpon>Arbol_Clasificaciones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Tablas Sistema BakApp\Arbol_Clasificaciones.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Tablas Sistema BakApp\Tablas_BakApp.Designer.vb">
+      <DependentUpon>Tablas_BakApp.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Tablas Sistema BakApp\Tablas_BakApp.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Tablas Sistema BakApp\Tablas_BakApp_Vehiculos.Designer.vb">
+      <DependentUpon>Tablas_BakApp_Vehiculos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Tablas Sistema BakApp\Tablas_BakApp_Vehiculos.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Produccion\Informes\Produccion_Informes.designer.vb">
+      <DependentUpon>Produccion_Informes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Produccion\Informes\Produccion_Informes.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Produccion\Mesones\Produccion_Mesones.designer.vb">
+      <DependentUpon>Produccion_Mesones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Produccion\Mesones\Produccion_Mesones.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Produccion\Mesones\Servicio_Tecnico_Mesones.designer.vb">
+      <DependentUpon>Servicio_Tecnico_Mesones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Produccion\Mesones\Servicio_Tecnico_Mesones.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Produccion\Produccion.designer.vb">
+      <DependentUpon>Produccion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Produccion\Produccion.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Codigos de Barra\Sistema_CodBarras.Designer.vb">
+      <DependentUpon>Sistema_CodBarras.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Codigos de Barra\Sistema_CodBarras.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Creditos por negocios\CreditosNegociosMnu.Designer.vb">
+      <DependentUpon>CreditosNegociosMnu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Creditos por negocios\CreditosNegociosMnu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\CRV Control Ruta Vehiculos\Configuracion CRV\Configuracion_CRV.Designer.vb">
+      <DependentUpon>Configuracion_CRV.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\CRV Control Ruta Vehiculos\Configuracion CRV\Configuracion_CRV.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\CRV Control Ruta Vehiculos\CRV_Control_Ruta_Vehiculos.Designer.vb">
+      <DependentUpon>CRV_Control_Ruta_Vehiculos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\CRV Control Ruta Vehiculos\CRV_Control_Ruta_Vehiculos.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Factura Electronica\Factura_Electronica.Designer.vb">
+      <DependentUpon>Factura_Electronica.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Factura Electronica\Factura_Electronica.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Huellas\Modulo_Huellas.Designer.vb">
+      <DependentUpon>Modulo_Huellas.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Huellas\Modulo_Huellas.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Presatshop\Modulo_Prestashop.Designer.vb">
+      <DependentUpon>Modulo_Prestashop.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Presatshop\Modulo_Prestashop.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Reclamos\Sistema_Reclamos.Designer.vb">
+      <DependentUpon>Sistema_Reclamos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Reclamos\Sistema_Reclamos.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Sis. Vales despacho\Mod. Caja\ModCaja_01.Designer.vb">
+      <DependentUpon>ModCaja_01.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Sis. Vales despacho\Mod. Caja\ModCaja_01.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Sis. Vales despacho\Sis_ValesDespacho.Designer.vb">
+      <DependentUpon>Sis_ValesDespacho.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Sis. Vales despacho\Sis_ValesDespacho.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Modulo_Programas_Especiales.Designer.vb">
+      <DependentUpon>Modulo_Programas_Especiales.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Modulo_Programas_Especiales.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Servicio Tecnico\Modulo_Servicio_Tecnico.Designer.vb">
+      <DependentUpon>Modulo_Servicio_Tecnico.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Servicio Tecnico\Modulo_Servicio_Tecnico.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Documentos\Documentos_GDD_GDP.Designer.vb">
+      <DependentUpon>Documentos_GDD_GDP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Documentos\Documentos_GDD_GDP.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Documentos\Modulo_Documentos_Stock.Designer.vb">
+      <DependentUpon>Modulo_Documentos_Stock.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Documentos\Modulo_Documentos_Stock.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Inv. general\Inventario_Activo.Designer.vb">
+      <DependentUpon>Inventario_Activo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Inv. general\Inventario_Activo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Inv. general\Inv_General.Designer.vb">
+      <DependentUpon>Inv_General.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Inv. general\Inv_General.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Inv. general\Inv_General_Conf.Designer.vb">
+      <DependentUpon>Inv_General_Conf.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Inv. general\Inv_General_Conf.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Inv. parcializado\Inv_Parcializado.Designer.vb">
+      <DependentUpon>Inv_Parcializado.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Inv. parcializado\Inv_Parcializado.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Sistema_Inventarios.Designer.vb">
+      <DependentUpon>Sistema_Inventarios.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Sistema_Inventarios.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Ventas\Tesoreria\Clientes\Tesoreria_Clientes.Designer.vb">
+      <DependentUpon>Tesoreria_Clientes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Ventas\Tesoreria\Clientes\Tesoreria_Clientes.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Ventas\Tesoreria\Proveedores\Tesoreria_Proveedores.Designer.vb">
+      <DependentUpon>Tesoreria_Proveedores.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Ventas\Tesoreria\Proveedores\Tesoreria_Proveedores.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Ventas\Tesoreria\Modulo_Tesoreria.Designer.vb">
+      <DependentUpon>Modulo_Tesoreria.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Ventas\Tesoreria\Modulo_Tesoreria.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Ventas\CashDro\Modulo_CashDro.Designer.vb">
+      <DependentUpon>Modulo_CashDro.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Ventas\CashDro\Modulo_CashDro.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Ventas\Documentos\Modulo_Documentos_Venta.Designer.vb">
+      <DependentUpon>Modulo_Documentos_Venta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Ventas\Documentos\Modulo_Documentos_Venta.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Ventas\Modulo_Ventas.Designer.vb">
+      <DependentUpon>Modulo_Ventas.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Ventas\Modulo_Ventas.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\zz\Rs_Familias.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Rs_Familias.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\licenses.licx" />
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\Frm_Menu.resx">
+      <DependentUpon>Frm_Menu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Acreditacion\Clave_Administrador.resx">
+      <DependentUpon>Clave_Administrador.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Acreditacion\Conexion\Crear_Conexion.resx">
+      <DependentUpon>Crear_Conexion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Acreditacion\Conexion\Empresas_conectadas.resx">
+      <DependentUpon>Empresas_conectadas.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Acreditacion\Login.resx">
+      <DependentUpon>Login.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\Menu.resx">
+      <DependentUpon>Menu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Compras\Modulo_Compras.resx">
+      <DependentUpon>Modulo_Compras.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Compras\SolAsisCompraModos.resx">
+      <DependentUpon>SolAsisCompraModos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Compras\SolCompras.resx">
+      <DependentUpon>SolCompras.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Compras\SolCompras_Documentos.resx">
+      <DependentUpon>SolCompras_Documentos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Despachos\Sistema_Despachos.resx">
+      <DependentUpon>Sistema_Despachos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Informes\Informes Especiales\Informes_Especial_Cliente.resx">
+      <DependentUpon>Informes_Especial_Cliente.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Informes\Modulo_Informes.resx">
+      <DependentUpon>Modulo_Informes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Informes\InformesCompra.resx">
+      <DependentUpon>InformesCompra.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Informes\InformesStock.resx">
+      <DependentUpon>InformesStock.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Informes\InformesVenta.resx">
+      <DependentUpon>InformesVenta.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Menu Extra\Frm_Menu_Extra.resx">
+      <DependentUpon>Frm_Menu_Extra.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Parametros\Entidades\Entidades_menu.resx">
+      <DependentUpon>Entidades_menu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Parametros\Entidades\Tablas_Clasificaciones_Entidades\Tablas_Clasificaciones_Ent.resx">
+      <DependentUpon>Tablas_Clasificaciones_Ent.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Parametros\Modulo_Parametros.resx">
+      <DependentUpon>Modulo_Parametros.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Parametros\Productos\Cambiar código de producto\Cambiar_Codigos_Mnu.resx">
+      <DependentUpon>Cambiar_Codigos_Mnu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Parametros\Productos\Crear productos\Mant_Productos.resx">
+      <DependentUpon>Mant_Productos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Parametros\Productos\Ubicacion productos\Mnu_Ubic_Prod.resx">
+      <DependentUpon>Mnu_Ubic_Prod.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Parametros\Productos\Tablas_Clasificaciones_Productos\Tablas_Clasificaciones_Pro.resx">
+      <DependentUpon>Tablas_Clasificaciones_Pro.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Parametros\Precios y costos\Menu Mant Precios Costos\Modulo_Lista_Precios_Costos.resx">
+      <DependentUpon>Modulo_Lista_Precios_Costos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Parametros\Precios y costos\PreciosCostos.resx">
+      <DependentUpon>PreciosCostos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Parametros\Productos\Productos.resx">
+      <DependentUpon>Productos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Parametros\Tablas Sistema BakApp\Arbol_Clasificaciones.resx">
+      <DependentUpon>Arbol_Clasificaciones.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Parametros\Tablas Sistema BakApp\Tablas_BakApp.resx">
+      <DependentUpon>Tablas_BakApp.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Parametros\Tablas Sistema BakApp\Tablas_BakApp_Vehiculos.resx">
+      <DependentUpon>Tablas_BakApp_Vehiculos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Produccion\Informes\Produccion_Informes.resx">
+      <DependentUpon>Produccion_Informes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Produccion\Mesones\Produccion_Mesones.resx">
+      <DependentUpon>Produccion_Mesones.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Produccion\Mesones\Servicio_Tecnico_Mesones.resx">
+      <DependentUpon>Servicio_Tecnico_Mesones.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Produccion\Produccion.resx">
+      <DependentUpon>Produccion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Codigos de Barra\Sistema_CodBarras.resx">
+      <DependentUpon>Sistema_CodBarras.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Creditos por negocios\CreditosNegociosMnu.resx">
+      <DependentUpon>CreditosNegociosMnu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\CRV Control Ruta Vehiculos\Configuracion CRV\Configuracion_CRV.resx">
+      <DependentUpon>Configuracion_CRV.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\CRV Control Ruta Vehiculos\CRV_Control_Ruta_Vehiculos.resx">
+      <DependentUpon>CRV_Control_Ruta_Vehiculos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Factura Electronica\Factura_Electronica.resx">
+      <DependentUpon>Factura_Electronica.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Huellas\Modulo_Huellas.resx">
+      <DependentUpon>Modulo_Huellas.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Presatshop\Modulo_Prestashop.resx">
+      <DependentUpon>Modulo_Prestashop.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Reclamos\Sistema_Reclamos.resx">
+      <DependentUpon>Sistema_Reclamos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Sis. Vales despacho\Mod. Caja\ModCaja_01.resx">
+      <DependentUpon>ModCaja_01.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Sis. Vales despacho\Sis_ValesDespacho.resx">
+      <DependentUpon>Sis_ValesDespacho.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Modulo_Programas_Especiales.resx">
+      <DependentUpon>Modulo_Programas_Especiales.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Servicio Tecnico\Modulo_Servicio_Tecnico.resx">
+      <DependentUpon>Modulo_Servicio_Tecnico.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Documentos\Documentos_GDD_GDP.resx">
+      <DependentUpon>Documentos_GDD_GDP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Documentos\Modulo_Documentos_Stock.resx">
+      <DependentUpon>Modulo_Documentos_Stock.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Inv. general\Inventario_Activo.resx">
+      <DependentUpon>Inventario_Activo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Inv. general\Inv_General.resx">
+      <DependentUpon>Inv_General.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Inv. general\Inv_General_Conf.resx">
+      <DependentUpon>Inv_General_Conf.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Inv. parcializado\Inv_Parcializado.resx">
+      <DependentUpon>Inv_Parcializado.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Sistema_Inventarios.resx">
+      <DependentUpon>Sistema_Inventarios.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Ventas\Tesoreria\Clientes\Tesoreria_Clientes.resx">
+      <DependentUpon>Tesoreria_Clientes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Ventas\Tesoreria\Proveedores\Tesoreria_Proveedores.resx">
+      <DependentUpon>Tesoreria_Proveedores.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Ventas\Tesoreria\Modulo_Tesoreria.resx">
+      <DependentUpon>Modulo_Tesoreria.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Ventas\CashDro\Modulo_CashDro.resx">
+      <DependentUpon>Modulo_CashDro.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Ventas\Documentos\Modulo_Documentos_Venta.resx">
+      <DependentUpon>Modulo_Documentos_Venta.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Ventas\Modulo_Ventas.resx">
+      <DependentUpon>Modulo_Ventas.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\zz\Rs_Familias.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Rs_Familias.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\advertencia.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ayuda.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\barra.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\descarga.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fondo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\internet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\llave.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Ok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\soporte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tarea.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\usuarios.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Popup.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\close.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eye.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\file_extension_xls.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\accept.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\user_comment.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\key_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\find.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\user_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_stock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\user_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\date_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_row_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\date_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\accept2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shape_square.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\check_box.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Procedimientos\Auditoria compras y stock - copia.sql" />
+    <None Include="bin\Debug\Procedimientos\Auditoria compras y stock.sql" />
+    <None Include="bin\Debug\Procedimientos\Detalle Occ vs Nvv.sql" />
+    <None Include="bin\Debug\Procedimientos\Envio correo interno Random.sql" />
+    <None Include="bin\Debug\Procedimientos\Especial MTS\Crea Tabla ListaMTSvsProveedores.sql" />
+    <None Include="bin\Debug\Procedimientos\FUNCTION_ProxNumero.sql" />
+    <None Include="bin\Debug\Procedimientos\Graba_GDI.sql" />
+    <None Include="bin\Debug\Procedimientos\Graba_GRI.sql" />
+    <None Include="bin\Debug\Procedimientos\Graba_NVV.sql" />
+    <None Include="bin\Debug\Procedimientos\Graba_OCC.sql" />
+    <None Include="bin\Debug\Procedimientos\Inventario\Consolidación de Stock por producto.sql" />
+    <None Include="bin\Debug\Procedimientos\Inventario\Crear foto stock por inventario.sql" />
+    <None Include="bin\Debug\Procedimientos\Inventario\Dejar Stock en cero\Carga GRI para ajuste en x_maeddo x_maeedo.sql" />
+    <None Include="bin\Debug\Procedimientos\Inventario\Dejar Stock en cero\Deja Stock en Cero con guias de ajuste.sql" />
+    <None Include="bin\Debug\Procedimientos\Inventario\Eliminar Inventario.sql" />
+    <None Include="bin\Debug\Procedimientos\Inventario\Informe estado sectores.sql" />
+    <None Include="bin\Debug\Procedimientos\Inventario\Inventario parcializado\Busqueda inventario parcializado actualiza inf.sql" />
+    <None Include="bin\Debug\Procedimientos\Inventario\Inventario parcializado\Busqueda inventario parcializado.sql" />
+    <None Include="bin\Debug\Procedimientos\Inventario\Llena tabla inv parcializado.sql" />
+    <None Include="bin\Debug\Procedimientos\Inventario\SelectInformeProductosXsector.sql" />
+    <None Include="bin\Debug\Procedimientos\Inventario\SelectInformeProductosXsectorTodos.sql" />
+    <None Include="bin\Debug\Procedimientos\Random2Sap\GDV_RANDOM_SAP.sql" />
+    <None Include="bin\Debug\Procedimientos\Random2Sap\GRC_RANDOM_SAP.sql" />
+    <None Include="bin\Debug\Procedimientos\Random2Sap\NVV_RANDOM_SAP.sql" />
+    <None Include="bin\Debug\Procedimientos\Revision de compras.sql" />
+    <None Include="bin\Debug\Procedimientos\Rotacion productos.sql" />
+    <None Include="bin\Debug\Procedimientos\Sistema Inventario\Select_ProductosInvetariadosFotoStock.Sql" />
+    <None Include="bin\Debug\Procedimientos\Sistema Inventario\Select_ProductosInvetariadosFotoStock1.Sql" />
+    <None Include="bin\Debug\Procedimientos\Sistema Inventario\Select_ProductosInvetariadosFotoStockTodos.Sql" />
+    <None Include="bin\Debug\Procedimientos\Sistema Inventario\Select_ProductosInvetariadosFotoStockTodos1.Sql" />
+    <None Include="bin\Debug\Procedimientos\Sistema Inventario\Select_ProductosInvetariadosFotoStock_Informe.Sql" />
+    <None Include="bin\Debug\Procedimientos\Tablas del sistema.sql" />
+    <None Include="bin\Debug\Procedimientos\Trae_UltimoDocumentoXproducto.sql" />
+    <None Include="Resources\calendar_add.png" />
+    <None Include="Resources\brick_add.png" />
+    <None Include="Resources\date_add1.png" />
+    <None Include="Resources\cart_add.png" />
+    <None Include="Resources\LogoLaColchaguina.jpg" />
+    <None Include="Resources\file_extension_xls1.png" />
+    <None Include="Resources\report_user.png" />
+    <None Include="Resources\user_add1.png" />
+    <None Include="Resources\group_key.png" />
+    <None Include="Resources\image.png" />
+    <None Include="Resources\setting_tools.png" />
+    <None Include="Resources\user_go.png" />
+    <None Include="Resources\database_connect.png" />
+    <None Include="Resources\change_password.png" />
+    <None Include="Resources\page.png" />
+    <None Include="Resources\user_edit.png" />
+    <None Include="Resources\user_delete1.png" />
+    <None Include="Resources\database_add.png" />
+    <None Include="Resources\cart.png" />
+    <None Include="Resources\door_out.png" />
+    <None Include="Resources\database_refresh.png" />
+    <None Include="Resources\star.png" />
+    <None Include="Resources\storage.png" />
+    <None Include="bin\Debug\Logo Bakapp-01.jpg" />
+    <None Include="Resources\Logo.jpg" />
+    <None Include="Resources\folder.png" />
+    <None Include="Resources\Bakapp - Perfil ventana emergente.jpg" />
+    <Content Include="BakApp - Icono.ico" />
+    <Content Include="BakApp - Satelite.ico" />
+    <Content Include="BakApp 2.ico" />
+    <Content Include="BakApp.ico" />
+    <None Include="Resources\Firma Jorge Alfaro.png" />
+    <None Include="Resources\cart1.png" />
+    <None Include="Resources\arrow_refresh.png" />
+    <None Include="Resources\no_requirements.png" />
+    <None Include="Resources\table_tab_search.png" />
+    <None Include="Resources\Code_128_Barcode_Graphic.jpg" />
+    <None Include="Resources\storage1.png" />
+    <None Include="Resources\cancel.png" />
+    <None Include="Resources\report_go.png" />
+    <None Include="Resources\camera.png" />
+    <None Include="Resources\table_export.png" />
+    <None Include="Resources\chart_bullseye.png" />
+    <None Include="Resources\camera_delete.png" />
+    <None Include="Resources\camera_add.png" />
+    <None Include="Resources\disk1.png" />
+    <None Include="Resources\delete1.png" />
+    <None Include="Resources\barcode.png" />
+    <None Include="Resources\printer.png" />
+    <None Include="Resources\printer1.png" />
+    <None Include="Resources\printer_add.png" />
+    <None Include="Resources\cog.png" />
+    <None Include="Resources\insert_element.png" />
+    <None Include="Resources\door_out1.png" />
+    <None Include="Resources\user_go1.png" />
+    <None Include="Resources\setting_tools1.png" />
+    <None Include="Resources\phone_sound.png" />
+    <None Include="Resources\mts.jpg" />
+    <None Include="Resources\group_gear.png" />
+    <None Include="Resources\arrow_left.png" />
+    <None Include="Resources\bookshelf.png" />
+    <None Include="Resources\BakApp - Icono.ico" />
+    <None Include="Resources\arrow_left1.png" />
+    <None Include="Resources\cross.png" />
+    <None Include="Resources\insert_element1.png" />
+    <None Include="Resources\table_tab_search1.png" />
+    <None Include="Resources\database_connect1.png" />
+    <None Include="Resources\change_password1.png" />
+    <None Include="Resources\group_key1.png" />
+    <None Include="Resources\mail_server_setting.png" />
+    <None Include="Resources\draw_eraser.png" />
+    <None Include="Resources\to_do_list_cheked_all.png" />
+    <None Include="Resources\money_add.png" />
+    <None Include="Resources\money_dollar.png" />
+    <None Include="Resources\document_insert.png" />
+    <None Include="Resources\brick_add1.png" />
+    <None Include="Resources\Check_box_4779.jpg" />
+    <None Include="Resources\google_custom_search.png" />
+    <None Include="Resources\satellite.png" />
+    <None Include="Resources\satellite1.png" />
+    <None Include="Resources\time.png" />
+    <None Include="Resources\table_refresh.png" />
+    <None Include="Resources\gear_in.png" />
+    <None Include="Resources\document_move.png" />
+    <None Include="Resources\folder_find.png" />
+    <None Include="Resources\setting_tools2.png" />
+    <None Include="Resources\barcode1.png" />
+    <None Include="Resources\rotate_90.png" />
+    <None Include="Resources\Logo Empresa.bmp" />
+    <None Include="Resources\Bakapp - Pantalla Inicio.jpg" />
+    <None Include="bin\Debug\Procedimientos\Tablas del sistema.dll" />
+    <None Include="Resources\arrow_right.png" />
+    <None Include="Resources\calculator.png" />
+    <None Include="Resources\calculator1.png" />
+    <None Include="Resources\box_down.png" />
+    <None Include="Resources\group.png" />
+    <None Include="Resources\cart_add1.png" />
+    <None Include="Resources\gear_in1.png" />
+    <None Include="Resources\group_gear1.png" />
+    <None Include="Resources\group_go.png" />
+    <None Include="Resources\bricks.png" />
+    <None Include="Resources\bullet_arrow_up.png" />
+    <None Include="Resources\bullet_arrow_down.png" />
+    <None Include="Resources\lock.png" />
+    <None Include="Resources\lock_open.png" />
+    <None Include="Resources\Inicio.png" />
+    <None Include="Resources\find1.png" />
+    <None Include="Resources\bricks1.png" />
+    <None Include="Resources\document_insert1.png" />
+    <None Include="Resources\document_todo.png" />
+    <None Include="Resources\Bakapp - Perfil ventana emergente1.jpg" />
+    <None Include="Resources\Administrative Tools.png" />
+    <None Include="Resources\Administrative Tools1.png" />
+    <None Include="Resources\Administrative Tools mini.png" />
+    <None Include="Resources\Adobe Flash Catalyst.png" />
+    <None Include="Resources\Firma Jorge Alfaro1.png" />
+    <None Include="Resources\exit-32.png" />
+    <None Include="Resources\Bakapp - Pantalla Inicio1.jpg" />
+    <None Include="Resources\change_user-32.png" />
+    <None Include="Resources\data_configuration-26.png" />
+    <None Include="Resources\administrative_tools-26.png" />
+    <None Include="Resources\key-26.png" />
+    <None Include="Resources\checked_user-26.png" />
+    <None Include="Resources\administrative_tools-261.png" />
+    <None Include="Resources\buy-64.png" />
+    <None Include="Resources\buy-641.png" />
+    <None Include="Resources\buy-48.png" />
+    <None Include="Resources\Add_Row-32.png" />
+    <None Include="Resources\edit_property-32.png" />
+    <None Include="Resources\barcode-32.png" />
+    <None Include="Resources\list-32.png" />
+    <None Include="Resources\barcode_scanner-48.png" />
+    <None Include="Resources\barcode_scanner-64.png" />
+    <None Include="Resources\calculator-64.png" />
+    <None Include="Resources\data_recovery-64.png" />
+    <None Include="Resources\checked_user-64.png" />
+    <None Include="Resources\key-64.png" />
+    <None Include="Resources\key-128.png" />
+    <None Include="Resources\cancel-26.png" />
+    <None Include="Resources\add_link-32.png" />
+    <None Include="Resources\excel-32.png" />
+    <None Include="Resources\empty_filter-32.png" />
+    <None Include="Resources\camera_addon-32.png" />
+    <None Include="Resources\folder_page.png" />
+    <None Include="Resources\arrow_refresh1.png" />
+    <None Include="Resources\calculator_black.png" />
+    <None Include="Resources\Aero WinFlip 3D.png" />
+    <None Include="Resources\dns_setting.png" />
+    <None Include="Resources\compare-32.png" />
+    <None Include="Resources\bg_color-32.png" />
+    <None Include="Resources\bg_color-26.png" />
+    <None Include="Resources\flow_chart-32.png" />
+    <None Include="Resources\button_rounded_red_delete.png" />
+    <None Include="Resources\inventory-shipment.bmp" />
+    <None Include="Resources\inventory-shipment.png" />
+    <None Include="Resources\inventory-shipment1.png" />
+    <None Include="Resources\inventory-shipment2.png" />
+    <None Include="Resources\button_circle_left.png" />
+    <None Include="Resources\document_flat-new.png" />
+    <None Include="Resources\document_text-new.png" />
+    <None Include="Resources\archive-find.png" />
+    <None Include="Resources\inventory-customer.png" />
+    <None Include="Resources\check-gear.png" />
+    <None Include="Resources\inventory-customer1.png" />
+    <None Include="Resources\document-new.png" />
+    <None Include="Resources\document_text-new1.png" />
+    <None Include="Resources\archive-find1.png" />
+    <None Include="Resources\inventory-customer2.png" />
+    <None Include="Resources\inventory-print.png" />
+    <None Include="Resources\database-execute.png" />
+    <None Include="Resources\database-gear.png" />
+    <None Include="Resources\key.png" />
+    <None Include="Resources\computer-update.png" />
+    <None Include="Resources\check-gear1.png" />
+    <None Include="Resources\gears.png" />
+    <None Include="Resources\gear-ok.png" />
+    <None Include="Resources\document-find.png" />
+    <None Include="Resources\gears1.png" />
+    <None Include="Resources\barcode-shipment.png" />
+    <None Include="Resources\customers-shipment.png" />
+    <None Include="Resources\account_book-new.png" />
+    <None Include="Resources\account_book-info.png" />
+    <None Include="Resources\inventory-add.png" />
+    <None Include="Resources\inventory-new.png" />
+    <None Include="Resources\inventory-search.png" />
+    <None Include="Resources\business_report-ok.png" />
+    <None Include="Resources\calculator2.png" />
+    <None Include="Resources\colors-erase.png" />
+    <None Include="bin\Debug\BakApp_Demonio.exe" />
+    <None Include="bin\Debug\Bakapp_Notificaciones.exe" />
+    <Content Include="colors.ico" />
+    <None Include="Resources\business_report.png" />
+    <None Include="Resources\delete2.png" />
+    <None Include="Resources\document_color_red.png" />
+    <None Include="Resources\inventory-edit.png" />
+    <None Include="Resources\document_refresh.png" />
+    <None Include="Resources\import_from_excel.png" />
+    <None Include="Resources\export_to_excel.png" />
+    <None Include="Resources\document-update.png" />
+    <None Include="Resources\inventory-database.png" />
+    <None Include="Resources\inventory-key.png" />
+    <None Include="Resources\inventory-ok.png" />
+    <None Include="Resources\factory.png" />
+    <None Include="Resources\graph_sales.png" />
+    <None Include="Resources\inventory-shipment3.png" />
+    <None Include="Resources\inventory-edit1.png" />
+    <None Include="Resources\inventory-shipment4.png" />
+    <None Include="Resources\archive.png" />
+    <None Include="Resources\document-find1.png" />
+    <None Include="Resources\document-search.png" />
+    <None Include="Resources\form_wizard.png" />
+    <Content Include="Icono.ico" />
+    <Content Include="New_Bakapp_Icon.ico" />
+    <Content Include="Resources\Logo Bakapp-01.jpg" />
+    <None Include="Resources\table_row_insert.png" />
+    <None Include="Resources\world.png" />
+    <None Include="Resources\weight.png" />
+    <None Include="Resources\weight1.png" />
+    <None Include="Resources\to_do_list_cheked_all1.png" />
+    <None Include="Resources\to_do_list_cheked_all2.png" />
+    <None Include="Resources\rotate_901.png" />
+    <None Include="Resources\page_add.png" />
+    <None Include="Resources\table_refresh1.png" />
+    <None Include="Resources\widgets.png" />
+    <None Include="Resources\marketwatch.png" />
+    <None Include="Resources\Wizard-5BakApp.bmp" />
+    <None Include="Resources\page1.png" />
+    <None Include="Resources\scull.png" />
+    <None Include="Resources\scull1.png" />
+    <None Include="Resources\widgets1.png" />
+    <None Include="Resources\money_dollar1.png" />
+    <None Include="Resources\storage2.png" />
+    <None Include="Resources\monitor_window_3d.png" />
+    <None Include="Resources\unstoppable_copier.png" />
+    <None Include="Resources\settings-32.png" />
+    <None Include="Resources\sale-32.png" />
+    <None Include="Resources\sale-48.png" />
+    <None Include="Resources\registry_editor-32.png" />
+    <None Include="Resources\triller-32.png" />
+    <None Include="Resources\USD-48.png" />
+    <None Include="Resources\USD-32.png" />
+    <None Include="Resources\statistics-32.png" />
+    <None Include="Resources\product-64.png" />
+    <None Include="Resources\purchase_order-64.png" />
+    <None Include="Resources\price_tag-64.png" />
+    <None Include="Resources\user-64.png" />
+    <None Include="Resources\printer-64.png" />
+    <None Include="Resources\printer-48.png" />
+    <None Include="Resources\sale-26.png" />
+    <None Include="Resources\ok-26.png" />
+    <None Include="Resources\under_computer-128.png" />
+    <None Include="Resources\printer-32.png" />
+    <None Include="Resources\VillarHnos.png" />
+    <None Include="Resources\picture-48.png" />
+    <None Include="Resources\picture-64.png" />
+    <None Include="Resources\product-48.png" />
+    <None Include="Resources\paint_brush-32.png" />
+    <None Include="Resources\refresh-32.png" />
+    <None Include="Resources\repeat-32.png" />
+    <None Include="Resources\product-32.png" />
+    <None Include="Resources\shipment-edit.png" />
+    <None Include="Resources\tools.png" />
+    <None Include="Resources\user_group.png" />
+    <None Include="Resources\shopping_cart-shipment.png" />
+    <None Include="Resources\shopping_cart-vendor.png" />
+    <None Include="Resources\shopping_bag-add2.png" />
+    <None Include="Resources\shopping_bag-add21.png" />
+    <None Include="Resources\script-sql.png" />
+    <None Include="Resources\shopping_cart-vendor1.png" />
+    <None Include="Resources\shopping_cart-vendor2.png" />
+    <None Include="Resources\table-gear.png" />
+    <None Include="Resources\script-sql1.png" />
+    <None Include="Resources\money-query.png" />
+    <None Include="Resources\shipment.png" />
+    <None Include="Resources\tools1.png" />
+    <None Include="Resources\tag_price-employee.png" />
+    <None Include="Resources\windows-ok.png" />
+    <None Include="Resources\user-ok.png" />
+    <None Include="Resources\picture-gear.png" />
+    <None Include="Resources\shopping_bag-add.png" />
+    <None Include="Resources\TeamViewer.png" />
+    <None Include="Resources\TeamViewer1.png" />
+    <None Include="Resources\money-add.png" />
+    <None Include="Resources\shipment-shipment.png" />
+    <None Include="Resources\shipment-shipment1.png" />
+    <None Include="Resources\planning-shipment.png" />
+    <None Include="Resources\sheet-shipment.png" />
+    <None Include="Resources\transport-shipment.png" />
+    <None Include="Resources\record-user.png" />
+    <None Include="Resources\save.png" />
+    <None Include="Resources\shipment-search.png" />
+    <None Include="Resources\shipment-search1.png" />
+    <None Include="Resources\table.png" />
+    <None Include="Resources\mail.png" />
+    <None Include="Resources\shopping_cart-shipment1.png" />
+    <None Include="Resources\tree.png" />
+    <None Include="z_Menu Principal\SubMenus\zz\SQLQuery Conjunto de codigos madre Sierralta.sql" />
+    <Content Include="Satelite.ico" />
+    <Content Include="Satelite2.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{967B4E0D-AD0C-4609-AB67-0FA40C0206D8}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Sis. Vales despacho\Mod. Bodega\" />
+    <Folder Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Sis. Vales despacho\Mod. despacho\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Librerias\BkReclamos\BkReclamos\BkReclamos.vbproj">
+      <Project>{4f13dda5-6770-4e16-b1fe-b7e134c98bd6}</Project>
+      <Name>BkReclamos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Librerias\BkSpecialPrograms\BkSpecialPrograms.vbproj">
+      <Project>{b1123a46-6005-434a-9458-b58e8d51ee34}</Project>
+      <Name>BkSpecialPrograms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Librerias\Bk_Produccion\Bk_Produccion.vbproj">
+      <Project>{b9f81bea-c82e-4cda-9d7c-cf0cf634a37b}</Project>
+      <Name>Bk_Produccion</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

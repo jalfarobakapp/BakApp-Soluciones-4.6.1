@@ -1,0 +1,111 @@
+Return-Path: <siidte_error@sii.cl>
+Delivered-To: notificacionsii@sirrep.cl
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id mS/eGbdlRFdTZwwAqFaw+A
+	for <notificacionsii@sirrep.cl>; Tue, 24 May 2016 11:31:55 -0300
+Return-path: <siidte_error@sii.cl>
+Received: from rapel12.sii.cl ([200.10.251.90] helo=mailin02.sii.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.86)
+	(envelope-from <siidte_error@sii.cl>)
+	id 1b5DND-003Pda-BV
+	for notificacionsii@sirrep.cl; Tue, 24 May 2016 11:31:55 -0300
+X-IronPort-AV: E=Sophos;i="5.22,559,1449543600"; 
+   d="xml'?txt'?scan'208";a="470598185"
+Received: from dte.sii.cl (HELO dte) ([146.20.1.104])
+  by mailout02.sii.cl with ESMTP; 24 May 2016 10:33:07 -0300
+Message-ID: <30074778.1464100341687.JavaMail.root@dte>
+Date: Tue, 24 May 2016 11:32:21 -0300 (CLT)
+From: siidte_error@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: Produccion - Resultado de Revision Envio 1534650904 - 79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_50892885_16827918.1464100341687"
+
+------=_Part_50892885_16827918.1464100341687
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+SII de Chile - Validacion de DTE
+================================
+
+En el archivo adjunto esta el resultado del proceso de revision y validacion
+del envio de Documentos Tributarios Electronicos realizado por su empresa al
+Servicio de Impuestos Internos de Chile.
+
+----------------------------------------------------------------------------
+
+Este es una aplicacion automatica. No conteste este correo ni haga 
+consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue 
+mas claro en cualquier aplicacion.
+
+
+------=_Part_50892885_16827918.1464100341687
+Content-Type: text/plain; name=DTEMAIL1534650904.txt
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL1534650904.txt
+
+Resultado de Validacion de Envio de DTE
+=======================================
+
+Rut de Empresa Emisora   : 79514800-0
+Rut que Realizo el Envio : 12628844-1
+Identificador de Envio   : 1534650904
+Fecha de Recepcion       : 24/05/2016 10:33:11
+Estado del Envio         : EPR - Envio Procesado
+
+Estadisticas del Envio
+======================
+Tipo DTE  Informados  Rechazos  Reparos  Aceptados
+--------------------------------------------------
+   61              1         1        0          0
+
+Detalle de Rechazos y Reparos de DTE
+====================================
+
+ Folio       Tipo  Estado
+ ------------------------------------------------------------------------------
+ 16057        61   RCH - DTE Rechazado
+     (REF L[1] -3-779) Monto referencias no concuerda monto DTE : NC Tot : [18790] > Ref [18789]
+     (HED-2-210) Monto Neto No Cuadra con Detalle : [15789.0000] <> [18865.0000]
+     (DET L[4] -1-200) Valor Detalle Distinto a Precio * Cantidad : [5798.0000] <> [8874.0000]
+
+
+------=_Part_50892885_16827918.1464100341687
+Content-Type: application/octet-stream; name=DTEMAIL1534650904.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL1534650904.xml
+
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<RESULTADO_ENVIO>
+ <IDENTIFICACION>
+  <RUTEMISOR>79514800-0</RUTEMISOR>
+  <RUTENVIA>12628844-1</RUTENVIA>
+  <TRACKID>1534650904</TRACKID>
+  <TMSTRECEPCION>24/05/2016 10:33:11</TMSTRECEPCION>
+  <ESTADO>EPR - Envio Procesado</ESTADO>
+ </IDENTIFICACION>
+ <ESTADISTICA>
+  <SUBTOTAL>
+   <TIPODOC>61</TIPODOC>
+   <INFORMADO>1</INFORMADO>
+   <RECHAZO>1</RECHAZO>
+  </SUBTOTAL>
+ </ESTADISTICA>
+ <REVISIONENVIO>
+  <REVISIONDTE>
+   <FOLIO>16057</FOLIO>
+   <TIPODTE>61</TIPODTE>
+   <ESTADO>RCH - DTE Rechazado</ESTADO>
+   <DETALLE>(REF L[1] -3-779) Monto referencias no concuerda monto DTE : NC Tot : [18790] &gt; Ref [18789]</DETALLE>
+   <DETALLE>(HED-2-210) Monto Neto No Cuadra con Detalle : [15789.0000] &lt;&gt; [18865.0000]</DETALLE>
+   <DETALLE>(DET L[4] -1-200) Valor Detalle Distinto a Precio * Cantidad : [5798.0000] &lt;&gt; [8874.0000]</DETALLE>
+  </REVISIONDTE>
+ </REVISIONENVIO>
+</RESULTADO_ENVIO>
+
+------=_Part_50892885_16827918.1464100341687--
+

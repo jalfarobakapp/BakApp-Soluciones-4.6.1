@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Ds_Inf_Ventas_OnLine" targetNamespace="http://tempuri.org/Ds_Inf_Ventas_OnLine.xsd" xmlns:mstns="http://tempuri.org/Ds_Inf_Ventas_OnLine.xsd" xmlns="http://tempuri.org/Ds_Inf_Ventas_OnLine.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Ds_Inf_Ventas_OnLine" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="Ds_Inf_Ventas_OnLine" msprop:Generator_UserDSName="Ds_Inf_Ventas_OnLine" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Tbl_Diario" msprop:Generator_UserTableName="Tbl_Diario" msprop:Generator_RowDeletedName="Tbl_DiarioRowDeleted" msprop:Generator_TableClassName="Tbl_DiarioDataTable" msprop:Generator_RowChangedName="Tbl_DiarioRowChanged" msprop:Generator_RowClassName="Tbl_DiarioRow" msprop:Generator_RowChangingName="Tbl_DiarioRowChanging" msprop:Generator_RowEvArgName="Tbl_DiarioRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_DiarioRowChangeEventHandler" msprop:Generator_TablePropName="Tbl_Diario" msprop:Generator_TableVarName="tableTbl_Diario" msprop:Generator_RowDeletingName="Tbl_DiarioRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SUDO" msprop:Generator_UserColumnName="SUDO" msprop:Generator_ColumnPropNameInRow="SUDO" msprop:Generator_ColumnVarNameInTable="columnSUDO" msprop:Generator_ColumnPropNameInTable="SUDOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="NOSUDO" msprop:Generator_UserColumnName="NOSUDO" msprop:Generator_ColumnPropNameInRow="NOSUDO" msprop:Generator_ColumnVarNameInTable="columnNOSUDO" msprop:Generator_ColumnPropNameInTable="NOSUDOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="MONTO" msprop:Generator_UserColumnName="MONTO" msprop:Generator_ColumnPropNameInRow="MONTO" msprop:Generator_ColumnVarNameInTable="columnMONTO" msprop:Generator_ColumnPropNameInTable="MONTOColumn" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Tbl_Mensual" msprop:Generator_UserTableName="Tbl_Mensual" msprop:Generator_RowDeletedName="Tbl_MensualRowDeleted" msprop:Generator_TableClassName="Tbl_MensualDataTable" msprop:Generator_RowChangedName="Tbl_MensualRowChanged" msprop:Generator_RowClassName="Tbl_MensualRow" msprop:Generator_RowChangingName="Tbl_MensualRowChanging" msprop:Generator_RowEvArgName="Tbl_MensualRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_MensualRowChangeEventHandler" msprop:Generator_TablePropName="Tbl_Mensual" msprop:Generator_TableVarName="tableTbl_Mensual" msprop:Generator_RowDeletingName="Tbl_MensualRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SUDO" msprop:Generator_UserColumnName="SUDO" msprop:Generator_ColumnPropNameInRow="SUDO" msprop:Generator_ColumnVarNameInTable="columnSUDO" msprop:Generator_ColumnPropNameInTable="SUDOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="NOSUDO" msprop:Generator_UserColumnName="NOSUDO" msprop:Generator_ColumnPropNameInRow="NOSUDO" msprop:Generator_ColumnVarNameInTable="columnNOSUDO" msprop:Generator_ColumnPropNameInTable="NOSUDOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="MONTO" msprop:Generator_UserColumnName="MONTO" msprop:Generator_ColumnPropNameInRow="MONTO" msprop:Generator_ColumnVarNameInTable="columnMONTO" msprop:Generator_ColumnPropNameInTable="MONTOColumn" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Tbl_Anual" msprop:Generator_UserTableName="Tbl_Anual" msprop:Generator_RowDeletedName="Tbl_AnualRowDeleted" msprop:Generator_TableClassName="Tbl_AnualDataTable" msprop:Generator_RowChangedName="Tbl_AnualRowChanged" msprop:Generator_RowClassName="Tbl_AnualRow" msprop:Generator_RowChangingName="Tbl_AnualRowChanging" msprop:Generator_RowEvArgName="Tbl_AnualRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_AnualRowChangeEventHandler" msprop:Generator_TablePropName="Tbl_Anual" msprop:Generator_TableVarName="tableTbl_Anual" msprop:Generator_RowDeletingName="Tbl_AnualRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SUDO" msprop:Generator_UserColumnName="SUDO" msprop:Generator_ColumnPropNameInRow="SUDO" msprop:Generator_ColumnVarNameInTable="columnSUDO" msprop:Generator_ColumnPropNameInTable="SUDOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="NOSUDO" msprop:Generator_UserColumnName="NOSUDO" msprop:Generator_ColumnPropNameInRow="NOSUDO" msprop:Generator_ColumnVarNameInTable="columnNOSUDO" msprop:Generator_ColumnPropNameInTable="NOSUDOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="MONTO" msprop:Generator_UserColumnName="MONTO" msprop:Generator_ColumnPropNameInRow="MONTO" msprop:Generator_ColumnVarNameInTable="columnMONTO" msprop:Generator_ColumnPropNameInTable="MONTOColumn" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Tbl_Guias_Diario" msprop:Generator_UserTableName="Tbl_Guias_Diario" msprop:Generator_RowDeletedName="Tbl_Guias_DiarioRowDeleted" msprop:Generator_TableClassName="Tbl_Guias_DiarioDataTable" msprop:Generator_RowChangedName="Tbl_Guias_DiarioRowChanged" msprop:Generator_RowClassName="Tbl_Guias_DiarioRow" msprop:Generator_RowChangingName="Tbl_Guias_DiarioRowChanging" msprop:Generator_RowEvArgName="Tbl_Guias_DiarioRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_Guias_DiarioRowChangeEventHandler" msprop:Generator_TablePropName="Tbl_Guias_Diario" msprop:Generator_TableVarName="tableTbl_Guias_Diario" msprop:Generator_RowDeletingName="Tbl_Guias_DiarioRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SUDO" msprop:Generator_UserColumnName="SUDO" msprop:Generator_ColumnPropNameInRow="SUDO" msprop:Generator_ColumnVarNameInTable="columnSUDO" msprop:Generator_ColumnPropNameInTable="SUDOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="NOSUDO" msprop:Generator_UserColumnName="NOSUDO" msprop:Generator_ColumnPropNameInRow="NOSUDO" msprop:Generator_ColumnVarNameInTable="columnNOSUDO" msprop:Generator_ColumnPropNameInTable="NOSUDOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="FEEMDO" msprop:Generator_UserColumnName="FEEMDO" msprop:Generator_ColumnPropNameInRow="FEEMDO" msprop:Generator_ColumnVarNameInTable="columnFEEMDO" msprop:Generator_ColumnPropNameInTable="FEEMDOColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="GUIAS" msprop:Generator_UserColumnName="GUIAS" msprop:Generator_ColumnPropNameInRow="GUIAS" msprop:Generator_ColumnVarNameInTable="columnGUIAS" msprop:Generator_ColumnPropNameInTable="GUIASColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="COSTO" msprop:Generator_UserColumnName="COSTO" msprop:Generator_ColumnPropNameInRow="COSTO" msprop:Generator_ColumnVarNameInTable="columnCOSTO" msprop:Generator_ColumnPropNameInTable="COSTOColumn" type="xs:double" minOccurs="0" />
+              <xs:element name="MONTO" msprop:Generator_UserColumnName="MONTO" msprop:Generator_ColumnPropNameInRow="MONTO" msprop:Generator_ColumnVarNameInTable="columnMONTO" msprop:Generator_ColumnPropNameInTable="MONTOColumn" type="xs:double" minOccurs="0" />
+              <xs:element name="MARGEN_V" msprop:Generator_UserColumnName="MARGEN_V" msprop:Generator_ColumnPropNameInRow="MARGEN_V" msprop:Generator_ColumnVarNameInTable="columnMARGEN_V" msprop:Generator_ColumnPropNameInTable="MARGEN_VColumn" type="xs:double" minOccurs="0" />
+              <xs:element name="MARGEN" msprop:Generator_UserColumnName="MARGEN" msprop:Generator_ColumnPropNameInRow="MARGEN" msprop:Generator_ColumnVarNameInTable="columnMARGEN" msprop:Generator_ColumnPropNameInTable="MARGENColumn" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Tbl_Guias_Mensual" msprop:Generator_UserTableName="Tbl_Guias_Mensual" msprop:Generator_RowDeletedName="Tbl_Guias_MensualRowDeleted" msprop:Generator_TableClassName="Tbl_Guias_MensualDataTable" msprop:Generator_RowChangedName="Tbl_Guias_MensualRowChanged" msprop:Generator_RowClassName="Tbl_Guias_MensualRow" msprop:Generator_RowChangingName="Tbl_Guias_MensualRowChanging" msprop:Generator_RowEvArgName="Tbl_Guias_MensualRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_Guias_MensualRowChangeEventHandler" msprop:Generator_TablePropName="Tbl_Guias_Mensual" msprop:Generator_TableVarName="tableTbl_Guias_Mensual" msprop:Generator_RowDeletingName="Tbl_Guias_MensualRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SUDO" msprop:Generator_UserColumnName="SUDO" msprop:Generator_ColumnPropNameInRow="SUDO" msprop:Generator_ColumnVarNameInTable="columnSUDO" msprop:Generator_ColumnPropNameInTable="SUDOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="NOSUDO" msprop:Generator_UserColumnName="NOSUDO" msprop:Generator_ColumnPropNameInRow="NOSUDO" msprop:Generator_ColumnVarNameInTable="columnNOSUDO" msprop:Generator_ColumnPropNameInTable="NOSUDOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="FEEMDO" msprop:Generator_UserColumnName="FEEMDO" msprop:Generator_ColumnPropNameInRow="FEEMDO" msprop:Generator_ColumnVarNameInTable="columnFEEMDO" msprop:Generator_ColumnPropNameInTable="FEEMDOColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="GUIAS" msprop:Generator_UserColumnName="GUIAS" msprop:Generator_ColumnPropNameInRow="GUIAS" msprop:Generator_ColumnVarNameInTable="columnGUIAS" msprop:Generator_ColumnPropNameInTable="GUIASColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="COSTO" msprop:Generator_UserColumnName="COSTO" msprop:Generator_ColumnPropNameInRow="COSTO" msprop:Generator_ColumnVarNameInTable="columnCOSTO" msprop:Generator_ColumnPropNameInTable="COSTOColumn" type="xs:double" minOccurs="0" />
+              <xs:element name="MONTO" msprop:Generator_UserColumnName="MONTO" msprop:Generator_ColumnPropNameInRow="MONTO" msprop:Generator_ColumnVarNameInTable="columnMONTO" msprop:Generator_ColumnPropNameInTable="MONTOColumn" type="xs:double" minOccurs="0" />
+              <xs:element name="MARGEN_V" msprop:Generator_UserColumnName="MARGEN_V" msprop:Generator_ColumnPropNameInRow="MARGEN_V" msprop:Generator_ColumnVarNameInTable="columnMARGEN_V" msprop:Generator_ColumnPropNameInTable="MARGEN_VColumn" type="xs:double" minOccurs="0" />
+              <xs:element name="MARGEN" msprop:Generator_UserColumnName="MARGEN" msprop:Generator_ColumnPropNameInRow="MARGEN" msprop:Generator_ColumnVarNameInTable="columnMARGEN" msprop:Generator_ColumnPropNameInTable="MARGENColumn" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Tbl_Sel_Conexion" msprop:Generator_UserTableName="Tbl_Sel_Conexion" msprop:Generator_RowDeletedName="Tbl_Sel_ConexionRowDeleted" msprop:Generator_TableClassName="Tbl_Sel_ConexionDataTable" msprop:Generator_RowChangedName="Tbl_Sel_ConexionRowChanged" msprop:Generator_RowClassName="Tbl_Sel_ConexionRow" msprop:Generator_RowChangingName="Tbl_Sel_ConexionRowChanging" msprop:Generator_RowEvArgName="Tbl_Sel_ConexionRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_Sel_ConexionRowChangeEventHandler" msprop:Generator_TablePropName="Tbl_Sel_Conexion" msprop:Generator_TableVarName="tableTbl_Sel_Conexion" msprop:Generator_RowDeletingName="Tbl_Sel_ConexionRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Chk" msprop:Generator_UserColumnName="Chk" msprop:Generator_ColumnPropNameInRow="Chk" msprop:Generator_ColumnVarNameInTable="columnChk" msprop:Generator_ColumnPropNameInTable="ChkColumn" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Rut" msprop:Generator_UserColumnName="Rut" msprop:Generator_ColumnPropNameInRow="Rut" msprop:Generator_ColumnVarNameInTable="columnRut" msprop:Generator_ColumnPropNameInTable="RutColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="NombreConexion" msprop:Generator_UserColumnName="NombreConexion" msprop:Generator_ColumnPropNameInRow="NombreConexion" msprop:Generator_ColumnVarNameInTable="columnNombreConexion" msprop:Generator_ColumnPropNameInTable="NombreConexionColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="BaseDeDatos" msprop:Generator_UserColumnName="BaseDeDatos" msprop:Generator_ColumnPropNameInRow="BaseDeDatos" msprop:Generator_ColumnVarNameInTable="columnBaseDeDatos" msprop:Generator_ColumnPropNameInTable="BaseDeDatosColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TblFiltro_Sucursal" msprop:Generator_UserTableName="TblFiltro_Sucursal" msprop:Generator_RowDeletedName="TblFiltro_SucursalRowDeleted" msprop:Generator_TableClassName="TblFiltro_SucursalDataTable" msprop:Generator_RowChangedName="TblFiltro_SucursalRowChanged" msprop:Generator_RowClassName="TblFiltro_SucursalRow" msprop:Generator_RowChangingName="TblFiltro_SucursalRowChanging" msprop:Generator_RowEvArgName="TblFiltro_SucursalRowChangeEvent" msprop:Generator_RowEvHandlerName="TblFiltro_SucursalRowChangeEventHandler" msprop:Generator_TablePropName="TblFiltro_Sucursal" msprop:Generator_TableVarName="tableTblFiltro_Sucursal" msprop:Generator_RowDeletingName="TblFiltro_SucursalRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Codigo" msprop:Generator_UserColumnName="Codigo" msprop:Generator_ColumnPropNameInRow="Codigo" msprop:Generator_ColumnVarNameInTable="columnCodigo" msprop:Generator_ColumnPropNameInTable="CodigoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Descripcion" msprop:Generator_UserColumnName="Descripcion" msprop:Generator_ColumnPropNameInRow="Descripcion" msprop:Generator_ColumnVarNameInTable="columnDescripcion" msprop:Generator_ColumnPropNameInTable="DescripcionColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Tbl_Configuracion_Filtros" msprop:Generator_UserTableName="Tbl_Configuracion_Filtros" msprop:Generator_RowDeletedName="Tbl_Configuracion_FiltrosRowDeleted" msprop:Generator_TableClassName="Tbl_Configuracion_FiltrosDataTable" msprop:Generator_RowChangedName="Tbl_Configuracion_FiltrosRowChanged" msprop:Generator_RowClassName="Tbl_Configuracion_FiltrosRow" msprop:Generator_RowChangingName="Tbl_Configuracion_FiltrosRowChanging" msprop:Generator_RowEvArgName="Tbl_Configuracion_FiltrosRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_Configuracion_FiltrosRowChangeEventHandler" msprop:Generator_TablePropName="Tbl_Configuracion_Filtros" msprop:Generator_TableVarName="tableTbl_Configuracion_Filtros" msprop:Generator_RowDeletingName="Tbl_Configuracion_FiltrosRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Rdb_Sucursales_Todas" msprop:Generator_UserColumnName="Rdb_Sucursales_Todas" msprop:Generator_ColumnPropNameInRow="Rdb_Sucursales_Todas" msprop:Generator_ColumnVarNameInTable="columnRdb_Sucursales_Todas" msprop:Generator_ColumnPropNameInTable="Rdb_Sucursales_TodasColumn" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Rdb_Sucursales_Algunas" msprop:Generator_UserColumnName="Rdb_Sucursales_Algunas" msprop:Generator_ColumnPropNameInRow="Rdb_Sucursales_Algunas" msprop:Generator_ColumnVarNameInTable="columnRdb_Sucursales_Algunas" msprop:Generator_ColumnPropNameInTable="Rdb_Sucursales_AlgunasColumn" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Rdb_Super_Familia_Todos" msprop:Generator_UserColumnName="Rdb_Super_Familia_Todos" msprop:Generator_ColumnPropNameInRow="Rdb_Super_Familia_Todos" msprop:Generator_ColumnVarNameInTable="columnRdb_Super_Familia_Todos" msprop:Generator_ColumnPropNameInTable="Rdb_Super_Familia_TodosColumn" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Rdb_Super_Familia_Algunos" msprop:Generator_UserColumnName="Rdb_Super_Familia_Algunos" msprop:Generator_ColumnPropNameInRow="Rdb_Super_Familia_Algunos" msprop:Generator_ColumnVarNameInTable="columnRdb_Super_Familia_Algunos" msprop:Generator_ColumnPropNameInTable="Rdb_Super_Familia_AlgunosColumn" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Chk_Solo_Stock_Fisico" msprop:Generator_UserColumnName="Chk_Solo_Stock_Fisico" msprop:Generator_ColumnPropNameInRow="Chk_Solo_Stock_Fisico" msprop:Generator_ColumnVarNameInTable="columnChk_Solo_Stock_Fisico" msprop:Generator_ColumnPropNameInTable="Chk_Solo_Stock_FisicoColumn" type="xs:boolean" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TblFiltro_Super_Familia" msprop:Generator_UserTableName="TblFiltro_Super_Familia" msprop:Generator_RowDeletedName="TblFiltro_Super_FamiliaRowDeleted" msprop:Generator_TableClassName="TblFiltro_Super_FamiliaDataTable" msprop:Generator_RowChangedName="TblFiltro_Super_FamiliaRowChanged" msprop:Generator_RowClassName="TblFiltro_Super_FamiliaRow" msprop:Generator_RowChangingName="TblFiltro_Super_FamiliaRowChanging" msprop:Generator_RowEvArgName="TblFiltro_Super_FamiliaRowChangeEvent" msprop:Generator_RowEvHandlerName="TblFiltro_Super_FamiliaRowChangeEventHandler" msprop:Generator_TablePropName="TblFiltro_Super_Familia" msprop:Generator_TableVarName="tableTblFiltro_Super_Familia" msprop:Generator_RowDeletingName="TblFiltro_Super_FamiliaRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Codigo" msprop:Generator_UserColumnName="Codigo" msprop:Generator_ColumnPropNameInRow="Codigo" msprop:Generator_ColumnVarNameInTable="columnCodigo" msprop:Generator_ColumnPropNameInTable="CodigoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Descripcion" msprop:Generator_UserColumnName="Descripcion" msprop:Generator_ColumnPropNameInRow="Descripcion" msprop:Generator_ColumnVarNameInTable="columnDescripcion" msprop:Generator_ColumnPropNameInTable="DescripcionColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Tbl_Sel_ConexionKey1">
+      <xs:selector xpath=".//mstns:Tbl_Sel_Conexion" />
+      <xs:field xpath="mstns:NombreConexion" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

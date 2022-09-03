@@ -1,0 +1,88 @@
+Return-path: <siidte@sii.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Mon, 06 Aug 2012 13:50:18 -0400
+Received: from rapel11.sii.cl ([200.10.252.90] helo=mailin.sii.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.77)
+	(envelope-from <siidte@sii.cl>)
+	id 1SyRRX-000675-Ec
+	for notificacionsii@sirrep.cl; Mon, 06 Aug 2012 13:50:16 -0400
+X-IronPort-AV: E=Sophos;i="4.77,721,1336363200"; 
+   d="xml'?txt'?scan'208";a="208311365"
+Received: from dte.sii.cl (HELO dte) ([146.20.1.104])
+  by mailout.sii.cl with ESMTP; 06 Aug 2012 13:38:25 -0400
+Message-ID: <27214621.1344275327673.JavaMail.root@dte>
+Date: Mon, 6 Aug 2012 13:48:47 -0400 (CLT)
+From: siidte@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: Produccion - Resultado de Revision Envio 422951842 - 79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_4156851_15186661.1344275327672"
+
+------=_Part_4156851_15186661.1344275327672
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+SII de Chile - Validacion de DTE
+================================
+
+En el archivo adjunto esta el resultado del proceso de revision y validacion
+del envio de Documentos Tributarios Electronicos realizado por su empresa al
+Servicio de Impuestos Internos de Chile.
+
+----------------------------------------------------------------------------
+
+Este es una aplicacion automatica. No conteste este correo ni haga 
+consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue 
+mas claro en cualquier aplicacion.
+
+
+------=_Part_4156851_15186661.1344275327672
+Content-Type: text/plain; name=DTEMAIL0422951842.txt
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL0422951842.txt
+
+Resultado de Validacion de Envio de DTE
+=======================================
+
+Rut de Empresa Emisora   : 79514800-0
+Rut que Realizo el Envio : 12628844-1
+Identificador de Envio   :  422951842
+Fecha de Recepcion       : 06/08/2012 13:49:02
+Estado del Envio         : EPR - Envio Procesado
+
+Estadisticas del Envio
+======================
+Tipo DTE  Informados  Rechazos  Reparos  Aceptados
+--------------------------------------------------
+   61              1         0        0          1
+
+
+------=_Part_4156851_15186661.1344275327672
+Content-Type: application/octet-stream; name=DTEMAIL0422951842.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL0422951842.xml
+
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<RESULTADO_ENVIO>
+ <IDENTIFICACION>
+  <RUTEMISOR>79514800-0</RUTEMISOR>
+  <RUTENVIA>12628844-1</RUTENVIA>
+  <TRACKID>422951842</TRACKID>
+  <TMSTRECEPCION>06/08/2012 13:49:02</TMSTRECEPCION>
+  <ESTADO>EPR - Envio Procesado</ESTADO>
+ </IDENTIFICACION>
+ <ESTADISTICA>
+  <SUBTOTAL>
+   <TIPODOC>61</TIPODOC>
+   <INFORMADO>1</INFORMADO>
+   <ACEPTA>1</ACEPTA>
+  </SUBTOTAL>
+ </ESTADISTICA>
+</RESULTADO_ENVIO>
+
+------=_Part_4156851_15186661.1344275327672--
+

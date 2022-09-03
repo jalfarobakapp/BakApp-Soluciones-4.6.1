@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DS_Filtro_Venta_Vendedor" targetNamespace="http://tempuri.org/DS_Filtro_Venta_Vendedor.xsd" xmlns:mstns="http://tempuri.org/DS_Filtro_Venta_Vendedor.xsd" xmlns="http://tempuri.org/DS_Filtro_Venta_Vendedor.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DS_Filtro_Venta_Vendedor" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="DS_Filtro_Venta_Vendedor" msprop:Generator_UserDSName="DS_Filtro_Venta_Vendedor" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Tbl_Vendedores" msprop:Generator_UserTableName="Tbl_Vendedores" msprop:Generator_RowDeletedName="Tbl_VendedoresRowDeleted" msprop:Generator_TableClassName="Tbl_VendedoresDataTable" msprop:Generator_RowChangedName="Tbl_VendedoresRowChanged" msprop:Generator_RowClassName="Tbl_VendedoresRow" msprop:Generator_RowChangingName="Tbl_VendedoresRowChanging" msprop:Generator_RowEvArgName="Tbl_VendedoresRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_VendedoresRowChangeEventHandler" msprop:Generator_TablePropName="Tbl_Vendedores" msprop:Generator_TableVarName="tableTbl_Vendedores" msprop:Generator_RowDeletingName="Tbl_VendedoresRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Chk" msprop:Generator_UserColumnName="Chk" msprop:Generator_ColumnPropNameInRow="Chk" msprop:Generator_ColumnVarNameInTable="columnChk" msprop:Generator_ColumnPropNameInTable="ChkColumn" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Codigo" msprop:Generator_UserColumnName="Codigo" msprop:Generator_ColumnPropNameInRow="Codigo" msprop:Generator_ColumnVarNameInTable="columnCodigo" msprop:Generator_ColumnPropNameInTable="CodigoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Descripcion" msprop:Generator_UserColumnName="Descripcion" msprop:Generator_ColumnPropNameInRow="Descripcion" msprop:Generator_ColumnVarNameInTable="columnDescripcion" msprop:Generator_ColumnPropNameInTable="DescripcionColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Tbl_Documentos" msprop:Generator_UserTableName="Tbl_Documentos" msprop:Generator_RowDeletedName="Tbl_DocumentosRowDeleted" msprop:Generator_TableClassName="Tbl_DocumentosDataTable" msprop:Generator_RowChangedName="Tbl_DocumentosRowChanged" msprop:Generator_RowClassName="Tbl_DocumentosRow" msprop:Generator_RowChangingName="Tbl_DocumentosRowChanging" msprop:Generator_RowEvArgName="Tbl_DocumentosRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_DocumentosRowChangeEventHandler" msprop:Generator_TablePropName="Tbl_Documentos" msprop:Generator_TableVarName="tableTbl_Documentos" msprop:Generator_RowDeletingName="Tbl_DocumentosRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Chk" msprop:Generator_UserColumnName="Chk" msprop:Generator_ColumnPropNameInRow="Chk" msprop:Generator_ColumnVarNameInTable="columnChk" msprop:Generator_ColumnPropNameInTable="ChkColumn" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Codigo" msprop:Generator_UserColumnName="Codigo" msprop:Generator_ColumnPropNameInRow="Codigo" msprop:Generator_ColumnVarNameInTable="columnCodigo" msprop:Generator_ColumnPropNameInTable="CodigoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Descripcion" msprop:Generator_UserColumnName="Descripcion" msprop:Generator_ColumnPropNameInRow="Descripcion" msprop:Generator_ColumnVarNameInTable="columnDescripcion" msprop:Generator_ColumnPropNameInTable="DescripcionColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Tbl_Sucursales" msprop:Generator_UserTableName="Tbl_Sucursales" msprop:Generator_RowDeletedName="Tbl_SucursalesRowDeleted" msprop:Generator_TableClassName="Tbl_SucursalesDataTable" msprop:Generator_RowChangedName="Tbl_SucursalesRowChanged" msprop:Generator_RowClassName="Tbl_SucursalesRow" msprop:Generator_RowChangingName="Tbl_SucursalesRowChanging" msprop:Generator_RowEvArgName="Tbl_SucursalesRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_SucursalesRowChangeEventHandler" msprop:Generator_TablePropName="Tbl_Sucursales" msprop:Generator_TableVarName="tableTbl_Sucursales" msprop:Generator_RowDeletingName="Tbl_SucursalesRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Chk" msprop:Generator_UserColumnName="Chk" msprop:Generator_ColumnPropNameInRow="Chk" msprop:Generator_ColumnVarNameInTable="columnChk" msprop:Generator_ColumnPropNameInTable="ChkColumn" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Codigo" msprop:Generator_UserColumnName="Codigo" msprop:Generator_ColumnPropNameInRow="Codigo" msprop:Generator_ColumnVarNameInTable="columnCodigo" msprop:Generator_ColumnPropNameInTable="CodigoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Descripcion" msprop:Generator_UserColumnName="Descripcion" msprop:Generator_ColumnPropNameInRow="Descripcion" msprop:Generator_ColumnVarNameInTable="columnDescripcion" msprop:Generator_ColumnPropNameInTable="DescripcionColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Tbl_Opciones" msprop:Generator_UserTableName="Tbl_Opciones" msprop:Generator_RowDeletedName="Tbl_OpcionesRowDeleted" msprop:Generator_TableClassName="Tbl_OpcionesDataTable" msprop:Generator_RowChangedName="Tbl_OpcionesRowChanged" msprop:Generator_RowClassName="Tbl_OpcionesRow" msprop:Generator_RowChangingName="Tbl_OpcionesRowChanging" msprop:Generator_RowEvArgName="Tbl_OpcionesRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_OpcionesRowChangeEventHandler" msprop:Generator_TablePropName="Tbl_Opciones" msprop:Generator_TableVarName="tableTbl_Opciones" msprop:Generator_RowDeletingName="Tbl_OpcionesRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Rdb_Vendedores_Todos" msprop:Generator_UserColumnName="Rdb_Vendedores_Todos" msprop:Generator_ColumnPropNameInRow="Rdb_Vendedores_Todos" msprop:Generator_ColumnVarNameInTable="columnRdb_Vendedores_Todos" msprop:Generator_ColumnPropNameInTable="Rdb_Vendedores_TodosColumn" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Rdb_Vendedores_Algunos" msprop:Generator_UserColumnName="Rdb_Vendedores_Algunos" msprop:Generator_ColumnPropNameInRow="Rdb_Vendedores_Algunos" msprop:Generator_ColumnVarNameInTable="columnRdb_Vendedores_Algunos" msprop:Generator_ColumnPropNameInTable="Rdb_Vendedores_AlgunosColumn" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Rdb_Sucursales_Todos" msprop:Generator_UserColumnName="Rdb_Sucursales_Todos" msprop:Generator_ColumnPropNameInRow="Rdb_Sucursales_Todos" msprop:Generator_ColumnVarNameInTable="columnRdb_Sucursales_Todos" msprop:Generator_ColumnPropNameInTable="Rdb_Sucursales_TodosColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Rdb_Sucursales_Algunos" msprop:Generator_UserColumnName="Rdb_Sucursales_Algunos" msprop:Generator_ColumnPropNameInRow="Rdb_Sucursales_Algunos" msprop:Generator_ColumnVarNameInTable="columnRdb_Sucursales_Algunos" msprop:Generator_ColumnPropNameInTable="Rdb_Sucursales_AlgunosColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Rdb_Documentos_Todos" msprop:Generator_UserColumnName="Rdb_Documentos_Todos" msprop:Generator_ColumnPropNameInRow="Rdb_Documentos_Todos" msprop:Generator_ColumnVarNameInTable="columnRdb_Documentos_Todos" msprop:Generator_ColumnPropNameInTable="Rdb_Documentos_TodosColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Rdb_Documentos_Algunos" msprop:Generator_UserColumnName="Rdb_Documentos_Algunos" msprop:Generator_ColumnPropNameInRow="Rdb_Documentos_Algunos" msprop:Generator_ColumnVarNameInTable="columnRdb_Documentos_Algunos" msprop:Generator_ColumnPropNameInTable="Rdb_Documentos_AlgunosColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

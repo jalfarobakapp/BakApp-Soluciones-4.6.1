@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DsRanking" targetNamespace="http://tempuri.org/DsRanking.xsd" xmlns:mstns="http://tempuri.org/DsRanking.xsd" xmlns="http://tempuri.org/DsRanking.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DsRanking" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="DsRanking" msprop:Generator_UserDSName="DsRanking" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Ranking" msprop:Generator_UserTableName="Ranking" msprop:Generator_RowDeletedName="RankingRowDeleted" msprop:Generator_TableClassName="RankingDataTable" msprop:Generator_RowChangedName="RankingRowChanged" msprop:Generator_RowClassName="RankingRow" msprop:Generator_RowChangingName="RankingRowChanging" msprop:Generator_RowEvArgName="RankingRowChangeEvent" msprop:Generator_RowEvHandlerName="RankingRowChangeEventHandler" msprop:Generator_TablePropName="Ranking" msprop:Generator_TableVarName="tableRanking" msprop:Generator_RowDeletingName="RankingRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Codigo" msprop:Generator_UserColumnName="Codigo" msprop:Generator_ColumnPropNameInRow="Codigo" msprop:Generator_ColumnVarNameInTable="columnCodigo" msprop:Generator_ColumnPropNameInTable="CodigoColumn" type="xs:string" />
+              <xs:element name="Descripcion" msprop:Generator_UserColumnName="Descripcion" msprop:Generator_ColumnPropNameInRow="Descripcion" msprop:Generator_ColumnVarNameInTable="columnDescripcion" msprop:Generator_ColumnPropNameInTable="DescripcionColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Ranking_Top" msprop:Generator_UserColumnName="Ranking_Top" msprop:Generator_ColumnPropNameInRow="Ranking_Top" msprop:Generator_ColumnVarNameInTable="columnRanking_Top" msprop:Generator_ColumnPropNameInTable="Ranking_TopColumn" type="xs:double" minOccurs="0" />
+              <xs:element name="Rk_Presencia" msprop:Generator_UserColumnName="Rk_Presencia" msprop:Generator_ColumnPropNameInRow="Rk_Presencia" msprop:Generator_ColumnVarNameInTable="columnRk_Presencia" msprop:Generator_ColumnPropNameInTable="Rk_PresenciaColumn" type="xs:double" minOccurs="0" />
+              <xs:element name="Rk_Cantidad" msprop:Generator_UserColumnName="Rk_Cantidad" msprop:Generator_ColumnPropNameInRow="Rk_Cantidad" msprop:Generator_ColumnVarNameInTable="columnRk_Cantidad" msprop:Generator_ColumnPropNameInTable="Rk_CantidadColumn" type="xs:double" minOccurs="0" />
+              <xs:element name="Rk_Margen" msprop:Generator_UserColumnName="Rk_Margen" msprop:Generator_ColumnPropNameInRow="Rk_Margen" msprop:Generator_ColumnVarNameInTable="columnRk_Margen" msprop:Generator_ColumnPropNameInTable="Rk_MargenColumn" type="xs:double" minOccurs="0" />
+              <xs:element name="Rk_Precio" msprop:Generator_UserColumnName="Rk_Precio" msprop:Generator_ColumnPropNameInRow="Rk_Precio" msprop:Generator_ColumnVarNameInTable="columnRk_Precio" msprop:Generator_ColumnPropNameInTable="Rk_PrecioColumn" type="xs:double" minOccurs="0" />
+              <xs:element name="Pc_Presencia" msprop:Generator_UserColumnName="Pc_Presencia" msprop:Generator_ColumnPropNameInRow="Pc_Presencia" msprop:Generator_ColumnVarNameInTable="columnPc_Presencia" msprop:Generator_ColumnPropNameInTable="Pc_PresenciaColumn" type="xs:double" minOccurs="0" />
+              <xs:element name="Pc_Cantidad" msprop:Generator_UserColumnName="Pc_Cantidad" msprop:Generator_ColumnPropNameInRow="Pc_Cantidad" msprop:Generator_ColumnVarNameInTable="columnPc_Cantidad" msprop:Generator_ColumnPropNameInTable="Pc_CantidadColumn" type="xs:double" minOccurs="0" />
+              <xs:element name="Pc_Margen" msprop:Generator_UserColumnName="Pc_Margen" msprop:Generator_ColumnPropNameInRow="Pc_Margen" msprop:Generator_ColumnVarNameInTable="columnPc_Margen" msprop:Generator_ColumnPropNameInTable="Pc_MargenColumn" type="xs:double" minOccurs="0" />
+              <xs:element name="Pc_Precio" msprop:Generator_UserColumnName="Pc_Precio" msprop:Generator_ColumnPropNameInRow="Pc_Precio" msprop:Generator_ColumnVarNameInTable="columnPc_Precio" msprop:Generator_ColumnPropNameInTable="Pc_PrecioColumn" type="xs:double" minOccurs="0" />
+              <xs:element name="Clasificacion" msprop:Generator_UserColumnName="Clasificacion" msprop:Generator_ColumnPropNameInRow="Clasificacion" msprop:Generator_ColumnVarNameInTable="columnClasificacion" msprop:Generator_ColumnPropNameInTable="ClasificacionColumn" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Conf_Ranking" msprop:Generator_UserTableName="Conf_Ranking" msprop:Generator_RowDeletedName="Conf_RankingRowDeleted" msprop:Generator_TableClassName="Conf_RankingDataTable" msprop:Generator_RowChangedName="Conf_RankingRowChanged" msprop:Generator_RowClassName="Conf_RankingRow" msprop:Generator_RowChangingName="Conf_RankingRowChanging" msprop:Generator_RowEvArgName="Conf_RankingRowChangeEvent" msprop:Generator_RowEvHandlerName="Conf_RankingRowChangeEventHandler" msprop:Generator_TablePropName="Conf_Ranking" msprop:Generator_TableVarName="tableConf_Ranking" msprop:Generator_RowDeletingName="Conf_RankingRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha_Desde" msprop:Generator_UserColumnName="Fecha_Desde" msprop:Generator_ColumnPropNameInRow="Fecha_Desde" msprop:Generator_ColumnVarNameInTable="columnFecha_Desde" msprop:Generator_ColumnPropNameInTable="Fecha_DesdeColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Fecha_Hasta" msprop:Generator_UserColumnName="Fecha_Hasta" msprop:Generator_ColumnPropNameInRow="Fecha_Hasta" msprop:Generator_ColumnVarNameInTable="columnFecha_Hasta" msprop:Generator_ColumnPropNameInTable="Fecha_HastaColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="PPM_X_Trans" msprop:Generator_UserColumnName="PPM_X_Trans" msprop:Generator_ColumnPropNameInRow="PPM_X_Trans" msprop:Generator_ColumnVarNameInTable="columnPPM_X_Trans" msprop:Generator_ColumnPropNameInTable="PPM_X_TransColumn" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="PPM" msprop:Generator_UserColumnName="PPM" msprop:Generator_ColumnPropNameInRow="PPM" msprop:Generator_ColumnVarNameInTable="columnPPM" msprop:Generator_ColumnPropNameInTable="PPMColumn" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="UC" msprop:Generator_UserColumnName="UC" msprop:Generator_ColumnPropNameInRow="UC" msprop:Generator_ColumnVarNameInTable="columnUC" msprop:Generator_ColumnPropNameInTable="UCColumn" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="Lcostos" msprop:Generator_UserColumnName="Lcostos" msprop:Generator_ColumnPropNameInRow="Lcostos" msprop:Generator_ColumnVarNameInTable="columnLcostos" msprop:Generator_ColumnPropNameInTable="LcostosColumn" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="Lista" msprop:Generator_UserColumnName="Lista" msprop:Generator_ColumnPropNameInRow="Lista" msprop:Generator_ColumnVarNameInTable="columnLista" msprop:Generator_ColumnPropNameInTable="ListaColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Fecha_Desde_Desc" msprop:Generator_UserColumnName="Fecha_Desde_Desc" msprop:Generator_ColumnPropNameInRow="Fecha_Desde_Desc" msprop:Generator_ColumnVarNameInTable="columnFecha_Desde_Desc" msprop:Generator_ColumnPropNameInTable="Fecha_Desde_DescColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Fecha_Hasta_Desc" msprop:Generator_UserColumnName="Fecha_Hasta_Desc" msprop:Generator_ColumnPropNameInRow="Fecha_Hasta_Desc" msprop:Generator_ColumnVarNameInTable="columnFecha_Hasta_Desc" msprop:Generator_ColumnPropNameInTable="Fecha_Hasta_DescColumn" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="RankingKey1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Ranking" />
+      <xs:field xpath="mstns:Codigo" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

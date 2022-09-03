@@ -1,0 +1,212 @@
+Return-Path: <SRS0=C01vBT=4V=enternet.cl=notificaciones@sirrep.cl>
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id 6X3YJXDVGVmPCQ8AqFaw+A
+	; Mon, 15 May 2017 12:21:04 -0400
+Return-path: <SRS0=C01vBT=4V=enternet.cl=notificaciones@sirrep.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Mon, 15 May 2017 12:21:04 -0400
+Received: from mail-qt0-f179.google.com ([209.85.216.179])
+	by srv150.tuhosting.cl with esmtps (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+	(Exim 4.89)
+	(envelope-from <notificaciones@enternet.cl>)
+	id 1dAIk3-0049aN-Nu
+	for notificacionsii@sirrep.cl; Mon, 15 May 2017 12:21:04 -0400
+Received: by mail-qt0-f179.google.com with SMTP id t26so93005157qtg.0
+        for <notificacionsii@sirrep.cl>; Mon, 15 May 2017 09:22:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=enternet-cl.20150623.gappssmtp.com; s=20150623;
+        h=date:from:reply-to:to:to:message-id:subject:mime-version;
+        bh=gWAGnJ532UuoofNlzYwiUBq6A0aY16Wp6bS9k4D5Q38=;
+        b=VNbfSRy+gdVR6nzgPRrzXL1lBlkPzEokx1QvQr2kHPny4+a2wsVzMiU/B/E39Ppm22
+         2XglHMPNf8v5tWdD/14UgnmqlpbFNmLD2pGpuT/Q+wF/yKliS/yK5qfrUzGXch67tzqx
+         9OnjmhmbAvrHIyLTUmQcrVsrZhmJkYHnlqp6CBl3014R/FXRqAcmtI2b57rARAR4Mp9W
+         3PW4Ba7Ml8+PUiW735uHixTj1ZoctNr9zYqpQHWdjOrd02LADF81DpH/bPn2xUg0t2hr
+         po+f/WqC0yhe3IzGIRK62KZggghvyO7y7UKyFOqY/jKeQYfoMtm+hM4okoGjjk5ay2ft
+         rUWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:reply-to:to:to:message-id:subject
+         :mime-version;
+        bh=gWAGnJ532UuoofNlzYwiUBq6A0aY16Wp6bS9k4D5Q38=;
+        b=EQ8qUChcmIhoVf5JoMJjlEUc/ZfJhcNaR3mXFLcZhazDW61Uv2DZJYtroODw5dDzZS
+         HFf5byYCfo5XDHTdzR0cX69JUzEvzRJv5ZZy+79txTw5CpdCwT82GQYUFwONKhiDoEu6
+         z0jGirNNDqs4dXiasZQ0GhXTUfLgPo/MWpPQtIyXCWGQdjmSBtQlZ5YGr5SQ3bW5QNF6
+         sVkN7RkhcKv9YuU9cRzqOW5FRu1/THaytbQUbCmatah55cFAt0tHW/wJc+SLHqZNV1ss
+         sDYTCgQ7JOuY8XJkE41T1itlBgG2mJ98ARqYMmi7jF9pJ4jJsUNUKfzUG+omsNUR+6I4
+         KYaw==
+X-Gm-Message-State: AODbwcCwyipmO8qsQVAJS5buKaCtfGuDFnP56IAignI1jvq/z0Z7RCE2
+	0aq0jKPQHF2/ywpa
+X-Received: by 10.237.59.75 with SMTP id q11mr7066452qte.265.1494865373721;
+        Mon, 15 May 2017 09:22:53 -0700 (PDT)
+Received: from pomerape (enternet.netglobalis.net. [200.29.67.82])
+        by smtp.gmail.com with ESMTPSA id a15sm2004922qkb.24.2017.05.15.09.22.51
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Mon, 15 May 2017 09:22:52 -0700 (PDT)
+Date: Mon, 15 May 2017 09:22:52 -0700 (PDT)
+From: Envio de Respuestas <notificaciones@enternet.cl>
+X-Google-Original-From: Envio de Respuestas <virginia.soto.freire@gmail.com>
+Reply-To: Envio de Respuestas <virginia.soto.freire@gmail.com>
+To: SIERRALTA Y COMPANIA LIMITADA <notificacionsii@sirrep.cl>
+To: Copia a Responsable de Respuesta <virginia.soto.freire@gmail.com>
+Message-ID: <1606025859.1265.1494865368949.JavaMail.tomcat6@pomerape>
+Subject: Envio Acuse de Recibo de Mercaderia  - Documento RE795148000
+ RR764878507 T33F231569
+MIME-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_1264_1029947297.1494865368948"
+
+------=_Part_1264_1029947297.1494865368948
+Content-Type: text/html; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+
+Se adjunta documento electronico de Acuse de Recibo de Mercaderia para el documento con: 
+ RUT Emisor 795148000
+ RUT Receptor 764878507
+ Tipo 33
+ Folio 231569
+
+------=_Part_1264_1029947297.1494865368948
+Content-Type: application/octet-stream; 
+	name=RecepcionMercaderiaDTE_RUT795148000TIP33FOL231569TIM_201705151222.cst.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; 
+	filename=RecepcionMercaderiaDTE_RUT795148000TIP33FOL231569TIM_201705151222.cst.xml
+
+<?xml version="1.0" encoding="iso-8859-1"?> 
+<EnvioRecibos xmlns="http://www.sii.cl/SiiDte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sii.cl/SiiDte RespuestaEnvioDTE_v10.xsd" version="1.0">
+		<SetRecibos ID="RESDTERUT795148000TIP33FOL231569">
+<Caratula version="1.0">
+			<RutResponde>76487850-7</RutResponde>
+			<RutRecibe>79514800-0</RutRecibe>
+			<NmbContacto>VIRGINIA DEL ROSARIO SOTO</NmbContacto>
+			<FonoContacto>954011947</FonoContacto>
+			<MailContacto>virginia.soto.freire@gmail.com</MailContacto>
+			<TmstFirmaEnv>2017-05-15T12:22:43</TmstFirmaEnv>
+</Caratula>
+<Recibo version="1.0">
+<DocumentoRecibo ID="DTERUT795148000TIP33FOL231569">
+			<TipoDoc>33</TipoDoc>
+			<Folio>231569</Folio>
+			<FchEmis>2017-05-15</FchEmis>
+			<RUTEmisor>79514800-0</RUTEmisor>
+			<RUTRecep>76487850-7</RUTRecep>
+			<MntTotal>43889</MntTotal>
+			<Recinto>Matriz Inv. Juana Rosa Perez</Recinto>
+			<RutFirma>6642472-3</RutFirma>
+			<Declaracion>El acuse de recibo que se declara en este acto, de acuerdo a lo dispuesto en la letra b) del Art. 4, y la letra c) del Art. 5 de la Ley 19.983, acredita que la entrega de mercaderias o servicio(s) prestado(s) ha(n) sido recibido(s).</Declaracion>
+			<TmstFirmaRecibo>2017-05-15T12:22:43</TmstFirmaRecibo>
+</DocumentoRecibo>
+			<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+				<SignedInfo>
+					<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+					<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+					<Reference URI="#DTERUT795148000TIP33FOL231569">
+						<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+						<DigestValue>pq14iLtkdxbOCoxYjq8Mft5JYaI=</DigestValue>
+					</Reference>
+				</SignedInfo>
+				<SignatureValue>VmdzqMYSEmu9B36HuDy8zs26Tw6puljA9/eSWcNyauK08h0ylljvc7sXDGnxz2ueQfCbv5fVXQvE
+GsiwmruSUqVMQ9K9st99bmwFNJ3/W6jqlln0ugPnBpPgztI52kDNZgdE7qksX9Ep08cEqd1oQDo3
+s3FlXHkmCAOcA9UvSBM=</SignatureValue>
+				<KeyInfo>
+					<KeyValue>
+						<RSAKeyValue>
+							<Modulus>p4BSDZUBKqYvXKPVlP7iNRzxSoThDiNChoHoP3RIwAjW/1jBrPYqU38UzwB2UmtIkBO/EqHFlKRZ
+6q5XieDBX1ZW0ILZQ//uhcN0eCXC6VJN7VIBkf7Fxb02vVajUfB6O9D/SUH6BkUiiw/IMZgkduTV
+EpJT5cxxWpOu1DfoAbs=</Modulus>
+							<Exponent>AQAB</Exponent>
+						</RSAKeyValue>
+					</KeyValue>
+					<X509Data>
+						<X509Certificate>MIIGSDCCBTCgAwIBAgIKLonHhwAAAASlUjANBgkqhkiG9w0BAQUFADCB0jELMAkGA1UEBhMCQ0wx
+HTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQHEwhTYW50aWFnbzEUMBIGA1UE
+ChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9yaWRhZCBDZXJ0aWZpY2Fkb3JhMTAwLgYDVQQD
+EydFLUNFUlRDSElMRSBDQSBGSVJNQSBFTEVDVFJPTklDQSBTSU1QTEUxJzAlBgkqhkiG9w0BCQEW
+GHNjbGllbnRlc0BlLWNlcnRjaGlsZS5jbDAeFw0xNjA3MjgxMzIwNTBaFw0xNzA3MjgxMzIwNTBa
+MIHLMQswCQYDVQQGEwJDTDEiMCAGA1UECBMZTUVUUk9QT0xJVEFOQSBERSBTQU5USUFHTzERMA8G
+A1UEBxMIU2FudGlhZ28xFDASBgNVBAoTC0VudGVybmV0IFNBMR8wHQYDVQQLExZwcm9jZXNhbWll
+bnRvIGRlIGRhdG9zMSEwHwYDVQQDDBhKdWFuYSBSb3NhIFBlcmV6IEdhcmPDrWExKzApBgkqhkiG
+9w0BCQEWHHJ1aXp0YWdsZWcuYWxiZXJ0b0BnbWFpbC5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0A
+MIGJAoGBAKeAUg2VASqmL1yj1ZT+4jUc8UqE4Q4jQoaB6D90SMAI1v9Ywaz2KlN/FM8AdlJrSJAT
+vxKhxZSkWequV4ngwV9WVtCC2UP/7oXDdHglwulSTe1SAZH+xcW9Nr1Wo1HwejvQ/0lB+gZFIosP
+yDGYJHbk1RKSU+XMcVqTrtQ36AG7AgMBAAGjggKnMIICozA9BgkrBgEEAYI3FQcEMDAuBiYrBgEE
+AYI3FQiC3IMvhZOMZoXVnReC4twnge/sPGGD5rUTg6O9IQIBZAIBBDAdBgNVHQ4EFgQU9NynZMTt
+jK2FrWsEsI39GVwdhjAwCwYDVR0PBAQDAgTwMB8GA1UdIwQYMBaAFHjhPp/SErN6PI3NMA5Ts0Mp
+B7NVMD4GA1UdHwQ3MDUwM6AxoC+GLWh0dHA6Ly9jcmwuZS1jZXJ0Y2hpbGUuY2wvZWNlcnRjaGls
+ZWNhRkVTLmNybDA6BggrBgEFBQcBAQQuMCwwKgYIKwYBBQUHMAGGHmh0dHA6Ly9vY3NwLmVjZXJ0
+Y2hpbGUuY2wvb2NzcDAjBgNVHREEHDAaoBgGCCsGAQQBwQEBoAwWCjA2NDkwMjg4LTEwIwYDVR0S
+BBwwGqAYBggrBgEEAcEBAqAMFgo5NjkyODE4MC01MIIBTQYDVR0gBIIBRDCCAUAwggE8BggrBgEE
+AcNSBTCCAS4wLQYIKwYBBQUHAgEWIWh0dHA6Ly93d3cuZS1jZXJ0Y2hpbGUuY2wvQ1BTLmh0bTCB
+/AYIKwYBBQUHAgIwge8egewAQwBlAHIAdABpAGYAaQBjAGEAZABvACAARgBpAHIAbQBhACAAUwBp
+AG0AcABsAGUALgAgAEgAYQAgAHMAaQBkAG8AIAB2AGEAbABpAGQAYQBkAG8AIABlAG4AIABmAG8A
+cgBtAGEAIABwAHIAZQBzAGUAbgBjAGkAYQBsACwAIABxAHUAZQBkAGEAbgBkAG8AIABoAGEAYgBp
+AGwAaQB0AGEAZABvACAAZQBsACAAQwBlAHIAdABpAGYAaQBjAGEAZABvACAAcABhAHIAYQAgAHUA
+cwBvACAAdAByAGkAYgB1AHQAYQByAGkAbzANBgkqhkiG9w0BAQUFAAOCAQEATqwdwQeDLJg8ifVy
+O/wcxGabwfHY3vg0IQJKmpoD0ghSECmAJYlY7RgBb9P2KaPYYqcZ1w0MjA8V9qFkA5orj+eN4Igi
+ad1iddxRg5QnJMhldAKVjO5fvT43NMYLUIr3T9BR8Ms5fRQQJCaJiBcb3pFp5ruuXP270gIDlkxa
+5gdUWGiqHuoX8q6jwk0orfxNj6R8jpd4CSqYi8PqQoPDHl5GDbQqkJ/vCVdjW4fSywnXkEmBEFQ/
+rPw+p+mw502GRCIgyOfp3OF6ahx/oINYjK8FaDu7R6uTSErpzb29BFBMI2InH4HlHwixd1M9FgAL
+LPPtC3ZaQF6DWgU97vwlHQ==</X509Certificate>
+					</X509Data>
+				</KeyInfo>
+			</Signature>
+</Recibo>
+		</SetRecibos>
+		<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+			<SignedInfo>
+				<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+				<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+				<Reference URI="#RESDTERUT795148000TIP33FOL231569">
+					<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+					<DigestValue>6AqEsIBbSGlnHXSRuZUamP7z1ZM=</DigestValue>
+				</Reference>
+			</SignedInfo>
+			<SignatureValue>Gc0Tcppb+RN1BH8CNlw3X4UzC0a6tVIlatRogWxSen4pzvEQ8BJfiQahJ0fDT4YRvWhr8eDaQ9vh
+GVFv4HSvKVsMoIInLag6zpv3p3I+YeFACFtMhW68kWU1uqAXiOO9l7VNpnmIVpudWNRcPpseHcy9
+Pow4KqvMXMk+2JjkGak=</SignatureValue>
+			<KeyInfo>
+				<KeyValue>
+					<RSAKeyValue>
+						<Modulus>p4BSDZUBKqYvXKPVlP7iNRzxSoThDiNChoHoP3RIwAjW/1jBrPYqU38UzwB2UmtIkBO/EqHFlKRZ
+6q5XieDBX1ZW0ILZQ//uhcN0eCXC6VJN7VIBkf7Fxb02vVajUfB6O9D/SUH6BkUiiw/IMZgkduTV
+EpJT5cxxWpOu1DfoAbs=</Modulus>
+						<Exponent>AQAB</Exponent>
+					</RSAKeyValue>
+				</KeyValue>
+				<X509Data>
+					<X509Certificate>MIIGSDCCBTCgAwIBAgIKLonHhwAAAASlUjANBgkqhkiG9w0BAQUFADCB0jELMAkGA1UEBhMCQ0wx
+HTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQHEwhTYW50aWFnbzEUMBIGA1UE
+ChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9yaWRhZCBDZXJ0aWZpY2Fkb3JhMTAwLgYDVQQD
+EydFLUNFUlRDSElMRSBDQSBGSVJNQSBFTEVDVFJPTklDQSBTSU1QTEUxJzAlBgkqhkiG9w0BCQEW
+GHNjbGllbnRlc0BlLWNlcnRjaGlsZS5jbDAeFw0xNjA3MjgxMzIwNTBaFw0xNzA3MjgxMzIwNTBa
+MIHLMQswCQYDVQQGEwJDTDEiMCAGA1UECBMZTUVUUk9QT0xJVEFOQSBERSBTQU5USUFHTzERMA8G
+A1UEBxMIU2FudGlhZ28xFDASBgNVBAoTC0VudGVybmV0IFNBMR8wHQYDVQQLExZwcm9jZXNhbWll
+bnRvIGRlIGRhdG9zMSEwHwYDVQQDDBhKdWFuYSBSb3NhIFBlcmV6IEdhcmPDrWExKzApBgkqhkiG
+9w0BCQEWHHJ1aXp0YWdsZWcuYWxiZXJ0b0BnbWFpbC5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0A
+MIGJAoGBAKeAUg2VASqmL1yj1ZT+4jUc8UqE4Q4jQoaB6D90SMAI1v9Ywaz2KlN/FM8AdlJrSJAT
+vxKhxZSkWequV4ngwV9WVtCC2UP/7oXDdHglwulSTe1SAZH+xcW9Nr1Wo1HwejvQ/0lB+gZFIosP
+yDGYJHbk1RKSU+XMcVqTrtQ36AG7AgMBAAGjggKnMIICozA9BgkrBgEEAYI3FQcEMDAuBiYrBgEE
+AYI3FQiC3IMvhZOMZoXVnReC4twnge/sPGGD5rUTg6O9IQIBZAIBBDAdBgNVHQ4EFgQU9NynZMTt
+jK2FrWsEsI39GVwdhjAwCwYDVR0PBAQDAgTwMB8GA1UdIwQYMBaAFHjhPp/SErN6PI3NMA5Ts0Mp
+B7NVMD4GA1UdHwQ3MDUwM6AxoC+GLWh0dHA6Ly9jcmwuZS1jZXJ0Y2hpbGUuY2wvZWNlcnRjaGls
+ZWNhRkVTLmNybDA6BggrBgEFBQcBAQQuMCwwKgYIKwYBBQUHMAGGHmh0dHA6Ly9vY3NwLmVjZXJ0
+Y2hpbGUuY2wvb2NzcDAjBgNVHREEHDAaoBgGCCsGAQQBwQEBoAwWCjA2NDkwMjg4LTEwIwYDVR0S
+BBwwGqAYBggrBgEEAcEBAqAMFgo5NjkyODE4MC01MIIBTQYDVR0gBIIBRDCCAUAwggE8BggrBgEE
+AcNSBTCCAS4wLQYIKwYBBQUHAgEWIWh0dHA6Ly93d3cuZS1jZXJ0Y2hpbGUuY2wvQ1BTLmh0bTCB
+/AYIKwYBBQUHAgIwge8egewAQwBlAHIAdABpAGYAaQBjAGEAZABvACAARgBpAHIAbQBhACAAUwBp
+AG0AcABsAGUALgAgAEgAYQAgAHMAaQBkAG8AIAB2AGEAbABpAGQAYQBkAG8AIABlAG4AIABmAG8A
+cgBtAGEAIABwAHIAZQBzAGUAbgBjAGkAYQBsACwAIABxAHUAZQBkAGEAbgBkAG8AIABoAGEAYgBp
+AGwAaQB0AGEAZABvACAAZQBsACAAQwBlAHIAdABpAGYAaQBjAGEAZABvACAAcABhAHIAYQAgAHUA
+cwBvACAAdAByAGkAYgB1AHQAYQByAGkAbzANBgkqhkiG9w0BAQUFAAOCAQEATqwdwQeDLJg8ifVy
+O/wcxGabwfHY3vg0IQJKmpoD0ghSECmAJYlY7RgBb9P2KaPYYqcZ1w0MjA8V9qFkA5orj+eN4Igi
+ad1iddxRg5QnJMhldAKVjO5fvT43NMYLUIr3T9BR8Ms5fRQQJCaJiBcb3pFp5ruuXP270gIDlkxa
+5gdUWGiqHuoX8q6jwk0orfxNj6R8jpd4CSqYi8PqQoPDHl5GDbQqkJ/vCVdjW4fSywnXkEmBEFQ/
+rPw+p+mw502GRCIgyOfp3OF6ahx/oINYjK8FaDu7R6uTSErpzb29BFBMI2InH4HlHwixd1M9FgAL
+LPPtC3ZaQF6DWgU97vwlHQ==</X509Certificate>
+				</X509Data>
+			</KeyInfo>
+		</Signature>
+</EnvioRecibos>
+	
+
+------=_Part_1264_1029947297.1494865368948--

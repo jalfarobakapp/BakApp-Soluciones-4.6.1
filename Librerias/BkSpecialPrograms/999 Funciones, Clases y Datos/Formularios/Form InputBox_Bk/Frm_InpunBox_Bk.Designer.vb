@@ -1,0 +1,183 @@
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class Frm_InpunBox_Bk
+    Inherits DevComponents.DotNetBar.Metro.MetroForm
+
+    'Form overrides dispose to clean up the component list.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Required by the Windows Form Designer
+    Private components As System.ComponentModel.IContainer
+
+    'NOTE: The following procedure is required by the Windows Form Designer
+    'It can be modified using the Windows Form Designer.  
+    'Do not modify it using the code editor.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_InpunBox_Bk))
+        Me.TxtDescripcion = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Rf_Imagen = New DevComponents.DotNetBar.Controls.ReflectionImage()
+        Me.BtnAceptar = New DevComponents.DotNetBar.ButtonX()
+        Me.LblComentario_Centro = New DevComponents.DotNetBar.LabelX()
+        Me.BtnCancelar = New DevComponents.DotNetBar.ButtonX()
+        Me.TouchKeyboard1 = New DevComponents.DotNetBar.Keyboard.TouchKeyboard()
+        Me.Imagenes_48x48_Ligth = New System.Windows.Forms.ImageList(Me.components)
+        Me.Imagenes_48x48_Dark = New System.Windows.Forms.ImageList(Me.components)
+        Me.SuspendLayout()
+        '
+        'TxtDescripcion
+        '
+        Me.TxtDescripcion.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.TxtDescripcion.Border.Class = "TextBoxBorder"
+        Me.TxtDescripcion.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.TxtDescripcion.DisabledBackColor = System.Drawing.Color.White
+        Me.TxtDescripcion.ForeColor = System.Drawing.Color.Black
+        Me.TxtDescripcion.Location = New System.Drawing.Point(8, 100)
+        Me.TxtDescripcion.Multiline = True
+        Me.TxtDescripcion.Name = "TxtDescripcion"
+        Me.TxtDescripcion.PreventEnterBeep = True
+        Me.TxtDescripcion.Size = New System.Drawing.Size(476, 69)
+        Me.TxtDescripcion.TabIndex = 0
+        Me.TxtDescripcion.Text = "" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'Rf_Imagen
+        '
+        '
+        '
+        '
+        Me.Rf_Imagen.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rf_Imagen.BackgroundStyle.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.Rf_Imagen.Image = CType(resources.GetObject("Rf_Imagen.Image"), System.Drawing.Image)
+        Me.Rf_Imagen.Location = New System.Drawing.Point(402, -7)
+        Me.Rf_Imagen.Name = "Rf_Imagen"
+        Me.Rf_Imagen.Size = New System.Drawing.Size(70, 91)
+        Me.Rf_Imagen.TabIndex = 6
+        '
+        'BtnAceptar
+        '
+        Me.BtnAceptar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.BtnAceptar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.BtnAceptar.Image = CType(resources.GetObject("BtnAceptar.Image"), System.Drawing.Image)
+        Me.BtnAceptar.ImageAlt = CType(resources.GetObject("BtnAceptar.ImageAlt"), System.Drawing.Image)
+        Me.BtnAceptar.Location = New System.Drawing.Point(8, 175)
+        Me.BtnAceptar.Name = "BtnAceptar"
+        Me.BtnAceptar.Size = New System.Drawing.Size(92, 38)
+        Me.BtnAceptar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.BtnAceptar.TabIndex = 7
+        Me.BtnAceptar.Text = "Aceptar"
+        '
+        'LblComentario_Centro
+        '
+        '
+        '
+        '
+        Me.LblComentario_Centro.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LblComentario_Centro.Location = New System.Drawing.Point(12, 12)
+        Me.LblComentario_Centro.Name = "LblComentario_Centro"
+        Me.LblComentario_Centro.Size = New System.Drawing.Size(384, 82)
+        Me.LblComentario_Centro.TabIndex = 9
+        Me.LblComentario_Centro.Text = "Comentario..." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "XXXXXXXXXXYYYYYYYYYYCCCCCCCCCCXXXXXXXXXXZZXDSREFTE" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.LblComentario_Centro.TextLineAlignment = System.Drawing.StringAlignment.Near
+        '
+        'BtnCancelar
+        '
+        Me.BtnCancelar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.BtnCancelar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.BtnCancelar.Image = CType(resources.GetObject("BtnCancelar.Image"), System.Drawing.Image)
+        Me.BtnCancelar.ImageAlt = CType(resources.GetObject("BtnCancelar.ImageAlt"), System.Drawing.Image)
+        Me.BtnCancelar.Location = New System.Drawing.Point(106, 175)
+        Me.BtnCancelar.Name = "BtnCancelar"
+        Me.BtnCancelar.Size = New System.Drawing.Size(92, 38)
+        Me.BtnCancelar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.BtnCancelar.TabIndex = 11
+        Me.BtnCancelar.Text = "Cancelar"
+        Me.BtnCancelar.Visible = False
+        '
+        'TouchKeyboard1
+        '
+        Me.TouchKeyboard1.FloatingLocation = New System.Drawing.Point(0, 0)
+        Me.TouchKeyboard1.FloatingSize = New System.Drawing.Size(740, 250)
+        Me.TouchKeyboard1.Location = New System.Drawing.Point(0, 0)
+        Me.TouchKeyboard1.Size = New System.Drawing.Size(740, 250)
+        Me.TouchKeyboard1.Text = ""
+        '
+        'Imagenes_48x48_Ligth
+        '
+        Me.Imagenes_48x48_Ligth.ImageStream = CType(resources.GetObject("Imagenes_48x48_Ligth.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.Imagenes_48x48_Ligth.TransparentColor = System.Drawing.Color.Transparent
+        Me.Imagenes_48x48_Ligth.Images.SetKeyName(0, "Texto")
+        Me.Imagenes_48x48_Ligth.Images.SetKeyName(1, "Editar_Tabla")
+        Me.Imagenes_48x48_Ligth.Images.SetKeyName(2, "Buscar_documento")
+        Me.Imagenes_48x48_Ligth.Images.SetKeyName(3, "Correo")
+        Me.Imagenes_48x48_Ligth.Images.SetKeyName(4, "Alerta")
+        Me.Imagenes_48x48_Ligth.Images.SetKeyName(5, "Ubicacion")
+        Me.Imagenes_48x48_Ligth.Images.SetKeyName(6, "Transferencia_Bancaria")
+        Me.Imagenes_48x48_Ligth.Images.SetKeyName(7, "Cheque_Numero")
+        Me.Imagenes_48x48_Ligth.Images.SetKeyName(8, "Barra")
+        Me.Imagenes_48x48_Ligth.Images.SetKeyName(9, "CodQR")
+        Me.Imagenes_48x48_Ligth.Images.SetKeyName(10, "Imagen1")
+        Me.Imagenes_48x48_Ligth.Images.SetKeyName(11, "Imagen2")
+        '
+        'Imagenes_48x48_Dark
+        '
+        Me.Imagenes_48x48_Dark.ImageStream = CType(resources.GetObject("Imagenes_48x48_Dark.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.Imagenes_48x48_Dark.TransparentColor = System.Drawing.Color.Transparent
+        Me.Imagenes_48x48_Dark.Images.SetKeyName(0, "Texto")
+        Me.Imagenes_48x48_Dark.Images.SetKeyName(1, "Editar_Tabla")
+        Me.Imagenes_48x48_Dark.Images.SetKeyName(2, "Cheque_Numero")
+        Me.Imagenes_48x48_Dark.Images.SetKeyName(3, "Transferencia_Bancaria")
+        Me.Imagenes_48x48_Dark.Images.SetKeyName(4, "Ubicacion")
+        Me.Imagenes_48x48_Dark.Images.SetKeyName(5, "Alerta")
+        Me.Imagenes_48x48_Dark.Images.SetKeyName(6, "Correo")
+        Me.Imagenes_48x48_Dark.Images.SetKeyName(7, "Buscar_documento")
+        Me.Imagenes_48x48_Dark.Images.SetKeyName(8, "Barra")
+        Me.Imagenes_48x48_Dark.Images.SetKeyName(9, "CodQR")
+        Me.Imagenes_48x48_Dark.Images.SetKeyName(10, "Imagen2")
+        Me.Imagenes_48x48_Dark.Images.SetKeyName(11, "Imagen1")
+        '
+        'Frm_InpunBox_Bk
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(495, 220)
+        Me.ControlBox = False
+        Me.Controls.Add(Me.BtnCancelar)
+        Me.Controls.Add(Me.LblComentario_Centro)
+        Me.Controls.Add(Me.BtnAceptar)
+        Me.Controls.Add(Me.Rf_Imagen)
+        Me.Controls.Add(Me.TxtDescripcion)
+        Me.DoubleBuffered = True
+        Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.KeyPreview = True
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
+        Me.Name = "Frm_InpunBox_Bk"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "MetroForm"
+        Me.TopMost = True
+        Me.ResumeLayout(False)
+
+    End Sub
+    Friend WithEvents Rf_Imagen As DevComponents.DotNetBar.Controls.ReflectionImage
+    Friend WithEvents BtnAceptar As DevComponents.DotNetBar.ButtonX
+    Public WithEvents LblComentario_Centro As DevComponents.DotNetBar.LabelX
+    Public WithEvents TxtDescripcion As DevComponents.DotNetBar.Controls.TextBoxX
+    Public WithEvents BtnCancelar As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents TouchKeyboard1 As DevComponents.DotNetBar.Keyboard.TouchKeyboard
+    Friend WithEvents Imagenes_48x48_Ligth As ImageList
+    Friend WithEvents Imagenes_48x48_Dark As ImageList
+End Class

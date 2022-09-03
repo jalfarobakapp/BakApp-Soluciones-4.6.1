@@ -1,0 +1,259 @@
+Return-Path: <SRS0=xcHX5p=46=sii.cl=mipyme@sirrep.cl>
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id CT8SAROfJVn47Q8AqFaw+A
+	; Wed, 24 May 2017 10:56:19 -0400
+Return-path: <SRS0=xcHX5p=46=sii.cl=mipyme@sirrep.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Wed, 24 May 2017 10:56:19 -0400
+Received: from rapel12.sii.cl ([200.10.251.90])
+	by srv150.tuhosting.cl with esmtp (Exim 4.89)
+	(envelope-from <mipyme@sii.cl>)
+	id 1dDXhy-004Nih-HX
+	for notificacionsii@sirrep.cl; Wed, 24 May 2017 10:56:18 -0400
+X-IronPort-AV: E=Sophos;i="5.38,386,1491274800"; 
+   d="xml'?scan'208";a="632716328"
+Received: from alhuex202.sii.cl ([192.168.134.71])
+  by rapel12.sii.cl with ESMTP; 24 May 2017 10:58:24 -0400
+Message-ID: <1641853386.1495637904698.JavaMail.root@alhuex202.sii.cl>
+Date: Wed, 24 May 2017 10:58:24 -0400 (CLT)
+From: mipyme@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: Envio DTE - Emisor:13287473-5  Receptor:79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_422653_2024408001.1495637904638"
+
+------=_Part_422653_2024408001.1495637904638
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+Facturacion Electronica - Envio de DTE
+======================================
+
+Adjunto puede encontrar el Archivo XML de Envio de Documentos Tributarios 
+Electronicos generado para usted por el Emisor de la referencia.
+
+----------------------------------------------------------------------------
+
+Esta es una aplicacion automatica, por lo tanto no conteste este correo ni
+haga consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue
+mas claro en cualquier aplicacion.
+
+------=_Part_422653_2024408001.1495637904638
+Content-Type: application/octet-stream; name=EnvMiPERCP306991675.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=EnvMiPERCP306991675.xml
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<EnvioDTE xmlns="http://www.sii.cl/SiiDte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sii.cl/SiiDte EnvioDTE_v10.xsd" version="1.0">
+<SetDTE ID="SDTE306991675">
+  <Caratula version="1.0">
+    <RutEmisor>13287473-5</RutEmisor>
+    <RutEnvia>48080155-5</RutEnvia>
+    <RutReceptor>79514800-0</RutReceptor>
+    <FchResol>2014-10-21</FchResol>
+    <NroResol>99</NroResol>
+    <TmstFirmaEnv>2017-05-24T10:58:05</TmstFirmaEnv>
+    <SubTotDTE>
+      <TpoDTE>33</TpoDTE>
+      <NroDTE>1</NroDTE>
+    </SubTotDTE>
+  </Caratula>
+<DTE xmlns="http://www.sii.cl/SiiDte" version="1.0">
+  <!-- O Win32 Chrome 58 central VERSION: v20161228 -->
+<Documento ID="MiPE13287473-8902">
+    <Encabezado>
+      <IdDoc>
+        <TipoDTE>33</TipoDTE>
+        <Folio>1334</Folio>
+        <FchEmis>2017-05-24</FchEmis>
+      </IdDoc>
+      <Emisor>
+        <RUTEmisor>13287473-5</RUTEmisor>
+        <RznSoc>ALEX ANTONIO DINAMARCA VARGAS</RznSoc>
+        <GiroEmis>VENTA DE ART. ASEO, ESCRITORIO, EMBALAJE Y FERRETERIA</GiroEmis>
+        <Acteco>521120</Acteco>
+        <CdgSIISucur>052505551</CdgSIISucur>
+        <DirOrigen>AV MATTA 262</DirOrigen>
+        <CmnaOrigen>SANTIAGO</CmnaOrigen>
+        <CiudadOrigen>STGO</CiudadOrigen>
+      </Emisor>
+      <Receptor>
+        <RUTRecep>79514800-0</RUTRecep>
+        <RznSocRecep>SIERRALTA Y COMPANIA LIMITADA</RznSocRecep>
+        <GiroRecep>VENTA DE PARTES, PIEZAS Y ACCESORIOS</GiroRecep>
+        <DirRecep>AV BRASIL 24</DirRecep>
+        <CmnaRecep>SANTIAGO</CmnaRecep>
+        <CiudadRecep>STGO</CiudadRecep>
+      </Receptor>
+      <Totales>
+        <MntNeto>16170</MntNeto>
+        <TasaIVA>19.00</TasaIVA>
+        <IVA>3072</IVA>
+        <MntTotal>19242</MntTotal>
+      </Totales>
+    </Encabezado>
+    <Detalle>
+      <NroLinDet>1</NroLinDet>
+      <NmbItem>Rollo Carton Corrugado</NmbItem>
+      <QtyItem>55.00</QtyItem>
+      <PrcItem>294.00</PrcItem>
+      <MontoItem>16170</MontoItem>
+    </Detalle>
+<TED version="1.0"><DD><RE>13287473-5</RE><TD>33</TD><F>1334</F><FE>2017-05-24</FE><RR>79514800-0</RR><RSR>SIERRALTA Y COMPANIA LIMITADA</RSR><MNT>19242</MNT><IT1>Rollo Carton Corrugado</IT1><CAF version="1.0"><DA><RE>13287473-5</RE><RS>ALEX ANTONIO DINAMARCA VARGAS</RS><TD>33</TD><RNG><D>1334</D><H>1334</H></RNG><FA>2017-05-24</FA><RSAPK><M>t5//MI5YazHrmUz7ZA/H5YcN/mVKH7ur8gtivdXUXlHk0H2inq9TMVRACrZJQfoYfU6oSJTgCQ73FQmND3tz7w==</M><E>Aw==</E></RSAPK><IDK>300</IDK></DA><FRMA algoritmo="SHA1withRSA">jdiABRvcwx/DeOFXQUEk36+YIn+OmpE9DXfIR1fRt7zyM+H2XlDxmBTqkOIezmVUG/8VcxJowbTVWxcHsfrSqw==</FRMA></CAF><TSTED>2017-05-24T10:58:00</TSTED></DD><FRMT algoritmo="SHA1withRSA">MrpHwnicOOO5JhRXypAC7JymkAPLFLFKQulvPD6WCarx9aeHe+eT9feijNoa0AxjtvJqxFnArIB2cHstaHrGLQ==</FRMT></TED>
+    <TmstFirma>2017-05-24T10:58:00</TmstFirma>
+
+  </Documento>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference URI="#MiPE13287473-8902">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>YMl/3znlvktq/K5CzkbF7tKV9h4=</DigestValue>
+</Reference>
+</SignedInfo>
+<SignatureValue>
+QfiL93iGnE26zY+E5RNFKTaFIzlaRh8wgEsGO61cegXnBfsv656wV9NvN9Jwap+ccyZinndSFKsb
+rZ+xkZRrw2phnjz4ffNn0EX2gOhv+2wDUu4jlllQvgfn+ss01QghztsSmxb+qofjT2WcR4LM6Oue
+DidTuxQEzdu7SmE1bZU=
+</SignatureValue>
+<KeyInfo>
+<KeyValue>
+<RSAKeyValue>
+<Modulus>
+4ZrUZizQHYoaNtqWZ2dEfXaucYSBadkwHl3DoB3ogHt6wYHDvUA6x8W7eRM1TTvG3nPFmu3Tv6/f
+o8WHRvEt9Fozfu3o0SyQOZUBCr2IPidjiMg94lc7HQ0/RItCuhaFtfymuxe2c4NkzUKw3HAZuW/d
+sw4EJyPF1ebn33G+vIk=
+</Modulus>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
+</KeyValue>
+<X509Data>
+<X509Certificate>
+MIIGSTCCBTGgAwIBAgIKFTdVuAAAAAXBZDANBgkqhkiG9w0BAQUFADCB0jELMAkGA1UEBhMCQ0wx
+HTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQHEwhTYW50aWFnbzEUMBIGA1UE
+ChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9yaWRhZCBDZXJ0aWZpY2Fkb3JhMTAwLgYDVQQD
+EydFLUNFUlRDSElMRSBDQSBGSVJNQSBFTEVDVFJPTklDQSBTSU1QTEUxJzAlBgkqhkiG9w0BCQEW
+GHNjbGllbnRlc0BlLWNlcnRjaGlsZS5jbDAeFw0xNjExMTUxNzE0MDdaFw0xOTExMTUxNzE0MDda
+MIHMMQswCQYDVQQGEwJDTDEjMCEGA1UECBMaTUVUUk9QT0xJVEFOQSBERSBTQU5USUFHTyAxETAP
+BgNVBAcTCFNhbnRpYWdvMScwJQYDVQQKEx5hbGV4IGFudG9uaW8gIGRpbmFtYXJjYSB2YXJnYXMx
+CjAIBgNVBAsMASoxJzAlBgNVBAMTHmFsZXggYW50b25pbyAgZGluYW1hcmNhIHZhcmdhczEnMCUG
+CSqGSIb3DQEJARYYY2FydG9uaW50ZWdyYWxAZ21haWwuY29tMIGfMA0GCSqGSIb3DQEBAQUAA4GN
+ADCBiQKBgQDhmtRmLNAdiho22pZnZ0R9dq5xhIFp2TAeXcOgHeiAe3rBgcO9QDrHxbt5EzVNO8be
+c8Wa7dO/r9+jxYdG8S30WjN+7ejRLJA5lQEKvYg+J2OIyD3iVzsdDT9Ei0K6FoW1/Ka7F7Zzg2TN
+QrDccBm5b92zDgQnI8XV5uffcb68iQIDAQABo4ICpzCCAqMwPQYJKwYBBAGCNxUHBDAwLgYmKwYB
+BAGCNxUIgtyDL4WTjGaF1Z0XguLcJ4Hv7DxhgZrnFYav4BUCAWQCAQQwHQYDVR0OBBYEFIa5UKZm
+OEF7ym7OMS3C8doalr4vMAsGA1UdDwQEAwIE8DAfBgNVHSMEGDAWgBR44T6f0hKzejyNzTAOU7ND
+KQezVTA+BgNVHR8ENzA1MDOgMaAvhi1odHRwOi8vY3JsLmUtY2VydGNoaWxlLmNsL2VjZXJ0Y2hp
+bGVjYUZFUy5jcmwwOgYIKwYBBQUHAQEELjAsMCoGCCsGAQUFBzABhh5odHRwOi8vb2NzcC5lY2Vy
+dGNoaWxlLmNsL29jc3AwIwYDVR0RBBwwGqAYBggrBgEEAcEBAaAMFgoxMzI4NzQ3My01MCMGA1Ud
+EgQcMBqgGAYIKwYBBAHBAQKgDBYKOTY5MjgxODAtNTCCAU0GA1UdIASCAUQwggFAMIIBPAYIKwYB
+BAHDUgUwggEuMC0GCCsGAQUFBwIBFiFodHRwOi8vd3d3LmUtY2VydGNoaWxlLmNsL0NQUy5odG0w
+gfwGCCsGAQUFBwICMIHvHoHsAEMAZQByAHQAaQBmAGkAYwBhAGQAbwAgAEYAaQByAG0AYQAgAFMA
+aQBtAHAAbABlAC4AIABIAGEAIABzAGkAZABvACAAdgBhAGwAaQBkAGEAZABvACAAZQBuACAAZgBv
+AHIAbQBhACAAcAByAGUAcwBlAG4AYwBpAGEAbAAsACAAcQB1AGUAZABhAG4AZABvACAAaABhAGIA
+aQBsAGkAdABhAGQAbwAgAGUAbAAgAEMAZQByAHQAaQBmAGkAYwBhAGQAbwAgAHAAYQByAGEAIAB1
+AHMAbwAgAHQAcgBpAGIAdQB0AGEAcgBpAG8wDQYJKoZIhvcNAQEFBQADggEBACV64rCxqvDQNPpc
+fmd748hdXX7PVLlEbgvJpkw0Jul7UZHcRwUyU7fHEx099VzdOvPQk3Y6C35a97oLQvOnN4GzadtK
+s8NY+L0njBLV2WuNQhrVBDauMaYsChfVjvYTMCZLwDVvo4K5vnIgltInTZig8LEMR36wJDpanIhN
+Nl19rUGkEd3cwNaNYaamy6u84F8TS5rxh5D6yni40tfvM9HnQa6vuIteeqArjv2t/nys0zm8qk6k
+B5RJRHdpXL/JuqY9JyA0JJg0UWxIiKTRydeU32cihoSBc2JxzZPljay8y/xADDx/3FOW7KjfRGjV
+cDWUl8tZbpzqwGiqXZKJVik=
+</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature></DTE></SetDTE>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference URI="#SDTE306991675">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>ZEPTyWCF2wH0GU5BK05HXOFx5wA=</DigestValue>
+</Reference>
+</SignedInfo>
+<SignatureValue>TEUsrjMgRLWxbmxHO3m5eli42xLWT2mLiWC0Jl+fs0oxIbVLRzDpCiyqmyRWvM7R
+UP2NJFGrHCsQ24lvdDtBR3+2ZhOuDsXgn8bZoMuK0vjTcuLrZdf82tXrTGDY9Egx
+5u49zmeMDrkeWoi4nIlFSQMNZmOAMoe6mQ3Hb+PBFhLS4HpUKHw4qqA/JDSuryz5
+MOeCT5MlwZ2+6vCSndjQc2eWHF5hg6gtT/H88+TQOtn/2SB/t4cZQyw4/YBKEDoP
+9ZtzAfoES4S+KWTVZGEBFbg4A9DpVXz5bCpyIoVeWn9E+sze+t7neMt6Vl34wVcl
+NCyLPkfykMMLcpiHPoVGnA==</SignatureValue>
+<KeyInfo>
+<KeyValue>
+<RSAKeyValue>
+<Modulus>
+vUSZwnTtsvIdpQ5q2hq53klOqJpf4xEXdId5mZBsDiCC7rYW17IXZsRmULwNbg80
+I+8op1lw3tG/f7wnAD70SbiF+XtAmpDtFWxBuifOA7yt5LQ61UYeZUumdBhcoWGP
+FXXmQCHHEyhZzl264AhbyKhReae6+KG1tk3YDcdNXwCbzdp90+3r4Jj9iNgxKpE3
+KWYmJQtQ9mWqZlDKVef1PdHzVtALOJrI72hG6A4FV9tGRQ8xluTByCqw+hx4fkXZ
+irF1DT3uQsF3l79nGrtU6520DRTPoNWimzUkeVsEp8auTbU6KMjj4Umk4rbVo5kw
+gRP4WlsONi0RBkMa7uRsnQ==
+</Modulus>
+<Exponent>
+AQAB
+</Exponent>
+</RSAKeyValue>
+</KeyValue>
+<X509Data>
+<X509Certificate>
+MIIEZDCCA0ygAwIBAgIBRDANBgkqhkiG9w0BAQUFADCBpTEUMBIGA1UEAxMLU0lJ
+LUNBLTIwMTM
+xGjAYBgNVBAcTEVNhbnRpYWdvIGRlIENoaWxlMR0wGwYDVQQIExRS
+ZWdpb24gTWV0cm9wb2xpdG
+FuYTELMAkGA1UEBhMCQ0wxHDAaBgkqhkiG9w0BCQEW
+DXNpaS1jYUBzaWkuY2wxJzAlBgNVBAoTH
+lNlcnZpY2lvIGRlIEltcHVlc3RvcyBJ
+bnRlcm5vczAeFw0xNzAzMjIxNjMwMjdaFw0xOTAzMjIx
+NjMwMjdaMIHRMSQwIgYD
+VQQLExtTdWJkaXJlY2Npb24gZGUgSW5mb3JtYXRpY2ExJzAlBgNVBAo
+THlNlcnZp
+Y2lvIGRlIEltcHVlc3RvcyBJbnRlcm5vczELMAkGA1UEBhMCQ0wxHTAbBgNVBAgT
+F
+FJlZ2lvbiBNZXRyb3BvbGl0YW5hMRowGAYDVQQHExFTYW50aWFnbyBkZSBDaGls
+ZTEeMBwGCSqG
+SIb3DQEJARYPbWxhY29zdGVAc2lpLmNsMRgwFgYDVQQDEw9GQUNU
+VVJBQ0lPTiBTSUkwggEiMA0
+GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC9RJnC
+dO2y8h2lDmraGrneSU6oml/jERd0h3mZkG
+wOIILuthbXshdmxGZQvA1uDzQj7yin
+WXDe0b9/vCcAPvRJuIX5e0CakO0VbEG6J84DvK3ktDrVR
+h5lS6Z0GFyhYY8VdeZA
+IccTKFnOXbrgCFvIqFF5p7r4obW2TdgNx01fAJvN2n3T7evgmP2I2DEq
+kTcpZiYl
+C1D2ZapmUMpV5/U90fNW0As4msjvaEboDgVX20ZFDzGW5MHIKrD6HHh+RdmKsXUN
+Pe
+5CwXeXv2cau1TrnbQNFM+g1aKbNSR5WwSnxq5NtTooyOPhSaTittWjmTCBE/ha
+Ww42LREGQxru5
+GydAgMBAAGjcTBvMAkGA1UdEwQCMAAwPQYDVR0RBDYwNKAYBggr
+BgEEAcEBAaAMEwo0ODA4MDE1
+NS01oBgGCCsGAQQBwQEDoAwTCjYwODAzMDAwLUsw
+IwYDVR0SBBwwGqAYBggrBgEEAcEBAqAMEwo
+2MDgwMzAwMC1LMA0GCSqGSIb3DQEB
+BQUAA4IBAQCltLIBMlvpHbdSttl+QC6pZPBsl2U2VKLThg
+IEE4lCDGCIB7UoPb3k
+evEY2AepxKxNy64SvqXKpsXwfRIcdudcQOIIhk77WnsWP3x0HiyAqmn4U
+Ri7DNa0
+Hk4bcQXsdAGHGYqPUisQltPeaqzoGyhlATLfo8XyaMeB3/1jlAGyWaczWCP8Fv40
+rO4
+QEUqIqUf5XFeC2TiJPfFp/LB5zYkZKNeAVnqZXZtQAaRHrqxnDd4DNy8BAe6c
+Al/YZsDh/1JWRb
+gySVQK2M4HOU172feqEGkLOoy3bcMSKxj9Wqxsjg3kzcm+Uo0F
+ymekuMCa1XFJ1OWVu0E2zB2Xp
+dIMZTjU
+</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature></EnvioDTE>
+
+------=_Part_422653_2024408001.1495637904638--
+

@@ -1,0 +1,108 @@
+Return-Path: <SRS0=lKgy6D=4W=sii.cl=siidte_error@sirrep.cl>
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id aVODAmAQG1n/wQ8AqFaw+A
+	; Tue, 16 May 2017 10:44:48 -0400
+Return-path: <SRS0=lKgy6D=4W=sii.cl=siidte_error@sirrep.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Tue, 16 May 2017 10:44:48 -0400
+Received: from rapel11.sii.cl ([200.10.252.90] helo=mailin.sii.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.89)
+	(envelope-from <siidte_error@sii.cl>)
+	id 1dAdiR-004KqP-SL
+	for notificacionsii@sirrep.cl; Tue, 16 May 2017 10:44:47 -0400
+X-IronPort-AV: E=Sophos;i="5.04,848,1406602800"; 
+   d="xml'?txt'?scan'208";a="1153732296"
+Received: from dte01.sii.cl (HELO dte01) ([10.20.201.29])
+  by mailout.sii.cl with ESMTP; 16 May 2017 11:34:10 -0300
+Message-ID: <4849471.1494945998890.JavaMail.root@dte01>
+Date: Tue, 16 May 2017 10:46:38 -0400 (CLT)
+From: siidte_error@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: Produccion - Resultado de Revision Envio 2163692984 - 79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_2390_9034650.1494945998889"
+
+------=_Part_2390_9034650.1494945998889
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+SII de Chile - Validacion de DTE
+================================
+
+En el archivo adjunto esta el resultado del proceso de revision y validacion
+del envio de Documentos Tributarios Electronicos realizado por su empresa al
+Servicio de Impuestos Internos de Chile.
+
+----------------------------------------------------------------------------
+
+Este es una aplicacion automatica. No conteste este correo ni haga 
+consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue 
+mas claro en cualquier aplicacion.
+
+
+------=_Part_2390_9034650.1494945998889
+Content-Type: text/plain; name=DTEMAIL2163692984.txt
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL2163692984.txt
+
+Resultado de Validacion de Envio de DTE
+=======================================
+
+Rut de Empresa Emisora   : 79514800-0
+Rut que Realizo el Envio : 12628844-1
+Identificador de Envio   : 2163692984
+Fecha de Recepcion       : 16/05/2017 10:46:06
+Estado del Envio         : EPR - Envio Procesado
+
+Estadisticas del Envio
+======================
+Tipo DTE  Informados  Rechazos  Reparos  Aceptados
+--------------------------------------------------
+   61              1         1        0          0
+
+Detalle de Rechazos y Reparos de DTE
+====================================
+
+ Folio       Tipo  Estado
+ ------------------------------------------------------------------------------
+ 19175        61   RCH - DTE Rechazado
+     (REF-3-415) Debe Existir al Menos Una Referencia : a un Doc. Tributario
+
+
+------=_Part_2390_9034650.1494945998889
+Content-Type: application/octet-stream; name=DTEMAIL2163692984.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL2163692984.xml
+
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<RESULTADO_ENVIO>
+ <IDENTIFICACION>
+  <RUTEMISOR>79514800-0</RUTEMISOR>
+  <RUTENVIA>12628844-1</RUTENVIA>
+  <TRACKID>2163692984</TRACKID>
+  <TMSTRECEPCION>16/05/2017 10:46:06</TMSTRECEPCION>
+  <ESTADO>EPR - Envio Procesado</ESTADO>
+ </IDENTIFICACION>
+ <ESTADISTICA>
+  <SUBTOTAL>
+   <TIPODOC>61</TIPODOC>
+   <INFORMADO>1</INFORMADO>
+   <RECHAZO>1</RECHAZO>
+  </SUBTOTAL>
+ </ESTADISTICA>
+ <REVISIONENVIO>
+  <REVISIONDTE>
+   <FOLIO>19175</FOLIO>
+   <TIPODTE>61</TIPODTE>
+   <ESTADO>RCH - DTE Rechazado</ESTADO>
+   <DETALLE>(REF-3-415) Debe Existir al Menos Una Referencia : a un Doc. Tributario</DETALLE>
+  </REVISIONDTE>
+ </REVISIONENVIO>
+</RESULTADO_ENVIO>
+
+------=_Part_2390_9034650.1494945998889--
+

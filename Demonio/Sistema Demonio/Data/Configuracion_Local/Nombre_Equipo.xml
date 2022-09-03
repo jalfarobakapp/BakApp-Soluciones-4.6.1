@@ -1,0 +1,6 @@
+<?xml version="1.0" standalone="yes"?>
+<DatosBakApp xmlns="http://tempuri.org/DatosBakApp.xsd">
+  <Tbl_Nombre_Equipo>
+    <Nombre_Equipo />
+  </Tbl_Nombre_Equipo>
+</DatosBakApp>

@@ -1,0 +1,11 @@
+<?xml version="1.0" standalone="yes"?>
+<DS_Filtro_Venta_Vendedor xmlns="http://tempuri.org/DS_Filtro_Venta_Vendedor.xsd">
+  <Tbl_Opciones>
+    <Rdb_Vendedores_Todos>true</Rdb_Vendedores_Todos>
+    <Rdb_Vendedores_Algunos>false</Rdb_Vendedores_Algunos>
+    <Rdb_Sucursales_Todos>True</Rdb_Sucursales_Todos>
+    <Rdb_Sucursales_Algunos>False</Rdb_Sucursales_Algunos>
+    <Rdb_Documentos_Todos>True</Rdb_Documentos_Todos>
+    <Rdb_Documentos_Algunos>False</Rdb_Documentos_Algunos>
+  </Tbl_Opciones>
+</DS_Filtro_Venta_Vendedor>

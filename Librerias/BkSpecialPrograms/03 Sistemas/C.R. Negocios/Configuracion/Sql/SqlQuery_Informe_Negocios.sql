@@ -1,0 +1,27 @@
+SELECT     Enc.Nro_Negocio, Enc.Stand_By, Enc.Estado, Enc.Estado_Cerrado, Enc.Tipo, 
+                      Enc.NomTipo, 
+                      Enc.Fecha_Emision, 
+                      Enc.Fecha_Cierre, 
+                      Enc.CodEntidad, 
+                      Enc.CodSucursal, Enc.RutEntidad, Enc.NomEntidad, Enc.CodFuncionario, 
+                      Enc.NomFuncionario, Enc.Empresa, Enc.Sucursal, Enc.NomSucursal, 
+                      Enc.Motivo_Anula, Enc.Nom_Clas_Crediticia, Enc.Visado_Jefe, Enc.Fun_Corregir, 
+                      Enc.Fun_Corregir_Motivo, Det.Valor_UF, Det.Linea_Credito_SC_Ac_UF, Det.Linea_Credito_Int_Ac_Peso, 
+                      Det.Linea_Credito_Int_Ac_UF, Det.Cod_Clas_Crediticia_Ac_Seg_Credito, Det.Clasif_Riesgo_comercial, 
+                      Det.Morosidades_y_protestos, Det.Deuda_Actual, Det.Deuda_Actual_UF, Det.Fecha_Prox_Vencimiento, 
+                      Det.Prorroga_Negociacion_Vigente, Det.Monto_Prox_Vencimiento, 
+                      Det.Obs_Proximos_Vencimientos_CxC, Det.Monto_Venta_Civa, Det.Monto_Venta_Civa_UF, 
+                      Det.Plazo_Venta_Dias, Det.CodVendedor, Det.NomVendedor,Det.Producto, 
+                      Det.Precio, 
+                      --Det.Rentabilidad, 
+                      Det.Score_Crediticio,
+                      Det.Dias_libres, Det.Taza_de_interes, 
+                      Det.Doc_Venta_SI, Det.Cod_Doc_Venta_SI, Det.Doc_Venta_NO, Det.Ficha_Int_Cli_Completa, 
+                      Det.Ficha_Int_Cli_Parcial, Det.Ficha_Int_Cli_SinAntecedentes, 
+                      Det.Observaciones_Jefe, 
+                      Det.Observaciones, 
+                      Det.Cierre_CodAutoriza, Det.Cierre_NombreAutoriza, Det.Cierre_Observaciones, 
+                      Det.Total_Neto_Aprobado_Uf, Det.Total_Neto_Aprobado_Pesos
+FROM        BAKAPP_SA.dbo.Zw_Negocios_01_Enc Enc INNER JOIN
+                      BAKAPP_SA.dbo.Zw_Negocios_02_Det Det ON Enc.Nro_Negocio = Det.Nro_Negocio
+                      

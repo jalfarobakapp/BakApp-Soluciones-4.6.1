@@ -1,0 +1,28 @@
+<?xml version="1.0" standalone="yes"?>
+<Ds_Config_Picking xmlns="http://tempuri.org/Ds_Config_Picking.xsd">
+  <Tbl_Configuracion>
+    <Impresora />
+    <RutaImagen />
+    <Timer_Monitoreo_Doc>false</Timer_Monitoreo_Doc>
+    <Timer_Monitoreo_Mail>false</Timer_Monitoreo_Mail>
+    <Timer_Monitoreo_Impresion>true</Timer_Monitoreo_Impresion>
+    <Timer_Monitoreo_SolProdBod>false</Timer_Monitoreo_SolProdBod>
+    <Timer_Prestashop>false</Timer_Prestashop>
+    <Input_Tiempo_Correo>2</Input_Tiempo_Correo>
+    <Input_Tiempo_Impresion>5</Input_Tiempo_Impresion>
+    <Input_Tiempo_Sol_Bodega>1</Input_Tiempo_Sol_Bodega>
+    <Input_Tiempo_Prestashop>1</Input_Tiempo_Prestashop>
+    <Timer_Consolidacion_Stock>false</Timer_Consolidacion_Stock>
+    <Rdb_Cons_Stock_Todos>false</Rdb_Cons_Stock_Todos>
+    <Rdb_Cons_Stock_Mov_Hoy>true</Rdb_Cons_Stock_Mov_Hoy>
+    <Chk_Cons_Stock_Lunes>true</Chk_Cons_Stock_Lunes>
+    <Chk_Cons_Stock_Martes>true</Chk_Cons_Stock_Martes>
+    <Chk_Cons_Stock_Miercoles>true</Chk_Cons_Stock_Miercoles>
+    <Chk_Cons_Stock_Jueves>true</Chk_Cons_Stock_Jueves>
+    <Chk_Cons_Stock_Viernes>true</Chk_Cons_Stock_Viernes>
+    <Chk_Cons_Stock_Sabado>false</Chk_Cons_Stock_Sabado>
+    <Chk_Cons_Stock_Domingo>false</Chk_Cons_Stock_Domingo>
+    <Dtp_Cons_Stock_Hora_Ejecuion>2018-11-05T00:33:24-03:00</Dtp_Cons_Stock_Hora_Ejecuion>
+    <Ejecutar_Automaticamente>true</Ejecutar_Automaticamente>
+  </Tbl_Configuracion>
+</Ds_Config_Picking>

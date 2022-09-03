@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Ds_Cashdro" targetNamespace="http://tempuri.org/Ds_Cashdro.xsd" xmlns:mstns="http://tempuri.org/Ds_Cashdro.xsd" xmlns="http://tempuri.org/Ds_Cashdro.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Ds_Cashdro" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="Ds_Cashdro" msprop:Generator_DataSetName="Ds_Cashdro" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Tbl_Configuracion" msprop:Generator_UserTableName="Tbl_Configuracion" msprop:Generator_RowDeletedName="Tbl_ConfiguracionRowDeleted" msprop:Generator_RowChangedName="Tbl_ConfiguracionRowChanged" msprop:Generator_RowClassName="Tbl_ConfiguracionRow" msprop:Generator_RowChangingName="Tbl_ConfiguracionRowChanging" msprop:Generator_RowEvArgName="Tbl_ConfiguracionRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_ConfiguracionRowChangeEventHandler" msprop:Generator_TableClassName="Tbl_ConfiguracionDataTable" msprop:Generator_TableVarName="tableTbl_Configuracion" msprop:Generator_RowDeletingName="Tbl_ConfiguracionRowDeleting" msprop:Generator_TablePropName="Tbl_Configuracion">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Ip_cashdro" msprop:Generator_UserColumnName="Ip_cashdro" msprop:Generator_ColumnVarNameInTable="columnIp_cashdro" msprop:Generator_ColumnPropNameInRow="Ip_cashdro" msprop:Generator_ColumnPropNameInTable="Ip_cashdroColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Usuario" msprop:Generator_UserColumnName="Usuario" msprop:Generator_ColumnVarNameInTable="columnUsuario" msprop:Generator_ColumnPropNameInRow="Usuario" msprop:Generator_ColumnPropNameInTable="UsuarioColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Contrasena" msprop:Generator_UserColumnName="Contrasena" msprop:Generator_ColumnVarNameInTable="columnContrasena" msprop:Generator_ColumnPropNameInRow="Contrasena" msprop:Generator_ColumnPropNameInTable="ContrasenaColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Impresora" msprop:Generator_UserColumnName="Impresora" msprop:Generator_ColumnPropNameInRow="Impresora" msprop:Generator_ColumnVarNameInTable="columnImpresora" msprop:Generator_ColumnPropNameInTable="ImpresoraColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Pago_Efectivo" msprop:Generator_UserColumnName="Pago_Efectivo" msprop:Generator_ColumnPropNameInRow="Pago_Efectivo" msprop:Generator_ColumnVarNameInTable="columnPago_Efectivo" msprop:Generator_ColumnPropNameInTable="Pago_EfectivoColumn" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Pago_Tarjeta" msprop:Generator_UserColumnName="Pago_Tarjeta" msprop:Generator_ColumnPropNameInRow="Pago_Tarjeta" msprop:Generator_ColumnVarNameInTable="columnPago_Tarjeta" msprop:Generator_ColumnPropNameInTable="Pago_TarjetaColumn" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Pago_Nota_Credito" msprop:Generator_UserColumnName="Pago_Nota_Credito" msprop:Generator_ColumnPropNameInRow="Pago_Nota_Credito" msprop:Generator_ColumnVarNameInTable="columnPago_Nota_Credito" msprop:Generator_ColumnPropNameInTable="Pago_Nota_CreditoColumn" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Tiempo_Espera" msprop:Generator_UserColumnName="Tiempo_Espera" msprop:Generator_ColumnPropNameInRow="Tiempo_Espera" msprop:Generator_ColumnVarNameInTable="columnTiempo_Espera" msprop:Generator_ColumnPropNameInTable="Tiempo_EsperaColumn" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

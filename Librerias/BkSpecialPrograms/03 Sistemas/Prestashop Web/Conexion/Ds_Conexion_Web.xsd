@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Ds_Conexion_Web" targetNamespace="http://tempuri.org/Ds_Conexion_Web.xsd" xmlns:mstns="http://tempuri.org/Ds_Conexion_Web.xsd" xmlns="http://tempuri.org/Ds_Conexion_Web.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Ds_Conexion_Web" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="Ds_Conexion_Web" msprop:Generator_UserDSName="Ds_Conexion_Web" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Tbl_Conexion_Web" msprop:Generator_UserTableName="Tbl_Conexion_Web" msprop:Generator_RowDeletedName="Tbl_Conexion_WebRowDeleted" msprop:Generator_TableClassName="Tbl_Conexion_WebDataTable" msprop:Generator_RowChangedName="Tbl_Conexion_WebRowChanged" msprop:Generator_RowClassName="Tbl_Conexion_WebRow" msprop:Generator_RowChangingName="Tbl_Conexion_WebRowChanging" msprop:Generator_RowEvArgName="Tbl_Conexion_WebRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_Conexion_WebRowChangeEventHandler" msprop:Generator_TablePropName="Tbl_Conexion_Web" msprop:Generator_TableVarName="tableTbl_Conexion_Web" msprop:Generator_RowDeletingName="Tbl_Conexion_WebRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Servidor" msprop:Generator_UserColumnName="Servidor" msprop:Generator_ColumnPropNameInRow="Servidor" msprop:Generator_ColumnVarNameInTable="columnServidor" msprop:Generator_ColumnPropNameInTable="ServidorColumn" type="xs:string" default="" minOccurs="0" />
+              <xs:element name="Puerto" msprop:Generator_UserColumnName="Puerto" msprop:Generator_ColumnPropNameInRow="Puerto" msprop:Generator_ColumnVarNameInTable="columnPuerto" msprop:Generator_ColumnPropNameInTable="PuertoColumn" type="xs:string" default="" minOccurs="0" />
+              <xs:element name="Usuario" msprop:Generator_UserColumnName="Usuario" msprop:Generator_ColumnPropNameInRow="Usuario" msprop:Generator_ColumnVarNameInTable="columnUsuario" msprop:Generator_ColumnPropNameInTable="UsuarioColumn" type="xs:string" default="" minOccurs="0" />
+              <xs:element name="Clave" msprop:Generator_UserColumnName="Clave" msprop:Generator_ColumnPropNameInRow="Clave" msprop:Generator_ColumnVarNameInTable="columnClave" msprop:Generator_ColumnPropNameInTable="ClaveColumn" type="xs:string" default="" minOccurs="0" />
+              <xs:element name="Base_De_Datos" msprop:Generator_UserColumnName="Base_De_Datos" msprop:Generator_ColumnPropNameInRow="Base_De_Datos" msprop:Generator_ColumnVarNameInTable="columnBase_De_Datos" msprop:Generator_ColumnPropNameInTable="Base_De_DatosColumn" type="xs:string" default="" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

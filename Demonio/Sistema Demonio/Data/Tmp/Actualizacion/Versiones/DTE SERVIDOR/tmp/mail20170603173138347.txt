@@ -1,0 +1,101 @@
+Return-Path: <SRS0=YLpmwg=4Y=desis.cl=dteiwingenieria@sirrep.cl>
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id QRhRC7zlHVmTIA0AqFaw+A
+	; Thu, 18 May 2017 14:19:40 -0400
+Return-path: <SRS0=YLpmwg=4Y=desis.cl=dteiwingenieria@sirrep.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Thu, 18 May 2017 14:19:40 -0400
+Received: from ns21.desis.cl ([190.98.228.163] helo=mail.sertic.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.89)
+	(envelope-from <dteiwingenieria@desis.cl>)
+	id 1dBQ1U-003cI5-2D
+	for notificacionsii@sirrep.cl; Thu, 18 May 2017 14:19:40 -0400
+Received: from wsdte42.facturacion.cl (ns14.desis.cl [200.74.172.230])
+	by mail.sertic.cl (Postfix) with ESMTPA id EDA8480881E
+	for <notificacionsii@sirrep.cl>; Thu, 18 May 2017 15:22:14 -0300 (CLT)
+From: "IW Ingenieria S.A." <dteiwingenieria@desis.cl>
+To: notificacionsii@sirrep.cl
+Message-ID: <8166214.1193.1495131696711.JavaMail.root@wsdte42.facturacion.cl>
+Subject: Respuesta DTE
+MIME-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_1192_31372791.1495131696538"
+Content-Transfer-Encoding: 7bit
+X-Mailer: WSDTE - [http://www.desis.cl/]
+Date: Thu, 18 May 2017 15:22:14 -0300 (CLT)
+
+------=_Part_1192_31372791.1495131696538
+Content-Type: text/html; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+
+Adjunto Acuse de Recibo del Envio
+------=_Part_1192_31372791.1495131696538
+Content-Type: application/octet-stream; name=Respuesta_SobreReceptor.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=Respuesta_SobreReceptor.xml
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<RespuestaDTE xmlns="http://www.sii.cl/SiiDte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.sii.cl/SiiDte RespuestaEnvioDTE_v10.xsd">
+	<Resultado ID="RespEnvio">
+		<Caratula version="1.0">
+			<RutResponde>76033198-8</RutResponde>
+			<RutRecibe>79514800-0</RutRecibe>
+			<IdRespuesta>4744</IdRespuesta>
+			<NroDetalles>1</NroDetalles>
+			<TmstFirmaResp>2017-05-18T14:21:36</TmstFirmaResp>
+		</Caratula>
+		<RecepcionEnvio>
+			<NmbEnvio>SobreReceptor.xml</NmbEnvio>
+			<FchRecep>2017-05-18T14:21:36</FchRecep>
+			<CodEnvio>4744</CodEnvio>
+			<EnvioDTEID>SetDoc</EnvioDTEID>
+			<RutEmisor>79514800-0</RutEmisor>
+			<RutReceptor>76033198-8</RutReceptor>
+			<EstadoRecepEnv>0</EstadoRecepEnv>
+			<RecepEnvGlosa>Envio Recibido Conforme</RecepEnvGlosa>
+			<NroDTE>1</NroDTE>
+			<RecepcionDTE>
+				<TipoDTE>33</TipoDTE>
+				<Folio>231617</Folio>
+				<FchEmis>2017-05-18</FchEmis>
+				<RUTEmisor>79514800-0</RUTEmisor>
+				<RUTRecep>76033198-8</RUTRecep>
+				<MntTotal>94044</MntTotal>
+				<EstadoRecepDTE>0</EstadoRecepDTE>
+				<RecepDTEGlosa>DTE Aceptado OK (Documento Recibido por el SII. Datos Coinciden con los Registrados)</RecepDTEGlosa>
+			</RecepcionDTE>
+		</RecepcionEnvio>
+	</Resultado>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI="#RespEnvio"><Transforms><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>DiW0slNoAB6IvD9JWifFFLaA0sQ=</DigestValue></Reference></SignedInfo><SignatureValue>gXWVfoikhE38Uolkymbyy7wnl0Dex5DXXs8qNyZnrn3tiAah+ZftaYUwYqxwejnHzEg/1gYu8ko0
+XDdnZJghfQ5JlF3QVsL/RopUNpfZT7wcygIXYi394eT5tPRFesRF9W/2C5iO0hfVJI4J4ADrY7f0
+4G8aJerByKKrObx+Mps=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>ucQD6b89IQnRY/R7Z0s3o/bAE8JOhU0dkODvtf/yzq8rtVn+TfV9io3HLYeDILjuEJxzT4waLqcr
+xBdNx6yJbxjt/3tS0m49DJ1+fOjg0SROBJzHGH/3EQb10emBa9jBG08tn7avKIXXImQpwpZZ6iH9
+sXnlO2VywWrEPTpV1kk=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIGNDCCBRygAwIBAgIKFh30ugAAAAYl3jANBgkqhkiG9w0BAQUFADCB0jELMAkGA1UEBhMCQ0wx
+HTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQHEwhTYW50aWFnbzEUMBIGA1UE
+ChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9yaWRhZCBDZXJ0aWZpY2Fkb3JhMTAwLgYDVQQD
+EydFLUNFUlRDSElMRSBDQSBGSVJNQSBFTEVDVFJPTklDQSBTSU1QTEUxJzAlBgkqhkiG9w0BCQEW
+GHNjbGllbnRlc0BlLWNlcnRjaGlsZS5jbDAeFw0xNzAxMDYxODM4MDNaFw0yMDAxMDYxODM4MDNa
+MIG3MQswCQYDVQQGEwJDTDEjMCEGA1UECBMaTUVUUk9QT0xJVEFOQSBERSBTQU5USUFHTyAxETAP
+BgNVBAcTCFNhbnRpYWdvMRkwFwYDVQQKExBJVyBJTkdFTklFUklBIFNBMQowCAYDVQQLDAEqMSYw
+JAYDVQQDEx1BTkRSRVMgU0VCQVNUSUFOIFVMTE9BIEJBUlJJQTEhMB8GCSqGSIb3DQEJARYSQ09O
+VEFCSUxJREFEQElXLkNMMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC5xAPpvz0hCdFj9Htn
+Szej9sATwk6FTR2Q4O+1//LOryu1Wf5N9X2Kjccth4MguO4QnHNPjBoupyvEF03HrIlvGO3/e1LS
+bj0MnX586ODRJE4EnMcYf/cRBvXR6YFr2MEbTy2ftq8ohdciZCnCllnqIf2xeeU7ZXLBasQ9OlXW
+SQIDAQABo4ICpzCCAqMwPQYJKwYBBAGCNxUHBDAwLgYmKwYBBAGCNxUIgtyDL4WTjGaF1Z0XguLc
+J4Hv7DxhgZrnFYav4BUCAWQCAQQwHQYDVR0OBBYEFNk3DBVN8/ufSTnmxwkNikJXmEDjMAsGA1Ud
+DwQEAwIE8DAfBgNVHSMEGDAWgBR44T6f0hKzejyNzTAOU7NDKQezVTA+BgNVHR8ENzA1MDOgMaAv
+hi1odHRwOi8vY3JsLmUtY2VydGNoaWxlLmNsL2VjZXJ0Y2hpbGVjYUZFUy5jcmwwOgYIKwYBBQUH
+AQEELjAsMCoGCCsGAQUFBzABhh5odHRwOi8vb2NzcC5lY2VydGNoaWxlLmNsL29jc3AwIwYDVR0R
+BBwwGqAYBggrBgEEAcEBAaAMFgoxMzQzNTg1MC01MCMGA1UdEgQcMBqgGAYIKwYBBAHBAQKgDBYK
+OTY5MjgxODAtNTCCAU0GA1UdIASCAUQwggFAMIIBPAYIKwYBBAHDUgUwggEuMC0GCCsGAQUFBwIB
+FiFodHRwOi8vd3d3LmUtY2VydGNoaWxlLmNsL0NQUy5odG0wgfwGCCsGAQUFBwICMIHvHoHsAEMA
+ZQByAHQAaQBmAGkAYwBhAGQAbwAgAEYAaQByAG0AYQAgAFMAaQBtAHAAbABlAC4AIABIAGEAIABz
+AGkAZABvACAAdgBhAGwAaQBkAGEAZABvACAAZQBuACAAZgBvAHIAbQBhACAAcAByAGUAcwBlAG4A
+YwBpAGEAbAAsACAAcQB1AGUAZABhAG4AZABvACAAaABhAGIAaQBsAGkAdABhAGQAbwAgAGUAbAAg
+AEMAZQByAHQAaQBmAGkAYwBhAGQAbwAgAHAAYQByAGEAIAB1AHMAbwAgAHQAcgBpAGIAdQB0AGEA
+cgBpAG8wDQYJKoZIhvcNAQEFBQADggEBAAu4+9ZRQTeWP+wbjSmX1GV3VL9jCffvTXAwGsF35gxf
+jwhB1msZtZAI3uG16KXIvDaww/gN+AZXll/8/iP8jjKg04CpXBIzqeY71iQM9+Hz9IqlOfB0z3qb
+n8wrUKPsClcZwE0N3pCZp3G56yFv5rR60y16BddNDFq9o6IFil8jT6zp88J3SDxFWPKVjS7Pan4O
+cxC/fxYADp4qT/zgbJ3NUzmPHayQAK////5mqORCsuj1O2BjBWqGZdf+YFnaiUxQ3ywc7lcqEXEh
+NzXar4NlBwbxqqfCR3TPeVn6URkFYwuGx2WQbvoveNQ3N0q2BpJAIwcWNwhq318rWMFF/Pk=</X509Certificate></X509Data></KeyInfo></Signature></RespuestaDTE>
+------=_Part_1192_31372791.1495131696538--

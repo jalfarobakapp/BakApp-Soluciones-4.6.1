@@ -1,0 +1,11 @@
+10/01/2017 12:52:20 - Iniciando Analisis (-----------------------------------------)
+10/01/2017 12:52:20 - Iniciando Analisis (Revisando si existen productos que procesar...)
+10/01/2017 12:52:20 - Consolidación de Stock... (Preparandose para la consilidación de Stock)
+10/01/2017 12:52:28 - Consolidación de Stock... (Stock consolidaddo correctamente)
+10/01/2017 12:52:28 - Dejar Stock en Cero (Generando Guias de Ajuste para dejar Stock en cero...)
+10/01/2017 12:52:34 - Dejar Stock en Cero (Generando GDI de Ajuste para dejar Stock en cero...)
+10/01/2017 12:54:40 - Dejar Stock en Cero (GDI Nro: GDG0201068, Generada correctamente)
+10/01/2017 12:54:44 - GRI AJUSTE DEFINITIVA (Generando GRI de ajuste definitiva...)
+10/01/2017 12:55:31 - GRI AJUSTE DEFINITIVA (GRI Nro: VTA0901413, Generada correctamente)
+10/01/2017 12:55:31 - Respaldando información (Termanando el proceso...)
+

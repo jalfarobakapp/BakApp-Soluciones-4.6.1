@@ -1,0 +1,33 @@
+INFORMACION DE ENTIDAD
+
+
+CODIGO         : #CODIGO#
+RUT            : #RUT#
+TIPO           : #TIPOSUCURSAL#
+
+RAZON SOCIAL   : #RAZON#                                             
+DIRECCION      : #DIRECCION#
+SIGLA          : #SIGLA#  
+PAIS           : #PAIS#                                                 
+CIUDAD         : #CIUDAD#
+COMUNA         : #COMUNA#
+ZONA           : #ZONA#
+
+FONO-FAX       : #TELEFONO# - #FAX#
+EMAIL          : #EMAIL1#
+EMAIL COMER.   : #EMAIL2#
+
+ASIGNACIONES
+
+TIPO ENTIDAD   : #TIPOENTIDAD#
+ACT. ECONOMICA : #ACTECONOMICA#
+TAMAÑO EMPRESA : #TAMAEMPRESA#
+RUBRO          : #RUBRO#
+FUNCIONARIO    : #FUNCIONARIO#
+COBRADOR       : #COBRADOR#
+
+OBS. GENERALES : #OBSERVACIONES#
+L.PRECIO       : #LPRECIO#
+L. COSTO       : #LCOSTO#
+
+  

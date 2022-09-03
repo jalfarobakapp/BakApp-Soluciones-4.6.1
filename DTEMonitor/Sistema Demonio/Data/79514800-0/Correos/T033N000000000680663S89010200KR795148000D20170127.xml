@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<EnvioDTE version="1.0" xmlns="http://www.sii.cl/SiiDte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sii.cl/SiiDte EnvioDTE_v10.xsd">
+  <SetDTE ID="SET033S89010200KN680663">
+    <Caratula version="1.0">
+      <RutEmisor>89010200-K</RutEmisor>
+      <RutEnvia>7573262-7</RutEnvia>
+      <RutReceptor>79514800-0</RutReceptor>
+      <FchResol>2008-04-30</FchResol>
+      <NroResol>54</NroResol>
+      <TmstFirmaEnv>2017-01-27T17:23:28</TmstFirmaEnv>
+      
+    <SubTotDTE><TpoDTE>33</TpoDTE><NroDTE>1</NroDTE></SubTotDTE></Caratula>
+    
+  <DTE version="1.0">
+      <Documento ID="F680663T33">
+        <Encabezado>
+          <IdDoc>
+            <TipoDTE>33</TipoDTE>
+            <Folio>680663</Folio>
+            <FchEmis>2017-01-27</FchEmis>
+            <FmaPago>1</FmaPago>
+            <FchVenc>2017-03-13</FchVenc>
+          </IdDoc>
+          <Emisor>
+            <RUTEmisor>89010200-K</RUTEmisor>
+            <RznSoc>IMPORTADORA ALSACIA SPA</RznSoc>
+            <GiroEmis>Repuestos y Accesorios para Vehiculos Motorizados</GiroEmis>
+            <Telefono>6951986</Telefono>
+            <Acteco>503000</Acteco>
+            <DirOrigen>SALAR DE ATACAMA 1338</DirOrigen>
+            <CmnaOrigen>PUDAHUEL</CmnaOrigen>
+            <CiudadOrigen>SANTIAGO</CiudadOrigen>
+          </Emisor>
+          <Receptor>
+            <RUTRecep>79514800-0</RUTRecep>
+            <RznSocRecep>SIERRALTA Y CIA. LTDA.</RznSocRecep>
+            <GiroRecep>REPUESTOS</GiroRecep>
+            <DirRecep>BRASIL 24</DirRecep>
+            <CmnaRecep>SANTIAGO</CmnaRecep>
+            <CiudadRecep>SANTIAGO</CiudadRecep>
+            <DirPostal>BRASIL 24</DirPostal>
+            <CmnaPostal>SANTIAGO</CmnaPostal>
+            <CiudadPostal>SANTIAGO</CiudadPostal>
+          </Receptor>
+          <Totales>
+            <MntNeto>148104</MntNeto>
+            <MntExe>0</MntExe>
+            <TasaIVA>19.00</TasaIVA>
+            <IVA>28140</IVA>
+            <MntTotal>176244</MntTotal>
+          </Totales>
+        </Encabezado>
+        <Detalle>
+          <NroLinDet>1</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>090040583</VlrCodigo>
+          </CdgItem>
+          <NmbItem>AMORTIGUADOR SUZUKI CARRY SK413 MASTERVAN DELANTERO DER FURGON 2WD ESTR-P</NmbItem>
+          <DscItem>LATO GRANDE /03 GAS</DscItem>
+          <QtyItem>4.000000</QtyItem>
+          <PrcItem>9656.000000</PrcItem>
+          <MontoItem>38624</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>2</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>090040584</VlrCodigo>
+          </CdgItem>
+          <NmbItem>AMORTIGUADOR SUZUKI CARRY SK413 MASTERVAN DELANTERO IZQ FURGON 2WD ESTR-P</NmbItem>
+          <DscItem>LATO GRANDE /03 GAS</DscItem>
+          <QtyItem>4.000000</QtyItem>
+          <PrcItem>9656.000000</PrcItem>
+          <MontoItem>38624</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>3</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>090040328</VlrCodigo>
+          </CdgItem>
+          <NmbItem>AMORTIGUADOR SUZUKI AERIO LIANA  TRASERO IZQ SEDAN 2WD ESTR C/SPORTE BIEL</NmbItem>
+          <DscItem>ETA /2001 HIDRAULICO</DscItem>
+          <QtyItem>2.000000</QtyItem>
+          <PrcItem>10200.000000</PrcItem>
+          <MontoItem>20400</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>4</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>090040327</VlrCodigo>
+          </CdgItem>
+          <NmbItem>AMORTIGUADOR SUZUKI AERIO LIANA  TRASERO DER SEDAN 2WD ESTR C/SPORTE BIEL</NmbItem>
+          <DscItem>ETA /2001 HIDRAULICO</DscItem>
+          <QtyItem>1.000000</QtyItem>
+          <PrcItem>10200.000000</PrcItem>
+          <MontoItem>10200</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>5</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>090040331</VlrCodigo>
+          </CdgItem>
+          <NmbItem>AMORTIGUADOR SUZUKI IGNIS 1.3 -ALTO DELANTERO DER HB 2WD ESTR 21CM /2000</NmbItem>
+          <DscItem>HIDRAULICO</DscItem>
+          <QtyItem>2.000000</QtyItem>
+          <PrcItem>10064.000000</PrcItem>
+          <MontoItem>20128</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>6</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>090040332</VlrCodigo>
+          </CdgItem>
+          <NmbItem>AMORTIGUADOR SUZUKI IGNIS 1.3 -ALTO  DELANTERO IZQ HB 2WD ESTR 21CM /2000</NmbItem>
+          <DscItem>HIDRAULICO</DscItem>
+          <QtyItem>2.000000</QtyItem>
+          <PrcItem>10064.000000</PrcItem>
+          <MontoItem>20128</MontoItem>
+        </Detalle>
+        <TED version="1.0">
+          <DD>
+            <RE>89010200-K</RE>
+            <TD>33</TD>
+            <F>680663</F>
+            <FE>2017-01-27</FE>
+            <RR>79514800-0</RR>
+            <RSR>SIERRALTA Y CIA. LTDA.</RSR>
+            <MNT>176244</MNT>
+            <IT1>AMORTIGUADOR SUZUKI CARRY SK413 MASTERVA</IT1>
+            <CAF version="1.0">
+              <DA>
+                <RE>89010200-K</RE>
+                <RS>IMPORTADORA ALSACIA LIMITADA</RS>
+                <TD>33</TD>
+                <RNG>
+                  <D>613783</D>
+                  <H>703782</H>
+                </RNG>
+                <FA>2016-06-28</FA>
+                <RSAPK>
+                  <M>xrHL3BH01CMR99wyLVyYDa3DEJyoihoInsosinBlxoEKWdwYBbx0X30/9cIrpdzoao+RLipTsAKAbAQTvl2JQw==</M>
+                  <E>Aw==</E>
+                </RSAPK>
+                <IDK>300</IDK>
+              </DA>
+              <FRMA algoritmo="SHA1withRSA">j9WrumrWRTZCeGxgwNV3IDIElinuO4QbS1BPr/6jmAVKE+zea2lzn+yXEsmO/LcFBf2YJcKhhbiaKmxtVgG2qA==</FRMA>
+            </CAF>
+            <TSTED>2017-01-27T12:18:47</TSTED>
+          </DD>
+          <FRMT algoritmo="SHA1withRSA">VKN4jd3qRPVxFrL6Dqp+oOw7Le4UTsqTWr6avqtMmsjytQyNbv5tjeOZiAW8ywgwBojOSakCxPUPtOjS5vcpNw==</FRMT>
+        </TED>
+        <TmstFirma>2017-01-27T12:18:51</TmstFirma>
+      </Documento><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI="#F680663T33"><Transforms><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>ONuuZl72dfZdVLdqJDHcYPEg1Hs=</DigestValue></Reference></SignedInfo><SignatureValue>
+FX3W3bRt/vmbD5+S8xS1hQAH0MdWahF/CecGqs7tQDv2kr03iH4OxPdkQqnwVsjt
+LnnQicgjgSroxBAjQgh7OEnOTfxpE2agWYyHCr6lXiUTABbBgkgyFmTdH5sAHikU
+nysB8Yxv7QYS8RnNFs1BKmQNtbp6y7JDpVgeZs3esSE=
+</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>
+nlhshfFmVRPjrmcyZJ5+K6yg1qXpjNVloXbSaghcxH3VQ8vlcAl997sWlcMkIWor
+UP0J0Q+MUm6hGDVSaNffRtlcm9/znKeShE32/kzDff6Nx1RJsPTy6DcIX/r8P2uP
+Zrz9KUE50zoreKOR6rTLd+/wMohzxiYLKoRSN9d1EDM=
+</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>
+MIIGRjCCBS6gAwIBAgIKeypwhQAAAAFukDANBgkqhkiG9w0BAQUFADCB0jELMAkG
+A1UEBhMCQ0wxHTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQH
+EwhTYW50aWFnbzEUMBIGA1UEChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9y
+aWRhZCBDZXJ0aWZpY2Fkb3JhMTAwLgYDVQQDEydFLUNFUlRDSElMRSBDQSBGSVJN
+QSBFTEVDVFJPTklDQSBTSU1QTEUxJzAlBgkqhkiG9w0BCQEWGHNjbGllbnRlc0Bl
+LWNlcnRjaGlsZS5jbDAeFw0xNDA3MDkxMjEzMTRaFw0xNzA3MDgxMjEzMTRaMIHI
+MQswCQYDVQQGEwJDTDEjMCEGA1UECBMaTUVUUk9QT0xJVEFOQSBERSBTQU5USUFH
+TyAxETAPBgNVBAcTCFNhbnRpYWdvMSUwIwYDVQQKExxJTVBPUlRBRE9SQSBBTFNB
+Q0lBIExJTUlUQURBMQowCAYDVQQLDAEqMSAwHgYDVQQDExdBUVVJTElOTyBHQVJD
+SUEgTk9SSUVHQTEsMCoGCSqGSIb3DQEJARYdZWJldGFuY3VyQGFsc2FjaWFyZXB1
+ZXN0b3MuY2wwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAJ5YbIXxZlUT465n
+MmSefiusoNal6YzVZaF20moIXMR91UPL5XAJffe7FpXDJCFqK1D9CdEPjFJuoRg1
+UmjX30bZXJvf85ynkoRN9v5Mw33+jcdUSbD08ug3CF/6/D9rj2a8/SlBOdM6K3ij
+keq0y3fv8DKIc8YmCyqEUjfXdRAzAgMBAAGjggKoMIICpDA9BgkrBgEEAYI3FQcE
+MDAuBiYrBgEEAYI3FQiC3IMvhZOMZoXVnReC4twnge/sPGGBy54UhqiCWAIBZAIB
+BDAdBgNVHQ4EFgQUQ9cSty2V7ElW5cOhvCrdLarGrtYwCwYDVR0PBAQDAgTwMB8G
+A1UdIwQYMBaAFHjhPp/SErN6PI3NMA5Ts0MpB7NVMD4GA1UdHwQ3MDUwM6AxoC+G
+LWh0dHA6Ly9jcmwuZS1jZXJ0Y2hpbGUuY2wvZWNlcnRjaGlsZWNhRkVTLmNybDA7
+BggrBgEFBQcBAQQvMC0wKwYIKwYBBQUHMAGGH2h0dHA6Ly9vY3NwLmludGVyY2Fw
+aXQuY29tL29jc3AwIwYDVR0RBBwwGqAYBggrBgEEAcEBAaAMFgowNzU3MzI2Mi03
+MCMGA1UdEgQcMBqgGAYIKwYBBAHBAQKgDBYKOTY5MjgxODAtNTCCAU0GA1UdIASC
+AUQwggFAMIIBPAYIKwYBBAHDUgUwggEuMC0GCCsGAQUFBwIBFiFodHRwOi8vd3d3
+LmUtY2VydGNoaWxlLmNsL0NQUy5odG0wgfwGCCsGAQUFBwICMIHvHoHsAEMAZQBy
+AHQAaQBmAGkAYwBhAGQAbwAgAEYAaQByAG0AYQAgAFMAaQBtAHAAbABlAC4AIABI
+AGEAIABzAGkAZABvACAAdgBhAGwAaQBkAGEAZABvACAAZQBuACAAZgBvAHIAbQBh
+ACAAcAByAGUAcwBlAG4AYwBpAGEAbAAsACAAcQB1AGUAZABhAG4AZABvACAAaABh
+AGIAaQBsAGkAdABhAGQAbwAgAGUAbAAgAEMAZQByAHQAaQBmAGkAYwBhAGQAbwAg
+AHAAYQByAGEAIAB1AHMAbwAgAHQAcgBpAGIAdQB0AGEAcgBpAG8wDQYJKoZIhvcN
+AQEFBQADggEBAHO73QZNuq2eCtCWWMv0ypKRlq617RYj3X6qoduTVu/o+fio673O
+Seb47QRn68z8BZixZ1PxkTDQ+0YKjc3VUaTw5wLkVT/hgGZ+W//D+qg4jqnpHH58
+G9CQ4Uo0im30FJSUIzrCfAuAE45GGgo6uuTStxfS3hOQzyzrfhYpg4dLplGF8/L2
+SP5w+BmyCWjByshFj3IHZ3iJoKoQ57E55JGRnJ2lbdCJsqkfU/VPf+E57pzdAkkJ
+c/4NlUYJA2HZtVw3FiNDB2i1aeYFU++fL915g8dQ+CL2McoyRY6Ddu15D/FAIcCL
+jIzYlg85PvnPOhYexBbs82LQGbMOSdylJCY=
+</X509Certificate></X509Data></KeyInfo></Signature>
+    </DTE></SetDTE><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI="#SET033S89010200KN680663"><Transforms><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>rDovcZ8u4gVMV4BScRUnK1xbH5Y=</DigestValue></Reference></SignedInfo><SignatureValue>
+SEyLYJ4ZiBz/Cw1lcZByk2m4MBkaG+OT4DaNIWGUday71Lt17lWqZjReosUSnkVm
++0znA5B1Dd1GbMotWJUdvZM4PXUKy/deKlpa89znDuqnbmITL9ncrX2qUAAXqO0q
+nsHs8NH8TY2My4OqY/RVXqF1OfZsXofoBdX7z60k3bg=
+</SignatureValue><KeyInfo><KeyValue xmlns="http://www.w3.org/2000/09/xmldsig#"><RSAKeyValue><Modulus>
+nlhshfFmVRPjrmcyZJ5+K6yg1qXpjNVloXbSaghcxH3VQ8vlcAl997sWlcMkIWor
+UP0J0Q+MUm6hGDVSaNffRtlcm9/znKeShE32/kzDff6Nx1RJsPTy6DcIX/r8P2uP
+Zrz9KUE50zoreKOR6rTLd+/wMohzxiYLKoRSN9d1EDM=
+</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data xmlns="http://www.w3.org/2000/09/xmldsig#"><X509Certificate>
+MIIGRjCCBS6gAwIBAgIKeypwhQAAAAFukDANBgkqhkiG9w0BAQUFADCB0jELMAkG
+A1UEBhMCQ0wxHTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQH
+EwhTYW50aWFnbzEUMBIGA1UEChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9y
+aWRhZCBDZXJ0aWZpY2Fkb3JhMTAwLgYDVQQDEydFLUNFUlRDSElMRSBDQSBGSVJN
+QSBFTEVDVFJPTklDQSBTSU1QTEUxJzAlBgkqhkiG9w0BCQEWGHNjbGllbnRlc0Bl
+LWNlcnRjaGlsZS5jbDAeFw0xNDA3MDkxMjEzMTRaFw0xNzA3MDgxMjEzMTRaMIHI
+MQswCQYDVQQGEwJDTDEjMCEGA1UECBMaTUVUUk9QT0xJVEFOQSBERSBTQU5USUFH
+TyAxETAPBgNVBAcTCFNhbnRpYWdvMSUwIwYDVQQKExxJTVBPUlRBRE9SQSBBTFNB
+Q0lBIExJTUlUQURBMQowCAYDVQQLDAEqMSAwHgYDVQQDExdBUVVJTElOTyBHQVJD
+SUEgTk9SSUVHQTEsMCoGCSqGSIb3DQEJARYdZWJldGFuY3VyQGFsc2FjaWFyZXB1
+ZXN0b3MuY2wwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAJ5YbIXxZlUT465n
+MmSefiusoNal6YzVZaF20moIXMR91UPL5XAJffe7FpXDJCFqK1D9CdEPjFJuoRg1
+UmjX30bZXJvf85ynkoRN9v5Mw33+jcdUSbD08ug3CF/6/D9rj2a8/SlBOdM6K3ij
+keq0y3fv8DKIc8YmCyqEUjfXdRAzAgMBAAGjggKoMIICpDA9BgkrBgEEAYI3FQcE
+MDAuBiYrBgEEAYI3FQiC3IMvhZOMZoXVnReC4twnge/sPGGBy54UhqiCWAIBZAIB
+BDAdBgNVHQ4EFgQUQ9cSty2V7ElW5cOhvCrdLarGrtYwCwYDVR0PBAQDAgTwMB8G
+A1UdIwQYMBaAFHjhPp/SErN6PI3NMA5Ts0MpB7NVMD4GA1UdHwQ3MDUwM6AxoC+G
+LWh0dHA6Ly9jcmwuZS1jZXJ0Y2hpbGUuY2wvZWNlcnRjaGlsZWNhRkVTLmNybDA7
+BggrBgEFBQcBAQQvMC0wKwYIKwYBBQUHMAGGH2h0dHA6Ly9vY3NwLmludGVyY2Fw
+aXQuY29tL29jc3AwIwYDVR0RBBwwGqAYBggrBgEEAcEBAaAMFgowNzU3MzI2Mi03
+MCMGA1UdEgQcMBqgGAYIKwYBBAHBAQKgDBYKOTY5MjgxODAtNTCCAU0GA1UdIASC
+AUQwggFAMIIBPAYIKwYBBAHDUgUwggEuMC0GCCsGAQUFBwIBFiFodHRwOi8vd3d3
+LmUtY2VydGNoaWxlLmNsL0NQUy5odG0wgfwGCCsGAQUFBwICMIHvHoHsAEMAZQBy
+AHQAaQBmAGkAYwBhAGQAbwAgAEYAaQByAG0AYQAgAFMAaQBtAHAAbABlAC4AIABI
+AGEAIABzAGkAZABvACAAdgBhAGwAaQBkAGEAZABvACAAZQBuACAAZgBvAHIAbQBh
+ACAAcAByAGUAcwBlAG4AYwBpAGEAbAAsACAAcQB1AGUAZABhAG4AZABvACAAaABh
+AGIAaQBsAGkAdABhAGQAbwAgAGUAbAAgAEMAZQByAHQAaQBmAGkAYwBhAGQAbwAg
+AHAAYQByAGEAIAB1AHMAbwAgAHQAcgBpAGIAdQB0AGEAcgBpAG8wDQYJKoZIhvcN
+AQEFBQADggEBAHO73QZNuq2eCtCWWMv0ypKRlq617RYj3X6qoduTVu/o+fio673O
+Seb47QRn68z8BZixZ1PxkTDQ+0YKjc3VUaTw5wLkVT/hgGZ+W//D+qg4jqnpHH58
+G9CQ4Uo0im30FJSUIzrCfAuAE45GGgo6uuTStxfS3hOQzyzrfhYpg4dLplGF8/L2
+SP5w+BmyCWjByshFj3IHZ3iJoKoQ57E55JGRnJ2lbdCJsqkfU/VPf+E57pzdAkkJ
+c/4NlUYJA2HZtVw3FiNDB2i1aeYFU++fL915g8dQ+CL2McoyRY6Ddu15D/FAIcCL
+jIzYlg85PvnPOhYexBbs82LQGbMOSdylJCY=
+</X509Certificate></X509Data></KeyInfo></Signature>
+  
+</EnvioDTE>

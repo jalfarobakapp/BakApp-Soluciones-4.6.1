@@ -1,0 +1,13 @@
+USE [#Base#]
+
+
+CREATE TABLE [dbo].[Zw_Remotas_En_Cadena_03_Usu](
+	[Id_Enc]			[int] NOT NULL DEFAULT (0),
+	[Id_Det]			[int] NOT NULL DEFAULT (0),
+	[Id_Usu]			[int] IDENTITY(1,1) NOT NULL,
+	[Usuario_Destino]	[varchar](3) NOT NULL DEFAULT (''),
+ CONSTRAINT [PK_Zw_Remotas_En_Cadena_03_Usu] PRIMARY KEY CLUSTERED 
+(
+	[Id_Usu] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]

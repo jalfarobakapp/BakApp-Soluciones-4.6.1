@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DS_InfCredito" targetNamespace="http://tempuri.org/DS_InfCredito.xsd" xmlns:mstns="http://tempuri.org/DS_InfCredito.xsd" xmlns="http://tempuri.org/DS_InfCredito.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DS_InfCredito" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="DS_InfCredito" msprop:Generator_UserDSName="DS_InfCredito" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Tbl_SituCredito" msprop:Generator_UserTableName="Tbl_SituCredito" msprop:Generator_RowDeletedName="Tbl_SituCreditoRowDeleted" msprop:Generator_TableClassName="Tbl_SituCreditoDataTable" msprop:Generator_RowChangedName="Tbl_SituCreditoRowChanged" msprop:Generator_RowClassName="Tbl_SituCreditoRow" msprop:Generator_RowChangingName="Tbl_SituCreditoRowChanging" msprop:Generator_RowEvArgName="Tbl_SituCreditoRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_SituCreditoRowChangeEventHandler" msprop:Generator_TablePropName="Tbl_SituCredito" msprop:Generator_TableVarName="tableTbl_SituCredito" msprop:Generator_RowDeletingName="Tbl_SituCreditoRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TipoCredito" msprop:Generator_UserColumnName="TipoCredito" msprop:Generator_ColumnPropNameInRow="TipoCredito" msprop:Generator_ColumnVarNameInTable="columnTipoCredito" msprop:Generator_ColumnPropNameInTable="TipoCreditoColumn" type="xs:string" default="" minOccurs="0" />
+              <xs:element name="Autorizado" msprop:Generator_UserColumnName="Autorizado" msprop:Generator_ColumnPropNameInRow="Autorizado" msprop:Generator_ColumnVarNameInTable="columnAutorizado" msprop:Generator_ColumnPropNameInTable="AutorizadoColumn" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="Utilizado" msprop:Generator_UserColumnName="Utilizado" msprop:Generator_ColumnPropNameInRow="Utilizado" msprop:Generator_ColumnVarNameInTable="columnUtilizado" msprop:Generator_ColumnPropNameInTable="UtilizadoColumn" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="EnCurso" msprop:Generator_UserColumnName="EnCurso" msprop:Generator_ColumnPropNameInRow="EnCurso" msprop:Generator_ColumnVarNameInTable="columnEnCurso" msprop:Generator_ColumnPropNameInTable="EnCursoColumn" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="Disponible" msprop:Generator_UserColumnName="Disponible" msprop:Generator_ColumnPropNameInRow="Disponible" msprop:Generator_ColumnVarNameInTable="columnDisponible" msprop:Generator_ColumnPropNameInTable="DisponibleColumn" type="xs:double" default="0" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

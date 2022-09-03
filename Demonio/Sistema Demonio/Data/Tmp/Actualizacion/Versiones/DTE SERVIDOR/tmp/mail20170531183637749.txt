@@ -1,0 +1,94 @@
+Return-Path: <SRS0=jcccME=4W=desis.cl=dtecos@sirrep.cl>
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id QXdCOP0TG1m0mgAAqFaw+A
+	; Tue, 16 May 2017 11:00:13 -0400
+Return-path: <SRS0=jcccME=4W=desis.cl=dtecos@sirrep.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Tue, 16 May 2017 11:00:13 -0400
+Received: from ns21.desis.cl ([190.98.228.163] helo=mail.sertic.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.89)
+	(envelope-from <dtecos@desis.cl>)
+	id 1dAdxN-000AK2-No
+	for notificacionsii@sirrep.cl; Tue, 16 May 2017 11:00:13 -0400
+Received: from wsdte43.facturacion.cl (ns14.desis.cl [200.74.172.230])
+	by mail.sertic.cl (Postfix) with ESMTPA id 98DD597E347
+	for <notificacionsii@sirrep.cl>; Tue, 16 May 2017 12:02:02 -0300 (CLT)
+From: AUTOMOTRIZ COS LIMITADA <dtecos@desis.cl>
+To: notificacionsii@sirrep.cl
+Message-ID: <18930675.1.1494946925749.JavaMail.root@wsdte43.facturacion.cl>
+Subject: =?ISO-8859-1?Q?Documento_Tributario_Electr=F3nico:_RespuestaDTE?=
+MIME-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_0_27766975.1494946925559"
+Content-Transfer-Encoding: 7bit
+X-Mailer: WSDTE - [http://www.desis.cl/]
+Date: Tue, 16 May 2017 12:02:02 -0300 (CLT)
+
+------=_Part_0_27766975.1494946925559
+Content-Type: text/html; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+
+Adjunto se envia RespuestaDTE
+------=_Part_0_27766975.1494946925559
+Content-Type: application/octet-stream; name=RespuestaComercial_2360.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=RespuestaComercial_2360.xml
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<RespuestaDTE xmlns="http://www.sii.cl/SiiDte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.sii.cl/SiiDte RespuestaEnvioDTE_v10.xsd">
+	<Resultado ID="R3214">
+		<Caratula version="1.0">
+			<RutResponde>76212390-8</RutResponde>
+			<RutRecibe>79514800-0</RutRecibe>
+			<IdRespuesta>3214</IdRespuesta>
+			<NroDetalles>1</NroDetalles>
+			<NmbContacto>Usuario Administrador</NmbContacto>
+			<MailContacto>cos@automotrizcos.cl</MailContacto>
+			<TmstFirmaResp>2017-05-16T11:02:03</TmstFirmaResp>
+		</Caratula>
+		<ResultadoDTE>
+			<TipoDTE>33</TipoDTE>
+			<Folio>231575</Folio>
+			<FchEmis>2017-05-15</FchEmis>
+			<RUTEmisor>79514800-0</RUTEmisor>
+			<RUTRecep>76212390-8</RUTRecep>
+			<MntTotal>28694</MntTotal>
+			<CodEnvio>5236</CodEnvio>
+			<EstadoDTE>0</EstadoDTE>
+			<EstadoDTEGlosa>ACEPTADO OK</EstadoDTEGlosa>
+		</ResultadoDTE>
+	</Resultado>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI="#R3214"><Transforms><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>fJNOz74H6vO1w6OY/CX6wMNyC9A=</DigestValue></Reference></SignedInfo><SignatureValue>DO588T6TZiQNAy6aNJJbvpIPQirZhIrMpGHf/zs+dElUMUuGCspasjMNySQblieSL8EIUT2//4ph
+kO5etZptV3E0bgvgZLVZ9vqL8qyv9pNUcs5UfB4zvO4+GQNtk+I4iKUbv0aPxWDwi1+5xO8RTzkr
+CBA37LMtaMbUzUproqk=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>rgaRr3wjXGvTTRdRZLIXHCMJfUZIO+pvp6AQr0zjf6LVLU5kxDl6JQxDbhoYR9UkJZJxXMzS0zOd
+L7auW6ciPrOnqIZ1lPW+7mnR/kzU1+bUv1d2DIvjjJgM4X8O4/f+X4b36fN3ie1vsCAMLtikWAeZ
+/Q/kZEoISMkMu1c3/h8=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIGSDCCBTCgAwIBAgIKaZg52QAAAAHBDzANBgkqhkiG9w0BAQUFADCB0jELMAkGA1UEBhMCQ0wx
+HTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQHEwhTYW50aWFnbzEUMBIGA1UE
+ChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9yaWRhZCBDZXJ0aWZpY2Fkb3JhMTAwLgYDVQQD
+EydFLUNFUlRDSElMRSBDQSBGSVJNQSBFTEVDVFJPTklDQSBTSU1QTEUxJzAlBgkqhkiG9w0BCQEW
+GHNjbGllbnRlc0BlLWNlcnRjaGlsZS5jbDAeFw0xNDEwMTUxNzQxMzdaFw0xNzEwMTQxNzQxMzda
+MIHKMQswCQYDVQQGEwJDTDEKMAgGA1UECAwBKjERMA8GA1UEBxMIU0FOVElBR08xNjA0BgNVBAoT
+LVNFUlZJQ0lPUyBFTiBURUNOT0xPR0lBUyBERSBJTkYuIFkgQ09NLiBMVERBLjEXMBUGA1UECxMO
+RmFjdHVyYWNpb24uY2wxIDAeBgNVBAMTF0NBUkxPUyBPUlRFR0EgU0VQVUxWRURBMSkwJwYJKoZI
+hvcNAQkBFhpmb3JtdWxhcmlvc0BmYWN0dXJhY2lvbi5jbDCBnzANBgkqhkiG9w0BAQEFAAOBjQAw
+gYkCgYEArgaRr3wjXGvTTRdRZLIXHCMJfUZIO+pvp6AQr0zjf6LVLU5kxDl6JQxDbhoYR9UkJZJx
+XMzS0zOdL7auW6ciPrOnqIZ1lPW+7mnR/kzU1+bUv1d2DIvjjJgM4X8O4/f+X4b36fN3ie1vsCAM
+LtikWAeZ/Q/kZEoISMkMu1c3/h8CAwEAAaOCAqgwggKkMAsGA1UdDwQEAwIE8DAdBgNVHQ4EFgQU
+vHwl6Vz8qeGCRLzlWnSBc5zdM3swHwYDVR0jBBgwFoAUeOE+n9ISs3o8jc0wDlOzQykHs1UwPgYD
+VR0fBDcwNTAzoDGgL4YtaHR0cDovL2NybC5lLWNlcnRjaGlsZS5jbC9lY2VydGNoaWxlY2FGRVMu
+Y3JsMDsGCCsGAQUFBwEBBC8wLTArBggrBgEFBQcwAYYfaHR0cDovL29jc3AuaW50ZXJjYXBpdC5j
+b20vb2NzcDA9BgkrBgEEAYI3FQcEMDAuBiYrBgEEAYI3FQiC3IMvhZOMZoXVnReC4twnge/sPGGB
+y54UhqiCWAIBZAIBBDAjBgNVHREEHDAaoBgGCCsGAQQBwQEBoAwWCjA5MzA5NTQyLTEwIwYDVR0S
+BBwwGqAYBggrBgEEAcEBAqAMFgo5NjkyODE4MC01MIIBTQYDVR0gBIIBRDCCAUAwggE8BggrBgEE
+AcNSBTCCAS4wLQYIKwYBBQUHAgEWIWh0dHA6Ly93d3cuZS1jZXJ0Y2hpbGUuY2wvQ1BTLmh0bTCB
+/AYIKwYBBQUHAgIwge8egewAQwBlAHIAdABpAGYAaQBjAGEAZABvACAARgBpAHIAbQBhACAAUwBp
+AG0AcABsAGUALgAgAEgAYQAgAHMAaQBkAG8AIAB2AGEAbABpAGQAYQBkAG8AIABlAG4AIABmAG8A
+cgBtAGEAIABwAHIAZQBzAGUAbgBjAGkAYQBsACwAIABxAHUAZQBkAGEAbgBkAG8AIABoAGEAYgBp
+AGwAaQB0AGEAZABvACAAZQBsACAAQwBlAHIAdABpAGYAaQBjAGEAZABvACAAcABhAHIAYQAgAHUA
+cwBvACAAdAByAGkAYgB1AHQAYQByAGkAbzANBgkqhkiG9w0BAQUFAAOCAQEAfdb3o4jdYLtrronn
+GJ12J5Y9kSt5XRbR6DYSLXxcZm45bE4Y7ACvOO9QnTN9rflQfn7ro7L6/+HmXzWGMbqz4zX4/WPr
+lEpU64EfqFdo8PPnFQeRk6jhOmbopM0knpnJnGv9wrsWwzOARIuns2/+gseo4r9MAL5CJ9koAUw2
+NUmCKSAMxAxsl4XZjRWKC9g20gShQIFuHTqgY+pBAs4Mmh/uU3gF5UuO3TbjypFNefZkTy/+bonM
+0/JQmQr94zzL/7bAHnIAoV8vYh3FO9sParyZdNuTBero7Af7jRx4Wi9cFuGpE2rHJfarVvkkFtrS
+IEHV5Ht65ydJtsF4FYsk9Q==</X509Certificate></X509Data></KeyInfo></Signature></RespuestaDTE>
+------=_Part_0_27766975.1494946925559--

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Dt_UnifCod" targetNamespace="http://tempuri.org/Dt_UnifCod.xsd" xmlns:mstns="http://tempuri.org/Dt_UnifCod.xsd" xmlns="http://tempuri.org/Dt_UnifCod.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Dt_UnifCod" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="Dt_UnifCod" msprop:Generator_DataSetName="Dt_UnifCod" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Tmp_UnificadosHitory" msprop:Generator_UserTableName="Tmp_UnificadosHitory" msprop:Generator_RowDeletedName="Tmp_UnificadosHitoryRowDeleted" msprop:Generator_RowChangedName="Tmp_UnificadosHitoryRowChanged" msprop:Generator_RowClassName="Tmp_UnificadosHitoryRow" msprop:Generator_RowChangingName="Tmp_UnificadosHitoryRowChanging" msprop:Generator_RowEvArgName="Tmp_UnificadosHitoryRowChangeEvent" msprop:Generator_RowEvHandlerName="Tmp_UnificadosHitoryRowChangeEventHandler" msprop:Generator_TableClassName="Tmp_UnificadosHitoryDataTable" msprop:Generator_TableVarName="tableTmp_UnificadosHitory" msprop:Generator_RowDeletingName="Tmp_UnificadosHitoryRowDeleting" msprop:Generator_TablePropName="Tmp_UnificadosHitory">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodNew" msprop:Generator_UserColumnName="CodNew" msprop:Generator_ColumnVarNameInTable="columnCodNew" msprop:Generator_ColumnPropNameInRow="CodNew" msprop:Generator_ColumnPropNameInTable="CodNewColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="CodOld" msprop:Generator_UserColumnName="CodOld" msprop:Generator_ColumnVarNameInTable="columnCodOld" msprop:Generator_ColumnPropNameInRow="CodOld" msprop:Generator_ColumnPropNameInTable="CodOldColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="DescripcionOld" msprop:Generator_UserColumnName="DescripcionOld" msprop:Generator_ColumnVarNameInTable="columnDescripcionOld" msprop:Generator_ColumnPropNameInRow="DescripcionOld" msprop:Generator_ColumnPropNameInTable="DescripcionOldColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Ud1Old" msprop:Generator_UserColumnName="Ud1Old" msprop:Generator_ColumnVarNameInTable="columnUd1Old" msprop:Generator_ColumnPropNameInRow="Ud1Old" msprop:Generator_ColumnPropNameInTable="Ud1OldColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Ud2Old" msprop:Generator_UserColumnName="Ud2Old" msprop:Generator_ColumnVarNameInTable="columnUd2Old" msprop:Generator_ColumnPropNameInRow="Ud2Old" msprop:Generator_ColumnPropNameInTable="Ud2OldColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="RtuOld" msprop:Generator_UserColumnName="RtuOld" msprop:Generator_ColumnVarNameInTable="columnRtuOld" msprop:Generator_ColumnPropNameInRow="RtuOld" msprop:Generator_ColumnPropNameInTable="RtuOldColumn" type="xs:double" minOccurs="0" />
+              <xs:element name="Responzable" msprop:Generator_UserColumnName="Responzable" msprop:Generator_ColumnVarNameInTable="columnResponzable" msprop:Generator_ColumnPropNameInRow="Responzable" msprop:Generator_ColumnPropNameInTable="ResponzableColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Unificado" msprop:Generator_UserColumnName="Unificado" msprop:Generator_ColumnPropNameInRow="Unificado" msprop:Generator_ColumnVarNameInTable="columnUnificado" msprop:Generator_ColumnPropNameInTable="UnificadoColumn" type="xs:unsignedByte" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

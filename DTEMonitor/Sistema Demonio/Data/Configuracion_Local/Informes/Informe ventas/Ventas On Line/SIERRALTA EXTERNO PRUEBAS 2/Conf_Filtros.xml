@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone="yes"?>
+<Ds_Inf_Ventas_OnLine xmlns="http://tempuri.org/Ds_Inf_Ventas_OnLine.xsd">
+  <TblFiltro_Sucursal>
+    <Codigo>CM</Codigo>
+    <Descripcion>CASA MATRIZ</Descripcion>
+  </TblFiltro_Sucursal>
+  <Tbl_Configuracion_Filtros>
+    <Rdb_Sucursales_Todas>false</Rdb_Sucursales_Todas>
+    <Rdb_Sucursales_Algunas>true</Rdb_Sucursales_Algunas>
+    <Rdb_Super_Familia_Todos>true</Rdb_Super_Familia_Todos>
+    <Rdb_Super_Familia_Algunos>false</Rdb_Super_Familia_Algunos>
+    <Chk_Solo_Stock_Fisico>false</Chk_Solo_Stock_Fisico>
+  </Tbl_Configuracion_Filtros>
+</Ds_Inf_Ventas_OnLine>

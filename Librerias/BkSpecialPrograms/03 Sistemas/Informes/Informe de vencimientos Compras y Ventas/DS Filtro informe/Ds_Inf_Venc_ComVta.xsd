@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Ds_Inf_Venc_ComVta" targetNamespace="http://tempuri.org/Ds_Inf_Venc_ComVta.xsd" xmlns:mstns="http://tempuri.org/Ds_Inf_Venc_ComVta.xsd" xmlns="http://tempuri.org/Ds_Inf_Venc_ComVta.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Ds_Inf_Venc_ComVta" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="Ds_Inf_Venc_ComVta" msprop:Generator_UserDSName="Ds_Inf_Venc_ComVta" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Tbl_Rango_Fecha_Emision" msprop:Generator_UserTableName="Tbl_Rango_Fecha_Emision" msprop:Generator_RowDeletedName="Tbl_Rango_Fecha_EmisionRowDeleted" msprop:Generator_TableClassName="Tbl_Rango_Fecha_EmisionDataTable" msprop:Generator_RowChangedName="Tbl_Rango_Fecha_EmisionRowChanged" msprop:Generator_RowClassName="Tbl_Rango_Fecha_EmisionRow" msprop:Generator_RowChangingName="Tbl_Rango_Fecha_EmisionRowChanging" msprop:Generator_RowEvArgName="Tbl_Rango_Fecha_EmisionRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_Rango_Fecha_EmisionRowChangeEventHandler" msprop:Generator_TablePropName="Tbl_Rango_Fecha_Emision" msprop:Generator_TableVarName="tableTbl_Rango_Fecha_Emision" msprop:Generator_RowDeletingName="Tbl_Rango_Fecha_EmisionRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Dtp_Fecha_Emision_Desde" msprop:Generator_UserColumnName="Dtp_Fecha_Emision_Desde" msprop:Generator_ColumnPropNameInRow="Dtp_Fecha_Emision_Desde" msprop:Generator_ColumnVarNameInTable="columnDtp_Fecha_Emision_Desde" msprop:Generator_ColumnPropNameInTable="Dtp_Fecha_Emision_DesdeColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Dtp_Fecha_Emision_Hasta" msprop:Generator_UserColumnName="Dtp_Fecha_Emision_Hasta" msprop:Generator_ColumnPropNameInRow="Dtp_Fecha_Emision_Hasta" msprop:Generator_ColumnVarNameInTable="columnDtp_Fecha_Emision_Hasta" msprop:Generator_ColumnPropNameInTable="Dtp_Fecha_Emision_HastaColumn" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Tbl_Monto" msprop:Generator_UserTableName="Tbl_Monto" msprop:Generator_RowDeletedName="Tbl_MontoRowDeleted" msprop:Generator_TableClassName="Tbl_MontoDataTable" msprop:Generator_RowChangedName="Tbl_MontoRowChanged" msprop:Generator_RowClassName="Tbl_MontoRow" msprop:Generator_RowChangingName="Tbl_MontoRowChanging" msprop:Generator_RowEvArgName="Tbl_MontoRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_MontoRowChangeEventHandler" msprop:Generator_TablePropName="Tbl_Monto" msprop:Generator_TableVarName="tableTbl_Monto" msprop:Generator_RowDeletingName="Tbl_MontoRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Monto_Max" msprop:Generator_UserColumnName="Monto_Max" msprop:Generator_ColumnPropNameInRow="Monto_Max" msprop:Generator_ColumnVarNameInTable="columnMonto_Max" msprop:Generator_ColumnPropNameInTable="Monto_MaxColumn" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Tbl_Conf_Correo" msprop:Generator_UserTableName="Tbl_Conf_Correo" msprop:Generator_RowDeletedName="Tbl_Conf_CorreoRowDeleted" msprop:Generator_TableClassName="Tbl_Conf_CorreoDataTable" msprop:Generator_RowChangedName="Tbl_Conf_CorreoRowChanged" msprop:Generator_RowClassName="Tbl_Conf_CorreoRow" msprop:Generator_RowChangingName="Tbl_Conf_CorreoRowChanging" msprop:Generator_RowEvArgName="Tbl_Conf_CorreoRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_Conf_CorreoRowChangeEventHandler" msprop:Generator_TablePropName="Tbl_Conf_Correo" msprop:Generator_TableVarName="tableTbl_Conf_Correo" msprop:Generator_RowDeletingName="Tbl_Conf_CorreoRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Id_Correo" msprop:Generator_UserColumnName="Id_Correo" msprop:Generator_ColumnPropNameInRow="Id_Correo" msprop:Generator_ColumnVarNameInTable="columnId_Correo" msprop:Generator_ColumnPropNameInTable="Id_CorreoColumn" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

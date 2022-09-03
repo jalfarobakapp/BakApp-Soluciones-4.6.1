@@ -1,0 +1,303 @@
+<?xml version="1.0" standalone="yes"?>
+<DsListasPC xmlns="http://tempuri.org/DsListasPC.xsd">
+  <LcPrecios>
+    <IdLista>1</IdLista>
+    <Select>false</Select>
+    <Lista>01P</Lista>
+    <Codigo>CH96540249   </Codigo>
+    <Descripcion>A-OPTICO DEL.IZQ.</Descripcion>
+    <Rtu>1</Rtu>
+    <Ud1>UN</Ud1>
+    <Ud2>UN</Ud2>
+    <Formula>Pm*Margen</Formula>
+    <Redondear>1</Redondear>
+    <Costo>0</Costo>
+    <Precio>0</Precio>
+    <Margen>1.99155</Margen>
+    <Margen_Adicional>0</Margen_Adicional>
+    <Costo2>0</Costo2>
+    <Precio2>0</Precio2>
+    <Margen2>0</Margen2>
+    <Margen_Adicional2>0</Margen_Adicional2>
+    <DsctoMax>15.06</DsctoMax>
+    <Dscto1>0</Dscto1>
+    <Dscto2>0</Dscto2>
+    <Dscto3>0</Dscto3>
+    <Dscto4>0</Dscto4>
+    <Dscto5>0</Dscto5>
+    <Flete>0</Flete>
+    <Porc_Iva>19</Porc_Iva>
+    <Porc_Ila>0</Porc_Ila>
+    <Impuestos>19</Impuestos>
+    <Iva>0</Iva>
+    <Ila>0</Ila>
+    <Neto>0</Neto>
+    <Bruto>0</Bruto>
+    <ValoresNetos>1</ValoresNetos>
+    <Nuevo_Item>false</Nuevo_Item>
+    <Ej_Fx_documento>false</Ej_Fx_documento>
+    <Ej_Fx_documento2>false</Ej_Fx_documento2>
+    <Formula2 />
+    <FormulaRdUd1 />
+    <FormulaRdUd2 />
+    <LtCosto>02C</LtCosto>
+    <CostoLt>34207</CostoLt>
+    <Rubro>AUTOS                         </Rubro>
+    <ClasLibre>VARIOS                                            </ClasLibre>
+    <Marca>TAIWAN</Marca>
+    <Zona />
+    <SuperFamilia>CHEVROLET</SuperFamilia>
+    <Familia>AVEO                          </Familia>
+    <SubFamilia>CARROCERIA</SubFamilia>
+  </LcPrecios>
+  <LcPrecios>
+    <IdLista>2</IdLista>
+    <Select>false</Select>
+    <Lista>01P</Lista>
+    <Codigo>CH96542983   </Codigo>
+    <Descripcion>A-PARACHOQUE DEL AVEO</Descripcion>
+    <Rtu>1</Rtu>
+    <Ud1>UN</Ud1>
+    <Ud2>UN</Ud2>
+    <Formula>Pm*Margen</Formula>
+    <Redondear>1</Redondear>
+    <Costo>0</Costo>
+    <Precio>0</Precio>
+    <Margen>1.45</Margen>
+    <Margen_Adicional>0</Margen_Adicional>
+    <Costo2>0</Costo2>
+    <Precio2>0</Precio2>
+    <Margen2>0</Margen2>
+    <Margen_Adicional2>0</Margen_Adicional2>
+    <DsctoMax>15.06</DsctoMax>
+    <Dscto1>0</Dscto1>
+    <Dscto2>0</Dscto2>
+    <Dscto3>0</Dscto3>
+    <Dscto4>0</Dscto4>
+    <Dscto5>0</Dscto5>
+    <Flete>0</Flete>
+    <Porc_Iva>19</Porc_Iva>
+    <Porc_Ila>0</Porc_Ila>
+    <Impuestos>19</Impuestos>
+    <Iva>0</Iva>
+    <Ila>0</Ila>
+    <Neto>0</Neto>
+    <Bruto>0</Bruto>
+    <ValoresNetos>1</ValoresNetos>
+    <Nuevo_Item>false</Nuevo_Item>
+    <Ej_Fx_documento>false</Ej_Fx_documento>
+    <Ej_Fx_documento2>false</Ej_Fx_documento2>
+    <Formula2 />
+    <FormulaRdUd1 />
+    <FormulaRdUd2 />
+    <LtCosto>02C</LtCosto>
+    <CostoLt>53066</CostoLt>
+    <Rubro>AUTOS                         </Rubro>
+    <ClasLibre>VARIOS                                            </ClasLibre>
+    <Marca>TAIWAN</Marca>
+    <Zona />
+    <SuperFamilia>CHEVROLET</SuperFamilia>
+    <Familia>AVEO                          </Familia>
+    <SubFamilia>CARROCERIA</SubFamilia>
+  </LcPrecios>
+  <LcPrecios>
+    <IdLista>3</IdLista>
+    <Select>false</Select>
+    <Lista>01P</Lista>
+    <Codigo>CH96543017   </Codigo>
+    <Descripcion>A-PARACHOQUE TRA AVEO HB</Descripcion>
+    <Rtu>1</Rtu>
+    <Ud1>UN</Ud1>
+    <Ud2>UN</Ud2>
+    <Formula>Pm*Margen</Formula>
+    <Redondear>1</Redondear>
+    <Costo>0</Costo>
+    <Precio>0</Precio>
+    <Margen>1.45</Margen>
+    <Margen_Adicional>0</Margen_Adicional>
+    <Costo2>0</Costo2>
+    <Precio2>0</Precio2>
+    <Margen2>0</Margen2>
+    <Margen_Adicional2>0</Margen_Adicional2>
+    <DsctoMax>15.06</DsctoMax>
+    <Dscto1>0</Dscto1>
+    <Dscto2>0</Dscto2>
+    <Dscto3>0</Dscto3>
+    <Dscto4>0</Dscto4>
+    <Dscto5>0</Dscto5>
+    <Flete>0</Flete>
+    <Porc_Iva>19</Porc_Iva>
+    <Porc_Ila>0</Porc_Ila>
+    <Impuestos>19</Impuestos>
+    <Iva>0</Iva>
+    <Ila>0</Ila>
+    <Neto>0</Neto>
+    <Bruto>0</Bruto>
+    <ValoresNetos>1</ValoresNetos>
+    <Nuevo_Item>false</Nuevo_Item>
+    <Ej_Fx_documento>false</Ej_Fx_documento>
+    <Ej_Fx_documento2>false</Ej_Fx_documento2>
+    <Formula2 />
+    <FormulaRdUd1 />
+    <FormulaRdUd2 />
+    <LtCosto>02C</LtCosto>
+    <CostoLt>49995</CostoLt>
+    <Rubro>AUTOS                         </Rubro>
+    <ClasLibre>VARIOS                                            </ClasLibre>
+    <Marca>TAIWAN</Marca>
+    <Zona />
+    <SuperFamilia>CHEVROLET</SuperFamilia>
+    <Familia>AVEO                          </Familia>
+    <SubFamilia>CARROCERIA</SubFamilia>
+  </LcPrecios>
+  <LcPrecios>
+    <IdLista>4</IdLista>
+    <Select>false</Select>
+    <Lista>02P</Lista>
+    <Codigo>CH96540249   </Codigo>
+    <Descripcion>A-OPTICO DEL.IZQ.</Descripcion>
+    <Rtu>1</Rtu>
+    <Ud1>UN</Ud1>
+    <Ud2>UN</Ud2>
+    <Formula>Pm*Margen</Formula>
+    <Redondear>1</Redondear>
+    <Costo>0</Costo>
+    <Precio>0</Precio>
+    <Margen>1.81</Margen>
+    <Margen_Adicional>0</Margen_Adicional>
+    <Costo2>0</Costo2>
+    <Precio2>0</Precio2>
+    <Margen2>0</Margen2>
+    <Margen_Adicional2>0</Margen_Adicional2>
+    <DsctoMax>28.3</DsctoMax>
+    <Dscto1>0</Dscto1>
+    <Dscto2>0</Dscto2>
+    <Dscto3>0</Dscto3>
+    <Dscto4>0</Dscto4>
+    <Dscto5>0</Dscto5>
+    <Flete>0</Flete>
+    <Porc_Iva>19</Porc_Iva>
+    <Porc_Ila>0</Porc_Ila>
+    <Impuestos>19</Impuestos>
+    <Iva>0</Iva>
+    <Ila>0</Ila>
+    <Neto>0</Neto>
+    <Bruto>0</Bruto>
+    <ValoresNetos>1</ValoresNetos>
+    <Nuevo_Item>false</Nuevo_Item>
+    <Ej_Fx_documento>false</Ej_Fx_documento>
+    <Ej_Fx_documento2>false</Ej_Fx_documento2>
+    <Formula2 />
+    <FormulaRdUd1 />
+    <FormulaRdUd2 />
+    <LtCosto>02C</LtCosto>
+    <CostoLt>34207</CostoLt>
+    <Rubro>AUTOS                         </Rubro>
+    <ClasLibre>VARIOS                                            </ClasLibre>
+    <Marca>TAIWAN</Marca>
+    <Zona />
+    <SuperFamilia>CHEVROLET</SuperFamilia>
+    <Familia>AVEO                          </Familia>
+    <SubFamilia>CARROCERIA</SubFamilia>
+  </LcPrecios>
+  <LcPrecios>
+    <IdLista>5</IdLista>
+    <Select>false</Select>
+    <Lista>02P</Lista>
+    <Codigo>CH96542983   </Codigo>
+    <Descripcion>A-PARACHOQUE DEL AVEO</Descripcion>
+    <Rtu>1</Rtu>
+    <Ud1>UN</Ud1>
+    <Ud2>UN</Ud2>
+    <Formula>Pm*Margen</Formula>
+    <Redondear>1</Redondear>
+    <Costo>0</Costo>
+    <Precio>0</Precio>
+    <Margen>1.81</Margen>
+    <Margen_Adicional>0</Margen_Adicional>
+    <Costo2>0</Costo2>
+    <Precio2>0</Precio2>
+    <Margen2>0</Margen2>
+    <Margen_Adicional2>0</Margen_Adicional2>
+    <DsctoMax>28.3</DsctoMax>
+    <Dscto1>0</Dscto1>
+    <Dscto2>0</Dscto2>
+    <Dscto3>0</Dscto3>
+    <Dscto4>0</Dscto4>
+    <Dscto5>0</Dscto5>
+    <Flete>0</Flete>
+    <Porc_Iva>19</Porc_Iva>
+    <Porc_Ila>0</Porc_Ila>
+    <Impuestos>19</Impuestos>
+    <Iva>0</Iva>
+    <Ila>0</Ila>
+    <Neto>0</Neto>
+    <Bruto>0</Bruto>
+    <ValoresNetos>1</ValoresNetos>
+    <Nuevo_Item>false</Nuevo_Item>
+    <Ej_Fx_documento>false</Ej_Fx_documento>
+    <Ej_Fx_documento2>false</Ej_Fx_documento2>
+    <Formula2 />
+    <FormulaRdUd1 />
+    <FormulaRdUd2 />
+    <LtCosto>02C</LtCosto>
+    <CostoLt>53066</CostoLt>
+    <Rubro>AUTOS                         </Rubro>
+    <ClasLibre>VARIOS                                            </ClasLibre>
+    <Marca>TAIWAN</Marca>
+    <Zona />
+    <SuperFamilia>CHEVROLET</SuperFamilia>
+    <Familia>AVEO                          </Familia>
+    <SubFamilia>CARROCERIA</SubFamilia>
+  </LcPrecios>
+  <LcPrecios>
+    <IdLista>6</IdLista>
+    <Select>false</Select>
+    <Lista>02P</Lista>
+    <Codigo>CH96543017   </Codigo>
+    <Descripcion>A-PARACHOQUE TRA AVEO HB</Descripcion>
+    <Rtu>1</Rtu>
+    <Ud1>UN</Ud1>
+    <Ud2>UN</Ud2>
+    <Formula>Pm*Margen</Formula>
+    <Redondear>1</Redondear>
+    <Costo>0</Costo>
+    <Precio>0</Precio>
+    <Margen>1.81</Margen>
+    <Margen_Adicional>0</Margen_Adicional>
+    <Costo2>0</Costo2>
+    <Precio2>0</Precio2>
+    <Margen2>0</Margen2>
+    <Margen_Adicional2>0</Margen_Adicional2>
+    <DsctoMax>28.3</DsctoMax>
+    <Dscto1>0</Dscto1>
+    <Dscto2>0</Dscto2>
+    <Dscto3>0</Dscto3>
+    <Dscto4>0</Dscto4>
+    <Dscto5>0</Dscto5>
+    <Flete>0</Flete>
+    <Porc_Iva>19</Porc_Iva>
+    <Porc_Ila>0</Porc_Ila>
+    <Impuestos>19</Impuestos>
+    <Iva>0</Iva>
+    <Ila>0</Ila>
+    <Neto>0</Neto>
+    <Bruto>0</Bruto>
+    <ValoresNetos>1</ValoresNetos>
+    <Nuevo_Item>false</Nuevo_Item>
+    <Ej_Fx_documento>false</Ej_Fx_documento>
+    <Ej_Fx_documento2>false</Ej_Fx_documento2>
+    <Formula2 />
+    <FormulaRdUd1 />
+    <FormulaRdUd2 />
+    <LtCosto>02C</LtCosto>
+    <CostoLt>49995</CostoLt>
+    <Rubro>AUTOS                         </Rubro>
+    <ClasLibre>VARIOS                                            </ClasLibre>
+    <Marca>TAIWAN</Marca>
+    <Zona />
+    <SuperFamilia>CHEVROLET</SuperFamilia>
+    <Familia>AVEO                          </Familia>
+    <SubFamilia>CARROCERIA</SubFamilia>
+  </LcPrecios>
+</DsListasPC>

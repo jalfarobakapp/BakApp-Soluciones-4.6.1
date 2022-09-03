@@ -1,0 +1,256 @@
+Return-path: <RECEPCIONDTE@transbank.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Fri, 31 Aug 2012 23:00:24 -0400
+Received: from mapuche.transbank.cl ([200.10.12.227])
+	by srv150.tuhosting.cl with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.77)
+	(envelope-from <RECEPCIONDTE@transbank.cl>)
+	id 1T7dr0-0007Wu-Up
+	for notificacionsii@sirrep.cl; Fri, 31 Aug 2012 22:58:14 -0400
+Received: from mapuche.transbank.cl (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id BF54EA00A9
+	for <notificacionsii@sirrep.cl>; Fri, 31 Aug 2012 22:49:37 -0400 (CLT)
+Received: from mpgpu.transbank.cl (unknown [200.10.12.97])
+	by mapuche.transbank.cl (Postfix) with ESMTP id AFB65A00A2
+	for <notificacionsii@sirrep.cl>; Fri, 31 Aug 2012 22:49:37 -0400 (CLT)
+Received: from tbk-exchange-1.Transbank.local ([172.29.4.62])
+  by mpgpu.transbank.cl (PGP Universal service);
+  Fri, 31 Aug 2012 22:28:26 -0400
+X-PGP-Universal: processed;
+	by mpgpu.transbank.cl on Fri, 31 Aug 2012 22:28:26 -0400
+Received: from fender (172.24.27.40) by tbk-exchange-1.Transbank.local
+ (172.29.4.138) with Microsoft SMTP Server id 8.1.436.0; Fri, 31 Aug 2012
+ 22:51:29 -0400
+Message-ID: <23223665.1346468073982.JavaMail.dteplus@fender>
+From: <recepciondte@transbank.cl>
+To: <notificacionsii@sirrep.cl>
+Subject: =?ISO-8859-1?Q?Transbank_S.A._env=EDa_FACTURA_ELEC?=
+ =?ISO-8859-1?Q?TRONICA_N=B012361149_en_formato_XML.?=
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+	boundary="----=_Part_2198_23353924.1346468073976"
+Date: Fri, 31 Aug 2012 22:51:29 -0400
+X-EXCLAIMER-MD-CONFIG: 994a7b18-9067-4bcc-9c98-abb7072b77fc
+X-CFilter-Loop: Reflected
+
+------=_Part_2198_23353924.1346468073976
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+
+Servicio Despacho DTE Plus.
+"La informacion contenida en esta transmision (y sus documentos adjuntos), es 
+confidencial y no puede ser usada o difundida por personas distintas a su(s) 
+destinatario(s). El uso no autorizado de la informacion contenida en esta transmision 
+puede ser sancionado criminalmente de conformidad con la ley chilena. Si ha recibido 
+esta transmision por error, por favor destruyala y notifique al remitente. Atendido que 
+no existe certidumbre que el presente mensaje no sera modificado como resultado de 
+su transmision por correo electronico, Transbank S.A. no sera responsable si el 
+contenido del mismo ha sido modificado.
+(Se han omitido los acentos por compatibilidad con diversos servidores de correo)"
+
+------=_Part_2198_23353924.1346468073976
+Content-Type: text/xml; name="dte-966893109-89-190863.xml"; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="dte-966893109-89-190863.xml"
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<EnvioDTE version="1.0" xmlns="http://www.sii.cl/SiiDte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sii.cl/SiiDte EnvioDTE_v10.xsd"><SetDTE ID="SetDTE-190863"><Caratula version="1.0"><RutEmisor>96689310-9</RutEmisor><RutEnvia>10127565-5</RutEnvia><RutReceptor>79514800-0</RutReceptor><FchResol>2010-05-31</FchResol><NroResol>89</NroResol><TmstFirmaEnv>2012-08-31T22:54:33</TmstFirmaEnv><SubTotDTE><TpoDTE>33</TpoDTE><NroDTE>1</NroDTE></SubTotDTE></Caratula><DTE version="1.0">
+<Documento ID="F12361149T33">
+<Encabezado>
+<IdDoc>
+<TipoDTE>33</TipoDTE>
+<Folio>12361149</Folio>
+<FchEmis>2012-08-31</FchEmis>
+<IndServicio>3</IndServicio>
+
+</IdDoc>
+<Emisor>
+<RUTEmisor>96689310-9</RUTEmisor>
+<RznSoc>TRANSBANK S.A.</RznSoc>
+<GiroEmis>OPERADORA DE TARJETA DE CREDITO Y DEBITO</GiroEmis>
+<Acteco>671921</Acteco>
+<DirOrigen>HUERFANOS 770 PISO 10</DirOrigen>
+<CmnaOrigen>SANTIAGO</CmnaOrigen>
+<CiudadOrigen>SANTIAGO</CiudadOrigen>
+</Emisor>
+<Receptor>
+<RUTRecep>79514800-0</RUTRecep>
+<CdgIntRecep>079514800</CdgIntRecep>
+<RznSocRecep>SIERRALTA Y CIA LTDA</RznSocRecep>
+<GiroRecep>VENTA O COMPRAVENTA POR MENOR VEH. AU</GiroRecep>
+<DirRecep>BRASIL 24</DirRecep>
+<CmnaRecep>SANTIAGO</CmnaRecep>
+<CiudadRecep>SANTIAGO</CiudadRecep>
+</Receptor>
+
+<Totales>
+<MntNeto>56736</MntNeto>
+<TasaIVA>19.00</TasaIVA>
+<IVA>10780</IVA>
+<IVATerc>10780</IVATerc>
+<MntTotal>67516</MntTotal>
+<MontoNF>0</MontoNF>
+<SaldoAnterior>0</SaldoAnterior>
+<VlrPagar>0</VlrPagar>
+</Totales>
+
+</Encabezado>
+
+<Detalle>
+<NroLinDet>1</NroLinDet>
+<NmbItem>COMISION POR VENTAS DEBITO. EMISOR R.U.T.:   76.645.030-K</NmbItem>
+<MontoItem>2529</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>2</NroLinDet>
+<NmbItem>COMISION POR VENTAS DEBITO. EMISOR R.U.T.:   96.509.660-4</NmbItem>
+<MontoItem>1639</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>3</NroLinDet>
+<NmbItem>COMISION POR VENTAS DEBITO. EMISOR R.U.T.:   97.004.000-5</NmbItem>
+<MontoItem>6968</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>4</NroLinDet>
+<NmbItem>COMISION POR VENTAS DEBITO. EMISOR R.U.T.:   97.006.000-6</NmbItem>
+<MontoItem>12354</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>5</NroLinDet>
+<NmbItem>COMISION POR VENTAS DEBITO. EMISOR R.U.T.:   97.018.000-1</NmbItem>
+<MontoItem>2754</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>6</NroLinDet>
+<NmbItem>COMISION POR VENTAS DEBITO. EMISOR R.U.T.:   97.023.000-9</NmbItem>
+<MontoItem>571</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>7</NroLinDet>
+<NmbItem>COMISION POR VENTAS DEBITO. EMISOR R.U.T.:   97.030.000-7</NmbItem>
+<MontoItem>19506</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>8</NroLinDet>
+<NmbItem>COMISION POR VENTAS DEBITO. EMISOR R.U.T.:   97.032.000-8</NmbItem>
+<MontoItem>1516</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>9</NroLinDet>
+<NmbItem>COMISION POR VENTAS DEBITO. EMISOR R.U.T.:   97.036.000-K</NmbItem>
+<MontoItem>8899</MontoItem>
+</Detalle>
+<TED version="1.0"><DD><RE>96689310-9</RE><TD>33</TD><F>12361149</F><FE>2012-08-31</FE><RR>79514800-0</RR><RSR>SIERRALTA Y CIA LTDA</RSR><MNT>67516</MNT><IT1>COMISION POR VENTAS DEBITO. EMISOR R.U.T</IT1><CAF version="1.0"><DA><RE>96689310-9</RE><RS>TRANSBANK S A</RS><TD>33</TD><RNG><D>12200500</D><H>12400499</H></RNG><FA>2012-06-18</FA><RSAPK><M>xf8nVm94MVlR0kk5af3nSoK+y3WjHH2bPk8527VuS/hIrqkfY2F87Je2+jxdZef7HWGcxodchch3nwRvMCCPzw==</M><E>Aw==</E></RSAPK><IDK>300</IDK></DA><FRMA algoritmo="SHA1withRSA">Hjao755gRJ4XEX8QFQYn3x2wHDMCWCaaQaRtqAhplZikd9Sy8aRz9kLd0BbgkFwmgqRFd+ieuRAaik4C7tncHQ==</FRMA></CAF><TSTED>2012-08-31T18:30:33</TSTED></DD><FRMT algoritmo="SHA1withRSA">QGF3FMllz2pievCyml/LbXDuIkml+LC5C4JGcfrRJOfdIgAV8ewXSj4gR5K2QUv+Ectkb0fxmbjPTz3AyQXJZA==</FRMT></TED>
+<TmstFirma>2012-08-31T18:30:33</TmstFirma></Documento><Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+  <SignedInfo>
+    <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+    <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+    <Reference URI="#F12361149T33">
+      <Transforms>
+        <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/>
+      </Transforms>
+      <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+      <DigestValue>nFAlQJMxLwFKNKcxeuqyCKlsm/E=</DigestValue>
+    </Reference>
+  </SignedInfo>
+  <SignatureValue>
+    Keiqmzg3m0Rnlf/+vjDVCG5GIzuCtjbHb8cgHroC/Y4giiJXOWuanW7acYDpZJoS6v1UDrah
+    bEtECfEBpj2XIUvh/f6woRiscz6qQBcH/5CyTkJy8cHQLSbOeX/KycQLesR7is1YaochvqUH
+    kyAIP03YzEn6VNkzfC563SPZMho=
+  </SignatureValue>
+  <KeyInfo>
+    <KeyValue>
+      <RSAKeyValue>
+        <Modulus>
+          skysSXmlMSNOER8M4xuaNyD1NSwOQQ3F87JE564L4rrE94iZMOvs95Eq84/xGqTuzb
+          yBEWsfickjF3ees3HxYCm1+Y87JZZDp09vL8D6QqsxvP5y115RumKOX6GxrpYWILhW
+          EMvtrDqnZLMqAAMMHhhh6/XNI7XxOX2xaCiAha8=
+        </Modulus>
+        <Exponent>AQAB</Exponent>
+      </RSAKeyValue>
+    </KeyValue>
+    <X509Data>
+      <X509Certificate>
+MIIEjTCCA/agAwIBAgIEAQBpXDANBgkqhkiG9w0BAQUFADCBtTELMAkGA1UEBhMCQ0wxHTAbBgNV
+BAgUFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQHFAhTYW50aWFnbzEUMBIGA1UEChQLRS1D
+RVJUQ0hJTEUxIDAeBgNVBAsUF0F1dG9yaWRhZCBDZXJ0aWZpY2Fkb3JhMRcwFQYDVQQDFA5FLUNF
+UlRDSElMRSBDQTEjMCEGCSqGSIb3DQEJARYUZW1haWxAZS1jZXJ0Y2hpbGUuY2wwHhcNMTAwNTI3
+MjAzNjUzWhcNMTMwNTI2MDAwMDAwWjCBtDELMAkGA1UEBhMCQ0wxFjAUBgNVBAgUDU1ldHJvcG9s
+aXRhbmExETAPBgNVBAcUCFNhbnRpYWdvMRUwEwYDVQQKFAxUcmFuc2JhbmsgU0ExGjAYBgNVBAsU
+EUdlcmVuY2lhIEZpbmFuemFzMSAwHgYDVQQDFBdBbGJlcnRvIEJ1aG9semVyIFJpdmVyYTElMCMG
+CSqGSIb3DQEJARYWYWJ1aG9semVyQHRyYW5zYmFuay5jbDCBnzANBgkqhkiG9w0BAQEFAAOBjQAw
+gYkCgYEAskysSXmlMSNOER8M4xuaNyD1NSwOQQ3F87JE564L4rrE94iZMOvs95Eq84/xGqTuzbyB
+EWsfickjF3ees3HxYCm1+Y87JZZDp09vL8D6QqsxvP5y115RumKOX6GxrpYWILhWEMvtrDqnZLMq
+AAMMHhhh6/XNI7XxOX2xaCiAha8CAwEAAaOCAacwggGjMCMGA1UdEQQcMBqgGAYIKwYBBAHBAQGg
+DBYKMTAxMjc1NjUtNTAJBgNVHRMEAjAAMDwGA1UdHwQ1MDMwMaAvoC2GK2h0dHA6Ly9jcmwuZS1j
+ZXJ0Y2hpbGUuY2wvZS1jZXJ0Y2hpbGVjYS5jcmwwIwYDVR0SBBwwGqAYBggrBgEEAcEBAqAMFgo5
+NjkyODE4MC01MB8GA1UdIwQYMBaAFOAo/dLgYE+zRusazPUIkQdyOh0IMIHfBgNVHSAEgdcwgdQw
+gdEGCCsGAQQBw1IFMIHEMC8GCCsGAQUFBwIBFiNodHRwOi8vd3d3LmUtY2VydGNoaWxlLmNsLzIw
+MDAvQ1BTLzCBkAYIKwYBBQUHAgIwgYMagYBFbCB0aXR1bGFyIGhhIHNpZG8gdmFsaWRhZG8gZW4g
+Zm9ybWEgcHJlc2VuY2lhbCwgcXVlZGFuZG8gaGFiaWxpdGFkbyBlbCBDZXJ0aWZpY2FkbyBwYXJh
+IHVzbyB0cmlidXRhcmlvLCBwYWdvcywgY29tZXJjaW8geSBvdHJvczALBgNVHQ8EBAMCBPAwDQYJ
+KoZIhvcNAQEFBQADgYEAjFSlSgZQGx0sNM+FxxE2gbdciEKKuimwxlVqBe00+W2D+LYhjyA2qh2H
+JXytZeAD4REOg6x2dAC0YRI9mVPxGDIP8VHd+PfGhXPT2FjGElF3n5oQLe5td84qc3jHJAS2jWH5
+ohgCmoJvkBbR197WFA1mbKr+k+MQ14kcpyM76yM=
+      </X509Certificate>
+    </X509Data>
+  </KeyInfo>
+</Signature></DTE></SetDTE><Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+  <SignedInfo>
+    <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+    <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+    <Reference URI="#SetDTE-190863">
+      <Transforms>
+        <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/>
+      </Transforms>
+      <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+      <DigestValue>wkw2+DJjAAAHlv4s+mBruMFIvvM=</DigestValue>
+    </Reference>
+  </SignedInfo>
+  <SignatureValue>
+    FObhqkHtT0c5gQeslniK1d23TZEJgJLfiZSMnhpcXSwTvVo3UyyCys6QpVZh4fElR5akD9GU
+    UGDgOdMj+VhDyka2Ld2sNsRVSh7T86n5I+NI14juPDx/lKfu7m/gl1IQVpAatn3NSxdIUjwJ
+    jT2ZqHJroNIsbmeBA8J1f6yg+XE=
+  </SignatureValue>
+  <KeyInfo>
+    <KeyValue>
+      <RSAKeyValue>
+        <Modulus>
+          skysSXmlMSNOER8M4xuaNyD1NSwOQQ3F87JE564L4rrE94iZMOvs95Eq84/xGqTuzb
+          yBEWsfickjF3ees3HxYCm1+Y87JZZDp09vL8D6QqsxvP5y115RumKOX6GxrpYWILhW
+          EMvtrDqnZLMqAAMMHhhh6/XNI7XxOX2xaCiAha8=
+        </Modulus>
+        <Exponent>AQAB</Exponent>
+      </RSAKeyValue>
+    </KeyValue>
+    <X509Data>
+      <X509Certificate>
+MIIEjTCCA/agAwIBAgIEAQBpXDANBgkqhkiG9w0BAQUFADCBtTELMAkGA1UEBhMCQ0wxHTAbBgNV
+BAgUFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQHFAhTYW50aWFnbzEUMBIGA1UEChQLRS1D
+RVJUQ0hJTEUxIDAeBgNVBAsUF0F1dG9yaWRhZCBDZXJ0aWZpY2Fkb3JhMRcwFQYDVQQDFA5FLUNF
+UlRDSElMRSBDQTEjMCEGCSqGSIb3DQEJARYUZW1haWxAZS1jZXJ0Y2hpbGUuY2wwHhcNMTAwNTI3
+MjAzNjUzWhcNMTMwNTI2MDAwMDAwWjCBtDELMAkGA1UEBhMCQ0wxFjAUBgNVBAgUDU1ldHJvcG9s
+aXRhbmExETAPBgNVBAcUCFNhbnRpYWdvMRUwEwYDVQQKFAxUcmFuc2JhbmsgU0ExGjAYBgNVBAsU
+EUdlcmVuY2lhIEZpbmFuemFzMSAwHgYDVQQDFBdBbGJlcnRvIEJ1aG9semVyIFJpdmVyYTElMCMG
+CSqGSIb3DQEJARYWYWJ1aG9semVyQHRyYW5zYmFuay5jbDCBnzANBgkqhkiG9w0BAQEFAAOBjQAw
+gYkCgYEAskysSXmlMSNOER8M4xuaNyD1NSwOQQ3F87JE564L4rrE94iZMOvs95Eq84/xGqTuzbyB
+EWsfickjF3ees3HxYCm1+Y87JZZDp09vL8D6QqsxvP5y115RumKOX6GxrpYWILhWEMvtrDqnZLMq
+AAMMHhhh6/XNI7XxOX2xaCiAha8CAwEAAaOCAacwggGjMCMGA1UdEQQcMBqgGAYIKwYBBAHBAQGg
+DBYKMTAxMjc1NjUtNTAJBgNVHRMEAjAAMDwGA1UdHwQ1MDMwMaAvoC2GK2h0dHA6Ly9jcmwuZS1j
+ZXJ0Y2hpbGUuY2wvZS1jZXJ0Y2hpbGVjYS5jcmwwIwYDVR0SBBwwGqAYBggrBgEEAcEBAqAMFgo5
+NjkyODE4MC01MB8GA1UdIwQYMBaAFOAo/dLgYE+zRusazPUIkQdyOh0IMIHfBgNVHSAEgdcwgdQw
+gdEGCCsGAQQBw1IFMIHEMC8GCCsGAQUFBwIBFiNodHRwOi8vd3d3LmUtY2VydGNoaWxlLmNsLzIw
+MDAvQ1BTLzCBkAYIKwYBBQUHAgIwgYMagYBFbCB0aXR1bGFyIGhhIHNpZG8gdmFsaWRhZG8gZW4g
+Zm9ybWEgcHJlc2VuY2lhbCwgcXVlZGFuZG8gaGFiaWxpdGFkbyBlbCBDZXJ0aWZpY2FkbyBwYXJh
+IHVzbyB0cmlidXRhcmlvLCBwYWdvcywgY29tZXJjaW8geSBvdHJvczALBgNVHQ8EBAMCBPAwDQYJ
+KoZIhvcNAQEFBQADgYEAjFSlSgZQGx0sNM+FxxE2gbdciEKKuimwxlVqBe00+W2D+LYhjyA2qh2H
+JXytZeAD4REOg6x2dAC0YRI9mVPxGDIP8VHd+PfGhXPT2FjGElF3n5oQLe5td84qc3jHJAS2jWH5
+ohgCmoJvkBbR197WFA1mbKr+k+MQ14kcpyM76yM=
+      </X509Certificate>
+    </X509Data>
+  </KeyInfo>
+</Signature></EnvioDTE>
+------=_Part_2198_23353924.1346468073976--
+

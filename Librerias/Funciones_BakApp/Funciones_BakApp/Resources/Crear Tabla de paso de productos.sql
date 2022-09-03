@@ -1,0 +1,37 @@
+
+-- TABLA DE PASO 1
+
+IF EXISTS (SELECT * FROM sysobjects WHERE name='TblMaeprPaso') BEGIN
+DROP TABLE TblMaeprPaso
+END
+
+CREATE TABLE [dbo].[TblMaeprPaso] (
+[KOPR]     char(13)   DEFAULT '', 
+[NOKOPR]   char(50)  DEFAULT ''
+)
+ON [PRIMARY]
+SET ANSI_PADDING OFF
+CREATE UNIQUE NONCLUSTERED INDEX [IX_TblMaeprPaso
+] ON [dbo].[TblMaeprPaso] ([KOPR])
+
+
+INSERT INTO TblMaeprPaso (KOPR,NOKOPR)
+SELECT KOPR,NOKOPR FROM MAEPR
+WHERE KOPR NOT IN (SELECT KOPR FROM TblMaeprPaso)
+AND ATPR = ''
+
+
+-- TABLA DE PASO 2
+
+IF EXISTS (SELECT * FROM sysobjects WHERE name='TblMprPaso') BEGIN
+DROP TABLE TblMprPaso
+END
+
+CREATE TABLE [dbo].[TblMprPaso] (
+[KOPR]     char(13)   DEFAULT '', 
+[NOKOPR]   char(50)  DEFAULT ''
+)
+ON [PRIMARY]
+SET ANSI_PADDING OFF
+CREATE UNIQUE NONCLUSTERED INDEX [IX_TblMaeprPaso
+] ON [dbo].[TblMprPaso] ([KOPR])

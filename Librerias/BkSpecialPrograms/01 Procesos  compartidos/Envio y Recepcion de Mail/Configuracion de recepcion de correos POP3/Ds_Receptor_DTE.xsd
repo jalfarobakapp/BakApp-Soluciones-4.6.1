@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Ds_Receptor_DTE" targetNamespace="http://tempuri.org/Ds_Receptor_DTE.xsd" xmlns:mstns="http://tempuri.org/Ds_Receptor_DTE.xsd" xmlns="http://tempuri.org/Ds_Receptor_DTE.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Ds_Receptor_DTE" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="Ds_Receptor_DTE" msprop:Generator_DataSetName="Ds_Receptor_DTE" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Tbl_Configuracion" msprop:Generator_UserTableName="Tbl_Configuracion" msprop:Generator_RowDeletedName="Tbl_ConfiguracionRowDeleted" msprop:Generator_RowChangedName="Tbl_ConfiguracionRowChanged" msprop:Generator_RowClassName="Tbl_ConfiguracionRow" msprop:Generator_RowChangingName="Tbl_ConfiguracionRowChanging" msprop:Generator_RowEvArgName="Tbl_ConfiguracionRowChangeEvent" msprop:Generator_RowEvHandlerName="Tbl_ConfiguracionRowChangeEventHandler" msprop:Generator_TableClassName="Tbl_ConfiguracionDataTable" msprop:Generator_TableVarName="tableTbl_Configuracion" msprop:Generator_RowDeletingName="Tbl_ConfiguracionRowDeleting" msprop:Generator_TablePropName="Tbl_Configuracion">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Host" msprop:Generator_UserColumnName="Host" msprop:Generator_ColumnVarNameInTable="columnHost" msprop:Generator_ColumnPropNameInRow="Host" msprop:Generator_ColumnPropNameInTable="HostColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Usuario" msprop:Generator_UserColumnName="Usuario" msprop:Generator_ColumnVarNameInTable="columnUsuario" msprop:Generator_ColumnPropNameInRow="Usuario" msprop:Generator_ColumnPropNameInTable="UsuarioColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Clave" msprop:Generator_UserColumnName="Clave" msprop:Generator_ColumnVarNameInTable="columnClave" msprop:Generator_ColumnPropNameInRow="Clave" msprop:Generator_ColumnPropNameInTable="ClaveColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Directorio" msprop:Generator_UserColumnName="Directorio" msprop:Generator_ColumnVarNameInTable="columnDirectorio" msprop:Generator_ColumnPropNameInRow="Directorio" msprop:Generator_ColumnPropNameInTable="DirectorioColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Borrar_Todos_Los_Correos" msprop:Generator_UserColumnName="Borrar_Todos_Los_Correos" msprop:Generator_ColumnPropNameInRow="Borrar_Todos_Los_Correos" msprop:Generator_ColumnVarNameInTable="columnBorrar_Todos_Los_Correos" msprop:Generator_ColumnPropNameInTable="Borrar_Todos_Los_CorreosColumn" type="xs:boolean" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

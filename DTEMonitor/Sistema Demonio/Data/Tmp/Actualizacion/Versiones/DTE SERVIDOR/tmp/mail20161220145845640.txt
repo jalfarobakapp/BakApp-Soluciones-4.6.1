@@ -1,0 +1,117 @@
+Return-Path: <siidte_reparo@sii.cl>
+Delivered-To: notificacionsii@sirrep.cl
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id 7O6eCIXQJFjkuw0AqFaw+A
+	for <notificacionsii@sirrep.cl>; Thu, 10 Nov 2016 16:55:05 -0300
+Return-path: <siidte_reparo@sii.cl>
+Received: from rapel12.sii.cl ([200.10.251.90] helo=mailin02.sii.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.86)
+	(envelope-from <siidte_reparo@sii.cl>)
+	id 1c4vRA-003mQo-UO
+	for notificacionsii@sirrep.cl; Thu, 10 Nov 2016 16:55:04 -0300
+X-IronPort-AV: E=Sophos;i="5.22,559,1449543600"; 
+   d="xml'?txt'?scan'208";a="646085000"
+Received: from dte.sii.cl (HELO dte) ([146.20.1.104])
+  by mailout02.sii.cl with ESMTP; 10 Nov 2016 17:55:27 -0300
+Message-ID: <7696990.1478811486671.JavaMail.root@dte>
+Date: Thu, 10 Nov 2016 17:58:06 -0300 (CLST)
+From: siidte_reparo@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: Produccion - Resultado de Revision Envio 1810027938 - 79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_6319_25537123.1478811486671"
+
+------=_Part_6319_25537123.1478811486671
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+SII de Chile - Validacion de DTE
+================================
+
+En el archivo adjunto esta el resultado del proceso de revision y validacion
+del envio de Documentos Tributarios Electronicos realizado por su empresa al
+Servicio de Impuestos Internos de Chile.
+
+----------------------------------------------------------------------------
+
+Este es una aplicacion automatica. No conteste este correo ni haga 
+consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue 
+mas claro en cualquier aplicacion.
+
+
+------=_Part_6319_25537123.1478811486671
+Content-Type: text/plain; name=DTEMAIL1810027938.txt
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL1810027938.txt
+
+Resultado de Validacion de Envio de DTE
+=======================================
+
+Rut de Empresa Emisora   : 79514800-0
+Rut que Realizo el Envio : 12628844-1
+Identificador de Envio   : 1810027938
+Fecha de Recepcion       : 10/11/2016 16:16:49
+Estado del Envio         : EPR - Envio Procesado
+
+Estadisticas del Envio
+======================
+Tipo DTE  Informados  Rechazos  Reparos  Aceptados
+--------------------------------------------------
+   33              1         0        1          0
+
+Detalle de Rechazos y Reparos de DTE
+====================================
+
+ Folio       Tipo  Estado
+ ------------------------------------------------------------------------------
+ 227817       33   RPR - DTE Aceptado con Reparos
+     (HED-2-210) Monto Neto No Cuadra con Detalle : [73278.0000] <> [93100.0000]
+     (DET L[1] -1-200) Valor Detalle Distinto a Precio * Cantidad : [5961.0000] <> [8278.0000]
+     (DET L[2] -1-200) Valor Detalle Distinto a Precio * Cantidad : [8132.0000] <> [11294.0000]
+     (DET L[3] -1-200) Valor Detalle Distinto a Precio * Cantidad : [9961.0000] <> [13834.0000]
+     (DET L[4] -1-200) Valor Detalle Distinto a Precio * Cantidad : [26925.0000] <> [37395.0000]
+     (DTE-1-650) Fecha de Envio Excede Plazo Permitido : FT[2016-11-09T15:43:15] : FE[2016-11-09] : FR[2016-11-10T16:16:49]
+
+
+------=_Part_6319_25537123.1478811486671
+Content-Type: application/octet-stream; name=DTEMAIL1810027938.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL1810027938.xml
+
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<RESULTADO_ENVIO>
+ <IDENTIFICACION>
+  <RUTEMISOR>79514800-0</RUTEMISOR>
+  <RUTENVIA>12628844-1</RUTENVIA>
+  <TRACKID>1810027938</TRACKID>
+  <TMSTRECEPCION>10/11/2016 16:16:49</TMSTRECEPCION>
+  <ESTADO>EPR - Envio Procesado</ESTADO>
+ </IDENTIFICACION>
+ <ESTADISTICA>
+  <SUBTOTAL>
+   <TIPODOC>33</TIPODOC>
+   <INFORMADO>1</INFORMADO>
+   <REPARO>1</REPARO>
+  </SUBTOTAL>
+ </ESTADISTICA>
+ <REVISIONENVIO>
+  <REVISIONDTE>
+   <FOLIO>0000227817</FOLIO>
+   <TIPODTE>33</TIPODTE>
+   <ESTADO>RPR - DTE Aceptado con Reparos</ESTADO>
+   <DETALLE>(HED-2-210) Monto Neto No Cuadra con Detalle : [73278.0000] &lt;&gt; [93100.0000]</DETALLE>
+   <DETALLE>(DET L[1] -1-200) Valor Detalle Distinto a Precio * Cantidad : [5961.0000] &lt;&gt; [8278.0000]</DETALLE>
+   <DETALLE>(DET L[2] -1-200) Valor Detalle Distinto a Precio * Cantidad : [8132.0000] &lt;&gt; [11294.0000]</DETALLE>
+   <DETALLE>(DET L[3] -1-200) Valor Detalle Distinto a Precio * Cantidad : [9961.0000] &lt;&gt; [13834.0000]</DETALLE>
+   <DETALLE>(DET L[4] -1-200) Valor Detalle Distinto a Precio * Cantidad : [26925.0000] &lt;&gt; [37395.0000]</DETALLE>
+   <DETALLE>(DTE-1-650) Fecha de Envio Excede Plazo Permitido : FT[2016-11-09T15:43:15] : FE[2016-11-09] : FR[2016-11-10T16:16:49]</DETALLE>
+  </REVISIONDTE>
+ </REVISIONENVIO>
+</RESULTADO_ENVIO>
+
+------=_Part_6319_25537123.1478811486671--
+

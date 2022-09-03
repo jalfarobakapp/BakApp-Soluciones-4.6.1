@@ -1,0 +1,664 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Recursos_Inst_Tablas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>recursos_inst_tablas.resx;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Zw_CashDro_Operaciones" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_cashdro_operaciones.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_CashDro_Transbank_Cierre" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_cashdro_transbank_cierre.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_CashDro_Transbank_Log" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_cashdro_transbank_log.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Casi_DocArc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_casi_docarc.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Casi_DocDet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_casi_docdet.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Casi_DocDsc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_casi_docdsc.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Casi_DocEnc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_casi_docenc.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Casi_DocImp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_casi_docimp.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Casi_DocObs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_casi_docobs.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Casi_DocPer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_casi_docper.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Casi_DocTag" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_casi_doctag.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Casi_DocTom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_casi_doctom.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Chilexpress_Conf" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_chilexpress_conf.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Chilexpress_Env" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_chilexpress_env.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Chilexpress_Res" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_chilexpress_res.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Compras_en_SII" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_compras_en_sii.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Configuracion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_configuracion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Configuracion_Formatos_X_Modalidad" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_configuracion_formatos_x_modalidad.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Correos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_correos.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_CorreosEnvioRecepcion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_correosenviorecepcion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Correos_Cuentas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_correos_cuentas.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_CRV_Viajes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_crv_viajes.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_DbExt_Conexion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_dbext_conexion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_DbExt_Maest" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_dbext_maest.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Demonio_Archivador" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_demonio_archivador.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Demonio_Cof_Estacion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_demonio_cof_estacion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Demonio_Doc_Emitidos_Aviso_Correo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_demonio_doc_emitidos_aviso_correo.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Demonio_Doc_Emitidos_Aviso_Correo_Adjuntos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_demonio_doc_emitidos_aviso_correo_adjuntos.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Demonio_Doc_Emitidos_Cola_Impresion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_demonio_doc_emitidos_cola_impresion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Demonio_Filtros_X_Estacion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_demonio_filtros_x_estacion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Demonio_Prestashop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_demonio_prestashop.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Demonio_Wordpress" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_demonio_wordpress.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Despachos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_despachos.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Despachos_Configuracion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_despachos_configuracion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Despachos_Direcc_Cli" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_despachos_direcc_cli.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Despachos_Doc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_despachos_doc.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Despachos_Doc_Det" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_despachos_doc_det.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Despachos_Email_Aviso" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_despachos_email_aviso.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Despachos_Email_Envios" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_despachos_email_envios.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Despachos_Estados" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_despachos_estados.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Despachos_MiniCompXProd" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_despachos_minicompxprod.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Despachos_Tom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_despachos_tom.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Despachos_Transportistas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_despachos_transportistas.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Docu_Archivos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_docu_archivos.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Docu_ObligPg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_docu_obligpg.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_DTE_Caf" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_dte_caf.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_DTE_Configuracion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_dte_configuracion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_DTE_Documentos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_dte_documentos.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_DTE_Firmar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_dte_firmar.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_DTE_NotifxCorreo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_dte_notifxcorreo.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_DTE_Trackid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_dte_trackid.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Empresas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_empresas.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Entidades" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_entidades.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Entidad_Cia_Seguros" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_entidad_cia_seguros.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_EstacionesBkp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_estacionesbkp.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_EstacionesBkp_Configuracion_Local" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_estacionesbkp_configuracion_local.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Estaciones_CashDro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_estaciones_cashdro.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Estaciones_Impresoras" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_estaciones_impresoras.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Estaciones_Poswi" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_estaciones_poswi.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Estaciones_Ruta_PDF" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_estaciones_ruta_pdf.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Format_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_format_01.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Format_02" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_format_02.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Format_Fx" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_format_fx.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Format_Pag" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_format_pag.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Fuentes_Conf" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_fuentes_conf.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Licencia" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_licencia.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Licencia_Mod" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_licencia_mod.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Linea_Oferta" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_linea_oferta.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_ListaPreCosto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_listaprecosto.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_ListaPreCosto_Enc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_listaprecosto_enc.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_ListaPreGlobal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_listapreglobal.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_ListaPreProducto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_listapreproducto.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Log_Archivador" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_log_archivador.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Log_Gestiones" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_log_gestiones.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_MrVsPro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_mrvspro.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Negocios_01_Enc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_negocios_01_enc.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Negocios_02_Det" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_negocios_02_det.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Negocios_02_Fun" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_negocios_02_fun.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Negocios_03_Apr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_negocios_03_apr.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Negocios_04_Doc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_negocios_04_doc.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Notificaciones" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_notificaciones.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Pago_Prov_Autoriza_01_Enc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_pago_prov_autoriza_01_enc.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Pago_Prov_Autoriza_02_Det" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_pago_prov_autoriza_02_det.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Pago_Prov_Autoriza_02_Det_Eli" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_pago_prov_autoriza_02_det_eli.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Pdc_Mesones" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_pdc_mesones.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Pdc_MesonVsMaquina" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_pdc_mesonvsmaquina.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Pdc_MesonVsOperario" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_pdc_mesonvsoperario.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Pdp_MaquinaVsProductos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_pdp_maquinavsproductos.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Pdp_MesonVsAlertas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_pdp_mesonvsalertas.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Pdp_MesonVsAlertas_Lectura" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_pdp_mesonvsalertas_lectura.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Pdp_MesonVsEnvioRecibe" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_pdp_mesonvsenviorecibe.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Pdp_MesonVsProductos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_pdp_mesonvsproductos.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Pdp_MesonVsProductos_Repro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_pdp_mesonvsproductos_repro.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Pdp_OT_Prioridad" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_pdp_ot_prioridad.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ZW_Permisos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_permisos.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ZW_PermisosADM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_permisosadm.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ZW_PermisosVsUsuarios" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_permisosvsusuarios.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Picking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_picking.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Picking_Doc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_picking_doc.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_PrestaShop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prestashop.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Prod_Archivos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prod_archivos.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Prod_Asociacion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prod_asociacion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Prod_Asociacion_Respaldo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prod_asociacion_respaldo.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Prod_CodQR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prod_codqr.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Prod_Dimensiones" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prod_dimensiones.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Prod_Doc_Ult_Ventas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prod_doc_ult_ventas.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Prod_Imagenes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prod_imagenes.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Prod_Log_Compras" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prod_log_compras.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Prod_Padres" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prod_padres.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Prod_PrestaShop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prod_prestashop.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Prod_Ranking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prod_ranking.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Prod_Reemplazos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prod_reemplazos.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Prod_SolBodega" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prod_solbodega.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Prod_SolCompra" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prod_solcompra.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Prod_SolCompra_Resp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prod_solcompra_resp.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Prod_Stock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prod_stock.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Prod_Stock_Enc_History" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prod_stock_enc_history.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Prod_Ubicacion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prod_ubicacion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Prod_Usuario_Validador" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prod_usuario_validador.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Reclamo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_reclamo.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Reclamo_Archivos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_reclamo_archivos.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Reclamo_Email_Aviso" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_reclamo_email_aviso.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Reclamo_Estados" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_reclamo_estados.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Reclamo_Preguntas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_reclamo_preguntas.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Reclamo_Resolucion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_reclamo_resolucion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Referencias_Dte" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_referencias_dte.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Remotas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_remotas.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Remotas_En_Cadena_01_Enc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_remotas_en_cadena_01_enc.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Remotas_En_Cadena_02_Det" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_remotas_en_cadena_02_det.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Remotas_En_Cadena_03_Usu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_remotas_en_cadena_03_usu.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Remotas_Notif" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_remotas_notif.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ZW_SOC_Detalle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_soc_detalle.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ZW_SOC_Encabezado" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_soc_encabezado.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ZW_SOC_Ent_Cadena" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_soc_ent_cadena.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ZW_SOC_Log" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_soc_log.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ZW_SOC_Obs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_soc_obs.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_SQL_Querys" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_sql_querys.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_St_Conf_Info_Reportes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_st_conf_info_reportes.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_St_Conf_Tecnicos_Taller" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_st_conf_tecnicos_taller.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_St_OT_Accesorios" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_st_ot_accesorios.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_St_OT_CheckIn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_st_ot_checkin.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_St_OT_DetProd" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_st_ot_detprod.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_St_OT_Doc_Asociados" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_st_ot_doc_asociados.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_St_OT_Encabezado" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_st_ot_encabezado.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_St_OT_Estados" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_st_ot_estados.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_St_OT_Notas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_st_ot_notas.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_TablaDeCaracterizaciones" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_tabladecaracterizaciones.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Tablas_Equivalentes_Rd_Bk" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_tablas_equivalentes_rd_bk.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_TblArbol_Asociaciones" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_tblarbol_asociaciones.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_TblChoferes_Empresa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_tblchoferes_empresa.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_TblFiltro_InfxUs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_tblfiltro_infxus.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_TblInf_EntExcluidas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_tblinf_entexcluidas.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_TblTipoDocumentos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_tbltipodocumentos.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_TblVehiculos_Empresa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_tblvehiculos_empresa.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_TblVehiculos_Empresa_Imagenes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_tblvehiculos_empresa_imagenes.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Tbl_DisenoBarras" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_tbl_disenobarras.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Tbl_Reemplazos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_tbl_reemplazos.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_TmpInv_InvParcial" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_tmpinv_invparcial.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_TmpInv_InvParcialConf" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_tmpinv_invparcialconf.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_TmpInv_InvParcial_Inventarios" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_tmpinv_invparcial_inventarios.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Tmp_Filtros_Busqueda" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_tmp_filtros_busqueda.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Tmp_Prm_Informes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_tmp_prm_informes.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Turnos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_turnos.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_UnificadosHitory" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_unificadoshitory.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Usuarios" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_usuarios.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Usuarios_Email" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_usuarios_email.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Usuarios_Huellas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_usuarios_huellas.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Usuarios_Impresion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_usuarios_impresion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Usuarios_VS_Jefes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_usuarios_vs_jefes.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Vales_Enc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_vales_enc.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Vales_Obs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_vales_obs.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Version" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_version.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_WMS_Ingreso_Det" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_wms_ingreso_det.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_WMS_Ingreso_Enc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_wms_ingreso_enc.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_WMS_Ubicaciones_Bodega" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_wms_ubicaciones_bodega.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_WMS_Ubicaciones_Mapa_Det" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_wms_ubicaciones_mapa_det.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_WMS_Ubicaciones_Mapa_Enc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_wms_ubicaciones_mapa_enc.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_WMS_Ubicaciones_Stock_X_Producto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_wms_ubicaciones_stock_x_producto.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Wordpress" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_wordpress.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Wordpress_Productos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_wordpress_productos.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+</root>

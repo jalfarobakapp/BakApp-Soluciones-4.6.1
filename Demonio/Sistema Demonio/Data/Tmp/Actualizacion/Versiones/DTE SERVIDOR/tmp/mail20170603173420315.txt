@@ -1,0 +1,160 @@
+Return-Path: <SRS0=sBMxrJ=47=bciseguros.cl=dte_prod_generales@sirrep.cl>
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id oQRcLCoSJ1kbSgUAqFaw+A
+	; Thu, 25 May 2017 13:19:38 -0400
+Return-path: <SRS0=sBMxrJ=47=bciseguros.cl=dte_prod_generales@sirrep.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Thu, 25 May 2017 13:19:38 -0400
+Received: from colorado3.bciseguros.cl ([200.29.22.251] helo=colorado.bciseguros.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.89)
+	(envelope-from <dte_prod_generales@bciseguros.cl>)
+	id 1dDwQE-001ST7-H9
+	for notificacionsii@sirrep.cl; Thu, 25 May 2017 13:19:38 -0400
+Received: from localhost.localdomain ([100.100.1.32])
+          by colorado.bciseguros.cl (IBM Domino Release 9.0.1FP6)
+          with ESMTP id 2017052513214652-38610 ;
+          Thu, 25 May 2017 13:21:46 -0400 
+Date: Thu, 25 May 2017 13:21:46 -0400
+From: dte_prod_generales@bciseguros.cl
+To: notificacionsii@sirrep.cl
+Subject: Envio
+Message-ID: <OF6ABCEF5E.3336AAB2-ON8425812B.005F609C@LocalDomain>
+Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="_----------=_14957329066763125"; charset="iso-8859-1"
+MIME-Version: 1.0
+Disposition: attachment
+Type: text/plain
+X-Mailer: MIME::Lite 3.028 (F2.82; T1.34; A2.09; B3.13; Q3.13)
+X-MIMETrack: Itemize by SMTP Server on COLORADO/AXA(Release 9.0.1FP6|April  20, 2016) at
+ 25-05-2017 13:21:46
+X-Disclaimed: 23547
+
+
+--_----------=_14957329066763125
+Content-Disposition: inline
+Content-Type: text/html;
+	charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+
+Envio Adjunto
+<font face=3D"sans-serif"><html>
+<head>
+<meta http-equiv=3D"Content-Type">
+</head>
+<body>
+<p align=3D"left">
+ <a href=3D"https://itunes.apple.com/app/apple-store/id1121409317?pt=3D1181=
+09664&ct=3DBotonEmailCorp&mt=3D8" target=3D"=5Fblank"><img src=3D"http://ww=
+w.bciseguros.cl/medios/footer/appStore.png" alt=3D"AppStore" height=3D"36" =
+width=3D"90"></a>
+ <a href=3D"https://play.google.com/store/apps/details?id=3Dcl.bcivida.bcis=
+eguros&referrer=3Dutm=5Fsource%3Dbcisegurosemail%26utm=5Fmedium%3Demail%26u=
+tm=5Fcampaign%3DBotonEmailCorp" target=3D"=5Fblank"><img src=3D"http://www.=
+bciseguros.cl/medios/footer/googlePlay.png" alt=3D"GooglePlay" height=3D"36=
+" width=3D"90"></a>
+<br/>
+</p>
+<em><p align=3D"justify"><font size=3D"2" face=3D"arial">
+"NOTA DE CONFIDENCIALIDAD:
+La informaci=F3n contenida en este mensaje y/o en los archivos adjuntos es =
+de car=E1cter CONFIDENCIAL y est=E1 destinada al uso exclusivo del emisor y=
+/o de la persona o entidad a quien va dirigida. Si usted no es el destinata=
+rio, le rogamos notificarlo inmediatamente al remitente, borrarlo de sus si=
+stemas y abstenerse de comunicarlo a terceros, todo ello a fin de evitar in=
+currir en eventuales responsabilidades legales. Considerando que el mensaje=
+ no es revisado por Bci Seguros, y que no existe certidumbre en que el pres=
+ente mensaje no ser=E1 modificado como resultado de su transmisi=F3n por co=
+rreo electr=F3nico, no se garantiza la integridad de este mensaje, por lo t=
+anto no se asume responsabilidad por eventuales errores u omisiones en el c=
+ontenido de este mensaje. La empresa no acepta ninguna responsabilidad con =
+respecto a cualquier comunicaci=F3n que haya sido emitida incumpliendo nues=
+tra Pol=EDtica de Seguridad de la Informaci=F3n. La informaci=F3n contenida=
+ en este mensaje no constituye propuesta o recomendaci=F3n alguna por parte=
+ de Bci Seguros."
+</p></font></em>
+<br/><br/>
+</body>
+</html></font>
+
+--_----------=_14957329066763125
+Content-Type: application/*; name="RptaCOME3619164.xml"
+Content-Disposition: attachment; filename="RptaCOME3619164.xml"
+Content-Transfer-Encoding: base64
+
+PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iSVNPLTg4NTktMSIgPz4KPFJlc3B1ZXN0YURU
+RSB4bWxucz0iaHR0cDovL3d3dy5zaWkuY2wvU2lpRHRlIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cu
+dzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIiB4c2k6c2NoZW1hTG9jYXRpb249Imh0dHA6
+Ly93d3cuc2lpLmNsL1NpaUR0ZSBSZXNwdWVzdGFFbnZpb0RURV92MTAueHNkIiB2ZXJzaW9uPSIx
+LjAiPgo8UmVzdWx0YWRvIElEPSJSQ09NRTM2MTkxNjQiPgo8Q2FyYXR1bGEgdmVyc2lvbj0iMS4w
+Ij4KPFJ1dFJlc3BvbmRlPjk5MTQ3MDAwLUs8L1J1dFJlc3BvbmRlPgo8UnV0UmVjaWJlPjc5NTE0
+ODAwLTA8L1J1dFJlY2liZT4KPElkUmVzcHVlc3RhPjM2MTkxNjQ8L0lkUmVzcHVlc3RhPgo8TnJv
+RGV0YWxsZXM+MTwvTnJvRGV0YWxsZXM+CjxObWJDb250YWN0bz5NYXJpbyBHYXppdHVhPC9ObWJD
+b250YWN0bz4KPEZvbm9Db250YWN0bz4wPC9Gb25vQ29udGFjdG8+CjxUbXN0RmlybWFSZXNwPjIw
+MTctMDUtMjVUMTM6MjE6MTg8L1Rtc3RGaXJtYVJlc3A+CjwvQ2FyYXR1bGE+CjxSZXN1bHRhZG9E
+VEU+CjxUaXBvRFRFPjUyPC9UaXBvRFRFPgo8Rm9saW8+MTMxNzk8L0ZvbGlvPgo8RmNoRW1pcz4y
+MDE3LTA1LTIzPC9GY2hFbWlzPgo8UlVURW1pc29yPjc5NTE0ODAwLTA8L1JVVEVtaXNvcj4KPFJV
+VFJlY2VwPjk5MTQ3MDAwLUs8L1JVVFJlY2VwPgo8TW50VG90YWw+MTA2MzEwPC9NbnRUb3RhbD4K
+PENvZEVudmlvPjE1OTI3NzY1PC9Db2RFbnZpbz4KPEVzdGFkb0RURT4wPC9Fc3RhZG9EVEU+CjxF
+c3RhZG9EVEVHbG9zYT5BQ0VQVEFETyBPSzwvRXN0YWRvRFRFR2xvc2E+CjwvUmVzdWx0YWRvRFRF
+Pgo8L1Jlc3VsdGFkbz4KPFNpZ25hdHVyZSB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC8w
+OS94bWxkc2lnIyI+CjxTaWduZWRJbmZvPgo8Q2Fub25pY2FsaXphdGlvbk1ldGhvZCBBbGdvcml0
+aG09Imh0dHA6Ly93d3cudzMub3JnL1RSLzIwMDEvUkVDLXhtbC1jMTRuLTIwMDEwMzE1Ii8+CjxT
+aWduYXR1cmVNZXRob2QgQWxnb3JpdGhtPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwLzA5L3htbGRz
+aWcjcnNhLXNoYTEiLz4KPFJlZmVyZW5jZSBVUkk9IiNSQ09NRTM2MTkxNjQiPgo8VHJhbnNmb3Jt
+cz4KPFRyYW5zZm9ybSBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvMTAveG1sLWV4
+Yy1jMTRuIyIvPgo8L1RyYW5zZm9ybXM+CjxEaWdlc3RNZXRob2QgQWxnb3JpdGhtPSJodHRwOi8v
+d3d3LnczLm9yZy8yMDAwLzA5L3htbGRzaWcjc2hhMSIvPgo8RGlnZXN0VmFsdWU+aUlVUC9UdUVY
+V0RuNDRHcEZEZytnZTZsbkpvPTwvRGlnZXN0VmFsdWU+CjwvUmVmZXJlbmNlPgo8L1NpZ25lZElu
+Zm8+CjxTaWduYXR1cmVWYWx1ZT5hOW9WTCtLekd4Q0JQWVc0TWVNS0dSVUVnSTAzUEF5bTVWYVBO
+dCszVzZ0L3B2OEgveVlhRXhDUVdtbXJOU3dFTnhhazIxc3hXU3M3amVESVVyeFcvZEFYYjRBRExM
+ODJNQUJXZ2NsSUY2cmwxa2ZzbDlkS3Voem83bVZHQkE3MmRlNnN6RTA3dSswTUp2V2pwa1UxQ1NW
+R3V4SjVzTlU5d3ZHMTRTeVFJRWs9PC9TaWduYXR1cmVWYWx1ZT4KPEtleUluZm8+CjxLZXlWYWx1
+ZT4KPFJTQUtleVZhbHVlPgo8TW9kdWx1cz4KbCtQNEl0aVRNaDQwVTVvWEZGN3YwRENLQ0s0R3Uy
+WkdFRjBydFNJYTNjQjI4dFdjbUlETUVRTUMvWW5GeDA0dworYisvQU5KZnEwVXlrK01HbUw5MUox
+VjRBY1hXaElGd3RHMGVkKzNRaTE4MS9rWWlyN3A1dFA2SDBWWmR3VHZMCmxXQ29RL1BsT3M0T2xx
+TEtTdnFLZTY1K2tLdlhQMUJUUW1DREJMMDQ5MlU9CjwvTW9kdWx1cz4KPEV4cG9uZW50PgpBUUFC
+CjwvRXhwb25lbnQ+CjwvUlNBS2V5VmFsdWU+CjwvS2V5VmFsdWU+CjxYNTA5RGF0YT4KPFg1MDlD
+ZXJ0aWZpY2F0ZT4KTUlJR1VUQ0NCVG1nQXdJQkFnSUtjV24zOWdBQUFBRnNNekFOQmdrcWhraUc5
+dzBCQVFVRkFEQ0IwakVMTUFrRwpBMVVFQmhNQ1Ewd3hIVEFiQmdOVkJBZ1RGRkpsWjJsdmJpQk5a
+WFJ5YjNCdmJHbDBZVzVoTVJFd0R3WURWUVFICkV3aFRZVzUwYVdGbmJ6RVVNQklHQTFVRUNoTUxS
+UzFEUlZKVVEwaEpURVV4SURBZUJnTlZCQXNURjBGMWRHOXkKYVdSaFpDQkRaWEowYVdacFkyRmti
+M0poTVRBd0xnWURWUVFERXlkRkxVTkZVbFJEU0VsTVJTQkRRU0JHU1ZKTgpRU0JGVEVWRFZGSlBU
+a2xEUVNCVFNVMVFURVV4SnpBbEJna3Foa2lHOXcwQkNRRVdHSE5qYkdsbGJuUmxjMEJsCkxXTmxj
+blJqYUdsc1pTNWpiREFlRncweE5EQTNNRGN4TkRVd01ERmFGdzB4TnpBM01EWXhORFV3TURGYU1J
+SFQKTVFzd0NRWURWUVFHRXdKRFRERWpNQ0VHQTFVRUNCTWFUVVZVVWs5UVQweEpWRUZPUVNCRVJT
+QlRRVTVVU1VGSApUeUF4RVRBUEJnTlZCQWNUQ0ZOaGJuUnBZV2R2TVNNd0lRWURWUVFLRXhwQ1Ew
+a2dVMFZIVlZKUFV5QkhSVTVGClVrRk1SVk1nVXk1QkxqRWlNQ0FHQTFVRUN4TVpSRVZRUVZKVVFV
+MUZUbFJQSUVOUFRsUkJRa2xNU1VSQlJERWMKTUJvR0ExVUVBeE1UVFVGU1NVOGdSMEZhU1ZSVlFT
+QlRWMFZVVkRFbE1DTUdDU3FHU0liM0RRRUpBUllXYldkaAplbWwwZFdGQVltTnBjMlZuZFhKdmN5
+NWpiRENCbnpBTkJna3Foa2lHOXcwQkFRRUZBQU9CalFBd2dZa0NnWUVBCmwrUDRJdGlUTWg0MFU1
+b1hGRjd2MERDS0NLNEd1MlpHRUYwcnRTSWEzY0IyOHRXY21JRE1FUU1DL1luRngwNHcKK2IrL0FO
+SmZxMFV5aytNR21MOTFKMVY0QWNYV2hJRnd0RzBlZCszUWkxODEva1lpcjdwNXRQNkgwVlpkd1R2
+TApsV0NvUS9QbE9zNE9scUxLU3ZxS2U2NStrS3ZYUDFCVFFtQ0RCTDA0OTJVQ0F3RUFBYU9DQXFn
+d2dnS2tNQXNHCkExVWREd1FFQXdJRThEQWRCZ05WSFE0RUZnUVVFMUREVjZqcXBWczdKdUZ4ZGhF
+L3F1ZWppYk13SHdZRFZSMGoKQkJnd0ZvQVVlT0UrbjlJU3MzbzhqYzB3RGxPelF5a0hzMVV3UGdZ
+RFZSMGZCRGN3TlRBem9ER2dMNFl0YUhSMApjRG92TDJOeWJDNWxMV05sY25SamFHbHNaUzVqYkM5
+bFkyVnlkR05vYVd4bFkyRkdSVk11WTNKc01Ec0dDQ3NHCkFRVUZCd0VCQkM4d0xUQXJCZ2dyQmdF
+RkJRY3dBWVlmYUhSMGNEb3ZMMjlqYzNBdWFXNTBaWEpqWVhCcGRDNWoKYjIwdmIyTnpjREE5Qmdr
+ckJnRUVBWUkzRlFjRU1EQXVCaVlyQmdFRUFZSTNGUWlDM0lNdmhaT01ab1hWblJlQwo0dHduZ2Uv
+c1BHR0J5NTRVaHFpQ1dBSUJaQUlCQkRBakJnTlZIUkVFSERBYW9CZ0dDQ3NHQVFRQndRRUJvQXdX
+CkNqRXhPRE16T1RJM0xUUXdJd1lEVlIwU0JCd3dHcUFZQmdnckJnRUVBY0VCQXFBTUZnbzVOamt5
+T0RFNE1DMDEKTUlJQlRRWURWUjBnQklJQlJEQ0NBVUF3Z2dFOEJnZ3JCZ0VFQWNOU0JUQ0NBUzR3
+TFFZSUt3WUJCUVVIQWdFVwpJV2gwZEhBNkx5OTNkM2N1WlMxalpYSjBZMmhwYkdVdVkyd3ZRMUJU
+TG1oMGJUQ0IvQVlJS3dZQkJRVUhBZ0l3CmdlOGVnZXdBUXdCbEFISUFkQUJwQUdZQWFRQmpBR0VB
+WkFCdkFDQUFSZ0JwQUhJQWJRQmhBQ0FBVXdCcEFHMEEKY0FCc0FHVUFMZ0FnQUVnQVlRQWdBSE1B
+YVFCa0FHOEFJQUIyQUdFQWJBQnBBR1FBWVFCa0FHOEFJQUJsQUc0QQpJQUJtQUc4QWNnQnRBR0VB
+SUFCd0FISUFaUUJ6QUdVQWJnQmpBR2tBWVFCc0FDd0FJQUJ4QUhVQVpRQmtBR0VBCmJnQmtBRzhB
+SUFCb0FHRUFZZ0JwQUd3QWFRQjBBR0VBWkFCdkFDQUFaUUJzQUNBQVF3QmxBSElBZEFCcEFHWUEK
+YVFCakFHRUFaQUJ2QUNBQWNBQmhBSElBWVFBZ0FIVUFjd0J2QUNBQWRBQnlBR2tBWWdCMUFIUUFZ
+UUJ5QUdrQQpiekFOQmdrcWhraUc5dzBCQVFVRkFBT0NBUUVBa0lNZmNmNmRFQVRoNGpFWStzVVJK
+dVNmbUJRbTJ0UFUwV01hCmtEQ2s2RzQ3dDlOZ0MzemdSVG5CNGk3cXJQTG9NOFBON0EwUmJYb2ox
+NkIrQlVoM2ViazRiZVloS3U4bXhobUEKMjRjKzVWOUZpdStFeUFZQWhpRm84RW0yU2ZpZnIva0hP
+N3dSbVB6bnNOamx5bFJLM1F0QjhDVlJlKzZlMFMyMwpFd1IxbGF6elJmdVNtQ3pEcmpDNndscnNG
+eTZDWGlpTWRiZEhnOUhHNzhKbGtlRnc4QlR6eUJMclZZR3lJTGJhCktyeTc5U3dpdlRIeTJNNHRS
+L0VTNVc2ZUZ1aktRMUl0MlQ3ektxS0lPSC9rWitSV3AzRElCK3BmZFBrQk1rdkEKUlI4RUQ4bjN4
+VENsazc1Q1dmb3F2ZEZBQjE0dlp1WElvT004SjN6akFRTXVhTlY5VWc9PQo8L1g1MDlDZXJ0aWZp
+Y2F0ZT4KPC9YNTA5RGF0YT4KPC9LZXlJbmZvPgo8L1NpZ25hdHVyZT48L1Jlc3B1ZXN0YURURT4K
+
+
+--_----------=_14957329066763125--
+

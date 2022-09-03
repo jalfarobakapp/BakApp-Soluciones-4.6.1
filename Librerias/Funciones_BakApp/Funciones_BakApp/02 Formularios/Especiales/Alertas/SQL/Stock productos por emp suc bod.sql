@@ -1,0 +1,47 @@
+DECLARE 
+@Empresa char(2),
+@Codigo char(13),
+@ListaPrecio Char(3)
+
+select @Empresa = '#Empresa#',
+       @Codigo = '#Codigo#'
+
+
+SELECT 
+       MST.EMPRESA,
+       MST.KOSU,
+       MST.KOBO,
+       LTRIM(RTRIM(MST.KOSU))+'-'+LTRIM(RTRIM(MST.KOBO)) as SUC_BOD,
+       ISNULL((SELECT TOP 1 NOKOBO FROM TABBO 
+               WHERE EMPRESA = MST.EMPRESA AND KOSU = MST.KOSU AND KOBO = MST.KOBO),'???') AS NOKOBO,
+       MST.KOPR,
+       MST.STFI1 AS 'STOCKUD1',--,        -- STOCK FISICO
+       --MST.STFI2 AS 'STOCKUD2'--,       -- STOCK FISICO
+       MST.STDV1                          -- STOCK DEVENGADO
+       --MST.DESPNOFAC#Ud#,   -- DESPACHADO SIN FACTURAR 
+       --MST.STOCNV#Ud#,      -- STOCK COMPROMETIDO
+       --MST.STDV#Ud#C,       -- COMPRAS NO RECEPCIONADAS
+       --MST.RECENOFAC#Ud#,   -- RECEPCIONADO SIN FACTURAR
+       --MST.STOCNV#Ud#C,     -- STOCK PEDIDO
+       --TB.DATOSUBIC      -- UBICACION EN BODEGA
+FROM MAEST MST WITH ( NOLOCK )  
+LEFT OUTER JOIN TABBOPR TB ON MST.KOSU=TB.KOSU 
+AND MST.KOBO=TB.KOBO 
+AND MST.KOPR=TB.KOPR  
+AND MST.KOBO IN (SELECT KOBO FROM TABBO WHERE EMPRESA = @Empresa)
+WHERE MST.KOPR=@Codigo AND MST.EMPRESA=@Empresa
+
+/*
+       MST.STTR#Ud#,
+       MST.PRESALCLI#Ud#,
+       MST.PRESDEPRO#Ud#,
+       MST.CONSALCLI#Ud#,
+       MST.CONSDEPRO#Ud#,
+       MST.DEVENGNCV#Ud#,
+       MST.DEVENGNCC#Ud#,
+       MST.DEVSINNCV#Ud#,
+       MST.DEVSINNCC#Ud#,
+       MST.STENFAB#Ud#,
+       MST.STREQFAB#Ud#,
+*/
+

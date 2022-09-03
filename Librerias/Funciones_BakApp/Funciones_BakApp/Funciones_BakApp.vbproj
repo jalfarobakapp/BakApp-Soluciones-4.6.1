@@ -1,0 +1,513 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6502C206-A68A-4F9F-B855-4AE7B7FA80E4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Funciones_BakApp</RootNamespace>
+    <AssemblyName>Funciones_BakApp</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Funciones_BakApp.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <PlatformTarget>x86</PlatformTarget>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Funciones_BakApp.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="DevComponents.DotNetBar.Keyboard, Version=11.7.0.0, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL" />
+    <Reference Include="DevComponents.DotNetBar2, Version=11.7.0.0, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL" />
+    <Reference Include="Excel, Version=3.1.0.0, Culture=neutral, PublicKeyToken=7b835b529fb706c3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\.Net Librerias especiales\Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.4.0.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\.Net Librerias especiales\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp, Version=1.32.2608.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\.Net Librerias especiales\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Rs_Actualizar_Sistema.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Rs_Actualizar_Sistema.resx</DependentUpon>
+    </Compile>
+    <Compile Include="01 Funciones y Variables\BarCode.vb" />
+    <Compile Include="01 Funciones y Variables\Clase Funciones formato\Cl_Funciones_Formatos.vb" />
+    <Compile Include="01 Funciones y Variables\Clase Funciones formato\Cl_Imprimir_documento.vb" />
+    <Compile Include="01 Funciones y Variables\Clase Funciones formato\Ds documento\Ds_documento_imp.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Ds_documento_imp.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="01 Funciones y Variables\Clase Funciones formato\Sql_funciones\Rs_fx_SQL.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Rs_fx_SQL.resx</DependentUpon>
+    </Compile>
+    <Compile Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Frm_Instalar_Sistema.Designer.vb">
+      <DependentUpon>Frm_Instalar_Sistema.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Frm_Instalar_Sistema.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="01 Funciones y Variables\FuncionesDoNetBar.vb" />
+    <Compile Include="01 Funciones y Variables\Revisar Estructura SQL\Ds_Tablas_BakApp.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Ds_Tablas_BakApp.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="01 Funciones y Variables\Revisar Estructura SQL\Ds_Tablas_BakApp.vb">
+      <DependentUpon>Ds_Tablas_BakApp.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="01 Funciones y Variables\Revisar Estructura SQL\Revisar_Estructura_SqlData.vb" />
+    <Compile Include="02 Formularios\Especiales\Alertas\Frm_AlertaSOC.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="02 Formularios\Especiales\Alertas\Mod_Alertas.vb" />
+    <Compile Include="02 Formularios\Especiales\Ds_Especiales.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Ds_Especiales.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="02 Formularios\Especiales\Ds_Especiales.vb">
+      <DependentUpon>Ds_Especiales.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="02 Formularios\Especiales\Z Otros\Frm_Impresoras.Designer.vb">
+      <DependentUpon>Frm_Impresoras.vb</DependentUpon>
+    </Compile>
+    <Compile Include="02 Formularios\Especiales\Z Otros\Frm_Impresoras.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="aletras.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Resources\Recursos_Fx.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Recursos_Fx.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Variables.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Frm_Instalar_Sistema.resx">
+      <DependentUpon>Frm_Instalar_Sistema.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Rs_Actualizar_Sistema.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Rs_Actualizar_Sistema.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Funciones y Variables\Clase Funciones formato\Sql_funciones\Rs_fx_SQL.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Rs_fx_SQL.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="02 Formularios\Especiales\Alertas\Frm_AlertaSOC.resx">
+      <DependentUpon>Frm_AlertaSOC.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="02 Formularios\Especiales\Z Otros\Frm_Impresoras.resx">
+      <DependentUpon>Frm_Impresoras.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Recursos_Fx.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Recursos_Fx.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Crear Tabla de paso de productos.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\key-64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\key-128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ok_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete_button_error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh_update.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\calculator.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\company.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\company-add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button_rounded_red_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database-gear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database-save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database-gear1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button_rounded_red_delete1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sql_check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\export_to_excel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete_button_error1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\filter-check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\computer-key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\computer-gear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\internet_grey-key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document_flat-find.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SQLQuery Buscar Docmuento.sql" />
+    <None Include="Resources\TextFile1.sql.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document-search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\computer-key1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document-search1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="01 Funciones y Variables\Procedimeintos SQL\Actualizar Costos en Lista de Proveedores.sql" />
+    <None Include="01 Funciones y Variables\Revisar Estructura SQL\Ds_Tablas_BakApp.xsc">
+      <DependentUpon>Ds_Tablas_BakApp.xsd</DependentUpon>
+    </None>
+    <None Include="01 Funciones y Variables\Revisar Estructura SQL\Ds_Tablas_BakApp.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Ds_Tablas_BakApp.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="01 Funciones y Variables\Revisar Estructura SQL\Ds_Tablas_BakApp.xss">
+      <DependentUpon>Ds_Tablas_BakApp.xsd</DependentUpon>
+    </None>
+    <None Include="Resources\customers-arrow_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comment-edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_lookup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\user-ok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Esquemas Base de datos BakApp\Compras\Solicitud compra\ZW_SOC_Obs.sql" />
+    <None Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Esquemas Base de datos BakApp\Compras\Solicitud compra\ZW_SOC_Encabezado.sql" />
+    <None Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Esquemas Base de datos BakApp\Compras\Solicitud compra\ZW_SOC_Ent_Cadena.sql" />
+    <None Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Esquemas Base de datos BakApp\Compras\Solicitud compra\ZW_SOC_Log.sql" />
+    <None Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Esquemas Base de datos BakApp\Compras\Solicitud compra\ZW_SOC_Detalle.sql" />
+    <None Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Esquemas Base de datos BakApp\Configuracion\Listas de precios\Zw_ListaPreProducto.sql" />
+    <None Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Esquemas Base de datos BakApp\Configuracion\Listas de precios\Zw_ListaPreCosto.sql" />
+    <None Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Esquemas Base de datos BakApp\Configuracion\Listas de precios\Zw_ListaPreGlobal.sql" />
+    <None Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Esquemas Base de datos BakApp\Configuracion\Productos\Zw_TblArbol_Asociaciones.sql" />
+    <None Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Esquemas Base de datos BakApp\Configuracion\Productos\Zw_Prod_Asociacion.sql" />
+    <None Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Esquemas Base de datos BakApp\Configuracion\Zw_MrVsPro.sql" />
+    <None Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Esquemas Base de datos BakApp\Configuracion\Zw_TablaDeCaracterizaciones.sql" />
+    <None Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Esquemas Base de datos BakApp\Configuracion\Zw_Turnos.sql" />
+    <None Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Esquemas Base de datos BakApp\Configuracion\ZW_PermisosADM.sql" />
+    <None Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Esquemas Base de datos BakApp\Configuracion\Zw_Licencia_Mod.sql" />
+    <None Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Esquemas Base de datos BakApp\Filtros\Zw_TblFiltro_InfxUs.sql" />
+    <None Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Esquemas Base de datos BakApp\SqlQuery_Trae_Tabla.sql" />
+    <None Include="01 Funciones y Variables\01 Clase Actualizar Sistema\Esquemas Base de datos BakApp\Configuracion\Zw_EstacionesBkp.sql" />
+    <None Include="01 Funciones y Variables\Clase Funciones formato\Ds documento\Ds_documento_imp.xsc">
+      <DependentUpon>Ds_documento_imp.xsd</DependentUpon>
+    </None>
+    <None Include="01 Funciones y Variables\Clase Funciones formato\Ds documento\Ds_documento_imp.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Ds_documento_imp.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="01 Funciones y Variables\Clase Funciones formato\Ds documento\Ds_documento_imp.xss">
+      <DependentUpon>Ds_documento_imp.xsd</DependentUpon>
+    </None>
+    <None Include="01 Funciones y Variables\Clase Funciones formato\Sql_funciones\SQLQuery_Datos_Entidad.sql" />
+    <None Include="01 Funciones y Variables\Clase Funciones formato\Sql_funciones\SQLQuery_Documento_Enc.sql" />
+    <None Include="Resources\tag-edit.png" />
+    <None Include="Resources\folder_open-arrow_left1.png" />
+    <None Include="Resources\tree-delete.png" />
+    <None Include="Resources\tree-add2.png" />
+    <None Include="Resources\folder_open-arrow_left.png" />
+    <None Include="Resources\home.png" />
+    <None Include="Resources\import_from_excel.png" />
+    <None Include="Resources\inventory-ok.png" />
+    <None Include="Resources\export_to_csv.png" />
+    <None Include="Resources\zoom_out.png" />
+    <None Include="Resources\zoom_in.png" />
+    <None Include="Resources\tree.png" />
+    <None Include="Resources\tree-add1.png" />
+    <None Include="Resources\tree-remove.png" />
+    <None Include="Resources\zip_compress.png" />
+    <None Include="Resources\zip.png" />
+    <None Include="Resources\tree-add.png" />
+    <None Include="Resources\tree-delete21.png" />
+    <None Include="Resources\tree-delete2.png" />
+    <None Include="02 Formularios\Especiales\Ds_Especiales.xsc">
+      <DependentUpon>Ds_Especiales.xsd</DependentUpon>
+    </None>
+    <None Include="02 Formularios\Especiales\Ds_Especiales.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Ds_Especiales.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="02 Formularios\Especiales\Ds_Especiales.xss">
+      <DependentUpon>Ds_Especiales.xsd</DependentUpon>
+    </None>
+    <None Include="Resources\popup.wav" />
+    <None Include="Resources\tarea.png" />
+    <None Include="Resources\internet.png" />
+    <None Include="Resources\usuarios.png" />
+    <None Include="Resources\llave.png" />
+    <None Include="Resources\ayuda.png" />
+    <None Include="Resources\soporte.png" />
+    <None Include="Resources\error.png" />
+    <None Include="Resources\advertencia.png" />
+    <None Include="Resources\ok.png" />
+    <None Include="Resources\secure-ok.png" />
+    <None Include="Resources\cancel2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Outlook">
+      <Guid>{00062FFF-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>9</VersionMajor>
+      <VersionMinor>5</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Word">
+      <Guid>{00020905-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>8</VersionMajor>
+      <VersionMinor>6</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="02 Formularios\Caluladora de peso\" />
+    <Folder Include="02 Formularios\Especiales\Alertas\SQL\" />
+    <Folder Include="02 Formularios\Especiales\Parametros\Familias\" />
+    <Folder Include="02 Formularios\Especiales\Parametros\Tablas Sistema\" />
+    <Folder Include="02 Formularios\Especiales\Seleccionadores\" />
+    <Folder Include="02 Formularios\Especiales\Z Otros\Funcion InputBox_Bk\" />
+    <Folder Include="02 Formularios\Exportar Excel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\AntBru\Lib_Bakapp_VarClass\Lib_Bakapp_VarClassFun.vbproj">
+      <Project>{3365be15-8af7-412d-8500-d07c446f550d}</Project>
+      <Name>Lib_Bakapp_VarClassFun</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

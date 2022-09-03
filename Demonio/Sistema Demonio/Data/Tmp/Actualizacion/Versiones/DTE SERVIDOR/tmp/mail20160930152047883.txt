@@ -1,0 +1,241 @@
+Return-Path: <mipyme@sii.cl>
+Delivered-To: notificacionsii@sirrep.cl
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id NrvHEo8dNldNWw4AqFaw+A
+	for <notificacionsii@sirrep.cl>; Fri, 13 May 2016 15:32:13 -0300
+Return-path: <mipyme@sii.cl>
+Received: from rapel11.sii.cl ([200.10.252.90])
+	by srv150.tuhosting.cl with esmtp (Exim 4.86)
+	(envelope-from <mipyme@sii.cl>)
+	id 1b1Hsj-003x2F-7Y
+	for notificacionsii@sirrep.cl; Fri, 13 May 2016 15:32:13 -0300
+X-IronPort-AV: E=Sophos;i="5.24,614,1454986800"; 
+   d="xml'?scan'208";a="279074146"
+Received: from alhuex05.sii.cl ([192.168.4.174])
+  by rapel11.sii.cl with ESMTP; 13 May 2016 15:33:29 -0300
+Message-ID: <1886739994.1463164407525.JavaMail.root@alhuex05.sii.cl>
+Date: Fri, 13 May 2016 14:33:27 -0400 (CLT)
+From: mipyme@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: Envio DTE - Emisor:76585790-2  Receptor:79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_320591_102203021.1463164407524"
+
+------=_Part_320591_102203021.1463164407524
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+Facturacion Electronica - Envio de DTE
+======================================
+
+Adjunto puede encontrar el Archivo XML de Envio de Documentos Tributarios 
+Electronicos generado para usted por el Emisor de la referencia.
+
+----------------------------------------------------------------------------
+
+Esta es una aplicacion automatica, por lo tanto no conteste este correo ni
+haga consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue
+mas claro en cualquier aplicacion.
+
+------=_Part_320591_102203021.1463164407524
+Content-Type: application/octet-stream; name=EnvMiPERCP157809166.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=EnvMiPERCP157809166.xml
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<EnvioDTE xmlns="http://www.sii.cl/SiiDte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sii.cl/SiiDte EnvioDTE_v10.xsd" version="1.0">
+<SetDTE ID="SDTE157809166">
+  <Caratula version="1.0">
+    <RutEmisor>76585790-2</RutEmisor>
+    <RutEnvia>48080155-5</RutEnvia>
+    <RutReceptor>79514800-0</RutReceptor>
+    <FchResol>2014-10-21</FchResol>
+    <NroResol>99</NroResol>
+    <TmstFirmaEnv>2016-05-13T15:32:46</TmstFirmaEnv>
+    <SubTotDTE>
+      <TpoDTE>33</TpoDTE>
+      <NroDTE>1</NroDTE>
+    </SubTotDTE>
+  </Caratula>
+<DTE xmlns="http://www.sii.cl/SiiDte" version="1.0">
+  <!-- O Win32 Trident 7 plugin -->
+<Documento ID="MiPE76585790-10571">
+    <Encabezado>
+      <IdDoc>
+        <TipoDTE>33</TipoDTE>
+        <Folio>8</Folio>
+        <FchEmis>2016-05-13</FchEmis>
+      </IdDoc>
+      <Emisor>
+        <RUTEmisor>76585790-2</RUTEmisor>
+        <RznSoc>COMERCIALIZADORA DE REPUESTOS ROJAS Y CIA. LTDA.</RznSoc>
+        <GiroEmis>I.Y DIST.REP AUTOMOT, REP. USADOS,VENTA Y ARRIENDO ANDAMIOS Y HERRAMIE</GiroEmis>
+        <Acteco>503000</Acteco>
+        <CdgSIISucur>067071258</CdgSIISucur>
+        <DirOrigen>10 DE JULIO 366</DirOrigen>
+        <CmnaOrigen>SANTIAGO</CmnaOrigen>
+        <CiudadOrigen>STGO</CiudadOrigen>
+      </Emisor>
+      <Receptor>
+        <RUTRecep>79514800-0</RUTRecep>
+        <RznSocRecep>SIERRALTA Y COMPANIA LIMITADA</RznSocRecep>
+        <GiroRecep>VENTA DE PARTES, PIEZAS Y ACCESORIOS DE</GiroRecep>
+        <DirRecep>AV BRASIL 24</DirRecep>
+        <CmnaRecep>SANTIAGO</CmnaRecep>
+        <CiudadRecep>STGO</CiudadRecep>
+      </Receptor>
+      <Totales>
+        <MntNeto>45000</MntNeto>
+        <TasaIVA>19.00</TasaIVA>
+        <IVA>8550</IVA>
+        <MntTotal>53550</MntTotal>
+      </Totales>
+    </Encabezado>
+    <Detalle>
+      <NroLinDet>1</NroLinDet>
+      <NmbItem>TAPABARRO RH SQ</NmbItem>
+      <QtyItem>1.00</QtyItem>
+      <PrcItem>45000.00</PrcItem>
+      <MontoItem>45000</MontoItem>
+    </Detalle>
+<TED version="1.0"><DD><RE>76585790-2</RE><TD>33</TD><F>8</F><FE>2016-05-13</FE><RR>79514800-0</RR><RSR>SIERRALTA Y COMPANIA LIMITADA</RSR><MNT>53550</MNT><IT1>TAPABARRO RH SQ</IT1><CAF version="1.0"><DA><RE>76585790-2</RE><RS>COMERCIALIZADORA DE REPUESTOS ROJAS Y CI</RS><TD>33</TD><RNG><D>8</D><H>8</H></RNG><FA>2016-05-13</FA><RSAPK><M>r0j5HWn386hngngTo2xqlx3yTkLhC/fhjCyiKapYQSTNiv64y+/Tb86738SIfAElZyVIu0dwuuiJ3WVLvmkR0Q==</M><E>Aw==</E></RSAPK><IDK>300</IDK></DA><FRMA algoritmo="SHA1withRSA">UVwjgoqUsubqnigealpwtTx6XEnkg6r43qUjqprs92dpB6gH7RSc3Zq2qNHGLH1ZiSpy4onVjCtaBuNg7Yx9ag==</FRMA></CAF><TSTED>2016-05-13T15:32:40</TSTED></DD><FRMT algoritmo="SHA1withRSA">Lhf3GTBBz5asqAHhXCHBakcPycfdcNAhh14QpCp0moTXwYo8A6lJiQEgEzwaHJjzBkgJCJVLORTLlhVnNWjk4w==</FRMT></TED>
+    <TmstFirma>2016-05-13T15:32:40</TmstFirma>
+
+  </Documento>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI="#MiPE76585790-10571"><Transforms><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>sF+o/zNihajAhf0nFvjJt06u+Hg=</DigestValue></Reference></SignedInfo>
+<SignatureValue>il3xw77NYve0Vh7iLTMT+gc3I/Nmbrr+T2wjwUSt7VhXxLyL9sykr9dSjzUvj6ioifkN2LRhfQnNt4MK1ppp2i9YS4UV3HLNkd370+pYoyMBKyZ9C1h0NpVV02grEsD5Q46mIDdoR7MFv/JHe9GhHiCRtP6txrU95/UYBcOibHk=</SignatureValue>
+<KeyInfo>
+<KeyValue>
+<RSAKeyValue>
+<Modulus>nvS7FqPVx7IXf8tbJdvyhBCTA6NdyfkFj3tJAhxWDB2mb8q+ebgsmJC9DotmO2Mpu8bxMyoXWuHUXcly5BACwsVSNwpS/UN4SXG0on8vxFJS75Hrs7xQGu1ZvE0yMEbbpa7AgaWBWjZ4NUG5Kk9QTPsbLD4sud1bLZy9Hh3jH3k=</Modulus>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
+</KeyValue>
+<X509Data>
+<X509Certificate>
+MIIGajCCBVKgAwIBAgIKP0GeZQAAAAO5bDANBgkqhkiG9w0BAQUFADCB0jELMAkGA1UEBhMCQ0wx
+HTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQHEwhTYW50aWFnbzEUMBIGA1UE
+ChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9yaWRhZCBDZXJ0aWZpY2Fkb3JhMTAwLgYDVQQD
+EydFLUNFUlRDSElMRSBDQSBGSVJNQSBFTEVDVFJPTklDQSBTSU1QTEUxJzAlBgkqhkiG9w0BCQEW
+GHNjbGllbnRlc0BlLWNlcnRjaGlsZS5jbDAeFw0xNjA1MDIyMTAwNDZaFw0xODA1MDIyMTAwNDZa
+MIHtMQswCQYDVQQGEwJDTDEjMCEGA1UECBMaTUVUUk9QT0xJVEFOQSBERSBTQU5USUFHTyAxETAP
+BgNVBAcTCFNhbnRpYWdvMTcwNQYDVQQKEy5Db21lcmNpYWxpemFkb3JhIGRlIFJlcHVlc3RvcyBS
+b2phcyB5IENpYSBMdGRhMRswGQYDVQQLExJWZW50YSBkZSByZXB1ZXN0b3MxJjAkBgNVBAMTHUZS
+QU5DSVNDTyBKQVZJRVIgSUJBUlJBIENPUklBMSgwJgYJKoZIhvcNAQkBFhlkZXNhcm1hZHVyaWE0
+eDRAZ21haWwuY29tMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCe9LsWo9XHshd/y1sl2/KE
+EJMDo13J+QWPe0kCHFYMHaZvyr55uCyYkL0Oi2Y7Yym7xvEzKhda4dRdyXLkEALCxVI3ClL9Q3hJ
+cbSify/EUlLvkeuzvFAa7Vm8TTIwRtulrsCBpYFaNng1QbkqT1BM+xssPiy53VstnL0eHeMfeQID
+AQABo4ICpzCCAqMwPQYJKwYBBAGCNxUHBDAwLgYmKwYBBAGCNxUIgtyDL4WTjGaF1Z0XguLcJ4Hv
+7Dxhg6rnQ4fTxg4CAWQCAQQwHQYDVR0OBBYEFIwkK8hFBjKL1pHIBSM9t6UnS2l2MAsGA1UdDwQE
+AwIE8DAfBgNVHSMEGDAWgBR44T6f0hKzejyNzTAOU7NDKQezVTA+BgNVHR8ENzA1MDOgMaAvhi1o
+dHRwOi8vY3JsLmUtY2VydGNoaWxlLmNsL2VjZXJ0Y2hpbGVjYUZFUy5jcmwwOgYIKwYBBQUHAQEE
+LjAsMCoGCCsGAQUFBzABhh5odHRwOi8vb2NzcC5lY2VydGNoaWxlLmNsL29jc3AwIwYDVR0RBBww
+GqAYBggrBgEEAcEBAaAMFgoxNTM2MDM2MS04MCMGA1UdEgQcMBqgGAYIKwYBBAHBAQKgDBYKOTY5
+MjgxODAtNTCCAU0GA1UdIASCAUQwggFAMIIBPAYIKwYBBAHDUgUwggEuMC0GCCsGAQUFBwIBFiFo
+dHRwOi8vd3d3LmUtY2VydGNoaWxlLmNsL0NQUy5odG0wgfwGCCsGAQUFBwICMIHvHoHsAEMAZQBy
+AHQAaQBmAGkAYwBhAGQAbwAgAEYAaQByAG0AYQAgAFMAaQBtAHAAbABlAC4AIABIAGEAIABzAGkA
+ZABvACAAdgBhAGwAaQBkAGEAZABvACAAZQBuACAAZgBvAHIAbQBhACAAcAByAGUAcwBlAG4AYwBp
+AGEAbAAsACAAcQB1AGUAZABhAG4AZABvACAAaABhAGIAaQBsAGkAdABhAGQAbwAgAGUAbAAgAEMA
+ZQByAHQAaQBmAGkAYwBhAGQAbwAgAHAAYQByAGEAIAB1AHMAbwAgAHQAcgBpAGIAdQB0AGEAcgBp
+AG8wDQYJKoZIhvcNAQEFBQADggEBAIVq/WUvRy/bH+pnWAARd/IwMGpQ50MEhXeXcyhakuI/dxO2
+V/ftgVVr9D08H2GVPgZQjTe2Ut9eqWpGiF66eA8yDP6To+ArP4BPPfK11AlxPQ6c9vxPOCsEtk7z
+Op4EXpC39Trgj7pcWZzP0O6BRzuHO6Fz+RsoaE/j3+LLJkGkP7d59UnH5qf2wOm4Jj0WRQuSFUQW
+R8ig0YYlqpEXQHIGJYiNvdSIgSVLEaq0HlCRmWeFlJbYYelJbUu6f0YewFbxbm/tkTDk8KhebFLa
+6I68bYSixq8nNwtJzlKcob4ZIfjXOGlh0d4wc0MaupL5C0kyT9Viex+0G7bd7qKGsgk=
+</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature></DTE>
+</SetDTE>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference URI="#SDTE157809166">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>m2iTa5yidYx6JPn9qLAGGMi6qcU=</DigestValue>
+</Reference>
+</SignedInfo>
+<SignatureValue>ddkpkKayoZFRVAJyFKE1FNgTYkNwLC/0D+bGinNMD49xXvCh7OX3VV4H5VlmIYeH
+t/vGqK/MZBRnh26qykzUZdU23GYpDt1ulO70vR0MQe2bHKRHkt88ycpIyyTHbGRx
+T8RBnk8fPXrtyHei/hDHytVGsVgQELjNFLDO6AymTGyi8DQepfiGhkXjQdsDZiHJ
+sRN3JeqDifvER4ybh5c3EB6IHaofEWHDqEQqTeK8wdBxcNPkKqTsT0v9IpLk0RVj
+lK9ImSS/tvaUNiPZQBcghp9ogL+h+WGgLjDb2ivy6zVybci6vuoFyI1ikkwv3wNG
+/0NIVqfO/yCSSEI1EVEKhg==</SignatureValue>
+<KeyInfo>
+<KeyValue>
+<RSAKeyValue>
+<Modulus>
+sxlGm1Jc6E+z24JphF6c6L57hqfloO/zTw+VSxYKIdlKNjZgx6LzwILLVobZpo35
+qHoSSp5HNttc39GdvcqyUsvNBL2t0TFb75bSc957bwJuBh+4l/Gkt6fKOcIzEy1t
+QqJMTVFS0NvoOdbhotuiXqrg2bLiD73c3NUgS3bPzJKOeWn4okGGqnvZrZ2b2No3
+Ak01lr0XAHhTZEuhHGSoOOCw7szHgcqNuAB46xLBpAN4h2mOplS5YdHe2IOd7/Ev
+Lk3ClByowhJ2At0MXyLKEx7t3LDGjFQBB64fvW05t2Yj2snd/aMQkrwpmJJ+t6d5
+6QZvrRKF9eEXLLJ09h/Fyw==
+</Modulus>
+<Exponent>
+AQAB
+</Exponent>
+</RSAKeyValue>
+</KeyValue>
+<X509Data>
+<X509Certificate>
+MIIEbDCCA1SgAwIBAgIBQjANBgkqhkiG9w0BAQUFADCBpTEUMBIGA1UEAxMLU0lJ
+LUNBLTIwMTM
+xGjAYBgNVBAcTEVNhbnRpYWdvIGRlIENoaWxlMR0wGwYDVQQIExRS
+ZWdpb24gTWV0cm9wb2xpdG
+FuYTELMAkGA1UEBhMCQ0wxHDAaBgkqhkiG9w0BCQEW
+DXNpaS1jYUBzaWkuY2wxJzAlBgNVBAoTH
+lNlcnZpY2lvIGRlIEltcHVlc3RvcyBJ
+bnRlcm5vczAeFw0xNTAzMjcxNTM1MDBaFw0xNzAzMjYx
+NTM1MDBaMIHZMSQwIgYD
+VQQLExtTdWJkaXJlY2Npb24gZGUgSW5mb3JtYXRpY2ExJzAlBgNVBAo
+THlNlcnZp
+Y2lvIGRlIEltcHVlc3RvcyBJbnRlcm5vczELMAkGA1UEBhMCQ0wxHTAbBgNVBAgT
+F
+FJlZ2lvbiBNZXRyb3BvbGl0YW5hMRowGAYDVQQHExFTYW50aWFnbyBkZSBDaGls
+ZTEmMCQGCSqG
+SIb3DQEJARYXU0lJX2R0ZV9pbXByZXNvc0BzaWkuY2wxGDAWBgNV
+BAMTD0ZBQ1RVUkFDSU9OIFN
+JSTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+ggEBALMZRptSXOhPs9uCaYRenOi+e4an5a
+Dv808PlUsWCiHZSjY2YMei88CCy1aG
+2aaN+ah6EkqeRzbbXN/Rnb3KslLLzQS9rdExW++W0nPee
+28CbgYfuJfxpLenyjnC
+MxMtbUKiTE1RUtDb6DnW4aLbol6q4Nmy4g+93NzVIEt2z8ySjnlp+KJB
+hqp72a2d
+m9jaNwJNNZa9FwB4U2RLoRxkqDjgsO7Mx4HKjbgAeOsSwaQDeIdpjqZUuWHR3tiD
+ne
+/xLy5NwpQcqMISdgLdDF8iyhMe7dywxoxUAQeuH71tObdmI9rJ3f2jEJK8KZiS
+freneekGb60Sh
+fXhFyyydPYfxcsCAwEAAaNxMG8wCQYDVR0TBAIwADA9BgNVHREE
+NjA0oBgGCCsGAQQBwQEBoAwT
+CjQ4MDgwMTU1LTWgGAYIKwYBBAHBAQOgDBMKNjA4
+MDMwMDAtSzAjBgNVHRIEHDAaoBgGCCsGAQQ
+BwQECoAwTCjYwODAzMDAwLUswDQYJ
+KoZIhvcNAQEFBQADggEBABc4xNibQGRxBImO831jIPv5XQ
+Yt7Zm+8aOApNmh6eyy
+YKGX+oXDrAerlGJeM7v5qkuBu8ro2i5cOsixenlH3HnKSzW7VZuPrxboN
+h5K2GpT
+Z0BPjuRMgfHOa/09T1go44nsRvSh7bA/Fab52R5OL0o8brsQ6iP+MlVkmICPNQMs
+TRN
+jmjKf17QVyk3+8l4YeVXYE8+J6e3eLlA2ug5TsNEoHSWNk0QBq2ZTE8O5fBC7
+7BrxXK75ObKKpC
+HG9Dpo5ee8iClTJ7ic9mgrGprHZwYINQHjxImS7k2FdFCF/0sx
+rbS6qQ+Ts9zvDjhL55jY88LDN
+OY5EsN8Yd2I0UD2J4A=
+</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature></EnvioDTE>
+
+------=_Part_320591_102203021.1463164407524--
+

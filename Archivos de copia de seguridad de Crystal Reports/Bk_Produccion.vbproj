@@ -1,0 +1,466 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B9F81BEA-C82E-4CDA-9D7C-CF0CF634A37B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <StartupObject>
+    </StartupObject>
+    <RootNamespace>Bk_Produccion</RootNamespace>
+    <AssemblyName>Bk_Produccion</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Bk_Produccion.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Bk_Produccion.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="DevComponents.DotNetBar.Keyboard, Version=11.7.0.0, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL" />
+    <Reference Include="DevComponents.DotNetBar.Layout, Version=11.7.0.0, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL" />
+    <Reference Include="DevComponents.DotNetBar.SuperGrid, Version=11.7.0.0, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL" />
+    <Reference Include="DevComponents.DotNetBar2, Version=11.7.0.0, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Mesones\Frm_Meson_Gestion.Designer.vb">
+      <DependentUpon>Frm_Meson_Gestion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Mesones\Frm_Meson_Gestion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Mesones\Frm_Meson_Asignar_Productos.Designer.vb">
+      <DependentUpon>Frm_Meson_Asignar_Productos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Mesones\Frm_Meson_Asignar_Productos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Class_Fabricar.vb" />
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Clas_Crear_DFA_Desde_Meson.vb" />
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Frm_Meson_Operario_Cambio_Mesones.Designer.vb">
+      <DependentUpon>Frm_Meson_Operario_Cambio_Mesones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Frm_Meson_Operario_Cambio_Mesones.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Frm_Meson_Operario_Cantidad_A_Fabricar.Designer.vb">
+      <DependentUpon>Frm_Meson_Operario_Cantidad_A_Fabricar.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Frm_Meson_Operario_Cantidad_A_Fabricar.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Mesones\Frm_Meson_Reordenar_Productos.Designer.vb">
+      <DependentUpon>Frm_Meson_Reordenar_Productos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Mesones\Frm_Meson_Reordenar_Productos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Frm_Meson_Operario_Avance.Designer.vb">
+      <DependentUpon>Frm_Meson_Operario_Avance.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Frm_Meson_Operario_Avance.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Frm_Meson_Operario_Cantidad_Fabricada.Designer.vb">
+      <DependentUpon>Frm_Meson_Operario_Cantidad_Fabricada.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Frm_Meson_Operario_Cantidad_Fabricada.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Frm_Meson_Operario_Finalizar_Trabajo_Maquina.Designer.vb">
+      <DependentUpon>Frm_Meson_Operario_Finalizar_Trabajo_Maquina.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Frm_Meson_Operario_Finalizar_Trabajo_Maquina.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Frm_Meson_Operario_Ingreso.designer.vb">
+      <DependentUpon>Frm_Meson_Operario_Ingreso.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Frm_Meson_Operario_Ingreso.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Informe\Frm_Operarios_Estado.designer.vb">
+      <DependentUpon>Frm_Operarios_Estado.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Informe\Frm_Operarios_Estado.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Informe\Recursos\Recursos_Inf_Operarios.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Recursos_Inf_Operarios.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Recursos\Recursos_Gestion_Meson.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Recursos_Gestion_Meson.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Reprocesos\Frm_Reprocesar_Ope.Designer.vb">
+      <DependentUpon>Frm_Reprocesar_Ope.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Reprocesos\Frm_Reprocesar_Ope.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Mantencion\Frm_Crear_Meson.Designer.vb">
+      <DependentUpon>Frm_Crear_Meson.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Mantencion\Frm_Crear_Meson.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Mantencion\Frm_Mesones.Designer.vb">
+      <DependentUpon>Frm_Mesones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Mantencion\Frm_Mesones.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Recursos\Recursos_Meson.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Recursos_Meson.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Crear Documentos\DFA\Clases\Clas_Crear_DFA.vb" />
+    <Compile Include="Formularios Compartidos\Crear Documentos\DFA\Clases\Clas_Impirmir_Operaciones_OT_Barras.vb" />
+    <Compile Include="Formularios Compartidos\Crear Documentos\DFA\Clases\Modulo_DFA.vb" />
+    <Compile Include="Formularios Compartidos\Crear Documentos\DFA\Cierre atrasado\Frm_DFA_Cierre_Atrasado.Designer.vb">
+      <DependentUpon>Frm_DFA_Cierre_Atrasado.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Crear Documentos\DFA\Cierre atrasado\Frm_DFA_Cierre_Atrasado.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Crear Documentos\DFA\Reporte\Dfa_Cr.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Dfa_Cr.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Frm_Buscar_Pistoleando.Designer.vb">
+      <DependentUpon>Frm_Buscar_Pistoleando.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Frm_Buscar_Pistoleando.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Frm_Ing_Cant_Fabricada.Designer.vb">
+      <DependentUpon>Frm_Ing_Cant_Fabricada.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Frm_Ing_Cant_Fabricada.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Frm_Seleccionar_Op_SubOt_Maq_Etc.Designer.vb">
+      <DependentUpon>Frm_Seleccionar_Op_SubOt_Maq_Etc.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Frm_Seleccionar_Op_SubOt_Maq_Etc.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Crear Documentos\DFA\Frm_DFA_Ingreso.Designer.vb">
+      <DependentUpon>Frm_DFA_Ingreso.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Crear Documentos\DFA\Frm_DFA_Ingreso.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Frm_Meson_Operario.Designer.vb">
+      <DependentUpon>Frm_Meson_Operario.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Frm_Meson_Operario.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Nomenclaturas\Cl_Nomenclatura.vb" />
+    <Compile Include="Formularios Compartidos\Nomenclaturas\Frm_Nomenclaturas.designer.vb">
+      <DependentUpon>Frm_Nomenclaturas.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Nomenclaturas\Frm_Nomenclaturas.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Nomenclaturas\Mantencion de nomenclatura\Frm_Mant_Nomenclatura.designer.vb">
+      <DependentUpon>Frm_Mant_Nomenclatura.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Nomenclaturas\Mantencion de nomenclatura\Frm_Mant_Nomenclatura.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Informes\Avances por OT\Detalle\Frm_Proceso_Por_Operaciones.Designer.vb">
+      <DependentUpon>Frm_Proceso_Por_Operaciones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Informes\Avances por OT\Detalle\Frm_Proceso_Por_Operaciones.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Informes\Avances por OT\Frm_Inf_Prod_Avance_OT.Designer.vb">
+      <DependentUpon>Frm_Inf_Prod_Avance_OT.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Informes\Avances por OT\Frm_Inf_Prod_Avance_OT.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Informes\Maquinas\Frm_Maquinas_vs_Carga_De_Trabajo.Designer.vb">
+      <DependentUpon>Frm_Maquinas_vs_Carga_De_Trabajo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Informes\Maquinas\Frm_Maquinas_vs_Carga_De_Trabajo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Informes\Recursos\Recursos_Informes_Produccion.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Recursos_Informes_Produccion.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="OT\Ver Orden de trabajo\Frm_Impresion_Pruebas_SubOT.Designer.vb">
+      <DependentUpon>Frm_Impresion_Pruebas_SubOT.vb</DependentUpon>
+    </Compile>
+    <Compile Include="OT\Ver Orden de trabajo\Frm_Impresion_Pruebas_SubOT.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OT\Ver Orden de trabajo\Recursos\Recursos_OT.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Recursos_OT.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Mesones\Frm_Meson_Gestion.resx">
+      <DependentUpon>Frm_Meson_Gestion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Mesones\Frm_Meson_Asignar_Productos.resx">
+      <DependentUpon>Frm_Meson_Asignar_Productos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Mesones\Frm_Meson_Reordenar_Productos.resx">
+      <DependentUpon>Frm_Meson_Reordenar_Productos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Frm_Meson_Operario_Avance.resx">
+      <DependentUpon>Frm_Meson_Operario_Avance.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Frm_Meson_Operario_Cambio_Mesones.resx">
+      <DependentUpon>Frm_Meson_Operario_Cambio_Mesones.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Frm_Meson_Operario_Cantidad_A_Fabricar.resx">
+      <DependentUpon>Frm_Meson_Operario_Cantidad_A_Fabricar.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Frm_Meson_Operario_Cantidad_Fabricada.resx">
+      <DependentUpon>Frm_Meson_Operario_Cantidad_Fabricada.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Frm_Meson_Operario_Finalizar_Trabajo_Maquina.resx">
+      <DependentUpon>Frm_Meson_Operario_Finalizar_Trabajo_Maquina.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Frm_Meson_Operario_Ingreso.resx">
+      <DependentUpon>Frm_Meson_Operario_Ingreso.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Informe\Frm_Operarios_Estado.resx">
+      <DependentUpon>Frm_Operarios_Estado.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Informe\Recursos\Recursos_Inf_Operarios.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Recursos_Inf_Operarios.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Recursos\Recursos_Gestion_Meson.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Recursos_Gestion_Meson.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Reprocesos\Frm_Reprocesar_Ope.resx">
+      <DependentUpon>Frm_Reprocesar_Ope.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Administrar Mesones\Mantencion\Frm_Crear_Meson.resx">
+      <DependentUpon>Frm_Crear_Meson.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Administrar Mesones\Mantencion\Frm_Mesones.resx">
+      <DependentUpon>Frm_Mesones.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Administrar Mesones\Recursos\Recursos_Meson.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Recursos_Meson.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Crear Documentos\DFA\Cierre atrasado\Frm_DFA_Cierre_Atrasado.resx">
+      <DependentUpon>Frm_DFA_Cierre_Atrasado.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Crear Documentos\DFA\Reporte\Dfa_Cr.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Dfa_Cr.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Frm_Buscar_Pistoleando.resx">
+      <DependentUpon>Frm_Buscar_Pistoleando.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Frm_Ing_Cant_Fabricada.resx">
+      <DependentUpon>Frm_Ing_Cant_Fabricada.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Frm_Seleccionar_Op_SubOt_Maq_Etc.resx">
+      <DependentUpon>Frm_Seleccionar_Op_SubOt_Maq_Etc.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Crear Documentos\DFA\Frm_DFA_Ingreso.resx">
+      <DependentUpon>Frm_DFA_Ingreso.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Frm_Meson_Operario.resx">
+      <DependentUpon>Frm_Meson_Operario.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Nomenclaturas\Frm_Nomenclaturas.resx">
+      <DependentUpon>Frm_Nomenclaturas.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Nomenclaturas\Mantencion de nomenclatura\Frm_Mant_Nomenclatura.resx">
+      <DependentUpon>Frm_Mant_Nomenclatura.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Informes\Avances por OT\Detalle\Frm_Proceso_Por_Operaciones.resx">
+      <DependentUpon>Frm_Proceso_Por_Operaciones.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Informes\Avances por OT\Frm_Inf_Prod_Avance_OT.resx">
+      <DependentUpon>Frm_Inf_Prod_Avance_OT.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Informes\Maquinas\Frm_Maquinas_vs_Carga_De_Trabajo.resx">
+      <DependentUpon>Frm_Maquinas_vs_Carga_De_Trabajo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Informes\Recursos\Recursos_Informes_Produccion.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Recursos_Informes_Produccion.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OT\Ver Orden de trabajo\Frm_Impresion_Pruebas_SubOT.resx">
+      <DependentUpon>Frm_Impresion_Pruebas_SubOT.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OT\Ver Orden de trabajo\Recursos\Recursos_OT.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Recursos_OT.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Formularios Compartidos\Administrar Mesones\Recursos\Sql\SQLQuery Informe DFA en ejecucion x Meson.sql" />
+    <None Include="Informes\Recursos\Sql\SQLQuery Informe de OT avance Vs SubOt por Operaciones.sql" />
+    <None Include="Informes\Recursos\Sql\SQLQuery Informe de OT avance.sql" />
+    <None Include="Informes\Recursos\Sql\SQLQuery Informe DFA en ejecucion.sql" />
+    <None Include="Informes\Recursos\Sql\SQLQuery Informe estado de Maquinas Vs Avence y cola en proceso.sql" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="OT\Ver Orden de trabajo\Recursos\Sql\SqlQuery_Traer_OT.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BkSpecialPrograms\BkSpecialPrograms.vbproj">
+      <Project>{B1123A46-6005-434A-9458-B58E8D51EE34}</Project>
+      <Name>BkSpecialPrograms</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{967B4E0D-AD0C-4609-AB67-0FA40C0206D8}" />
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="OT\Listado de ordenes de trabajo\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Recursos\Sql\Buscar_OT_Para_Asignar_Meson.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Informe\Recursos\Sql\Estado_Trabajos_Operario.sql" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

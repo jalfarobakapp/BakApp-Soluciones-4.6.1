@@ -1,0 +1,7 @@
+<?xml version="1.0" standalone="yes"?>
+<DatosBakApp xmlns="http://tempuri.org/DatosBakApp.xsd">
+  <Conf_Impresora_Local>
+    <Modulo>Bkpost</Modulo>
+    <Impresora>PDFCreator</Impresora>
+  </Conf_Impresora_Local>
+</DatosBakApp>

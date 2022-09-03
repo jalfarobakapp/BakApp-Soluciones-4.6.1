@@ -1,0 +1,7 @@
+<?xml version="1.0" standalone="yes"?>
+<Ds_Barras xmlns="http://tempuri.org/Ds_Barras.xsd">
+  <Tbl_Configuracion>
+    <Puerto>LPT1</Puerto>
+    <Etiqueta>Etiqueta 5x25</Etiqueta>
+  </Tbl_Configuracion>
+</Ds_Barras>

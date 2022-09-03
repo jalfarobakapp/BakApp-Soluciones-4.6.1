@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.106
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Instalador_BakApp", "Instalador_BakApp.vdproj", "{A8692EE1-4BDE-4E2D-A99B-A806DF07D545}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8692EE1-4BDE-4E2D-A99B-A806DF07D545}.Debug|Default.ActiveCfg = Debug
+		{A8692EE1-4BDE-4E2D-A99B-A806DF07D545}.Debug|Default.Build.0 = Debug
+		{A8692EE1-4BDE-4E2D-A99B-A806DF07D545}.Release|Default.ActiveCfg = Release
+		{A8692EE1-4BDE-4E2D-A99B-A806DF07D545}.Release|Default.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E8391A8B-363B-4A07-ABEF-E5C2BF445E3F}
+	EndGlobalSection
+EndGlobal

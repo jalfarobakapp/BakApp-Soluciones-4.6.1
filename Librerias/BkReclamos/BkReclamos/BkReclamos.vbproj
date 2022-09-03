@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4F13DDA5-6770-4E16-B1FE-B7E134C98BD6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>BkReclamos</RootNamespace>
+    <AssemblyName>BkReclamos</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>BkReclamos.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>BkReclamos.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevComponents.DotNetBar.Keyboard, Version=11.7.0.0, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL" />
+    <Reference Include="DevComponents.DotNetBar.Layout, Version=11.7.0.0, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL" />
+    <Reference Include="DevComponents.DotNetBar.Schedule, Version=11.7.0.0, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL" />
+    <Reference Include="DevComponents.DotNetBar.SuperGrid, Version=11.7.0.0, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL" />
+    <Reference Include="DevComponents.DotNetBar2, Version=11.7.0.0, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL" />
+    <Reference Include="DevComponents.TreeGX, Version=11.7.0.0, Culture=neutral, PublicKeyToken=055db68f670cfeab, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Buscar\Cl_Buscar_Reclamo.vb" />
+    <Compile Include="Buscar\Frm_Rc_Buscador.Designer.vb">
+      <DependentUpon>Frm_Rc_Buscador.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Buscar\Frm_Rc_Buscador.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Clases\Cl_Reclamo.vb" />
+    <Compile Include="Estados Sub-Estados\Frm_Archivos_Adjuntos.Designer.vb">
+      <DependentUpon>Frm_Archivos_Adjuntos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Estados Sub-Estados\Frm_Archivos_Adjuntos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Estados Sub-Estados\Frm_RcSe_Ges_Sub_Estados.Designer.vb">
+      <DependentUpon>Frm_RcSe_Ges_Sub_Estados.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Estados Sub-Estados\Frm_RcSe_Ges_Sub_Estados.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Estados\Frm_Rc_02_Revision_Cam_Tipo_Reclamo.Designer.vb">
+      <DependentUpon>Frm_Rc_02_Revision_Cam_Tipo_Reclamo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Estados\Frm_Rc_02_Revision_Cam_Tipo_Reclamo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Estados\Frm_Rc_05_Validacion.Designer.vb">
+      <DependentUpon>Frm_Rc_05_Validacion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Estados\Frm_Rc_05_Validacion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Estados\Frm_Rc_03_Recopilar_Informacion.Designer.vb">
+      <DependentUpon>Frm_Rc_03_Recopilar_Informacion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Estados\Frm_Rc_03_Recopilar_Informacion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Estados\Frm_Rc_01_Ingreso.Designer.vb">
+      <DependentUpon>Frm_Rc_01_Ingreso.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Estados\Frm_Rc_01_Ingreso.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Estados\Frm_Rc_02_Revision.Designer.vb">
+      <DependentUpon>Frm_Rc_02_Revision.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Estados\Frm_Rc_02_Revision.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Estados\Frm_Rc_04_Resolucion.Designer.vb">
+      <DependentUpon>Frm_Rc_04_Resolucion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Estados\Frm_Rc_04_Resolucion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Estados\Frm_Rc_06_Aviso_Cliente.Designer.vb">
+      <DependentUpon>Frm_Rc_06_Aviso_Cliente.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Estados\Frm_Rc_06_Aviso_Cliente.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion\Frm_Rc_Configuracion.Designer.vb">
+      <DependentUpon>Frm_Rc_Configuracion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\Frm_Rc_Configuracion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Rc_Lista_Reclamos.Designer.vb">
+      <DependentUpon>Frm_Rc_Lista_Reclamos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Rc_Lista_Reclamos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Rc_Reclamo.Designer.vb">
+      <DependentUpon>Frm_Rc_Reclamo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Rc_Reclamo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Referencias\Recursos_Reclamo.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Recursos_Reclamo.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Buscar\Frm_Rc_Buscador.resx">
+      <DependentUpon>Frm_Rc_Buscador.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Estados Sub-Estados\Frm_Archivos_Adjuntos.resx">
+      <DependentUpon>Frm_Archivos_Adjuntos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Estados Sub-Estados\Frm_RcSe_Ges_Sub_Estados.resx">
+      <DependentUpon>Frm_RcSe_Ges_Sub_Estados.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Estados\Frm_Rc_02_Revision_Cam_Tipo_Reclamo.resx">
+      <DependentUpon>Frm_Rc_02_Revision_Cam_Tipo_Reclamo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Estados\Frm_Rc_05_Validacion.resx">
+      <DependentUpon>Frm_Rc_05_Validacion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Estados\Frm_Rc_03_Recopilar_Informacion.resx">
+      <DependentUpon>Frm_Rc_03_Recopilar_Informacion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Estados\Frm_Rc_01_Ingreso.resx">
+      <DependentUpon>Frm_Rc_01_Ingreso.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Estados\Frm_Rc_02_Revision.resx">
+      <DependentUpon>Frm_Rc_02_Revision.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Estados\Frm_Rc_04_Resolucion.resx">
+      <DependentUpon>Frm_Rc_04_Resolucion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Estados\Frm_Rc_06_Aviso_Cliente.resx">
+      <DependentUpon>Frm_Rc_06_Aviso_Cliente.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\Frm_Rc_Configuracion.resx">
+      <DependentUpon>Frm_Rc_Configuracion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Rc_Lista_Reclamos.resx">
+      <DependentUpon>Frm_Rc_Lista_Reclamos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Rc_Reclamo.resx">
+      <DependentUpon>Frm_Rc_Reclamo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Referencias\Recursos_Reclamo.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Recursos_Reclamo.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BkSpecialPrograms\BkSpecialPrograms.vbproj">
+      <Project>{b1123a46-6005-434a-9458-b58e8d51ee34}</Project>
+      <Name>BkSpecialPrograms</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Referencias\Sql\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+</Project>
