@@ -24509,16 +24509,17 @@ Public Class Frm_Formulario_Documento
                     If CBool(_Cantidad) Then
 
                         Dim _UnTrans As Integer = 1
+                        Dim _Aplica_Descuentos As Boolean = CBool(_Fila.Dscto1 + _Fila.Dscto2 + _Fila.Dscto3)
                         'Dim _Precio As Double = Fila.Item(_Campo_Precio)
 
                         Dim _Observa As String
                         Dim _DescuentoPorc As Double
 
-                        If False Then '_Aplica_Descuentos Then
+                        If _Aplica_Descuentos Then
 
-                            Dim _Desc1 As Double '= Fila.Item("Desc1")
-                            Dim _Desc2 As Double '= Fila.Item("Desc2")
-                            Dim _Desc3 As Double '= Fila.Item("Desc3")
+                            Dim _Desc1 As Double = _Fila.Dscto1
+                            Dim _Desc2 As Double = _Fila.Dscto2
+                            Dim _Desc3 As Double = _Fila.Dscto3
                             Dim _Desc4 As Double '= Fila.Item("Desc4")
                             Dim _Desc5 As Double '= Fila.Item("Desc5")
 
@@ -24571,9 +24572,32 @@ Public Class Frm_Formulario_Documento
 
             Next
 
-            'If Not _Respuesta.EsCorrecto Then
-            '    Call BtnLimpiar_Click(Nothing, Nothing)
-            'End If
+            Dim _DsctoGlobal = 0
+            Dim _RecarGlobal = 0
+
+            For Each _Fila As Bk_GenDoc2DTE.DscRcgGlobal In _Respuesta.DscRcgGlobal
+
+                Dim _TpoMov = _Fila.TpoMov
+
+                If _TpoMov = "D" Then
+                    _DsctoGlobal += 1
+                Else
+                    _RecarGlobal += 1
+                End If
+
+            Next
+
+            If CBool(_DsctoGlobal) Then
+                MessageBoxEx.Show(Me, "Existen descuentos globales" & vbCrLf &
+                                  "Debe incorporar estos descuento a mano en el documento." & vbCrLf &
+                                  "Revise el documento que envia el proveedor", "Descuentos Globales", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            End If
+
+            If CBool(_RecarGlobal) Then
+                MessageBoxEx.Show(Me, "Existen recargos globales" & vbCrLf &
+                                  "Debe incorporar estos recargos a mano en el documento." & vbCrLf &
+                                  "Revise el documento que envia el proveedor", "Recargos Globales", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            End If
 
             _Reg = Grilla_Detalle.RowCount - 1
 
