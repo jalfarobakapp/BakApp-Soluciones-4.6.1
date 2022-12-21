@@ -45,6 +45,7 @@ Partial Class Frm_DocsDesdeDTEXML
         Me.Txt_Descripcion = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.Chk_Ver_Solo_Pendientes = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.ContextMenuBar2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -93,7 +94,8 @@ Partial Class Frm_DocsDesdeDTEXML
         '
         Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel2.TabIndex = 47
-        Me.GroupPanel2.Text = "Detalle de documentos del proveedor"
+        Me.GroupPanel2.Text = "Detalle de documentos del proveedor (Doble clic sobre la fila para seleccionar el" &
+    " documento)"
         '
         'ContextMenuBar2
         '
@@ -195,7 +197,7 @@ Partial Class Frm_DocsDesdeDTEXML
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Aceptar, Me.Btn_Exportar_PDF})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Actualizar, Me.Btn_Exportar_PDF, Me.Btn_Aceptar})
         Me.Bar1.Location = New System.Drawing.Point(0, 389)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(766, 41)
@@ -214,6 +216,7 @@ Partial Class Frm_DocsDesdeDTEXML
         Me.Btn_Aceptar.Name = "Btn_Aceptar"
         Me.Btn_Aceptar.Text = "Aceptar"
         Me.Btn_Aceptar.Tooltip = "Seleccionar documento marcado"
+        Me.Btn_Aceptar.Visible = False
         '
         'Btn_Exportar_PDF
         '
@@ -453,6 +456,16 @@ Partial Class Frm_DocsDesdeDTEXML
         Me.Chk_Ver_Solo_Pendientes.TabIndex = 144
         Me.Chk_Ver_Solo_Pendientes.Text = "Mostrar solo documentos pendientes de recepcionar"
         '
+        'Btn_Actualizar
+        '
+        Me.Btn_Actualizar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Actualizar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Actualizar.Image = CType(resources.GetObject("Btn_Actualizar.Image"), System.Drawing.Image)
+        Me.Btn_Actualizar.ImageAlt = CType(resources.GetObject("Btn_Actualizar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Actualizar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Actualizar.Name = "Btn_Actualizar"
+        Me.Btn_Actualizar.Tooltip = "Actualizar (F5)"
+        '
         'Frm_DocsDesdeDTEXML
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -503,4 +516,5 @@ Partial Class Frm_DocsDesdeDTEXML
     Friend WithEvents Btn_Ver_Documento As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Seleccionar_Documento As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_VerXMLPDF As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Actualizar As DevComponents.DotNetBar.ButtonItem
 End Class

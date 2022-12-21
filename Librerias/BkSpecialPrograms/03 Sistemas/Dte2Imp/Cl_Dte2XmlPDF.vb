@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports System.Web.Services
+Imports DevComponents.DotNetBar
 Imports PdfSharp
 Imports PdfSharp.Drawing
 Imports PdfSharp.Drawing.Layout
@@ -560,9 +561,9 @@ Public Class Cl_Dte2XmlPDF
                     _Total_Bruto = ": $ " & Rellenar(_Total_Bruto, 11, " ", False)
 
                     Ypos = 635
-                    pgfx.DrawString("DESCUENTO", FteNegrita_8, XBrushes.Black, 425, Ypos)
-                    pgfx.DrawString(_Tota_Descuento, FteNormal_C_12, XBrushes.Black, 475, Ypos)
-                    Ypos += 20
+                    'pgfx.DrawString("DESCUENTO", FteNegrita_8, XBrushes.Black, 425, Ypos)
+                    'pgfx.DrawString(_Tota_Descuento, FteNormal_C_12, XBrushes.Black, 475, Ypos)
+                    'Ypos += 20
                     pgfx.DrawString("EXENTO", FteNegrita_8, XBrushes.Black, 425, Ypos)
                     pgfx.DrawString(_Tota_Exento, FteNormal_C_12, XBrushes.Black, 475, Ypos)
                     Ypos += 20
@@ -1036,7 +1037,7 @@ Public Class Cl_Dte2XmlPDF
                 pgfx.DrawString("DESCRIPCION", FteNegrita_7, XBrushes.Black, 220, Ypos)
                 pgfx.DrawString("PRECIO", FteNegrita_7, XBrushes.Black, 395, Ypos)
                 pgfx.DrawString("%D.", FteNegrita_7, XBrushes.Black, 450, Ypos)
-                pgfx.DrawString("DSCTO. $", FteNegrita_7, XBrushes.Black, 480, Ypos)
+                pgfx.DrawString("DSCTO. $", FteNegrita_7, XBrushes.Black, 490, Ypos)
                 pgfx.DrawString("TOTAL", FteNegrita_7, XBrushes.Black, 550, Ypos)
 
                 Ypos = 265
@@ -1053,6 +1054,19 @@ Public Class Cl_Dte2XmlPDF
                 Dim Tbl_CdgItem = _Dset_DTE.Tables("CdgItem")
 
                 Contador = 0
+
+                Dim _Registros = 0
+
+                For Each Fila As DataRow In Tbl_Detalle.Rows
+
+                    Dim Id = Fila.Item("Documento_Id")
+
+                    If Id = _Documento_Id Then
+                        _Registros += 1
+                    End If
+
+                Next
+
 
                 For Each Fila As DataRow In Tbl_Detalle.Rows
 
@@ -1147,18 +1161,22 @@ Public Class Cl_Dte2XmlPDF
                         End If
 
                         pgfx.DrawString(_Precio_, FteNormal_C_7, XBrushes.Black, 380, Ypos)
-                        pgfx.DrawString(_DecuentoPct_, FteNormal_C_7, XBrushes.Black, 446, Ypos) ' porcentaje descuento
-                        pgfx.DrawString(_DescuentoMonto_, FteNormal_C_7, XBrushes.Black, 460, Ypos) ' valor descuento
+                        pgfx.DrawString(_DecuentoPct_, FteNormal_C_7, XBrushes.Black, 445, Ypos) ' porcentaje descuento
+                        pgfx.DrawString(_DescuentoMonto_, FteNormal_C_7, XBrushes.Black, 470, Ypos) ' valor descuento
                         pgfx.DrawString(_Monto_, FteNormal_C_7, XBrushes.Black, 530, Ypos)
 
-                        If Not String.IsNullOrEmpty(_Descripcion_02) Then
-                            Ypos += 10
-                            pgfx.DrawString(_Descripcion_02, FteNormal_C_6, XBrushes.Black, 140, Ypos)
-                        End If
+                        If _Registros <= 15 Then
 
-                        If Not String.IsNullOrEmpty(_DscItem) Then
-                            Ypos += 10
-                            pgfx.DrawString(_DscItem, FteNormal_C_6, XBrushes.Black, 145, Ypos)
+                            If Not String.IsNullOrEmpty(_Descripcion_02) Then
+                                Ypos += 10
+                                pgfx.DrawString(_Descripcion_02, FteNormal_C_6, XBrushes.Black, 140, Ypos)
+                            End If
+
+                            If Not String.IsNullOrEmpty(_DscItem) Then
+                                Ypos += 10
+                                pgfx.DrawString(_DscItem, FteNormal_C_6, XBrushes.Black, 145, Ypos)
+                            End If
+
                         End If
 
                         Ypos += 10
@@ -1168,7 +1186,36 @@ Public Class Cl_Dte2XmlPDF
 
                 Next
 
+                Dim Tbl_DscRcgGlobal = _Dset_DTE.Tables("DscRcgGlobal")
 
+                For Each _Fila As DataRow In Tbl_DscRcgGlobal.Rows
+
+                    Dim ID = _Fila.Item("Documento_Id")
+
+                    If ID = _Documento_Id Then
+
+                        Dim _TpoMov As String = _Fila.Item("TpoMov")
+                        Dim _GlosaDR As String = _Fila.Item("GlosaDR")
+                        Dim _TpoValor As String = _Fila.Item("TpoValor")
+                        Dim _ValorDR As Double = Valor_Columna(_Fila, 0, "ValorDR", True)
+
+                        If _TpoMov = "D" And _TpoValor = "$" Then _ValorDR = _ValorDR * -1
+
+                        Dim _DecuentoPct = Rellenar(FormatNumber(_ValorDR, 2), 4, " ", False)
+                        Dim _DescuentoMonto = Rellenar(FormatNumber(_ValorDR, 0), 13, " ", False)
+
+                        pgfx.DrawString(_GlosaDR, FteNormal_C_7, XBrushes.Black, 140, Ypos)
+
+                        If _TpoValor = "%" Then
+                            pgfx.DrawString(_DecuentoPct, FteNormal_C_7, XBrushes.Black, 446, Ypos) ' porcentaje descuento
+                        Else
+                            pgfx.DrawString(_DescuentoMonto, FteNormal_C_7, XBrushes.Black, 530, Ypos) ' valor descuento
+                        End If
+                        Ypos += 8
+
+                    End If
+
+                Next
 
                 Dim elipse As XSize
                 elipse.Height = 10
@@ -1190,16 +1237,13 @@ Public Class Cl_Dte2XmlPDF
                 rect = New XRect(135, 230, 240, 340)
                 pgfx.DrawRectangle(XPens.Black, rect)
 
-                rect = New XRect(375, 230, 70, 340)
+                rect = New XRect(375, 230, 63, 340)
                 pgfx.DrawRectangle(XPens.Black, rect)
 
-                rect = New XRect(445, 230, 80, 340)
+                rect = New XRect(438, 230, 30, 340)
                 pgfx.DrawRectangle(XPens.Black, rect)
 
-                rect = New XRect(465, 230, 60, 340)
-                pgfx.DrawRectangle(XPens.Black, rect)
-
-                rect = New XRect(465, 230, 60, 340)
+                rect = New XRect(468, 230, 65, 340)
                 pgfx.DrawRectangle(XPens.Black, rect)
 
                 Dim pen As XPen = New XPen(XColor.FromArgb(255, 0, 0), 1)
@@ -1349,9 +1393,9 @@ Public Class Cl_Dte2XmlPDF
                     _Total_Bruto = ": $ " & Rellenar(_Total_Bruto, 11, " ", False)
 
                     Ypos = 635
-                    pgfx.DrawString("DESCUENTO", FteNegrita_8, XBrushes.Black, 425, Ypos)
-                    pgfx.DrawString(_Tota_Descuento, FteNormal_C_12, XBrushes.Black, 475, Ypos)
-                    Ypos += 20
+                    'pgfx.DrawString("DESCUENTO", FteNegrita_8, XBrushes.Black, 425, Ypos)
+                    'pgfx.DrawString(_Tota_Descuento, FteNormal_C_12, XBrushes.Black, 475, Ypos)
+                    'Ypos += 20
                     pgfx.DrawString("EXENTO", FteNegrita_8, XBrushes.Black, 425, Ypos)
                     pgfx.DrawString(_Tota_Exento, FteNormal_C_12, XBrushes.Black, 475, Ypos)
                     Ypos += 20
@@ -1384,9 +1428,9 @@ Public Class Cl_Dte2XmlPDF
                 rect = New XRect(15, 120, 580, 100)
                 pgfx.DrawRoundedRectangle(XPens.Black, rect, elipse)
 
-                'pgfx.DrawRectangle(XPens.Black, rect)
 
-                rect = New XRect(415, 620, 178, 125)
+                ' Rectangulo de los totales
+                rect = New XRect(415, 620, 178, 105)
                 pgfx.DrawRoundedRectangle(XPens.Black, rect, elipse)
 
 

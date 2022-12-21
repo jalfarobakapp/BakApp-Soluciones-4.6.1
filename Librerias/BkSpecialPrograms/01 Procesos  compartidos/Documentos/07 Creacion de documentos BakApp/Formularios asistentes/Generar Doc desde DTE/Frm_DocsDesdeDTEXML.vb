@@ -327,4 +327,7 @@ Public Class Frm_DocsDesdeDTEXML
         Call Btn_Exportar_PDF_Click(Nothing, Nothing)
     End Sub
 
+    Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click
+        Sb_Actualizar_Grilla()
+    End Sub
 End Class
