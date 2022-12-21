@@ -92,12 +92,13 @@ Namespace My.Resources
         '''FROM POTE 
         '''Left JOIN #Base_Bakapp#Zw_Pdp_OT_Prioridad Pd ON Pd.Idpote=IDPOTE
         '''WHERE ESODD = &apos;#Tipo_OT#&apos; And EMPRESA = @Empresa 
-        '''AND NUMOT+REFERENCIA LIKE &apos;%#Filtro#%&apos; 
+        '''--AND NUMOT+REFERENCIA LIKE &apos;%#Filtro#%&apos; 
+        '''#NuevoFiltro#
         '''ORDER BY NUMOT
         '''
         '''
         '''SELECT POTL.IDPOTL,IDPOTE,POTL.NUMOT,NREG,ESTADO,POTL.CODIGO,POTL.UDAD,CODNOMEN,POTL.FABRICAR,POTL.REALIZADO,DIFERENCIA,MARCANOM,GLOSA,NIVEL,
-        '''       Cast(&apos;&apos; As Varchar(5)) [resto de la cadena truncado]&quot;;.
+        '''       Cast( [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Buscar_OT_Para_Asignar_Meson2() As String
             Get

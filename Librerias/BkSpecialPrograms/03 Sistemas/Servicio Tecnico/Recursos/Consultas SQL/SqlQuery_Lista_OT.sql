@@ -1,6 +1,6 @@
 
 
-SELECT  Id_Ot, Nro_Ot, 
+SELECT  Id_Ot,Sub_Ot,Id_Ot_Padre,Nro_Ot,Pertenece, 
         Empresa, Sucursal, Bodega, 
         CodEntidad, SucEntidad, Rut,
         Isnull((Select Top 1 NOKOEN From MAEEN Where KOEN = CodEntidad And SUEN = SucEntidad),'') As Cliente, 
@@ -61,3 +61,6 @@ FROM   #Db_BakApp#Zw_St_OT_Encabezado
 				Left Join #Db_BakApp#Zw_TablaDeCaracterizaciones TModel On TModel.Tabla = 'MODELOS_ST' And TModel.CodigoTabla = CodModelo
 					Left Join #Db_BakApp#Zw_TablaDeCaracterizaciones TCateg On TCateg.Tabla = 'CATEGOR_ST' And TCateg.CodigoTabla = CodCategoria
 						Left Join #Db_BakApp#Zw_TablaDeCaracterizaciones TEntrega On TEntrega.Tabla = 'ES_ENTREGA_ST' And TEntrega.CodigoTabla = Cod_Estado_Entrega
+
+Where 1 > 0
+#Condicion#

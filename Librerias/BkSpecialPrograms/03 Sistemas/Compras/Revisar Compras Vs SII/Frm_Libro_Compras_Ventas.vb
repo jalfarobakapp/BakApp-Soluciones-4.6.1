@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports System.IO
+Imports DevComponents.DotNetBar
 
 
 Public Class Frm_Libro_Compras_Ventas
@@ -23,8 +24,8 @@ Public Class Frm_Libro_Compras_Ventas
     Dim _Mes_Palabra As String
     Dim _Libro As String
 
-    Public Sub New(ByVal Periodo As Integer,
-                   ByVal Mes As Integer)
+    Public Sub New(Periodo As Integer,
+                   Mes As Integer)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -41,17 +42,19 @@ Public Class Frm_Libro_Compras_Ventas
 
         Me.Text = "Periodo " & _Periodo & " Mes " & UCase(MonthName(Mes))
 
-        If Global_Thema = Enum_Themas.Oscuro Then
+        Sb_Color_Botones_Barra(Bar1)
 
-            Btn_Libro_SII.ForeColor = Color.White
-            Btn_Cambiar_Libro.ForeColor = Color.White
-            Btn_Actualizar_DTE.ForeColor = Color.White
-
-        End If
+        Sb_Formato_Generico_Grilla(Grilla_00, 20, New Font("Tahoma", 8), Color.White, ScrollBars.Both, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_01, 20, New Font("Tahoma", 8), Color.White, ScrollBars.Both, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_02, 20, New Font("Tahoma", 8), Color.White, ScrollBars.Both, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_03, 20, New Font("Tahoma", 8), Color.White, ScrollBars.Both, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_04, 20, New Font("Tahoma", 8), Color.White, ScrollBars.Both, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_05, 20, New Font("Tahoma", 8), Color.White, ScrollBars.Both, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_06, 20, New Font("Tahoma", 8), Color.White, ScrollBars.Both, True, False, False)
 
     End Sub
 
-    Private Sub Frm_Libro_Compras_Ventas_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Libro_Compras_Ventas_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         AddHandler Tab.SelectedTabChanged, AddressOf Sb_Tab_SelectedTabChanged
 
@@ -91,7 +94,7 @@ Public Class Frm_Libro_Compras_Ventas
 
     End Sub
 
-    Private Sub Btn_Libro_SII_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Libro_SII.Click
+    Private Sub Btn_Libro_SII_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Libro_SII.Click
         Sb_Actualizar_Grillas(Tab.SelectedTabIndex)
     End Sub
 
@@ -160,7 +163,7 @@ Public Class Frm_Libro_Compras_Ventas
 
     End Sub
 
-    Sub Sb_Actualizar_Grillas(ByVal _TabIndex As Integer)
+    Sub Sb_Actualizar_Grillas(_TabIndex As Integer)
 
         Dim _Descripcion As String = RTrim$(Txt_Descripcion.Text)
 
@@ -182,11 +185,10 @@ Public Class Frm_Libro_Compras_Ventas
                         Order by Libro
                        
                         -- Tabla 2
-
                         Update " & _Global_BaseBk & "Zw_Compras_en_SII Set Idmaeedo_GRC = Isnull((Select IDMAEEDO From MAEEDO Where TIDO = 'GRC' And NUDO = Nudo And ENDO = Endo),0)
                         Where Libro = '' And Periodo = " & _Periodo & " And Mes = " & _Mes & " And Idmaeedo = 0
 
-                        Select * From " & _Global_BaseBk & "Zw_Compras_en_SII
+                        Select *,Case When Isnull((Select Top 1 Id From " & _Global_BaseBk & "Zw_DTE_ReccDet Z1 Where Cmp.Rut_Proveedor = Z1.RutEmisor And Z1.Folio = Cmp.Folio And Cmp.TipoDoc = Z1.TipoDTE),0) = 0 Then 'No' Else 'Si' End As TPDF From " & _Global_BaseBk & "Zw_Compras_en_SII Cmp
                         Where Libro = '' And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
                        _Filtro_SII & "
                        
@@ -322,20 +324,24 @@ Public Class Frm_Libro_Compras_Ventas
             Dim _Libro_cp As String = _Fila.Cells("Libro").Value
             Dim _Diferencia As Double = NuloPorNro(_Fila.Cells("Diferencia").Value, 0)
 
+            If _TipoDoc = 61 Then
+                If Global_Thema = Enum_Themas.Oscuro Then
+                    _Fila.DefaultCellStyle.ForeColor = Amarillo
+                Else
+                    _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+                End If
+            End If
+
             If String.IsNullOrEmpty(_Libro_cp) Then
                 _Fila.DefaultCellStyle.BackColor = Color.LightGray
             ElseIf _Libro_cp.Contains(_Libro) Then
-                _Fila.Cells("Libro").Style.ForeColor = Color.Green
+                _Fila.Cells("Libro").Style.ForeColor = Verde
             Else
-                _Fila.Cells("Libro").Style.ForeColor = Color.Red
+                _Fila.Cells("Libro").Style.ForeColor = Rojo
             End If
 
             If CBool(_Diferencia) Then
-                _Fila.Cells("Diferencia").Style.ForeColor = Color.Red
-            End If
-
-            If _TipoDoc = 61 Then
-                _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+                _Fila.Cells("Diferencia").Style.ForeColor = Rojo
             End If
 
         Next
@@ -429,18 +435,22 @@ Public Class Frm_Libro_Compras_Ventas
         For Each _Fila As DataGridViewRow In Grilla_01.Rows
 
             Dim _Libro_cp As String = _Fila.Cells("Libro").Value
+            Dim _TipoDoc As Integer = _Fila.Cells("TipoDoc").Value
+
+            If _TipoDoc = 61 Then
+                If Global_Thema = Enum_Themas.Oscuro Then
+                    _Fila.DefaultCellStyle.ForeColor = Amarillo
+                Else
+                    _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+                End If
+            End If
 
             If String.IsNullOrEmpty(_Libro_cp) Then
                 _Fila.DefaultCellStyle.BackColor = Color.LightGray
             ElseIf _Libro_cp.Contains(_Libro) Then
-                _Fila.Cells("Libro").Style.ForeColor = Color.Green
+                _Fila.Cells("Libro").Style.ForeColor = Verde
             Else
-                _Fila.Cells("Libro").Style.ForeColor = Color.Red
-            End If
-
-            Dim _TipoDoc As Integer = _Fila.Cells("TipoDoc").Value
-            If _TipoDoc = 61 Then
-                _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+                _Fila.Cells("Libro").Style.ForeColor = Rojo
             End If
 
         Next
@@ -448,6 +458,8 @@ Public Class Frm_Libro_Compras_Ventas
     End Sub
 
     Sub Sb_Formato_Grilla_02()
+
+        Dim _DisplayIndex = 0
 
         With Grilla_02
 
@@ -458,84 +470,80 @@ Public Class Frm_Libro_Compras_Ventas
             .Columns("TipoDoc").Visible = True
             .Columns("TipoDoc").HeaderText = "TD"
             .Columns("TipoDoc").Width = 30
-            .Columns("TipoDoc").DisplayIndex = 0
+            .Columns("TipoDoc").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Rut_Proveedor").Visible = True
             .Columns("Rut_Proveedor").HeaderText = "Rut Proveedor"
             .Columns("Rut_Proveedor").Width = 80
-            .Columns("Rut_Proveedor").DisplayIndex = 1
+            .Columns("Rut_Proveedor").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Razon_Social").Visible = True
             .Columns("Razon_Social").HeaderText = "Razón Social"
-            .Columns("Razon_Social").Width = 200 + 190
-            .Columns("Razon_Social").DisplayIndex = 2
+            .Columns("Razon_Social").Width = 200 + 190 - 30
+            .Columns("Razon_Social").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Folio").Visible = True
             .Columns("Folio").HeaderText = "Folio"
             .Columns("Folio").Width = 80
-            .Columns("Folio").DisplayIndex = 3
+            .Columns("Folio").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            '.Columns("Libro").Visible = True
-            '.Columns("Libro").HeaderText = "Libro"
-            '.Columns("Libro").Width = 100
-            '.Columns("Libro").DisplayIndex = 4
+            .Columns("TPDF").Visible = True
+            .Columns("TPDF").HeaderText = "PDF"
+            .Columns("TPDF").Width = 30
+            .Columns("TPDF").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Fecha_Docto").Visible = True
             .Columns("Fecha_Docto").HeaderText = "Fecha"
             .Columns("Fecha_Docto").Width = 80
             .Columns("Fecha_Docto").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("Fecha_Docto").DisplayIndex = 5
+            .Columns("Fecha_Docto").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Monto_Exento").Visible = True
             .Columns("Monto_Exento").HeaderText = "Exento"
             .Columns("Monto_Exento").Width = 80
             .Columns("Monto_Exento").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Monto_Exento").DefaultCellStyle.Format = "$ ###,##.##"
-            .Columns("Monto_Exento").DisplayIndex = 6
+            .Columns("Monto_Exento").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Monto_Neto").Visible = True
             .Columns("Monto_Neto").HeaderText = "Neto"
             .Columns("Monto_Neto").Width = 80
             .Columns("Monto_Neto").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Monto_Neto").DefaultCellStyle.Format = "$ ###,##.##"
-            .Columns("Monto_Neto").DisplayIndex = 7
+            .Columns("Monto_Neto").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Monto_Iva_Recuperable").Visible = True
             .Columns("Monto_Iva_Recuperable").HeaderText = "Iva"
             .Columns("Monto_Iva_Recuperable").Width = 80
             .Columns("Monto_Iva_Recuperable").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Monto_Iva_Recuperable").DefaultCellStyle.Format = "$ ###,##.##"
-            .Columns("Monto_Iva_Recuperable").DisplayIndex = 9
+            .Columns("Monto_Iva_Recuperable").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Valor_Otro_Impuesto").Visible = True
             .Columns("Valor_Otro_Impuesto").HeaderText = "Otro Impuesto"
             .Columns("Valor_Otro_Impuesto").Width = 80
             .Columns("Valor_Otro_Impuesto").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Valor_Otro_Impuesto").DefaultCellStyle.Format = "$ ###,##.##"
-            .Columns("Valor_Otro_Impuesto").DisplayIndex = 10
+            .Columns("Valor_Otro_Impuesto").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Monto_Total").Visible = True
             .Columns("Monto_Total").HeaderText = "Total"
             .Columns("Monto_Total").Width = 80
             .Columns("Monto_Total").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Monto_Total").DefaultCellStyle.Format = "$ ###,##.##"
-            .Columns("Monto_Total").DisplayIndex = 11
+            .Columns("Monto_Total").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-
-            '.Columns("Tido_Sugerido").Visible = True
-            '.Columns("Tido_Sugerido").HeaderText = "TD Sug."
-            '.Columns("Tido_Sugerido").Width = 30
-            '.Columns("Tido_Sugerido").DisplayIndex = 12
-
-            '.Columns("Nudo_Sugerido").Visible = True
-            '.Columns("Nudo_Sugerido").HeaderText = "Nro Sug."
-            '.Columns("Nudo_Sugerido").Width = 80
-            '.Columns("Nudo_Sugerido").DisplayIndex = 13
-
-            '.Columns("Libro_Sugerido").Visible = True
-            '.Columns("Libro_Sugerido").HeaderText = "Libro Sug."
-            '.Columns("Libro_Sugerido").Width = 100
-            '.Columns("Libro_Sugerido").DisplayIndex = 14
 
         End With
 
@@ -547,20 +555,30 @@ Public Class Frm_Libro_Compras_Ventas
 
             If Not String.IsNullOrEmpty(_Libro_Sugerido) Then
                 If _Libro_Sugerido.Contains(_Libro) Then
-                    _Fila.Cells("Libro_Sugerido").Style.ForeColor = Color.Green
+                    _Fila.Cells("Libro_Sugerido").Style.ForeColor = Verde
                 Else
-                    _Fila.Cells("Libro_Sugerido").Style.ForeColor = Color.Red
+                    _Fila.Cells("Libro_Sugerido").Style.ForeColor = Rojo
                 End If
             End If
 
+            If Not Convert.ToBoolean(_Idmaeedo) And Convert.ToBoolean(_Idmaeedo_GRC) Then
+                If Global_Thema = Enum_Themas.Oscuro Then
+                    _Fila.DefaultCellStyle.BackColor = Color.GreenYellow
+                    _Fila.DefaultCellStyle.ForeColor = Color.Black
+                Else
+                    _Fila.DefaultCellStyle.BackColor = Color.GreenYellow
+                End If
+            End If
+
+            Dim _Libro_cp As String = _Fila.Cells("Libro").Value
             Dim _TipoDoc As Integer = _Fila.Cells("TipoDoc").Value
 
             If _TipoDoc = 61 Then
-                _Fila.DefaultCellStyle.BackColor = Color.LightYellow
-            End If
-
-            If Not Convert.ToBoolean(_Idmaeedo) And Convert.ToBoolean(_Idmaeedo_GRC) Then
-                _Fila.DefaultCellStyle.BackColor = Color.GreenYellow
+                If Global_Thema = Enum_Themas.Oscuro Then
+                    _Fila.DefaultCellStyle.ForeColor = Amarillo
+                Else
+                    _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+                End If
             End If
 
         Next
@@ -655,7 +673,11 @@ Public Class Frm_Libro_Compras_Ventas
             Dim _TipoDoc As Integer = _Fila.Cells("TipoDoc").Value
 
             If _TipoDoc = 61 Then
-                _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+                If Global_Thema = Enum_Themas.Oscuro Then
+                    _Fila.DefaultCellStyle.ForeColor = Amarillo
+                Else
+                    _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+                End If
             End If
 
         Next
@@ -751,15 +773,18 @@ Public Class Frm_Libro_Compras_Ventas
             Dim _TipoDoc As Integer = _Fila.Cells("TipoDoc").Value
 
             If CBool(_Diferencia) Then
-                _Fila.Cells("Diferencia").Style.ForeColor = Color.Red
+                _Fila.Cells("Diferencia").Style.ForeColor = Rojo
             End If
 
             If _TipoDoc = 61 Then
-                _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+                If Global_Thema = Enum_Themas.Oscuro Then
+                    _Fila.DefaultCellStyle.ForeColor = Amarillo
+                Else
+                    _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+                End If
             End If
 
         Next
-
 
     End Sub
 
@@ -859,7 +884,11 @@ Public Class Frm_Libro_Compras_Ventas
             Dim _Tido = _Fila.Cells("TIDO").Value
 
             If _Tido = "NCC" Then
-                _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+                If Global_Thema = Enum_Themas.Oscuro Then
+                    _Fila.DefaultCellStyle.ForeColor = Amarillo
+                Else
+                    _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+                End If
             End If
 
         Next
@@ -960,23 +989,27 @@ Public Class Frm_Libro_Compras_Ventas
 
                 If _Idmaeedo_01 = _Idmaeedo_02 Then
                     _F01.DefaultCellStyle.BackColor = Color.LightSalmon
+                    If Global_Thema = Enum_Themas.Oscuro Then
+                        _F01.DefaultCellStyle.ForeColor = Color.Black
+                    End If
                     Exit For
                 End If
 
             Next
 
             If _Tido = "NCC" Then
-                If _F01.DefaultCellStyle.BackColor <> Color.LightSalmon Then
+                If Global_Thema = Enum_Themas.Oscuro Then
+                    _F01.DefaultCellStyle.ForeColor = Amarillo
+                Else
                     _F01.DefaultCellStyle.BackColor = Color.LightYellow
                 End If
             End If
 
         Next
 
-
     End Sub
 
-    Sub Sb_Actualizar_Totales_SII(ByVal _Tbl As DataTable)
+    Sub Sb_Actualizar_Totales_SII(_Tbl As DataTable)
 
         Dim _Neto As Double = NuloPorNro(_Tbl.Compute("Sum(Monto_Neto)", "Monto_Neto <> 0"), 0)
         Dim _Exento As Double = NuloPorNro(_Tbl.Compute("Sum(Monto_Exento)", "Monto_Exento <> 0"), 0)
@@ -997,7 +1030,7 @@ Public Class Frm_Libro_Compras_Ventas
 
     End Sub
 
-    Sub Sb_Actualizar_Totales_Random(ByVal _Tbl As DataTable)
+    Sub Sb_Actualizar_Totales_Random(_Tbl As DataTable)
 
         Dim _Neto As Double = NuloPorNro(_Tbl.Compute("Sum(AFECTO)", "AFECTO <> 0"), 0)
         Dim _Exento As Double = NuloPorNro(_Tbl.Compute("Sum(EXENTO)", "EXENTO <> 0"), 0)
@@ -1016,7 +1049,7 @@ Public Class Frm_Libro_Compras_Ventas
 
     End Sub
 
-    Private Sub Sb_Tab_SelectedTabChanged(ByVal sender As System.Object, ByVal e As DevComponents.DotNetBar.SuperTabStripSelectedTabChangedEventArgs)
+    Private Sub Sb_Tab_SelectedTabChanged(sender As System.Object, e As DevComponents.DotNetBar.SuperTabStripSelectedTabChangedEventArgs)
         Sb_Refrescar_Grillas()
     End Sub
 
@@ -1053,7 +1086,7 @@ Public Class Frm_Libro_Compras_Ventas
 
     End Sub
 
-    Private Sub Btn_Excel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Excel.Click
+    Private Sub Btn_Excel_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Excel.Click
 
         Select Case Tab.SelectedTabIndex
             Case 0
@@ -1074,7 +1107,7 @@ Public Class Frm_Libro_Compras_Ventas
 
     End Sub
 
-    Private Sub Btn_Cambiar_Libro_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cambiar_Libro.Click
+    Private Sub Btn_Cambiar_Libro_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cambiar_Libro.Click
 
         For Each _Fila As DataRow In _Inf_03_SII_Random_Otro_Mes.Rows
 
@@ -1088,7 +1121,7 @@ Public Class Frm_Libro_Compras_Ventas
 
     End Sub
 
-    Sub Sb_Cambiar_Al_Libro_De_Compras(ByVal _Idmaeedo As Integer, ByVal _Libro As String)
+    Sub Sb_Cambiar_Al_Libro_De_Compras(_Idmaeedo As Integer, _Libro As String)
 
         Dim _Num_Siguiente As String
         Dim _Ult_Libro = _Sql.Fx_Trae_Dato("MAEEDO", "MAX(LIBRO)", "LIBRO LIKE '" & _Libro & "%'")
@@ -1108,7 +1141,7 @@ Public Class Frm_Libro_Compras_Ventas
 
     End Sub
 
-    Private Sub Sb_Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Sb_Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Dim _Grilla As DataGridView = sender
         Dim _Fila As DataGridViewRow = _Grilla.Rows(_Grilla.CurrentRow.Index)
@@ -1136,12 +1169,25 @@ Public Class Frm_Libro_Compras_Ventas
 
                 Dim _Idmaeedo_GRC = _Fila.Cells("Idmaeedo_GRC").Value
 
-                If Convert.ToBoolean(_Idmaeedo_GRC) Then
+                'If Convert.ToBoolean(_Idmaeedo_GRC) Then
 
-                    ShowContextMenu(Menu_Contextual_Solo_en_SII)
-                    Return
+                Btn_Ver_GRC_Sugerida.Enabled = (Convert.ToBoolean(_Idmaeedo_GRC))
+                Btn_Crear_FCC_desde_GRC.Enabled = (Convert.ToBoolean(_Idmaeedo_GRC))
 
-                End If
+                Dim _Folio = _Fila.Cells("Folio").Value
+                Dim _TipoDoc = _Fila.Cells("TipoDoc").Value
+                Dim _Rut_Proveedor = _Fila.Cells("Rut_Proveedor").Value
+
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_ReccDet" & vbCrLf &
+                               "Where TipoDTE = " & _TipoDoc & " And Folio = " & _Folio & " And RutEmisor = '" & _Rut_Proveedor & "'"
+                Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                Btn_VerXMLPDF.Enabled = Not (IsNothing(_Row))
+
+                ShowContextMenu(Menu_Contextual_Solo_en_SII)
+                Return
+
+                'End If
 
             Case 5, 6
 
@@ -1209,7 +1255,7 @@ Public Class Frm_Libro_Compras_Ventas
 
     End Sub
 
-    Private Sub Txt_Descripcion_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Txt_Descripcion.KeyDown
+    Private Sub Txt_Descripcion_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles Txt_Descripcion.KeyDown
 
         If e.KeyValue = Keys.Enter Then
 
@@ -1392,6 +1438,64 @@ Public Class Frm_Libro_Compras_Ventas
         Else
 
             MessageBoxEx.Show(Me, "No se encontro coincidencia", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_VerXMLPDF_Click(sender As Object, e As EventArgs) Handles Btn_VerXMLPDF.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_02.Rows(Grilla_02.CurrentRow.Index)
+
+        Dim _Folio = _Fila.Cells("Folio").Value
+        Dim _TipoDoc = _Fila.Cells("TipoDoc").Value
+        Dim _Rut_Proveedor = _Fila.Cells("Rut_Proveedor").Value
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_ReccDet" & vbCrLf &
+                       "Where TipoDTE = " & _TipoDoc & " And Folio = " & _Folio & " And RutEmisor = '" & _Rut_Proveedor & "'"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row) Then
+            MessageBoxEx.Show(Me, "No se encontro el archivo PDF", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Xml As String = _Row.Item("Xml")
+
+        Dim _Directorio As String = AppPath() & "\Data\" & RutEmpresa & "\DTE\Descargas"
+
+        If Not Directory.Exists(_Directorio) Then
+            Directory.CreateDirectory(_Directorio)
+        End If
+
+        Dim _NombreArchivo As String = _Folio & "_" & _TipoDoc & _Rut_Proveedor '& ".XML"
+        Dim _Archivo As String = _Directorio & "\" & _NombreArchivo.Trim
+
+        Dim oSW As New StreamWriter(_Archivo & ".XML")
+        oSW.WriteLine(_Xml)
+        oSW.Close()
+
+        Dim Ds_Xml As New DataSet
+        Ds_Xml.ReadXml(_Archivo & ".XML")
+
+        If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresa & "\DTE2PDF") Then
+            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresa & "\DTE2PDF")
+        End If
+
+        Dim _File As String = AppPath() & "\Data\" & RutEmpresa & "\DTE2PDF\" & _NombreArchivo & ".pdf"
+
+        If Not El_Archivo_Esta_Abierto(_File) Then
+
+            Dim _RecepXMLCmp_MarcaAgua As String = _Global_Row_Configuracion_General.Item("RecepXMLCmp_MarcaAgua")
+            Dim _RecepXMLCmp_ImpMarcaAgua As Boolean = Not String.IsNullOrEmpty(_RecepXMLCmp_MarcaAgua)
+
+            Dim Cl_Dte2XmlIPDF As New Cl_Dte2XmlPDF
+            Cl_Dte2XmlIPDF.Sb_Crear_PDF2XML(Me, Ds_Xml, _NombreArchivo, _RecepXMLCmp_MarcaAgua, _RecepXMLCmp_ImpMarcaAgua)
+            File.Delete(_Archivo & ".XML")
+
+        Else
+
+            MessageBoxEx.Show(Me, "El Archivo se encuentra abierto", "DTE2PDF", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
         End If
 

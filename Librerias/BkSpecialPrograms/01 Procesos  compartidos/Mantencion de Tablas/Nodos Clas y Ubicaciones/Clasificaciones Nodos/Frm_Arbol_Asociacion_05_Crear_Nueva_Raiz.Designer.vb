@@ -129,6 +129,7 @@ Partial Class Frm_Arbol_Asociacion_05_Crear_Nueva_Raiz
         Me.BtnGrabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.BtnGrabar.ForeColor = System.Drawing.Color.Black
         Me.BtnGrabar.Image = CType(resources.GetObject("BtnGrabar.Image"), System.Drawing.Image)
+        Me.BtnGrabar.ImageAlt = CType(resources.GetObject("BtnGrabar.ImageAlt"), System.Drawing.Image)
         Me.BtnGrabar.Name = "BtnGrabar"
         Me.BtnGrabar.Text = "Aceptar"
         Me.BtnGrabar.Tooltip = "Aceptar"

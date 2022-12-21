@@ -50,7 +50,7 @@ Public Class Frm_Menu
 
         _Global_Nombre_BakApp_Soluciones = Replace(_Global_Nombre_BakApp_Soluciones, ".exe", "")
 
-        Sb_Revisar_Estilo("")
+        'Sb_Revisar_Estilo("")
 
         Select Case _Global_Nombre_BakApp_Soluciones
             Case "BakApp_Soluciones2"
@@ -497,7 +497,7 @@ Public Class Frm_Menu
         Else
 
             Dim NewPanel As Empresas_conectadas = Nothing
-            NewPanel = New Empresas_conectadas(_Cambio_de_base)
+            NewPanel = New Empresas_conectadas(Me, _Cambio_de_base)
             Me.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
 
         End If
@@ -1218,7 +1218,7 @@ Public Class Frm_Menu
 
         BaseDeConexion = ArchivoConexion.BasePrincipal
         Dim NewPanel As Empresas_conectadas = Nothing
-        NewPanel = New Empresas_conectadas(True)
+        NewPanel = New Empresas_conectadas(Me, True)
         NewPanel._Crear_Conexion = True
         Me.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
 

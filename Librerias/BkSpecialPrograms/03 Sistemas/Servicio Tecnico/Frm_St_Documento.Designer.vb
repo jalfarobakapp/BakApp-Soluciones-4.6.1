@@ -23,9 +23,9 @@ Partial Class Frm_St_Documento
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_St_Documento))
         Me.GroupPanel13 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
@@ -52,7 +52,6 @@ Partial Class Frm_St_Documento
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.Chk_Serv_Demostracion_Maquina = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Btn_Documento_Garantia = New DevComponents.DotNetBar.ButtonX()
-        Me.Btn_Direccion_Servicio = New DevComponents.DotNetBar.ButtonX()
         Me.Chk_Serv_Garantia = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Serv_Mantenimiento_Preventivo = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Serv_Recoleccion = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -60,6 +59,7 @@ Partial Class Frm_St_Documento
         Me.Chk_Serv_Mantenimiento_Correctivo = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Serv_Reparacion_Stock = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Serv_Domicilio = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Btn_Direccion_Servicio = New DevComponents.DotNetBar.ButtonX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Defecto_segun_cliente = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
@@ -79,12 +79,12 @@ Partial Class Frm_St_Documento
         Me.Btn_Editar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Cancelar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Anular = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Etapas_Logistica = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Check_In = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Cerrar_OT = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Imprimir = New DevComponents.DotNetBar.ButtonItem()
         Me.Imagenes_32x32 = New System.Windows.Forms.ImageList(Me.components)
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Btn_Contacto = New DevComponents.DotNetBar.ButtonX()
         Me.Txt_Nombre_Contacto = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX9 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Email_Contacto = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -135,7 +135,6 @@ Partial Class Frm_St_Documento
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Tab_Maquina = New DevComponents.DotNetBar.SuperTabItem()
-        Me.Btn_Contacto = New DevComponents.DotNetBar.ButtonX()
         Me.GroupPanel13.SuspendLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -199,36 +198,36 @@ Partial Class Frm_St_Documento
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(3, 3)
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.RowHeadersVisible = False
         Me.Grilla.RowTemplate.Height = 25
         Me.Grilla.Size = New System.Drawing.Size(762, 39)
@@ -594,7 +593,6 @@ Partial Class Frm_St_Documento
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 44.0!))
         Me.TableLayoutPanel2.Controls.Add(Me.Chk_Serv_Demostracion_Maquina, 0, 7)
         Me.TableLayoutPanel2.Controls.Add(Me.Btn_Documento_Garantia, 1, 6)
-        Me.TableLayoutPanel2.Controls.Add(Me.Btn_Direccion_Servicio, 1, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.Chk_Serv_Garantia, 0, 6)
         Me.TableLayoutPanel2.Controls.Add(Me.Chk_Serv_Mantenimiento_Preventivo, 0, 5)
         Me.TableLayoutPanel2.Controls.Add(Me.Chk_Serv_Recoleccion, 0, 4)
@@ -602,6 +600,7 @@ Partial Class Frm_St_Documento
         Me.TableLayoutPanel2.Controls.Add(Me.Chk_Serv_Mantenimiento_Correctivo, 0, 2)
         Me.TableLayoutPanel2.Controls.Add(Me.Chk_Serv_Reparacion_Stock, 0, 1)
         Me.TableLayoutPanel2.Controls.Add(Me.Chk_Serv_Domicilio, 0, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Btn_Direccion_Servicio, 1, 0)
         Me.TableLayoutPanel2.ForeColor = System.Drawing.Color.Black
         Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 3)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
@@ -623,6 +622,8 @@ Partial Class Frm_St_Documento
         '
         '
         Me.Chk_Serv_Demostracion_Maquina.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Serv_Demostracion_Maquina.CheckBoxImageChecked = CType(resources.GetObject("Chk_Serv_Demostracion_Maquina.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Serv_Demostracion_Maquina.FocusCuesEnabled = False
         Me.Chk_Serv_Demostracion_Maquina.ForeColor = System.Drawing.Color.Black
         Me.Chk_Serv_Demostracion_Maquina.Location = New System.Drawing.Point(3, 157)
         Me.Chk_Serv_Demostracion_Maquina.Name = "Chk_Serv_Demostracion_Maquina"
@@ -643,24 +644,14 @@ Partial Class Frm_St_Documento
         Me.Btn_Documento_Garantia.TabIndex = 90
         Me.Btn_Documento_Garantia.Tooltip = "Dirección del servicio"
         '
-        'Btn_Direccion_Servicio
-        '
-        Me.Btn_Direccion_Servicio.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Direccion_Servicio.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Direccion_Servicio.Image = CType(resources.GetObject("Btn_Direccion_Servicio.Image"), System.Drawing.Image)
-        Me.Btn_Direccion_Servicio.Location = New System.Drawing.Point(176, 3)
-        Me.Btn_Direccion_Servicio.Name = "Btn_Direccion_Servicio"
-        Me.Btn_Direccion_Servicio.Size = New System.Drawing.Size(38, 16)
-        Me.Btn_Direccion_Servicio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Direccion_Servicio.TabIndex = 89
-        Me.Btn_Direccion_Servicio.Tooltip = "Dirección del servicio"
-        '
         'Chk_Serv_Garantia
         '
         '
         '
         '
         Me.Chk_Serv_Garantia.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Serv_Garantia.CheckBoxImageChecked = CType(resources.GetObject("Chk_Serv_Garantia.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Serv_Garantia.FocusCuesEnabled = False
         Me.Chk_Serv_Garantia.ForeColor = System.Drawing.Color.Black
         Me.Chk_Serv_Garantia.Location = New System.Drawing.Point(3, 135)
         Me.Chk_Serv_Garantia.Name = "Chk_Serv_Garantia"
@@ -675,6 +666,8 @@ Partial Class Frm_St_Documento
         '
         '
         Me.Chk_Serv_Mantenimiento_Preventivo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Serv_Mantenimiento_Preventivo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Serv_Mantenimiento_Preventivo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Serv_Mantenimiento_Preventivo.FocusCuesEnabled = False
         Me.Chk_Serv_Mantenimiento_Preventivo.ForeColor = System.Drawing.Color.Black
         Me.Chk_Serv_Mantenimiento_Preventivo.Location = New System.Drawing.Point(3, 113)
         Me.Chk_Serv_Mantenimiento_Preventivo.Name = "Chk_Serv_Mantenimiento_Preventivo"
@@ -689,6 +682,8 @@ Partial Class Frm_St_Documento
         '
         '
         Me.Chk_Serv_Recoleccion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Serv_Recoleccion.CheckBoxImageChecked = CType(resources.GetObject("Chk_Serv_Recoleccion.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Serv_Recoleccion.FocusCuesEnabled = False
         Me.Chk_Serv_Recoleccion.ForeColor = System.Drawing.Color.Black
         Me.Chk_Serv_Recoleccion.Location = New System.Drawing.Point(3, 91)
         Me.Chk_Serv_Recoleccion.Name = "Chk_Serv_Recoleccion"
@@ -703,6 +698,8 @@ Partial Class Frm_St_Documento
         '
         '
         Me.Chk_Serv_Presupuesto_Pre_Aprobado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Serv_Presupuesto_Pre_Aprobado.CheckBoxImageChecked = CType(resources.GetObject("Chk_Serv_Presupuesto_Pre_Aprobado.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Serv_Presupuesto_Pre_Aprobado.FocusCuesEnabled = False
         Me.Chk_Serv_Presupuesto_Pre_Aprobado.ForeColor = System.Drawing.Color.Black
         Me.Chk_Serv_Presupuesto_Pre_Aprobado.Location = New System.Drawing.Point(3, 69)
         Me.Chk_Serv_Presupuesto_Pre_Aprobado.Name = "Chk_Serv_Presupuesto_Pre_Aprobado"
@@ -717,6 +714,8 @@ Partial Class Frm_St_Documento
         '
         '
         Me.Chk_Serv_Mantenimiento_Correctivo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Serv_Mantenimiento_Correctivo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Serv_Mantenimiento_Correctivo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Serv_Mantenimiento_Correctivo.FocusCuesEnabled = False
         Me.Chk_Serv_Mantenimiento_Correctivo.ForeColor = System.Drawing.Color.Black
         Me.Chk_Serv_Mantenimiento_Correctivo.Location = New System.Drawing.Point(3, 47)
         Me.Chk_Serv_Mantenimiento_Correctivo.Name = "Chk_Serv_Mantenimiento_Correctivo"
@@ -731,6 +730,8 @@ Partial Class Frm_St_Documento
         '
         '
         Me.Chk_Serv_Reparacion_Stock.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Serv_Reparacion_Stock.CheckBoxImageChecked = CType(resources.GetObject("Chk_Serv_Reparacion_Stock.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Serv_Reparacion_Stock.FocusCuesEnabled = False
         Me.Chk_Serv_Reparacion_Stock.ForeColor = System.Drawing.Color.Black
         Me.Chk_Serv_Reparacion_Stock.Location = New System.Drawing.Point(3, 25)
         Me.Chk_Serv_Reparacion_Stock.Name = "Chk_Serv_Reparacion_Stock"
@@ -745,6 +746,8 @@ Partial Class Frm_St_Documento
         '
         '
         Me.Chk_Serv_Domicilio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Serv_Domicilio.CheckBoxImageChecked = CType(resources.GetObject("Chk_Serv_Domicilio.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Serv_Domicilio.FocusCuesEnabled = False
         Me.Chk_Serv_Domicilio.ForeColor = System.Drawing.Color.Black
         Me.Chk_Serv_Domicilio.Location = New System.Drawing.Point(3, 3)
         Me.Chk_Serv_Domicilio.Name = "Chk_Serv_Domicilio"
@@ -752,6 +755,18 @@ Partial Class Frm_St_Documento
         Me.Chk_Serv_Domicilio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Serv_Domicilio.TabIndex = 69
         Me.Chk_Serv_Domicilio.Text = "Servicio a domicilio"
+        '
+        'Btn_Direccion_Servicio
+        '
+        Me.Btn_Direccion_Servicio.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Direccion_Servicio.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Direccion_Servicio.Image = CType(resources.GetObject("Btn_Direccion_Servicio.Image"), System.Drawing.Image)
+        Me.Btn_Direccion_Servicio.Location = New System.Drawing.Point(176, 3)
+        Me.Btn_Direccion_Servicio.Name = "Btn_Direccion_Servicio"
+        Me.Btn_Direccion_Servicio.Size = New System.Drawing.Size(38, 16)
+        Me.Btn_Direccion_Servicio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Direccion_Servicio.TabIndex = 89
+        Me.Btn_Direccion_Servicio.Tooltip = "Dirección del servicio"
         '
         'GroupPanel2
         '
@@ -976,7 +991,7 @@ Partial Class Frm_St_Documento
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Editar, Me.Btn_Cancelar, Me.Btn_Anular, Me.Btn_Etapas_Logistica, Me.Btn_Check_In, Me.Btn_Cerrar_OT, Me.Btn_Imprimir})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Editar, Me.Btn_Cancelar, Me.Btn_Anular, Me.Btn_Check_In, Me.Btn_Cerrar_OT, Me.Btn_Imprimir})
         Me.Bar2.Location = New System.Drawing.Point(0, 544)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(800, 41)
@@ -1024,16 +1039,6 @@ Partial Class Frm_St_Documento
         Me.Btn_Anular.Name = "Btn_Anular"
         Me.Btn_Anular.Tooltip = "Eliminar"
         Me.Btn_Anular.Visible = False
-        '
-        'Btn_Etapas_Logistica
-        '
-        Me.Btn_Etapas_Logistica.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Etapas_Logistica.FontBold = True
-        Me.Btn_Etapas_Logistica.ForeColor = System.Drawing.Color.Red
-        Me.Btn_Etapas_Logistica.Image = CType(resources.GetObject("Btn_Etapas_Logistica.Image"), System.Drawing.Image)
-        Me.Btn_Etapas_Logistica.Name = "Btn_Etapas_Logistica"
-        Me.Btn_Etapas_Logistica.Text = "Gestión"
-        Me.Btn_Etapas_Logistica.Visible = False
         '
         'Btn_Check_In
         '
@@ -1114,6 +1119,18 @@ Partial Class Frm_St_Documento
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 87
+        '
+        'Btn_Contacto
+        '
+        Me.Btn_Contacto.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Contacto.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Contacto.Image = CType(resources.GetObject("Btn_Contacto.Image"), System.Drawing.Image)
+        Me.Btn_Contacto.Location = New System.Drawing.Point(715, 6)
+        Me.Btn_Contacto.Name = "Btn_Contacto"
+        Me.Btn_Contacto.Size = New System.Drawing.Size(50, 48)
+        Me.Btn_Contacto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Contacto.TabIndex = 74
+        Me.Btn_Contacto.Tooltip = "buscar contactos del cliente"
         '
         'Txt_Nombre_Contacto
         '
@@ -1762,18 +1779,6 @@ Partial Class Frm_St_Documento
         Me.Tab_Maquina.Name = "Tab_Maquina"
         Me.Tab_Maquina.Text = "Maquina externa"
         '
-        'Btn_Contacto
-        '
-        Me.Btn_Contacto.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Contacto.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Contacto.Image = CType(resources.GetObject("Btn_Contacto.Image"), System.Drawing.Image)
-        Me.Btn_Contacto.Location = New System.Drawing.Point(715, 6)
-        Me.Btn_Contacto.Name = "Btn_Contacto"
-        Me.Btn_Contacto.Size = New System.Drawing.Size(50, 48)
-        Me.Btn_Contacto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Contacto.TabIndex = 74
-        Me.Btn_Contacto.Tooltip = "buscar contactos del cliente"
-        '
         'Frm_St_Documento
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1855,7 +1860,6 @@ Partial Class Frm_St_Documento
     Friend WithEvents BtnSalir As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Etapas_Logistica As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Imagenes_32x32 As System.Windows.Forms.ImageList
     Friend WithEvents Chk_Serv_Garantia As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Btn_Editar As DevComponents.DotNetBar.ButtonItem

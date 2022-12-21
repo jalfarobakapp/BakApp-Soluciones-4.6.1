@@ -151,8 +151,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\Nube OneDrive\OneDrive\Desarrollos BakApp\.Net Librerias especiales\Itenso Text2Html\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Mail">
-      <HintPath>..\..\..\OneDrive\Desarrollos BakApp\.Net Librerias especiales\Mail.dll</HintPath>
+    <Reference Include="Mail, Version=3.0.20106.1313, Culture=neutral, PublicKeyToken=6dc438ab78a525b3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Nube OneDrive\OneDrive\Desarrollos BakApp\.Net Librerias especiales\Licencia Mail DLL\Mail\Redistributables\net20\Mail.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic.PowerPacks, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualBasic.PowerPacks.Design, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
@@ -187,11 +188,14 @@
     <Reference Include="SautinSoft.RtfToHtml, Version=7.4.5.25, Culture=neutral, PublicKeyToken=c666a5e96a3d5457, processorArchitecture=MSIL">
       <HintPath>..\..\packages\sautinsoft.rtftohtml.7.4.5.25\lib\net40\SautinSoft.RtfToHtml.dll</HintPath>
     </Reference>
-    <Reference Include="Spire.Doc, Version=10.8.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FreeSpire.Doc.10.8.0\lib\net40\Spire.Doc.dll</HintPath>
+    <Reference Include="Spire.Doc, Version=7.11.0.41040, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FreeSpire.Doc.7.11.0\lib\net40\Spire.Doc.dll</HintPath>
     </Reference>
-    <Reference Include="Spire.Pdf, Version=8.8.6.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FreeSpire.Doc.10.8.0\lib\net40\Spire.Pdf.dll</HintPath>
+    <Reference Include="Spire.License, Version=1.3.7.40, Culture=neutral, PublicKeyToken=b1144360237c8b3f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FreeSpire.Doc.7.11.0\lib\net40\Spire.License.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.Pdf, Version=5.11.0.2040, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FreeSpire.Doc.7.11.0\lib\net40\Spire.Pdf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -317,6 +321,13 @@
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Frm_Formulario_Permisos_Asociados_New.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Generar Doc desde DTE\Cl_GenDoc2DTE.vb" />
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Generar Doc desde DTE\Frm_DocsDesdeDTEXML.Designer.vb">
+      <DependentUpon>Frm_DocsDesdeDTEXML.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Generar Doc desde DTE\Frm_DocsDesdeDTEXML.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Imprimir doc. en construccion\Clas_Imprimir_DocEnconstruccion.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Lector de Barras\Frm_Formulario_Lector_Barra.Designer.vb">
       <DependentUpon>Frm_Formulario_Lector_Barra.vb</DependentUpon>
@@ -356,6 +367,13 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Class_Referencias_DTE.vb" />
+    <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Archivo Electronico Cesion AEC\Cl_BakAppHefestoEAC.vb" />
+    <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Archivo Electronico Cesion AEC\Frm_Aec_CesionDTE.Designer.vb">
+      <DependentUpon>Frm_Aec_CesionDTE.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Archivo Electronico Cesion AEC\Frm_Aec_CesionDTE.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Class_MantFacturasElect.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_Dte_Configuracion.Designer.vb">
       <DependentUpon>Frm_Dte_Configuracion.vb</DependentUpon>
@@ -441,6 +459,7 @@
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Asociacion de documentos a OCC\Frm_RecargosXProd.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\14 Exportar documentos\Cl_ExpotarDoc.vb" />
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Familias\Frm_Crear_SpfmFmSbfm.Designer.vb">
       <DependentUpon>Frm_Crear_SpfmFmSbfm.vb</DependentUpon>
     </Compile>
@@ -454,6 +473,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Precios y Costos\01 Mantención Listas Random\Clas_Imprimir_ListaPrecios.vb" />
+    <Compile Include="01 Procesos  compartidos\Precios y Costos\01 Mantención Listas Random\Precios Futuros\Frm_PrecioFuturoRd.Designer.vb">
+      <DependentUpon>Frm_PrecioFuturoRd.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Precios y Costos\01 Mantención Listas Random\Precios Futuros\Frm_PrecioFuturoRd.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Precios y Costos\Costos Proveedores\Frm_MantCostosPrecios_CreaLista.Designer.vb">
       <DependentUpon>Frm_MantCostosPrecios_CreaLista.vb</DependentUpon>
     </Compile>
@@ -464,6 +489,24 @@
       <DependentUpon>Frm_MantCostosPrecios_LV.vb</DependentUpon>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Precios y Costos\Costos Proveedores\Frm_MantCostosPrecios_LV.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Precios Futuros\Frm_PrecioLCFuturo.designer.vb">
+      <DependentUpon>Frm_PrecioLCFuturo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Precios Futuros\Frm_PrecioLCFuturo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Precios Futuros\Frm_PrecioLCFuturoGrabar.Designer.vb">
+      <DependentUpon>Frm_PrecioLCFuturoGrabar.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Precios Futuros\Frm_PrecioLCFuturoGrabar.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Precios Futuros\Frm_PrecioLCFuturoListaXProd.Designer.vb">
+      <DependentUpon>Frm_PrecioLCFuturoListaXProd.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Precios Futuros\Frm_PrecioLCFuturoListaXProd.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Productos\02 Mantencion de Imagenes\Frm_Imagenes_X_Producto_Lev.Designer.vb">
@@ -520,6 +563,25 @@
       <DependentUpon>Frm_Recalculo_PPPxProd.vb</DependentUpon>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Productos\18 Precio Promedio Ponderado\Frm_Recalculo_PPPxProd.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\19 Migrar productos entre empresas\Cl_Migrar_Producto.vb" />
+    <Compile Include="01 Procesos  compartidos\Productos\19 Migrar productos entre empresas\Frm_Migrar_Productos.designer.vb">
+      <DependentUpon>Frm_Migrar_Productos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\19 Migrar productos entre empresas\Frm_Migrar_Productos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\20 Impresiones adicionales\Frm_ImpAdicXProd_Lista.Designer.vb">
+      <DependentUpon>Frm_ImpAdicXProd_Lista.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\20 Impresiones adicionales\Frm_ImpAdicXProd_Lista.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\20 Impresiones adicionales\Frm_ImpAdicXProd.Designer.vb">
+      <DependentUpon>Frm_ImpAdicXProd.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\20 Impresiones adicionales\Frm_ImpAdicXProd.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="02 Procesos Bakapp y configuracion\01 Actualizacion BakApp\Clas_Actualiza_BakApp_Sql.vb" />
@@ -1220,6 +1282,12 @@
     <Compile Include="02 Procesos Bakapp y configuracion\09 Conexion otra base de datos\Frm_DatosConexion.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\09 Conexion otra base de datos\Grabar datos\Frm_ExporProd.Designer.vb">
+      <DependentUpon>Frm_ExporProd.vb</DependentUpon>
+    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\09 Conexion otra base de datos\Grabar datos\Frm_ExporProd.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Archivador\Frm_Archivador_Buscador.designer.vb">
       <DependentUpon>Frm_Archivador_Buscador.vb</DependentUpon>
     </Compile>
@@ -1285,9 +1353,11 @@
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Cerrar_Documentos.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Consolidacion_Stock.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Correos.vb" />
+    <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_FacAuto_NVV.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Imprimir_Documentos.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Imprimir_Picking.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_LibroDTESII.vb" />
+    <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Listas_Programadas.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Prestashop_Orders.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Prestashop_Web.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Solicitud_Productos_Bodega.vb" />
@@ -1412,16 +1482,24 @@
     <Compile Include="03 Sistemas\Despachos\Frm_Despacho_Ordenes.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Dte2Imp\Cl_Dte2XmlPDF.vb" />
     <Compile Include="03 Sistemas\Impresión de Barras\Configuracion\Frm_Barras_ConfPuerto_OD.Designer.vb">
       <DependentUpon>Frm_Barras_ConfPuerto_OD.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Impresión de Barras\Configuracion\Frm_Barras_ConfPuerto_OD.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Cl_InfProyStXVnta.vb" />
     <Compile Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Frm_InfProyStXVnta.Designer.vb">
       <DependentUpon>Frm_InfProyStXVnta.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Frm_InfProyStXVnta.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Frm_InfProyStXVnta_Estudio.Designer.vb">
+      <DependentUpon>Frm_InfProyStXVnta_Estudio.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Frm_InfProyStXVnta_Estudio.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Recursos\Filtro_VistInf1.vb" />
@@ -1766,6 +1844,25 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Recursos_Produccion.resx</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Gestion Taller\Frm_St_GestionTaller.Designer.vb">
+      <DependentUpon>Frm_St_GestionTaller.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Gestion Taller\Frm_St_GestionTaller.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Ingreso Varios\Cl_OrdenServicio.vb" />
+    <Compile Include="03 Sistemas\Servicio Tecnico\Ingreso Varios\Frm_St_DetIngreso.Designer.vb">
+      <DependentUpon>Frm_St_DetIngreso.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Ingreso Varios\Frm_St_DetIngreso.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Ingreso Varios\Frm_St_EncIngreso.Designer.vb">
+      <DependentUpon>Frm_St_EncIngreso.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Ingreso Varios\Frm_St_EncIngreso.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Sistema WMS\Gestión WMS\Clases\Cl_Documento_Wms.vb" />
     <Compile Include="03 Sistemas\Sistema WMS\Gestión WMS\Formularios\Frm_WMS_Documento.Designer.vb">
@@ -3168,6 +3265,12 @@
     <Compile Include="999 Funciones, Clases y Datos\Formularios\Form de espera\Frm_Form_Esperar.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="999 Funciones, Clases y Datos\Formularios\Form editar fecha\Frm_Seleccionar_Fecha.Designer.vb">
+      <DependentUpon>Frm_Seleccionar_Fecha.vb</DependentUpon>
+    </Compile>
+    <Compile Include="999 Funciones, Clases y Datos\Formularios\Form editar fecha\Frm_Seleccionar_Fecha.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="999 Funciones, Clases y Datos\Formularios\Form InputBox_Bk\Frm_InpunBox_Bk.Designer.vb">
       <DependentUpon>Frm_InpunBox_Bk.vb</DependentUpon>
     </Compile>
@@ -3735,6 +3838,7 @@
     <Compile Include="999 Funciones, Clases y Datos\Formularios\Frm_Seleccionar_Impresoras.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Cl_RevVersion.vb" />
     <Compile Include="999 Funciones, Clases y Datos\Funciones BakApp\Entidad\Recursos\Recursos_Entidad.Designer.vb">
       <DependentUpon>Recursos_Entidad.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -3808,6 +3912,9 @@
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Frm_Formulario_Permisos_Asociados_New.resx">
       <DependentUpon>Frm_Formulario_Permisos_Asociados_New.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Generar Doc desde DTE\Frm_DocsDesdeDTEXML.resx">
+      <DependentUpon>Frm_DocsDesdeDTEXML.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Lector de Barras\Frm_Formulario_Lector_Barra.resx">
       <DependentUpon>Frm_Formulario_Lector_Barra.vb</DependentUpon>
     </EmbeddedResource>
@@ -3827,6 +3934,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\09 Seleccionar documentos entidad\Frm_Documentos_Relacionados.resx">
       <DependentUpon>Frm_Documentos_Relacionados.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Archivo Electronico Cesion AEC\Frm_Aec_CesionDTE.resx">
+      <DependentUpon>Frm_Aec_CesionDTE.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_Dte_Configuracion.resx">
       <DependentUpon>Frm_Dte_Configuracion.vb</DependentUpon>
@@ -3878,11 +3988,23 @@
     <EmbeddedResource Include="01 Procesos  compartidos\Mantencion de Tablas\Familias\Frm_Familias_Lista.resx">
       <DependentUpon>Frm_Familias_Lista.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Precios y Costos\01 Mantención Listas Random\Precios Futuros\Frm_PrecioFuturoRd.resx">
+      <DependentUpon>Frm_PrecioFuturoRd.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Precios y Costos\Costos Proveedores\Frm_MantCostosPrecios_CreaLista.resx">
       <DependentUpon>Frm_MantCostosPrecios_CreaLista.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Precios y Costos\Costos Proveedores\Frm_MantCostosPrecios_LV.resx">
       <DependentUpon>Frm_MantCostosPrecios_LV.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Precios Futuros\Frm_PrecioLCFuturo.resx">
+      <DependentUpon>Frm_PrecioLCFuturo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Precios Futuros\Frm_PrecioLCFuturoGrabar.resx">
+      <DependentUpon>Frm_PrecioLCFuturoGrabar.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Precios Futuros\Frm_PrecioLCFuturoListaXProd.resx">
+      <DependentUpon>Frm_PrecioLCFuturoListaXProd.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Productos\02 Mantencion de Imagenes\Frm_Imagenes_X_Producto_Lev.resx">
       <DependentUpon>Frm_Imagenes_X_Producto_Lev.vb</DependentUpon>
@@ -3910,6 +4032,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Productos\18 Precio Promedio Ponderado\Frm_Recalculo_PPPxProd.resx">
       <DependentUpon>Frm_Recalculo_PPPxProd.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Productos\19 Migrar productos entre empresas\Frm_Migrar_Productos.resx">
+      <DependentUpon>Frm_Migrar_Productos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Productos\20 Impresiones adicionales\Frm_ImpAdicXProd.resx">
+      <DependentUpon>Frm_ImpAdicXProd.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Productos\20 Impresiones adicionales\Frm_ImpAdicXProd_Lista.resx">
+      <DependentUpon>Frm_ImpAdicXProd_Lista.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random.resx">
       <DependentUpon>Frm_Usuarios_Random.vb</DependentUpon>
@@ -4263,6 +4394,9 @@
     <EmbeddedResource Include="02 Procesos Bakapp y configuracion\09 Conexion otra base de datos\Frm_DatosConexion.resx">
       <DependentUpon>Frm_DatosConexion.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="02 Procesos Bakapp y configuracion\09 Conexion otra base de datos\Grabar datos\Frm_ExporProd.resx">
+      <DependentUpon>Frm_ExporProd.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Archivador\Frm_Archivador_Buscador.resx">
       <DependentUpon>Frm_Archivador_Buscador.vb</DependentUpon>
     </EmbeddedResource>
@@ -4352,6 +4486,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Frm_InfProyStXVnta.resx">
       <DependentUpon>Frm_InfProyStXVnta.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Frm_InfProyStXVnta_Estudio.resx">
+      <DependentUpon>Frm_InfProyStXVnta_Estudio.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Recursos\Recursos_InfProyStXVnta.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
@@ -4592,6 +4729,15 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Recursos_Produccion.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Gestion Taller\Frm_St_GestionTaller.resx">
+      <DependentUpon>Frm_St_GestionTaller.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Ingreso Varios\Frm_St_DetIngreso.resx">
+      <DependentUpon>Frm_St_DetIngreso.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Ingreso Varios\Frm_St_EncIngreso.resx">
+      <DependentUpon>Frm_St_EncIngreso.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Frm_Formulario_Diseno_Mapa_Crear_Sector.resx">
       <DependentUpon>Frm_Formulario_Diseno_Mapa_Crear_Sector.vb</DependentUpon>
@@ -5223,6 +5369,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="999 Funciones, Clases y Datos\Formularios\Form de espera\Frm_Form_Esperar.resx">
       <DependentUpon>Frm_Form_Esperar.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="999 Funciones, Clases y Datos\Formularios\Form editar fecha\Frm_Seleccionar_Fecha.resx">
+      <DependentUpon>Frm_Seleccionar_Fecha.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="999 Funciones, Clases y Datos\Formularios\Form InputBox_Bk\Frm_InpunBox_Bk.resx">
       <DependentUpon>Frm_InpunBox_Bk.vb</DependentUpon>
@@ -6970,6 +7119,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Chilexpress_Env.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Chilexpress_Res.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Compras_en_SII.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Conceptos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Configuracion.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Configuracion_Formatos_X_Modalidad.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Correos.sql" />
@@ -6983,6 +7133,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Demonio_Doc_Emitidos_Aviso_Correo.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Demonio_Doc_Emitidos_Aviso_Correo_Adjuntos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Demonio_Doc_Emitidos_Cola_Impresion.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Demonio_FacAuto.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Demonio_Filtros_X_Estacion.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Demonio_Prestashop.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Demonio_Wordpress.sql" />
@@ -6999,11 +7150,14 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Despachos_Transportistas.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_Archivos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_ObligPg.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_Aec.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_Caf.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_Configuracion.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_Documentos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_Firmar.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_NotifxCorreo.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_ReccDet.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_ReccEnc.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_Trackid.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Empresas.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Entidades.sql" />
@@ -7022,6 +7176,8 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Licencia.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Licencia_Mod.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Linea_Oferta.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_ListaLC_Programadas.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_ListaLC_Programadas_Detalles.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_ListaPreCosto.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_ListaPreCosto_Enc.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_ListaPreGlobal.sql" />
@@ -7058,9 +7214,11 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_Asociacion.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_Asociacion_Respaldo.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_CodQR.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_CodQRLogDoc.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_Dimensiones.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_Doc_Ult_Ventas.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_Imagenes.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_ImpAdicional.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_Log_Compras.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_Padres.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_PrestaShop.sql" />
@@ -7146,6 +7304,8 @@
     <Content Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Sql\SQLQuery SumTotalQty Venta X Periodo.sql" />
     <Content Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Sql\SQLQuery Ult 3 compras X producto.sql" />
     <None Include="03 Sistemas\Demonio automatico\Procedimientos\Recursos\Sql\SQLQuery Cierrer Docmuento.sql" />
+    <Content Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Recursos\Sql\SQLQuery Crear Tabla Paso InfStockProyecVnta.sql" />
+    <Content Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Recursos\Sql\SQLQuery Actualiza datos InfStockProyecVnta.sql" />
     <Content Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Recursos\Sql\SQLQuery Informe de Stock segun proyeccion de venta con detalle.sql" />
     <Content Include="03 Sistemas\Informes\Ventas\Margenes de venta y proyeccion\Recursos\Sql\SQLQuery Revision Margenes SeaGarden Con Mediana.sql" />
     <None Include="03 Sistemas\Informes\Ventas\Margenes venta\Sql\Margenes de venta2.sql" />
@@ -7270,6 +7430,26 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.CONSULTA.TRACKID\HEFESTO.CONSULTA.TRACKID.csproj">
+      <Project>{7eaa3266-f348-45c7-adcb-b4b9efa1e19e}</Project>
+      <Name>HEFESTO.CONSULTA.TRACKID</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.DTE.ENVIO.SETDTE\HEFESTO.DTE.AUTENTICACION.ENT\HEFESTO.DTE.AUTENTICACION.ENT.csproj">
+      <Project>{6d1e9c54-ba9f-4e37-bbd8-592cfb5ba8c6}</Project>
+      <Name>HEFESTO.DTE.AUTENTICACION.ENT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.DTE.ENVIO.SETDTE\HEFESTO.DTE.AUTENTICACION\HEFESTO.DTE.AUTENTICACION.csproj">
+      <Project>{d6edae47-ae7f-4a42-bc8c-5ee83d5a1e1e}</Project>
+      <Name>HEFESTO.DTE.AUTENTICACION</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.DTE.ENVIO.SETDTE\HEFESTO.ENVIO.SETDTE.CLIENTE\HEFESTO.ENVIO.SETDTE.CLIENTE.csproj">
+      <Project>{0e857171-0fa8-4d20-959d-e2b9555015aa}</Project>
+      <Name>HEFESTO.ENVIO.SETDTE.CLIENTE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.DTE.ENVIO.SETDTE\HEFESTO.ENVIO.SETDTE.FORM\HEFESTO.ENVIO.SETDTE.FORM.csproj">
+      <Project>{e3e05ec7-7d5e-4d0d-807b-166250c5eebb}</Project>
+      <Name>HEFESTO.ENVIO.SETDTE.FORM</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.FIRMA.DOC.FORM\HEFESTO.FIRMA.DOC.FORM\HEFESTO.FIRMA.DOC.FORM.csproj">
       <Project>{e30ead6e-db52-4d07-a5d3-37af75b1ec42}</Project>
       <Name>HEFESTO.FIRMA.DOC.FORM</Name>
@@ -7277,6 +7457,18 @@
     <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.FIRMA.DOC.FORM\HEFESTO.FIRMA.DOCUMENTO\HEFESTO.FIRMA.DOCUMENTO.csproj">
       <Project>{f9910cdc-2faa-4e71-8f62-cbd1a7ebac89}</Project>
       <Name>HEFESTO.FIRMA.DOCUMENTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HefestoCesionV12\HefestoCesionV12.csproj">
+      <Project>{3f91f195-975a-4f79-854b-7026cadb8a67}</Project>
+      <Name>HefestoCesionV12</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFSIILIBDTES BOLETAS ELECTRÓNICAS 2022\HEFSIILIBDTES\HEFSIILIBDTES.csproj">
+      <Project>{ad94e747-4598-499c-8ea3-f6013acffcd5}</Project>
+      <Name>HEFSIILIBDTES</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFSIIREGCOMPRAVENTAS\HEFESTO.SII.V2020.BG.QUERY.LIB\HEFSIIREGCOMPRAVENTAS.LIB.csproj">
+      <Project>{965eb04b-532a-4d19-b2c2-a3f5495cde87}</Project>
+      <Name>HEFSIIREGCOMPRAVENTAS.LIB</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -7333,7 +7525,9 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="03 Sistemas\Servicio Tecnico\Estados\Recetas\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

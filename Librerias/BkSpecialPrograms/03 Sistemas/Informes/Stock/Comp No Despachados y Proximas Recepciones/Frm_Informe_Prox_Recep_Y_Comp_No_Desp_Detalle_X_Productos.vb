@@ -11,6 +11,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Detalle_X_Productos
     Dim _Unidad As Integer
 
     Dim _Tbl_Productos, _Tbl_Detalle As DataTable
+    Dim _Tbl_FiltroProductos As DataTable
 
     Enum Enum_Informe_Padre
         Informe_Proximas_Recpciones
@@ -20,10 +21,10 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Detalle_X_Productos
     Dim _Informe_Padre As Enum_Informe_Padre
 
 
-    Public Sub New(ByVal Informe_Padre As Enum_Informe_Padre,
-                   ByVal Nombre_Tabla_Paso As String,
-                   ByVal SqlFiltro As String,
-                   ByVal Unidad As Integer)
+    Public Sub New(Informe_Padre As Enum_Informe_Padre,
+                   Nombre_Tabla_Paso As String,
+                   SqlFiltro As String,
+                   Unidad As Integer)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -38,9 +39,11 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Detalle_X_Productos
         Sb_Formato_Generico_Grilla(Grilla_Productos, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
         Sb_Formato_Generico_Grilla(Grilla_Documentos, 15, New Font("Tahoma", 7), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
-    Private Sub Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Detalle_X_Productos_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Detalle_X_Productos_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         If _Informe_Padre = Enum_Informe_Padre.Informe_Compromisos_No_Despachados Then
             Me.Text = "INFORME DE COMPROMISOS NO DESPACHADOS NIVEL PRODUCTOS"
@@ -77,8 +80,17 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Detalle_X_Productos
 
     Sub Sb_Actualizar_Grillas()
 
+        Btn_Quitar_Filtro.Visible = Not IsNothing(_Tbl_FiltroProductos)
+
+        Dim _SqlFiltro_Prod = String.Empty
+
+        If Not IsNothing(_Tbl_FiltroProductos) Then
+            _SqlFiltro_Prod = Generar_Filtro_IN(_Tbl_FiltroProductos, "", "Codigo", False, False, "'")
+            _SqlFiltro_Prod = "And KOPRCT In " & _SqlFiltro_Prod & vbCrLf
+        End If
+
         Consulta_sql = My.Resources.Recursos_Proximas_Recepciones.SQLQuery_Sub_Inf_Recep_Desp_Detalle_x_Producto
-        Consulta_sql = Replace(Consulta_sql, "#Filtro#", _SqlFiltro)
+        Consulta_sql = Replace(Consulta_sql, "#Filtro#", _SqlFiltro & _SqlFiltro_Prod)
         Consulta_sql = Replace(Consulta_sql, "#Ud#", _Unidad)
         Consulta_sql = Replace(Consulta_sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
 
@@ -251,11 +263,11 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Detalle_X_Productos
 
     End Sub
 
-    Private Sub Btn_Excel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Excel.Click
-        ExportarTabla_JetExcel_Tabla(_Tbl_Detalle, Me, "Productos_Detalle")
+    Private Sub Btn_Excel_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Excel.Click
+        ShowContextMenu(Menu_Contextual_Excel)
     End Sub
 
-    Private Sub Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
 
         Dim _Nombre_Grilla = CType(sender, Control).Name
 
@@ -281,7 +293,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Detalle_X_Productos
 
     End Sub
 
-    Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Dim _Nombre_Grilla = CType(sender, Control).Name
 
@@ -298,7 +310,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Detalle_X_Productos
     End Sub
 
 
-    Private Sub Btn_Estadisticas_Producto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Estadisticas_Producto.Click
+    Private Sub Btn_Estadisticas_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Estadisticas_Producto.Click
 
         Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
 
@@ -321,7 +333,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Detalle_X_Productos
 
     End Sub
 
-    Private Sub Btn_Ver_Documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ver_Documento.Click
+    Private Sub Btn_Ver_Documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_Documento.Click
 
         Dim _Fila As DataGridViewRow = Grilla_Documentos.Rows(Grilla_Documentos.CurrentRow.Index)
 
@@ -333,17 +345,113 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Detalle_X_Productos
 
     End Sub
 
+    Private Sub Btn_Filtrar_Productos_Click(sender As Object, e As EventArgs) Handles Btn_Filtrar_Productos.Click
+
+        Dim _Sql_Filtro_Condicion_Extra = "And KOPR In (Select KOPRCT From " & _Nombre_Tabla_Paso & ")"
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl_FiltroProductos,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
+                               False, False) Then
+
+            _Tbl_FiltroProductos = _Filtrar.Pro_Tbl_Filtro
+            If _Filtrar.Pro_Filtro_Todas Then
+                _Tbl_FiltroProductos = Nothing
+            End If
+
+            If Not IsNothing(_Tbl_FiltroProductos) Then
+                Btn_Filtrar_Productos.Text = "Filtro aplicado..."
+            Else
+                Btn_Filtrar_Productos.Text = "Filtrar productos"
+            End If
+
+            Sb_Actualizar_Grillas()
+            Sb_Formato_Grillas()
+
+            For Each _Fila As DataGridViewRow In Grilla_Productos.Rows
+
+                'If Global_Thema = Enum_Themas.Oscuro Then
+                '    _Fila.Cells("CAPREX" & _Unidad).Style.ForeColor = Color.Green
+                '    _Fila.Cells("SALDO_Ud" & _Unidad).Style.ForeColor = Color.FromArgb(221, 80, 68)
+                'Else
+                '    _Fila.Cells("CAPREX" & _Unidad).Style.ForeColor = Color.Green
+                '    _Fila.Cells("SALDO_Ud" & _Unidad).Style.ForeColor = Color.Red
+                'End If
+
+                _Fila.Cells("CAPREX" & _Unidad).Style.ForeColor = Verde
+                _Fila.Cells("SALDO_Ud" & _Unidad).Style.ForeColor = Rojo
+
+            Next
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_Quitar_Filtro_Click(sender As Object, e As EventArgs) Handles Btn_Quitar_Filtro.Click
+
+        Btn_Quitar_Filtro.Visible = False
+        _Tbl_FiltroProductos = Nothing
+        Btn_Filtrar_Productos.Text = "Filtrar productos"
+        Sb_Actualizar_Grillas()
+        Sb_Formato_Grillas()
+
+        For Each _Fila As DataGridViewRow In Grilla_Productos.Rows
+
+            'If Global_Thema = Enum_Themas.Oscuro Then
+            '    _Fila.Cells("CAPREX" & _Unidad).Style.ForeColor = Color.Green
+            '    _Fila.Cells("SALDO_Ud" & _Unidad).Style.ForeColor = Color.FromArgb(221, 80, 68)
+            'Else
+            '    _Fila.Cells("CAPREX" & _Unidad).Style.ForeColor = Color.Green
+            '    _Fila.Cells("SALDO_Ud" & _Unidad).Style.ForeColor = Color.Red
+            'End If
+
+            _Fila.Cells("CAPREX" & _Unidad).Style.ForeColor = Verde
+            _Fila.Cells("SALDO_Ud" & _Unidad).Style.ForeColor = Rojo
+
+        Next
+
+    End Sub
+
+    Private Sub Btn_Excel_Detalle_Click(sender As Object, e As EventArgs) Handles Btn_Excel_Detalle.Click
+        ExportarTabla_JetExcel_Tabla(_Tbl_Detalle, Me, "Productos_Detalle")
+    End Sub
+
+    Private Sub Btn_Excel_Resumen_Click(sender As Object, e As EventArgs) Handles Btn_Excel_Resumen.Click
+
+        Dim _SqlFiltro_Prod = String.Empty
+
+        If Not IsNothing(_Tbl_FiltroProductos) Then
+            _SqlFiltro_Prod = Generar_Filtro_IN(_Tbl_FiltroProductos, "", "Codigo", False, False, "'")
+            _SqlFiltro_Prod = "And KOPRCT In " & _SqlFiltro_Prod & vbCrLf
+        End If
+
+        Consulta_sql = "Select ENDO,SUENDO,NOKOEN,TIDO,Ps.NUDO,FEEMDO,FEERLI,KOFULIDO,NOKOFU AS 'VENDEDOR',BOSULIDO,BODEGA," &
+                       "KOPRCT,NOKOPR,UD01PR,CAPRCO1,PPPRNE" & vbCrLf &
+                        "From " & _Nombre_Tabla_Paso & " Ps" & vbCrLf &
+                        "Left Join TABFU On KOFU = KOFULIDO" & vbCrLf &
+                        "Where 1 > 0" & vbCrLf &
+                        _SqlFiltro & _SqlFiltro_Prod
+        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Productos_Resumen")
+
+    End Sub
+
     Private Sub Grilla_Detalle_RowEnter()
 
         For Each _Fila As DataGridViewRow In Grilla_Documentos.Rows
 
-            If Global_Thema = Enum_Themas.Oscuro Then
-                _Fila.Cells("CAPREX" & _Unidad).Style.ForeColor = Color.Green
-                _Fila.Cells("SALDO_Ud" & _Unidad).Style.ForeColor = Color.FromArgb(221, 80, 68)
-            Else
-                _Fila.Cells("CAPREX" & _Unidad).Style.ForeColor = Color.Green
-                _Fila.Cells("SALDO_Ud" & _Unidad).Style.ForeColor = Color.Red
-            End If
+            'If Global_Thema = Enum_Themas.Oscuro Then
+            '    _Fila.Cells("CAPREX" & _Unidad).Style.ForeColor = Color.Green
+            '    _Fila.Cells("SALDO_Ud" & _Unidad).Style.ForeColor = Color.FromArgb(221, 80, 68)
+            'Else
+            '    _Fila.Cells("CAPREX" & _Unidad).Style.ForeColor = Color.Green
+            '    _Fila.Cells("SALDO_Ud" & _Unidad).Style.ForeColor = Color.Red
+            'End If
+
+            _Fila.Cells("CAPREX" & _Unidad).Style.ForeColor = Verde
+            _Fila.Cells("SALDO_Ud" & _Unidad).Style.ForeColor = Rojo
 
         Next
 

@@ -85,6 +85,10 @@ Public Class Clas_PDF_Crear_Documento
                        "Where TipoDoc = '" & _TipoDoc & "' And NombreFormato = '" & _NombreFormato & "' And Subtido = '" & _SubTido & "'"
             _TblEncForm = _Sql.Fx_Get_Tablas(Consulta_sql)
 
+            If Not CBool(_TblEncForm.Rows.Count) Then
+                Throw New System.Exception("No existe el formato de documento: " & _NombreFormato)
+            End If
+
             Dim _Es_Picking = _TblEncForm.Rows(0).Item("Es_Picking")
 
             Dim _Condicion_Extra_Maeddo As String

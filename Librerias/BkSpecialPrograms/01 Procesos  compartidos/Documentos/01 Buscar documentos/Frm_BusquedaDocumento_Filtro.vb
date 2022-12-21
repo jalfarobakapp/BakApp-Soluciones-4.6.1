@@ -444,6 +444,9 @@ Public Class Frm_BusquedaDocumento_Filtro
         Dim _Sql_Filtro_Sucursal_Doc = String.Empty
         Dim _Sql_Filtro_Vales_Transitorios = String.Empty
         Dim _Sql_Orden = String.Empty
+        Dim _Sql_Occ = String.Empty
+        Dim _Sql_Placa = String.Empty
+        Dim _Sql_RetMerca = String.Empty
 
         Dim _Usar_Otro_Filtros As Boolean
 
@@ -637,6 +640,22 @@ Public Class Frm_BusquedaDocumento_Filtro
             _Sql_Filtro_Vales_Transitorios = " And NUDONODEFI In (0)"
         End If
 
+        If Not String.IsNullOrEmpty(Txt_Ocdo.Text.Trim) Then
+            _Sql_Occ = "And IDMAEEDO In (Select IDMAEEDO From MAEEDOOB Where OCDO Like '" & Txt_Ocdo.Text.Trim & "')" & vbCrLf
+        End If
+
+        If Not String.IsNullOrEmpty(Txt_Placapat.Text) Then
+            _Sql_Placa = "And IDMAEEDO In (Select IDMAEEDO From MAEEDOOB Where PLACAPAT Like '" & Txt_Placapat.Text.Trim & "')" & vbCrLf
+        End If
+
+        If Not String.IsNullOrEmpty(Txt_CodRetirador.Text) Then
+            _Sql_RetMerca = "And IDMAEEDO In (Select IDMAEEDO From MAEEDOOB Where DIENDESP Like '" & Txt_CodRetirador.Tag.Trim & "')" & vbCrLf
+        End If
+
+        Dim _Filtro_Observaciones = String.Empty
+
+        _Filtro_Observaciones = _Sql_Occ & _Sql_Placa & _Sql_RetMerca
+
 Buscar:
 
 
@@ -667,6 +686,8 @@ Buscar:
         Consulta_sql = Replace(Consulta_sql, "#Producto#", _Sql_Filtro_Producto)
         Consulta_sql = Replace(Consulta_sql, "#SucursalDocumento#", _Sql_Filtro_Sucursal_Doc)
         Consulta_sql = Replace(Consulta_sql, "#Orden#", _Sql_Orden)
+        Consulta_sql = Replace(Consulta_sql, "#Observaciones#", _Filtro_Observaciones)
+
 
         Consulta_sql = Replace(Consulta_sql, "#Left_Join_MAEEN_ENDOFI_SUENDOFI#", _Left_Join_MAEEN_ENDOFI_SUENDOFI)
         Consulta_sql = Replace(Consulta_sql, "#Campo_SUENDOFI#", _Campo_SUENDOFI)
@@ -857,6 +878,87 @@ Buscar:
 
     Private Sub Chk_Mostrar_Vales_Transitorios_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Mostrar_Vales_Transitorios.CheckedChanged
         _Mostrar_Vales_Transitorios = Chk_Mostrar_Vales_Transitorios.Checked
+    End Sub
+
+    Private Sub Txt_Placapat_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Placapat.ButtonCustomClick
+
+        Dim _Koenresp As String = _Sql.Fx_Trae_Dato("TABRETI", "KOENRESP", "KORETI = '" & Txt_CodRetirador.Tag & "'")
+
+        Dim _Sql_Filtro_Condicion_Extra As String
+
+        If Not String.IsNullOrEmpty(_Koenresp.Trim) Then
+
+            _Sql_Filtro_Condicion_Extra = "And KOENRESP = '" & _Koenresp & "'"
+
+        End If
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Tabla = "TABPLACA"
+        _Filtrar.Campo = "PLACA"
+        _Filtrar.Descripcion = "DESCRIP"
+
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "PLACAS PATENTE"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, _Sql_Filtro_Condicion_Extra,
+                               Nothing, False, True) Then
+
+            Dim _Tbl_Placa As DataTable = _Filtrar.Pro_Tbl_Filtro
+
+            Dim _Row As DataRow = _Tbl_Placa.Rows(0)
+
+            Dim _Codigo = _Row.Item("Codigo").ToString.Trim
+            Dim _Descripcion = _Row.Item("Descripcion").ToString.Trim
+
+            Txt_Placapat.Tag = _Codigo
+            Txt_Placapat.Text = _Codigo
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_Ocdo_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Ocdo.ButtonCustomClick
+        Txt_Ocdo.Text = String.Empty
+    End Sub
+
+    Private Sub Txt_CodRetirador_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CodRetirador.ButtonCustomClick
+        Try
+
+            Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+            _Filtrar.Tabla = "TABRETI"
+            _Filtrar.Campo = "KORETI"
+            _Filtrar.Descripcion = "NORETI"
+
+            _Filtrar.Pro_Nombre_Encabezado_Informe = "RETIRADORES DE MERCADERIA"
+
+            If _Filtrar.Fx_Filtrar(Nothing,
+                                   Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "",
+                                   Nothing, False, True) Then
+
+                Dim _Tbl_Retirador As DataTable = _Filtrar.Pro_Tbl_Filtro
+
+                Dim _Row As DataRow = _Tbl_Retirador.Rows(0)
+
+                Dim _Codigo = _Row.Item("Codigo").ToString.Trim
+                Dim _Descripcion = _Row.Item("Descripcion").ToString.Trim
+
+                Txt_CodRetirador.Tag = _Codigo
+                Txt_CodRetirador.Text = _Codigo & " - " & _Descripcion
+
+            End If
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End Try
+    End Sub
+
+    Private Sub Txt_CodRetirador_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CodRetirador.ButtonCustom2Click
+        Txt_CodRetirador.Text = String.Empty
+    End Sub
+
+    Private Sub Txt_Placapat_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Placapat.ButtonCustom2Click
+        Txt_Placapat.Text = String.Empty
     End Sub
 
     Private Sub Frm_BusquedaDocumento_Filtro_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown

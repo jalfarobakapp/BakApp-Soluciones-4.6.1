@@ -34,8 +34,6 @@ Update #Paso1 Set Dias_Transc = Datediff(D,FIOT,Getdate())
 Update #Paso1 Set REFERENCIA = (Select REFERENCIA From POTE Where POTE.NUMOT = #Paso1.NUMOT)
 --Update #Paso1 Set Fabricar_SubOt = (Select REFERENCIA From POTE Where POTE.NUMOT = #Paso1.NUMOT)
 
-
-
 -- 
 Select POTPR.*,CAST('' As VARCHAR(50)) As DESCRIPCION_PR,POPER.NOMBREOP,POPER.UDAD,POPER.OBREROS,POPER.CODMAQ,PVELPROP.NOOPPR,PVELPROP.CODMAQOPPR,
        Cast('' As varchar(50)) As NOMBREMAQ,
@@ -90,7 +88,6 @@ From #Paso2 Z1
 
 Update #Paso2 Set Av_Op = Case When Cant_Operaciones <> 0 Then Round(Operaciones_Realizadas/Cant_Operaciones,4) Else 0 End
 
-
 Select  Pd.IDPDATFAD,IDPDATFAE,ARCHIRST,IDRST,Pd.EMPRESA,NUMDF,NUMOT,NUMODC,Pd.OPERACION,Op.NOMBREOP,Pd.CODMAQ,Mq.NOMBREMAQ,FECHA,NREGOTL,CODIGO,OBRERO,NOMBREOB,Pd.UDAD,REALJOR,FECHINI,
         HORAINI,FECHTER,HORATER,TIEMPO
 		--OBRERO1,OBRERO2,OBRERO3,OBRERO4,OBRERO5,OBRERO6,ESULTOPER,UDAD2,REALJOR2,RLUD
@@ -106,26 +103,23 @@ Left Join TCAUDET Tc On Tc.KOCAUDET = Pd.KOCAUDET
 Left Join #Base_Bakapp#Zw_Pdp_MaquinaVsProductos Mqb On Pd.IDPDATFAE = Mqb.Idpdatfae
 Where ARCHIRST = 'POTPR' And IDRST IN (Select IDPOTPR From #Paso)
 
-Select  IDOBREFAD,IDPDATFAD,OBRERO,FECHINIOB,HORAINIOB,FECHTEROB,HORATEROB,TIEMPOOB,VALHORA,VALUNID,VALADI1,VALADI2,KOJORNADA,TIEMPOOBHE
+Select IDOBREFAD,IDPDATFAD,OBRERO,FECHINIOB,HORAINIOB,FECHTEROB,HORATEROB,TIEMPOOB,VALHORA,VALUNID,VALADI1,VALADI2,KOJORNADA,TIEMPOOBHE
 Into #Paso4
-From   POBREFAD
+From POBREFAD
 Where IDPDATFAD In (Select IDPDATFAD From #Paso3)
 
-
-
+Select NUMDF,FEVENTO,NOKOCARAC
+Into #Paso5
+From MEVENTO 
+Inner Join #Paso3 On ARCHIRVE = 'PDATFAE' And IDRVE = IDPDATFAE
 ----------------------------
---Select * From #Paso
 
 Select *,Round(Realizado/Fabricar,4) As Av_Fb_Ot,
          Round(Operaciones_Realizadas/Cant_Operaciones,4) As Av_Op,
          Case When Fabricar_SubOt > 0 then Round(Realizado_SubOt/Fabricar_SubOt,4) Else 0 End As Av_Fb_Partes_SubOt
 From #Paso1
 
-Select *
-From #Paso2 Z1
---Where NIVEL = 0
-
-
+Select * From #Paso2 Z1
 
 Select * From #Paso2 Order By NIVEL,PERTENECE
 
@@ -136,9 +130,11 @@ Order By NREGOTL,ORDEN
 
 Select * From #Paso3
 Select * From #Paso4
+Select * From #Paso5
 
 Drop Table #Paso
 Drop Table #Paso1
 Drop Table #Paso2
 Drop Table #Paso3
 Drop Table #Paso4
+Drop Table #Paso5

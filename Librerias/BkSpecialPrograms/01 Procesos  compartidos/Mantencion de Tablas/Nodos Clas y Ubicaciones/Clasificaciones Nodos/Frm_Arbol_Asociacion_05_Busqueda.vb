@@ -65,7 +65,7 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
         Get
             Return _Tbl_Nodos_Seleccionados
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Nodos_Seleccionados = value
         End Set
     End Property
@@ -73,7 +73,7 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
         Get
             Return _Seleccionar_Todo
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Seleccionar_Todo = value
         End Set
     End Property
@@ -86,7 +86,7 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
         Get
             Return _Filtro_Unico_Seleccionado
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Filtro_Unico_Seleccionado = value
         End Set
     End Property
@@ -94,13 +94,13 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
         Get
             Return _Identificacdor_NodoPadre
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _Identificacdor_NodoPadre = value
         End Set
     End Property
 
-    Public Sub New(ByVal Tipo_De_Carpeta_Mostrar As Enum_Tipo_De_Carpeta,
-                   Optional ByVal Seleccionar_Varios As Boolean = False)
+    Public Sub New(Tipo_De_Carpeta_Mostrar As Enum_Tipo_De_Carpeta,
+                   Optional Seleccionar_Varios As Boolean = False)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -116,7 +116,7 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
 
     End Sub
 
-    Private Sub Frm_Inf_Ventas_X_Periodo_Tabla_Vista_Informe_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Inf_Ventas_X_Periodo_Tabla_Vista_Informe_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         Sb_Actualizar_Grilla()
@@ -131,17 +131,10 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
 
     End Sub
 
-
-    'Function Fx_Hijos(ByVal _Codigo_Nodo As Integer, _
-    '                  ByVal _Sql_Ar As String, _
-    '                  ByVal _Full_Path As String, _
-    '                  Optional ByVal _Solo_Hijos As Boolean = False, _
-    '                  Optional ByVal _Nro_Padres As Integer = 0) As String
-
-    Private Function Fx_Hijos(ByVal _Codigo_Nodo As Integer,
-                              ByVal _Sql_Ar As String,
-                              ByVal _Full_Path As String,
-                              Optional ByVal _Nro_Padres As Integer = 0) As String
+    Private Function Fx_Hijos(_Codigo_Nodo As Integer,
+                              _Sql_Ar As String,
+                              _Full_Path As String,
+                              Optional _Nro_Padres As Integer = 0) As String
 
         Dim _Clas_Arbol_Asociaciones As New Clas_Arbol_Asociaciones(Me)
 
@@ -181,7 +174,7 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
                 _Solo_Hijos = False : _Solo_Padres = True
         End Select
 
-        Consulta_sql = "SELECT * FROM " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
                        "Where 1 > 0 And Identificacdor_NodoPadre = " & _Codigo_Nodo & vbCrLf & _Sql_Clas_Unica & vbCrLf &
                        "Order by Descripcion"
 
@@ -216,14 +209,6 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
 
                 _Semi += _Descripcion
 
-                '_Sql_Hijo += _Sql_Ar + vbCrLf & _
-                '             "Insert Into #Paso_Vista (Codigo_Nodo,Identificacdor_NodoPadre,Descripcion,Es_Padre," & _
-                '             "Es_Seleccionable,Clas_Unica_X_Producto,Nodo_Raiz,Full_Path,Semi_Path,Nro_Padres) Values " & _
-                '             "('" & _Codigo & "','" & _Identificacdor_NodoPadre & "','" & _Descripcion & "'," & _
-                '             CInt(_Es_Padre) * -1 & "," & CInt(_Es_Seleccionable) * -1 & "," & _
-                '             CInt(_Clas_Unica_X_Producto) * -1 & "," & _Nodo_Raiz & _
-                '             ",'" & _Full & "','" & Space((_Nro_Padres * 2) + 1) & _Descripcion & "'," & _Nro_Padres & ")" & vbCrLf
-
                 _Sql_Hijo += _Sql_Ar + vbCrLf &
                              "Insert Into #Paso_Vista (Codigo_Nodo,Identificacdor_NodoPadre,Descripcion,Es_Padre," &
                              "Es_Seleccionable,Clas_Unica_X_Producto,Nodo_Raiz,Full_Path,Semi_Path,Nro_Padres) Values " &
@@ -237,8 +222,6 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
 
             Else
 
-
-
                 If String.IsNullOrEmpty(_Descripcion) Then
                     _Descripcion = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TblArbol_Asociaciones",
                                                      "Descripcion", "Codigo_Nodo = '" & _Codigo_Nodo & "'")
@@ -248,21 +231,13 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
 
                 For i = 0 To _Nro_Padres
                     If i > 0 Then
-                        _Semi += Space(i + 1) '& "..\" & _Descripcion
+                        _Semi += Space(i + 1)
                     End If
                 Next
 
                 _Semi = _Semi + _Descripcion
 
                 If _Solo_Padres Then
-
-                    '_Sql_Hijo += _Sql_Ar + vbCrLf & _
-                    '            "Insert Into #Paso_Vista (Codigo_Nodo,Identificacdor_NodoPadre,Descripcion,Es_Padre," & _
-                    '             "Es_Seleccionable,Clas_Unica_X_Producto,Nodo_Raiz,Full_Path,Semi_Path,Nro_Padres) Values " & _
-                    '             "('" & _Codigo & "','" & _Identificacdor_NodoPadre & "','" & _Descripcion & "'," & _
-                    '             CInt(_Es_Padre) * -1 & "," & CInt(_Es_Seleccionable) * -1 & "," & _
-                    '             CInt(_Clas_Unica_X_Producto) * -1 & _
-                    '             "," & _Nodo_Raiz & ",'" & _Full & "','" & Space((_Nro_Padres * 2) + 1) & _Descripcion & "'," & _Nro_Padres & ")" & vbCrLf
 
                     _Sql_Hijo += _Sql_Ar + vbCrLf &
                                 "Insert Into #Paso_Vista (Codigo_Nodo,Identificacdor_NodoPadre,Descripcion,Es_Padre," &
@@ -276,9 +251,8 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
 
             End If
 
-            'If Not _Solo_Hijos Then
             _Sql_Hijo += Fx_Hijos(_Codigo_Nodo, _Sql_Ar, _Full, _Nro_Padres + 1)
-            'End If
+
         Next
 
         Return _Sql_Hijo
@@ -286,6 +260,8 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
     End Function
 
     Sub Sb_Actualizar_Grilla()
+
+        Me.Cursor = Cursors.WaitCursor
 
         Dim _Sql_Marcar_Seleccionados = String.Empty
         Dim _Filtro_Solo_Seleccionados As String = String.Empty
@@ -385,6 +361,8 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
 
         Sb_Marcar_Grilla()
 
+        Me.Cursor = Cursors.Default
+
     End Sub
 
     Sub Sb_Marcar_Grilla()
@@ -393,11 +371,12 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
         Next
     End Sub
 
-    Sub Sb_Marcar_Fila(ByVal _Fila As DataGridViewRow)
+    Sub Sb_Marcar_Fila(_Fila As DataGridViewRow)
 
         If _Seleccionar_Varios Then
 
             Dim _Chk As Boolean = _Fila.Cells("Chk").Value
+            Dim _Es_Seleccionable As Boolean = _Fila.Cells("Es_Seleccionable").Value
 
             If _Chk Then
 
@@ -433,17 +412,23 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
 
             End If
 
+            If _Es_Seleccionable Then
+                _Fila.DefaultCellStyle.Font = New Font("Courier New", 8, FontStyle.Italic)
+            Else
+                _Fila.DefaultCellStyle.Font = New Font("Courier New", 10, FontStyle.Bold)
+            End If
+
         End If
 
     End Sub
 
-    Private Sub Txt_Descripcion_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Txt_Descripcion.TextChanged
+    Private Sub Txt_Descripcion_TextChanged(sender As System.Object, e As System.EventArgs) Handles Txt_Descripcion.TextChanged
         _Dv.RowFilter = String.Format("Codigo_Nodo+Full_Path Like '%{0}%'", Txt_Descripcion.Text)
         Sb_Marcar_Grilla()
         Lbl_Full_Path.Text = "..."
     End Sub
 
-    Private Sub Sb_Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Sb_Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         If _Seleccionar_Varios Then Return
 
@@ -474,7 +459,7 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
         If _Aceptar Then Me.Close()
     End Sub
 
-    Private Sub Sb_Grilla_CellEndEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Sb_Grilla_CellEndEdit(sender As Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
@@ -504,7 +489,7 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
 
     End Sub
 
-    Function Fx_Marcar_Hijos(ByVal _Fila As DataGridViewRow, ByVal _Chk As Boolean)
+    Function Fx_Marcar_Hijos(_Fila As DataGridViewRow, _Chk As Boolean)
 
         Dim _Codigo_Nodo As Integer = _Fila.Cells("Codigo_Nodo").Value
         Dim _Descripcion As String = _Fila.Cells("Descripcion").Value
@@ -550,11 +535,11 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
 
     End Function
 
-    Private Sub Sb_Grilla_CellMouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellMouseEventArgs)
+    Private Sub Sb_Grilla_CellMouseUp(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs)
         Grilla.EndEdit()
     End Sub
 
-    Private Sub Btn_Aceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Aceptar.Click
+    Private Sub Btn_Aceptar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Aceptar.Click
 
         Dim _Fila As DataGridViewRow
 
@@ -607,12 +592,12 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
 
     End Sub
 
-    Private Sub Grilla_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEndEdit
+    Private Sub Grilla_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEndEdit
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Sb_Marcar_Fila(_Fila)
     End Sub
 
-    Private Sub Grilla_CellEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEnter
+    Private Sub Grilla_CellEnter(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEnter
         Try
             Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
             Lbl_Full_Path.Text = _Fila.Cells("Full_Path").Value
@@ -621,7 +606,7 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
         End Try
     End Sub
 
-    Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
     End Sub
 

@@ -50,9 +50,7 @@ Public Class Frm_Arbol_Asociacion_05_Crear_Nueva_Raiz
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        If Global_Thema = Enum_Themas.Oscuro Then
-            BtnGrabar.ForeColor = Color.White
-        End If
+        Sb_Color_Botones_Barra(Bar2)
 
     End Sub
 

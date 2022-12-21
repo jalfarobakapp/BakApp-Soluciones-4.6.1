@@ -29,7 +29,7 @@ Public Class InformesStock
 
     Private Sub Btn_Proyeccion_Stock_Click(sender As Object, e As EventArgs) Handles Btn_Proyeccion_Stock.Click
 
-        Dim Fm As New Frm_InfProyStXVnta
+        Dim Fm As New Frm_InfProyStXVnta_Estudio
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

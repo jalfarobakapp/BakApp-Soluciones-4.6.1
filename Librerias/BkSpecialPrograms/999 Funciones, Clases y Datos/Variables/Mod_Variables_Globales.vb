@@ -176,7 +176,10 @@ Public Module Mod_Variables_Globales
     Public Property Rojo As Color
         Get
             If Global_Thema = Enum_Themas.Oscuro Then
-                Return Color.FromArgb(220, 78, 66)
+                Return Color.FromArgb(230, 123, 115)  'Rojo mas claro
+                'Return Color.FromArgb(225, 104, 93)  'Rojo claro
+                'Return Color.FromArgb(255, 182, 193) 'Rosado
+                'Return Color.FromArgb(220, 78, 66)   'Rojo
             Else
                 Return Color.Red
             End If

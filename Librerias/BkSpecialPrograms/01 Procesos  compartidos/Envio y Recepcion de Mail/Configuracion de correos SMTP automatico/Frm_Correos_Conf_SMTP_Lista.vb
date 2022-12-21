@@ -42,8 +42,7 @@ Public Class Frm_Correos_Conf_SMTP_Lista
 
     Sub Sb_Actualizar_Grilla()
 
-        Consulta_Sql = "SELECT Nombre_Usuario,Contrasena,Host,Puerto,SSL
-                        FROM " & _Global_BaseBk & "Zw_Correos_Cuentas Order by Nombre_Usuario"
+        Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Correos_Cuentas Order by Nombre_Usuario"
 
         With Grilla
 

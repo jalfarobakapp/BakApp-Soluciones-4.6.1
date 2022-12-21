@@ -57,6 +57,7 @@ Partial Class Frm_SeleccionarListaPrecios
         Me.BtnAceptar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.BtnAceptar.ForeColor = System.Drawing.Color.Black
         Me.BtnAceptar.Image = CType(resources.GetObject("BtnAceptar.Image"), System.Drawing.Image)
+        Me.BtnAceptar.ImageAlt = CType(resources.GetObject("BtnAceptar.ImageAlt"), System.Drawing.Image)
         Me.BtnAceptar.Name = "BtnAceptar"
         Me.BtnAceptar.Text = "ACEPTAR"
         '

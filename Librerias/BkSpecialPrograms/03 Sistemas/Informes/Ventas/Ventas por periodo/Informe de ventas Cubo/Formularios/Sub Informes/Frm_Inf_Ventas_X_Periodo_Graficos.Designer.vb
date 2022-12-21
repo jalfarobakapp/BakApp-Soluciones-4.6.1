@@ -108,6 +108,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.Btn_Filtro_Pro_Zonas = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_Filtros_Suc_Bod = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem4 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Filtro_SucursalDoc = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Filtro_Sucursales = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Filtro_Bodegas = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_Filtros_Funcionarios = New DevComponents.DotNetBar.ButtonItem()
@@ -1150,7 +1151,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.Menu_Contextual_Filtros_Suc_Bod.AutoExpandOnClick = True
         Me.Menu_Contextual_Filtros_Suc_Bod.ImageAlt = CType(resources.GetObject("Menu_Contextual_Filtros_Suc_Bod.ImageAlt"), System.Drawing.Image)
         Me.Menu_Contextual_Filtros_Suc_Bod.Name = "Menu_Contextual_Filtros_Suc_Bod"
-        Me.Menu_Contextual_Filtros_Suc_Bod.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem4, Me.Btn_Filtro_Sucursales, Me.Btn_Filtro_Bodegas})
+        Me.Menu_Contextual_Filtros_Suc_Bod.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem4, Me.Btn_Filtro_SucursalDoc, Me.Btn_Filtro_Sucursales, Me.Btn_Filtro_Bodegas})
         Me.Menu_Contextual_Filtros_Suc_Bod.Text = "Filtros Sucursales-Bodegas"
         '
         'LabelItem4
@@ -1166,12 +1167,20 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.LabelItem4.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
         Me.LabelItem4.Text = "Productos"
         '
+        'Btn_Filtro_SucursalDoc
+        '
+        Me.Btn_Filtro_SucursalDoc.Image = CType(resources.GetObject("Btn_Filtro_SucursalDoc.Image"), System.Drawing.Image)
+        Me.Btn_Filtro_SucursalDoc.ImageAlt = CType(resources.GetObject("Btn_Filtro_SucursalDoc.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Filtro_SucursalDoc.Name = "Btn_Filtro_SucursalDoc"
+        Me.Btn_Filtro_SucursalDoc.Text = "Filtrar por <b><font color=""#0072BC"">SUCURSAL</font></b> (Emisora Doc. Encabezado" &
+    ")"
+        '
         'Btn_Filtro_Sucursales
         '
         Me.Btn_Filtro_Sucursales.Image = CType(resources.GetObject("Btn_Filtro_Sucursales.Image"), System.Drawing.Image)
         Me.Btn_Filtro_Sucursales.ImageAlt = CType(resources.GetObject("Btn_Filtro_Sucursales.ImageAlt"), System.Drawing.Image)
         Me.Btn_Filtro_Sucursales.Name = "Btn_Filtro_Sucursales"
-        Me.Btn_Filtro_Sucursales.Text = "Filtrar por <b><font color=""#0072BC"">SUCURSALES</font></b>"
+        Me.Btn_Filtro_Sucursales.Text = "Filtrar por <b><font color=""#0072BC"">SUCURSAL</font></b> (Línea Doc. Detalle)"
         '
         'Btn_Filtro_Bodegas
         '
@@ -1749,7 +1758,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.TableLayoutPanel4.ColumnCount = 3
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.8022!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52.1978!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 117.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 135.0!))
         Me.TableLayoutPanel4.Controls.Add(Me.Label7, 2, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.Label5, 1, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.Label8, 0, 1)
@@ -1776,7 +1785,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         '
         Me.Label7.BackColor = System.Drawing.Color.Transparent
         Me.Label7.ForeColor = System.Drawing.Color.Black
-        Me.Label7.Location = New System.Drawing.Point(154, 1)
+        Me.Label7.Location = New System.Drawing.Point(136, 1)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(68, 17)
         Me.Label7.TabIndex = 129
@@ -1787,7 +1796,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         '
         Me.Label5.BackColor = System.Drawing.Color.Transparent
         Me.Label5.ForeColor = System.Drawing.Color.Black
-        Me.Label5.Location = New System.Drawing.Point(76, 1)
+        Me.Label5.Location = New System.Drawing.Point(67, 1)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(54, 16)
         Me.Label5.TabIndex = 128
@@ -1800,7 +1809,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.Label8.ForeColor = System.Drawing.Color.Black
         Me.Label8.Location = New System.Drawing.Point(4, 21)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(65, 19)
+        Me.Label8.Size = New System.Drawing.Size(56, 19)
         Me.Label8.TabIndex = 37
         Me.Label8.Text = "Días de venta"
         Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1809,9 +1818,9 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         '
         Me.Lbl_Dias_Habiles_R1.BackColor = System.Drawing.Color.Transparent
         Me.Lbl_Dias_Habiles_R1.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Dias_Habiles_R1.Location = New System.Drawing.Point(76, 21)
+        Me.Lbl_Dias_Habiles_R1.Location = New System.Drawing.Point(67, 21)
         Me.Lbl_Dias_Habiles_R1.Name = "Lbl_Dias_Habiles_R1"
-        Me.Lbl_Dias_Habiles_R1.Size = New System.Drawing.Size(71, 19)
+        Me.Lbl_Dias_Habiles_R1.Size = New System.Drawing.Size(62, 19)
         Me.Lbl_Dias_Habiles_R1.TabIndex = 38
         Me.Lbl_Dias_Habiles_R1.Text = "999"
         Me.Lbl_Dias_Habiles_R1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -1820,7 +1829,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         '
         Me.Lbl_Dias_Habiles_R2.BackColor = System.Drawing.Color.Transparent
         Me.Lbl_Dias_Habiles_R2.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Dias_Habiles_R2.Location = New System.Drawing.Point(154, 21)
+        Me.Lbl_Dias_Habiles_R2.Location = New System.Drawing.Point(136, 21)
         Me.Lbl_Dias_Habiles_R2.Name = "Lbl_Dias_Habiles_R2"
         Me.Lbl_Dias_Habiles_R2.Size = New System.Drawing.Size(80, 19)
         Me.Lbl_Dias_Habiles_R2.TabIndex = 44
@@ -1842,9 +1851,9 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         '
         Me.Lbl_Prom_Vta_Diario_R1.BackColor = System.Drawing.Color.Transparent
         Me.Lbl_Prom_Vta_Diario_R1.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Prom_Vta_Diario_R1.Location = New System.Drawing.Point(76, 41)
+        Me.Lbl_Prom_Vta_Diario_R1.Location = New System.Drawing.Point(67, 41)
         Me.Lbl_Prom_Vta_Diario_R1.Name = "Lbl_Prom_Vta_Diario_R1"
-        Me.Lbl_Prom_Vta_Diario_R1.Size = New System.Drawing.Size(71, 20)
+        Me.Lbl_Prom_Vta_Diario_R1.Size = New System.Drawing.Size(62, 20)
         Me.Lbl_Prom_Vta_Diario_R1.TabIndex = 34
         Me.Lbl_Prom_Vta_Diario_R1.Text = "$ 99.999.999"
         Me.Lbl_Prom_Vta_Diario_R1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -1853,7 +1862,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         '
         Me.Lbl_Prom_Vta_Diario_R2.BackColor = System.Drawing.Color.Transparent
         Me.Lbl_Prom_Vta_Diario_R2.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Prom_Vta_Diario_R2.Location = New System.Drawing.Point(154, 41)
+        Me.Lbl_Prom_Vta_Diario_R2.Location = New System.Drawing.Point(136, 41)
         Me.Lbl_Prom_Vta_Diario_R2.Name = "Lbl_Prom_Vta_Diario_R2"
         Me.Lbl_Prom_Vta_Diario_R2.Size = New System.Drawing.Size(80, 18)
         Me.Lbl_Prom_Vta_Diario_R2.TabIndex = 36
@@ -1864,9 +1873,9 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         '
         Me.Lbl_Total_R1.BackColor = System.Drawing.Color.Transparent
         Me.Lbl_Total_R1.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Total_R1.Location = New System.Drawing.Point(76, 65)
+        Me.Lbl_Total_R1.Location = New System.Drawing.Point(67, 65)
         Me.Lbl_Total_R1.Name = "Lbl_Total_R1"
-        Me.Lbl_Total_R1.Size = New System.Drawing.Size(71, 18)
+        Me.Lbl_Total_R1.Size = New System.Drawing.Size(62, 18)
         Me.Lbl_Total_R1.TabIndex = 55
         Me.Lbl_Total_R1.Text = "$ 99.999.999"
         Me.Lbl_Total_R1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -1875,7 +1884,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         '
         Me.Lbl_Total_R2.BackColor = System.Drawing.Color.Transparent
         Me.Lbl_Total_R2.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Total_R2.Location = New System.Drawing.Point(154, 65)
+        Me.Lbl_Total_R2.Location = New System.Drawing.Point(136, 65)
         Me.Lbl_Total_R2.Name = "Lbl_Total_R2"
         Me.Lbl_Total_R2.Size = New System.Drawing.Size(80, 18)
         Me.Lbl_Total_R2.TabIndex = 46
@@ -2486,4 +2495,5 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
     Friend WithEvents Rdb_Ver_Clientes As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Btn_Exportar_Diferencia_Clientes As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Exportar_Diferencia_Productos As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Filtro_SucursalDoc As DevComponents.DotNetBar.ButtonItem
 End Class

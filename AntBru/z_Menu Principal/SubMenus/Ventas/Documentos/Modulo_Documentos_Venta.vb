@@ -124,9 +124,6 @@ Public Class Modulo_Documentos_Venta
     End Sub
 
     Private Sub Btn_Nota_De_Debito_Click(sender As Object, e As EventArgs) Handles Btn_Nota_De_Debito.Click
-        MessageBoxEx.Show(_Fm_Menu_Padre, "En construcción",
-                      "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-        Return
         Dim _Tido = "FDV"
         Modulo_Documentos.Sb_Generar_Documento(_Fm_Menu_Padre, _Tido, True, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta, "")
     End Sub

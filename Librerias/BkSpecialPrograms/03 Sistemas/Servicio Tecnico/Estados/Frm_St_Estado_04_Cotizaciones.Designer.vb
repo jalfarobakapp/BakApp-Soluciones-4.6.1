@@ -23,9 +23,9 @@ Partial Class Frm_St_Estado_04_Cotizaciones
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_St_Estado_04_Cotizaciones))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Accion = New DevComponents.DotNetBar.ButtonItem()
@@ -34,6 +34,7 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         Me.Btn_Presupuestos_Evaluacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_Ver_Quitar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Ver_documento = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Correo_Outlook = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Quitar_documento = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
@@ -43,7 +44,9 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Nota = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Chk_No_Existe_COV_Ni_NVV = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Btn_Correo_Outlook = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_COV = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_AgregarCOVExistente = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_CrearCOVdesdePresupuesto = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -96,10 +99,10 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         '
         Me.ContextMenuBar1.AntiAlias = True
         Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Accion, Me.Menu_Contextual_Ver_Quitar})
-        Me.ContextMenuBar1.Location = New System.Drawing.Point(131, 35)
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Accion, Me.Menu_Contextual_Ver_Quitar, Me.Menu_Contextual_COV})
+        Me.ContextMenuBar1.Location = New System.Drawing.Point(22, 20)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
-        Me.ContextMenuBar1.Size = New System.Drawing.Size(319, 25)
+        Me.ContextMenuBar1.Size = New System.Drawing.Size(428, 25)
         Me.ContextMenuBar1.Stretch = True
         Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.ContextMenuBar1.TabIndex = 47
@@ -144,6 +147,12 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         Me.Btn_Ver_documento.Name = "Btn_Ver_documento"
         Me.Btn_Ver_documento.Text = "Ver documento"
         '
+        'Btn_Correo_Outlook
+        '
+        Me.Btn_Correo_Outlook.Image = CType(resources.GetObject("Btn_Correo_Outlook.Image"), System.Drawing.Image)
+        Me.Btn_Correo_Outlook.Name = "Btn_Correo_Outlook"
+        Me.Btn_Correo_Outlook.Text = "Armar correo solo para Outlook"
+        '
         'Btn_Quitar_documento
         '
         Me.Btn_Quitar_documento.Image = CType(resources.GetObject("Btn_Quitar_documento.Image"), System.Drawing.Image)
@@ -155,23 +164,23 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
@@ -179,14 +188,14 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         Me.Grilla.MultiSelect = False
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.Grilla.Size = New System.Drawing.Size(500, 126)
         Me.Grilla.TabIndex = 1
@@ -311,11 +320,22 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         Me.Chk_No_Existe_COV_Ni_NVV.TabIndex = 104
         Me.Chk_No_Existe_COV_Ni_NVV.Text = "NO EXISTE COTIZACION NI NOTA DE VENTA"
         '
-        'Btn_Correo_Outlook
+        'Menu_Contextual_COV
         '
-        Me.Btn_Correo_Outlook.Image = CType(resources.GetObject("Btn_Correo_Outlook.Image"), System.Drawing.Image)
-        Me.Btn_Correo_Outlook.Name = "Btn_Correo_Outlook"
-        Me.Btn_Correo_Outlook.Text = "Armar correo solo para Outlook"
+        Me.Menu_Contextual_COV.AutoExpandOnClick = True
+        Me.Menu_Contextual_COV.Name = "Menu_Contextual_COV"
+        Me.Menu_Contextual_COV.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_AgregarCOVExistente, Me.Btn_CrearCOVdesdePresupuesto})
+        Me.Menu_Contextual_COV.Text = "Opciones cotizacion"
+        '
+        'Btn_AgregarCOVExistente
+        '
+        Me.Btn_AgregarCOVExistente.Name = "Btn_AgregarCOVExistente"
+        Me.Btn_AgregarCOVExistente.Text = "Agregar cotizacion existente"
+        '
+        'Btn_CrearCOVdesdePresupuesto
+        '
+        Me.Btn_CrearCOVdesdePresupuesto.Name = "Btn_CrearCOVdesdePresupuesto"
+        Me.Btn_CrearCOVdesdePresupuesto.Text = "Crear cotizacion a partir del presupuesto"
         '
         'Frm_St_Estado_04_Cotizaciones
         '
@@ -363,4 +383,7 @@ Partial Class Frm_St_Estado_04_Cotizaciones
     Public WithEvents Btn_Editar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Chk_No_Existe_COV_Ni_NVV As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Btn_Correo_Outlook As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Menu_Contextual_COV As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_AgregarCOVExistente As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_CrearCOVdesdePresupuesto As DevComponents.DotNetBar.ButtonItem
 End Class

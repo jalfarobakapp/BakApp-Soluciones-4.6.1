@@ -121,12 +121,13 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         _Accion = Accion
 
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
 
     Private Sub Frm_St_Mant_Tecnicos_Talleres_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        AddHandler Btn_Grabar.Click, AddressOf Sb_Grabar_Nuevo_Tecnico_o_Taller
-        AddHandler Chk_Taller_Externo.CheckedChanged, AddressOf Chk_Taller_Externo_CheckedChanged
+        AddHandler Rdb_Chk_Taller_Externo.CheckedChanged, AddressOf Chk_Taller_Externo_CheckedChanged
 
         Txt_Email.CharacterCasing = CharacterCasing.Lower
 
@@ -143,6 +144,7 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
             Txt_Email.Text = _Row_Tecnico.Item("Email")
             Txt_Informacion.Text = _Row_Tecnico.Item("Informacion")
             Txt_Telefono.Text = _Row_Tecnico.Item("Telefono")
+            Txt_PwTecnico.Text = _Row_Tecnico.Item("PwTecnico")
 
             Rating_Star.Rating = _Row_Tecnico.Item("Star")
 
@@ -152,7 +154,10 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
 
             Sb_Llenar_Ciudad_Comuna()
 
-            Chk_Taller_Externo.Checked = _Row_Tecnico.Item("Chk_Taller_Externo")
+            Rdb_Chk_Taller_Externo.Checked = _Row_Tecnico.Item("Chk_Taller_Externo")
+            Rdb_EsTecnico.Checked = _Row_Tecnico.Item("EsTecnico")
+            Rdb_EsTaller.Checked = _Row_Tecnico.Item("EsTaller")
+
             Chk_Habilitado.Checked = _Row_Tecnico.Item("Chk_Habilitado")
             Chk_Supervisor.Checked = _Row_Tecnico.Item("Chk_Supervisor")
             Chk_Domicilio.Checked = _Row_Tecnico.Item("Chk_Domicilio")
@@ -193,44 +198,33 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
     Private Function Fx_Habilitar_Objetos(ByVal _Habilitar As Boolean)
 
         Dim _ReadOnly As Boolean
-        Dim _Color As Color
 
         If Not _Habilitar Then
             _ReadOnly = True
         End If
 
-
         If _Habilitar Then
 
-            RemoveHandler Chk_Taller_Externo.CheckedChanging, AddressOf Chk_CheckedChanging
+            RemoveHandler Rdb_Chk_Taller_Externo.CheckedChanging, AddressOf Chk_CheckedChanging
             RemoveHandler Chk_Habilitado.CheckedChanging, AddressOf Chk_CheckedChanging
             AddHandler Chk_Habilitado.CheckedChanging, AddressOf Chk_Habilitar_CheckedChanging
             RemoveHandler Chk_Supervisor.CheckedChanging, AddressOf Chk_CheckedChanging
             RemoveHandler Chk_Domicilio.CheckedChanging, AddressOf Chk_CheckedChanging
 
-            _Color = Color.White
-
         Else
 
             _ReadOnly = True
-            AddHandler Chk_Taller_Externo.CheckedChanging, AddressOf Chk_CheckedChanging
+            AddHandler Rdb_Chk_Taller_Externo.CheckedChanging, AddressOf Chk_CheckedChanging
             AddHandler Chk_Habilitado.CheckedChanging, AddressOf Chk_CheckedChanging
             RemoveHandler Chk_Habilitado.CheckedChanging, AddressOf Chk_Habilitar_CheckedChanging
             AddHandler Chk_Supervisor.CheckedChanging, AddressOf Chk_CheckedChanging
             AddHandler Chk_Domicilio.CheckedChanging, AddressOf Chk_CheckedChanging
-            _Color = Color.LightGray
 
         End If
 
-        If _Tiene_OT Then
-            Chk_Taller_Externo.Enabled = False
-            Chk_Supervisor.Enabled = False
-            Chk_Domicilio.Enabled = False
-        Else
-            Chk_Taller_Externo.Enabled = True
-            Chk_Supervisor.Enabled = True
-            Chk_Domicilio.Enabled = True
-        End If
+        Rdb_Chk_Taller_Externo.Enabled = Not _Tiene_OT
+        Chk_Supervisor.Enabled = Not _Tiene_OT
+        Chk_Domicilio.Enabled = Not _Tiene_OT
 
         Txt_NomFuncionario.ReadOnly = _ReadOnly
         Txt_Direccion.ReadOnly = _ReadOnly
@@ -238,17 +232,17 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
         Txt_Informacion.ReadOnly = _ReadOnly
         Txt_Telefono.ReadOnly = _ReadOnly
 
-        Txt_NomFuncionario.FocusHighlightEnabled = _Habilitar
-        Txt_Direccion.FocusHighlightEnabled = _Habilitar
-        Txt_Email.FocusHighlightEnabled = _Habilitar
-        Txt_Informacion.FocusHighlightEnabled = _Habilitar
-        Txt_Telefono.FocusHighlightEnabled = _Habilitar
+        'Txt_NomFuncionario.FocusHighlightEnabled = _Habilitar
+        'Txt_Direccion.FocusHighlightEnabled = _Habilitar
+        'Txt_Email.FocusHighlightEnabled = _Habilitar
+        'Txt_Informacion.FocusHighlightEnabled = _Habilitar
+        'Txt_Telefono.FocusHighlightEnabled = _Habilitar
 
-        Txt_NomFuncionario.BackColor = _Color
-        Txt_Direccion.BackColor = _Color
-        Txt_Email.BackColor = _Color
-        Txt_Informacion.BackColor = _Color
-        Txt_Telefono.BackColor = _Color
+        'Txt_NomFuncionario.BackColor = _Color
+        'Txt_Direccion.BackColor = _Color
+        'Txt_Email.BackColor = _Color
+        'Txt_Informacion.BackColor = _Color
+        'Txt_Telefono.BackColor = _Color
 
         Rating_Star.IsEditable = _Habilitar
 
@@ -262,7 +256,7 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
             Btn_Cancelar.Visible = _Habilitar
         End If
 
-        If Chk_Taller_Externo.Checked Then
+        If Rdb_Chk_Taller_Externo.Checked Then
             Chk_Domicilio.Enabled = False
             Chk_Supervisor.Enabled = False
         Else
@@ -275,12 +269,12 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
     End Function
 
 
-    Private Sub Chk_CheckedChanging(ByVal sender As System.Object, _
+    Private Sub Chk_CheckedChanging(ByVal sender As System.Object,
                                                    ByVal e As DevComponents.DotNetBar.Controls.CheckBoxXChangeEventArgs)
         e.Cancel = True
     End Sub
 
-    Private Sub Chk_Habilitar_CheckedChanging(ByVal sender As System.Object, _
+    Private Sub Chk_Habilitar_CheckedChanging(ByVal sender As System.Object,
                                                    ByVal e As DevComponents.DotNetBar.Controls.CheckBoxXChangeEventArgs)
         If Not Fx_Tiene_Permiso(Me, "Stec0009") Then
             e.Cancel = True
@@ -289,114 +283,12 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
 
 #Region "PROCEDIMIENTOS"
 
-    Sub Sb_Grabar_Nuevo_Tecnico_o_Taller()
-
-        If String.IsNullOrEmpty(Txt_NomFuncionario.Text) Then
-            Beep()
-            ToastNotification.Show(Me, "NOMBRE DEL TALLER / TECNICO", _
-                                   Imagenes_32x32.Images.Item("warning.png"), _
-                                   2 * 1000, eToastGlowColor.Red, _
-                                   eToastPosition.MiddleCenter)
-            Txt_NomFuncionario.Focus()
-            Return
-        End If
-
-        If String.IsNullOrEmpty(CodPais) Or
-           String.IsNullOrEmpty(CodCiudad) Or
-           String.IsNullOrEmpty(CodComuna) Or
-           String.IsNullOrEmpty(Txt_Direccion.Text) Then
-
-            Beep()
-            ToastNotification.Show(Me, "FALTA DIRECCION" & vbCrLf &
-                                   "Revise: Pais, Ciudad, Comuna y Dirección",
-                                   Imagenes_32x32.Images.Item("warning.png"),
-                                   2 * 1000, eToastGlowColor.Red,
-                                   eToastPosition.MiddleCenter)
-            Txt_Direccion.Focus()
-            Return
-        End If
-
-        If String.IsNullOrEmpty(Txt_Telefono.Text) Then
-            Beep()
-            ToastNotification.Show(Me, "FALTA TELEFONO", _
-                                   Imagenes_32x32.Images.Item("warning.png"), _
-                                   2 * 1000, eToastGlowColor.Red, _
-                                   eToastPosition.MiddleCenter)
-            Txt_Telefono.Focus()
-            Return
-        End If
-
-        If String.IsNullOrEmpty(Txt_Email.Text) Then
-            Beep()
-            ToastNotification.Show(Me, "FALTA EMAIL", _
-                                   Imagenes_32x32.Images.Item("warning.png"), _
-                                   2 * 1000, eToastGlowColor.Red, _
-                                   eToastPosition.MiddleCenter)
-            Txt_Email.Focus()
-            Return
-        End If
-
-        If Not Fx_Validar_Email(Txt_Email.Text) Then
-            Beep()
-            ToastNotification.Show(Me, "VALIDACION DE EMAIL" & vbCrLf & _
-                                   "Formato Ej: micorreo@correo.com", _
-                                   Imagenes_32x32.Images.Item("warning.png"), _
-                                   2 * 1000, eToastGlowColor.Red, _
-                                   eToastPosition.MiddleCenter)
-            Txt_Email.Focus()
-            Return
-        End If
-
-        If String.IsNullOrEmpty(_CodFuncionario) Then
-            _CodFuncionario = Fx_Nvo_CodFuncionario()
-        End If
-
-        Dim _Chk_Taller_Externo As Integer = CInt(Chk_Taller_Externo.Checked) * -1
-        Dim _Chk_Habilitado As Integer = CInt(Chk_Habilitado.Checked) * -1
-        Dim _Chk_Supervisor As Integer = CInt(Chk_Supervisor.Checked) * -1
-        Dim _Chk_Domicilio As Integer = CInt(Chk_Domicilio.Checked) * -1
-
-        If Chk_Taller_Externo.Checked Then
-            _Chk_Supervisor = 0
-            _Chk_Domicilio = 0
-        End If
-
-        Dim _Star = Rating_Star.Rating
-
-        Dim _Informacion = Trim(Txt_Informacion.Text)
-        For _i = 0 To 31
-            _Informacion = Replace(_Informacion, Chr(_i), " ")
-        Next
-
-        Consulta_sql = String.Empty
-
-        If _Accion = Accion.Editar Then
-            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller" & Space(1) & _
-                           "Where CodFuncionario = '" & _CodFuncionario & "'" & vbCrLf & vbCrLf
-        End If
-
-        Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller (CodFuncionario,NomFuncionario,Direccion," &
-                       "Telefono,Email,Pais,Ciudad,Comuna,Star," &
-                       "Chk_Taller_Externo,Chk_Habilitado,Chk_Supervisor,Chk_Domicilio,Informacion) Values " &
-                       "('" & _CodFuncionario & "','" & Trim(Txt_NomFuncionario.Text) & "','" & Trim(Txt_Direccion.Text) &
-                       "','" & Txt_Telefono.Text & "','" & Txt_Email.Text &
-                       "','" & _CodPais & "','" & _CodCiudad & "','" & _CodComuna & "'," & _Star &
-                       "," & _Chk_Taller_Externo & "," & _Chk_Habilitado & "," & _Chk_Supervisor & "," & _Chk_Domicilio &
-                       ",'" & _Informacion & "')"
-
-        If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
-            _Grabado = True
-            Me.Close()
-        End If
-
-    End Sub
-
     Function Fx_Nvo_CodFuncionario() As String
 
         Dim _NvoNro_CodFuncionario As String
 
 
-        Dim _TblPaso = _Sql.Fx_Get_Tablas("Select Max(CodFuncionario) As CodFuncionario " & _
+        Dim _TblPaso = _Sql.Fx_Get_Tablas("Select Max(CodFuncionario) As CodFuncionario " &
                                           "From " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller") ' cn1, "MAX(Nro_SOC)", _Global_BaseBk & "ZW_SOC_Encabezado", "Stand_By = " & Stby)
 
         If CBool(_TblPaso.Rows.Count) Then
@@ -450,9 +342,9 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
         If Fx_Tiene_Permiso(Me, "Stec0008") Then
             Fx_Habilitar_Objetos(True)
             Beep()
-            ToastNotification.Show(Me, "AHORA ES POSIBLE ACTUALIZAR EL DOCUMENTO", _
-                                   Btn_Editar.Image, _
-                                   1 * 1000, eToastGlowColor.Green, _
+            ToastNotification.Show(Me, "AHORA ES POSIBLE ACTUALIZAR EL DOCUMENTO",
+                                   Btn_Editar.Image,
+                                   1 * 1000, eToastGlowColor.Green,
                                    eToastPosition.MiddleCenter)
         End If
 
@@ -476,7 +368,7 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
 
         Sb_Llenar_Ciudad_Comuna()
 
-        Chk_Taller_Externo.Checked = _Row_Tecnico.Item("Chk_Taller_Externo")
+        Rdb_Chk_Taller_Externo.Checked = _Row_Tecnico.Item("Chk_Taller_Externo")
         Chk_Habilitado.Checked = _Row_Tecnico.Item("Chk_Habilitado")
         Chk_Supervisor.Checked = _Row_Tecnico.Item("Chk_Supervisor")
         Chk_Domicilio.Checked = _Row_Tecnico.Item("Chk_Domicilio")
@@ -511,7 +403,7 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
     End Sub
 
     Private Sub Chk_Taller_Externo_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        If Chk_Taller_Externo.Checked Then
+        If Rdb_Chk_Taller_Externo.Checked Then
             Chk_Domicilio.Enabled = False
             Chk_Supervisor.Enabled = False
         Else
@@ -541,5 +433,109 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
         Txt_Direccion.Focus()
 
         Fm.Dispose()
+    End Sub
+
+    Private Sub Txt_ClaveFuncionario_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_PwTecnico.ButtonCustomClick
+
+        If Txt_PwTecnico.PasswordChar = "*" Then
+            Txt_PwTecnico.PasswordChar = ""
+        Else
+            Txt_PwTecnico.PasswordChar = "*"
+        End If
+
+    End Sub
+
+    Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
+
+        If String.IsNullOrEmpty(Txt_NomFuncionario.Text) Then
+            MessageBoxEx.Show(Me, "Falta el nombre", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_NomFuncionario.Focus()
+            Return
+        End If
+
+        If String.IsNullOrEmpty(CodPais) Or
+           String.IsNullOrEmpty(CodCiudad) Or
+           String.IsNullOrEmpty(CodComuna) Or
+           String.IsNullOrEmpty(Txt_Direccion.Text) Then
+            MessageBoxEx.Show(Me, "Falta la dirección", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Direccion.Focus()
+            Return
+        End If
+
+        If String.IsNullOrEmpty(Txt_Telefono.Text) Then
+            MessageBoxEx.Show(Me, "Falta el teléfono", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Telefono.Focus()
+            Return
+        End If
+
+        If String.IsNullOrEmpty(Txt_Email.Text) Then
+            MessageBoxEx.Show(Me, "Falta el email", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Email.Focus()
+            Return
+        End If
+
+        If Not Fx_Validar_Email(Txt_Email.Text) Then
+            MessageBoxEx.Show(Me, "Email con formato incorrecto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Email.Focus()
+            Return
+        End If
+
+        If Not Rdb_EsTecnico.Checked And Not Rdb_EsTaller.Checked And Not Rdb_Chk_Taller_Externo.Checked Then
+            MessageBoxEx.Show(Me, "Debe marcar una opción de tipo de taller o técnico", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If String.IsNullOrEmpty(Txt_PwTecnico.Text) And Rdb_EsTecnico.Checked Then
+            MessageBoxEx.Show(Me, "Falta la clave del técnico", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_PwTecnico.Focus()
+            Return
+        End If
+
+        If String.IsNullOrEmpty(_CodFuncionario) Then
+            _CodFuncionario = Fx_Nvo_CodFuncionario()
+        End If
+
+        Dim _Chk_Taller_Externo As Integer = Convert.ToInt32(Rdb_Chk_Taller_Externo.Checked)
+        Dim _Chk_Habilitado As Integer = Convert.ToInt32(Chk_Habilitado.Checked)
+        Dim _Chk_Supervisor As Integer = Convert.ToInt32(Chk_Supervisor.Checked)
+        Dim _Chk_Domicilio As Integer = Convert.ToInt32(Chk_Domicilio.Checked)
+        Dim _EsTecnico As Integer = Convert.ToInt32(Rdb_EsTecnico.Checked)
+        Dim _EsTaller As Integer = Convert.ToInt32(Rdb_EsTaller.Checked)
+
+        If Rdb_Chk_Taller_Externo.Checked Then
+            _Chk_Supervisor = 0
+            _Chk_Domicilio = 0
+        End If
+
+        Dim _Star = Rating_Star.Rating
+        Dim _Informacion = Trim(Txt_Informacion.Text)
+
+        For _i = 0 To 31
+            _Informacion = Replace(_Informacion, Chr(_i), " ")
+        Next
+
+        Consulta_sql = String.Empty
+
+        If _Accion = Accion.Editar Then
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller" & Space(1) &
+                           "Where CodFuncionario = '" & _CodFuncionario & "'" & vbCrLf & vbCrLf
+        End If
+
+        Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller (CodFuncionario,NomFuncionario,Direccion," &
+                       "Telefono,Email,Pais,Ciudad,Comuna,Star," &
+                       "Chk_Taller_Externo,Chk_Habilitado,Chk_Supervisor,Chk_Domicilio,Informacion,EsTecnico,PwTecnico,EsTaller) Values " &
+                       "('" & _CodFuncionario & "','" & Txt_NomFuncionario.Text.Trim & "','" & Txt_Direccion.Text.Trim &
+                       "','" & Txt_Telefono.Text.Trim & "','" & Txt_Email.Text.Trim &
+                       "','" & _CodPais & "','" & _CodCiudad & "','" & _CodComuna & "'," & _Star &
+                       "," & _Chk_Taller_Externo & "," & _Chk_Habilitado & "," & _Chk_Supervisor & "," & _Chk_Domicilio &
+                       ",'" & _Informacion & "'," & _EsTecnico & ",'" & Txt_PwTecnico.Text & "'," & _EsTaller & ")"
+
+        If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+            _Grabado = True
+            Me.Close()
+        Else
+            MessageBoxEx.Show(Me, _Sql.Pro_Error, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
+
     End Sub
 End Class

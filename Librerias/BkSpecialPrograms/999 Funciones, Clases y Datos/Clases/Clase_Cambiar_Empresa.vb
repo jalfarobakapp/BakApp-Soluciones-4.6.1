@@ -12,7 +12,7 @@ Public Class Clase_Cambiar_Empresa
     Dim _Cadena_ConexionSQL_Server_Original = Cadena_ConexionSQL_Server
     Dim _Cadena_ConexionSQL_Seleccionada = String.Empty
 
-    Public Sub New(ByVal Formulario As Form)
+    Public Sub New(Formulario As Form)
         _Formulario = Formulario
         ' _Funcionario = Funcionario
         '_Pwfu = Trim(_Sql.Fx_Trae_Dato(, "PWFU", "TABFU", "KOFU = '" & _Funcionario & "'"))
@@ -24,9 +24,9 @@ Public Class Clase_Cambiar_Empresa
         Cambiar_solo_formulario_activo
     End Enum
 
-    Function Fx_Cambiar_Empresa_Solo_Para_Formulario_Actual(ByVal _Tipo_de_cambio As Tipo_de_cambio, _
-                                                            ByVal _CodPermiso As String, _
-                                                            ByVal _Imagen As Image)
+    Function Fx_Cambiar_Empresa_Solo_Para_Formulario_Actual(_Tipo_de_cambio As Tipo_de_cambio,
+                                                             _CodPermiso As String,
+                                                             _Imagen As Image)
 
         Dim _Permitido As Boolean
         Dim _Global_BaseBk_Original = _Global_BaseBk
@@ -129,7 +129,7 @@ Public Class Clase_Cambiar_Empresa
 
     End Function
 
-    Private Function Fx_Act_Usuario(ByVal _Kofu As String) As Boolean
+    Private Function Fx_Act_Usuario(_Kofu As String) As Boolean
 
         Consulta_sql = "Select top 1 * From TABFU Where KOFU = '" & _Funcionario & "'"
         Dim _TblFun As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -151,9 +151,9 @@ Public Class Clase_Cambiar_Empresa
                 Frm_Modalidad.ShowDialog(_Formulario)
                 Frm_Modalidad.Dispose()
 
-                _Formulario.Text = "Sistema BakApp. Empresa :" & RazonEmpresa & _
-                           ", Funcionario Activo: " & Trim(Nombre_funcionario_activo) & _
-                           ", Modalidad: " & Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & "..." & Space(4) & _
+                _Formulario.Text = "Sistema BakApp. Empresa :" & RazonEmpresa &
+                           ", Funcionario Activo: " & Trim(Nombre_funcionario_activo) &
+                           ", Modalidad: " & Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & "..." & Space(4) &
                            "(Base BakApp: " & _Global_BaseBk & ")"
                 Return True
 
@@ -163,7 +163,7 @@ Public Class Clase_Cambiar_Empresa
 
     End Function
 
-    Function Fx_Conectar_Usuario_Formulario_Actual(ByVal _CodPermiso As String) As Boolean
+    Function Fx_Conectar_Usuario_Formulario_Actual(_CodPermiso As String) As Boolean
 
         Consulta_sql = "Select top 1 * From TABFU Where KOFU = '" & _Funcionario & "'"
         Dim _TblFun As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -184,15 +184,15 @@ Public Class Clase_Cambiar_Empresa
 
         Else
 
-            MessageBoxEx.Show(_Formulario, "No se reconoce el usuario en la empresa: " & RazonEmpresa & vbCrLf & _
-                              "Revise la clave, puede que sea distinta entre ambas bases", "Validación", _
+            MessageBoxEx.Show(_Formulario, "No se reconoce el usuario en la empresa: " & RazonEmpresa & vbCrLf &
+                              "Revise la clave, puede que sea distinta entre ambas bases", "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
         End If
 
     End Function
 
-    Function Fx_Reconectar_Base_De_Datos(ByVal _Cadena_de_Conexion_SQL As String)
+    Function Fx_Reconectar_Base_De_Datos(_Cadena_de_Conexion_SQL As String)
         Cadena_ConexionSQL_Server = _Cadena_de_Conexion_SQL
         Fx_Conectar_Empresa(_Formulario, True)
         'SQL_ServerClass.Sb_Cerrar_Conexion(cn1)

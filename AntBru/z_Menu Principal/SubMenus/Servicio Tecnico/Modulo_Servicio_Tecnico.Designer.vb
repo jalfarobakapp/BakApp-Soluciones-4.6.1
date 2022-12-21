@@ -30,6 +30,7 @@ Partial Class Modulo_Servicio_Tecnico
         Me.Btn_Sis_Serv_Tecnico = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_CRV_Control_Ruta_Vehiculos = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Btn_Sis_Serv_GestTaller = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -39,9 +40,9 @@ Partial Class Modulo_Servicio_Tecnico
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir})
-        Me.Bar2.Location = New System.Drawing.Point(0, 198)
+        Me.Bar2.Location = New System.Drawing.Point(0, 286)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(429, 41)
+        Me.Bar2.Size = New System.Drawing.Size(437, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 43
@@ -72,7 +73,7 @@ Partial Class Modulo_Servicio_Tecnico
         Me.MetroTilePanel1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.MetroTilePanel1.Location = New System.Drawing.Point(3, 57)
         Me.MetroTilePanel1.Name = "MetroTilePanel1"
-        Me.MetroTilePanel1.Size = New System.Drawing.Size(502, 268)
+        Me.MetroTilePanel1.Size = New System.Drawing.Size(586, 445)
         Me.MetroTilePanel1.TabIndex = 42
         Me.MetroTilePanel1.Text = "MetroTilePanel1"
         '
@@ -82,10 +83,10 @@ Partial Class Modulo_Servicio_Tecnico
         '
         '
         Me.ConsultaPreciosContenedor.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.ConsultaPreciosContenedor.FixedSize = New System.Drawing.Size(500, 200)
+        Me.ConsultaPreciosContenedor.FixedSize = New System.Drawing.Size(500, 400)
         Me.ConsultaPreciosContenedor.MultiLine = True
         Me.ConsultaPreciosContenedor.Name = "ConsultaPreciosContenedor"
-        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Sis_Serv_Tecnico, Me.Btn_CRV_Control_Ruta_Vehiculos})
+        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Sis_Serv_Tecnico, Me.Btn_CRV_Control_Ruta_Vehiculos, Me.Btn_Sis_Serv_GestTaller})
         '
         '
         '
@@ -121,8 +122,8 @@ Partial Class Modulo_Servicio_Tecnico
         Me.Btn_CRV_Control_Ruta_Vehiculos.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.Btn_CRV_Control_Ruta_Vehiculos.Name = "Btn_CRV_Control_Ruta_Vehiculos"
         Me.Btn_CRV_Control_Ruta_Vehiculos.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_CRV_Control_Ruta_Vehiculos.Text = "<font size=""+4"">C.R.V.</font><br/><font size=""-1"">Control de Rutas de Vehiculos</" &
-    "font>"
+        Me.Btn_CRV_Control_Ruta_Vehiculos.Text = "<font size=""+4""><b>C.R.V.</b></font><br/><font size=""-1"">Control de Rutas de Vehi" &
+    "culos</font>"
         Me.Btn_CRV_Control_Ruta_Vehiculos.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Teal
         Me.Btn_CRV_Control_Ruta_Vehiculos.TileSize = New System.Drawing.Size(200, 100)
         '
@@ -155,6 +156,33 @@ Partial Class Modulo_Servicio_Tecnico
         Me.LabelX1.TabIndex = 54
         Me.LabelX1.Text = "<font color=""#349FCE""><b>SERVICIO TECNICO</b></font>"
         '
+        'Btn_Sis_Serv_GestTaller
+        '
+        Me.Btn_Sis_Serv_GestTaller.Image = CType(resources.GetObject("Btn_Sis_Serv_GestTaller.Image"), System.Drawing.Image)
+        Me.Btn_Sis_Serv_GestTaller.ImageIndent = New System.Drawing.Point(8, -6)
+        Me.Btn_Sis_Serv_GestTaller.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Sis_Serv_GestTaller.Name = "Btn_Sis_Serv_GestTaller"
+        Me.Btn_Sis_Serv_GestTaller.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Sis_Serv_GestTaller.Text = "<font size=""+4""><b>SERV. TEC.</b></font><br/><font size=""-1"">Gestión Mesón</font>" &
+    ""
+        Me.Btn_Sis_Serv_GestTaller.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Teal
+        Me.Btn_Sis_Serv_GestTaller.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_Sis_Serv_GestTaller.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(124, Byte), Integer), CType(CType(73, Byte), Integer))
+        Me.Btn_Sis_Serv_GestTaller.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(124, Byte), Integer), CType(CType(73, Byte), Integer))
+        Me.Btn_Sis_Serv_GestTaller.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_Sis_Serv_GestTaller.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(124, Byte), Integer), CType(CType(73, Byte), Integer))
+        Me.Btn_Sis_Serv_GestTaller.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(124, Byte), Integer), CType(CType(73, Byte), Integer))
+        Me.Btn_Sis_Serv_GestTaller.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Sis_Serv_GestTaller.TileStyle.PaddingBottom = 4
+        Me.Btn_Sis_Serv_GestTaller.TileStyle.PaddingLeft = 4
+        Me.Btn_Sis_Serv_GestTaller.TileStyle.PaddingRight = 4
+        Me.Btn_Sis_Serv_GestTaller.TileStyle.PaddingTop = 4
+        Me.Btn_Sis_Serv_GestTaller.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Sis_Serv_GestTaller.TitleText = "BakApp"
+        '
         'Modulo_Servicio_Tecnico
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -163,7 +191,7 @@ Partial Class Modulo_Servicio_Tecnico
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.MetroTilePanel1)
         Me.Name = "Modulo_Servicio_Tecnico"
-        Me.Size = New System.Drawing.Size(429, 239)
+        Me.Size = New System.Drawing.Size(437, 327)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -175,4 +203,5 @@ Partial Class Modulo_Servicio_Tecnico
     Private WithEvents Btn_Sis_Serv_Tecnico As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_CRV_Control_Ruta_Vehiculos As DevComponents.DotNetBar.Metro.MetroTileItem
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
+    Private WithEvents Btn_Sis_Serv_GestTaller As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

@@ -1,8 +1,4 @@
-﻿Imports System.Data.SqlClient
-Imports System.Data
-'Imports Lib_Bakapp_VarClassFunc
-Imports DevComponents.DotNetBar
-Imports BkSpecialPrograms
+﻿'Imports Lib_Bakapp_VarClassFunc
 
 Public Class Cl_Producto
 
@@ -16,7 +12,7 @@ Public Class Cl_Producto
 
     Dim _Tbl_Maepr As DataTable
     Dim _Tbl_Maeprem As DataTable
-    Dim _Tbl_Maeficha As DataTable
+    Dim _Tbl_Maefichd As DataTable
     Dim _Tbl_Tabimpr As DataTable
     Dim _Tbl_Maeprobs As DataTable
 
@@ -24,6 +20,8 @@ Public Class Cl_Producto
     Dim _Tbl_Bodegas As DataTable
     Dim _Tbl_Listas As DataTable
     Dim _Tbl_Impuestos As DataTable
+
+    Public Property Ficha As String
 
 #Region "VARIABLES"
 
@@ -163,7 +161,7 @@ Public Class Cl_Producto
     '    Get
     '        Return _Mensaje01
     '    End Get
-    '    Set(ByVal value As String)
+    '    Set(value As String)
     '        _Mensaje01 = Replace(value, "'", "")
     ' End Set
     'End Property
@@ -172,7 +170,7 @@ Public Class Cl_Producto
     '    Get
     '        Return _Mensaje02
     '    End Get
-    '    Set(ByVal value As String)
+    '    Set(value As String)
     '        _Mensaje02 = Replace(value, "'", "")
     ' End Set
     'End Property
@@ -181,7 +179,7 @@ Public Class Cl_Producto
     '    Get
     '        Return _Mensaje03
     '    End Get
-    '    Set(ByVal value As String)
+    '    Set(value As String)
     '        _Mensaje03 = Replace(value, "'", "")
     ' End Set
     ' End Property
@@ -224,10 +222,10 @@ Public Class Cl_Producto
 
     Public Property Pro_Maeficha As DataTable
         Get
-            Return _Tbl_Maeficha
+            Return _Tbl_Maefichd
         End Get
         Set(value As DataTable)
-            _Tbl_Maeficha = value
+            _Tbl_Maefichd = value
         End Set
     End Property
 
@@ -287,8 +285,8 @@ Public Class Cl_Producto
 
     Public Sub New()
 
-        'ByVal RowProducto As DataRow,
-        ' ByVal Ds_Producto As DataSet)
+        'RowProducto As DataRow,
+        ' Ds_Producto As DataSet)
 
         '_RowProducto = RowProducto
         '_Ds_Producto = Ds_Producto
@@ -300,16 +298,16 @@ Public Class Cl_Producto
 
     End Sub
 
-    Function Fx_Grabar_Producto(Optional ByVal _Accion As Enum_Accion = Enum_Accion.Nuevo,
-                                Optional ByVal _Reemplaza_Codigo As Boolean = False,
-                                Optional ByVal _Crear_Alternativo As Boolean = False,
-                                Optional ByVal _CodProveedor As String = "",
-                                Optional ByVal _CodAlternativo As String = "")
+    Function Fx_Grabar_Producto(Optional _Accion As Enum_Accion = Enum_Accion.Nuevo,
+                                Optional _Reemplaza_Codigo As Boolean = False,
+                                Optional _Crear_Alternativo As Boolean = False,
+                                Optional _CodProveedor As String = "",
+                                Optional _CodAlternativo As String = "")
 
 
         Dim _Tbl_Maepr As DataTable
         Dim _Tbl_Maeprem As DataTable
-        Dim _Tbl_Maeficha As DataTable
+        Dim _Tbl_Maefichd As DataTable
 
         If (_RowProducto Is Nothing) Then
             Return False
@@ -321,12 +319,10 @@ Public Class Cl_Producto
 
             Dim _SqlQuery = String.Empty
 
-
             Dim _Pm, _Ppul01, _Ppul02 As Double
             Dim _Ficha As String
 
-
-            _SqlQuery += "INSERT INTO MAEPR (TIPR,KOPR,NOKOPR,KOPRRA,KOPRTE,KOGE,NOKOPRRA,POIVPR,EXENTO," & vbCrLf &
+            _SqlQuery += "Insert Into MAEPR (TIPR,KOPR,NOKOPR,KOPRRA,KOPRTE,KOGE,NOKOPRRA,POIVPR,EXENTO," & vbCrLf &
                          "RGPR,UD01PR,UD02PR,RLUD,NMARCA,TRATALOTE,FUNCLOTE,CONUBIC,ESACTFI,PRRG,NIPRRG," & vbCrLf &
                          "NFPRRG,NUIMPR,MRPR,RUPR,COLEGPR,FMPR,PFPR,HFPR,PLANO,ATPR,LISCOSTO,DIVISIBLE," & vbCrLf &
                          "DIVISIBLE2,STOCKASEG,MOVETIQ,TRATVMEDIA,PRDESRES,CLALIBPR,KOPRDIM,NODIM1,NODIM2," & vbCrLf &
@@ -351,7 +347,6 @@ Public Class Cl_Producto
                          "," & De_Num_a_Tx_01(_Ppul01, False, 5) & "," & De_Num_a_Tx_01(_Ppul02, False, 5) &
                          "," & De_Num_a_Tx_01(_Pm, False, 5) & ")" & vbCrLf & vbCrLf
 
-
             If _Accion = Enum_Accion.Editar Then
 
                 Consulta_sql = "Select * From MAEPR Where KOPR = ''
@@ -361,7 +356,7 @@ Public Class Cl_Producto
 
                 _Tbl_Maepr = _Ds_Producto.Tables(0)
                 _Tbl_Maeprem = _Ds_Producto.Tables(1)
-                _Tbl_Maeficha = _Ds_Producto.Tables(2)
+                _Tbl_Maefichd = _Ds_Producto.Tables(2)
 
                 If CBool(_Tbl_Maeprem.Rows.Count) Then
                     _Pm = _Tbl_Maeprem.Rows(0).Item("PM")
@@ -369,7 +364,7 @@ Public Class Cl_Producto
                     _Ppul02 = _Tbl_Maeprem.Rows(0).Item("PPUL02")
                 End If
 
-                _Ficha = NuloPorNro(_Tbl_Maeficha.Rows(0).Item("FICHA"), "") ' _Sql.Fx_Trae_Dato(, "FICHA", "MAEFICHA", "KOPR = '" & _Kopr & "'")
+                _Ficha = NuloPorNro(_Tbl_Maefichd.Rows(0).Item("FICHA"), "") ' _Sql.Fx_Trae_Dato(, "FICHA", "MAEFICHA", "KOPR = '" & _Kopr & "'")
 
                 _SqlQuery = "Delete MAEPR Where KOPR = '" & _kopr & "'" & vbCrLf &
                             "Delete MAEPREM Where KOPR = '" & _kopr & "'" & vbCrLf &
@@ -379,14 +374,26 @@ Public Class Cl_Producto
 
             End If
 
-
-
-
             If Not _Reemplaza_Codigo Then
 
                 'INGRESO DE PRODUCTO EN TABLA DE FICHAS DEL PRODUCTO
-                _SqlQuery += "INSERT INTO MAEFICHA (KOPR,NOKOPR,FICHA) VALUES ('" & _kopr &
-                             "','" & _nokopr & "','')" & vbCrLf & vbCrLf
+                '_SqlQuery += "INSERT INTO MAEFICHA (KOPR,NOKOPR,FICHA) VALUES ('" & _kopr &
+                '             "','" & _nokopr & "','')" & vbCrLf & vbCrLf
+
+                _SqlQuery += "Delete MAEFICHD Where KOPR='" & _kopr & "'" & vbCrLf
+
+                Dim _ListaFichas As New List(Of String)
+
+                Dim _Div = Math.Ceiling(Ficha.Length / 80)
+                Dim _Ini = 1
+                For i = 1 To _Div
+                    _ListaFichas.Add(Mid(Ficha.ToString, _Ini, 80))
+                    _Ini += 80
+                Next
+
+                For Each _Fichas As String In _ListaFichas
+                    _SqlQuery += "INSERT INTO MAEFICHD (KOPR,FICHA) VALUES ('" & _kopr & "','" & _Fichas & "')" & vbCrLf
+                Next
 
                 'INGRESO DE PRODUCTOS POR EMPRESA
                 _Tbl_Paso = New DataTable
@@ -537,16 +544,36 @@ Public Class Cl_Producto
 
         _kopr = _Codigo
 
+        Dim _Llena_Tabimpr = String.Empty
+
+        If _Sql.Fx_Exite_Campo("TABIMPR", "NOAPLICEN") Then
+
+            _Llena_Tabimpr =
+"Update #Paso_Tabim Set Compras = (Case When ISNULL(NOAPLICEN,'') = '' Then 'Si' When NOAPLICEN like '%compras%' Then 'No' Else 'Si' End )
+From TABIMPR Where KOPR = '" & _kopr & "' And Codigo = KOIM
+Update #Paso_Tabim Set Ventas = (Case When ISNULL(NOAPLICEN,'') = '' Then 'Si' When NOAPLICEN like '%ventas%' Then 'No' Else 'Si' End )
+From TABIMPR Where KOPR = '" & _kopr & "' And Codigo = KOIM
+Update #Paso_Tabim Set Stock = (Case When ISNULL(NOAPLICEN,'') = '' Then 'Si' When NOAPLICEN like '%stock%' Then 'No' Else 'Si' End )
+From TABIMPR Where KOPR = '" & _kopr & "' And Codigo = KOIM
+Update #Paso_Tabim Set Boleta = (Case When ISNULL(NOAPLICEN,'') = '' Then 'Si' When NOAPLICEN like '%BSV,BLV%' Then 'No' Else 'Si' End )
+From TABIMPR Where KOPR = '" & _kopr & "' And Codigo = KOIM"
+
+        End If
+
         Consulta_sql = "If Not Exists(Select * From MAEFICHA Where KOPR = '" & _kopr & "')" & vbCrLf &
                        "Begin" & vbCrLf &
                        "Insert Into MAEFICHA (KOPR,NOKOPR,FICHA) Select KOPR,NOKOPR,'' From MAEPR Where KOPR = '" & _kopr & "'" & vbCrLf &
+                       "End" & vbCrLf &
+                       "If Not Exists(Select * From MAEFICHD Where KOPR = '" & _kopr & "')" & vbCrLf &
+                       "Begin" & vbCrLf &
+                       "Insert Into MAEFICHD (KOPR,FICHA) Select KOPR,'' From MAEPR Where KOPR = '" & _kopr & "'" & vbCrLf &
                        "End" & vbCrLf &
                        "-- 0" & vbCrLf &
                        "Select * From MAEPR Where KOPR = '" & _kopr & "'" & vbCrLf &
                        "-- 1" & vbCrLf &
                        "Select * From MAEPREM Where KOPR = '" & _kopr & "'" & vbCrLf &
                        "-- 2" & vbCrLf &
-                       "Select KOPR,NOKOPR,Isnull(FICHA,'') As FICHA From MAEFICHA Where KOPR = '" & _kopr & "'" & vbCrLf &
+                       "Select KOPR,Isnull(FICHA,'') As FICHA From MAEFICHD Where KOPR = '" & _kopr & "'" & vbCrLf &
                        "-- 3" & vbCrLf &
                        "Select * From MAEPROBS Where KOPR = '" & _kopr & "'" & vbCrLf &
                        "-- 4" & vbCrLf &
@@ -563,15 +590,28 @@ Public Class Cl_Producto
                        "Where TP.KOLT = TPP.KOLT And KOPR = '" & _Codigo & "' ) As Bit) AS 'Select', KOLT as Codigo,NOKOLT as Descripcion" & vbCrLf &
                        "From TABPP TPP" & vbCrLf &
                        "-- 7" & vbCrLf &
-                       "Select Cast((Select COUNT(*) From TABIMPR TIP" & vbCrLf &
-                       "Where TI.KOIM = TIP.KOIM And TIP.KOPR = '" & _Codigo & "' ) As Bit) As 'Select',KOIM as Codigo,NOKOIM as Descripcion" & vbCrLf &
-                       "From TABIM TI"
+                       "Select Cast((Select COUNT(*) From TABIMPR TIP
+Where TI.KOIM = TIP.KOIM And TIP.KOPR = '" & _kopr & "' ) As Bit) As 'Select',KOIM as Codigo,NOKOIM as Descripcion,
+	  CAST('' As varchar(2)) As Compras,CAST('' As varchar(2)) As Ventas,CAST('' As varchar(2)) As Stock,CAST('' As varchar(2)) As Boleta,POIM,MEIM
+Into #Paso_Tabim
+From TABIM TI
+
+" & _Llena_Tabimpr & "
+
+Select * From #Paso_Tabim
+
+Drop Table #Paso_Tabim"
+
+
+        '"Select Cast((Select COUNT(*) From TABIMPR TIP" & vbCrLf &
+        '"Where TI.KOIM = TIP.KOIM And TIP.KOPR = '" & _Codigo & "' ) As Bit) As 'Select',KOIM as Codigo,NOKOIM as Descripcion" & vbCrLf &
+        '"From TABIM TI" 
 
         _Ds_Producto = _Sql.Fx_Get_DataSet(Consulta_sql)
 
         _Tbl_Maepr = _Ds_Producto.Tables(0)
         _Tbl_Maeprem = _Ds_Producto.Tables(1)
-        _Tbl_Maeficha = _Ds_Producto.Tables(2)
+        _Tbl_Maefichd = _Ds_Producto.Tables(2)
         '_Tbl_Tabimpr = _Ds_Producto.Tables(3)
         _Tbl_Maeprobs = _Ds_Producto.Tables(3)
 
@@ -579,6 +619,33 @@ Public Class Cl_Producto
         _Tbl_Bodegas = _Ds_Producto.Tables(5)
         _Tbl_Listas = _Ds_Producto.Tables(6)
         _Tbl_Impuestos = _Ds_Producto.Tables(7)
+
+        Dim dc As DataColumn
+
+        If Not _Sql.Fx_Exite_Campo("MAEPR", "NOKOPRAMP") Then
+            dc = New DataColumn("NOKOPRAMP", Type.GetType("System.String"))
+            _Tbl_Maepr.Columns.Add(dc)
+        End If
+
+        If Not _Sql.Fx_Exite_Campo("MAEPR", "CAMBIOSUJ") Then
+            dc = New DataColumn("CAMBIOSUJ", Type.GetType("System.Boolean"))
+            _Tbl_Maepr.Columns.Add(dc)
+        End If
+
+        If Not _Sql.Fx_Exite_Campo("MAEPROBS", "ALTO") Then
+            dc = New DataColumn("ALTO", Type.GetType("System.Double"))
+            _Tbl_Maeprobs.Columns.Add(dc)
+        End If
+
+        If Not _Sql.Fx_Exite_Campo("MAEPROBS", "LARGO") Then
+            dc = New DataColumn("LARGO", Type.GetType("System.Double"))
+            _Tbl_Maeprobs.Columns.Add(dc)
+        End If
+
+        If Not _Sql.Fx_Exite_Campo("MAEPROBS", "ANCHO") Then
+            dc = New DataColumn("ANCHO", Type.GetType("System.Double"))
+            _Tbl_Maeprobs.Columns.Add(dc)
+        End If
 
         If Not CBool(_Tbl_Maepr.Rows.Count) Then
 
@@ -599,20 +666,26 @@ Public Class Cl_Producto
             _RowProducto.Item("MOVETIQ") = False
             _RowProducto.Item("TRATVMEDIA") = False
             _RowProducto.Item("ANALIZABLE") = False
+            _RowProducto.Item("LOMAFA") = 0
+
+            If _Sql.Fx_Exite_Campo("MAEPR", "CONTROLADO") Then
+                _RowProducto.Item("CONTROLADO") = False
+            End If
+
+            If _Sql.Fx_Exite_Campo("MAEPR", "CAMBIOSUJ") Then
+                _RowProducto.Item("CAMBIOSUJ") = False
+            End If
 
             _Tbl_Maepr.Rows.Add(_RowProducto)
 
         End If
 
-        If Not CBool(_Tbl_Maeficha.Rows.Count) Then
-
-            Dim _Row As DataRow = _Tbl_Maeficha.NewRow()
-            _Row.Item("KOPR") = _kopr
-            _Row.Item("NOKOPR") = String.Empty
-            _Row.Item("FICHA") = String.Empty
-
-            _Tbl_Maeficha.Rows.Add(_Row)
-
+        If CBool(_Tbl_Maefichd.Rows.Count) Then
+            For Each _Fichas As DataRow In _Tbl_Maefichd.Rows
+                Ficha += _Fichas.Item("FICHA")
+            Next
+        Else
+            Ficha = String.Empty
         End If
 
         If Not CBool(_Tbl_Maeprobs.Rows.Count) Then
@@ -627,8 +700,6 @@ Public Class Cl_Producto
             _Tbl_Maeprobs.Rows.Add(_Row)
 
         End If
-
-
 
         _RowProducto = _Tbl_Maepr.Rows(0)
 
@@ -649,9 +720,12 @@ Public Class Cl_Producto
 
             'INGRESO DE PRODUCTO EN TABLA DE FICHAS DEL PRODUCTO
 
-            Dim _Ficha As String = Replace(NuloPorNro(_Tbl_Maeficha.Rows(0).Item("FICHA"), ""), "'", "''")
-            _SqlQuery += "INSERT INTO MAEFICHA (KOPR,NOKOPR,FICHA) VALUES ('" & _kopr &
-                         "','" & _nokopr & "','" & _Ficha & "')" & vbCrLf & vbCrLf
+            'Dim _Ficha As String = Replace(NuloPorNro(_Tbl_Maefichd.Rows(0).Item("FICHA"), ""), "'", "''")
+            '_SqlQuery += "INSERT INTO MAEFICHA (KOPR,NOKOPR,FICHA) VALUES ('" & _kopr &
+            '             "','" & _nokopr & "','" & _Ficha & "')" & vbCrLf & vbCrLf
+
+            _SqlQuery += "DELETE MAEFICHD Where KOPR='" & _kopr & "'" & vbCrLf &
+                         "INSERT INTO MAEFICHD (KOPR,FICHA) Values ('" & _kopr & "','" & _Ficha & "')" & vbCrLf
 
             'INGRESO DE PRODUCTOS POR EMPRESA
 
@@ -760,12 +834,14 @@ Public Class Cl_Producto
                          "','','" & _Mensaje01 & "','" & _Mensaje02 & "','" & _Mensaje03 & "')" & vbCrLf & vbCrLf
 
 
-            Return _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery)
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery)
+
+            Return _Sql.Pro_Error
 
         Catch ex As Exception
             'myTrans.Rollback()
             'SQL_ServerClass.Sb_Cerrar_Conexion(Cn)
-            MsgBox(ex.Message)
+            Return ex.Message
             '_Producto_Creado = False
         End Try
 
@@ -784,7 +860,7 @@ Public Class Cl_Producto
 
             Dim _SqlQuery = String.Empty
 
-            Dim _Ficha As String = Replace(NuloPorNro(_Tbl_Maeficha.Rows(0).Item("FICHA"), ""), "'", "''")
+            Dim _Ficha As String = Replace(NuloPorNro(_Tbl_Maefichd.Rows(0).Item("FICHA"), ""), "'", "''")
 
             _SqlQuery = "Delete MAEPR Where KOPR = '" & _kopr & "'" & vbCrLf &
                         "Delete TABIMPR Where KOPR = '" & _kopr & "'" & vbCrLf &
@@ -795,7 +871,21 @@ Public Class Cl_Producto
 
             'INGRESO DE PRODUCTO EN TABLA DE FICHAS DEL PRODUCTO
 
-            _SqlQuery += "UPDATE MAEFICHA SET NOKOPR = '" & _nokopr & "',FICHA = '" & _Ficha & "' WHERE KOPR = '" & _kopr & "'" & vbCrLf & vbCrLf
+            '_SqlQuery += "UPDATE MAEFICHA SET NOKOPR = '" & _nokopr & "',FICHA = '" & _Ficha & "' WHERE KOPR = '" & _kopr & "'" & vbCrLf & vbCrLf
+            _SqlQuery += "Delete FROM MAEFICHD Where KOPR='" & _kopr & "'" & vbCrLf
+
+            Dim _ListaFichas As New List(Of String)
+
+            Dim _Div = Math.Ceiling(Ficha.Length / 80)
+            Dim _Ini = 1
+            For i = 1 To _Div
+                _ListaFichas.Add(Mid(Ficha.ToString, _Ini, 80))
+                _Ini += 80
+            Next
+
+            For Each _Fichas As String In _ListaFichas
+                _SqlQuery += "Insert Into MAEFICHD (KOPR,FICHA) Values ('" & _kopr & "','" & _Fichas & "')" & vbCrLf
+            Next
 
 
             'INGRESO DE PRODUCTOS POR EMPRESA
@@ -811,7 +901,7 @@ Public Class Cl_Producto
                     Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("MAEPREM", "EMPRESA = '" & _Cod & "' And KOPR = '" & _kopr & "'"))
 
                     If Not _Reg Then
-                        _SqlQuery += "INSERT INTO MAEPREM ( EMPRESA,KOPR,LISCOSTO,PPUL01,PPUL02,PM) VALUES " &
+                        _SqlQuery += "Insert Into MAEPREM ( EMPRESA,KOPR,LISCOSTO,PPUL01,PPUL02,PM) Values " &
                                      "( '" & _Cod &
                                      "','" & _kopr &
                                      "',''," & De_Num_a_Tx_01(_ppul01, False, 5) &
@@ -819,7 +909,7 @@ Public Class Cl_Producto
                                      "," & De_Num_a_Tx_01(_pm, False, 5) & ")" & vbCrLf & vbCrLf
                     End If
                 Else
-                    _SqlQuery += "DELETE MAEPREM WHERE KOPR = '" & _kopr & "' AND EMPRESA = '" & _Cod & "'" & vbCrLf & vbCrLf
+                    _SqlQuery += "Delete MAEPREM Where KOPR = '" & _kopr & "' AND EMPRESA = '" & _Cod & "'" & vbCrLf & vbCrLf
                 End If
 
             Next
@@ -833,7 +923,36 @@ Public Class Cl_Producto
                 Dim _Des As String = _Fila.Item("Descripcion")
 
                 If _Select Then
-                    _SqlQuery += "INSERT INTO TABIMPR (KOPR,KOIM) VALUES ( '" & _kopr & "','" & _Cod & "')" & vbCrLf & vbCrLf
+
+                    If _Sql.Fx_Exite_Campo("TABIMPR", "NOAPLICEN") Then
+
+                        Dim _ListNoaplicen As New List(Of String)
+
+                        Dim _Compras = _Fila.Item("Compras")
+                        Dim _Ventas = _Fila.Item("Ventas")
+                        Dim _Stock = _Fila.Item("Stock")
+                        Dim _Boleta = _Fila.Item("Boleta")
+
+                        If _Compras = "No" Then _ListNoaplicen.Add("compras")
+                        If _Ventas = "No" Then _ListNoaplicen.Add("ventas")
+                        If _Stock = "No" Then _ListNoaplicen.Add("stock")
+                        If _Boleta = "No" Then _ListNoaplicen.Add("BSV,BLV")
+
+                        Dim _Noaplicen As String = String.Empty
+
+                        For Each _Valor As String In _ListNoaplicen
+                            If String.IsNullOrEmpty(_Noaplicen) Then
+                                _Noaplicen = _Valor
+                            Else
+                                _Noaplicen += "," & _Valor
+                            End If
+                        Next
+
+                        _SqlQuery += "Insert Into TABIMPR (KOPR,KOIM,NOAPLICEN) Values ( '" & _kopr & "','" & _Cod & "','" & _Noaplicen & "')" & vbCrLf & vbCrLf
+                    Else
+                        _SqlQuery += "Insert Into TABIMPR (KOPR,KOIM) Values ( '" & _kopr & "','" & _Cod & "')" & vbCrLf & vbCrLf
+                    End If
+
                 End If
 
             Next
@@ -857,7 +976,7 @@ Public Class Cl_Producto
                         Dim _Ecuacion As String = _Sql.Fx_Trae_Dato("TABPP", "ECUDEF01UD", "KOLT = '" & _Kolt & "'")
                         Dim _Ecuacionu2 As String = _Sql.Fx_Trae_Dato("TABPP", "ECUDEF02UD", "KOLT = '" & _Kolt & "'")
 
-                        _SqlQuery += "INSERT INTO TABPRE (KOPR,KOLT,KOPRRA,KOPRTE,RLUD,ECUACION,ECUACIONU2) VALUES ('" & _kopr &
+                        _SqlQuery += "Insert Into TABPRE (KOPR,KOLT,KOPRRA,KOPRTE,RLUD,ECUACION,ECUACIONU2) Values ('" & _kopr &
                                         "','" & _Kolt & "','" & _koprra &
                                         "','" & _koprte & "'," & De_Num_a_Tx_01(_rlud, False, 5) &
                                         ",'" & _Ecuacion & "','" & _Ecuacionu2 & "')" & vbCrLf & vbCrLf
@@ -895,7 +1014,7 @@ Public Class Cl_Producto
                                                                           "' And KOPR = '" & _kopr & "'"))
 
                     If Not _Reg Then
-                        _SqlQuery += "INSERT INTO TABBOPR (KOPR,EMPRESA,KOSU,KOBO) VALUES ('" & _kopr &
+                        _SqlQuery += "Insert Into TABBOPR (KOPR,EMPRESA,KOSU,KOBO) Values ('" & _kopr &
                                          "','" & _Empresa & "','" & _Kosu & "','" & _Kobo & "')" & vbCrLf & vbCrLf
                     End If
 
@@ -915,17 +1034,42 @@ Public Class Cl_Producto
             Dim _Mensaje02 = Replace(_Tbl_Maeprobs.Rows(0).Item("MENSAJE02"), "'", "''")
             Dim _Mensaje03 = Replace(_Tbl_Maeprobs.Rows(0).Item("MENSAJE03"), "'", "''")
 
-            _SqlQuery += "INSERT INTO MAEPROBS (KOPR,EMPRESA,MENSAJE01,MENSAJE02,MENSAJE03) VALUES ('" & _kopr &
+            _SqlQuery += "Insert Into MAEPROBS (KOPR,EMPRESA,MENSAJE01,MENSAJE02,MENSAJE03) VALUES ('" & _kopr &
                          "','','" & _Mensaje01 & "','" & _Mensaje02 & "','" & _Mensaje03 & "')" & vbCrLf & vbCrLf
 
+            If _Sql.Fx_Exite_Campo("MAEPROBS", "ALTO") Then
+                Dim _Alto = De_Num_a_Tx_01(_Tbl_Maeprobs.Rows(0).Item("ALTO"), False, 5)
+                _SqlQuery += "Update MAEPROBS Set ALTO = " & _Alto & " Where KOPR = '" & _kopr & "'" & vbCrLf
+            End If
 
-            Return _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery)
+            If _Sql.Fx_Exite_Campo("MAEPROBS", "LARGO") Then
+                Dim _Largo = De_Num_a_Tx_01(_Tbl_Maeprobs.Rows(0).Item("LARGO"), False, 5)
+                _SqlQuery += "Update MAEPROBS Set LARGO = " & _Largo & " Where KOPR = '" & _kopr & "'" & vbCrLf
+            End If
+
+            If _Sql.Fx_Exite_Campo("MAEPROBS", "ANCHO") Then
+                Dim _Ancho = De_Num_a_Tx_01(_Tbl_Maeprobs.Rows(0).Item("ANCHO"), False, 5)
+                _SqlQuery += "Update MAEPROBS Set ANCHO = " & _Ancho & " Where KOPR = '" & _kopr & "'" & vbCrLf
+            End If
+
+            If _Sql.Fx_Exite_Campo("MAEPR", "CAMBIOSUJ") Then
+                _SqlQuery += "Update MAEPR Set CAMBIOSUJ = " & CInt(_RowProducto.Item("CAMBIOSUJ")) & " Where KOPR = '" & _kopr & "'" & vbCrLf
+            End If
+
+            If _Sql.Fx_Exite_Campo("MAEPR", "NOKOPRAMP") Then
+                _SqlQuery += "Update MAEPR Set NOKOPRAMP = '" & _RowProducto.Item("NOKOPRAMP").ToString.Trim & "' Where KOPR = '" & _kopr & "'" & vbCrLf
+            End If
+
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery)
+
+            Return _Sql.Pro_Error
 
         Catch ex As Exception
             'myTrans.Rollback()
             'SQL_ServerClass.Sb_Cerrar_Conexion(Cn)
-            MsgBox(ex.Message)
+            'MsgBox(ex.Message)
             '_Producto_Creado = False
+            Return ex.Message
         End Try
 
     End Function

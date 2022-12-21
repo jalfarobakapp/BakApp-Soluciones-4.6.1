@@ -1,5 +1,7 @@
-Imports System.IO
+锘縄mports System.IO
 Imports DevComponents.DotNetBar
+Imports HEFSIIREGCOMPRAVENTAS.LIB
+Imports Newtonsoft.Json
 
 Public Class Frm_Importar_Compras_SII
 
@@ -20,7 +22,7 @@ Public Class Frm_Importar_Compras_SII
         Get
             Return _TblInforme
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _TblInforme = value
         End Set
     End Property
@@ -30,40 +32,31 @@ Public Class Frm_Importar_Compras_SII
         End Get
     End Property
 
-    Public Sub New(ByVal Periodo As Integer, ByVal Mes As Integer)
+    Public Sub New(Periodo As Integer, Mes As Integer)
 
-        ' Llamada necesaria para el Dise馻dor de Windows Forms.
+        ' Llamada necesaria para el Dise帽ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicializaci髇 despu閟 de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaci贸n despu茅s de la llamada a InitializeComponent().
 
         _Periodo = Periodo
         _Mes = Mes
 
-        If Global_Thema = Enum_Themas.Oscuro Then
-
-            Btn_Importar_Desde_XML.ForeColor = Color.White
-            Btn_Cancelar.ForeColor = Color.White
-            Btn_Buscar_Archivo.ForeColor = Color.White
-
-        End If
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
-    Private Sub Frm_Importar_Compras_SII_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Importar_Compras_SII_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
     End Sub
 
-    Sub Sb_Habilitar_Deshabilitar_Comandos(ByVal _Habilitar As Boolean,
-                                           ByVal _Habilitar_Cancelar As Boolean)
+    Sub Sb_Habilitar_Deshabilitar_Comandos(_Habilitar As Boolean,
+                                           _Habilitar_Cancelar As Boolean)
 
         _Cancelar = False
 
 
         Chk_Primera_Fila_Es_encabezado.Enabled = _Habilitar
-
-        Btn_Buscar_Archivo.Enabled = _Habilitar
-        Btn_Archivo_Ayuda_Excel.Enabled = _Habilitar
 
         Me.ControlBox = _Habilitar
 
@@ -75,27 +68,26 @@ Public Class Frm_Importar_Compras_SII
         Circular_Progres_Val.Value = 0
 
         Btn_Cancelar.Visible = _Habilitar_Cancelar
-        Lbl_Procesando.Visible = _Habilitar_Cancelar
 
         Me.Refresh()
 
     End Sub
 
-    Private Sub Btn_Cancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cancelar.Click
-        If MessageBoxEx.Show(Me, "縀sta seguro cancelar la acci髇?", "Cancelar", _
+    Private Sub Btn_Cancelar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cancelar.Click
+        If MessageBoxEx.Show(Me, "驴Esta seguro cancelar la acci贸n?", "Cancelar",
                             MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
 
             _Cancelar = True
-            Txt_Nombre_Archivo.Text = String.Empty
+            Sb_AddToLog("Importar SII", "Acci贸n cancelada por el usuario", Txt_Log)
         End If
     End Sub
 
-    Private Sub Btn_Buscar_Archivo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Buscar_Archivo.Click
+    Private Sub Btn_Buscar_Archivo_Click(sender As System.Object, e As System.EventArgs)
 
         Sb_Importar_Archivo_SII_Compras()
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Compras_en_SII"
-        _TblInforme = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Compras_en_SII"
+        _TblInforme = _Sql.Fx_Get_Tablas(Consulta_Sql)
 
     End Sub
 
@@ -125,8 +117,6 @@ Public Class Frm_Importar_Compras_SII
                 Return
             End If
         End With
-
-        Txt_Nombre_Archivo.Text = _Ubic_Archivo
 
         Dim _ImpEx As New Class_Importar_Excel
         Dim _Extencion As String = Replace(System.IO.Path.GetExtension(_Nombre_Archivo), ".", "")
@@ -224,7 +214,7 @@ Public Class Frm_Importar_Compras_SII
 
 
                 Consulta_Sql = "Select top 1 * From MAEEN Where RTEN = '" & _Rten & "'"
-                Dim _RowProveedor As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                Dim _RowProveedor As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
                 Dim _Endo As String
 
@@ -296,7 +286,7 @@ Public Class Frm_Importar_Compras_SII
                             ",'" & _Nudo_Sugerido & "')" & vbCrLf
 
             Else
-                'Sb_AddToLog("Fila Nro :" & i + 1, "Problema: " & _Error & "C骴igo: [" & _Kopr & "]", _
+                'Sb_AddToLog("Fila Nro :" & i + 1, "Problema: " & _Error & "C贸digo: [" & _Kopr & "]", _
                 ' _Txt_Log, False)
                 _Problemas += 1
             End If
@@ -318,8 +308,8 @@ Public Class Frm_Importar_Compras_SII
             Circular_Progres_Val.Value += 1
             Circular_Progres_Val.ProgressText = Circular_Progres_Val.Value '& "%"
 
-            Lbl_Procesando.Text = "Leyendo fila " & i & " de " & _Filas & ". Estado Ok: " & _SinProbremas &
-                                  ", Problemas: " & _Problemas
+            'Lbl_Procesando.Text = "Leyendo fila " & i & " de " & _Filas & ". Estado Ok: " & _SinProbremas &
+            '                      ", Problemas: " & _Problemas
 
         Next
 
@@ -340,7 +330,7 @@ Public Class Frm_Importar_Compras_SII
                        "Vaivdo = Vaivdo*-1," & vbCrLf &
                        "Vabrdo = Vabrdo*-1" & vbCrLf &
                        "Where Periodo = " & _Periodo & " And Mes = " & _Mes & " And Tido = 'NCC'"
-        _Sql.Ej_consulta_IDU(Consulta_sql)
+        _Sql.Ej_consulta_IDU(Consulta_Sql)
 
         Try
 
@@ -352,12 +342,12 @@ Public Class Frm_Importar_Compras_SII
         Finally
 
             Sb_Habilitar_Deshabilitar_Comandos(True, False)
-            Txt_Nombre_Archivo.Text = String.Empty
+            'Txt_Nombre_Archivo.Text = String.Empty
         End Try
 
     End Sub
 
-    Private Function Fx_Tido(ByVal _TipoDoc As Integer) As String
+    Private Function Fx_Tido(_TipoDoc As Integer) As String
 
         Select Case _TipoDoc
             Case 33, 34
@@ -384,6 +374,80 @@ Public Class Frm_Importar_Compras_SII
 
     Private Sub Btn_Importar_Desde_XML_Click(sender As Object, e As EventArgs) Handles Btn_Importar_Desde_XML.Click
 
+        Sb_Importar_Archivos_Json()
+
+    End Sub
+    Sub Sb_Importar_Archivos_Json()
+
+        Dim _Clas_Hefesto_Dte_Libro As New Clas_Hefesto_Dte_Libro
+
+        _Clas_Hefesto_Dte_Libro.Circular_Progres_Porc = Circular_Progres_Porc
+        _Clas_Hefesto_Dte_Libro.Circular_Progres_Val = Circular_Progres_Val
+
+        '_Clas_Hefesto_Dte_Libro.Estatus = Lbl_Procesando
+        '_Clas_Hefesto_Dte_Libro.Sb_Importar_Archivos_Json(_Periodo, _Mes)
+
+        Dim _RecuperarResumenVentasRegistro As HefRespuesta
+        Dim _RecuperarVentasRegistro As HefRespuesta
+        Dim _RecuperarResumenCompras As HefRespuesta
+        Dim _RecuperarComprasRegistro As HefRespuesta
+        Dim _RecuperarComprasPendientes As HefRespuesta
+        Dim _RecuperarComprasNoIncluir As HefRespuesta
+        Dim _RecuperarComprasReclamadas As HefRespuesta
+
+        '_RecuperarResumenVentasRegistro = _Clas_Hefesto_Dte_Libro.Fx_RecuperarResumenVentasRegistro(_Periodo, _Mes)
+        'If _RecuperarResumenVentasRegistro.EsCorrecto Then Txt_Nombre_Archivo.Text = _RecuperarResumenVentasRegistro.Directorio
+
+        '_RecuperarVentasRegistro = _Clas_Hefesto_Dte_Libro.Fx_RecuperarVentasRegistro(_Periodo, _Mes)
+        'If _RecuperarVentasRegistro.EsCorrecto Then Txt_Nombre_Archivo.Text = _RecuperarVentasRegistro.Directorio
+
+        '_RecuperarResumenCompras = _Clas_Hefesto_Dte_Libro.Fx_RecuperarResumenCompras(_Periodo, _Mes)
+        'If _RecuperarResumenCompras.EsCorrecto Then Txt_Nombre_Archivo.Text = _RecuperarResumenCompras.Directorio
+
+        _RecuperarComprasRegistro = _Clas_Hefesto_Dte_Libro.Fx_RecuperarComprasRegistro(_Periodo, _Mes)
+
+        If _RecuperarComprasRegistro.EsCorrecto Then
+            Sb_AddToLog("Importar SII", "Es correcto: " & _RecuperarComprasRegistro.EsCorrecto, Txt_Log)
+            Sb_AddToLog("Importar SII", "Mensaje    : " & _RecuperarComprasRegistro.Mensaje, Txt_Log)
+            Sb_AddToLog("Importar SII", "Detalle    :" & _RecuperarComprasRegistro.Directorio, Txt_Log)
+        Else
+            Sb_AddToLog("Importar SII", "Es correcto: " & _RecuperarComprasRegistro.EsCorrecto, Txt_Log)
+            Sb_AddToLog("Importar SII", "Mensaje    : " & _RecuperarComprasRegistro.Mensaje, Txt_Log)
+            MessageBoxEx.Show(Me, _RecuperarComprasRegistro.Mensaje, "Error al importar el archivo Registro de compras",
+                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
+
+        _RecuperarComprasPendientes = _Clas_Hefesto_Dte_Libro.Fx_RecuperarComprasPendientes(_Periodo, _Mes)
+
+        If _RecuperarComprasPendientes.EsCorrecto Then
+            Sb_AddToLog("Importar SII", "Es correcto: " & _RecuperarComprasPendientes.EsCorrecto, Txt_Log)
+            Sb_AddToLog("Importar SII", "Mensaje    : " & _RecuperarComprasPendientes.Mensaje, Txt_Log)
+            Sb_AddToLog("Importar SII", "Detalle    :" & _RecuperarComprasPendientes.Directorio, Txt_Log)
+        Else
+            Sb_AddToLog("Importar SII", "Es correcto: " & _RecuperarComprasPendientes.EsCorrecto, Txt_Log)
+            Sb_AddToLog("Importar SII", "Mensaje    : " & _RecuperarComprasPendientes.Mensaje, Txt_Log)
+            MessageBoxEx.Show(Me, _RecuperarComprasPendientes.Mensaje, "Error al importar el archivo Registro de compras",
+                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
+
+        Sb_AddToLog("Importar SII", "Rescatando datos desde archivos Json...", Txt_Log)
+
+        Dim _Fichero1 As String = File.ReadAllText(_RecuperarComprasRegistro.Directorio)
+        Dim _Fichero2 As String = File.ReadAllText(_RecuperarComprasPendientes.Directorio)
+
+        Dim _Tbl_Registro_Compras As DataTable = Fx_TblFromJson(_Fichero1, "RegistroCompras")
+        Dim _Tbl_Registro_Compras_Pendientes As DataTable = Fx_TblFromJson(_Fichero2, "RegistroComprasPendientes")
+
+        If _Clas_Hefesto_Dte_Libro.Fx_Importar_Archivo_SII_Compras_Desde_Json(_Tbl_Registro_Compras,
+                                                                              _Tbl_Registro_Compras_Pendientes,
+                                                                              _Periodo, _Mes) Then
+            Me.Close()
+        End If
+
+    End Sub
+
+    Sub Sb_Importar_XML_Old()
+
         Dim _Clas_Hefesto_Dte_Libro As New Clas_Hefesto_Dte_Libro
 
         _Clas_Hefesto_Dte_Libro.Circular_Progres_Porc = Circular_Progres_Porc
@@ -391,7 +455,7 @@ Public Class Frm_Importar_Compras_SII
 
         '_Ubic_Archivo = "D:\OneDrive\Documentos\Empresas\Sierralta\Hefesto_DTE\CONFIGURACION\Salida\" & RutEmpresa & "\" & _Periodo
 
-        _Clas_Hefesto_Dte_Libro.Estatus = Lbl_Procesando
+        '_Clas_Hefesto_Dte_Libro.Estatus = Lbl_Procesando
 
         If System.IO.File.Exists(_Clas_Hefesto_Dte_Libro.Directorio_Hefesto & "\SISTEMA\HEFESTO_LIBROS.exe") Then 'Application.StartupPath & "\BakApp_Demonio.exe") Then
 
@@ -415,7 +479,7 @@ Public Class Frm_Importar_Compras_SII
 
         End If
 
-        Lbl_Procesando.Text = "..."
+        'Lbl_Procesando.Text = "..."
 
         If _Clas_Hefesto_Dte_Libro.Fx_Importar_Archivo_SII_Compras_Desde_XML(_Periodo, _Mes) Then
             Me.Close()

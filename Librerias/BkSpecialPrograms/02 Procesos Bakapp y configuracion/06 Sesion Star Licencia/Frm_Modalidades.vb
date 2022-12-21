@@ -311,6 +311,8 @@ Public Class Frm_Modalidades
                     RutEmpresaActiva = _Global_Row_Empresa.Item("Rut").ToString.Trim
                     RutEmpresa = RutEmpresaActiva
 
+                    'Sb_Revisar_Estilo("")
+
                 End If
 
                 Me.Close()

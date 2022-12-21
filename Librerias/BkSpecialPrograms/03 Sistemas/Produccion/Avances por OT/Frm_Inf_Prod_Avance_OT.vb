@@ -1,5 +1,4 @@
-﻿Imports DevComponents.DotNetBar
-Imports DevComponents.DotNetBar.SuperGrid
+﻿Imports DevComponents.DotNetBar.SuperGrid
 Imports DevComponents.DotNetBar.SuperGrid.Style
 
 Public Class Frm_Inf_Prod_Avance_OT
@@ -47,7 +46,7 @@ Public Class Frm_Inf_Prod_Avance_OT
 
         Sb_Initialize_Grid()
         Sb_Actualizar_Grilla()
-        
+
     End Sub
 
     Sub Sb_Actualizar_Grilla()
@@ -58,55 +57,36 @@ Public Class Frm_Inf_Prod_Avance_OT
 
         Dim _Ds_Informe As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
 
-
         _Tbl_Informe_01_OT = _Ds_Informe.Tables(0)
         _Tbl_Informe_02_SUBOT = _Ds_Informe.Tables(1)
         _Tbl_Informe_03_SUBOT_OPERACIONES = _Ds_Informe.Tables(2)
         _Tbl_Informe_04_OPERACIONES = _Ds_Informe.Tables(3)
 
-        If True Then
 
-            _Ds_Informe.Relations.Add("1",
+        _Ds_Informe.Relations.Add("1",
                                     _Ds_Informe.Tables("Table").Columns("NUMOT"),
                                     _Ds_Informe.Tables("Table1").Columns("NUMOT"), False)
 
-            _Ds_Informe.Relations.Add("2",
-                                    _Ds_Informe.Tables("Table1").Columns("NUMOT_PERTENECE"),
-                                    _Ds_Informe.Tables("Table2").Columns("NUMOT_PERTENECE"), False)
+        _Ds_Informe.Relations.Add("2",
+                                _Ds_Informe.Tables("Table1").Columns("NUMOT_PERTENECE"),
+                                _Ds_Informe.Tables("Table2").Columns("NUMOT_PERTENECE"), False)
 
-            _Ds_Informe.Relations.Add("3",
-                                    _Ds_Informe.Tables("Table2").Columns("IDPOTL"),
-                                    _Ds_Informe.Tables("Table3").Columns("IDPOTL"), False)
+        _Ds_Informe.Relations.Add("3",
+                                _Ds_Informe.Tables("Table2").Columns("IDPOTL"),
+                                _Ds_Informe.Tables("Table3").Columns("IDPOTL"), False)
 
-            _Ds_Informe.Relations.Add("4",
-                                    _Ds_Informe.Tables("Table3").Columns("IDPOTPR"),
-                                    _Ds_Informe.Tables("Table4").Columns("IDRST"), False)
+        _Ds_Informe.Relations.Add("4",
+                                _Ds_Informe.Tables("Table3").Columns("IDPOTPR"),
+                                _Ds_Informe.Tables("Table4").Columns("IDRST"), False)
 
-            _Ds_Informe.Relations.Add("5",
-                                    _Ds_Informe.Tables("Table4").Columns("IDPDATFAD"),
-                                    _Ds_Informe.Tables("Table5").Columns("IDPDATFAD"), False)
+        '_Ds_Informe.Relations.Add("5",
+        '                            _Ds_Informe.Tables("Table4").Columns("IDPDATFAD"),
+        '                            _Ds_Informe.Tables("Table5").Columns("IDPDATFAD"), False)
 
-        End If
+        _Ds_Informe.Relations.Add("6",
+                                    _Ds_Informe.Tables("Table4").Columns("NUMDF"),
+                                    _Ds_Informe.Tables("Table6").Columns("NUMDF"), False)
 
-        If False Then
-            _Ds_Informe.Relations.Add("1",
-                                    _Ds_Informe.Tables("Table").Columns("NUMOT"),
-                                     _Ds_Informe.Tables("Table1").Columns("NUMOT"), False)
-
-            _Ds_Informe.Relations.Add("2",
-                                      _Ds_Informe.Tables("Table1").Columns("IDPOTL"),
-                                      _Ds_Informe.Tables("Table2").Columns("IDPOTL"), False)
-
-            _Ds_Informe.Relations.Add("3",
-                                     _Ds_Informe.Tables("Table2").Columns("IDPOTPR"),
-                                     _Ds_Informe.Tables("Table3").Columns("IDRST"), False)
-
-
-            _Ds_Informe.Relations.Add("4",
-                                     _Ds_Informe.Tables("Table3").Columns("IDPDATFAD"),
-                                     _Ds_Informe.Tables("Table4").Columns("IDPDATFAD"), False)
-
-        End If
 
         Super_Grilla.PrimaryGrid.DataSource = _Ds_Informe
         Super_Grilla.PrimaryGrid.DataMember = "Table"
@@ -167,12 +147,12 @@ Public Class Frm_Inf_Prod_Avance_OT
                 Sb_Formato_Grilla_OT2(panel)
             Case "Table2"
                 Sb_Formato_Grilla_OT3(panel)
-                ' panel.SortLevel = SortLevel.None
-                'Sb_Formato_Grilla_Documentos(panel)
             Case "Table3"
                 Sb_Formato_Grilla_OT4(panel)
             Case "Table4"
                 Sb_Formato_Grilla_OT5(panel)
+            Case "Table6"
+                Sb_Formato_Grilla_OT6(panel)
         End Select
     End Sub
 
@@ -631,7 +611,53 @@ Public Class Frm_Inf_Prod_Avance_OT
 
     End Sub
 
+    Sub Sb_Formato_Grilla_OT6(ByVal _Grilla As GridPanel)
 
+        With _Grilla
+
+            .FrozenColumnCount = 1
+            .ColumnHeader.RowHeight = 70
+            .ShowRowGridIndex = True
+            .GroupByRow.Visible = False
+            '.UseAlternateRowStyle = True
+
+            If CBool(.Rows.Count) Then
+                .Caption.Text = "OBSERVACIONES...<div align=""vcenter"">observaciones anotadas por los operarios</div>"
+            Else
+                .Caption.Text = "NO HAY OBSERVACIONES"
+            End If
+
+            .Columns(0).GroupBoxEffects = GroupBoxEffects.None
+            .Columns(0).CellStyles.Default.Background = New Background(Color.AliceBlue)
+
+            For Each column As GridColumn In .Columns
+                column.ColumnSortMode = ColumnSortMode.Multiple
+                column.ResizeMode = ColumnResizeMode.MoveFollowingElements
+            Next column
+
+            Dim _DisplayIndex = 0
+
+            .Columns("NUMDF").Width = 100
+            .Columns("NUMDF").HeaderText = "Nro"
+            .Columns("NUMDF").Visible = True
+            .Columns("NUMDF").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("FEVENTO").Width = 100
+            .Columns("FEVENTO").HeaderText = "Fecha"
+            .Columns("FEVENTO").Visible = True
+            .Columns("FEVENTO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("NOKOCARAC").Width = 600
+            .Columns("NOKOCARAC").HeaderText = "Observaciones"
+            .Columns("NOKOCARAC").Visible = True
+            .Columns("NOKOCARAC").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+        End With
+
+    End Sub
     Private Sub Btn_Actualizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Actualizar.Click
         Sb_Actualizar_Grilla()
     End Sub

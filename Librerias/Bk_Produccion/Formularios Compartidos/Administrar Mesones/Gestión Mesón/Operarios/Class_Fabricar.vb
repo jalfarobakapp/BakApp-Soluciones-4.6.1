@@ -192,6 +192,11 @@ Public Class Class_Fabricar
 
         Dim _AsignadoAlPrincipio As Boolean
         Dim _CodMesonManda As String
+        Dim _IdPotpr_Ac1 As Integer
+        Dim _IdPotpr_Ac2 As Integer
+
+        Dim _Row_IdPotpr_Ac1 As DataRow
+        Dim _Row_IdPotpr_Ac2 As DataRow
 
         _CodSigMeson = String.Empty
 
@@ -325,6 +330,22 @@ Public Class Class_Fabricar
 
             End If
 
+            'If Not IsNothing(_Row_Next_Operacion) Then
+
+            '    _IdPotpr_Ac1 = _Row_Next_Operacion.Item("IdPotpr_Ac1")
+            '    _IdPotpr_Ac2 = _Row_Next_Operacion.Item("IdPotpr_Ac2")
+
+            '    If CBool(_IdPotpr_Ac1) Or CBool(_IdPotpr_Ac2) Then
+
+            Consulta_Sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Pdp_MesonVsProductos Where IdPotpr_Ac1 = " & _FilaMaquina.Item("Idpotpr")
+            _Row_IdPotpr_Ac1 = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+            Consulta_Sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Pdp_MesonVsProductos Where IdPotpr_Ac2 = " & _FilaMaquina.Item("Idpotpr")
+            _Row_IdPotpr_Ac2 = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+            '    End If
+
+            'End If
             'Throw New System.Exception("Error a proposito!!!")
 
         Catch ex As Exception
@@ -466,7 +487,10 @@ Public Class Class_Fabricar
 
                     Dim _IdMeson_Recibe = _Row_Meson_En_Pausa.Item("IdMeson")
 
-                    Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Pdp_MesonVsProductos Set Estado = 'PD'" & vbCrLf &
+                    Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Pdp_MesonVsProductos Set " &
+                                   "Estado = 'PD'" &
+                                   ",Fabricar = " & De_Num_a_Tx_01(_Fabricar, False, 5) & vbCrLf &
+                                   ",Saldo_Fabricar = Saldo_Fabricar+" & De_Num_a_Tx_01(_Fabricado, False, 5) & vbCrLf &
                                    "Where IdMeson = " & _IdMeson_Recibe
                     Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
                     Comando.Transaction = myTrans
@@ -546,24 +570,60 @@ Public Class Class_Fabricar
 
                                 Dim _Nex_IdMeson = _Row_Next_Operacion.Item("IdMeson")
                                 Dim _Nex_AsignadoAlPrincipio As Boolean = _Row_Next_Operacion.Item("AsignadoAlPrincipio")
+                                Dim _NewEstado = _Row_Next_Operacion.Item("Estado")
+
+                                If _NewEstado = "PD" Or _NewEstado = "PS" Then
+                                    _NewEstado = String.Empty
+                                End If
+
+                                If Not _Nex_AsignadoAlPrincipio Then
+                                    _NewEstado = "Estado = 'PS',"
+                                End If
+
+                                If _NewEstado = "FZ" And _Cant_Fabricada > 0 Then
+                                    _NewEstado = "Estado = 'PD',"
+                                End If
+
+                                If _Nex_AsignadoAlPrincipio Then
+
+                                    If Not IsNothing(_Row_IdPotpr_Ac1) Then
+                                        _Nex_IdMeson = 0
+                                    End If
+
+                                    If Not IsNothing(_Row_IdPotpr_Ac2) Then
+                                        _Nex_IdMeson = _Row_IdPotpr_Ac2.Item("IdMeson")
+                                    End If
+
+                                    Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Pdp_MesonVsProductos Set 
+                                                    Estado = 'PD',Fabricar = Fabricar + " & _Cant_Fabricada & vbCrLf &
+                                                    "Where IdMeson = " & _Nex_IdMeson
+
+                                    Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
+                                    Comando.Transaction = myTrans
+                                    Comando.ExecuteNonQuery()
+
+                                End If
 
                                 If Not _Nex_AsignadoAlPrincipio Then
 
                                     Dim _Fabricando_ = _Row_Next_Operacion.Item("Fabricando")
 
                                     Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Pdp_MesonVsProductos Set 
-                                    Estado = 'PD',Fabricar = Fabricar + " & _Cant_Fabricada & ", 
-                                    Saldo_Fabricar = Saldo_Fabricar + " & _Cant_Fabricada & "
-                                    Where IdMeson = " & _Nex_IdMeson
+                                                    Estado = 'PD',Fabricar = Fabricar+" & _Cant_Fabricada & vbCrLf &
+                                                    "Where IdMeson = " & _Nex_IdMeson
 
                                     Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
                                     Comando.Transaction = myTrans
                                     Comando.ExecuteNonQuery()
 
+                                End If
+
+                                If CBool(_Nex_IdMeson) Then
+
                                     Dim _IdMeson_Recibe As Integer = _Nex_IdMeson
 
                                     Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_MesonVsEnvioRecibe (IdMaquina,IdMeson_Envia,IdMeson_Recibe,Codigo,CantEnvia,FechaHoraEnvia,Codigoob) Values " &
-                                                   "(" & _IdMaquina & "," & _IdMeson & "," & _IdMeson_Recibe & ",'" & _Codigo & "'," & _Cant_Fabricada & ",Getdate(),'" & _Codigoob & "')"
+                                           "(" & _IdMaquina & "," & _IdMeson & "," & _IdMeson_Recibe & ",'" & _Codigo & "'," & _Cant_Fabricada & ",Getdate(),'" & _Codigoob & "')"
                                     Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
                                     Comando.Transaction = myTrans
                                     Comando.ExecuteNonQuery()
@@ -580,7 +640,6 @@ Public Class Class_Fabricar
                                 End If
 
                             Else
-
 
                                 ' Envio de Alerta al siguiente meson
 
@@ -614,6 +673,7 @@ Public Class Class_Fabricar
                                         If Not _Tiene_Filas Then
                                             _Enviar_Sig_Meson = False
                                             _NewEstado = "PS"
+                                            _IdPotpr_Ac1 = _FilaMaquina.Item("Idpotpr")
                                         End If
 
                                         While dfd2.Read()
@@ -633,25 +693,42 @@ Public Class Class_Fabricar
                                 End If
 
                                 Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_MesonVsProductos(Codmeson,Idpotpr,Idpotl,Idpote," &
-                                                   "Empresa,Numot,Nreg,Estado,Desde,Operacion,Nombreop,Codigo,Glosa,Asignado_Por," &
-                                                   "Fecha_Asignacion,Fabricar_OT,Fabricado_OT,Saldo_Fabricar_OT," &
-                                                   "Fabricar,Fabricado,Saldo_Fabricar,Cod_Funcionario_Asigna,Orden_Potpr,Orden_Meson,Nivel,AsignadoAlPrincipio,CodMesonManda) " &
-                                                   "VALUES('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & ModEmpresa &
-                                                   "','" & _Numot & "','" & _Nreg & "','" & _NewEstado & "','MS'" &
-                                                   ",'" & _Operacion & "','" & _Nombreop & "','" & _Codigo & "','" & _Glosa &
-                                                   "','" & FUNCIONARIO & "',Getdate()," & _Fabricar_OT & "," & _Fabricado_OT & "," & _Saldo_Fabricar_OT &
-                                                   "," & _Fabricado & ",0," & _Fabricado & ",'" & FUNCIONARIO & "'," & _Orden_Potpr &
-                                                   "," & _Orden_Meson & "," & _Nivel & "," & Convert.ToInt32(_AsignadoAlPrincipio) & ",'" & _CodMesonManda & "')"
+                                            "Empresa,Numot,Nreg,Estado,Desde,Operacion,Nombreop,Codigo,Glosa,Asignado_Por," &
+                                            "Fecha_Asignacion,Fabricar_OT,Fabricado_OT,Saldo_Fabricar_OT," &
+                                            "Fabricar,Fabricado,Saldo_Fabricar,Cod_Funcionario_Asigna,Orden_Potpr,Orden_Meson,Nivel,AsignadoAlPrincipio,CodMesonManda,IdPotpr_Ac1) " &
+                                            "Values('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & ModEmpresa &
+                                            "','" & _Numot & "','" & _Nreg & "','" & _NewEstado & "','MS'" &
+                                            ",'" & _Operacion & "','" & _Nombreop & "','" & _Codigo & "','" & _Glosa &
+                                            "','" & FUNCIONARIO & "',Getdate()," & _Fabricar_OT & "," & _Fabricado_OT & "," & _Saldo_Fabricar_OT &
+                                            "," & _Fabricado & ",0," & _Fabricado & ",'" & FUNCIONARIO & "'," & _Orden_Potpr &
+                                            "," & _Orden_Meson & "," & _Nivel & "," & Convert.ToInt32(_AsignadoAlPrincipio) & ",'" & _CodMesonManda & "'," & _IdPotpr_Ac1 & ")"
 
                                 Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
                                 Comando.Transaction = myTrans
                                 Comando.ExecuteNonQuery()
 
+
+                                Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Pdp_MesonVsProductos Set IdPotpr_Ac2 = " & _Idpotpr & vbCrLf &
+                                               "Where IdPotpr_Ac1 <> 0 And CodMesonManda = '" & _Codmeson & "'"
+                                Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
+                                Comando.Transaction = myTrans
+                                Comando.ExecuteNonQuery()
+
+
+                                If Not _Enviar_Sig_Meson Then
+
+                                    Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Pdp_MesonVsProductos Set Fabricar = 0, Saldo_Fabricar = 0 Where IdPotpr_Ac1 = " & _IdPotpr_Ac1
+                                    Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
+                                    Comando.Transaction = myTrans
+                                    Comando.ExecuteNonQuery()
+
+                                End If
+
                                 If _Enviar_Al_Sig_Meson Then
 
                                     Dim _IdMeson_Recibe As Integer
 
-                                    Comando = New SqlCommand("SELECT @@IDENTITY AS 'Identity'", cn2)
+                                    Comando = New SqlCommand("Select @@IDENTITY AS 'Identity'", cn2)
                                     Comando.Transaction = myTrans
                                     Dim dfd1 As SqlDataReader = Comando.ExecuteReader()
                                     While dfd1.Read()
@@ -854,7 +931,8 @@ Public Class Class_Fabricar
 
                 Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_MesonVsProductos" & vbCrLf &
                                "Where Idpotl_Padre = " & _Idpotl & " And IdMeson <> " & _IdMeson & Space(1) &
-                               "And Codmeson In (Select Codmeson From " & _Global_BaseBk & "Zw_Pdc_Mesones Where Virtual = 0 And Estado = 'PS')"
+                               "And Codmeson In (Select Codmeson From " & _Global_BaseBk & "Zw_Pdc_Mesones" & Space(1) &
+                               "Where Estado = 'PS' And (Virtual = 0 Or ActivaConMesonMaestro = 1))"
 
                 Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
                 Comando.Transaction = myTrans
@@ -873,7 +951,7 @@ Public Class Class_Fabricar
                 For Each _IdMeson_Recibe In _IdMeson_Recibe_List
 
                     Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_MesonVsEnvioRecibe (IdMaquina,IdMeson_Envia,IdMeson_Recibe,Codigo,CantEnvia,FechaHoraEnvia,Codigoob) Values " &
-                                    "(" & _IdMaquina & "," & _IdMeson & "," & _IdMeson_Recibe & ",'" & _Codigo & "'," & _Fabricar & ",Getdate(),'" & _Codigoob & "')"
+                                   "(" & _IdMaquina & "," & _IdMeson & "," & _IdMeson_Recibe & ",'" & _Codigo & "'," & _Fabricar & ",Getdate(),'" & _Codigoob & "')"
                     Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
                     Comando.Transaction = myTrans
                     Comando.ExecuteNonQuery()
@@ -893,20 +971,19 @@ Public Class Class_Fabricar
                                "Fabricar = Fabricar_OT * " & De_Num_a_Tx_01(_Porc_Fabricacion, False, 5) & "," &
                                "Fecha_Asignacion = Getdate(),Estado = 'PD'" & vbCrLf &
                                "Where Idpotl_Padre = " & _Idpotl & " And IdMeson <> " & _IdMeson & Space(1) &
-                               "And Codmeson In (Select Codmeson From " & _Global_BaseBk & "Zw_Pdc_Mesones Where Virtual = 0 And Estado = 'PS')"
+                               "And Codmeson In (Select Codmeson From " & _Global_BaseBk & "Zw_Pdc_Mesones" & Space(1) &
+                               "Where Estado = 'PS' And (Virtual = 0 Or ActivaConMesonMaestro = 1))"
 
                 Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
                 Comando.Transaction = myTrans
                 Comando.ExecuteNonQuery()
 
-
-
-
                 Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Pdp_MesonVsProductos Set" & Space(1) &
                                "Saldo_Fabricar = Fabricar - Fabricado," & Space(1) &
                                "Porc_Fabricacion = Round(Fabricado/Fabricar,2)" & Space(1) &
                                "Where Idpotl_Padre = " & _Idpotl & " And IdMeson <> " & _IdMeson & Space(1) &
-                               "And Codmeson In (Select Codmeson From " & _Global_BaseBk & "Zw_Pdc_Mesones Where Virtual = 0 And Estado = 'PS')"
+                               "And Codmeson In (Select Codmeson From " & _Global_BaseBk & "Zw_Pdc_Mesones" & Space(1) &
+                               "Where Estado = 'PS' And (Virtual = 0 Or ActivaConMesonMaestro = 1))"
 
                 Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
                 Comando.Transaction = myTrans

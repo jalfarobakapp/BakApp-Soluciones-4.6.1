@@ -32,3 +32,13 @@ Public Class Encabezado
     Public Property estadistica As List(Of Estadistica)
     Public Property detalle_rep_rech As List(Of DetalleRepRech)
 End Class
+
+Public Class RespBolSII
+    Public Property rut_emisor As String
+    Public Property rut_envia As String
+    Public Property trackid As String
+    Public Property fecha_recepcion As String
+    Public Property estado As String
+    Public Property estadistica As List(Of Estadistica)
+    Public Property detalle_rep_rech As List(Of DetalleRepRech)
+End Class

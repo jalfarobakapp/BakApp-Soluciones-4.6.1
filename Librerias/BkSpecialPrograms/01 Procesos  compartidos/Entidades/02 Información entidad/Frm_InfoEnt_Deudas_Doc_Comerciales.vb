@@ -12,6 +12,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
     'Dim _TblPagos As DataTable
 
     Dim _TblCheques,
+        _TblPagos,
         _TblLetras,
         _TblPagares,
         _TblTotales,
@@ -20,6 +21,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
 
     Dim _Crsd_Utilizado As Double
     Dim _Crch_Utilizado As Double
+    Dim _CrPgo_Utilizado As Double
     Dim _Crlt_Utilizado As Double
     Dim _Crpa_Utilizado As Double
     Dim _Crto_Utilizado As Double
@@ -27,6 +29,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
 
     Dim _Crsd_Disponible,
         _Crch_Disponible,
+        _CrPgo_Disponible,
         _Crlt_Disponible,
         _Crpa_Disponible,
         _Crto_Disponible As Double
@@ -66,7 +69,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Get
             Return _Dias_Vencimiento
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _Dias_Vencimiento = value
         End Set
     End Property
@@ -74,7 +77,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Get
             Return _FechaEmision
         End Get
-        Set(ByVal value As Date)
+        Set(value As Date)
             _FechaEmision = value
         End Set
     End Property
@@ -82,7 +85,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Get
             Return _Fecha_1er_Vencimiento
         End Get
-        Set(ByVal value As Date)
+        Set(value As Date)
             _Fecha_1er_Vencimiento = value
         End Set
     End Property
@@ -90,7 +93,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Get
             Return _FechaUltVencimiento
         End Get
-        Set(ByVal value As Date)
+        Set(value As Date)
             _FechaUltVencimiento = value
         End Set
     End Property
@@ -98,7 +101,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Get
             Return _Cuotas
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _Cuotas = value
         End Set
     End Property
@@ -106,7 +109,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Get
             Return _Dias_1er_Vencimiento
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _Dias_1er_Vencimiento = value
         End Set
     End Property
@@ -114,7 +117,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Get
             Return _Grabar_Vencimientos
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Grabar_Vencimientos = value
         End Set
     End Property
@@ -122,7 +125,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Get
             Return _Credito_Utilizado
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             _Credito_Utilizado = value
         End Set
     End Property
@@ -130,7 +133,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Get
             Return _Tiene_Deudas
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Tiene_Deudas = value
         End Set
     End Property
@@ -138,7 +141,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Get
             Return _CodFuncionario_permiso
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _CodFuncionario_permiso = value
         End Set
     End Property
@@ -146,7 +149,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Get
             Return _Crsd_Disponible
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             _Crsd_Disponible = value
         End Set
     End Property
@@ -154,7 +157,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Get
             Return _Crch_Disponible
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             _Crch_Disponible = value
         End Set
     End Property
@@ -162,7 +165,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Get
             Return _Crlt_Disponible
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             _Crlt_Disponible = value
         End Set
     End Property
@@ -170,7 +173,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Get
             Return _Crpa_Disponible
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             _Crpa_Disponible = value
         End Set
     End Property
@@ -178,7 +181,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Get
             Return _Crto_Disponible
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             _Crto_Disponible = value
         End Set
     End Property
@@ -186,7 +189,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Get
             Return _Fun_Auto_Cupo_Exe
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Fun_Auto_Cupo_Exe = value
         End Set
     End Property
@@ -194,7 +197,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Get
             Return _Fun_Auto_Deuda_Ven
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Fun_Auto_Deuda_Ven = value
         End Set
     End Property
@@ -208,7 +211,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
 
             Return _Autorizar_Venta_Con_Deuda_Vencida
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Autorizar_Venta_Con_Deuda_Vencida = value
         End Set
     End Property
@@ -222,7 +225,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
 
             Return _Autorizar_Venta_Con_Cupo_Exedido
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Autorizar_Venta_Con_Cupo_Exedido = value
         End Set
     End Property
@@ -340,7 +343,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
 
     End Sub
 
-    Private Sub Frm_InfoEnt_Deudas_Doc_Comerciales_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_InfoEnt_Deudas_Doc_Comerciales_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         If Global_Thema = Enum_Themas.Oscuro Then
 
@@ -607,10 +610,10 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
 
     End Sub
 
-    Public Function Fx_Revisar_Deuda_Doc_Entidad(ByVal _Formulario As Form,
-                                                  ByVal _CodEntidad As String,
-                                                  ByVal _SucEntidad As String,
-                                                  Optional ByVal _Mostrar_Mendaje As Boolean = False) As DataTable
+    Public Function Fx_Revisar_Deuda_Doc_Entidad(_Formulario As Form,
+                                                  _CodEntidad As String,
+                                                  _SucEntidad As String,
+                                                  Optional _Mostrar_Mendaje As Boolean = False) As DataTable
 
         Dim _Fecha As String = Format(FechaDelServidor, "yyyyMMdd")
 
@@ -668,8 +671,11 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
                 Dim _Nudonodefi As Boolean = _Fila.Item("NUDONODEFI")
                 Dim _Dias_Atraso As Integer = _Fila.Item("DIAS_ATRASO")
 
-                If Not _Nudonodefi And ((_Dias_Atraso > _Dimoper) Or (_Dias_Atraso = 0)) Then
-                    _Deudas += 1
+                If Not _Nudonodefi Then
+                    Dim _DiasDeAtraso = _Dias_Atraso - _Dimoper
+                    If _DiasDeAtraso >= 0 Then
+                        _Deudas += 1
+                    End If
                 End If
 
             Next
@@ -678,10 +684,9 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
 
         End If
 
-
     End Sub
 
-    Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Deuda.CellDoubleClick
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Deuda.CellDoubleClick
 
         Me.Enabled = False
 
@@ -694,19 +699,19 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
 
     End Sub
 
-    Private Sub Frm_InfoEnt_Deudas_Doc_Comerciales_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_InfoEnt_Deudas_Doc_Comerciales_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Public Function Fx_Revisar_Situacion_Credito(ByVal _Formulario As Form,
-                                                 ByVal _EnCurso As Double,
-                                                 ByVal _Mostrar_Infor As Boolean,
-                                                 Optional ByVal _Revisar_Deuda As Boolean = True,
-                                                 Optional ByVal _EnCurso_Cheque As Double = 0,
-                                                 Optional ByVal _EnCurso_Letra As Double = 0,
-                                                 Optional ByVal _EnCurso_Pagare As Double = 0) As Boolean
+    Public Function Fx_Revisar_Situacion_Credito(_Formulario As Form,
+                                                 _EnCurso As Double,
+                                                 _Mostrar_Infor As Boolean,
+                                                 Optional _Revisar_Deuda As Boolean = True,
+                                                 Optional _EnCurso_Cheque As Double = 0,
+                                                 Optional _EnCurso_Letra As Double = 0,
+                                                 Optional _EnCurso_Pagare As Double = 0) As Boolean
 
         Sb_Revisar_Situacion_Credito_Entidad(_EnCurso, _EnCurso_Cheque, _EnCurso_Letra, _EnCurso_Pagare)
 
@@ -729,10 +734,10 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
 
     End Function
 
-    Sub Sb_Revisar_Situacion_Credito_Entidad(ByVal _EnCurso_Total As Double,
-                                             ByVal _EnCurso_Cheque As Double,
-                                             ByVal _EnCurso_Letra As Double,
-                                             ByVal _EnCurso_Pagare As Double)
+    Sub Sb_Revisar_Situacion_Credito_Entidad(_EnCurso_Total As Double,
+                                             _EnCurso_Cheque As Double,
+                                             _EnCurso_Letra As Double,
+                                             _EnCurso_Pagare As Double)
         _DsInfCredito.Clear()
 
         Dim _CodEntidad As String = _RowEntidad.Item("KOEN")
@@ -761,7 +766,8 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         _DsCredito.Tables(6).TableName = "Totales"
 
         _TblSinDocumentar = _DsCredito.Tables("SinDocumentar")
-        '_TblPagos = _DsCredito.Tables("SinDocumentar")
+
+        '_TblPagos = _DsCredito.Tables("Pagos")
         _TblCheques = _DsCredito.Tables("Cheques")
         _TblLetras = _DsCredito.Tables("Letras")
         _TblPagares = _DsCredito.Tables("Pagares")
@@ -769,30 +775,86 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         _TblTotales = _DsCredito.Tables("Totales")
 
         _Crsd_Utilizado = _TblTotales.Rows(0).Item("SIN_DOCUMENTAR")
+        '_CrPgo_Utilizado = _TblTotales.Rows(0).Item("PAGOS")
         _Crch_Utilizado = _TblTotales.Rows(0).Item("CHEQUES")
         _Crlt_Utilizado = _TblTotales.Rows(0).Item("LETRAS")
         _Crpa_Utilizado = _TblTotales.Rows(0).Item("PAGARES")
 
         If Chk_Utilizar_NVV_En_Credito_X_Cliente.Checked Then
             _CrNvv_Utilizado = _TblTotales.Rows(0).Item("NVV")
-            '_Crsd_Utilizado += _CrNvv_Utilizado
         End If
 
         _Crsd_Disponible = _CRSD - (_Crsd_Utilizado + _CrNvv_Utilizado) - _EnCurso_Total
         _Crch_Disponible = _CRCH - (_Crch_Utilizado + _EnCurso_Cheque)
+
         _Crlt_Disponible = _CRLT - (_Crlt_Utilizado + _EnCurso_Letra)
         _Crpa_Disponible = _CRPA - (_Crpa_Utilizado + _EnCurso_Pagare)
 
         _Crto_Utilizado = _Crsd_Utilizado + _CrNvv_Utilizado + _Crch_Utilizado + _Crlt_Utilizado + _Crpa_Utilizado
+
+        Dim _CRSF As Double
+
+        Sb_Revisar_Saldo_Favor(_TblPagos, _CRSF, _CrPgo_Utilizado, _CrPgo_Disponible, _CodEntidad)
+
         _Crto_Disponible = _CRTO - (_Crto_Utilizado + _EnCurso_Total + _EnCurso_Cheque + _EnCurso_Letra + _EnCurso_Pagare)
+        _Crto_Disponible = _CRTO + _CrPgo_Disponible - (_Crto_Utilizado + _EnCurso_Total + _EnCurso_Cheque + _EnCurso_Letra + _EnCurso_Pagare)
 
         Fx_Nueva_Linea_Credito("Sin documentar Cta. Cte.", _CRSD, _Crsd_Utilizado, _CrNvv_Utilizado, _EnCurso_Total, _Crsd_Disponible)
         Fx_Nueva_Linea_Credito("En cheques", _CRCH, _Crch_Utilizado, 0, _EnCurso_Cheque, _Crch_Disponible)
         Fx_Nueva_Linea_Credito("En letras", _CRLT, _Crlt_Utilizado, 0, _EnCurso_Letra, _Crlt_Disponible)
         Fx_Nueva_Linea_Credito("En pagare", _CRPA, _Crpa_Utilizado, 0, _EnCurso_Pagare, _Crpa_Disponible)
+
+        Fx_Nueva_Linea_Credito("Saldo Favor (anticipos)", _CRSF, _CrPgo_Utilizado, 0, 0, _CrPgo_Disponible) ' Nueva linea
+
         Fx_Nueva_Linea_Credito("Máximo crédito", _CRTO, _Crto_Utilizado - _CrNvv_Utilizado, _CrNvv_Utilizado, _EnCurso_Total, _Crto_Disponible)
 
         Grilla_Credito.DataSource = _DsInfCredito.Tables("Tbl_SituCredito")
+
+    End Sub
+
+    Sub Sb_Revisar_Saldo_Favor(ByRef _TblPagos As DataTable,
+                               ByRef _CRSF As Double,
+                               ByRef _CrPgo_Utilizado As Double,
+                               ByRef _CrPgo_Disponible As Double,
+                               _CodEntidad As String)
+
+        Consulta_Sql = "SELECT
+DPCE.TIDP AS TIDP,
+DPCE.NUDP AS NUDP,
+DPCE.NUCUDP AS NUCUDP,
+DPCE.FEVEDP AS FEVEDP,
+DPCE.ENDP AS ENTIDAD,
+convert(char(10),DPCE.FEEMDP,103) AS EMISION,
+convert(char(10),DPCE.FEVEDP,103) AS VENCIM,
+DPCE.REFANTI AS GLOSA,DPCE.VADP,DPCE.VAASDP,
+Isnull((Select Top 1 NOKOENDP From TABENDP Where KOENDP = EMDP),'????') AS BANCO,
+DPCE.ESPGDP,
+'VALOR' =CASE DPCE.TIMODP WHEN 'E' THEN 0 ELSE DPCE.VADP-DPCE.VAASDP-DPCE.VAVUDP END,
+'VALORD'=CASE DPCE.TIMODP WHEN 'E' THEN DPCE.VADP-DPCE.VAASDP-DPCE.VAVUDP ELSE 0 END,
+'NOMBRE'=( SELECT TOP 1 EN.NOKOEN FROM MAEEN EN WITH ( NOLOCK ) WHERE EN.KOEN=DPCE.ENDP ) 
+Into #Paso
+FROM MAEDPCE DPCE WITH ( NOLOCK ) 
+
+WHERE DPCE.TIDP IN ( 'EFV','CHV','TJV','LTV','PAV','ncv','fcv','fdv','DEP','CRV','ATB' )
+--AND DPCE.FEEMDP  >= '2010-09-01'
+AND DPCE.EMPRESA='" & ModEmpresa & "'  AND DPCE.ESASDP='P' 
+ AND ROUND(DPCE.VADP,2)-ROUND(DPCE.VAASDP,2)-ROUND(DPCE.VAVUDP,2)<>0.0 
+ AND DPCE.ENDP='" & _CodEntidad & "'
+
+ Select * From #Paso
+
+ Select Isnull(SUM(VADP),0) As 'CRSF',Isnull(SUM(VAASDP),0) As 'Utilizado',Isnull(Sum(VALOR),0) As 'Disponible'
+ From #Paso
+
+ Drop Table #Paso"
+
+        Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_Sql)
+
+        _TblPagos = _Ds.Tables(0)
+
+        _CRSF = _Ds.Tables(1).Rows(0).Item("CRSF")
+        _CrPgo_Utilizado = _Ds.Tables(1).Rows(0).Item("Utilizado")
+        _CrPgo_Disponible = _Ds.Tables(1).Rows(0).Item("Disponible")
 
     End Sub
 
@@ -819,8 +881,8 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
 
     End Function
 
-    Private Sub Sb_Grilla_Credito_CellDoubleClick(ByVal sender As System.Object,
-                                               ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Sb_Grilla_Credito_CellDoubleClick(sender As System.Object,
+                                               e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Dim _Fila As DataGridViewRow = Grilla_Credito.Rows(Grilla_Credito.CurrentRow.Index)
         Dim _Cabeza = Grilla_Credito.Columns(Grilla_Credito.CurrentCell.ColumnIndex).Name
@@ -883,6 +945,17 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
 
                 End If
 
+            Case "Saldo Favor (anticipos)"
+
+                If _Cabeza = "Utilizado" Then
+
+                    Fm.Text = "Saldo Favor (anticipos)"
+                    Fm.TipoDocumentos = Frm_InfoEnt_Situacion_Documentos._TipoDoc.Doc_Pago
+                    Fm.Tabla = _TblPagos
+                    _Revisar = CBool(Fm.Tabla.Rows.Count)
+
+                End If
+
             Case Else
 
                 _Revisar = False
@@ -906,12 +979,12 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
 
     End Sub
 
-    Private Sub Btn_AceptarVencimientos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_AceptarVencimientos.Click
+    Private Sub Btn_AceptarVencimientos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_AceptarVencimientos.Click
         _Grabar_Vencimientos = True
         Me.Close()
     End Sub
 
-    Private Sub Txt_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs)
+    Private Sub Txt_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs)
 
         Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
         KeyAscii = CShort(SoloNumerosSinPuntosNiComas(KeyAscii))
@@ -931,11 +1004,11 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
 
     End Sub
 
-    Private Sub Dtp_Fecha_1er_Vencimiento_Validated(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Dtp_Fecha_1er_Vencimiento_Validated(sender As System.Object, e As System.EventArgs)
         Sb_Procesar_Cond_Pago(False)
     End Sub
 
-    Private Sub Txt_Validated(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Txt_Validated(sender As System.Object, e As System.EventArgs)
         If String.IsNullOrEmpty(CType(sender, TextBox).Text) Then
             CType(sender, TextBox).Text = 0
         End If
@@ -944,7 +1017,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Sb_Procesar_Cond_Pago(True)
     End Sub
 
-    Sub Sb_Procesar_Cond_Pago(ByVal _Cambia_F1Venc As Boolean)
+    Sub Sb_Procesar_Cond_Pago(_Cambia_F1Venc As Boolean)
 
         _Dias_Vencimiento = _Dias_1er_Vencimiento
 
@@ -985,16 +1058,16 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Dtp_FechaUltVencimiento.Value = _FechaUltVencimiento
 
     End Sub
-    Private Sub Btn_CambCodPago_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_CambCodPago.Click
+    Private Sub Btn_CambCodPago_Click(sender As System.Object, e As System.EventArgs) Handles Btn_CambCodPago.Click
         If Fx_Tiene_Permiso(Me, "Bkp00034") Then
             Grupo_CondPago.Enabled = True
             Txt_Cuotas.Focus()
         End If
     End Sub
-    Private Sub Warning_Box_Deuda_Cupo_Exedido_OptionsClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Warning_Box_Deuda.OptionsClick
+    Private Sub Warning_Box_Deuda_Cupo_Exedido_OptionsClick(sender As System.Object, e As System.EventArgs) Handles Warning_Box_Deuda.OptionsClick
         SuperTabControl1.SelectedTabIndex = 1
     End Sub
-    Private Sub Tiempo_Alerta_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Tiempo_Alerta_Tick(sender As System.Object, e As System.EventArgs)
 
         If Warning_Box_Deuda.Visible Then
             Warning_Box_Deuda.Visible = False

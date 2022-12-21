@@ -10,12 +10,25 @@ Public Class Frm_MantFacturasElectronicas
     Dim _AmbienteCertificacion As Integer
 
     Dim _Ult_Trackid_Procesado As String
+    Dim _Dv As New DataView
+
+    Dim _Ds As DataSet
+
     Public Property Cl_MFElec As Class_MantFacturasElect
         Get
             Return _Cl_MFElec
         End Get
         Set(value As Class_MantFacturasElect)
             _Cl_MFElec = value
+        End Set
+    End Property
+
+    Public Property Ds As DataSet
+        Get
+            Return _Ds
+        End Get
+        Set(value As DataSet)
+            _Ds = value
         End Set
     End Property
 
@@ -26,8 +39,10 @@ Public Class Frm_MantFacturasElectronicas
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 8), Color.White, ScrollBars.Vertical, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 8), Color.White, ScrollBars.Both, True, False, False)
         Sb_Color_Botones_Barra(Bar1)
+
+        _AmbienteCertificacion = Convert.ToInt32(_Global_Row_Configuracion_Estacion.Item("FacElect_Usar_AmbienteCertificacion"))
 
     End Sub
 
@@ -35,8 +50,6 @@ Public Class Frm_MantFacturasElectronicas
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_Detalle_MouseDown
-
-        _AmbienteCertificacion = Convert.ToInt32(_Global_Row_Configuracion_Estacion.Item("FacElect_Usar_AmbienteCertificacion"))
 
         Chk_SoloFirmadosXBakapp.Checked = False
 
@@ -60,13 +73,18 @@ Public Class Frm_MantFacturasElectronicas
     Sub Sb_Actualizar_Grilla()
 
         Grilla.Columns.Clear()
-        Dim _Tbl_Informe As DataTable = Fx_Generar_Informe()
+
+        'Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+        'Dim _Tbl_Informe As DataTable = _New_Ds.Tables(0)
+        '_Dv.Table = _New_Ds.Tables("Table")
+
+        _Dv.Table = _Ds.Tables("Table") 'Fx_Generar_Informe().Tables("Table")
 
         Dim _DisplayIndex = 0
 
         With Grilla
 
-            .DataSource = _Tbl_Informe
+            .DataSource = _Dv
 
             OcultarEncabezadoGrilla(Grilla, True)
 
@@ -260,40 +278,80 @@ Public Class Frm_MantFacturasElectronicas
 
     End Sub
 
-    Function Fx_Generar_Informe() As DataTable
+    Function Fx_Generar_Informe() As DataSet
 
+        Me.Cursor = Cursors.WaitCursor
+
+        Dim Fm_Espera As New Frm_Form_Esperar
+        Fm_Espera.BarraCircular.IsRunning = True
+        Fm_Espera.Show()
+
+        Dim _Filtro_Idmaeedo As String = String.Empty
         Dim _Filtro_Documentos As String = String.Empty
         Dim _Filtro_Responsables As String = String.Empty
         Dim _Filtro_Sucursales As String = String.Empty
         Dim _Filtro_Entidades As String = String.Empty
+        Dim _Filtro_Estado As String = String.Empty
 
-        If _Cl_MFElec.Documentos_Todos Then
-            _Filtro_Documentos = "And TIDO In ('FCV','BLV','NCV','GTI','GDV','GDP','GDD')"
+        If CBool(_Cl_MFElec.Idmaeedo) Then
+            _Filtro_Idmaeedo = "And IDMAEEDO = " & _Cl_MFElec.Idmaeedo & vbCrLf
         Else
-            _Filtro_Documentos = Generar_Filtro_IN(_Cl_MFElec.Tbl_Documentos, "", "Codigo", False, False, "'")
-            _Filtro_Documentos = "And TIDO In " & _Filtro_Documentos & vbCrLf
+            If _Cl_MFElec.Documentos_Todos Then
+                _Filtro_Documentos = "And TIDO In ('BLV','FCL','FCT','FCV','FDE','FDV','FDX','FEV','FVX','FXV','FYV','GDD','GDP','GDV','GTI','NCV','NCX','NEV')"
+            Else
+                _Filtro_Documentos = Generar_Filtro_IN(_Cl_MFElec.Tbl_Documentos, "", "Codigo", False, False, "'")
+                _Filtro_Documentos = "And TIDO In " & _Filtro_Documentos & vbCrLf
+            End If
+
+            If Not _Cl_MFElec.Responsables_Todos Then
+                _Filtro_Responsables = Generar_Filtro_IN(_Cl_MFElec.Tbl_Responsables, "", "Codigo", False, False, "'")
+                _Filtro_Responsables = "And KOFUDO In " & _Filtro_Responsables & vbCrLf
+            End If
+
+            If Not _Cl_MFElec.Sucursales_Todas Then
+                _Filtro_Sucursales = Generar_Filtro_IN(_Cl_MFElec.Tbl_Sucursales, "", "Codigo", False, False, "'")
+                _Filtro_Sucursales = "And SUDO In " & _Filtro_Sucursales & vbCrLf
+            End If
+
+            If Not _Cl_MFElec.Entidades_Todas Then
+                _Filtro_Entidades = Generar_Filtro_IN(_Cl_MFElec.Tbl_Entidades, "", "Codigo", False, False, "'")
+                _Filtro_Entidades = "And ENDO In " & _Filtro_Entidades & vbCrLf
+            End If
+
+            If _Cl_MFElec.Estado_Aceptado Then
+                _Filtro_Estado = "And IDMAEEDO In (Select Distinct Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid" & vbCrLf &
+                                 "Where Aceptado = 1 or (Informado = 1 and Reparo = 1))"
+            End If
+
+            If _Cl_MFElec.Estado_AceptadoReparos Then
+                _Filtro_Estado = "And IDMAEEDO In (Select Distinct Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid" & vbCrLf &
+                                 "Where Informado = 1 And Reparo = 1 And Aceptado = 0)"
+            End If
+
+            If _Cl_MFElec.Estado_Rechazado Then
+                _Filtro_Estado = "And IDMAEEDO In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid" & vbCrLf &
+                                 "Where Rechazado = 1 And Idmaeedo Not In (Select Idmaeedo" & vbCrLf &
+                                 "From " & _Global_BaseBk & "Zw_DTE_Trackid" & vbCrLf &
+                                 "Where Aceptado = 1 or (Informado = 1 and Reparo = 1)))" & vbCrLf
+            End If
+
+            If _Cl_MFElec.Estado_SinFirmar Then
+                _Filtro_Estado = "And (IDMAEEDO Not In (Select Distinct Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid) " &
+                                 "Or IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Documentos))" & vbCrLf
+            End If
+
         End If
 
-        If Not _Cl_MFElec.Responsables_Todos Then
-            _Filtro_Responsables = Generar_Filtro_IN(_Cl_MFElec.Tbl_Responsables, "", "Codigo", False, False, "'")
-            _Filtro_Responsables = "And KOFUDO In " & _Filtro_Responsables & vbCrLf
-        End If
 
-        If Not _Cl_MFElec.Sucursales_Todas Then
-            _Filtro_Sucursales = Generar_Filtro_IN(_Cl_MFElec.Tbl_Sucursales, "", "Codigo", False, False, "'")
-            _Filtro_Sucursales = "And SUDO In " & _Filtro_Sucursales & vbCrLf
-        End If
-
-        If Not _Cl_MFElec.Entidades_Todas Then
-            _Filtro_Entidades = Generar_Filtro_IN(_Cl_MFElec.Tbl_Entidades, "", "Codigo", False, False, "'")
-            _Filtro_Entidades = "And ENDO In " & _Filtro_Entidades & vbCrLf
-        End If
-
-        Dim _Filtros As String = _Filtro_Entidades & _Filtro_Documentos & _Filtro_Responsables & _Filtro_Sucursales
+        Dim _Filtros As String = _Filtro_Idmaeedo & _Filtro_Entidades & _Filtro_Documentos & _Filtro_Responsables & _Filtro_Sucursales & _Filtro_Estado
 
         Consulta_sql = My.Resources.Recursos_Dte_Hefesto.SQLQuery_Estado_de_avance_de_envios_de_DTE_vs_Trackid
         Consulta_sql = Replace(Consulta_sql, "#Global_BaseBk#", _Global_BaseBk)
         Consulta_sql = Replace(Consulta_sql, "#Filtros#", _Filtros)
+
+        If CBool(_Cl_MFElec.Idmaeedo) Then
+            Consulta_sql = Replace(Consulta_sql, "And FEEMDO Between '#Fecha_Desde#' And '#Fecha_Hasta#'", "")
+        End If
 
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Desde#", Format(_Cl_MFElec.Fecha_Desde, "yyyyMMdd"))
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Hasta#", Format(_Cl_MFElec.Fecha_Hasta, "yyyyMMdd"))
@@ -302,72 +360,25 @@ Public Class Frm_MantFacturasElectronicas
 
         Dim _SoloFirmadosPorBakapp = String.Empty
 
-        If Chk_SoloFirmadosXBakapp.Checked Then
-            _SoloFirmadosPorBakapp = "And Edo.IDMAEEDO In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Firmar)"
-        End If
+        'If Chk_SoloFirmadosXBakapp.Checked Then
+        '    _SoloFirmadosPorBakapp = "And Edo.IDMAEEDO In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Firmar)"
+        'End If
 
         Consulta_sql = Replace(Consulta_sql, "#SoloFirmadosPorBakapp#", _SoloFirmadosPorBakapp)
 
-        Dim _Tbl_Informe As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
 
-        Return _Tbl_Informe
+        Me.Cursor = Cursors.Default
+        Fm_Espera.Close()
+        Fm_Espera.Dispose()
+
+        Return Ds
 
     End Function
 
     Private Sub Btn_Actualizar_Datos_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar_Datos.Click
         'Sb_Actualizar_Datos_SII()
     End Sub
-
-    'Sub Sb_Actualizar_Datos_SII()
-
-    '    Try
-    '        CircularProgressItem1.IsRunning = True
-    '        CircularProgressItem1.Visible = True
-    '        Grilla.Enabled = False
-    '        Bar1.Enabled = False
-
-    '        Dim _Tbl_Informe As DataTable = Fx_Generar_Informe()
-
-    '        For Each _Fila As DataRow In _Tbl_Informe.Rows
-
-    '            Application.DoEvents()
-
-    '            Dim _Idmaeedo As Integer = _Fila.Item("IDMAEEDO")
-    '            Dim _Id_Dte As Integer = _Fila.Item("Id_Dte")
-    '            Dim _Id_Trackid As String = _Fila.Item("Id_Trackid")
-    '            Dim _Trackid As String = _Fila.Item("Trackid")
-    '            Dim _DocFirmado As Boolean = _Fila.Item("DocFirmado")
-    '            Dim _EnviadoSII As Boolean = _Fila.Item("EnviadoSII")
-    '            Dim _AceptadoSII As Boolean = _Fila.Item("AceptadoSII")
-    '            Dim _InformadoSII As Boolean = _Fila.Item("InformadoSII")
-    '            Dim _RechazadoSII As Boolean = _Fila.Item("RechazadoSII")
-    '            Dim _ReparoSII As Boolean = _Fila.Item("ReparoSII")
-    '            Dim _MailEnviado As Boolean = _Fila.Item("MailEnviado")
-
-    '            Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
-
-    '            Dim _Tiene_Trackid As Boolean = Not String.IsNullOrEmpty(_Trackid)
-
-    '            Dim _Respuesta As String
-
-    '            Dim _Class_MantFacturasElect As New Class_MantFacturasElect
-    '            _Class_MantFacturasElect.Sb_Reenviar_Documento(_Id_Dte, _Idmaeedo, _Trackid, _AceptadoSII, _RechazadoSII, _Respuesta)
-
-    '        Next
-
-    '        Sb_Actualizar_Grilla()
-
-    '        MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Actualizar datos", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-    '    Catch ex As Exception
-    '    Finally
-    '        CircularProgressItem1.IsRunning = False
-    '        CircularProgressItem1.Visible = False
-    '        Grilla.Enabled = True
-    '        Bar1.Enabled = True
-    '    End Try
-
-    'End Sub
 
     Private Sub Sb_Grilla_Detalle_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
@@ -442,7 +453,27 @@ Public Class Frm_MantFacturasElectronicas
                                       "Informe de esta situación al administrador del sistema para que revise que el DTEMonitor este corriendo en algún equipo",
                                       "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Else
+
+                    If CBool(_Row_Firmar.Item("Id_Dte")) Then
+                        Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_DTE_Documentos", "Id_Dte = " & _Row_Firmar.Item("Id_Dte")))
+
+                        If Not _Reg Then
+                            _Row_Firmar.Item("Log_Error") = "Error"
+                        End If
+                    End If
+
+                    If Not _Row_Firmar.Item("Firmar") Then
+                        _ErrorEnvioDTE = True
+                    End If
+
+                    If Not String.IsNullOrEmpty(_Row_Firmar.Item("Log_Error").ToString.Trim) Then
+                        _Fila.Cells("ErrorEnvioDTE").Value = True
+                        _Fila.Cells("Glosa").Value = _Row_Firmar.Item("Log_Error").ToString.Trim
+                        _ErrorEnvioDTE = True
+                    End If
+
                     If Not _ErrorEnvioDTE Then
+
                         MessageBoxEx.Show(Me, "Este documento ya esta firmado" & vbCrLf &
                                       "Debe enviarlo al SII con la opción [Re-enviar documento al SII]", "Validación",
                                       MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -595,35 +626,24 @@ Public Class Frm_MantFacturasElectronicas
 
         Dim _Msg2 As String
 
-        If (_AceptadoSII Or _RechazadoSII) Then
+        If _Estado = "RPT" Or _Estado = "RFR" Or _Estado = "RCT" Or _Estado = "RCH" Or _Estado = "007" Or _Estado = "-11" Or _Estado = "001" Or
+                       (_Id_Dte <> 0 And Not _DocFirmado) Then
 
-            'If _RechazadoSII Then
+            Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+            If CBool(_Class_DTE.Fx_FirmarXHefesto()) Then
 
-            '    Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
-            '    If CBool(_Class_DTE.Fx_FirmarXHefesto()) Then
-            '        MessageBoxEx.Show(Me, "Documento firmado correctamente, espere la gestión del DTEMonitor", "Información Bakapp", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            '        Sb_Actualizar_Grilla()
-            '        BuscarDatoEnGrilla(_Tido_Nudo, "Tido_Nudo", Grilla)
-            '        Return
-            '    End If
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Eliminado = 1 Where Id_Dte = " & _Id_Dte
+                _Sql.Ej_consulta_IDU(Consulta_sql)
 
-            'End If
-
-            If _Estado = "RPT" Or _Estado = "RFR" Or _Estado = "RCT" Or _Estado = "RCH" Then
-
-                Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
-                If CBool(_Class_DTE.Fx_FirmarXHefesto()) Then
-
-                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Eliminado = 1 Where Id_Dte = " & _Id_Dte
-                    _Sql.Ej_consulta_IDU(Consulta_sql)
-
-                    MessageBoxEx.Show(Me, "Documento firmado correctamente, espere la gestión del DTEMonitor", "Información Bakapp", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    Sb_Actualizar_Grilla()
-                    BuscarDatoEnGrilla(_Tido_Nudo, "Tido_Nudo", Grilla)
-
-                    Return
+                MessageBoxEx.Show(Me, "Documento firmado correctamente, espere la gestión del DTEMonitor", "Información Bakapp", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                _Ds = Fx_Generar_Informe()
+                Sb_Actualizar_Grilla()
+                BuscarDatoEnGrilla(_Tido_Nudo, "Tido_Nudo", Grilla)
+                If Not String.IsNullOrEmpty(Txt_Descripcion.Text.Trim) Then
+                    _Dv.RowFilter = String.Format("Tido_Nudo+NOKOEN+FEEMDO+Trackid Like '%{0}%'", Txt_Descripcion.Text.Trim)
                 End If
 
+                Return
             End If
 
         End If
@@ -670,8 +690,6 @@ Public Class Frm_MantFacturasElectronicas
 
         Sb_Actualizar_Datos_Registro(_Fila)
 
-        'Sb_Pintar_Fila(_Fila)
-
         MessageBoxEx.Show(Me, "Documento a la espera de ser procesado por el DTEMonitor...",
                           "Renviar DTE al SII", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
@@ -684,7 +702,12 @@ Public Class Frm_MantFacturasElectronicas
         Sb_Actualizar_Datos_Registro(_Fila)
 
         Dim _Id_Dte As Integer = _Fila.Cells("Id_Dte").Value
+        Dim _Id_Trackid = _Fila.Cells("Id_Trackid").Value
         Dim _ErrorEnvioDTE As Boolean = _Fila.Cells("ErrorEnvioDTE").Value
+        Dim _Esdo = _Fila.Cells("Esdo").Value
+        Dim _Tido_Nudo = _Fila.Cells("Tido_Nudo").Value
+
+        Lbl_LeyendaDoc.Text = "Id_Dte: " & _Id_Dte & ", Id_Trackid: " & _Id_Trackid
 
         Btn_Firmar_Documento.Visible = Not (CBool(_Id_Dte))
         Btn_Reenviar_SII.Visible = CBool(_Id_Dte)
@@ -697,6 +720,13 @@ Public Class Frm_MantFacturasElectronicas
             Btn_ReConsultar_Trackid.Visible = False
             Btn_Reenviar_Correo.Visible = False
         End If
+
+        If Btn_Firmar_Documento.Visible Then
+            If _Esdo = "N" Then Btn_Firmar_Documento.Enabled = False
+        End If
+
+        Btn_CesionarDTE.Visible = _Tido_Nudo.ToString.Contains("FCV")
+        Lbl_AEC.Visible = _Tido_Nudo.ToString.Contains("FCV")
 
         ShowContextMenu(Menu_Contextual)
 
@@ -714,10 +744,15 @@ Public Class Frm_MantFacturasElectronicas
             _Tido_Nudo = String.Empty
         End Try
 
+        _Ds = Fx_Generar_Informe()
         Sb_Actualizar_Grilla()
 
         If Not String.IsNullOrEmpty(_Tido_Nudo) Then
             BuscarDatoEnGrilla(_Tido_Nudo, "Tido_Nudo", Grilla)
+        End If
+
+        If Not String.IsNullOrEmpty(Txt_Descripcion.Text.Trim) Then
+            _Dv.RowFilter = String.Format("Tido_Nudo+NOKOEN+FEEMDO+Trackid Like '%{0}%'", Txt_Descripcion.Text.Trim)
         End If
 
     End Sub
@@ -815,8 +850,11 @@ Public Class Frm_MantFacturasElectronicas
 
             If Not _AceptadoSII Then
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Procesar = 1, Procesado = 0 Where Trackid = '" & _Trackid & "' And Id_Dte = " & _Id_Dte
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Procesar = 1, Procesado = 0,Estado = '' Where Trackid = '" & _Trackid & "' And Id_Dte = " & _Id_Dte
                 If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+
+                    Sb_Actualizar_Datos_Registro(_Fila)
+
                     MessageBoxEx.Show(Me, "El documento fue nuevamente enviado a la consulta de Trackid" & vbCrLf &
                                       "Debera eseprar un momento para que el servidor DTEMonitor obtenga la llamada",
                                       "Consultar Trackid", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -853,6 +891,10 @@ Public Class Frm_MantFacturasElectronicas
             Chk_RechazadoSII.Checked = _Fila.Cells("RechazadoSII").Value
 
             _Leyenda = "Estado: " & _Fila.Cells("Estado").Value.ToString.Trim & " - " & _Fila.Cells("Glosa").Value.ToString.Trim & ". " & _Fila.Cells("LeyendaEmail").Value.ToString.Trim
+
+            If _Fila.Cells("ErrorEnvioDTE").Value Then
+                _Leyenda += _Fila.Cells("Respuesta").Value
+            End If
 
         Catch ex As Exception
             _Leyenda = String.Empty
@@ -920,7 +962,7 @@ Public Class Frm_MantFacturasElectronicas
             Return
         End If
 
-        If Not _Row.Item("DocFirmado") And Not CBool(_Row.Item("Id_Trackid")) Then
+        If _Row.Item("DocFirmado") And Not CBool(_Row.Item("Id_Trackid")) Then
             _Row.Item("Glosa") = "Firmado Ok"
         End If
 
@@ -976,6 +1018,51 @@ Public Class Frm_MantFacturasElectronicas
         Dim _Leyenda = "Estado: " & _Fila.Cells("Estado").Value.ToString.Trim & " - " & _Fila.Cells("Glosa").Value.ToString.Trim & ". " & _Fila.Cells("LeyendaEmail").Value.ToString.Trim
 
         Txt_Leyenda.Text = _Leyenda
+
+    End Sub
+
+    Private Sub Txt_Descripcion_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Descripcion.KeyDown
+
+        If e.KeyValue = Keys.Enter Or String.IsNullOrEmpty(Txt_Descripcion.Text.Trim) Then
+            _Dv.RowFilter = String.Format("Tido_Nudo+NOKOEN+FEEMDO+Trackid+Glosa Like '%{0}%'", Txt_Descripcion.Text.Trim)
+        End If
+
+    End Sub
+
+    Private Sub Btn_CesionarDTE_Click(sender As Object, e As EventArgs) Handles Btn_CesionarDTE.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Id_Dte As Integer = _Fila.Cells("Id_Dte").Value
+        Dim _Idmaeedo As Integer = _Fila.Cells("Idmaeedo").Value
+        Dim _Id_Aec As Integer
+
+        Consulta_sql = "Select Top 1 Tid.Id As Id_Trackid,Tid.Id_Dte,Isnull(Aec.Id_Aec,0) As Id_Aec" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_DTE_Trackid Tid" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_DTE_Documentos Doc On Tid.Id_Dte = Doc.Id_Dte" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_DTE_Aec Aec On Aec.Idmaeedo = Tid.Idmaeedo" & vbCrLf &
+                       "Where Doc.Idmaeedo = " & _Idmaeedo & " And Tid.Id_Dte <> 0 And Estado In ('EPR','RPR','RLV') "
+        Dim _Row_TidDoc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row_TidDoc) Then
+            '_Errores.Add("No se encontro el archivo XML en la tabla [Zw_DTE_Documentos]")
+            Return
+        End If
+
+        If CBool(_Row_TidDoc.Item("Id_Aec")) Then
+            MessageBoxEx.Show(Me, "Ya existe una solicitud AEC para este documento", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_Aec_CesionDTE(_Id_Dte, _Idmaeedo)
+        Fm.ShowDialog(Me)
+        _Id_Aec = Fm.Id_Aec
+        Fm.Dispose()
+
+        If CBool(_Id_Aec) Then
+            MessageBoxEx.Show(Me, "Archivo sera enviado por el DTEMonitor a la brevedad", "Archivo Electrónico de Cesión (AEC)",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
 
     End Sub
 

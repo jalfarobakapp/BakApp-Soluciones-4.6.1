@@ -27,7 +27,7 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
         End Get
     End Property
 
-    Public Sub New(ByVal RowParametros As DataRow)
+    Public Sub New(RowParametros As DataRow)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -46,7 +46,7 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
 
     End Sub
 
-    Private Sub Frm_08_Asis_Compra_IncorpProveedor_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_08_Asis_Compra_IncorpProveedor_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Dim _Arr_Tipo_Documento(,) As String = {{"GRC", "Guía recepción compra (GRC)"},
                                                 {"OCC", "Orden de compra (OCC)"},
@@ -76,14 +76,14 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
 
     End Sub
 
-    Private Sub BtnEntidadesExcluidas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnEntidadesExcluidas.Click
+    Private Sub BtnEntidadesExcluidas_Click(sender As System.Object, e As System.EventArgs) Handles BtnEntidadesExcluidas.Click
         Dim Fm As New Frm_EntExcluidas
         Fm.ShowInTaskbar = False
         Fm.ShowDialog(Me)
         Fm.Dispose()
     End Sub
 
-    Private Sub BtnProcesarInf_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnProcesarInf.Click
+    Private Sub BtnProcesarInf_Click(sender As System.Object, e As System.EventArgs) Handles BtnProcesarInf.Click
 
         _Proceso_Generado = Fx_Incorporar_Proveedores()
 
@@ -157,7 +157,7 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
                            "Costo_Ult_Compra_RealUd1 = Ddo.PPPRNERE1," & vbCrLf &
                            "Costo_Ult_Compra_RealUd2 = Ddo.PPPRNERE2,Costo_Ult_Compra = Ddo.PPPRNE,Dscto_Ult_Compra =PODTGLLI," & vbCrLf &
                            "Udtpr_Ult_Compra = Ddo.UDTRPR,Fecha_Ult_Compra = Ddo.FEEMLI" & vbCrLf &
-                           "From " & _Tabla_Paso & " LEFT OUTER JOIN" & vbCrLf &
+                           "From " & _Tabla_Paso & " Left Outer Join" & vbCrLf &
                            "dbo.MAEDDO Ddo ON Id_Ult_Compra = Ddo.IDMAEDDO" & vbCrLf &
                            "Where " & _Tabla_Paso & ".Id_Ult_Compra <> 0"
             _Sql.Ej_consulta_IDU(Consulta_sql)
@@ -173,9 +173,9 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
             If Not Chk_Incluir_Ent_Excluidas.Checked Then
 
                 Consulta_sql = "Delete " & _Tabla_Paso & vbCrLf &
-                                "Where Es_Agrupador = 0" & vbCrLf &
-                                "And LTRIM(RTRIM(Endo_Utl_Compra))+LTRIM(RTRIM(Suendo_Utl_Compra)) IN " &
-                                "(SELECT LTRIM(RTRIM(Codigo))+LTRIM(RTRIM(Sucursal)) From " & _Global_BaseBk & "Zw_TblInf_EntExcluidas Where Excluida in ('A','C','T'))"
+                               "Where Es_Agrupador = 0" & vbCrLf &
+                               "And Ltrim(Rtrim(Endo_Utl_Compra))+Ltrim(Rtrim(Suendo_Utl_Compra)) In " &
+                               "(Select Ltrim(Rtrim(Codigo))+Ltrim(Rtrim(Sucursal)) From " & _Global_BaseBk & "Zw_TblInf_EntExcluidas Where Excluida in ('A','C','T'))"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
             End If
@@ -200,7 +200,6 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
 
                     System.Windows.Forms.Application.DoEvents()
 
-                    'Dim _CodigoGenerico As String = Trim(Fila.Item("CodigoGenerico"))
                     Dim _Codigo_Nodo_Madre As String = Trim(Fila.Item("Codigo_Nodo_Madre"))
                     Dim _Descripcion_Madre As String = Trim(Fila.Item("Descripcion_Madre"))
                     _Codigo_Comprar = String.Empty
@@ -211,8 +210,6 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
                                    "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "'" & vbCrLf &
                                    "Order by Id_Ult_Compra"
                     Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-                    'Dim _IdCompra As String
-
 
                     Dim _CantSugeridaTot As Double = _Tbl_Detalle.Rows(0).Item("CantSugeridaTot")
                     Dim _CantComprar As Double = Math.Ceiling(_CantSugeridaTot)
@@ -322,464 +319,6 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
 
     End Function
 
-    Function Fx_Incorporar_Proveedores_Old() As Boolean
-
-        Dim _Codigo_Comprar As String
-        Dim _Costo_Compra_RealUd1 As String
-        Dim _Costo_Compra_RealUd2 As String
-        Dim _Costo_Compra As String
-        Dim _Dscto_Compra As String
-        Dim _CodProveedor As String
-        Dim _CodSucProveedor As String
-
-        Dim _Fecha As Date = Dtp_Fecha_Tope_Proveedores_Automaticos.Value
-
-        Try
-
-            Me.Enabled = False
-
-
-            Consulta_sql = "Update " & _Tabla_Paso & vbCrLf &
-                           "Set Id_Ult_Compra = Isnull((Select top 1 IDMAEDDO From MAEDDO" & vbCrLf &
-                           "Where TIDO = '" & Cmb_Documento_Compra.SelectedValue & "' and KOPRCT = Codigo" & vbCrLf &
-                           "And FEEMLI >= '" & Format(_Fecha, "yyyyMMdd") & "'" & vbCrLf &
-                                                    "Order by PPPRNERE1),0)"
-            _Sql.Ej_consulta_IDU(Consulta_sql)
-
-            'BUSCA LA ULTIMA COMPRA DE LOS PRODUCTOS QUE NO ENCONTRO GRC DENTRO DE LA FECHA TOPE, ES DECIR
-            'LITARALMETE LA ULTIMA VEZ QUE SE COMPRO EL PRODUCTO SIN IMPORTAR LA FECHA TOPE
-
-            Consulta_sql = "Update " & _Tabla_Paso & vbCrLf &
-                           "Set Id_Ult_Compra = Isnull((Select top 1 IDMAEDDO From MAEDDO" & vbCrLf &
-                           "Where TIDO = '" & Cmb_Documento_Compra.SelectedValue & "' and KOPRCT = Codigo" & vbCrLf &
-                           "Order by FEEMLI DESC),0)"
-
-            _Sql.Ej_consulta_IDU(Consulta_sql)
-
-
-            Consulta_sql = "Select IDMAEEDO,ENDO,SUENDO,FEEMLI,PPPRNERE1,PPPRNERE2,PPPRNE,PODTGLLI,UDTRPR,KOPRCT" & vbCrLf &
-                                             "From MAEDDO Where IDMAEDDO"
-
-
-
-            Dim _Ud As Integer
-
-            If Rdb_Ud1_Compra.Checked Then
-                _Ud = 1
-            ElseIf Rdb_Ud2_Compra.Checked Then
-                _Ud = 2
-            End If
-
-            Dim _Condicion As String = String.Empty
-
-            If Chk_Restar_Stok_Bodega.Checked Then
-                _Condicion += vbCrLf & "And Cant_Comprar_Restando_Stock > 0" '"And Cant_Comprar_ReStock > 0"
-            Else
-                _Condicion += vbCrLf & "Cant_Comprar_Sin_Restar_Stock > 0" '"And Cant_Comprar_SnStock > 0"
-            End If
-
-            If Chk_Mostrar_Solo_Stock_Critico.Checked Then
-                _Condicion += vbCrLf & "And Con_Stock_CriticoUd = 1" '"And Diferencia_StCriUd" & _Ud & " < 0"
-            End If
-
-            If Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked Then
-                _Condicion += vbCrLf & "And StockPedidoUd <= 0"
-            End If
-
-            Dim _Update_Dias As String
-
-            _Update_Dias = "Update #Paso Set Dias = (Select Max(Dias_Existencia_Habiles) From " & _Tabla_Paso & Space(1) &
-                           "Z1 Where Z1.CodigoGenerico = #Paso.CodigoGenerico)" & vbCrLf
-
-            If Chk_Sabado.Checked Then
-                _Update_Dias += "+(Select Max(Dias_Existencia_Sabados) From " & _Tabla_Paso & Space(1) &
-                               "Z1 Where Z1.CodigoGenerico = #Paso.CodigoGenerico)" & vbCrLf
-            End If
-
-            If Chk_Domingo.Checked Then
-                _Update_Dias += "+(Select Max(Dias_Existencia_Domingos) From " & _Tabla_Paso & Space(1) &
-                               "Z1 Where Z1.CodigoGenerico = #Paso.CodigoGenerico)" & vbCrLf
-            End If
-
-
-            _Tbl_Genericos = Nothing
-
-            'Consulta_sql = "Delete " & _Tabla_Paso & " Where Es_Agrupador = 1"
-            '_Sql.Ej_consulta_IDU(Consulta_sql)
-
-
-            Dim _Tiempo_Reposicion = Input_Tiempo_Reposicion.Value * Cmb_Proyeccion_Tiempo_Reposicion_.SelectedValue
-            Dim _Dias_Abastecer = Input_Dias_a_Abastecer.Value * Cmb_Proyeccion_Metodo_Abastecer_.SelectedValue ' + _Tiempo_Reposicion
-
-            Dim _Fecha_Fin = DateAdd(DateInterval.Day, _Dias_Abastecer, Now.Date)
-
-            _Dias_Abastecer = Fx_Cuenta_Dias(FechaDelServidor, _Fecha_Fin, Opcion_Dias.Habiles)
-
-            Dim _Sabados As Integer = Fx_Cuenta_Dias(FechaDelServidor, _Fecha_Fin, Opcion_Dias.Sabado)
-            Dim _Domingos As Integer = Fx_Cuenta_Dias(FechaDelServidor, _Fecha_Fin, Opcion_Dias.Domingo)
-
-            Dim _Dias_Proyeccion '= Input_Dias_a_Abastecer.Value * Cmb_Proyeccion_Metodo_Abastecer.SelectedValue + _Tiempo_Reposicion
-
-            Dim _Campos As Integer
-
-            Select Case Cmb_Proyeccion_Metodo_Abastecer_.SelectedValue
-                Case 1
-                    _Dias_Proyeccion = 1 : _Campos = 60 '_Dias_Abastecer
-                Case 7
-                    _Dias_Proyeccion = 5 : _Campos = 20
-                Case 30
-                    _Dias_Proyeccion = 22 : _Campos = 12
-            End Select
-
-            If Chk_Sabado.Checked Then
-                _Dias_Abastecer += _Sabados
-                Select Case Cmb_Proyeccion_Metodo_Abastecer_.SelectedValue
-                    Case 7
-                        _Dias_Proyeccion += 1
-                    Case 30
-                        _Dias_Proyeccion += 2
-                End Select
-            End If
-
-            If Chk_Domingo.Checked Then
-                _Dias_Abastecer += _Domingos
-                Select Case Cmb_Proyeccion_Metodo_Abastecer_.SelectedValue
-                    Case 7
-                        _Dias_Proyeccion += 1
-                    Case 30
-                        _Dias_Proyeccion += 2
-                End Select
-            End If
-
-            _Update_Dias = String.Empty
-
-            Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_Llena_tablas_Agrupa_Genericos_para_estudio
-            Consulta_sql = Replace(Consulta_sql, "#Tabla#", _Tabla_Paso)
-            Consulta_sql = Replace(Consulta_sql, "#Ud#", _Ud)
-            Consulta_sql = Replace(Consulta_sql, "#Condicion_Especial#", "Where Es_Agrupador = 1")
-            Consulta_sql = Replace(Consulta_sql, "#Condicion#", _Condicion)
-            Consulta_sql = Replace(Consulta_sql, "#Tiempo_Reposicion#", _Tiempo_Reposicion)
-            Consulta_sql = Replace(Consulta_sql, "#Dias_Avastecer#", _Dias_Abastecer)
-            Consulta_sql = Replace(Consulta_sql, "#Porc_Crecimiento#", 1)
-            Consulta_sql = Replace(Consulta_sql, "#Update_Dias#", _Update_Dias)
-
-
-            _Tbl_Genericos = _Sql.Fx_Get_Tablas(Consulta_sql) '_SQL.Fx_Get_Tablas(Consulta_sql)
-            Dim _Cant_Productos As Long = _Tbl_Genericos.Rows.Count
-
-
-
-            Dim _SqlQuery_2 As String = String.Empty
-
-            If CBool(_Cant_Productos) Then
-                'System.Windows.Forms.Application.DoEvents()
-
-                ProgressBarX1.Maximum = _Cant_Productos
-                ProgressBarX1.Value = 0
-
-                For Each Fila As DataRow In _Tbl_Genericos.Rows
-                    System.Windows.Forms.Application.DoEvents()
-
-                    'Dim _CodigoGenerico As String = Trim(Fila.Item("CodigoGenerico"))
-                    Dim _Codigo_Nodo_Madre As String = Trim(Fila.Item("Codigo_Nodo_Madre"))
-                    Dim _Descripcion_Madre As String = Trim(Fila.Item("Descripcion_Madre"))
-
-                    '[Id_Ult_Compra]            [Int]          DEFAULT (0),
-                    '[Costo_Ult_Compra_RealUd1] [Float]        DEFAULT (0),
-                    '[Costo_Ult_Compra_RealUd2] [Float]        DEFAULT (0),
-                    '[Costo_Ult_Compra]         [Float]        DEFAULT (0),
-                    '[Dscto_Ult_Compra]         [Float]        DEFAULT (0),
-                    '[Fecha_Ult_Compra]         [Date],
-
-                    'BUSCA LA ULTIMA COMPRA GRC => QUE LA FECHA DE TOPE
-                    Consulta_sql = "Update " & _Tabla_Paso & vbCrLf &
-                                   "Set Id_Ult_Compra = Isnull((Select top 1 IDMAEDDO From MAEDDO" & vbCrLf &
-                                   "Where TIDO = '" & Cmb_Documento_Compra.SelectedValue & "' and KOPRCT = Codigo" & vbCrLf &
-                                   "And FEEMLI >= '" & Format(_Fecha, "yyyyMMdd") & "'" & vbCrLf &
-                                   "And LTRIM(RTRIM(ENDO))+LTRIM(RTRIM(SUENDO)) NOT IN " &
-                                   "(SELECT LTRIM(RTRIM(Codigo))+LTRIM(RTRIM(Sucursal)) From " & _Global_BaseBk & "Zw_TblInf_EntExcluidas Where Excluida in ('A','C','T'))" & vbCrLf &
-                                   "Order by PPPRNERE1),0)" & vbCrLf &
-                                   "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "'"
-                    _Sql.Ej_consulta_IDU(Consulta_sql)
-
-                    'BUSCA LA ULTIMA COMPRA DE LOS PRODUCTOS QUE NO ENCONTRO GRC DENTRO DE LA FECHA TOPE, ES DECIR
-                    'LITARALMETE LA ULTIMA VEZ QUE SE COMPRO EL PRODUCTO SIN IMPORTAR LA FECHA TOPE
-                    Consulta_sql = "Update " & _Tabla_Paso & vbCrLf &
-                                   "Set Id_Ult_Compra = Isnull((Select top 1 IDMAEDDO From MAEDDO" & vbCrLf &
-                                   "Where TIDO = '" & Cmb_Documento_Compra.SelectedValue & "' and KOPRCT = Codigo" & vbCrLf &
-                                   "And LTRIM(RTRIM(ENDO))+LTRIM(RTRIM(SUENDO)) NOT IN " &
-                                   "(SELECT LTRIM(RTRIM(Codigo))+LTRIM(RTRIM(Sucursal)) From " & _Global_BaseBk & "Zw_TblInf_EntExcluidas Where Excluida in ('A','C','T'))" & vbCrLf &
-                                   "Order by FEEMLI DESC),0)" & vbCrLf &
-                                   "Where Id_Ult_Compra = 0 And Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "'"
-                    _Sql.Ej_consulta_IDU(Consulta_sql)
-
-                    'BUSCA LOS PRODUCTOS AGRUPANDOLOS EN UNA TABLA DE PASO, PRODUCTOS HERMANOS
-                    Consulta_sql = "Select * From " & _Tabla_Paso & vbCrLf &
-                                   "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "' And Es_Agrupador = 1" & vbCrLf &
-                                   "Order by IdCompra"
-                    Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-                    Dim _IdCompra As String
-
-                    If CBool(_Tbl_Detalle.Rows.Count) Then
-
-                        Dim _SqlQuery As String = String.Empty
-                        Dim Tf As Integer = _Tbl_Detalle.Rows.Count
-                        Dim C As Integer = 1
-
-                        For Each _Fila_d As DataRow In _Tbl_Detalle.Rows
-
-                            _IdCompra = _Fila_d.Item("IdCompra")
-
-                            If CBool(_IdCompra) Then
-
-                                _SqlQuery += "Select IDMAEEDO,ENDO,SUENDO,FEEMLI,PPPRNERE1,PPPRNERE2,PPPRNE,PODTGLLI,UDTRPR,KOPRCT" & vbCrLf &
-                                             "From MAEDDO Where IDMAEDDO = " & _IdCompra & vbCrLf
-
-                                If C <> Tf Then
-                                    _SqlQuery += "Union" & vbCrLf
-                                End If
-                                C += 1
-                            Else
-                                C += 1
-                            End If
-
-                        Next
-
-                        'If String.IsNullOrEmpty(Trim(_SqlQuery)) Then
-                        'GoTo SIGUE
-                        'End If
-
-                        If Not String.IsNullOrEmpty(Trim(_SqlQuery)) Then
-
-                            Dim _TblGRC_PR1 As DataTable = _Sql.Fx_Get_Tablas(_SqlQuery)
-                            Dim _TblGRC_PR2 As DataTable = _TblGRC_PR1
-
-                            _Codigo_Comprar = String.Empty
-                            _Costo_Compra_RealUd1 = String.Empty
-                            _Costo_Compra_RealUd2 = String.Empty
-                            _Costo_Compra = String.Empty
-                            _Dscto_Compra = String.Empty
-                            _CodProveedor = String.Empty
-                            _CodSucProveedor = String.Empty
-
-                            For Each _Fila_1 As DataRow In _TblGRC_PR2.Rows
-
-                                _IdCompra = _Fila_1.Item("IDMAEEDO")
-                                Dim _CodProveedor_1 As String = _Fila_1.Item("ENDO")
-                                Dim _CodSucProveedor_1 As String = _Fila_1.Item("SUENDO")
-                                Dim _Fecha_1 As Date = _Fila_1.Item("FEEMLI")
-                                Dim _Costo_Compra_RealUd1_1 As String = De_Num_a_Tx_01(_Fila_1.Item("PPPRNERE1"), False, 5) '_CostoGRCRealUd1_1
-                                Dim _Costo_Compra_RealUd2_1 As String = De_Num_a_Tx_01(_Fila_1.Item("PPPRNERE2"), False, 5)
-                                Dim _Costo_Compra_1 As String = De_Num_a_Tx_01(_Fila_1.Item("PPPRNE"), 5)
-                                Dim _Dscto_Compra_1 As String = De_Num_a_Tx_01(_Fila_1.Item("PODTGLLI"), False, 5)
-                                Dim _UdTrans_1 As Integer = _Fila_1.Item("UDTRPR")
-                                Dim _Codigo_1 As String = _Fila_1.Item("KOPRCT")
-
-
-                                For Each _Fila_2 As DataRow In _TblGRC_PR2.Rows
-
-                                    Dim _CodProveedor_2 As String = _Fila_2.Item("ENDO")
-                                    Dim _CodSucProveedor_2 As String = _Fila_2.Item("SUENDO")
-                                    Dim _Fecha_2 As Date = _Fila_2.Item("FEEMLI")
-                                    Dim _Costo_Compra_RealUd1_2 As String = De_Num_a_Tx_01(_Fila_2.Item("PPPRNERE1"), False, 5)
-                                    Dim _Costo_Compra_RealUd2_2 As String = De_Num_a_Tx_01(_Fila_2.Item("PPPRNERE2"), False, 5)
-                                    Dim _Costo_Compra_2 As String = De_Num_a_Tx_01(_Fila_2.Item("PPPRNE"), 5)
-                                    Dim _Dscto_Compra_2 As String = De_Num_a_Tx_01(_Fila_2.Item("PODTGLLI"), False, 5)
-                                    Dim _UdTrans_2 As Integer = _Fila_2.Item("UDTRPR")
-                                    Dim _Codigo_2 As String = _Fila_2.Item("KOPRCT")
-
-                                    ' SI LOS PROVEEDORES SON DISTINTOS EMPIEZA A REVISAR CUAL TIENE EL PRECIO MENOR
-                                    If Trim(_Codigo_1) <> Trim(_Codigo_2) Then
-                                        'SI LA FECHA DE LA ULTIMA COMPRA ESTA DENTRO DEL TOPE BUSCA EL PRECIO MENOR
-                                        If _Fecha_1 >= Dtp_Fecha_Tope_Proveedores_Automaticos.Value Then
-                                            If _Fecha_2 >= Dtp_Fecha_Tope_Proveedores_Automaticos.Value Then
-                                                If _Costo_Compra_1 < _Costo_Compra_2 Then
-                                                    _Codigo_Comprar = _Codigo_1
-                                                    _Costo_Compra = _Costo_Compra_1
-                                                    _Costo_Compra_RealUd1 = _Costo_Compra_RealUd1_1
-                                                    _Costo_Compra_RealUd2 = _Costo_Compra_RealUd2_1
-                                                    _Dscto_Compra = _Dscto_Compra_1
-                                                    _CodProveedor = _CodProveedor_1
-                                                    _CodSucProveedor = _CodSucProveedor_1
-                                                Else
-                                                    _Codigo_Comprar = _Codigo_2
-                                                    _Costo_Compra = _Costo_Compra_2
-                                                    _Costo_Compra_RealUd1 = _Costo_Compra_RealUd1_2
-                                                    _Costo_Compra_RealUd2 = _Costo_Compra_RealUd2_2
-                                                    _Dscto_Compra = _Dscto_Compra_2
-                                                    _CodProveedor = _CodProveedor_2
-                                                    _CodSucProveedor = _CodSucProveedor_2
-                                                    _IdCompra = _Fila_2.Item("IDMAEEDO")
-                                                End If
-                                            Else
-                                                _Codigo_Comprar = _Codigo_1
-                                                _Costo_Compra = _Costo_Compra_1
-                                                _Costo_Compra_RealUd1 = _Costo_Compra_RealUd1_1
-                                                _Costo_Compra_RealUd2 = _Costo_Compra_RealUd2_1
-                                                _Dscto_Compra = _Dscto_Compra_1
-                                                _CodProveedor = _CodProveedor_1
-                                                _CodSucProveedor = _CodSucProveedor_1
-                                            End If
-                                        End If
-                                    End If
-                                Next
-                            Next
-
-                            If String.IsNullOrEmpty(_Codigo_Comprar) Then
-                                _SqlQuery += "Order by FEEMLI Desc"
-                                Dim _TB As DataTable = _Sql.Fx_Get_Tablas(_SqlQuery)
-
-                                _Codigo_Comprar = _TB.Rows(0).Item("KOPRCT")
-                                _CodProveedor = _TB.Rows(0).Item("ENDO")
-                                _CodSucProveedor = _TB.Rows(0).Item("SUENDO")
-                                _Costo_Compra_RealUd1 = De_Num_a_Tx_01(_TB.Rows(0).Item("PPPRNERE1"), False, 5)
-                                _Costo_Compra_RealUd2 = De_Num_a_Tx_01(_TB.Rows(0).Item("PPPRNERE2"), False, 5)
-                                _Costo_Compra = De_Num_a_Tx_01(_TB.Rows(0).Item("PPPRNE"), False, 5)
-                                _Dscto_Compra = De_Num_a_Tx_01(_TB.Rows(0).Item("PODTGLLI"), False, 5)
-                            End If
-
-                            Dim _CantComprar As String
-
-                            ' PREGUNTA QUE CANTIDAD CALCULADA COMPRAR
-                            If Chk_Restar_Stok_Bodega.Checked Then
-                                'CANTIDAD SUGERIDA RESTANDO STOCK DE BODEGA
-                                _CantComprar = Fila.Item("Cant_Comprar_Restando_Stock")
-                            Else
-                                'CANTIDAD SUGERIDAD SIN RESTAR STOCK DE BODEGA
-                                _CantComprar = Fila.Item("Cant_Comprar_Sin_Restar_Stock")
-                            End If
-
-                            Dim _StockUd = De_Num_a_Tx_01(Fila.Item("StockUd"), False, 5)
-                            Dim _RotDiariaUd = De_Num_a_Tx_01(Fila.Item("RotDiariaUd"), False, 5)
-                            Dim _Stock_CriticoUd_Rd = De_Num_a_Tx_01(Fila.Item("Stock_CriticoUd_Rd"), False, 5)
-                            Dim _StockPedidoUd = De_Num_a_Tx_01(Fila.Item("StockPedidoUd"), False, 5)
-
-                            Dim _Con_Stock_CriticoUd = CInt(Fila.Item("Con_Stock_CriticoUd")) * -1
-
-                            Dim _TStock = De_Num_a_Tx_01(Fila.Item("TStock"), False, 5)
-                            Dim _CantSugeridaTot = _CantComprar
-                            Dim _BLV = De_Num_a_Tx_01(Fila.Item("BLV"), False, 5)
-                            Dim _FCV = De_Num_a_Tx_01(Fila.Item("FCV"), False, 5)
-                            Dim _GDV = De_Num_a_Tx_01(Fila.Item("GDV"), False, 5)
-                            Dim _NCV = De_Num_a_Tx_01(Fila.Item("NCV"), False, 5)
-                            Dim _TDV = De_Num_a_Tx_01(Fila.Item("TDV"), False, 5)
-
-                            Consulta_sql = "Select Top 1 * From " & _Tabla_Paso & vbCrLf &
-                                           "Where Codigo = '" & _Codigo_Comprar & "' And Es_Agrupador = 1"
-                            Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-                            Dim _IdGRC = _RowProducto.Item("IdGRC")
-                            Dim _IdGDD = _RowProducto.Item("IdGDD")
-
-                            Dim __Fecha_Inicio = Format(_RowProducto.Item("Fecha_Inicio"), "yyyyMMdd")
-                            Dim __Fecha_Fin = Format(_RowProducto.Item("Fecha_Fin"), "yyyyMMdd")
-                            Dim _Fecha_Ult_Venta = Format(_RowProducto.Item("Fecha_Ult_Venta"), "yyyyMMdd")
-
-                            Dim _UD1 = _RowProducto.Item("UD1")
-                            Dim _UD2 = _RowProducto.Item("UD2")
-                            Dim _Rtu = De_Num_a_Tx_01(_RowProducto.Item("Rtu"), False, 5)
-
-                            '[Costo_Compra_RealUd1]     [float]       DEFAULT (0),
-                            '[Costo_Compra_RealUd2]     [float]       DEFAULT (0),
-                            '[Costo_Compra]             [float]       DEFAULT (0),
-                            '[Dscto_Compra]             [float]       DEFAULT (0),
-
-
-                            Consulta_sql = "Insert Into " & _Tabla_Paso & Space(1) &
-                                           "(Codigo,CodigoGenerico,Comprar,Es_Agrupador,Descripcion,UD1,UD2,Rtu," &
-                                           "Costo_Compra_RealUd1,Costo_Compra_RealUd2," &
-                                           "Costo_Compra,Dscto_Compra,CodProveedor,CodSucProveedor,CantComprar," &
-                                           "CantSugeridaTot,StockUd1," &
-                                           "StockUd2,StockPedidoUd1,StockPedidoUd2,RotDiariaUd1,RotDiariaUd2,Stock_CriticoUd1_Rd,Stock_CriticoUd2_Rd," &
-                                           "Con_Stock_CriticoUd1,Con_Stock_CriticoUd2,TStock,IdGRC,IdGDD,IdOCC,IdCompra," &
-                                           "Fecha_Inicio,Fecha_Fin,Fecha_Ult_Venta,BLV,FCV,GDV,NCV,TDV)" & vbCrLf &
-                                           "Values" & vbCrLf &
-                                           "('" & _Codigo_Comprar & "','" & _Codigo_Nodo_Madre & "',1,1,'" & _Descripcion_Madre &
-                                           "','" & _UD1 & "','" & _UD2 & "'," & _Rtu & "," &
-                                           _Costo_Compra_RealUd1 & "," & _Costo_Compra_RealUd2 & "," & _Costo_Compra &
-                                           "," & _Dscto_Compra & ",'" & _CodProveedor & "','" & _CodSucProveedor &
-                                           "'," & _CantComprar &
-                                           "," & _CantSugeridaTot & "," & _StockUd & "," & _StockUd &
-                                           "," & _StockPedidoUd & "," & _StockPedidoUd &
-                                           "," & _RotDiariaUd & "," & _RotDiariaUd &
-                                           "," & _Stock_CriticoUd_Rd & "," & _Stock_CriticoUd_Rd &
-                                           "," & _Con_Stock_CriticoUd & "," & _Con_Stock_CriticoUd & "," & _TStock &
-                                           ",'" & _IdGRC & "','" & _IdGDD & "','0','" & _IdCompra & "'" &
-                                           ",'" & __Fecha_Inicio & "','" & __Fecha_Fin & "','" & _Fecha_Ult_Venta &
-                                           "'," & _BLV & "," & _FCV & "," & _GDV & "," & _NCV & "," & _TDV & ")"
-
-                            _SqlQuery_2 += "Update " & _Tabla_Paso & vbCrLf &
-                                           "Set Comprar = 1," &
-                                           "Costo_Compra = " & _Costo_Compra & "," &
-                                           "Costo_Compra_RealUd1 = " & _Costo_Compra_RealUd1 & "," &
-                                           "Costo_Compra_RealUd2 = " & _Costo_Compra_RealUd2 & "," &
-                                           "Dscto_Compra = " & _Dscto_Compra & "," &
-                                           "CodProveedor = '" & _CodProveedor & "'," &
-                                           "CodSucProveedor = '" & _CodSucProveedor & "'," &
-                                           "CantComprar = " & _CantComprar & "," &
-                                           "CantSugeridaTot = " & _CantSugeridaTot & vbCrLf &
-                                           "Where Codigo = '" & _Codigo_Comprar & "' And Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "' And Es_Agrupador = 1" & vbCrLf &
-                                           vbCrLf &
-                                           "Delete " & _Tabla_Paso & Space(1) &
-                                           "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "' And Codigo <> '" & _Codigo_Comprar & "' And Es_Agrupador = 1" & vbCrLf & vbCrLf
-
-                            '_Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
-
-
-
-
-                        End If
-
-                    End If
-
-                    ProgressBarX1.Value += 1
-                    ProgressBarX1.Text = "Procesados " & FormatNumber(ProgressBarX1.Value, 0) & " de " &
-                                       FormatNumber(_Cant_Productos, 0)
-
-                Next
-
-            End If
-
-            If Not String.IsNullOrEmpty(_SqlQuery_2) Then
-                _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery_2)
-            End If
-
-
-            Consulta_sql = "Delete " & _Tabla_Paso & " Where Codigo_Nodo_Madre Not In (Select Codigo_Nodo_Madre From " & _Tabla_Paso & " Where Comprar = 1)"
-            _Sql.Ej_consulta_IDU(Consulta_sql)
-
-            If Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked Then
-
-                Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Tabla_Paso, "StockPedidoUd1 > 0 And CantComprar > 0")
-
-                If CBool(_Reg) Then
-                    Consulta_sql = "Update " & _Tabla_Paso & " Set CantComprar = 0," & vbCrLf &
-                                   "CodProveedor = '',CodSucProveedor = ''" & vbCrLf &
-                                   "Where StockPedidoUd1 > 0 And CantComprar > 0"
-                    _Sql.Ej_consulta_IDU(Consulta_sql)
-
-                    MessageBoxEx.Show(Me, "Se descartaran " & _Reg & " productos que constan con orden de compra vigente",
-                                      "No considerar productos con Orden de compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-                End If
-
-            End If
-
-            MessageBoxEx.Show(Me, "Proceso generado correctamente", "Asociación automática", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            ProgressBarX1.Value = 0
-            ProgressBarX1.Text = String.Empty
-
-            Return True
-
-        Catch ex As Exception
-            MessageBoxEx.Show(Me, ex.Message, _Codigo_Comprar)
-            Return False
-        Finally
-            Me.Enabled = True
-        End Try
-
-    End Function
-
     Sub Sb_Parametros_Revisar()
 
         caract_combo(Cmb_Documento_Compra)
@@ -858,11 +397,11 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
     End Sub
 
 
-    Private Sub Frm_00_AsisCompra_IncorpProveedor_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+    Private Sub Frm_00_AsisCompra_IncorpProveedor_FormClosed(sender As Object, e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
         'Sb_Parametros_Actualizar()
     End Sub
 
-    Sub Sb_Cargar_Combo_Dias(ByVal Cmb As DevComponents.DotNetBar.Controls.ComboBoxEx)
+    Sub Sb_Cargar_Combo_Dias(Cmb As DevComponents.DotNetBar.Controls.ComboBoxEx)
 
         caract_combo(Cmb)
 
@@ -887,7 +426,7 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
 
     End Sub
 
-    Private Sub Cmb_Dias_Abastecer_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Cmb_Dias_Abastecer_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
 
         Dim _Valor As Integer = Cmb_Proyeccion_Metodo_Abastecer_.SelectedValue
 
@@ -915,7 +454,7 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
         End Select
 
     End Sub
-    Private Sub Cmb_Tiempo_Reposicion_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Cmb_Tiempo_Reposicion_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
 
         Dim _Valor As Integer = Cmb_Proyeccion_Tiempo_Reposicion_.SelectedValue
 

@@ -646,6 +646,9 @@ Public Class Clas_Estructura_Base_De_Datos
             Case "Zw_Chilexpress_Res"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Chilexpress_Res
 
+            Case "Zw_Conceptos"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Conceptos
+
             Case "Zw_Compras_en_SII"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Compras_en_SII
             Case "Zw_Configuracion"
@@ -672,6 +675,8 @@ Public Class Clas_Estructura_Base_De_Datos
             Case "Zw_DbExt_Maest"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_DbExt_Maest
 
+            Case "Zw_Demonio_Archivador"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Demonio_Archivador
             Case "Zw_Demonio_Cof_Estacion"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Demonio_Cof_Estacion
             Case "Zw_Demonio_Doc_Emitidos_Aviso_Correo"
@@ -686,6 +691,8 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Demonio_Prestashop
             Case "Zw_Demonio_Wordpress"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Demonio_Wordpress
+            Case "Zw_Demonio_FacAuto"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Demonio_FacAuto
 
             Case "Zw_Docu_Archivos"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Docu_Archivos
@@ -695,6 +702,8 @@ Public Class Clas_Estructura_Base_De_Datos
             'Case "Zw_DTE_Receptores"
             '    Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_DTE_Receptores
 
+            Case "Zw_DTE_Aec"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_DTE_Aec
             Case "Zw_DTE_Caf"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_DTE_Caf
             Case "Zw_DTE_Configuracion"
@@ -707,6 +716,10 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_DTE_Trackid
             Case "Zw_DTE_Firmar"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_DTE_Firmar
+            Case "Zw_DTE_ReccEnc"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_DTE_ReccEnc
+            Case "Zw_DTE_ReccDet"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_DTE_ReccDet
 
             Case "Zw_Empresas"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Empresas
@@ -742,15 +755,21 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Licencia_Mod
             Case "Zw_Linea_Oferta"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Linea_Oferta
+
             Case "Zw_ListaPreCosto"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_ListaPreCosto
             Case "Zw_ListaPreCosto_Enc"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_ListaPreCosto_Enc
-
             Case "Zw_ListaPreGlobal"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_ListaPreGlobal
             Case "Zw_ListaPreProducto"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_ListaPreProducto
+
+            Case "Zw_ListaLC_Programadas"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_ListaLC_Programadas
+            Case "Zw_ListaLC_Programadas_Detalles"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_ListaLC_Programadas_Detalles
+
             Case "Zw_Log_Gestiones"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Log_Gestiones
             Case "Zw_MrVsPro"
@@ -844,6 +863,10 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Prod_Dimensiones
             Case "Zw_Prod_CodQR"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Prod_CodQR
+            Case "Zw_Prod_CodQRLogDoc"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Prod_CodQRLogDoc
+            Case "Zw_Prod_ImpAdicional"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Prod_ImpAdicional
 
             Case "Zw_Reclamo"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Reclamo

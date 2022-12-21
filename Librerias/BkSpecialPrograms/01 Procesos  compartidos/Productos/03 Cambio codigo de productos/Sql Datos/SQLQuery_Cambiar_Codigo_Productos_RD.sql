@@ -45,6 +45,8 @@ UPDATE MAEPROBS SET KOPR  = @CodigoNew     WHERE KOPR  = @CodigoOld
 UPDATE ELIDDO   SET KOPRCT = @CodigoNew    WHERE KOPRCT = @CodigoOld 
 UPDATE KASIDDO  SET KOPRCT = @CodigoNew    WHERE KOPRCT = @CodigoOld 
 UPDATE TABLOTES SET KOPR  = @CodigoNew     WHERE KOPR  = @CodigoOld 
+UPDATE TABRECPR SET KOPR  = @CodigoNew     WHERE KOPR  = @CodigoOld 
+
 
 
 

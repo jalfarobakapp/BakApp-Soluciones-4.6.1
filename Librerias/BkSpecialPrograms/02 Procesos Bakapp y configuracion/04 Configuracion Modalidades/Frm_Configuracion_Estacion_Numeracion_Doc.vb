@@ -103,6 +103,18 @@ Public Class Frm_Configuracion_Estacion_Numeracion_Doc
             _Fila.Cells("Obliga_Despacho_BodDistintas").Value = _RowFormato.Item("Obliga_Despacho_BodDistintas")
             _Fila.Cells("Enviar_Correo").Value = _RowFormato.Item("Enviar_Correo")
             _Fila.Cells("TimbrarXRandom").Value = _RowFormato.Item("TimbrarXRandom")
+
+            If _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDD" Then
+
+                For Each _Fl As DataRow In _dv.Table.Rows
+                    _Tido = _Fl.Item("Tido")
+                    If _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDD" Then
+                        _Fl.Item("Numero") = _Numero
+                    End If
+                Next
+
+            End If
+
         End If
 
 

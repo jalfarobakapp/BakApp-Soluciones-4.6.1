@@ -399,6 +399,7 @@ Public Class Frm_Archivador_Buscador
         Else
             MessageBoxEx.Show(Me, "No hay archivos para Integrar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
+
     End Sub
 
     Private Sub IntegrarArchivos(i As Integer)
@@ -459,16 +460,19 @@ Public Class Frm_Archivador_Buscador
 
                         If Not (Tabla.TableName.ToUpper = "MAEEDO" And Columna.ColumnName = "IDMAEEDO" Or Columna.ColumnName = "FECREEN" Or Columna.ColumnName = "IDMAEDDO" Or Columna.ColumnName = "IDMAEVEN" Or Columna.ColumnName = "IDMAEEN") Then
                             If Columna.ColumnName = "FEEMDO" Or
-                                Columna.ColumnName = "FE01VEDO" Or
-                                Columna.ColumnName = "FEULVEDO" Or
-                                Columna.ColumnName = "FEER" Or
-                                Columna.ColumnName = "LAHORA" Or
-                                Columna.ColumnName = "FLIQUIFCV" Or
-                                Columna.ColumnName = "FEEMLI" Or
-                                Columna.ColumnName = "FEERLI" Or
-                                Columna.ColumnName = "FECHAE" Or
-                                Columna.ColumnName = "FECHAD" Or
-                                Columna.ColumnName = "FEVE" Or Columna.ColumnName = "FECREEN" Or Columna.ColumnName = "FEVECREN" Or Columna.ColumnName = "FEULTR" Then
+                               Columna.ColumnName = "FE01VEDO" Or
+                               Columna.ColumnName = "FEULVEDO" Or
+                               Columna.ColumnName = "FEER" Or
+                               Columna.ColumnName = "LAHORA" Or
+                               Columna.ColumnName = "FLIQUIFCV" Or
+                               Columna.ColumnName = "FEEMLI" Or
+                               Columna.ColumnName = "FEERLI" Or
+                               Columna.ColumnName = "FECHAE" Or
+                               Columna.ColumnName = "FECHAD" Or
+                               Columna.ColumnName = "FEVE" Or
+                               Columna.ColumnName = "FECREEN" Or
+                               Columna.ColumnName = "FEVECREN" Or
+                               Columna.ColumnName = "FEULTR" Then
                                 consulta = consulta & "'" & DateTime.Parse(Fila(Columna.ColumnName)).ToString("yyyy-MM-ddTHH:mm:ss") & "',"
                             ElseIf Columna.ColumnName = "IDMAEEDO" Then
                                 'consulta = consulta & "@id,"

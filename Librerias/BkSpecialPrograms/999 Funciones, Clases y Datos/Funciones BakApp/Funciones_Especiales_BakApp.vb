@@ -1,7 +1,7 @@
 ﻿Imports System.IO
 Imports System.Security.Cryptography
 Imports DevComponents.DotNetBar
-
+Imports Newtonsoft.Json
 
 Public Module Funciones_Especiales_BakApp
 
@@ -226,8 +226,8 @@ Public Module Funciones_Especiales_BakApp
         End If
 
 
-        Consulta_sql = "SELECT Top 1 *" & vbCrLf &
-                       "FROM " & _Global_BaseBk & "Zw_Configuracion" & vbCrLf &
+        Consulta_sql = "Select Top 1 *" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Configuracion" & vbCrLf &
                        "Where Modalidad = '  '"
 
         Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Configuracion", "Modalidad = '  '"))
@@ -277,12 +277,11 @@ Public Module Funciones_Especiales_BakApp
 
         End If
 
-        'If Not _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Format_Fx", "CodigoQR") Then
-
-        '    Consulta_sql = "Alter Table " & _Global_BaseBk & "Zw_Format_Fx ADD CodigoQR Bit Not NULL Default(0)"
-        '    _Sql.Ej_consulta_IDU(Consulta_sql)
-
-        'End If
+        Dim _Cl_RevVersion As New Cl_RevVersion
+        If Not _Cl_RevVersion.Fx_RevisarEstructuraDeDatos(_Global_Version_BakApp) Then
+            MessageBoxEx.Show(_Formulario, "ESTRUCTURA DE LA BASE DE DATOS NO COINCIDE CON LA VERSION" & vbCrLf & vbCrLf &
+                              "INFORME DE ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
 
         Sb_Actualizar_Formar_De_Pago()
 
@@ -321,8 +320,77 @@ Public Module Funciones_Especiales_BakApp
 
                     Dim _ProxNumero As String = Fx_Proximo_NroDocumento(_Nudo_Modalidad, 10)
 
-                    _Consulta_sql = "UPDATE CONFIEST SET " & _Tido & " = '" & _ProxNumero & "'" & vbCrLf &
-                                    "WHERE EMPRESA = '" & _Empresa & "' AND  MODALIDAD = '" & _Modalidad & "'"
+                    '_Consulta_sql = "UPDATE CONFIEST SET " & _Tido & " = '" & _ProxNumero & "'" & vbCrLf &
+                    '                "WHERE EMPRESA = '" & _Empresa & "' AND  MODALIDAD = '" & _Modalidad & "'"
+
+                    If _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDD" Then
+
+                        _Consulta_sql = "UPDATE CONFIEST SET " &
+                                        "GDV = '" & _ProxNumero & "'," & vbCrLf &
+                                        "GTI = '" & _ProxNumero & "'," & vbCrLf &
+                                        "GDP = '" & _ProxNumero & "'," & vbCrLf &
+                                        "GDD = '" & _ProxNumero & "'" & vbCrLf &
+                                        "WHERE EMPRESA = '" & ModEmpresa & "' AND  MODALIDAD = '" & _Modalidad & "'"
+                    Else
+                        _Consulta_sql = "UPDATE CONFIEST SET " & _Tido & " = '" & _ProxNumero & "'" & vbCrLf &
+                                    "WHERE EMPRESA = '" & ModEmpresa & "' AND  MODALIDAD = '" & _Modalidad & "'"
+                    End If
+
+                End If
+
+            End If
+
+        End If
+
+        If Not String.IsNullOrEmpty(_Consulta_sql) Then
+            Return _Sql.Ej_consulta_IDU(_Consulta_sql)
+        End If
+
+    End Function
+
+    Private Function Fx_Cambiar_Numeracion_Modalidad2(_Tido As String,
+                                                     _Nudo As String,
+                                                     _Modalidad As String) As Boolean
+
+
+        ' _Modalidad = "  "
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST Where MODALIDAD = '" & _Modalidad & "' And EMPRESA = '" & ModEmpresa & "'"
+        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+
+        Dim _Nudo_Modalidad As String
+
+        _Consulta_sql = String.Empty
+
+        If CBool(_Tbl.Rows.Count) Then
+
+            _Nudo_Modalidad = _Tbl.Rows(0).Item(_Tido).ToString.Trim
+
+            If String.IsNullOrEmpty(_Nudo_Modalidad) Then
+                _Consulta_sql = Fx_Cambiar_Numeracion_Modalidad2(_Tido, _Nudo, "  ")
+            ElseIf _Nudo_Modalidad = "0000000000" Then
+                _Consulta_sql = String.Empty
+            Else
+
+                Dim Continua As Boolean = True
+
+                If Not String.IsNullOrEmpty(Trim(_Nudo_Modalidad)) Then
+
+                    Dim _ProxNumero = Fx_Proximo_NroDocumento(_Nudo, 10)
+
+                    If _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDD" Then
+
+                        _Consulta_sql = "UPDATE CONFIEST SET " &
+                                        "GDV = '" & _ProxNumero & "'," & vbCrLf &
+                                        "GTI = '" & _ProxNumero & "'," & vbCrLf &
+                                        "GDP = '" & _ProxNumero & "'," & vbCrLf &
+                                        "GDD = '" & _ProxNumero & "'" & vbCrLf &
+                                        "WHERE EMPRESA = '" & ModEmpresa & "' AND  MODALIDAD = '" & _Modalidad & "'"
+                    Else
+                        _Consulta_sql = "UPDATE CONFIEST SET " & _Tido & " = '" & _ProxNumero & "'" & vbCrLf &
+                                    "WHERE EMPRESA = '" & ModEmpresa & "' AND  MODALIDAD = '" & _Modalidad & "'"
+                    End If
 
                 End If
 
@@ -826,7 +894,12 @@ Public Module Funciones_Especiales_BakApp
                 Dim _Rt = Split(_Rut, "-")
                 _Rut = _Rt(0)
             End If
-            _Rut = FormatNumber(_Rut, 0) & "-" & RutDigito(_Rut)
+            Try
+                _Rut = FormatNumber(_Rut, 0) & "-" & RutDigito(_Rut)
+            Catch ex As Exception
+                _Rut = _Rut
+            End Try
+
             _Row_Entidad.Item("Rut") = _Rut
         End If
 
@@ -1025,7 +1098,7 @@ Public Module Funciones_Especiales_BakApp
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql) 'get_Tablas(_Consulta_sql, cn1)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
 
         Dim _Nudo_Modalidad As String
 
@@ -1544,9 +1617,11 @@ Public Module Funciones_Especiales_BakApp
                     If String.IsNullOrEmpty(_Monedas) Then
                         Return True
                     Else
-                        MessageBoxEx.Show(_Formulario, "No existe taza de cambio para la fecha: " & FormatDateTime(_Fecha_Taza, DateFormat.ShortDate) & vbCrLf &
+                        If Not IsNothing(_Formulario) Then
+                            MessageBoxEx.Show(_Formulario, "No existe taza de cambio para la fecha: " & FormatDateTime(_Fecha_Taza, DateFormat.ShortDate) & vbCrLf &
                                           "Para las monedas: " & vbCrLf & vbCrLf & _Monedas, "Validación",
                                           MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        End If
                     End If
 
                 End If
@@ -1729,6 +1804,17 @@ Public Module Modulo_Precios_Costos
         Dim _Fx As String
         Dim _Kolt As String
 
+        Dim _Campo_Precio
+        Dim _Campo_Ecuacion
+
+        If _UnTrans = 1 Then
+            _Campo_Precio = "PP01UD"
+            _Campo_Ecuacion = "ECUACION"
+        Else
+            _Campo_Precio = "PP02UD"
+            _Campo_Ecuacion = "ECUACIONU2"
+        End If
+
         _Ecuacion = _Ecuacion.Trim
 
         Dim _Formula = Split(_Ecuacion, "#")
@@ -1757,7 +1843,13 @@ Public Module Modulo_Precios_Costos
 
                 For i = 1 To _Ecuacion_2.Length
 
-                    Dim _Ecuacion_3 = Split(_Ecuacion_2(i), ",")
+                    Dim _Ecuacion_3
+
+                    Try
+                        _Ecuacion_3 = Split(_Ecuacion_2(i), ",")
+                    Catch ex As Exception
+                        Exit For
+                    End Try
 
                     Dim _Cant1_Ecu As Double = _Ecuacion_3(0)
                     Dim _Cant2_Ecu As Double = _Ecuacion_3(1)
@@ -1787,81 +1879,63 @@ Public Module Modulo_Precios_Costos
                         Throw New System.Exception(vbCrLf & vbCrLf & "Falta una apertura de corchetes")
                     End If
 
-                    Dim _Ecuacion_Ok = True
-
                     If Not String.IsNullOrEmpty(_Ecuacion_2(0).Trim) Then
                         _Fx = _Ecuacion
                         Throw New System.Exception(vbCrLf & vbCrLf & "Error cerca de " & _Ecuacion_2(0).Trim)
                     End If
 
-                    If Not String.IsNullOrEmpty(_Corchete2(_Corchete2.Length - 1).Trim) Then
-                        If Not (_Corchete2(_Corchete2.Length - 1).Trim).Contains("#") Then
-                            _Fx = _Ecuacion
-                            Throw New System.Exception(vbCrLf & vbCrLf & "Error cerca de " & _Corchete2(_Corchete2.Length - 1).Trim)
+                    'If Not String.IsNullOrEmpty(_Corchete2(_Corchete2.Length - 1).Trim) Then
+                    '    If Not (_Corchete2(_Corchete2.Length - 1).Trim).Contains("#") Then
+                    '        _Fx = _Ecuacion
+                    '        Throw New System.Exception(vbCrLf & vbCrLf & "Error cerca de " & _Corchete2(_Corchete2.Length - 1).Trim)
+                    '    End If
+                    'End If
+
+                    'If _Corchete3.Length <> _Ecuacion_2.Length - 1 Then
+                    '    Throw New System.Exception(vbCrLf & vbCrLf & "Error en un cierre y apertura de corchetes")
+                    'End If
+
+                    Dim _Ejecutar_Consulta = False
+
+                    If _Campo_Ecu.ToUpper = "CAPRCO1" Then
+                        If _Caprco1 >= _Cant1_Ecu And _Caprco1 <= _Cant2_Ecu Then
+                            _Ejecutar_Consulta = True
                         End If
                     End If
 
-                    If _Corchete3.Length <> _Ecuacion_2.Length - 1 Then
-                        Throw New System.Exception(vbCrLf & vbCrLf & "Error en un cierre y apertura de corchetes")
+                    If _Campo_Ecu.ToUpper = "CAPRCO2" Then
+                        If _Caprco2 >= _Cant1_Ecu And _Caprco2 <= _Cant2_Ecu Then
+                            _Ejecutar_Consulta = True
+                        End If
                     End If
 
-                    Dim _Calculo = _Ecuacion_3(3)
-
-                    Dim _Precio As Double
-
-                    _Calculo = UCase(_Calculo)
-                    _Calculo = Replace(_Calculo, "CAPRCO1", "(" & De_Num_a_Tx_01(_Caprco1, False, 5) & "*1.0)")
-                    _Calculo = Replace(_Calculo, "CAPRCO2", "(" & De_Num_a_Tx_01(_Caprco2, False, 5) & "*1.0)")
+                    If _Caprco1 = 0 And _Caprco2 = 0 Then
+                        _Ejecutar_Consulta = True
+                    End If
 
                     Try
-                        Dim _Result As Double = _Sql.Fx_Get_DataRow("Select " & _Calculo & " As Resultado", False).Item(0)
-                        _Calculo = _Result
-                        _Ecuacion_3(3) = De_Num_a_Tx_01(_Calculo, False, 5)
+                        _Ecuacion = _Ecuacion_3(3) & "#" & _Ecuacion_1(1)
                     Catch ex As Exception
-                        _Calculo = 0
-                        _Ecuacion_3(3) = 0
+                        _Ecuacion = _Ecuacion_3(3)
                     End Try
 
-                    If Not IsNumeric(_Calculo) Then
+                    If _Ejecutar_Consulta Then
 
-                        If Not _Calculo.ToString.Contains("<") Then
-                            _Calculo = _Kolt & _Calculo
-                        End If
-
-                        _Precio = Fx_Traer_Campo_Desde_Otra_Lista(_Codigo, _Calculo, "", _Caprco1, _Caprco2)
-
-                    Else
-                        _Precio = De_Txt_a_Num_01(_Ecuacion_3(3), 5)
-                    End If
-
-                    If _Cantidad >= _Cant1_Ecu AndAlso _Cantidad <= _Cant2_Ecu Then
-
-                        Dim _Redondeo = 7
-
-                        If _Ecuacion_1.Length > 1 Then
-                            _Redondeo = Fx_Redondeo_Random(_Ecuacion_1(1))
-                        End If
-
-                        _PrecioLinea = Fx_Redondear_Precio(_Precio, _Redondeo)
-
-                        Exit For
+                        _PrecioLinea = Fx_Precio_Formula_Random_Ecuacion(_RowPrecios,
+                                                 _Campo_Precio,
+                                                 _Ecuacion,
+                                                 Nothing,
+                                                 True,
+                                                 _Koen,
+                                                 _Caprco1,
+                                                 _Caprco2)
+                        Return _PrecioLinea
 
                     End If
 
                 Next
 
             Else
-
-                Dim _Campo_Precio
-                Dim _Campo_Ecuacion
-
-                If _UnTrans = 1 Then
-                    _Campo_Precio = "PP01UD"
-                    _Campo_Ecuacion = "ECUACION"
-                Else
-                    _Campo_Precio = "PP02UD"
-                    _Campo_Ecuacion = "ECUACIONU2"
-                End If
 
                 _PrecioLinea = Fx_Precio_Formula_Random(_RowPrecios, _Campo_Precio, _Campo_Ecuacion, Nothing, True, _Koen, _Caprco1, _Caprco1)
 
@@ -1911,6 +1985,159 @@ Public Module Modulo_Precios_Costos
         Else
             _Ecuacion = NuloPorNro(_RowPrecio.Item(_Campo_Ecuacion), "").ToString.Trim()
         End If
+
+        Dim _Tiene_Cor As Boolean = InStr(1, _Ecuacion, "[")
+
+        If _Tiene_Cor Then
+            _Precio = Fx_Funcion_Ecuacion_Random(Nothing, "", _Ecuacion, _Codigo, 1, _RowPrecio, 1, 1, 1)
+            Return _Precio
+        End If
+
+
+        Dim _Ejecutar_Ecuacion = False
+
+        If _Aplicar_Formula_Dinamica Then
+
+            If Not String.IsNullOrEmpty(_Ecuacion) Then
+                _Ejecutar_Ecuacion = (_Ecuacion = LCase(_Ecuacion))
+            End If
+
+        Else
+
+            _Ejecutar_Ecuacion = True
+
+        End If
+
+
+        _Precio = NuloPorNro(_RowPrecio.Item(_Campo_Precio), 0)
+        Dim _New_Precio As Double
+
+        If _Ejecutar_Ecuacion Then
+
+            _Formula = Split(_Ecuacion, "#")
+
+            Dim _Pp01ud = De_Num_a_Tx_01(_RowPrecio.Item("PP01UD"), False, 5)
+            Dim _Pp02ud = De_Num_a_Tx_01(_RowPrecio.Item("PP02UD"), False, 5)
+
+            Dim _CantUd1 = De_Num_a_Tx_01(_vCantUd1, False, 5)
+            Dim _CantUd2 = De_Num_a_Tx_01(_vCantUd2, False, 5)
+
+            Dim _Mg01ud = De_Num_a_Tx_01(_RowPrecio.Item("MG01UD"), False, 5)
+            Dim _Mg02ud = De_Num_a_Tx_01(_RowPrecio.Item("MG02UD"), False, 5)
+
+            Dim _Dtma01ud = De_Num_a_Tx_01(_RowPrecio.Item("DTMA01UD"), False, 5)
+            Dim _Dtma02ud = De_Num_a_Tx_01(_RowPrecio.Item("DTMA02UD"), False, 5)
+
+            Dim _Pm As String = 0
+            Dim _Ppul01 As String = 0
+            Dim _Ppul02 As String = 0
+            Dim _Pmsuc As String = 0
+
+            If (_RowCostos_PM Is Nothing) Then
+
+                Consulta_sql = "Select Top 1 PM,PM As PM01,PPUL01,PPUL02,Isnull(Round(PMSUC,5),0) As PMSUC
+                                From MAEPREM EM
+                                Left Join MAEPMSUC SUC On EM.EMPRESA = SUC.EMPRESA AND SUC.KOSU = '" & ModSucursal & "' AND EM.KOPR = SUC.KOPR
+                                Where EM.EMPRESA = '" & ModEmpresa & "' And EM.KOPR = '" & _Codigo & "'"
+
+                _RowCostos_PM = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            End If
+
+            If Not (_RowCostos_PM Is Nothing) Then
+
+                _Pm = Math.Round(NuloPorNro(_RowCostos_PM.Item("PM01"), 0), 5)
+                _Ppul01 = Math.Round(NuloPorNro(_RowCostos_PM.Item("PPUL01"), 0), 5)
+                _Ppul02 = Math.Round(NuloPorNro(_RowCostos_PM.Item("PPUL02"), 0), 5)
+                _Pmsuc = Math.Round(NuloPorNro(_RowCostos_PM.Item("PMSUC"), 0), 5)
+
+            End If
+
+            Dim _Fx1, _Redondeo
+
+
+            _Fx1 = UCase(_Formula(0))
+
+            If _Formula.Length > 1 Then
+                _Redondeo = Trim(_Formula(1))
+            Else
+                _Redondeo = 0
+            End If
+
+            If String.IsNullOrEmpty(_Fx1) Then
+
+                _New_Precio = 0
+
+            Else
+
+                If _Fx1.ToString.Contains("<") Then
+                    _Fx1 = Fx_Traer_Campo_Desde_Otra_Lista(_Codigo, _Fx1, _Koen, _vCantUd1, _vCantUd2)
+                End If
+
+                _Fx1 = Replace(_Fx1, "RLUD", _Rtu)
+
+                _Fx1 = Replace(_Fx1, "PMSUC", _Pmsuc)
+                _Fx1 = Replace(_Fx1, "PM", _Pm)
+                _Fx1 = Replace(_Fx1, "PPUL01", _Ppul01)
+                _Fx1 = Replace(_Fx1, "PPUL02", _Ppul02)
+                _Fx1 = Replace(_Fx1, "PP01UD", _Pp01ud)
+                _Fx1 = Replace(_Fx1, "PP02UD", _Pp02ud)
+
+                _Fx1 = Replace(_Fx1, "MG01UD", _Mg01ud)
+                _Fx1 = Replace(_Fx1, "MG02UD", _Mg02ud)
+
+                _Fx1 = Replace(_Fx1, "DTMA01UD", _Dtma01ud)
+                _Fx1 = Replace(_Fx1, "DTMA02UD", _Dtma02ud)
+
+                _Fx1 = Replace(_Fx1, "CAPRCO1", _CantUd1)
+                _Fx1 = Replace(_Fx1, "CAPRCO2", _CantUd2)
+
+                _Fx1 = Replace(_Fx1, ",", ".")
+                _Fx1 = UCase(_Fx1)
+
+                Sb_Buscar_Valor_En_Dimensiones(_Fx1, _Codigo, _Koen)
+
+                Consulta_sql = "Select " & _Fx1 & " As Valor"
+                Dim _RowPr As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                _Precio = _RowPr.Item("Valor")
+
+                _Redondeo = Fx_Redondeo_Random(_Redondeo)
+
+            End If
+
+            _New_Precio = Fx_Redondear_Precio(_Precio, _Redondeo)
+
+        Else
+            _New_Precio = _Precio
+        End If
+
+        _New_Precio = Math.Round(_New_Precio, 2)
+
+        Return _New_Precio
+
+    End Function
+
+    Function Fx_Precio_Formula_Random_Ecuacion(_RowPrecio As DataRow,
+                                               _Campo_Precio As String,
+                                               _Ecuacion As String,
+                                               _RowCostos_PM As DataRow,
+                                               _Aplicar_Formula_Dinamica As Boolean,
+                                               _Koen As String,
+                                               _vCantUd1 As Double,
+                                               _vCantUd2 As Double)
+
+        If (_RowPrecio Is Nothing) Then
+            Return 0
+        End If
+
+        Dim _Lista = _RowPrecio.Item("KOLT")
+        Dim _Codigo = _RowPrecio.Item("KOPR")
+
+        Dim _Rtu = De_Num_a_Tx_01(_RowPrecio.Item("RLUD"), False, 5)
+        Dim _Precio As Double
+
+        Dim _Formula
 
         Dim _Tiene_Cor As Boolean = InStr(1, _Ecuacion, "[")
 
@@ -2944,9 +3171,11 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
-    Dim _Dir_Local As String = Application.StartupPath & "\Data\Configuracion_Local"
+    Dim _Dir_Local As String = Application.StartupPath & "\Data\" & RutEmpresaActiva & "\Configuracion_Local" '\Configuracion_Local"
 
     Function Fx_Cambiar_Thema(_Estilo As Enum_Themas, _Color As Color)
+
+        Dim _Dir_Local As String = Application.StartupPath & "\Data\" & RutEmpresaActiva & "\Configuracion_Local" '\Configuracion_Local"
 
         Dim _Existe = System.IO.File.Exists(_Dir_Local & "\Estilo.xml")
         Dim _Ds_Estilo As New DatosBakApp
@@ -2973,6 +3202,8 @@ Public Module Crear_Documentos_Desde_Otro
                           Optional _Estilo As eStyle = eStyle.Metro,
                           Optional _Color As Integer = -16748352)
 
+        Dim _Dir_Local As String = Application.StartupPath & "\Data\" & RutEmpresaActiva & "\Configuracion_Local" '\Configuracion_Local"
+
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Dim _baseColor As Color
@@ -2986,7 +3217,15 @@ Public Module Crear_Documentos_Desde_Otro
         Dim _Ds_Estilo As New DatosBakApp
 
         If Not _Existe Then
-            Sb_Actualizar_Estilo(_Dir_Local, _Ds_Estilo, Enum_Themas.Claro, Enum_Themas.Claro.ToString, -16748352, Enum_Themas.Claro)
+
+            Dim _Dir_Local2 As String = Application.StartupPath & "\Data\Configuracion_Local"
+
+            If System.IO.File.Exists(_Dir_Local2 & "\Estilo.xml") Then
+                File.Copy(_Dir_Local2 & "\Estilo.xml", _Dir_Local & "\Estilo.xml")
+            Else
+                Sb_Actualizar_Estilo(_Dir_Local, _Ds_Estilo, Enum_Themas.Claro, Enum_Themas.Claro.ToString, -16748352, Enum_Themas.Claro)
+            End If
+
         End If
 
         _Ds_Estilo.Clear()
@@ -3083,7 +3322,7 @@ Public Module Crear_Documentos_Desde_Otro
             If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Casi_DocArc") Then
 
                 If _Stand_by Then
-                    Consulta_sql = "Update  " & _Global_BaseBk & "Zw_Casi_DocArc Set Id_DocEnc = 0,En_Construccion = 0,NombreEquipo = '" & _NombreEquipo & "' 
+                    Consulta_sql = "Update  " & _Global_BaseBk & "Zw_Casi_DocArc Set Id_DocEnc = 0,En_Construccion = 1,NombreEquipo = '" & _NombreEquipo & "' 
                                     Where Id_DocEnc = " & _Id_DocEnc
                 Else
                     Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Casi_DocArc Where Id_DocEnc = " & _Id_DocEnc
@@ -3579,7 +3818,7 @@ Public Module Crear_Documentos_Desde_Otro
         ''''
         '''
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones (Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden) Values " &
-               "('TIDP_Cli','Pago con Cta. Cte.','CTA','CUENTA CORRIENTE',3)"
+               "('TIDP_Cli','Pago con Cta. Cte.','CTA','CUENTA CORRIENTE / SALDO A FAVOR',3)"
         _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
     End Sub
@@ -4910,7 +5149,7 @@ Public Module Crear_Documentos_Desde_Otro
 
         If IsNothing(_RowListaPreCosto_Enc) Then
 
-            If MessageBoxEx.Show(_Formulario, "Falta una la lista de costos vigente para del proveedor en BakApp" & vbCrLf & vbCrLf &
+            If MessageBoxEx.Show(_Formulario, "Falta una la lista de costos vigente para el proveedor en BakApp" & vbCrLf & vbCrLf &
                                 "¿Desde continuar sin revisar esta situación?", "Validación", MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = DialogResult.Yes Then
                 If Fx_Tiene_Permiso(_Formulario, "Comp0097") Then
                     Return True
@@ -4930,9 +5169,19 @@ Public Module Crear_Documentos_Desde_Otro
 
         Dim _FechaActual As Date = FormatDateTime(FechaDelServidor(), DateFormat.ShortDate)
 
-        If _FechaActual > _FechaVigenciaHasta Then
+        If _FechaActual < _FechaVigenciaDesde Or _FechaActual > _FechaVigenciaHasta Then
 
-            If MessageBoxEx.Show(_Formulario, "La lista de costos vigente para el proveedor esta caducada." & vbCrLf & vbCrLf &
+            Dim _MsgError As String
+
+            If _FechaActual < _FechaVigenciaDesde Then
+                _MsgError = "La <fecha desde> de la lista vigente es mayor a la fecha:" & _FechaActual
+            End If
+
+            If _FechaActual > _FechaVigenciaHasta Then
+                _MsgError = "La lista de costos vigente para el proveedor esta caducada."
+            End If
+
+            If MessageBoxEx.Show(_Formulario, _MsgError & vbCrLf & vbCrLf &
                                 "Lista de costos:  " & _NombreLista.Trim & vbCrLf &
                                 "Fecha vigencia desde :" & _FechaVigenciaDesde & " hasta: " & _FechaVigenciaHasta & vbCrLf & vbCrLf &
                                 "¿Desde continuar sin revisar esta situación?", "Validación", MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = DialogResult.Yes Then
@@ -5058,7 +5307,6 @@ Public Module Crear_Documentos_Desde_Otro
             Finally
                 _Formulario.Enabled = True
                 Application.DoEvents()
-                _Formulario.Enabled = False
                 _Formulario.Cursor = Cursors.Default
             End Try
 
@@ -5080,6 +5328,8 @@ Public Module Crear_Documentos_Desde_Otro
                 If _TimbrarXRandom Then
                     Return False
                 End If
+            Else
+                Return False
             End If
         Catch ex As Exception
             Return False
@@ -5101,6 +5351,8 @@ Public Module Crear_Documentos_Desde_Otro
                 If _TimbrarXRandom Then
                     Return False
                 End If
+            Else
+                Return False
             End If
         Catch ex As Exception
             Return False
@@ -5124,6 +5376,8 @@ Public Module Crear_Documentos_Desde_Otro
                 If _TimbrarXRandom Then
                     Return False
                 End If
+            Else
+                Return False
             End If
         Catch ex As Exception
             Return False
@@ -5132,6 +5386,75 @@ Public Module Crear_Documentos_Desde_Otro
         Return True
 
     End Function
+
+    Function Fx_Caracter_Raro_Quitar(ByRef _Texto As String)
+
+        _Texto = Replace(_Texto, "&", "&amp;")
+        _Texto = Replace(_Texto, "<", "&lt;")
+        _Texto = Replace(_Texto, ">", "&gt;")
+        _Texto = Replace(_Texto, "'", "&apos;")
+        _Texto = Replace(_Texto, """", "&quot;")
+        _Texto = Replace(_Texto, "´", "")
+        _Texto = Replace(_Texto, "°", "")
+        _Texto = Replace(_Texto, "º", "")
+        _Texto = Replace(_Texto, "ñ", "n")
+        _Texto = Replace(_Texto, "Ñ", "N")
+
+        _Texto = Replace(_Texto, "á", "a")
+        _Texto = Replace(_Texto, "é", "e")
+        _Texto = Replace(_Texto, "í", "i")
+        _Texto = Replace(_Texto, "ó", "o")
+        _Texto = Replace(_Texto, "ú", "u")
+
+        _Texto = Replace(_Texto, "Á", "A")
+        _Texto = Replace(_Texto, "É", "E")
+        _Texto = Replace(_Texto, "Í", "I")
+        _Texto = Replace(_Texto, "Ó", "O")
+        _Texto = Replace(_Texto, "Ú", "U")
+
+        _Texto = Replace(_Texto, "ü", "u")
+        _Texto = Replace(_Texto, "Ü", "U")
+
+        _Texto = Replace(_Texto, vbCrLf, "")
+        _Texto = Replace(_Texto, " ", "")
+        _Texto = Replace(_Texto, "ª", "")
+
+        If Not String.IsNullOrEmpty(_Texto) Then
+            For i = 1 To _Texto.Length
+                Dim Letra As String = Mid(_Texto, i, 1)
+                Dim codeInt = Asc(Letra)
+                If (codeInt >= 0 And codeInt <= 31) Or (codeInt >= 127 And codeInt <= 255) Then
+                    _Texto = Replace(_Texto, Letra, " ")
+                End If
+            Next
+        End If
+
+        If IsNothing(_Texto) Then
+            _Texto = String.Empty
+        End If
+
+        _Texto = _Texto.Trim
+
+    End Function
+
+    Function Fx_TblFromJson(Respuesta As String, Objeto As String) As DataTable
+
+        Dim result As Object
+        result = JsonConvert.DeserializeObject(Of Object)(Respuesta)
+
+        Dim _Json = "{'" & Objeto & "':" & result(Objeto).ToString & "}"
+
+        Dim dataSet As DataSet
+
+        dataSet = JsonConvert.DeserializeObject(Of DataSet)(_Json)
+
+        Dim _Tbl As DataTable = dataSet.Tables(0)
+
+        Return _Tbl
+
+    End Function
+
+
 
 End Module
 

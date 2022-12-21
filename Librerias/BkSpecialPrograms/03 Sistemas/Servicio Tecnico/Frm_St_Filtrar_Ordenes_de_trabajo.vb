@@ -357,8 +357,7 @@ Public Class Frm_St_Filtrar_Ordenes_de_trabajo
 
         Consulta_sql = My.Resources.Recursos_Locales.SqlQuery_Lista_OT
         Consulta_sql = Replace(Consulta_sql, "#Db_BakApp#", _Global_BaseBk)
-
-        Consulta_sql += vbCrLf & "Where 1 > 0" & vbCrLf & _Filtro_SQl
+        Consulta_sql = Replace(Consulta_sql, "#Condicion#", _Filtro_SQl)
 
         _Tbl_Informe = _Sql.Fx_Get_Tablas(Consulta_sql)
 

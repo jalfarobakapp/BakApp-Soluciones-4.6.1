@@ -161,7 +161,7 @@ Public Class Crear_Conexion
                                   Windows.Forms.MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.Information)
 
                 Dim NewPanel As Empresas_conectadas = Nothing
-                NewPanel = New Empresas_conectadas(False)
+                NewPanel = New Empresas_conectadas(_Fm_Menu_Padre, False)
                 _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
 
                 _Fm_Menu_Padre.CloseModalPanel(Me, DevComponents.DotNetBar.Controls.eSlideSide.Right)
@@ -242,7 +242,7 @@ Public Class Crear_Conexion
             End
         Else
             Dim NewPanel As Empresas_conectadas = Nothing
-            NewPanel = New Empresas_conectadas(False)
+            NewPanel = New Empresas_conectadas(_Fm_Menu_Padre, False)
             NewPanel._Crear_Conexion = True
             _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
 

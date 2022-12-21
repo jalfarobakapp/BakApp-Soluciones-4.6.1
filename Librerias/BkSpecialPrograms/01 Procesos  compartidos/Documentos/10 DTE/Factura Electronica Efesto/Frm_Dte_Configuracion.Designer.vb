@@ -61,6 +61,8 @@ Partial Class Frm_Dte_Configuracion
         Me.LabelX11 = New DevComponents.DotNetBar.LabelX()
         Me.MStb_Barra = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Etiqueta = New DevComponents.DotNetBar.LabelItem()
+        Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_MailContactoSIIPruebas = New DevComponents.DotNetBar.Controls.TextBoxX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.GroupPanel2.SuspendLayout()
@@ -103,6 +105,8 @@ Partial Class Frm_Dte_Configuracion
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Txt_MailContactoSIIPruebas)
+        Me.GroupPanel1.Controls.Add(Me.LabelX13)
         Me.GroupPanel1.Controls.Add(Me.Txt_FchResol)
         Me.GroupPanel1.Controls.Add(Me.Btn_Buscar_Cn)
         Me.GroupPanel1.Controls.Add(Me.Txt_Cn)
@@ -261,7 +265,7 @@ Partial Class Frm_Dte_Configuracion
         Me.Txt_NroResol.Location = New System.Drawing.Point(95, 149)
         Me.Txt_NroResol.Name = "Txt_NroResol"
         Me.Txt_NroResol.PreventEnterBeep = True
-        Me.Txt_NroResol.Size = New System.Drawing.Size(128, 22)
+        Me.Txt_NroResol.Size = New System.Drawing.Size(64, 22)
         Me.Txt_NroResol.TabIndex = 42
         Me.Txt_NroResol.Tag = "NroResol"
         Me.Txt_NroResol.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -703,6 +707,38 @@ Partial Class Frm_Dte_Configuracion
         Me.Lbl_Etiqueta.Name = "Lbl_Etiqueta"
         Me.Lbl_Etiqueta.Text = "Ambiente de producción"
         '
+        'LabelX13
+        '
+        Me.LabelX13.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX13.ForeColor = System.Drawing.Color.Black
+        Me.LabelX13.Location = New System.Drawing.Point(165, 150)
+        Me.LabelX13.Name = "LabelX13"
+        Me.LabelX13.Size = New System.Drawing.Size(99, 23)
+        Me.LabelX13.TabIndex = 69
+        Me.LabelX13.Text = "Email pruebas"
+        '
+        'Txt_MailContactoSIIPruebas
+        '
+        Me.Txt_MailContactoSIIPruebas.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_MailContactoSIIPruebas.Border.Class = "TextBoxBorder"
+        Me.Txt_MailContactoSIIPruebas.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_MailContactoSIIPruebas.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_MailContactoSIIPruebas.ForeColor = System.Drawing.Color.Black
+        Me.Txt_MailContactoSIIPruebas.Location = New System.Drawing.Point(237, 149)
+        Me.Txt_MailContactoSIIPruebas.Name = "Txt_MailContactoSIIPruebas"
+        Me.Txt_MailContactoSIIPruebas.PreventEnterBeep = True
+        Me.Txt_MailContactoSIIPruebas.Size = New System.Drawing.Size(240, 22)
+        Me.Txt_MailContactoSIIPruebas.TabIndex = 70
+        Me.Txt_MailContactoSIIPruebas.Tag = "NroResol"
+        Me.Txt_MailContactoSIIPruebas.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'Frm_Dte_Configuracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -768,4 +804,6 @@ Partial Class Frm_Dte_Configuracion
     Friend WithEvents MStb_Barra As DevComponents.DotNetBar.Metro.MetroStatusBar
     Friend WithEvents Lbl_Etiqueta As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_Importar_Datos_Random As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Txt_MailContactoSIIPruebas As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX13 As DevComponents.DotNetBar.LabelX
 End Class

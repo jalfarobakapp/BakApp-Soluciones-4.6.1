@@ -182,9 +182,9 @@ Partial Class Frm_InfoEnt_Deudas_Doc_Comerciales
         '
         Me.SuperTabControlPanel1.Controls.Add(Me.Grilla_Deuda)
         Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(580, 242)
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(580, 215)
         Me.SuperTabControlPanel1.TabIndex = 1
         Me.SuperTabControlPanel1.TabItem = Me.Tab_DeudasVencidas
         '
@@ -225,7 +225,7 @@ Partial Class Frm_InfoEnt_Deudas_Doc_Comerciales
         DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla_Deuda.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
-        Me.Grilla_Deuda.Size = New System.Drawing.Size(580, 242)
+        Me.Grilla_Deuda.Size = New System.Drawing.Size(580, 215)
         Me.Grilla_Deuda.StandardTab = True
         Me.Grilla_Deuda.TabIndex = 54
         '

@@ -30,6 +30,41 @@ Partial Class Frm_Equipos_CashDro_Equipo
         Me.Btn_Conf_ConfEstacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Conf_ConfImpDiablito = New DevComponents.DotNetBar.ButtonItem()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
+        Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Btn_Imprimir_Detalle_Terminal = New DevComponents.DotNetBar.ButtonX()
+        Me.Lbl_Status = New DevComponents.DotNetBar.LabelX()
+        Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Btn_Imprimir_Ventas = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_Inicializacion = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_Probar_Transbank = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_Datos_Ultima_Venta = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_Anular_Transaccion = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_Cargar_Llaves = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_Cierre_Terminal = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_Pooling = New DevComponents.DotNetBar.ButtonX()
+        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Txt_Tbk_Post_Version = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Tbk_Post_Terminal = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Tbk_Post_Codigo_Comercio = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX21 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX20 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.Cmb_Tbk_Tasa_de_baudios = New DevComponents.DotNetBar.Controls.ComboBoxEx()
+        Me.Cmb_Tbk_Bits_de_datos = New DevComponents.DotNetBar.Controls.ComboBoxEx()
+        Me.Rdb_Tbk_Texto = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX11 = New DevComponents.DotNetBar.LabelX()
+        Me.Cmb_Tbk_Paridad = New DevComponents.DotNetBar.Controls.ComboBoxEx()
+        Me.Cmb_Tbk_Puerto = New DevComponents.DotNetBar.Controls.ComboBoxEx()
+        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX9 = New DevComponents.DotNetBar.LabelX()
+        Me.Cmb_Tbk_Bits_de_parada = New DevComponents.DotNetBar.Controls.ComboBoxEx()
+        Me.Rdb_Tbk_Hexadecimal = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX12 = New DevComponents.DotNetBar.LabelX()
+        Me.SuperTabItem3 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Btn_Cambiar_Impresora = New DevComponents.DotNetBar.ButtonX()
@@ -66,41 +101,6 @@ Partial Class Frm_Equipos_CashDro_Equipo
         Me.LabelX14 = New DevComponents.DotNetBar.LabelX()
         Me.Line1 = New DevComponents.DotNetBar.Controls.Line()
         Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Btn_Imprimir_Detalle_Terminal = New DevComponents.DotNetBar.ButtonX()
-        Me.Lbl_Status = New DevComponents.DotNetBar.LabelX()
-        Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Btn_Imprimir_Ventas = New DevComponents.DotNetBar.ButtonX()
-        Me.Btn_Inicializacion = New DevComponents.DotNetBar.ButtonX()
-        Me.Btn_Probar_Transbank = New DevComponents.DotNetBar.ButtonX()
-        Me.Btn_Datos_Ultima_Venta = New DevComponents.DotNetBar.ButtonX()
-        Me.Btn_Anular_Transaccion = New DevComponents.DotNetBar.ButtonX()
-        Me.Btn_Cargar_Llaves = New DevComponents.DotNetBar.ButtonX()
-        Me.Btn_Cierre_Terminal = New DevComponents.DotNetBar.ButtonX()
-        Me.Btn_Pooling = New DevComponents.DotNetBar.ButtonX()
-        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Txt_Tbk_Post_Version = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Txt_Tbk_Post_Terminal = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Txt_Tbk_Post_Codigo_Comercio = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX21 = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX20 = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
-        Me.Cmb_Tbk_Tasa_de_baudios = New DevComponents.DotNetBar.Controls.ComboBoxEx()
-        Me.Cmb_Tbk_Bits_de_datos = New DevComponents.DotNetBar.Controls.ComboBoxEx()
-        Me.Rdb_Tbk_Texto = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX11 = New DevComponents.DotNetBar.LabelX()
-        Me.Cmb_Tbk_Paridad = New DevComponents.DotNetBar.Controls.ComboBoxEx()
-        Me.Cmb_Tbk_Puerto = New DevComponents.DotNetBar.Controls.ComboBoxEx()
-        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX9 = New DevComponents.DotNetBar.LabelX()
-        Me.Cmb_Tbk_Bits_de_parada = New DevComponents.DotNetBar.Controls.ComboBoxEx()
-        Me.Rdb_Tbk_Hexadecimal = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.LabelX12 = New DevComponents.DotNetBar.LabelX()
-        Me.SuperTabItem3 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
@@ -117,12 +117,12 @@ Partial Class Frm_Equipos_CashDro_Equipo
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
-        Me.SuperTabControlPanel1.SuspendLayout()
-        Me.GroupPanel1.SuspendLayout()
         Me.SuperTabControlPanel3.SuspendLayout()
         Me.GroupPanel3.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
+        Me.SuperTabControlPanel1.SuspendLayout()
+        Me.GroupPanel1.SuspendLayout()
         Me.SuperTabControlPanel2.SuspendLayout()
         Me.GroupPanel2.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
@@ -195,8 +195,8 @@ Partial Class Frm_Equipos_CashDro_Equipo
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
         Me.SuperTabControl1.ControlBox.Visible = False
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
         Me.SuperTabControl1.Location = New System.Drawing.Point(12, 12)
@@ -209,6 +209,543 @@ Partial Class Frm_Equipos_CashDro_Equipo
         Me.SuperTabControl1.TabIndex = 43
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem2, Me.SuperTabItem3})
         Me.SuperTabControl1.Text = "SuperTabControl1"
+        '
+        'SuperTabControlPanel3
+        '
+        Me.SuperTabControlPanel3.Controls.Add(Me.GroupPanel3)
+        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(537, 548)
+        Me.SuperTabControlPanel3.TabIndex = 0
+        Me.SuperTabControlPanel3.TabItem = Me.SuperTabItem3
+        '
+        'GroupPanel3
+        '
+        Me.GroupPanel3.BackColor = System.Drawing.Color.White
+        Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel3.Controls.Add(Me.Btn_Imprimir_Detalle_Terminal)
+        Me.GroupPanel3.Controls.Add(Me.Lbl_Status)
+        Me.GroupPanel3.Controls.Add(Me.TableLayoutPanel4)
+        Me.GroupPanel3.Controls.Add(Me.TableLayoutPanel3)
+        Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GroupPanel3.Location = New System.Drawing.Point(0, 0)
+        Me.GroupPanel3.Name = "GroupPanel3"
+        Me.GroupPanel3.Size = New System.Drawing.Size(537, 548)
+        '
+        '
+        '
+        Me.GroupPanel3.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel3.Style.BackColorGradientAngle = 90
+        Me.GroupPanel3.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel3.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderBottomWidth = 1
+        Me.GroupPanel3.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel3.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderLeftWidth = 1
+        Me.GroupPanel3.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderRightWidth = 1
+        Me.GroupPanel3.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderTopWidth = 1
+        Me.GroupPanel3.Style.CornerDiameter = 4
+        Me.GroupPanel3.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel3.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel3.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel3.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel3.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel3.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel3.TabIndex = 46
+        '
+        'Btn_Imprimir_Detalle_Terminal
+        '
+        Me.Btn_Imprimir_Detalle_Terminal.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Imprimir_Detalle_Terminal.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Imprimir_Detalle_Terminal.Image = CType(resources.GetObject("Btn_Imprimir_Detalle_Terminal.Image"), System.Drawing.Image)
+        Me.Btn_Imprimir_Detalle_Terminal.Location = New System.Drawing.Point(326, 142)
+        Me.Btn_Imprimir_Detalle_Terminal.Name = "Btn_Imprimir_Detalle_Terminal"
+        Me.Btn_Imprimir_Detalle_Terminal.Size = New System.Drawing.Size(202, 39)
+        Me.Btn_Imprimir_Detalle_Terminal.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Imprimir_Detalle_Terminal.TabIndex = 53
+        Me.Btn_Imprimir_Detalle_Terminal.Text = "Imprimir cierre ventas terminal"
+        '
+        'Lbl_Status
+        '
+        Me.Lbl_Status.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_Status.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Status.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Status.Location = New System.Drawing.Point(0, 434)
+        Me.Lbl_Status.Name = "Lbl_Status"
+        Me.Lbl_Status.Size = New System.Drawing.Size(528, 78)
+        Me.Lbl_Status.TabIndex = 49
+        Me.Lbl_Status.Text = "Modo Texto"
+        '
+        'TableLayoutPanel4
+        '
+        Me.TableLayoutPanel4.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel4.ColumnCount = 1
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Imprimir_Ventas, 0, 7)
+        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Inicializacion, 0, 6)
+        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Probar_Transbank, 0, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Datos_Ultima_Venta, 0, 5)
+        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Anular_Transaccion, 0, 1)
+        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Cargar_Llaves, 0, 2)
+        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Cierre_Terminal, 0, 3)
+        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Pooling, 0, 4)
+        Me.TableLayoutPanel4.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel4.Location = New System.Drawing.Point(323, 187)
+        Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
+        Me.TableLayoutPanel4.RowCount = 8
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(208, 241)
+        Me.TableLayoutPanel4.TabIndex = 50
+        '
+        'Btn_Imprimir_Ventas
+        '
+        Me.Btn_Imprimir_Ventas.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Imprimir_Ventas.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Imprimir_Ventas.Location = New System.Drawing.Point(3, 213)
+        Me.Btn_Imprimir_Ventas.Name = "Btn_Imprimir_Ventas"
+        Me.Btn_Imprimir_Ventas.Size = New System.Drawing.Size(202, 24)
+        Me.Btn_Imprimir_Ventas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Imprimir_Ventas.TabIndex = 56
+        Me.Btn_Imprimir_Ventas.Text = "Imprimir Ventas"
+        '
+        'Btn_Inicializacion
+        '
+        Me.Btn_Inicializacion.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Inicializacion.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Inicializacion.Location = New System.Drawing.Point(3, 183)
+        Me.Btn_Inicializacion.Name = "Btn_Inicializacion"
+        Me.Btn_Inicializacion.Size = New System.Drawing.Size(202, 24)
+        Me.Btn_Inicializacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Inicializacion.TabIndex = 52
+        Me.Btn_Inicializacion.Text = "Inicializacion"
+        '
+        'Btn_Probar_Transbank
+        '
+        Me.Btn_Probar_Transbank.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Probar_Transbank.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Probar_Transbank.Location = New System.Drawing.Point(3, 3)
+        Me.Btn_Probar_Transbank.Name = "Btn_Probar_Transbank"
+        Me.Btn_Probar_Transbank.Size = New System.Drawing.Size(202, 24)
+        Me.Btn_Probar_Transbank.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Probar_Transbank.TabIndex = 51
+        Me.Btn_Probar_Transbank.Text = "Enviar venta"
+        '
+        'Btn_Datos_Ultima_Venta
+        '
+        Me.Btn_Datos_Ultima_Venta.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Datos_Ultima_Venta.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Datos_Ultima_Venta.Location = New System.Drawing.Point(3, 153)
+        Me.Btn_Datos_Ultima_Venta.Name = "Btn_Datos_Ultima_Venta"
+        Me.Btn_Datos_Ultima_Venta.Size = New System.Drawing.Size(202, 24)
+        Me.Btn_Datos_Ultima_Venta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Datos_Ultima_Venta.TabIndex = 55
+        Me.Btn_Datos_Ultima_Venta.Text = "Datos Última Venta "
+        '
+        'Btn_Anular_Transaccion
+        '
+        Me.Btn_Anular_Transaccion.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Anular_Transaccion.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Anular_Transaccion.Location = New System.Drawing.Point(3, 33)
+        Me.Btn_Anular_Transaccion.Name = "Btn_Anular_Transaccion"
+        Me.Btn_Anular_Transaccion.Size = New System.Drawing.Size(202, 24)
+        Me.Btn_Anular_Transaccion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Anular_Transaccion.TabIndex = 52
+        Me.Btn_Anular_Transaccion.Text = "Anular ultima transacción"
+        '
+        'Btn_Cargar_Llaves
+        '
+        Me.Btn_Cargar_Llaves.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Cargar_Llaves.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Cargar_Llaves.Location = New System.Drawing.Point(3, 63)
+        Me.Btn_Cargar_Llaves.Name = "Btn_Cargar_Llaves"
+        Me.Btn_Cargar_Llaves.Size = New System.Drawing.Size(202, 24)
+        Me.Btn_Cargar_Llaves.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Cargar_Llaves.TabIndex = 52
+        Me.Btn_Cargar_Llaves.Text = "Cargar llaves"
+        '
+        'Btn_Cierre_Terminal
+        '
+        Me.Btn_Cierre_Terminal.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Cierre_Terminal.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Cierre_Terminal.Location = New System.Drawing.Point(3, 93)
+        Me.Btn_Cierre_Terminal.Name = "Btn_Cierre_Terminal"
+        Me.Btn_Cierre_Terminal.Size = New System.Drawing.Size(202, 24)
+        Me.Btn_Cierre_Terminal.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Cierre_Terminal.TabIndex = 53
+        Me.Btn_Cierre_Terminal.Text = "Cerrar terminal"
+        '
+        'Btn_Pooling
+        '
+        Me.Btn_Pooling.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Pooling.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Pooling.Location = New System.Drawing.Point(3, 123)
+        Me.Btn_Pooling.Name = "Btn_Pooling"
+        Me.Btn_Pooling.Size = New System.Drawing.Size(202, 24)
+        Me.Btn_Pooling.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Pooling.TabIndex = 54
+        Me.Btn_Pooling.Text = "Enviar Pooling "
+        '
+        'TableLayoutPanel3
+        '
+        Me.TableLayoutPanel3.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel3.ColumnCount = 2
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.66929!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 54.33071!))
+        Me.TableLayoutPanel3.Controls.Add(Me.Txt_Tbk_Post_Version, 1, 9)
+        Me.TableLayoutPanel3.Controls.Add(Me.Txt_Tbk_Post_Terminal, 1, 8)
+        Me.TableLayoutPanel3.Controls.Add(Me.Txt_Tbk_Post_Codigo_Comercio, 1, 7)
+        Me.TableLayoutPanel3.Controls.Add(Me.LabelX21, 0, 9)
+        Me.TableLayoutPanel3.Controls.Add(Me.LabelX20, 0, 8)
+        Me.TableLayoutPanel3.Controls.Add(Me.LabelX2, 0, 7)
+        Me.TableLayoutPanel3.Controls.Add(Me.Cmb_Tbk_Tasa_de_baudios, 1, 1)
+        Me.TableLayoutPanel3.Controls.Add(Me.Cmb_Tbk_Bits_de_datos, 1, 4)
+        Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Tbk_Texto, 1, 6)
+        Me.TableLayoutPanel3.Controls.Add(Me.LabelX13, 0, 5)
+        Me.TableLayoutPanel3.Controls.Add(Me.LabelX11, 0, 4)
+        Me.TableLayoutPanel3.Controls.Add(Me.Cmb_Tbk_Paridad, 1, 2)
+        Me.TableLayoutPanel3.Controls.Add(Me.Cmb_Tbk_Puerto, 1, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.LabelX4, 0, 3)
+        Me.TableLayoutPanel3.Controls.Add(Me.LabelX5, 0, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.LabelX6, 0, 1)
+        Me.TableLayoutPanel3.Controls.Add(Me.LabelX9, 0, 2)
+        Me.TableLayoutPanel3.Controls.Add(Me.Cmb_Tbk_Bits_de_parada, 1, 3)
+        Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Tbk_Hexadecimal, 1, 5)
+        Me.TableLayoutPanel3.Controls.Add(Me.LabelX12, 0, 6)
+        Me.TableLayoutPanel3.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(0, 0)
+        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
+        Me.TableLayoutPanel3.RowCount = 14
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142857!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142857!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142857!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142857!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142857!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142857!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142857!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142857!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142857!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142857!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.439252!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.98131!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.607477!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.476635!))
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(314, 428)
+        Me.TableLayoutPanel3.TabIndex = 1
+        '
+        'Txt_Tbk_Post_Version
+        '
+        Me.Txt_Tbk_Post_Version.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Tbk_Post_Version.Border.Class = "TextBoxBorder"
+        Me.Txt_Tbk_Post_Version.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Tbk_Post_Version.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Tbk_Post_Version.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Tbk_Post_Version.Location = New System.Drawing.Point(146, 273)
+        Me.Txt_Tbk_Post_Version.Name = "Txt_Tbk_Post_Version"
+        Me.Txt_Tbk_Post_Version.PreventEnterBeep = True
+        Me.Txt_Tbk_Post_Version.Size = New System.Drawing.Size(165, 22)
+        Me.Txt_Tbk_Post_Version.TabIndex = 52
+        '
+        'Txt_Tbk_Post_Terminal
+        '
+        Me.Txt_Tbk_Post_Terminal.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Tbk_Post_Terminal.Border.Class = "TextBoxBorder"
+        Me.Txt_Tbk_Post_Terminal.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Tbk_Post_Terminal.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Tbk_Post_Terminal.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Tbk_Post_Terminal.Location = New System.Drawing.Point(146, 243)
+        Me.Txt_Tbk_Post_Terminal.Name = "Txt_Tbk_Post_Terminal"
+        Me.Txt_Tbk_Post_Terminal.PreventEnterBeep = True
+        Me.Txt_Tbk_Post_Terminal.Size = New System.Drawing.Size(165, 22)
+        Me.Txt_Tbk_Post_Terminal.TabIndex = 52
+        '
+        'Txt_Tbk_Post_Codigo_Comercio
+        '
+        Me.Txt_Tbk_Post_Codigo_Comercio.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Tbk_Post_Codigo_Comercio.Border.Class = "TextBoxBorder"
+        Me.Txt_Tbk_Post_Codigo_Comercio.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Tbk_Post_Codigo_Comercio.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Tbk_Post_Codigo_Comercio.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Tbk_Post_Codigo_Comercio.Location = New System.Drawing.Point(146, 213)
+        Me.Txt_Tbk_Post_Codigo_Comercio.Name = "Txt_Tbk_Post_Codigo_Comercio"
+        Me.Txt_Tbk_Post_Codigo_Comercio.PreventEnterBeep = True
+        Me.Txt_Tbk_Post_Codigo_Comercio.Size = New System.Drawing.Size(165, 22)
+        Me.Txt_Tbk_Post_Codigo_Comercio.TabIndex = 51
+        '
+        'LabelX21
+        '
+        Me.LabelX21.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX21.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX21.ForeColor = System.Drawing.Color.Black
+        Me.LabelX21.Location = New System.Drawing.Point(3, 273)
+        Me.LabelX21.Name = "LabelX21"
+        Me.LabelX21.Size = New System.Drawing.Size(99, 24)
+        Me.LabelX21.TabIndex = 51
+        Me.LabelX21.Text = "Versión Post"
+        '
+        'LabelX20
+        '
+        Me.LabelX20.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX20.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX20.ForeColor = System.Drawing.Color.Black
+        Me.LabelX20.Location = New System.Drawing.Point(3, 243)
+        Me.LabelX20.Name = "LabelX20"
+        Me.LabelX20.Size = New System.Drawing.Size(99, 24)
+        Me.LabelX20.TabIndex = 51
+        Me.LabelX20.Text = "Terminal"
+        '
+        'LabelX2
+        '
+        Me.LabelX2.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX2.ForeColor = System.Drawing.Color.Black
+        Me.LabelX2.Location = New System.Drawing.Point(3, 213)
+        Me.LabelX2.Name = "LabelX2"
+        Me.LabelX2.Size = New System.Drawing.Size(99, 24)
+        Me.LabelX2.TabIndex = 51
+        Me.LabelX2.Text = "Código comercio"
+        '
+        'Cmb_Tbk_Tasa_de_baudios
+        '
+        Me.Cmb_Tbk_Tasa_de_baudios.DisplayMember = "Text"
+        Me.Cmb_Tbk_Tasa_de_baudios.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_Tbk_Tasa_de_baudios.ForeColor = System.Drawing.Color.Black
+        Me.Cmb_Tbk_Tasa_de_baudios.FormattingEnabled = True
+        Me.Cmb_Tbk_Tasa_de_baudios.ItemHeight = 16
+        Me.Cmb_Tbk_Tasa_de_baudios.Location = New System.Drawing.Point(146, 33)
+        Me.Cmb_Tbk_Tasa_de_baudios.Name = "Cmb_Tbk_Tasa_de_baudios"
+        Me.Cmb_Tbk_Tasa_de_baudios.Size = New System.Drawing.Size(165, 22)
+        Me.Cmb_Tbk_Tasa_de_baudios.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Cmb_Tbk_Tasa_de_baudios.TabIndex = 46
+        '
+        'Cmb_Tbk_Bits_de_datos
+        '
+        Me.Cmb_Tbk_Bits_de_datos.DisplayMember = "Text"
+        Me.Cmb_Tbk_Bits_de_datos.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_Tbk_Bits_de_datos.ForeColor = System.Drawing.Color.Black
+        Me.Cmb_Tbk_Bits_de_datos.FormattingEnabled = True
+        Me.Cmb_Tbk_Bits_de_datos.ItemHeight = 16
+        Me.Cmb_Tbk_Bits_de_datos.Location = New System.Drawing.Point(146, 123)
+        Me.Cmb_Tbk_Bits_de_datos.Name = "Cmb_Tbk_Bits_de_datos"
+        Me.Cmb_Tbk_Bits_de_datos.Size = New System.Drawing.Size(165, 22)
+        Me.Cmb_Tbk_Bits_de_datos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Cmb_Tbk_Bits_de_datos.TabIndex = 45
+        '
+        'Rdb_Tbk_Texto
+        '
+        '
+        '
+        '
+        Me.Rdb_Tbk_Texto.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Tbk_Texto.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Tbk_Texto.Enabled = False
+        Me.Rdb_Tbk_Texto.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_Tbk_Texto.Location = New System.Drawing.Point(146, 183)
+        Me.Rdb_Tbk_Texto.Name = "Rdb_Tbk_Texto"
+        Me.Rdb_Tbk_Texto.Size = New System.Drawing.Size(100, 17)
+        Me.Rdb_Tbk_Texto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_Tbk_Texto.TabIndex = 50
+        Me.Rdb_Tbk_Texto.Text = "Texto"
+        '
+        'LabelX13
+        '
+        Me.LabelX13.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX13.ForeColor = System.Drawing.Color.Black
+        Me.LabelX13.Location = New System.Drawing.Point(3, 153)
+        Me.LabelX13.Name = "LabelX13"
+        Me.LabelX13.Size = New System.Drawing.Size(99, 24)
+        Me.LabelX13.TabIndex = 45
+        Me.LabelX13.Text = "Modo Hexadecimal"
+        '
+        'LabelX11
+        '
+        Me.LabelX11.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX11.ForeColor = System.Drawing.Color.Black
+        Me.LabelX11.Location = New System.Drawing.Point(3, 123)
+        Me.LabelX11.Name = "LabelX11"
+        Me.LabelX11.Size = New System.Drawing.Size(99, 24)
+        Me.LabelX11.TabIndex = 44
+        Me.LabelX11.Text = "Bist de datos"
+        '
+        'Cmb_Tbk_Paridad
+        '
+        Me.Cmb_Tbk_Paridad.DisplayMember = "Text"
+        Me.Cmb_Tbk_Paridad.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_Tbk_Paridad.ForeColor = System.Drawing.Color.Black
+        Me.Cmb_Tbk_Paridad.FormattingEnabled = True
+        Me.Cmb_Tbk_Paridad.ItemHeight = 16
+        Me.Cmb_Tbk_Paridad.Location = New System.Drawing.Point(146, 63)
+        Me.Cmb_Tbk_Paridad.Name = "Cmb_Tbk_Paridad"
+        Me.Cmb_Tbk_Paridad.Size = New System.Drawing.Size(165, 22)
+        Me.Cmb_Tbk_Paridad.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Cmb_Tbk_Paridad.TabIndex = 44
+        '
+        'Cmb_Tbk_Puerto
+        '
+        Me.Cmb_Tbk_Puerto.DisplayMember = "Text"
+        Me.Cmb_Tbk_Puerto.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_Tbk_Puerto.ForeColor = System.Drawing.Color.Black
+        Me.Cmb_Tbk_Puerto.FormattingEnabled = True
+        Me.Cmb_Tbk_Puerto.ItemHeight = 16
+        Me.Cmb_Tbk_Puerto.Location = New System.Drawing.Point(146, 3)
+        Me.Cmb_Tbk_Puerto.Name = "Cmb_Tbk_Puerto"
+        Me.Cmb_Tbk_Puerto.Size = New System.Drawing.Size(165, 22)
+        Me.Cmb_Tbk_Puerto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Cmb_Tbk_Puerto.TabIndex = 44
+        '
+        'LabelX4
+        '
+        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.ForeColor = System.Drawing.Color.Black
+        Me.LabelX4.Location = New System.Drawing.Point(3, 93)
+        Me.LabelX4.Name = "LabelX4"
+        Me.LabelX4.Size = New System.Drawing.Size(99, 24)
+        Me.LabelX4.TabIndex = 43
+        Me.LabelX4.Text = "Bist de parada"
+        '
+        'LabelX5
+        '
+        Me.LabelX5.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX5.ForeColor = System.Drawing.Color.Black
+        Me.LabelX5.Location = New System.Drawing.Point(3, 3)
+        Me.LabelX5.Name = "LabelX5"
+        Me.LabelX5.Size = New System.Drawing.Size(99, 24)
+        Me.LabelX5.TabIndex = 5
+        Me.LabelX5.Text = "Puerto"
+        '
+        'LabelX6
+        '
+        Me.LabelX6.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX6.ForeColor = System.Drawing.Color.Black
+        Me.LabelX6.Location = New System.Drawing.Point(3, 33)
+        Me.LabelX6.Name = "LabelX6"
+        Me.LabelX6.Size = New System.Drawing.Size(99, 24)
+        Me.LabelX6.TabIndex = 6
+        Me.LabelX6.Text = "Tasa de baudios"
+        '
+        'LabelX9
+        '
+        Me.LabelX9.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX9.ForeColor = System.Drawing.Color.Black
+        Me.LabelX9.Location = New System.Drawing.Point(3, 63)
+        Me.LabelX9.Name = "LabelX9"
+        Me.LabelX9.Size = New System.Drawing.Size(99, 24)
+        Me.LabelX9.TabIndex = 7
+        Me.LabelX9.Text = "Paridad"
+        '
+        'Cmb_Tbk_Bits_de_parada
+        '
+        Me.Cmb_Tbk_Bits_de_parada.DisplayMember = "Text"
+        Me.Cmb_Tbk_Bits_de_parada.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_Tbk_Bits_de_parada.ForeColor = System.Drawing.Color.Black
+        Me.Cmb_Tbk_Bits_de_parada.FormattingEnabled = True
+        Me.Cmb_Tbk_Bits_de_parada.ItemHeight = 16
+        Me.Cmb_Tbk_Bits_de_parada.Location = New System.Drawing.Point(146, 93)
+        Me.Cmb_Tbk_Bits_de_parada.Name = "Cmb_Tbk_Bits_de_parada"
+        Me.Cmb_Tbk_Bits_de_parada.Size = New System.Drawing.Size(165, 22)
+        Me.Cmb_Tbk_Bits_de_parada.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Cmb_Tbk_Bits_de_parada.TabIndex = 44
+        '
+        'Rdb_Tbk_Hexadecimal
+        '
+        '
+        '
+        '
+        Me.Rdb_Tbk_Hexadecimal.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Tbk_Hexadecimal.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Tbk_Hexadecimal.Checked = True
+        Me.Rdb_Tbk_Hexadecimal.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_Tbk_Hexadecimal.CheckValue = "Y"
+        Me.Rdb_Tbk_Hexadecimal.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_Tbk_Hexadecimal.Location = New System.Drawing.Point(146, 153)
+        Me.Rdb_Tbk_Hexadecimal.Name = "Rdb_Tbk_Hexadecimal"
+        Me.Rdb_Tbk_Hexadecimal.Size = New System.Drawing.Size(100, 17)
+        Me.Rdb_Tbk_Hexadecimal.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_Tbk_Hexadecimal.TabIndex = 49
+        Me.Rdb_Tbk_Hexadecimal.Text = "Hexadecimal"
+        '
+        'LabelX12
+        '
+        Me.LabelX12.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX12.Enabled = False
+        Me.LabelX12.ForeColor = System.Drawing.Color.Black
+        Me.LabelX12.Location = New System.Drawing.Point(3, 183)
+        Me.LabelX12.Name = "LabelX12"
+        Me.LabelX12.Size = New System.Drawing.Size(99, 24)
+        Me.LabelX12.TabIndex = 48
+        Me.LabelX12.Text = "Modo Texto"
+        '
+        'SuperTabItem3
+        '
+        Me.SuperTabItem3.AttachedControl = Me.SuperTabControlPanel3
+        Me.SuperTabItem3.GlobalItem = False
+        Me.SuperTabItem3.Name = "SuperTabItem3"
+        Me.SuperTabItem3.Text = "Conf. TRANSBANK"
         '
         'SuperTabControlPanel1
         '
@@ -790,543 +1327,6 @@ Partial Class Frm_Equipos_CashDro_Equipo
         Me.SuperTabItem1.Name = "SuperTabItem1"
         Me.SuperTabItem1.Text = "Conf. GENERAL"
         '
-        'SuperTabControlPanel3
-        '
-        Me.SuperTabControlPanel3.Controls.Add(Me.GroupPanel3)
-        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(537, 521)
-        Me.SuperTabControlPanel3.TabIndex = 0
-        Me.SuperTabControlPanel3.TabItem = Me.SuperTabItem3
-        '
-        'GroupPanel3
-        '
-        Me.GroupPanel3.BackColor = System.Drawing.Color.White
-        Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel3.Controls.Add(Me.Btn_Imprimir_Detalle_Terminal)
-        Me.GroupPanel3.Controls.Add(Me.Lbl_Status)
-        Me.GroupPanel3.Controls.Add(Me.TableLayoutPanel4)
-        Me.GroupPanel3.Controls.Add(Me.TableLayoutPanel3)
-        Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GroupPanel3.Location = New System.Drawing.Point(0, 0)
-        Me.GroupPanel3.Name = "GroupPanel3"
-        Me.GroupPanel3.Size = New System.Drawing.Size(537, 521)
-        '
-        '
-        '
-        Me.GroupPanel3.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.GroupPanel3.Style.BackColorGradientAngle = 90
-        Me.GroupPanel3.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.GroupPanel3.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel3.Style.BorderBottomWidth = 1
-        Me.GroupPanel3.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
-        Me.GroupPanel3.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel3.Style.BorderLeftWidth = 1
-        Me.GroupPanel3.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel3.Style.BorderRightWidth = 1
-        Me.GroupPanel3.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel3.Style.BorderTopWidth = 1
-        Me.GroupPanel3.Style.CornerDiameter = 4
-        Me.GroupPanel3.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.GroupPanel3.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
-        Me.GroupPanel3.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
-        Me.GroupPanel3.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
-        '
-        '
-        '
-        Me.GroupPanel3.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.GroupPanel3.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.GroupPanel3.TabIndex = 46
-        '
-        'Btn_Imprimir_Detalle_Terminal
-        '
-        Me.Btn_Imprimir_Detalle_Terminal.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Imprimir_Detalle_Terminal.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Imprimir_Detalle_Terminal.Image = CType(resources.GetObject("Btn_Imprimir_Detalle_Terminal.Image"), System.Drawing.Image)
-        Me.Btn_Imprimir_Detalle_Terminal.Location = New System.Drawing.Point(326, 142)
-        Me.Btn_Imprimir_Detalle_Terminal.Name = "Btn_Imprimir_Detalle_Terminal"
-        Me.Btn_Imprimir_Detalle_Terminal.Size = New System.Drawing.Size(202, 39)
-        Me.Btn_Imprimir_Detalle_Terminal.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Imprimir_Detalle_Terminal.TabIndex = 53
-        Me.Btn_Imprimir_Detalle_Terminal.Text = "Imprimir cierre ventas terminal"
-        '
-        'Lbl_Status
-        '
-        Me.Lbl_Status.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Lbl_Status.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Lbl_Status.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Status.Location = New System.Drawing.Point(0, 434)
-        Me.Lbl_Status.Name = "Lbl_Status"
-        Me.Lbl_Status.Size = New System.Drawing.Size(528, 78)
-        Me.Lbl_Status.TabIndex = 49
-        Me.Lbl_Status.Text = "Modo Texto"
-        '
-        'TableLayoutPanel4
-        '
-        Me.TableLayoutPanel4.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel4.ColumnCount = 1
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Imprimir_Ventas, 0, 7)
-        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Inicializacion, 0, 6)
-        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Probar_Transbank, 0, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Datos_Ultima_Venta, 0, 5)
-        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Anular_Transaccion, 0, 1)
-        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Cargar_Llaves, 0, 2)
-        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Cierre_Terminal, 0, 3)
-        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Pooling, 0, 4)
-        Me.TableLayoutPanel4.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel4.Location = New System.Drawing.Point(323, 187)
-        Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
-        Me.TableLayoutPanel4.RowCount = 8
-        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel4.Size = New System.Drawing.Size(208, 241)
-        Me.TableLayoutPanel4.TabIndex = 50
-        '
-        'Btn_Imprimir_Ventas
-        '
-        Me.Btn_Imprimir_Ventas.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Imprimir_Ventas.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Imprimir_Ventas.Location = New System.Drawing.Point(3, 213)
-        Me.Btn_Imprimir_Ventas.Name = "Btn_Imprimir_Ventas"
-        Me.Btn_Imprimir_Ventas.Size = New System.Drawing.Size(202, 24)
-        Me.Btn_Imprimir_Ventas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Imprimir_Ventas.TabIndex = 56
-        Me.Btn_Imprimir_Ventas.Text = "Imprimir Ventas"
-        '
-        'Btn_Inicializacion
-        '
-        Me.Btn_Inicializacion.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Inicializacion.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Inicializacion.Location = New System.Drawing.Point(3, 183)
-        Me.Btn_Inicializacion.Name = "Btn_Inicializacion"
-        Me.Btn_Inicializacion.Size = New System.Drawing.Size(202, 24)
-        Me.Btn_Inicializacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Inicializacion.TabIndex = 52
-        Me.Btn_Inicializacion.Text = "Inicializacion"
-        '
-        'Btn_Probar_Transbank
-        '
-        Me.Btn_Probar_Transbank.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Probar_Transbank.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Probar_Transbank.Location = New System.Drawing.Point(3, 3)
-        Me.Btn_Probar_Transbank.Name = "Btn_Probar_Transbank"
-        Me.Btn_Probar_Transbank.Size = New System.Drawing.Size(202, 24)
-        Me.Btn_Probar_Transbank.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Probar_Transbank.TabIndex = 51
-        Me.Btn_Probar_Transbank.Text = "Enviar venta"
-        '
-        'Btn_Datos_Ultima_Venta
-        '
-        Me.Btn_Datos_Ultima_Venta.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Datos_Ultima_Venta.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Datos_Ultima_Venta.Location = New System.Drawing.Point(3, 153)
-        Me.Btn_Datos_Ultima_Venta.Name = "Btn_Datos_Ultima_Venta"
-        Me.Btn_Datos_Ultima_Venta.Size = New System.Drawing.Size(202, 24)
-        Me.Btn_Datos_Ultima_Venta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Datos_Ultima_Venta.TabIndex = 55
-        Me.Btn_Datos_Ultima_Venta.Text = "Datos Última Venta "
-        '
-        'Btn_Anular_Transaccion
-        '
-        Me.Btn_Anular_Transaccion.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Anular_Transaccion.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Anular_Transaccion.Location = New System.Drawing.Point(3, 33)
-        Me.Btn_Anular_Transaccion.Name = "Btn_Anular_Transaccion"
-        Me.Btn_Anular_Transaccion.Size = New System.Drawing.Size(202, 24)
-        Me.Btn_Anular_Transaccion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Anular_Transaccion.TabIndex = 52
-        Me.Btn_Anular_Transaccion.Text = "Anular ultima transacción"
-        '
-        'Btn_Cargar_Llaves
-        '
-        Me.Btn_Cargar_Llaves.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Cargar_Llaves.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Cargar_Llaves.Location = New System.Drawing.Point(3, 63)
-        Me.Btn_Cargar_Llaves.Name = "Btn_Cargar_Llaves"
-        Me.Btn_Cargar_Llaves.Size = New System.Drawing.Size(202, 24)
-        Me.Btn_Cargar_Llaves.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Cargar_Llaves.TabIndex = 52
-        Me.Btn_Cargar_Llaves.Text = "Cargar llaves"
-        '
-        'Btn_Cierre_Terminal
-        '
-        Me.Btn_Cierre_Terminal.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Cierre_Terminal.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Cierre_Terminal.Location = New System.Drawing.Point(3, 93)
-        Me.Btn_Cierre_Terminal.Name = "Btn_Cierre_Terminal"
-        Me.Btn_Cierre_Terminal.Size = New System.Drawing.Size(202, 24)
-        Me.Btn_Cierre_Terminal.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Cierre_Terminal.TabIndex = 53
-        Me.Btn_Cierre_Terminal.Text = "Cerrar terminal"
-        '
-        'Btn_Pooling
-        '
-        Me.Btn_Pooling.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Pooling.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Pooling.Location = New System.Drawing.Point(3, 123)
-        Me.Btn_Pooling.Name = "Btn_Pooling"
-        Me.Btn_Pooling.Size = New System.Drawing.Size(202, 24)
-        Me.Btn_Pooling.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Pooling.TabIndex = 54
-        Me.Btn_Pooling.Text = "Enviar Pooling "
-        '
-        'TableLayoutPanel3
-        '
-        Me.TableLayoutPanel3.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel3.ColumnCount = 2
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.66929!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 54.33071!))
-        Me.TableLayoutPanel3.Controls.Add(Me.Txt_Tbk_Post_Version, 1, 9)
-        Me.TableLayoutPanel3.Controls.Add(Me.Txt_Tbk_Post_Terminal, 1, 8)
-        Me.TableLayoutPanel3.Controls.Add(Me.Txt_Tbk_Post_Codigo_Comercio, 1, 7)
-        Me.TableLayoutPanel3.Controls.Add(Me.LabelX21, 0, 9)
-        Me.TableLayoutPanel3.Controls.Add(Me.LabelX20, 0, 8)
-        Me.TableLayoutPanel3.Controls.Add(Me.LabelX2, 0, 7)
-        Me.TableLayoutPanel3.Controls.Add(Me.Cmb_Tbk_Tasa_de_baudios, 1, 1)
-        Me.TableLayoutPanel3.Controls.Add(Me.Cmb_Tbk_Bits_de_datos, 1, 4)
-        Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Tbk_Texto, 1, 6)
-        Me.TableLayoutPanel3.Controls.Add(Me.LabelX13, 0, 5)
-        Me.TableLayoutPanel3.Controls.Add(Me.LabelX11, 0, 4)
-        Me.TableLayoutPanel3.Controls.Add(Me.Cmb_Tbk_Paridad, 1, 2)
-        Me.TableLayoutPanel3.Controls.Add(Me.Cmb_Tbk_Puerto, 1, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.LabelX4, 0, 3)
-        Me.TableLayoutPanel3.Controls.Add(Me.LabelX5, 0, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.LabelX6, 0, 1)
-        Me.TableLayoutPanel3.Controls.Add(Me.LabelX9, 0, 2)
-        Me.TableLayoutPanel3.Controls.Add(Me.Cmb_Tbk_Bits_de_parada, 1, 3)
-        Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Tbk_Hexadecimal, 1, 5)
-        Me.TableLayoutPanel3.Controls.Add(Me.LabelX12, 0, 6)
-        Me.TableLayoutPanel3.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel3.Location = New System.Drawing.Point(0, 0)
-        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
-        Me.TableLayoutPanel3.RowCount = 14
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142857!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142857!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142857!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142857!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142857!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142857!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142857!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142857!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142857!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142857!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.439252!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.98131!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.607477!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.476635!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(314, 428)
-        Me.TableLayoutPanel3.TabIndex = 1
-        '
-        'Txt_Tbk_Post_Version
-        '
-        Me.Txt_Tbk_Post_Version.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_Tbk_Post_Version.Border.Class = "TextBoxBorder"
-        Me.Txt_Tbk_Post_Version.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Tbk_Post_Version.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Tbk_Post_Version.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Tbk_Post_Version.Location = New System.Drawing.Point(146, 273)
-        Me.Txt_Tbk_Post_Version.Name = "Txt_Tbk_Post_Version"
-        Me.Txt_Tbk_Post_Version.PreventEnterBeep = True
-        Me.Txt_Tbk_Post_Version.Size = New System.Drawing.Size(165, 22)
-        Me.Txt_Tbk_Post_Version.TabIndex = 52
-        '
-        'Txt_Tbk_Post_Terminal
-        '
-        Me.Txt_Tbk_Post_Terminal.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_Tbk_Post_Terminal.Border.Class = "TextBoxBorder"
-        Me.Txt_Tbk_Post_Terminal.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Tbk_Post_Terminal.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Tbk_Post_Terminal.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Tbk_Post_Terminal.Location = New System.Drawing.Point(146, 243)
-        Me.Txt_Tbk_Post_Terminal.Name = "Txt_Tbk_Post_Terminal"
-        Me.Txt_Tbk_Post_Terminal.PreventEnterBeep = True
-        Me.Txt_Tbk_Post_Terminal.Size = New System.Drawing.Size(165, 22)
-        Me.Txt_Tbk_Post_Terminal.TabIndex = 52
-        '
-        'Txt_Tbk_Post_Codigo_Comercio
-        '
-        Me.Txt_Tbk_Post_Codigo_Comercio.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_Tbk_Post_Codigo_Comercio.Border.Class = "TextBoxBorder"
-        Me.Txt_Tbk_Post_Codigo_Comercio.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Tbk_Post_Codigo_Comercio.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Tbk_Post_Codigo_Comercio.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Tbk_Post_Codigo_Comercio.Location = New System.Drawing.Point(146, 213)
-        Me.Txt_Tbk_Post_Codigo_Comercio.Name = "Txt_Tbk_Post_Codigo_Comercio"
-        Me.Txt_Tbk_Post_Codigo_Comercio.PreventEnterBeep = True
-        Me.Txt_Tbk_Post_Codigo_Comercio.Size = New System.Drawing.Size(165, 22)
-        Me.Txt_Tbk_Post_Codigo_Comercio.TabIndex = 51
-        '
-        'LabelX21
-        '
-        Me.LabelX21.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX21.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX21.ForeColor = System.Drawing.Color.Black
-        Me.LabelX21.Location = New System.Drawing.Point(3, 273)
-        Me.LabelX21.Name = "LabelX21"
-        Me.LabelX21.Size = New System.Drawing.Size(99, 24)
-        Me.LabelX21.TabIndex = 51
-        Me.LabelX21.Text = "Versión Post"
-        '
-        'LabelX20
-        '
-        Me.LabelX20.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX20.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX20.ForeColor = System.Drawing.Color.Black
-        Me.LabelX20.Location = New System.Drawing.Point(3, 243)
-        Me.LabelX20.Name = "LabelX20"
-        Me.LabelX20.Size = New System.Drawing.Size(99, 24)
-        Me.LabelX20.TabIndex = 51
-        Me.LabelX20.Text = "Terminal"
-        '
-        'LabelX2
-        '
-        Me.LabelX2.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(3, 213)
-        Me.LabelX2.Name = "LabelX2"
-        Me.LabelX2.Size = New System.Drawing.Size(99, 24)
-        Me.LabelX2.TabIndex = 51
-        Me.LabelX2.Text = "Código comercio"
-        '
-        'Cmb_Tbk_Tasa_de_baudios
-        '
-        Me.Cmb_Tbk_Tasa_de_baudios.DisplayMember = "Text"
-        Me.Cmb_Tbk_Tasa_de_baudios.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.Cmb_Tbk_Tasa_de_baudios.ForeColor = System.Drawing.Color.Black
-        Me.Cmb_Tbk_Tasa_de_baudios.FormattingEnabled = True
-        Me.Cmb_Tbk_Tasa_de_baudios.ItemHeight = 16
-        Me.Cmb_Tbk_Tasa_de_baudios.Location = New System.Drawing.Point(146, 33)
-        Me.Cmb_Tbk_Tasa_de_baudios.Name = "Cmb_Tbk_Tasa_de_baudios"
-        Me.Cmb_Tbk_Tasa_de_baudios.Size = New System.Drawing.Size(165, 22)
-        Me.Cmb_Tbk_Tasa_de_baudios.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Cmb_Tbk_Tasa_de_baudios.TabIndex = 46
-        '
-        'Cmb_Tbk_Bits_de_datos
-        '
-        Me.Cmb_Tbk_Bits_de_datos.DisplayMember = "Text"
-        Me.Cmb_Tbk_Bits_de_datos.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.Cmb_Tbk_Bits_de_datos.ForeColor = System.Drawing.Color.Black
-        Me.Cmb_Tbk_Bits_de_datos.FormattingEnabled = True
-        Me.Cmb_Tbk_Bits_de_datos.ItemHeight = 16
-        Me.Cmb_Tbk_Bits_de_datos.Location = New System.Drawing.Point(146, 123)
-        Me.Cmb_Tbk_Bits_de_datos.Name = "Cmb_Tbk_Bits_de_datos"
-        Me.Cmb_Tbk_Bits_de_datos.Size = New System.Drawing.Size(165, 22)
-        Me.Cmb_Tbk_Bits_de_datos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Cmb_Tbk_Bits_de_datos.TabIndex = 45
-        '
-        'Rdb_Tbk_Texto
-        '
-        '
-        '
-        '
-        Me.Rdb_Tbk_Texto.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_Tbk_Texto.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_Tbk_Texto.Enabled = False
-        Me.Rdb_Tbk_Texto.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Tbk_Texto.Location = New System.Drawing.Point(146, 183)
-        Me.Rdb_Tbk_Texto.Name = "Rdb_Tbk_Texto"
-        Me.Rdb_Tbk_Texto.Size = New System.Drawing.Size(100, 17)
-        Me.Rdb_Tbk_Texto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_Tbk_Texto.TabIndex = 50
-        Me.Rdb_Tbk_Texto.Text = "Texto"
-        '
-        'LabelX13
-        '
-        Me.LabelX13.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX13.ForeColor = System.Drawing.Color.Black
-        Me.LabelX13.Location = New System.Drawing.Point(3, 153)
-        Me.LabelX13.Name = "LabelX13"
-        Me.LabelX13.Size = New System.Drawing.Size(99, 24)
-        Me.LabelX13.TabIndex = 45
-        Me.LabelX13.Text = "Modo Hexadecimal"
-        '
-        'LabelX11
-        '
-        Me.LabelX11.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX11.ForeColor = System.Drawing.Color.Black
-        Me.LabelX11.Location = New System.Drawing.Point(3, 123)
-        Me.LabelX11.Name = "LabelX11"
-        Me.LabelX11.Size = New System.Drawing.Size(99, 24)
-        Me.LabelX11.TabIndex = 44
-        Me.LabelX11.Text = "Bist de datos"
-        '
-        'Cmb_Tbk_Paridad
-        '
-        Me.Cmb_Tbk_Paridad.DisplayMember = "Text"
-        Me.Cmb_Tbk_Paridad.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.Cmb_Tbk_Paridad.ForeColor = System.Drawing.Color.Black
-        Me.Cmb_Tbk_Paridad.FormattingEnabled = True
-        Me.Cmb_Tbk_Paridad.ItemHeight = 16
-        Me.Cmb_Tbk_Paridad.Location = New System.Drawing.Point(146, 63)
-        Me.Cmb_Tbk_Paridad.Name = "Cmb_Tbk_Paridad"
-        Me.Cmb_Tbk_Paridad.Size = New System.Drawing.Size(165, 22)
-        Me.Cmb_Tbk_Paridad.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Cmb_Tbk_Paridad.TabIndex = 44
-        '
-        'Cmb_Tbk_Puerto
-        '
-        Me.Cmb_Tbk_Puerto.DisplayMember = "Text"
-        Me.Cmb_Tbk_Puerto.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.Cmb_Tbk_Puerto.ForeColor = System.Drawing.Color.Black
-        Me.Cmb_Tbk_Puerto.FormattingEnabled = True
-        Me.Cmb_Tbk_Puerto.ItemHeight = 16
-        Me.Cmb_Tbk_Puerto.Location = New System.Drawing.Point(146, 3)
-        Me.Cmb_Tbk_Puerto.Name = "Cmb_Tbk_Puerto"
-        Me.Cmb_Tbk_Puerto.Size = New System.Drawing.Size(165, 22)
-        Me.Cmb_Tbk_Puerto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Cmb_Tbk_Puerto.TabIndex = 44
-        '
-        'LabelX4
-        '
-        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(3, 93)
-        Me.LabelX4.Name = "LabelX4"
-        Me.LabelX4.Size = New System.Drawing.Size(99, 24)
-        Me.LabelX4.TabIndex = 43
-        Me.LabelX4.Text = "Bist de parada"
-        '
-        'LabelX5
-        '
-        Me.LabelX5.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX5.ForeColor = System.Drawing.Color.Black
-        Me.LabelX5.Location = New System.Drawing.Point(3, 3)
-        Me.LabelX5.Name = "LabelX5"
-        Me.LabelX5.Size = New System.Drawing.Size(99, 24)
-        Me.LabelX5.TabIndex = 5
-        Me.LabelX5.Text = "Puerto"
-        '
-        'LabelX6
-        '
-        Me.LabelX6.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX6.ForeColor = System.Drawing.Color.Black
-        Me.LabelX6.Location = New System.Drawing.Point(3, 33)
-        Me.LabelX6.Name = "LabelX6"
-        Me.LabelX6.Size = New System.Drawing.Size(99, 24)
-        Me.LabelX6.TabIndex = 6
-        Me.LabelX6.Text = "Tasa de baudios"
-        '
-        'LabelX9
-        '
-        Me.LabelX9.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX9.ForeColor = System.Drawing.Color.Black
-        Me.LabelX9.Location = New System.Drawing.Point(3, 63)
-        Me.LabelX9.Name = "LabelX9"
-        Me.LabelX9.Size = New System.Drawing.Size(99, 24)
-        Me.LabelX9.TabIndex = 7
-        Me.LabelX9.Text = "Paridad"
-        '
-        'Cmb_Tbk_Bits_de_parada
-        '
-        Me.Cmb_Tbk_Bits_de_parada.DisplayMember = "Text"
-        Me.Cmb_Tbk_Bits_de_parada.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.Cmb_Tbk_Bits_de_parada.ForeColor = System.Drawing.Color.Black
-        Me.Cmb_Tbk_Bits_de_parada.FormattingEnabled = True
-        Me.Cmb_Tbk_Bits_de_parada.ItemHeight = 16
-        Me.Cmb_Tbk_Bits_de_parada.Location = New System.Drawing.Point(146, 93)
-        Me.Cmb_Tbk_Bits_de_parada.Name = "Cmb_Tbk_Bits_de_parada"
-        Me.Cmb_Tbk_Bits_de_parada.Size = New System.Drawing.Size(165, 22)
-        Me.Cmb_Tbk_Bits_de_parada.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Cmb_Tbk_Bits_de_parada.TabIndex = 44
-        '
-        'Rdb_Tbk_Hexadecimal
-        '
-        '
-        '
-        '
-        Me.Rdb_Tbk_Hexadecimal.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_Tbk_Hexadecimal.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_Tbk_Hexadecimal.Checked = True
-        Me.Rdb_Tbk_Hexadecimal.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Rdb_Tbk_Hexadecimal.CheckValue = "Y"
-        Me.Rdb_Tbk_Hexadecimal.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Tbk_Hexadecimal.Location = New System.Drawing.Point(146, 153)
-        Me.Rdb_Tbk_Hexadecimal.Name = "Rdb_Tbk_Hexadecimal"
-        Me.Rdb_Tbk_Hexadecimal.Size = New System.Drawing.Size(100, 17)
-        Me.Rdb_Tbk_Hexadecimal.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_Tbk_Hexadecimal.TabIndex = 49
-        Me.Rdb_Tbk_Hexadecimal.Text = "Hexadecimal"
-        '
-        'LabelX12
-        '
-        Me.LabelX12.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX12.Enabled = False
-        Me.LabelX12.ForeColor = System.Drawing.Color.Black
-        Me.LabelX12.Location = New System.Drawing.Point(3, 183)
-        Me.LabelX12.Name = "LabelX12"
-        Me.LabelX12.Size = New System.Drawing.Size(99, 24)
-        Me.LabelX12.TabIndex = 48
-        Me.LabelX12.Text = "Modo Texto"
-        '
-        'SuperTabItem3
-        '
-        Me.SuperTabItem3.AttachedControl = Me.SuperTabControlPanel3
-        Me.SuperTabItem3.GlobalItem = False
-        Me.SuperTabItem3.Name = "SuperTabItem3"
-        Me.SuperTabItem3.Text = "Conf. TRANSBANK"
-        '
         'SuperTabControlPanel2
         '
         Me.SuperTabControlPanel2.Controls.Add(Me.GroupPanel2)
@@ -1557,12 +1557,12 @@ Partial Class Frm_Equipos_CashDro_Equipo
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
-        Me.SuperTabControlPanel1.ResumeLayout(False)
-        Me.GroupPanel1.ResumeLayout(False)
         Me.SuperTabControlPanel3.ResumeLayout(False)
         Me.GroupPanel3.ResumeLayout(False)
         Me.TableLayoutPanel4.ResumeLayout(False)
         Me.TableLayoutPanel3.ResumeLayout(False)
+        Me.SuperTabControlPanel1.ResumeLayout(False)
+        Me.GroupPanel1.ResumeLayout(False)
         Me.SuperTabControlPanel2.ResumeLayout(False)
         Me.GroupPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)

@@ -1,6 +1,4 @@
-Imports DevComponents.DotNetBar
-'Imports Lib_Bakapp_VarClassFunc
-'Imports BkSpecialPrograms
+ï»¿Imports DevComponents.DotNetBar
 Imports System.Data.SqlClient
 
 Public Class Frm_St_Estado_01_Ingreso_Check_In
@@ -28,21 +26,20 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
 
     Dim Imagenes_32x32 As ImageList
 
-    Public Sub New(ByVal Id_Ot As Integer, ByVal Accion As Accion)
+    Public Sub New(Id_Ot As Integer, Accion As Accion)
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
         _Accion = Accion
         _Id_Ot = Id_Ot
 
     End Sub
-    Private Sub Frm_St_Estado_01_Asignacion_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_St_Estado_01_Asignacion_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
-      
-        InsertarBotonenGrilla(Grill_Check_In, "BtnImagen", "Situación", "Solicitud", 0, _Tipo_Boton.Imagen)
-        InsertarBotonenGrilla(Grilla_Accesorios, "BtnImagen", "Situación", "Solicitud", 0, _Tipo_Boton.Imagen)
+        InsertarBotonenGrilla(Grill_Check_In, "BtnImagen", "SituaciÃ³n", "Solicitud", 0, _Tipo_Boton.Imagen)
+        InsertarBotonenGrilla(Grilla_Accesorios, "BtnImagen", "SituaciÃ³n", "Solicitud", 0, _Tipo_Boton.Imagen)
 
         Sb_Formato_Generico_Grilla(Grill_Check_In, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
         Sb_Formato_Generico_Grilla(Grilla_Accesorios, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
@@ -55,7 +52,7 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
             Btn_Grabar.Visible = True
             Btn_Grabar.Enabled = False
             Btn_Editar.Visible = True
-            'Btn_Salir.Visible = True
+
             Me.ControlBox = True
             _Solo_Lectura = True
             Btn_Agregar_Check_In.Enabled = False
@@ -71,14 +68,11 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
             Btn_Grabar.Visible = False
             Btn_Editar.Visible = False
             Me.ControlBox = False
-            'Btn_Salir.Visible = False
 
         End If
 
         Grill_Check_In.DataSource = _Tbl_ChekIn
         Grilla_Accesorios.DataSource = _Tbl_Accesorios
-
-
 
         AddHandler Grill_Check_In.KeyDown, AddressOf Grilla_Check_In_KeyDown
         AddHandler Grill_Check_In.CellBeginEdit, AddressOf Grilla_Check_In_CellBeginEdit
@@ -88,17 +82,14 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
         AddHandler Grilla_Accesorios.CellBeginEdit, AddressOf Grilla_Accesorios_CellBeginEdit
         AddHandler Grilla_Accesorios.CellEndEdit, AddressOf Grilla_Accesorios_CellEndEdit
 
-        '.Item("Articulo") = String.Empty
-        '.Item("Cantidad") = 0
-        '.Item("NroSerie_Chk") = String.Empty
-        '.Item("Nota") = String.Empty
         Sb_Formato_Grillas(_Solo_Lectura)
+
         Sb_Marcar_Grillas(Grill_Check_In, Imagenes_16x16.Images.Item("Check_in"))
         Sb_Marcar_Grillas(Grilla_Accesorios, Imagenes_16x16.Images.Item("Accesorios"))
 
     End Sub
 
-    Sub Sb_Formato_Grillas(ByVal _Solo_Lectura As Boolean)
+    Sub Sb_Formato_Grillas(_Solo_Lectura As Boolean)
 
         With Grill_Check_In
 
@@ -160,10 +151,9 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
 
         End With
 
-
     End Sub
 
-    Sub Sb_Marcar_Grillas(ByVal _Grilla As DataGridView, ByVal _Imagen As Image)
+    Sub Sb_Marcar_Grillas(_Grilla As DataGridView, _Imagen As Image)
 
         For Each _Fila As DataGridViewRow In _Grilla.Rows
             _Fila.Cells("BtnImagen").Value = _Imagen
@@ -192,7 +182,7 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
         Get
             Return _DsDocumento
         End Get
-        Set(ByVal value As DataSet)
+        Set(value As DataSet)
             _DsDocumento = value
 
             _Row_Encabezado = _DsDocumento.Tables(0).Rows(0)
@@ -204,11 +194,20 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
         End Set
     End Property
 
+    Public Property Pro_DsDocumento2() As DataSet
+        Get
+            Return _DsDocumento
+        End Get
+        Set(value As DataSet)
+            _DsDocumento = value
+        End Set
+    End Property
+
     Public Property Pro_Grabar() As Boolean
         Get
             Return _Grabar
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Grabar = value
         End Set
     End Property
@@ -217,7 +216,7 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
         Get
             Return Imagenes_32x32
         End Get
-        Set(ByVal value As ImageList)
+        Set(value As ImageList)
             Imagenes_32x32 = value
         End Set
     End Property
@@ -226,7 +225,7 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
         Get
             Return _Editando_documento
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Editando_documento = value
         End Set
     End Property
@@ -234,8 +233,8 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
 #End Region
 
 
-    Sub Sb_New_OT_Agregar_Fila_Accesorios(Optional ByVal _Codigo As String = "", _
-                                          Optional ByVal _Articulo As String = "")
+    Sub Sb_New_OT_Agregar_Fila_Accesorios(Optional _Codigo As String = "",
+                                          Optional _Articulo As String = "")
 
         Dim NewFila As DataRow
         NewFila = _Tbl_Accesorios.NewRow
@@ -254,13 +253,12 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
 
     End Sub
 
-    Sub Sb_New_OT_Agregar_Fila_Check_In(Optional ByVal _Codigo As String = "", _
-                                        Optional ByVal _Check_In As String = "")
+    Sub Sb_New_OT_Agregar_Fila_Check_In(Optional _Codigo As String = "",
+                                        Optional _Check_In As String = "")
 
         Dim NewFila As DataRow
         NewFila = _Tbl_ChekIn.NewRow
         With NewFila
-            ' Articulo, Cantidad, NroSerie_Chk, Nota
 
             .Item("Nuevo_Item") = False
             .Item("Codigo") = _Codigo
@@ -275,7 +273,7 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
 
 #Region "EVENTOS GRILLA CHECK-IN"
 
-    Private Sub Grilla_Check_In_CellBeginEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellCancelEventArgs)
+    Private Sub Grilla_Check_In_CellBeginEdit(sender As Object, e As System.Windows.Forms.DataGridViewCellCancelEventArgs)
 
         Dim Grilla As DataGridView = CType(sender, DataGridView)
 
@@ -293,7 +291,7 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
 
     End Sub
 
-    Private Sub Grilla_Check_In_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Grilla_Check_In_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Dim Grilla As DataGridView = CType(sender, DataGridView)
 
@@ -314,7 +312,7 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
 
     End Sub
 
-    Private Sub Grilla_Check_In_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+    Private Sub Grilla_Check_In_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs)
         If CBool(_Tbl_ChekIn.Rows.Count) Then
             Dim Grilla As DataGridView = CType(sender, DataGridView)
 
@@ -356,7 +354,7 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
                 Case Keys.Delete
 
                     If Not _Nuevo_Item Then
-                        If MessageBoxEx.Show(Me, "¿Esta seguro de eliminar la(s) fila(s) seleccionada(s)?", _
+                        If MessageBoxEx.Show(Me, "Â¿Esta seguro de eliminar la(s) fila(s) seleccionada(s)?",
                                                  "Eliminar fila", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
 
                             Grilla.Rows.RemoveAt(Grilla.CurrentRow.Index)
@@ -375,7 +373,7 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
 
 #Region "EVENTOS GRILLA ACCESORIOS"
 
-    Private Sub Grilla_Accesorios_CellBeginEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellCancelEventArgs)
+    Private Sub Grilla_Accesorios_CellBeginEdit(sender As Object, e As System.Windows.Forms.DataGridViewCellCancelEventArgs)
 
         Dim Grilla As DataGridView = CType(sender, DataGridView)
 
@@ -395,7 +393,7 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
 
     End Sub
 
-    Private Sub Grilla_Accesorios_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Grilla_Accesorios_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Dim Grilla As DataGridView = CType(sender, DataGridView)
 
@@ -416,7 +414,7 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
 
     End Sub
 
-    Private Sub Grilla_Accesorios_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+    Private Sub Grilla_Accesorios_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs)
 
         Try
 
@@ -443,7 +441,7 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
 
                         If Not _Nuevo_Item Then
 
-                            If MessageBoxEx.Show(Me, "¿Esta seguro de eliminar la(s) fila(s) seleccionada(s)?",
+                            If MessageBoxEx.Show(Me, "Â¿Esta seguro de eliminar la(s) fila(s) seleccionada(s)?",
                                                      "Eliminar fila", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
 
                                 Grilla.Rows.RemoveAt(Grilla.CurrentRow.Index)
@@ -462,50 +460,28 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
     End Sub
 
 #End Region
-
-
-    Private Sub Grilla_EditingControlShowing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs)
+    Private Sub Grilla_EditingControlShowing(sender As System.Object, e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs)
         Dim validar As TextBox = CType(e.Control, TextBox)
         AddHandler validar.KeyPress, AddressOf validar_Keypress
     End Sub
 
-    Sub Sb_RowsPostPaint(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewRowPostPaintEventArgs)
-        Try
-            'Captura el numero de filas del datagridview
-            Dim RowsNumber As String = (e.RowIndex + 1).ToString
-            While RowsNumber.Length < sender.RowCount.ToString.Length
-                RowsNumber = "0" & RowsNumber
-            End While
-            Dim size As SizeF = e.Graphics.MeasureString(RowsNumber, Me.Font)
-            If sender.RowHeadersWidth < CInt(size.Width + 20) Then
-                sender.RowHeadersWidth = CInt(size.Width + 20)
-            End If
-            Dim ob As Brush = SystemBrushes.ControlText
-            e.Graphics.DrawString(RowsNumber, Me.Font, ob, e.RowBounds.Location.X + 15, e.RowBounds.Location.Y + ((e.RowBounds.Height - size.Height) / 2))
-        Catch ex As Exception
-            MessageBox.Show(ex.Message, "vb.net", _
-         MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
-    Private Sub validar_Keypress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs)
+    Private Sub validar_Keypress(sender As Object, e As System.Windows.Forms.KeyPressEventArgs)
         ' evento Keypress  
-
         ' obtener indice de la columna
 
         With sender
+
             Dim columna As Integer = Grilla_Accesorios.CurrentCellAddress.X 'Current.ColumnIndex
             Dim fila As Integer = Grilla_Accesorios.CurrentCellAddress.Y 'Current.ColumnIndex
-
 
             Dim Cabeza = Grilla_Accesorios.Columns(columna).Name
             Dim Codigo = Grilla_Accesorios.Rows(fila).Cells("Codigo").Value
             Dim Descripcion = Grilla_Accesorios.Rows(fila).Cells("Descripcion").Value
 
-            ' comprobar si la celda en edición corresponde a la columna 1 o 2
-            If Cabeza = "Cantidad" Or _
-               Cabeza = "Precio" Or _
-               Cabeza = "DescuentoPorc" Or _
+            ' comprobar si la celda en ediciÃ³n corresponde a la columna 1 o 2
+            If Cabeza = "Cantidad" Or
+               Cabeza = "Precio" Or
+               Cabeza = "DescuentoPorc" Or
                Cabeza = "DescuentoValor" Then
 
                 ' Obtener caracter  
@@ -515,7 +491,7 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
                 Dim txt As TextBox = CType(sender, TextBox)
 
                 If e.KeyChar = "."c Then
-                    ' si se pulsa la coma se convertirá en punto
+                    ' si se pulsa la coma se convertirÃ¡ en punto
                     'e.Handled = True
                     SendKeys.Send(",")
                     e.KeyChar = ","c
@@ -525,34 +501,36 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
                 Dim Caracter_Raro = ChrW(Keys.Back)
                 Dim EsNumero As Boolean = Char.IsNumber(caracter)
 
-                ' comprobar si es un número con isNumber, si es el backspace, si el caracter  
+                ' comprobar si es un nÃºmero con isNumber, si es el backspace, si el caracter  
                 ' es el separador decimal, y que no contiene ya el separador  
-                If (Char.IsNumber(caracter)) Or _
-                (caracter = ChrW(Keys.Back)) Or _
-                (caracter = ",") And _
+                If (Char.IsNumber(caracter)) Or
+                (caracter = ChrW(Keys.Back)) Or
+                (caracter = ",") And
                 (txt.Text.Contains(",") = False) Then
                     e.Handled = False
                 Else
                     e.Handled = True
                 End If
 
-
-
             End If
+
         End With
+
     End Sub
 
 
-    Private Sub Btn_Agregar_Check_In_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Agregar_Check_In.Click
+    Private Sub Btn_Agregar_Check_In_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Agregar_Check_In.Click
 
-        Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Check_in_ST, _
+        Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Check_in_ST,
                                                             Frm_Tabla_Caracterizaciones_01_Listado.Accion.Multiseleccion)
         Fm.Pro_TblFilasSeleccionadas = _Tbl_ChekIn
         Fm.Text = "Lista de detalle detectados en el ingreso sin seleccionar"
         Fm.ShowDialog(Me)
+
         If Fm.Pro_Seleccion_Realizada Then
 
             Dim _Tbl As DataTable = Fm.Pro_TblFilasSeleccionadas
+
             For Each _Fila As DataRow In _Tbl.Rows
                 If _Fila.RowState <> DataRowState.Deleted Then
                     Dim _Chk = NuloPorNro(_Fila.Item("Chk"), False)
@@ -563,6 +541,7 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
                     End If
                 End If
             Next
+
             Sb_Marcar_Grillas(Grill_Check_In, Imagenes_16x16.Images.Item("Check_in"))
 
         End If
@@ -571,17 +550,19 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
     End Sub
 
 
-    
-    Private Sub Btn_Agregar_Accesorios_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Agregar_Accesorios.Click
 
-        Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Accesorios_ST, _
+    Private Sub Btn_Agregar_Accesorios_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Agregar_Accesorios.Click
+
+        Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Accesorios_ST,
                                                             Frm_Tabla_Caracterizaciones_01_Listado.Accion.Multiseleccion)
         Fm.Pro_TblFilasSeleccionadas = _Tbl_Accesorios
         Fm.Text = "Lista de accesorios sin seleccionar"
         Fm.ShowDialog(Me)
+
         If Fm.Pro_Seleccion_Realizada Then
 
             Dim _Tbl As DataTable = Fm.Pro_TblFilasSeleccionadas
+
             For Each _Fila As DataRow In _Tbl.Rows
                 If _Fila.RowState <> DataRowState.Deleted Then
                     Dim _Chk = NuloPorNro(_Fila.Item("Chk"), False)
@@ -592,51 +573,57 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
                     End If
                 End If
             Next
-            'Sb_Marcar_Grillas(Grill_Check_In, Imagenes_16x16.Images.Item("Check_in"))
+
             Sb_Marcar_Grillas(Grilla_Accesorios, Imagenes_16x16.Images.Item("Accesorios"))
+
         End If
+
         Fm.Dispose()
 
     End Sub
 
-    
-    Private Sub Btn_Aceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Aceptar.Click
+
+    Private Sub Btn_Aceptar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Aceptar.Click
 
         If CBool(Grilla_Accesorios.Rows.Count) Then
+
             For Each _Fila As DataGridViewRow In Grilla_Accesorios.Rows
                 Dim _Cantidad = _Fila.Cells("Cantidad").Value
                 If _Cantidad <= 0 Then
                     Beep()
-                    ToastNotification.Show(Me, "LAS CANTIDADES DE LOS ARTICULOS NO PUEDEN ESTAR EN CERO", _
-                                           Btn_Cancelar.Image, _
-                                           2 * 1000, eToastGlowColor.Red, _
+                    ToastNotification.Show(Me, "LAS CANTIDADES DE LOS ARTICULOS NO PUEDEN ESTAR EN CERO",
+                                           Btn_Cancelar.Image,
+                                           2 * 1000, eToastGlowColor.Red,
                                            eToastPosition.MiddleCenter)
                     Return
                 End If
             Next
+
         End If
 
         Grill_Check_In.EndEdit()
         Grilla_Accesorios.EndEdit()
+
         Me.Close()
+
     End Sub
 
-    Private Sub Frm_St_Estado_01_Ingreso_Check_In_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_St_Estado_01_Ingreso_Check_In_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-   
-    Private Sub Btn_Editar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Editar.Click
+
+    Private Sub Btn_Editar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Editar.Click
 
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_OT_Estados", "Id_Ot = " & _Id_Ot & " And CodEstado = 'A'")
 
         Dim _Editar As Boolean
 
         If CBool(_Reg) Then
-            If MessageBoxEx.Show(Me, "No se puede modificar el estado, ya que existe un estado posterior" & vbCrLf & _
-                                 "¿Desea editar igualmemnte el Chek-In?", "Validación", _
+            If MessageBoxEx.Show(Me, "No se puede modificar el estado, ya que existe un estado posterior" & vbCrLf &
+                                 "Â¿Desea editar igualmemnte el Chek-In?", "ValidaciÃ³n",
                                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = Windows.Forms.DialogResult.Yes Then
                 _Editar = Fx_Tiene_Permiso(Me, "Stec0017")
             End If
@@ -644,16 +631,13 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
             _Editar = True
         End If
 
-
         If _Editar Then
-           
-            'Else
 
             _Editando_documento = True
             Beep()
-            ToastNotification.Show(Me, "AHORA ES POSIBLE ACTUALIZAR EL DOCUMENTO", _
-                                   Btn_Editar.Image, _
-                                   1 * 1000, eToastGlowColor.Green, _
+            ToastNotification.Show(Me, "AHORA ES POSIBLE ACTUALIZAR EL DOCUMENTO",
+                                   Btn_Editar.Image,
+                                   1 * 1000, eToastGlowColor.Green,
                                    eToastPosition.MiddleCenter)
 
             Sb_Formato_Grillas(False)
@@ -662,7 +646,6 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
             Btn_Cancelar.Visible = True
             Btn_Editar.Visible = False
             Me.ControlBox = False
-            'Btn_Salir.Visible = False
 
             Btn_Agregar_Accesorios.Enabled = True
             Btn_Agregar_Check_In.Enabled = True
@@ -676,16 +659,16 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
 
     End Sub
 
-    Private Sub Btn_Grabar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Grabar.Click
+    Private Sub Btn_Grabar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Grabar.Click
 
         If CBool(Grilla_Accesorios.Rows.Count) Then
             For Each _Fila As DataGridViewRow In Grilla_Accesorios.Rows
                 Dim _Cantidad = _Fila.Cells("Cantidad").Value
                 If _Cantidad <= 0 Then
                     Beep()
-                    ToastNotification.Show(Me, "LAS CANTIDADES DE LOS ARTICULOS NO PUEDEN ESTAR EN CERO", _
-                                           Btn_Cancelar.Image, _
-                                           2 * 1000, eToastGlowColor.Red, _
+                    ToastNotification.Show(Me, "LAS CANTIDADES DE LOS ARTICULOS NO PUEDEN ESTAR EN CERO",
+                                           Btn_Cancelar.Image,
+                                           2 * 1000, eToastGlowColor.Red,
                                            eToastPosition.MiddleCenter)
                     Return
                 End If
@@ -696,7 +679,7 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
         Me.Close()
     End Sub
 
-    Private Sub Btn_Cancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cancelar.Click
+    Private Sub Btn_Cancelar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cancelar.Click
         Me.Close()
     End Sub
 End Class

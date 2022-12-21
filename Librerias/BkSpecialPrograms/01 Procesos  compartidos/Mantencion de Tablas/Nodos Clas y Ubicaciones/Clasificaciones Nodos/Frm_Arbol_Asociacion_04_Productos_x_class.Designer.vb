@@ -23,9 +23,9 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Arbol_Asociacion_04_Productos_x_class))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Exportar_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_AgregarProductos = New DevComponents.DotNetBar.ButtonItem()
@@ -84,6 +84,7 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
         Me.Btn_Exportar_Excel.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Exportar_Excel.ForeColor = System.Drawing.Color.Black
         Me.Btn_Exportar_Excel.Image = CType(resources.GetObject("Btn_Exportar_Excel.Image"), System.Drawing.Image)
+        Me.Btn_Exportar_Excel.ImageAlt = CType(resources.GetObject("Btn_Exportar_Excel.ImageAlt"), System.Drawing.Image)
         Me.Btn_Exportar_Excel.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_Exportar_Excel.Name = "Btn_Exportar_Excel"
         Me.Btn_Exportar_Excel.Tooltip = "Exportar a Excel"
@@ -93,6 +94,7 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
         Me.Btn_AgregarProductos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_AgregarProductos.ForeColor = System.Drawing.Color.Black
         Me.Btn_AgregarProductos.Image = CType(resources.GetObject("Btn_AgregarProductos.Image"), System.Drawing.Image)
+        Me.Btn_AgregarProductos.ImageAlt = CType(resources.GetObject("Btn_AgregarProductos.ImageAlt"), System.Drawing.Image)
         Me.Btn_AgregarProductos.Name = "Btn_AgregarProductos"
         Me.Btn_AgregarProductos.Text = "Agregar productos"
         '
@@ -101,6 +103,7 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
         Me.Btn_Quitar_Productos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Quitar_Productos.ForeColor = System.Drawing.Color.Black
         Me.Btn_Quitar_Productos.Image = CType(resources.GetObject("Btn_Quitar_Productos.Image"), System.Drawing.Image)
+        Me.Btn_Quitar_Productos.ImageAlt = CType(resources.GetObject("Btn_Quitar_Productos.ImageAlt"), System.Drawing.Image)
         Me.Btn_Quitar_Productos.Name = "Btn_Quitar_Productos"
         Me.Btn_Quitar_Productos.Text = "Quitar productos (marcados)"
         '
@@ -213,24 +216,28 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
         'Mnu_Btn_Ver_Asociaciones_Del_Producto
         '
         Me.Mnu_Btn_Ver_Asociaciones_Del_Producto.Image = CType(resources.GetObject("Mnu_Btn_Ver_Asociaciones_Del_Producto.Image"), System.Drawing.Image)
+        Me.Mnu_Btn_Ver_Asociaciones_Del_Producto.ImageAlt = CType(resources.GetObject("Mnu_Btn_Ver_Asociaciones_Del_Producto.ImageAlt"), System.Drawing.Image)
         Me.Mnu_Btn_Ver_Asociaciones_Del_Producto.Name = "Mnu_Btn_Ver_Asociaciones_Del_Producto"
         Me.Mnu_Btn_Ver_Asociaciones_Del_Producto.Text = "Ver arbol de asocioaciones del producto"
         '
         'Btn_Estadisticas_Producto
         '
         Me.Btn_Estadisticas_Producto.Image = CType(resources.GetObject("Btn_Estadisticas_Producto.Image"), System.Drawing.Image)
+        Me.Btn_Estadisticas_Producto.ImageAlt = CType(resources.GetObject("Btn_Estadisticas_Producto.ImageAlt"), System.Drawing.Image)
         Me.Btn_Estadisticas_Producto.Name = "Btn_Estadisticas_Producto"
         Me.Btn_Estadisticas_Producto.Text = "Ver estadísticas del producto/información adicional"
         '
         'Btn_Reparara_Arbol_Del_Producto
         '
         Me.Btn_Reparara_Arbol_Del_Producto.Image = CType(resources.GetObject("Btn_Reparara_Arbol_Del_Producto.Image"), System.Drawing.Image)
+        Me.Btn_Reparara_Arbol_Del_Producto.ImageAlt = CType(resources.GetObject("Btn_Reparara_Arbol_Del_Producto.ImageAlt"), System.Drawing.Image)
         Me.Btn_Reparara_Arbol_Del_Producto.Name = "Btn_Reparara_Arbol_Del_Producto"
         Me.Btn_Reparara_Arbol_Del_Producto.Text = "Reparar Arbol Del Producto"
         '
         'Btn_Ver_documento_origen
         '
         Me.Btn_Ver_documento_origen.Image = CType(resources.GetObject("Btn_Ver_documento_origen.Image"), System.Drawing.Image)
+        Me.Btn_Ver_documento_origen.ImageAlt = CType(resources.GetObject("Btn_Ver_documento_origen.ImageAlt"), System.Drawing.Image)
         Me.Btn_Ver_documento_origen.Name = "Btn_Ver_documento_origen"
         Me.Btn_Ver_documento_origen.Text = "Copiar"
         '
@@ -257,18 +264,21 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
         'Btn_Quitar_Marcados
         '
         Me.Btn_Quitar_Marcados.Image = CType(resources.GetObject("Btn_Quitar_Marcados.Image"), System.Drawing.Image)
+        Me.Btn_Quitar_Marcados.ImageAlt = CType(resources.GetObject("Btn_Quitar_Marcados.ImageAlt"), System.Drawing.Image)
         Me.Btn_Quitar_Marcados.Name = "Btn_Quitar_Marcados"
         Me.Btn_Quitar_Marcados.Text = "Quitar solo productos seleccionados"
         '
         'Btn_Quitar_Todo
         '
         Me.Btn_Quitar_Todo.Image = CType(resources.GetObject("Btn_Quitar_Todo.Image"), System.Drawing.Image)
+        Me.Btn_Quitar_Todo.ImageAlt = CType(resources.GetObject("Btn_Quitar_Todo.ImageAlt"), System.Drawing.Image)
         Me.Btn_Quitar_Todo.Name = "Btn_Quitar_Todo"
         Me.Btn_Quitar_Todo.Text = "Quitar todos los productos"
         '
         'Btn_Quitar_Huachos
         '
         Me.Btn_Quitar_Huachos.Image = CType(resources.GetObject("Btn_Quitar_Huachos.Image"), System.Drawing.Image)
+        Me.Btn_Quitar_Huachos.ImageAlt = CType(resources.GetObject("Btn_Quitar_Huachos.ImageAlt"), System.Drawing.Image)
         Me.Btn_Quitar_Huachos.Name = "Btn_Quitar_Huachos"
         Me.Btn_Quitar_Huachos.Text = "Quita los productos que no tienen asignación hacia algún hijo de esta carpeta pad" &
     "re"
@@ -278,37 +288,37 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle8
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
         Me.Grilla.RowHeadersVisible = False
         Me.Grilla.RowTemplate.Height = 25
         Me.Grilla.Size = New System.Drawing.Size(603, 350)

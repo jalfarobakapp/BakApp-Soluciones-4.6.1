@@ -358,6 +358,8 @@ Partial Class Frm_Filtro_Especial_Informes
         '
         '
         Me.Rdb_Mostrar_Todos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Mostrar_Todos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Mostrar_Todos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_Mostrar_Todos.CheckBoxImageUnChecked = CType(resources.GetObject("Rdb_Mostrar_Todos.CheckBoxImageUnChecked"), System.Drawing.Image)
         Me.Rdb_Mostrar_Todos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Mostrar_Todos.Checked = True
         Me.Rdb_Mostrar_Todos.CheckState = System.Windows.Forms.CheckState.Checked
@@ -377,6 +379,8 @@ Partial Class Frm_Filtro_Especial_Informes
         '
         '
         Me.Rdb_Mostrar_Solo_Tickeados.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Mostrar_Solo_Tickeados.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Mostrar_Solo_Tickeados.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_Mostrar_Solo_Tickeados.CheckBoxImageUnChecked = CType(resources.GetObject("Rdb_Mostrar_Solo_Tickeados.CheckBoxImageUnChecked"), System.Drawing.Image)
         Me.Rdb_Mostrar_Solo_Tickeados.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Mostrar_Solo_Tickeados.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Mostrar_Solo_Tickeados.Location = New System.Drawing.Point(104, 491)
@@ -393,6 +397,8 @@ Partial Class Frm_Filtro_Especial_Informes
         '
         '
         Me.Chk_Seleccionar_Todos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Seleccionar_Todos.CheckBoxImageChecked = CType(resources.GetObject("Chk_Seleccionar_Todos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Seleccionar_Todos.CheckBoxImageUnChecked = CType(resources.GetObject("Chk_Seleccionar_Todos.CheckBoxImageUnChecked"), System.Drawing.Image)
         Me.Chk_Seleccionar_Todos.ForeColor = System.Drawing.Color.Black
         Me.Chk_Seleccionar_Todos.Location = New System.Drawing.Point(430, 491)
         Me.Chk_Seleccionar_Todos.Name = "Chk_Seleccionar_Todos"

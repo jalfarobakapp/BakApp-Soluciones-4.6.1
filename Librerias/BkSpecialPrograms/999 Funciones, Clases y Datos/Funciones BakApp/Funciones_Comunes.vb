@@ -486,6 +486,73 @@ Error_Numero:
 
     End Function
 
+    Function Generar_Filtro_IN_Lista(_Lista As Object,
+                                     _CodChk As String,
+                                     _CodCampo As String,
+                                     _EsNumero As Boolean,
+                                     _TieneChk As Boolean,
+                                     _Separador As String)
+
+        Dim Cadena As String = String.Empty
+        Dim Vcampo As String = String.Empty
+        Dim Separador As String = ""
+
+        If _EsNumero Then
+            Separador = "#"
+        Else
+            Separador = "@"
+        End If
+
+        If (_Lista Is Nothing) Then Return "()"
+
+        Dim i = 0
+
+        For Each _Fila In _Lista
+
+            'Dim _Cadena As String = Rd.Item(_CodCampo).ToString().Trim
+            Vcampo = _Fila.Codigo 'Rd.Item(_CodCampo).ToString() '.Trim
+
+            If String.IsNullOrEmpty(Vcampo) Then
+                Vcampo = "%%"
+            End If
+
+            Dim _Encadenar As Boolean = False
+
+            If _TieneChk Then
+                'If Rd.Item(_CodChk) Then
+                '    _Encadenar = True
+                'End If
+            Else
+                If Not String.IsNullOrEmpty(Trim(Vcampo)) Then _Encadenar = True
+            End If
+
+            If Vcampo.Contains(Separador) Then
+                Vcampo = Replace(Vcampo, Separador, "|")
+            End If
+
+            If _Encadenar Then
+                Cadena = Cadena & Separador & Vcampo & Separador '& Coma
+            End If
+
+            i += 1
+        Next
+
+        If _EsNumero Then
+            Cadena = Replace(Cadena, "##", ",")
+            Cadena = Replace(Cadena, "#", "")
+        Else
+            Cadena = Replace(Cadena, "@@", "@,@")
+            Cadena = Replace(Cadena, "@", _Separador)
+            Cadena = Replace(Cadena, "%%", "")
+        End If
+
+        Cadena = Replace(Cadena, "|", Separador)
+
+        Cadena = "(" & Cadena & ")"
+
+        Return Cadena
+
+    End Function
     Public Function Primerdiadelmes(fecha As Date) As Date
         Dim rtn As New Date
         rtn = fecha 'Date.Now
@@ -2420,5 +2487,16 @@ Error_Numero:
         Process.Start(_UrlDireccion.ToString)
 
     End Sub
+
+    Function El_Archivo_Esta_Abierto(filePath As String) As Boolean
+        Dim rtnvalue As Boolean = False
+        Try
+            Dim fs As System.IO.FileStream = System.IO.File.OpenWrite(filePath)
+            fs.Close()
+        Catch ex As System.IO.IOException
+            rtnvalue = True
+        End Try
+        Return rtnvalue
+    End Function
 
 End Module

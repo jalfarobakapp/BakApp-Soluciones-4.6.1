@@ -94,6 +94,7 @@ Partial Class Frm_Arbol_Asociacion_02
         Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
+        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Grabar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_Grabar.Name = "Btn_Grabar"
         Me.Btn_Grabar.Tooltip = "Grabar"
@@ -103,6 +104,7 @@ Partial Class Frm_Arbol_Asociacion_02
         Me.Btn_Importar_Asociaciones_Desde_Excel.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Importar_Asociaciones_Desde_Excel.ForeColor = System.Drawing.Color.Black
         Me.Btn_Importar_Asociaciones_Desde_Excel.Image = CType(resources.GetObject("Btn_Importar_Asociaciones_Desde_Excel.Image"), System.Drawing.Image)
+        Me.Btn_Importar_Asociaciones_Desde_Excel.ImageAlt = CType(resources.GetObject("Btn_Importar_Asociaciones_Desde_Excel.ImageAlt"), System.Drawing.Image)
         Me.Btn_Importar_Asociaciones_Desde_Excel.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_Importar_Asociaciones_Desde_Excel.Name = "Btn_Importar_Asociaciones_Desde_Excel"
         Me.Btn_Importar_Asociaciones_Desde_Excel.Tooltip = "Importar asociaciones"
@@ -112,6 +114,7 @@ Partial Class Frm_Arbol_Asociacion_02
         Me.Btn_Ver_Arbol.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Ver_Arbol.ForeColor = System.Drawing.Color.Black
         Me.Btn_Ver_Arbol.Image = CType(resources.GetObject("Btn_Ver_Arbol.Image"), System.Drawing.Image)
+        Me.Btn_Ver_Arbol.ImageAlt = CType(resources.GetObject("Btn_Ver_Arbol.ImageAlt"), System.Drawing.Image)
         Me.Btn_Ver_Arbol.Name = "Btn_Ver_Arbol"
         Me.Btn_Ver_Arbol.Text = "Ver arbol"
         Me.Btn_Ver_Arbol.Tooltip = "Ver arbol"
@@ -121,6 +124,7 @@ Partial Class Frm_Arbol_Asociacion_02
         Me.Btn_BuscarClasificacion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_BuscarClasificacion.ForeColor = System.Drawing.Color.Black
         Me.Btn_BuscarClasificacion.Image = CType(resources.GetObject("Btn_BuscarClasificacion.Image"), System.Drawing.Image)
+        Me.Btn_BuscarClasificacion.ImageAlt = CType(resources.GetObject("Btn_BuscarClasificacion.ImageAlt"), System.Drawing.Image)
         Me.Btn_BuscarClasificacion.Name = "Btn_BuscarClasificacion"
         Me.Btn_BuscarClasificacion.Text = "Buscar clasificación en todo el árbol"
         Me.Btn_BuscarClasificacion.Tooltip = "Ver arbol"
@@ -130,6 +134,7 @@ Partial Class Frm_Arbol_Asociacion_02
         Me.Btn_ClasificarMasivamente.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_ClasificarMasivamente.ForeColor = System.Drawing.Color.Black
         Me.Btn_ClasificarMasivamente.Image = CType(resources.GetObject("Btn_ClasificarMasivamente.Image"), System.Drawing.Image)
+        Me.Btn_ClasificarMasivamente.ImageAlt = CType(resources.GetObject("Btn_ClasificarMasivamente.ImageAlt"), System.Drawing.Image)
         Me.Btn_ClasificarMasivamente.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_ClasificarMasivamente.Name = "Btn_ClasificarMasivamente"
         Me.Btn_ClasificarMasivamente.Tooltip = "Importar clasificaciones y productos masivamente"
@@ -140,6 +145,7 @@ Partial Class Frm_Arbol_Asociacion_02
         Me.BtnEliminarTodo.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.BtnEliminarTodo.ForeColor = System.Drawing.Color.Black
         Me.BtnEliminarTodo.Image = CType(resources.GetObject("BtnEliminarTodo.Image"), System.Drawing.Image)
+        Me.BtnEliminarTodo.ImageAlt = CType(resources.GetObject("BtnEliminarTodo.ImageAlt"), System.Drawing.Image)
         Me.BtnEliminarTodo.Name = "BtnEliminarTodo"
         Me.BtnEliminarTodo.Tooltip = "Eliminar todas las clasificaciones que son clasificables"
         Me.BtnEliminarTodo.Visible = False
@@ -149,6 +155,7 @@ Partial Class Frm_Arbol_Asociacion_02
         Me.Btn_Exportar_Excel.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Exportar_Excel.ForeColor = System.Drawing.Color.Black
         Me.Btn_Exportar_Excel.Image = CType(resources.GetObject("Btn_Exportar_Excel.Image"), System.Drawing.Image)
+        Me.Btn_Exportar_Excel.ImageAlt = CType(resources.GetObject("Btn_Exportar_Excel.ImageAlt"), System.Drawing.Image)
         Me.Btn_Exportar_Excel.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_Exportar_Excel.Name = "Btn_Exportar_Excel"
         Me.Btn_Exportar_Excel.Tooltip = "Importar asociaciones"
@@ -158,6 +165,7 @@ Partial Class Frm_Arbol_Asociacion_02
         Me.Btn_Carpeta_Padrel_Ver_Productos_Asociados.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Carpeta_Padrel_Ver_Productos_Asociados.ForeColor = System.Drawing.Color.Black
         Me.Btn_Carpeta_Padrel_Ver_Productos_Asociados.Image = CType(resources.GetObject("Btn_Carpeta_Padrel_Ver_Productos_Asociados.Image"), System.Drawing.Image)
+        Me.Btn_Carpeta_Padrel_Ver_Productos_Asociados.ImageAlt = CType(resources.GetObject("Btn_Carpeta_Padrel_Ver_Productos_Asociados.ImageAlt"), System.Drawing.Image)
         Me.Btn_Carpeta_Padrel_Ver_Productos_Asociados.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_Carpeta_Padrel_Ver_Productos_Asociados.Name = "Btn_Carpeta_Padrel_Ver_Productos_Asociados"
         Me.Btn_Carpeta_Padrel_Ver_Productos_Asociados.Tooltip = "Ver productos asociados a las carpetas"
@@ -168,6 +176,7 @@ Partial Class Frm_Arbol_Asociacion_02
         Me.Btn_Carpeta_Padre_Ver_Productos_Sin_Asociacion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Carpeta_Padre_Ver_Productos_Sin_Asociacion.ForeColor = System.Drawing.Color.Black
         Me.Btn_Carpeta_Padre_Ver_Productos_Sin_Asociacion.Image = CType(resources.GetObject("Btn_Carpeta_Padre_Ver_Productos_Sin_Asociacion.Image"), System.Drawing.Image)
+        Me.Btn_Carpeta_Padre_Ver_Productos_Sin_Asociacion.ImageAlt = CType(resources.GetObject("Btn_Carpeta_Padre_Ver_Productos_Sin_Asociacion.ImageAlt"), System.Drawing.Image)
         Me.Btn_Carpeta_Padre_Ver_Productos_Sin_Asociacion.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_Carpeta_Padre_Ver_Productos_Sin_Asociacion.Name = "Btn_Carpeta_Padre_Ver_Productos_Sin_Asociacion"
         Me.Btn_Carpeta_Padre_Ver_Productos_Sin_Asociacion.Tooltip = "Ver productos SIN asociación a ninguna de las carpetas"
@@ -186,6 +195,7 @@ Partial Class Frm_Arbol_Asociacion_02
         Me.BtnSalir.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.BtnSalir.ForeColor = System.Drawing.Color.Black
         Me.BtnSalir.Image = CType(resources.GetObject("BtnSalir.Image"), System.Drawing.Image)
+        Me.BtnSalir.ImageAlt = CType(resources.GetObject("BtnSalir.ImageAlt"), System.Drawing.Image)
         Me.BtnSalir.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.BtnSalir.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
         Me.BtnSalir.Name = "BtnSalir"
@@ -228,24 +238,28 @@ Partial Class Frm_Arbol_Asociacion_02
         'Mnu_Btn_Ver_Sub_Carpetas
         '
         Me.Mnu_Btn_Ver_Sub_Carpetas.Image = CType(resources.GetObject("Mnu_Btn_Ver_Sub_Carpetas.Image"), System.Drawing.Image)
+        Me.Mnu_Btn_Ver_Sub_Carpetas.ImageAlt = CType(resources.GetObject("Mnu_Btn_Ver_Sub_Carpetas.ImageAlt"), System.Drawing.Image)
         Me.Mnu_Btn_Ver_Sub_Carpetas.Name = "Mnu_Btn_Ver_Sub_Carpetas"
         Me.Mnu_Btn_Ver_Sub_Carpetas.Text = "Ver Sub-Carpetas de asignaciones"
         '
         'Mnu_Btn_Eliminar_Clasificacion
         '
         Me.Mnu_Btn_Eliminar_Clasificacion.Image = CType(resources.GetObject("Mnu_Btn_Eliminar_Clasificacion.Image"), System.Drawing.Image)
+        Me.Mnu_Btn_Eliminar_Clasificacion.ImageAlt = CType(resources.GetObject("Mnu_Btn_Eliminar_Clasificacion.ImageAlt"), System.Drawing.Image)
         Me.Mnu_Btn_Eliminar_Clasificacion.Name = "Mnu_Btn_Eliminar_Clasificacion"
         Me.Mnu_Btn_Eliminar_Clasificacion.Text = "Eliminar clasificación"
         '
         'Mnu_Btn_Ver_Productos_Asociados
         '
         Me.Mnu_Btn_Ver_Productos_Asociados.Image = CType(resources.GetObject("Mnu_Btn_Ver_Productos_Asociados.Image"), System.Drawing.Image)
+        Me.Mnu_Btn_Ver_Productos_Asociados.ImageAlt = CType(resources.GetObject("Mnu_Btn_Ver_Productos_Asociados.ImageAlt"), System.Drawing.Image)
         Me.Mnu_Btn_Ver_Productos_Asociados.Name = "Mnu_Btn_Ver_Productos_Asociados"
         Me.Mnu_Btn_Ver_Productos_Asociados.Text = "Ver productos asociados a la carpeta"
         '
         'Mnu_Btn_Ver_Productos_Sin_Asociacion
         '
         Me.Mnu_Btn_Ver_Productos_Sin_Asociacion.Image = CType(resources.GetObject("Mnu_Btn_Ver_Productos_Sin_Asociacion.Image"), System.Drawing.Image)
+        Me.Mnu_Btn_Ver_Productos_Sin_Asociacion.ImageAlt = CType(resources.GetObject("Mnu_Btn_Ver_Productos_Sin_Asociacion.ImageAlt"), System.Drawing.Image)
         Me.Mnu_Btn_Ver_Productos_Sin_Asociacion.Name = "Mnu_Btn_Ver_Productos_Sin_Asociacion"
         Me.Mnu_Btn_Ver_Productos_Sin_Asociacion.Text = "Ver productos SIN asociación (En Este Árbol)"
         '
@@ -304,12 +318,14 @@ Partial Class Frm_Arbol_Asociacion_02
         'Mnu_Btn_Carpeta_Actual_Ver_Productos_Asociados
         '
         Me.Mnu_Btn_Carpeta_Actual_Ver_Productos_Asociados.Image = CType(resources.GetObject("Mnu_Btn_Carpeta_Actual_Ver_Productos_Asociados.Image"), System.Drawing.Image)
+        Me.Mnu_Btn_Carpeta_Actual_Ver_Productos_Asociados.ImageAlt = CType(resources.GetObject("Mnu_Btn_Carpeta_Actual_Ver_Productos_Asociados.ImageAlt"), System.Drawing.Image)
         Me.Mnu_Btn_Carpeta_Actual_Ver_Productos_Asociados.Name = "Mnu_Btn_Carpeta_Actual_Ver_Productos_Asociados"
         Me.Mnu_Btn_Carpeta_Actual_Ver_Productos_Asociados.Text = "Ver productos asociados a la carpeta"
         '
         'Mnu_Btn_Carpeta_Actual_Ver_Productos_Sin_Asociacion
         '
         Me.Mnu_Btn_Carpeta_Actual_Ver_Productos_Sin_Asociacion.Image = CType(resources.GetObject("Mnu_Btn_Carpeta_Actual_Ver_Productos_Sin_Asociacion.Image"), System.Drawing.Image)
+        Me.Mnu_Btn_Carpeta_Actual_Ver_Productos_Sin_Asociacion.ImageAlt = CType(resources.GetObject("Mnu_Btn_Carpeta_Actual_Ver_Productos_Sin_Asociacion.ImageAlt"), System.Drawing.Image)
         Me.Mnu_Btn_Carpeta_Actual_Ver_Productos_Sin_Asociacion.Name = "Mnu_Btn_Carpeta_Actual_Ver_Productos_Sin_Asociacion"
         Me.Mnu_Btn_Carpeta_Actual_Ver_Productos_Sin_Asociacion.Text = "Ver productos SIN asociación (En árbol de esta carpeta)"
         '
@@ -370,6 +386,7 @@ Partial Class Frm_Arbol_Asociacion_02
         Me.Btn_Agregar_Nueva_Carpeta.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Agregar_Nueva_Carpeta.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Agregar_Nueva_Carpeta.Image = CType(resources.GetObject("Btn_Agregar_Nueva_Carpeta.Image"), System.Drawing.Image)
+        Me.Btn_Agregar_Nueva_Carpeta.ImageAlt = CType(resources.GetObject("Btn_Agregar_Nueva_Carpeta.ImageAlt"), System.Drawing.Image)
         Me.Btn_Agregar_Nueva_Carpeta.Location = New System.Drawing.Point(610, 2)
         Me.Btn_Agregar_Nueva_Carpeta.Name = "Btn_Agregar_Nueva_Carpeta"
         Me.Btn_Agregar_Nueva_Carpeta.Size = New System.Drawing.Size(151, 23)

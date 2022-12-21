@@ -54,9 +54,7 @@ Insert Into Zw_TablaDeCaracterizaciones(Tabla,DescripcionTabla,CodigoTabla,Nombr
 -- GUIA DE RECEPCION INTERNA
 Insert Into Zw_TablaDeCaracterizaciones(Tabla,DescripcionTabla,CodigoTabla,NombreTabla) Values ('DOCUMENTOS_COLOR','VERDER CLARO','GRI','101; 195; 139')
 
+-- NOTA DE DEBITO
+Insert Into Zw_TablaDeCaracterizaciones(Tabla,DescripcionTabla,CodigoTabla,NombreTabla) Values ('DOCUMENTOS_COLOR','AZUL CLARO','FDV','128; 141; 179')
 
-
-
-          
-
-       
+      

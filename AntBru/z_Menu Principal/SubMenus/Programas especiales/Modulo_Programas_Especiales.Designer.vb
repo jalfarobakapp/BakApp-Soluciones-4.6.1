@@ -302,7 +302,6 @@ Partial Class Modulo_Programas_Especiales
         '
         'Btn_DTE_Respuestas_XML
         '
-        Me.Btn_DTE_Respuestas_XML.Enabled = False
         Me.Btn_DTE_Respuestas_XML.Image = CType(resources.GetObject("Btn_DTE_Respuestas_XML.Image"), System.Drawing.Image)
         Me.Btn_DTE_Respuestas_XML.ImageIndent = New System.Drawing.Point(8, -10)
         Me.Btn_DTE_Respuestas_XML.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
@@ -327,7 +326,6 @@ Partial Class Modulo_Programas_Especiales
         Me.Btn_DTE_Respuestas_XML.TileStyle.PaddingTop = 4
         Me.Btn_DTE_Respuestas_XML.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_DTE_Respuestas_XML.TitleText = "BakApp"
-        Me.Btn_DTE_Respuestas_XML.Visible = False
         '
         'Btn_Precios_PrestaShop
         '
@@ -358,6 +356,7 @@ Partial Class Modulo_Programas_Especiales
         '
         'Btn_Revision_Compras_SII
         '
+        Me.Btn_Revision_Compras_SII.Enabled = False
         Me.Btn_Revision_Compras_SII.Image = CType(resources.GetObject("Btn_Revision_Compras_SII.Image"), System.Drawing.Image)
         Me.Btn_Revision_Compras_SII.ImageIndent = New System.Drawing.Point(8, -6)
         Me.Btn_Revision_Compras_SII.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
@@ -382,6 +381,7 @@ Partial Class Modulo_Programas_Especiales
         Me.Btn_Revision_Compras_SII.TileStyle.PaddingTop = 4
         Me.Btn_Revision_Compras_SII.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Revision_Compras_SII.TitleText = "BakApp"
+        Me.Btn_Revision_Compras_SII.Visible = False
         '
         'Btn_Huella
         '

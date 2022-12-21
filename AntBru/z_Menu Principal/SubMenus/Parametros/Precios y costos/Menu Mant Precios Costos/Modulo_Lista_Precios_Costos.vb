@@ -15,7 +15,6 @@ Public Class Modulo_Lista_Precios_Costos
         End Set
     End Property
 
-
     Public Sub New(ByVal Fm_Menu_Padre As Metro.MetroAppForm)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -27,8 +26,8 @@ Public Class Modulo_Lista_Precios_Costos
     End Sub
     Private Sub Modulo_Lista_Precios_Costos_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        MetroTileItem1.Visible = (RutEmpresa = "77458040-9" Or RutEmpresa = "07251245-6")
-        MetroTileItem2.Visible = (RutEmpresa = "77458040-9" Or RutEmpresa = "07251245-6")
+        MetroTileItem1.Visible = (RutEmpresa = "77458040-9" Or RutEmpresa = "07251245-6" Or RutEmpresa = "77634877-5" Or RutEmpresa = "77634879-1")
+        MetroTileItem2.Visible = (RutEmpresa = "77458040-9" Or RutEmpresa = "07251245-6" Or RutEmpresa = "77634877-5" Or RutEmpresa = "77634879-1")
 
     End Sub
 
@@ -80,9 +79,13 @@ Public Class Modulo_Lista_Precios_Costos
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Pre0013") Then
 
             Dim _Tbl_Lista_Seleccionada As DataTable
-            Dim _CodLista As String = _Global_Row_Configuracion_General.Item("Lista_Precios_Proveedores")
+            Dim _CodLista As String = _Global_Row_Configuracion_General.Item("Lista_Precios_Proveedores").ToString.Trim
 
             If String.IsNullOrEmpty(_CodLista) Then
+
+                MessageBoxEx.Show(Me, "No existe una lista de costos por defecto en la modalidad general" & vbCrLf &
+                                  "Deberá escoger en que lista se grabaran los precios del proveedor en Random",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                 Dim Fm As New Frm_SeleccionarListaPrecios(Frm_SeleccionarListaPrecios.Enum_Tipo_Lista.Costo, False, False)
                 Fm.ShowDialog(Me)
@@ -95,38 +98,38 @@ Public Class Modulo_Lista_Precios_Costos
 
             End If
 
-            If Not String.IsNullOrEmpty(_CodLista.Trim) Then
+            If String.IsNullOrEmpty(_CodLista.Trim) Then
+                Return
+            End If
 
-                Dim _RowProveedor As DataRow
+            Dim _RowProveedor As DataRow
 
-                Dim Fm_E As New Frm_BuscarEntidad_Mt(False)
-                Fm_E.ShowInTaskbar = False
-                Fm_E.Text = "Busqueda de proveedores para lista de costos"
-                Fm_E.ShowDialog(Me)
-                If Fm_E.Pro_Entidad_Seleccionada Then
-                    _RowProveedor = Fm_E.Pro_RowEntidad
-                End If
-                Fm_E.Dispose()
+            Dim Fm_E As New Frm_BuscarEntidad_Mt(False)
+            Fm_E.ShowInTaskbar = False
+            Fm_E.Text = "Busqueda de proveedores para lista de costos"
+            Fm_E.ShowDialog(Me)
+            If Fm_E.Pro_Entidad_Seleccionada Then
+                _RowProveedor = Fm_E.Pro_RowEntidad
+            End If
+            Fm_E.Dispose()
 
-                If Not (_RowProveedor Is Nothing) Then
+            If Not (_RowProveedor Is Nothing) Then
 
-                    Dim _BuscarOtroProveedor As Boolean
+                Dim _BuscarOtroProveedor As Boolean
 
-                    Dim Fm_P As New Frm_MantCostosPrecios_LV(_RowProveedor, _CodLista)
-                    Fm_P.Btn_CambiarProveedor.Visible = True
-                    Fm_P.ShowDialog(Me)
-                    _BuscarOtroProveedor = Fm_P.BuscarOtroProveedor
-                    Fm_P.Dispose()
+                Dim Fm_P As New Frm_MantCostosPrecios_LV(_RowProveedor, _CodLista)
+                Fm_P.Btn_CambiarProveedor.Visible = True
+                Fm_P.ShowDialog(Me)
+                _BuscarOtroProveedor = Fm_P.BuscarOtroProveedor
+                Fm_P.Dispose()
 
-                    If _BuscarOtroProveedor Then
-                        Call Btn_Listas_Proveedores_Click(sender, e)
-                    End If
-
-                Else
-                    MessageBoxEx.Show(Me, "No se seleccionó ningún proveedor",
-                                     "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                If _BuscarOtroProveedor Then
+                    Call Btn_Listas_Proveedores_Click(sender, e)
                 End If
 
+            Else
+                MessageBoxEx.Show(Me, "No se seleccionó ningún proveedor",
+                                 "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
 
         End If

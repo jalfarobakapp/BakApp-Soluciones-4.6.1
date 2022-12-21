@@ -88,7 +88,7 @@ Partial Class Frm_St_Estado_03_Presupuesto
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.Grilla.Size = New System.Drawing.Size(600, 164)
-        Me.Grilla.TabIndex = 1
+        Me.Grilla.TabIndex = 3
         '
         'Bar2
         '
@@ -197,7 +197,6 @@ Partial Class Frm_St_Estado_03_Presupuesto
         '
         'Txt_Tecnico_Taller
         '
-        Me.Txt_Tecnico_Taller.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -207,7 +206,6 @@ Partial Class Frm_St_Estado_03_Presupuesto
         Me.Txt_Tecnico_Taller.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Tecnico_Taller.Enabled = False
         Me.Txt_Tecnico_Taller.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Tecnico_Taller.FocusHighlightEnabled = True
         Me.Txt_Tecnico_Taller.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Tecnico_Taller.ForeColor = System.Drawing.Color.Black
         Me.Txt_Tecnico_Taller.Location = New System.Drawing.Point(96, 17)
@@ -220,7 +218,6 @@ Partial Class Frm_St_Estado_03_Presupuesto
         '
         'Txt_Horas_Mano_de_Obra
         '
-        Me.Txt_Horas_Mano_de_Obra.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -229,7 +226,6 @@ Partial Class Frm_St_Estado_03_Presupuesto
         Me.Txt_Horas_Mano_de_Obra.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Horas_Mano_de_Obra.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Horas_Mano_de_Obra.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Horas_Mano_de_Obra.FocusHighlightEnabled = True
         Me.Txt_Horas_Mano_de_Obra.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Horas_Mano_de_Obra.ForeColor = System.Drawing.Color.Black
         Me.Txt_Horas_Mano_de_Obra.Location = New System.Drawing.Point(525, 17)
@@ -237,7 +233,7 @@ Partial Class Frm_St_Estado_03_Presupuesto
         Me.Txt_Horas_Mano_de_Obra.Name = "Txt_Horas_Mano_de_Obra"
         Me.Txt_Horas_Mano_de_Obra.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.Txt_Horas_Mano_de_Obra.Size = New System.Drawing.Size(58, 22)
-        Me.Txt_Horas_Mano_de_Obra.TabIndex = 70
+        Me.Txt_Horas_Mano_de_Obra.TabIndex = 0
         Me.Txt_Horas_Mano_de_Obra.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'LabelX1
@@ -274,7 +270,6 @@ Partial Class Frm_St_Estado_03_Presupuesto
         '
         'Txt_Defecto_encontrado
         '
-        Me.Txt_Defecto_encontrado.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -283,7 +278,6 @@ Partial Class Frm_St_Estado_03_Presupuesto
         Me.Txt_Defecto_encontrado.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Defecto_encontrado.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Defecto_encontrado.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Defecto_encontrado.FocusHighlightEnabled = True
         Me.Txt_Defecto_encontrado.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Defecto_encontrado.ForeColor = System.Drawing.Color.Black
         Me.Txt_Defecto_encontrado.Location = New System.Drawing.Point(3, 3)
@@ -292,7 +286,7 @@ Partial Class Frm_St_Estado_03_Presupuesto
         Me.Txt_Defecto_encontrado.Name = "Txt_Defecto_encontrado"
         Me.Txt_Defecto_encontrado.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.Txt_Defecto_encontrado.Size = New System.Drawing.Size(596, 95)
-        Me.Txt_Defecto_encontrado.TabIndex = 7
+        Me.Txt_Defecto_encontrado.TabIndex = 1
         '
         'GroupPanel2
         '
@@ -376,7 +370,6 @@ Partial Class Frm_St_Estado_03_Presupuesto
         '
         'Txt_Reparacion_a_realizar
         '
-        Me.Txt_Reparacion_a_realizar.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -385,7 +378,6 @@ Partial Class Frm_St_Estado_03_Presupuesto
         Me.Txt_Reparacion_a_realizar.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Reparacion_a_realizar.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Reparacion_a_realizar.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Reparacion_a_realizar.FocusHighlightEnabled = True
         Me.Txt_Reparacion_a_realizar.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Reparacion_a_realizar.ForeColor = System.Drawing.Color.Black
         Me.Txt_Reparacion_a_realizar.Location = New System.Drawing.Point(3, 3)
@@ -394,7 +386,7 @@ Partial Class Frm_St_Estado_03_Presupuesto
         Me.Txt_Reparacion_a_realizar.Name = "Txt_Reparacion_a_realizar"
         Me.Txt_Reparacion_a_realizar.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.Txt_Reparacion_a_realizar.Size = New System.Drawing.Size(596, 84)
-        Me.Txt_Reparacion_a_realizar.TabIndex = 8
+        Me.Txt_Reparacion_a_realizar.TabIndex = 2
         '
         'Grupo_Grilla
         '

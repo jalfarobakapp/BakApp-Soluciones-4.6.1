@@ -31,7 +31,7 @@ SELECT D.KOPRCT,D.EMPRESA,D.TIDO,E.SUBTIDO,D.SULIDO,D.BOSULIDO,
        INNER JOIN MAEEDO AS E ON E.IDMAEEDO=D.IDMAEEDO  
        WHERE D.PRCT=0 AND D.LILG IN ('SI','CR')  
              AND D.KOPRCT IN ( @Codigo ) 
-             AND D.TIDO IN ('FCV','FDB','FDV','FDX','FEV','FVL','FVT','FVX','BLV')
+             AND D.TIDO IN ('FCV','FDB','FDV','FDX','FEV','FVL','FVT','FVX','BLV','BSV')
              AND D.EMPRESA  =@Empresa 
              AND D.SULIDO   =@Sucursal
              AND D.BOSULIDO =@Bodega

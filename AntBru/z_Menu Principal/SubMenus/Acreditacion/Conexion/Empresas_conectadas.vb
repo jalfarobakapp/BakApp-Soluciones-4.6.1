@@ -21,7 +21,7 @@ Public Class Empresas_conectadas
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
     End Sub
 
-    Private Sub Empresas_conectadas_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Empresas_conectadas_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         'If _Crear_Conexion Then
         '    Btn_conectar.Visible = False
@@ -43,7 +43,7 @@ Public Class Empresas_conectadas
 
     End Sub
 
-    Public Sub New(ByVal Cambio_de_base As Boolean)
+    Public Sub New(Fm_Menu_Padre As Metro.MetroAppForm, Cambio_de_base As Boolean)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -178,12 +178,12 @@ Public Class Empresas_conectadas
         End Try
 
     End Sub
-    Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
         If Not _Crear_Conexion Then
             Sb_Seleccionar_Empresa()
         End If
     End Sub
-    Private Sub Btn_Crear_Empresa_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Crear_Coneccion.Click
+    Private Sub Btn_Crear_Empresa_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Crear_Coneccion.Click
 
         Dim NewPanel As Crear_Conexion = Nothing
         NewPanel = New Crear_Conexion(Frm_Menu)
@@ -193,7 +193,7 @@ Public Class Empresas_conectadas
         Frm_Menu.CloseModalPanel(Me, DevComponents.DotNetBar.Controls.eSlideSide.Right)
 
     End Sub
-    Private Sub Btn_Cancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cancelar.Click
+    Private Sub Btn_Cancelar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cancelar.Click
         If _Crear_Conexion Then
             Frm_Menu.CloseModalPanel(Me, DevComponents.DotNetBar.Controls.eSlideSide.Right)
         Else
@@ -209,7 +209,7 @@ Public Class Empresas_conectadas
             End If
         End If
     End Sub
-    Private Sub Btn_Eliminar_Empresa_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Eliminar_Empresa.Click
+    Private Sub Btn_Eliminar_Empresa_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Eliminar_Empresa.Click
         If CBool(Grilla.SelectedRows.Count) Then
             If MessageBoxEx.Show(Frm_Menu, "¿Esta seguro de eliminar esta conexión?", "Eliminar conexión",
                                  MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
@@ -231,7 +231,7 @@ Public Class Empresas_conectadas
 
         End If
     End Sub
-    Private Sub Btn_conectar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_conectar.Click
+    Private Sub Btn_conectar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_conectar.Click
         If CBool(Grilla.SelectedRows.Count) Then
             Sb_Seleccionar_Empresa()
         Else
@@ -239,7 +239,7 @@ Public Class Empresas_conectadas
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
     End Sub
-    Private Sub Grilla_CellEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEnter
+    Private Sub Grilla_CellEnter(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEnter
         TxtRazon.Text = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Razon").Value
     End Sub
 End Class

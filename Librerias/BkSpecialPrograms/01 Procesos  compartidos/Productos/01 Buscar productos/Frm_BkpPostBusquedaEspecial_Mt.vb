@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports System.Globalization
 Imports DevComponents.DotNetBar
 
 Public Class Frm_BkpPostBusquedaEspecial_Mt
@@ -51,6 +52,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
 #Region "PROPIEDADES"
 
+    Public Property TraerTodosLosProductos As Boolean
     Public Property Pro_Empresa() As String
         Get
             Return _Empresa
@@ -982,6 +984,10 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
             Consulta_sql = Replace(Consulta_sql, "#Filtro_Productos#", _Filtro_Productos)
 
+            If TraerTodosLosProductos Then
+                Consulta_sql = Replace(Consulta_sql, "Inner Join MAEPREM Mpn On Mpn.EMPRESA = @Empresa And Mpn.KOPR = Mp.KOPR ", "")
+            End If
+
             Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
             If Not CBool(_Tbl.Rows.Count) Then
@@ -1315,19 +1321,37 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     Sub Sb_Editar_Producto(_RowProducto As DataRow)
 
-        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        Dim _Codigo = _RowProducto.Item("KOPR")
 
         If Fx_Tiene_Permiso(Me, "Prod014") Then
 
-            Dim Fm As New Frm_MtCreacionDeProducto(Cl_Producto.Enum_Accion.Editar, _RowProducto.Item("KOPR"), False, False)
+            Dim Fm As New Frm_MtCreacionDeProducto(Cl_Producto.Enum_Accion.Editar, _Codigo, False, False)
             Fm.BtnCodAlternativosProducto.Visible = True
             Fm.ShowDialog(Me)
 
             If Fm.Pro_Grabar Then
+
+                Dim _Ficha As String
+
+                Consulta_sql = "Select * From MAEFICHD Where KOPR = '" & _Codigo & "' Order by SEMILLA"
+
+                Dim _Tbl_Maefichd As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                For Each _Fichas As DataRow In _Tbl_Maefichd.Rows
+                    _Ficha += _Fichas.Item("FICHA")
+                Next
+
+                _Fila.Cells("Ficha").Value = _Ficha
+
                 Beep()
                 ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
                                        2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
                 _Fila.Cells("Descripcion").Value = Fm.Txt_Nokopr.Text
+
+                Txt_Ficha.Text = _Ficha
+
             End If
 
             Fm.Dispose()
@@ -2083,7 +2107,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
         If Fx_Tiene_Permiso(Me, "Prod003") Then
 
-            Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+            Dim _Fila As DataGridViewRow = Grilla.CurrentRow
             Dim _Codigo As String = _Fila.Cells("Codigo").Value
             Dim _Codigo_Tecnico As String = _Fila.Cells("Codigo_Tecnico").Value
             Dim _Descripcion As String = _Fila.Cells("Descripcion").Value
@@ -2093,7 +2117,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             Fm.Txt_Descripcion.Text = _Descripcion
             Fm.Txt_Codigo_Tecnico_Old.Text = _Codigo_Tecnico
             Fm.Txt_Codigo_Tecnico_New.Text = _Codigo_Tecnico
-            Fm.BtnBuscarProducto.Visible = False
             Fm._Cerrar_al_cambiar = True
             Fm.ShowDialog(Me)
 
@@ -2686,12 +2709,49 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
     End Sub
 
     Private Sub Grilla_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellEnter
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
         Try
-            Txt_Ficha.Text = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Ficha").Value
+            Dim _Ficha As String = _Fila.Cells("Ficha").Value
+            Txt_Ficha.Text = _Ficha
         Catch ex As Exception
             Txt_Ficha.Text = String.Empty
         End Try
+
     End Sub
+
+    Private Sub Btn_Migrar_Producto_Click(sender As Object, e As EventArgs) Handles Btn_Migrar_Producto.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+
+        Dim _Codigo As String = _Fila.Cells("Codigo").Value
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbProd_Nuevos = 1"
+        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
+
+            Dim _Id_Conexion As Integer = _FilaCx.Item("Id")
+
+            Dim _Cl_Migrar_Producto As New Bk_Migrar_Producto.Cl_Migrar_Producto(_Id_Conexion)
+            If _Cl_Migrar_Producto.SePuedeMigrar Then
+                If _Cl_Migrar_Producto.Fx_Migrar_Producto(_Codigo) Then
+                    MessageBoxEx.Show(Me, "Producto exportado correctamente", "Migrar producto", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Else
+                    MessageBoxEx.Show(Me, "No se pudo migrar el producto" & vbCrLf & _Cl_Migrar_Producto.ProError, "Problema!",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                End If
+            Else
+                MessageBoxEx.Show(Me, _Cl_Migrar_Producto.ProError, "Problema!",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End If
+
+        Next
+
+    End Sub
+
+
 
     Private Sub Mnu_Btn_Ubicacion_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Mnu_Btn_Ubicacion_Producto.Click
         Dim _Codigo As String = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value
@@ -2740,6 +2800,8 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                         Mnu_Btn_Ocultar.Enabled = True
                         Mnu_Btn_Ocultar.Checked = False
                     End If
+
+                    Btn_Migrar_Producto.Visible = _Global_Row_Configuracion_General.Item("PermitirMigrarProductosBaseExterna")
 
                     ShowContextMenu(Menu_Contextual_01)
 
@@ -2855,5 +2917,43 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Refresh()
 
     End Sub
+
+    Private Sub ButtonItem1_Click(sender As Object, e As EventArgs) Handles ButtonItem1.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+
+        Dim _Codigo As String = _Fila.Cells("Codigo").Value
+
+        Dim _Fecha = "01/01/1999"
+        Dim _FechaTope As DateTime = DateTime.ParseExact(_Fecha, "dd/MM/yyyy", Globalization.CultureInfo.CurrentCulture, DateTimeStyles.None)
+
+        Try
+            _FechaTope = _Global_Row_Configp.Item("FECHINIPPP")
+        Catch ex As Exception
+            _FechaTope = DateTime.ParseExact(_Fecha, "dd/MM/yyyy", Globalization.CultureInfo.CurrentCulture, DateTimeStyles.None)
+        End Try
+
+        Dim _Recalculado As Boolean
+        Dim _OldPpp As Double = _Sql.Fx_Trae_Dato("MAEPREM", "PM", "EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Codigo & "'")
+        Dim _NewPpp As Double
+
+        Dim Fm As New Frm_Recalculo_PPPxProd(_Codigo, _FechaTope)
+        Fm.ShowDialog(Me)
+        _Recalculado = Fm.Recalculado
+        _NewPpp = Fm.NewPPP
+        Fm.Dispose()
+
+        If _Recalculado Then
+
+            If _OldPpp <> _NewPpp Then
+
+            End If
+
+            MessageBoxEx.Show(Me, "PPP calculado: " & FormatCurrency(_NewPpp, 2), "Recalculo PM", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        End If
+
+    End Sub
+
 
 End Class

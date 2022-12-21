@@ -304,6 +304,8 @@ Public Class Frm_Pagos_Documentos
             Lbl_Info_Transbank.Text = "(*** Ambiente Certificación SII ***) - Transbank activo (Post-Integrado)"
         End If
 
+        Me.Enabled = True
+
     End Sub
 
     Sub Sb_Sumar_Totales()
@@ -1250,50 +1252,6 @@ Public Class Frm_Pagos_Documentos
                 If CBool(_Tidoelec) Then
 
                     Sb_Firmar_Documento_Electronico(Me, _Idmaeedo, _Tido)
-
-                    'Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
-                    'Dim _Firma_Bakapp As Boolean
-                    'Dim _Firma_RunMonitor As Boolean
-
-                    'Try
-                    '    If _Global_Row_Configuracion_General.Item("FacElec_Bakapp_Hefesto") Then
-                    '        _Firma_Bakapp = True
-                    '    Else
-                    '        _Firma_RunMonitor = True
-                    '    End If
-                    'Catch ex As Exception
-                    '    _Firma_RunMonitor = True
-                    'End Try
-
-                    'If _Firma_RunMonitor Then
-                    '    _Iddt = _Class_DTE.Fx_Dte_Genera_Documento(Me, False)
-                    '    If CBool(_Iddt) Then
-                    '        _Class_DTE.Fx_Dte_Firma(Me, _Iddt, False)
-                    '    End If
-                    'End If
-
-                    'If _Firma_Bakapp Then
-
-                    '    Dim _Id_Dte As Integer
-                    '    Dim _Icono As Image = My.Resources.Recursos_DTE.script_edit
-                    '    Me.Cursor = Cursors.WaitCursor
-
-                    '    Try
-                    '        Lbl_Version.Text = "Versión: " & _Global_Version_BakApp & "... Firmando documento electrónico DTE"
-                    '        Me.Refresh()
-
-                    '        If CBool(_Class_DTE.Fx_FirmarXHefesto()) Then
-                    '            ToastNotification.Show(Me, "FIRMADO...", _Icono, 3 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
-                    '        End If
-
-                    '    Catch ex As Exception
-                    '    Finally
-                    '        Me.Enabled = True
-                    '        Application.DoEvents()
-                    '        Me.Cursor = Cursors.Default
-                    '    End Try
-
-                    'End If
 
                 End If
 

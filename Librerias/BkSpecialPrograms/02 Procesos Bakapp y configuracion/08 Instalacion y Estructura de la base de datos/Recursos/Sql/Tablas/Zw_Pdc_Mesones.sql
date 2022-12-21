@@ -21,6 +21,7 @@ CREATE TABLE [dbo].[Zw_Pdc_Mesones](
     [Solicita_Alerta]           [bit]           NOT NULL DEFAULT (0),
     [SolicitaConfOperaciones]   [bit]           NOT NULL DEFAULT (0),
     [ActivaAlPrincipio]         [bit]           NOT NULL DEFAULT (0),
+    [ActivaConMesonMaestro]     [bit]           NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Pdc_Mesones] PRIMARY KEY CLUSTERED 
 (
 	[Codmeson] ASC

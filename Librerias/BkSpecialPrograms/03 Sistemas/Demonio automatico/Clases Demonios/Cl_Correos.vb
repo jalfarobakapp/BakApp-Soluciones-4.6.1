@@ -18,6 +18,7 @@ Public Class Cl_Correos
     Dim _Segundos_Correo As Integer
     Dim _Input_Tiempo_Correo As Integer
 
+    Public Property CantMmail As Integer
 
     Public Property Lbl_Estado As String
         Get
@@ -88,6 +89,7 @@ Public Class Cl_Correos
         '_BackgroundWorker.WorkerSupportsCancellation = True
 
         _Lbl_Estado = "Monitoreo Correos"
+        CantMmail = 30
 
     End Sub
 
@@ -266,26 +268,24 @@ Public Class Cl_Correos
 
         Sb_Correos_Automaticos_MEENMAIL()
 
-        'Sb_Preparacion_Correo_Por_Ordenes_De_Despacho()
+        'Dim _Filtro_Fecha_Enviar =
+        '              "And Fecha Between Convert(Datetime, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 00:00:00', 102)" & vbCrLf &
+        '              "And Convert(Datetime, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 23:59:59', 102)"
 
-        Dim _Filtro_Fecha_Enviar =
-                      "And Fecha Between Convert(Datetime, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 00:00:00', 102)" & vbCrLf &
-                      "And Convert(Datetime, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 23:59:59', 102)"
+        Dim _Filtro_Fecha_Enviar = "And CONVERT(varchar, Fecha, 112) = '" & _Fecha & "'"
 
         'Se reactivan los correos que se cerraron y por error no pudieron ser enviados
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo Set Enviar = 1 " &
                        "Where NombreEquipo = '" & _Nombre_Equipo & "' And Enviar = 0 And Enviado = 0 And Intentos <= 2"
         _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
-        Consulta_Sql = "Select Top 20 *,Isnull(NOKOFU,'Funcionario?????') As 'Nombre_Funcionario'" & vbCrLf &
+        '_Nombre_Equipo = "SRV-RANDOM"
+
+        Consulta_Sql = "Select Top " & CantMmail & " *,Isnull(NOKOFU,'Funcionario?????') As 'Nombre_Funcionario'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo" & vbCrLf &
                        "Left Join TABFU On KOFU = CodFuncionario" & vbCrLf &
-                       "Where Enviar = 1 And Enviado = 0 And NombreEquipo In ('','" & _Nombre_Equipo & "') " & _Filtro_Fecha_Enviar
-
-        'Consulta_Sql = "Select *,Isnull(NOKOFU,'Funcionario?????') As 'Nombre_Funcionario'" & vbCrLf &
-        '               "From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo" & vbCrLf &
-        '               "Left Join TABFU On KOFU = CodFuncionario" & vbCrLf &
-        '               "Where Enviar = 1 And Enviado = 0 And NombreEquipo = '" & _Nombre_Equipo & "' " & _Filtro_Fecha_Enviar
+                       "Where Enviar = 1 And Enviado = 0 And NombreEquipo In ('','" & _Nombre_Equipo & "') " & _Filtro_Fecha_Enviar & vbCrLf &
+                       "Order By Intentos, Id"
 
         _Tbl_Correos = _Sql.Fx_Get_Tablas(Consulta_Sql)
 
@@ -333,25 +333,81 @@ Public Class Cl_Correos
                 Dim _Existe_File
 
                 Dim _Enviar_Correo = True
-                Dim _Error As String
+                Dim _Error = String.Empty
 
-                Consulta_Sql = "Select TIDO,NUDO,KOEN,SUEN,NOKOEN 
+                Consulta_Sql = "Select TIDO,NUDO,KOEN,SUEN,NOKOEN,ESDO 
                                 From MAEEDO Inner Join MAEEN On KOEN = ENDO And SUEN = SUENDO 
                                 Where IDMAEEDO = " & _IdMaeedo
                 Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
                 Dim _Koen, _Suen As String
 
-                If Not IsNothing(_Row_Documento) Then
+                If IsNothing(_Row_Documento) Then
+
+                    Consulta_Sql = "Select TIDO,NUDO,KOEN,SUEN,NOKOEN,ESDO 
+                                    From MAEEDO Inner Join MAEEN On KOEN = ENDO And SUEN = SUENDO 
+                                    Where TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
+                    _Row_Documento = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+                End If
+
+                If IsNothing(_Row_Documento) Then
+
+                    _Error += "No se encontro el documento " & _Tido & "-" & _Nudo & " (IDMAEEDO: " & _IdMaeedo & ")"
+
+                Else
 
                     _Koen = _Row_Documento.Item("KOEN")
                     _Suen = _Row_Documento.Item("SUEN")
+
+                    Dim _Esdo = _Row_Documento.Item("ESDO")
+                    If _Esdo = "N" Then
+                        _Error += "El documento " & _Tido & "-" & _Nudo & " esta NULO"
+                    Else
+                        If _Row_Documento.Item("TIDO") <> _Tido Or _Row_Documento.Item("NUDO") <> _Nudo Then
+                            _Error += "El documento " & _Tido & "-" & _Nudo & " no pertenece al IDMAEEDO " & _IdMaeedo
+                        End If
+                    End If
+
+                End If
+
+                If Not String.IsNullOrEmpty(_Error) Then
+
+                    _Error = "Problemas al enviar correo: " & _Error
+
+                    Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo Set" & Space(1) &
+                                   "Enviar = 0," &
+                                   "Fecha_Envio = Getdate()," &
+                                   "Informacion = '" & _Error & "'" & vbCrLf &
+                                   "Where Id = " & _Id
+                    _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+                    _Adjuntar_DTE = False
+                    _Enviar_Correo = False
+                    _Adjuntar_Documento = False
 
                 End If
 
                 If _Adjuntar_DTE Then
 
-                    Dim _Archivo_Xml As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Documentos", "CaratulaXml", "Id_Dte = " & _Id_Dte)
+                    Dim _Archivo_Xml As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Documentos", "CaratulaXmlEmail", "Id_Dte = " & _Id_Dte)
+
+                    If String.IsNullOrEmpty(_Archivo_Xml) Then
+
+                        _Error = "Problemas al enviar correo: No se encontro el archivo XML en el campo [CaratulaXmlEmail] de la tabla " & _Global_BaseBk & "Zw_DTE_Documentos, Id_Dte = " & _Id_Dte
+
+                        Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo Set" & Space(1) &
+                                       "Enviar = 0," &
+                                       "Fecha_Envio = Getdate()," &
+                                       "Informacion = '" & _Error & "'" & vbCrLf &
+                                       "Where Id = " & _Id
+                        _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+                        _Adjuntar_DTE = False
+                        _Enviar_Correo = False
+                        _Adjuntar_Documento = False
+
+                    End If
 
                     If Not String.IsNullOrEmpty(_Archivo_Xml) Then
 
@@ -406,6 +462,18 @@ Public Class Cl_Correos
                             End If
 
                         Else
+
+                            Consulta_Sql = "Select * From MAEEDO Where TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
+                            _Row_Documento = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+                            If Not IsNothing(_Row_Documento) Then
+                                Dim _Esdo = _Row_Documento.Item("ESDO")
+                                If _Esdo = "N" Then
+                                    _Error += ", el documento " & _Tido & "-" & _Nudo & " esta NULO"
+                                End If
+                            Else
+                                _Error += ", No se encontro el documento " & _Tido & "-" & _Nudo
+                            End If
 
                             _Enviar_Correo = False
                             _Error = "Problemas al enviar correo: No se pudo crear archivo adjunto. " & _Error

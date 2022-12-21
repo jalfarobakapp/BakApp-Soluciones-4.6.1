@@ -105,7 +105,7 @@ Partial Class Frm_SQL2Excel_Diseno
         Me.Txt_Query_SQL.Location = New System.Drawing.Point(0, 0)
         Me.Txt_Query_SQL.Name = "Txt_Query_SQL"
         Me.Txt_Query_SQL.Rtf = "{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang13322{\fonttbl{\f0\fnil\fcharset0" &
-    " Courier New;}}" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "{\*\generator Riched20 10.0.19041}\viewkind4\uc1 " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "\pard\f0\fs2" &
+    " Courier New;}}" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "{\*\generator Riched20 10.0.22621}\viewkind4\uc1 " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "\pard\f0\fs2" &
     "0\par" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "}" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         Me.Txt_Query_SQL.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical
         Me.Txt_Query_SQL.Size = New System.Drawing.Size(879, 373)
@@ -404,7 +404,9 @@ Partial Class Frm_SQL2Excel_Diseno
         '
         '
         Me.Rdb_Consulta_Global.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Consulta_Global.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Consulta_Global.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Consulta_Global.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Consulta_Global.FocusCuesEnabled = False
         Me.Rdb_Consulta_Global.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Consulta_Global.Location = New System.Drawing.Point(119, 491)
         Me.Rdb_Consulta_Global.Name = "Rdb_Consulta_Global"
@@ -421,10 +423,12 @@ Partial Class Frm_SQL2Excel_Diseno
         '
         '
         Me.Rdb_Consulta_Personal.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Consulta_Personal.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Consulta_Personal.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Consulta_Personal.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Consulta_Personal.Checked = True
         Me.Rdb_Consulta_Personal.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Consulta_Personal.CheckValue = "Y"
+        Me.Rdb_Consulta_Personal.FocusCuesEnabled = False
         Me.Rdb_Consulta_Personal.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Consulta_Personal.Location = New System.Drawing.Point(1, 491)
         Me.Rdb_Consulta_Personal.Name = "Rdb_Consulta_Personal"

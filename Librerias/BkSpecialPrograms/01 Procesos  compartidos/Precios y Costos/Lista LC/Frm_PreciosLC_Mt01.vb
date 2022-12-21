@@ -6,6 +6,8 @@ Public Class Frm_PreciosLC_Mt01
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
+    Dim _Imagen_Warning As Image
+
 #Region "VARIABLES"
 
     Dim Rango1 As Double
@@ -50,10 +52,10 @@ Public Class Frm_PreciosLC_Mt01
 
 #Region "FUNCIONES y PROCEDIMIENTOS"
 
-    Function ver_codigo(ByVal ListaRango As String,
-                        ByVal VerBruto As Boolean,
-                        ByVal Codigo As String,
-                        ByVal LtValoresConfig As String) As Boolean
+    Function ver_codigo(ListaRango As String,
+                        VerBruto As Boolean,
+                        Codigo As String,
+                        LtValoresConfig As String) As Boolean
 
         Dim costopm, costoultcompra As Double
         Dim Lblila, Lbliva As Double
@@ -93,7 +95,7 @@ Public Class Frm_PreciosLC_Mt01
 
     End Function
 
-    Function CargarProducto(Optional ByVal Codigo As String = "")
+    Function Sb_Cargar_Producto(Optional Codigo As String = "")
         'Try
 
         Dim TblPaso As String = "TblIMPILA" & FUNCIONARIO
@@ -101,18 +103,20 @@ Public Class Frm_PreciosLC_Mt01
         Consulta_sql = My.Resources.DetalleMcostoPm_eImpuestos.ToString
         Consulta_sql = Replace(Consulta_sql, "#TablaPaso#", TblPaso)
         Consulta_sql = Replace(Consulta_sql, "#Codigo#", Codigo)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-        Consulta_sql = "SELECT ISNULL(dbo.MAEPR.NOKOPR, 0) as NOKOPR,ISNULL(dbo.MAEPREM.PM, 0) as PM,ISNULL(dbo.MAEPREM.PPUL01, 0) as PUL," & vbCrLf &
-                       "CASE WHEN ISNULL(dbo.MAEPREM.PPUL01, 0) > ISNULL(dbo.MAEPREM.PM, 0) THEN ISNULL(dbo.MAEPREM.PPUL01, 0) " & vbCrLf &
-                       "ELSE ISNULL(dbo.MAEPREM.PM, 0) END as MCOSTO , ISNULL(dbo.MAEPR.RLUD,0) AS RLUD,ISNULL(dbo.MAEPR.UD01PR,0) AS UD01PR, " & vbCrLf &
-                          "ISNULL(dbo.MAEPR.UD02PR,0) AS UD02PR, ISNULL(dbo.PDIMEN.IVAFORM/100,0) AS IVAFORM" & vbCrLf &
-                          ",ISNULL(dbo.PDIMEN.ILAVALOR/100,0) AS ILAVALOR, " & vbCrLf &
-                          "ISNULL((dbo.PDIMEN.ILAVALOR + dbo.PDIMEN.IVAFORM)/100,0) AS TotalImpuestos " & vbCrLf &
-                          "FROM   dbo.MAEPR LEFT OUTER JOIN" & vbCrLf &
-                          "dbo.MAEPREM ON dbo.MAEPR.KOPR = dbo.MAEPREM.KOPR LEFT OUTER JOIN" & vbCrLf &
-                          "dbo.PDIMEN ON dbo.MAEPR.KOPR = dbo.PDIMEN.CODIGO" & vbCrLf &
-                          "WHERE dbo.MAEPR.KOPR = '" & Codigo & "'"
+        'Consulta_sql = "SELECT ISNULL(dbo.MAEPR.NOKOPR, 0) as NOKOPR,ISNULL(dbo.MAEPREM.PM, 0) as PM,ISNULL(dbo.MAEPREM.PPUL01, 0) as PUL," & vbCrLf &
+        '               "CASE WHEN ISNULL(dbo.MAEPREM.PPUL01, 0) > ISNULL(dbo.MAEPREM.PM, 0) THEN ISNULL(dbo.MAEPREM.PPUL01, 0) " & vbCrLf &
+        '               "ELSE ISNULL(dbo.MAEPREM.PM, 0) END as MCOSTO , ISNULL(dbo.MAEPR.RLUD,0) AS RLUD,ISNULL(dbo.MAEPR.UD01PR,0) AS UD01PR, " & vbCrLf &
+        '                  "ISNULL(dbo.MAEPR.UD02PR,0) AS UD02PR, ISNULL(dbo.PDIMEN.IVAFORM/100,0) AS IVAFORM" & vbCrLf &
+        '                  ",ISNULL(dbo.PDIMEN.ILAVALOR/100,0) AS ILAVALOR, " & vbCrLf &
+        '                  "ISNULL((dbo.PDIMEN.ILAVALOR + dbo.PDIMEN.IVAFORM)/100,0) AS TotalImpuestos " & vbCrLf &
+        '                  "FROM   dbo.MAEPR LEFT OUTER JOIN" & vbCrLf &
+        '                  "dbo.MAEPREM ON dbo.MAEPR.KOPR = dbo.MAEPREM.KOPR LEFT OUTER JOIN" & vbCrLf &
+        '                  "dbo.PDIMEN ON dbo.MAEPR.KOPR = dbo.PDIMEN.CODIGO" & vbCrLf &
+        '                  "WHERE dbo.MAEPR.KOPR = '" & Codigo & "'"
 
         Consulta_sql = "SELECT * FROM " & TblPaso
         GrillaProducto.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -126,21 +130,27 @@ Public Class Frm_PreciosLC_Mt01
         Consulta_sql = "CASE WHEN ISNULL(PPUL01, 0) > ISNULL(PM, 0) THEN ISNULL(PPUL01, 0) " & vbCrLf &
                        "ELSE ISNULL(PM, 0) END "
 
-        Mcosto = _Sql.Fx_Trae_Dato("MAEPREM", Consulta_sql, "KOPR = '" & Codigo & "'")
+        Mcosto = _Sql.Fx_Trae_Dato("MAEPREM", Consulta_sql, "KOPR = '" & Codigo & "' And EMPRESA = '" & ModEmpresa & "'")
 
         Dim RegValPro As Long
-        RegValPro = _Sql.Fx_Cuenta_Registros("Zw_ListaLC_ValPro", "Codigo = '" & Codigo & "'")
+        RegValPro = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_ListaLC_ValPro", "Codigo = '" & Codigo & "'")
+        'RegValPro = _Sql.Fx_Cuenta_Registros("Zw_ListaLC_ValPro", "Codigo = '" & Codigo & "'")
 
         If RegValPro = 0 Then
-            Consulta_sql = "INSERT INTO Zw_ListaLC_ValPro (Codigo,Mcosto,VproNeto,VproBruto,MgDigitado,ValDigitado) values" & vbCrLf &
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_ListaLC_ValPro (Codigo,Mcosto,VproNeto,VproBruto,MgDigitado,ValDigitado) values" & vbCrLf &
                    "('" & Codigo & "',0,0,0,0,0)"
+            'Consulta_sql = "Insert Into Zw_ListaLC_ValPro (Codigo,Mcosto,VproNeto,VproBruto,MgDigitado,ValDigitado) values" & vbCrLf &
+            '       "('" & Codigo & "',0,0,0,0,0)"
             _Sql.Ej_consulta_IDU(Consulta_sql)
         End If
 
-        Mcosto_Old = _Sql.Fx_Trae_Dato("Zw_ListaLC_ValPro", "Mcosto", "Codigo = '" & Codigo & "'")
+        'Mcosto_Old = _Sql.Fx_Trae_Dato("Zw_ListaLC_ValPro", "Mcosto", "Codigo = '" & Codigo & "'")
+        'MargenDigitado = _Sql.Fx_Trae_Dato("Zw_ListaLC_ValPro", "MgDigitado", "Codigo = '" & Codigo & "'")
+        'BrutoDigitado = _Sql.Fx_Trae_Dato("Zw_ListaLC_ValPro", "ValDigitado", "Codigo = '" & Codigo & "'")
 
-        MargenDigitado = _Sql.Fx_Trae_Dato("Zw_ListaLC_ValPro", "MgDigitado", "Codigo = '" & Codigo & "'")
-        BrutoDigitado = _Sql.Fx_Trae_Dato("Zw_ListaLC_ValPro", "ValDigitado", "Codigo = '" & Codigo & "'")
+        Mcosto_Old = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_ListaLC_ValPro", "Mcosto", "Codigo = '" & Codigo & "'")
+        MargenDigitado = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_ListaLC_ValPro", "MgDigitado", "Codigo = '" & Codigo & "'")
+        BrutoDigitado = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_ListaLC_ValPro", "ValDigitado", "Codigo = '" & Codigo & "'")
 
         TxtMargenDigitado.Text = De_Num_a_Tx_01(MargenDigitado, False, 2)
         TxtPrecioDigitado.Text = BrutoDigitado
@@ -165,21 +175,71 @@ Public Class Frm_PreciosLC_Mt01
         CalcularPropuestos(MargenDigitado, Impuestos)
 
         If BrutoDigitado < BrutoPropuesto Then
-            TxtPrecioDigitado.ForeColor = Color.Red
+            TxtPrecioDigitado.ForeColor = Rojo
         Else
-            TxtPrecioDigitado.ForeColor = Color.Black
+            If Global_Thema = Enum_Themas.Oscuro Then
+                TxtPrecioDigitado.ForeColor = Color.White
+            Else
+                TxtPrecioDigitado.ForeColor = Color.Black
+            End If
         End If
+
+        ReflectionImage1.Visible = False
+        LabelX9.Visible = False
+
+        Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_ListaLC_Programadas", "Codigo='" & Txtcodigo.Text & "' " &
+                                "And FechaProgramada > '" & Format(FechaDelServidor, "yyyyMMdd") & "' " &
+                                "And Activo = 1")
+
+        Timer_Warning.Enabled = CBool(_Reg)
+
+        Txtcodigo.ReadOnly = True
+        Txtcodigo.ButtonCustom.Visible = False
+        Txtcodigo.ButtonCustom2.Visible = True
 
         TxtPrecioDigitado.Focus()
 
-        'Catch ex As Exception
-
-        'End Try
+        Me.Refresh()
 
     End Function
 
-    Private Function CalcularPropuestos(ByVal MargenDig As Double,
-                                        ByVal Impuestos As Double)
+    Sub Sb_Limpiar()
+
+        Timer_Warning.Enabled = False
+        ReflectionImage1.Visible = False
+
+        GrillaPrecios.DataSource = Nothing
+        GrillaProducto.DataSource = Nothing
+        GrillaRecargos.DataSource = Nothing
+
+        Txtcodigo.Text = String.Empty
+        TxtMargenDigitado.Text = String.Empty
+        TxtPrecioDigitado.Text = String.Empty
+        TxtNetoPropuesto.Text = String.Empty
+        TxtBrutoPropuesto.Text = String.Empty
+        TxtMcostoOld.Text = String.Empty
+        TxtFlete1.Text = String.Empty
+        TxtFlete2.Text = String.Empty
+
+        GrillaRecargos.DataSource = Nothing
+        DataGridView1.DataSource = Nothing
+
+        Txtcodigo.ButtonCustom.Visible = True
+        Txtcodigo.ButtonCustom2.Visible = False
+
+        Txtcodigo.ReadOnly = False
+
+        Mcosto = 0
+        Mcosto_Old = 0
+
+        Txtcodigo.Focus()
+
+        Me.Refresh()
+
+    End Sub
+
+    Private Function CalcularPropuestos(MargenDig As Double,
+                                        Impuestos As Double)
 
         'MargenDig = De_Txt_a_Num_01(TxtMargenDigitado.Text, 3)
 
@@ -190,9 +250,9 @@ Public Class Frm_PreciosLC_Mt01
         TxtBrutoPropuesto.Text = FormatCurrency(BrutoPropuesto)
     End Function
 
-    Private Function ActualizarGrillaPrecios(ByVal Codigo As String,
-                                             ByVal Ila As Double,
-                                             ByVal Iva As Double)
+    Private Function ActualizarGrillaPrecios(Codigo As String,
+                                             Ila As Double,
+                                             Iva As Double)
 
         Try
 
@@ -206,6 +266,14 @@ Public Class Frm_PreciosLC_Mt01
             Consulta_sql = Replace(Consulta_sql, "#Impuestos", De_Num_a_Tx_01(Impuestos))
             Consulta_sql = Replace(Consulta_sql, "#PrecioDigitado", De_Num_a_Tx_01(BrutoDigitado))
             Consulta_sql = Replace(Consulta_sql, "#MargenPropuesto", De_Num_a_Tx_01(MargenDigitado))
+
+            Consulta_sql = Replace(Consulta_sql, "Zw_ListaLC_Listas_1", " Zz1")
+            Consulta_sql = Replace(Consulta_sql, "dbo.", "")
+
+            '' PONER ESTA FILA EN NUEVA VERSIÓN
+            Consulta_sql = Replace(Consulta_sql, "Zw_ListaLC_Listas", _Global_BaseBk & "Zw_ListaLC_Listas")
+            Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+
 
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
@@ -221,7 +289,7 @@ Public Class Frm_PreciosLC_Mt01
 
     End Function
 
-    Private Function FormatoGrilla(ByVal Grilla As DataGridView)
+    Private Function FormatoGrilla(Grilla As DataGridView)
 
         'Lista, NombreLista, Codigo, PrecioUd1,PrecioUd2,Rtu, MargenPorc, VarMcosto,VarPm, 
         'VarUc, VarFlete, VarIva, VarIla,VarNetoDigit,VarValorDigit
@@ -282,7 +350,7 @@ Public Class Frm_PreciosLC_Mt01
 
     End Function
 
-    Private Function FormatoGrillaProducto(ByVal Grilla As DataGridView, ByVal Gr As Integer)
+    Private Function FormatoGrillaProducto(Grilla As DataGridView, Gr As Integer)
         With Grilla
             If Gr = 1 Then
 
@@ -359,9 +427,9 @@ Public Class Frm_PreciosLC_Mt01
         End With
     End Function
 
-    Sub EditarFormulas(ByVal IdGrilla As String,
-                       ByVal Campo As String,
-                       ByVal Lista As String)
+    Sub EditarFormulas(IdGrilla As String,
+                       Campo As String,
+                       Lista As String)
 
         Dim Tabla, Condicion As String
         'Dim Ejec As Boolean = False
@@ -393,17 +461,24 @@ Public Class Frm_PreciosLC_Mt01
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Sb_Formato_Generico_Grilla(GrillaPrecios, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
+        Sb_Formato_Generico_Grilla(GrillaPrecios, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
         Sb_Formato_Generico_Grilla(DataGridView1, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.None, False, False, False)
+        Sb_Formato_Generico_Grilla(GrillaProducto, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.None, True, False, False)
+        Sb_Formato_Generico_Grilla(GrillaRecargos, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.None, True, False, False)
 
         Sb_Color_Botones_Barra(Bar2)
 
+        Sb_Limpiar()
+
     End Sub
     Private Sub Frm_PreciosLC_Mt01_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
         Me.ActiveControl = Txtcodigo
+        _Imagen_Warning = Warning_Precios_Futuro.Image
+
     End Sub
 
-    Private Sub EditarFormulasDeEcuacionesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EditarFormulasDeEcuacionesToolStripMenuItem.Click
+    Private Sub EditarFormulasDeEcuacionesToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles EditarFormulasDeEcuacionesToolStripMenuItem.Click
 
         Dim IdGrilla = GrillaPrecios.CurrentRow.Index
         Dim Id = GrillaPrecios.Rows(IdGrilla).Cells("Id").Value.ToString
@@ -417,7 +492,7 @@ Public Class Frm_PreciosLC_Mt01
 
     End Sub
 
-    Private Sub EditarFormulasDeValoresToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EditarFormulasDeValoresToolStripMenuItem.Click
+    Private Sub EditarFormulasDeValoresToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles EditarFormulasDeValoresToolStripMenuItem.Click
 
         Dim IdGrilla = GrillaPrecios.CurrentRow.Index
         Dim Id = GrillaPrecios.Rows(IdGrilla).Cells("Id").Value.ToString
@@ -431,54 +506,31 @@ Public Class Frm_PreciosLC_Mt01
 
     End Sub
 
-    Private Sub BtnBuscarProducto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnBuscarProducto.Click
 
-        Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
-        Fm.Pro_Tipo_Lista = "C"
-        Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
-        Fm.Pro_CodEntidad = String.Empty
-        Fm.Pro_Mostrar_Info = False
-        Fm.BtnCrearProductos.Visible = False
-
-        Fm.BtnExportaExcel.Visible = False
-        Fm.Pro_Actualizar_Precios = False
-
-        Fm.ShowDialog(Me)
-
-        If Fm.Pro_Seleccionado Then
-
-            Codigo_abuscar = Fm.Pro_RowProducto.Item("KOPR")
-
-            If Not String.IsNullOrEmpty(Trim(Codigo_abuscar)) Then
-                Txtcodigo.Text = Codigo_abuscar
-                CargarProducto(Codigo_abuscar)
-            End If
-        Else
-            Txtcodigo.Text = String.Empty
-        End If
-
-    End Sub
-
-    Private Sub TxtFlete2_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtFlete2.TextChanged
+    Private Sub TxtFlete2_TextChanged(sender As System.Object, e As System.EventArgs) Handles TxtFlete2.TextChanged
         TxtFlete1.Text = TxtFlete2.Text
     End Sub
 
-    Private Sub TxtPrecioDigitado_Leave(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtPrecioDigitado.Leave
+    Private Sub TxtPrecioDigitado_Leave(sender As System.Object, e As System.EventArgs) Handles TxtPrecioDigitado.Leave
         If BrutoDigitado < BrutoPropuesto Then
-            MsgBox("El valor digitado es menor que el precio sugerido", MsgBoxStyle.Exclamation, "Precio")
+            MessageBoxEx.Show(Me, "El valor digitado es menor que el precio sugerido", "Precio", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End If
     End Sub
 
-    Private Sub TxtPrecioDigitado_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtPrecioDigitado.TextChanged
+    Private Sub TxtPrecioDigitado_TextChanged(sender As System.Object, e As System.EventArgs) Handles TxtPrecioDigitado.TextChanged
         BrutoDigitado = De_Txt_a_Num_01(TxtPrecioDigitado.Text, 3)
         If BrutoDigitado < BrutoPropuesto Then
-            TxtPrecioDigitado.ForeColor = Color.Red
+            TxtPrecioDigitado.ForeColor = Rojo
         Else
-            TxtPrecioDigitado.ForeColor = Color.Black
+            If Global_Thema = Enum_Themas.Oscuro Then
+                TxtPrecioDigitado.ForeColor = Color.White
+            Else
+                TxtPrecioDigitado.ForeColor = Color.Black
+            End If
         End If
     End Sub
 
-    Private Sub TxtPrecioDigitado_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles TxtPrecioDigitado.KeyPress
+    Private Sub TxtPrecioDigitado_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles TxtPrecioDigitado.KeyPress
         Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
         KeyAscii = CShort(SoloNumeros(KeyAscii))
         If KeyAscii = 0 Then
@@ -498,7 +550,12 @@ Public Class Frm_PreciosLC_Mt01
         End If
     End Sub
 
-    Private Sub BtnSimular_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnSimular.Click
+    Private Sub BtnSimular_Click(sender As System.Object, e As System.EventArgs) Handles BtnSimular.Click
+
+        If Txtcodigo.ButtonCustom.Visible Then
+            MessageBoxEx.Show(Me, "Debe seleccionar un producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Dim Flete As Double
         Flete = De_Txt_a_Num_01(TxtFlete1.Text, 3)
@@ -508,24 +565,44 @@ Public Class Frm_PreciosLC_Mt01
                        ",VarNetoDigit = 0"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
+        '' REEMPLAZAR ESTA FUNCION EN LA NUEVA VERSION
         Consulta_sql = "Declare @Fxx Varchar(8000)" & vbCrLf &
-                       "Set @Fxx = (Select Formula From Zw_ListaLC_Fx" & vbCrLf &
+                       "Set @Fxx = (Select Formula From " & _Global_BaseBk & "Zw_ListaLC_Fx" & vbCrLf &
                        "where CodFormula = 'Lista_LC')" & vbCrLf &
                        "Set @Fxx = REPLACE(@Fxx,'#TblPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
                        "Set @Fxx = REPLACE(@Fxx,'#TablaPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
+                       "Set @Fxx = REPLACE(@Fxx,'Zw_ListaLC_Listas','" & _Global_BaseBk & "Zw_ListaLC_Listas')" & vbCrLf &
                        "Exec (@Fxx)"
+
+        'Consulta_sql = "Declare @Fxx Varchar(8000)" & vbCrLf &
+        '               "Set @Fxx = (Select Formula From Zw_ListaLC_Fx" & vbCrLf &
+        '               "where CodFormula = 'Lista_LC')" & vbCrLf &
+        '               "Set @Fxx = REPLACE(@Fxx,'#TblPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
+        '               "Set @Fxx = REPLACE(@Fxx,'#TablaPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
+        '               "Exec (@Fxx)"
+
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
         '"Set @Fxx = REPLACE(@Fxx,'Zw_ListaLC_TblPasoListas','" & TablaDePasoLista_LC & "')" & vbCrLf & _
 
         Dim Codigo = Txtcodigo.Text
 
+        '' REEMPLAZAR ESTA FUNCION EN LA NUEVA VERSION
         Consulta_sql = "Declare @Fxx Varchar(8000)" & vbCrLf &
-                          "Set @Fxx = (Select Formula From Zw_ListaLC_Fx" & vbCrLf &
+                          "Set @Fxx = (Select Formula From " & _Global_BaseBk & "Zw_ListaLC_Fx" & vbCrLf &
                           "where CodFormula = 'Lista_LCRa')" & vbCrLf &
                           "Set @Fxx = REPLACE(@Fxx,'#Codigo#','" & Codigo & "')" & vbCrLf &
                           "Set @Fxx = REPLACE(@Fxx,'#TablaPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
+                          "Set @Fxx = REPLACE(@Fxx,'Zw_ListaLC_Listas','" & _Global_BaseBk & "Zw_ListaLC_Listas')" & vbCrLf &
                           "Exec (@Fxx)"
+
+        'Consulta_sql = "Declare @Fxx Varchar(8000)" & vbCrLf &
+        '                  "Set @Fxx = (Select Formula From Zw_ListaLC_Fx" & vbCrLf &
+        '                  "where CodFormula = 'Lista_LCRa')" & vbCrLf &
+        '                  "Set @Fxx = REPLACE(@Fxx,'#Codigo#','" & Codigo & "')" & vbCrLf &
+        '                  "Set @Fxx = REPLACE(@Fxx,'#TablaPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
+        '                  "Exec (@Fxx)"
+
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
         Consulta_sql = "Select * From " & TablaDePasoLista_LC & " ORDER BY Lista"
@@ -534,7 +611,7 @@ Public Class Frm_PreciosLC_Mt01
 
     End Sub
 
-    Private Sub Btnimprimir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btnimprimir.Click
+    Private Sub Btnimprimir_Click(sender As System.Object, e As System.EventArgs) Handles Btnimprimir.Click
 
         Dim Nro As String = "7Brr0005"
 
@@ -549,7 +626,7 @@ Public Class Frm_PreciosLC_Mt01
 
     End Sub
 
-    Private Sub MargeToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MargeToolStripMenuItem.Click
+    Private Sub MargeToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles MargeToolStripMenuItem.Click
 
         Dim IdGrilla = GrillaPrecios.CurrentRow.Index
         Dim Id = GrillaPrecios.Rows(IdGrilla).Cells("Id").Value.ToString
@@ -563,7 +640,7 @@ Public Class Frm_PreciosLC_Mt01
 
     End Sub
 
-    Private Sub BtnFormulas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnFormulas.Click
+    Private Sub BtnFormulas_Click(sender As System.Object, e As System.EventArgs) Handles BtnFormulas.Click
         'Dim Nro As String = "Pre0003"
         'If Fx_Tiene_Permiso(Me,Nro) Then
         '    Dim Campo, Tabla, Condicion As String
@@ -589,7 +666,7 @@ Public Class Frm_PreciosLC_Mt01
         'End If
     End Sub
 
-    Private Sub Txtcodigo_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles Txtcodigo.KeyPress
+    Private Sub Txtcodigo_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs)
         If e.KeyChar = Convert.ToChar(Keys.Return) Then
 
             e.Handled = True
@@ -616,7 +693,7 @@ Public Class Frm_PreciosLC_Mt01
 
                     If Not String.IsNullOrEmpty(Trim(Codigo_abuscar)) Then
                         Txtcodigo.Text = Codigo_abuscar
-                        CargarProducto(Codigo_abuscar)
+                        Sb_Cargar_Producto(Codigo_abuscar)
                     End If
                 Else
                     Txtcodigo.Text = String.Empty
@@ -625,13 +702,13 @@ Public Class Frm_PreciosLC_Mt01
 
             If Codigo_abuscar <> "" Then
                 Txtcodigo.Text = Codigo_abuscar
-                CargarProducto(Codigo_abuscar)
+                Sb_Cargar_Producto(Codigo_abuscar)
             End If
 
         End If
     End Sub
 
-    Private Sub GrillaPrecios_CellEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GrillaPrecios.CellEnter
+    Private Sub GrillaPrecios_CellEnter(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GrillaPrecios.CellEnter
 
         Try
 
@@ -667,34 +744,52 @@ Public Class Frm_PreciosLC_Mt01
 
     End Sub
 
-    Private Sub BtnGrabar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnGrabar.Click
+    Private Sub BtnGrabar_Click(sender As System.Object, e As System.EventArgs) Handles BtnGrabar.Click
 
-        Dim dlg As System.Windows.Forms.DialogResult =
-        MessageBoxEx.Show(Me, "¿Esta seguro de actualizar los valores?",
-                          "Grabar", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        If Txtcodigo.ButtonCustom.Visible Then
+            MessageBoxEx.Show(Me, "Debe seleccionar un producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        ShowContextMenu(Menu_Contextual)
+
+    End Sub
+
+    Sub Sb_Grabar_Inmediatamente()
+
+        Dim dlg As System.Windows.Forms.DialogResult = MessageBoxEx.Show(Me, "¿Esta seguro de actualizar los valores?",
+                  "Grabar", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
         If dlg = System.Windows.Forms.DialogResult.Yes Then
 
-            Consulta_sql = "UPDATE TABPRE SET " & vbCrLf &
+            Consulta_sql = "Update TABPRE SET " & vbCrLf &
                            "TABPRE.PP01UD = " & TablaDePasoLista_LC & ".PrecioUd1," & vbCrLf &
                            "TABPRE.PP02UD = " & TablaDePasoLista_LC & ".PrecioUd2," & vbCrLf &
                            "TABPRE.ECUACION = " & TablaDePasoLista_LC & ".EcuacionUd1," & vbCrLf &
                            "TABPRE.ECUACIONU2 = " & TablaDePasoLista_LC & ".EcuacionUd2," & vbCrLf &
                            "TABPRE.MG01UD = " & TablaDePasoLista_LC & ".MargenPorc" & vbCrLf &
-                           "FROM    " & TablaDePasoLista_LC & " LEFT OUTER JOIN" & vbCrLf &
+                           "FROM    " & TablaDePasoLista_LC & " Left Outer Join" & vbCrLf &
                            "TABPRE ON " & TablaDePasoLista_LC &
                            ".Codigo = TABPRE.KOPR AND " & TablaDePasoLista_LC & ".Lista = TABPRE.KOLT"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
-            Consulta_sql = "DELETE Zw_ListaLC_ValPro WHERE Codigo = '" & Txtcodigo.Text & "'"
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_ListaLC_ValPro Where Codigo = '" & Txtcodigo.Text & "'"
+            'Consulta_sql = "Delete Zw_ListaLC_ValPro Where Codigo = '" & Txtcodigo.Text & "'"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
-            Consulta_sql = "INSERT INTO Zw_ListaLC_ValPro (Codigo,Mcosto,VproNeto,VproBruto,MgDigitado,ValDigitado,FechaModif,HoraModif) values" & vbCrLf &
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_ListaLC_ValPro (Codigo,Mcosto,VproNeto,VproBruto,MgDigitado,ValDigitado,FechaModif,HoraModif) values" & vbCrLf &
                            "('" & Txtcodigo.Text & "'," & De_Num_a_Tx_01(Mcosto, False, 5) &
                            "," & De_Num_a_Tx_01(NetoPropuesto, False, 5) &
                            "," & De_Num_a_Tx_01(BrutoPropuesto, False, 5) &
                            "," & TxtMargenDigitado.Text &
                            "," & De_Num_a_Tx_01(BrutoDigitado, 5) & ",(SELECT replace(convert(varchar, getdate(), 111), '/','')),(SELECT convert(varchar, getdate(), 108)))"
+            'Consulta_sql = "Insert Into Zw_ListaLC_ValPro (Codigo,Mcosto,VproNeto,VproBruto,MgDigitado,ValDigitado,FechaModif,HoraModif) values" & vbCrLf &
+            '               "('" & Txtcodigo.Text & "'," & De_Num_a_Tx_01(Mcosto, False, 5) &
+            '               "," & De_Num_a_Tx_01(NetoPropuesto, False, 5) &
+            '               "," & De_Num_a_Tx_01(BrutoPropuesto, False, 5) &
+            '               "," & TxtMargenDigitado.Text &
+            '               "," & De_Num_a_Tx_01(BrutoDigitado, 5) & ",(SELECT replace(convert(varchar, getdate(), 111), '/','')),(SELECT convert(varchar, getdate(), 108)))"
+
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
             Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("PDIMEN", "CODIGO = '" & Txtcodigo.Text & "' And EMPRESA = '" & ModEmpresa & "'"))
@@ -716,8 +811,8 @@ Public Class Frm_PreciosLC_Mt01
             Dim _Ila As Double = GrillaProducto.Rows(0).Cells("ILAVALOR").Value * 100
 
             Consulta_sql = "Update PDIMEN Set ILAVALOR = " & De_Num_a_Tx_01(_Ila, False, 5) & ",FLETE_PROD = " & De_Num_a_Tx_01(Flete, False, 5) & vbCrLf &
-                           "WHERE CODIGO = '" & Txtcodigo.Text & "'"
-            _Sql.Ej_consulta_IDU(Consulta_sql)
+                           "Where CODIGO = '" & Txtcodigo.Text & "'"
+            _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
             MessageBoxEx.Show(Me, "Precios actualizados correctamente", "Grabar precios", MessageBoxButtons.OK, MessageBoxIcon.Information)
             _Grabar = True
@@ -730,7 +825,12 @@ Public Class Frm_PreciosLC_Mt01
 
     End Sub
 
-    Private Sub Btndimensiones_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btndimensiones.Click
+    Private Sub Btndimensiones_Click(sender As System.Object, e As System.EventArgs) Handles Btndimensiones.Click
+
+        If Txtcodigo.ButtonCustom.Visible Then
+            MessageBoxEx.Show(Me, "Debe seleccionar un producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Dim Fm As New Frm_Dimensiones
         Fm.CodigoRd = Txtcodigo.Text
@@ -741,7 +841,7 @@ Public Class Frm_PreciosLC_Mt01
 
     End Sub
 
-    Private Sub TxtMargenDigitado_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtMargenDigitado.TextChanged
+    Private Sub TxtMargenDigitado_TextChanged(sender As System.Object, e As System.EventArgs) Handles TxtMargenDigitado.TextChanged
         CalcularPropuestos(De_Txt_a_Num_01(TxtMargenDigitado.Text, 3), Impuestos)
     End Sub
 
@@ -749,7 +849,8 @@ Public Class Frm_PreciosLC_Mt01
 
         If Fx_Tiene_Permiso(Me, "Pre0004") Then
 
-            Consulta_sql = "Select * From Zw_ListaLC_Fx Where CodFormula = 'Lista_LCRa'"
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_ListaLC_Fx Where CodFormula = 'Lista_LCRa'"
+            'Consulta_sql = "Select * From Zw_ListaLC_Fx Where CodFormula = 'Lista_LCRa'"
             Dim _Row_LitsaLC_Fx As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Dim _Formula As String = _Row_LitsaLC_Fx.Item("Formula")
@@ -761,8 +862,10 @@ Public Class Frm_PreciosLC_Mt01
 
             If Fm.Grabar Then
                 _Formula = Replace(LTrim(RTrim(Fm.Formula)), "'", "''")
-                Consulta_sql = "Update Zw_ListaLC_Fx Set Formula = '" & _Formula & "'" & vbCrLf &
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaLC_Fx Set Formula = '" & _Formula & "'" & vbCrLf &
                                "Where CodFormula = 'Lista_LCRa'"
+                'Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaLC_Fx Set Formula = '" & _Formula & "'" & vbCrLf &
+                '               "Where CodFormula = 'Lista_LCRa'"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
             End If
 
@@ -787,6 +890,9 @@ Public Class Frm_PreciosLC_Mt01
     End Sub
 
     Private Sub Btn_RecalcularPPP_Click(sender As Object, e As EventArgs) Handles Btn_RecalcularPPP.Click
+
+        MessageBoxEx.Show(Me, "En construcción", "Bakapp", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        Return
 
         Dim _Fecha = "31/12/2021"
         Dim _FechaTope As DateTime = DateTime.ParseExact(_Fecha, "dd/MM/yyyy", Globalization.CultureInfo.CurrentCulture, DateTimeStyles.None)
@@ -815,7 +921,134 @@ Public Class Frm_PreciosLC_Mt01
 
     End Sub
 
+    Private Sub Btn_Grabar_Inmediatamente_Click(sender As Object, e As EventArgs) Handles Btn_Grabar_Inmediatamente.Click
+        Sb_Grabar_Inmediatamente()
+    End Sub
+
+    Private Sub Btn_Grabar_Futuro_Click(sender As Object, e As EventArgs) Handles Btn_Grabar_Futuro.Click
+
+        Consulta_sql = "Select Cast(0 As Bit) As Chk,* From " & TablaDePasoLista_LC & " Order By Lista"
+        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        Dim _Grabar As Boolean
+
+        Dim Fm As New Frm_PrecioLCFuturoGrabar(Txtcodigo.Text, _Tbl)
+        Fm.ShowDialog(Me)
+        _Grabar = Fm.Grabar
+        Fm.Dispose()
+
+        If _Grabar Then
+            Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_ListaLC_Programadas", "Codigo = '" & Txtcodigo.Text & "' " &
+                                "And FechaProgramada > '" & Format(FechaDelServidor, "yyyyMMdd") & "' " &
+                                "And Activo = 1 And Eliminada = 0")
+
+            Timer_Warning.Enabled = CBool(_Reg)
+        End If
+
+    End Sub
+
+    Private Sub Txtcodigo_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txtcodigo.ButtonCustomClick
+
+        Try
+
+            Txtcodigo.Enabled = False
+
+            Dim _Codigo As String = Txtcodigo.Text
+
+            Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
+            Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not IsNothing(_RowProducto) Then
+                If Not String.IsNullOrEmpty(_RowProducto.Item("ATPR").ToString.Trim) Then
+                    MessageBoxEx.Show(Me, "Producto oculto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                Else
+                    Codigo_abuscar = _Codigo
+                    Sb_Cargar_Producto(Codigo_abuscar)
+                End If
+                Return
+            End If
+
+            Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
+            Fm.Pro_Tipo_Lista = "P"
+            Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
+            Fm.Pro_CodEntidad = String.Empty
+            Fm.Pro_Mostrar_Info = True
+            Fm.BtnCrearProductos.Visible = False
+            Fm.Txtdescripcion.Text = _Codigo
+            Fm.BtnExportaExcel.Visible = False
+            Fm.Pro_Actualizar_Precios = False
+
+            Fm.ShowDialog(Me)
+
+            If Fm.Pro_Seleccionado Then
+
+                Codigo_abuscar = Fm.Pro_RowProducto.Item("KOPR")
+
+                If Not String.IsNullOrEmpty(Trim(Codigo_abuscar)) Then
+                    Txtcodigo.Text = Codigo_abuscar
+                    Sb_Cargar_Producto(Codigo_abuscar)
+                End If
+
+            End If
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Sb_Limpiar()
+        Finally
+            Txtcodigo.Enabled = True
+        End Try
+
+    End Sub
+
+    Private Sub Timer_Warning_Tick(sender As Object, e As EventArgs) Handles Timer_Warning.Tick
+
+        ReflectionImage1.Visible = Not ReflectionImage1.Visible
+        LabelX9.Visible = Not LabelX9.Visible
+
+    End Sub
+
+    Private Sub Warning_Precios_Futuro_OptionsClick(sender As Object, e As EventArgs) Handles Warning_Precios_Futuro.OptionsClick
+
+        ReflectionImage1.Visible = False
+        LabelX9.Visible = False
+        Timer_Warning.Enabled = False
+
+        If Txtcodigo.ButtonCustom.Visible Then
+            MessageBoxEx.Show(Me, "Debe seleccionar un producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_PrecioLCFuturoListaXProd(Txtcodigo.Text)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+        Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_ListaLC_Programadas", "Codigo = '" & Txtcodigo.Text & "' " &
+                                        "And FechaProgramada > '" & Format(FechaDelServidor, "yyyyMMdd") & "' " &
+                                        "And Activo = 1 And Eliminada = 0")
+
+        Timer_Warning.Enabled = CBool(_Reg)
+
+    End Sub
+
+    Private Sub Txtcodigo_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txtcodigo.ButtonCustom2Click
+        Sb_Limpiar()
+    End Sub
+
+    Private Sub Txtcodigo_KeyDown(sender As Object, e As KeyEventArgs) Handles Txtcodigo.KeyDown
+        If Txtcodigo.ButtonCustom.Visible Then
+            If e.KeyValue = Keys.Enter Then
+                Call Txtcodigo_ButtonCustomClick(Nothing, Nothing)
+            End If
+        End If
+    End Sub
+
     Private Sub Btn_Grabar_Flete_Click(sender As Object, e As EventArgs) Handles Btn_Grabar_Flete.Click
+
+        If Txtcodigo.ButtonCustom.Visible Then
+            MessageBoxEx.Show(Me, "Debe seleccionar un producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Flete = TxtFlete1.Text
 
@@ -853,7 +1086,9 @@ Public Class Frm_PreciosLC_Mt01
 
         If Fx_Tiene_Permiso(Me, "Pre0003") Then
 
-            Consulta_sql = "Select * From Zw_ListaLC_Fx Where CodFormula = 'Lista_LC'"
+            '' REEMPLAZAR ESTA FUNCION EN LA NUEVA VERSION
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_ListaLC_Fx Where CodFormula = 'Lista_LC'"
+            'Consulta_sql = "Select * From Zw_ListaLC_Fx Where CodFormula = 'Lista_LC'"
             Dim _Row_LitsaLC_Fx As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Dim _Formula As String = _Row_LitsaLC_Fx.Item("Formula")
@@ -865,8 +1100,10 @@ Public Class Frm_PreciosLC_Mt01
 
             If Fm.Grabar Then
                 _Formula = Replace(LTrim(RTrim(Fm.Formula)), "'", "''")
-                Consulta_sql = "Update Zw_ListaLC_Fx Set Formula = '" & _Formula & "'" & vbCrLf &
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaLC_Fx Set Formula = '" & _Formula & "'" & vbCrLf &
                                "Where CodFormula = 'Lista_LC'"
+                'Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaLC_Fx Set Formula = '" & _Formula & "'" & vbCrLf &
+                '               "Where CodFormula = 'Lista_LC'"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
             End If
 

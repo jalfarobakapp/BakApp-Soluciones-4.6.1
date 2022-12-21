@@ -84,11 +84,12 @@ Partial Class Frm_InpunBox_Bk
         '
         '
         Me.LblComentario_Centro.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LblComentario_Centro.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblComentario_Centro.Location = New System.Drawing.Point(12, 12)
         Me.LblComentario_Centro.Name = "LblComentario_Centro"
         Me.LblComentario_Centro.Size = New System.Drawing.Size(384, 82)
         Me.LblComentario_Centro.TabIndex = 9
-        Me.LblComentario_Centro.Text = "Comentario..." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "XXXXXXXXXXYYYYYYYYYYCCCCCCCCCCXXXXXXXXXXZZXDSREFTE" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.LblComentario_Centro.Text = "Comentario..." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "XXXXXXXXXXYYYYYYYYYYCCCCCCCCCCXXXXXXXXX" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "XZZXDSREFTE" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         Me.LblComentario_Centro.TextLineAlignment = System.Drawing.StringAlignment.Near
         '
         'BtnCancelar
@@ -129,6 +130,7 @@ Partial Class Frm_InpunBox_Bk
         Me.Imagenes_48x48_Ligth.Images.SetKeyName(9, "CodQR")
         Me.Imagenes_48x48_Ligth.Images.SetKeyName(10, "Imagen1")
         Me.Imagenes_48x48_Ligth.Images.SetKeyName(11, "Imagen2")
+        Me.Imagenes_48x48_Ligth.Images.SetKeyName(12, "Key")
         '
         'Imagenes_48x48_Dark
         '
@@ -146,6 +148,7 @@ Partial Class Frm_InpunBox_Bk
         Me.Imagenes_48x48_Dark.Images.SetKeyName(9, "CodQR")
         Me.Imagenes_48x48_Dark.Images.SetKeyName(10, "Imagen2")
         Me.Imagenes_48x48_Dark.Images.SetKeyName(11, "Imagen1")
+        Me.Imagenes_48x48_Dark.Images.SetKeyName(12, "Key")
         '
         'Frm_InpunBox_Bk
         '
@@ -168,7 +171,9 @@ Partial Class Frm_InpunBox_Bk
         Me.Name = "Frm_InpunBox_Bk"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MetroForm"
+        Me.TopLeftCornerSize = 50
         Me.TopMost = True
+        Me.TopRightCornerSize = 50
         Me.ResumeLayout(False)
 
     End Sub

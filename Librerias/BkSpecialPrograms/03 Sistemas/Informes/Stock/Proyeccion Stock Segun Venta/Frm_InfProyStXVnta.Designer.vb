@@ -1,9 +1,9 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_InfProyStXVnta
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class Frm_InfProyStXVnta
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_InfProyStXVnta))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -35,6 +35,8 @@ Partial Class Frm_InfProyStXVnta
         Me.Btn_Filtro_Pro_Familias = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Filtro_Pro_Sub_Familias = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Filtro_Pro_Marcas = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Filtro_Pro_Categorias = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Filtro_Pro_Codigos_Madre = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Filtro_Pro_Clas_Libre = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Filtro_Pro_Rubros = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Filtro_Pro_Zonas = New DevComponents.DotNetBar.ButtonItem()
@@ -42,6 +44,10 @@ Partial Class Frm_InfProyStXVnta
         Me.LabelItem4 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Filtro_Sucursales = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Filtro_Bodegas = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_Edicion_Datos = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem9 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Cambiar_PromVntaPorc = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Cambiar_PromVntaValor = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Actualizar_Informe = New DevComponents.DotNetBar.ButtonItem()
@@ -59,8 +65,6 @@ Partial Class Frm_InfProyStXVnta
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.Input_MesesProyeccion = New DevComponents.Editors.IntegerInput()
         Me.Btn_Bodega_Vta_Estudio = New DevComponents.DotNetBar.ButtonX()
-        Me.Btn_Filtro_Pro_Categorias = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Filtro_Pro_Codigos_Madre = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo_Venta_Diaria.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -79,9 +83,9 @@ Partial Class Frm_InfProyStXVnta
         Me.Grupo_Venta_Diaria.Controls.Add(Me.ContextMenuBar1)
         Me.Grupo_Venta_Diaria.Controls.Add(Me.Grilla)
         Me.Grupo_Venta_Diaria.DisabledBackColor = System.Drawing.Color.Empty
-        Me.Grupo_Venta_Diaria.Location = New System.Drawing.Point(12, 78)
+        Me.Grupo_Venta_Diaria.Location = New System.Drawing.Point(4, 72)
         Me.Grupo_Venta_Diaria.Name = "Grupo_Venta_Diaria"
-        Me.Grupo_Venta_Diaria.Size = New System.Drawing.Size(1051, 385)
+        Me.Grupo_Venta_Diaria.Size = New System.Drawing.Size(1063, 532)
         '
         '
         '
@@ -117,10 +121,10 @@ Partial Class Frm_InfProyStXVnta
         '
         Me.ContextMenuBar1.AntiAlias = True
         Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Filtros_Productos, Me.Menu_Contextual_Filtros_Suc_Bod})
-        Me.ContextMenuBar1.Location = New System.Drawing.Point(20, 37)
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Filtros_Productos, Me.Menu_Contextual_Filtros_Suc_Bod, Me.Menu_Contextual_Edicion_Datos})
+        Me.ContextMenuBar1.Location = New System.Drawing.Point(31, 28)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
-        Me.ContextMenuBar1.Size = New System.Drawing.Size(723, 25)
+        Me.ContextMenuBar1.Size = New System.Drawing.Size(784, 25)
         Me.ContextMenuBar1.Stretch = True
         Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.ContextMenuBar1.TabIndex = 97
@@ -184,6 +188,20 @@ Partial Class Frm_InfProyStXVnta
         Me.Btn_Filtro_Pro_Marcas.Name = "Btn_Filtro_Pro_Marcas"
         Me.Btn_Filtro_Pro_Marcas.Text = "Filtrar por <b><font color=""#0072BC"">MARCAS</font></b>"
         '
+        'Btn_Filtro_Pro_Categorias
+        '
+        Me.Btn_Filtro_Pro_Categorias.Image = CType(resources.GetObject("Btn_Filtro_Pro_Categorias.Image"), System.Drawing.Image)
+        Me.Btn_Filtro_Pro_Categorias.ImageAlt = CType(resources.GetObject("Btn_Filtro_Pro_Categorias.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Filtro_Pro_Categorias.Name = "Btn_Filtro_Pro_Categorias"
+        Me.Btn_Filtro_Pro_Categorias.Text = "Filtrar por <b><font color=""#0072BC"">CATEGORIAS</font></b>"
+        '
+        'Btn_Filtro_Pro_Codigos_Madre
+        '
+        Me.Btn_Filtro_Pro_Codigos_Madre.Image = CType(resources.GetObject("Btn_Filtro_Pro_Codigos_Madre.Image"), System.Drawing.Image)
+        Me.Btn_Filtro_Pro_Codigos_Madre.ImageAlt = CType(resources.GetObject("Btn_Filtro_Pro_Codigos_Madre.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Filtro_Pro_Codigos_Madre.Name = "Btn_Filtro_Pro_Codigos_Madre"
+        Me.Btn_Filtro_Pro_Codigos_Madre.Text = "Filtrar por <b><font color=""#0072BC"">CODIGOS MADRE</font></b>"
+        '
         'Btn_Filtro_Pro_Clas_Libre
         '
         Me.Btn_Filtro_Pro_Clas_Libre.Image = CType(resources.GetObject("Btn_Filtro_Pro_Clas_Libre.Image"), System.Drawing.Image)
@@ -245,6 +263,42 @@ Partial Class Frm_InfProyStXVnta
         Me.Btn_Filtro_Bodegas.Name = "Btn_Filtro_Bodegas"
         Me.Btn_Filtro_Bodegas.Text = "Filtrar por <b><font color=""#0072BC"">BODEGAS</font></b>"
         '
+        'Menu_Contextual_Edicion_Datos
+        '
+        Me.Menu_Contextual_Edicion_Datos.AutoExpandOnClick = True
+        Me.Menu_Contextual_Edicion_Datos.Name = "Menu_Contextual_Edicion_Datos"
+        Me.Menu_Contextual_Edicion_Datos.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem9, Me.Btn_Cambiar_PromVntaPorc, Me.Btn_Cambiar_PromVntaValor})
+        Me.Menu_Contextual_Edicion_Datos.Text = "Reparar datos..."
+        '
+        'LabelItem9
+        '
+        Me.LabelItem9.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem9.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem9.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem9.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem9.Name = "LabelItem9"
+        Me.LabelItem9.PaddingBottom = 1
+        Me.LabelItem9.PaddingLeft = 10
+        Me.LabelItem9.PaddingTop = 1
+        Me.LabelItem9.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem9.Text = "Simular"
+        '
+        'Btn_Cambiar_PromVntaPorc
+        '
+        Me.Btn_Cambiar_PromVntaPorc.Image = CType(resources.GetObject("Btn_Cambiar_PromVntaPorc.Image"), System.Drawing.Image)
+        Me.Btn_Cambiar_PromVntaPorc.ImageAlt = CType(resources.GetObject("Btn_Cambiar_PromVntaPorc.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Cambiar_PromVntaPorc.Name = "Btn_Cambiar_PromVntaPorc"
+        Me.Btn_Cambiar_PromVntaPorc.Text = "Cambiar la venta promedio (Porcentaje)"
+        Me.Btn_Cambiar_PromVntaPorc.Visible = False
+        '
+        'Btn_Cambiar_PromVntaValor
+        '
+        Me.Btn_Cambiar_PromVntaValor.Image = CType(resources.GetObject("Btn_Cambiar_PromVntaValor.Image"), System.Drawing.Image)
+        Me.Btn_Cambiar_PromVntaValor.ImageAlt = CType(resources.GetObject("Btn_Cambiar_PromVntaValor.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Cambiar_PromVntaValor.Name = "Btn_Cambiar_PromVntaValor"
+        Me.Btn_Cambiar_PromVntaValor.Text = "Cambiar la venta promedio (Valor)"
+        Me.Btn_Cambiar_PromVntaValor.Visible = False
+        '
         'Grilla
         '
         Me.Grilla.AllowUserToAddRows = False
@@ -282,7 +336,7 @@ Partial Class Frm_InfProyStXVnta
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.RowHeadersVisible = False
-        Me.Grilla.Size = New System.Drawing.Size(1045, 362)
+        Me.Grilla.Size = New System.Drawing.Size(1057, 509)
         Me.Grilla.TabIndex = 3
         '
         'Bar1
@@ -291,7 +345,7 @@ Partial Class Frm_InfProyStXVnta
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Actualizar_Informe, Me.Btn_Excel})
-        Me.Bar1.Location = New System.Drawing.Point(0, 476)
+        Me.Bar1.Location = New System.Drawing.Point(0, 617)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(1067, 41)
         Me.Bar1.Stretch = True
@@ -345,8 +399,6 @@ Partial Class Frm_InfProyStXVnta
         '
         'Cmb_Vista_Informe
         '
-        Me.Cmb_Vista_Informe.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Cmb_Vista_Informe.DisplayMember = "Text"
         Me.Cmb_Vista_Informe.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.Cmb_Vista_Informe.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -401,6 +453,7 @@ Partial Class Frm_InfProyStXVnta
         Me.Input_MesesEstudio.BackgroundStyle.Class = "DateTimeInputBackground"
         Me.Input_MesesEstudio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_MesesEstudio.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_MesesEstudio.Enabled = False
         Me.Input_MesesEstudio.ForeColor = System.Drawing.Color.Black
         Me.Input_MesesEstudio.Location = New System.Drawing.Point(152, 11)
         Me.Input_MesesEstudio.MaxValue = 24
@@ -437,7 +490,7 @@ Partial Class Frm_InfProyStXVnta
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(98, 23)
         Me.LabelX3.TabIndex = 123
-        Me.LabelX3.Text = "Meses proyecci�n"
+        Me.LabelX3.Text = "Meses proyección"
         '
         'Input_MesesProyeccion
         '
@@ -448,6 +501,7 @@ Partial Class Frm_InfProyStXVnta
         Me.Input_MesesProyeccion.BackgroundStyle.Class = "DateTimeInputBackground"
         Me.Input_MesesProyeccion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_MesesProyeccion.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_MesesProyeccion.Enabled = False
         Me.Input_MesesProyeccion.ForeColor = System.Drawing.Color.Black
         Me.Input_MesesProyeccion.Location = New System.Drawing.Point(295, 11)
         Me.Input_MesesProyeccion.MaxValue = 12
@@ -470,26 +524,13 @@ Partial Class Frm_InfProyStXVnta
         Me.Btn_Bodega_Vta_Estudio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_Bodega_Vta_Estudio.TabIndex = 124
         Me.Btn_Bodega_Vta_Estudio.Text = "Bodegas de estudio"
-        '
-        'Btn_Filtro_Pro_Categorias
-        '
-        Me.Btn_Filtro_Pro_Categorias.Image = CType(resources.GetObject("Btn_Filtro_Pro_Categorias.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_Categorias.ImageAlt = CType(resources.GetObject("Btn_Filtro_Pro_Categorias.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_Categorias.Name = "Btn_Filtro_Pro_Categorias"
-        Me.Btn_Filtro_Pro_Categorias.Text = "Filtrar por <b><font color=""#0072BC"">CATEGORIAS</font></b>"
-        '
-        'Btn_Filtro_Pro_Codigos_Madre
-        '
-        Me.Btn_Filtro_Pro_Codigos_Madre.Image = CType(resources.GetObject("Btn_Filtro_Pro_Codigos_Madre.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_Codigos_Madre.ImageAlt = CType(resources.GetObject("Btn_Filtro_Pro_Codigos_Madre.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_Codigos_Madre.Name = "Btn_Filtro_Pro_Codigos_Madre"
-        Me.Btn_Filtro_Pro_Codigos_Madre.Text = "Filtrar por <b><font color=""#0072BC"">CODIGOS MADRE</font></b>"
+        Me.Btn_Bodega_Vta_Estudio.Visible = False
         '
         'Frm_InfProyStXVnta
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1067, 517)
+        Me.ClientSize = New System.Drawing.Size(1067, 658)
         Me.Controls.Add(Me.Btn_Bodega_Vta_Estudio)
         Me.Controls.Add(Me.Input_MesesProyeccion)
         Me.Controls.Add(Me.LabelX3)
@@ -528,21 +569,6 @@ Partial Class Frm_InfProyStXVnta
     Friend WithEvents Cmb_Vista_Informe As DevComponents.DotNetBar.Controls.ComboBoxEx
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Btn_Actualizar_Informe As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents ContextMenuBar1 As DevComponents.DotNetBar.ContextMenuBar
-    Friend WithEvents Menu_Contextual_Filtros_Productos As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents LabelItem2 As DevComponents.DotNetBar.LabelItem
-    Public WithEvents Btn_Filtro_Pro_Productos As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Filtro_Pro_Super_Familias As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Filtro_Pro_Familias As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Filtro_Pro_Sub_Familias As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Filtro_Pro_Marcas As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Filtro_Pro_Clas_Libre As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Filtro_Pro_Rubros As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Filtro_Pro_Zonas As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Menu_Contextual_Filtros_Suc_Bod As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents LabelItem4 As DevComponents.DotNetBar.LabelItem
-    Public WithEvents Btn_Filtro_Sucursales As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Filtro_Bodegas As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents ComboItem1 As DevComponents.Editors.ComboItem
     Friend WithEvents ComboItem2 As DevComponents.Editors.ComboItem
     Friend WithEvents ComboItem3 As DevComponents.Editors.ComboItem
@@ -552,6 +578,25 @@ Partial Class Frm_InfProyStXVnta
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Input_MesesProyeccion As DevComponents.Editors.IntegerInput
     Friend WithEvents Btn_Bodega_Vta_Estudio As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Menu_Contextual_Filtros_Productos As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem2 As DevComponents.DotNetBar.LabelItem
+    Public WithEvents Btn_Filtro_Pro_Productos As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Filtro_Pro_Super_Familias As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Filtro_Pro_Familias As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Filtro_Pro_Sub_Familias As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Filtro_Pro_Marcas As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Filtro_Pro_Categorias As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Filtro_Pro_Codigos_Madre As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Filtro_Pro_Clas_Libre As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Filtro_Pro_Rubros As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Filtro_Pro_Zonas As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Menu_Contextual_Filtros_Suc_Bod As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem4 As DevComponents.DotNetBar.LabelItem
+    Public WithEvents Btn_Filtro_Sucursales As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Filtro_Bodegas As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ContextMenuBar1 As DevComponents.DotNetBar.ContextMenuBar
+    Friend WithEvents Menu_Contextual_Edicion_Datos As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem9 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_Cambiar_PromVntaPorc As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Cambiar_PromVntaValor As DevComponents.DotNetBar.ButtonItem
 End Class

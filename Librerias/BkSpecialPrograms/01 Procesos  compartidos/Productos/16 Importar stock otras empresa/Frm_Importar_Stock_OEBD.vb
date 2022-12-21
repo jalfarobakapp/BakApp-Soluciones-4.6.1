@@ -80,6 +80,8 @@ Public Class Frm_Importar_Stock_OEBD
         End Set
     End Property
 
+    Public Property SoloProductosConStock As Boolean
+
     Public Sub New(_TblProductos As DataTable, _Cadena_ConexionSQL_Server_Origen As String, _Campo_Codigo As String)
 
         ' Esta llamada es exigida por el diseñador.
@@ -147,8 +149,17 @@ Public Class Frm_Importar_Stock_OEBD
             Dim _SqlQuery = String.Empty
             Dim _Cl_Importar_Stock As New Cl_Importar_Stock_Otra_Bodega(_Cadena_ConexionSQL_Server_Origen)
 
-            Dim _TblProductos_Encontrados As DataTable = _Cl_Importar_Stock.Fx_Traer_Productos(_TblProductos, _Campo_Codigo)
+            Dim _TblProductos_Encontrados As DataTable
 
+            If SoloProductosConStock Then
+                _TblProductos_Encontrados = _Cl_Importar_Stock.Fx_Traer_Productos_Con_Stock_Positivo(_TblProductos,
+                                                                                                     _Campo_Codigo,
+                                                                                                     _Empresa_Ori,
+                                                                                                     _Sucursal_Ori,
+                                                                                                     _Bodega_Ori)
+            Else
+                _TblProductos_Encontrados = _Cl_Importar_Stock.Fx_Traer_Productos(_TblProductos, _Campo_Codigo)
+            End If
 
             If CBool(_TblProductos_Encontrados.Rows.Count) Then
                 If _Mostrar_Mensajes Then
@@ -187,20 +198,14 @@ Public Class Frm_Importar_Stock_OEBD
                 Dim _Cl_Importar_Stock_Otra_Bodega As New Cl_Importar_Stock_Otra_Bodega(_Cadena_ConexionSQL_Server_Origen)
 
                 Dim _Query = _Cl_Importar_Stock_Otra_Bodega.Fx_Extraer_Stock_X_Producto(_Empresa_Ori, _Sucursal_Ori, _Bodega_Ori,
-                                                                                               _Empresa_Des, _Sucursal_Des, _Bodega_Des,
-                                                                                               _Codigo)
+                                                                                        _Empresa_Des, _Sucursal_Des, _Bodega_Des,
+                                                                                        _Codigo)
 
                 If String.IsNullOrEmpty(_Query) Then
-                    'Cadena_ConexionSQL_Server = _Cadena_ConexionSQL_Server_Original
-                    '_Sql = New Class_SQL(Cadena_ConexionSQL_Server)
-
-                    'If _Sql.Ej_consulta_IDU(_Query) Then
-                    '    _Contador_Insertados += 1
-                    'End If
                     _Contador_No_Encontrados += 1
                 Else
-                    AddToLog(_Codigo & "-" & _Descripcion & ", Sincronizado Ok", FormatNumber(_Cant_Productos, 0) & " Productos")
-                    _SqlQuery += _Query
+                    AddToLog(_Codigo & "-" & _Descripcion & ", Sincronizado Ok", FormatNumber(_Contador_Encontrados, 0) & " Productos")
+                    _SqlQuery += _Query & vbCrLf
                     _Contador_Encontrados += 1
                 End If
 

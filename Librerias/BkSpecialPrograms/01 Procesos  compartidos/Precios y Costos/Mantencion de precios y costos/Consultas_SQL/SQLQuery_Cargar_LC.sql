@@ -33,8 +33,12 @@ CREATE TABLE [dbo].[Zw_PsLc#Funcionario#](
 	[Uc1]               [Float]				Default (0),
 	[Uc2]               [Float]				Default (0),
 	[Repetidos]         [Int]				Default (0),
+	[RepetidosAlt]      [Int]				Default (0),
+    [Repetido]          [Bit]				Default (0),
     [Id_Hijo]           [Int]				Default (0),
     [Id_Padre]          [Int]				Default (0),
+    [Neto_Cn_Dscto]     [Float]             Default (0),
+    [Bloqueapr]         [char](1)   		Default '',
  CONSTRAINT [PK_Zw_PsLc#Funcionario#] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC,

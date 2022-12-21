@@ -15,6 +15,9 @@ Public Class Frm_CreaProductos_04_CodAlternativo
     Dim _RowProducto As DataRow
     Dim _RowTabcodal As DataRow
 
+    Dim _Cl_CompUdMedidas As New Bk_Comporamiento_UdMedidas.Cl_CompUdMedidas
+    Dim _NNmarca As New Bk_Comporamiento_UdMedidas.Nmarca
+
     Enum Enum_Accion
         Solo_Codigo_De_Barras
         Codigo_Barras_Proveedor
@@ -66,12 +69,50 @@ Public Class Frm_CreaProductos_04_CodAlternativo
         Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
         _RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+        Txt_CodigoDescripcion.Text = _RowProducto.Item("KOPR").ToString.Trim & " - " & _RowProducto.Item("NOKOPR").ToString.Trim
+
         Dim _Ud01pr = _RowProducto.Item("UD01PR")
         Dim _Ud02pr = _RowProducto.Item("UD02PR")
+
+        Txt_Ud1.Text = _Ud01pr
+        Txt_Ud2.Text = _Ud02pr
+
+        Txt_Rlud.Text = _RowProducto.Item("RLUD")
 
         Txt_Nokopral.Text = _RowProducto.Item("NOKOPR").ToString.Trim
 
         Btn_Eliminar.Visible = False
+
+        Dim _Arr_Comportamiento(,) As String = {
+                                    {1, "1. Solicitar unidad en que se hará la transacción"},
+                                    {2, "2. Comprar en 1era. Udad. Vender en 1era. Udad."},
+                                    {3, "3. Comprar en 2da. Udad. Vender en 1era. Udad."},
+                                    {4, "4. Comprar en 1era. Udad. Vender en 2da. Udad."},
+                                    {5, "5. Comprar en 2da. Udad. Vender en 2da. Udad."},
+                                    {6, "6. Solicitar Udad. si es compra, Vender en 1era. Udad."},
+                                    {7, "7. Solicitar Udad. si es compra, Vender en 2da. Udad."},
+                                    {8, "8. Comprar en 1era. Udad. Solicitar Udad. si es venta"},
+                                    {9, "9. Comprar en 2da. Udad. Solicitar Udad. si es venta"},
+                                    {10, "10. Utilizar la unidad indivisible (solo para RTU Constante)"},
+                                    {11, "11. Vender en 1era. Udad. Sin dividir 2da. Udad"}}
+        Sb_Llenar_Combos(_Arr_Comportamiento, Cmb_Nmarca_Comportamiento)
+        Cmb_Nmarca_Comportamiento.SelectedValue = 1
+
+        Dim _Arr_Tratamiento(,) As String = {
+                            {1, "1. Caso normal, respetar RTU definida"},
+                            {2, "2. Solicitar Ancho, Largo y Alto para obtener cantidad 1era. Udad"},
+                            {3, "3. Solicitar Ancho y Largo para obtener cantidad 1era. Udad. (MT2)"},
+                            {4, "4. Solicitar Ancho y Largo para obtener cantidad 1era. Udad. (CM2)"},
+                            {5, "5. Solicitar cantidad solo en Udad. seleccionada y calcular por RTU la otra Udad."},
+                            {6, "6. Calcular RTU en forma invertida"},
+                            {7, "7. Solicitar cantidad para ambas unidades del producto"},
+                            {8, "8. Solicitar RTU del producto"},
+                            {9, "9. RTU variable"},
+                            {10, "10. RTU constante"}}
+        Sb_Llenar_Combos(_Arr_Tratamiento, Cmb_Nmarca_Tratamiento)
+        Cmb_Nmarca_Tratamiento.SelectedValue = 1
+
+        Txt_Kopral.ButtonCustom.Visible = False
 
         If Not String.IsNullOrEmpty(_Kopral) Then
 
@@ -79,6 +120,13 @@ Public Class Frm_CreaProductos_04_CodAlternativo
             _RowTabcodal = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Txt_Nokopral.Text = _RowTabcodal.Item("NOKOPRAL").ToString.Trim
+
+            Dim _Nmarca = NuloPorNro(_RowTabcodal.Item("NMARCA").ToString.Trim, "")
+
+            _NNmarca = _Cl_CompUdMedidas.Fx_Decifra_Nmarca(_Nmarca)
+
+            Cmb_Nmarca_Tratamiento.SelectedValue = CInt(_NNmarca.Tratamiento)
+            Cmb_Nmarca_Comportamiento.SelectedValue = CInt(_NNmarca.Comportamiento)
 
             Chk_Conmulti.Checked = _RowTabcodal.Item("CONMULTI")
 
@@ -98,7 +146,7 @@ Public Class Frm_CreaProductos_04_CodAlternativo
             Txt_Kopral3.Text = _RowTabcodal.Item("KOPRAL3").ToString.Trim
             Txt_Kopral4.Text = _RowTabcodal.Item("KOPRAL4").ToString.Trim
             Txt_Kopral5.Text = _RowTabcodal.Item("KOPRAL5").ToString.Trim
-            'Zw_Prod_CodQR (CodigoQR,Kopral)
+
             Txt_CodigoQR.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Prod_CodQR", "CodigoQR", "Kopral = '" & _Kopral & "'")
 
             Stab_3QR.Visible = Not String.IsNullOrEmpty(Txt_CodigoQR.Text)
@@ -106,20 +154,28 @@ Public Class Frm_CreaProductos_04_CodAlternativo
 
             Btn_Eliminar.Visible = True
 
+            Txt_Kopral.ButtonCustom.Visible = True
+
         End If
 
-        Txt_Kopral.Enabled = String.IsNullOrEmpty(_Kopral)
+        Cmb_Nmarca_Comportamiento.Enabled = (_Ud01pr <> _Ud02pr)
+        Cmb_Nmarca_Tratamiento.Enabled = (_Ud01pr <> _Ud02pr)
+
+        Txt_Kopral.ReadOnly = Not String.IsNullOrEmpty(_Kopral)
+
         Me._Accion = _Accion
 
         Select Case _Accion
             Case Enum_Accion.Codigo_Barras_Proveedor
                 Grupo_Proveedor.Enabled = True
-                BtnBuscarEntidad.Visible = True
-            Case Enum_Accion.Solo_Codigo_De_Barras, Enum_Accion.Ambos
+                Txt_Koen.Enabled = True
+            Case Enum_Accion.Solo_Codigo_De_Barras
                 Grupo_Proveedor.Enabled = False
-                BtnBuscarEntidad.Visible = False
+                Txt_Koen.Enabled = False
+            Case Enum_Accion.Ambos
+                Grupo_Proveedor.Enabled = True
+                Txt_Koen.Enabled = True
         End Select
-
 
         Dim _Arr_Tipo_Entidad(,) As String = {{"1", _Ud01pr}, {"2", _Ud02pr}}
         Sb_Llenar_Combos(_Arr_Tipo_Entidad, Cmb_Unimulti)
@@ -220,7 +276,7 @@ Public Class Frm_CreaProductos_04_CodAlternativo
         Dim _Kopral As String = Txt_Kopral.Text.Trim
         Dim _Nokopral As String = Txt_Nokopral.Text.Trim
         Dim _Koen As String = Txt_Koen.Text.Trim
-        Dim _Nmarca As String = _RowProducto.Item("NMARCA")
+        Dim _Nmarca As String = _Cl_CompUdMedidas.Fx_Trae_NMARCA(CInt(Cmb_Nmarca_Comportamiento.SelectedValue), CInt(Cmb_Nmarca_Tratamiento.SelectedValue))
 
         Dim _Cantmincom As String = Txt_Cantmincom.Text
         Dim _Multdecom As String = Txt_Multdecom.Text
@@ -381,15 +437,6 @@ Public Class Frm_CreaProductos_04_CodAlternativo
         Txt_Kopral.Focus()
     End Sub
 
-    Private Sub Btn_QuitarProveedor_Click(sender As Object, e As EventArgs) Handles Btn_QuitarProveedor.Click
-
-        _Koen = String.Empty
-        Txt_RazonSocial.Text = String.Empty
-        txtsigla.Text = String.Empty
-        Txt_Koen.Text = String.Empty
-
-    End Sub
-
     Private Sub Btn_CodQR_Click(sender As Object, e As EventArgs) Handles Btn_CodQR.Click
 
         Dim _Aceptar As Boolean
@@ -437,7 +484,8 @@ Public Class Frm_CreaProductos_04_CodAlternativo
 
             Dim _NewKopral = Fx_Kopral_Alearorios("QRBk")
             Txt_Kopral.Text = _NewKopral
-            Txt_Kopral.Enabled = False
+            'Txt_Kopral.Enabled = False
+            Txt_Kopral.ReadOnly = True
             Txt_CodigoQR.Text = _CodigoQR
             Stab_3QR.Visible = True
 
@@ -446,12 +494,15 @@ Public Class Frm_CreaProductos_04_CodAlternativo
     End Sub
 
     Private Sub Btn_Quitar_QR_Click(sender As Object, e As EventArgs) Handles Btn_Quitar_QR.Click
+
         SuperTabControl1.SelectedTabIndex = 0
         Stab_3QR.Visible = False
         Txt_CodigoQR.Text = String.Empty
         Txt_Kopral.Text = String.Empty
-        Txt_Kopral.Enabled = True
+        'Txt_Kopral.Enabled = True
+        Txt_Kopral.ReadOnly = False
         Txt_Kopral.Focus()
+
     End Sub
 
     Sub Sb_Eliminar_Codigo()
@@ -526,4 +577,38 @@ Public Class Frm_CreaProductos_04_CodAlternativo
 
     End Function
 
+    Private Sub Txt_Kopral_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Kopral.ButtonCustomClick
+
+        Dim Copiar = Txt_Kopral.Text
+        Clipboard.SetText(Copiar)
+
+        MessageBoxEx.Show(Me, "Código copiado en el portapapeles", "Portapapeles", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+    End Sub
+
+    Private Sub Txt_Koen_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Koen.ButtonCustom2Click
+        _Koen = String.Empty
+        Txt_RazonSocial.Text = String.Empty
+        txtsigla.Text = String.Empty
+        Txt_Koen.Text = String.Empty
+    End Sub
+
+    Private Sub Txt_Koen_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Koen.ButtonCustomClick
+        Dim Fm As New Frm_BuscarEntidad_Mt(False)
+        Fm.ShowDialog(Me)
+
+        If Not (Fm.Pro_RowEntidad Is Nothing) Then
+
+            Txt_RazonSocial.Text = Fm.Pro_RowEntidad.Item("NOKOEN")
+            txtsigla.Text = Fm.Pro_RowEntidad.Item("SIEN")
+            Txt_Koen.Text = Fm.Pro_RowEntidad.Item("KOEN")
+            _Koen = Fm.Pro_RowEntidad.Item("KOEN")
+
+            Txt_Kopral.Focus()
+            Txt_Kopral.SelectAll()
+
+        End If
+
+        Fm.Dispose()
+    End Sub
 End Class

@@ -39,6 +39,7 @@ Public Class Frm_00_Asis_Compra_Menu
     Dim _Filtro_Bodegas_Est_Vta_Todas As Boolean
 
     Dim _RowProveedor As DataRow
+    Dim _RowProveedor_Especial As DataRow
     Dim _RowParametros As DataRow
 
     Dim _Cmb_Padre_Asociacion_Productos As String
@@ -151,6 +152,7 @@ Public Class Frm_00_Asis_Compra_Menu
             Cmb_Tipo_de_compra.Enabled = False
             Layaut_UlProdXProv.Visible = False
             Me.Text += " MODO NVI"
+            Tab_ConexionExterna.Visible = False
         End If
 
     End Sub
@@ -736,6 +738,75 @@ Public Class Frm_00_Asis_Compra_Menu
                                              Chk_Incluir_Salidas_GDI_OT.Name, Class_SQLite.Enum_Type._Boolean, Chk_Incluir_Salidas_GDI_OT.Checked, _Actualizar)
 
 
+        Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_DbExt_Conexion", "Id = " & Txt_DbExt_Nombre_Conexion.Tag))
+
+        If Not _Reg Then
+            Txt_DbExt_Nombre_Conexion.Tag = 0
+            Txt_DbExt_Nombre_Conexion.Text = String.Empty
+            Txt_DbExt_NombreBod_Ori.Text = String.Empty
+            Txt_DbExt_NombreBod_Des.Text = String.Empty
+        End If
+
+        If _Actualizar Then
+            Txt_DbExt_Nombre_Conexion.Text = Txt_DbExt_Nombre_Conexion.Tag
+        End If
+        '
+        _Sql.Sb_Parametro_Informe_Sql(Txt_DbExt_Nombre_Conexion, "Compras_Asistente",
+                                                 Txt_DbExt_Nombre_Conexion.Name, Class_SQLite.Enum_Type._String, Txt_DbExt_Nombre_Conexion.Tag, _Actualizar)
+
+        If Not _Actualizar Then
+            Txt_DbExt_Nombre_Conexion.Tag = Txt_DbExt_Nombre_Conexion.Text
+        End If
+
+
+        Txt_DbExt_Nombre_Conexion.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DbExt_Conexion", "Nombre_Conexion", "Id = " & Val(Txt_DbExt_Nombre_Conexion.Tag))
+
+        ' Proveedor especial para compras directas a este proveedor antes que otros
+
+        Dim _Koen_Especial As String
+        Dim _Suen_Especial As String
+
+        If (_RowProveedor_Especial Is Nothing) Then
+
+            _Koen_Especial = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor",
+                                      "Informe = 'Compras_Asistente' And Campo = 'Koen_Especial' And NombreEquipo = '" & _NombreEquipo & "' And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad & "'")
+            _Suen_Especial = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor",
+                                      "Informe = 'Compras_Asistente' And Campo = 'Suen_Especial' And NombreEquipo = '" & _NombreEquipo & "' And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad & "'")
+
+            Txt_ProvEspecial.Text = String.Empty
+            _RowProveedor_Especial = Fx_Traer_Datos_Entidad(_Koen_Especial, _Suen_Especial)
+
+        End If
+
+        If Not (_RowProveedor_Especial Is Nothing) Then
+
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Tmp_Prm_Informes" & vbCrLf &
+                           "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente' And Campo In ('Koen_Especial','Suen_Especial') And Modalidad = '" & Modalidad & "'"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            _Koen_Especial = Trim(_RowProveedor_Especial.Item("KOEN"))
+            _Suen_Especial = Trim(_RowProveedor_Especial.Item("SUEN"))
+
+            Txt_ProvEspecial.Text = _RowProveedor_Especial.Item("KOEN").ToString.Trim & " - " & _RowProveedor_Especial.Item("NOKOEN").ToString.Trim
+
+            _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Koen_Especial", Class_SQLite.Enum_Type._String, _Koen_Especial, _Actualizar, "Seleccion_Productos")
+            _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Suen_Especial", Class_SQLite.Enum_Type._String, _Suen_Especial, _Actualizar, "Seleccion_Productos")
+
+        End If
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Maest Where Id_Conexion = " & Val(Txt_DbExt_Nombre_Conexion.Tag)
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not IsNothing(_Row) Then
+            Txt_DbExt_NombreBod_Ori.Text = _Row.Item("Empresa_Ori") & "-" & _Row.Item("Sucursal_Ori") & "-" & _Row.Item("Bodega_Ori") & " (" & _Row.Item("NombreBod_Ori") & ")"
+            Txt_DbExt_NombreBod_Des.Text = _Row.Item("Empresa_Des") & "-" & _Row.Item("Sucursal_Des") & "-" & _Row.Item("Bodega_Des") & " (" & _Row.Item("NombreBod_Des") & ")"
+        End If
+
+        '   Ejecutar sincronizacion entre ambas bases
+        _Sql.Sb_Parametro_Informe_Sql(Chk_DbExt_SincronizarPRBD, "Compras_Asistente",
+                                      Chk_DbExt_SincronizarPRBD.Name, Class_SQLite.Enum_Type._Boolean, Chk_DbExt_SincronizarPRBD.Checked, _Actualizar)
+
+
     End Sub
 
     'Sub Sb_Actualizar_Revisar_Sqlite()
@@ -1132,7 +1203,6 @@ Public Class Frm_00_Asis_Compra_Menu
 
     'End Sub
 
-
 #End Region
 
     Private Sub BtnProveedor_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Buscar_Proveedor.Click
@@ -1224,6 +1294,14 @@ Public Class Frm_00_Asis_Compra_Menu
 
             End If
 
+        End If
+
+        If Chk_DbExt_SincronizarPRBD.Checked And Txt_DbExt_Nombre_Conexion.Tag = 0 Then
+            MessageBoxEx.Show(Me, "Faltan los datos de conexión hacia la base de datos externa" & vbCrLf & vbCrLf &
+                              "Revise la pestaña: Bod.Ext. Prov. Especial", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            STabConfiguracion.SelectedTabIndex = 6
+            Return
         End If
 
         _DstCompras.Clear()
@@ -1324,7 +1402,9 @@ Public Class Frm_00_Asis_Compra_Menu
                     End If
                 End If
 
-                Sb_Actualizar_Stock_Desde_Una_Empresa_A_Otra(_TblProductos_Con_Reemplazo)
+                If Chk_DbExt_SincronizarPRBD.Checked Then 'CBool(Txt_DbExt_Nombre_Conexion.Tag) Then
+                    Sb_Actualizar_Stock_Desde_Una_Empresa_A_Otra(_TblProductos_Con_Reemplazo)
+                End If
 
                 Fm_Espera = New Frm_Form_Esperar
                 Fm_Espera.BarraCircular.IsRunning = True
@@ -1457,14 +1537,14 @@ Public Class Frm_00_Asis_Compra_Menu
                     If Not _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Prod_Doc_Ult_Ventas") Then
 
                         MessageBoxEx.Show(Me, "Falta la tabla Zw_Prod_Doc_Ult_Ventas" & vbCrLf &
-                                      "Informe de esta situación al administrador del sistema", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                          "Informe de esta situación al administrador del sistema",
+                                          "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                         Me.Enabled = True
                         Fm_Espera.Close()
                         Fm_Espera.Dispose()
                         Fm_Espera = Nothing
                         Circular_Progress1.Visible = False
-                        'Circular_Progress1.IsRunning = True
                         Me.Refresh()
                         Return
 
@@ -2653,9 +2733,6 @@ Public Class Frm_00_Asis_Compra_Menu
         Dim _Sucursal_Des = _Row_DbExtMaest.Item("Sucursal_Des")
         Dim _Bodega_Des = _Row_DbExtMaest.Item("Bodega_Des")
 
-        'Lbl_Bodega_Origen.Text = "Empresa: " & _Empresa_Ori & ", Sucursal: " & _Sucursal_Ori & ", Bodega: " & _Bodega_Ori
-        'Lbl_Bodega_Destino.Text = "Empresa: " & _Empresa_Des & ", Sucursal: " & _Sucursal_Des & ", Bodega: " & _Bodega_Des
-
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where Id = " & _Id_Conexion
         Dim _Row_DnExt As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -2665,10 +2742,14 @@ Public Class Frm_00_Asis_Compra_Menu
         Dim _Clave = _Row_DnExt.Item("Clave")
         Dim _BaseDeDatos = _Row_DnExt.Item("BaseDeDatos")
 
+        Dim _ServidorPuerto As String = _Servidor
 
+        If Not String.IsNullOrEmpty(_Puerto) Then
+            _ServidorPuerto = _Servidor & "," & _Puerto
+        End If
 
         Dim _Cadena_ConexionSQL_Server_Origen = "data " &
-                                        "source = " & _Servidor & "; " &
+                                        "source = " & _ServidorPuerto & "; " &
                                         "initial catalog = " & _BaseDeDatos & "; " &
                                         "user id = " & _Usuario & "; " &
                                         "password = " & _Clave
@@ -2682,6 +2763,7 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Sucursal_Des = _Sucursal_Des
         Fm.Bodega_Des = _Bodega_Des
         Fm.Ejecutar_Automaticamente = True
+        Fm.SoloProductosConStock = _Modo_NVI
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
@@ -2746,4 +2828,106 @@ Public Class Frm_00_Asis_Compra_Menu
         Timer_Ejecucion_Automatica.Stop()
         Call BtnProcesarInf_Click(Nothing, Nothing)
     End Sub
+
+    Private Sub Txt_DbExt_Nombre_Conexion_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_DbExt_Nombre_Conexion.ButtonCustomClick
+
+        Dim _RowConexion As DataRow
+
+        Consulta_sql = "Select *,'****' As [Password] From " & _Global_BaseBk & "Zw_DbExt_Conexion"
+        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        If Not CBool(_Tbl.Rows.Count) Then
+            MessageBoxEx.Show(Me, "No hay conexiones disponibles" & vbCrLf & vbCrLf &
+                              "Dene ir a la Configuración -> Conexiones -> Conexiones a otras bases de datos externas (para fines migratorios de información)" & vbCrLf &
+                              "Informe de esta situación al administrador del sistema", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_ConexOtrasBases
+        Fm.Seleccionar = True
+        Fm.ShowDialog(Me)
+        _RowConexion = Fm.RowConexion
+        Fm.Dispose()
+
+        If Not IsNothing(_RowConexion) Then
+
+            Dim _ErrorBodegas As Boolean
+
+            If IsDBNull(_RowConexion.Item("Empresa_Ori")) Or IsDBNull(_RowConexion.Item("Empresa_Des")) Then
+                _ErrorBodegas = True
+            End If
+
+            If Not _ErrorBodegas Then
+                If String.IsNullOrEmpty(_RowConexion.Item("Empresa_Ori").ToString.Trim) Or
+                    String.IsNullOrEmpty(_RowConexion.Item("Empresa_Des").ToString.Trim) Then
+                    _ErrorBodegas = True
+                End If
+            End If
+
+            If _ErrorBodegas Then
+                MessageBoxEx.Show(Me, "Faltan las bodegas de origen o destino para hacer la gestión" & vbCrLf & vbCrLf &
+                                  "Dene ir a la Configuración -> Conexiones -> Conexiones a otras bases de datos externas (para fines migratorios de información)" & vbCrLf &
+                                  "Informe de esta situación al administrador del sistema", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            Txt_DbExt_Nombre_Conexion.Tag = _RowConexion.Item("Id")
+            Txt_DbExt_Nombre_Conexion.Text = _RowConexion.Item("Nombre_Conexion")
+            Txt_DbExt_NombreBod_Ori.Text = _RowConexion.Item("Empresa_Ori") & "-" & _RowConexion.Item("Sucursal_Ori") & "-" & _RowConexion.Item("Bodega_Ori") & " (" & _RowConexion.Item("NombreBod_Ori") & ")"
+            Txt_DbExt_NombreBod_Des.Text = _RowConexion.Item("Empresa_Des") & "-" & _RowConexion.Item("Sucursal_Des") & "-" & _RowConexion.Item("Bodega_Des") & " (" & _RowConexion.Item("NombreBod_Des") & ")"
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_Buscar_ProvEspecial_Click(sender As Object, e As EventArgs) Handles Btn_Buscar_ProvEspecial.Click
+
+        If Not CBool(Txt_DbExt_Nombre_Conexion.Tag) Then
+            MessageBoxEx.Show(Me, "Falta la conexión externa", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_BuscarEntidad_Mt(False)
+        Fm.ShowInTaskbar = False
+        Fm.ShowDialog(Me)
+
+        If Fm.Pro_Entidad_Seleccionada Then
+
+            _RowProveedor_Especial = Fm.Pro_RowEntidad
+            Txt_ProvEspecial.Text = _RowProveedor_Especial.Item("KOEN").ToString.Trim & " - " & _RowProveedor_Especial.Item("NOKOEN").ToString.Trim
+
+        End If
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Txt_DbExt_Nombre_Conexion_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_DbExt_Nombre_Conexion.ButtonCustom2Click
+
+        If String.IsNullOrEmpty(Txt_DbExt_Nombre_Conexion.Text) Then
+            Txt_DbExt_Nombre_Conexion.Tag = 0
+            Txt_DbExt_Nombre_Conexion.Text = String.Empty
+            Txt_DbExt_NombreBod_Ori.Text = String.Empty
+            Txt_DbExt_NombreBod_Des.Text = String.Empty
+            _RowProveedor_Especial = Nothing
+            Txt_ProvEspecial.Text = String.Empty
+            Beep()
+            Return
+        End If
+        If MessageBoxEx.Show(Me, "¿Confirma quitar esta conexión?", "Quitar conexión externa",
+                             MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Txt_DbExt_Nombre_Conexion.Tag = 0
+            Txt_DbExt_Nombre_Conexion.Text = String.Empty
+            Txt_DbExt_NombreBod_Ori.Text = String.Empty
+            Txt_DbExt_NombreBod_Des.Text = String.Empty
+            _RowProveedor_Especial = Nothing
+            Txt_ProvEspecial.Text = String.Empty
+        End If
+
+    End Sub
+
+    Private Sub Chk_DbExt_SincronizarPRBD_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_DbExt_SincronizarPRBD.CheckedChanged
+        Grupo_DbExt.Enabled = Chk_DbExt_SincronizarPRBD.Checked
+    End Sub
+
 End Class

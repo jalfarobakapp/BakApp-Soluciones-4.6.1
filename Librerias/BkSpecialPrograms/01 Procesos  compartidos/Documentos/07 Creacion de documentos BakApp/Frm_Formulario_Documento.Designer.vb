@@ -102,7 +102,7 @@ Partial Class Frm_Formulario_Documento
         Me.Txt_Importar_ArchivoSG = New DevComponents.DotNetBar.ButtonItem()
         Me.Txt_ArchivoSG_Carpeta_Lectura = New DevComponents.DotNetBar.ButtonItem()
         Me.Txt_ArchivoSG_Carpeta_Generados = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_ElimRecic_Doc = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Crear_Desde_DTEXMLCompra = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_Opciones_Recargar_Costos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Recargar_Producto_Linea_Activa = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Recargar_Producto_Todos = New DevComponents.DotNetBar.ButtonItem()
@@ -604,7 +604,7 @@ Partial Class Frm_Formulario_Documento
         '
         Me.Menu_Contextual_Opciones_Especiales.AutoExpandOnClick = True
         Me.Menu_Contextual_Opciones_Especiales.Name = "Menu_Contextual_Opciones_Especiales"
-        Me.Menu_Contextual_Opciones_Especiales.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Despacho, Me.Btn_Exportar_a_XML, Me.Btn_Config_Tipo_Estacion, Me.Btn_Config_Impresora, Me.Btn_Prestashop, Me.Btn_Lista_Costos_Proveedor, Me.Btn_Levantar_Prod_Masivamente, Me.Btn_ElimRecic_Doc})
+        Me.Menu_Contextual_Opciones_Especiales.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Despacho, Me.Btn_Exportar_a_XML, Me.Btn_Config_Tipo_Estacion, Me.Btn_Config_Impresora, Me.Btn_Prestashop, Me.Btn_Lista_Costos_Proveedor, Me.Btn_Levantar_Prod_Masivamente, Me.Btn_Crear_Desde_DTEXMLCompra})
         Me.Menu_Contextual_Opciones_Especiales.Text = "Opciones especiales"
         '
         'Btn_Despacho
@@ -747,12 +747,13 @@ Partial Class Frm_Formulario_Documento
         Me.Txt_ArchivoSG_Carpeta_Generados.Name = "Txt_ArchivoSG_Carpeta_Generados"
         Me.Txt_ArchivoSG_Carpeta_Generados.Text = "Carpeta de destino de generacion de archivos"
         '
-        'Btn_ElimRecic_Doc
+        'Btn_Crear_Desde_DTEXMLCompra
         '
-        Me.Btn_ElimRecic_Doc.Image = CType(resources.GetObject("Btn_ElimRecic_Doc.Image"), System.Drawing.Image)
-        Me.Btn_ElimRecic_Doc.Name = "Btn_ElimRecic_Doc"
-        Me.Btn_ElimRecic_Doc.Text = "Editar documento"
-        Me.Btn_ElimRecic_Doc.Visible = False
+        Me.Btn_Crear_Desde_DTEXMLCompra.Image = CType(resources.GetObject("Btn_Crear_Desde_DTEXMLCompra.Image"), System.Drawing.Image)
+        Me.Btn_Crear_Desde_DTEXMLCompra.ImageAlt = CType(resources.GetObject("Btn_Crear_Desde_DTEXMLCompra.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Crear_Desde_DTEXMLCompra.Name = "Btn_Crear_Desde_DTEXMLCompra"
+        Me.Btn_Crear_Desde_DTEXMLCompra.Text = "Crear OCC desde DTE XML"
+        Me.Btn_Crear_Desde_DTEXMLCompra.Visible = False
         '
         'Menu_Contextual_Opciones_Recargar_Costos
         '
@@ -2469,10 +2470,12 @@ Partial Class Frm_Formulario_Documento
         '
         '
         Me.ChkValores.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.ChkValores.CheckBoxImageChecked = CType(resources.GetObject("ChkValores.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.ChkValores.FocusCuesEnabled = False
         Me.ChkValores.ForeColor = System.Drawing.Color.Black
-        Me.ChkValores.Location = New System.Drawing.Point(7, 390)
+        Me.ChkValores.Location = New System.Drawing.Point(7, 391)
         Me.ChkValores.Name = "ChkValores"
-        Me.ChkValores.Size = New System.Drawing.Size(100, 18)
+        Me.ChkValores.Size = New System.Drawing.Size(100, 17)
         Me.ChkValores.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.ChkValores.TabIndex = 140
         Me.ChkValores.Text = "Valores Netos"
@@ -2484,10 +2487,12 @@ Partial Class Frm_Formulario_Documento
         '
         '
         Me.Chk_Redondear_Cero.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Redondear_Cero.CheckBoxImageChecked = CType(resources.GetObject("Chk_Redondear_Cero.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Redondear_Cero.FocusCuesEnabled = False
         Me.Chk_Redondear_Cero.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Redondear_Cero.Location = New System.Drawing.Point(98, 390)
+        Me.Chk_Redondear_Cero.Location = New System.Drawing.Point(100, 391)
         Me.Chk_Redondear_Cero.Name = "Chk_Redondear_Cero"
-        Me.Chk_Redondear_Cero.Size = New System.Drawing.Size(116, 18)
+        Me.Chk_Redondear_Cero.Size = New System.Drawing.Size(116, 17)
         Me.Chk_Redondear_Cero.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Redondear_Cero.TabIndex = 141
         Me.Chk_Redondear_Cero.Text = "Redondedar a cero"
@@ -2513,10 +2518,12 @@ Partial Class Frm_Formulario_Documento
         '
         '
         Me.Chk_Ver_Dscto_Maximo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Ver_Dscto_Maximo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Ver_Dscto_Maximo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Ver_Dscto_Maximo.FocusCuesEnabled = False
         Me.Chk_Ver_Dscto_Maximo.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Ver_Dscto_Maximo.Location = New System.Drawing.Point(291, 390)
+        Me.Chk_Ver_Dscto_Maximo.Location = New System.Drawing.Point(291, 393)
         Me.Chk_Ver_Dscto_Maximo.Name = "Chk_Ver_Dscto_Maximo"
-        Me.Chk_Ver_Dscto_Maximo.Size = New System.Drawing.Size(109, 16)
+        Me.Chk_Ver_Dscto_Maximo.Size = New System.Drawing.Size(109, 15)
         Me.Chk_Ver_Dscto_Maximo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Ver_Dscto_Maximo.TabIndex = 143
         Me.Chk_Ver_Dscto_Maximo.Text = "Ver Dscto. Máximo"
@@ -2528,11 +2535,13 @@ Partial Class Frm_Formulario_Documento
         '
         '
         Me.Chk_Conservar_Bodega_Sig_Linea_Venta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Conservar_Bodega_Sig_Linea_Venta.CheckBoxImageChecked = CType(resources.GetObject("Chk_Conservar_Bodega_Sig_Linea_Venta.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Conservar_Bodega_Sig_Linea_Venta.Enabled = False
+        Me.Chk_Conservar_Bodega_Sig_Linea_Venta.FocusCuesEnabled = False
         Me.Chk_Conservar_Bodega_Sig_Linea_Venta.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Conservar_Bodega_Sig_Linea_Venta.Location = New System.Drawing.Point(406, 390)
+        Me.Chk_Conservar_Bodega_Sig_Linea_Venta.Location = New System.Drawing.Point(406, 391)
         Me.Chk_Conservar_Bodega_Sig_Linea_Venta.Name = "Chk_Conservar_Bodega_Sig_Linea_Venta"
-        Me.Chk_Conservar_Bodega_Sig_Linea_Venta.Size = New System.Drawing.Size(314, 18)
+        Me.Chk_Conservar_Bodega_Sig_Linea_Venta.Size = New System.Drawing.Size(314, 17)
         Me.Chk_Conservar_Bodega_Sig_Linea_Venta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Conservar_Bodega_Sig_Linea_Venta.TabIndex = 144
         Me.Chk_Conservar_Bodega_Sig_Linea_Venta.Text = "Conservar la bodega en la siguiente línea de un documento"
@@ -2616,6 +2625,7 @@ Partial Class Frm_Formulario_Documento
         Me.Controls.Add(Me.Chk_Conservar_Bodega_Sig_Linea_Venta)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
@@ -2834,7 +2844,6 @@ Partial Class Frm_Formulario_Documento
     Friend WithEvents Txt_Importar_ArchivoSG As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Txt_ArchivoSG_Carpeta_Lectura As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Txt_ArchivoSG_Carpeta_Generados As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_ElimRecic_Doc As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Barra_Progreso As DevComponents.DotNetBar.ProgressBarItem
     Friend WithEvents Lbl_Progreso As DevComponents.DotNetBar.LabelItem
     Public WithEvents Btn_Imprimir As DevComponents.DotNetBar.ButtonItem
@@ -2842,4 +2851,5 @@ Partial Class Frm_Formulario_Documento
     Friend WithEvents Btn_ImpConstCarta As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_ImpConstVale As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_ActListaProveedor As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Crear_Desde_DTEXMLCompra As DevComponents.DotNetBar.ButtonItem
 End Class

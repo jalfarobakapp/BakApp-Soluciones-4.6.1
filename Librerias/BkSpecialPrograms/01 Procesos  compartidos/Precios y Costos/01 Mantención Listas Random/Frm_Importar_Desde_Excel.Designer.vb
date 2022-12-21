@@ -61,6 +61,7 @@ Partial Class Frm_Importar_Desde_Excel
         Me.Btn_Buscar_Archivo.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Buscar_Archivo.ForeColor = System.Drawing.Color.Black
         Me.Btn_Buscar_Archivo.Image = CType(resources.GetObject("Btn_Buscar_Archivo.Image"), System.Drawing.Image)
+        Me.Btn_Buscar_Archivo.ImageAlt = CType(resources.GetObject("Btn_Buscar_Archivo.ImageAlt"), System.Drawing.Image)
         Me.Btn_Buscar_Archivo.Name = "Btn_Buscar_Archivo"
         Me.Btn_Buscar_Archivo.Text = "Importar archivo"
         Me.Btn_Buscar_Archivo.Tooltip = "Buscar Archivo"
@@ -70,6 +71,7 @@ Partial Class Frm_Importar_Desde_Excel
         Me.Btn_Archivo_Ayuda_Excel.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Archivo_Ayuda_Excel.ForeColor = System.Drawing.Color.Black
         Me.Btn_Archivo_Ayuda_Excel.Image = CType(resources.GetObject("Btn_Archivo_Ayuda_Excel.Image"), System.Drawing.Image)
+        Me.Btn_Archivo_Ayuda_Excel.ImageAlt = CType(resources.GetObject("Btn_Archivo_Ayuda_Excel.ImageAlt"), System.Drawing.Image)
         Me.Btn_Archivo_Ayuda_Excel.Name = "Btn_Archivo_Ayuda_Excel"
         Me.Btn_Archivo_Ayuda_Excel.Tooltip = "Ayuda, ejemplo archivo excel."
         '
@@ -78,6 +80,7 @@ Partial Class Frm_Importar_Desde_Excel
         Me.Btn_Cancelar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Cancelar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Cancelar.Image = CType(resources.GetObject("Btn_Cancelar.Image"), System.Drawing.Image)
+        Me.Btn_Cancelar.ImageAlt = CType(resources.GetObject("Btn_Cancelar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Cancelar.Name = "Btn_Cancelar"
         Me.Btn_Cancelar.Text = "Cancelar"
         Me.Btn_Cancelar.Tooltip = "Eliminar Servidor de correo de salida SMTP"

@@ -24,9 +24,9 @@ Partial Class Frm_MantLista_Precios_Random
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_MantLista_Precios_Random))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Ejecutar_Formula = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_Productos = New DevComponents.DotNetBar.ButtonItem()
@@ -59,6 +59,9 @@ Partial Class Frm_MantLista_Precios_Random
         Me.BtnCambiarLista = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Importar_Desde_Excel = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_Grabar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Grabar_Inmediatamente = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Grabar_Futuro = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Ordenar_Lista_Codigo = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Ordenar_Registros = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Ordenar_Codigo_Lista = New DevComponents.DotNetBar.ButtonItem()
@@ -90,6 +93,7 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Btn_Sel_Productos = New DevComponents.DotNetBar.ButtonItem()
         Me.Barra_Arriba = New DevComponents.DotNetBar.Bar()
         Me.Btn_ProdBloqueados = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Cambiar_Opciones = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem9 = New DevComponents.DotNetBar.LabelItem()
         Me.Rdb_Traer_Todos = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Rdb_Traer_No_Bloqueados = New DevComponents.DotNetBar.CheckBoxItem()
@@ -109,7 +113,6 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Grupo_Costo_Ud1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grupo_Costo_Ud2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grupo_PM = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Btn_Cambiar_Opciones = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -137,6 +140,7 @@ Partial Class Frm_MantLista_Precios_Random
         'Btn_Ejecutar_Formula
         '
         Me.Btn_Ejecutar_Formula.Image = CType(resources.GetObject("Btn_Ejecutar_Formula.Image"), System.Drawing.Image)
+        Me.Btn_Ejecutar_Formula.ImageAlt = CType(resources.GetObject("Btn_Ejecutar_Formula.ImageAlt"), System.Drawing.Image)
         Me.Btn_Ejecutar_Formula.Name = "Btn_Ejecutar_Formula"
         Me.Btn_Ejecutar_Formula.Text = "Ejecutar formula"
         '
@@ -150,6 +154,7 @@ Partial Class Frm_MantLista_Precios_Random
         'Btn_Estadisticas_Producto_01
         '
         Me.Btn_Estadisticas_Producto_01.Image = CType(resources.GetObject("Btn_Estadisticas_Producto_01.Image"), System.Drawing.Image)
+        Me.Btn_Estadisticas_Producto_01.ImageAlt = CType(resources.GetObject("Btn_Estadisticas_Producto_01.ImageAlt"), System.Drawing.Image)
         Me.Btn_Estadisticas_Producto_01.Name = "Btn_Estadisticas_Producto_01"
         Me.Btn_Estadisticas_Producto_01.Text = "Ver estadísticas del producto/información adicional"
         '
@@ -157,10 +162,10 @@ Partial Class Frm_MantLista_Precios_Random
         '
         Me.ContextMenuBar1.AntiAlias = True
         Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Productos, Me.Menu_Contextual_Copiar, Me.Menu_Contextual_Formula, Me.Menu_Contextual_Costo, Me.Menu_Contextual_Tratamiento})
-        Me.ContextMenuBar1.Location = New System.Drawing.Point(87, 55)
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Productos, Me.Menu_Contextual_Copiar, Me.Menu_Contextual_Formula, Me.Menu_Contextual_Costo, Me.Menu_Contextual_Tratamiento, Me.Menu_Contextual_Grabar})
+        Me.ContextMenuBar1.Location = New System.Drawing.Point(25, 26)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
-        Me.ContextMenuBar1.Size = New System.Drawing.Size(645, 25)
+        Me.ContextMenuBar1.Size = New System.Drawing.Size(645, 47)
         Me.ContextMenuBar1.Stretch = True
         Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.ContextMenuBar1.TabIndex = 47
@@ -177,12 +182,14 @@ Partial Class Frm_MantLista_Precios_Random
         'Btn_Estadisticas_Producto_02
         '
         Me.Btn_Estadisticas_Producto_02.Image = CType(resources.GetObject("Btn_Estadisticas_Producto_02.Image"), System.Drawing.Image)
+        Me.Btn_Estadisticas_Producto_02.ImageAlt = CType(resources.GetObject("Btn_Estadisticas_Producto_02.ImageAlt"), System.Drawing.Image)
         Me.Btn_Estadisticas_Producto_02.Name = "Btn_Estadisticas_Producto_02"
         Me.Btn_Estadisticas_Producto_02.Text = "Ver estadísticas del producto/información adicional"
         '
         'Btn_Copiar_datos
         '
         Me.Btn_Copiar_datos.Image = CType(resources.GetObject("Btn_Copiar_datos.Image"), System.Drawing.Image)
+        Me.Btn_Copiar_datos.ImageAlt = CType(resources.GetObject("Btn_Copiar_datos.ImageAlt"), System.Drawing.Image)
         Me.Btn_Copiar_datos.Name = "Btn_Copiar_datos"
         Me.Btn_Copiar_datos.Text = "Copiar este datos en todos los productos marcados"
         '
@@ -196,6 +203,7 @@ Partial Class Frm_MantLista_Precios_Random
         'Btn_Estadisticas_Producto_03
         '
         Me.Btn_Estadisticas_Producto_03.Image = CType(resources.GetObject("Btn_Estadisticas_Producto_03.Image"), System.Drawing.Image)
+        Me.Btn_Estadisticas_Producto_03.ImageAlt = CType(resources.GetObject("Btn_Estadisticas_Producto_03.ImageAlt"), System.Drawing.Image)
         Me.Btn_Estadisticas_Producto_03.Name = "Btn_Estadisticas_Producto_03"
         Me.Btn_Estadisticas_Producto_03.Text = "Ver estadísticas del producto/información adicional"
         '
@@ -215,6 +223,7 @@ Partial Class Frm_MantLista_Precios_Random
         'Btn_Configurar_Formula_Linea
         '
         Me.Btn_Configurar_Formula_Linea.Image = CType(resources.GetObject("Btn_Configurar_Formula_Linea.Image"), System.Drawing.Image)
+        Me.Btn_Configurar_Formula_Linea.ImageAlt = CType(resources.GetObject("Btn_Configurar_Formula_Linea.ImageAlt"), System.Drawing.Image)
         Me.Btn_Configurar_Formula_Linea.Name = "Btn_Configurar_Formula_Linea"
         Me.Btn_Configurar_Formula_Linea.Text = "Configuración de formula"
         '
@@ -234,12 +243,14 @@ Partial Class Frm_MantLista_Precios_Random
         'Btn_Copiar_Formula
         '
         Me.Btn_Copiar_Formula.Image = CType(resources.GetObject("Btn_Copiar_Formula.Image"), System.Drawing.Image)
+        Me.Btn_Copiar_Formula.ImageAlt = CType(resources.GetObject("Btn_Copiar_Formula.ImageAlt"), System.Drawing.Image)
         Me.Btn_Copiar_Formula.Name = "Btn_Copiar_Formula"
         Me.Btn_Copiar_Formula.Text = "Copiar la <b>fórmula</b> de este producto en todos los productos marcados"
         '
         'Btn_Copiar_Datos_Precios
         '
         Me.Btn_Copiar_Datos_Precios.Image = CType(resources.GetObject("Btn_Copiar_Datos_Precios.Image"), System.Drawing.Image)
+        Me.Btn_Copiar_Datos_Precios.ImageAlt = CType(resources.GetObject("Btn_Copiar_Datos_Precios.ImageAlt"), System.Drawing.Image)
         Me.Btn_Copiar_Datos_Precios.Name = "Btn_Copiar_Datos_Precios"
         Me.Btn_Copiar_Datos_Precios.Text = "Copiar este <b>Valor</b> en todos los productos marcados"
         '
@@ -266,12 +277,14 @@ Partial Class Frm_MantLista_Precios_Random
         'Btn_PM_Linea
         '
         Me.Btn_PM_Linea.Image = CType(resources.GetObject("Btn_PM_Linea.Image"), System.Drawing.Image)
+        Me.Btn_PM_Linea.ImageAlt = CType(resources.GetObject("Btn_PM_Linea.ImageAlt"), System.Drawing.Image)
         Me.Btn_PM_Linea.Name = "Btn_PM_Linea"
         Me.Btn_PM_Linea.Text = "Traer el PM de este producto"
         '
         'Btn_UC_Linea
         '
         Me.Btn_UC_Linea.Image = CType(resources.GetObject("Btn_UC_Linea.Image"), System.Drawing.Image)
+        Me.Btn_UC_Linea.ImageAlt = CType(resources.GetObject("Btn_UC_Linea.ImageAlt"), System.Drawing.Image)
         Me.Btn_UC_Linea.Name = "Btn_UC_Linea"
         Me.Btn_UC_Linea.Text = "Traer el Costo última compra de este producto"
         '
@@ -298,24 +311,28 @@ Partial Class Frm_MantLista_Precios_Random
         'Btn_Buscar_Un_Producto
         '
         Me.Btn_Buscar_Un_Producto.Image = CType(resources.GetObject("Btn_Buscar_Un_Producto.Image"), System.Drawing.Image)
+        Me.Btn_Buscar_Un_Producto.ImageAlt = CType(resources.GetObject("Btn_Buscar_Un_Producto.ImageAlt"), System.Drawing.Image)
         Me.Btn_Buscar_Un_Producto.Name = "Btn_Buscar_Un_Producto"
         Me.Btn_Buscar_Un_Producto.Text = "Traer un solo producto (F2)"
         '
         'Btn_Busqueda_Selectiva
         '
         Me.Btn_Busqueda_Selectiva.Image = CType(resources.GetObject("Btn_Busqueda_Selectiva.Image"), System.Drawing.Image)
+        Me.Btn_Busqueda_Selectiva.ImageAlt = CType(resources.GetObject("Btn_Busqueda_Selectiva.ImageAlt"), System.Drawing.Image)
         Me.Btn_Busqueda_Selectiva.Name = "Btn_Busqueda_Selectiva"
         Me.Btn_Busqueda_Selectiva.Text = "Buscar productos selectivamente (F3)"
         '
         'Btn_Busqueda_Class
         '
         Me.Btn_Busqueda_Class.Image = CType(resources.GetObject("Btn_Busqueda_Class.Image"), System.Drawing.Image)
+        Me.Btn_Busqueda_Class.ImageAlt = CType(resources.GetObject("Btn_Busqueda_Class.ImageAlt"), System.Drawing.Image)
         Me.Btn_Busqueda_Class.Name = "Btn_Busqueda_Class"
         Me.Btn_Busqueda_Class.Text = "Buscar productos según clasificación (Marca, Rubros, Familia, Etc.)"
         '
         'Btn_Traer_Todos_Los_Productos
         '
         Me.Btn_Traer_Todos_Los_Productos.Image = CType(resources.GetObject("Btn_Traer_Todos_Los_Productos.Image"), System.Drawing.Image)
+        Me.Btn_Traer_Todos_Los_Productos.ImageAlt = CType(resources.GetObject("Btn_Traer_Todos_Los_Productos.ImageAlt"), System.Drawing.Image)
         Me.Btn_Traer_Todos_Los_Productos.Name = "Btn_Traer_Todos_Los_Productos"
         Me.Btn_Traer_Todos_Los_Productos.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Productos_Todos, Me.Btn_Productos_Ud1, Me.Btn_Productos_Ud2, Me.Btn_Productos_Ud1_o_Ud2})
         Me.Btn_Traer_Todos_Los_Productos.Text = "Traer todos los productos asociados a la(s) lista(s) seleccionada(s)."
@@ -323,30 +340,35 @@ Partial Class Frm_MantLista_Precios_Random
         'Btn_Productos_Todos
         '
         Me.Btn_Productos_Todos.Image = CType(resources.GetObject("Btn_Productos_Todos.Image"), System.Drawing.Image)
+        Me.Btn_Productos_Todos.ImageAlt = CType(resources.GetObject("Btn_Productos_Todos.ImageAlt"), System.Drawing.Image)
         Me.Btn_Productos_Todos.Name = "Btn_Productos_Todos"
         Me.Btn_Productos_Todos.Text = "Todos"
         '
         'Btn_Productos_Ud1
         '
         Me.Btn_Productos_Ud1.Image = CType(resources.GetObject("Btn_Productos_Ud1.Image"), System.Drawing.Image)
+        Me.Btn_Productos_Ud1.ImageAlt = CType(resources.GetObject("Btn_Productos_Ud1.ImageAlt"), System.Drawing.Image)
         Me.Btn_Productos_Ud1.Name = "Btn_Productos_Ud1"
         Me.Btn_Productos_Ud1.Text = "Sin precio en Ud1"
         '
         'Btn_Productos_Ud2
         '
         Me.Btn_Productos_Ud2.Image = CType(resources.GetObject("Btn_Productos_Ud2.Image"), System.Drawing.Image)
+        Me.Btn_Productos_Ud2.ImageAlt = CType(resources.GetObject("Btn_Productos_Ud2.ImageAlt"), System.Drawing.Image)
         Me.Btn_Productos_Ud2.Name = "Btn_Productos_Ud2"
         Me.Btn_Productos_Ud2.Text = "Sin Precio en Ud2"
         '
         'Btn_Productos_Ud1_o_Ud2
         '
         Me.Btn_Productos_Ud1_o_Ud2.Image = CType(resources.GetObject("Btn_Productos_Ud1_o_Ud2.Image"), System.Drawing.Image)
+        Me.Btn_Productos_Ud1_o_Ud2.ImageAlt = CType(resources.GetObject("Btn_Productos_Ud1_o_Ud2.ImageAlt"), System.Drawing.Image)
         Me.Btn_Productos_Ud1_o_Ud2.Name = "Btn_Productos_Ud1_o_Ud2"
         Me.Btn_Productos_Ud1_o_Ud2.Text = "Traer todos los productos sin precio/costo"
         '
         'BtnCambiarLista
         '
         Me.BtnCambiarLista.Image = CType(resources.GetObject("BtnCambiarLista.Image"), System.Drawing.Image)
+        Me.BtnCambiarLista.ImageAlt = CType(resources.GetObject("BtnCambiarLista.ImageAlt"), System.Drawing.Image)
         Me.BtnCambiarLista.Name = "BtnCambiarLista"
         Me.BtnCambiarLista.Text = "Cambiar lista de precios"
         Me.BtnCambiarLista.Visible = False
@@ -367,8 +389,30 @@ Partial Class Frm_MantLista_Precios_Random
         'Btn_Importar_Desde_Excel
         '
         Me.Btn_Importar_Desde_Excel.Image = CType(resources.GetObject("Btn_Importar_Desde_Excel.Image"), System.Drawing.Image)
+        Me.Btn_Importar_Desde_Excel.ImageAlt = CType(resources.GetObject("Btn_Importar_Desde_Excel.ImageAlt"), System.Drawing.Image)
         Me.Btn_Importar_Desde_Excel.Name = "Btn_Importar_Desde_Excel"
         Me.Btn_Importar_Desde_Excel.Text = "Importar datos desde <b>Excel </b>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'Menu_Contextual_Grabar
+        '
+        Me.Menu_Contextual_Grabar.AutoExpandOnClick = True
+        Me.Menu_Contextual_Grabar.Name = "Menu_Contextual_Grabar"
+        Me.Menu_Contextual_Grabar.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_Inmediatamente, Me.Btn_Grabar_Futuro})
+        Me.Menu_Contextual_Grabar.Text = "Opciones Grabar"
+        '
+        'Btn_Grabar_Inmediatamente
+        '
+        Me.Btn_Grabar_Inmediatamente.Image = CType(resources.GetObject("Btn_Grabar_Inmediatamente.Image"), System.Drawing.Image)
+        Me.Btn_Grabar_Inmediatamente.ImageAlt = CType(resources.GetObject("Btn_Grabar_Inmediatamente.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Grabar_Inmediatamente.Name = "Btn_Grabar_Inmediatamente"
+        Me.Btn_Grabar_Inmediatamente.Text = "Grabra inmediatamente los precios"
+        '
+        'Btn_Grabar_Futuro
+        '
+        Me.Btn_Grabar_Futuro.Image = CType(resources.GetObject("Btn_Grabar_Futuro.Image"), System.Drawing.Image)
+        Me.Btn_Grabar_Futuro.ImageAlt = CType(resources.GetObject("Btn_Grabar_Futuro.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Grabar_Futuro.Name = "Btn_Grabar_Futuro"
+        Me.Btn_Grabar_Futuro.Text = "Grabar precios a futuro"
         '
         'Btn_Ordenar_Lista_Codigo
         '
@@ -381,6 +425,7 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Btn_Ordenar_Registros.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Ordenar_Registros.ForeColor = System.Drawing.Color.Black
         Me.Btn_Ordenar_Registros.Image = CType(resources.GetObject("Btn_Ordenar_Registros.Image"), System.Drawing.Image)
+        Me.Btn_Ordenar_Registros.ImageAlt = CType(resources.GetObject("Btn_Ordenar_Registros.ImageAlt"), System.Drawing.Image)
         Me.Btn_Ordenar_Registros.Name = "Btn_Ordenar_Registros"
         Me.Btn_Ordenar_Registros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Ordenar_Lista_Codigo, Me.Btn_Ordenar_Codigo_Lista, Me.Chk_OrdenDeLlegada})
         Me.Btn_Ordenar_Registros.Text = "Ordenar registros"
@@ -400,6 +445,7 @@ Partial Class Frm_MantLista_Precios_Random
         'Btn_Buscar_Producto_En_Grilla
         '
         Me.Btn_Buscar_Producto_En_Grilla.Image = CType(resources.GetObject("Btn_Buscar_Producto_En_Grilla.Image"), System.Drawing.Image)
+        Me.Btn_Buscar_Producto_En_Grilla.ImageAlt = CType(resources.GetObject("Btn_Buscar_Producto_En_Grilla.ImageAlt"), System.Drawing.Image)
         Me.Btn_Buscar_Producto_En_Grilla.Name = "Btn_Buscar_Producto_En_Grilla"
         Me.Btn_Buscar_Producto_En_Grilla.Tooltip = "Buscar producto en tratamiento"
         '
@@ -474,36 +520,36 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle10.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle11.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle11.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle11.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle11
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle12.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
         Me.Grilla.Size = New System.Drawing.Size(771, 310)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 77
@@ -616,6 +662,7 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Btn_Limpiar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Limpiar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Limpiar.Image = CType(resources.GetObject("Btn_Limpiar.Image"), System.Drawing.Image)
+        Me.Btn_Limpiar.ImageAlt = CType(resources.GetObject("Btn_Limpiar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Limpiar.Name = "Btn_Limpiar"
         Me.Btn_Limpiar.Tooltip = "Limpiar tratamiento"
         '
@@ -624,6 +671,7 @@ Partial Class Frm_MantLista_Precios_Random
         Me.BtnGrabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.BtnGrabar.ForeColor = System.Drawing.Color.Black
         Me.BtnGrabar.Image = CType(resources.GetObject("BtnGrabar.Image"), System.Drawing.Image)
+        Me.BtnGrabar.ImageAlt = CType(resources.GetObject("BtnGrabar.ImageAlt"), System.Drawing.Image)
         Me.BtnGrabar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.BtnGrabar.Name = "BtnGrabar"
         Me.BtnGrabar.Tooltip = "Grabar"
@@ -647,6 +695,7 @@ Partial Class Frm_MantLista_Precios_Random
         '
         Me.Btn_Exportar_Excel.ForeColor = System.Drawing.Color.Black
         Me.Btn_Exportar_Excel.Image = CType(resources.GetObject("Btn_Exportar_Excel.Image"), System.Drawing.Image)
+        Me.Btn_Exportar_Excel.ImageAlt = CType(resources.GetObject("Btn_Exportar_Excel.ImageAlt"), System.Drawing.Image)
         Me.Btn_Exportar_Excel.Name = "Btn_Exportar_Excel"
         Me.Btn_Exportar_Excel.Tooltip = "Exportar a excel (Vista actual)"
         '
@@ -684,6 +733,7 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Btn_Conf_Funcion.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Conf_Funcion.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Conf_Funcion.Image = CType(resources.GetObject("Btn_Conf_Funcion.Image"), System.Drawing.Image)
+        Me.Btn_Conf_Funcion.ImageAlt = CType(resources.GetObject("Btn_Conf_Funcion.ImageAlt"), System.Drawing.Image)
         Me.Btn_Conf_Funcion.Location = New System.Drawing.Point(3, 403)
         Me.Btn_Conf_Funcion.Name = "Btn_Conf_Funcion"
         Me.Btn_Conf_Funcion.Size = New System.Drawing.Size(22, 22)
@@ -696,6 +746,7 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Btn_Sel_Productos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Sel_Productos.ForeColor = System.Drawing.Color.Black
         Me.Btn_Sel_Productos.Image = CType(resources.GetObject("Btn_Sel_Productos.Image"), System.Drawing.Image)
+        Me.Btn_Sel_Productos.ImageAlt = CType(resources.GetObject("Btn_Sel_Productos.ImageAlt"), System.Drawing.Image)
         Me.Btn_Sel_Productos.Name = "Btn_Sel_Productos"
         Me.Btn_Sel_Productos.Text = "Traer productos al tratamiento"
         Me.Btn_Sel_Productos.Tooltip = "Seleccionar productos"
@@ -720,9 +771,16 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Btn_ProdBloqueados.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_ProdBloqueados.ForeColor = System.Drawing.Color.Black
         Me.Btn_ProdBloqueados.Image = CType(resources.GetObject("Btn_ProdBloqueados.Image"), System.Drawing.Image)
+        Me.Btn_ProdBloqueados.ImageAlt = CType(resources.GetObject("Btn_ProdBloqueados.ImageAlt"), System.Drawing.Image)
         Me.Btn_ProdBloqueados.Name = "Btn_ProdBloqueados"
         Me.Btn_ProdBloqueados.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Cambiar_Opciones, Me.LabelItem9, Me.Rdb_Traer_Todos, Me.Rdb_Traer_No_Bloqueados, Me.LabelItem10, Me.Rdb_Traer_Bloqueados_Compras, Me.Rdb_Traer_Bloqueados_Venta, Me.Rdb_Traer_Bloqueados_Compra_y_Venta, Me.Rdb_Traer_Bloqueados_Compra_Venta_y_Produccion})
         Me.Btn_ProdBloqueados.Tooltip = "Que hacer con los productos bloqueados"
+        '
+        'Btn_Cambiar_Opciones
+        '
+        Me.Btn_Cambiar_Opciones.Image = CType(resources.GetObject("Btn_Cambiar_Opciones.Image"), System.Drawing.Image)
+        Me.Btn_Cambiar_Opciones.Name = "Btn_Cambiar_Opciones"
+        Me.Btn_Cambiar_Opciones.Text = "Cambiar opciones"
         '
         'LabelItem9
         '
@@ -837,6 +895,7 @@ Partial Class Frm_MantLista_Precios_Random
         '
         '
         Me.Circular_Progres_Val.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Circular_Progres_Val.FocusCuesEnabled = False
         Me.Circular_Progres_Val.Location = New System.Drawing.Point(410, 445)
         Me.Circular_Progres_Val.Name = "Circular_Progres_Val"
         Me.Circular_Progres_Val.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
@@ -874,6 +933,7 @@ Partial Class Frm_MantLista_Precios_Random
         '
         '
         Me.Circular_Progres_Porc.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Circular_Progres_Porc.FocusCuesEnabled = False
         Me.Circular_Progres_Porc.Location = New System.Drawing.Point(476, 445)
         Me.Circular_Progres_Porc.Name = "Circular_Progres_Porc"
         Me.Circular_Progres_Porc.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
@@ -889,6 +949,7 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Btn_Cancelar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Cancelar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Cancelar.Image = CType(resources.GetObject("Btn_Cancelar.Image"), System.Drawing.Image)
+        Me.Btn_Cancelar.ImageAlt = CType(resources.GetObject("Btn_Cancelar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Cancelar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_Cancelar.Location = New System.Drawing.Point(557, 445)
         Me.Btn_Cancelar.Name = "Btn_Cancelar"
@@ -901,7 +962,6 @@ Partial Class Frm_MantLista_Precios_Random
         'Grupo_Rut
         '
         Me.Grupo_Rut.BackColor = System.Drawing.Color.White
-        Me.Grupo_Rut.CanvasColor = System.Drawing.SystemColors.Control
         Me.Grupo_Rut.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.Grupo_Rut.Controls.Add(Me.Lbl_Rtu)
         Me.Grupo_Rut.DisabledBackColor = System.Drawing.Color.Empty
@@ -942,7 +1002,6 @@ Partial Class Frm_MantLista_Precios_Random
         'Grupo_Costo_Ud1
         '
         Me.Grupo_Costo_Ud1.BackColor = System.Drawing.Color.White
-        Me.Grupo_Costo_Ud1.CanvasColor = System.Drawing.SystemColors.Control
         Me.Grupo_Costo_Ud1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.Grupo_Costo_Ud1.Controls.Add(Me.Lbl_Costo_Ultima_Compra_Ud1)
         Me.Grupo_Costo_Ud1.DisabledBackColor = System.Drawing.Color.Empty
@@ -983,7 +1042,6 @@ Partial Class Frm_MantLista_Precios_Random
         'Grupo_Costo_Ud2
         '
         Me.Grupo_Costo_Ud2.BackColor = System.Drawing.Color.White
-        Me.Grupo_Costo_Ud2.CanvasColor = System.Drawing.SystemColors.Control
         Me.Grupo_Costo_Ud2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.Grupo_Costo_Ud2.Controls.Add(Me.Lbl_Costo_Ultima_Compra_Ud2)
         Me.Grupo_Costo_Ud2.DisabledBackColor = System.Drawing.Color.Empty
@@ -1024,7 +1082,6 @@ Partial Class Frm_MantLista_Precios_Random
         'Grupo_PM
         '
         Me.Grupo_PM.BackColor = System.Drawing.Color.White
-        Me.Grupo_PM.CanvasColor = System.Drawing.SystemColors.Control
         Me.Grupo_PM.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.Grupo_PM.Controls.Add(Me.Lbl_Costo_PM)
         Me.Grupo_PM.DisabledBackColor = System.Drawing.Color.Empty
@@ -1061,12 +1118,6 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Grupo_PM.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Grupo_PM.TabIndex = 80
         Me.Grupo_PM.Text = "Costo PM"
-        '
-        'Btn_Cambiar_Opciones
-        '
-        Me.Btn_Cambiar_Opciones.Image = CType(resources.GetObject("Btn_Cambiar_Opciones.Image"), System.Drawing.Image)
-        Me.Btn_Cambiar_Opciones.Name = "Btn_Cambiar_Opciones"
-        Me.Btn_Cambiar_Opciones.Text = "Cambiar opciones"
         '
         'Frm_MantLista_Precios_Random
         '
@@ -1193,4 +1244,7 @@ Partial Class Frm_MantLista_Precios_Random
     Friend WithEvents Grupo_Costo_Ud2 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Grupo_PM As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Btn_Cambiar_Opciones As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Menu_Contextual_Grabar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Grabar_Inmediatamente As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Grabar_Futuro As DevComponents.DotNetBar.ButtonItem
 End Class

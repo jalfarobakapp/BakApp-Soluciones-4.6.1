@@ -55,9 +55,6 @@ namespace HEFESTO.ENVIO.SETDTE.FORM
             radioButton1.Checked = true;
             radioButton2.Checked = false;
 
-
-
-
             ////
             //// Inicie la seleccion del archivo
             openFile.Title = "Seleccione el archivo xml a enviar al SII.";
@@ -89,7 +86,6 @@ namespace HEFESTO.ENVIO.SETDTE.FORM
                         xmlDocumento.PreserveWhitespace = true;
                         xmlDocumento.Load(fileName);
 
-
                         ////
                         //// Recupere el rut del enviador del documento.
                         //// Revisar los siguientes tag
@@ -100,7 +96,7 @@ namespace HEFESTO.ENVIO.SETDTE.FORM
                         XmlNodeList XmlRutEmisorLibro = xmlDocumento.GetElementsByTagName("RutEmisorLibro", xmlDocumento.DocumentElement.NamespaceURI);
 
                         if (XmlRutEmisor != null && XmlRutEmisor.Count > 0)
-                            lRutEmisor.Add(XmlRutEmisor[0].InnerText);
+                            lRutEmisor.Add(XmlRutEmisor[0].InnerText);  
                         if (XmlRutEmisorLibro != null && XmlRutEmisorLibro.Count > 0)
                             lRutEmisor.Add(XmlRutEmisorLibro[0].InnerText);
                         
@@ -144,24 +140,15 @@ namespace HEFESTO.ENVIO.SETDTE.FORM
                         if (XmlRutEnvia.Count > 0)
                             cmpRutEnvia.Text = XmlRutEnvia[0].InnerText;
 
-
-
-                    
                     }
                 
                 }
-
-
-
 
             }
             catch (Exception exp)
             {
                 MessageBox.Show(exp.Message, "Error del proceso", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-
-
 
         }
 

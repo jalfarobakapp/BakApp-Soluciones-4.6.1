@@ -108,6 +108,7 @@ Partial Class Frm_Arbol_Asociacion_01
         Me.BtnGrabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.BtnGrabar.ForeColor = System.Drawing.Color.Black
         Me.BtnGrabar.Image = CType(resources.GetObject("BtnGrabar.Image"), System.Drawing.Image)
+        Me.BtnGrabar.ImageAlt = CType(resources.GetObject("BtnGrabar.ImageAlt"), System.Drawing.Image)
         Me.BtnGrabar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.BtnGrabar.Name = "BtnGrabar"
         Me.BtnGrabar.Tooltip = "Grabar"
@@ -117,6 +118,7 @@ Partial Class Frm_Arbol_Asociacion_01
         Me.BtnExpandirTodo.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.BtnExpandirTodo.ForeColor = System.Drawing.Color.Black
         Me.BtnExpandirTodo.Image = CType(resources.GetObject("BtnExpandirTodo.Image"), System.Drawing.Image)
+        Me.BtnExpandirTodo.ImageAlt = CType(resources.GetObject("BtnExpandirTodo.ImageAlt"), System.Drawing.Image)
         Me.BtnExpandirTodo.Name = "BtnExpandirTodo"
         Me.BtnExpandirTodo.Tooltip = "Expandir todo el árbol"
         '
@@ -125,6 +127,7 @@ Partial Class Frm_Arbol_Asociacion_01
         Me.BtnContraerTodo.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.BtnContraerTodo.ForeColor = System.Drawing.Color.Black
         Me.BtnContraerTodo.Image = CType(resources.GetObject("BtnContraerTodo.Image"), System.Drawing.Image)
+        Me.BtnContraerTodo.ImageAlt = CType(resources.GetObject("BtnContraerTodo.ImageAlt"), System.Drawing.Image)
         Me.BtnContraerTodo.Name = "BtnContraerTodo"
         Me.BtnContraerTodo.Tooltip = "Contraer todo el árbol"
         '
@@ -133,6 +136,7 @@ Partial Class Frm_Arbol_Asociacion_01
         Me.Btn_Refrescar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Refrescar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Refrescar.Image = CType(resources.GetObject("Btn_Refrescar.Image"), System.Drawing.Image)
+        Me.Btn_Refrescar.ImageAlt = CType(resources.GetObject("Btn_Refrescar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Refrescar.Name = "Btn_Refrescar"
         Me.Btn_Refrescar.Tooltip = "Actualizar información"
         '
@@ -141,6 +145,7 @@ Partial Class Frm_Arbol_Asociacion_01
         Me.BtnMantencion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.BtnMantencion.ForeColor = System.Drawing.Color.Black
         Me.BtnMantencion.Image = CType(resources.GetObject("BtnMantencion.Image"), System.Drawing.Image)
+        Me.BtnMantencion.ImageAlt = CType(resources.GetObject("BtnMantencion.ImageAlt"), System.Drawing.Image)
         Me.BtnMantencion.Name = "BtnMantencion"
         Me.BtnMantencion.Tooltip = "Mantención de clasificaciones"
         Me.BtnMantencion.Visible = False
@@ -150,6 +155,7 @@ Partial Class Frm_Arbol_Asociacion_01
         Me.Btn_MoverCarpetas.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_MoverCarpetas.ForeColor = System.Drawing.Color.Black
         Me.Btn_MoverCarpetas.Image = CType(resources.GetObject("Btn_MoverCarpetas.Image"), System.Drawing.Image)
+        Me.Btn_MoverCarpetas.ImageAlt = CType(resources.GetObject("Btn_MoverCarpetas.ImageAlt"), System.Drawing.Image)
         Me.Btn_MoverCarpetas.Name = "Btn_MoverCarpetas"
         Me.Btn_MoverCarpetas.Tooltip = "Mover carpetas"
         Me.Btn_MoverCarpetas.Visible = False
@@ -159,6 +165,7 @@ Partial Class Frm_Arbol_Asociacion_01
         Me.Btn_RearmarArbol.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_RearmarArbol.ForeColor = System.Drawing.Color.Black
         Me.Btn_RearmarArbol.Image = CType(resources.GetObject("Btn_RearmarArbol.Image"), System.Drawing.Image)
+        Me.Btn_RearmarArbol.ImageAlt = CType(resources.GetObject("Btn_RearmarArbol.ImageAlt"), System.Drawing.Image)
         Me.Btn_RearmarArbol.Name = "Btn_RearmarArbol"
         Me.Btn_RearmarArbol.Tooltip = "Volver a re-clasificar productos"
         Me.Btn_RearmarArbol.Visible = False
@@ -168,6 +175,7 @@ Partial Class Frm_Arbol_Asociacion_01
         Me.BtnImprimirArbol.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.BtnImprimirArbol.ForeColor = System.Drawing.Color.Black
         Me.BtnImprimirArbol.Image = CType(resources.GetObject("BtnImprimirArbol.Image"), System.Drawing.Image)
+        Me.BtnImprimirArbol.ImageAlt = CType(resources.GetObject("BtnImprimirArbol.ImageAlt"), System.Drawing.Image)
         Me.BtnImprimirArbol.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
         Me.BtnImprimirArbol.Name = "BtnImprimirArbol"
         Me.BtnImprimirArbol.Tooltip = "Exportar a .txt"
@@ -177,6 +185,7 @@ Partial Class Frm_Arbol_Asociacion_01
         Me.BtnExportarCsv.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.BtnExportarCsv.ForeColor = System.Drawing.Color.Black
         Me.BtnExportarCsv.Image = CType(resources.GetObject("BtnExportarCsv.Image"), System.Drawing.Image)
+        Me.BtnExportarCsv.ImageAlt = CType(resources.GetObject("BtnExportarCsv.ImageAlt"), System.Drawing.Image)
         Me.BtnExportarCsv.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
         Me.BtnExportarCsv.Name = "BtnExportarCsv"
         Me.BtnExportarCsv.Tooltip = "Exportar a .csv"

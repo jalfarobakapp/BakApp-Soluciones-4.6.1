@@ -233,11 +233,20 @@ Public Class Frm_Formulario_Observaciones
 
         End If
 
-
         Dim _TblDetalle As DataTable = _Ds_Matriz_Documentos.Tables("Detalle_Doc")
 
         For Each _Fila As DataRow In _TblDetalle.Rows
-            _Fila.Item("FechaRecepcion") = DtpFechaEntrega.Value
+
+            Try
+                Dim _Feerli = NuloPorNro(_Fila.Item("FechaRecepcion"), "Nulo")
+
+                If _Feerli = "Nulo" Then
+                    _Fila.Item("FechaRecepcion") = DtpFechaEntrega.Value
+                End If
+            Catch ex As Exception
+
+            End Try
+
         Next
 
         If _Caracteres <= 250 Then

@@ -1,5 +1,5 @@
-﻿Imports DevComponents.DotNetBar
-Imports System.ComponentModel
+﻿Imports System.ComponentModel
+Imports DevComponents.DotNetBar
 
 Public Class Frm_Ubicaciones
 
@@ -221,7 +221,7 @@ Public Class Frm_Ubicaciones
                       "Order by Fila Desc" &
                       vbCrLf &
                       vbCrLf &
-                      "Select * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega" & vbCrLf &
+                      "Select *,Codigo_Ubic As Codigo_Ubic_Old From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega" & vbCrLf &
                       "Where Id_Mapa = @Id_Mapa And Codigo_Sector = @Codigo_Sector" & vbCrLf &
                       "Order by Columna,Fila Desc"
 
@@ -255,15 +255,20 @@ Public Class Frm_Ubicaciones
             _TblColumnas.Rows.Add(dr)
         End If
 
+        Me.Cursor = Cursors.WaitCursor
+
         For Each _Fila As DataRow In _TblColumnas.Rows
             'creamos las mismas columnas que hay en el dataset
             Dim _Columna As String = Trim(_Fila.Item("Columna"))
 
             Dim _Col As New DataColumn
-            '_Col.Namespace = "C" & numero_(_Contador, 2)
-            '_Col.ColumnName = _Columna '"C" & numero_(_Contador, 2)
-            '_Col.DataType = System.Type.[GetType]("System.String")
-            dt.Columns.Add(_Columna, System.Type.[GetType]("System.String"))
+
+            Try
+                dt.Columns.Add(_Columna, System.Type.[GetType]("System.String"))
+            Catch ex As Exception
+                dt.Columns.Add(_Columna & "." & dt.Columns.Count + 1, System.Type.[GetType]("System.String"))
+            End Try
+
             '
             'dt.Columns.Add(_Col)
             ' _Contador += 1
@@ -413,6 +418,7 @@ Public Class Frm_Ubicaciones
 
         End If
 
+        Me.Cursor = Cursors.Default
 
     End Sub
 
@@ -557,17 +563,9 @@ Public Class Frm_Ubicaciones
 
         If Fx_Tiene_Permiso(Me, "Ubic0013") Then
 
-            'Consulta_sql = "Update Zw_TblArbol_Asociaciones Set Descripcion = '" & TxtDescripcion_Ubic.Text & "' Where Codigo_Nodo = " & _Codigo_Nodo
-
-            ' If Ej_consulta_IDU(Consulta_sql, cn1) Then
-
-
-
-
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega " & vbCrLf &
                            "Where Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega &
                            "' And Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "'" & vbCrLf
-
 
             With Grilla
                 Dim NCol As Integer = .ColumnCount
@@ -586,7 +584,7 @@ Public Class Frm_Ubicaciones
                         Dim _Sub = Split(_Codigo_Ubic, ".", 2)
                         Dim _Sql_SubSector = String.Empty
 
-                        If _EsSubSector Then
+                        If False Then '_EsSubSector Then
                             _Codigo_Ubic = Replace(_Codigo_Ubic, "...", "")
                         Else
                             If _Sub.Length = 2 Then
@@ -617,41 +615,50 @@ Public Class Frm_Ubicaciones
 
 
                         If _Fila.Visible Then
+
                             If _Columna <> "Fila" And
                                _Columna <> "Alto" And
                                _Columna <> "Largo" And
                                _Columna <> "Ancho" And
                                _Columna <> "Peso_Max" And
                                _Columna <> "Desc_Ubicacion" Then
+
+                                Dim _Codigo_Ubic_Old = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega", "Codigo_Ubic",
+                                                                         "Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "' And Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "' And Fila = '" & _Nivel & "' And Columna = '" & _Columna & "'")
+
+                                If _Codigo_Ubic_Old <> _Codigo_Ubic Then
+                                    Consulta_sql += "Update " & _Global_BaseBk & "Zw_Prod_Ubicacion Set Codigo_Ubic = '" & _Codigo_Ubic & "'" & Space(1) &
+                                                    "Where Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "' " &
+                                                    "And Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "' " &
+                                                    "And Codigo_Ubic = '" & _Codigo_Ubic_Old & "'" & vbCrLf
+                                End If
+
                                 Consulta_sql +=
                                 "Insert Into " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega (Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector," &
                                 "Columna,NomColumna,Fila,Es_SubSector,Codigo_Ubic,Descripcion_Ubic,Nombre_SubSector) Values " &
                                 "('" & _Empresa & "','" & _Sucursal & "','" & _Bodega & "'," & _Id_Mapa & ",'" & _Codigo_Sector &
                                 "','" & _Columna & "','" & _NomColumna & "','" & _Nivel &
                                 "'," & _Es_SubSector & ",'" & _Codigo_Ubic & "','" & _Descripcion_Ubic & "','" & _Nombre_SubSector & "')" & vbCrLf & _Sql_SubSector & vbCrLf
+
                             End If
+
                         End If
 
                     Next
-                    '.Columns(i).Visible = False
-                Next
-            End With
-            _Grabo = _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
+                Next
+
+            End With
+
+            _Grabo = _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
         End If
 
         Sb_Marcar_Celdas_Sin_Productos_Asignados()
 
         If _Grabo Then
-            Beep()
-            ToastNotification.Show(Me, "DATOS GUARDADOS CORRECTAMENTE",
-                                   My.Resources.save,
-                                   2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
-            'Chk_Modificar_Sector.Checked = False
+            MessageBoxEx.Show(Me, "Datos guardados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
-
-        ' Sb_Autoajustar_Ancho_Columnas(Grilla)
 
     End Sub
 
@@ -833,20 +840,11 @@ Public Class Frm_Ubicaciones
                             ShowContextMenu(Menu_Contextual_Fila)
                         End If
                     Else
+
                         Dim _Codigo_Ubic = NuloPorNro(_Fila.Cells(_Cabeza).Value, "")
 
-                        Dim _Sub = Split(_Codigo_Ubic, ".", 2)
                         Dim _Sql_SubSector = String.Empty
-                        Dim _Es_SubSector As Boolean
-
-                        If _Sub.Length = 2 Then
-                            If _Sub(1) = ".." Then
-
-                                _Codigo_Ubic = _TblUbicacion.Rows(0).Item("Codigo_Sector") & _Codigo_Ubic
-                                _Es_SubSector = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega",
-                                                "Id_Mapa = " & _Id_Mapa & " And Codigo_Ubic = '" & _Codigo_Ubic & "' And Es_SubSector = 1"))
-                            End If
-                        End If
+                        Dim _Es_SubSector As Boolean = Fx_Es_SubSector(_Codigo_Ubic, _Codigo_Ubic)
 
                         If _Es_SubSector Then
                             ShowContextMenu(Menu_Contextual_Sub_Sector)
@@ -859,7 +857,6 @@ Public Class Frm_Ubicaciones
                                     Btn_Mnu_Desbloquear_Ubicacion.Visible = True
                                     ShowContextMenu(Menu_Contextual_Ubicacion)
                                 Else
-                                    'Btn_Mnu_Bloquear_Ubicacion.Visible = False
                                     Beep()
                                     ToastNotification.Show(Me, "UBICACION BLOQUEADA",
                                                           My.Resources.delete,
@@ -903,18 +900,18 @@ Public Class Frm_Ubicaciones
 
         Dim _Codigo_Ubic As String = NuloPorNro(_Fila.Cells(_Cabeza).Value, "")
 
-        Dim _Sub = Split(_Codigo_Ubic, ".", 2)
+        'Dim _Sub = Split(_Codigo_Ubic, ".", 2)
         Dim _Sql_SubSector = String.Empty
-        Dim _Es_SubSector As Boolean
+        Dim _Es_SubSector As Boolean = Fx_Es_SubSector(_Codigo_Ubic, _Codigo_Ubic)
 
-        If _Sub.Length = 2 Then
-            If _Sub(1) = ".." Then
+        'If _Sub.Length = 2 Then
+        '    If _Sub(1) = ".." Then
 
-                _Codigo_Ubic = _TblUbicacion.Rows(0).Item("Codigo_Sector") & _Codigo_Ubic
-                _Es_SubSector = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega",
-                                "Id_Mapa = " & _Id_Mapa & " And Codigo_Ubic = '" & _Codigo_Ubic & "' And Es_SubSector = 1"))
-            End If
-        End If
+        '        _Codigo_Ubic = _TblUbicacion.Rows(0).Item("Codigo_Sector") & _Codigo_Ubic
+        '        _Es_SubSector = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega",
+        '                        "Id_Mapa = " & _Id_Mapa & " And Codigo_Ubic = '" & _Codigo_Ubic & "' And Es_SubSector = 1"))
+        '    End If
+        'End If
 
         If _Es_SubSector Then
 
@@ -1017,11 +1014,24 @@ Public Class Frm_Ubicaciones
     End Sub
 
     Private Sub Grilla_CellBeginEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellCancelEventArgs) Handles Grilla.CellBeginEdit
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+
+        Dim _Codigo_Ubic = NuloPorNro(_Fila.Cells(_Cabeza).Value, "")
+
+        Dim _Es_SubSector = Fx_Es_SubSector(_Codigo_Ubic, _Codigo_Ubic)
+
+        'Dim _Row_Ubicacion As DataRow = Fx_Row_Ubicacion(_Codigo_Ubic)
 
         If _Cabeza = "Fila" Or Not _Mantencion_Ubicaciones Then
             e.Cancel = True
         End If
+
+        If _Es_SubSector Then
+            e.Cancel = True
+        End If
+
     End Sub
 
 
@@ -1110,7 +1120,7 @@ Public Class Frm_Ubicaciones
 
             Sb_Marcar_Celdas_Sin_Productos_Asignados()
         Else
-            MessageBoxEx.Show(Me, "Esta ubicación aun no existe ne la base de datos" & vbCrLf &
+            MessageBoxEx.Show(Me, "Esta ubicación aun no existe en la base de datos" & vbCrLf &
                                "debe grabar para poder hacer gestión sobre esta celda", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
 
@@ -1141,9 +1151,9 @@ Public Class Frm_Ubicaciones
         Btn_Mnu_Bloquear_Ubicacion.Enabled = _Habilitar
         Btn_Mnu_Desbloquear_Ubicacion.Enabled = _Habilitar
 
-        If _EsSubSector Then
-            Btn_Mnu_Dejar_Ubacion_Sub_Sector.Visible = False
-        End If
+        'If _EsSubSector Then
+        '    Btn_Mnu_Dejar_Ubacion_Sub_Sector.Visible = False
+        'End If
 
         Sb_Marcar_Celdas_Sin_Productos_Asignados()
         Return
@@ -1213,21 +1223,23 @@ Public Class Frm_Ubicaciones
                             Dim _NomColumna = NuloPorNro(_Fila.Cells(_Columna).Value, "")
                             Dim _Codigo_Ubic = _Codigo_Sector & _NomColumna
 
+                            _Es_SubSector = Fx_Es_SubSector(_NomColumna, _Codigo_Ubic)
+
                             If _NomColumna = "." Then
                                 _Fila.Cells(_Columna).Style.ForeColor = Color.Black
                                 _Fila.Cells(_Columna).Style.BackColor = Color.Gray
                             Else
 
 
-                                Dim _Sub = Split(_Codigo_Ubic, ".", 2)
-                                Dim _Sql_SubSector = String.Empty
+                                'Dim _Sub = Split(_Codigo_Ubic, ".", 2)
+                                'Dim _Sql_SubSector = String.Empty
 
 
-                                If _Sub.Length = 2 Then
-                                    If _Sub(1) = ".." Then
-                                        _Es_SubSector = True
-                                    End If
-                                End If
+                                'If _Sub.Length = 2 Then
+                                '    If _Sub(1) = ".." Then
+                                '        _Es_SubSector = True
+                                '    End If
+                                'End If
 
                                 If _Es_SubSector Then
 
@@ -1340,49 +1352,55 @@ Public Class Frm_Ubicaciones
 
     Private Sub Sb_Grilla_CellEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
 
-        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
-        Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+        Try
 
-        If _Cabeza = "Fila" Then
+            Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+            Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
-            Lbl_Estatus_Ubicacion.Text = String.Empty
-            Btn_Ver.Enabled = False
-
-        Else
-
-            Dim _NomColumna = _Fila.Cells(_Cabeza).Value
-
-            If _NomColumna = "." Then
+            If _Cabeza = "Fila" Then
 
                 Lbl_Estatus_Ubicacion.Text = String.Empty
                 Btn_Ver.Enabled = False
 
             Else
 
-                Dim _Codigo_Ubic = Replace(_Codigo_Sector, "...", "") & _NomColumna
-                Dim _Cant_Producto_Asignados = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Ubicacion",
-                                                                "Codigo_Ubic = '" & _Codigo_Ubic & "'")
+                Dim _NomColumna = _Fila.Cells(_Cabeza).Value
 
-                Dim _Es_SubSector As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega",
-                                                                      "Id_Mapa = " & _Id_Mapa & " And Codigo_Ubic = '" & _Codigo_Ubic & "' And Es_SubSector = 1"))
-                If _Es_SubSector Then
+                If _NomColumna = "." Then
 
-                    Lbl_Estatus_Ubicacion.Text = "Está ubicación es un Sub-Sector : <b> " & _Codigo_Ubic & "</b>"
+                    Lbl_Estatus_Ubicacion.Text = String.Empty
                     Btn_Ver.Enabled = False
 
                 Else
 
-                    Lbl_Estatus_Ubicacion.Text = "Ubicación : <b> " & _Codigo_Ubic & "</b>, Productos asociados : <b> " & _Cant_Producto_Asignados & "</b>"
-                    Btn_Ver.Enabled = True
-                    Btn_Ver.Enabled = Chk_Modificar_Sector.Checked
+                    Dim _Codigo_Ubic = Replace(_Codigo_Sector, "...", "") & _NomColumna
+                    Dim _Cant_Producto_Asignados = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Ubicacion",
+                                                                    "Codigo_Ubic = '" & _Codigo_Ubic & "'")
+
+                    Dim _Es_SubSector As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega",
+                                                                          "Id_Mapa = " & _Id_Mapa & " And Codigo_Ubic = '" & _Codigo_Ubic & "' And Es_SubSector = 1"))
+                    If _Es_SubSector Then
+
+                        Lbl_Estatus_Ubicacion.Text = "Está ubicación es un Sub-Sector : <b> " & _Codigo_Ubic & "</b>"
+                        Btn_Ver.Enabled = False
+
+                    Else
+
+                        Lbl_Estatus_Ubicacion.Text = "Ubicación : <b> " & _Codigo_Ubic & "</b>, Productos asociados : <b> " & _Cant_Producto_Asignados & "</b>"
+                        Btn_Ver.Enabled = True
+                        Btn_Ver.Enabled = Chk_Modificar_Sector.Checked
+
+                    End If
 
                 End If
 
             End If
 
-        End If
-
-        Btn_Ver.Refresh()
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Cuek!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        Finally
+            Btn_Ver.Refresh()
+        End Try
 
     End Sub
 
@@ -1397,13 +1415,43 @@ Public Class Frm_Ubicaciones
 
     Private Sub Btn_Imprimir_Toma_Inventario_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Imprimir_Toma_Inventario.Click
 
-        Consulta_sql = "SELECT Zw_Ub.Empresa,Zw_Ub.Sucursal,Zw_Ub.Bodega,Zw_Ub.Codigo_Sector,Zw_Ub.Codigo_Ubic," &
+        Dim _Tiene_SubSectores As Boolean
+
+        For Each _Fila As DataRow In _TblEstante.Rows
+
+            Dim _Es_SubSector As Boolean = _Fila.Item("Es_SubSector")
+
+            If _Es_SubSector Then
+                _Tiene_SubSectores = True
+                Exit For
+            End If
+
+        Next
+
+        Dim _Filtro_Sectores As String
+
+        If _Tiene_SubSectores Then
+            If MessageBoxEx.Show(Me, "Esta ubicación tiene Sub-Sectores." & vbCrLf &
+                   "¿Desea incorporar estos productos al informe tambien?",
+                     "Existente Sub-Sectores", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                _Tiene_SubSectores = False
+            End If
+        End If
+
+        If _Tiene_SubSectores Then
+            _Filtro_Sectores = Generar_Filtro_IN(_TblEstante, "Es_SubSector", "Codigo_Ubic", False, True, "'")
+            _Filtro_Sectores = Replace(_Filtro_Sectores, ")", ",'" & _Codigo_Sector & "')")
+        Else
+            _Filtro_Sectores = "('" & _Codigo_Sector & "')"
+        End If
+
+        Consulta_sql = "Select Zw_Ub.Empresa,Zw_Ub.Sucursal,Zw_Ub.Bodega,Zw_Ub.Codigo_Sector,Zw_Ub.Codigo_Ubic," &
                        "Zw_Ub.Codigo,Mp.NOKOPR,Zw_Ub.Primaria,Mp.UD01PR,Mp.UD02PR,Mp.RLUD,Mst.STFI1,Mst.STFI2" & vbCrLf &
-                       "FROM " & _Global_BaseBk & "Zw_Prod_Ubicacion AS Zw_Ub " & vbCrLf &
-                       "LEFT OUTER JOIN MAEST AS Mst ON Zw_Ub.Codigo = Mst.KOPR AND Zw_Ub.Empresa = Mst.EMPRESA AND " & vbCrLf &
-                       "Zw_Ub.Sucursal = Mst.KOSU AND Zw_Ub.Bodega = Mst.KOBO LEFT OUTER JOIN MAEPR AS Mp ON Zw_Ub.Codigo = Mp.KOPR" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Prod_Ubicacion AS Zw_Ub " & vbCrLf &
+                       "Left Outer Join MAEST AS Mst ON Zw_Ub.Codigo = Mst.KOPR AND Zw_Ub.Empresa = Mst.EMPRESA AND " & vbCrLf &
+                       "Zw_Ub.Sucursal = Mst.KOSU AND Zw_Ub.Bodega = Mst.KOBO Left Outer Join MAEPR AS Mp ON Zw_Ub.Codigo = Mp.KOPR" & vbCrLf &
                        "Where Zw_Ub.Id_Mapa = '" & _Id_Mapa & "' And " & vbCrLf &
-                       "Zw_Ub.Codigo_Sector = '" & _Codigo_Sector & "'"
+                       "Zw_Ub.Codigo_Sector In " & _Filtro_Sectores & "--'" & _Codigo_Sector & "'"
 
         Dim _TblUbicaciones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -1591,17 +1639,27 @@ Public Class Frm_Ubicaciones
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
-
         Dim _Codigo_Ubic = NuloPorNro(_Fila.Cells(_Cabeza).Value, "")
+        Dim _Codigo_Sector = _Codigo_Ubic
         Dim _Nombre_SubSector As String = _Fila.Cells(_Cabeza).ToolTipText
+
+        Dim _Row_Ubicacion As DataRow = Fx_Row_Ubicacion(_Codigo_Ubic)
+
+        _Codigo_Ubic = _Row_Ubicacion.Item("Codigo_Ubic")
+
+        Dim _Cant_Producto_Asignados As Double = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Ubicacion", "Codigo_Ubic = '" & _Codigo_Ubic & "'")
+
+        If CBool(_Cant_Producto_Asignados) Then
+            MessageBoxEx.Show(Me, "No se puede dejar este sector como Sub-Sector, ya que existente productos asignados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         If String.IsNullOrEmpty(_Nombre_SubSector) Then
             _Nombre_SubSector = "SUB-SECTOR " & _Fila.Cells(_Cabeza).Value
         End If
 
-
         Dim Fm As New Frm_Formulario_Diseno_Mapa_Crear_Sector(_Id_Mapa, Frm_Formulario_Diseno_Mapa_Crear_Sector._Enum_Accion.Editar)
-        Fm.Pro_Codigo_Sector = _Codigo_Ubic
+        Fm.Pro_Codigo_Sector = _Codigo_Sector
         Fm.Pro_Nombre_Sector = _Nombre_SubSector
         Fm.ShowDialog(Me)
         _Grabar = Fm.Pro_Grabar
@@ -1613,9 +1671,16 @@ Public Class Frm_Ubicaciones
                 MessageBoxEx.Show(Me, "El nombre no puede estar vacío", "Validación")
             Else
 
-                Sb_Marcar_Celdas_Sub_Sector(_Enum_Marcar_Sub_Sector.Marcar, _Codigo_Ubic, _Nombre_SubSector)
+                Sb_Marcar_Celdas_Sub_Sector(_Enum_Marcar_Sub_Sector.Marcar, _Codigo_Sector, _Nombre_SubSector)
+
+                _Row_Ubicacion.Item("Es_SubSector") = True
+                _Row_Ubicacion.Item("Codigo_Ubic") += "..."
+                _Row_Ubicacion.Item("Descripcion_Ubic") += "..."
+                _Row_Ubicacion.Item("Codigo_Ubic_Old") += "..."
+                _Row_Ubicacion.Item("Nombre_SubSector") = _Nombre_SubSector
 
                 Sb_Grabar_Ubicaciones()
+
                 Chk_Modificar_Sector.Checked = True
 
             End If
@@ -1763,10 +1828,101 @@ Public Class Frm_Ubicaciones
 
     Private Sub Grilla_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
 
-        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
         Grilla.Columns(_Cabeza).ReadOnly = True
+
+    End Sub
+
+    Private Sub Btn_Mnu_Sector_Cambiar_Codigo_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Sector_Cambiar_Codigo.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+
+        Dim _Codigo_Ubic = NuloPorNro(_Fila.Cells(_Cabeza).Value, "")
+
+        Dim _Sql_SubSector = String.Empty
+
+        Dim _Row_Ubicacion As DataRow = Fx_Row_Ubicacion(_Codigo_Ubic)
+
+        Dim _Id_Ubicacion = _Row_Ubicacion.Item("Id_Ubicacion")
+        Dim _Codigo_Sector = _Row_Ubicacion.Item("Codigo_Ubic")
+        Dim _Cod_Celda = _Codigo_Sector
+        Dim _Codigo_Sector_Old = _Codigo_Sector
+        Dim _Nombre_Sector = _Row_Ubicacion.Item("Nombre_SubSector")
+        Dim _Es_SubSector = _Row_Ubicacion.Item("Es_SubSector")
+
+        Dim _Tiene_Prod As Boolean
+        Dim Fm_ As New Frm_Ubicaciones(_RowBodega, _Id_Mapa, _Codigo_Sector_Old)
+        _Tiene_Prod = Fm_.Fx_Tiene_Productos_El_Sector(_Id_Mapa, _Codigo_Sector_Old)
+        Fm_.Dispose()
+
+        If _Tiene_Prod Then
+
+            If MessageBoxEx.Show(Me, "Existen productos asociados a estas ubicaciones" & vbCrLf &
+                                 "¿Esta seguro de cambiar el código del sector?", "Confirmación",
+                                 MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
+                Return
+            End If
+
+        End If
+
+        '_Nombre_Sector = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det", "Nombre_Sector",
+        '                           "Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector_Old & "'")
+
+        Dim Fm As New Frm_Formulario_Diseno_Mapa_Crear_Sector(_Id_Mapa, Frm_Formulario_Diseno_Mapa_Crear_Sector._Enum_Accion.Editar_Codigo)
+        Fm.Pro_Codigo_Sector = _Codigo_Ubic
+        Fm.Pro_Nombre_Sector = _Nombre_Sector
+        Fm.Es_SubSector = True
+        Fm.ShowDialog(Me)
+
+        Dim _Grabar = Fm.Pro_Grabar
+        _Codigo_Sector = Fm.Pro_Codigo_Sector
+        _Nombre_Sector = Fm.Pro_Nombre_Sector
+        Fm.Dispose()
+
+        If _Grabar Then
+
+            _Cod_Celda = _Codigo_Sector & "..."
+            _Nombre_Sector = "SUB-SECTOR " & _Codigo_Sector
+            _Codigo_Sector = _TblUbicacion.Rows(0).Item("Codigo_Sector") & _Codigo_Sector & "..."
+
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Set Codigo_Ubic = '" & _Codigo_Sector & "',Descripcion_Ubic = '" & _Cod_Celda & "',Nombre_SubSector = '" & _Nombre_Sector & "'" & vbCrLf &
+                           "Where Id_Ubicacion = " & _Id_Ubicacion & vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det" & Space(1) &
+                           "Set Codigo_Sector = '" & _Codigo_Sector & "', Nombre_Sector = '" & _Nombre_Sector & "'" & Space(1) &
+                           "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector_Old & "'" &
+                           vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Set Codigo_Sector = '" & _Codigo_Sector & "'" & Space(1) &
+                           "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector_Old & "'" &
+                           vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Set Codigo_Ubic = Codigo_Sector+Descripcion_Ubic" & Space(1) &
+                           "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector_Old & "'" &
+                           vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_Prod_Ubicacion Set Codigo_Sector = '" & _Codigo_Sector & "'," &
+                           "Codigo_Ubic = REPLACE(Codigo_Ubic,'" & _Codigo_Sector_Old & "','" & _Codigo_Sector & "')" &
+                           vbCrLf &
+                           "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector_Old & "'"
+
+            If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+
+                _Fila.Cells(_Cabeza).Value = _Cod_Celda
+                _Fila.Cells(_Cabeza).ToolTipText = _Nombre_Sector
+
+                _Row_Ubicacion.Item("Codigo_Ubic") = _Codigo_Sector
+                _Row_Ubicacion.Item("Codigo_Ubic_Old") = _Codigo_Sector
+                _Row_Ubicacion.Item("Nombre_SubSector") = _Nombre_Sector
+                _Row_Ubicacion.Item("Descripcion_Ubic") = _Cod_Celda
+
+                Beep()
+                ToastNotification.Show(Me, "CODIGO CAMBIADO CORRECTAMENTE",
+                                       My.Resources.save,
+                                       2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+
+            End If
+
+        End If
 
     End Sub
 
@@ -1774,6 +1930,18 @@ Public Class Frm_Ubicaciones
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+
+        Dim _Codigo_Ubic As String = _Fila.Cells(_Cabeza).Value
+        Dim _Row_Ubicacion As DataRow = Fx_Row_Ubicacion(_Codigo_Ubic)
+
+        _Codigo_Ubic = _Row_Ubicacion.Item("Codigo_Ubic")
+
+        Dim _Cant_Producto_Asignados As Double = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Ubicacion", "Codigo_Ubic = '" & _Codigo_Ubic & "'")
+
+        If CBool(_Cant_Producto_Asignados) Then
+            MessageBoxEx.Show(Me, "No se puede bloquear esta ubicación, ya que existente productos asignados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         _Fila.Cells(_Cabeza).Value = "."
         _Fila.Cells(_Cabeza).Style.BackColor = Color.Gray
@@ -1803,5 +1971,37 @@ Public Class Frm_Ubicaciones
         Grilla.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
 
     End Sub
+
+
+    Function Fx_Es_SubSector(Descripcion_Ubic As String, ByRef _Codigo_Ubic As String) As Boolean
+
+        Dim _Es_SubSector As Boolean
+        Dim _RowFlPer As DataRow() = _TblEstante.Select("Descripcion_Ubic = '" & Descripcion_Ubic & "'")
+
+        If Convert.ToBoolean(_RowFlPer.Count) Then
+
+            Dim _FlPer2 As DataRow = _RowFlPer(0)
+
+            _Codigo_Ubic = _FlPer2.Item("Codigo_Ubic")
+            _Es_SubSector = _FlPer2.Item("Es_SubSector")
+
+        End If
+
+        Return _Es_SubSector
+
+    End Function
+
+    Function Fx_Row_Ubicacion(_Descripcion_Ubic As String) As DataRow
+
+        Dim _RowFlPer As DataRow() = _TblEstante.Select("Descripcion_Ubic = '" & _Descripcion_Ubic & "'")
+        Dim _FlPer2 As DataRow
+
+        If Convert.ToBoolean(_RowFlPer.Count) Then
+            _FlPer2 = _RowFlPer(0)
+        End If
+
+        Return _FlPer2
+
+    End Function
 
 End Class

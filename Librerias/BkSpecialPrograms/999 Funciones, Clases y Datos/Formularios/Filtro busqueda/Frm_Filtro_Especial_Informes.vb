@@ -64,7 +64,7 @@ Public Class Frm_Filtro_Especial_Informes
         Get
             Return _Filtrar
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
 
         End Set
     End Property
@@ -72,7 +72,7 @@ Public Class Frm_Filtro_Especial_Informes
         Get
             Return _TblFiltro
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _TblFiltro = value
 
             If Not (_TblFiltro Is Nothing) Then
@@ -87,7 +87,7 @@ Public Class Frm_Filtro_Especial_Informes
         Get
             Return Chk_Seleccionar_Todos.Checked
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             Chk_Seleccionar_Todos.Checked = value
         End Set
     End Property
@@ -95,7 +95,7 @@ Public Class Frm_Filtro_Especial_Informes
         Get
             Return _Condicion_Extra
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Condicion_Extra = value
         End Set
     End Property
@@ -103,7 +103,7 @@ Public Class Frm_Filtro_Especial_Informes
         Get
             Return _Campo
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Campo = value
         End Set
     End Property
@@ -111,7 +111,7 @@ Public Class Frm_Filtro_Especial_Informes
         Get
             Return _Descripcion
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Descripcion = value
         End Set
     End Property
@@ -119,7 +119,7 @@ Public Class Frm_Filtro_Especial_Informes
         Get
             Return _Tabla
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Tabla = value
         End Set
     End Property
@@ -127,7 +127,7 @@ Public Class Frm_Filtro_Especial_Informes
         Get
             Return Chk_Seleccionar_Todos.Checked
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             Chk_Seleccionar_Todos.Checked = value
         End Set
     End Property
@@ -135,7 +135,7 @@ Public Class Frm_Filtro_Especial_Informes
         Get
             Return Txt_Codigo.Text
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             Txt_Codigo.Text = value
         End Set
     End Property
@@ -143,7 +143,7 @@ Public Class Frm_Filtro_Especial_Informes
         Get
             Return Txt_Descripcion.Text
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             Txt_Descripcion.Text = value
         End Set
     End Property
@@ -159,7 +159,7 @@ Public Class Frm_Filtro_Especial_Informes
         Get
             Return _Seleccionar_Solo_Uno
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Seleccionar_Solo_Uno = value
         End Set
     End Property
@@ -198,9 +198,9 @@ Public Class Frm_Filtro_Especial_Informes
         End Set
     End Property
 
-    Public Sub New(ByVal Tabla_filtro As _Tabla_Fl,
-                   Optional ByVal Incorporar_Campo_Vacias As Boolean = False,
-                   Optional ByVal Condicion_Extra As String = "",
+    Public Sub New(Tabla_filtro As _Tabla_Fl,
+                   Optional Incorporar_Campo_Vacias As Boolean = False,
+                   Optional Condicion_Extra As String = "",
                    Optional Tabla As String = "",
                    Optional Campo As String = "",
                    Optional Descripcion As String = "")
@@ -212,8 +212,8 @@ Public Class Frm_Filtro_Especial_Informes
 
         ' _Ver_Codigo = True
 
-        _Tabla = _Tabla
-        _Campo = _Campo
+        _Tabla = Tabla
+        _Campo = Campo
         _Descripcion = Descripcion
 
         _Tabla_a_Filtras = Tabla_filtro
@@ -231,6 +231,8 @@ Public Class Frm_Filtro_Especial_Informes
 
         _Requiere_Seleccion = True
 
+        Sb_Color_Botones_Barra(Bar1)
+
         If Global_Thema = Enum_Themas.Oscuro Then
 
             Txt_Descripcion.FocusHighlightEnabled = False
@@ -244,7 +246,7 @@ Public Class Frm_Filtro_Especial_Informes
 
     End Sub
 
-    Private Sub Frm_Filtro_Especial_Informes_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Filtro_Especial_Informes_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, Not Pro_Seleccionar_Solo_Uno)
 
@@ -433,9 +435,9 @@ Public Class Frm_Filtro_Especial_Informes
 
     End Sub
 
-    Private Function ChequearTodo(ByVal Grilla As DataGridView,
-                             ByVal Chk As Boolean,
-                             ByVal TipoFiltro As String)
+    Private Function ChequearTodo(Grilla As DataGridView,
+                             Chk As Boolean,
+                             TipoFiltro As String)
 
 
         For Each _Fila As DataGridViewRow In Grilla.Rows
@@ -446,7 +448,7 @@ Public Class Frm_Filtro_Especial_Informes
 
     End Function
 
-    Private Sub Sb_Grilla_MouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_MouseUp(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
 
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
@@ -477,7 +479,7 @@ Public Class Frm_Filtro_Especial_Informes
 
     End Sub
 
-    Private Sub BtnAceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnAceptar.Click
+    Private Sub BtnAceptar_Click(sender As System.Object, e As System.EventArgs) Handles BtnAceptar.Click
 
         Dim _Union_Campo_Vacias As String = "Select 1 As Chk,'' As Codigo, 'Vacias...' As Descripcion" & vbCrLf &
                                             "Union" & vbCrLf
@@ -551,13 +553,13 @@ Public Class Frm_Filtro_Especial_Informes
 
     End Sub
 
-    Private Sub Frm_Filtro_Especial_Informes_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Filtro_Especial_Informes_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Rdb_Mostrar_Todos_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Rdb_Mostrar_Todos.CheckedChanged
+    Private Sub Rdb_Mostrar_Todos_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles Rdb_Mostrar_Todos.CheckedChanged
         Grilla.EndEdit()
         If Rdb_Mostrar_Todos.Checked Then
             _Dv.RowFilter = String.Format("Codigo+Descripcion Like '%{0}%'", Txt_Descripcion.Text)
@@ -565,7 +567,7 @@ Public Class Frm_Filtro_Especial_Informes
         Me.Refresh()
     End Sub
 
-    Private Sub Rdb_Mostrar_Solo_Tickeados_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Rdb_Mostrar_Solo_Tickeados.CheckedChanged
+    Private Sub Rdb_Mostrar_Solo_Tickeados_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles Rdb_Mostrar_Solo_Tickeados.CheckedChanged
         Grilla.EndEdit()
         If Rdb_Mostrar_Solo_Tickeados.Checked Then
             _Dv.RowFilter = String.Format("Chk = {0}", 1)
@@ -573,12 +575,12 @@ Public Class Frm_Filtro_Especial_Informes
         Me.Refresh()
     End Sub
 
-    Private Sub Sb_Chk_Seleccionar_Todos_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Sb_Chk_Seleccionar_Todos_CheckedChanged(sender As System.Object, e As System.EventArgs)
         Dim chk As Boolean = Chk_Seleccionar_Todos.Checked
         ChequearTodo(Grilla, chk, "")
     End Sub
 
-    Private Sub Txt_Codigo_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Txt_Codigo.TextChanged
+    Private Sub Txt_Codigo_TextChanged(sender As System.Object, e As System.EventArgs) Handles Txt_Codigo.TextChanged
 
         Dim _Fl As String
         Select Case Cmb_Filtro_Codigo.SelectedValue
@@ -588,7 +590,7 @@ Public Class Frm_Filtro_Especial_Informes
 
     End Sub
 
-    Private Sub Btn_Ver_documento_origen_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ver_documento_origen.Click
+    Private Sub Btn_Ver_documento_origen_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_documento_origen.Click
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
@@ -596,7 +598,7 @@ Public Class Frm_Filtro_Especial_Informes
         Clipboard.SetText(Copiar)
     End Sub
 
-    Private Sub Sb_Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)

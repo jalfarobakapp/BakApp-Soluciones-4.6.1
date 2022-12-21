@@ -408,12 +408,16 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
         If Fx_Revisar_Documento_Cerrado(_Idmaeedo, True) Then
 
-            If Not Fx_Tiene_Permiso(Me, "Doc00055") Then
-                Return
-            End If
+            'If Not Fx_Tiene_Permiso(Me, "Doc00055") Then
+            '    Return
+            'End If
 
             Dim Cerrar_Doc As New Clas_Cerrar_Documento
             Dim _Rows_Usuario_Autoriza As DataRow
+
+            If Not Fx_Tiene_Permiso(Me, "Doc00055",,,,,,,,, _Rows_Usuario_Autoriza) Then
+                Return
+            End If
 
             If Cerrar_Doc.Fx_Abrir_Documento(_Idmaeedo, _Tbl_Maeddo) Then
 

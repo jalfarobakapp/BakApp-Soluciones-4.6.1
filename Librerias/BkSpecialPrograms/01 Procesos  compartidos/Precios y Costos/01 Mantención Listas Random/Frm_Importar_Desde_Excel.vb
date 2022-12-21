@@ -12,6 +12,8 @@ Public Class Frm_Importar_Desde_Excel
     Dim _Tbl_Listas_Seleccionadas As DataTable
     Dim _Tbl_Productos_Seleccionados As DataTable
 
+    Public Property Lista_Campos_Adicionales As List(Of String)
+
     Dim _Traer_Productos As Boolean
 
     Dim _Limpiar As Boolean
@@ -85,9 +87,20 @@ Public Class Frm_Importar_Desde_Excel
         If Rdb_Exportar_Solo_Codigo.Checked Then
             Consulta_sql = "SELECT 'Caracter [13]' as 'Código'"
         ElseIf Rdb_Exportar_Valores.Checked Then
-            Consulta_sql = "SELECT 'Caracter [3]' as Lista,'Caracter [13]' as 'Código','Númerico' as 'Precio Ud1'," & _
-                           "'Númerico' as 'Margen Ud1','Númerico' as 'Desc. Max. Ud1','Númerico' as 'Precio Ud2'" & _
-                           ",'Númerico' as 'Margen Ud2','Númerico' as 'Desc. Max. Ud2'"
+
+            Dim _CamposAdicionales = String.Empty
+
+            If Not IsNothing(Lista_Campos_Adicionales) Then
+                Dim _Cc = 8
+                For Each Cmp As String In Lista_Campos_Adicionales
+                    _CamposAdicionales += ",'Númerico' as '" & Cmp & "'"
+                    _Cc += 1
+                Next
+            End If
+
+            Consulta_sql = "SELECT 'Caracter [3]' as Lista,'Caracter [13]' as 'Código','Númerico' as 'Precio Ud1'," &
+                           "'Númerico' as 'Margen Ud1','Númerico' as 'Desc. Max. Ud1','Númerico' as 'Precio Ud2'" &
+                           ",'Númerico' as 'Margen Ud2','Númerico' as 'Desc. Max. Ud2'" & _CamposAdicionales
         End If
 
         _Nom_Excel = "Ejemplo levantamiento precios"
@@ -156,6 +169,37 @@ Public Class Frm_Importar_Desde_Excel
             _Desde = 1
         End If
 
+        Consulta_sql = "Truncate Table " & _Nombre_Tbl_Paso_Precios
+        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+        _Error = String.Empty
+
+        If Not IsNothing(Lista_Campos_Adicionales) Then
+            Dim _Cc = 8
+            For Each Cmp As String In Lista_Campos_Adicionales
+                Try
+                    Dim _Valor = NuloPorNro(_Arreglo(1, _Cc), 0)
+                Catch ex As Exception
+                    _Error += "Falta el campo: " & Cmp & " en el documento Excel" & vbCrLf
+                    Sb_AddToLog("Fila Nro :" & i + 1, "Problema!. " & _Error, _Txt_Log, False)
+                End Try
+                _Cc += 1
+            Next
+
+        End If
+
+        If Not String.IsNullOrEmpty(_Error) Then
+            MessageBoxEx.Show(Me, "Error en el formato del archivos Excel." & vbCrLf & vbCrLf &
+                              _Error, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Sb_Habilitar_Deshabilitar_Comandos(True, False)
+            Txt_Nombre_Archivo.Text = String.Empty
+            _Txt_Log.Text = String.Empty
+            Return
+        End If
+
+
+
+
         For i = _Desde To _Filas
 
             System.Windows.Forms.Application.DoEvents()
@@ -193,7 +237,7 @@ Public Class Frm_Importar_Desde_Excel
 
                 If Not (_RowProducto Is Nothing) Then
 
-                    _Descripcion = _RowProducto.Item("NOKOPR")
+                    _Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
                     _Rtu = _RowProducto.Item("RLUD")
                     _Ud01pr = _RowProducto.Item("UD01PR")
                     _Ud02pr = _RowProducto.Item("UD02PR")
@@ -236,16 +280,36 @@ Public Class Frm_Importar_Desde_Excel
 
                         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-                        Consulta_sql += "Update " & _Nombre_Tbl_Paso_Precios & " Set" & vbCrLf & _
-                                        "PP01UD = " & De_Num_a_Tx_01(_Pp01ud, False, 5) & "," & vbCrLf & _
-                                        "MG01UD = " & De_Num_a_Tx_01(_Mg01ud, False, 5) & "," & vbCrLf & _
-                                        "DTMA01UD = " & De_Num_a_Tx_01(_Dtma01ud, False, 5) & "," & vbCrLf & _
-                                        "PP02UD = " & De_Num_a_Tx_01(_Pp02ud, False, 5) & "," & vbCrLf & _
-                                        "MG02UD = " & De_Num_a_Tx_01(_Mg02ud, False, 5) & "," & vbCrLf & _
-                                        "DTMA02UD = " & De_Num_a_Tx_01(_Dtma02ud, False, 5) & "," & vbCrLf & _
-                                        "FINMAES = 1" & vbCrLf & _
-                                        "Where KOLT = '" & _Kolt & "' And KOPR = '" & _Kopr & "'"
+                        Consulta_sql += "Update " & _Nombre_Tbl_Paso_Precios & " Set" & vbCrLf &
+                                        "PP01UD = " & De_Num_a_Tx_01(_Pp01ud, False, 5) & "," & vbCrLf &
+                                        "MG01UD = " & De_Num_a_Tx_01(_Mg01ud, False, 5) & "," & vbCrLf &
+                                        "DTMA01UD = " & De_Num_a_Tx_01(_Dtma01ud, False, 5) & "," & vbCrLf &
+                                        "PP02UD = " & De_Num_a_Tx_01(_Pp02ud, False, 5) & "," & vbCrLf &
+                                        "MG02UD = " & De_Num_a_Tx_01(_Mg02ud, False, 5) & "," & vbCrLf &
+                                        "DTMA02UD = " & De_Num_a_Tx_01(_Dtma02ud, False, 5) & "," & vbCrLf &
+                                        "FINMAES = 1," & vbCrLf &
+                                        "Editado = 1" & vbCrLf &
+                                        "Where KOLT = '" & _Kolt & "' And KOPR = '" & _Kopr & "'" & vbCrLf & vbCrLf
 
+
+                        If Not IsNothing(Lista_Campos_Adicionales) Then
+                            Dim _Cc = 8
+                            For Each Cmp As String In Lista_Campos_Adicionales
+                                Try
+                                    Dim _Valor As Double = NuloPorNro(_Arreglo(i, _Cc), 0)
+                                    Consulta_sql += "Update " & _Nombre_Tbl_Paso_Precios & " Set" & vbCrLf &
+                                                    Cmp & " = " & De_Num_a_Tx_01(_Valor, False, 5) & vbCrLf &
+                                                    "Where KOLT = '" & _Kolt & "' And KOPR = '" & _Kopr & "'" & vbCrLf
+                                Catch ex As Exception
+                                    Problemas += 1
+                                    _Error = "Falta el campo: " & Cmp & " en el documento Excel; " & ex.Message
+                                    Sb_AddToLog("Fila Nro :" & i + 1, "Problema!. " & _Error, _Txt_Log, False)
+                                    Problemas += 1
+                                End Try
+                                _Cc += 1
+                            Next
+
+                        End If
 
                         Dim _Ok_ As Boolean
 
@@ -258,7 +322,7 @@ Public Class Frm_Importar_Desde_Excel
                         If _Ok_ Then
                             SinProbremas += 1
                         Else
-                            Sb_AddToLog("Fila Nro :" & i + 1, "Problema!.  Código " & _Kopr, _
+                            Sb_AddToLog("Fila Nro :" & i + 1, "Problema!. " & _Error & " Código " & _Kopr,
                             _Txt_Log, False)
                             Problemas += 1
                         End If
@@ -596,8 +660,8 @@ Public Class Frm_Importar_Desde_Excel
 
     Private Sub Btn_Cancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cancelar.Click
 
-        If MessageBoxEx.Show(Me, "¿Esta seguro cancelar la acción?", "Cancelar", _
-                             MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+        If MessageBoxEx.Show(Me, "¿Esta seguro cancelar la acción?", "Cancelar",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
             _Cancelar = True
             Txt_Nombre_Archivo.Text = String.Empty

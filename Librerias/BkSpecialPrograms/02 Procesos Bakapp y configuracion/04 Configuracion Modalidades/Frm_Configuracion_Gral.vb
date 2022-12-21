@@ -29,8 +29,8 @@ Public Class Frm_Configuracion_Gral
 
         Sb_Color_Botones_Barra(Bar1)
 
-        Lbl_Monto_CRV.Visible = _Modalidad_General
-        Input_Monto_Max_CRV_FacMasiva.Visible = _Modalidad_General
+        Lbl_Monto_CRV.Enabled = _Modalidad_General
+        Input_Monto_Max_CRV_FacMasiva.Enabled = _Modalidad_General
 
         Dim _Arr_Filtro(,) As String
 
@@ -39,6 +39,7 @@ Public Class Frm_Configuracion_Gral
                        {"3", "Fecha de despacho igual a la fecha del documento de origen Solo en Detalle"}}
         Sb_Llenar_Combos(_Arr_Filtro, Cmb_CriterioFechaGDVconFechaDistintaDocOrigen)
 
+        Txt_Lista_Precios_Proveedores.Tag = String.Empty
 
     End Sub
 
@@ -174,6 +175,22 @@ Public Class Frm_Configuracion_Gral
 
             Chk_BloqCambNomCONCEPTOSEnDocumentos.Checked = .Item("BloqCambNomCONCEPTOSEnDocumentos")
 
+            Txt_RecepXMLComp_CorreoPOP3.Text = .Item("RecepXMLComp_CorreoPOP3")
+            Chk_RecepXMLCmp_ElimiCorreosPOP3.Checked = .Item("RecepXMLCmp_ElimiCorreosPOP3")
+
+            Txt_RecepXMLCmp_MarcaAgua.Text = .Item("RecepXMLCmp_MarcaAgua")
+
+            Chk_PermitirMigrarProductosBaseExterna.Checked = .Item("PermitirMigrarProductosBaseExterna")
+
+            Txt_Lista_Precios_Proveedores.Tag = .Item("Lista_Precios_Proveedores").ToString.Trim
+
+            Consulta_sql = "Select * From TABPP Where KOLT = '" & Txt_Lista_Precios_Proveedores.Tag & "'"
+            Dim _RowLista As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not IsNothing(_RowLista) Then
+                Txt_Lista_Precios_Proveedores.Text = _RowLista.Item("KOLT") & " - " & _RowLista.Item("NOKOLT")
+            End If
+
         End With
 
         Chk_Revisar_Tasa_de_Cambio.Enabled = _Modalidad_General
@@ -212,12 +229,20 @@ Public Class Frm_Configuracion_Gral
 
         Btn_Asociar_Prod_Funcionarios.Enabled = Chk_Usar_Validador_Prod_X_Compras.Checked
 
-        LabelX17.Visible = _Modalidad_General
-        Cmb_CriterioFechaGDVconFechaDistintaDocOrigen.Visible = _Modalidad_General
-        Chk_CriterioFechaGDVconFechaDistintaDocOrigenObligatorio.Visible = _Modalidad_General
+        LabelX17.Enabled = _Modalidad_General
+        Cmb_CriterioFechaGDVconFechaDistintaDocOrigen.Enabled = _Modalidad_General
+        Chk_CriterioFechaGDVconFechaDistintaDocOrigenObligatorio.Enabled = _Modalidad_General
         Chk_LeerSoloUnaVezCodBarra.Enabled = _Modalidad_General
         Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.Enabled = _Modalidad_General
         Chk_BloqCambNomCONCEPTOSEnDocumentos.Enabled = _Modalidad_General
+
+        Chk_PermitirMigrarProductosBaseExterna.Enabled = _Modalidad_General
+
+        Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.Enabled = _Modalidad_General
+        LabelX20.Enabled = _Modalidad_General
+        Txt_Lista_Precios_Proveedores.Enabled = _Modalidad_General
+
+        Grupo_RecepXMLComp.Enabled = _Modalidad_General
 
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
@@ -390,7 +415,14 @@ Public Class Frm_Configuracion_Gral
                        ",Incorporar_Modo_NVI_y_OCC_Asistente_Compras = " & Convert.ToInt32(Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.Checked) & vbCrLf &
                        ",Actualizar_Lista_De_Costos_Random_Desde_Bakapp = " & Convert.ToInt32(Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.Checked) & vbCrLf &
                        ",BloqCambNomCONCEPTOSEnDocumentos = " & Convert.ToInt32(Chk_BloqCambNomCONCEPTOSEnDocumentos.Checked) & vbCrLf &
+                       ",RecepXMLComp_CorreoPOP3 = '" & Txt_RecepXMLComp_CorreoPOP3.Text.Trim & "'" & vbCrLf &
+                       ",RecepXMLCmp_ElimiCorreosPOP3 = " & Convert.ToInt32(Chk_RecepXMLCmp_ElimiCorreosPOP3.Checked) & vbCrLf &
+                       ",RecepXMLCmp_MarcaAgua = '" & Txt_RecepXMLCmp_MarcaAgua.Text.Trim & "'" & vbCrLf &
+                       ",PermitirMigrarProductosBaseExterna = " & Convert.ToInt32(Chk_PermitirMigrarProductosBaseExterna.Checked) & vbCrLf &
+                       ",Lista_Precios_Proveedores = '" & Txt_Lista_Precios_Proveedores.Tag & "'" & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
+
+
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
@@ -459,6 +491,41 @@ Public Class Frm_Configuracion_Gral
 
     Private Sub Chk_FacElec_Bakapp_Hefesto_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_FacElec_Bakapp_Hefesto.CheckedChanged
         'Chk_FacElect_Usar_AmbienteCertificacion.Enabled = Chk_FacElec_Bakapp_Hefesto.Checked
+    End Sub
+
+    Private Sub Btn_BuscarSMTPRecepXMLComp_Click_1(sender As Object, e As EventArgs) Handles Btn_BuscarSMTPRecepXMLComp.Click
+
+        Dim _Row_Cuenta As DataRow
+
+        Dim Fm As New Frm_Correos_Conf_SMTP_Lista(Frm_Correos_Conf_SMTP_Lista.Enum_Accion.Seleccionar)
+        Fm.ShowDialog(Me)
+        _Row_Cuenta = Fm.Pro_Row_Cuenta
+        Fm.Dispose()
+
+        If Not IsNothing(_Row_Cuenta) Then
+            Txt_RecepXMLComp_CorreoPOP3.Text = _Row_Cuenta.Item("Nombre_Usuario")
+        End If
+
+    End Sub
+
+    Private Sub Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.CheckedChanged
+        LabelX20.Enabled = Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.Checked
+        Txt_Lista_Precios_Proveedores.Enabled = Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.Checked
+    End Sub
+
+    Private Sub Txt_Lista_Precios_Proveedores_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Lista_Precios_Proveedores.ButtonCustomClick
+
+        Dim Fm As New Frm_SeleccionarListaPrecios(Frm_SeleccionarListaPrecios.Enum_Tipo_Lista.Costo, False, False)
+        Fm.ShowDialog(Me)
+        Dim _Tbl_Lista_Seleccionada = Fm.Pro_Tbl_Listas_Seleccionadas
+        Fm.Dispose()
+
+        If Not (_Tbl_Lista_Seleccionada Is Nothing) Then
+            Txt_Lista_Precios_Proveedores.Tag = _Tbl_Lista_Seleccionada.Rows(0).Item("Lista")
+            Txt_Lista_Precios_Proveedores.Text = _Tbl_Lista_Seleccionada.Rows(0).Item("Lista").ToString.Trim &
+                                                " - " & _Tbl_Lista_Seleccionada.Rows(0).Item("Nombre_Lista").ToString.Trim
+        End If
+
     End Sub
 
     Sub Sb_Cargar_Combo()

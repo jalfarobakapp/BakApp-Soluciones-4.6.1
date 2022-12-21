@@ -34,6 +34,10 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Btn_Mantencion_Tecnicos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Conf_Info_Reportes = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
+        Me.Menu_Contextual_Garantia = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Crear_OT1Producto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Crear_OTVariosProductos = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.Progeso_Gestion = New DevComponents.DotNetBar.ProgressSteps()
@@ -56,6 +60,7 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Tab_08_Cerradas_Hoy = New DevComponents.DotNetBar.SuperTabItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Super_TabS, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -125,6 +130,7 @@ Partial Class Frm_St_Ordenes_de_trabajo
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.ContextMenuBar1)
         Me.GroupPanel1.Controls.Add(Me.Grilla)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 80)
@@ -160,6 +166,39 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 88
         Me.GroupPanel1.Text = "Ordenes de trabajo"
+        '
+        'ContextMenuBar1
+        '
+        Me.ContextMenuBar1.AntiAlias = True
+        Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Garantia})
+        Me.ContextMenuBar1.Location = New System.Drawing.Point(232, 56)
+        Me.ContextMenuBar1.Name = "ContextMenuBar1"
+        Me.ContextMenuBar1.Size = New System.Drawing.Size(586, 25)
+        Me.ContextMenuBar1.Stretch = True
+        Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ContextMenuBar1.TabIndex = 66
+        Me.ContextMenuBar1.TabStop = False
+        Me.ContextMenuBar1.Text = "ContextMenuBar1"
+        '
+        'Menu_Contextual_Garantia
+        '
+        Me.Menu_Contextual_Garantia.AutoExpandOnClick = True
+        Me.Menu_Contextual_Garantia.Name = "Menu_Contextual_Garantia"
+        Me.Menu_Contextual_Garantia.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_OT1Producto, Me.Btn_Crear_OTVariosProductos})
+        Me.Menu_Contextual_Garantia.Text = "Opciones encabezado"
+        '
+        'Btn_Crear_OT1Producto
+        '
+        Me.Btn_Crear_OT1Producto.Image = CType(resources.GetObject("Btn_Crear_OT1Producto.Image"), System.Drawing.Image)
+        Me.Btn_Crear_OT1Producto.Name = "Btn_Crear_OT1Producto"
+        Me.Btn_Crear_OT1Producto.Text = "Crear Orden con un solo producto"
+        '
+        'Btn_Crear_OTVariosProductos
+        '
+        Me.Btn_Crear_OTVariosProductos.Image = CType(resources.GetObject("Btn_Crear_OTVariosProductos.Image"), System.Drawing.Image)
+        Me.Btn_Crear_OTVariosProductos.Name = "Btn_Crear_OTVariosProductos"
+        Me.Btn_Crear_OTVariosProductos.Text = "Crear Orden con varios productos"
         '
         'Grilla
         '
@@ -337,7 +376,7 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Super_TabS.Name = "Super_TabS"
         Me.Super_TabS.ReorderTabsEnabled = True
         Me.Super_TabS.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.Super_TabS.SelectedTabIndex = 0
+        Me.Super_TabS.SelectedTabIndex = 2
         Me.Super_TabS.Size = New System.Drawing.Size(1111, 27)
         Me.Super_TabS.TabCloseButtonHot = Nothing
         Me.Super_TabS.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -415,6 +454,7 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Text = "ORDENES DE TRABAJO.  SISTEMA SERVICIO TECNICO"
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Super_TabS, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -449,4 +489,8 @@ Partial Class Frm_St_Ordenes_de_trabajo
     Friend WithEvents Tab_07_Entregadas As DevComponents.DotNetBar.SuperTabItem
     Friend WithEvents Tab_08_Cerradas_Hoy As DevComponents.DotNetBar.SuperTabItem
     Friend WithEvents Tab_05_Preparacion As DevComponents.DotNetBar.SuperTabItem
+    Friend WithEvents ContextMenuBar1 As DevComponents.DotNetBar.ContextMenuBar
+    Friend WithEvents Menu_Contextual_Garantia As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Crear_OT1Producto As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Crear_OTVariosProductos As DevComponents.DotNetBar.ButtonItem
 End Class

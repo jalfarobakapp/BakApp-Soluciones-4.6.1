@@ -1,5 +1,4 @@
-﻿Imports BkReclamos
-Imports BkSpecialPrograms
+﻿Imports BkSpecialPrograms
 Imports DevComponents.DotNetBar
 
 Public Class Menu
@@ -11,7 +10,8 @@ Public Class Menu
     Dim _Fm_Menu_Padre As Metro.MetroAppForm
     Dim _Menu_Extra As Boolean
 
-    Public Sub New(ByVal Fm_Menu_Padre As Metro.MetroAppForm, ByVal Menu_Extra As Boolean)
+
+    Public Sub New(Fm_Menu_Padre As Metro.MetroAppForm, Menu_Extra As Boolean)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -32,7 +32,7 @@ Public Class Menu
 
     End Sub
 
-    Private Sub Menu_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Menu_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         AddHandler Btn_Cambio_Empresa.Click, AddressOf Sb_Cambiar_De_Base_De_Datos
 
@@ -70,21 +70,36 @@ Public Class Menu
             Sb_Color_Botones_Barra(Barra)
         End If
 
-        'Try
-        '    If _Global_Row_Configuracion_General.Item("FacElec_Bakapp_Hefesto") Then
         Btn_Facturacion_Electronica.Visible = True
-        '    Else
-        '        Btn_Facturacion_Electronica.Visible = False
-        '    End If
-        'Catch ex As Exception
-        '    Btn_Facturacion_Electronica.Visible = False
-        'End Try
 
         'ButtonX1.Visible = True
 
+        'If _Global_Row_Configuracion_Estacion.Item("FacElect_Usar_AmbienteCertificacion") Then
+        '    Dim _BackColor_Tido As Color = Color.FromArgb(235, 81, 13)
+        '    Metro_Bar_Color.BackgroundStyle.BackColor = _BackColor_Tido
+        'End If
+
+        Dim DatosConex As New ConexionBK
+
+        Dim Directorio As String = Application.StartupPath & "\Data\"
+
+        Dim _Tbl = New DataTable
+        DatosConex.Clear()
+        DatosConex.ReadXml(Directorio & "Conexiones.xml")
+        _Tbl = DatosConex.Tables("CnBakApp")
+
+        'If _Tbl.Rows.Count = 1 Then
+        '    MessageBoxEx.Show(_Fm_Menu_Padre, "No hay mas empresas conectadas", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    Return
+        'End If
+
+        Btn_CambioDeEmpresa.Visible = (_Tbl.Rows.Count > 1)
+
+        Sb_Color_Botones_Barra(Barra)
+
     End Sub
 
-    Private Sub BtnGestionCompras_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnGestionCompras.Click
+    Private Sub BtnGestionCompras_Click(sender As System.Object, e As System.EventArgs) Handles BtnGestionCompras.Click
 
         Dim NewPanel As Modulo_Compras = Nothing
         NewPanel = New Modulo_Compras(_Fm_Menu_Padre)
@@ -92,25 +107,25 @@ Public Class Menu
 
     End Sub
 
-    Private Sub BtnProductos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub BtnProductos_Click(sender As System.Object, e As System.EventArgs)
         Dim NewPanel As Productos = Nothing
         NewPanel = New Productos(_Fm_Menu_Padre)
         _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
     End Sub
 
-    Private Sub BtnInventarios_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Inventarios.Click
+    Private Sub BtnInventarios_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Inventarios.Click
         Dim NewPanel As Sistema_Inventarios = Nothing
         NewPanel = New Sistema_Inventarios(_Fm_Menu_Padre)
         _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
     End Sub
 
-    Private Sub BtnInformes_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Informes.Click
+    Private Sub BtnInformes_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informes.Click
         Dim NewPanel As Modulo_Informes = Nothing
         NewPanel = New Modulo_Informes(_Fm_Menu_Padre)
         _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
     End Sub
 
-    Private Sub Btn_CambiarCodProducto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ventas.Click
+    Private Sub Btn_CambiarCodProducto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ventas.Click
         'MessageBoxEx.Show(Me, "No esta disponible en esta versión", "Inventario", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         'Return
         'If Licencia_Modulo("VTA01") Then
@@ -125,7 +140,7 @@ Public Class Menu
         'End If
     End Sub
 
-    Private Sub BtnConfiguracion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnConfiguracion.Click
+    Private Sub BtnConfiguracion_Click(sender As System.Object, e As System.EventArgs) Handles BtnConfiguracion.Click
 
         Dim _Autorizado As Boolean
 
@@ -138,17 +153,17 @@ Public Class Menu
 
     End Sub
 
-    Private Sub BtnCambiarDeUsuario_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnCambiarDeUsuario.Click
+    Private Sub BtnCambiarDeUsuario_Click(sender As System.Object, e As System.EventArgs) Handles BtnCambiarDeUsuario.Click
         Dim NewPanel As Login = Nothing
         NewPanel = New Login(_Fm_Menu_Padre)
         _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Right)
     End Sub
 
-    Private Sub BtnTeamviewer_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnTeamviewer.Click
+    Private Sub BtnTeamviewer_Click(sender As System.Object, e As System.EventArgs) Handles BtnTeamviewer.Click
         Shell(AppPath() & "\TeamViewerQS.exe", AppWinStyle.NormalFocus)
     End Sub
 
-    Private Sub BtnProgramasEspeciales_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Programas_Especiales.Click
+    Private Sub BtnProgramasEspeciales_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Programas_Especiales.Click
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Espr0021") Then
             Dim NewPanel As Modulo_Programas_Especiales = Nothing
             NewPanel = New Modulo_Programas_Especiales(_Fm_Menu_Padre)
@@ -156,7 +171,7 @@ Public Class Menu
         End If
     End Sub
 
-    Private Sub Btn_Cerrar_Sistema_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cerrar_Sistema.Click
+    Private Sub Btn_Cerrar_Sistema_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cerrar_Sistema.Click
         _Fm_Menu_Padre.Close()
     End Sub
 
@@ -183,7 +198,7 @@ Public Class Menu
 
     End Sub
 
-    Function Fx_Act_Usuario(ByVal _Kofu As String, ByVal _Nokofu As String) As Boolean
+    Function Fx_Act_Usuario(_Kofu As String, _Nokofu As String) As Boolean
 
         Dim Fm_L As New Frm_Login
 
@@ -205,7 +220,7 @@ Public Class Menu
 
     End Function
 
-    Private Sub Btn_Desconectar_Bases_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Desconectar_Bases.Click
+    Private Sub Btn_Desconectar_Bases_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Desconectar_Bases.Click
 
         If MessageBoxEx.Show(_Fm_Menu_Padre, "Esto lo desconectara de las otras bases a las cuales se ha conectado durante el transcurso de su sesión" & vbCrLf &
                               "¿Está seguro de cerrar estas conexiones?", "Cerrar conexiones", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
@@ -295,7 +310,7 @@ Public Class Menu
 
     End Sub
 
-    Private Sub Btn_Servicio_Tecnico_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Servicio_Tecnico.Click
+    Private Sub Btn_Servicio_Tecnico_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Servicio_Tecnico.Click
 
         Dim NewPanel As Modulo_Servicio_Tecnico = Nothing
         NewPanel = New Modulo_Servicio_Tecnico(_Fm_Menu_Padre)
@@ -303,13 +318,13 @@ Public Class Menu
 
     End Sub
 
-    Private Sub Btn_Actualizar_BakApp_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Actualizar_BakApp.Click
+    Private Sub Btn_Actualizar_BakApp_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Actualizar_BakApp.Click
         Tiempo_Actualizar_BakApp.Stop()
         Frm_Menu.Sb_Descargar_Actualizacion()
         Tiempo_Actualizar_BakApp.Start()
     End Sub
 
-    Private Sub Btn_Tesoreria_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Tesoreria.Click
+    Private Sub Btn_Tesoreria_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Tesoreria.Click
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Ppro0007") Then
 
@@ -325,7 +340,7 @@ Public Class Menu
 
     End Sub
 
-    Private Sub Btn_Precios_Costos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Precios_Costos.Click
+    Private Sub Btn_Precios_Costos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Precios_Costos.Click
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Pre0008") Then
 
@@ -337,7 +352,7 @@ Public Class Menu
 
     End Sub
 
-    Private Sub Btn_Parametros_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Parametros.Click
+    Private Sub Btn_Parametros_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Parametros.Click
 
         Dim NewPanel As Modulo_Parametros = Nothing
         NewPanel = New Modulo_Parametros(_Fm_Menu_Padre)
@@ -345,7 +360,7 @@ Public Class Menu
 
     End Sub
 
-    Private Sub Btn_Prueba_Monto_Palabra_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Prueba_Monto_Palabra.Click
+    Private Sub Btn_Prueba_Monto_Palabra_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Prueba_Monto_Palabra.Click
 
         Try
 
@@ -365,7 +380,7 @@ Public Class Menu
 
     End Sub
 
-    Private Sub BtnCreacionEntidad_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnCreacionEntidad.Click
+    Private Sub BtnCreacionEntidad_Click(sender As System.Object, e As System.EventArgs) Handles BtnCreacionEntidad.Click
 
         Dim NewPanel As Entidades_menu = Nothing
         NewPanel = New Entidades_menu(_Fm_Menu_Padre)
@@ -373,7 +388,7 @@ Public Class Menu
 
     End Sub
 
-    Private Sub BtnProductos_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnProductos.Click
+    Private Sub BtnProductos_Click_1(sender As System.Object, e As System.EventArgs) Handles BtnProductos.Click
 
         Dim NewPanel As Productos = Nothing
         NewPanel = New Productos(_Fm_Menu_Padre)
@@ -381,7 +396,7 @@ Public Class Menu
 
     End Sub
 
-    Private Sub BtnBuscarDocumento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnBuscarDocumento.Click
+    Private Sub BtnBuscarDocumento_Click(sender As System.Object, e As System.EventArgs) Handles BtnBuscarDocumento.Click
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Doc00015") Then
 
@@ -397,7 +412,10 @@ Public Class Menu
 
     Private Sub ButtonX1_Click(sender As Object, e As EventArgs) Handles ButtonX1.Click
 
-        Dim Fm As New Frm_InfProyStXVnta
+        'Dim _Cl_ExportarDoc As New Bk_ExpotarDoc.Cl_ExpotarDoc
+        '_Cl_ExportarDoc.Fx_Importar_Documento(8829553, 1, True, Modalidad)
+        Return
+        Dim Fm As New Frm_Migrar_Productos
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
@@ -668,4 +686,44 @@ Public Class Menu
         End If
 
     End Sub
+
+    Private Sub Btn_CambioDeEmpresa_Click(sender As Object, e As EventArgs) Handles Btn_CambioDeEmpresa.Click
+
+        Dim _Ejecutando_Notificaciones As Process() = Process.GetProcessesByName(_Global_Nombre_BakApp_Notificaciones)
+        Dim _Ejecutando_Demonio As Process() = Process.GetProcessesByName(_Global_Nombre_BakApp_Demonio)
+        Dim _Ejecutando_DTEMonitor As Process() = Process.GetProcessesByName(_Global_Nombre_BakApp_DTEMonitor)
+
+        For Each prog As Process In Process.GetProcesses
+
+            If UCase(prog.ProcessName) = UCase(_Global_Nombre_BakApp_Demonio) Then
+                MessageBoxEx.Show(Frm_Menu, "El diablito de monitoreo de acciones automáticas se encuentra en ejecución." & vbCrLf &
+                                            "No se puede hacer cambio de empresa cuando el diablito esta corriendo.", "Validación",
+                                            MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                'prog.Kill()
+                Return
+            End If
+
+            If UCase(prog.ProcessName) = UCase(_Global_Nombre_BakApp_DTEMonitor) Then
+                MessageBoxEx.Show(Frm_Menu, "El diablito de monitoreo de documentos DTE SII se encuentra en ejecución." & vbCrLf &
+                                             "No se puede hacer cambio de empresa cuando el diablito esta corriendo.", "Validación",
+                                            MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                'prog.Kill()
+                Return
+            End If
+
+            If UCase(prog.ProcessName) = UCase(_Global_Nombre_BakApp_Notificaciones) Then
+                prog.Kill()
+            End If
+
+        Next
+
+        _Fm_Menu_Padre.CloseModalPanel(Me, DevComponents.DotNetBar.Controls.eSlideSide.Right)
+
+        BaseDeConexion = ArchivoConexion.BasePrincipal
+        Dim NewPanel As Empresas_conectadas = Nothing
+        NewPanel = New Empresas_conectadas(_Fm_Menu_Padre, True)
+        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+
+    End Sub
+
 End Class

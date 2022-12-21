@@ -130,9 +130,11 @@ Partial Class Frm_Buscar_Pistoleando
         '
         '
         Me.Chk_Ver_Clave.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Ver_Clave.CheckBoxImageChecked = CType(resources.GetObject("Chk_Ver_Clave.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Ver_Clave.Checked = True
         Me.Chk_Ver_Clave.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_Ver_Clave.CheckValue = "Y"
+        Me.Chk_Ver_Clave.FocusCuesEnabled = False
         Me.Chk_Ver_Clave.ForeColor = System.Drawing.Color.Black
         Me.Chk_Ver_Clave.Location = New System.Drawing.Point(12, 72)
         Me.Chk_Ver_Clave.Name = "Chk_Ver_Clave"

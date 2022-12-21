@@ -6,7 +6,7 @@ Declare @Id_Ot Int = #Id_Ot#
 
 -- ENCABEZADO TABLA (0)
 
-SELECT  Id_Ot, Nro_Ot, Empresa, Sucursal, Bodega, CodEntidad, SucEntidad, Rten ,Rut, 
+SELECT  Id_Ot,Nro_Ot,Sub_Ot,Id_Ot_Padre,Empresa,Sucursal,Bodega,CodEntidad,SucEntidad,Rten,Rut, 
         Cast('' As Varchar(50)) As	Cliente,
         Fecha_Ingreso, 
         Fecha_Compromiso, 
@@ -54,8 +54,11 @@ SELECT  Id_Ot, Nro_Ot, Empresa, Sucursal, Bodega, CodEntidad, SucEntidad, Rten ,
         Chk_No_Existe_COV_Ni_NVV,
 		Codigo,
 		Descripcion,
+        Cast('' As Varchar(10)) As Nro_GRP_PRE,
 		Idmaeedo_GRP_PRE,
-		Idmaeedo_GDP_PRE
+		Idmaeedo_GDP_PRE,
+        Cast(0 As Int) As 'Cantidad',
+        Pertenece
 FROM    #Db_BakApp#Zw_St_OT_Encabezado
 Where Id_Ot = @Id_Ot
 
@@ -109,7 +112,9 @@ SELECT Id_Ot,Idmaeedo,Tido,Nudo,Estado,
 			When 'R' Then 'RECHAZADO' 
 		End As Estado_D,Fecha_Asociacion,
 		CONVERT(VARCHAR, Fecha_Asociacion, 103) Fecha,
-		Fecha_Doc,Seleccionado
+		Fecha_Doc,Seleccionado,
+        Garantia,
+        Documento_Externo
 FROM   #Db_BakApp#Zw_St_OT_Doc_Asociados
 Where Id_Ot = @Id_Ot and Tido In ('COV','NVV')
 

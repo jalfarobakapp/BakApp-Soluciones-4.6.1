@@ -174,6 +174,7 @@ Partial Class Frm_MantListas_Conf_Funciones
         Me.bCut.BeginGroup = True
         Me.bCut.GlobalName = "bCut"
         Me.bCut.Image = CType(resources.GetObject("bCut.Image"), System.Drawing.Image)
+        Me.bCut.ImageAlt = CType(resources.GetObject("bCut.ImageAlt"), System.Drawing.Image)
         Me.bCut.ImageIndex = 5
         Me.bCut.Name = "bCut"
         Me.bCut.PopupAnimation = DevComponents.DotNetBar.ePopupAnimation.SystemDefault
@@ -183,6 +184,7 @@ Partial Class Frm_MantListas_Conf_Funciones
         '
         Me.bCopy.GlobalName = "bCopy"
         Me.bCopy.Image = CType(resources.GetObject("bCopy.Image"), System.Drawing.Image)
+        Me.bCopy.ImageAlt = CType(resources.GetObject("bCopy.ImageAlt"), System.Drawing.Image)
         Me.bCopy.ImageIndex = 4
         Me.bCopy.Name = "bCopy"
         Me.bCopy.PopupAnimation = DevComponents.DotNetBar.ePopupAnimation.SystemDefault
@@ -192,6 +194,7 @@ Partial Class Frm_MantListas_Conf_Funciones
         '
         Me.bPaste.GlobalName = "bPaste"
         Me.bPaste.Image = CType(resources.GetObject("bPaste.Image"), System.Drawing.Image)
+        Me.bPaste.ImageAlt = CType(resources.GetObject("bPaste.ImageAlt"), System.Drawing.Image)
         Me.bPaste.ImageIndex = 12
         Me.bPaste.Name = "bPaste"
         Me.bPaste.PopupAnimation = DevComponents.DotNetBar.ePopupAnimation.SystemDefault
@@ -202,6 +205,7 @@ Partial Class Frm_MantListas_Conf_Funciones
         Me.bSelectAll.BeginGroup = True
         Me.bSelectAll.GlobalName = "bSelectAll"
         Me.bSelectAll.Image = CType(resources.GetObject("bSelectAll.Image"), System.Drawing.Image)
+        Me.bSelectAll.ImageAlt = CType(resources.GetObject("bSelectAll.ImageAlt"), System.Drawing.Image)
         Me.bSelectAll.Name = "bSelectAll"
         Me.bSelectAll.PopupAnimation = DevComponents.DotNetBar.ePopupAnimation.SystemDefault
         Me.bSelectAll.Text = "Select &All"
@@ -266,6 +270,7 @@ Partial Class Frm_MantListas_Conf_Funciones
         '
         Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
+        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Grabar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_Grabar.Name = "Btn_Grabar"
         Me.Btn_Grabar.Tooltip = "Mantención de formula global"
@@ -274,6 +279,7 @@ Partial Class Frm_MantListas_Conf_Funciones
         '
         Me.Btn_Probar_Funcion.ForeColor = System.Drawing.Color.Black
         Me.Btn_Probar_Funcion.Image = CType(resources.GetObject("Btn_Probar_Funcion.Image"), System.Drawing.Image)
+        Me.Btn_Probar_Funcion.ImageAlt = CType(resources.GetObject("Btn_Probar_Funcion.ImageAlt"), System.Drawing.Image)
         Me.Btn_Probar_Funcion.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_Probar_Funcion.Name = "Btn_Probar_Funcion"
         Me.Btn_Probar_Funcion.Tooltip = "Probar"

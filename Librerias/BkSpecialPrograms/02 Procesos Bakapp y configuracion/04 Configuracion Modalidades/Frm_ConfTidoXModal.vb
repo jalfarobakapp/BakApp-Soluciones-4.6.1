@@ -122,7 +122,7 @@ Public Class Frm_ConfTidoXModal
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
-        Dim _Numero = Txt_Numero.Text
+        Dim _Numero = Txt_Numero.Text.Trim
         Dim _Nombreformato = Txt_Nombreformato.Text
         Dim _Nombreformato_PDF = Txt_NombreFormato_PDF.Text
         Dim _Grabar_Con_Huella = Convert.ToInt32(Sw_Grabar_Con_Huella.Value)
@@ -137,7 +137,27 @@ Public Class Frm_ConfTidoXModal
         Dim _TimbrarXRandom = Convert.ToInt32(Rdb_TimbrarXRandom.Value)
 
         If Not String.IsNullOrEmpty(_Numero) Then
+
             _Numero = Fx_Rellena_ceros(_Numero, 10)
+
+            'Revisamos si contiene numeros
+            Dim result As String = String.Empty
+
+            For Each i As Char In _Numero
+
+                If Char.IsNumber(i) Then
+                    result += CStr(i)
+                End If
+
+            Next
+
+            Dim _UltDig = Mid(_Numero, _Numero.Length, 1)
+
+            If String.IsNullOrEmpty(result) Or Not IsNumeric(_UltDig) Then
+                MessageBoxEx.Show(Me, "La numeración: " & _Numero & " no esta permitida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
         End If
 
         Dim _Filtro_Tido As String = "('" & _Tido & "')"

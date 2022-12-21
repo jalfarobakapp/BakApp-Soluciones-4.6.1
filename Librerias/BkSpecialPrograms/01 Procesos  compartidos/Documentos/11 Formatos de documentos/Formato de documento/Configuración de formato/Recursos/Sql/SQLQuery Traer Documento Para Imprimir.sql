@@ -206,7 +206,7 @@ Select Distinct
        Mp.CONSDEPRO1, Mp.CONSDEPRO2, Mp.DEVENGNCV1, Mp.DEVENGNCV2, Mp.DEVENGNCC1, Mp.DEVENGNCC2, Mp.DEVSINNCV1, Mp.DEVSINNCV2, Mp.DEVSINNCC1, Mp.DEVSINNCC2, 
        Mp.STENFAB1, Mp.STENFAB2, Mp.STREQFAB1, Mp.STREQFAB2, Mp.PMME, Mp.FEPMME, Mp.VALUNFLEKM, Mp.ANALIZABLE, Mp.TOLELOTE, Mp.PMIFRS, Mp.FEPMIFRS,
        Isnull(Mfch.FICHA,'') As 'MAEFICHA',
-       Cast('' As Varchar(200)) As 'MAEFICHD',
+       Cast('' As Varchar(1600)) As 'MAEFICHD',
 	   CASE UDTRPR WHEN 1 THEN CAPRCO1 ELSE CAPRCO2 END AS 'Bk_Cant_Trans',
 	   CASE UDTRPR WHEN 1 THEN Edd.UD01PR ELSE Edd.UD02PR END AS 'Bk_Un_Trans',
 	   Tbp.DATOSUBIC As 'UBICACION', 
@@ -220,7 +220,10 @@ Select Distinct
 	   CAST('' As varchar(21)) As 'KOPRAL_PROV',
 	   CAST('' As varchar(50)) As 'NOKOPRAL_PROV',
 	   CAST('' As varchar(20)) As 'KOPRAL',
-	   CAST('' As varchar(50)) As 'NOKOPRAL'
+	   CAST('' As varchar(50)) As 'NOKOPRAL',
+       ISNULL(Mpo.MENSAJE01,'') As 'MENSAJE01',
+	   ISNULL(Mpo.MENSAJE02,'') As 'MENSAJE02',
+	   ISNULL(Mpo.MENSAJE03,'') As 'MENSAJE03'
 
 Into #Paso_Detalle	   
 	   
@@ -230,8 +233,8 @@ From dbo.MAEDDO Edd
 			LEFT JOIN dbo.MAEST Mst ON Edd.EMPRESA = Mst.EMPRESA And Edd.SULIDO = Mst.KOSU And Mst.KOBO = Edd.BOSULIDO And Mst.KOPR = Edd.KOPRCT
 				 LEFT JOIN dbo.TABMR Mrc ON Mrc.KOMR = Mp.MRPR
                     LEFT JOIN dbo.MAEFICHA Mfch On Mfch.KOPR = Edd.KOPRCT
-						--LEFT JOIN dbo.MAEFICHD Mfchd On Mfchd.KOPR = Edd.KOPRCT
-                    --LEFT JOIN dbo.TABCODAL Tcd ON Edd.ENDO = Tcd.KOEN And Edd.KOPRCT = Tcd.KOPR
+                        LEFT JOIN dbo.MAEPROBS Mpo On Mpo.KOPR = Edd.KOPRCT
+
 Where IDMAEEDO = @Idmaeedo 
 #Condicion_Extra_Maeddo#
 --Order By IDMAEDDO

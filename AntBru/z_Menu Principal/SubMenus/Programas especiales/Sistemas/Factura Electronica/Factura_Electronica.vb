@@ -34,6 +34,7 @@ Public Class Factura_Electronica
             MStb_Barra.BackgroundStyle.BackColor = _BackColor_Tido
             Lbl_Etiqueta.Text = "Ambiente de Certificación y Prueba"
         End If
+        'Btn_Pruebas.Visible = True
     End Sub
 
     Private Sub BtnSalir_Click(sender As Object, e As EventArgs) Handles BtnSalir.Click
@@ -53,8 +54,8 @@ Public Class Factura_Electronica
         Dim _Aceptar As Boolean
         Dim _Cl_MFElec As New Class_MantFacturasElect
 
-        _Cl_MFElec.Fecha_Desde = Primerdiadelmes(FechaDelServidor)
-        _Cl_MFElec.Fecha_Hasta = FechaDelServidor()
+        _Cl_MFElec.Fecha_Desde = FechaDelServidor() 'Primerdiadelmes(FechaDelServidor)
+        _Cl_MFElec.Fecha_Hasta = _Cl_MFElec.Fecha_Desde
 
         Dim Fm As New Frm_MantFacturasElecFiltrar
         Fm.Class_MantFacturasElect = _Cl_MFElec

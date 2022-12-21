@@ -125,6 +125,7 @@ Partial Class Frm_Exportar_Excel
         '
         '
         Me.Circular_Progres_Porcentaje.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Circular_Progres_Porcentaje.FocusCuesEnabled = False
         Me.Circular_Progres_Porcentaje.Location = New System.Drawing.Point(3, 14)
         Me.Circular_Progres_Porcentaje.Name = "Circular_Progres_Porcentaje"
         Me.Circular_Progres_Porcentaje.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
@@ -141,6 +142,7 @@ Partial Class Frm_Exportar_Excel
         '
         '
         Me.Circular_Progres_Contador.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Circular_Progres_Contador.FocusCuesEnabled = False
         Me.Circular_Progres_Contador.Location = New System.Drawing.Point(53, 14)
         Me.Circular_Progres_Contador.Name = "Circular_Progres_Contador"
         Me.Circular_Progres_Contador.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut

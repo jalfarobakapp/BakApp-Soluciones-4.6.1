@@ -6,15 +6,11 @@ Public Class Frm_DatosConexion
     Dim Consulta_sql As String
 
     Dim _Id As Integer
-    Dim _Grabar As Boolean
+    Dim _Empresa_Conec As String
+    Dim _Razon_Conec As String
+
+    Public Property New_Cadena_ConexionSQL_Server As String
     Public Property Grabar As Boolean
-        Get
-            Return _Grabar
-        End Get
-        Set(value As Boolean)
-            _Grabar = value
-        End Set
-    End Property
 
     Enum Enum_Accion
         Nuevo
@@ -33,8 +29,9 @@ Public Class Frm_DatosConexion
         Me._Accion = _Accion
         Me._Id = _Id
 
-    End Sub
+        Sb_Color_Botones_Barra(Bar1)
 
+    End Sub
 
     Private Sub Frm_DatosConexion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -88,8 +85,8 @@ Public Class Frm_DatosConexion
         End If
 
         If _Accion = Enum_Accion.Nuevo Then
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DbExt_Conexion (Nombre_Conexion,Servidor,Puerto,Usuario,Clave,BaseDeDatos) Values " &
-                           "('" & _Nombre_Conexion & "','" & _Servidor & "','" & _Puerto & "','" & _Usuario & "','" & _Clave & "','" & _BaseDeDatos & "')"
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DbExt_Conexion (Nombre_Conexion,Servidor,Puerto,Usuario,Clave,BaseDeDatos,Empresa) Values " &
+                           "('" & _Nombre_Conexion & "','" & _Servidor & "','" & _Puerto & "','" & _Usuario & "','" & _Clave & "','" & _BaseDeDatos & "','" & _Empresa_Conec & "')"
         End If
 
         If _Accion = Enum_Accion.Editar Then
@@ -98,7 +95,8 @@ Public Class Frm_DatosConexion
                            "Puerto = '" & _Puerto & "'," &
                            "Usuario = '" & _Usuario & "'," &
                            "Clave = '" & _Clave & "'," &
-                           "BaseDeDatos = '" & _BaseDeDatos & "' " & vbCrLf &
+                           "BaseDeDatos = '" & _BaseDeDatos & "'," &
+                           "Empresa = '" & _Empresa_Conec & "'" & vbCrLf &
                            "Where Id = " & _Id
         End If
 
@@ -106,8 +104,9 @@ Public Class Frm_DatosConexion
 
             MessageBoxEx.Show(Me, "Datos actuializados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-            _Grabar = True
+            Grabar = True
             Me.Close()
+
         End If
 
     End Sub
@@ -158,23 +157,66 @@ Public Class Frm_DatosConexion
         Cadena = Replace(Cadena, "#US#", US)
         Cadena = Replace(Cadena, "#PW#", PW)
 
-        Dim _New_Cadena_ConexionSQL_Server = Cadena
+        New_Cadena_ConexionSQL_Server = Cadena
 
         Dim _Sql As New Class_SQL(_New_Cadena_ConexionSQL_Server)
         Dim Consulta_sql As String
 
+        Dim Fila As DataRow
+
+        Dim _Cadena_ConexionSQL_Server_Origen = Cadena_ConexionSQL_Server
+
         Try
 
-            Consulta_sql = "SELECT TOP 1 RUT,RAZON,NCORTO FROM CONFIGP"
-
-            Dim Tabla = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Consulta_sql = "SELECT RUT,RAZON,NCORTO FROM CONFIGP"
+            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                 Return False
             End If
 
-            Dim Fila As DataRow
-            Fila = Tabla.Rows(0)
+
+            If _Tbl.Rows.Count = 1 Then
+
+                Fila = _Tbl.Rows(0)
+
+            Else
+
+                Cadena_ConexionSQL_Server = New_Cadena_ConexionSQL_Server
+
+                Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+                _Filtrar.Tabla = "CONFIGP"
+                _Filtrar.Campo = "EMPRESA"
+                _Filtrar.Descripcion = "RAZON"
+
+                _Filtrar.Pro_Nombre_Encabezado_Informe = "EMPRESAS DEL SISTEMA"
+
+                If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And EMPRESA <> ''",
+                               Nothing, False, True) Then
+
+                    Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
+
+                    Dim _Codigo = _Row.Item("Codigo").ToString.Trim
+                    Dim _Descripcion = _Row.Item("Descripcion").ToString.Trim
+
+                    _Empresa_Conec = _Codigo
+                    _Razon_Conec = _Descripcion
+
+                    Txt_Empresa.Text = _Empresa_Conec
+
+                    Consulta_sql = "SELECT TOP 1 RUT,RAZON,NCORTO FROM CONFIGP Where EMPRESA = '" & _Empresa_Conec & "'"
+                    Fila = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                Else
+
+                    Return False
+
+                End If
+
+            End If
+
 
             Dim _Rut = Fila.Item("RUT").ToString.Trim
             Dim _Razon = Fila.Item("RAZON").ToString.Trim
@@ -187,7 +229,7 @@ Public Class Frm_DatosConexion
                                          "CONEXIÓN EXITOSA",
                                          "la conexión con la base de datos resulto exitosa." & vbCrLf & vbCrLf &
                                          "Rut: " & FormatNumber(Rt(0), 0) & "-" & Rt(1) & vbCrLf &
-                                         "Empresa: " & _Razon,
+                                         "Empresa: " & _Empresa_Conec & " - " & _Razon,
                                          eTaskDialogButton.Ok _
                                          , eTaskDialogBackgroundColor.Blue, Nothing, Nothing, Nothing, Nothing, Nothing)
             Dim result As eTaskDialogResult = TaskDialog.Show(info)
@@ -195,9 +237,12 @@ Public Class Frm_DatosConexion
             Return True
 
         Catch ex As Exception
+            New_Cadena_ConexionSQL_Server = String.Empty
             MessageBoxEx.Show(Me, ex.Message, "Problema", Windows.Forms.MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.Stop)
             Txt_Servidor.SelectAll()
             Txt_Servidor.Focus()
+        Finally
+            Cadena_ConexionSQL_Server = _Cadena_ConexionSQL_Server_Origen
         End Try
 
     End Function

@@ -1,7 +1,8 @@
 Declare @Fecha_Desde As Datetime,
-		@Fecha_Hasta As Datetime
+		@Fecha_Hasta As Datetime,
+        @Empresa As Char(2)
 
-Select @Fecha_Desde = '#Fecha_Desde#',@Fecha_Hasta = '#Fecha_Hasta#'
+Select @Fecha_Desde = '#Fecha_Desde#',@Fecha_Hasta = '#Fecha_Hasta#',@Empresa = '#Empresa#'
 
 SELECT DISTINCT    Ddo.IDMAEEDO,
 				   Ddo.IDMAEDDO,	
@@ -39,38 +40,9 @@ Order By Ddo.KOPRCT
 
 Select *,
 		ROUND(ISNULL(PPPRNERE2, 0) / ISNULL(RLUDPR, 0), 3) AS Ult_Compra,
-		ISNULL(Zw_ListaLC_ValPro.Mcosto, 0) AS Mcosto
+		ISNULL(#Global_BaseBk#Zw_ListaLC_ValPro.Mcosto, 0) AS Mcosto
 From #Tbl_Paso2
-	Left Join Zw_ListaLC_ValPro ON #Tbl_Paso2.KOPRCT = Zw_ListaLC_ValPro.Codigo 
+	Left Join #Global_BaseBk#Zw_ListaLC_ValPro ON #Tbl_Paso2.KOPRCT = #Global_BaseBk#Zw_ListaLC_ValPro.Codigo 
 #Condicion#
 
---Select  --dbo.Zw_TblPasoUltGRCA72.Id, 
---		dbo.Zw_TblPasoUltGRCA72.KOPRCT, 
---		dbo.Zw_TblPasoUltGRCA72.NOKOPR, 
---		dbo.Zw_TblPasoUltGRCA72.RLUDPR,
---		dbo.Zw_TblPasoUltGRCA72.CAPRCO2, 
---		dbo.Zw_TblPasoUltGRCA72.UD02PR, 
---		dbo.Zw_TblPasoUltGRCA72.PPPRNE, 
---		dbo.MAEPREM.PM,
---		ROUND(ISNULL(dbo.Zw_TblPasoUltGRCA72.PPPRNERE2, 0) / ISNULL(dbo.Zw_TblPasoUltGRCA72.RLUDPR, 0), 3) AS Ult_Compra, 
---		ISNULL(dbo.Zw_ListaLC_ValPro.Mcosto, 0) AS Mcosto, 
---		dbo.Zw_TblPasoUltGRCA72.TIDO, 
---		dbo.Zw_TblPasoUltGRCA72.NUDO, 
---		dbo.Zw_TblPasoUltGRCA72.FEEMLI, 
---		dbo.Zw_TblPasoUltGRCA72.ENDO, 
---		dbo.Zw_TblPasoUltGRCA72.SUENDO, 
---		dbo.Zw_TblPasoUltGRCA72.NOKOEN, 
---		dbo.Zw_TblPasoUltGRCA72.SULIDO, 
---		dbo.Zw_TblPasoUltGRCA72.BOSULIDO
---FROM dbo.Zw_TblPasoUltGRCA72 
---	LEFT OUTER JOIN dbo.Zw_ListaLC_ValPro ON dbo.Zw_TblPasoUltGRCA72.KOPRCT = dbo.Zw_ListaLC_ValPro.Codigo 
---		LEFT OUTER JOIN dbo.MAEPREM ON dbo.Zw_TblPasoUltGRCA72.KOPRCT = dbo.MAEPREM.KOPR
---where 
---dbo.Zw_ListaLC_ValPro.FechaModif <> (SELECT replace(convert(varchar, getdate(), 111), '/',''))
---OR dbo.Zw_ListaLC_ValPro.FechaModif IS NULL
-
---Select * From Zw_ListaLC_ValPro
-
 Drop Table #Tbl_Paso2
-
-

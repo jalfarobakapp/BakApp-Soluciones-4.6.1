@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using HEFESTO.DTE.AUTENTICACION.ENT;
 using System.Security.Cryptography.X509Certificates;
+using System.Net;
 
 namespace HEFESTO.DTE.AUTENTICACION
 {
@@ -38,6 +39,8 @@ namespace HEFESTO.DTE.AUTENTICACION
 
             try
             {
+
+                System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
                 ////
                 //// Recupere la semilla (Seed) desde el SII
@@ -116,7 +119,7 @@ namespace HEFESTO.DTE.AUTENTICACION
                 ////
                 //// Notifique el error
                 respuesta.correcto = false;
-                respuesta.mensaje = "Error al intentar logearse con el SII";
+                respuesta.mensaje = "Error al intentar logearse con el SII" ;
                 respuesta.detalle = ex.Message;
                 respuesta.Resultado = null;                
             }

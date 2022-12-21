@@ -412,6 +412,8 @@ Partial Public Class Ds_Config_Picking
         
         Private columnTimer_Wordpress_Stock As Global.System.Data.DataColumn
         
+        Private columnTimer_Listas_Programadas As Global.System.Data.DataColumn
+        
         Private columnTimer_Wordpress_Productos As Global.System.Data.DataColumn
         
         Private columnInput_Tiempo_Correo As Global.System.Data.DataColumn
@@ -513,6 +515,34 @@ Partial Public Class Ds_Config_Picking
         Private columnInput_DiasOCI As Global.System.Data.DataColumn
         
         Private columnInput_DiasOCC As Global.System.Data.DataColumn
+        
+        Private columnCantMail As Global.System.Data.DataColumn
+        
+        Private columnChk_Fac_Lunes As Global.System.Data.DataColumn
+        
+        Private columnChk_Fac_Martes As Global.System.Data.DataColumn
+        
+        Private columnChk_Fac_Miercoles As Global.System.Data.DataColumn
+        
+        Private columnChk_Fac_Jueves As Global.System.Data.DataColumn
+        
+        Private columnChk_Fac_Viernes As Global.System.Data.DataColumn
+        
+        Private columnChk_Fac_Sabado As Global.System.Data.DataColumn
+        
+        Private columnChk_Fac_Domingo As Global.System.Data.DataColumn
+        
+        Private columnRdb_FA_1Dia As Global.System.Data.DataColumn
+        
+        Private columnRdb_FA_1Semana As Global.System.Data.DataColumn
+        
+        Private columnRdb_FA_1Mes As Global.System.Data.DataColumn
+        
+        Private columnRdb_FA_1Todas As Global.System.Data.DataColumn
+        
+        Private columnTxt_Modalidad_FacAuto As Global.System.Data.DataColumn
+        
+        Private columnTimer_FacAuto As Global.System.Data.DataColumn
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
@@ -642,6 +672,14 @@ Partial Public Class Ds_Config_Picking
         Public ReadOnly Property Timer_Wordpress_StockColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnTimer_Wordpress_Stock
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Timer_Listas_ProgramadasColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnTimer_Listas_Programadas
             End Get
         End Property
         
@@ -1054,6 +1092,118 @@ Partial Public Class Ds_Config_Picking
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property CantMailColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCantMail
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Chk_Fac_LunesColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnChk_Fac_Lunes
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Chk_Fac_MartesColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnChk_Fac_Martes
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Chk_Fac_MiercolesColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnChk_Fac_Miercoles
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Chk_Fac_JuevesColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnChk_Fac_Jueves
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Chk_Fac_ViernesColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnChk_Fac_Viernes
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Chk_Fac_SabadoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnChk_Fac_Sabado
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Chk_Fac_DomingoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnChk_Fac_Domingo
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Rdb_FA_1DiaColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnRdb_FA_1Dia
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Rdb_FA_1SemanaColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnRdb_FA_1Semana
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Rdb_FA_1MesColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnRdb_FA_1Mes
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Rdb_FA_1TodasColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnRdb_FA_1Todas
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Txt_Modalidad_FacAutoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnTxt_Modalidad_FacAuto
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Timer_FacAutoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnTimer_FacAuto
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -1103,6 +1253,7 @@ Partial Public Class Ds_Config_Picking
                     ByVal Timer_LibroDTESII As Boolean,  _
                     ByVal Timer_Archivador As Boolean,  _
                     ByVal Timer_Wordpress_Stock As Boolean,  _
+                    ByVal Timer_Listas_Programadas As Boolean,  _
                     ByVal Timer_Wordpress_Productos As Boolean,  _
                     ByVal Input_Tiempo_Correo As Integer,  _
                     ByVal Input_Tiempo_Impresion As Integer,  _
@@ -1153,9 +1304,23 @@ Partial Public Class Ds_Config_Picking
                     ByVal Input_DiasNVI As Integer,  _
                     ByVal Input_DiasNVV As Integer,  _
                     ByVal Input_DiasOCI As Integer,  _
-                    ByVal Input_DiasOCC As Integer) As Tbl_ConfiguracionRow
+                    ByVal Input_DiasOCC As Integer,  _
+                    ByVal CantMail As Integer,  _
+                    ByVal Chk_Fac_Lunes As Boolean,  _
+                    ByVal Chk_Fac_Martes As Boolean,  _
+                    ByVal Chk_Fac_Miercoles As Boolean,  _
+                    ByVal Chk_Fac_Jueves As Boolean,  _
+                    ByVal Chk_Fac_Viernes As Boolean,  _
+                    ByVal Chk_Fac_Sabado As Boolean,  _
+                    ByVal Chk_Fac_Domingo As Boolean,  _
+                    ByVal Rdb_FA_1Dia As Boolean,  _
+                    ByVal Rdb_FA_1Semana As Boolean,  _
+                    ByVal Rdb_FA_1Mes As Boolean,  _
+                    ByVal Rdb_FA_1Todas As Boolean,  _
+                    ByVal Txt_Modalidad_FacAuto As String,  _
+                    ByVal Timer_FacAuto As Boolean) As Tbl_ConfiguracionRow
             Dim rowTbl_ConfiguracionRow As Tbl_ConfiguracionRow = CType(Me.NewRow,Tbl_ConfiguracionRow)
-            Dim columnValuesArray() As Object = New Object() {Impresora, RutaImagen, Timer_Monitoreo_Doc, Timer_Monitoreo_Mail, Timer_Monitoreo_Impresion, Timer_Monitoreo_SolProdBod, Timer_Prestashop, Timer_Prestashop_Ordenes, Timer_Picking, Timer_LibroDTESII, Timer_Archivador, Timer_Wordpress_Stock, Timer_Wordpress_Productos, Input_Tiempo_Correo, Input_Tiempo_Impresion, Input_Tiempo_Sol_Bodega, Input_Tiempo_Prestashop, Input_Tiempo_Picking, Input_Tiempo_LibroDTESII, Timer_Consolidacion_Stock, Input_Tiempo_Archivador, Input_Tiempo_Wordpress_Stock, Input_Tiempo_Wordpress_Productos, Rdb_Cons_Stock_Todos, Rdb_Cons_Stock_Mov_Hoy, Chk_Cons_Stock_Lunes, Chk_Cons_Stock_Martes, Chk_Cons_Stock_Miercoles, Chk_Cons_Stock_Jueves, Chk_Cons_Stock_Viernes, Chk_Cons_Stock_Sabado, Chk_Cons_Stock_Domingo, Dtp_Cons_Stock_Hora_Ejecuion, Ejecutar_Automaticamente, Chk_Prestashop_Ejecucion_Total, Chk_Prestashop_Lunes, Chk_Prestashop_Martes, Chk_Prestashop_Miercoles, Chk_Prestashop_Jueves, Chk_Prestashop_Viernes, Chk_Prestashop_Sabado, Chk_Prestashop_Domingo, Dtp_Prestashop_Total_Hora_Ejecucion, Ruta_Archivador, Chk_Timer_CierreDoc, Chk_CierreDoc_Lunes, Chk_CierreDoc_Martes, Chk_CierreDoc_Miercoles, Chk_CierreDoc_Jueves, Chk_CierreDoc_Viernes, Chk_CierreDoc_Sabado, Chk_CierreDoc_Domingo, Dtp_CierreDoc_Hora_Ejecucion, Chk_COVCerrar, Chk_NVICerrar, Chk_NVVCerrar, Chk_OCICerrar, Chk_OCCCerrar, Input_DiasCOV, Input_DiasNVI, Input_DiasNVV, Input_DiasOCI, Input_DiasOCC}
+            Dim columnValuesArray() As Object = New Object() {Impresora, RutaImagen, Timer_Monitoreo_Doc, Timer_Monitoreo_Mail, Timer_Monitoreo_Impresion, Timer_Monitoreo_SolProdBod, Timer_Prestashop, Timer_Prestashop_Ordenes, Timer_Picking, Timer_LibroDTESII, Timer_Archivador, Timer_Wordpress_Stock, Timer_Listas_Programadas, Timer_Wordpress_Productos, Input_Tiempo_Correo, Input_Tiempo_Impresion, Input_Tiempo_Sol_Bodega, Input_Tiempo_Prestashop, Input_Tiempo_Picking, Input_Tiempo_LibroDTESII, Timer_Consolidacion_Stock, Input_Tiempo_Archivador, Input_Tiempo_Wordpress_Stock, Input_Tiempo_Wordpress_Productos, Rdb_Cons_Stock_Todos, Rdb_Cons_Stock_Mov_Hoy, Chk_Cons_Stock_Lunes, Chk_Cons_Stock_Martes, Chk_Cons_Stock_Miercoles, Chk_Cons_Stock_Jueves, Chk_Cons_Stock_Viernes, Chk_Cons_Stock_Sabado, Chk_Cons_Stock_Domingo, Dtp_Cons_Stock_Hora_Ejecuion, Ejecutar_Automaticamente, Chk_Prestashop_Ejecucion_Total, Chk_Prestashop_Lunes, Chk_Prestashop_Martes, Chk_Prestashop_Miercoles, Chk_Prestashop_Jueves, Chk_Prestashop_Viernes, Chk_Prestashop_Sabado, Chk_Prestashop_Domingo, Dtp_Prestashop_Total_Hora_Ejecucion, Ruta_Archivador, Chk_Timer_CierreDoc, Chk_CierreDoc_Lunes, Chk_CierreDoc_Martes, Chk_CierreDoc_Miercoles, Chk_CierreDoc_Jueves, Chk_CierreDoc_Viernes, Chk_CierreDoc_Sabado, Chk_CierreDoc_Domingo, Dtp_CierreDoc_Hora_Ejecucion, Chk_COVCerrar, Chk_NVICerrar, Chk_NVVCerrar, Chk_OCICerrar, Chk_OCCCerrar, Input_DiasCOV, Input_DiasNVI, Input_DiasNVV, Input_DiasOCI, Input_DiasOCC, CantMail, Chk_Fac_Lunes, Chk_Fac_Martes, Chk_Fac_Miercoles, Chk_Fac_Jueves, Chk_Fac_Viernes, Chk_Fac_Sabado, Chk_Fac_Domingo, Rdb_FA_1Dia, Rdb_FA_1Semana, Rdb_FA_1Mes, Rdb_FA_1Todas, Txt_Modalidad_FacAuto, Timer_FacAuto}
             rowTbl_ConfiguracionRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowTbl_ConfiguracionRow)
             Return rowTbl_ConfiguracionRow
@@ -1190,6 +1355,7 @@ Partial Public Class Ds_Config_Picking
             Me.columnTimer_LibroDTESII = MyBase.Columns("Timer_LibroDTESII")
             Me.columnTimer_Archivador = MyBase.Columns("Timer_Archivador")
             Me.columnTimer_Wordpress_Stock = MyBase.Columns("Timer_Wordpress_Stock")
+            Me.columnTimer_Listas_Programadas = MyBase.Columns("Timer_Listas_Programadas")
             Me.columnTimer_Wordpress_Productos = MyBase.Columns("Timer_Wordpress_Productos")
             Me.columnInput_Tiempo_Correo = MyBase.Columns("Input_Tiempo_Correo")
             Me.columnInput_Tiempo_Impresion = MyBase.Columns("Input_Tiempo_Impresion")
@@ -1241,6 +1407,20 @@ Partial Public Class Ds_Config_Picking
             Me.columnInput_DiasNVV = MyBase.Columns("Input_DiasNVV")
             Me.columnInput_DiasOCI = MyBase.Columns("Input_DiasOCI")
             Me.columnInput_DiasOCC = MyBase.Columns("Input_DiasOCC")
+            Me.columnCantMail = MyBase.Columns("CantMail")
+            Me.columnChk_Fac_Lunes = MyBase.Columns("Chk_Fac_Lunes")
+            Me.columnChk_Fac_Martes = MyBase.Columns("Chk_Fac_Martes")
+            Me.columnChk_Fac_Miercoles = MyBase.Columns("Chk_Fac_Miercoles")
+            Me.columnChk_Fac_Jueves = MyBase.Columns("Chk_Fac_Jueves")
+            Me.columnChk_Fac_Viernes = MyBase.Columns("Chk_Fac_Viernes")
+            Me.columnChk_Fac_Sabado = MyBase.Columns("Chk_Fac_Sabado")
+            Me.columnChk_Fac_Domingo = MyBase.Columns("Chk_Fac_Domingo")
+            Me.columnRdb_FA_1Dia = MyBase.Columns("Rdb_FA_1Dia")
+            Me.columnRdb_FA_1Semana = MyBase.Columns("Rdb_FA_1Semana")
+            Me.columnRdb_FA_1Mes = MyBase.Columns("Rdb_FA_1Mes")
+            Me.columnRdb_FA_1Todas = MyBase.Columns("Rdb_FA_1Todas")
+            Me.columnTxt_Modalidad_FacAuto = MyBase.Columns("Txt_Modalidad_FacAuto")
+            Me.columnTimer_FacAuto = MyBase.Columns("Timer_FacAuto")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1270,6 +1450,8 @@ Partial Public Class Ds_Config_Picking
             MyBase.Columns.Add(Me.columnTimer_Archivador)
             Me.columnTimer_Wordpress_Stock = New Global.System.Data.DataColumn("Timer_Wordpress_Stock", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnTimer_Wordpress_Stock)
+            Me.columnTimer_Listas_Programadas = New Global.System.Data.DataColumn("Timer_Listas_Programadas", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnTimer_Listas_Programadas)
             Me.columnTimer_Wordpress_Productos = New Global.System.Data.DataColumn("Timer_Wordpress_Productos", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnTimer_Wordpress_Productos)
             Me.columnInput_Tiempo_Correo = New Global.System.Data.DataColumn("Input_Tiempo_Correo", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
@@ -1372,6 +1554,34 @@ Partial Public Class Ds_Config_Picking
             MyBase.Columns.Add(Me.columnInput_DiasOCI)
             Me.columnInput_DiasOCC = New Global.System.Data.DataColumn("Input_DiasOCC", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnInput_DiasOCC)
+            Me.columnCantMail = New Global.System.Data.DataColumn("CantMail", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCantMail)
+            Me.columnChk_Fac_Lunes = New Global.System.Data.DataColumn("Chk_Fac_Lunes", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnChk_Fac_Lunes)
+            Me.columnChk_Fac_Martes = New Global.System.Data.DataColumn("Chk_Fac_Martes", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnChk_Fac_Martes)
+            Me.columnChk_Fac_Miercoles = New Global.System.Data.DataColumn("Chk_Fac_Miercoles", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnChk_Fac_Miercoles)
+            Me.columnChk_Fac_Jueves = New Global.System.Data.DataColumn("Chk_Fac_Jueves", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnChk_Fac_Jueves)
+            Me.columnChk_Fac_Viernes = New Global.System.Data.DataColumn("Chk_Fac_Viernes", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnChk_Fac_Viernes)
+            Me.columnChk_Fac_Sabado = New Global.System.Data.DataColumn("Chk_Fac_Sabado", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnChk_Fac_Sabado)
+            Me.columnChk_Fac_Domingo = New Global.System.Data.DataColumn("Chk_Fac_Domingo", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnChk_Fac_Domingo)
+            Me.columnRdb_FA_1Dia = New Global.System.Data.DataColumn("Rdb_FA_1Dia", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnRdb_FA_1Dia)
+            Me.columnRdb_FA_1Semana = New Global.System.Data.DataColumn("Rdb_FA_1Semana", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnRdb_FA_1Semana)
+            Me.columnRdb_FA_1Mes = New Global.System.Data.DataColumn("Rdb_FA_1Mes", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnRdb_FA_1Mes)
+            Me.columnRdb_FA_1Todas = New Global.System.Data.DataColumn("Rdb_FA_1Todas", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnRdb_FA_1Todas)
+            Me.columnTxt_Modalidad_FacAuto = New Global.System.Data.DataColumn("Txt_Modalidad_FacAuto", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnTxt_Modalidad_FacAuto)
+            Me.columnTimer_FacAuto = New Global.System.Data.DataColumn("Timer_FacAuto", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnTimer_FacAuto)
             Me.columnTimer_Monitoreo_Doc.DefaultValue = CType(false,Boolean)
             Me.columnTimer_Monitoreo_Mail.DefaultValue = CType(false,Boolean)
             Me.columnTimer_Monitoreo_Impresion.DefaultValue = CType(false,Boolean)
@@ -2694,6 +2904,22 @@ Partial Public Class Ds_Config_Picking
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Timer_Listas_Programadas() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Timer_Listas_ProgramadasColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Timer_Listas_Programadas' de la tabla 'Tbl_Configuracion'"& _ 
+                            " es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Timer_Listas_ProgramadasColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Property Timer_Wordpress_Productos() As Boolean
             Get
                 Try 
@@ -3510,6 +3736,227 @@ Partial Public Class Ds_Config_Picking
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property CantMail() As Integer
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.CantMailColumn),Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'CantMail' de la tabla 'Tbl_Configuracion' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.CantMailColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Chk_Fac_Lunes() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Chk_Fac_LunesColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Chk_Fac_Lunes' de la tabla 'Tbl_Configuracion' es DBNull."& _ 
+                            "", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Chk_Fac_LunesColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Chk_Fac_Martes() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Chk_Fac_MartesColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Chk_Fac_Martes' de la tabla 'Tbl_Configuracion' es DBNull"& _ 
+                            ".", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Chk_Fac_MartesColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Chk_Fac_Miercoles() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Chk_Fac_MiercolesColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Chk_Fac_Miercoles' de la tabla 'Tbl_Configuracion' es DBN"& _ 
+                            "ull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Chk_Fac_MiercolesColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Chk_Fac_Jueves() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Chk_Fac_JuevesColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Chk_Fac_Jueves' de la tabla 'Tbl_Configuracion' es DBNull"& _ 
+                            ".", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Chk_Fac_JuevesColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Chk_Fac_Viernes() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Chk_Fac_ViernesColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Chk_Fac_Viernes' de la tabla 'Tbl_Configuracion' es DBNul"& _ 
+                            "l.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Chk_Fac_ViernesColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Chk_Fac_Sabado() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Chk_Fac_SabadoColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Chk_Fac_Sabado' de la tabla 'Tbl_Configuracion' es DBNull"& _ 
+                            ".", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Chk_Fac_SabadoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Chk_Fac_Domingo() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Chk_Fac_DomingoColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Chk_Fac_Domingo' de la tabla 'Tbl_Configuracion' es DBNul"& _ 
+                            "l.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Chk_Fac_DomingoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Rdb_FA_1Dia() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Rdb_FA_1DiaColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Rdb_FA_1Dia' de la tabla 'Tbl_Configuracion' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Rdb_FA_1DiaColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Rdb_FA_1Semana() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Rdb_FA_1SemanaColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Rdb_FA_1Semana' de la tabla 'Tbl_Configuracion' es DBNull"& _ 
+                            ".", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Rdb_FA_1SemanaColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Rdb_FA_1Mes() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Rdb_FA_1MesColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Rdb_FA_1Mes' de la tabla 'Tbl_Configuracion' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Rdb_FA_1MesColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Rdb_FA_1Todas() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Rdb_FA_1TodasColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Rdb_FA_1Todas' de la tabla 'Tbl_Configuracion' es DBNull."& _ 
+                            "", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Rdb_FA_1TodasColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Txt_Modalidad_FacAuto() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Txt_Modalidad_FacAutoColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Txt_Modalidad_FacAuto' de la tabla 'Tbl_Configuracion' es"& _ 
+                            " DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Txt_Modalidad_FacAutoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Timer_FacAuto() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Timer_FacAutoColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Timer_FacAuto' de la tabla 'Tbl_Configuracion' es DBNull."& _ 
+                            "", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Timer_FacAutoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Function IsImpresoraNull() As Boolean
             Return Me.IsNull(Me.tableTbl_Configuracion.ImpresoraColumn)
         End Function
@@ -3650,6 +4097,18 @@ Partial Public Class Ds_Config_Picking
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub SetTimer_Wordpress_StockNull()
             Me(Me.tableTbl_Configuracion.Timer_Wordpress_StockColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsTimer_Listas_ProgramadasNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Timer_Listas_ProgramadasColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetTimer_Listas_ProgramadasNull()
+            Me(Me.tableTbl_Configuracion.Timer_Listas_ProgramadasColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -4262,6 +4721,174 @@ Partial Public Class Ds_Config_Picking
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub SetInput_DiasOCCNull()
             Me(Me.tableTbl_Configuracion.Input_DiasOCCColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsCantMailNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.CantMailColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetCantMailNull()
+            Me(Me.tableTbl_Configuracion.CantMailColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsChk_Fac_LunesNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Chk_Fac_LunesColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetChk_Fac_LunesNull()
+            Me(Me.tableTbl_Configuracion.Chk_Fac_LunesColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsChk_Fac_MartesNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Chk_Fac_MartesColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetChk_Fac_MartesNull()
+            Me(Me.tableTbl_Configuracion.Chk_Fac_MartesColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsChk_Fac_MiercolesNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Chk_Fac_MiercolesColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetChk_Fac_MiercolesNull()
+            Me(Me.tableTbl_Configuracion.Chk_Fac_MiercolesColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsChk_Fac_JuevesNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Chk_Fac_JuevesColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetChk_Fac_JuevesNull()
+            Me(Me.tableTbl_Configuracion.Chk_Fac_JuevesColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsChk_Fac_ViernesNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Chk_Fac_ViernesColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetChk_Fac_ViernesNull()
+            Me(Me.tableTbl_Configuracion.Chk_Fac_ViernesColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsChk_Fac_SabadoNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Chk_Fac_SabadoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetChk_Fac_SabadoNull()
+            Me(Me.tableTbl_Configuracion.Chk_Fac_SabadoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsChk_Fac_DomingoNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Chk_Fac_DomingoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetChk_Fac_DomingoNull()
+            Me(Me.tableTbl_Configuracion.Chk_Fac_DomingoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsRdb_FA_1DiaNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Rdb_FA_1DiaColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetRdb_FA_1DiaNull()
+            Me(Me.tableTbl_Configuracion.Rdb_FA_1DiaColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsRdb_FA_1SemanaNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Rdb_FA_1SemanaColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetRdb_FA_1SemanaNull()
+            Me(Me.tableTbl_Configuracion.Rdb_FA_1SemanaColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsRdb_FA_1MesNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Rdb_FA_1MesColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetRdb_FA_1MesNull()
+            Me(Me.tableTbl_Configuracion.Rdb_FA_1MesColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsRdb_FA_1TodasNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Rdb_FA_1TodasColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetRdb_FA_1TodasNull()
+            Me(Me.tableTbl_Configuracion.Rdb_FA_1TodasColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsTxt_Modalidad_FacAutoNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Txt_Modalidad_FacAutoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetTxt_Modalidad_FacAutoNull()
+            Me(Me.tableTbl_Configuracion.Txt_Modalidad_FacAutoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsTimer_FacAutoNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Timer_FacAutoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetTimer_FacAutoNull()
+            Me(Me.tableTbl_Configuracion.Timer_FacAutoColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     

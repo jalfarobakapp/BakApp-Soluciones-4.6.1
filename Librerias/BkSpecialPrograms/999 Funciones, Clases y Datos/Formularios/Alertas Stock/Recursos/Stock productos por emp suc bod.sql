@@ -57,6 +57,8 @@ Update #Paso Set ST_DISPONIBLE = Case When ST_FISICO < 0 Then 0 Else ST_FISICO E
 
 Update #Paso Set ST_DISPONIBLE = 0 Where ST_DISPONIBLE < 0
 
+--#Update_Conficion_Adicional#
+
 Insert Into #Paso (CodPermiso,Empresa,Sucursal,Bodega,SUC_BOD,NOKOBO,Codigo,ST_FISICO,ST_DEVENGADO,ST_DESP_SIN_FACTURAR,ST_COMPROMETIDO,ST_DISPONIBLE,
                    ST_COMPRAS_NO_RECEPCIONADAS,ST_RECEP_SIN_FACTURAR,ST_PEDIDO,ST_COMPROMETIDO_BK,ST_PEDIDO_BK,Orden)
 Select 'zzz',

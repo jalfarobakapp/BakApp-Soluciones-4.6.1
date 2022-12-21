@@ -208,13 +208,15 @@ Public Class Frm_Login
         Dim _Row_Nom_Equipo As DataRow
         Dim _Dir_Local As String = Application.StartupPath & "\Data\" '"Configuracion_Local"
 
+        Dim _RutEmpresa01 As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Empresas", "Rut", "Empresa = '01'")
+
         Dim _Nombre_Equipo As String = My.Computer.Name
         If Fx_Revisar_Nombre_Equipo_BakApp(_Formulario,
-                                               _Dir_Local & RutEmpresa & "\Configuracion_Local", RutEmpresa, _Nombre_Equipo) Then
+                                               _Dir_Local & _RutEmpresa01 & "\Configuracion_Local", _RutEmpresa01, _Nombre_Equipo) Then
 
             Dim _Ds As New DatosBakApp
             _Ds.Clear()
-            _Ds.ReadXml(_Dir_Local & RutEmpresa & "\Configuracion_Local\Nombre_Equipo.xml")
+            _Ds.ReadXml(_Dir_Local & _RutEmpresa01 & "\Configuracion_Local\Nombre_Equipo.xml")
 
             _Row_Nom_Equipo = _Ds.Tables("Tbl_Nombre_Equipo").Rows(0)
         Else
@@ -229,7 +231,7 @@ Public Class Frm_Login
 
         If Not (_Global_Row_EstacionBk Is Nothing) Then
 
-            Dim _RutEmpresa01 As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Empresas", "Rut", "Empresa = '01'")
+            'Dim _RutEmpresa01 As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Empresas", "Rut", "Empresa = '01'")
 
             Dim _Cadena_Base As String =
             UCase(Trim(_RutEmpresa01) & "@" & Trim(_Global_Row_EstacionBk.Item("NombreEquipo")))

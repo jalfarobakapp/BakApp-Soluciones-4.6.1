@@ -225,9 +225,7 @@ Public Class Frm_Facturacion_Masiva
     End Sub
 
     Private Sub Btn_Facturar_Click(sender As Object, e As EventArgs) Handles Btn_Facturar.Click
-
         Sb_Facturar_Masivamente()
-
     End Sub
 
     Sub Sb_Facturar_Masivamente()
@@ -291,7 +289,7 @@ Public Class Frm_Facturacion_Masiva
                     If _Fila.Item("Chk") Then
 
                         Dim _Idmaeedo As Integer = _Fila.Item("IDMAEEDO")
-                        Dim _Fecha_Emision As Date = _FechaEmision ' _Fila.Item("Fecha_Emision")
+                        Dim _Fecha_Emision As Date = _FechaEmision
                         Dim _Idmaeedo_Fcv As Integer
 
                         Dim _Nudo_Nvv As String = _Fila.Item("NUDO")
@@ -316,7 +314,6 @@ Public Class Frm_Facturacion_Masiva
                             _Fila.Item("NUDO_FCV") = _Row_Factura.Item("NUDO")
                             _Fila.Item("Fecha_Emision") = _Row_Factura.Item("FEEMDO")
                             _Fila.Item("VABRDO_FCV") = _Row_Factura.Item("VABRDO")
-                            '_Fila.Item("VAABDO_FCV") = _Row_Factura.Item("VAABDO")
 
                             Dim _Idmaeedo_NVV As Integer = _Fila.Item("IDMAEEDO")
                             Dim _Idmaedpce As Integer = _Fila.Item("IDMAEDPCE")
@@ -426,10 +423,6 @@ Public Class Frm_Facturacion_Masiva
 
                             _Error_PDF = Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Idmaeedo_Fcv)
 
-                            'If Not String.IsNullOrEmpty(_Error_PDF) Then
-                            '    MessageBoxEx.Show(Me, _Error_PDF, "Error al querer grabar PDF automático", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                            'End If
-
                         End If
 
                         _Contador += 1
@@ -455,6 +448,7 @@ Public Class Frm_Facturacion_Masiva
             MessageBoxEx.Show(Me, ex.Message, "Bakapp", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
         Finally
+
             Circular_Progres_Porcentaje.Visible = False
             Circular_Progres_Contador.Visible = False
             Circular_Progres_Run.Visible = False
@@ -463,6 +457,7 @@ Public Class Frm_Facturacion_Masiva
             Sb_Habilitar_Controles(True)
 
             Me.Refresh()
+
         End Try
 
     End Sub
@@ -488,9 +483,9 @@ Public Class Frm_Facturacion_Masiva
     End Sub
 
     Function Fx_Crear_Documento_Desde_Otro_Automaticamente(_Formulario As Form,
-                                                      _Tido_Destino As String,
-                                                      _Idmaeedo_Origen As Integer,
-                                                      _Fecha_Emision As DateTime) As Integer
+                                                           _Tido_Destino As String,
+                                                           _Idmaeedo_Origen As Integer,
+                                                           _Fecha_Emision As DateTime) As Integer
 
         Dim _New_Idmaeedo As Integer
 
@@ -568,7 +563,6 @@ Public Class Frm_Facturacion_Masiva
 
                             Dim Fm_Post As New Frm_Formulario_Documento("FCV", csGlobales.Enum_Tipo_Documento.Venta, False)
                             Fm_Post.Sb_Limpiar(Modalidad)
-                            'Fm_Post.Pro_Nudo = _Nudo
                             Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(Me, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
                             Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento, True, False)
                             _New_Idmaeedo = Fm_Post.Pro_Idmaeedo
@@ -598,14 +592,6 @@ Public Class Frm_Facturacion_Masiva
         Return _New_Idmaeedo
 
     End Function
-
-    Private Sub Btn_Exportar_Excel_Click(sender As Object, e As EventArgs) Handles Btn_Exportar_Excel.Click
-
-    End Sub
-
-    Private Sub Chk_Marcar_todo_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Marcar_todo.CheckedChanged
-
-    End Sub
 
     Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 

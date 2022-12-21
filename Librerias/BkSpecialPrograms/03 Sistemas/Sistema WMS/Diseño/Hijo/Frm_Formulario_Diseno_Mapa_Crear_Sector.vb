@@ -20,7 +20,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
         Get
             Return Txt_Codigo_Sector.Text
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             Txt_Codigo_Sector.Text = value
         End Set
     End Property
@@ -29,7 +29,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
         Get
             Return Txt_Nombre_Sector.Text
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             Txt_Nombre_Sector.Text = value
         End Set
     End Property
@@ -40,8 +40,8 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
         End Get
     End Property
 
-
-    Public Sub New(ByVal Id_Mapa As Integer, ByVal Accion As _Enum_Accion)
+    Public Property Es_SubSector As Boolean
+    Public Sub New(Id_Mapa As Integer, Accion As _Enum_Accion)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -51,10 +51,9 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
         _Id_Mapa = Id_Mapa
         _Accion = Accion
 
-
     End Sub
 
-    Private Sub Frm_Formulario_Diseno_Mapa_Crear_Sector_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Formulario_Diseno_Mapa_Crear_Sector_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         If _Accion = _Enum_Accion.Editar Then
             Txt_Codigo_Sector.Enabled = False
@@ -63,21 +62,39 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
             Me.ActiveControl = Txt_Codigo_Sector
         End If
 
+        If Es_SubSector Then
+            Txt_Codigo_Sector.Text = Replace(Txt_Codigo_Sector.Text, "...", "")
+            Txt_Nombre_Sector.Enabled = False
+        End If
+
     End Sub
 
-    Private Sub Frm_Formulario_Diseno_Mapa_Crear_Sector_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Formulario_Diseno_Mapa_Crear_Sector_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Btn_Grabar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Grabar.Click
+    Private Sub Btn_Grabar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Grabar.Click
+
+        Dim _Codigo_Sector = Txt_Codigo_Sector.Text.Trim
+
+        If String.IsNullOrEmpty(_Codigo_Sector) Then
+            MessageBoxEx.Show(Me, "El código no puede estar vacío", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Codigo_Sector.Focus()
+            Return
+        End If
+
+        If Es_SubSector Then
+            _Codigo_Sector = _Codigo_Sector & "..."
+        End If
 
         If _Accion = _Enum_Accion.Nuevo Then
+
             Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det" & vbCrLf &
-                           "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & Trim(Txt_Codigo_Sector.Text) & "'"
+                           "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "'"
             Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
             If _Accion = _Enum_Accion.Nuevo Then

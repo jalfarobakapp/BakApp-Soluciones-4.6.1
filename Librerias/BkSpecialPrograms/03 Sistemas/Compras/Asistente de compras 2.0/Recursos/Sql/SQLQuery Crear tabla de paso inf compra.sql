@@ -174,6 +174,9 @@ CREATE TABLE [dbo].[#TablaPaso#](
 	[Fecha_Ultima_Ejecucion]    [Date],
 	[Sospecha_Familia]          [Int]          DEFAULT (0),
     [Porc_CumpUlt3Pedidos]      [Float]        DEFAULT (0),
+    [StockUd1BodStar]           [Float]        DEFAULT (0),
+    [StockUd2BodStar]           [Float]        DEFAULT (0),
+
 	CONSTRAInt [PK_Zw_#TablaPaso#_Codigo] PRIMARY KEY CLUSTERED 
 (
 	[Codigo] ASC,

@@ -37,8 +37,6 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.BtnCambiarCodigo = New DevComponents.DotNetBar.ButtonItem()
-        Me.BtnBuscarProducto = New DevComponents.DotNetBar.ButtonItem()
-        Me.BtnLimpiar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -100,7 +98,7 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
         '
         Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX5.ForeColor = System.Drawing.Color.Black
-        Me.LabelX5.Location = New System.Drawing.Point(243, 3)
+        Me.LabelX5.Location = New System.Drawing.Point(280, 3)
         Me.LabelX5.Name = "LabelX5"
         Me.LabelX5.Size = New System.Drawing.Size(77, 23)
         Me.LabelX5.TabIndex = 11
@@ -116,13 +114,12 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
         Me.Txt_Codigo_Tecnico_New.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Codigo_Tecnico_New.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Codigo_Tecnico_New.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Codigo_Tecnico_New.Location = New System.Drawing.Point(326, 70)
+        Me.Txt_Codigo_Tecnico_New.Location = New System.Drawing.Point(363, 71)
         Me.Txt_Codigo_Tecnico_New.MaxLength = 20
         Me.Txt_Codigo_Tecnico_New.Name = "Txt_Codigo_Tecnico_New"
         Me.Txt_Codigo_Tecnico_New.PreventEnterBeep = True
         Me.Txt_Codigo_Tecnico_New.Size = New System.Drawing.Size(114, 22)
         Me.Txt_Codigo_Tecnico_New.TabIndex = 10
-        Me.Txt_Codigo_Tecnico_New.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'LabelX4
         '
@@ -132,11 +129,11 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(206, 69)
+        Me.LabelX4.Location = New System.Drawing.Point(257, 70)
         Me.LabelX4.Name = "LabelX4"
-        Me.LabelX4.Size = New System.Drawing.Size(114, 23)
+        Me.LabelX4.Size = New System.Drawing.Size(100, 23)
         Me.LabelX4.TabIndex = 9
-        Me.LabelX4.Text = "Nuevo código técnico"
+        Me.LabelX4.Text = "Nuevo cód. Técnico"
         '
         'Txt_Codigo_Tecnico_Old
         '
@@ -148,13 +145,12 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
         Me.Txt_Codigo_Tecnico_Old.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Codigo_Tecnico_Old.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Codigo_Tecnico_Old.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Codigo_Tecnico_Old.Location = New System.Drawing.Point(326, 4)
+        Me.Txt_Codigo_Tecnico_Old.Location = New System.Drawing.Point(363, 3)
         Me.Txt_Codigo_Tecnico_Old.Name = "Txt_Codigo_Tecnico_Old"
         Me.Txt_Codigo_Tecnico_Old.PreventEnterBeep = True
         Me.Txt_Codigo_Tecnico_Old.ReadOnly = True
         Me.Txt_Codigo_Tecnico_Old.Size = New System.Drawing.Size(114, 22)
         Me.Txt_Codigo_Tecnico_Old.TabIndex = 8
-        Me.Txt_Codigo_Tecnico_Old.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'ChkCambiarCodigoTecnico
         '
@@ -163,6 +159,8 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
         '
         '
         Me.ChkCambiarCodigoTecnico.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.ChkCambiarCodigoTecnico.CheckBoxImageChecked = CType(resources.GetObject("ChkCambiarCodigoTecnico.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.ChkCambiarCodigoTecnico.FocusCuesEnabled = False
         Me.ChkCambiarCodigoTecnico.ForeColor = System.Drawing.Color.Black
         Me.ChkCambiarCodigoTecnico.Location = New System.Drawing.Point(483, 70)
         Me.ChkCambiarCodigoTecnico.Name = "ChkCambiarCodigoTecnico"
@@ -185,9 +183,8 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
         Me.Txt_Codigo_New.MaxLength = 13
         Me.Txt_Codigo_New.Name = "Txt_Codigo_New"
         Me.Txt_Codigo_New.PreventEnterBeep = True
-        Me.Txt_Codigo_New.Size = New System.Drawing.Size(114, 22)
+        Me.Txt_Codigo_New.Size = New System.Drawing.Size(154, 22)
         Me.Txt_Codigo_New.TabIndex = 5
-        Me.Txt_Codigo_New.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'LabelX3
         '
@@ -242,15 +239,17 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
         '
         Me.Txt_Codigo_Old.Border.Class = "TextBoxBorder"
         Me.Txt_Codigo_Old.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Codigo_Old.ButtonCustom.Image = CType(resources.GetObject("Txt_Codigo_Old.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Codigo_Old.ButtonCustom.Visible = True
+        Me.Txt_Codigo_Old.ButtonCustom2.Image = CType(resources.GetObject("Txt_Codigo_Old.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Codigo_Old.ButtonCustom2.Visible = True
         Me.Txt_Codigo_Old.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Codigo_Old.ForeColor = System.Drawing.Color.Black
         Me.Txt_Codigo_Old.Location = New System.Drawing.Point(86, 4)
         Me.Txt_Codigo_Old.Name = "Txt_Codigo_Old"
         Me.Txt_Codigo_Old.PreventEnterBeep = True
-        Me.Txt_Codigo_Old.ReadOnly = True
-        Me.Txt_Codigo_Old.Size = New System.Drawing.Size(114, 22)
+        Me.Txt_Codigo_Old.Size = New System.Drawing.Size(154, 22)
         Me.Txt_Codigo_Old.TabIndex = 1
-        Me.Txt_Codigo_Old.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'LabelX1
         '
@@ -271,7 +270,7 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnCambiarCodigo, Me.BtnBuscarProducto, Me.BtnLimpiar})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnCambiarCodigo})
         Me.Bar2.Location = New System.Drawing.Point(0, 134)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(644, 41)
@@ -286,24 +285,9 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
         Me.BtnCambiarCodigo.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.BtnCambiarCodigo.ForeColor = System.Drawing.Color.Black
         Me.BtnCambiarCodigo.Image = CType(resources.GetObject("BtnCambiarCodigo.Image"), System.Drawing.Image)
+        Me.BtnCambiarCodigo.ImageAlt = CType(resources.GetObject("BtnCambiarCodigo.ImageAlt"), System.Drawing.Image)
         Me.BtnCambiarCodigo.Name = "BtnCambiarCodigo"
         Me.BtnCambiarCodigo.Text = "Cambiar código"
-        '
-        'BtnBuscarProducto
-        '
-        Me.BtnBuscarProducto.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.BtnBuscarProducto.ForeColor = System.Drawing.Color.Black
-        Me.BtnBuscarProducto.Image = CType(resources.GetObject("BtnBuscarProducto.Image"), System.Drawing.Image)
-        Me.BtnBuscarProducto.Name = "BtnBuscarProducto"
-        Me.BtnBuscarProducto.Tooltip = "Buscar producto"
-        '
-        'BtnLimpiar
-        '
-        Me.BtnLimpiar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.BtnLimpiar.ForeColor = System.Drawing.Color.Black
-        Me.BtnLimpiar.Image = CType(resources.GetObject("BtnLimpiar.Image"), System.Drawing.Image)
-        Me.BtnLimpiar.Name = "BtnLimpiar"
-        Me.BtnLimpiar.Tooltip = "Limpiar"
         '
         'Frm_Cambio_Codigos_UnoxUno
         '
@@ -316,6 +300,7 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.KeyPreview = True
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Frm_Cambio_Codigos_UnoxUno"
@@ -333,13 +318,11 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
     Public WithEvents BtnCambiarCodigo As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents BtnLimpiar As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Txt_Codigo_Old As DevComponents.DotNetBar.Controls.TextBoxX
     Public WithEvents Txt_Descripcion As DevComponents.DotNetBar.Controls.TextBoxX
     Public WithEvents Txt_Codigo_New As DevComponents.DotNetBar.Controls.TextBoxX
     Public WithEvents ChkCambiarCodigoTecnico As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Txt_Codigo_Tecnico_Old As DevComponents.DotNetBar.Controls.TextBoxX
-    Public WithEvents BtnBuscarProducto As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
     Public WithEvents Txt_Codigo_Tecnico_New As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX

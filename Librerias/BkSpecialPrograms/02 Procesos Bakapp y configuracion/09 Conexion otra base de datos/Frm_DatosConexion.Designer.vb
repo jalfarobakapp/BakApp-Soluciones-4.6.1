@@ -40,6 +40,8 @@ Partial Class Frm_DatosConexion
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Txt_Nombre_Conexion = New System.Windows.Forms.TextBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Txt_Empresa = New System.Windows.Forms.TextBox()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.SuspendLayout()
@@ -127,9 +129,9 @@ Partial Class Frm_DatosConexion
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Conectar, Me.Btn_Grabar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 249)
+        Me.Bar1.Location = New System.Drawing.Point(0, 279)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(372, 57)
+        Me.Bar1.Size = New System.Drawing.Size(368, 57)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 87
@@ -188,7 +190,6 @@ Partial Class Frm_DatosConexion
         'GroupPanel1
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
-        Me.GroupPanel1.CanvasColor = System.Drawing.SystemColors.Control
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel1.Controls.Add(Me.Txt_BaseDeDatos)
         Me.GroupPanel1.Controls.Add(Me.Label1)
@@ -255,11 +256,34 @@ Partial Class Frm_DatosConexion
         Me.Txt_Nombre_Conexion.Size = New System.Drawing.Size(293, 22)
         Me.Txt_Nombre_Conexion.TabIndex = 0
         '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.BackColor = System.Drawing.Color.Transparent
+        Me.Label7.ForeColor = System.Drawing.Color.Black
+        Me.Label7.Location = New System.Drawing.Point(30, 248)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(50, 13)
+        Me.Label7.TabIndex = 91
+        Me.Label7.Text = "Empresa"
+        '
+        'Txt_Empresa
+        '
+        Me.Txt_Empresa.BackColor = System.Drawing.Color.White
+        Me.Txt_Empresa.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Empresa.Location = New System.Drawing.Point(141, 248)
+        Me.Txt_Empresa.Name = "Txt_Empresa"
+        Me.Txt_Empresa.ReadOnly = True
+        Me.Txt_Empresa.Size = New System.Drawing.Size(60, 22)
+        Me.Txt_Empresa.TabIndex = 92
+        '
         'Frm_DatosConexion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(372, 306)
+        Me.ClientSize = New System.Drawing.Size(368, 336)
+        Me.Controls.Add(Me.Txt_Empresa)
+        Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.Txt_Nombre_Conexion)
         Me.Controls.Add(Me.GroupPanel1)
@@ -298,4 +322,6 @@ Partial Class Frm_DatosConexion
     Public WithEvents Txt_Servidor As TextBox
     Friend WithEvents Label6 As Label
     Public WithEvents Txt_Nombre_Conexion As TextBox
+    Friend WithEvents Label7 As Label
+    Public WithEvents Txt_Empresa As TextBox
 End Class

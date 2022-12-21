@@ -73,6 +73,48 @@ Namespace My.Resources
         '''-- Ventas de un año
         '''Set @Fecha1 = DATEADD(M,-@MesesEstudio,@Fecha2) 
         '''
+        '''Declare @Contador Int = 0
+        '''
+        '''Declare @AAAA As Varchar(4)= Cast(year(Getdate()) As Varchar(4))
+        '''Declare @MM As Varchar(2) = Case When month(Getdate()) &lt; 10 Then &apos;0&apos;+Cast(month(Getdate()) As Varchar(2)) Else Cast(month(Getdate()) As Varchar(2)) end
+        '''
+        '''Decla [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property SQLQuery_Actualiza_datos_InfStockProyecVnta() As String
+            Get
+                Return ResourceManager.GetString("SQLQuery_Actualiza_datos_InfStockProyecVnta", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a DECLARE @Fecha1 Date, -- Fecha de un año atras
+        '''        @Fecha2 Date = Getdate(), -- Fecha de Hoy
+        '''		@MesesEstudio Int = #MesesEstudio#,
+        '''		@MesesProyeccion Int = #MesesProyeccion#
+        '''
+        '''Declare @Contador Int = 0
+        '''
+        '''Declare @AAAA As Varchar(4)= Cast(year(Getdate()) As Varchar(4))
+        '''Declare @MM As Varchar(2) = Case When month(Getdate()) &lt; 10 Then &apos;0&apos;+Cast(month(Getdate()) As Varchar(2)) Else Cast(month(Getdate()) As Varchar(2)) end
+        '''Declare @Fecha As Datetime = @AAAA+@MM+&apos;01&apos;
+        '''Declare @FechaDesde As Datetime
+        '''De [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property SQLQuery_Crear_Tabla_Paso_InfStockProyecVnta() As String
+            Get
+                Return ResourceManager.GetString("SQLQuery_Crear_Tabla_Paso_InfStockProyecVnta", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a DECLARE @Fecha1 Date, -- Fecha de un año atras
+        '''        @Fecha2 Date = Getdate(), -- Fecha de Hoy
+        '''		@MesesEstudio Int = #MesesEstudio#,
+        '''		@MesesProyeccion Int = #MesesProyeccion#
+        '''
+        '''-- Ventas de un año
+        '''Set @Fecha1 = DATEADD(M,-@MesesEstudio,@Fecha2) 
+        '''
         '''Create Table #PasoVentas(
         '''[Empresa]					Char(2)			NOT NULL DEFAULT (&apos;&apos;),
         '''[RAZON]						Varchar(50)		NOT NULL DEFAULT (&apos;&apos;),

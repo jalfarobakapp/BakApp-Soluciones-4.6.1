@@ -35,7 +35,9 @@ Public Class Frm_MantListas_Conf_Funciones
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        _Lista_En_Neto = Lista_en_neto
+        _Lista_En_Neto = Lista_En_Neto
+
+        Sb_Color_Botones_Barra(Bar2)
 
     End Sub
 
@@ -266,9 +268,15 @@ Public Class Frm_MantListas_Conf_Funciones
                     Dim _Cant2_Ecu As Double = _Ecuacion_3(1)
                     Dim _Campo_Ecu As String = _Ecuacion_3(2).ToString.ToUpper
 
-                    Dim _Calculo = _Ecuacion_3(3)
+                    Dim _Calculo = _Ecuacion_3(3).ToString.ToUpper
 
-                    Dim _Precio As Double
+                    For Each _FColumnas As DataRow In _Tbl_Campos.Rows
+                        Dim _Columna As String = _FColumnas.Item("CODIGO").ToString.Trim
+                        _Calculo = Replace(_Calculo, _Columna, 1 & " ")
+                    Next
+
+                    _Calculo = Replace(_Calculo, "<", "")
+                    _Calculo = Replace(_Calculo, ">", "")
 
                     Dim _Reg = _Sql.Fx_Cuenta_Registros("PNOMDIM",
                                                         "DEPENDENCI In ('Por_maepr','Por_tabpp','Valor_docud','Valor_docue','Valor_propio'," &
@@ -278,45 +286,29 @@ Public Class Frm_MantListas_Conf_Funciones
                         _Fx = _Ecuacion
                         Throw New System.Exception(vbCrLf & vbCrLf & "El campo " & _Campo_Ecu.ToString.ToUpper & " no existe")
                     End If
-                    '  Consulta_sql = "Select COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS Where TABLE_NAME = 'TABPRE'"
 
                     _Calculo = Replace(_Calculo.ToString.ToUpper, _Campo_Ecu, 1)
 
-                    If Not IsNumeric(_Calculo) Then
+                    Consulta_sql = "Select KOLT From TABPP"
+                    Dim _TblLtas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-                        '_Calculo = UCase(_Calculo)
-                        '_Calculo = Replace(_Calculo, "CAPRCO1", "(" & De_Num_a_Tx_01(1, False, 5) & "*1.0)")
-                        '_Calculo = Replace(_Calculo, "CAPRCO2", "(" & De_Num_a_Tx_01(1, False, 5) & "*1.0)")
+                    For Each _Fila As DataRow In _TblLtas.Rows
+                        _Calculo = Replace(_Calculo, _Fila.Item("KOLT"), "")
+                    Next
 
-                        'If _Corchete1.Length > _Corchete2.Length Then
+                    Consulta_sql = "Select " & _Calculo & " As Prueba"
+                    If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                        'End If
+                        'If Not IsNumeric(_Calculo) Then
                         _Fx = _Calculo
                         _Ecuacion_Ok = False
                         Exit For
-                        'Throw New System.Exception(vbCrLf & vbCrLf & "Error cerca de " & _Calculo)
-                        'End If
+                        'Else
+                        '    _Precio = _Ecuacion_3(3)
+                        '    If _Precio < 0 Then
 
-                        'Dim _Kolt = "01P"
-
-                        'Consulta_sql = "Select Round(" & UCase(_Calculo) & ",5) As Precio From" & Environment.NewLine &
-                        '               "TABPRE Where KOLT = '" & _Kolt & "' And KOPR = '" & _Codigo & "'"
-                        'Dim _Row_Calculo = _Sql.Fx_Get_DataRow(Consulta_sql, False)
-
-                        'If Not _Row_Calculo Is Nothing Then
-                        '    _Precio = _Row_Calculo.Item("Precio")
-                        'End If
-
-                    Else
-                        _Precio = _Ecuacion_3(3)
-                        If _Precio < 0 Then
-
-                        End If
+                        '    End If
                     End If
-
-                    'If _Cantidad >= _Cant1_Ecu AndAlso _Cantidad <= _Cant2_Ecu Then
-                    '    Dim _Redondeo = Fx_Redondeo_Random(_Ecuacion_1(1))
-                    '    _PrecioLinea = Fx_Redondear_Precio(_Precio, _Redondeo)
-                    '    Exit For
-                    'End If
 
                 Next
 

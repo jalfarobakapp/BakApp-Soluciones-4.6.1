@@ -95,7 +95,7 @@ Partial Class Frm_St_Estado_02_Asignacion
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.22774!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 69.77226!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 25.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 78.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.Chk_Tec_Domicilio, 1, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.Btn_Tecnicos, 2, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Chk_Taller_Externo, 0, 1)
@@ -131,7 +131,7 @@ Partial Class Frm_St_Estado_02_Asignacion
         Me.Btn_Tecnicos.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Tecnicos.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Tecnicos.Image = CType(resources.GetObject("Btn_Tecnicos.Image"), System.Drawing.Image)
-        Me.Btn_Tecnicos.Location = New System.Drawing.Point(530, 3)
+        Me.Btn_Tecnicos.Location = New System.Drawing.Point(529, 3)
         Me.Btn_Tecnicos.Name = "Btn_Tecnicos"
         Me.Btn_Tecnicos.Size = New System.Drawing.Size(19, 22)
         Me.Btn_Tecnicos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -179,7 +179,7 @@ Partial Class Frm_St_Estado_02_Asignacion
         Me.Cmb_Tecnico.ItemHeight = 16
         Me.Cmb_Tecnico.Location = New System.Drawing.Point(162, 3)
         Me.Cmb_Tecnico.Name = "Cmb_Tecnico"
-        Me.Cmb_Tecnico.Size = New System.Drawing.Size(362, 22)
+        Me.Cmb_Tecnico.Size = New System.Drawing.Size(361, 22)
         Me.Cmb_Tecnico.TabIndex = 68
         '
         'Rating_Star
@@ -191,7 +191,7 @@ Partial Class Frm_St_Estado_02_Asignacion
         Me.Rating_Star.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rating_Star.ForeColor = System.Drawing.Color.Black
         Me.Rating_Star.IsEditable = False
-        Me.Rating_Star.Location = New System.Drawing.Point(555, 3)
+        Me.Rating_Star.Location = New System.Drawing.Point(554, 3)
         Me.Rating_Star.Name = "Rating_Star"
         Me.Rating_Star.Size = New System.Drawing.Size(68, 23)
         Me.Rating_Star.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
@@ -301,7 +301,6 @@ Partial Class Frm_St_Estado_02_Asignacion
         '
         'Txt_Nota
         '
-        Me.Txt_Nota.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -310,7 +309,6 @@ Partial Class Frm_St_Estado_02_Asignacion
         Me.Txt_Nota.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Nota.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Nota.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Nota.FocusHighlightEnabled = True
         Me.Txt_Nota.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Nota.ForeColor = System.Drawing.Color.Black
         Me.Txt_Nota.Location = New System.Drawing.Point(6, 3)

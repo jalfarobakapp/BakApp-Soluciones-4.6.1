@@ -70,6 +70,7 @@ Public Class Frm_Demonio_01_Conf_Local
         Chk_Timer_LibroDTESII.Checked = NuloPorNro(_Fila.Item("Timer_LibroDTESII"), False)
         Chk_Timer_Wordpress_Stock.Checked = NuloPorNro(_Fila.Item("Timer_Wordpress_Stock"), False)
         Chk_Timer_Wordpress_Productos.Checked = NuloPorNro(_Fila.Item("Timer_Wordpress_Productos"), False)
+        Chk_Timer_Listas_Programadas.Checked = NuloPorNro(_Fila.Item("Timer_Listas_Programadas"), False)
 
         Input_Tiempo_Correo.Value = NuloPorNro(_Fila.Item("Input_Tiempo_Correo"), 2)
         Input_Tiempo_Impresion.Value = NuloPorNro(_Fila.Item("Input_Tiempo_Impresion"), 1)
@@ -124,8 +125,26 @@ Public Class Frm_Demonio_01_Conf_Local
         Input_DiasOCI.Value = NuloPorNro(_Fila.Item("Input_DiasOCI"), 1)
         Input_DiasOCC.Value = NuloPorNro(_Fila.Item("Input_DiasOCC"), 1)
 
+        Input_CantMail.Value = NuloPorNro(_Fila.Item("CantMail"), 30)
 
         _Ruta_Archivador = NuloPorNro(_Fila.Item("Ruta_Archivador"), AppPath() & "\Data\" & RutEmpresa)
+
+        Chk_Timer_FacAuto.Checked = NuloPorNro(_Fila.Item("Timer_FacAuto"), True)
+
+        Chk_Fac_Lunes.Checked = NuloPorNro(_Fila.Item("Chk_Fac_Lunes"), True)
+        Chk_Fac_Martes.Checked = NuloPorNro(_Fila.Item("Chk_Fac_Martes"), True)
+        Chk_Fac_Miercoles.Checked = NuloPorNro(_Fila.Item("Chk_Fac_Miercoles"), True)
+        Chk_Fac_Jueves.Checked = NuloPorNro(_Fila.Item("Chk_Fac_Jueves"), True)
+        Chk_Fac_Viernes.Checked = NuloPorNro(_Fila.Item("Chk_Fac_Viernes"), True)
+        Chk_Fac_Sabado.Checked = NuloPorNro(_Fila.Item("Chk_Fac_Sabado"), False)
+        Chk_Fac_Domingo.Checked = NuloPorNro(_Fila.Item("Chk_Fac_Domingo"), False)
+
+        Rdb_FA_1Dia.Checked = NuloPorNro(_Fila.Item("Rdb_FA_1Dia"), True)
+        Rdb_FA_1Semana.Checked = NuloPorNro(_Fila.Item("Rdb_FA_1Semana"), False)
+        Rdb_FA_1Mes.Checked = NuloPorNro(_Fila.Item("Rdb_FA_1Mes"), False)
+        Rdb_FA_1Todas.Checked = NuloPorNro(_Fila.Item("Rdb_FA_1Todas"), False)
+
+        Txt_Modalidad_FacAuto.Text = NuloPorNro(_Fila.Item("Txt_Modalidad_FacAuto"), "")
 
         Dim _LaHora = Now
 
@@ -190,9 +209,31 @@ Public Class Frm_Demonio_01_Conf_Local
                 .Item("Timer_Consolidacion_Stock") = Chk_Timer_Consolidacion_Stock.Checked
                 .Item("Timer_Picking") = Chk_Timer_Picking.Checked
                 .Item("Timer_LibroDTESII") = Chk_Timer_LibroDTESII.Checked
+                .Item("CantMail") = Input_CantMail.Value
+
+                If Chk_Timer_LibroDTESII.Checked Then
+
+                    Dim _RecepXMLComp_CorreoPOP3 As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion",
+                                                                               "RecepXMLComp_CorreoPOP3",
+                                                                               "Empresa = '" & ModEmpresa & "' And Modalidad = '  '")
+
+                    Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos_Cuentas Where Nombre_Usuario = '" & _RecepXMLComp_CorreoPOP3 & "'"
+                    Dim _Row_Cuenta = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                    If IsNothing(_Row_Cuenta) Then
+                        MessageBoxEx.Show(Me, "El sistema solo descargara las compras desde el SII, pero no descargara los XML desde el correo" & vbCrLf & vbCrLf &
+                                          "Falta configuración para recibir correos con XML de proveedores" & vbCrLf &
+                                          "Revisen en la configuraión general en la pestaña de compras",
+                                          "Configuración DTE proveedores",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    End If
+
+                End If
+
                 .Item("Timer_Archivador") = Chk_Timer_Archivador.Checked
                 .Item("Timer_Wordpress_Stock") = Chk_Timer_Wordpress_Stock.Checked
                 .Item("Timer_Wordpress_Productos") = Chk_Timer_Wordpress_Productos.Checked
+                .Item("Timer_Listas_Programadas") = Chk_Timer_Listas_Programadas.Checked
 
                 _Es_Diablito = (Chk_Timer_Impresion.Checked Or Chk_Timer_Picking.Checked)
 
@@ -261,6 +302,21 @@ Public Class Frm_Demonio_01_Conf_Local
                 .Item("Input_DiasOCC") = Input_DiasOCC.Value
 
                 .Item("Dtp_CierreDoc_Hora_Ejecucion") = Dtp_CierreDoc_Hora_Ejecucion.Value
+                .Item("CantMail") = Input_CantMail.Value
+
+                .Item("Timer_FacAuto") = Chk_Timer_FacAuto.Checked
+                .Item("Chk_Fac_Lunes") = Chk_Fac_Lunes.Checked
+                .Item("Chk_Fac_Martes") = Chk_Fac_Martes.Checked
+                .Item("Chk_Fac_Miercoles") = Chk_Fac_Miercoles.Checked
+                .Item("Chk_Fac_Jueves") = Chk_Fac_Jueves.Checked
+                .Item("Chk_Fac_Viernes") = Chk_Fac_Viernes.Checked
+                .Item("Chk_Fac_Sabado") = Chk_Fac_Sabado.Checked
+                .Item("Chk_Fac_Domingo") = Chk_Fac_Domingo.Checked
+                .Item("Rdb_FA_1Dia") = Rdb_FA_1Dia.Checked
+                .Item("Rdb_FA_1Semana") = Rdb_FA_1Semana.Checked
+                .Item("Rdb_FA_1Mes") = Rdb_FA_1Mes.Checked
+                .Item("Rdb_FA_1Todas") = Rdb_FA_1Todas.Checked
+                .Item("Txt_Modalidad_FacAuto") = Txt_Modalidad_FacAuto.Text
 
             End With
 
@@ -447,5 +503,31 @@ Public Class Frm_Demonio_01_Conf_Local
 
     End Sub
 
+    Private Sub Txt_Modalidad_FacAuto_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Modalidad_FacAuto.ButtonCustomClick
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "MODALIDADES DE LA EMPRESA"
+
+        _Filtrar.Tabla = "CONFIEST"
+        _Filtrar.Campo = "MODALIDAD"
+        _Filtrar.Descripcion = "MODALIDAD"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And MODALIDAD <> '  '",
+                               Nothing, False, True) Then
+
+            Dim _Tbl_Transportista As DataTable = _Filtrar.Pro_Tbl_Filtro
+
+            Dim _Row As DataRow = _Tbl_Transportista.Rows(0)
+
+            Dim _Modalidad = _Row.Item("Codigo").ToString.Trim
+
+            Txt_Modalidad_FacAuto.Tag = _Modalidad
+            Txt_Modalidad_FacAuto.Text = _Modalidad
+
+        End If
+
+    End Sub
 
 End Class

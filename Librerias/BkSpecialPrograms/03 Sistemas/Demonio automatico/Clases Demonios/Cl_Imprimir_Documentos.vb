@@ -203,56 +203,64 @@ Public Class Cl_Imprimir_Documentos
         _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Cof_Estacion" & vbCrLf &
                         "Where NombreEquipo = '" & _Nombre_Equipo & "' And Traer_Doc_Auto_Imprimir = 1"
 
-        Dim _Tbl_Zw_Demonio_Cof_Estacion As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _Tbl_Zw_Demonio_Cof_Estacion As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql, False)
 
         Dim _SqlQuery_Cola = String.Empty
 
-        For Each _Fila As DataRow In _Tbl_Zw_Demonio_Cof_Estacion.Rows
+        If Not IsNothing(_Tbl_Zw_Demonio_Cof_Estacion) Then
 
-            Dim _Tido As String = _Fila.Item("TipoDoc")
-            Dim _NombreFormato As String = _Fila.Item("NombreFormato")
-            Dim _IdPadre As String = _Fila.Item("Id")
-            Dim _Condicion_Func = String.Empty
+            For Each _Fila As DataRow In _Tbl_Zw_Demonio_Cof_Estacion.Rows
 
-            Dim _Imprimir_Picking = _Fila.Item("Imprimir_Picking")
+                Dim _Tido As String = _Fila.Item("TipoDoc")
+                Dim _NombreFormato As String = _Fila.Item("NombreFormato")
+                Dim _IdPadre As String = _Fila.Item("Id")
+                Dim _Condicion_Func = String.Empty
 
-            _Consulta_sql = "Select Codigo From " & _Global_BaseBk & "Zw_Demonio_Filtros_X_Estacion" & vbCrLf &
-                            "Where IdPadre = " & _IdPadre & " And Impresora <> '' And Picking = 0"
-            Dim _TblFiltroFunc As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+                Dim _Imprimir_Picking = _Fila.Item("Imprimir_Picking")
 
-            If CBool(_TblFiltroFunc.Rows.Count) Then
+                _Consulta_sql = "Select Codigo From " & _Global_BaseBk & "Zw_Demonio_Filtros_X_Estacion" & vbCrLf &
+                                "Where IdPadre = " & _IdPadre & " And Impresora <> '' And Picking = 0"
+                Dim _TblFiltroFunc As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql, False)
 
-                Dim _Imp_Suc_Modal = _Fila.Item("Imp_Suc_Modal") ' Si es false Imprime todos los documentos generados desde cualquier modalidad
+                If Not IsNothing(_TblFiltroFunc) Then
 
-                _Condicion_Func = Generar_Filtro_IN(_TblFiltroFunc, "", "Codigo", False, False, "'") ' 
-                _Condicion_Func = "And KOFUDO In " & _Condicion_Func
+                    If CBool(_TblFiltroFunc.Rows.Count) Then
 
-                Dim _Nudonodefi As String = "0"
+                        Dim _Imp_Suc_Modal = _Fila.Item("Imp_Suc_Modal") ' Si es false Imprime todos los documentos generados desde cualquier modalidad
 
-                If _Tido = "BLV" Or _Tido = "FCV" Then
-                    Dim _Tipo_Definitivo_Vale As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_Cof_Estacion", "Tipo_Definitivo_Vale",
-                                                          "NombreEquipo = '" & _Nombre_Equipo & "' And TipoDoc = '" & _Tido & "'")
+                        _Condicion_Func = Generar_Filtro_IN(_TblFiltroFunc, "", "Codigo", False, False, "'") ' 
+                        _Condicion_Func = "And KOFUDO In " & _Condicion_Func
 
-                    Select Case _Tipo_Definitivo_Vale
-                        Case "D"
-                            _Nudonodefi = "0"
+                        Dim _Nudonodefi As String = "0"
+
+                        If _Tido = "BLV" Or _Tido = "FCV" Then
+                            Dim _Tipo_Definitivo_Vale As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_Cof_Estacion", "Tipo_Definitivo_Vale",
+                                                                  "NombreEquipo = '" & _Nombre_Equipo & "' And TipoDoc = '" & _Tido & "'")
+
+                            Select Case _Tipo_Definitivo_Vale
+                                Case "D"
+                                    _Nudonodefi = "0"
+                                    _SqlQuery_Cola += Fx_Insertar_Documento_Para_Imprimir(_Tido, _NombreFormato, _Filtro_Fecha, _Condicion_Func, 0, 0, _Imp_Suc_Modal)
+                                Case "V", "A"
+                                    If _Tipo_Definitivo_Vale = "V" Then
+                                        _SqlQuery_Cola += Fx_Insertar_Documento_Para_Imprimir(_Tido, _NombreFormato, _Filtro_Fecha, _Condicion_Func, 1, 0, _Imp_Suc_Modal)
+                                    ElseIf _Tipo_Definitivo_Vale = "A" Then
+                                        _SqlQuery_Cola += Fx_Insertar_Documento_Para_Imprimir(_Tido, _NombreFormato, _Filtro_Fecha, _Condicion_Func, 0, 0, _Imp_Suc_Modal)
+                                        _SqlQuery_Cola += Fx_Insertar_Documento_Para_Imprimir(_Tido, _NombreFormato, _Filtro_Fecha, _Condicion_Func, 1, 0, _Imp_Suc_Modal)
+                                    End If
+                            End Select
+
+                        Else
                             _SqlQuery_Cola += Fx_Insertar_Documento_Para_Imprimir(_Tido, _NombreFormato, _Filtro_Fecha, _Condicion_Func, 0, 0, _Imp_Suc_Modal)
-                        Case "V", "A"
-                            If _Tipo_Definitivo_Vale = "V" Then
-                                _SqlQuery_Cola += Fx_Insertar_Documento_Para_Imprimir(_Tido, _NombreFormato, _Filtro_Fecha, _Condicion_Func, 1, 0, _Imp_Suc_Modal)
-                            ElseIf _Tipo_Definitivo_Vale = "A" Then
-                                _SqlQuery_Cola += Fx_Insertar_Documento_Para_Imprimir(_Tido, _NombreFormato, _Filtro_Fecha, _Condicion_Func, 0, 0, _Imp_Suc_Modal)
-                                _SqlQuery_Cola += Fx_Insertar_Documento_Para_Imprimir(_Tido, _NombreFormato, _Filtro_Fecha, _Condicion_Func, 1, 0, _Imp_Suc_Modal)
-                            End If
-                    End Select
+                        End If
 
-                Else
-                    _SqlQuery_Cola += Fx_Insertar_Documento_Para_Imprimir(_Tido, _NombreFormato, _Filtro_Fecha, _Condicion_Func, 0, 0, _Imp_Suc_Modal)
+                    End If
+
                 End If
 
-            End If
+            Next
 
-        Next
+        End If
 
         If Not String.IsNullOrEmpty(_SqlQuery_Cola) Then
             _Sql.Ej_consulta_IDU(_SqlQuery_Cola, False)
@@ -273,7 +281,12 @@ Public Class Cl_Imprimir_Documentos
         '"FEEMDO BETWEEN CONVERT(DATETIME, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 00:00:00', 102)" & vbCrLf &
         '              "AND CONVERT(DATETIME, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 23:59:59', 102)"
 
-        Dim _Tbl_Doc_Sin_Imprimir As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _Tbl_Doc_Sin_Imprimir As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql, False)
+
+        If IsNothing(_Tbl_Doc_Sin_Imprimir) Then
+            _Procesando = False
+            Return
+        End If
 
         Dim _Solo_Marcar_No_Imprimir As Boolean = _Solo_Marcar_No_Imprimir
 

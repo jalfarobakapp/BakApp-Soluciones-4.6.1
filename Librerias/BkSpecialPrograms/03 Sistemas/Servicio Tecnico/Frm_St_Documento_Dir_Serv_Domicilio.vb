@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+ï»¿Imports DevComponents.DotNetBar
 'Imports BkSpecialPrograms
 'Imports Lib_Bakapp_VarClassFunc
 
@@ -18,10 +18,10 @@ Public Class Frm_St_Documento_Dir_Serv_Domicilio
 
     Public Sub New()
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
 
     End Sub
 
@@ -147,7 +147,16 @@ Public Class Frm_St_Documento_Dir_Serv_Domicilio
         End Set
     End Property
 
-    
+    Public Property Row_Encabezado As DataRow
+        Get
+            Return _Row_Encabezado
+        End Get
+        Set(value As DataRow)
+            _Row_Encabezado = value
+        End Set
+    End Property
+
+
 #End Region
 
     Private Sub Btn_Fijar_Estado_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Trasladar_Datos.Click

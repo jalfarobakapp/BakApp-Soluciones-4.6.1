@@ -34,8 +34,8 @@ Partial Class Modulo_Documentos_Venta
         Me.Btn_Nota_De_Credito = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Guias = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Guia_Recepcion_Devoluciones = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Btn_Nota_De_Debito = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -287,20 +287,6 @@ Partial Class Modulo_Documentos_Venta
         Me.Btn_Guia_Recepcion_Devoluciones.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Guia_Recepcion_Devoluciones.TitleText = "Documento"
         '
-        'LabelX1
-        '
-        '
-        '
-        '
-        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX1.Font = New System.Drawing.Font("Century Gothic", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
-        Me.LabelX1.Location = New System.Drawing.Point(3, 3)
-        Me.LabelX1.Name = "LabelX1"
-        Me.LabelX1.Size = New System.Drawing.Size(378, 49)
-        Me.LabelX1.TabIndex = 44
-        Me.LabelX1.Text = "<font color=""#349FCE""><b>DOCUMENTOS DE VENTA</b></font>"
-        '
         'Btn_Nota_De_Debito
         '
         Me.Btn_Nota_De_Debito.Image = CType(resources.GetObject("Btn_Nota_De_Debito.Image"), System.Drawing.Image)
@@ -318,8 +304,8 @@ Partial Class Modulo_Documentos_Venta
         Me.Btn_Nota_De_Debito.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(179, Byte), Integer))
         Me.Btn_Nota_De_Debito.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(179, Byte), Integer))
         Me.Btn_Nota_De_Debito.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_Nota_De_Debito.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
-        Me.Btn_Nota_De_Debito.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
+        Me.Btn_Nota_De_Debito.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(179, Byte), Integer))
+        Me.Btn_Nota_De_Debito.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(179, Byte), Integer))
         Me.Btn_Nota_De_Debito.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
         Me.Btn_Nota_De_Debito.TileStyle.PaddingBottom = 4
         Me.Btn_Nota_De_Debito.TileStyle.PaddingLeft = 4
@@ -327,6 +313,20 @@ Partial Class Modulo_Documentos_Venta
         Me.Btn_Nota_De_Debito.TileStyle.PaddingTop = 4
         Me.Btn_Nota_De_Debito.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Nota_De_Debito.TitleText = "Documento"
+        '
+        'LabelX1
+        '
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.Font = New System.Drawing.Font("Century Gothic", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
+        Me.LabelX1.Location = New System.Drawing.Point(3, 3)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(378, 49)
+        Me.LabelX1.TabIndex = 44
+        Me.LabelX1.Text = "<font color=""#349FCE""><b>DOCUMENTOS DE VENTA</b></font>"
         '
         'Modulo_Documentos_Venta
         '

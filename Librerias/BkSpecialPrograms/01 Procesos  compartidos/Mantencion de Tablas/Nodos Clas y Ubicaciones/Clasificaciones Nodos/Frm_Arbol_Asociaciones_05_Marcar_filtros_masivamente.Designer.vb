@@ -102,6 +102,7 @@ Partial Class Frm_Arbol_Asociaciones_05_Marcar_filtros_masivamente
         Me.BtnGenerar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.BtnGenerar.ForeColor = System.Drawing.Color.Black
         Me.BtnGenerar.Image = CType(resources.GetObject("BtnGenerar.Image"), System.Drawing.Image)
+        Me.BtnGenerar.ImageAlt = CType(resources.GetObject("BtnGenerar.ImageAlt"), System.Drawing.Image)
         Me.BtnGenerar.Name = "BtnGenerar"
         Me.BtnGenerar.Text = "Re-clasificar todos los productos, volver a generar arbol"
         '
@@ -110,6 +111,7 @@ Partial Class Frm_Arbol_Asociaciones_05_Marcar_filtros_masivamente
         Me.Btn_ImportarListado.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_ImportarListado.ForeColor = System.Drawing.Color.Black
         Me.Btn_ImportarListado.Image = CType(resources.GetObject("Btn_ImportarListado.Image"), System.Drawing.Image)
+        Me.Btn_ImportarListado.ImageAlt = CType(resources.GetObject("Btn_ImportarListado.ImageAlt"), System.Drawing.Image)
         Me.Btn_ImportarListado.Name = "Btn_ImportarListado"
         Me.Btn_ImportarListado.Tooltip = "Importar listado de cambio de códigos masivamente"
         Me.Btn_ImportarListado.Visible = False

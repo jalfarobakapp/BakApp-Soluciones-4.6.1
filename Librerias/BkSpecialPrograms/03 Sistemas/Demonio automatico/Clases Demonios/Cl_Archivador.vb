@@ -235,7 +235,6 @@ Public Class Cl_Archivador
         _Dsp.Tables(1).TableName = "Maedpcd"
         _Dsp.WriteXml(_Ruta_Pagos)
 
-
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Archivador 
                         Where Fecha = '" & _Fecha & "' " & _Archivado
         Dim _Tbl_Archivos As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)

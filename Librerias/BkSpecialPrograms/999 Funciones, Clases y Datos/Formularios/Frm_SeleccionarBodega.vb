@@ -14,6 +14,8 @@ Public Class Frm_SeleccionarBodega
 
     Dim _Accion As Accion
 
+    Public Property RevisarPermisosBodega As Boolean
+
     Enum Accion
         Empresa
         Sucursal
@@ -26,7 +28,7 @@ Public Class Frm_SeleccionarBodega
         Get
             Return Cmbempresa.SelectedValue
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Empresa = value
         End Set
     End Property
@@ -34,7 +36,7 @@ Public Class Frm_SeleccionarBodega
         Get
             Return Cmbsucursal.SelectedValue
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Sucursal = value
         End Set
     End Property
@@ -42,7 +44,7 @@ Public Class Frm_SeleccionarBodega
         Get
             Return Cmbbodega.SelectedValue
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Bodega = value
         End Set
     End Property
@@ -51,7 +53,7 @@ Public Class Frm_SeleccionarBodega
             _RowBodega = Fx_Trar_Datos_De_Bodega_Seleccionada(_Empresa, _Sucursal, _Bodega)
             Return _RowBodega
         End Get
-        Set(ByVal value As DataRow)
+        Set(value As DataRow)
 
         End Set
     End Property
@@ -59,7 +61,7 @@ Public Class Frm_SeleccionarBodega
         Get
             Return Cmbempresa.Text
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
 
         End Set
     End Property
@@ -67,7 +69,7 @@ Public Class Frm_SeleccionarBodega
         Get
             Return Cmbempresa.Text
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
 
         End Set
     End Property
@@ -75,7 +77,7 @@ Public Class Frm_SeleccionarBodega
         Get
             Return Cmbempresa.Text
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
 
         End Set
     End Property
@@ -83,7 +85,7 @@ Public Class Frm_SeleccionarBodega
         Get
             Return _Seleccionado
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
 
         End Set
     End Property
@@ -99,7 +101,7 @@ Public Class Frm_SeleccionarBodega
 
 #End Region
 
-    Public Sub New(ByVal Accion As Accion)
+    Public Sub New(Accion As Accion)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -107,21 +109,26 @@ Public Class Frm_SeleccionarBodega
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         _Accion = Accion
 
-        Consulta_sql = "Delete " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Bodega'" & vbCrLf & _
-                      "Insert Into " & _Global_BaseBk & "ZW_Permisos " & _
-                      "(CodPermiso,DescripcionPermiso,CodFamilia,NombreFamiliaPermiso)" & vbCrLf & _
-                      "SELECT 'Bo'+EMPRESA+KOSU+KOBO,'BODEGA: '+NOKOBO,'Bodega','Bodegas'" & vbCrLf & _
-                      "FROM TABBO"
-
-        _Sql.Ej_consulta_IDU(Consulta_sql)
-
         Sb_Color_Botones_Barra(Bar1)
 
         _Pedir_Permiso = True
+        RevisarPermisosBodega = True
 
     End Sub
 
-    Private Sub Frm_SeleccionarBodega_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_SeleccionarBodega_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+
+        If RevisarPermisosBodega Then
+
+            Consulta_Sql = "Delete " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Bodega'" & vbCrLf &
+                           "Insert Into " & _Global_BaseBk & "ZW_Permisos " &
+                           "(CodPermiso,DescripcionPermiso,CodFamilia,NombreFamiliaPermiso)" & vbCrLf &
+                           "Select 'Bo'+EMPRESA+KOSU+KOBO,'BODEGA: '+NOKOBO,'Bodega','Bodegas'" & vbCrLf &
+                           "From TABBO"
+
+            _Sql.Ej_consulta_IDU(Consulta_Sql)
+
+        End If
 
         If _Empresa Is Nothing Then
             _Empresa = ModEmpresa
@@ -159,53 +166,53 @@ Public Class Frm_SeleccionarBodega
 
     End Sub
 
-    Sub Sb_Cargar_Empresa(ByVal _Empresa As String)
+    Sub Sb_Cargar_Empresa(_Empresa As String)
 
         caract_combo(Cmbempresa)
-        Consulta_sql = "SELECT EMPRESA AS Padre,RAZON AS Hijo FROM CONFIGP" ' WHERE SEMILLA = " & Actividad
-        Cmbempresa.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Consulta_Sql = "SELECT EMPRESA AS Padre,RAZON AS Hijo FROM CONFIGP" ' WHERE SEMILLA = " & Actividad
+        Cmbempresa.DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
         Cmbempresa.Focus()
         Cmbempresa.SelectedValue = _Empresa
 
     End Sub
 
-    Sub Sb_Cargar_Sucursales(ByVal _Empresa As String, ByVal _Sucursal As String)
+    Sub Sb_Cargar_Sucursales(_Empresa As String, _Sucursal As String)
 
         Cmbsucursal.DataSource = Nothing
         Cmbbodega.DataSource = Nothing
 
         caract_combo(Cmbsucursal)
-        Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf & _
+        Consulta_Sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT KOSU AS Padre,KOSU+'-'+NOKOSU AS Hijo FROM TABSU WHERE EMPRESA = '" & _Empresa & "'"
-        Cmbsucursal.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmbsucursal.DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
         Cmbsucursal.SelectedValue = _Sucursal
 
     End Sub
 
-    Sub Sb_Cargar_Bodegas(ByVal _Empresa As String, ByVal _Sucursal As String, ByVal _Bodega As String)
+    Sub Sb_Cargar_Bodegas(_Empresa As String, _Sucursal As String, _Bodega As String)
 
         Cmbbodega.DataSource = Nothing
         caract_combo(Cmbbodega)
-        Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf & _
-                       "SELECT KOBO AS Padre,KOBO+'-'+NOKOBO AS Hijo FROM TABBO " & _
+        Consulta_Sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
+                       "SELECT KOBO AS Padre,KOBO+'-'+NOKOBO AS Hijo FROM TABBO " &
                        "WHERE EMPRESA = '" & _Empresa & "' AND KOSU = '" & _Sucursal & "'"
-        Cmbbodega.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmbbodega.DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
         Cmbbodega.SelectedValue = _Bodega
 
     End Sub
 
-    Private Sub Cmbempresa_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Cmbempresa_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
         _Empresa = Cmbempresa.SelectedValue.ToString
         Sb_Cargar_Sucursales(_Empresa, "")
     End Sub
 
-    Private Sub Cmbsucursal_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Cmbsucursal_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
         _Sucursal = Cmbsucursal.SelectedValue.ToString
         Cmbbodega.DataSource = Nothing
         Sb_Cargar_Bodegas(_Empresa, _Sucursal, "")
     End Sub
 
-    Private Sub BtnAceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnAceptar.Click
+    Private Sub BtnAceptar_Click(sender As System.Object, e As System.EventArgs) Handles BtnAceptar.Click
 
         Dim _Campo As String
 
@@ -250,7 +257,7 @@ Public Class Frm_SeleccionarBodega
 
     End Sub
 
-    Private Sub Frm_SeleccionarBodega_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_SeleccionarBodega_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If

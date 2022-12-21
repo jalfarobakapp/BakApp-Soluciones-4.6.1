@@ -22,12 +22,11 @@ Partial Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Informe_Prox_Recep_Y_Comp_No_Desp))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Informe_Prox_Recep_Y_Comp_No_Desp))
         Me.Grupo_Venta_Diaria = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Informe = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
@@ -42,11 +41,12 @@ Partial Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
         Me.Btn_Informe_X_Entidad_Documentos_Productos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Informe_X_Documentos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Informe_X_Productos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo_Venta_Diaria.SuspendLayout()
-        CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -91,6 +91,125 @@ Partial Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
         Me.Grupo_Venta_Diaria.TabIndex = 103
         Me.Grupo_Venta_Diaria.Text = "Detalle del informe"
         '
+        'ContextMenuBar1
+        '
+        Me.ContextMenuBar1.AntiAlias = True
+        Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Informe})
+        Me.ContextMenuBar1.Location = New System.Drawing.Point(252, 104)
+        Me.ContextMenuBar1.Name = "ContextMenuBar1"
+        Me.ContextMenuBar1.Size = New System.Drawing.Size(280, 25)
+        Me.ContextMenuBar1.Stretch = True
+        Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ContextMenuBar1.TabIndex = 96
+        Me.ContextMenuBar1.TabStop = False
+        Me.ContextMenuBar1.Text = "ContextMenuBar1"
+        '
+        'Menu_Contextual_Informe
+        '
+        Me.Menu_Contextual_Informe.AutoExpandOnClick = True
+        Me.Menu_Contextual_Informe.Name = "Menu_Contextual_Informe"
+        Me.Menu_Contextual_Informe.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem2, Me.Btn_Informe_X_Bodega, Me.Btn_Informe_X_Super_Familia, Me.Btn_Informe_X_Entidades, Me.Btn_Informe_X_Ciudades, Me.Btn_Informe_X_Comunas, Me.Btn_Informe_X_Productos_Consolidados, Me.Btn_Informe_X_Funcionarios, Me.LabelItem1, Me.Btn_Informe_X_Entidad_Documentos_Productos, Me.Btn_Informe_X_Documentos, Me.Btn_Informe_X_Productos})
+        Me.Menu_Contextual_Informe.Text = "Sub Informes Recepcion - Despacho"
+        '
+        'LabelItem2
+        '
+        Me.LabelItem2.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem2.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem2.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem2.Name = "LabelItem2"
+        Me.LabelItem2.PaddingBottom = 1
+        Me.LabelItem2.PaddingLeft = 10
+        Me.LabelItem2.PaddingTop = 1
+        Me.LabelItem2.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem2.Text = "Informes Agrupados"
+        '
+        'Btn_Informe_X_Bodega
+        '
+        Me.Btn_Informe_X_Bodega.Image = CType(resources.GetObject("Btn_Informe_X_Bodega.Image"), System.Drawing.Image)
+        Me.Btn_Informe_X_Bodega.ImageAlt = CType(resources.GetObject("Btn_Informe_X_Bodega.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Informe_X_Bodega.Name = "Btn_Informe_X_Bodega"
+        Me.Btn_Informe_X_Bodega.Text = "Ver informe por <b><font color=""#0072BC"">BODEGAS</font></b>"
+        '
+        'Btn_Informe_X_Super_Familia
+        '
+        Me.Btn_Informe_X_Super_Familia.Image = CType(resources.GetObject("Btn_Informe_X_Super_Familia.Image"), System.Drawing.Image)
+        Me.Btn_Informe_X_Super_Familia.ImageAlt = CType(resources.GetObject("Btn_Informe_X_Super_Familia.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Informe_X_Super_Familia.Name = "Btn_Informe_X_Super_Familia"
+        Me.Btn_Informe_X_Super_Familia.Text = "Ver informe por <b><font color=""#4E5D30""><font color=""#ED1C24"">SUPER FAMILIAS</fo" &
+    "nt></font></b>"
+        '
+        'Btn_Informe_X_Entidades
+        '
+        Me.Btn_Informe_X_Entidades.Image = CType(resources.GetObject("Btn_Informe_X_Entidades.Image"), System.Drawing.Image)
+        Me.Btn_Informe_X_Entidades.ImageAlt = CType(resources.GetObject("Btn_Informe_X_Entidades.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Informe_X_Entidades.Name = "Btn_Informe_X_Entidades"
+        Me.Btn_Informe_X_Entidades.Text = "Ver informe por <b><font color=""#903C39"">ENTIDADES</font></b>"
+        '
+        'Btn_Informe_X_Ciudades
+        '
+        Me.Btn_Informe_X_Ciudades.Image = CType(resources.GetObject("Btn_Informe_X_Ciudades.Image"), System.Drawing.Image)
+        Me.Btn_Informe_X_Ciudades.ImageAlt = CType(resources.GetObject("Btn_Informe_X_Ciudades.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Informe_X_Ciudades.Name = "Btn_Informe_X_Ciudades"
+        Me.Btn_Informe_X_Ciudades.Text = "Ver informe por <b><font color=""#0072BC"">CIUDADES (Entidad)</font></b>"
+        '
+        'Btn_Informe_X_Comunas
+        '
+        Me.Btn_Informe_X_Comunas.Image = CType(resources.GetObject("Btn_Informe_X_Comunas.Image"), System.Drawing.Image)
+        Me.Btn_Informe_X_Comunas.ImageAlt = CType(resources.GetObject("Btn_Informe_X_Comunas.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Informe_X_Comunas.Name = "Btn_Informe_X_Comunas"
+        Me.Btn_Informe_X_Comunas.Text = "Ver informe por <b><font color=""#0072BC"">COMUNAS (Entidad)</font></b>"
+        '
+        'Btn_Informe_X_Productos_Consolidados
+        '
+        Me.Btn_Informe_X_Productos_Consolidados.Image = CType(resources.GetObject("Btn_Informe_X_Productos_Consolidados.Image"), System.Drawing.Image)
+        Me.Btn_Informe_X_Productos_Consolidados.ImageAlt = CType(resources.GetObject("Btn_Informe_X_Productos_Consolidados.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Informe_X_Productos_Consolidados.Name = "Btn_Informe_X_Productos_Consolidados"
+        Me.Btn_Informe_X_Productos_Consolidados.Text = "Ver informe por <b><font color=""#0072BC"">PRODUCTOS (Consolidado)</font></b>"
+        '
+        'Btn_Informe_X_Funcionarios
+        '
+        Me.Btn_Informe_X_Funcionarios.Image = CType(resources.GetObject("Btn_Informe_X_Funcionarios.Image"), System.Drawing.Image)
+        Me.Btn_Informe_X_Funcionarios.ImageAlt = CType(resources.GetObject("Btn_Informe_X_Funcionarios.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Informe_X_Funcionarios.Name = "Btn_Informe_X_Funcionarios"
+        Me.Btn_Informe_X_Funcionarios.Text = "Ver informe por <b><font color=""#903C39"">FUNCIONARIOS</font></b>"
+        '
+        'LabelItem1
+        '
+        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem1.Name = "LabelItem1"
+        Me.LabelItem1.PaddingBottom = 1
+        Me.LabelItem1.PaddingLeft = 10
+        Me.LabelItem1.PaddingTop = 1
+        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem1.Text = "Informe detallado"
+        '
+        'Btn_Informe_X_Entidad_Documentos_Productos
+        '
+        Me.Btn_Informe_X_Entidad_Documentos_Productos.Image = CType(resources.GetObject("Btn_Informe_X_Entidad_Documentos_Productos.Image"), System.Drawing.Image)
+        Me.Btn_Informe_X_Entidad_Documentos_Productos.ImageAlt = CType(resources.GetObject("Btn_Informe_X_Entidad_Documentos_Productos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Informe_X_Entidad_Documentos_Productos.Name = "Btn_Informe_X_Entidad_Documentos_Productos"
+        Me.Btn_Informe_X_Entidad_Documentos_Productos.Text = "Ver detalle de los <b><font color=""#22B14C"">Entidades->Documentos->Productos</fon" &
+    "t></b>"
+        '
+        'Btn_Informe_X_Documentos
+        '
+        Me.Btn_Informe_X_Documentos.Image = CType(resources.GetObject("Btn_Informe_X_Documentos.Image"), System.Drawing.Image)
+        Me.Btn_Informe_X_Documentos.ImageAlt = CType(resources.GetObject("Btn_Informe_X_Documentos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Informe_X_Documentos.Name = "Btn_Informe_X_Documentos"
+        Me.Btn_Informe_X_Documentos.Text = "Ver detalle de los <b><font color=""#22B14C"">Documentos->Detalle</font></b>"
+        '
+        'Btn_Informe_X_Productos
+        '
+        Me.Btn_Informe_X_Productos.Image = CType(resources.GetObject("Btn_Informe_X_Productos.Image"), System.Drawing.Image)
+        Me.Btn_Informe_X_Productos.ImageAlt = CType(resources.GetObject("Btn_Informe_X_Productos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Informe_X_Productos.Name = "Btn_Informe_X_Productos"
+        Me.Btn_Informe_X_Productos.Text = "Ver detalle de los <b><font color=""#22B14C"">Productos->Detalle</font></b>"
+        '
         'Grilla
         '
         Me.Grilla.AllowUserToAddRows = False
@@ -131,115 +250,6 @@ Partial Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
         Me.Grilla.Size = New System.Drawing.Size(744, 439)
         Me.Grilla.TabIndex = 3
         '
-        'ContextMenuBar1
-        '
-        Me.ContextMenuBar1.AntiAlias = True
-        Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Informe})
-        Me.ContextMenuBar1.Location = New System.Drawing.Point(252, 104)
-        Me.ContextMenuBar1.Name = "ContextMenuBar1"
-        Me.ContextMenuBar1.Size = New System.Drawing.Size(280, 25)
-        Me.ContextMenuBar1.Stretch = True
-        Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.ContextMenuBar1.TabIndex = 96
-        Me.ContextMenuBar1.TabStop = False
-        Me.ContextMenuBar1.Text = "ContextMenuBar1"
-        '
-        'Menu_Contextual_Informe
-        '
-        Me.Menu_Contextual_Informe.AutoExpandOnClick = True
-        Me.Menu_Contextual_Informe.Name = "Menu_Contextual_Informe"
-        Me.Menu_Contextual_Informe.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem2, Me.Btn_Informe_X_Bodega, Me.Btn_Informe_X_Super_Familia, Me.Btn_Informe_X_Entidades, Me.Btn_Informe_X_Ciudades, Me.Btn_Informe_X_Comunas, Me.Btn_Informe_X_Productos_Consolidados, Me.Btn_Informe_X_Funcionarios, Me.LabelItem1, Me.Btn_Informe_X_Entidad_Documentos_Productos, Me.Btn_Informe_X_Documentos, Me.Btn_Informe_X_Productos})
-        Me.Menu_Contextual_Informe.Text = "Sub Informes Recepcion - Despacho"
-        '
-        'LabelItem2
-        '
-        Me.LabelItem2.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.LabelItem2.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.LabelItem2.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.LabelItem2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.LabelItem2.Name = "LabelItem2"
-        Me.LabelItem2.PaddingBottom = 1
-        Me.LabelItem2.PaddingLeft = 10
-        Me.LabelItem2.PaddingTop = 1
-        Me.LabelItem2.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem2.Text = "Informes Agrupados"
-        '
-        'Btn_Informe_X_Bodega
-        '
-        Me.Btn_Informe_X_Bodega.Image = CType(resources.GetObject("Btn_Informe_X_Bodega.Image"), System.Drawing.Image)
-        Me.Btn_Informe_X_Bodega.Name = "Btn_Informe_X_Bodega"
-        Me.Btn_Informe_X_Bodega.Text = "Ver informe por <b><font color=""#0072BC"">BODEGAS</font></b>"
-        '
-        'Btn_Informe_X_Super_Familia
-        '
-        Me.Btn_Informe_X_Super_Familia.Image = CType(resources.GetObject("Btn_Informe_X_Super_Familia.Image"), System.Drawing.Image)
-        Me.Btn_Informe_X_Super_Familia.Name = "Btn_Informe_X_Super_Familia"
-        Me.Btn_Informe_X_Super_Familia.Text = "Ver informe por <b><font color=""#4E5D30""><font color=""#ED1C24"">SUPER FAMILIAS</fo" &
-    "nt></font></b>"
-        '
-        'Btn_Informe_X_Entidades
-        '
-        Me.Btn_Informe_X_Entidades.Image = CType(resources.GetObject("Btn_Informe_X_Entidades.Image"), System.Drawing.Image)
-        Me.Btn_Informe_X_Entidades.Name = "Btn_Informe_X_Entidades"
-        Me.Btn_Informe_X_Entidades.Text = "Ver informe por <b><font color=""#903C39"">ENTIDADES</font></b>"
-        '
-        'Btn_Informe_X_Ciudades
-        '
-        Me.Btn_Informe_X_Ciudades.Image = CType(resources.GetObject("Btn_Informe_X_Ciudades.Image"), System.Drawing.Image)
-        Me.Btn_Informe_X_Ciudades.Name = "Btn_Informe_X_Ciudades"
-        Me.Btn_Informe_X_Ciudades.Text = "Ver informe por <b><font color=""#0072BC"">CIUDADES (Entidad)</font></b>"
-        '
-        'Btn_Informe_X_Comunas
-        '
-        Me.Btn_Informe_X_Comunas.Image = CType(resources.GetObject("Btn_Informe_X_Comunas.Image"), System.Drawing.Image)
-        Me.Btn_Informe_X_Comunas.Name = "Btn_Informe_X_Comunas"
-        Me.Btn_Informe_X_Comunas.Text = "Ver informe por <b><font color=""#0072BC"">COMUNAS (Entidad)</font></b>"
-        '
-        'Btn_Informe_X_Productos_Consolidados
-        '
-        Me.Btn_Informe_X_Productos_Consolidados.Image = CType(resources.GetObject("Btn_Informe_X_Productos_Consolidados.Image"), System.Drawing.Image)
-        Me.Btn_Informe_X_Productos_Consolidados.Name = "Btn_Informe_X_Productos_Consolidados"
-        Me.Btn_Informe_X_Productos_Consolidados.Text = "Ver informe por <b><font color=""#0072BC"">PRODUCTOS (Consolidado)</font></b>"
-        '
-        'Btn_Informe_X_Funcionarios
-        '
-        Me.Btn_Informe_X_Funcionarios.Image = CType(resources.GetObject("Btn_Informe_X_Funcionarios.Image"), System.Drawing.Image)
-        Me.Btn_Informe_X_Funcionarios.Name = "Btn_Informe_X_Funcionarios"
-        Me.Btn_Informe_X_Funcionarios.Text = "Ver informe por <b><font color=""#903C39"">FUNCIONARIOS</font></b>"
-        '
-        'LabelItem1
-        '
-        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.LabelItem1.Name = "LabelItem1"
-        Me.LabelItem1.PaddingBottom = 1
-        Me.LabelItem1.PaddingLeft = 10
-        Me.LabelItem1.PaddingTop = 1
-        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem1.Text = "Informe detallado"
-        '
-        'Btn_Informe_X_Entidad_Documentos_Productos
-        '
-        Me.Btn_Informe_X_Entidad_Documentos_Productos.Image = CType(resources.GetObject("Btn_Informe_X_Entidad_Documentos_Productos.Image"), System.Drawing.Image)
-        Me.Btn_Informe_X_Entidad_Documentos_Productos.Name = "Btn_Informe_X_Entidad_Documentos_Productos"
-        Me.Btn_Informe_X_Entidad_Documentos_Productos.Text = "Ver detalle de los <b><font color=""#22B14C"">Entidades->Documentos->Productos</fon" &
-    "t></b>"
-        '
-        'Btn_Informe_X_Documentos
-        '
-        Me.Btn_Informe_X_Documentos.Image = CType(resources.GetObject("Btn_Informe_X_Documentos.Image"), System.Drawing.Image)
-        Me.Btn_Informe_X_Documentos.Name = "Btn_Informe_X_Documentos"
-        Me.Btn_Informe_X_Documentos.Text = "Ver detalle de los <b><font color=""#22B14C"">Documentos->Detalle</font></b>"
-        '
-        'Btn_Informe_X_Productos
-        '
-        Me.Btn_Informe_X_Productos.Image = CType(resources.GetObject("Btn_Informe_X_Productos.Image"), System.Drawing.Image)
-        Me.Btn_Informe_X_Productos.Name = "Btn_Informe_X_Productos"
-        Me.Btn_Informe_X_Productos.Text = "Ver detalle de los <b><font color=""#22B14C"">Productos->Detalle</font></b>"
-        '
         'Bar1
         '
         Me.Bar1.AntiAlias = True
@@ -260,6 +270,7 @@ Partial Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
         Me.Btn_Excel.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Excel.ForeColor = System.Drawing.Color.Black
         Me.Btn_Excel.Image = CType(resources.GetObject("Btn_Excel.Image"), System.Drawing.Image)
+        Me.Btn_Excel.ImageAlt = CType(resources.GetObject("Btn_Excel.ImageAlt"), System.Drawing.Image)
         Me.Btn_Excel.Name = "Btn_Excel"
         Me.Btn_Excel.Tooltip = "Exportar a Excel"
         '
@@ -282,8 +293,8 @@ Partial Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Compromisos no despachados por Sucursal"
         Me.Grupo_Venta_Diaria.ResumeLayout(False)
-        CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

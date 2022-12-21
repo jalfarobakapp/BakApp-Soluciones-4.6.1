@@ -1,7 +1,9 @@
 ﻿Imports System.Globalization
 Imports System.IO
+Imports System.Text
 Imports DevComponents.DotNetBar
 Imports DevComponents.DotNetBar.Controls
+Imports HEFSIIREGCOMPRAVENTAS.LIB
 
 Public Class Clas_Hefesto_Dte_Libro
 
@@ -17,6 +19,10 @@ Public Class Clas_Hefesto_Dte_Libro
     Dim _Problemas As Integer
     Dim _SinProbremas As Integer
     Dim _Formulario As Form
+
+    Public Property Cn As String
+    Public Property RutEmpresa As String
+    Public Property Errores As List(Of String)
 
     Public Property Directorio_Hefesto As String
         Get
@@ -91,7 +97,29 @@ Public Class Clas_Hefesto_Dte_Libro
     End Property
 
     Public Sub New()
+
+        'Errores.Clear()
+
+        Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
+                       "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa' And AmbienteCertificacion = 0"
+        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
+            _Errores.Add("Faltan los datos de configuración DTE para la empresa")
+        End If
+
+        For Each _Fila As DataRow In _Tbl_ConfEmpresa.Rows
+
+            Dim _Campo As String = _Fila.Item("Campo").ToString.Trim
+
+            If _Campo = "RutEmisor" Then _RutEmpresa = _Fila.Item("Valor")
+            If _Campo = "Cn" Then _Cn = _Fila.Item("Valor")
+
+        Next
+
         Sb_Directorio_Hefecto_DTE_Libro_Compra_Venta()
+
     End Sub
 
     Sub Sb_Directorio_Hefecto_DTE_Libro_Compra_Venta()
@@ -177,17 +205,6 @@ Public Class Clas_Hefesto_Dte_Libro
             End If
 
         End If
-
-        'If String.IsNullOrEmpty(_SqlQuery) Then
-        '    Return False
-        'End If
-
-        '_SqlQuery = "Delete " & _Global_BaseBk & "Zw_Compras_en_SII Where Periodo = " & _Year & " And Mes = " & _Month &
-        '            vbCrLf &
-        '            vbCrLf &
-        '            _SqlQuery
-
-        'If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery) Then
 
         Consulta_sql = "Update " & _Global_BaseBk & "Zw_Compras_en_SII Set" & vbCrLf &
                            "Monto_Exento = Monto_Exento*-1," & vbCrLf &
@@ -494,6 +511,9 @@ Public Class Clas_Hefesto_Dte_Libro
                 _Razon_Social = Replace(_Fila.Item("Razon_Social"), "'", "")
                 _Folio = _Fila.Item("Folio")
 
+                If _Folio = 261 Then
+                    Dim a = 0
+                End If
                 'If _Compras_Pendientes Then
 
                 Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Compras_en_SII",
@@ -508,7 +528,12 @@ Public Class Clas_Hefesto_Dte_Libro
                 _Nudo = numero_(_Folio, 10)
 
                 _Fecha_Docto = NuloPorNro(_Fila.Item("Fecha_Docto"), #1/1/2000#)
-                _Fecha_Recepcion = NuloPorNro(_Fila.Item("Fecha_Recepcion"), #1/1/2000#)
+
+                Try
+                    _Fecha_Recepcion = NuloPorNro(_Fila.Item("Fecha_Recepcion"), #1/1/2000#)
+                Catch ex As Exception
+                    _Fecha_Recepcion = _Fecha_Docto
+                End Try
 
                 Try
                     If String.IsNullOrEmpty(_Fila.Item("Fecha_Acuse")) Then
@@ -548,7 +573,8 @@ Public Class Clas_Hefesto_Dte_Libro
                     _Endo = Trim(_RowProveedor.Item("KOEN"))
                 End If
 
-                Consulta_sql = "Select Top 1 * From MAEEDO Where EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "' And ENDO = '" & _Endo & "'"
+                Consulta_sql = "Select Top 1 * From MAEEDO" & vbCrLf &
+                               "Where EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "' And ENDO = '" & _Endo & "' And TIDOELEC = 1"
                 Dim _RowMaeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                 Dim _Idmaeedo As Integer = 0
@@ -562,6 +588,10 @@ Public Class Clas_Hefesto_Dte_Libro
                 Dim _Libro_Sugerido As String = String.Empty
                 Dim _Tido_Sugerido As String = String.Empty
                 Dim _Nudo_Sugerido As String = String.Empty
+
+                'If _Nudo = "0000001073" Then
+                '    Dim a = 0
+                'End If
 
 
                 If Not (_RowMaeedo Is Nothing) Then
@@ -649,6 +679,264 @@ Public Class Clas_Hefesto_Dte_Libro
 
     End Function
 
+    Function Fx_Traer_Informacion_Desde_Json(_Tbl_Registro As DataTable,
+                                            _Year As Integer,
+                                            _Month As Integer) As String
+
+        Dim _Color = Circular_Progres_Val.ProgressColor
+
+        Circular_Progres_Val.Maximum = _Tbl_Registro.Rows.Count
+
+        Dim _Contador As Integer = 0
+
+        Dim _SqlQuery As String = String.Empty
+
+        Dim _Filas = _Tbl_Registro.Rows.Count
+
+        For Each _Fila As DataRow In _Tbl_Registro.Rows
+
+            Dim _Error = String.Empty
+
+            System.Windows.Forms.Application.DoEvents()
+
+            Dim _TipoDoc As Integer
+            Dim _Tido
+            Dim _Rut_Proveedor As String
+            Dim _Razon_Social As String
+            Dim _Folio As String
+            Dim _Fecha_Docto As Date
+            Dim _Fecha_Recepcion As Date
+            Dim _Fecha_Acuse As Date
+            Dim _Monto_Exento As Double
+            Dim _Monto_Neto As Double
+            Dim _Monto_Iva_Recuperable As Double
+            Dim _Monto_Iva_No_Recuperable As Double
+            Dim _Monto_Total As Double
+            Dim _Valor_Otro_impuesto As Double
+
+            Dim _Total_Neto As Double
+            'Dim _Total_Impuestos As Double
+            Dim _Total_Iva As Double
+            Dim _Total_Bruto As Double
+
+            Dim _Rut
+            Dim _Rten As String
+            Dim _Nudo As String
+
+            '<TipoDte>33</TipoDte>
+            '<RutCons>79514800-0</RutCons>
+            '<Tipo_Compra>Del Giro</Tipo_Compra>
+            '<RUT_Proveedor>96719620-7</RUT_Proveedor>
+            '<Razon_Social>ADT SECURITY SERVICES S. A.</Razon_Social>
+            '<Folio>10045848</Folio>
+            '<Fecha_Docto>2019-10-01</Fecha_Docto>
+            '<Fecha_Recepcion>2019-09-28 18:04:35</Fecha_Recepcion>
+            '<Fecha_Acuse />
+            '<Monto_Exento>0</Monto_Exento>
+            '<Monto_Neto>33472</Monto_Neto>
+            '<Monto_IVA_Recuperable>6360</Monto_IVA_Recuperable>
+            '<Monto_Iva_No_Recuperable />
+            '<Codigo_IVA_No_Rec. />
+            '<Monto_Total>39832</Monto_Total>
+            '<Monto_Neto_Activo_Fijo />
+            '<IVA_Activo_Fijo />
+            '<IVA_uso_Comun />
+            '<Impto._Sin_Derecho_a_Credito />
+            '<IVA_No_Retenido>0</IVA_No_Retenido>
+            '<Tabacos_Puros />
+            '<Tabacos_Cigarrillos />
+            '<Tabacos_Elaborados />
+            '<NCE_o_NDE_sobre_Fact._de_Compra>0</NCE_o_NDE_sobre_Fact._de_Compra>
+            '<Codigo_Otro_Impuesto />
+            '<Valor_Otro_Impuesto />
+            '<Tasa_Otro_Impuesto />
+
+            Try
+
+                Try
+                    _TipoDoc = _Fila.Item("TipoDte") '_ro NuloPorNro(_Arreglo(i, 1), 0)
+                Catch ex As Exception
+                    _TipoDoc = _Fila.Item("Tipo_Doc") '_ro NuloPorNro(_Arreglo(i, 1), 0)
+                End Try
+
+                _Rut_Proveedor = _Fila.Item("RUTProveedor")
+
+                _Rut = Split(_Rut_Proveedor, "-")
+                _Rten = numero_(_Rut(0), 8)
+
+                _Razon_Social = Replace(_Fila.Item("RazonSocial"), "'", "")
+                _Folio = _Fila.Item("Folio")
+
+                If _Folio = 138484 Then
+                    Dim a = 0
+                End If
+                'If _Compras_Pendientes Then
+
+                Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Compras_en_SII",
+                                                    "Periodo = " & _Year & " And Mes = " & _Month & " And Rut_Proveedor = '" & _Rut_Proveedor & "' And Folio = '" & _Folio & "'")
+
+                If CBool(_Reg) Then
+                    Throw New System.Exception("Folio: " & _Folio & " ya esta registrado")
+                End If
+
+                'End If
+
+                _Nudo = numero_(_Folio, 10)
+
+                _Fecha_Docto = NuloPorNro(_Fila.Item("FechaDocto"), #1/1/2000#)
+
+                Try
+                    _Fecha_Recepcion = NuloPorNro(_Fila.Item("FechaRecepcion"), #1/1/2000#)
+                Catch ex As Exception
+                    _Fecha_Recepcion = _Fecha_Docto
+                End Try
+
+                Try
+                    If String.IsNullOrEmpty(_Fila.Item("FechaAcuse")) Then
+                        _Fecha_Acuse = #1/1/2000#
+                    Else
+                        _Fecha_Acuse = NuloPorNro(_Fila.Item("FechaAcuse"), #1/1/2000#)
+                    End If
+                Catch ex As Exception
+                    _Fecha_Acuse = #1/1/2000#
+                End Try
+
+                _Monto_Exento = NuloPorNro(_Fila.Item("MontoExento"), 0)
+                _Monto_Neto = NuloPorNro(_Fila.Item("MontoNeto"), 0)
+                _Monto_Iva_Recuperable = NuloPorNro(De_Txt_a_Num_01(_Fila.Item("MontoIVARecuperable")), 0)
+                _Monto_Iva_No_Recuperable = NuloPorNro(De_Txt_a_Num_01(_Fila.Item("MontoIvaNoRecuperable")), 0)
+                _Monto_Total = NuloPorNro(_Fila.Item("MontoTotal"), 0)
+                _Valor_Otro_impuesto = NuloPorNro(De_Txt_a_Num_01(_Fila.Item("ValorOtroImpuesto")), 0)
+
+                _Total_Neto = _Monto_Neto + _Monto_Exento + _Valor_Otro_impuesto
+                _Total_Iva = _Monto_Iva_Recuperable
+                _Total_Bruto = _Monto_Total
+
+            Catch ex As Exception
+                _Error = ex.Message
+            End Try
+
+            If String.IsNullOrEmpty(_Error) Then
+
+                _Tido = Fx_Tido_Compra(_TipoDoc)
+
+                Consulta_sql = "Select top 1 * From MAEEN Where RTEN = '" & _Rten & "'"
+                Dim _RowProveedor As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                Dim _Endo As String
+
+                If Not (_RowProveedor Is Nothing) Then
+                    _Endo = Trim(_RowProveedor.Item("KOEN"))
+                End If
+
+                Consulta_sql = "Select Top 1 * From MAEEDO" & vbCrLf &
+                               "Where EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "' And ENDO = '" & _Endo & "' And TIDOELEC = 1"
+                Dim _RowMaeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                Dim _Idmaeedo As Integer = 0
+                Dim _Libro As String = String.Empty
+                Dim _Vanedo As Double = 0
+                Dim _Vaivdo As Double = 0
+                Dim _Vabrdo As Double = 0
+                Dim _Diferencia As Double = 0
+
+                Dim _Idmaeedo_Sugerido As Integer = 0
+                Dim _Libro_Sugerido As String = String.Empty
+                Dim _Tido_Sugerido As String = String.Empty
+                Dim _Nudo_Sugerido As String = String.Empty
+
+                'If _Nudo = "0000001073" Then
+                '    Dim a = 0
+                'End If
+
+
+                If Not (_RowMaeedo Is Nothing) Then
+                    _Idmaeedo = _RowMaeedo.Item("IDMAEEDO")
+                    _Libro = _RowMaeedo.Item("LIBRO")
+                    _Vanedo = _RowMaeedo.Item("VANEDO")
+                    _Vaivdo = _RowMaeedo.Item("VAIVDO")
+                    _Vabrdo = _RowMaeedo.Item("VABRDO")
+                    _Diferencia = _Vabrdo - _Monto_Total
+                Else
+                    Consulta_sql = "Select Top 1 * From MAEEDO Where TIDO = '" & _Tido & "' And ENDO = '" & _Endo & "' And VABRDO = " & De_Num_a_Tx_01(_Monto_Total, False, 5)
+                    _RowMaeedo = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                    If Not (_RowMaeedo Is Nothing) Then
+                        _Idmaeedo_Sugerido = _RowMaeedo.Item("IDMAEEDO")
+                        _Libro_Sugerido = _RowMaeedo.Item("LIBRO")
+                        _Tido_Sugerido = _RowMaeedo.Item("TIDO")
+                        _Nudo_Sugerido = _RowMaeedo.Item("NUDO")
+                    End If
+
+                End If
+
+                _SqlQuery += "Insert Into " & _Global_BaseBk & "Zw_Compras_en_SII (Periodo,Mes,TipoDoc,Tido,Nudo,Endo,Rut_Proveedor," &
+                            "Razon_Social,Folio,Fecha_Docto," &
+                            "Fecha_Recepcion,Fecha_Acuse,Monto_Exento,Monto_Neto,Monto_Iva_Recuperable," &
+                            "Monto_Iva_No_Recuperable,Monto_Total,Valor_Otro_impuesto" &
+                            ",Idmaeedo,Libro,Vanedo,Vaivdo,Vabrdo,Diferencia," &
+                            "Idmaeedo_Sugerido,Libro_Sugerido,Tido_Sugerido,Nudo_Sugerido) Values " & vbCrLf &
+                            "(" & _Year & "," & _Month & "," & _TipoDoc & ",'" & _Tido & "','" & _Nudo & "','" & _Endo & "','" & _Rut_Proveedor & "'" &
+                            ",'" & _Razon_Social & "','" & _Folio & "'" &
+                            ",'" & Format(_Fecha_Docto, "yyyyMMdd") & "','" & Format(_Fecha_Recepcion, "yyyMMdd") & "'" &
+                            ",'" & Format(_Fecha_Acuse, "yyyyMMdd") & "'" &
+                            "," & De_Num_a_Tx_01(_Monto_Exento, False, 5) &
+                            "," & De_Num_a_Tx_01(_Monto_Neto, False, 5) &
+                            "," & De_Num_a_Tx_01(_Monto_Iva_Recuperable, False, 5) &
+                            "," & De_Num_a_Tx_01(_Monto_Iva_No_Recuperable, False, 5) &
+                            "," & De_Num_a_Tx_01(_Monto_Total, False, 5) &
+                            "," & _Valor_Otro_impuesto &
+                            "," & _Idmaeedo &
+                            ",'" & _Libro & "'" &
+                            "," & De_Num_a_Tx_01(_Vanedo, False, 5) &
+                            "," & De_Num_a_Tx_01(_Vaivdo, False, 5) &
+                            "," & De_Num_a_Tx_01(_Vabrdo, False, 5) &
+                            "," & De_Num_a_Tx_01(_Diferencia, False, 5) &
+                            "," & _Idmaeedo_Sugerido &
+                            ",'" & _Libro_Sugerido & "'" &
+                            ",'" & _Tido_Sugerido & "'" &
+                            ",'" & _Nudo_Sugerido & "')" & vbCrLf
+
+            Else
+                'Sb_AddToLog("Fila Nro :" & i + 1, "Problema: " & _Error & "Código: [" & _Kopr & "]", _
+                ' _Txt_Log, False)
+                _Problemas += 1
+            End If
+
+
+            If CBool(_Problemas) Then
+                Circular_Progres_Porc.ProgressColor = Color.Red
+                Circular_Progres_Val.ProgressColor = Color.Red
+            End If
+
+            If _Cancelar Then
+                Exit For
+            End If
+
+            System.Windows.Forms.Application.DoEvents()
+
+            _Contador += 1
+            Circular_Progres_Porc.Value = ((_Contador * 100) / _Filas) 'Mas
+            Circular_Progres_Val.Value += 1
+            Circular_Progres_Val.ProgressText = Circular_Progres_Val.Value '& "%"
+
+            If Not IsNothing(_Estatus) Then
+                _Estatus.Text = "Leyendo fila " & _Contador & " de " & _Filas & ". Estado Ok: " & _SinProbremas & ", Problemas: " & _Problemas
+            End If
+
+        Next
+
+        Circular_Progres_Val.Value = 0
+        Circular_Progres_Val.Text = 0
+        Circular_Progres_Porc.Value = 0
+
+        Circular_Progres_Val.ProgressColor = _Color
+        Circular_Progres_Porc.ProgressColor = _Color
+
+        Return _SqlQuery & vbCrLf
+
+    End Function
+
     Private Function Fx_Tido_Compra(ByVal _TipoDoc As Integer) As String
 
         Select Case _TipoDoc
@@ -715,6 +1003,258 @@ Public Class Clas_Hefesto_Dte_Libro
         'FDB FACTURA DEBITO TIPO B                             	FDB       
         'FDZ FACTURA DEBITO ZONA FRANCA                        	FDZ       
         'RIN RECIBO DE INGRESOS                                	RIN       
+
+    End Function
+
+    Function Fx_RecuperarResumenVentasRegistro(_Year As Integer, _Month As Integer) As HefRespuesta
+
+        Dim _Respuestas As New HefRespuesta
+
+        Try
+
+            Dim _Periodo As String = _Year & "-" & Fx_Rellena_ceros(_Month, 2)
+            Dim _HefConsultas As New HefConsultas(_RutEmpresa, _Cn)
+            _Respuestas = _HefConsultas.RecuperarResumenVentas(_Periodo)
+
+            Dim _Ubic_Archivo As String = _Directorio_Hefesto & "\CONFIGURACION\Salida\" & RutEmpresa & "\" & _Periodo
+
+            If Not Directory.Exists(_Ubic_Archivo) Then
+                System.IO.Directory.CreateDirectory(_Ubic_Archivo)
+            End If
+
+            If _Respuestas.EsCorrecto Then
+                _Respuestas.Directorio = _Ubic_Archivo & "\ResumenVentas.json"
+                File.WriteAllText(_Respuestas.Directorio,
+                                  _Respuestas.Resultado.ToString(),
+                                  Encoding.GetEncoding("ISO-8859-1"))
+            End If
+
+        Catch ex As Exception
+            _Respuestas.Mensaje = ex.Message
+        End Try
+
+        Return _Respuestas
+
+    End Function
+    Function Fx_RecuperarVentasRegistro(_Year As Integer, _Month As Integer) As HefRespuesta
+
+        Dim _Respuestas As New HefRespuesta
+
+        Try
+
+            Dim _Periodo As String = _Year & "-" & Fx_Rellena_ceros(_Month, 2)
+            Dim _HefConsultas As New HefConsultas(_RutEmpresa, _Cn)
+            _Respuestas = _HefConsultas.RecuperarVentasRegistro(_Periodo)
+
+            Dim _Ubic_Archivo As String = _Directorio_Hefesto & "\CONFIGURACION\Salida\" & RutEmpresa & "\" & _Periodo
+
+            If Not Directory.Exists(_Ubic_Archivo) Then
+                System.IO.Directory.CreateDirectory(_Ubic_Archivo)
+            End If
+
+            If _Respuestas.EsCorrecto Then
+                _Respuestas.Directorio = _Ubic_Archivo & "\RegistrosVentas.json"
+                File.WriteAllText(_Respuestas.Directorio,
+                                  _Respuestas.Resultado.ToString(),
+                                  Encoding.GetEncoding("ISO-8859-1"))
+            End If
+
+        Catch ex As Exception
+            _Respuestas.Mensaje = ex.Message
+        End Try
+
+        Return _Respuestas
+
+    End Function
+    Function Fx_RecuperarResumenCompras(_Year As Integer, _Month As Integer) As HefRespuesta
+
+        Dim _Respuestas As New HefRespuesta
+
+        Try
+
+            Dim _Periodo As String = _Year & "-" & Fx_Rellena_ceros(_Month, 2)
+            Dim _HefConsultas As New HefConsultas(_RutEmpresa, _Cn)
+            _Respuestas = _HefConsultas.RecuperarResumenCompras(_Periodo)
+
+            Dim _Ubic_Archivo As String = _Directorio_Hefesto & "\CONFIGURACION\Salida\" & RutEmpresa & "\" & _Periodo
+
+            If Not Directory.Exists(_Ubic_Archivo) Then
+                System.IO.Directory.CreateDirectory(_Ubic_Archivo)
+            End If
+
+            If _Respuestas.EsCorrecto Then
+                _Respuestas.Directorio = _Ubic_Archivo & "\ResumenCompras.json"
+                File.WriteAllText(_Respuestas.Directorio,
+                                  _Respuestas.Resultado.ToString(),
+                                  Encoding.GetEncoding("ISO-8859-1"))
+            End If
+
+        Catch ex As Exception
+            _Respuestas.Mensaje = ex.Message
+        End Try
+
+        Return _Respuestas
+
+    End Function
+    Function Fx_RecuperarComprasRegistro(_Year As Integer, _Month As Integer) As HefRespuesta
+
+        Dim _Respuestas As New HefRespuesta
+
+        Try
+
+            Dim _Periodo As String = _Year & "-" & Fx_Rellena_ceros(_Month, 2)
+            Dim _HefConsultas As New HefConsultas(_RutEmpresa, _Cn)
+            _Respuestas = _HefConsultas.RecuperarComprasRegistro(_Periodo)
+
+            Dim _Ubic_Archivo As String = _Directorio_Hefesto & "\CONFIGURACION\Salida\" & RutEmpresa & "\" & _Periodo
+
+            If Not Directory.Exists(_Ubic_Archivo) Then
+                System.IO.Directory.CreateDirectory(_Ubic_Archivo)
+            End If
+
+            If _Respuestas.EsCorrecto Then
+                _Respuestas.Directorio = _Ubic_Archivo & "\RegistrosCompras.json"
+                File.WriteAllText(_Respuestas.Directorio,
+                                  _Respuestas.Resultado.ToString(),
+                                  Encoding.GetEncoding("ISO-8859-1"))
+            End If
+
+        Catch ex As Exception
+            _Respuestas.Mensaje = ex.Message
+        End Try
+
+        Return _Respuestas
+
+    End Function
+    Function Fx_RecuperarComprasPendientes(_Year As Integer, _Month As Integer) As HefRespuesta
+
+        Dim _Respuestas As New HefRespuesta
+
+        Try
+
+            Dim _Periodo As String = _Year & "-" & Fx_Rellena_ceros(_Month, 2)
+            Dim _HefConsultas As New HefConsultas(_RutEmpresa, _Cn)
+            _Respuestas = _HefConsultas.RecuperarComprasPendientes(_Periodo)
+
+            Dim _Ubic_Archivo As String = _Directorio_Hefesto & "\CONFIGURACION\Salida\" & RutEmpresa & "\" & _Periodo
+
+            If Not Directory.Exists(_Ubic_Archivo) Then
+                System.IO.Directory.CreateDirectory(_Ubic_Archivo)
+            End If
+
+            If _Respuestas.EsCorrecto Then
+                _Respuestas.Directorio = _Ubic_Archivo & "\RegistrosComprasPendientes.json"
+                File.WriteAllText(_Respuestas.Directorio,
+                                  _Respuestas.Resultado.ToString(),
+                                  Encoding.GetEncoding("ISO-8859-1"))
+            End If
+
+        Catch ex As Exception
+            _Respuestas.Mensaje = ex.Message
+        End Try
+
+        Return _Respuestas
+
+    End Function
+    Function Fx_RecuperarComprasNoIncluir(_Year As Integer, _Month As Integer) As HefRespuesta
+
+        Dim _Respuestas As New HefRespuesta
+
+        Try
+
+            Dim _Periodo As String = _Year & "-" & Fx_Rellena_ceros(_Month, 2)
+            Dim _HefConsultas As New HefConsultas(_RutEmpresa, _Cn)
+            _Respuestas = _HefConsultas.RecuperarComprasNoIncluir(_Periodo)
+
+            Dim _Ubic_Archivo As String = _Directorio_Hefesto & "\CONFIGURACION\Salida\" & RutEmpresa & "\" & _Periodo
+
+            If Not Directory.Exists(_Ubic_Archivo) Then
+                System.IO.Directory.CreateDirectory(_Ubic_Archivo)
+            End If
+
+            If _Respuestas.EsCorrecto Then
+                _Respuestas.Directorio = _Ubic_Archivo & "\RegistrosComprasNoIncluir.json"
+                File.WriteAllText(_Respuestas.Directorio,
+                                  _Respuestas.Resultado.ToString(),
+                                  Encoding.GetEncoding("ISO-8859-1"))
+            End If
+
+        Catch ex As Exception
+            _Respuestas.Mensaje = ex.Message
+        End Try
+
+        Return _Respuestas
+
+    End Function
+    Function Fx_RecuperarComprasReclamadas(_Year As Integer, _Month As Integer) As HefRespuesta
+
+        Dim _Respuestas As New HefRespuesta
+
+        Try
+
+            Dim _Periodo As String = _Year & "-" & Fx_Rellena_ceros(_Month, 2)
+            Dim _HefConsultas As New HefConsultas(_RutEmpresa, _Cn)
+            _Respuestas = _HefConsultas.RecuperarComprasReclamadas(_Periodo)
+
+            Dim _Ubic_Archivo As String = _Directorio_Hefesto & "\CONFIGURACION\Salida\" & RutEmpresa & "\" & _Periodo
+
+            If Not Directory.Exists(_Ubic_Archivo) Then
+                System.IO.Directory.CreateDirectory(_Ubic_Archivo)
+            End If
+
+            If _Respuestas.EsCorrecto Then
+                _Respuestas.Directorio = _Ubic_Archivo & "\RegistrosComprasReclamadas.json"
+                File.WriteAllText(_Respuestas.Directorio,
+                                  _Respuestas.Resultado.ToString(),
+                                  Encoding.GetEncoding("ISO-8859-1"))
+            End If
+
+        Catch ex As Exception
+            _Respuestas.Mensaje = ex.Message
+        End Try
+
+        Return _Respuestas
+
+    End Function
+
+    Function Fx_Importar_Archivo_SII_Compras_Desde_Json(_Tbl_Registro_Compras As DataTable,
+                                                        _Tbl_Registro_Compras_Pendientes As DataTable,
+                                                        _Year As Integer,
+                                                        _Month As Integer) As Boolean
+
+        Dim _Periodo As String = _Year & "-" & Fx_Rellena_ceros(_Month, 2)
+
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Compras_en_SII Where Periodo = " & _Year & " And Mes = " & _Month
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Dim _SqlQuery = String.Empty
+
+        _SqlQuery = Fx_Traer_Informacion_Desde_Json(_Tbl_Registro_Compras, _Year, _Month)
+
+        If Not String.IsNullOrEmpty(_SqlQuery) Then
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery)
+        End If
+
+        _SqlQuery = String.Empty
+
+        _SqlQuery = Fx_Traer_Informacion_Desde_Json(_Tbl_Registro_Compras_Pendientes, _Year, _Month)
+
+        If Not String.IsNullOrEmpty(_SqlQuery) Then
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery)
+        End If
+
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Compras_en_SII Set" & vbCrLf &
+                           "Monto_Exento = Monto_Exento*-1," & vbCrLf &
+                           "Monto_Neto = Monto_Neto*-1," & vbCrLf &
+                           "Monto_Iva_Recuperable = Monto_Iva_Recuperable *-1," & vbCrLf &
+                           "Monto_Iva_No_Recuperable = Monto_Iva_No_Recuperable *-1," & vbCrLf &
+                           "Monto_Total = Monto_Total*-1," & vbCrLf &
+                           "Valor_Otro_impuesto = Valor_Otro_impuesto*-1," & vbCrLf &
+                           "Vanedo = Vanedo*-1," & vbCrLf &
+                           "Vaivdo = Vaivdo*-1," & vbCrLf &
+                           "Vabrdo = Vabrdo*-1" & vbCrLf &
+                           "Where Periodo = " & _Year & " And Mes = " & _Month & " And Tido = 'NCC'"
+        Return _Sql.Ej_consulta_IDU(Consulta_sql)
 
     End Function
 

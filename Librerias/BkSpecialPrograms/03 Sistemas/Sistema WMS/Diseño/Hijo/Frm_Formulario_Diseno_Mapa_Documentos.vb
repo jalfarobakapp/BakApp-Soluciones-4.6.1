@@ -1,8 +1,6 @@
 ﻿Imports System.Drawing.Color
 Imports DevComponents.DotNetBar
 Imports Microsoft.VisualBasic.PowerPacks
-Imports System.Windows.Forms
-Imports System.Linq
 'Imports Lib_Bakapp_VarClassFunc
 
 Public Class Frm_Formulario_Diseno_Mapa_Documentos
@@ -2056,68 +2054,81 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
         _Tiene_Prod = Fm_.Fx_Tiene_Productos_El_Sector(_Id_Mapa, _Codigo_Sector)
         Fm_.Dispose()
 
-        If Not _Tiene_Prod Then
+        If _Tiene_Prod Then
 
-            Dim _Color_F = CType(ObjetoActivo, LabelX).BackColor
-            CType(ObjetoActivo, LabelX).BackColor = Gold
+            If MessageBoxEx.Show(Me, "Existen productos asociados a estas ubicaciones" & vbCrLf &
+                                 "¿Esta seguro de cambiar el código del sector?", "Confirmación",
+                                 MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
+                Return
+            End If
 
-            _Nombre_Sector = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det", "Nombre_Sector",
-                                       "Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "'")
+        End If
 
-            Dim Fm As New Frm_Formulario_Diseno_Mapa_Crear_Sector(_Id_Mapa, Frm_Formulario_Diseno_Mapa_Crear_Sector._Enum_Accion.Editar_Codigo)
-            Fm.Pro_Codigo_Sector = _Codigo_Sector
-            Fm.Pro_Nombre_Sector = _Nombre_Sector
-            Fm.ShowDialog(Me)
+        'If Not _Tiene_Prod Then
 
-            Dim _Grabar = Fm.Pro_Grabar
-            _Codigo_Sector = Fm.Pro_Codigo_Sector
-            _Nombre_Sector = Fm.Pro_Nombre_Sector
-            Fm.Dispose()
+        Dim _Color_F = CType(ObjetoActivo, LabelX).BackColor
+        CType(ObjetoActivo, LabelX).BackColor = Gold
 
-            If _Grabar Then
+        _Nombre_Sector = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det", "Nombre_Sector",
+                                   "Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "'")
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det" & Space(1) &
-                               "Set Codigo_Sector = '" & _Codigo_Sector & "', Nombre_Sector = '" & _Nombre_Sector & "'" & Space(1) &
-                               "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector_Old & "'" & vbCrLf &
-                               "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Set Codigo_Sector = '" & _Codigo_Sector & "'" & Space(1) &
-                               "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector_Old & "'" & vbCrLf &
-                               "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Set Codigo_Ubic = Codigo_Sector+Descripcion_Ubic" & Space(1) &
-                               "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "'"
+        Dim Fm As New Frm_Formulario_Diseno_Mapa_Crear_Sector(_Id_Mapa, Frm_Formulario_Diseno_Mapa_Crear_Sector._Enum_Accion.Editar_Codigo)
+        Fm.Pro_Codigo_Sector = _Codigo_Sector
+        Fm.Pro_Nombre_Sector = _Nombre_Sector
+        Fm.ShowDialog(Me)
 
-                If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+        Dim _Grabar = Fm.Pro_Grabar
+        _Codigo_Sector = Fm.Pro_Codigo_Sector
+        _Nombre_Sector = Fm.Pro_Nombre_Sector
+        Fm.Dispose()
 
-                    For i = 0 To 1000
-                        Dim _N = _Sectores(i, 1)
-                        If _Codigo_Sector_Old = _N Then
+        If _Grabar Then
 
-                            For Each Ctrl In _Documento.Controls
-                                'Insertamos las Etiquetas y Sectores
-                                If Mid(Ctrl.Name, 1, 5) = "LblFx" Then
-                                    If Ctrl.Text = _Codigo_Sector_Old Then
-                                        Ctrl.Text = _Codigo_Sector
-                                        Me.ToolTip1.SetToolTip(Ctrl, UCase(_Nombre_Sector))
-                                    End If
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det" & Space(1) &
+                           "Set Codigo_Sector = '" & _Codigo_Sector & "', Nombre_Sector = '" & _Nombre_Sector & "'" & Space(1) &
+                           "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector_Old & "'" & vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Set Codigo_Sector = '" & _Codigo_Sector & "'" & Space(1) &
+                           "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector_Old & "'" & vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Set Codigo_Ubic = Codigo_Sector+Descripcion_Ubic" & Space(1) &
+                           "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "'" & vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_Prod_Ubicacion Set Codigo_Sector = '" & _Codigo_Sector & "'," &
+                           "Codigo_Ubic = REPLACE(Codigo_Ubic,'" & _Codigo_Sector_Old & "','" & _Codigo_Sector & "')" & vbCrLf &
+                           "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector_Old & "'"
+
+            If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+
+                For i = 0 To 1000
+                    Dim _N = _Sectores(i, 1)
+                    If _Codigo_Sector_Old = _N Then
+
+                        For Each Ctrl In _Documento.Controls
+                            'Insertamos las Etiquetas y Sectores
+                            If Mid(Ctrl.Name, 1, 5) = "LblFx" Then
+                                If Ctrl.Text = _Codigo_Sector_Old Then
+                                    Ctrl.Text = _Codigo_Sector
+                                    Me.ToolTip1.SetToolTip(Ctrl, UCase(_Nombre_Sector))
                                 End If
-                            Next
-                            _Sectores(i, 1) = _Codigo_Sector
-                            _Sectores(i, 2) = _Nombre_Sector
-                            'Exit For
-                        End If
-                    Next
+                            End If
+                        Next
+                        _Sectores(i, 1) = _Codigo_Sector
+                        _Sectores(i, 2) = _Nombre_Sector
+                        'Exit For
+                    End If
+                Next
 
-                    Beep()
-                    ToastNotification.Show(Me, "CODIGO CAMBIADO CORRECTAMENTE",
-                                           My.Resources.save,
-                                           2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
-
-                End If
+                Beep()
+                ToastNotification.Show(Me, "CODIGO CAMBIADO CORRECTAMENTE",
+                                       My.Resources.save,
+                                       2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
 
             End If
-            CType(ObjetoActivo, LabelX).BackColor = _Color_F
-        Else
-            MessageBoxEx.Show(Me, "Existen productos asociados en las ubicaciones", "Validación",
-                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
         End If
+        CType(ObjetoActivo, LabelX).BackColor = _Color_F
+        'Else
+        '    MessageBoxEx.Show(Me, "Existen productos asociados en las ubicaciones", "Validación",
+        '                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        'End If
 
     End Sub
 

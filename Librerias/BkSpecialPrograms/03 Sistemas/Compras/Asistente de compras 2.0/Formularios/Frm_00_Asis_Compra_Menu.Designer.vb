@@ -102,6 +102,10 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Chk_Sumar_Rotacion_Hermanos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Btn_Bodega_Vta_Estudio = New DevComponents.DotNetBar.ButtonX()
         Me.Tab_CalVnta = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel4 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Chk_Mostrar_Solo_Stock_Critico = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Btn_Bodegas_Stock = New DevComponents.DotNetBar.ButtonX()
+        Me.Tab_Excluir_Incluir = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel6 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Dtp_Fecha_Tope_Proveedores_Automaticos = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.LabelX11 = New DevComponents.DotNetBar.LabelX()
@@ -114,10 +118,19 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.Tab_Costos_OCC = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel4 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.Chk_Mostrar_Solo_Stock_Critico = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Btn_Bodegas_Stock = New DevComponents.DotNetBar.ButtonX()
-        Me.Tab_Excluir_Incluir = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Chk_DbExt_SincronizarPRBD = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Grupo_DbExt = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_DbExt_NombreBod_Des = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_ProvEspecial = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX20 = New DevComponents.DotNetBar.LabelX()
+        Me.Btn_Buscar_ProvEspecial = New DevComponents.DotNetBar.ButtonX()
+        Me.Txt_DbExt_NombreBod_Ori = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_DbExt_Nombre_Conexion = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX19 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX18 = New DevComponents.DotNetBar.LabelX()
+        Me.Tab_ConexionExterna = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel5 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.ReflectionImage1 = New DevComponents.DotNetBar.Controls.ReflectionImage()
         Me.Chk_Advertir_Rotacion = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -176,10 +189,12 @@ Partial Class Frm_00_Asis_Compra_Menu
         CType(Me.Dtp_Fecha_Vta_Hasta, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Input_Ultimos_Meses_Vta_Promedio, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel1.SuspendLayout()
+        Me.SuperTabControlPanel4.SuspendLayout()
         Me.SuperTabControlPanel6.SuspendLayout()
         CType(Me.Dtp_Fecha_Tope_Proveedores_Automaticos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel7.SuspendLayout()
-        Me.SuperTabControlPanel4.SuspendLayout()
+        Me.SuperTabControlPanel2.SuspendLayout()
+        Me.Grupo_DbExt.SuspendLayout()
         Me.SuperTabControlPanel5.SuspendLayout()
         CType(Me.Input_Dias_Advertencia_Rotacion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel7.SuspendLayout()
@@ -230,6 +245,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         'Chk_Procesar_Uno_A_Uno
         '
+        Me.Chk_Procesar_Uno_A_Uno.CheckBoxImageChecked = CType(resources.GetObject("Chk_Procesar_Uno_A_Uno.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Procesar_Uno_A_Uno.Checked = True
         Me.Chk_Procesar_Uno_A_Uno.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_Procesar_Uno_A_Uno.Name = "Chk_Procesar_Uno_A_Uno"
@@ -274,10 +290,12 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Chk_Sacar_Productos_Sin_Rotacion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Sacar_Productos_Sin_Rotacion.CheckBoxImageChecked = CType(resources.GetObject("Chk_Sacar_Productos_Sin_Rotacion.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Sacar_Productos_Sin_Rotacion.FocusCuesEnabled = False
         Me.Chk_Sacar_Productos_Sin_Rotacion.ForeColor = System.Drawing.Color.Black
         Me.Chk_Sacar_Productos_Sin_Rotacion.Location = New System.Drawing.Point(15, 14)
         Me.Chk_Sacar_Productos_Sin_Rotacion.Name = "Chk_Sacar_Productos_Sin_Rotacion"
-        Me.Chk_Sacar_Productos_Sin_Rotacion.Size = New System.Drawing.Size(163, 23)
+        Me.Chk_Sacar_Productos_Sin_Rotacion.Size = New System.Drawing.Size(163, 24)
         Me.Chk_Sacar_Productos_Sin_Rotacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Sacar_Productos_Sin_Rotacion.TabIndex = 15
         Me.Chk_Sacar_Productos_Sin_Rotacion.Text = "Sacar productos sin rotación"
@@ -331,12 +349,13 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Chk_Sabado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Sabado.CheckBoxImageChecked = CType(resources.GetObject("Chk_Sabado.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Sabado.ForeColor = System.Drawing.Color.Black
         Me.HelpProvider1.SetHelpString(Me.Chk_Sabado, "Considera los días sábados como días hábiles")
         Me.Chk_Sabado.Location = New System.Drawing.Point(284, 3)
         Me.Chk_Sabado.Name = "Chk_Sabado"
         Me.HelpProvider1.SetShowHelp(Me.Chk_Sabado, True)
-        Me.Chk_Sabado.Size = New System.Drawing.Size(138, 17)
+        Me.Chk_Sabado.Size = New System.Drawing.Size(138, 20)
         Me.Chk_Sabado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Sabado.TabIndex = 21
         Me.Chk_Sabado.Text = "Considerar día Sábado"
@@ -348,12 +367,13 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Chk_Domingo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Domingo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Domingo.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Domingo.ForeColor = System.Drawing.Color.Black
         Me.HelpProvider1.SetHelpString(Me.Chk_Domingo, "Considera los días domingos como días hábiles")
         Me.Chk_Domingo.Location = New System.Drawing.Point(284, 29)
         Me.Chk_Domingo.Name = "Chk_Domingo"
         Me.HelpProvider1.SetShowHelp(Me.Chk_Domingo, True)
-        Me.Chk_Domingo.Size = New System.Drawing.Size(139, 17)
+        Me.Chk_Domingo.Size = New System.Drawing.Size(139, 20)
         Me.Chk_Domingo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Domingo.TabIndex = 22
         Me.Chk_Domingo.Text = "Considerar día Domingo"
@@ -365,10 +385,12 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Chk_Restar_Stok_Bodega.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Restar_Stok_Bodega.CheckBoxImageChecked = CType(resources.GetObject("Chk_Restar_Stok_Bodega.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Restar_Stok_Bodega.FocusCuesEnabled = False
         Me.Chk_Restar_Stok_Bodega.ForeColor = System.Drawing.Color.Black
         Me.Chk_Restar_Stok_Bodega.Location = New System.Drawing.Point(15, 44)
         Me.Chk_Restar_Stok_Bodega.Name = "Chk_Restar_Stok_Bodega"
-        Me.Chk_Restar_Stok_Bodega.Size = New System.Drawing.Size(139, 23)
+        Me.Chk_Restar_Stok_Bodega.Size = New System.Drawing.Size(139, 19)
         Me.Chk_Restar_Stok_Bodega.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Restar_Stok_Bodega.TabIndex = 25
         Me.Chk_Restar_Stok_Bodega.Text = "Restar Stock de bodega"
@@ -380,10 +402,12 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.CheckBoxImageChecked = CType(resources.GetObject("Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.FocusCuesEnabled = False
         Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.ForeColor = System.Drawing.Color.Black
         Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Location = New System.Drawing.Point(15, 69)
         Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Name = "Chk_No_Considera_Con_Stock_Pedido_OCC_NVI"
-        Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Size = New System.Drawing.Size(146, 79)
+        Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Size = New System.Drawing.Size(146, 77)
         Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.TabIndex = 27
         Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Text = resources.GetString("Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Text")
@@ -395,6 +419,8 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Chk_Quitar_Bloqueados_Compra.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Quitar_Bloqueados_Compra.CheckBoxImageChecked = CType(resources.GetObject("Chk_Quitar_Bloqueados_Compra.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Quitar_Bloqueados_Compra.FocusCuesEnabled = False
         Me.Chk_Quitar_Bloqueados_Compra.ForeColor = System.Drawing.Color.Black
         Me.Chk_Quitar_Bloqueados_Compra.Location = New System.Drawing.Point(376, 44)
         Me.Chk_Quitar_Bloqueados_Compra.Name = "Chk_Quitar_Bloqueados_Compra"
@@ -423,9 +449,11 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Chk_Traer_Productos_De_Reemplazo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Traer_Productos_De_Reemplazo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Traer_Productos_De_Reemplazo.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Traer_Productos_De_Reemplazo.Checked = True
         Me.Chk_Traer_Productos_De_Reemplazo.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_Traer_Productos_De_Reemplazo.CheckValue = "Y"
+        Me.Chk_Traer_Productos_De_Reemplazo.FocusCuesEnabled = False
         Me.Chk_Traer_Productos_De_Reemplazo.ForeColor = System.Drawing.Color.Black
         Me.Chk_Traer_Productos_De_Reemplazo.Location = New System.Drawing.Point(3, 192)
         Me.Chk_Traer_Productos_De_Reemplazo.Name = "Chk_Traer_Productos_De_Reemplazo"
@@ -441,6 +469,8 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Chk_Ent_Fisica.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Ent_Fisica.CheckBoxImageChecked = CType(resources.GetObject("Chk_Ent_Fisica.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Ent_Fisica.FocusCuesEnabled = False
         Me.Chk_Ent_Fisica.ForeColor = System.Drawing.Color.Black
         Me.Chk_Ent_Fisica.Location = New System.Drawing.Point(272, 248)
         Me.Chk_Ent_Fisica.Name = "Chk_Ent_Fisica"
@@ -481,7 +511,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Rdb_Productos_Proveedor.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Productos_Proveedor.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Productos_Proveedor.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Productos_Proveedor.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Productos_Proveedor.FocusCuesEnabled = False
         Me.Rdb_Productos_Proveedor.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Productos_Proveedor.Location = New System.Drawing.Point(3, 159)
         Me.Rdb_Productos_Proveedor.Name = "Rdb_Productos_Proveedor"
@@ -496,10 +528,12 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Rdb_Productos_Todos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Productos_Todos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Productos_Todos.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Productos_Todos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Productos_Todos.Checked = True
         Me.Rdb_Productos_Todos.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Productos_Todos.CheckValue = "Y"
+        Me.Rdb_Productos_Todos.FocusCuesEnabled = False
         Me.Rdb_Productos_Todos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Productos_Todos.Location = New System.Drawing.Point(3, 3)
         Me.Rdb_Productos_Todos.Name = "Rdb_Productos_Todos"
@@ -514,7 +548,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Rdb_Productos_Ranking.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Productos_Ranking.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Productos_Ranking.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Productos_Ranking.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Productos_Ranking.FocusCuesEnabled = False
         Me.Rdb_Productos_Ranking.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Productos_Ranking.Location = New System.Drawing.Point(3, 133)
         Me.Rdb_Productos_Ranking.Name = "Rdb_Productos_Ranking"
@@ -529,7 +565,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Rdb_Productos_Familias_Marcas_Etc.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Productos_Familias_Marcas_Etc.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Productos_Familias_Marcas_Etc.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Productos_Familias_Marcas_Etc.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Productos_Familias_Marcas_Etc.FocusCuesEnabled = False
         Me.Rdb_Productos_Familias_Marcas_Etc.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Productos_Familias_Marcas_Etc.Location = New System.Drawing.Point(3, 107)
         Me.Rdb_Productos_Familias_Marcas_Etc.Name = "Rdb_Productos_Familias_Marcas_Etc"
@@ -544,7 +582,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Rdb_Productos_Seleccionar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Productos_Seleccionar.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Productos_Seleccionar.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Productos_Seleccionar.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Productos_Seleccionar.FocusCuesEnabled = False
         Me.Rdb_Productos_Seleccionar.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Productos_Seleccionar.Location = New System.Drawing.Point(3, 81)
         Me.Rdb_Productos_Seleccionar.Name = "Rdb_Productos_Seleccionar"
@@ -559,7 +599,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Rdb_Productos_Con_Movimientos_De_Venta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Productos_Con_Movimientos_De_Venta.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Productos_Con_Movimientos_De_Venta.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Productos_Con_Movimientos_De_Venta.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Productos_Con_Movimientos_De_Venta.FocusCuesEnabled = False
         Me.Rdb_Productos_Con_Movimientos_De_Venta.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Productos_Con_Movimientos_De_Venta.Location = New System.Drawing.Point(3, 55)
         Me.Rdb_Productos_Con_Movimientos_De_Venta.Name = "Rdb_Productos_Con_Movimientos_De_Venta"
@@ -574,7 +616,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Rdb_Productos_Vendidos_Los_Ultimos_Dias.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Productos_Vendidos_Los_Ultimos_Dias.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Productos_Vendidos_Los_Ultimos_Dias.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Productos_Vendidos_Los_Ultimos_Dias.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Productos_Vendidos_Los_Ultimos_Dias.FocusCuesEnabled = False
         Me.Rdb_Productos_Vendidos_Los_Ultimos_Dias.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Productos_Vendidos_Los_Ultimos_Dias.Location = New System.Drawing.Point(3, 29)
         Me.Rdb_Productos_Vendidos_Los_Ultimos_Dias.Name = "Rdb_Productos_Vendidos_Los_Ultimos_Dias"
@@ -806,8 +850,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.STabConfiguracion.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.STabConfiguracion.ControlBox.MenuBox, Me.STabConfiguracion.ControlBox.CloseBox})
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel3)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel1)
-        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel6)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel4)
+        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel6)
+        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel2)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel5)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel7)
         Me.STabConfiguracion.ForeColor = System.Drawing.Color.Black
@@ -819,7 +864,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.STabConfiguracion.Size = New System.Drawing.Size(539, 232)
         Me.STabConfiguracion.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.STabConfiguracion.TabIndex = 49
-        Me.STabConfiguracion.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Tab_Indicadores, Me.Tab_Costos_OCC, Me.Tab_Excluir_Incluir, Me.Tab_CalVnta, Me.SuperTabItem7, Me.SuperTabItem5})
+        Me.STabConfiguracion.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Tab_Indicadores, Me.Tab_Costos_OCC, Me.Tab_Excluir_Incluir, Me.Tab_CalVnta, Me.SuperTabItem7, Me.SuperTabItem5, Me.Tab_ConexionExterna})
         Me.STabConfiguracion.Text = "SuperTabControl2"
         '
         'SuperTabControlPanel3
@@ -936,9 +981,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         Me.TableLayoutPanel8.BackColor = System.Drawing.Color.Transparent
         Me.TableLayoutPanel8.ColumnCount = 3
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.68528!))
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 54.31472!))
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 364.0!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.56221!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.43779!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 308.0!))
         Me.TableLayoutPanel8.Controls.Add(Me.LabelX9, 0, 0)
         Me.TableLayoutPanel8.Controls.Add(Me.Rdb_Ud1_Compra, 1, 0)
         Me.TableLayoutPanel8.Controls.Add(Me.Rdb_Ud2_Compra, 2, 0)
@@ -970,14 +1015,16 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Rdb_Ud1_Compra.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Ud1_Compra.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Ud1_Compra.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Ud1_Compra.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Ud1_Compra.Checked = True
         Me.Rdb_Ud1_Compra.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Ud1_Compra.CheckValue = "Y"
+        Me.Rdb_Ud1_Compra.FocusCuesEnabled = False
         Me.Rdb_Ud1_Compra.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Ud1_Compra.Location = New System.Drawing.Point(64, 3)
+        Me.Rdb_Ud1_Compra.Location = New System.Drawing.Point(68, 3)
         Me.Rdb_Ud1_Compra.Name = "Rdb_Ud1_Compra"
-        Me.Rdb_Ud1_Compra.Size = New System.Drawing.Size(66, 20)
+        Me.Rdb_Ud1_Compra.Size = New System.Drawing.Size(118, 20)
         Me.Rdb_Ud1_Compra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Ud1_Compra.TabIndex = 57
         Me.Rdb_Ud1_Compra.Text = "[Ud. 1] Primera Unidad "
@@ -988,9 +1035,11 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Rdb_Ud2_Compra.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Ud2_Compra.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Ud2_Compra.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Ud2_Compra.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Ud2_Compra.FocusCuesEnabled = False
         Me.Rdb_Ud2_Compra.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Ud2_Compra.Location = New System.Drawing.Point(136, 3)
+        Me.Rdb_Ud2_Compra.Location = New System.Drawing.Point(192, 3)
         Me.Rdb_Ud2_Compra.Name = "Rdb_Ud2_Compra"
         Me.Rdb_Ud2_Compra.Size = New System.Drawing.Size(143, 20)
         Me.Rdb_Ud2_Compra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1127,6 +1176,8 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Chk_IncluirUltCXprov.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_IncluirUltCXprov.CheckBoxImageChecked = CType(resources.GetObject("Chk_IncluirUltCXprov.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_IncluirUltCXprov.FocusCuesEnabled = False
         Me.Chk_IncluirUltCXprov.ForeColor = System.Drawing.Color.Black
         Me.Chk_IncluirUltCXprov.Location = New System.Drawing.Point(15, 114)
         Me.Chk_IncluirUltCXprov.Name = "Chk_IncluirUltCXprov"
@@ -1209,7 +1260,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Rdb_Rot_Promedio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Rot_Promedio.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Rot_Promedio.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Rot_Promedio.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Rot_Promedio.FocusCuesEnabled = False
         Me.Rdb_Rot_Promedio.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Rot_Promedio.Location = New System.Drawing.Point(69, 3)
         Me.Rdb_Rot_Promedio.Name = "Rdb_Rot_Promedio"
@@ -1224,10 +1277,12 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Rdb_Rot_Mediana.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Rot_Mediana.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Rot_Mediana.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Rot_Mediana.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Rot_Mediana.Checked = True
         Me.Rdb_Rot_Mediana.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Rot_Mediana.CheckValue = "Y"
+        Me.Rdb_Rot_Mediana.FocusCuesEnabled = False
         Me.Rdb_Rot_Mediana.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Rot_Mediana.Location = New System.Drawing.Point(3, 3)
         Me.Rdb_Rot_Mediana.Name = "Rdb_Rot_Mediana"
@@ -1244,7 +1299,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.875!))
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 93.0!))
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 47.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 111.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 122.0!))
         Me.TableLayoutPanel2.Controls.Add(Me.Rdb_Rango_Fechas_Vta_Promedio, 0, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.Dtp_Fecha_Vta_Desde, 2, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.Rdb_Rango_Meses_Vta_Promedio, 0, 1)
@@ -1267,7 +1322,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Rdb_Rango_Fechas_Vta_Promedio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Rango_Fechas_Vta_Promedio.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Rango_Fechas_Vta_Promedio.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Rango_Fechas_Vta_Promedio.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Rango_Fechas_Vta_Promedio.FocusCuesEnabled = False
         Me.Rdb_Rango_Fechas_Vta_Promedio.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Rango_Fechas_Vta_Promedio.Location = New System.Drawing.Point(3, 3)
         Me.Rdb_Rango_Fechas_Vta_Promedio.Name = "Rdb_Rango_Fechas_Vta_Promedio"
@@ -1287,7 +1344,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Dtp_Fecha_Vta_Desde.ButtonDropDown.Visible = True
         Me.Dtp_Fecha_Vta_Desde.ForeColor = System.Drawing.Color.Black
         Me.Dtp_Fecha_Vta_Desde.IsPopupCalendarOpen = False
-        Me.Dtp_Fecha_Vta_Desde.Location = New System.Drawing.Point(269, 3)
+        Me.Dtp_Fecha_Vta_Desde.Location = New System.Drawing.Point(259, 3)
         '
         '
         '
@@ -1333,14 +1390,16 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Rdb_Rango_Meses_Vta_Promedio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Rango_Meses_Vta_Promedio.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Rango_Meses_Vta_Promedio.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Rango_Meses_Vta_Promedio.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Rango_Meses_Vta_Promedio.Checked = True
         Me.Rdb_Rango_Meses_Vta_Promedio.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Rango_Meses_Vta_Promedio.CheckValue = "Y"
+        Me.Rdb_Rango_Meses_Vta_Promedio.FocusCuesEnabled = False
         Me.Rdb_Rango_Meses_Vta_Promedio.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Rango_Meses_Vta_Promedio.Location = New System.Drawing.Point(3, 28)
         Me.Rdb_Rango_Meses_Vta_Promedio.Name = "Rdb_Rango_Meses_Vta_Promedio"
-        Me.Rdb_Rango_Meses_Vta_Promedio.Size = New System.Drawing.Size(202, 20)
+        Me.Rdb_Rango_Meses_Vta_Promedio.Size = New System.Drawing.Size(194, 20)
         Me.Rdb_Rango_Meses_Vta_Promedio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Rango_Meses_Vta_Promedio.TabIndex = 52
         Me.Rdb_Rango_Meses_Vta_Promedio.Text = "Ventas generadas en los últimos meses"
@@ -1352,7 +1411,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(211, 3)
+        Me.LabelX2.Location = New System.Drawing.Point(203, 3)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(41, 19)
         Me.LabelX2.TabIndex = 114
@@ -1366,7 +1425,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(362, 3)
+        Me.LabelX1.Location = New System.Drawing.Point(352, 3)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(33, 19)
         Me.LabelX1.TabIndex = 113
@@ -1384,7 +1443,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Dtp_Fecha_Vta_Hasta.ButtonDropDown.Visible = True
         Me.Dtp_Fecha_Vta_Hasta.ForeColor = System.Drawing.Color.Black
         Me.Dtp_Fecha_Vta_Hasta.IsPopupCalendarOpen = False
-        Me.Dtp_Fecha_Vta_Hasta.Location = New System.Drawing.Point(409, 3)
+        Me.Dtp_Fecha_Vta_Hasta.Location = New System.Drawing.Point(399, 3)
         '
         '
         '
@@ -1435,12 +1494,12 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Input_Ultimos_Meses_Vta_Promedio.ButtonClear.Visible = True
         Me.Input_Ultimos_Meses_Vta_Promedio.FocusHighlightEnabled = True
         Me.Input_Ultimos_Meses_Vta_Promedio.ForeColor = System.Drawing.Color.Black
-        Me.Input_Ultimos_Meses_Vta_Promedio.Location = New System.Drawing.Point(211, 28)
+        Me.Input_Ultimos_Meses_Vta_Promedio.Location = New System.Drawing.Point(203, 28)
         Me.Input_Ultimos_Meses_Vta_Promedio.MaxValue = 24
         Me.Input_Ultimos_Meses_Vta_Promedio.MinValue = 1
         Me.Input_Ultimos_Meses_Vta_Promedio.Name = "Input_Ultimos_Meses_Vta_Promedio"
         Me.Input_Ultimos_Meses_Vta_Promedio.ShowUpDown = True
-        Me.Input_Ultimos_Meses_Vta_Promedio.Size = New System.Drawing.Size(52, 22)
+        Me.Input_Ultimos_Meses_Vta_Promedio.Size = New System.Drawing.Size(50, 22)
         Me.Input_Ultimos_Meses_Vta_Promedio.TabIndex = 109
         Me.Input_Ultimos_Meses_Vta_Promedio.Value = 12
         '
@@ -1469,6 +1528,8 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Chk_Incluir_Salidas_GDI_OT.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Incluir_Salidas_GDI_OT.CheckBoxImageChecked = CType(resources.GetObject("Chk_Incluir_Salidas_GDI_OT.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Incluir_Salidas_GDI_OT.FocusCuesEnabled = False
         Me.Chk_Incluir_Salidas_GDI_OT.ForeColor = System.Drawing.Color.Black
         Me.Chk_Incluir_Salidas_GDI_OT.Location = New System.Drawing.Point(3, 45)
         Me.Chk_Incluir_Salidas_GDI_OT.Name = "Chk_Incluir_Salidas_GDI_OT"
@@ -1484,6 +1545,8 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Chk_Rotacion_Con_Ent_Excluidas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Rotacion_Con_Ent_Excluidas.CheckBoxImageChecked = CType(resources.GetObject("Chk_Rotacion_Con_Ent_Excluidas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Rotacion_Con_Ent_Excluidas.FocusCuesEnabled = False
         Me.Chk_Rotacion_Con_Ent_Excluidas.ForeColor = System.Drawing.Color.Black
         Me.Chk_Rotacion_Con_Ent_Excluidas.Location = New System.Drawing.Point(3, 24)
         Me.Chk_Rotacion_Con_Ent_Excluidas.Name = "Chk_Rotacion_Con_Ent_Excluidas"
@@ -1500,6 +1563,8 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Chk_Sumar_Rotacion_Hermanos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Sumar_Rotacion_Hermanos.CheckBoxImageChecked = CType(resources.GetObject("Chk_Sumar_Rotacion_Hermanos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Sumar_Rotacion_Hermanos.FocusCuesEnabled = False
         Me.Chk_Sumar_Rotacion_Hermanos.ForeColor = System.Drawing.Color.Black
         Me.Chk_Sumar_Rotacion_Hermanos.Location = New System.Drawing.Point(3, 3)
         Me.Chk_Sumar_Rotacion_Hermanos.Name = "Chk_Sumar_Rotacion_Hermanos"
@@ -1527,6 +1592,59 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Tab_CalVnta.GlobalItem = False
         Me.Tab_CalVnta.Name = "Tab_CalVnta"
         Me.Tab_CalVnta.Text = "Calc. Vta. promedio"
+        '
+        'SuperTabControlPanel4
+        '
+        Me.SuperTabControlPanel4.CanvasColor = System.Drawing.Color.Empty
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Mostrar_Solo_Stock_Critico)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Btn_Bodegas_Stock)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Sacar_Productos_Sin_Rotacion)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Restar_Stok_Bodega)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Quitar_Bloqueados_Compra)
+        Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
+        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(539, 232)
+        Me.SuperTabControlPanel4.TabIndex = 0
+        Me.SuperTabControlPanel4.TabItem = Me.Tab_Excluir_Incluir
+        '
+        'Chk_Mostrar_Solo_Stock_Critico
+        '
+        Me.Chk_Mostrar_Solo_Stock_Critico.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Mostrar_Solo_Stock_Critico.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Mostrar_Solo_Stock_Critico.CheckBoxImageChecked = CType(resources.GetObject("Chk_Mostrar_Solo_Stock_Critico.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Mostrar_Solo_Stock_Critico.FocusCuesEnabled = False
+        Me.Chk_Mostrar_Solo_Stock_Critico.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Mostrar_Solo_Stock_Critico.Location = New System.Drawing.Point(376, 15)
+        Me.Chk_Mostrar_Solo_Stock_Critico.Name = "Chk_Mostrar_Solo_Stock_Critico"
+        Me.Chk_Mostrar_Solo_Stock_Critico.Size = New System.Drawing.Size(139, 20)
+        Me.Chk_Mostrar_Solo_Stock_Critico.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Mostrar_Solo_Stock_Critico.TabIndex = 115
+        Me.Chk_Mostrar_Solo_Stock_Critico.Text = "Mostrar solo Stock critico"
+        '
+        'Btn_Bodegas_Stock
+        '
+        Me.Btn_Bodegas_Stock.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Bodegas_Stock.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Bodegas_Stock.Image = CType(resources.GetObject("Btn_Bodegas_Stock.Image"), System.Drawing.Image)
+        Me.Btn_Bodegas_Stock.ImageAlt = CType(resources.GetObject("Btn_Bodegas_Stock.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Bodegas_Stock.Location = New System.Drawing.Point(160, 38)
+        Me.Btn_Bodegas_Stock.Name = "Btn_Bodegas_Stock"
+        Me.Btn_Bodegas_Stock.Size = New System.Drawing.Size(174, 29)
+        Me.Btn_Bodegas_Stock.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Bodegas_Stock.TabIndex = 114
+        Me.Btn_Bodegas_Stock.Text = "Bodegas de estudio de stock"
+        '
+        'Tab_Excluir_Incluir
+        '
+        Me.Tab_Excluir_Incluir.AttachedControl = Me.SuperTabControlPanel4
+        Me.Tab_Excluir_Incluir.GlobalItem = False
+        Me.Tab_Excluir_Incluir.Name = "Tab_Excluir_Incluir"
+        Me.Tab_Excluir_Incluir.Text = "Excluir / Incluir (Opc. dinámicas)"
         '
         'SuperTabControlPanel6
         '
@@ -1650,11 +1768,13 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Rd_Costo_Lista_Proveedor.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rd_Costo_Lista_Proveedor.CheckBoxImageChecked = CType(resources.GetObject("Rd_Costo_Lista_Proveedor.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rd_Costo_Lista_Proveedor.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rd_Costo_Lista_Proveedor.FocusCuesEnabled = False
         Me.Rd_Costo_Lista_Proveedor.ForeColor = System.Drawing.Color.Black
         Me.Rd_Costo_Lista_Proveedor.Location = New System.Drawing.Point(220, 3)
         Me.Rd_Costo_Lista_Proveedor.Name = "Rd_Costo_Lista_Proveedor"
-        Me.Rd_Costo_Lista_Proveedor.Size = New System.Drawing.Size(88, 20)
+        Me.Rd_Costo_Lista_Proveedor.Size = New System.Drawing.Size(88, 19)
         Me.Rd_Costo_Lista_Proveedor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rd_Costo_Lista_Proveedor.TabIndex = 55
         Me.Rd_Costo_Lista_Proveedor.Text = "Desde L.Costos"
@@ -1665,14 +1785,16 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Rd_Costo_Ultimo_Documento_Seleccionado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.CheckBoxImageChecked = CType(resources.GetObject("Rd_Costo_Ultimo_Documento_Seleccionado.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rd_Costo_Ultimo_Documento_Seleccionado.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rd_Costo_Ultimo_Documento_Seleccionado.Checked = True
         Me.Rd_Costo_Ultimo_Documento_Seleccionado.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rd_Costo_Ultimo_Documento_Seleccionado.CheckValue = "Y"
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.FocusCuesEnabled = False
         Me.Rd_Costo_Ultimo_Documento_Seleccionado.ForeColor = System.Drawing.Color.Black
         Me.Rd_Costo_Ultimo_Documento_Seleccionado.Location = New System.Drawing.Point(51, 3)
         Me.Rd_Costo_Ultimo_Documento_Seleccionado.Name = "Rd_Costo_Ultimo_Documento_Seleccionado"
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Size = New System.Drawing.Size(162, 20)
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Size = New System.Drawing.Size(162, 17)
         Me.Rd_Costo_Ultimo_Documento_Seleccionado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rd_Costo_Ultimo_Documento_Seleccionado.TabIndex = 56
         Me.Rd_Costo_Ultimo_Documento_Seleccionado.Text = "Desde la última GRC/OCC/FCC"
@@ -1740,56 +1862,232 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Tab_Costos_OCC.Name = "Tab_Costos_OCC"
         Me.Tab_Costos_OCC.Text = "Costos para OCC"
         '
-        'SuperTabControlPanel4
+        'SuperTabControlPanel2
         '
-        Me.SuperTabControlPanel4.CanvasColor = System.Drawing.Color.Empty
-        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Mostrar_Solo_Stock_Critico)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Btn_Bodegas_Stock)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Sacar_Productos_Sin_Rotacion)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Restar_Stok_Bodega)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Quitar_Bloqueados_Compra)
-        Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 0)
-        Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
-        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(539, 232)
-        Me.SuperTabControlPanel4.TabIndex = 0
-        Me.SuperTabControlPanel4.TabItem = Me.Tab_Excluir_Incluir
+        Me.SuperTabControlPanel2.Controls.Add(Me.Chk_DbExt_SincronizarPRBD)
+        Me.SuperTabControlPanel2.Controls.Add(Me.Grupo_DbExt)
+        Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(539, 232)
+        Me.SuperTabControlPanel2.TabIndex = 0
+        Me.SuperTabControlPanel2.TabItem = Me.Tab_ConexionExterna
         '
-        'Chk_Mostrar_Solo_Stock_Critico
+        'Chk_DbExt_SincronizarPRBD
         '
-        Me.Chk_Mostrar_Solo_Stock_Critico.BackColor = System.Drawing.Color.Transparent
+        Me.Chk_DbExt_SincronizarPRBD.BackColor = System.Drawing.Color.Transparent
         '
         '
         '
-        Me.Chk_Mostrar_Solo_Stock_Critico.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Mostrar_Solo_Stock_Critico.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Mostrar_Solo_Stock_Critico.Location = New System.Drawing.Point(376, 15)
-        Me.Chk_Mostrar_Solo_Stock_Critico.Name = "Chk_Mostrar_Solo_Stock_Critico"
-        Me.Chk_Mostrar_Solo_Stock_Critico.Size = New System.Drawing.Size(139, 22)
-        Me.Chk_Mostrar_Solo_Stock_Critico.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Mostrar_Solo_Stock_Critico.TabIndex = 115
-        Me.Chk_Mostrar_Solo_Stock_Critico.Text = "Mostrar solo Stock critico"
+        Me.Chk_DbExt_SincronizarPRBD.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_DbExt_SincronizarPRBD.ForeColor = System.Drawing.Color.Black
+        Me.Chk_DbExt_SincronizarPRBD.Location = New System.Drawing.Point(7, 5)
+        Me.Chk_DbExt_SincronizarPRBD.Name = "Chk_DbExt_SincronizarPRBD"
+        Me.Chk_DbExt_SincronizarPRBD.Size = New System.Drawing.Size(518, 23)
+        Me.Chk_DbExt_SincronizarPRBD.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_DbExt_SincronizarPRBD.TabIndex = 10020
+        Me.Chk_DbExt_SincronizarPRBD.Text = "Sincronizar productos entre ambas bases para estudios"
         '
-        'Btn_Bodegas_Stock
+        'Grupo_DbExt
         '
-        Me.Btn_Bodegas_Stock.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Bodegas_Stock.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Bodegas_Stock.Image = CType(resources.GetObject("Btn_Bodegas_Stock.Image"), System.Drawing.Image)
-        Me.Btn_Bodegas_Stock.ImageAlt = CType(resources.GetObject("Btn_Bodegas_Stock.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Bodegas_Stock.Location = New System.Drawing.Point(160, 38)
-        Me.Btn_Bodegas_Stock.Name = "Btn_Bodegas_Stock"
-        Me.Btn_Bodegas_Stock.Size = New System.Drawing.Size(174, 29)
-        Me.Btn_Bodegas_Stock.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Bodegas_Stock.TabIndex = 114
-        Me.Btn_Bodegas_Stock.Text = "Bodegas de estudio de stock"
+        Me.Grupo_DbExt.BackColor = System.Drawing.Color.White
+        Me.Grupo_DbExt.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_DbExt.Controls.Add(Me.LabelX17)
+        Me.Grupo_DbExt.Controls.Add(Me.Txt_DbExt_NombreBod_Des)
+        Me.Grupo_DbExt.Controls.Add(Me.Txt_ProvEspecial)
+        Me.Grupo_DbExt.Controls.Add(Me.LabelX20)
+        Me.Grupo_DbExt.Controls.Add(Me.Btn_Buscar_ProvEspecial)
+        Me.Grupo_DbExt.Controls.Add(Me.Txt_DbExt_NombreBod_Ori)
+        Me.Grupo_DbExt.Controls.Add(Me.Txt_DbExt_Nombre_Conexion)
+        Me.Grupo_DbExt.Controls.Add(Me.LabelX19)
+        Me.Grupo_DbExt.Controls.Add(Me.LabelX18)
+        Me.Grupo_DbExt.DisabledBackColor = System.Drawing.Color.Empty
+        Me.Grupo_DbExt.Location = New System.Drawing.Point(7, 34)
+        Me.Grupo_DbExt.Name = "Grupo_DbExt"
+        Me.Grupo_DbExt.Size = New System.Drawing.Size(518, 159)
         '
-        'Tab_Excluir_Incluir
         '
-        Me.Tab_Excluir_Incluir.AttachedControl = Me.SuperTabControlPanel4
-        Me.Tab_Excluir_Incluir.GlobalItem = False
-        Me.Tab_Excluir_Incluir.Name = "Tab_Excluir_Incluir"
-        Me.Tab_Excluir_Incluir.Text = "Excluir / Incluir (Opc. dinámicas)"
+        '
+        Me.Grupo_DbExt.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Grupo_DbExt.Style.BackColorGradientAngle = 90
+        Me.Grupo_DbExt.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Grupo_DbExt.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_DbExt.Style.BorderBottomWidth = 1
+        Me.Grupo_DbExt.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.Grupo_DbExt.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_DbExt.Style.BorderLeftWidth = 1
+        Me.Grupo_DbExt.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_DbExt.Style.BorderRightWidth = 1
+        Me.Grupo_DbExt.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_DbExt.Style.BorderTopWidth = 1
+        Me.Grupo_DbExt.Style.CornerDiameter = 4
+        Me.Grupo_DbExt.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Grupo_DbExt.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.Grupo_DbExt.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.Grupo_DbExt.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.Grupo_DbExt.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.Grupo_DbExt.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Grupo_DbExt.TabIndex = 10021
+        '
+        'LabelX17
+        '
+        Me.LabelX17.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX17.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX17.ForeColor = System.Drawing.Color.Black
+        Me.LabelX17.Location = New System.Drawing.Point(3, 11)
+        Me.LabelX17.Name = "LabelX17"
+        Me.LabelX17.SingleLineColor = System.Drawing.Color.Transparent
+        Me.LabelX17.Size = New System.Drawing.Size(128, 23)
+        Me.LabelX17.TabIndex = 10012
+        Me.LabelX17.Text = "Nombre conexión activa"
+        '
+        'Txt_DbExt_NombreBod_Des
+        '
+        Me.Txt_DbExt_NombreBod_Des.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_DbExt_NombreBod_Des.Border.Class = "TextBoxBorder"
+        Me.Txt_DbExt_NombreBod_Des.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_DbExt_NombreBod_Des.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_DbExt_NombreBod_Des.ForeColor = System.Drawing.Color.Black
+        Me.Txt_DbExt_NombreBod_Des.Location = New System.Drawing.Point(133, 66)
+        Me.Txt_DbExt_NombreBod_Des.Name = "Txt_DbExt_NombreBod_Des"
+        Me.Txt_DbExt_NombreBod_Des.PreventEnterBeep = True
+        Me.Txt_DbExt_NombreBod_Des.ReadOnly = True
+        Me.Txt_DbExt_NombreBod_Des.Size = New System.Drawing.Size(373, 22)
+        Me.Txt_DbExt_NombreBod_Des.TabIndex = 10019
+        '
+        'Txt_ProvEspecial
+        '
+        Me.Txt_ProvEspecial.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_ProvEspecial.Border.Class = "TextBoxBorder"
+        Me.Txt_ProvEspecial.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_ProvEspecial.ButtonCustom.Image = CType(resources.GetObject("Txt_ProvEspecial.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_ProvEspecial.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_ProvEspecial.ForeColor = System.Drawing.Color.Black
+        Me.Txt_ProvEspecial.Location = New System.Drawing.Point(53, 128)
+        Me.Txt_ProvEspecial.Name = "Txt_ProvEspecial"
+        Me.Txt_ProvEspecial.PreventEnterBeep = True
+        Me.Txt_ProvEspecial.ReadOnly = True
+        Me.Txt_ProvEspecial.Size = New System.Drawing.Size(453, 22)
+        Me.Txt_ProvEspecial.TabIndex = 11
+        '
+        'LabelX20
+        '
+        Me.LabelX20.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX20.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX20.ForeColor = System.Drawing.Color.Black
+        Me.LabelX20.Location = New System.Drawing.Point(3, 63)
+        Me.LabelX20.Name = "LabelX20"
+        Me.LabelX20.SingleLineColor = System.Drawing.Color.Transparent
+        Me.LabelX20.Size = New System.Drawing.Size(128, 23)
+        Me.LabelX20.TabIndex = 10018
+        Me.LabelX20.Text = "Bodega de destino"
+        '
+        'Btn_Buscar_ProvEspecial
+        '
+        Me.Btn_Buscar_ProvEspecial.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Buscar_ProvEspecial.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Buscar_ProvEspecial.Image = CType(resources.GetObject("Btn_Buscar_ProvEspecial.Image"), System.Drawing.Image)
+        Me.Btn_Buscar_ProvEspecial.ImageAlt = CType(resources.GetObject("Btn_Buscar_ProvEspecial.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Buscar_ProvEspecial.Location = New System.Drawing.Point(0, 128)
+        Me.Btn_Buscar_ProvEspecial.Name = "Btn_Buscar_ProvEspecial"
+        Me.Btn_Buscar_ProvEspecial.Size = New System.Drawing.Size(46, 22)
+        Me.Btn_Buscar_ProvEspecial.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Buscar_ProvEspecial.TabIndex = 12
+        Me.Btn_Buscar_ProvEspecial.Tooltip = "Buscar proveedor"
+        '
+        'Txt_DbExt_NombreBod_Ori
+        '
+        Me.Txt_DbExt_NombreBod_Ori.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_DbExt_NombreBod_Ori.Border.Class = "TextBoxBorder"
+        Me.Txt_DbExt_NombreBod_Ori.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_DbExt_NombreBod_Ori.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_DbExt_NombreBod_Ori.ForeColor = System.Drawing.Color.Black
+        Me.Txt_DbExt_NombreBod_Ori.Location = New System.Drawing.Point(133, 38)
+        Me.Txt_DbExt_NombreBod_Ori.Name = "Txt_DbExt_NombreBod_Ori"
+        Me.Txt_DbExt_NombreBod_Ori.PreventEnterBeep = True
+        Me.Txt_DbExt_NombreBod_Ori.ReadOnly = True
+        Me.Txt_DbExt_NombreBod_Ori.Size = New System.Drawing.Size(373, 22)
+        Me.Txt_DbExt_NombreBod_Ori.TabIndex = 10017
+        '
+        'Txt_DbExt_Nombre_Conexion
+        '
+        Me.Txt_DbExt_Nombre_Conexion.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_DbExt_Nombre_Conexion.Border.Class = "TextBoxBorder"
+        Me.Txt_DbExt_Nombre_Conexion.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_DbExt_Nombre_Conexion.ButtonCustom.Image = CType(resources.GetObject("Txt_DbExt_Nombre_Conexion.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_DbExt_Nombre_Conexion.ButtonCustom.Visible = True
+        Me.Txt_DbExt_Nombre_Conexion.ButtonCustom2.Image = CType(resources.GetObject("Txt_DbExt_Nombre_Conexion.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_DbExt_Nombre_Conexion.ButtonCustom2.Visible = True
+        Me.Txt_DbExt_Nombre_Conexion.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_DbExt_Nombre_Conexion.ForeColor = System.Drawing.Color.Black
+        Me.Txt_DbExt_Nombre_Conexion.Location = New System.Drawing.Point(133, 11)
+        Me.Txt_DbExt_Nombre_Conexion.Name = "Txt_DbExt_Nombre_Conexion"
+        Me.Txt_DbExt_Nombre_Conexion.PreventEnterBeep = True
+        Me.Txt_DbExt_Nombre_Conexion.ReadOnly = True
+        Me.Txt_DbExt_Nombre_Conexion.Size = New System.Drawing.Size(373, 22)
+        Me.Txt_DbExt_Nombre_Conexion.TabIndex = 10014
+        Me.Txt_DbExt_Nombre_Conexion.Tag = "0"
+        '
+        'LabelX19
+        '
+        Me.LabelX19.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX19.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX19.ForeColor = System.Drawing.Color.Black
+        Me.LabelX19.Location = New System.Drawing.Point(3, 35)
+        Me.LabelX19.Name = "LabelX19"
+        Me.LabelX19.SingleLineColor = System.Drawing.Color.Transparent
+        Me.LabelX19.Size = New System.Drawing.Size(128, 23)
+        Me.LabelX19.TabIndex = 10016
+        Me.LabelX19.Text = "Bodega de origen"
+        '
+        'LabelX18
+        '
+        Me.LabelX18.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX18.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX18.ForeColor = System.Drawing.Color.Black
+        Me.LabelX18.Location = New System.Drawing.Point(3, 99)
+        Me.LabelX18.Name = "LabelX18"
+        Me.LabelX18.SingleLineColor = System.Drawing.Color.Transparent
+        Me.LabelX18.Size = New System.Drawing.Size(128, 23)
+        Me.LabelX18.TabIndex = 10015
+        Me.LabelX18.Text = "Proveedor estrella"
+        '
+        'Tab_ConexionExterna
+        '
+        Me.Tab_ConexionExterna.AttachedControl = Me.SuperTabControlPanel2
+        Me.Tab_ConexionExterna.GlobalItem = False
+        Me.Tab_ConexionExterna.Name = "Tab_ConexionExterna"
+        Me.Tab_ConexionExterna.Text = "Bod.Ext. Prov. Especial"
         '
         'SuperTabControlPanel5
         '
@@ -1954,7 +2252,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_RotMeses, 1, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_RotDias, 0, 0)
         Me.TableLayoutPanel3.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel3.Location = New System.Drawing.Point(603, 385)
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(717, 383)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
         Me.TableLayoutPanel3.RowCount = 1
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -2065,6 +2363,8 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Chk_Solo_Proveedores_CodAlternativo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Solo_Proveedores_CodAlternativo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Solo_Proveedores_CodAlternativo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Solo_Proveedores_CodAlternativo.FocusCuesEnabled = False
         Me.Chk_Solo_Proveedores_CodAlternativo.ForeColor = System.Drawing.Color.Black
         Me.Chk_Solo_Proveedores_CodAlternativo.Location = New System.Drawing.Point(274, 192)
         Me.Chk_Solo_Proveedores_CodAlternativo.Name = "Chk_Solo_Proveedores_CodAlternativo"
@@ -2124,7 +2424,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Chk_Incluir_Servicios.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Incluir_Servicios.Enabled = False
         Me.Chk_Incluir_Servicios.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Incluir_Servicios.Location = New System.Drawing.Point(602, 354)
+        Me.Chk_Incluir_Servicios.Location = New System.Drawing.Point(716, 352)
         Me.Chk_Incluir_Servicios.Name = "Chk_Incluir_Servicios"
         Me.Chk_Incluir_Servicios.Size = New System.Drawing.Size(170, 23)
         Me.Chk_Incluir_Servicios.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -2224,7 +2524,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         '
         Me.Chk_Sumar_Vta_Ult_Year.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Sumar_Vta_Ult_Year.CheckBoxImageChecked = CType(resources.GetObject("Chk_Sumar_Vta_Ult_Year.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Sumar_Vta_Ult_Year.Enabled = False
+        Me.Chk_Sumar_Vta_Ult_Year.FocusCuesEnabled = False
         Me.Chk_Sumar_Vta_Ult_Year.ForeColor = System.Drawing.Color.Black
         Me.Chk_Sumar_Vta_Ult_Year.Location = New System.Drawing.Point(14, 560)
         Me.Chk_Sumar_Vta_Ult_Year.Name = "Chk_Sumar_Vta_Ult_Year"
@@ -2284,12 +2586,14 @@ Partial Class Frm_00_Asis_Compra_Menu
         CType(Me.Dtp_Fecha_Vta_Hasta, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Input_Ultimos_Meses_Vta_Promedio, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.SuperTabControlPanel4.ResumeLayout(False)
         Me.SuperTabControlPanel6.ResumeLayout(False)
         Me.SuperTabControlPanel6.PerformLayout()
         CType(Me.Dtp_Fecha_Tope_Proveedores_Automaticos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel7.ResumeLayout(False)
         Me.TableLayoutPanel7.PerformLayout()
-        Me.SuperTabControlPanel4.ResumeLayout(False)
+        Me.SuperTabControlPanel2.ResumeLayout(False)
+        Me.Grupo_DbExt.ResumeLayout(False)
         Me.SuperTabControlPanel5.ResumeLayout(False)
         CType(Me.Input_Dias_Advertencia_Rotacion, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel7.ResumeLayout(False)
@@ -2428,4 +2732,17 @@ Partial Class Frm_00_Asis_Compra_Menu
     Friend WithEvents Chk_Incluir_Salidas_GDI_OT As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents HelpProvider1 As HelpProvider
     Friend WithEvents Chk_Sumar_Vta_Ult_Year As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents SuperTabControlPanel2 As DevComponents.DotNetBar.SuperTabControlPanel
+    Friend WithEvents LabelX17 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Btn_Buscar_ProvEspecial As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Txt_ProvEspecial As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Tab_ConexionExterna As DevComponents.DotNetBar.SuperTabItem
+    Friend WithEvents LabelX18 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_DbExt_Nombre_Conexion As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Txt_DbExt_NombreBod_Des As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX20 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_DbExt_NombreBod_Ori As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX19 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Chk_DbExt_SincronizarPRBD As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Grupo_DbExt As DevComponents.DotNetBar.Controls.GroupPanel
 End Class

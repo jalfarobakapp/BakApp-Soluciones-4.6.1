@@ -1,6 +1,8 @@
 ﻿Imports System.Drawing.Printing
 Imports System.IO
+Imports System.Threading
 Imports DevComponents.DotNetBar
+Imports HEFSIIREGCOMPRAVENTAS.LIB
 Imports Newtonsoft.Json.Linq
 
 Public Class Frm_Demonio_01
@@ -19,7 +21,6 @@ Public Class Frm_Demonio_01
     Dim _Tm_Solicitud_Productos_Bodega As Boolean
 
     Dim _Impresora_Prod_Sol_Bodega As String
-
     Dim _Formulario As Form
 
     Dim _Tbl_Filtro_Doc_Imprimir As DataTable
@@ -50,7 +51,8 @@ Public Class Frm_Demonio_01
         _Sw_Activar_Prestashop,
         _Sw_Activar_LibroDTESII,
         _Sw_Activar_Wordpress_Stock,
-        _Sw_Activar_Wordpress_Productos As Boolean
+        _Sw_Activar_Wordpress_Productos,
+        _Sw_Activar_Listas_Programacion As Boolean
 
     Dim _Prestashop_Ejecucion_Total As Boolean
 
@@ -62,7 +64,6 @@ Public Class Frm_Demonio_01
     Dim _Prestashop_Total_Ejecudato As Boolean
 
     Dim _Correos_Enviados, _Correos_Rechazados As Integer
-
     Dim _Row_Nom_Equipo As DataRow
 
     Dim _Input_Tiempo_Correo As Integer
@@ -77,6 +78,8 @@ Public Class Frm_Demonio_01
 
     Dim _Input_Tiempo_Wordpress_Stock As Integer
     Dim _Input_Tiempo_Wordpress_Productos As Integer
+
+    Dim _Input_Tiempo_Listas_Programacion As Integer
 
     Dim _Segundos_Correo As Integer
     Dim _Minutos_Correo As Integer
@@ -103,6 +106,9 @@ Public Class Frm_Demonio_01
     Dim _Segundos_RunMonitor As Integer
 
     Dim _Segundos_Archivador As Integer
+
+    Dim _Segundos_Listas_Programacion As Integer
+    Dim _Segundos_FacAuto As Integer
 
     Dim _Minimiza_Automatico As Boolean
     Dim _Cadena_Conexion_Poswii As String
@@ -165,10 +171,10 @@ Public Class Frm_Demonio_01
     Dim _Cl_Archivador As New Cl_Archivador
     Dim _Cl_Prestashop_Orders As New Cl_Prestashop_Orders
     Dim _Cl_LibroDTESII As New Cl_LibroDTESII
-
     Dim _Cl_Wordpress As New Cl_Wordpress
-
     Dim _Cl_Solicitud_Productos_Bodega As New Cl_Solicitud_Productos_Bodega
+    Dim _Cl_Listas_Programadas As New Cl_Listas_Programadas
+    Dim _Cl_FacAuto_NVV As New Cl_FacAuto_NVV
 
     Dim _Ejecutar_PrestaShop_Ordenes As Boolean
     Dim _Nro_Impresiones_Cerrar As Integer = 20
@@ -301,6 +307,8 @@ Public Class Frm_Demonio_01
 
     Public Sub Sb_Load()
 
+        Sb_Revisar_Estilo("")
+
         _Datos_Conf.Clear()
         _Datos_Conf.ReadXml(_Path & "\Config_Local.xml")
 
@@ -321,6 +329,8 @@ Public Class Frm_Demonio_01
         Switch_Wordpress_Stock.Value = NuloPorNro(_Fila.Item("Timer_Wordpress_Stock"), False)
         Switch_Wordpress_Prod.Value = NuloPorNro(_Fila.Item("Timer_Wordpress_Productos"), False)
         Switch_Cierre_Documentos.Value = NuloPorNro(_Fila.Item("Chk_Timer_CierreDoc"), False)
+        Switch_Listas_Programadas.Value = NuloPorNro(_Fila.Item("Timer_Listas_Programadas"), False)
+        Switch_FacAuto.Value = NuloPorNro(_Fila.Item("Timer_FacAuto"), False)
 
         _Cl_Archivador.Ruta_Archivador = NuloPorNro(_Fila.Item("Ruta_Archivador"), "")
 
@@ -380,6 +390,9 @@ Public Class Frm_Demonio_01
         _Segundos_Wordpress_Stock = 60
         _Minutos_Wordpress_Prod = (_Input_Tiempo_Wordpress_Productos / 1000 / 60) - 1
 
+        _Segundos_Listas_Programacion = 60
+        _Segundos_FacAuto = 60
+
         Dim _Hora_Cstock As DateTime
 
         _Hora_Cstock = NuloPorNro(_Fila.Item("Dtp_Cons_Stock_Hora_Ejecuion"), Now.ToString("HH:mm:ss"))
@@ -425,6 +438,8 @@ Public Class Frm_Demonio_01
         _Input_DiasOCI = NuloPorNro(_Fila.Item("Input_DiasOCI"), 1)
         _Input_DiasOCI = NuloPorNro(_Fila.Item("Input_DiasOCI"), 1)
 
+        _Cl_Correos.CantMmail = NuloPorNro(_Fila.Item("CantMail"), 30)
+
         _Prestashop_Ejecucion_Total = NuloPorNro(_Fila.Item("Chk_Prestashop_Ejecucion_Total"), False)
 
         If _Prestashop_Ejecucion_Total Then
@@ -436,6 +451,21 @@ Public Class Frm_Demonio_01
         End If
 
         _Ejecutar_PrestaShop_Ordenes = Switch_Prestashop_Ordenes.Value
+
+        _Cl_FacAuto_NVV.Modalidad_Fac = NuloPorNro(_Fila.Item("Txt_Modalidad_FacAuto"), "")
+        _Cl_FacAuto_NVV.Nombre_Equipo = _Nombre_Equipo
+        _Cl_FacAuto_NVV.Fac_Lunes = NuloPorNro(_Fila.Item("Chk_Fac_Lunes"), 0)
+        _Cl_FacAuto_NVV.Fac_Martes = NuloPorNro(_Fila.Item("Chk_Fac_Martes"), 0)
+        _Cl_FacAuto_NVV.Fac_Miercoles = NuloPorNro(_Fila.Item("Chk_Fac_Miercoles"), 0)
+        _Cl_FacAuto_NVV.Fac_Jueves = NuloPorNro(_Fila.Item("Chk_Fac_Jueves"), 0)
+        _Cl_FacAuto_NVV.Fac_Viernes = NuloPorNro(_Fila.Item("Chk_Fac_Viernes"), 0)
+        _Cl_FacAuto_NVV.Fac_Sabado = NuloPorNro(_Fila.Item("Chk_Fac_Sabado"), 0)
+        _Cl_FacAuto_NVV.Fac_Domingo = NuloPorNro(_Fila.Item("Chk_Fac_Domingo"), 0)
+
+        _Cl_FacAuto_NVV.FA_1Dia = NuloPorNro(_Fila.Item("Rdb_FA_1Dia"), 0)
+        _Cl_FacAuto_NVV.FA_1Semana = NuloPorNro(_Fila.Item("Rdb_FA_1Semana"), 0)
+        _Cl_FacAuto_NVV.FA_1Mes = NuloPorNro(_Fila.Item("Rdb_FA_1Mes"), 0)
+        _Cl_FacAuto_NVV.FA_1Todas = NuloPorNro(_Fila.Item("Rdb_FA_1Todas"), 0)
 
         AddHandler Switch_Monitoreo_doc_emitidos.ValueChanged, AddressOf Sb_Switch_DocEmitidos
         AddHandler Switch_Correos.ValueChanged, AddressOf Sb_Switch_Correo
@@ -476,6 +506,8 @@ Public Class Frm_Demonio_01
         Circular_Cons_Stock.IsRunning = Switch_Cons_Stock.Value
         CircularPicking.IsRunning = Switch_Picking.Value
         CircularLibroDTESII.IsRunning = Switch_LibroDTESII.Value
+        CircularListasProgramadas.IsRunning = Switch_Listas_Programadas.Value
+        CircularFacAuto.IsRunning = Switch_FacAuto.Value
 
         PicBox_Archivador.Enabled = Switch_Archivador.Value
         PicBox_Cola_Impresion.Enabled = Switch_Cola_Impresion.Value
@@ -486,6 +518,7 @@ Public Class Frm_Demonio_01
         PicBox_Imprimir_Picking.Enabled = Switch_Picking.Value
         PicBox_Prestashop.Enabled = Switch_Prestashop.Value
         PicBox_Sol_Prod_Bodega.Enabled = Switch_Solicitud_Productos_Bodega.Value
+        PictureBox7.Enabled = Switch_FacAuto.Value
 
         Lbl_Archivador.Enabled = Switch_Archivador.Value
         Lbl_Cola_Impresion.Enabled = Switch_Cola_Impresion.Value
@@ -498,6 +531,7 @@ Public Class Frm_Demonio_01
         Lbl_Prestashop_Ordenes.Enabled = Switch_Prestashop_Ordenes.Value
 
         Lbl_Sol_Prod_Bodega.Enabled = Switch_Solicitud_Productos_Bodega.Value
+        Lbl_FacAuto.Enabled = Switch_FacAuto.Value
 
         Lbl_Wordpress_productos.Enabled = Switch_Wordpress_Prod.Value
         Lbl_Wordpress_Stock_Precios.Enabled = Switch_Wordpress_Stock.Value
@@ -1246,6 +1280,8 @@ Public Class Frm_Demonio_01
             End If
         End If
 
+        Lbl_Segundos_FacAuto.Visible = Switch_FacAuto.Value
+
         ' EMPIEZAN LOS PROCEDIMIENTOS
 
 #Region "CONSOLIDACION DE STOCK"
@@ -1263,7 +1299,7 @@ Public Class Frm_Demonio_01
                 If _Hora = Lbl_Hora_Consolid_Stock.Text Then
 
                     If Not _Cons_Ejecudato Then
-                        Sb_Procedimiento_Consolidar_Stock()
+                        Sb_Procedimiento_Consolidar_Stock(_Rdb_Cons_Stock_Todos, _Rdb_Cons_Stock_Mov_Hoy)
                         _Cons_Ejecudato = True
                     End If
 
@@ -1514,15 +1550,17 @@ Public Class Frm_Demonio_01
 
             If _Minutos_Prestashop = 0 And _Segundos_Prestashop = 0 Then
 
-                Sb_Actualizar_Fecha()
+                ' Consolidar el stock de los productos antes de actualizar
+                Sb_Procedimiento_Consolidar_Stock(False, True)
 
-                Sb_Pausar(_Pausa.Pausa)
+                Sb_Actualizar_Fecha()
 
                 _Cl_Prestashop_Web.Fecha_Revision = DtpFecharevision.Value
 
+                Sb_Pausar(_Pausa.Pausa)
+
                 _Cl_Prestashop_Web.Sb_Procedimiento_Prestashop()
                 _Cl_Prestashop_Web.Sb_Procedimiento_Prestashop3()
-                '_Cl_Prestashop_Web.Sb_Procedimiento_Prestashop2(False)
 
                 Sb_Pausar(_Pausa.Play)
 
@@ -1611,6 +1649,13 @@ Public Class Frm_Demonio_01
 
             If _Minutos_LibroDTESII = 0 And _Segundos_LibroDTESII = 0 Then
 
+                Sb_Pausar(_Pausa.Pausa)
+
+                Dim Fm As New Frm_Recibir_Correos_DTE
+                Fm.ActivacionAutomatica = True
+                Fm.ShowDialog(Me)
+                Fm.Dispose()
+
                 Sb_Actualizar_Fecha()
 
                 Dim _Fecha As Date = DtpFecharevision.Value
@@ -1628,7 +1673,59 @@ Public Class Frm_Demonio_01
                     _Contador_Reenvio_Firmas_DTE = 0
                 End If
 
-                _Cl_LibroDTESII.Sb_Iniciar(_Periodo, _Mes, _Libro_Bajado, _Reenviar_Documentos_al_SII)
+                '_Cl_LibroDTESII.Sb_Iniciar(_Periodo, _Mes, _Libro_Bajado, _Reenviar_Documentos_al_SII)
+
+                Dim _Clas_Hefesto_Dte_Libro As New Clas_Hefesto_Dte_Libro
+
+                'Dim _RecuperarResumenVentasRegistro As HefRespuesta
+                'Dim _RecuperarVentasRegistro As HefRespuesta
+                'Dim _RecuperarResumenCompras As HefRespuesta
+                Dim _RecuperarComprasRegistro As HefRespuesta
+                Dim _RecuperarComprasPendientes As HefRespuesta
+                'Dim _RecuperarComprasNoIncluir As HefRespuesta
+                'Dim _RecuperarComprasReclamadas As HefRespuesta
+
+                Lbl_LibroDTESII.Text = "Recuperando los registros de compras desde el SII..."
+                Application.DoEvents()
+
+                _RecuperarComprasRegistro = _Clas_Hefesto_Dte_Libro.Fx_RecuperarComprasRegistro(_Periodo, _Mes)
+                Thread.Sleep(2000)
+                Lbl_LibroDTESII.Text = "Es correcto: " & _RecuperarComprasRegistro.EsCorrecto
+                Application.DoEvents()
+                Thread.Sleep(2000)
+                Lbl_LibroDTESII.Text = "Mensaje    : " & _RecuperarComprasRegistro.Mensaje
+                Application.DoEvents()
+
+                _RecuperarComprasPendientes = _Clas_Hefesto_Dte_Libro.Fx_RecuperarComprasPendientes(_Periodo, _Mes)
+                Thread.Sleep(2000)
+                Lbl_LibroDTESII.Text = "Es correcto: " & _RecuperarComprasPendientes.EsCorrecto
+                Application.DoEvents()
+                Thread.Sleep(2000)
+                Lbl_LibroDTESII.Text = "Mensaje    : " & _RecuperarComprasPendientes.Mensaje
+                Application.DoEvents()
+
+                If _RecuperarComprasRegistro.EsCorrecto And _RecuperarComprasPendientes.EsCorrecto Then
+
+                    Dim _Fichero1 As String = File.ReadAllText(_RecuperarComprasRegistro.Directorio)
+                    Dim _Fichero2 As String = File.ReadAllText(_RecuperarComprasPendientes.Directorio)
+
+                    Dim _Tbl_Registro_Compras As DataTable = Fx_TblFromJson(_Fichero1, "RegistroCompras")
+                    Dim _Tbl_Registro_Compras_Pendientes As DataTable = Fx_TblFromJson(_Fichero2, "RegistroComprasPendientes")
+
+                    _Clas_Hefesto_Dte_Libro.Estatus = Lbl_LibroDTESII
+
+                    Thread.Sleep(2000)
+
+                    _Clas_Hefesto_Dte_Libro.Fx_Importar_Archivo_SII_Compras_Desde_Json(_Tbl_Registro_Compras,
+                                                                                  _Tbl_Registro_Compras_Pendientes,
+                                                                                  _Periodo, _Mes)
+
+                    Lbl_LibroDTESII.Text = "Monitoreo Libro DTE desde SII"
+                Else
+                    Lbl_LibroDTESII.Text = "Problema al descargar los archivos desde el SII"
+                End If
+
+                Sb_Pausar(_Pausa.Play)
 
                 _Minutos_LibroDTESII = (_Input_Tiempo_LibroDTESII / 1000 / 60) - 1
                 _Segundos_LibroDTESII = 59
@@ -1863,6 +1960,8 @@ Public Class Frm_Demonio_01
 
 #End Region
 
+#Region "POSWII Solo Ferreteria Ohiggins"
+
         Lbl_Segundos_Poswii.Visible = Switch_Poswii.Value
 
         If Switch_Poswii.Value Then _Segundos_Poswii -= 1
@@ -1883,6 +1982,75 @@ Public Class Frm_Demonio_01
             _Segundos_Minimiza_Automatico = 60 * 5
             Me.WindowState = FormWindowState.Minimized
         End If
+
+#End Region
+
+#Region "LISTAS DE PRECIO PROGRAMADAS"
+
+        If Switch_Listas_Programadas.Value Then
+
+            _Segundos_Listas_Programacion -= 1
+
+            If _Segundos_Listas_Programacion < 0 Then '_Hora.Contains(":00") Then
+
+                Sb_Pausar(_Pausa.Pausa)
+
+                _Cl_Listas_Programadas.Sb_Grabar_Listas_Programadas(DtpFecharevision.Value)
+
+                Sb_Pausar(_Pausa.Play)
+
+                _Segundos_Listas_Programacion = 60
+
+            End If
+
+            Lbl_Segundos_Listas_Programadas.Text = _Segundos_Listas_Programacion
+
+        End If
+
+#End Region
+
+#Region "FACTURAR AUTOMATICAMENTE"
+
+        If Switch_FacAuto.Value Then
+
+            _Segundos_FacAuto -= 1
+
+            If _Segundos_FacAuto < 0 Then
+
+                If (_Dia = DayOfWeek.Monday And _Cl_FacAuto_NVV.Fac_Lunes) Or
+                   (_Dia = DayOfWeek.Tuesday And _Cl_FacAuto_NVV.Fac_Martes) Or
+                   (_Dia = DayOfWeek.Wednesday And _Cl_FacAuto_NVV.Fac_Miercoles) Or
+                   (_Dia = DayOfWeek.Thursday And _Cl_FacAuto_NVV.Fac_Jueves) Or
+                   (_Dia = DayOfWeek.Friday And _Cl_FacAuto_NVV.Fac_Viernes) Or
+                   (_Dia = DayOfWeek.Saturday And _Cl_FacAuto_NVV.Fac_Sabado) Or
+                   (_Dia = DayOfWeek.Sunday And _Cl_FacAuto_NVV.Fac_Domingo) Then
+
+                    Sb_Pausar(_Pausa.Pausa)
+
+                    _Cl_FacAuto_NVV.Fecha_Revision = DtpFecharevision.Value
+                    _Cl_FacAuto_NVV.Nombre_Equipo = _Nombre_Equipo
+                    _Cl_FacAuto_NVV.Sb_Traer_NVV_A_Facturar()
+                    _Cl_FacAuto_NVV.Sb_Facturar_Automaticamente_NVV(Me, Lbl_FacAuto)
+
+                    Lbl_FacAuto.Text = "Generar facturas automáticamente"
+
+                    Sb_Pausar(_Pausa.Play)
+
+                End If
+
+                _Segundos_FacAuto = 60
+
+            End If
+
+            Lbl_Segundos_FacAuto.Text = _Segundos_FacAuto
+
+        Else
+
+            _Segundos_FacAuto = 60
+
+        End If
+
+#End Region
 
     End Sub
 
@@ -3231,7 +3399,8 @@ Fin:
 
     'End Sub
 
-    Sub Sb_Procedimiento_Consolidar_Stock()
+    Sub Sb_Procedimiento_Consolidar_Stock(_Rdb_Cons_Stock_Todos As Boolean,
+                                          _Rdb_Cons_Stock_Mov_Hoy As Boolean)
 
         Timer_Hora_Actual.Stop()
 
@@ -3263,10 +3432,8 @@ Fin:
                            "Or KOPR In (Select KOPRCT From MAEDDO Ddo Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO " &
                            "Where CONVERT(varchar,LAHORA,112) = '" & _Fecha & "'))"
 
-            'Consulta_sql = "SELECT KOPR AS 'Codigo', NOKOPR AS 'Descripcion' FROM MAEPR" & vbCrLf &
-            '               "WHERE ATPR = '' AND TIPR = 'FPN' AND" & Space(1) &
-            '               "KOPR IN (SELECT Distinct KOPRCT FROM MAEDDO WHERE FEEMLI = '" & _Fecha & "')"
-
+            'ElseIf _ProdPrestashop Then
+            '    Consulta_sql = "Select Distinct Codigo From " & _Global_BaseBk & "Zw_Prod_PrestaShop"
         End If
 
         _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -4268,5 +4435,6 @@ Fin:
         Sb_Pausar(_Pausa.Pausa)
 
     End Sub
+
 
 End Class

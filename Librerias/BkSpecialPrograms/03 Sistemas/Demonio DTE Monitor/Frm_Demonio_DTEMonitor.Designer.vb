@@ -39,7 +39,13 @@ Partial Class Frm_Demonio_DTEMonitor
         Me.Txt_Log = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Timer_Minimizar = New System.Windows.Forms.Timer(Me.components)
         Me.Chk_MostrarBoletaBkHfDOS = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_FirmarDocumentos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Chk_EnviarCorreos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_ConsultarTrackid = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_EnviarDTE = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TableLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'CircularPgrs
@@ -51,7 +57,7 @@ Partial Class Frm_Demonio_DTEMonitor
         '
         Me.CircularPgrs.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.CircularPgrs.Enabled = False
-        Me.CircularPgrs.Location = New System.Drawing.Point(617, 15)
+        Me.CircularPgrs.Location = New System.Drawing.Point(714, 15)
         Me.CircularPgrs.Name = "CircularPgrs"
         Me.CircularPgrs.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Dot
         Me.CircularPgrs.ProgressColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
@@ -79,9 +85,9 @@ Partial Class Frm_Demonio_DTEMonitor
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Limpiar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 396)
+        Me.Bar1.Location = New System.Drawing.Point(0, 478)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(662, 41)
+        Me.Bar1.Size = New System.Drawing.Size(759, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 64
@@ -111,9 +117,9 @@ Partial Class Frm_Demonio_DTEMonitor
         Me.Metro_Bar_Color.ForeColor = System.Drawing.Color.Black
         Me.Metro_Bar_Color.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Estatus})
         Me.Metro_Bar_Color.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 437)
+        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 519)
         Me.Metro_Bar_Color.Name = "Metro_Bar_Color"
-        Me.Metro_Bar_Color.Size = New System.Drawing.Size(662, 22)
+        Me.Metro_Bar_Color.Size = New System.Drawing.Size(759, 22)
         Me.Metro_Bar_Color.TabIndex = 71
         Me.Metro_Bar_Color.Text = "MetroStatusBar1"
         '
@@ -150,12 +156,15 @@ Partial Class Frm_Demonio_DTEMonitor
         '
         '
         Me.Chk_AmbienteCertificacion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_AmbienteCertificacion.CheckBoxImageChecked = CType(resources.GetObject("Chk_AmbienteCertificacion.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_AmbienteCertificacion.Enabled = False
-        Me.Chk_AmbienteCertificacion.Location = New System.Drawing.Point(12, 370)
+        Me.Chk_AmbienteCertificacion.FocusCuesEnabled = False
+        Me.Chk_AmbienteCertificacion.Location = New System.Drawing.Point(4, 4)
         Me.Chk_AmbienteCertificacion.Name = "Chk_AmbienteCertificacion"
-        Me.Chk_AmbienteCertificacion.Size = New System.Drawing.Size(264, 23)
+        Me.Chk_AmbienteCertificacion.Size = New System.Drawing.Size(325, 13)
         Me.Chk_AmbienteCertificacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_AmbienteCertificacion.TabIndex = 72
+        Me.Chk_AmbienteCertificacion.TabStop = False
         Me.Chk_AmbienteCertificacion.Text = "Trabajar en Ambiente de Certificación (pruebas)"
         '
         'Txt_Log
@@ -176,7 +185,7 @@ Partial Class Frm_Demonio_DTEMonitor
         Me.Txt_Log.Name = "Txt_Log"
         Me.Txt_Log.PreventEnterBeep = True
         Me.Txt_Log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.Txt_Log.Size = New System.Drawing.Size(640, 320)
+        Me.Txt_Log.Size = New System.Drawing.Size(737, 321)
         Me.Txt_Log.TabIndex = 73
         '
         'Timer_Minimizar
@@ -191,36 +200,140 @@ Partial Class Frm_Demonio_DTEMonitor
         '
         '
         Me.Chk_MostrarBoletaBkHfDOS.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_MostrarBoletaBkHfDOS.Location = New System.Drawing.Point(269, 370)
+        Me.Chk_MostrarBoletaBkHfDOS.Location = New System.Drawing.Point(807, 330)
         Me.Chk_MostrarBoletaBkHfDOS.Name = "Chk_MostrarBoletaBkHfDOS"
         Me.Chk_MostrarBoletaBkHfDOS.Size = New System.Drawing.Size(224, 23)
         Me.Chk_MostrarBoletaBkHfDOS.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_MostrarBoletaBkHfDOS.TabIndex = 74
         Me.Chk_MostrarBoletaBkHfDOS.Text = "Mostrar ejecución BoletaBkHf (MS-DOS)"
         '
+        'Chk_FirmarDocumentos
+        '
+        Me.Chk_FirmarDocumentos.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        '
+        '
+        '
+        Me.Chk_FirmarDocumentos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_FirmarDocumentos.CheckBoxImageChecked = CType(resources.GetObject("Chk_FirmarDocumentos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_FirmarDocumentos.Checked = True
+        Me.Chk_FirmarDocumentos.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_FirmarDocumentos.CheckValue = "Y"
+        Me.Chk_FirmarDocumentos.FocusCuesEnabled = False
+        Me.Chk_FirmarDocumentos.Location = New System.Drawing.Point(4, 24)
+        Me.Chk_FirmarDocumentos.Name = "Chk_FirmarDocumentos"
+        Me.Chk_FirmarDocumentos.Size = New System.Drawing.Size(325, 13)
+        Me.Chk_FirmarDocumentos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_FirmarDocumentos.TabIndex = 75
+        Me.Chk_FirmarDocumentos.TabStop = False
+        Me.Chk_FirmarDocumentos.Text = "Firmar documentos"
+        '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel1.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
+        Me.TableLayoutPanel1.ColumnCount = 1
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.Chk_EnviarCorreos, 0, 4)
+        Me.TableLayoutPanel1.Controls.Add(Me.Chk_ConsultarTrackid, 0, 3)
+        Me.TableLayoutPanel1.Controls.Add(Me.Chk_EnviarDTE, 0, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.Chk_AmbienteCertificacion, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Chk_FirmarDocumentos, 0, 1)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(12, 371)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 5
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(333, 104)
+        Me.TableLayoutPanel1.TabIndex = 77
+        '
+        'Chk_EnviarCorreos
+        '
+        Me.Chk_EnviarCorreos.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        '
+        '
+        '
+        Me.Chk_EnviarCorreos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EnviarCorreos.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnviarCorreos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EnviarCorreos.Checked = True
+        Me.Chk_EnviarCorreos.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_EnviarCorreos.CheckValue = "Y"
+        Me.Chk_EnviarCorreos.FocusCuesEnabled = False
+        Me.Chk_EnviarCorreos.Location = New System.Drawing.Point(4, 84)
+        Me.Chk_EnviarCorreos.Name = "Chk_EnviarCorreos"
+        Me.Chk_EnviarCorreos.Size = New System.Drawing.Size(325, 16)
+        Me.Chk_EnviarCorreos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EnviarCorreos.TabIndex = 80
+        Me.Chk_EnviarCorreos.TabStop = False
+        Me.Chk_EnviarCorreos.Text = "Enviar correos"
+        '
+        'Chk_ConsultarTrackid
+        '
+        Me.Chk_ConsultarTrackid.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        '
+        '
+        '
+        Me.Chk_ConsultarTrackid.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_ConsultarTrackid.CheckBoxImageChecked = CType(resources.GetObject("Chk_ConsultarTrackid.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_ConsultarTrackid.Checked = True
+        Me.Chk_ConsultarTrackid.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_ConsultarTrackid.CheckValue = "Y"
+        Me.Chk_ConsultarTrackid.FocusCuesEnabled = False
+        Me.Chk_ConsultarTrackid.Location = New System.Drawing.Point(4, 64)
+        Me.Chk_ConsultarTrackid.Name = "Chk_ConsultarTrackid"
+        Me.Chk_ConsultarTrackid.Size = New System.Drawing.Size(325, 13)
+        Me.Chk_ConsultarTrackid.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_ConsultarTrackid.TabIndex = 79
+        Me.Chk_ConsultarTrackid.TabStop = False
+        Me.Chk_ConsultarTrackid.Text = "Consultar TrackId"
+        '
+        'Chk_EnviarDTE
+        '
+        Me.Chk_EnviarDTE.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        '
+        '
+        '
+        Me.Chk_EnviarDTE.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EnviarDTE.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnviarDTE.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EnviarDTE.Checked = True
+        Me.Chk_EnviarDTE.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_EnviarDTE.CheckValue = "Y"
+        Me.Chk_EnviarDTE.FocusCuesEnabled = False
+        Me.Chk_EnviarDTE.Location = New System.Drawing.Point(4, 44)
+        Me.Chk_EnviarDTE.Name = "Chk_EnviarDTE"
+        Me.Chk_EnviarDTE.Size = New System.Drawing.Size(325, 13)
+        Me.Chk_EnviarDTE.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EnviarDTE.TabIndex = 78
+        Me.Chk_EnviarDTE.TabStop = False
+        Me.Chk_EnviarDTE.Text = "Enviar DTE"
+        '
         'Frm_Demonio_DTEMonitor
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(662, 459)
+        Me.ClientSize = New System.Drawing.Size(759, 541)
         Me.Controls.Add(Me.Chk_MostrarBoletaBkHfDOS)
         Me.Controls.Add(Me.Txt_Log)
-        Me.Controls.Add(Me.Chk_AmbienteCertificacion)
         Me.Controls.Add(Me.CircularPgrs)
         Me.Controls.Add(Me.Lbl_Nombre_Equipo)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.Metro_Bar_Color)
+        Me.Controls.Add(Me.TableLayoutPanel1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
         Me.MaximizeBox = False
-        Me.MaximumSize = New System.Drawing.Size(678, 498)
-        Me.MinimumSize = New System.Drawing.Size(501, 299)
+        Me.MaximumSize = New System.Drawing.Size(775, 580)
+        Me.MinimumSize = New System.Drawing.Size(501, 402)
         Me.Name = "Frm_Demonio_DTEMonitor"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MetroForm"
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -239,4 +352,9 @@ Partial Class Frm_Demonio_DTEMonitor
     Friend WithEvents Txt_Log As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Timer_Minimizar As Timer
     Friend WithEvents Chk_MostrarBoletaBkHfDOS As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_FirmarDocumentos As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents Chk_EnviarCorreos As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_ConsultarTrackid As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_EnviarDTE As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

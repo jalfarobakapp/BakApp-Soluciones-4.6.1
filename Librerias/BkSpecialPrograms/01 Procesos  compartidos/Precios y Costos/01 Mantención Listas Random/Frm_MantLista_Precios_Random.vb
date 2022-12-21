@@ -410,7 +410,7 @@ Public Class Frm_MantLista_Precios_Random
 
         Dim _Filtro_Listas As String = Generar_Filtro_IN(_Tbl_Listas_Seleccionadas, "", "KOLT", False, False, "'")
 
-        Dim _Sql_Filtro_Condicion_Extra = "And TIPR = 'FPN' And KOPR In (Select KOPR From TABPRE Where KOLT In " & _Filtro_Listas & ")"
+        Dim _Sql_Filtro_Condicion_Extra = "And KOPR In (Select KOPR From TABPRE Where KOLT In " & _Filtro_Listas & ")"
 
         If Rdb_Traer_No_Bloqueados.Checked Then
             _Sql_Filtro_Condicion_Extra += Rdb_Traer_No_Bloqueados.Tag.ToString
@@ -1472,26 +1472,28 @@ Public Class Frm_MantLista_Precios_Random
     End Sub
 
     Private Sub BtnGrabar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnGrabar.Click
+        'ShowContextMenu(Menu_Contextual_Grabar)
 
         If CBool(Grilla.Rows.Count) Then
 
-            If Fx_Tiene_Permiso(Me, "Pre0011") Then
+            If Not Fx_Tiene_Permiso(Me, "Pre0011") Then
+                Return
+            End If
 
-                Sb_Habilitar_Deshabilitar_Comandos(False, False)
+            Sb_Habilitar_Deshabilitar_Comandos(False, False)
 
-                Dim _Campos_Adicionales = String.Empty
+            Dim _Campos_Adicionales = String.Empty
 
-                For _i = 28 To _TblTabpre.Columns.Count - 1
+            For _i = 28 To _TblTabpre.Columns.Count - 1
 
-                    Dim _Columna As DataColumn = _TblTabpre.Columns(_i)
-                    Dim _CA As String = _Columna.ColumnName
-                    Dim _Fx_CA As String ' Formula Campo Adicional
+                Dim _Columna As DataColumn = _TblTabpre.Columns(_i)
+                Dim _CA As String = _Columna.ColumnName
 
-                    _Campos_Adicionales += "TABPRE." & _CA & " = Tbl." & _CA & "," & vbCrLf
+                _Campos_Adicionales += "TABPRE." & _CA & " = Tbl." & _CA & "," & vbCrLf
 
-                Next
+            Next
 
-                Consulta_sql = "
+            Consulta_sql = "
                                 Update TABPRE Set 
                                 TABPRE.PP01UD = Tbl.PP01UD,
                                 TABPRE.MG01UD = Tbl.MG01UD,
@@ -1507,26 +1509,24 @@ Public Class Frm_MantLista_Precios_Random
                                     Left Outer Join TABPRE ON Tbl.KOLT = TABPRE.KOLT AND Tbl.KOPR = TABPRE.KOPR
                                 Where Tbl.Editado = 1"
 
-                If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+            If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
-                    Dim _Editados = _Sql.Fx_Cuenta_Registros(_Nombre_Tbl_Paso_Precios, "Editado = 1")
+                Dim _Editados = _Sql.Fx_Cuenta_Registros(_Nombre_Tbl_Paso_Precios, "Editado = 1")
 
-                    Consulta_sql = "Update " & _Nombre_Tbl_Paso_Precios & " Set Editado = 0"
-                    _Sql.Ej_consulta_IDU(Consulta_sql)
+                Consulta_sql = "Update " & _Nombre_Tbl_Paso_Precios & " Set Editado = 0"
+                _Sql.Ej_consulta_IDU(Consulta_sql)
 
-                    MessageBoxEx.Show(Me, FormatNumber(_Editados, 0) & " registro(s) actualizado(s) correctamente", "Actualizar Precios",
+                MessageBoxEx.Show(Me, FormatNumber(_Editados, 0) & " registro(s) actualizado(s) correctamente", "Actualizar Precios",
                                       MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                    If _Cerrar_Al_Grabar Then
-                        _Grabacion_Realizada = True
-                        Me.Close()
-                    End If
-
+                If _Cerrar_Al_Grabar Then
+                    _Grabacion_Realizada = True
+                    Me.Close()
                 End If
 
-                Sb_Habilitar_Deshabilitar_Comandos(True, False)
-
             End If
+
+            Sb_Habilitar_Deshabilitar_Comandos(True, False)
 
         Else
             Beep()
@@ -1717,6 +1717,7 @@ Public Class Frm_MantLista_Precios_Random
         Sb_Limpiar()
 
         Dim Fm As New Frm_Importar_Desde_Excel(_Nombre_Tbl_Paso_Precios, _Tbl_Listas_Seleccionadas)
+        Fm.Lista_Campos_Adicionales = _Lista_Campos_Adicionales
         Fm.ShowDialog(Me)
 
         If Fm.Pro_Limpiar Then
@@ -1935,4 +1936,11 @@ Public Class Frm_MantLista_Precios_Random
 
     End Sub
 
+    Private Sub Btn_Grabar_Inmediatamente_Click(sender As Object, e As EventArgs) Handles Btn_Grabar_Inmediatamente.Click
+
+    End Sub
+
+    Private Sub Btn_Grabar_Futuro_Click(sender As Object, e As EventArgs) Handles Btn_Grabar_Futuro.Click
+
+    End Sub
 End Class

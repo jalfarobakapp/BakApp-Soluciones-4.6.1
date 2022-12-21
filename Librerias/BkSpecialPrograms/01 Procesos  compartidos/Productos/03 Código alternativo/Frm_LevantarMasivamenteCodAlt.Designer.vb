@@ -113,6 +113,7 @@ Partial Class Frm_LevantarMasivamenteCodAlt
         '
         Me.Rdb_CodigoQR.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_CodigoQR.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_CodigoQR.FocusCuesEnabled = False
         Me.Rdb_CodigoQR.ForeColor = System.Drawing.Color.Black
         Me.Rdb_CodigoQR.Location = New System.Drawing.Point(290, 4)
         Me.Rdb_CodigoQR.Name = "Rdb_CodigoQR"
@@ -132,6 +133,7 @@ Partial Class Frm_LevantarMasivamenteCodAlt
         Me.Rdb_CodigoDeBarras.Checked = True
         Me.Rdb_CodigoDeBarras.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_CodigoDeBarras.CheckValue = "Y"
+        Me.Rdb_CodigoDeBarras.FocusCuesEnabled = False
         Me.Rdb_CodigoDeBarras.ForeColor = System.Drawing.Color.Black
         Me.Rdb_CodigoDeBarras.Location = New System.Drawing.Point(4, 4)
         Me.Rdb_CodigoDeBarras.Name = "Rdb_CodigoDeBarras"
@@ -151,6 +153,7 @@ Partial Class Frm_LevantarMasivamenteCodAlt
         Me.Chk_Primera_Fila_Es_encabezado.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_Primera_Fila_Es_encabezado.CheckValue = "Y"
         Me.Chk_Primera_Fila_Es_encabezado.Enabled = False
+        Me.Chk_Primera_Fila_Es_encabezado.FocusCuesEnabled = False
         Me.Chk_Primera_Fila_Es_encabezado.ForeColor = System.Drawing.Color.Black
         Me.Chk_Primera_Fila_Es_encabezado.Location = New System.Drawing.Point(3, 89)
         Me.Chk_Primera_Fila_Es_encabezado.Name = "Chk_Primera_Fila_Es_encabezado"
@@ -197,6 +200,7 @@ Partial Class Frm_LevantarMasivamenteCodAlt
         '
         '
         Me.Circular_Progres_Porc.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Circular_Progres_Porc.FocusCuesEnabled = False
         Me.Circular_Progres_Porc.Location = New System.Drawing.Point(63, 14)
         Me.Circular_Progres_Porc.Name = "Circular_Progres_Porc"
         Me.Circular_Progres_Porc.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
@@ -224,6 +228,7 @@ Partial Class Frm_LevantarMasivamenteCodAlt
         '
         '
         Me.Circular_Progres_Val.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Circular_Progres_Val.FocusCuesEnabled = False
         Me.Circular_Progres_Val.Location = New System.Drawing.Point(3, 14)
         Me.Circular_Progres_Val.Name = "Circular_Progres_Val"
         Me.Circular_Progres_Val.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut

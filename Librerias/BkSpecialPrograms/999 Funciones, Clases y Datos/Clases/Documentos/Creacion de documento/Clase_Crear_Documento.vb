@@ -351,7 +351,7 @@ Public Class Clase_Crear_Documento
                 _Feulvedo = Format(.Item("FechaUltVencimiento"), "yyyyMMdd")
 
                 _Feer = Format(.Item("FechaRecepcion"), "yyyyMMdd")
-                _Feerli = Format(.Item("FechaRecepcion"), "yyyyMMdd")
+                '_Feerli = Format(.Item("FechaRecepcion"), "yyyyMMdd")
 
                 _Libro = .Item("Libro")
                 _Fecha_Tributaria = .Item("Fecha_Tributaria")
@@ -3405,10 +3405,19 @@ Public Class Clase_Crear_Documento
 
                 Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Casi_DocArc Set Id_DocEnc = " & _Id_DocEnc & ",En_Construccion = 0,NombreEquipo = '' Where NombreEquipo = '" & _NombreEquipo & "'"
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Casi_DocArc (Id_DocEnc,Nombre_Archivo,Archivo,Fecha,CodFuncionario,En_Construccion," &
+                               "NombreEquipo,Idmaeedo)" & vbCrLf &
+                               "Select " & _Id_DocEnc & ",Nombre_Archivo,Archivo,Fecha,CodFuncionario,0,'',Idmaeedo" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_Casi_DocArc" & vbCrLf &
+                               "Where NombreEquipo = '" & _NombreEquipo & "'"
                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                 Comando.Transaction = myTrans
                 Comando.ExecuteNonQuery()
+
+                'Consulta_sql = "Update " & _Global_BaseBk & "Zw_Casi_DocArc Set Id_DocEnc = " & _Id_DocEnc & ",En_Construccion = 0,NombreEquipo = '' Where NombreEquipo = '" & _NombreEquipo & "'"
+                'Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                'Comando.Transaction = myTrans
+                'Comando.ExecuteNonQuery()
 
             End If
 

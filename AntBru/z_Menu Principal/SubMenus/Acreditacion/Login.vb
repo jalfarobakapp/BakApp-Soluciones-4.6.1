@@ -144,6 +144,8 @@ Public Class Login
 
             If _Global_Sesion Then
 
+                'Sb_Revisar_Estilo("")
+
                 Dim Frm_Modalidad As New Frm_Modalidades(False)
                 Frm_Modalidad.ShowDialog(Me)
                 Frm_Modalidad.Dispose()

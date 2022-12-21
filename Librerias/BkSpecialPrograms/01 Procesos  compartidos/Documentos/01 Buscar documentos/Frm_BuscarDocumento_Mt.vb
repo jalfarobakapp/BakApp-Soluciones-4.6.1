@@ -203,6 +203,8 @@ Public Class Frm_BuscarDocumento_Mt
 
         Tiempo_Cerrar_Documentos_Automaticamente.Enabled = Cerrar_Documentos_Automaticamente
 
+        Btn_CopiarDocOtrEmpresa.Visible = (RutEmpresa = "77458040-9" Or RutEmpresa = "07251245-6" Or RutEmpresa = "77634877-5" Or RutEmpresa = "77634879-1")
+
     End Sub
 
     Public Sub Sb_Llenar_Grilla(ByVal Sql_Query As String)
@@ -667,6 +669,10 @@ Public Class Frm_BuscarDocumento_Mt
 
         Dim Crea_Htm As New Clase_Crear_Documento_Htm
         Dim _Ruta As String = AppPath() & "\Data\" & RutEmpresa & "\Tmp"
+
+        If Not IO.Directory.Exists(_Ruta) Then
+            System.IO.Directory.CreateDirectory(_Ruta)
+        End If
 
         Sb_Enviar_Doc_Por_Mail(_IdMaeedo_Doc, _Email_Para, "Estimados.", "", Me)
 
@@ -1513,4 +1519,54 @@ Public Class Frm_BuscarDocumento_Mt
 
     End Sub
 
+    Private Sub Btn_CopiarDocOtrEmpresa_Click(sender As Object, e As EventArgs) Handles Btn_CopiarDocOtrEmpresa.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
+        Dim _Tido As String = _Fila.Cells("TIDO").Value
+        Dim _Nudo As String = _Fila.Cells("NUDO").Value
+
+        Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbOCC_Nuevas = 1"
+        Dim _Tbl_DnExt As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+
+        If Not CBool(_Tbl_DnExt.Rows.Count) Then
+            MessageBoxEx.Show(Me, "No existen conexiones a otras bases de datos para poder hacer esta gestión", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        For Each _Fl_Emp As DataRow In _Tbl_DnExt.Rows
+
+            Dim _Id_Conexion = _Fl_Emp.Item("Id")
+
+            Dim _Respuesta As New Bk_ExpotarDoc.Respuesta
+
+            Me.Cursor = Cursors.WaitCursor
+
+            Dim _Cl_ExportarDoc As New Bk_ExpotarDoc.Cl_ExpotarDoc
+            _Respuesta = _Cl_ExportarDoc.Fx_Importar_Documento(_Idmaeedo, _Id_Conexion, True, Modalidad)
+
+            Me.Cursor = Cursors.Default
+
+            Dim _Msg As String
+
+            For Each _Inf As String In _Respuesta.Mensajes
+                _Msg += vbCrLf & _Inf
+            Next
+
+            Dim _Empresa = _Respuesta.RowEmpresa.Item("EMPRESA")
+            Dim _Razon = _Respuesta.RowEmpresa.Item("RAZON")
+
+            If _Respuesta.EsCorrecto Then
+                MessageBoxEx.Show(Me, "Se grabo correctamente la " & _Tido & " en la empresa: " & _Empresa & " - " & _Razon & vbCrLf & _Msg, "Grabar OCC",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Else
+                MessageBoxEx.Show(Me, "Problema al grabar la " & _Tido & " en la empresa: " & _Empresa & " - " & _Razon & vbCrLf & _Msg, "Problema :(",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+
+        Next
+
+    End Sub
 End Class

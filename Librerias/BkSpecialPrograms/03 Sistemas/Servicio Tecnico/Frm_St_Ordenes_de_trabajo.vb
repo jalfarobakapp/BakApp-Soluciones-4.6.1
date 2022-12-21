@@ -55,12 +55,16 @@ Public Class Frm_St_Ordenes_de_trabajo
 
         Super_TabS.SelectedTabIndex = 0
 
+        Me.Text += Space(1) & "SUCURSAL: " & ModSucursal & " " '& _Global_Row_Configuracion_Estacion
+
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
 
     Private Sub Frm_St_Ordenes_de_trabajo_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         'InsertarBotonenGrilla(Grilla, "BtnImagen", "Situación", "Solicitud", 0, _Tipo_Boton.Imagen)
-        AddHandler Btn_Crear_OT.Click, AddressOf Sb_Crear_Nueva_OT
+        AddHandler Btn_Crear_OT1Producto.Click, AddressOf Sb_Crear_Nueva_OT
 
         Sb_Marcar_Grilla()
 
@@ -85,7 +89,9 @@ Public Class Frm_St_Ordenes_de_trabajo
 #Region "PROCEMIENTOS"
 
     Sub Sb_Crear_Nueva_OT()
+
         If Fx_Tiene_Permiso(Me, "Stec0002") Then
+
             Dim _RowEntidad As DataRow
             Dim Fm_Ent As New Frm_BuscarEntidad_Mt(False)
             Fm_Ent.Text = "SELECCIONE EL CLIENTE"
@@ -107,6 +113,37 @@ Public Class Frm_St_Ordenes_de_trabajo
             Sb_Marcar_Grilla()
 
         End If
+
+    End Sub
+
+    Sub Sb_Crear_Nueva_OT_Varios_Productos()
+
+        If Fx_Tiene_Permiso(Me, "Stec0002") Then
+
+            Dim _RowEntidad As DataRow
+            Dim Fm_Ent As New Frm_BuscarEntidad_Mt(False)
+            Fm_Ent.Text = "SELECCIONE EL CLIENTE"
+            Fm_Ent.ShowDialog(Me)
+
+            If Fm_Ent.Pro_Entidad_Seleccionada Then
+                _RowEntidad = Fm_Ent.Pro_RowEntidad
+            Else
+                Return
+            End If
+            Fm_Ent.Dispose()
+
+            Dim _Cl_OrdenServicio As Cl_OrdenServicio
+
+            Dim Fm As New Frm_St_EncIngreso(_RowEntidad)
+            Fm.ShowDialog(Me)
+            _Cl_OrdenServicio = Fm.Cl_OrdenServicio
+            Fm.Dispose()
+
+            Sb_Actualizar_Grilla()
+            Sb_Marcar_Grilla()
+
+        End If
+
     End Sub
 
 #End Region
@@ -145,43 +182,40 @@ Public Class Frm_St_Ordenes_de_trabajo
 
             Case 0 ' Todas
                 GroupPanel1.Text = "Todas las ordenes de trabajo activas"
-                _Condicion = "Where CodEstado In ('A','C','E','F','I','P','R','V') Or (CodEstado In ('CE','N') And " & _Filtro_Fecha & ")"
+                _Condicion = "And CodEstado In ('A','C','E','F','I','P','R','V') Or (CodEstado In ('CE','N') And " & _Filtro_Fecha & ")" & vbCrLf
             Case 1 ' Ingresadas
                 GroupPanel1.Text = "Ordenes de trabajo Ingresadas, en esperad de asignación a algún técnico."
-                _Condicion = "Where CodEstado In ('I')"
+                _Condicion = "And CodEstado In ('I')" & vbCrLf
             Case 2 ' Asignadas tecnico
                 GroupPanel1.Text = "Ordenes de trabajo asignadas a algún técnico, a la espera de una evaluación."
-                _Condicion = "Where CodEstado In ('A')"
+                _Condicion = "And CodEstado In ('A')" & vbCrLf
             Case 3 ' Presupuesto
                 GroupPanel1.Text = "Ordenes de trabajo con evaluación realizada por el técnico, presupuesto o cotización creadas"
-                _Condicion = "Where CodEstado In ('P')"
+                _Condicion = "And CodEstado In ('P')" & vbCrLf
             Case 4 ' En Reparacion
                 GroupPanel1.Text = "Ordenes de trabajo en reparación"
-                _Condicion = "Where CodEstado In ('R')"
+                _Condicion = "And CodEstado In ('R')" & vbCrLf
             Case 5 ' Aviso cliente
                 GroupPanel1.Text = "Todas las ordenes de trabajo reparadas en espera de aviso al cliente"
-                _Condicion = "Where CodEstado In ('V')"
+                _Condicion = "And CodEstado In ('V')" & vbCrLf
             Case 6 ' Entregadas
                 GroupPanel1.Text = "Ordenes de trabajo entregadas con factura o guía"
-                _Condicion = "Where CodEstado In ('E','F')"
+                _Condicion = "And CodEstado In ('E','F')" & vbCrLf
             Case 7 ' Cerradas hoy
                 GroupPanel1.Text = "Ordenes de trabajo cerradas hoy"
-                _Condicion = "Where CodEstado In ('CE') And " & _Filtro_Fecha '& ")"
+                _Condicion = "And CodEstado In ('CE') And " & _Filtro_Fecha & vbCrLf
 
         End Select
 
-        '_Condicion = "Where CodEstado In ('A','C','E','F','I','P','R','V') Or (CodEstado In ('CE','N') And " & _Filtro_Fecha & ")"
+        _Condicion += "And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'" & vbCrLf
 
         Consulta_Sql = My.Resources.Recursos_Locales.SqlQuery_Lista_OT
-        Consulta_sql = Replace(Consulta_sql, "#Db_BakApp#", _Global_BaseBk)
-
-        Consulta_sql += vbCrLf & vbCrLf & _Condicion
+        Consulta_Sql = Replace(Consulta_Sql, "#Db_BakApp#", _Global_BaseBk)
+        Consulta_Sql = Replace(Consulta_Sql, "#Condicion#", _Condicion)
 
         _Tbl_OT = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         Sb_Marcar_Grilla()
-
-        'Fm_Espera.Dispose()
 
     End Sub
 
@@ -205,6 +239,12 @@ Public Class Frm_St_Ordenes_de_trabajo
             .Columns("Nro_Ot").HeaderText = "Número OT"
             .Columns("Nro_Ot").Width = 80
             .Columns("Nro_Ot").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Sub_Ot").Visible = True
+            .Columns("Sub_Ot").HeaderText = "Sub OT"
+            .Columns("Sub_Ot").Width = 30
+            .Columns("Sub_Ot").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Rut").Visible = True
@@ -241,15 +281,6 @@ Public Class Frm_St_Ordenes_de_trabajo
             .Columns("Hora").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            '.Columns("Fecha").Visible = True
-            '.Columns("Fecha").HeaderText = "Fecha"
-            '.Columns("Fecha").Width = 70
-
-            '.Columns("Hora").Visible = True
-            '.Columns("Hora").HeaderText = "Hora"
-            '.Columns("Hora").Width = 60
-            '.Columns("Hora").DefaultCellStyle.Format = "hh:mm"
-
             .Columns("Dias").Visible = True
             .Columns("Dias").HeaderText = "Dias"
             .Columns("Dias").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -266,25 +297,9 @@ Public Class Frm_St_Ordenes_de_trabajo
 
             .Columns("Producto").Visible = True
             .Columns("Producto").HeaderText = "Producto"
-            .Columns("Producto").Width = 250 + _Mas
+            .Columns("Producto").Width = 250 + _Mas - 30
             .Columns("Producto").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
-
-            '.Columns("Maquina").Visible = True
-            '.Columns("Maquina").HeaderText = "Maquina"
-            '.Columns("Maquina").Width = 120
-
-            '.Columns("Marca").Visible = True
-            '.Columns("Marca").HeaderText = "Marca"
-            '.Columns("Marca").Width = 120
-
-            '.Columns("Modelo").Visible = True
-            '.Columns("Modelo").HeaderText = "Modelo"
-            '.Columns("Modelo").Width = 120
-
-            '.Columns("Categoria").Visible = True
-            '.Columns("Categoria").HeaderText = "Categoria"
-            '.Columns("Categoria").Width = 120
 
         End With
 
@@ -324,7 +339,7 @@ Public Class Frm_St_Ordenes_de_trabajo
         _Abrir_Documento = Fm.Pro_Abrir_Documeneto
         Fm.Dispose()
 
-        Dim _CodEstado = _DsDocumento.Tables(0).Rows(0).Item("CodEstado") '_Sql.Fx_Trae_Dato(, "CodEstado", _Global_BaseBk & "Zw_St_OT_Encabezado", "Id_Ot = " & _Id_Ot)
+        Dim _CodEstado = _DsDocumento.Tables(0).Rows(0).Item("CodEstado")
         Dim _Estado = _DsDocumento.Tables(0).Rows(0).Item("Estado")
         Dim _CodTecnico_Asignado = _DsDocumento.Tables(0).Rows(0).Item("CodTecnico_Asignado")
         Dim _Tecnico_Asignado = _DsDocumento.Tables(0).Rows(0).Item("Tecnico_Asignado")
@@ -632,5 +647,26 @@ Public Class Frm_St_Ordenes_de_trabajo
 
     End Sub
 
+    Private Sub Btn_Crear_OT_Click(sender As Object, e As EventArgs) Handles Btn_Crear_OT.Click
+
+        Dim _ServTecnico_Empresa As String = _Global_Row_Configuracion_Estacion.Item("ServTecnico_Empresa").ToString.Trim
+        Dim _ServTecnico_Sucursal As String = _Global_Row_Configuracion_Estacion.Item("ServTecnico_Sucursal").ToString.Trim
+        Dim _ServTecnico_Bodega As String = _Global_Row_Configuracion_Estacion.Item("ServTecnico_Bodega").ToString.Trim
+
+        If String.IsNullOrEmpty(_ServTecnico_Empresa) Or
+               String.IsNullOrEmpty(_ServTecnico_Sucursal) Or
+               String.IsNullOrEmpty(_ServTecnico_Bodega) Then
+            MessageBoxEx.Show(Me, "Faltan los datos de la configuración del ingreso de mercadería" & vbCrLf &
+                                  "para servicio tecnico en la modalidad: " & Modalidad, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        ShowContextMenu(Menu_Contextual_Garantia)
+
+    End Sub
+
+    Private Sub Btn_Crear_OTVariosProductos_Click(sender As Object, e As EventArgs) Handles Btn_Crear_OTVariosProductos.Click
+        Sb_Crear_Nueva_OT_Varios_Productos()
+    End Sub
 
 End Class

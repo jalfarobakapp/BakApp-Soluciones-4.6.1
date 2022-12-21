@@ -103,8 +103,7 @@ Namespace My.Resources
         '''       Cast(0 As Bit) As &apos;Prct&apos;,
         '''       Mp.RLUD as &apos;Rtu&apos;,
         '''       Isnull(Lp.PP01UD,0) AS &apos;Precio_UD1&apos;,
-        '''       Lp.PP01UD * (Mp.POIVPR/100.0)+Lp.PP01UD AS &apos;Precio_UD1_Bruto&apos;,
-        '''       Isnu [resto de la cadena truncado]&quot;;.
+        '''       Isnull(Lp.PP01UD,0) * (Mp.POIVPR/100.0)+Isnull(Lp.PP01UD,0) AS &apos;Precio_UD1_ [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property BuscarProductoBusqEspecial() As String
             Get

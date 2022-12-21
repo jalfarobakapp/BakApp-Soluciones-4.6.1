@@ -25,11 +25,12 @@ Select Cast(0 As Int) As Existe,
 		Isnull(Tid.Glosa,'') As 'Glosa',
 		Isnull(Doc.Procesar,'') As 'Procesar',
 		Isnull(Doc.Procesado,'') As 'Procesado',								   
-        Case When Doc.ErrorEnvioDTE = 0 Then Isnull(Tid.Respuesta,'') Else Isnull(Doc.Respuesta,'') End As 'Respuesta',
+        Case When Edo.ESDO = 'N' Then 'Documento NULO' Else Case When Doc.ErrorEnvioDTE = 0 Then Isnull(Tid.Respuesta,'') Else Isnull(Doc.Respuesta,'') End End As 'Respuesta',
 		Isnull(Doc.ErrorEnvioDTE,0) As 'ErrorEnvioDTE',
         Isnull(Doc.Eliminado,0) As 'Eliminado',
         Cast('' As Varchar(300)) As 'LeyendaEmail',
-        Isnull(Correo.Destinatarios,'') As 'Destinatarios'
+        Isnull(Correo.Destinatarios,'') As 'Destinatarios',
+        Edo.ESDO As 'Esdo'
 Into #PasoDTE
 From MAEEDO Edo
 	Left Join MAEEN En On En.KOEN = Edo.ENDO And En.SUEN = Edo.SUENDO
@@ -49,8 +50,9 @@ Select * Into #PasoDTEResp From #PasoDTE
 Delete #PasoDTE Where Eliminado = 1
 
 Update #PasoDTE Set Glosa = 'Firmado Ok' Where DocFirmado = 1 And Trackid = ''
-Update #PasoDTE Set Glosa = 'Error al enviar DTE al SII' Where ErrorEnvioDTE = 1
+Update #PasoDTE Set Glosa = 'Error al enviar DTE al SII' Where ErrorEnvioDTE = 1 And (AceptadoSII = 0 And InformadoSII = 0)
 Update #PasoDTE Set Glosa = 'A la espera de consultar Trackid en SII' Where DocFirmado = 1 And Trackid <> '' And Estado = ''
+Update #PasoDTE Set Glosa = Respuesta Where Esdo = 'N'
 
 Update #PasoDTE Set LeyendaEmail = 'A la espera de envia el correo.' Where EnviarMail = 1
 Update #PasoDTE Set LeyendaEmail = 'El correo esta en la bandeja de salida del diablito de correos.' Where MailToDiablito = 1

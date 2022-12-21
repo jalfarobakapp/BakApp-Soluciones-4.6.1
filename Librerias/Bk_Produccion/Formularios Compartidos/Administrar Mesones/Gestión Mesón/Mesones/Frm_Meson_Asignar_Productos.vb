@@ -29,6 +29,8 @@ Public Class Frm_Meson_Asignar_Productos
 
         _Tipo_OT = Tipo_OT
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_OT_Buscador_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -357,6 +359,31 @@ Public Class Frm_Meson_Asignar_Productos
             Dim _Filtro As String
             _Filtro = CADENA_A_BUSCAR(RTrim$(Txt_Descripcion.Text), "NUMOT+REFERENCIA LIKE '%")
 
+            Dim _NuevoFiltro = String.Empty
+
+            If Not String.IsNullOrEmpty(Txt_Descripcion.Text.Trim) Then
+                _Filtro = CADENA_A_BUSCAR(RTrim$(Txt_Descripcion.Text), "NUMOT+REFERENCIA LIKE '%")
+                _NuevoFiltro += "And NUMOT+REFERENCIA LIKE '%" & _Filtro & "%'" & vbCrLf
+            End If
+
+            If Not String.IsNullOrEmpty(Txt_BuscarXEntidad.Text.Trim) Then
+                _NuevoFiltro += "And IDPOTE In" & vbCrLf &
+                               "(SELECT IDPOTE FROM POTL WITH (NOLOCK) INNER JOIN POTLCOM WITH (NOLOCK) ON POTLCOM.IDPOTL=POTL.IDPOTL" & vbCrLf &
+                                "WHERE POTLCOM.ENDO LIKE '%" & Txt_BuscarXEntidad.Text.Trim & "%' And POTL.EMPRESA = '" & ModEmpresa & "')" & vbCrLf
+            End If
+
+            If Not String.IsNullOrEmpty(Txt_BuscarXProducto.Text.Trim) Then
+                '_Filtro = CADENA_A_BUSCAR(RTrim$(Txt_BuscarXProducto.Text), "NUMOT+REFERENCIA LIKE '%")
+                _NuevoFiltro += "And IDPOTE In (SELECT IDPOTE FROM POTL WITH (NOLOCK) " &
+                    "WHERE CODIGO LIKE '%" & Txt_BuscarXProducto.Text.Trim & "%' And EMPRESA = '" & ModEmpresa & "')" & vbCrLf
+            End If
+
+            If Not String.IsNullOrEmpty(Txt_BuscarXInsumo.Text.Trim) Then
+                '_Filtro = CADENA_A_BUSCAR(RTrim$(Txt_BuscarXProducto.Text), "NUMOT+REFERENCIA LIKE '%")
+                _NuevoFiltro += "And IDPOTE In (Select IDPOTE From POTL Where IDPOTL In " &
+                    "(SELECT IDPOTL FROM POTD WITH (NOLOCK) WHERE EMPRESA = '" & ModEmpresa & "' AND CODIGO LIKE '%" & Txt_BuscarXInsumo.Text.Trim & "%'))" & vbCrLf
+            End If
+
             Dim _Select_Tablas As String
 
             Dim _Filtro_Tipo_OT = String.Empty
@@ -410,10 +437,14 @@ Public Class Frm_Meson_Asignar_Productos
 
             Consulta_sql = My.Resources.Recursos_Gestion_Meson.Buscar_OT_Para_Asignar_Meson2
             Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
-            Consulta_sql = Replace(Consulta_sql, "#Filtro#", _Filtro)
+            'Consulta_sql = Replace(Consulta_sql, "#Filtro#", _Filtro)
+            Consulta_sql = Replace(Consulta_sql, "#NuevoFiltro#", _NuevoFiltro)
             Consulta_sql = Replace(Consulta_sql, "#Tipo_OT#", _Filtro_Tipo_OT)
             Consulta_sql = Replace(Consulta_sql, "#Base_Bakapp#", _Global_BaseBk)
             Consulta_sql = Replace(Consulta_sql, "#Select_Tablas#", _Select_Tablas)
+
+
+
 
 
             _Ds = _Sql.Fx_Get_DataSet(Consulta_sql)
@@ -475,7 +506,7 @@ Public Class Frm_Meson_Asignar_Productos
 
                 .Columns("REFERENCIA").Visible = True
                 .Columns("REFERENCIA").HeaderText = "Referencia"
-                .Columns("REFERENCIA").Width = 305
+                .Columns("REFERENCIA").Width = 305 + 110
                 .Columns("REFERENCIA").DisplayIndex = _DisplayIndex
                 _DisplayIndex += 1
 
@@ -495,7 +526,7 @@ Public Class Frm_Meson_Asignar_Productos
 
                 .Columns("IDPOTE").Visible = True
                 .Columns("IDPOTE").HeaderText = "idpote"
-                .Columns("IDPOTE").Width = 40
+                .Columns("IDPOTE").Width = 40 + 10
                 .Columns("IDPOTE").DisplayIndex = _DisplayIndex
                 _DisplayIndex += 1
 
@@ -558,13 +589,13 @@ Public Class Frm_Meson_Asignar_Productos
 
                 .Columns("GLOSA").Visible = True
                 .Columns("GLOSA").HeaderText = "Descripción producto"
-                .Columns("GLOSA").Width = 360 - 70
+                .Columns("GLOSA").Width = 440
                 .Columns("GLOSA").DisplayIndex = _DisplayIndex
                 _DisplayIndex += 1
 
                 .Columns("FABRICAR").Visible = True
                 .Columns("FABRICAR").HeaderText = "Cant.Fab"
-                .Columns("FABRICAR").Width = 50
+                .Columns("FABRICAR").Width = 60
                 .Columns("FABRICAR").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
                 .Columns("FABRICAR").DisplayIndex = _DisplayIndex
                 _DisplayIndex += 1
@@ -572,7 +603,12 @@ Public Class Frm_Meson_Asignar_Productos
             End With
 
             Dim _Idpotl As Integer
-            _Idpotl = Grilla_Potl.Rows(0).Cells("IDPOTL").Value
+
+            Try
+                _Idpotl = Grilla_Potl.Rows(0).Cells("IDPOTL").Value
+            Catch ex As Exception
+                _Idpotl = 0
+            End Try
 
             Sb_Actualizar_Grilla_Potpr(_Idpotl)
 
@@ -676,13 +712,13 @@ Public Class Frm_Meson_Asignar_Productos
 
             .Columns("NOMBREOP").Visible = True
             .Columns("NOMBREOP").HeaderText = "Nombre operación"
-            .Columns("NOMBREOP").Width = 250
+            .Columns("NOMBREOP").Width = 330
             .Columns("NOMBREOP").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Nommeson").Visible = True
             .Columns("Nommeson").HeaderText = "Mesón por defecto"
-            .Columns("Nommeson").Width = 260
+            .Columns("Nommeson").Width = 340
             .Columns("Nommeson").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -1434,7 +1470,8 @@ Public Class Frm_Meson_Asignar_Productos
                         (Select Idpotl From " & _Global_BaseBk & "Zw_Pdp_MesonVsProductos Mp
                         Inner Join " & _Global_BaseBk & "Zw_Pdc_Mesones Ms On Mp.Codmeson = Ms.Codmeson
                         Where (Idpote = " & _Idpote & ")
-                        And Ms.Maestro = 1) And Codmeson In (Select Codmeson From " & _Global_BaseBk & "Zw_Pdc_Mesones Where Virtual = 0)"
+                        And Ms.Maestro = 1) And Codmeson In " &
+                        "(Select Codmeson From " & _Global_BaseBk & "Zw_Pdc_Mesones Where Virtual = 0 Or ActivaConMesonMaestro = 1)"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
         Sb_Actualizar_Grillas()
@@ -2379,4 +2416,97 @@ Public Class Frm_Meson_Asignar_Productos
 
     End Sub
 
+    Private Sub Txt_BuscarXEntidad_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_BuscarXEntidad.ButtonCustomClick
+
+        Dim _CodEntidad = Txt_BuscarXEntidad.Text.Trim
+
+        Dim Fm As New Frm_BuscarEntidad_Mt(False)
+        Fm.Rdb_Clientes.Checked = True
+        Fm.Txtdescripcion.Text = _CodEntidad
+        Fm.ShowDialog(Me)
+        Dim _RowEntidad = Fm.Pro_RowEntidad
+
+        Fm.Dispose()
+
+        If Not IsNothing(_RowEntidad) Then
+            Txt_BuscarXEntidad.Text = _RowEntidad.Item("KOEN")
+        End If
+
+    End Sub
+
+    Private Sub Txt_BuscarXProducto_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_BuscarXProducto.ButtonCustomClick
+
+        Dim _RowProducto As DataRow = Fx_Buscar_Producto()
+
+        If Not IsNothing(_RowProducto) Then
+            Txt_BuscarXProducto.Text = _RowProducto.Item("KOPR")
+        End If
+
+    End Sub
+
+    Private Sub Txt_BuscarXInsumo_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_BuscarXInsumo.ButtonCustomClick
+
+        Dim _RowProducto As DataRow = Fx_Buscar_Producto()
+
+        If Not IsNothing(_RowProducto) Then
+            Txt_BuscarXInsumo.Text = _RowProducto.Item("KOPR")
+        End If
+
+    End Sub
+
+    Function Fx_Buscar_Producto() As DataRow
+
+        Dim _RowProducto As DataRow
+
+        Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
+
+        Fm.Seleccionar_Multiple = False
+        Fm.Bloqueados = Frm_BkpPostBusquedaEspecial_Mt.Enum_Bloquear.Ventas
+        Fm.Top20 = Frm_BkpPostBusquedaEspecial_Mt.Enum_Top20.Top_Ventas
+        'Fm.Pro_CodEntidad = _CodEntidad
+        'Fm.Pro_CodSucEntidad = _CodSucEntidad
+        'Fm.Pro_Tipo_Lista = ModListaPrecioVenta
+        Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
+        Fm.Pro_Sucursal_Busqueda = ModSucursal
+        Fm.Pro_Bodega_Busqueda = ModBodega
+        Fm.Pro_Mostrar_Info = False
+        Fm.Pro_Actualizar_Precios = False
+        Fm.Pro_Mostrar_Clasificaciones = True
+        Fm.Pro_Mostrar_Imagenes = True
+        Fm.BtnCrearProductos.Visible = False
+        Fm.Pro_Mostrar_Precios = False
+        Fm.Mostrar_Stock_Disponible = False
+        Fm.ShowDialog(Me)
+
+        If Fm.Pro_Seleccionado Then
+            _RowProducto = Fm.Pro_RowProducto
+        End If
+
+        Return _RowProducto
+
+    End Function
+
+    Private Sub Btn_AplicarBusqueda_Click(sender As Object, e As EventArgs) Handles Btn_AplicarBusqueda.Click
+        Sb_Actualizar_Grillas()
+    End Sub
+
+    Private Sub Txt_BuscarXEntidad_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_BuscarXEntidad.ButtonCustom2Click
+        Txt_BuscarXEntidad.Text = String.Empty
+    End Sub
+
+    Private Sub Txt_BuscarXProducto_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_BuscarXProducto.ButtonCustom2Click
+        Txt_BuscarXProducto.Text = String.Empty
+    End Sub
+
+    Private Sub Txt_BuscarXInsumo_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_BuscarXInsumo.ButtonCustom2Click
+        Txt_BuscarXInsumo.Text = String.Empty
+    End Sub
+
+    Private Sub Txt_Descripcion_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Descripcion.ButtonCustomClick
+        Txt_Descripcion.Text = String.Empty
+    End Sub
+
+    Private Sub Btn_AplicarBusqueda2_Click(sender As Object, e As EventArgs) Handles Btn_AplicarBusqueda2.Click
+        Sb_Actualizar_Grillas()
+    End Sub
 End Class

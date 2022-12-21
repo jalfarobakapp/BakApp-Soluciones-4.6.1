@@ -97,5 +97,34 @@ Public Class Modulo_Servicio_Tecnico
 
     End Sub
 
+    Private Sub Btn_Sis_Serv_GestTaller_Click(sender As Object, e As EventArgs) Handles Btn_Sis_Serv_GestTaller.Click
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+        Dim Consulta_Sql As String
+
+        Dim _Aceptar As Boolean
+        Dim _PwTecnico As String
+
+        _Aceptar = InputBox_Bk(_Fm_Menu_Padre, "INGRESE SU CLAVE DE USUARIO", "INGRESAR A GESTION DEL TALLER",
+                               _PwTecnico, False, _Tipo_Mayus_Minus.Normal, 5, True, _Tipo_Imagen.Key,, _Tipo_Caracter.Solo_Numeros_Enteros, False, "*")
+
+        If Not _Aceptar Then
+            Return
+        End If
+
+        Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller Where PwTecnico = '" & _PwTecnico & "'"
+        Dim _Row_Funcionario As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+        If IsNothing(_Row_Funcionario) Then
+            MessageBoxEx.Show(Me, "Clave desconocida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Call Btn_Sis_Serv_GestTaller_Click(Nothing, Nothing)
+            Return
+        End If
+
+        Dim Fm As New Frm_St_GestionTaller(_Row_Funcionario.Item("CodFuncionario"))
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 
 End Class

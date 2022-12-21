@@ -35,6 +35,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
     Dim _Fl_Funcionarios = String.Empty
 
     Dim _Tbl_Filtro_Entidad As DataTable
+    Dim _Tbl_Filtro_SucursalDoc As DataTable
     Dim _Tbl_Filtro_Sucursales As DataTable
     Dim _Tbl_Filtro_Bodegas As DataTable
     Dim _Tbl_Filtro_Ciudad As DataTable
@@ -58,6 +59,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
     Dim _Tbl_Filtro_Clas_BakApp As DataTable ' Clasificaciones BakApp
 
     Dim _Filtro_Entidad_Todas As Boolean
+    Dim _Filtro_SucursalDoc_Todas As Boolean
     Dim _Filtro_Sucursales_Todas As Boolean
     Dim _Filtro_Bodegas_Todas As Boolean
     Dim _Filtro_Ciudad_Todas As Boolean
@@ -86,6 +88,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
     Dim _Tbl_Vista_Informe As DataTable
     Dim _Row_Vista As DataRow
 
+    Dim _Color_Rojo As Color
     Public Property Pro_Tbl_Filtro_Productos() As DataTable
         Get
             Return _Tbl_Filtro_Productos
@@ -344,6 +347,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
         '_Unidad = Unidad
         '_Correr_a_la_derecha = Correr_a_la_derecha
 
+        _Filtro_SucursalDoc_Todas = True
         _Filtro_Sucursales_Todas = True
         _Filtro_Bodegas_Todas = True
 
@@ -403,6 +407,14 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
     End Sub
 
     Private Sub Frm_Inf_Ventas_X_Periodo_Graficos_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+
+        'If Global_Thema = Enum_Themas.Oscuro Then
+        '    _Color_Rojo = Color.FromArgb(255, 182, 193)
+        'Else
+        '    _Color_Rojo = Rojo
+        'End If
+
+        _Color_Rojo = Rojo
 
         AddHandler Grilla.CellEnter, AddressOf Sb_Grilla_CellEnter
         AddHandler Grilla.ColumnHeaderMouseClick, AddressOf Sb_Grilla_ColumnHeaderMouseClick
@@ -849,11 +861,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
 
 
             If _Diferencia < 0 Then
-                Lbl_Diferencia.ForeColor = Color.Red
-                Lbl_Diferencia_Porc.ForeColor = Color.Red
+                Lbl_Diferencia.ForeColor = _Color_Rojo
+                Lbl_Diferencia_Porc.ForeColor = _Color_Rojo
             Else
-                Lbl_Diferencia.ForeColor = Color.Green
-                Lbl_Diferencia_Porc.ForeColor = Color.Green
+                Lbl_Diferencia.ForeColor = Verde
+                Lbl_Diferencia_Porc.ForeColor = Verde
             End If
 
             Lbl_Total_R1.Text = FormatNumber(_Total_R1, 0)
@@ -1076,16 +1088,13 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
 
 
             If _Diferencia < 0 Then
-                If Global_Thema = Enum_Themas.Oscuro Then
-                    Lbl_Diferencia.ForeColor = Color.FromArgb(221, 79, 67)
-                    Lbl_Diferencia_Porc.ForeColor = Color.FromArgb(221, 79, 67)
-                Else
-                    Lbl_Diferencia.ForeColor = Color.Red
-                    Lbl_Diferencia_Porc.ForeColor = Color.Red
-                End If
+
+                Lbl_Diferencia.ForeColor = _Color_Rojo
+                Lbl_Diferencia_Porc.ForeColor = _Color_Rojo
+
             Else
-                Lbl_Diferencia.ForeColor = Color.Green
-                Lbl_Diferencia_Porc.ForeColor = Color.Green
+                Lbl_Diferencia.ForeColor = Verde
+                Lbl_Diferencia_Porc.ForeColor = Verde
             End If
 
             Lbl_Total_R1.Text = FormatNumber(_Total_R1, 0)
@@ -1233,9 +1242,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
                                Optional _Incorporar_Filtro_SuperFamilias As Boolean = True,
                                Optional _Incorporar_Filtro_Familias As Boolean = True,
                                Optional _Incorporar_Filtro_Sub_Familias As Boolean = True,
-                               Optional _Incorporar_Filtro_ClasLibre As Boolean = True)
+                               Optional _Incorporar_Filtro_ClasLibre As Boolean = True,
+                               Optional _Incorporar_Filtro_SucursalDoc As Boolean = True)
 
-        Dim _Filtro_Sucursales,
+        Dim _Filtro_SucursalDoc,
+            _Filtro_Sucursales,
             _Filtro_Bodegas,
             _Filtro_Entidades,
             _Filtro_Ciudad,
@@ -1256,6 +1267,15 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
             _Filtro_Familias,
             _Filtro_Sub_Familias,
             _Filtro_ClasLibre As String
+
+        If _Incorporar_Filtro_SucursalDoc Then
+            If _Filtro_SucursalDoc_Todas Then
+                _Filtro_SucursalDoc = String.Empty
+            Else
+                _Filtro_SucursalDoc = Generar_Filtro_IN(_Tbl_Filtro_SucursalDoc, "Chk", "Codigo", False, True, "'")
+                _Filtro_SucursalDoc = "And SUDO IN " & _Filtro_SucursalDoc & vbCrLf
+            End If
+        End If
 
         If _Incorporar_Filtro_Sucursales Then
             If _Filtro_Sucursales_Todas Then
@@ -1462,7 +1482,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
                                  Format(_Fecha_Hasta, "yyyyMMdd") & "'" & vbCrLf
         End If
 
-        Dim _Filtro_Externo = _Filtro_Sucursales &
+        Dim _Filtro_Externo = _Filtro_SucursalDoc &
+                              _Filtro_Sucursales &
                               _Filtro_Bodegas &
                               _Filtro_Entidades &
                               _Filtro_Ciudad &
@@ -1525,6 +1546,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
 
     Sub Sb_Actualizar_Grilla()
 
+        'If Global_Thema = Enum_Themas.Oscuro Then
+        '    _Color_Rojo = Color.FromArgb(255, 139, 164)
+        'Else
+        '    _Color_Rojo = Rojo
+        'End If
 
         Try
 
@@ -1824,13 +1850,9 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
             End If
 
             If _Expectativa > _Realidad Then
-                If Global_Thema = Enum_Themas.Oscuro Then
-                    _Fila.Cells(_CampoRealidad).Style.ForeColor = Color.FromArgb(221, 79, 67)
-                Else
-                    _Fila.Cells(_CampoRealidad).Style.ForeColor = Color.Red
-                End If
+                _Fila.Cells(_CampoRealidad).Style.ForeColor = _Color_Rojo
             Else
-                _Fila.Cells(_CampoRealidad).Style.ForeColor = Color.Green
+                _Fila.Cells(_CampoRealidad).Style.ForeColor = Verde
             End If
         Next
 
@@ -2497,6 +2519,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
             Btn_Filtrar_Productos.Image = Nothing
         End If
 
+        Btn_Filtro_SucursalDoc.Image = Fx_Imagen_Filtro(_Filtro_SucursalDoc_Todas)
         Btn_Filtro_Sucursales.Image = Fx_Imagen_Filtro(_Filtro_Sucursales_Todas)
         Btn_Filtro_Bodegas.Image = Fx_Imagen_Filtro(_Filtro_Bodegas_Todas)
 
@@ -2511,7 +2534,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
     Function Fx_Imagen_Filtro(_Todas As Boolean) As Image
 
         If _Todas Then
-            Return Nothing ' Imagenes_20x20.Images.Item("filter.png")
+            Return Nothing
         Else
             Return Imagenes_16x16.Images.Item("filter.png")
         End If
@@ -2609,7 +2632,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
         If _Filtro_Clas_BakApp_Todas Then
             _Filtro_Nodos = String.Empty
         Else
-            _Filtro_Nodos = Generar_Filtro_IN(_Tbl_Filtro_Clas_BakApp, "Chk", "CODIGO", False, True, "")
+            _Filtro_Nodos = Generar_Filtro_IN(_Tbl_Filtro_Clas_BakApp, "Chk", "Codigo_Nodo", False, True, "")
             _Filtro_Nodos = "And KOPRCT In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
                             "Where Codigo_Nodo In " & _Filtro_Nodos & ")"
         End If
@@ -2661,7 +2684,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
 
         Consulta_sql = Replace(Consulta_sql, "#Filtro#", _Filtro)
 
+        Me.Cursor = Cursors.WaitCursor
+
         Dim _Tbl_Informe As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        Me.Cursor = Cursors.Default
 
         If CBool(_Tbl_Informe.Rows.Count) Then
 
@@ -3231,6 +3258,37 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
 
     Private Sub Btn_Exportar_Diferencia_Productos_Click(sender As Object, e As EventArgs) Handles Btn_Exportar_Diferencia_Productos.Click
         ExportarTabla_JetExcel_Tabla(_Tbl_DifProductos_R1_R2, Me, "Dif. Productos R1 y R2", "Inf00045")
+    End Sub
+
+    Private Sub Btn_Filtro_SucursalDoc_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_SucursalDoc.Click
+
+        Dim _SqlFiltro_Fechas As String
+
+
+        Dim _Sql_Filtro_Condicion_Extra = "And EMPRESA+KOSU In (Select Distinct EMPRESA+SUDO From " &
+                                          _Nombre_Tabla_Paso & vbCrLf & _SqlFiltro_Fechas & ")"
+
+        _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde_01.Value, "yyyyMMdd") & "' AND '" &
+                            Format(Dtp_Fecha_Hasta_02.Value, "yyyyMMdd") & "'" & vbCrLf
+
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl_Filtro_SucursalDoc,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Sucursales, _Sql_Filtro_Condicion_Extra,
+                               _Filtro_SucursalDoc_Todas, False) Then
+
+            _Tbl_Filtro_SucursalDoc = _Filtrar.Pro_Tbl_Filtro
+            _Filtro_SucursalDoc_Todas = _Filtrar.Pro_Filtro_Todas
+
+            If Cmb_Vista_Informe.SelectedValue = "SUDO" Then
+                Sb_Actualizar_Grilla()
+            Else
+                Cmb_Vista_Informe.SelectedValue = "SUDO"
+            End If
+
+        End If
+
     End Sub
 
     Sub Sb_Formato_Graficos(_Grafico As Chart,

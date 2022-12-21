@@ -169,6 +169,9 @@
   <data name="Zw_Compras_en_SII" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_compras_en_sii.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="Zw_Conceptos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_conceptos.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="Zw_Configuracion" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_configuracion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
@@ -207,6 +210,9 @@
   </data>
   <data name="Zw_Demonio_Doc_Emitidos_Cola_Impresion" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_demonio_doc_emitidos_cola_impresion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Demonio_FacAuto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_demonio_facauto.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Zw_Demonio_Filtros_X_Estacion" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_demonio_filtros_x_estacion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
@@ -256,6 +262,9 @@
   <data name="Zw_Docu_ObligPg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_docu_obligpg.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="Zw_DTE_Aec" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_dte_aec.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="Zw_DTE_Caf" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_dte_caf.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
@@ -270,6 +279,12 @@
   </data>
   <data name="Zw_DTE_NotifxCorreo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_dte_notifxcorreo.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_DTE_ReccDet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_dte_reccdet.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_DTE_ReccEnc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_dte_reccenc.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Zw_DTE_Trackid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_dte_trackid.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
@@ -324,6 +339,12 @@
   </data>
   <data name="Zw_Linea_Oferta" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_linea_oferta.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_ListaLC_Programadas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_listalc_programadas.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_ListaLC_Programadas_Detalles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_listalc_programadas_detalles.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Zw_ListaPreCosto" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_listaprecosto.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
@@ -433,6 +454,9 @@
   <data name="Zw_Prod_CodQR" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_prod_codqr.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="Zw_Prod_CodQRLogDoc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prod_codqrlogdoc.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="Zw_Prod_Dimensiones" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_prod_dimensiones.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
@@ -441,6 +465,9 @@
   </data>
   <data name="Zw_Prod_Imagenes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_prod_imagenes.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Prod_ImpAdicional" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_prod_impadicional.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Zw_Prod_Log_Compras" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_prod_log_compras.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>

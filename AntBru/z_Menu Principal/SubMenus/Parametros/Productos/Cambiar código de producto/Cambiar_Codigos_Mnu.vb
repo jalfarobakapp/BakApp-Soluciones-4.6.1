@@ -24,20 +24,7 @@ Public Class Cambiar_Codigos_Mnu
 
     End Sub
 
-    Private Sub BtnCambiarCodigoUnoxUno_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnCambiarCodigoUnoxUno.Click
-
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Prod003") Then
-
-            Dim Fm As New Frm_Cambio_Codigos_UnoxUno
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-
-        End If
-
-    End Sub
-
-    Private Sub BtnCompra_Stock_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnCompra_Stock.Click
-
+    Private Sub Btn_Cambio_Masivo_Click(sender As Object, e As EventArgs) Handles Btn_Cambio_Masivo.Click
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Prod042") Then
 
             Dim Fm As New Frm_Cambio_Codigos
@@ -45,7 +32,15 @@ Public Class Cambiar_Codigos_Mnu
             Fm.Dispose()
 
         End If
-
     End Sub
 
+    Private Sub Btn_Cambio_UnoxUno_Click(sender As Object, e As EventArgs) Handles Btn_Cambio_UnoxUno.Click
+        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Prod003") Then
+
+            Dim Fm As New Frm_Cambio_Codigos_UnoxUno
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
+        End If
+    End Sub
 End Class

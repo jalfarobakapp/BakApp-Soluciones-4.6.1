@@ -361,6 +361,7 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
 
         Me.Cursor = Cursors.Default
 
+
     End Sub
 
     Private Sub Frm_Inf_Vencimientos_Detalle_Documentos_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown

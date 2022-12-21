@@ -51,6 +51,7 @@ Public Class Frm_01_Asis_Compra_Resultados
     Dim _Ds As DataSet
     Dim _Dv, _Dv2 As New DataView
 
+
     Dim _Clas_Asistente_Compras As Clas_Asistente_Compras
     Dim _Nodo_Raiz_Asociados As Integer = _Global_Row_Configuracion_General.Item("Nodo_Raiz_Asociados")
     Dim Fm_Hijo As New Frm_01_Asis_Compra_Resultados_Hijo
@@ -403,6 +404,10 @@ Public Class Frm_01_Asis_Compra_Resultados
         Rd_Costo_Ultimo_Documento_Seleccionado.Enabled = _Modo_OCC
         Rd_Costo_Lista_Proveedor.Enabled = _Modo_OCC
         Cmb_Lista_Costos.Enabled = _Modo_OCC
+
+        If Modo_NVI Then
+            BtnProceso_Prov_Auto_Especial.Enabled = False
+        End If
 
     End Sub
 
@@ -1708,11 +1713,6 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         End If
 
-        'Dim _Rdb_Productos_Proveedor As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor",
-        '                                                            "(Funcionario = '" & FUNCIONARIO & "')" & Space(1) &
-        '                                                            "AND (Campo = 'Rdb_Productos_Proveedor')" & Space(1) &
-        '                                                            "AND (Informe = 'Compras_Asistente')", , , , True)
-
         Dim _Todos_Los_Proveedores As Boolean
 
         If Not _Rdb_Productos_Proveedor Then
@@ -1727,8 +1727,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
 
-                Dim Fm1 = New Frm_04_Asis_Compra_Proveedores(Frm_04_Asis_Compra_Proveedores.TipoBusqueda.Proveedores_Seleccionados,
-                                                                        "", True)
+                Dim Fm1 = New Frm_04_Asis_Compra_Proveedores(Frm_04_Asis_Compra_Proveedores.TipoBusqueda.Proveedores_Seleccionados, "", True)
                 Fm1.ShowDialog(Me)
 
                 If Not (Fm1.Pro_RowProveedor Is Nothing) Then
@@ -1753,7 +1752,6 @@ Public Class Frm_01_Asis_Compra_Resultados
                 'CodEntidadFisica = NuloPorNro(Fila_.Item("CodEntidadSel"), "")
                 'CodSucEntidadFisica = NuloPorNro(Fila_.Item("SucEntidadSel"), "")
             End If
-
 
             MessageBoxEx.Show(Me, "Debe seleccionar un proveedor para generar la orden de compra, " &
                               "ya que está marcada la opción entidad física", "Seleccionar proveedor",
@@ -1872,7 +1870,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         If Rd_Costo_Lista_Proveedor.Checked Then
 
-            Dim _Lista As String = Cmb_Lista_Costos.SelectedItem.Value '_Global_Row_Configuracion_General.Item("Lista_Precios_Proveedores")
+            Dim _Lista As String = Cmb_Lista_Costos.SelectedItem.Value
 
             Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER
 
@@ -6376,6 +6374,9 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         Dim _Orden_Bod = "ORDEN_BOD_" & ModEmpresa.Trim & ModSucursal.Trim
 
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Stock Where Codigo = '" & _Codigo & "' And StfiBodExt" & Ud & " <> 0"
+        Dim _TblStExt As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
         Consulta_sql = My.Resources.Recursos_Alerta_Stock.Stock_productos_por_emp_suc_bod
         Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
         Consulta_sql = Replace(Consulta_sql, "#Codigo#", _Codigo)
@@ -6384,6 +6385,23 @@ Public Class Frm_01_Asis_Compra_Resultados
         Consulta_sql = Replace(Consulta_sql, "#Filtro#", _Filtro)
         Consulta_sql = Replace(Consulta_sql, "#Tabla#", _Orden_Bod)
         Consulta_sql = Replace(Consulta_sql, "#Global_BaseBk#", _Global_BaseBk)
+
+        Dim _Update_Conficion_Adicional = String.Empty
+
+        For Each _FlExt As DataRow In _TblStExt.Rows
+
+            Dim _EmpExt As String = _FlExt.Item("Empresa")
+            Dim _SucExt As String = _FlExt.Item("Sucursal")
+            Dim _BodExt As String = _FlExt.Item("Bodega")
+
+            Dim _StfiBodExt As Double = _FlExt.Item("StfiBodExt" & Ud)
+
+            _Update_Conficion_Adicional += "Update #Paso Set ST_FISICO = ST_FISICO + " & De_Num_a_Tx_01(_StfiBodExt, False, 5) & vbCrLf &
+                                           "Where Empresa = '" & _EmpExt & "' And Sucursal = '" & _SucExt & "' And Bodega = '" & _BodExt & "'" & vbCrLf
+
+        Next
+
+        Consulta_sql = Replace(Consulta_sql, "--#Update_Conficion_Adicional#", _Update_Conficion_Adicional)
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -7621,16 +7639,15 @@ Public Class Frm_01_Asis_Compra_Resultados
         If Chk_Sabado.Checked Then _Dias_Abastecer += _Sabados
         If Chk_Domingo.Checked Then _Dias_Abastecer += _Domingos
 
-        Consulta_sql = "Insert Into " & _Nombre_Tbl_Paso & " (Empresa,Sucursal,Bodega,Codigo,Descripcion,Codigo_Nodo,Stock_Fisico_Madre," &
-                       "Stock_Fisico_Prod,Stock_CriticoUd" & Ud & "_Rd,CantComprar,TStock,RotDiariaUd" & Ud & ",RotMensualUd" & Ud & ",Dias,Solicitar,Pedir,Pedir_Hnos)
-                        Select '" & _Emp_Reab & "' As Empresa,'" & _Suc_Reab & "' As Sucursal,'" & _Bod_Reab & "' As Bodega,Codigo,Isnull(Descripcion,''),Codigo_Nodo,
-                        Stock_Fisico_Ud" & Ud & " As Stock_Fisico_Madre,0 As Stock_Fisico_Prod,Stock_CriticoUd" & Ud & "_Rd,CantComprar,TStock,RotDiariaUd" & Ud & ",RotMensualUd" & Ud & ",
-	                   " & _Dias_Abastecer & " As Dias,	
-	                    Round(Stock_Fisico_Ud" & Ud & "-RotDiariaUd" & Ud & "*" & _Dias_Abastecer & ",0) As Solicitar,
-                        Cast(0 As Float) As Pedir,Cast(0 As Float) As Pedir_Hnos 
-                       
-                        From " & _Nombre_TblPaso_PrBd & "
-                        Where TStock >= 30 And Round(Stock_Fisico_Ud" & Ud & "-RotDiariaUd" & Ud & "*" & _Dias_Abastecer & ",0) < Stock_Fisico_Ud" & Ud & " And Round(Stock_Fisico_Ud" & Ud & "-RotDiariaUd" & Ud & "*" & _Dias_Abastecer & ",0) > 0" & vbCrLf & vbCrLf
+        Consulta_sql = "Insert Into " & _Nombre_Tbl_Paso & " (Empresa,Sucursal,Bodega,Codigo,Descripcion,Codigo_Nodo,Stock_Fisico_Madre," & vbCrLf &
+                       "Stock_Fisico_Prod,Stock_CriticoUd" & Ud & "_Rd,CantComprar,TStock,RotDiariaUd" & Ud & ",RotMensualUd" & Ud & ",Dias,Solicitar,Pedir,Pedir_Hnos)" & vbCrLf &
+                       "Select '" & _Emp_Reab & "' As Empresa,'" & _Suc_Reab & "' As Sucursal,'" & _Bod_Reab & "' As Bodega,Codigo,Isnull(Descripcion,''),Codigo_Nodo," & vbCrLf &
+                       "Stock_Fisico_Ud" & Ud & " As Stock_Fisico_Madre,0 As Stock_Fisico_Prod,Stock_CriticoUd" & Ud & "_Rd,CantComprar,TStock,RotDiariaUd" & Ud & ",RotMensualUd" & Ud & "," & vbCrLf &
+                        _Dias_Abastecer & " As Dias," & vbCrLf &
+                       "Round(Stock_Fisico_Ud" & Ud & "-RotDiariaUd" & Ud & "*" & _Dias_Abastecer & ",0) As Solicitar," & vbCrLf &
+                       "Cast(0 As Float) As Pedir,Cast(0 As Float) As Pedir_Hnos" & vbCrLf & vbCrLf &
+                       "From " & _Nombre_TblPaso_PrBd & vbCrLf &
+                       "Where TStock >= 30 And Round(Stock_Fisico_Ud" & Ud & "-RotDiariaUd" & Ud & "*" & _Dias_Abastecer & ",0) <= Stock_Fisico_Ud" & Ud & " And Round(Stock_Fisico_Ud" & Ud & "-RotDiariaUd" & Ud & "*" & _Dias_Abastecer & ",0) > 0" & vbCrLf & vbCrLf
 
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
 
@@ -7928,6 +7945,83 @@ Public Class Frm_01_Asis_Compra_Resultados
         If _Proceso_Realizado Then
             Call Btn_Actualizar_Informe_Click(Nothing, Nothing)
         End If
+
+    End Sub
+
+    Private Sub BtnProceso_Prov_Auto_Especial_Click(sender As Object, e As EventArgs) Handles BtnProceso_Prov_Auto_Especial.Click
+
+        Dim _CodProveedor_Pstar As String '= "76590920"
+        Dim _CodSucProveedor_Pstar As String '= String.Empty
+
+        Dim _EmpPstar As String
+        Dim _SucPstar As String
+        Dim _BodPstar As String
+
+        Dim _Id = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                 "Valor",
+                                                 "Informe = 'Compras_Asistente' And Campo = 'Txt_DbExt_Nombre_Conexion' And NombreEquipo = '" & _NombreEquipo & "' " &
+                                                 "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad & "'")
+
+        _CodProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                 "Valor",
+                                                 "Informe = 'Compras_Asistente' And Campo = 'Koen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
+                                                 "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad & "'")
+        _CodSucProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                    "Valor",
+                                                    "Informe = 'Compras_Asistente' And Campo = 'Suen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
+                                                    "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad & "'")
+
+        Consulta_sql = "Select * From MAEEN Where KOEN = '" & _CodProveedor_Pstar & "' And SUEN = '" & _CodSucProveedor_Pstar & "'"
+        _RowProveedor = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_RowProveedor) Then
+            MessageBoxEx.Show(Me, "No esta asignado el proveedore especial para estos fines" & vbCrLf & vbCrLf &
+                              "Revise la pestaña [Bod.Ext. Prov. Especial] en la configuración anterior.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Maest Where Id_Conexion = " & Val(_Id)
+        Dim _RowDbExt_Maest As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not IsNothing(_RowDbExt_Maest) Then
+            _EmpPstar = _RowDbExt_Maest.Item("Empresa_Des")
+            _SucPstar = _RowDbExt_Maest.Item("Sucursal_Des")
+            _BodPstar = _RowDbExt_Maest.Item("Bodega_Des")
+        End If
+
+        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CodProveedor = '',CodSucProveedor = ''"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        'Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set StockUd1BodStar = STFI1,StockUd2BodStar = STFI2" & vbCrLf &
+        '               "From " & _Nombre_Tbl_Paso_Informe & vbCrLf &
+        '               "Inner Join MAEST On EMPRESA = '" & _EmpPstar & "' And KOSU = '" & _SucPstar & "' And KOBO = '" & _BodPstar & "' And KOPR = Codigo" & vbCrLf &
+        '               "Where Comprar = 1 And STFI1 > 0"
+
+        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set StockUd1BodStar = StfiBodExt1,StockUd2BodStar = StfiBodExt2" & vbCrLf &
+                       "From " & _Nombre_Tbl_Paso_Informe & " Tbps" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_Prod_Stock TbSt On " &
+                       "TbSt.Empresa = '" & _EmpPstar & "' And TbSt.Sucursal = '" & _SucPstar & "' And TbSt.Bodega = '" & _BodPstar & "' And Tbps.Codigo = TbSt.Codigo" & vbCrLf &
+                       "Where Comprar = 1 And (StfiBodExt1+StfiBodExt2) > 0"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CantComprar = Case When StockUd1BodStar > CantSugeridaTot then CantSugeridaTot Else StockUd1BodStar End" & vbCrLf &
+                       "Where StockUd1BodStar > 0"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & Space(1) &
+                       "Set CodProveedor = '" & _CodProveedor_Pstar & "'" & vbCrLf &
+                       ",CodSucProveedor = '" & _CodSucProveedor_Pstar & "'" & vbCrLf &
+                       "Where Comprar = 1 And CantComprar > 0 And StockUd1BodStar >= CantComprar"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Consulta_sql = "Delete " & _Nombre_Tbl_Paso_Informe & " Where CodProveedor = '' And CodSucProveedor = ''"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        BtnProceso_Prov_Auto_Especial.Enabled = False
+        BtnProceso_Prov_Auto.Enabled = False
+
+        Call Btn_Actualizar_Informe_Click(Nothing, Nothing)
+
 
     End Sub
 

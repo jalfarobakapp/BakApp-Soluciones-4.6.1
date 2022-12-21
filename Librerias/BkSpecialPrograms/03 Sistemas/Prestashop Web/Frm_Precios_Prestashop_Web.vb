@@ -876,7 +876,7 @@ Public Class Frm_Precios_Prestashop_Web
                             Where Sitio = '" & _Sitio & "'" & Space(1) & _Filtro_Productos
             _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-            Sb_Actualizar_Prestashop(False, _Tbl_Productos)
+            Sb_Actualizar_Prestashop(True, _Tbl_Productos)
 
         End If
 
@@ -1004,7 +1004,11 @@ Public Class Frm_Precios_Prestashop_Web
             _Class_Prestashop.Etiqueta2 = Lbl_Producto
 
             If Not IsNothing(_Tbl_Productos) Then
-                If _Tbl_Productos.Rows.Count > 20 Then
+
+                Dim _Filtro_Prod = Generar_Filtro_IN(_Tbl_Productos, "", "Codigo", False, False, "'")
+                Dim _Reg = _Sql.Fx_Cuenta_Registros("MAEPR", "KOPR In " & _Filtro_Prod)
+
+                If _Reg > 20 Then '_Tbl_Productos.Rows.Count > 20 Then
                     _Class_Prestashop.Sb_Insertar_Nuevos_Productos_Desde_Prestashop_Hacia_Tabla_Prod_PrestaShop(_Actualizar_Todo)
                 End If
             End If

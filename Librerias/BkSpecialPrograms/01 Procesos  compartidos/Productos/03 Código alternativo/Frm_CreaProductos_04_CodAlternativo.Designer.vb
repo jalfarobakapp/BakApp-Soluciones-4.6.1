@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_CreaProductos_04_CodAlternativo
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -29,8 +29,9 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         Me.BtnBuscarEntidad = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.Highlighter1 = New DevComponents.DotNetBar.Validator.Highlighter()
+        Me.Cmb_Nmarca_Comportamiento = New DevComponents.DotNetBar.Controls.ComboBoxEx()
+        Me.Cmb_Nmarca_Tratamiento = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.Grupo_Proveedor = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Btn_QuitarProveedor = New DevComponents.DotNetBar.ButtonX()
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
@@ -49,15 +50,23 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         Me.Chk_Conmulti = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.GroupPanel6 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.LabelX34 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX33 = New DevComponents.DotNetBar.LabelX()
+        Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_Rlud = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX21 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_Ud2 = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Ud1 = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX20 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX19 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX18 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_CodigoDescripcion = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel5 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Nokopral = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.ReflectionImage1 = New DevComponents.DotNetBar.Controls.ReflectionImage()
         Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.Btn_Quitar_QR = New DevComponents.DotNetBar.ButtonX()
-        Me.Txt_CodigoQR = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Stab_3QR = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Txt_Multdecom = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
@@ -86,17 +95,23 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         Me.Txt_Kopral2 = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Btn_Quitar_QR = New DevComponents.DotNetBar.ButtonX()
+        Me.Txt_CodigoQR = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Stab_3QR = New DevComponents.DotNetBar.SuperTabItem()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo_Proveedor.SuspendLayout()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
         Me.SuperTabControlPanel1.SuspendLayout()
+        Me.GroupPanel6.SuspendLayout()
+        Me.GroupPanel1.SuspendLayout()
         Me.GroupPanel5.SuspendLayout()
-        Me.SuperTabControlPanel3.SuspendLayout()
         Me.SuperTabControlPanel2.SuspendLayout()
         Me.GroupPanel4.SuspendLayout()
         Me.GroupPanel3.SuspendLayout()
+        Me.SuperTabControlPanel3.SuspendLayout()
         Me.SuspendLayout()
         '
         'Bar1
@@ -105,9 +120,9 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_CodQR, Me.BtnBuscarEntidad, Me.Btn_Eliminar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 328)
+        Me.Bar1.Location = New System.Drawing.Point(0, 492)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(617, 41)
+        Me.Bar1.Size = New System.Drawing.Size(619, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 7
@@ -130,7 +145,7 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         Me.Btn_CodQR.Image = CType(resources.GetObject("Btn_CodQR.Image"), System.Drawing.Image)
         Me.Btn_CodQR.ImageAlt = CType(resources.GetObject("Btn_CodQR.ImageAlt"), System.Drawing.Image)
         Me.Btn_CodQR.Name = "Btn_CodQR"
-        Me.Btn_CodQR.Tooltip = "Crear código QR"
+        Me.Btn_CodQR.Tooltip = "Crear cÃ³digo QR"
         '
         'BtnBuscarEntidad
         '
@@ -140,6 +155,7 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         Me.BtnBuscarEntidad.ImageAlt = CType(resources.GetObject("BtnBuscarEntidad.ImageAlt"), System.Drawing.Image)
         Me.BtnBuscarEntidad.Name = "BtnBuscarEntidad"
         Me.BtnBuscarEntidad.Text = "Buscar proveedor"
+        Me.BtnBuscarEntidad.Visible = False
         '
         'Btn_Eliminar
         '
@@ -156,11 +172,40 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         Me.Highlighter1.FocusHighlightColor = DevComponents.DotNetBar.Validator.eHighlightColor.Red
         Me.Highlighter1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         '
+        'Cmb_Nmarca_Comportamiento
+        '
+        Me.Cmb_Nmarca_Comportamiento.DisplayMember = "Text"
+        Me.Cmb_Nmarca_Comportamiento.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_Nmarca_Comportamiento.FocusHighlightColor = System.Drawing.SystemColors.Highlight
+        Me.Cmb_Nmarca_Comportamiento.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.Cmb_Nmarca_Comportamiento.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Cmb_Nmarca_Comportamiento, True)
+        Me.Cmb_Nmarca_Comportamiento.ItemHeight = 16
+        Me.Cmb_Nmarca_Comportamiento.Location = New System.Drawing.Point(3, 24)
+        Me.Cmb_Nmarca_Comportamiento.Name = "Cmb_Nmarca_Comportamiento"
+        Me.Cmb_Nmarca_Comportamiento.Size = New System.Drawing.Size(280, 22)
+        Me.Cmb_Nmarca_Comportamiento.TabIndex = 89
+        Me.Cmb_Nmarca_Comportamiento.WatermarkText = "..."
+        '
+        'Cmb_Nmarca_Tratamiento
+        '
+        Me.Cmb_Nmarca_Tratamiento.DisplayMember = "Text"
+        Me.Cmb_Nmarca_Tratamiento.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_Nmarca_Tratamiento.FocusHighlightColor = System.Drawing.SystemColors.Highlight
+        Me.Cmb_Nmarca_Tratamiento.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.Cmb_Nmarca_Tratamiento.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Cmb_Nmarca_Tratamiento, True)
+        Me.Cmb_Nmarca_Tratamiento.ItemHeight = 16
+        Me.Cmb_Nmarca_Tratamiento.Location = New System.Drawing.Point(292, 24)
+        Me.Cmb_Nmarca_Tratamiento.Name = "Cmb_Nmarca_Tratamiento"
+        Me.Cmb_Nmarca_Tratamiento.Size = New System.Drawing.Size(280, 22)
+        Me.Cmb_Nmarca_Tratamiento.TabIndex = 90
+        Me.Cmb_Nmarca_Tratamiento.WatermarkText = "..."
+        '
         'Grupo_Proveedor
         '
         Me.Grupo_Proveedor.BackColor = System.Drawing.Color.White
         Me.Grupo_Proveedor.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.Grupo_Proveedor.Controls.Add(Me.Btn_QuitarProveedor)
         Me.Grupo_Proveedor.Controls.Add(Me.LabelX7)
         Me.Grupo_Proveedor.Controls.Add(Me.LabelX4)
         Me.Grupo_Proveedor.Controls.Add(Me.LabelX5)
@@ -168,9 +213,9 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         Me.Grupo_Proveedor.Controls.Add(Me.txtsigla)
         Me.Grupo_Proveedor.Controls.Add(Me.Txt_Koen)
         Me.Grupo_Proveedor.DisabledBackColor = System.Drawing.Color.Empty
-        Me.Grupo_Proveedor.Location = New System.Drawing.Point(5, 104)
+        Me.Grupo_Proveedor.Location = New System.Drawing.Point(7, 206)
         Me.Grupo_Proveedor.Name = "Grupo_Proveedor"
-        Me.Grupo_Proveedor.Size = New System.Drawing.Size(587, 90)
+        Me.Grupo_Proveedor.Size = New System.Drawing.Size(587, 85)
         '
         '
         '
@@ -202,20 +247,6 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         Me.Grupo_Proveedor.TabIndex = 8
         Me.Grupo_Proveedor.Text = "Proveedor"
         '
-        'Btn_QuitarProveedor
-        '
-        Me.Btn_QuitarProveedor.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_QuitarProveedor.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_QuitarProveedor.Image = CType(resources.GetObject("Btn_QuitarProveedor.Image"), System.Drawing.Image)
-        Me.Btn_QuitarProveedor.ImageAlt = CType(resources.GetObject("Btn_QuitarProveedor.ImageAlt"), System.Drawing.Image)
-        Me.Btn_QuitarProveedor.Location = New System.Drawing.Point(221, 9)
-        Me.Btn_QuitarProveedor.Name = "Btn_QuitarProveedor"
-        Me.Btn_QuitarProveedor.Size = New System.Drawing.Size(75, 22)
-        Me.Btn_QuitarProveedor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_QuitarProveedor.TabIndex = 19
-        Me.Btn_QuitarProveedor.Text = "Quitar"
-        Me.Btn_QuitarProveedor.Tooltip = "Quitar proveedor"
-        '
         'LabelX7
         '
         Me.LabelX7.BackColor = System.Drawing.Color.Transparent
@@ -238,11 +269,11 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(6, 9)
+        Me.LabelX4.Location = New System.Drawing.Point(3, 9)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(101, 23)
         Me.LabelX4.TabIndex = 10
-        Me.LabelX4.Text = "Código empresa"
+        Me.LabelX4.Text = "CÃ³digo empresa"
         '
         'LabelX5
         '
@@ -252,11 +283,11 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         '
         Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX5.ForeColor = System.Drawing.Color.Black
-        Me.LabelX5.Location = New System.Drawing.Point(6, 38)
+        Me.LabelX5.Location = New System.Drawing.Point(3, 38)
         Me.LabelX5.Name = "LabelX5"
         Me.LabelX5.Size = New System.Drawing.Size(101, 23)
         Me.LabelX5.TabIndex = 11
-        Me.LabelX5.Text = "Razón social"
+        Me.LabelX5.Text = "RazÃ³n social"
         '
         'Txt_RazonSocial
         '
@@ -300,13 +331,17 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         '
         Me.Txt_Koen.Border.Class = "TextBoxBorder"
         Me.Txt_Koen.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Koen.ButtonCustom.Image = CType(resources.GetObject("Txt_Koen.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Koen.ButtonCustom.Visible = True
+        Me.Txt_Koen.ButtonCustom2.Image = CType(resources.GetObject("Txt_Koen.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Koen.ButtonCustom2.Visible = True
         Me.Txt_Koen.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Koen.ForeColor = System.Drawing.Color.Black
         Me.Txt_Koen.Location = New System.Drawing.Point(113, 9)
         Me.Txt_Koen.Name = "Txt_Koen"
         Me.Txt_Koen.PreventEnterBeep = True
         Me.Txt_Koen.ReadOnly = True
-        Me.Txt_Koen.Size = New System.Drawing.Size(101, 22)
+        Me.Txt_Koen.Size = New System.Drawing.Size(160, 22)
         Me.Txt_Koen.TabIndex = 2
         '
         'LabelX6
@@ -321,7 +356,7 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         Me.LabelX6.Name = "LabelX6"
         Me.LabelX6.Size = New System.Drawing.Size(101, 23)
         Me.LabelX6.TabIndex = 12
-        Me.LabelX6.Text = "Código Alternativo"
+        Me.LabelX6.Text = "CÃ³digo Alternativo"
         '
         'Txt_Kopral
         '
@@ -331,6 +366,8 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         '
         Me.Txt_Kopral.Border.Class = "TextBoxBorder"
         Me.Txt_Kopral.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Kopral.ButtonCustom.Image = CType(resources.GetObject("Txt_Kopral.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Kopral.ButtonCustom.Visible = True
         Me.Txt_Kopral.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Kopral.ForeColor = System.Drawing.Color.Black
         Me.Txt_Kopral.Location = New System.Drawing.Point(113, 16)
@@ -351,9 +388,9 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         Me.GroupPanel2.Controls.Add(Me.Lbl_LUnimulti)
         Me.GroupPanel2.Controls.Add(Me.Chk_Conmulti)
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel2.Location = New System.Drawing.Point(5, 200)
+        Me.GroupPanel2.Location = New System.Drawing.Point(7, 379)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(587, 70)
+        Me.GroupPanel2.Size = New System.Drawing.Size(587, 65)
         '
         '
         '
@@ -383,7 +420,7 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         '
         Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel2.TabIndex = 9
-        Me.GroupPanel2.Text = "Múltiplos"
+        Me.GroupPanel2.Text = "MÃºltiplos"
         '
         'Cmb_Unimulti
         '
@@ -458,7 +495,7 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         Me.Lbl_LMultiplo.Name = "Lbl_LMultiplo"
         Me.Lbl_LMultiplo.Size = New System.Drawing.Size(46, 23)
         Me.Lbl_LMultiplo.TabIndex = 3
-        Me.Lbl_LMultiplo.Text = "Múltiplo"
+        Me.Lbl_LMultiplo.Text = "MÃºltiplo"
         '
         'Lbl_LUnimulti
         '
@@ -481,13 +518,15 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         '
         '
         Me.Chk_Conmulti.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Conmulti.CheckBoxImageChecked = CType(resources.GetObject("Chk_Conmulti.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Conmulti.FocusCuesEnabled = False
         Me.Chk_Conmulti.ForeColor = System.Drawing.Color.Black
         Me.Chk_Conmulti.Location = New System.Drawing.Point(3, 14)
         Me.Chk_Conmulti.Name = "Chk_Conmulti"
-        Me.Chk_Conmulti.Size = New System.Drawing.Size(165, 23)
+        Me.Chk_Conmulti.Size = New System.Drawing.Size(165, 22)
         Me.Chk_Conmulti.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Conmulti.TabIndex = 5
-        Me.Chk_Conmulti.Text = "Utilizar múltiplos de unidad"
+        Me.Chk_Conmulti.Text = "Utilizar mÃºltiplos de unidad"
         '
         'SuperTabControl1
         '
@@ -514,7 +553,7 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         Me.SuperTabControl1.ReorderTabsEnabled = True
         Me.SuperTabControl1.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
         Me.SuperTabControl1.SelectedTabIndex = 1
-        Me.SuperTabControl1.Size = New System.Drawing.Size(606, 307)
+        Me.SuperTabControl1.Size = New System.Drawing.Size(606, 474)
         Me.SuperTabControl1.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SuperTabControl1.TabIndex = 10
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem2, Me.Stab_3QR})
@@ -522,15 +561,268 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         '
         'SuperTabControlPanel1
         '
+        Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel6)
+        Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel1)
         Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel5)
         Me.SuperTabControlPanel1.Controls.Add(Me.Grupo_Proveedor)
         Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel2)
         Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(606, 280)
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(606, 447)
         Me.SuperTabControlPanel1.TabIndex = 1
         Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
+        '
+        'GroupPanel6
+        '
+        Me.GroupPanel6.BackColor = System.Drawing.Color.White
+        Me.GroupPanel6.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel6.Controls.Add(Me.Cmb_Nmarca_Tratamiento)
+        Me.GroupPanel6.Controls.Add(Me.Cmb_Nmarca_Comportamiento)
+        Me.GroupPanel6.Controls.Add(Me.LabelX34)
+        Me.GroupPanel6.Controls.Add(Me.LabelX33)
+        Me.GroupPanel6.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel6.Location = New System.Drawing.Point(7, 297)
+        Me.GroupPanel6.Name = "GroupPanel6"
+        Me.GroupPanel6.Size = New System.Drawing.Size(587, 76)
+        '
+        '
+        '
+        Me.GroupPanel6.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel6.Style.BackColorGradientAngle = 90
+        Me.GroupPanel6.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel6.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel6.Style.BorderBottomWidth = 1
+        Me.GroupPanel6.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel6.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel6.Style.BorderLeftWidth = 1
+        Me.GroupPanel6.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel6.Style.BorderRightWidth = 1
+        Me.GroupPanel6.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel6.Style.BorderTopWidth = 1
+        Me.GroupPanel6.Style.CornerDiameter = 4
+        Me.GroupPanel6.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel6.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel6.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel6.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel6.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel6.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel6.TabIndex = 12
+        Me.GroupPanel6.Text = "Reglas de comportamiento entre unidades de medida"
+        '
+        'LabelX34
+        '
+        Me.LabelX34.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX34.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX34.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.LabelX34.ForeColor = System.Drawing.Color.Black
+        Me.LabelX34.Location = New System.Drawing.Point(292, 3)
+        Me.LabelX34.Name = "LabelX34"
+        Me.LabelX34.Size = New System.Drawing.Size(280, 23)
+        Me.LabelX34.TabIndex = 92
+        Me.LabelX34.Text = "Tratamientos alternativos para el cÃ¡lculo de RTU"
+        '
+        'LabelX33
+        '
+        Me.LabelX33.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX33.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX33.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.LabelX33.ForeColor = System.Drawing.Color.Black
+        Me.LabelX33.Location = New System.Drawing.Point(3, 3)
+        Me.LabelX33.Name = "LabelX33"
+        Me.LabelX33.Size = New System.Drawing.Size(281, 23)
+        Me.LabelX33.TabIndex = 91
+        Me.LabelX33.Text = "Comportamiento entre unidades de medida" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'GroupPanel1
+        '
+        Me.GroupPanel1.BackColor = System.Drawing.Color.White
+        Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Txt_Rlud)
+        Me.GroupPanel1.Controls.Add(Me.LabelX21)
+        Me.GroupPanel1.Controls.Add(Me.Txt_Ud2)
+        Me.GroupPanel1.Controls.Add(Me.Txt_Ud1)
+        Me.GroupPanel1.Controls.Add(Me.LabelX20)
+        Me.GroupPanel1.Controls.Add(Me.LabelX19)
+        Me.GroupPanel1.Controls.Add(Me.LabelX18)
+        Me.GroupPanel1.Controls.Add(Me.Txt_CodigoDescripcion)
+        Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel1.Location = New System.Drawing.Point(7, 8)
+        Me.GroupPanel1.Name = "GroupPanel1"
+        Me.GroupPanel1.Size = New System.Drawing.Size(587, 91)
+        '
+        '
+        '
+        Me.GroupPanel1.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel1.Style.BackColorGradientAngle = 90
+        Me.GroupPanel1.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel1.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderBottomWidth = 1
+        Me.GroupPanel1.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel1.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderLeftWidth = 1
+        Me.GroupPanel1.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderRightWidth = 1
+        Me.GroupPanel1.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderTopWidth = 1
+        Me.GroupPanel1.Style.CornerDiameter = 4
+        Me.GroupPanel1.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel1.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel1.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel1.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel1.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel1.TabIndex = 11
+        Me.GroupPanel1.Text = "CÃ³digo alternativo"
+        '
+        'Txt_Rlud
+        '
+        Me.Txt_Rlud.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Rlud.Border.Class = "TextBoxBorder"
+        Me.Txt_Rlud.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Rlud.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Rlud.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Rlud.Location = New System.Drawing.Point(516, 15)
+        Me.Txt_Rlud.Name = "Txt_Rlud"
+        Me.Txt_Rlud.PreventEnterBeep = True
+        Me.Txt_Rlud.ReadOnly = True
+        Me.Txt_Rlud.Size = New System.Drawing.Size(56, 22)
+        Me.Txt_Rlud.TabIndex = 25
+        Me.Txt_Rlud.TabStop = False
+        Me.Txt_Rlud.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'LabelX21
+        '
+        Me.LabelX21.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX21.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX21.ForeColor = System.Drawing.Color.Black
+        Me.LabelX21.Location = New System.Drawing.Point(491, 14)
+        Me.LabelX21.Name = "LabelX21"
+        Me.LabelX21.Size = New System.Drawing.Size(29, 23)
+        Me.LabelX21.TabIndex = 26
+        Me.LabelX21.Text = "RTU"
+        '
+        'Txt_Ud2
+        '
+        Me.Txt_Ud2.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Ud2.Border.Class = "TextBoxBorder"
+        Me.Txt_Ud2.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Ud2.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Ud2.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Ud2.Location = New System.Drawing.Point(423, 14)
+        Me.Txt_Ud2.Name = "Txt_Ud2"
+        Me.Txt_Ud2.PreventEnterBeep = True
+        Me.Txt_Ud2.ReadOnly = True
+        Me.Txt_Ud2.Size = New System.Drawing.Size(35, 22)
+        Me.Txt_Ud2.TabIndex = 23
+        Me.Txt_Ud2.TabStop = False
+        Me.Txt_Ud2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Txt_Ud1
+        '
+        Me.Txt_Ud1.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Ud1.Border.Class = "TextBoxBorder"
+        Me.Txt_Ud1.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Ud1.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Ud1.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Ud1.Location = New System.Drawing.Point(357, 15)
+        Me.Txt_Ud1.Name = "Txt_Ud1"
+        Me.Txt_Ud1.PreventEnterBeep = True
+        Me.Txt_Ud1.ReadOnly = True
+        Me.Txt_Ud1.Size = New System.Drawing.Size(35, 22)
+        Me.Txt_Ud1.TabIndex = 21
+        Me.Txt_Ud1.TabStop = False
+        Me.Txt_Ud1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'LabelX20
+        '
+        Me.LabelX20.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX20.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX20.ForeColor = System.Drawing.Color.Black
+        Me.LabelX20.Location = New System.Drawing.Point(398, 14)
+        Me.LabelX20.Name = "LabelX20"
+        Me.LabelX20.Size = New System.Drawing.Size(29, 23)
+        Me.LabelX20.TabIndex = 24
+        Me.LabelX20.Text = "Ud1"
+        '
+        'LabelX19
+        '
+        Me.LabelX19.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX19.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX19.ForeColor = System.Drawing.Color.Black
+        Me.LabelX19.Location = New System.Drawing.Point(333, 15)
+        Me.LabelX19.Name = "LabelX19"
+        Me.LabelX19.Size = New System.Drawing.Size(29, 23)
+        Me.LabelX19.TabIndex = 22
+        Me.LabelX19.Text = "Ud1"
+        '
+        'LabelX18
+        '
+        Me.LabelX18.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX18.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX18.ForeColor = System.Drawing.Color.Black
+        Me.LabelX18.Location = New System.Drawing.Point(3, 11)
+        Me.LabelX18.Name = "LabelX18"
+        Me.LabelX18.Size = New System.Drawing.Size(153, 23)
+        Me.LabelX18.TabIndex = 20
+        Me.LabelX18.Text = "CÃ³digo/DescripciÃ³n"
+        '
+        'Txt_CodigoDescripcion
+        '
+        Me.Txt_CodigoDescripcion.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CodigoDescripcion.Border.Class = "TextBoxBorder"
+        Me.Txt_CodigoDescripcion.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CodigoDescripcion.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CodigoDescripcion.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CodigoDescripcion.Location = New System.Drawing.Point(3, 40)
+        Me.Txt_CodigoDescripcion.Name = "Txt_CodigoDescripcion"
+        Me.Txt_CodigoDescripcion.PreventEnterBeep = True
+        Me.Txt_CodigoDescripcion.ReadOnly = True
+        Me.Txt_CodigoDescripcion.Size = New System.Drawing.Size(569, 22)
+        Me.Txt_CodigoDescripcion.TabIndex = 1
+        Me.Txt_CodigoDescripcion.TabStop = False
         '
         'GroupPanel5
         '
@@ -542,7 +834,7 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         Me.GroupPanel5.Controls.Add(Me.Txt_Kopral)
         Me.GroupPanel5.Controls.Add(Me.ReflectionImage1)
         Me.GroupPanel5.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel5.Location = New System.Drawing.Point(5, 3)
+        Me.GroupPanel5.Location = New System.Drawing.Point(7, 105)
         Me.GroupPanel5.Name = "GroupPanel5"
         Me.GroupPanel5.Size = New System.Drawing.Size(587, 95)
         '
@@ -574,7 +866,7 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         '
         Me.GroupPanel5.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel5.TabIndex = 10
-        Me.GroupPanel5.Text = "Código alternativo"
+        Me.GroupPanel5.Text = "CÃ³digo alternativo"
         '
         'LabelX17
         '
@@ -584,11 +876,11 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         '
         Me.LabelX17.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX17.ForeColor = System.Drawing.Color.Black
-        Me.LabelX17.Location = New System.Drawing.Point(6, 44)
+        Me.LabelX17.Location = New System.Drawing.Point(3, 44)
         Me.LabelX17.Name = "LabelX17"
         Me.LabelX17.Size = New System.Drawing.Size(101, 23)
         Me.LabelX17.TabIndex = 20
-        Me.LabelX17.Text = "Descripción"
+        Me.LabelX17.Text = "DescripciÃ³n"
         '
         'Txt_Nokopral
         '
@@ -627,55 +919,7 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel1
         Me.SuperTabItem1.GlobalItem = False
         Me.SuperTabItem1.Name = "SuperTabItem1"
-        Me.SuperTabItem1.Text = " Código"
-        '
-        'SuperTabControlPanel3
-        '
-        Me.SuperTabControlPanel3.Controls.Add(Me.Btn_Quitar_QR)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Txt_CodigoQR)
-        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(606, 280)
-        Me.SuperTabControlPanel3.TabIndex = 0
-        Me.SuperTabControlPanel3.TabItem = Me.Stab_3QR
-        '
-        'Btn_Quitar_QR
-        '
-        Me.Btn_Quitar_QR.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Quitar_QR.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Quitar_QR.Location = New System.Drawing.Point(7, 253)
-        Me.Btn_Quitar_QR.Name = "Btn_Quitar_QR"
-        Me.Btn_Quitar_QR.Size = New System.Drawing.Size(99, 23)
-        Me.Btn_Quitar_QR.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Quitar_QR.TabIndex = 1
-        Me.Btn_Quitar_QR.Text = "Quitar código QR"
-        '
-        'Txt_CodigoQR
-        '
-        Me.Txt_CodigoQR.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_CodigoQR.Border.Class = "TextBoxBorder"
-        Me.Txt_CodigoQR.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CodigoQR.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CodigoQR.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CodigoQR.Location = New System.Drawing.Point(7, 3)
-        Me.Txt_CodigoQR.MaxLength = 300
-        Me.Txt_CodigoQR.Multiline = True
-        Me.Txt_CodigoQR.Name = "Txt_CodigoQR"
-        Me.Txt_CodigoQR.PreventEnterBeep = True
-        Me.Txt_CodigoQR.Size = New System.Drawing.Size(593, 244)
-        Me.Txt_CodigoQR.TabIndex = 0
-        '
-        'Stab_3QR
-        '
-        Me.Stab_3QR.AttachedControl = Me.SuperTabControlPanel3
-        Me.Stab_3QR.GlobalItem = False
-        Me.Stab_3QR.Name = "Stab_3QR"
-        Me.Stab_3QR.Text = "Código QR"
-        Me.Stab_3QR.Visible = False
+        Me.SuperTabItem1.Text = " CÃ³digo"
         '
         'SuperTabControlPanel2
         '
@@ -688,7 +932,7 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(606, 280)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(606, 447)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
         '
@@ -722,7 +966,7 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(64, 23)
         Me.LabelX2.TabIndex = 7
-        Me.LabelX2.Text = "Múlt.Compra"
+        Me.LabelX2.Text = "MÃºlt.Compra"
         '
         'Txt_Cantmincom
         '
@@ -1181,11 +1425,59 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         Me.SuperTabItem2.Name = "SuperTabItem2"
         Me.SuperTabItem2.Text = "B2B"
         '
+        'SuperTabControlPanel3
+        '
+        Me.SuperTabControlPanel3.Controls.Add(Me.Btn_Quitar_QR)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Txt_CodigoQR)
+        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(606, 447)
+        Me.SuperTabControlPanel3.TabIndex = 0
+        Me.SuperTabControlPanel3.TabItem = Me.Stab_3QR
+        '
+        'Btn_Quitar_QR
+        '
+        Me.Btn_Quitar_QR.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Quitar_QR.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Quitar_QR.Location = New System.Drawing.Point(7, 355)
+        Me.Btn_Quitar_QR.Name = "Btn_Quitar_QR"
+        Me.Btn_Quitar_QR.Size = New System.Drawing.Size(99, 23)
+        Me.Btn_Quitar_QR.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Quitar_QR.TabIndex = 1
+        Me.Btn_Quitar_QR.Text = "Quitar cÃ³digo QR"
+        '
+        'Txt_CodigoQR
+        '
+        Me.Txt_CodigoQR.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CodigoQR.Border.Class = "TextBoxBorder"
+        Me.Txt_CodigoQR.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CodigoQR.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CodigoQR.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CodigoQR.Location = New System.Drawing.Point(7, 3)
+        Me.Txt_CodigoQR.MaxLength = 300
+        Me.Txt_CodigoQR.Multiline = True
+        Me.Txt_CodigoQR.Name = "Txt_CodigoQR"
+        Me.Txt_CodigoQR.PreventEnterBeep = True
+        Me.Txt_CodigoQR.Size = New System.Drawing.Size(593, 346)
+        Me.Txt_CodigoQR.TabIndex = 0
+        '
+        'Stab_3QR
+        '
+        Me.Stab_3QR.AttachedControl = Me.SuperTabControlPanel3
+        Me.Stab_3QR.GlobalItem = False
+        Me.Stab_3QR.Name = "Stab_3QR"
+        Me.Stab_3QR.Text = "CÃ³digo QR"
+        Me.Stab_3QR.Visible = False
+        '
         'Frm_CreaProductos_04_CodAlternativo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(617, 369)
+        Me.ClientSize = New System.Drawing.Size(619, 533)
         Me.Controls.Add(Me.SuperTabControl1)
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
@@ -1198,18 +1490,20 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
         Me.Name = "Frm_CreaProductos_04_CodAlternativo"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Verificación de código alternativo"
+        Me.Text = "VerificaciÃ³n de cÃ³digo alternativo"
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Grupo_Proveedor.ResumeLayout(False)
         Me.GroupPanel2.ResumeLayout(False)
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
         Me.SuperTabControlPanel1.ResumeLayout(False)
+        Me.GroupPanel6.ResumeLayout(False)
+        Me.GroupPanel1.ResumeLayout(False)
         Me.GroupPanel5.ResumeLayout(False)
-        Me.SuperTabControlPanel3.ResumeLayout(False)
         Me.SuperTabControlPanel2.ResumeLayout(False)
         Me.GroupPanel4.ResumeLayout(False)
         Me.GroupPanel3.ResumeLayout(False)
+        Me.SuperTabControlPanel3.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -1268,7 +1562,6 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
     Friend WithEvents GroupPanel5 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents LabelX17 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_Nokopral As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents Btn_QuitarProveedor As DevComponents.DotNetBar.ButtonX
     Friend WithEvents ReflectionImage1 As DevComponents.DotNetBar.Controls.ReflectionImage
     Friend WithEvents Btn_CodQR As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents SuperTabControlPanel3 As DevComponents.DotNetBar.SuperTabControlPanel
@@ -1276,4 +1569,18 @@ Partial Class Frm_CreaProductos_04_CodAlternativo
     Friend WithEvents Txt_CodigoQR As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Stab_3QR As DevComponents.DotNetBar.SuperTabItem
     Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents Txt_Rlud As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX21 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_Ud2 As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Txt_Ud1 As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX20 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX19 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX18 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_CodigoDescripcion As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents GroupPanel6 As DevComponents.DotNetBar.Controls.GroupPanel
+    Public WithEvents Cmb_Nmarca_Tratamiento As DevComponents.DotNetBar.Controls.ComboBoxEx
+    Public WithEvents Cmb_Nmarca_Comportamiento As DevComponents.DotNetBar.Controls.ComboBoxEx
+    Friend WithEvents LabelX34 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX33 As DevComponents.DotNetBar.LabelX
 End Class

@@ -290,6 +290,66 @@ Public Class Frm_FacturacionElectronica
 
     End Sub
 
+    Private Sub Btn_ReFirmarEnvioCorreo_Click(sender As Object, e As EventArgs) Handles Btn_ReFirmarEnvioCorreo.Click
 
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+        Dim Consulta_sql As String
+
+        Dim _AmbienteCertificacion As Integer = Convert.ToInt32(Chk_AmbienteCertificacion.Checked)
+
+        Dim _Id_Dte As Integer = Txt_Id_Dte2.Text
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Documentos Where Id_Dte = " & _Id_Dte
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Idmaeedo As Integer = _Row.Item("Idmaeedo")
+        Dim _CaratulaXmlEmail As String = _Row.Item("CaratulaXmlEmail")
+
+        If Not String.IsNullOrEmpty(_CaratulaXmlEmail) Then
+            If MessageBoxEx.Show(Me, "Ya tiene la caratula" & vbCrLf &
+                                 "¿Desea grabar igualmente?", "Tiene Caratula", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                Return
+            End If
+        End If
+
+        Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+        If String.IsNullOrEmpty(_Class_DTE.Fx_Timbrar_Documento_Hefesto2(Me, _Id_Dte)) Then
+            MessageBoxEx.Show(Me, "Documento regularizado correctamente", "Re-firmar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+
+    End Sub
+
+    Private Sub Btn_RefirmarIdmaeedo_Click(sender As Object, e As EventArgs) Handles Btn_RefirmarIdmaeedo.Click
+
+        Dim _Idmaeedo = Txt_Idmaeedo2.Text
+
+        Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+        Dim _Id_Dte As Integer = _Class_DTE.Fx_Timbrar_Documento_Hefesto(Me)
+
+    End Sub
+
+    Private Sub Btn_AEC_Click(sender As Object, e As EventArgs) Handles Btn_AEC.Click
+
+        Dim _Id_Aec As Integer = Txt_Id_Aec.Text
+        Dim _Idmaeedo As Integer
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Aec Where Id_Aec = " & _Id_Aec
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        _Idmaeedo = _Row.Item("Idmaeedo")
+
+        Dim _Fx_AEC_EnviarCesion As HefestoCesionV12.HefRespuesta
+
+        Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+        _Fx_AEC_EnviarCesion = _Class_DTE.Fx_AEC_EnviarCesion(_Id_Aec)
+
+        If _Fx_AEC_EnviarCesion.EsCorrecto Then
+            MessageBoxEx.Show(Me, "Documento cedido correctamente Trackid: " & _Fx_AEC_EnviarCesion.Trackid, "Archivo Electrónico de Cesión (AEC)",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Else
+            MessageBoxEx.Show(Me, _Class_DTE.Pro_Errores(0), "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
+
+    End Sub
 
 End Class

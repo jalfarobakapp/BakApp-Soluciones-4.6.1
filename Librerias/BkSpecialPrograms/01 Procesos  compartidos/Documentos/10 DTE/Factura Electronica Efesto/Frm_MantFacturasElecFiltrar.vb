@@ -1,4 +1,6 @@
-﻿Public Class Frm_MantFacturasElecFiltrar
+﻿Imports DevComponents.DotNetBar
+
+Public Class Frm_MantFacturasElecFiltrar
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -158,6 +160,11 @@
         AddHandler Rdb_Sucursales_Algunas.CheckedChanged, AddressOf Rdb_CheckedChanged
         AddHandler Rdb_Entidades_Algunas.CheckedChanged, AddressOf Rdb_CheckedChanged
 
+        Sb_Habilitar_Grupos(Rdb_Buscar_Todos.Checked)
+
+        AddHandler Rdb_Buscar_Todos.CheckedChanged, AddressOf Rdb_Buscar_Todos_CheckedChanged
+        AddHandler Rdb_Buscar_Uno.CheckedChanged, AddressOf Rdb_Buscar_Todos_CheckedChanged
+
         'If _Global_Row_Configuracion_Estacion.Item("FacElect_Usar_AmbienteCertificacion") Then
         '    Dim _BackColor_Tido As Color = Color.FromArgb(235, 81, 13)
         '    MStb_Barra.BackgroundStyle.BackColor = _BackColor_Tido
@@ -250,12 +257,59 @@
         _Cl_MFElec.Entidades_Todas = Rdb_Entidades_Todas.Checked
         _Cl_MFElec.Fecha_Desde = Dtp_Fecha_Emision_Desde.Value
         _Cl_MFElec.Fecha_Hasta = Dtp_Fecha_Emision_Hasta.Value
+
+        If Rdb_Buscar_Uno.Checked Then
+            _Cl_MFElec.Idmaeedo = Txt_Documento.Tag
+            If Not CBool(_Cl_MFElec.Idmaeedo) Then
+                MessageBoxEx.Show(Me, "Falta el documento a buscar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+        Else
+            _Cl_MFElec.Idmaeedo = 0
+            Txt_Documento.Tag = 0
+            Txt_Documento.Text = String.Empty
+        End If
+
+        If Rdb_EstadoTodos.Checked Then
+            _Cl_MFElec.Estado_Aceptado = False
+            _Cl_MFElec.Estado_AceptadoReparos = False
+            _Cl_MFElec.Estado_Rechazado = False
+            _Cl_MFElec.Estado_SinFirmar = False
+        End If
+
+        If Rdb_EstadoExcepciones.Checked Then
+            _Cl_MFElec.Estado_Aceptado = Rdb_EstadoAceptados.Checked
+            _Cl_MFElec.Estado_AceptadoReparos = Rdb_EstadoAceptadosReparos.Checked
+            _Cl_MFElec.Estado_Rechazado = Rdb_EstadoRechazados.Checked
+            _Cl_MFElec.Estado_SinFirmar = Rdb_EstadoSinFirmar.Checked
+        End If
+
         _Aceptar = True
+
+        Me.Enabled = False
 
         Dim Fm2 As New Frm_MantFacturasElectronicas
         Fm2.Cl_MFElec = _Cl_MFElec
-        Fm2.ShowDialog(Me)
+        Fm2.Ds = Fm2.Fx_Generar_Informe
+        Dim _SinRegistros As Boolean
+
+        If IsNothing(Fm2.Ds) Then _SinRegistros = True
+
+        If Not _SinRegistros Then
+            If Fm2.Ds.Tables(0).Rows.Count Then
+                Fm2.ShowDialog(Me)
+            Else
+                _SinRegistros = True
+            End If
+        End If
+
+        If _SinRegistros Then
+            MessageBoxEx.Show(Me, "No hay registros que mostrar", "Buscar documentos DTE", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
+
         Fm2.Dispose()
+
+        Me.Enabled = True
 
     End Sub
 
@@ -263,6 +317,41 @@
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
+    End Sub
+
+    Sub Sb_Habilitar_Grupos(_Habilitar_Todo As Boolean)
+
+        Grupo_Estado.Enabled = _Habilitar_Todo
+        Grupo_Fechas.Enabled = _Habilitar_Todo
+        Grupo_Filtros.Enabled = _Habilitar_Todo
+        Grupo_Uno.Enabled = Not _Habilitar_Todo
+
+    End Sub
+
+    Private Sub Rdb_Buscar_Todos_CheckedChanged(sender As Object, e As EventArgs)
+        Sb_Habilitar_Grupos(Rdb_Buscar_Todos.Checked)
+    End Sub
+
+    Private Sub Rdb_EstadoExcepciones_CheckedChanged(sender As Object, e As EventArgs) Handles Rdb_EstadoExcepciones.CheckedChanged
+        Grupo_Excepciones.Enabled = Rdb_EstadoExcepciones.Checked
+    End Sub
+
+    Private Sub Txt_Documento_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Documento.ButtonCustomClick
+
+        Dim _Fm As New Frm_BusquedaDocumento_Filtro(False)
+        _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "NVV",
+                                 "Where TIDO In ('BLV','FCL','FCT','FCV','FDE','FDV','FDX','FEV','FVX','FXV','FYV','GDD','GDP','GDV','GTI','NCV','NCX','NEV')")
+        _Fm.Rdb_Estado_Todos.Enabled = False
+        _Fm.Rdb_Estado_Vigente.Checked = True
+        _Fm.ShowDialog(Me)
+        Dim _Row_Documento As DataRow = _Fm.Pro_Row_Documento_Seleccionado
+        _Fm.Dispose()
+
+        If Not IsNothing(_Row_Documento) Then
+            Txt_Documento.Text = _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
+            Txt_Documento.Tag = _Row_Documento.Item("IDMAEEDO")
+        End If
+
     End Sub
 
 End Class

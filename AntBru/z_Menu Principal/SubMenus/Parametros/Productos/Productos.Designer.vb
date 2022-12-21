@@ -41,11 +41,12 @@ Partial Class Productos
         Me.Btn_AjustePM = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.BtnRankingProductos = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Kardex_Inventario = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_ImagenesXProductos = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_ImpAdicionalXProd = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Radio1 = New DevComponents.DotNetBar.Command(Me.components)
         Me.Radio2 = New DevComponents.DotNetBar.Command(Me.components)
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Radio3 = New DevComponents.DotNetBar.Command(Me.components)
-        Me.Btn_ImagenesXProductos = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -111,7 +112,7 @@ Partial Class Productos
         Me.MnuEspecialProductos.FixedSize = New System.Drawing.Size(850, 500)
         Me.MnuEspecialProductos.MultiLine = True
         Me.MnuEspecialProductos.Name = "MnuEspecialProductos"
-        Me.MnuEspecialProductos.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Maestra_Productos, Me.Btn_CodAlternativo, Me.Btn_CambiarCodProducto, Me.BtnUbicProductos, Me.BtnUnificarProductos, Me.BtnConsolidarStock, Me.Btn_Tablas, Me.BtnCP_Matriz, Me.Btn_Arbol_Clasificaciones, Me.Btn_AjustePM, Me.BtnRankingProductos, Me.Btn_Kardex_Inventario, Me.Btn_ImagenesXProductos})
+        Me.MnuEspecialProductos.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Maestra_Productos, Me.Btn_CodAlternativo, Me.Btn_CambiarCodProducto, Me.BtnUbicProductos, Me.BtnUnificarProductos, Me.BtnConsolidarStock, Me.Btn_Tablas, Me.BtnCP_Matriz, Me.Btn_Arbol_Clasificaciones, Me.Btn_AjustePM, Me.BtnRankingProductos, Me.Btn_Kardex_Inventario, Me.Btn_ImagenesXProductos, Me.Btn_ImpAdicionalXProd})
         '
         '
         '
@@ -424,6 +425,60 @@ Partial Class Productos
         Me.Btn_Kardex_Inventario.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
         Me.Btn_Kardex_Inventario.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
         '
+        'Btn_ImagenesXProductos
+        '
+        Me.Btn_ImagenesXProductos.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_ImagenesXProductos.Image = CType(resources.GetObject("Btn_ImagenesXProductos.Image"), System.Drawing.Image)
+        Me.Btn_ImagenesXProductos.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_ImagenesXProductos.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_ImagenesXProductos.Name = "Btn_ImagenesXProductos"
+        Me.Btn_ImagenesXProductos.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_ImagenesXProductos.Text = "<font size=""+4""><b>IMAGENES POR PRODUCTOS URL.</b></font><br/><font size=""-1"">Lis" &
+    "tado de tabla donde se guardan las imagenes de los productos URL</font>"
+        Me.Btn_ImagenesXProductos.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
+        Me.Btn_ImagenesXProductos.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_ImagenesXProductos.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_ImagenesXProductos.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_ImagenesXProductos.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_ImagenesXProductos.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_ImagenesXProductos.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_ImagenesXProductos.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_ImagenesXProductos.TileStyle.PaddingBottom = 4
+        Me.Btn_ImagenesXProductos.TileStyle.PaddingLeft = 4
+        Me.Btn_ImagenesXProductos.TileStyle.PaddingRight = 4
+        Me.Btn_ImagenesXProductos.TileStyle.PaddingTop = 4
+        Me.Btn_ImagenesXProductos.TileStyle.TextColor = System.Drawing.Color.White
+        '
+        'Btn_ImpAdicionalXProd
+        '
+        Me.Btn_ImpAdicionalXProd.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_ImpAdicionalXProd.Image = CType(resources.GetObject("Btn_ImpAdicionalXProd.Image"), System.Drawing.Image)
+        Me.Btn_ImpAdicionalXProd.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_ImpAdicionalXProd.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_ImpAdicionalXProd.Name = "Btn_ImpAdicionalXProd"
+        Me.Btn_ImpAdicionalXProd.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_ImpAdicionalXProd.Text = "<font size=""+4""><b>IMPRESION ADICIONAL</b></font><br/><font size=""-1"">Productos q" &
+    "ue gatillan una impresión adicional</font>"
+        Me.Btn_ImpAdicionalXProd.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Magenta
+        Me.Btn_ImpAdicionalXProd.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_ImpAdicionalXProd.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(93, Byte), Integer), CType(CType(171, Byte), Integer))
+        Me.Btn_ImpAdicionalXProd.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(93, Byte), Integer), CType(CType(171, Byte), Integer))
+        Me.Btn_ImpAdicionalXProd.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_ImpAdicionalXProd.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(93, Byte), Integer), CType(CType(171, Byte), Integer))
+        Me.Btn_ImpAdicionalXProd.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(93, Byte), Integer), CType(CType(171, Byte), Integer))
+        Me.Btn_ImpAdicionalXProd.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_ImpAdicionalXProd.TileStyle.PaddingBottom = 4
+        Me.Btn_ImpAdicionalXProd.TileStyle.PaddingLeft = 4
+        Me.Btn_ImpAdicionalXProd.TileStyle.PaddingRight = 4
+        Me.Btn_ImpAdicionalXProd.TileStyle.PaddingTop = 4
+        Me.Btn_ImpAdicionalXProd.TileStyle.TextColor = System.Drawing.Color.White
+        '
         'Radio1
         '
         Me.Radio1.Checked = True
@@ -453,33 +508,6 @@ Partial Class Productos
         '
         Me.Radio3.Name = "Radio3"
         Me.Radio3.Text = "Con movimientos hoy"
-        '
-        'Btn_ImagenesXProductos
-        '
-        Me.Btn_ImagenesXProductos.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_ImagenesXProductos.Image = CType(resources.GetObject("Btn_ImagenesXProductos.Image"), System.Drawing.Image)
-        Me.Btn_ImagenesXProductos.ImageIndent = New System.Drawing.Point(8, -10)
-        Me.Btn_ImagenesXProductos.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_ImagenesXProductos.Name = "Btn_ImagenesXProductos"
-        Me.Btn_ImagenesXProductos.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_ImagenesXProductos.Text = "<font size=""+4""><b>IMAGENES POR PRODUCTOS URL.</b></font><br/><font size=""-1"">Lis" &
-    "tado de tabla donde se guardan las imagenes de los productos URL</font>"
-        Me.Btn_ImagenesXProductos.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
-        Me.Btn_ImagenesXProductos.TileSize = New System.Drawing.Size(200, 100)
-        '
-        '
-        '
-        Me.Btn_ImagenesXProductos.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
-        Me.Btn_ImagenesXProductos.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
-        Me.Btn_ImagenesXProductos.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_ImagenesXProductos.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
-        Me.Btn_ImagenesXProductos.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
-        Me.Btn_ImagenesXProductos.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_ImagenesXProductos.TileStyle.PaddingBottom = 4
-        Me.Btn_ImagenesXProductos.TileStyle.PaddingLeft = 4
-        Me.Btn_ImagenesXProductos.TileStyle.PaddingRight = 4
-        Me.Btn_ImagenesXProductos.TileStyle.PaddingTop = 4
-        Me.Btn_ImagenesXProductos.TileStyle.TextColor = System.Drawing.Color.White
         '
         'Productos
         '
@@ -516,4 +544,5 @@ Partial Class Productos
     Friend WithEvents Radio3 As DevComponents.DotNetBar.Command
     Private WithEvents Btn_Kardex_Inventario As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_ImagenesXProductos As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_ImpAdicionalXProd As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

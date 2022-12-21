@@ -35,13 +35,12 @@ Partial Class Frm_MantCostosPrecios
         Me.Btn_Cancelar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Actualizar_Lista_Random = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ImportarFletes = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ImportarPreciosOtraLista = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Lbl_Rtu = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Uc1 = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Uc2 = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Pm = New DevComponents.DotNetBar.LabelX()
-        Me.GrupoCostoLt = New System.Windows.Forms.GroupBox()
-        Me.LblCostoDefecto = New DevComponents.DotNetBar.LabelX()
         Me.ChkUd1XUd2 = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Productos = New DevComponents.DotNetBar.ButtonItem()
@@ -113,10 +112,11 @@ Partial Class Frm_MantCostosPrecios
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.Dtp_FechaVigenciaDesde = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
-        Me.Btn_ImportarPreciosOtraLista = New DevComponents.DotNetBar.ButtonItem()
+        Me.Chk_Quitar_Bloqueados_venta = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Ver_Solo_Repetidos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_NoUsar_Bloqueados = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Barrar_Menu, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GrupoCostoLt.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip2.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
@@ -220,6 +220,15 @@ Partial Class Frm_MantCostosPrecios
         Me.Btn_ImportarFletes.Name = "Btn_ImportarFletes"
         Me.Btn_ImportarFletes.Tooltip = "Importar el precio del flete desde la base datos del proveedor"
         '
+        'Btn_ImportarPreciosOtraLista
+        '
+        Me.Btn_ImportarPreciosOtraLista.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_ImportarPreciosOtraLista.ForeColor = System.Drawing.Color.Black
+        Me.Btn_ImportarPreciosOtraLista.Image = CType(resources.GetObject("Btn_ImportarPreciosOtraLista.Image"), System.Drawing.Image)
+        Me.Btn_ImportarPreciosOtraLista.ImageAlt = CType(resources.GetObject("Btn_ImportarPreciosOtraLista.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ImportarPreciosOtraLista.Name = "Btn_ImportarPreciosOtraLista"
+        Me.Btn_ImportarPreciosOtraLista.Tooltip = "Importar precios desde otra lista, mismo proveedor"
+        '
         'Grilla
         '
         Me.Grilla.AllowUserToAddRows = False
@@ -318,34 +327,6 @@ Partial Class Frm_MantCostosPrecios
         Me.Lbl_Pm.Text = "PM"
         Me.Lbl_Pm.TextAlignment = System.Drawing.StringAlignment.Center
         '
-        'GrupoCostoLt
-        '
-        Me.GrupoCostoLt.BackColor = System.Drawing.Color.White
-        Me.GrupoCostoLt.Controls.Add(Me.LblCostoDefecto)
-        Me.GrupoCostoLt.ForeColor = System.Drawing.Color.Black
-        Me.GrupoCostoLt.Location = New System.Drawing.Point(688, 421)
-        Me.GrupoCostoLt.Name = "GrupoCostoLt"
-        Me.GrupoCostoLt.Size = New System.Drawing.Size(65, 44)
-        Me.GrupoCostoLt.TabIndex = 38
-        Me.GrupoCostoLt.TabStop = False
-        Me.GrupoCostoLt.Text = "Costo Lt Ud1"
-        Me.GrupoCostoLt.Visible = False
-        '
-        'LblCostoDefecto
-        '
-        Me.LblCostoDefecto.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.LblCostoDefecto.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LblCostoDefecto.ForeColor = System.Drawing.Color.Black
-        Me.LblCostoDefecto.Location = New System.Drawing.Point(6, 18)
-        Me.LblCostoDefecto.Name = "LblCostoDefecto"
-        Me.LblCostoDefecto.Size = New System.Drawing.Size(66, 23)
-        Me.LblCostoDefecto.TabIndex = 34
-        Me.LblCostoDefecto.Text = "UC1"
-        Me.LblCostoDefecto.TextAlignment = System.Drawing.StringAlignment.Center
-        '
         'ChkUd1XUd2
         '
         Me.ChkUd1XUd2.BackColor = System.Drawing.Color.White
@@ -401,12 +382,14 @@ Partial Class Frm_MantCostosPrecios
         'Btn_Estadisticas_Producto
         '
         Me.Btn_Estadisticas_Producto.Image = CType(resources.GetObject("Btn_Estadisticas_Producto.Image"), System.Drawing.Image)
+        Me.Btn_Estadisticas_Producto.ImageAlt = CType(resources.GetObject("Btn_Estadisticas_Producto.ImageAlt"), System.Drawing.Image)
         Me.Btn_Estadisticas_Producto.Name = "Btn_Estadisticas_Producto"
         Me.Btn_Estadisticas_Producto.Text = "Ver estadísticas del producto/información adicional"
         '
         'Btn_Codigos_Alternativos
         '
         Me.Btn_Codigos_Alternativos.Image = CType(resources.GetObject("Btn_Codigos_Alternativos.Image"), System.Drawing.Image)
+        Me.Btn_Codigos_Alternativos.ImageAlt = CType(resources.GetObject("Btn_Codigos_Alternativos.ImageAlt"), System.Drawing.Image)
         Me.Btn_Codigos_Alternativos.Name = "Btn_Codigos_Alternativos"
         Me.Btn_Codigos_Alternativos.Text = "Mantención de códigos alternativos del productos"
         '
@@ -420,6 +403,7 @@ Partial Class Frm_MantCostosPrecios
         'Btn_Copiar_datos
         '
         Me.Btn_Copiar_datos.Image = CType(resources.GetObject("Btn_Copiar_datos.Image"), System.Drawing.Image)
+        Me.Btn_Copiar_datos.ImageAlt = CType(resources.GetObject("Btn_Copiar_datos.ImageAlt"), System.Drawing.Image)
         Me.Btn_Copiar_datos.Name = "Btn_Copiar_datos"
         Me.Btn_Copiar_datos.Text = "Copiar este datos en todos los productos marcados"
         '
@@ -446,12 +430,14 @@ Partial Class Frm_MantCostosPrecios
         'Btn_Ejecutar_Formula
         '
         Me.Btn_Ejecutar_Formula.Image = CType(resources.GetObject("Btn_Ejecutar_Formula.Image"), System.Drawing.Image)
+        Me.Btn_Ejecutar_Formula.ImageAlt = CType(resources.GetObject("Btn_Ejecutar_Formula.ImageAlt"), System.Drawing.Image)
         Me.Btn_Ejecutar_Formula.Name = "Btn_Ejecutar_Formula"
         Me.Btn_Ejecutar_Formula.Text = "Ejecutar formula"
         '
         'Btn_Configurar_Formula_Linea
         '
         Me.Btn_Configurar_Formula_Linea.Image = CType(resources.GetObject("Btn_Configurar_Formula_Linea.Image"), System.Drawing.Image)
+        Me.Btn_Configurar_Formula_Linea.ImageAlt = CType(resources.GetObject("Btn_Configurar_Formula_Linea.ImageAlt"), System.Drawing.Image)
         Me.Btn_Configurar_Formula_Linea.Name = "Btn_Configurar_Formula_Linea"
         Me.Btn_Configurar_Formula_Linea.Text = "Configuración de formula"
         '
@@ -471,12 +457,14 @@ Partial Class Frm_MantCostosPrecios
         'Btn_Copiar_Formula
         '
         Me.Btn_Copiar_Formula.Image = CType(resources.GetObject("Btn_Copiar_Formula.Image"), System.Drawing.Image)
+        Me.Btn_Copiar_Formula.ImageAlt = CType(resources.GetObject("Btn_Copiar_Formula.ImageAlt"), System.Drawing.Image)
         Me.Btn_Copiar_Formula.Name = "Btn_Copiar_Formula"
         Me.Btn_Copiar_Formula.Text = "Copiar la fórmula de este producto en todos los productos marcados"
         '
         'Btn_Copiar_Datos_Precios
         '
         Me.Btn_Copiar_Datos_Precios.Image = CType(resources.GetObject("Btn_Copiar_Datos_Precios.Image"), System.Drawing.Image)
+        Me.Btn_Copiar_Datos_Precios.ImageAlt = CType(resources.GetObject("Btn_Copiar_Datos_Precios.ImageAlt"), System.Drawing.Image)
         Me.Btn_Copiar_Datos_Precios.Name = "Btn_Copiar_Datos_Precios"
         Me.Btn_Copiar_Datos_Precios.Text = "Copiar este dato en todos los productos marcados (Valor)"
         '
@@ -503,12 +491,14 @@ Partial Class Frm_MantCostosPrecios
         'Btn_PM_Linea
         '
         Me.Btn_PM_Linea.Image = CType(resources.GetObject("Btn_PM_Linea.Image"), System.Drawing.Image)
+        Me.Btn_PM_Linea.ImageAlt = CType(resources.GetObject("Btn_PM_Linea.ImageAlt"), System.Drawing.Image)
         Me.Btn_PM_Linea.Name = "Btn_PM_Linea"
         Me.Btn_PM_Linea.Text = "Traer el PM de este producto"
         '
         'Btn_UC_Linea
         '
         Me.Btn_UC_Linea.Image = CType(resources.GetObject("Btn_UC_Linea.Image"), System.Drawing.Image)
+        Me.Btn_UC_Linea.ImageAlt = CType(resources.GetObject("Btn_UC_Linea.ImageAlt"), System.Drawing.Image)
         Me.Btn_UC_Linea.Name = "Btn_UC_Linea"
         Me.Btn_UC_Linea.Text = "Traer el Costo última compra de este producto"
         '
@@ -535,12 +525,14 @@ Partial Class Frm_MantCostosPrecios
         'Btn_Levantamiento_Excel
         '
         Me.Btn_Levantamiento_Excel.Image = CType(resources.GetObject("Btn_Levantamiento_Excel.Image"), System.Drawing.Image)
+        Me.Btn_Levantamiento_Excel.ImageAlt = CType(resources.GetObject("Btn_Levantamiento_Excel.ImageAlt"), System.Drawing.Image)
         Me.Btn_Levantamiento_Excel.Name = "Btn_Levantamiento_Excel"
         Me.Btn_Levantamiento_Excel.Text = "Buscar archivo y levantar"
         '
         'Btn_Levantamiento_Ejemplo
         '
         Me.Btn_Levantamiento_Ejemplo.Image = CType(resources.GetObject("Btn_Levantamiento_Ejemplo.Image"), System.Drawing.Image)
+        Me.Btn_Levantamiento_Ejemplo.ImageAlt = CType(resources.GetObject("Btn_Levantamiento_Ejemplo.ImageAlt"), System.Drawing.Image)
         Me.Btn_Levantamiento_Ejemplo.Name = "Btn_Levantamiento_Ejemplo"
         Me.Btn_Levantamiento_Ejemplo.Text = "Ayuda, ejemplo archivo excel."
         '
@@ -825,13 +817,15 @@ Partial Class Frm_MantCostosPrecios
         '
         '
         Me.Chk_Quitar_Sin_Usar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Quitar_Sin_Usar.CheckBoxImageChecked = CType(resources.GetObject("Chk_Quitar_Sin_Usar.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Quitar_Sin_Usar.FocusCuesEnabled = False
         Me.Chk_Quitar_Sin_Usar.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Quitar_Sin_Usar.Location = New System.Drawing.Point(7, 471)
+        Me.Chk_Quitar_Sin_Usar.Location = New System.Drawing.Point(117, 471)
         Me.Chk_Quitar_Sin_Usar.Name = "Chk_Quitar_Sin_Usar"
-        Me.Chk_Quitar_Sin_Usar.Size = New System.Drawing.Size(226, 23)
+        Me.Chk_Quitar_Sin_Usar.Size = New System.Drawing.Size(159, 20)
         Me.Chk_Quitar_Sin_Usar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Quitar_Sin_Usar.TabIndex = 66
-        Me.Chk_Quitar_Sin_Usar.Text = "Quitar productos ""No Usar (Bloqueados)"""
+        Me.Chk_Quitar_Sin_Usar.Text = "Quitar productos ""No Usar"""
         '
         'MetroStatusBar1
         '
@@ -887,10 +881,12 @@ Partial Class Frm_MantCostosPrecios
         '
         '
         Me.ChkMarcarTodo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.ChkMarcarTodo.CheckBoxImageChecked = CType(resources.GetObject("ChkMarcarTodo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.ChkMarcarTodo.FocusCuesEnabled = False
         Me.ChkMarcarTodo.ForeColor = System.Drawing.Color.Black
-        Me.ChkMarcarTodo.Location = New System.Drawing.Point(254, 471)
+        Me.ChkMarcarTodo.Location = New System.Drawing.Point(7, 471)
         Me.ChkMarcarTodo.Name = "ChkMarcarTodo"
-        Me.ChkMarcarTodo.Size = New System.Drawing.Size(162, 23)
+        Me.ChkMarcarTodo.Size = New System.Drawing.Size(81, 20)
         Me.ChkMarcarTodo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.ChkMarcarTodo.TabIndex = 68
         Me.ChkMarcarTodo.Text = "Marcar todo"
@@ -1441,20 +1437,71 @@ Partial Class Frm_MantCostosPrecios
         Me.LabelX1.Text = "Desde"
         Me.LabelX1.TextAlignment = System.Drawing.StringAlignment.Far
         '
-        'Btn_ImportarPreciosOtraLista
+        'Chk_Quitar_Bloqueados_venta
         '
-        Me.Btn_ImportarPreciosOtraLista.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_ImportarPreciosOtraLista.ForeColor = System.Drawing.Color.Black
-        Me.Btn_ImportarPreciosOtraLista.Image = CType(resources.GetObject("Btn_ImportarPreciosOtraLista.Image"), System.Drawing.Image)
-        Me.Btn_ImportarPreciosOtraLista.ImageAlt = CType(resources.GetObject("Btn_ImportarPreciosOtraLista.ImageAlt"), System.Drawing.Image)
-        Me.Btn_ImportarPreciosOtraLista.Name = "Btn_ImportarPreciosOtraLista"
-        Me.Btn_ImportarPreciosOtraLista.Tooltip = "Importar precios desde otra lista, mismo proveedor"
+        Me.Chk_Quitar_Bloqueados_venta.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_Quitar_Bloqueados_venta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Quitar_Bloqueados_venta.CheckBoxImageChecked = CType(resources.GetObject("Chk_Quitar_Bloqueados_venta.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Quitar_Bloqueados_venta.Checked = True
+        Me.Chk_Quitar_Bloqueados_venta.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_Quitar_Bloqueados_venta.CheckValue = "Y"
+        Me.Chk_Quitar_Bloqueados_venta.FocusCuesEnabled = False
+        Me.Chk_Quitar_Bloqueados_venta.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Quitar_Bloqueados_venta.Location = New System.Drawing.Point(273, 471)
+        Me.Chk_Quitar_Bloqueados_venta.Name = "Chk_Quitar_Bloqueados_venta"
+        Me.Chk_Quitar_Bloqueados_venta.Size = New System.Drawing.Size(193, 20)
+        Me.Chk_Quitar_Bloqueados_venta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Quitar_Bloqueados_venta.TabIndex = 82
+        Me.Chk_Quitar_Bloqueados_venta.Text = "No mostrar productos Bloqueados"
+        '
+        'Chk_Ver_Solo_Repetidos
+        '
+        Me.Chk_Ver_Solo_Repetidos.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_Ver_Solo_Repetidos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Ver_Solo_Repetidos.CheckBoxImageChecked = CType(resources.GetObject("Chk_Ver_Solo_Repetidos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Ver_Solo_Repetidos.FocusCuesEnabled = False
+        Me.Chk_Ver_Solo_Repetidos.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Ver_Solo_Repetidos.Location = New System.Drawing.Point(472, 471)
+        Me.Chk_Ver_Solo_Repetidos.Name = "Chk_Ver_Solo_Repetidos"
+        Me.Chk_Ver_Solo_Repetidos.Size = New System.Drawing.Size(159, 20)
+        Me.Chk_Ver_Solo_Repetidos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Ver_Solo_Repetidos.TabIndex = 83
+        Me.Chk_Ver_Solo_Repetidos.Text = "Ver solo productos repetidos"
+        '
+        'Chk_NoUsar_Bloqueados
+        '
+        Me.Chk_NoUsar_Bloqueados.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_NoUsar_Bloqueados.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_NoUsar_Bloqueados.CheckBoxImageChecked = CType(resources.GetObject("Chk_NoUsar_Bloqueados.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_NoUsar_Bloqueados.Checked = True
+        Me.Chk_NoUsar_Bloqueados.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_NoUsar_Bloqueados.CheckValue = "Y"
+        Me.Chk_NoUsar_Bloqueados.FocusCuesEnabled = False
+        Me.Chk_NoUsar_Bloqueados.ForeColor = System.Drawing.Color.Black
+        Me.Chk_NoUsar_Bloqueados.Location = New System.Drawing.Point(637, 471)
+        Me.Chk_NoUsar_Bloqueados.Name = "Chk_NoUsar_Bloqueados"
+        Me.Chk_NoUsar_Bloqueados.Size = New System.Drawing.Size(190, 20)
+        Me.Chk_NoUsar_Bloqueados.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_NoUsar_Bloqueados.TabIndex = 84
+        Me.Chk_NoUsar_Bloqueados.Text = """No Usar"" productos bloqueados"
         '
         'Frm_MantCostosPrecios
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1089, 560)
+        Me.Controls.Add(Me.Chk_NoUsar_Bloqueados)
+        Me.Controls.Add(Me.Chk_Ver_Solo_Repetidos)
+        Me.Controls.Add(Me.Chk_Quitar_Bloqueados_venta)
         Me.Controls.Add(Me.GroupPanel11)
         Me.Controls.Add(Me.GroupPanel8)
         Me.Controls.Add(Me.GroupPanel6)
@@ -1471,7 +1518,6 @@ Partial Class Frm_MantCostosPrecios
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.ChkUd1XUd2)
-        Me.Controls.Add(Me.GrupoCostoLt)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -1485,7 +1531,6 @@ Partial Class Frm_MantCostosPrecios
         Me.Text = "MetroForm"
         CType(Me.Barrar_Menu, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GrupoCostoLt.ResumeLayout(False)
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip2.ResumeLayout(False)
         Me.GroupPanel1.ResumeLayout(False)
@@ -1511,8 +1556,6 @@ Partial Class Frm_MantCostosPrecios
     Friend WithEvents Lbl_Uc1 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Lbl_Uc2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Lbl_Pm As DevComponents.DotNetBar.LabelX
-    Friend WithEvents GrupoCostoLt As System.Windows.Forms.GroupBox
-    Friend WithEvents LblCostoDefecto As DevComponents.DotNetBar.LabelX
     Public WithEvents ChkUd1XUd2 As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
     Friend WithEvents ContextMenuStrip2 As System.Windows.Forms.ContextMenuStrip
@@ -1591,4 +1634,7 @@ Partial Class Frm_MantCostosPrecios
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Btn_ImportarFletes As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_ImportarPreciosOtraLista As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Chk_Quitar_Bloqueados_venta As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Chk_Ver_Solo_Repetidos As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Chk_NoUsar_Bloqueados As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

@@ -33,6 +33,7 @@ Module Mod_Imprimir
                                             _Reimprimir As Boolean,
                                             _Subtido As String) As String
         _RowMaeedo = Nothing
+        Dim _LogError As String
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
@@ -45,6 +46,15 @@ Module Mod_Imprimir
 
         Dim _Tido = _RowMaeedo.Item("TIDO")
         Dim _Nudo = _RowMaeedo.Item("NUDO")
+
+        Consulta_sql = "Select Top 1 NombreFormato_Destino From " & _Global_BaseBk & "Zw_Prod_ImpAdicional" & vbCrLf &
+                       "Where Tido = '" & _Tido & "' And Subtido = '" & _Subtido & "' And NombreFormato_Origen = '" & _NombreFormato & "' " &
+                       "And Codigo In (Select KOPRCT From MAEDDO Where IDMAEEDO = " & _Idmaeedo & ") And Reemplazar_Formato_Origen = 1"
+        Dim _Row_FormatoAdicional As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not IsNothing(_Row_FormatoAdicional) Then
+            _NombreFormato = _Row_FormatoAdicional.Item("NombreFormato_Destino")
+        End If
 
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Format_01" & vbCrLf &
                        "Where TipoDoc = '" & _Tido & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "'"
@@ -67,7 +77,6 @@ Module Mod_Imprimir
         End If
 
 
-        Dim _LogError As String
         Dim _Imprimir_Cedible As Boolean
 
         If _Doc_Electronico Then
@@ -133,6 +142,16 @@ Module Mod_Imprimir
                     End If
 
                 End If
+
+                Consulta_sql = "Select Distinct NombreFormato_Destino From " & _Global_BaseBk & "Zw_Prod_ImpAdicional" & vbCrLf &
+                               "Where Tido = '" & _Tido & "' And Subtido = '" & _Subtido & "' And NombreFormato_Origen = '" & _NombreFormato & "' " &
+                               "And Codigo In (Select KOPRCT From MAEDDO Where IDMAEEDO = " & _Idmaeedo & ") And Reemplazar_Formato_Origen = 0"
+                Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                For Each _Fila As DataRow In _Tbl.Rows
+                    _LogError = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _Fila.Item("NombreFormato_Destino"), False,
+                                  _Seleccionar_Impresora, _Vista_Previa, _Impresora, _Subtido)
+                Next
 
             Else
 

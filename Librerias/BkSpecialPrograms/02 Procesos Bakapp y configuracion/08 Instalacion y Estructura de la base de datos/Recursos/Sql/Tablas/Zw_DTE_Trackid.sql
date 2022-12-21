@@ -22,4 +22,5 @@ CREATE TABLE [dbo].[Zw_DTE_Trackid](
     [ErrorEnviarMail]      	[bit]          NOT NULL DEFAULT (0),   
     [EnviarMail]          	[bit]          NOT NULL DEFAULT (0),   
     [Intentos]            	[int]          NOT NULL DEFAULT (0),   
+    [Id_Aec]            	[int]          NOT NULL DEFAULT (0),   
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]

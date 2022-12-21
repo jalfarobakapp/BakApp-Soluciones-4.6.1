@@ -72,7 +72,11 @@ Public Class Cl_PPPPr
         Consulta_sql = "Select Top 1 * From MAEDDO Where KOPRCT = '" & _Codigo & "' And FEEMLI < '" & Format("yyyyMMdd", _FechaTope) & "' And PPPRPM <> 0 Order By FEEMLI Desc"
         Dim _RowUltDoc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        _Pm = _RowUltDoc.Item("PPPRPM")
+        If IsNothing(_RowUltDoc) Then
+            _Pm = 0
+        Else
+            _Pm = _RowUltDoc.Item("PPPRPM")
+        End If
 
         If Not IsNothing(_ProgressBarX1) Then
             _ProgressBarX1.Text = "Analizando movimientos del producto..."

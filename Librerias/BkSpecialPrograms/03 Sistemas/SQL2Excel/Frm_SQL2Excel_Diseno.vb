@@ -133,7 +133,9 @@ Public Class Frm_SQL2Excel_Diseno
         If Not String.IsNullOrEmpty(Txt_Query_SQL.Text) Then
             If Fx_Revisar_Consulta_Sin_Modificaciones_En_Tablas_del_Sistema(Txt_Query_SQL.Text) Then
 
+                Me.Cursor = Cursors.WaitCursor
                 _Tbl_Query = Fx_Ejecutar_Comsulta_SQL()
+                Me.Cursor = Cursors.Default
 
                 If Not (_Tbl_Query Is Nothing) Then
                     ExportarTabla_JetExcel_Tabla(_Tbl_Query, Me, "Consulta_SQL_personalizada")
@@ -456,7 +458,15 @@ Public Class Frm_SQL2Excel_Diseno
     End Sub
 
     Private Sub Btn_Guardar_Consulta_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Guardar_Consulta.Click
+
+        If Rdb_Consulta_Personal.Checked Then
+            If Not Fx_Tiene_Permiso(Me, "Sql00005") Then
+                Return
+            End If
+        End If
+
         Sb_Guardar()
+
     End Sub
 
     Sub Sb_Guardar()
@@ -527,10 +537,10 @@ Public Class Frm_SQL2Excel_Diseno
                                  "Nombre_Query = '" & Trim(Txt_Nombre_Query.Text) & "'"))
 
                 If _Existe_Nombre Then
-                    Consulta_sql = "Update Zw_SQL_Querys Set" & Space(1) &
-                                   "Nombre_Query = '" & _Row_SQL_Querys.Item("Nombre_Query") & "'" & vbCrLf &
-                                   "Where Id =" & _Id
-                    _Sql.Ej_consulta_IDU(Consulta_sql)
+                    'Consulta_sql = "Update Zw_SQL_Querys Set" & Space(1) &
+                    '               "Nombre_Query = '" & _Row_SQL_Querys.Item("Nombre_Query") & "'" & vbCrLf &
+                    '               "Where Id =" & _Id
+                    '_Sql.Ej_consulta_IDU(Consulta_sql)
                     Throw New Exception("El nombre de la consulta ya existe")
                 End If
 

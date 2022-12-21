@@ -69,10 +69,12 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Mnu_Btn_Desocultar = New DevComponents.DotNetBar.ButtonItem()
         Me.Mnu_Btn_Archivos_Asociados_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Mnu_Btn_Dimensiones = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Migrar_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
         Me.Mnu_Btn_Editar_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Mnu_Btn_Eliminar_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Mnu_Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.TouchKeyboard1 = New DevComponents.DotNetBar.Keyboard.TouchKeyboard()
         Me.Bar_Menu_Producto = New DevComponents.DotNetBar.Bar()
@@ -271,6 +273,7 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         '
         'ChkMostrarOcultos
         '
+        Me.ChkMostrarOcultos.CheckBoxImageChecked = CType(resources.GetObject("ChkMostrarOcultos.CheckBoxImageChecked"), System.Drawing.Image)
         Me.ChkMostrarOcultos.Name = "ChkMostrarOcultos"
         Me.ChkMostrarOcultos.Text = "Mostrar ocultos"
         '
@@ -318,6 +321,7 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Txt_Ficha.Name = "Txt_Ficha"
         Me.Txt_Ficha.PreventEnterBeep = True
         Me.Txt_Ficha.ReadOnly = True
+        Me.Txt_Ficha.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.Txt_Ficha.Size = New System.Drawing.Size(774, 33)
         Me.Txt_Ficha.TabIndex = 55
         Me.Txt_Ficha.Text = "Ficha tecnica" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Ficha tecnica"
@@ -422,7 +426,7 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         '
         Me.Menu_Contextual_01.AutoExpandOnClick = True
         Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Mnu_1, Me.Mnu_Btn_Ver_Informacion_de_producto, Me.Mnu_Btn_Codigos_Reemplazo, Me.Mnu_Btn_Productos_Asociados, Me.Mnu_Btn_Cambiar_Codigo_Producto, Me.Mnu_Btn_Pr_Ver_Clasificacion_Producto, Me.Mnu_Btn_Imagenes_producto, Me.Mnu_Btn_Mant_codigos_alternativos, Me.Mnu_Btn_Kardex_Inventario, Me.Mnu_Btn_Ubicacion_Producto, Me.Mnu_Btn_Ocultar_Desocultar, Me.Mnu_Btn_Archivos_Asociados_Producto, Me.Mnu_Btn_Dimensiones, Me.LabelItem1, Me.Mnu_Btn_Editar_Producto, Me.Mnu_Btn_Eliminar_Producto, Me.Mnu_Btn_Copiar})
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Mnu_1, Me.Mnu_Btn_Ver_Informacion_de_producto, Me.Mnu_Btn_Codigos_Reemplazo, Me.Mnu_Btn_Productos_Asociados, Me.Mnu_Btn_Cambiar_Codigo_Producto, Me.Mnu_Btn_Pr_Ver_Clasificacion_Producto, Me.Mnu_Btn_Imagenes_producto, Me.Mnu_Btn_Mant_codigos_alternativos, Me.Mnu_Btn_Kardex_Inventario, Me.Mnu_Btn_Ubicacion_Producto, Me.Mnu_Btn_Ocultar_Desocultar, Me.Mnu_Btn_Archivos_Asociados_Producto, Me.Mnu_Btn_Dimensiones, Me.Btn_Migrar_Producto, Me.LabelItem1, Me.Mnu_Btn_Editar_Producto, Me.Mnu_Btn_Eliminar_Producto, Me.Mnu_Btn_Copiar, Me.ButtonItem1})
         Me.Menu_Contextual_01.Text = "Opciones"
         '
         'Lbl_Mnu_1
@@ -552,6 +556,13 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Mnu_Btn_Dimensiones.Name = "Mnu_Btn_Dimensiones"
         Me.Mnu_Btn_Dimensiones.Text = "Dimensiones (peso, largo, alto, ancho)"
         '
+        'Btn_Migrar_Producto
+        '
+        Me.Btn_Migrar_Producto.Image = CType(resources.GetObject("Btn_Migrar_Producto.Image"), System.Drawing.Image)
+        Me.Btn_Migrar_Producto.ImageAlt = CType(resources.GetObject("Btn_Migrar_Producto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Migrar_Producto.Name = "Btn_Migrar_Producto"
+        Me.Btn_Migrar_Producto.Text = "Migrar producto a base externa"
+        '
         'LabelItem1
         '
         Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
@@ -585,6 +596,12 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Mnu_Btn_Copiar.ImageAlt = CType(resources.GetObject("Mnu_Btn_Copiar.ImageAlt"), System.Drawing.Image)
         Me.Mnu_Btn_Copiar.Name = "Mnu_Btn_Copiar"
         Me.Mnu_Btn_Copiar.Text = "Copiar (portapapeles)"
+        '
+        'ButtonItem1
+        '
+        Me.ButtonItem1.Name = "ButtonItem1"
+        Me.ButtonItem1.Text = "ButtonItem1"
+        Me.ButtonItem1.Visible = False
         '
         'GroupPanel3
         '
@@ -826,10 +843,12 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         '
         '
         Me.Chk_Top20.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Top20.CheckBoxImageChecked = CType(resources.GetObject("Chk_Top20.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Top20.CheckBoxImageUnChecked = CType(resources.GetObject("Chk_Top20.CheckBoxImageUnChecked"), System.Drawing.Image)
         Me.Chk_Top20.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Top20.Location = New System.Drawing.Point(383, 122)
+        Me.Chk_Top20.Location = New System.Drawing.Point(383, 115)
         Me.Chk_Top20.Name = "Chk_Top20"
-        Me.Chk_Top20.Size = New System.Drawing.Size(410, 20)
+        Me.Chk_Top20.Size = New System.Drawing.Size(410, 25)
         Me.Chk_Top20.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Top20.TabIndex = 51
         Me.Chk_Top20.Text = "Al buscar productos presentar esta vista de datos como predefinida."
@@ -1033,4 +1052,6 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
     Friend WithEvents Mnu_Btn_Dimensiones As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Txt_Ficha As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Btn_Migrar_Producto As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ButtonItem1 As DevComponents.DotNetBar.ButtonItem
 End Class

@@ -71,23 +71,43 @@ Public Class Frm_Dimensiones_Pr
             End If
         End If
 
-            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Prod_Dimensiones Where Codigo = '" & _Codigo & "'"
+        Dim _Existe As Boolean
 
-        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Dimensiones (Codigo,Peso,Alto,Largo,Ancho) Values " &
-                                    "('" & _Codigo & "'," &
-                                    De_Num_a_Tx_01(Txt_Peso.Text, False, 5) & "," &
-                                    De_Num_a_Tx_01(Txt_Alto.Text, False, 5) & "," &
-                                    De_Num_a_Tx_01(Txt_Largo.Text, False, 5) & "," &
-                                    De_Num_a_Tx_01(Txt_Ancho.Text, False, 5) & ")"
-            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                _Grabar = True
-                If Not _Nuevo Then
-                    MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                End If
-                Me.Close()
-            End If
+        If _Sql.Fx_Exite_Campo("MAEPR", "ALTO") And _Sql.Fx_Exite_Campo("MAEPR", "LARGO") And _Sql.Fx_Exite_Campo("MAEPR", "ANCHO") Then
+            _Existe = True
         End If
+
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Prod_Dimensiones Where Codigo = '" & _Codigo & "'" & vbCrLf &
+                       "Insert Into " & _Global_BaseBk & "Zw_Prod_Dimensiones (Codigo,Peso,Alto,Largo,Ancho) Values " &
+                       "('" & _Codigo & "'," &
+                       De_Num_a_Tx_01(Txt_Peso.Text, False, 5) & "," &
+                       De_Num_a_Tx_01(Txt_Alto.Text, False, 5) & "," &
+                       De_Num_a_Tx_01(Txt_Largo.Text, False, 5) & "," &
+                       De_Num_a_Tx_01(Txt_Ancho.Text, False, 5) & ")"
+
+        If _Existe Then
+            Consulta_sql += vbCrLf & vbCrLf &
+                    "Update MAEPR Set " &
+                    "ALTO = '" & De_Num_a_Tx_01(Txt_Alto.Text, False, 5) & "'," &
+                    "LARGO = '" & De_Num_a_Tx_01(Txt_Largo.Text, False, 5) & "'," &
+                    "ANCHO = '" & De_Num_a_Tx_01(Txt_Ancho.Text, False, 5) & "'," &
+                    "PESOUBIC = " & De_Num_a_Tx_01(Txt_Peso.Text, False, 5) & vbCrLf &
+                    "Where Codigo = '" & _Codigo & "'"
+        Else
+            Consulta_sql += vbCrLf & "Update MAEPR Set PESOUBIC = " & De_Num_a_Tx_01(Txt_Peso.Text, False, 5) & Space(1) &
+                            "Where KOPR = '" & _Codigo & "'"
+        End If
+
+        If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+            _Grabar = True
+            If Not _Nuevo Then
+                MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+            Me.Close()
+        Else
+            MessageBoxEx.Show(Me, _Sql.Pro_Error, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
+
 
     End Sub
 
@@ -103,7 +123,14 @@ Public Class Frm_Dimensiones_Pr
             Return
         End If
 
+        Dim _Existe As Boolean
+
+        If _Sql.Fx_Exite_Campo("MAEPR", "ALTO") And _Sql.Fx_Exite_Campo("MAEPR", "LARGO") And _Sql.Fx_Exite_Campo("MAEPR", "ANCHO") Then
+            _Existe = True
+        End If
+
         Dim _Sql_Filtro_Condicion_Extra = "And TIPR = 'FPN'"
+        Dim _Filtro_Productos As String
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
 
@@ -132,7 +159,7 @@ Public Class Frm_Dimensiones_Pr
                                     "From MAEPR Where TIPR = 'FPN'"
             Else
 
-                Dim _Filtro_Productos As String = Generar_Filtro_IN(_Tbl_Productos, "Chk", "Codigo", False, True, "'")
+                _Filtro_Productos = Generar_Filtro_IN(_Tbl_Productos, "Chk", "Codigo", False, True, "'")
 
                 Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Prod_Dimensiones Where Codigo In " & _Filtro_Productos & vbCrLf &
                                "Insert Into " & _Global_BaseBk & "Zw_Prod_Dimensiones (Codigo,Peso,Alto,Largo,Ancho)  
@@ -145,8 +172,22 @@ Public Class Frm_Dimensiones_Pr
             End If
 
             If Not String.IsNullOrEmpty(Consulta_sql) Then
-                If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                If _Existe Then
+                    Consulta_sql += vbCrLf & vbCrLf &
+                        "Update MAEPR Set " &
+                        "ALTO = '" & De_Num_a_Tx_01(Txt_Alto.Text, False, 5) & "'," &
+                        "LARGO = '" & De_Num_a_Tx_01(Txt_Largo.Text, False, 5) & "'," &
+                        "ANCHO = '" & De_Num_a_Tx_01(Txt_Ancho.Text, False, 5) & "'," &
+                        "PESOUBIC = " & De_Num_a_Tx_01(Txt_Peso.Text, False, 5) & vbCrLf &
+                        "Where KOPR In " & _Filtro_Productos
+                End If
+            End If
+
+            If Not String.IsNullOrEmpty(Consulta_sql) Then
+                If String.IsNullOrEmpty(_Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)) Then
                     MessageBoxEx.Show(Me, "Datos actualizados correcatmente", "Copiar dimensiones", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Else
+                    MessageBoxEx.Show(Me, _Sql.Pro_Error, "Error al grabar los datos", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 End If
             End If
 

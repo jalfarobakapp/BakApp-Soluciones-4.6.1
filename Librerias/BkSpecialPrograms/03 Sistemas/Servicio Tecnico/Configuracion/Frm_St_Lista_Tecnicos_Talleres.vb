@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+ï»¿Imports DevComponents.DotNetBar
 'Imports Lib_Bakapp_VarClassFunc
 'Imports BkSpecialPrograms
 
@@ -13,18 +13,20 @@ Public Class Frm_St_Lista_Tecnicos_Talleres
 
     Public Sub New()
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
         Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+
+        Sb_Color_Botones_Barra(Bar2)
 
     End Sub
 
     Private Sub Frm_St_Lista_Tecnicos_Talleres_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         Sb_Actualizar_Grilla()
-        AddHandler Grilla.RowPostPaint, AddressOf Sb_RowsPostPaint
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         Txt_Informacion.DataBindings.Add(New System.Windows.Forms.Binding("Text", _TblTecnicos, "Informacion", True))
 
     End Sub
@@ -33,10 +35,9 @@ Public Class Frm_St_Lista_Tecnicos_Talleres
 
     Sub Sb_Actualizar_Grilla()
 
-
-        Consulta_sql = "SELECT CodFuncionario,NomFuncionario,Direccion,Telefono,Email,Pais,Ciudad,Comuna,Star," & _
-                       "Chk_Taller_Externo,Chk_Habilitado,Chk_Supervisor,Chk_Domicilio,Informacion," & vbCrLf & _
-                       "Case Chk_Taller_Externo When 1 Then 'TALLER' Else 'TECNICO' End As 'Tipo'" & vbCrLf & _
+        Consulta_sql = "SELECT CodFuncionario,NomFuncionario,Direccion,Telefono,Email,Pais,Ciudad,Comuna,Star," &
+                       "Chk_Taller_Externo,Chk_Habilitado,Chk_Supervisor,Chk_Domicilio,Informacion," & vbCrLf &
+                       "Case Chk_Taller_Externo When 1 Then 'TALLER' Else 'TECNICO' End As 'Tipo'" & vbCrLf &
                        "FROM " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller"
         _TblTecnicos = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -70,17 +71,15 @@ Public Class Frm_St_Lista_Tecnicos_Talleres
 
     Private Sub Sb_Marcar_Grilla()
 
-
-
         For Each _Fila As DataGridViewRow In Grilla.Rows
 
             Dim _Chk_Habilitado = _Fila.Cells("Chk_Habilitado").Value
 
             If _Chk_Habilitado Then
-                _Fila.DefaultCellStyle.ForeColor = Color.Black
+                '_Fila.DefaultCellStyle.ForeColor = Color.Black
                 _Fila.DefaultCellStyle.Font = New Font(Font.Name, Font.Size, FontStyle.Regular)
             Else
-                _Fila.DefaultCellStyle.ForeColor = Color.Red
+                _Fila.DefaultCellStyle.ForeColor = Rojo
                 _Fila.DefaultCellStyle.Font = New Font(Font.Name, Font.Size, FontStyle.Strikeout)
             End If
 
@@ -88,34 +87,15 @@ Public Class Frm_St_Lista_Tecnicos_Talleres
 
     End Sub
 
-
 #End Region
 
-    Sub Sb_RowsPostPaint(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewRowPostPaintEventArgs)
-        Try
-            'Captura el numero de filas del datagridview
-            Dim RowsNumber As String = (e.RowIndex + 1).ToString
-            While RowsNumber.Length < sender.RowCount.ToString.Length
-                RowsNumber = "0" & RowsNumber
-            End While
-            Dim size As SizeF = e.Graphics.MeasureString(RowsNumber, Me.Font)
-            If sender.RowHeadersWidth < CInt(size.Width + 20) Then
-                sender.RowHeadersWidth = CInt(size.Width + 20)
-            End If
-            Dim ob As Brush = SystemBrushes.ControlText
-            e.Graphics.DrawString(RowsNumber, Me.Font, ob, e.RowBounds.Location.X + 15, e.RowBounds.Location.Y + ((e.RowBounds.Height - size.Height) / 2))
-        Catch ex As Exception
-            MessageBox.Show(ex.Message, "vb.net",
-         MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
 
     Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _CodFuncionario = _Fila.Cells("CodFuncionario").Value
 
-        Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller" & Space(1) & _
+        Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller" & Space(1) &
                        "Where CodFuncionario = '" & _CodFuncionario & "'"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -129,12 +109,12 @@ Public Class Frm_St_Lista_Tecnicos_Talleres
             If Fm.Pro_Grabar Then
 
                 Beep()
-                ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", _
-                                       Fm.Btn_Grabar.Image, _
-                                       1 * 1000, eToastGlowColor.Green, _
+                ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE",
+                                       Fm.Btn_Grabar.Image,
+                                       1 * 1000, eToastGlowColor.Green,
                                        eToastPosition.MiddleCenter)
 
-                If Fm.Chk_Taller_Externo.Checked Then
+                If Fm.Rdb_Chk_Taller_Externo.Checked Then
                     _Fila.Cells("Tipo").Value = "TALLER"
                 Else
                     _Fila.Cells("Tipo").Value = "TECNICO"
@@ -144,7 +124,7 @@ Public Class Frm_St_Lista_Tecnicos_Talleres
                 _Fila.Cells("Informacion").Value = Fm.Txt_Informacion.Text
                 _Fila.Cells("Chk_Habilitado").Value = Fm.Chk_Habilitado.Checked
 
-                _Fila.Cells("Chk_Taller_Externo").Value = Fm.Chk_Taller_Externo.Checked
+                _Fila.Cells("Chk_Taller_Externo").Value = Fm.Rdb_Chk_Taller_Externo.Checked
                 _Fila.Cells("Chk_Supervisor").Value = Fm.Chk_Supervisor.Checked
                 _Fila.Cells("Chk_Domicilio").Value = Fm.Chk_Domicilio.Checked
 
@@ -156,9 +136,9 @@ Public Class Frm_St_Lista_Tecnicos_Talleres
                 Grilla.Refresh()
 
                 Beep()
-                ToastNotification.Show(Me, "REGISTRO ELIMINADO CORRECTAMENTE", _
-                                       Fm.Btn_Eliminar.Image, _
-                                       1 * 1000, eToastGlowColor.Red, _
+                ToastNotification.Show(Me, "REGISTRO ELIMINADO CORRECTAMENTE",
+                                       Fm.Btn_Eliminar.Image,
+                                       1 * 1000, eToastGlowColor.Red,
                                        eToastPosition.MiddleCenter)
             End If
 

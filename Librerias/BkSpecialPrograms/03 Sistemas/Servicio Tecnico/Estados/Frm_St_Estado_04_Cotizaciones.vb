@@ -47,6 +47,8 @@ Public Class Frm_St_Estado_04_Cotizaciones
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
 
     Private Sub Frm_St_Estado_04_Cotizaciones_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -132,67 +134,12 @@ Public Class Frm_St_Estado_04_Cotizaciones
 
         Sb_Marcar_Grilla()
 
+        Chk_No_Existe_COV_Ni_NVV.Enabled = Not CBool(Grilla.RowCount)
+
     End Sub
 
     Private Sub Btn_Agregar_Cotizacion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Agregar_Cotizacion.Click
-
-        Dim _Filtro_Doc As String = Generar_Filtro_IN(_TblCotizaciones, "", "Idmaeedo", False, False, "")
-
-        Dim _RowDocumento As DataRow
-
-        Dim Fm As New Frm_BusquedaDocumento_Filtro(False)
-        Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "COV", "Where TIDO IN ('COV','NVV')")
-        Fm.Pro_TipoDoc_Seleccionado = Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado
-
-        If _Filtro_Doc <> "()" Then
-            Fm.Pro_Sql_Filtro_Otro_Filtro = "And IDMAEEDO not in " & _Filtro_Doc
-        End If
-
-        Fm.Pro_Row_Entidad = _RowEntidad
-        Fm.ShowDialog(Me)
-        _RowDocumento = Fm.Pro_Row_Documento_Seleccionado
-        Fm.Dispose()
-
-        If Not (_RowDocumento Is Nothing) Then
-
-            With _RowDocumento
-
-                Dim _Id_Ot = _Row_Encabezado.Item("Id_Ot")
-                Dim _Idmaeedo = .Item("IDMAEEDO")
-                Dim _Tido = .Item("TIDO")
-                Dim _Nudo = .Item("NUDO")
-                Dim _Feemdo = .Item("FEEMDO")
-
-
-                Dim NewFila As DataRow
-                NewFila = _TblCotizaciones.NewRow
-                With NewFila
-
-                    .Item("Id_Ot") = _Id_Ot
-                    .Item("Idmaeedo") = _Idmaeedo
-                    .Item("Tido") = _Tido
-                    .Item("Nudo") = _Nudo
-                    .Item("Estado") = "E"
-                    .Item("Estado_D") = "En Evaluación..."
-                    .Item("Fecha_Doc") = _Feemdo
-                    .Item("Fecha_Asociacion") = FechaDelServidor()
-                    .Item("Seleccionado") = True
-
-                    _TblCotizaciones.Rows.Add(NewFila)
-
-                End With
-            End With
-
-            Chk_No_Existe_COV_Ni_NVV.Enabled = False
-
-        Else
-
-            Chk_No_Existe_COV_Ni_NVV.Enabled = True
-
-        End If
-
-        Sb_Marcar_Grilla()
-
+        ShowContextMenu(Menu_Contextual_COV)
     End Sub
 
     Sub Sb_Marcar_Grilla()
@@ -206,13 +153,25 @@ Public Class Frm_St_Estado_04_Cotizaciones
             Select Case _Estado
                 Case "E"
                     Btn_Agregar_Cotizacion.Enabled = False
-                    _Fila.DefaultCellStyle.BackColor = Color.Yellow
+                    If Global_Thema = Enum_Themas.Oscuro Then
+                        _Fila.DefaultCellStyle.ForeColor = Amarillo
+                    Else
+                        _Fila.DefaultCellStyle.BackColor = Color.Yellow
+                    End If
                 Case "A" ' Evaluación, Aprobado
                     Btn_Agregar_Cotizacion.Enabled = False
-                    _Fila.DefaultCellStyle.BackColor = Color.LightGreen
+                    If Global_Thema = Enum_Themas.Oscuro Then
+                        _Fila.DefaultCellStyle.ForeColor = Verde
+                    Else
+                        _Fila.DefaultCellStyle.BackColor = Color.LightGreen
+                    End If
                 Case "R" ' Rechazado
                     Btn_Agregar_Cotizacion.Enabled = True
-                    _Fila.DefaultCellStyle.BackColor = Color.LightGray
+                    If Global_Thema = Enum_Themas.Oscuro Then
+                        _Fila.DefaultCellStyle.ForeColor = Rojo
+                    Else
+                        _Fila.DefaultCellStyle.BackColor = Color.LightGray
+                    End If
             End Select
 
         Next
@@ -239,23 +198,10 @@ Public Class Frm_St_Estado_04_Cotizaciones
 
             Case "Btn_Ver"
 
-                'If _Accion = Accion.Nuevo Then
-
-                'Select Case _Estado
-                '    Case "E"
-                '        Btn_Quitar_documento.Enabled = True
-                '    Case Else
-                '        Btn_Quitar_documento.Enabled = False
-                'End Select
-
                 Btn_Quitar_documento.Enabled = (_Estado = "E")
                 Btn_Correo_Outlook.Enabled = Not (_Estado = "R")
 
                 ShowContextMenu(Menu_Contextual_Ver_Quitar)
-
-                'ElseIf _Accion = Accion.Editar Then
-                '    Sb_Ver_Documento()
-                'End If
 
             Case "Btn_Accion"
 
@@ -398,9 +344,124 @@ Public Class Frm_St_Estado_04_Cotizaciones
         End If
         '**********************************'**********************************
 
-
         _Fijar = _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
         Return _Fijar
+
+    End Function
+
+    Function Fx_Fijar_Estado2(_Id_Ot As Integer, _Idmaeedo As Integer, _Estado As String, _Estado_Fijar As Estado_Fijar) As String
+
+        Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
+        Dim _RowDocumento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Tido As String = _RowDocumento.Item("TIDO")
+        Dim _Nudo As String = _RowDocumento.Item("NUDO")
+        Dim _Feemdo As Date = _RowDocumento.Item("FEEMDO")
+
+        ' ----------------------------------------------------- COTIZACIONES ASOCIADAS ------------------------------------------------
+        Consulta_sql = String.Empty
+
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_St_OT_Doc_Asociados " &
+                       "Where Id_Ot = " & _Id_Ot & " And Tido In ('COV','NVV')" & vbCrLf
+
+        Consulta_sql += "Insert Into " & _Global_BaseBk &
+                        "Zw_St_OT_Doc_Asociados (Id_Ot,Idmaeedo,Tido,Nudo,Estado,Fecha_Asociacion,Fecha_Doc,MovTodasSubOT) Values " &
+                        "(" & _Id_Ot & "," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "','" & _Estado &
+                        "',GetDate(),'" & Format(_Feemdo, "yyyyMMdd") & "',1)" & vbCrLf & vbCrLf
+
+
+        '**********************************'***********************************************************************
+
+        ' --------------------------------------------------- NOTAS ---------------------------------------
+
+        Dim _Nota_Etapa_04 As String = Txt_Nota.Text
+
+        Consulta_sql += "Update " & _Global_BaseBk & "Zw_St_OT_Notas Set " &
+                       "Nota_Etapa_04 = '" & _Nota_Etapa_04 & "'" & vbCrLf &
+                       "Where Id_Ot = " & _Id_Ot & vbCrLf
+        '**********************************'**********************************
+
+        If Chk_No_Existe_COV_Ni_NVV.Checked Then
+
+            Consulta_sql += "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set " &
+                            "CodEstado = 'R',Chk_No_Existe_COV_Ni_NVV = 1" & vbCrLf &
+                            "Where Id_Ot = " & _Id_Ot & vbCrLf
+
+            If _Accion = Accion.Nuevo Then
+
+                Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_OT_Estados " &
+                                "(Id_Ot,CodEstado,Fecha_Fijacion,CodFuncionario,NomFuncionario) Values " &
+                                "(" & _Id_Ot & ",'C',GetDate(),'" & FUNCIONARIO & "','" & Nombre_funcionario_activo & "')" & vbCrLf
+
+            End If
+
+        Else
+
+            If _Estado_Fijar = Estado_Fijar.Aceptado Or _Estado_Fijar = Estado_Fijar.Rechazado Then
+
+                ' ACTUALIZAR ENCABEZADO DE DOCUMENTO
+
+                Consulta_sql += "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set " &
+                                 "CodEstado = 'R'" & vbCrLf &
+                                 "Where Id_Ot  = " & _Id_Ot & vbCrLf
+
+                ' ACTUALIZAR ESTADO
+
+                Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_OT_Estados " &
+                "(Id_Ot,CodEstado,Fecha_Fijacion,CodFuncionario,NomFuncionario) Values " &
+                "(" & _Id_Ot & ",'C',GetDate(),'" & FUNCIONARIO & "','" & Nombre_funcionario_activo & "')" & vbCrLf
+
+                'If _Estado_Fijar = Estado_Fijar.Aceptado Then
+
+                '    Consulta_sql += "Delete " & _Global_BaseBk & "Zw_St_OT_DetProd Where Desde_COV = 1 And Id_Ot = " & _Id_Ot & vbCrLf & vbCrLf
+
+                '    For Each _Fila_Cov As DataRow In _TblDetalle_Cov.Rows
+
+                '        ',,,UD02PR,,,,,,
+                '        'Dim _Idmaeedo = _Fila_Cov.Item("IDMAEEDO")
+                '        Dim _Idmaeddo = _Fila_Cov.Item("IDMAEDDO")
+                '        Dim _Codigo = _Fila_Cov.Item("KOPRCT")
+                '        Dim _Descripcion = _Fila_Cov.Item("NOKOPR")
+
+                '        Dim _Un As Integer = _Fila_Cov.Item("UDTRPR")
+
+                '        Dim _Ud = _Fila_Cov.Item("UD0" & _Un & "PR")
+
+                '        Dim _Cantidad = _Fila_Cov.Item("CAPRCO" & _Un)
+                '        Dim _CantUd1 = _Fila_Cov.Item("CAPRCO1")
+                '        Dim _CantUd2 = _Fila_Cov.Item("CAPRCO2")
+                '        Dim _Precio = _Fila_Cov.Item("PPPRNE")
+                '        Dim _Neto_Linea = _Fila_Cov.Item("VANELI")
+                '        Dim _Iva_Linea = _Fila_Cov.Item("VAIVLI")
+                '        Dim _Total_Linea = _Fila_Cov.Item("VABRLI")
+
+                '        Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_OT_DetProd (Id_Ot,Utilizado,Codigo,Descripcion," &
+                '                       "Cantidad,Cantidad_Utilizada,Ud,Un," &
+                '                       "CantUd1,CantUd2,Precio,Neto_Linea,Iva_Linea,Total_Linea,Desde_COV,Idmaeedo_Cov,Idmaeddo_Cov) Values " &
+                '                       "(" & _Id_Ot & ",0,'" & _Codigo & "','" & _Descripcion &
+                '                       "'," & De_Num_a_Tx_01(_Cantidad, False, 5) &
+                '                       "," & De_Num_a_Tx_01(_Cantidad, False, 5) &
+                '                       ",'" & _Ud & "'," & _Un &
+                '                       "," & De_Num_a_Tx_01(_CantUd1, False, 5) &
+                '                       "," & De_Num_a_Tx_01(_CantUd2, False, 5) &
+                '                       "," & De_Num_a_Tx_01(_Precio, False, 5) &
+                '                       "," & De_Num_a_Tx_01(_Neto_Linea, False, 5) &
+                '                       "," & De_Num_a_Tx_01(_Iva_Linea, False, 5) &
+                '                       "," & De_Num_a_Tx_01(_Total_Linea, False, 5) & ",1," & _Idmaeedo & "," & _Idmaeddo & ")" & vbCrLf
+
+                '    Next
+
+                'End If
+
+            End If
+
+        End If
+        '**********************************'**********************************
+
+        Return Consulta_sql & vbCrLf
+
+        '_Fijar = _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+        'Return _Fijar
 
     End Function
 
@@ -411,10 +472,11 @@ Public Class Frm_St_Estado_04_Cotizaciones
         Dim _Evaluacion = 0
 
         Dim _Idmaeedo As Integer
+        Dim _Estado As String
 
         For Each _Fila As DataRow In _TblCotizaciones.Rows
 
-            Dim _Estado = _Fila.Item("Estado")
+            _Estado = _Fila.Item("Estado")
 
             If _Estado = "E" Then _Evaluacion += 1
 
@@ -431,9 +493,10 @@ Public Class Frm_St_Estado_04_Cotizaciones
             _Estado_Fijar = Estado_Fijar.Evaluacion
         Else
             If _Aprobados > 0 Then
+
                 _Estado_Fijar = Estado_Fijar.Aceptado
 
-                Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo & " And TIPR <> 'SSN' Order By IDMAEDDO"
+                Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo & " Order By IDMAEDDO"
                 _TblDetalle_Cov = _Sql.Fx_Get_Tablas(Consulta_sql)
 
 
@@ -451,14 +514,54 @@ Public Class Frm_St_Estado_04_Cotizaciones
             End If
         End If
 
+        Dim _Nro_Ot = _Row_Encabezado.Item("Nro_Ot")
 
-        If Fx_Fijar_Estado() Then
+        Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_OT_Doc_Asociados",
+                                            "Id_Ot In (Select Id_Ot From " & _Global_BaseBk & "Zw_St_OT_Encabezado Where Nro_Ot = '" & _Nro_Ot & "') " &
+                                            "And Idmaeedo = " & _Idmaeedo & " And MovTodasSubOT = 1")
 
-            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado",
-                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+        If _Reg > 1 Then
 
-            _Fijar_Estado = True
-            Me.Close()
+            MessageBoxEx.Show(Me, "Existente " & _Reg & " Sub-Ot Asociadas a esta cotización" & vbCrLf &
+                              "Se fijara el estado para todas", "Fijar estado a todas la Sub-Ot de la OT: " & _Nro_Ot,
+                                                                MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_DetProd " & vbCrLf &
+                   "Where Id_Ot In (Select Id_Ot From " & _Global_BaseBk & "Zw_St_OT_Encabezado Where Nro_Ot = '" & _Nro_Ot & "')"
+            Dim _Tbl_SubOt As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _SqlQuery = String.Empty
+
+            For Each _Fila As DataRow In _Tbl_SubOt.Rows
+
+                Dim _Id_Ot = _Fila.Item("Id_Ot")
+
+                _SqlQuery += Fx_Fijar_Estado2(_Id_Ot, _Idmaeedo, _Estado, _Estado_Fijar)
+
+            Next
+
+            If Not String.IsNullOrEmpty(_SqlQuery) Then
+
+                If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery) Then
+
+                    MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                    _Fijar_Estado = True
+                    Me.Close()
+
+                End If
+
+            End If
+
+        Else
+
+            If Fx_Fijar_Estado() Then
+
+                MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                _Fijar_Estado = True
+                Me.Close()
+
+            End If
 
         End If
 
@@ -811,6 +914,228 @@ Public Class Frm_St_Estado_04_Cotizaciones
         End If
 
 
+
+    End Sub
+
+    Private Sub Btn_AgregarCOVExistente_Click(sender As Object, e As EventArgs) Handles Btn_AgregarCOVExistente.Click
+
+        Dim _Filtro_Doc As String = Generar_Filtro_IN(_TblCotizaciones, "", "Idmaeedo", False, False, "")
+
+        Dim _RowDocumento As DataRow
+
+        Dim Fm As New Frm_BusquedaDocumento_Filtro(False)
+        Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "COV", "Where TIDO IN ('COV','NVV')")
+        Fm.Pro_TipoDoc_Seleccionado = Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado
+
+        If _Filtro_Doc <> "()" Then
+            Fm.Pro_Sql_Filtro_Otro_Filtro = "And IDMAEEDO not in " & _Filtro_Doc
+        End If
+
+        Fm.Pro_Row_Entidad = _RowEntidad
+        Fm.ShowDialog(Me)
+        _RowDocumento = Fm.Pro_Row_Documento_Seleccionado
+        Fm.Dispose()
+
+        If Not (_RowDocumento Is Nothing) Then
+
+            With _RowDocumento
+
+                Dim _Id_Ot = _Row_Encabezado.Item("Id_Ot")
+                Dim _Idmaeedo = .Item("IDMAEEDO")
+                Dim _Tido = .Item("TIDO")
+                Dim _Nudo = .Item("NUDO")
+                Dim _Feemdo = .Item("FEEMDO")
+
+                Dim NewFila As DataRow
+                NewFila = _TblCotizaciones.NewRow
+                With NewFila
+
+                    .Item("Id_Ot") = _Id_Ot
+                    .Item("Idmaeedo") = _Idmaeedo
+                    .Item("Tido") = _Tido
+                    .Item("Nudo") = _Nudo
+                    .Item("Estado") = "E"
+                    .Item("Estado_D") = "En Evaluación..."
+                    .Item("Fecha_Doc") = _Feemdo
+                    .Item("Fecha_Asociacion") = FechaDelServidor()
+                    .Item("Seleccionado") = True
+
+                    _TblCotizaciones.Rows.Add(NewFila)
+
+                End With
+
+            End With
+
+            Chk_No_Existe_COV_Ni_NVV.Enabled = False
+
+        Else
+
+            Chk_No_Existe_COV_Ni_NVV.Enabled = True
+
+        End If
+
+        Sb_Marcar_Grilla()
+
+    End Sub
+
+    Private Sub Btn_CrearCOVdesdePresupuesto_Click(sender As Object, e As EventArgs) Handles Btn_CrearCOVdesdePresupuesto.Click
+
+        Dim _Tido As String = "COV"
+        Dim _Fecha_Emision As Date = FechaDelServidor()
+
+        Dim _Nro_Ot = _Row_Encabezado.Item("Nro_Ot")
+
+        Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_OT_DetProd",
+                                            "Id_Ot In (Select Id_Ot From " & _Global_BaseBk & "Zw_St_OT_Encabezado Where Nro_Ot = '" & _Nro_Ot & "')")
+
+        If Not CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "No existen productos asociados al detalle de los presupuestos de la OT para poder genarar una cotización",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If _Reg = 1 Then
+            Consulta_sql = "Select Det.*,Enc.Nro_Ot,Enc.Sub_Ot,Enc.Empresa,Enc.Sucursal,Enc.Bodega,'ODST OT: '+Enc.Nro_Ot+'-'+Enc.Sub_Ot As 'Observa'" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_St_OT_DetProd Det" & vbCrLf &
+                           "Left Join " & _Global_BaseBk & "Zw_St_OT_Encabezado Enc On Enc.Id_Ot = Det.Id_Ot" & vbCrLf &
+                           "Where Det.Id_Ot = " & _Id_Ot
+        Else
+
+            Dim Chk_Genarar_COV_Solo_Esta_SubOT As New Command
+            Chk_Genarar_COV_Solo_Esta_SubOT.Checked = False
+            Chk_Genarar_COV_Solo_Esta_SubOT.Name = "Chk_Genarar_COV_Solo_Esta_SubOT"
+            Chk_Genarar_COV_Solo_Esta_SubOT.Text = "Generar cotización solo con servicios de esta Sub-Ot"
+
+            Dim Chk_Genarar_COV_Todas_Las_OT As New Command
+            Chk_Genarar_COV_Todas_Las_OT.Checked = True
+            Chk_Genarar_COV_Todas_Las_OT.Name = "Chk_Genarar_COV_Todas_Las_OT"
+            Chk_Genarar_COV_Todas_Las_OT.Text = "Generar cotización con todos los servicios" & vbCrLf &
+                                                "de todas las Sub-Ot de la OT: " & _Nro_Ot
+
+            Dim _Opciones() As Command = {Chk_Genarar_COV_Solo_Esta_SubOT, Chk_Genarar_COV_Todas_Las_OT}
+
+            Dim _Koen = _RowEntidad.Item("KOEN")
+            Dim _Suen = _RowEntidad.Item("SUEN")
+
+            Dim _Info As New TaskDialogInfo("Crear cotización desde presupuesto de Sub-Ot",
+                      eTaskDialogIcon.Bulb,
+                      "Existen mas SubOt de esta OT con presupuestos",
+                      "Confirme su opción",
+                      eTaskDialogButton.Ok + eTaskDialogButton.Cancel, eTaskDialogBackgroundColor.Default, _Opciones, Nothing, Nothing, Nothing, Nothing)
+
+            Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
+
+
+            If _Resultado <> eTaskDialogResult.Ok Then
+                Return
+            End If
+
+            If Chk_Genarar_COV_Solo_Esta_SubOT.Checked Then
+
+                Consulta_sql = "Select Det.*,Enc.Nro_Ot,Enc.Sub_Ot,Enc.Empresa,Enc.Sucursal,Enc.Bodega,'ODST OT: '+Enc.Nro_Ot+'-'+Enc.Sub_Ot As 'Observa'" & vbCrLf &
+               "From " & _Global_BaseBk & "Zw_St_OT_DetProd Det" & vbCrLf &
+               "Left Join " & _Global_BaseBk & "Zw_St_OT_Encabezado Enc On Enc.Id_Ot = Det.Id_Ot" & vbCrLf &
+               "Where Det.Id_Ot = " & _Id_Ot
+
+            End If
+
+            If Chk_Genarar_COV_Todas_Las_OT.Checked Then
+                Consulta_sql = "Select Det.*,Enc.Nro_Ot,Enc.Sub_Ot,Enc.Empresa,Enc.Sucursal,Enc.Bodega,'ODST OT: '+Enc.Nro_Ot+'-'+Enc.Sub_Ot As 'Observa'" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_St_OT_DetProd Det" & vbCrLf &
+                               "Left Join " & _Global_BaseBk & "Zw_St_OT_Encabezado Enc On Enc.Id_Ot = Det.Id_Ot" & vbCrLf &
+                               "Where Det.Id_Ot In (Select Id_Ot From " & _Global_BaseBk & "Zw_St_OT_Encabezado Where Nro_Ot = '" & _Nro_Ot & "')"
+            End If
+
+        End If
+
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        If Not CBool(_Tbl_Productos.Rows.Count) Then
+            MessageBoxEx.Show(Me, "No existen productos o servicios en la Orden para poder hacer la cotización", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_Formulario_Documento(_Tido,
+                                               csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta,
+                                               False, True, False, False, False)
+
+        Fm.Pro_RowEntidad = _RowEntidad
+        Fm.Sb_Crear_Documento_Interno_Con_Tabla2(Me, _Tbl_Productos, _Fecha_Emision, "Codigo", "Cantidad", "Precio", "", False, True)
+        Fm.ShowDialog(Me)
+        Dim _New_Idmaeedo = Fm.Pro_Idmaeedo
+        Fm.Dispose()
+
+        _New_Idmaeedo = 339718
+
+        If CBool(_New_Idmaeedo) Then
+
+            MessageBoxEx.Show(Me, "Cotización creada correctamente" & vbCrLf & "Se adjuntara a la orden de servicio",
+                              "Crear cotización", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_DetProd " & vbCrLf &
+                               "Where Id_Ot In (Select Id_Ot From " & _Global_BaseBk & "Zw_St_OT_Encabezado Where Nro_Ot = '" & _Nro_Ot & "')"
+            Dim _Tbl_SubOt As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _SqlQuery = String.Empty
+
+            For Each _Fila As DataRow In _Tbl_SubOt.Rows
+
+                Dim _Id_Ot = _Fila.Item("Id_Ot")
+
+                _SqlQuery += Fx_Fijar_Estado2(_Id_Ot, _New_Idmaeedo, "E", _Estado_Fijar.Evaluacion)
+
+            Next
+
+            If Not String.IsNullOrEmpty(_SqlQuery) Then
+
+                If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery) Then
+
+                    MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                    _Fijar_Estado = True
+                    Me.Close()
+
+                End If
+
+            End If
+
+
+            'Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
+            'Dim _RowDocumento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            'With _RowDocumento
+
+            '    Dim _Id_Ot = _Row_Encabezado.Item("Id_Ot")
+            '    Dim _Idmaeedo = .Item("IDMAEEDO")
+            '    'Dim _Tido = .Item("TIDO")
+            '    Dim _Nudo = .Item("NUDO")
+            '    Dim _Feemdo = .Item("FEEMDO")
+
+            '    Dim NewFila As DataRow
+            '    NewFila = _TblCotizaciones.NewRow
+            '    With NewFila
+
+            '        .Item("Id_Ot") = _Id_Ot
+            '        .Item("Idmaeedo") = _Idmaeedo
+            '        .Item("Tido") = _Tido
+            '        .Item("Nudo") = _Nudo
+            '        .Item("Estado") = "E"
+            '        .Item("Estado_D") = "En Evaluación..."
+            '        .Item("Fecha_Doc") = _Feemdo
+            '        .Item("Fecha_Asociacion") = FechaDelServidor()
+            '        .Item("Seleccionado") = True
+            '        .Item("Garantia") = False
+            '        .Item("Documento_Externo") = False
+
+            '        _TblCotizaciones.Rows.Add(NewFila)
+
+            '    End With
+
+            '    Sb_Marcar_Grilla()
+
+            'End With
+
+        End If
 
     End Sub
 

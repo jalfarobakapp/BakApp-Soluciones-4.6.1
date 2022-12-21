@@ -90,6 +90,7 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Chilexpress_Env", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Chilexpress_Res", _Modificar, Lbl_Eventos)
 
+            .Sb_Revisar_Tabla2(Me, "Zw_Conceptos", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Compras_en_SII", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Configuracion", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Configuracion_Formatos_X_Modalidad", _Modificar, Lbl_Eventos)
@@ -102,6 +103,7 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_DbExt_Maest", _Modificar, Lbl_Eventos)
 
             'DEMONIO
+            .Sb_Revisar_Tabla2(Me, "Zw_Demonio_Archivador", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Demonio_Cof_Estacion", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Demonio_Doc_Emitidos_Aviso_Correo", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Demonio_Doc_Emitidos_Aviso_Correo_Adjuntos", _Modificar, Lbl_Eventos)
@@ -109,16 +111,20 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Demonio_Filtros_X_Estacion", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Demonio_Prestashop", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Demonio_Wordpress", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Demonio_FacAuto", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_Docu_Archivos", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Docu_ObligPg", _Modificar, Lbl_Eventos)
 
+            .Sb_Revisar_Tabla2(Me, "Zw_DTE_Aec", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_DTE_Caf", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_DTE_Configuracion", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_DTE_Documentos", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_DTE_NotifxCorreo", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_DTE_Trackid", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_DTE_Firmar", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_DTE_ReccEnc", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_DTE_ReccDet", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_Empresas", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Entidades", _Modificar, Lbl_Eventos)
@@ -148,6 +154,10 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_ListaPreGlobal", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_ListaPreProducto", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Log_Gestiones", _Modificar, Lbl_Eventos)
+
+            .Sb_Revisar_Tabla2(Me, "Zw_ListaLC_Programadas", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_ListaLC_Programadas_Detalles", _Modificar, Lbl_Eventos)
+
             .Sb_Revisar_Tabla2(Me, "Zw_MrVsPro", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_Negocios_01_Enc", _Modificar, Lbl_Eventos)
@@ -189,6 +199,8 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Prod_Doc_Ult_Ventas", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Prod_Dimensiones", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Prod_CodQR", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Prod_CodQRLogDoc", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Prod_ImpAdicional", _Modificar, Lbl_Eventos)
 
             'PRODUCCION
             .Sb_Revisar_Tabla2(Me, "Zw_Pdc_Mesones", _Modificar, Lbl_Eventos)
@@ -341,6 +353,7 @@ Public Class Frm_Estructura_Base_De_Datos
                 If Not _Reparado Then
                     Consulta_Sql = _Accion
                     Consulta_Sql = Replace(Consulta_Sql, "varbinary (-1)", "varbinary")
+                    Consulta_Sql = Replace(Consulta_Sql, "varchar (-1)", "varchar(Max)")
 
                     If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
                         _Fila.Cells("Reparado").Value = True

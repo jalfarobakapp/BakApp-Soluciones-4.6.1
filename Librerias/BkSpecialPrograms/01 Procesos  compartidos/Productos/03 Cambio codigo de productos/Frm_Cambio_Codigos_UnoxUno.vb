@@ -1,6 +1,5 @@
 ﻿'Imports Lib_Bakapp_VarClassFunc
 Imports DevComponents.DotNetBar
-Imports System.Data.SqlClient
 
 Public Class Frm_Cambio_Codigos_UnoxUno
 
@@ -28,39 +27,28 @@ Public Class Frm_Cambio_Codigos_UnoxUno
         AddHandler ChkCambiarCodigoTecnico.CheckedChanging, AddressOf ChkCambiarCodigoTecnico_CheckedChanging
         AddHandler ChkCambiarCodigoTecnico.CheckValueChanged, AddressOf ChkCambiarCodigoTecnico_CheckValueChanged
 
-        BtnLimpiar.Visible = Not _Cerrar_al_cambiar
+        'BtnLimpiar.Visible = Not _Cerrar_al_cambiar
+
+        If String.IsNullOrEmpty(Txt_Codigo_Old.Text.Trim) Then
+            Call Txt_Codigo_Old_ButtonCustom2Click(Nothing, Nothing)
+        End If
 
     End Sub
 
-    Private Sub BtnBuscarProducto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnBuscarProducto.Click
 
-        Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
-        Fm.Pro_Actualizar_Precios = False
-        Fm.Pro_Mostrar_Info = False
-        Fm.BtnBuscarAlternativos.Visible = True
-        Fm.Pro_Mostrar_Imagenes = True
-        Fm.BtnCrearProductos.Visible = False
-        Fm.Pro_Mostrar_Editar = False
-        Fm.Pro_Mostrar_Eliminar = False
-        Fm.BtnExportaExcel.Visible = False
-        Fm.Pro_Tipo_Lista = "P"
-        Fm.Pro_Maestro_Productos = False
-        Fm.Pro_Sucursal_Busqueda = ModSucursal
-        Fm.Pro_Bodega_Busqueda = ModBodega
-        Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
-        Fm.ShowDialog(Me)
+    Sub Sb_Cargar_Producto(_RowProducto As DataRow)
 
-        If Fm.Pro_Seleccionado Then
+        Txt_Codigo_Old.Text = _RowProducto.Item("KOPR").ToString.Trim
+        Txt_Descripcion.Text = _RowProducto.Item("NOKOPR").ToString.Trim
+        Txt_Codigo_Tecnico_Old.Text = _RowProducto.Item("KOPRTE").ToString.Trim
+        Txt_Codigo_Tecnico_New.Text = _RowProducto.Item("KOPRTE").ToString.Trim
 
-            Txt_Codigo_Old.Text = Fm.Pro_RowProducto.Item("KOPR").ToString.Trim
-            Txt_Descripcion.Text = Fm.Pro_RowProducto.Item("NOKOPR").ToString.Trim
-            Txt_Codigo_Tecnico_Old.Text = Fm.Pro_RowProducto.Item("KOPRTE").ToString.Trim
-            Txt_Codigo_Tecnico_New.Text = Fm.Pro_RowProducto.Item("KOPRTE").ToString.Trim
+        Txt_Codigo_Old.ReadOnly = True
+        Txt_Codigo_Old.ButtonCustom2.Enabled = True
+        Txt_Codigo_Old.ButtonCustom.Enabled = False
 
-            Txt_Codigo_New.Text = String.Empty
-            Txt_Codigo_New.Focus()
-
-        End If
+        Txt_Codigo_New.Text = String.Empty
+        Txt_Codigo_New.Focus()
 
     End Sub
 
@@ -71,27 +59,25 @@ Public Class Frm_Cambio_Codigos_UnoxUno
             GroupPanel1.Enabled = False
             Bar2.Enabled = False
 
-            'If Fx_Tiene_Permiso(Me, "Prod003") Then
-
-            If String.IsNullOrEmpty(Trim(Txt_Codigo_Old.Text)) Then
-                Beep()
-                ToastNotification.Show(Me, "FALTA EL PRODUCTO A CAMBIAR", My.Resources.cross,
-                                             1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
-
+            If String.IsNullOrEmpty(Txt_Descripcion.Text.Trim) Then
+                MessageBoxEx.Show(Me, "PRODUCTO NO EXISTE", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Call Txt_Codigo_Old_ButtonCustom2Click(Nothing, Nothing)
                 Return
             End If
 
-            If String.IsNullOrEmpty(Trim(Txt_Codigo_New.Text)) Then
-                Beep()
-                ToastNotification.Show(Me, "FALTA NUEVO CODIGO", My.Resources.cross,
-                                             1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+            If String.IsNullOrEmpty(Txt_Codigo_Old.Text.Trim) Then
+                MessageBoxEx.Show(Me, "FALTA EL PRODUCTO A CAMBIAR", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
 
+            If String.IsNullOrEmpty(Txt_Codigo_New.Text.Trim) Then
+                MessageBoxEx.Show(Me, "FALTA NUEVO CODIGO", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_Codigo_New.Focus()
                 Return
             End If
 
             Dim Fm As New Frm_Cambio_Codigos
             Dim _Existe_PrNew As Boolean = Fm.Fx_Existe_Producto(Me, Txt_Codigo_New.Text, True)
-
 
             If Not _Existe_PrNew Then
 
@@ -109,29 +95,30 @@ Public Class Frm_Cambio_Codigos_UnoxUno
                 If MessageBoxEx.Show("¿Esta seguro de cambiar el código?", "Cambiar código",
                                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
-                        Consulta_sql = "Select * From MAEPR Where KOPR = '" & Txt_Codigo_Old.Text & "'"
-                        Dim _TblPro As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Consulta_sql = "Select * From MAEPR Where KOPR = '" & Txt_Codigo_Old.Text & "'"
+                    Dim _TblPro As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-                        If Fm.Fx_Cambiar_Codigo(Txt_Codigo_New.Text, Txt_Codigo_Old.Text,
-                                            ChkCambiarCodigoTecnico.Checked, True, FUNCIONARIO,
-                                            _TblPro.Rows(0), Txt_Codigo_Tecnico_New.Text) Then
+                    If Fm.Fx_Cambiar_Codigo(Txt_Codigo_New.Text, Txt_Codigo_Old.Text,
+                                        ChkCambiarCodigoTecnico.Checked, True, FUNCIONARIO,
+                                        _TblPro.Rows(0), Txt_Codigo_Tecnico_New.Text) Then
 
-                            If _Cerrar_al_cambiar Then
-                                _CodigoCambiado = True
-                                Me.Close()
-                            Else
+                        If _Cerrar_al_cambiar Then
+                            _CodigoCambiado = True
+                            Me.Close()
+                        Else
 
-                                Call BtnLimpiar_Click(Nothing, Nothing)
+                            Call Txt_Codigo_Old_ButtonCustom2Click(Nothing, Nothing)
 
-                                Beep()
-                                ToastNotification.Show(Me, "CODIGO CAMBIADO CORRECTAMENTE", My.Resources.ok_button,
-                                                   2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
-                            End If
+                            MessageBoxEx.Show(Me, "CODIGO CAMBIADO CORRECTAMENTE", "Cambiar código", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
                         End If
 
                     End If
-                Else
-                    Txt_Codigo_New.SelectAll()
+
+                End If
+
+            Else
+                Txt_Codigo_New.SelectAll()
                 Txt_Codigo_New.Focus()
                 Return
             End If
@@ -142,19 +129,6 @@ Public Class Frm_Cambio_Codigos_UnoxUno
             GroupPanel1.Enabled = True
             Bar2.Enabled = True
         End Try
-
-    End Sub
-
-
-    Private Sub BtnLimpiar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnLimpiar.Click
-
-        Txt_Codigo_New.Text = String.Empty
-        Txt_Descripcion.Text = String.Empty
-        Txt_Codigo_Old.Text = String.Empty
-        Txt_Codigo_Tecnico_New.Text = String.Empty
-        Txt_Codigo_Tecnico_Old.Text = String.Empty
-        Txt_Codigo_Tecnico_New.Enabled = False
-        ChkCambiarCodigoTecnico.Checked = False
 
     End Sub
 
@@ -171,5 +145,93 @@ Public Class Frm_Cambio_Codigos_UnoxUno
     Private Sub ChkCambiarCodigoTecnico_CheckValueChanged(sender As Object, e As EventArgs)
         Txt_Codigo_Tecnico_New.Enabled = ChkCambiarCodigoTecnico.Checked
         If Not ChkCambiarCodigoTecnico.Checked Then Txt_Codigo_Tecnico_New.Text = Txt_Codigo_Tecnico_Old.Text
+    End Sub
+
+    Private Sub Txt_Codigo_Old_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Codigo_Old.ButtonCustomClick
+        Try
+
+            'Txt_Codigo_Old.Enabled = False
+
+            Dim _Codigo As String = Txt_Codigo_Old.Text
+
+            Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
+            Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not IsNothing(_RowProducto) Then
+                If Not String.IsNullOrEmpty(_RowProducto.Item("ATPR").ToString.Trim) Then
+                    MessageBoxEx.Show(Me, "Producto oculto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                Else
+                    Codigo_abuscar = _Codigo
+                    Sb_Cargar_Producto(_RowProducto)
+                End If
+                Return
+            End If
+
+            Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
+            Fm.Pro_Tipo_Lista = "P"
+            Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
+            Fm.Pro_CodEntidad = String.Empty
+            Fm.Pro_Mostrar_Info = False
+            Fm.BtnCrearProductos.Visible = False
+            Fm.Txtdescripcion.Text = _Codigo
+            Fm.BtnExportaExcel.Visible = False
+            Fm.Pro_Actualizar_Precios = False
+            Fm.TraerTodosLosProductos = True
+
+            Fm.ShowDialog(Me)
+
+            If Fm.Pro_Seleccionado Then
+
+                _RowProducto = Fm.Pro_RowProducto
+                Codigo_abuscar = Fm.Pro_RowProducto.Item("KOPR")
+
+                If Not String.IsNullOrEmpty(Trim(Codigo_abuscar)) Then
+                    Sb_Cargar_Producto(_RowProducto)
+                End If
+
+            Else
+
+                If String.IsNullOrEmpty(Txt_Descripcion.Text) Then
+                    Call Txt_Codigo_Old_ButtonCustom2Click(Nothing, Nothing)
+                End If
+
+            End If
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Call Txt_Codigo_Old_ButtonCustom2Click(Nothing, Nothing)
+        Finally
+            'Txt_Codigo_Old.Enabled = True
+        End Try
+    End Sub
+
+    Private Sub Txt_Codigo_Old_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Codigo_Old.ButtonCustom2Click
+        GroupPanel1.Enabled = True
+        Txt_Codigo_Old.ReadOnly = False
+        Txt_Codigo_New.Text = String.Empty
+        Txt_Descripcion.Text = String.Empty
+        Txt_Codigo_Old.Text = String.Empty
+        Txt_Codigo_Tecnico_New.Text = String.Empty
+        Txt_Codigo_Tecnico_Old.Text = String.Empty
+        Txt_Codigo_Tecnico_New.Enabled = False
+        ChkCambiarCodigoTecnico.Checked = False
+        Txt_Codigo_Old.ButtonCustom2.Enabled = False
+        Txt_Codigo_Old.ButtonCustom.Enabled = True
+        Txt_Codigo_Old.Focus()
+    End Sub
+
+    Private Sub Txt_Codigo_Old_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Codigo_Old.KeyDown
+        If Txt_Codigo_Old.ButtonCustom.Visible Then
+            If e.KeyValue = Keys.Enter Then
+                Call Txt_Codigo_Old_ButtonCustomClick(Nothing, Nothing)
+            End If
+        End If
+    End Sub
+
+    Private Sub Frm_Cambio_Codigos_UnoxUno_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        If e.KeyValue = Keys.Escape Then
+            Me.Close()
+        End If
     End Sub
 End Class

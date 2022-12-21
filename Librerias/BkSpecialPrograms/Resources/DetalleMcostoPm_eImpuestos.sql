@@ -1,10 +1,11 @@
-Declare @Ila Float, @Codigo Char(13)
+Declare @Ila Float, @Codigo Char(13), @Empresa Char(2)
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name='#TablaPaso#') BEGIN
 DROP TABLE #TablaPaso#
 END
 
 Set @Codigo = '#Codigo#'
+Set @Empresa = '#Empresa#'
 
 Set @Ila = (SELECT    SUM(ISNULL(dbo.TABIM.POIM, 0)) AS Impuestos
              FROM         dbo.MAEPR LEFT OUTER JOIN
@@ -28,7 +29,7 @@ SELECT      ISNULL(dbo.MAEPR.NOKOPR, 0) AS 'NOKOPR',
 			Into #TablaPaso#
 FROM         dbo.MAEPR LEFT OUTER JOIN
                       dbo.MAEPREM ON dbo.MAEPR.KOPR = dbo.MAEPREM.KOPR
-WHERE     (dbo.MAEPR.KOPR = @Codigo)			 
+WHERE     (dbo.MAEPR.KOPR = @Codigo And MAEPREM.EMPRESA = @Empresa)			 
 
 --,ISNULL(dbo.PDIMEN.ILAVALOR/100,0) AS ILAVALOR, 
 -- ISNULL((dbo.PDIMEN.ILAVALOR + dbo.PDIMEN.IVAFORM)/100,0) AS TotalImpuestos 

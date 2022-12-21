@@ -82,7 +82,7 @@ Public Class Class_Referencias_DTE
 
     Function Fx_Incorporar_Tipo_NC(_Formulario As Form) As DataRow
 
-        Dim _Sql_Filtro_Condicion_Extra = "And Tabla = 'CODREF_SII_NCV' --And Equiv_Kotabla = 'SET-FE'"
+        Dim _Sql_Filtro_Condicion_Extra = "And Tabla = 'CODREF_SII_NCV'  --And Equiv_Kotabla = 'SET-FE'"
 
         Dim _Filtrar As New Clas_Filtros_Random(_Formulario)
         Dim _Codigo As String
@@ -169,10 +169,10 @@ Public Class Class_Referencias_DTE
 
     End Sub
 
-    Function Fx_Insertar_Referencias_Para_Nota_De_Credito_NCV(_Formulario As Form,
-                                                              _TblDetalle As DataTable,
-                                                              ByRef _Tbl_Mevento_Edo As DataTable,
-                                                              _RowEntidad As DataRow) As Boolean
+    Function Fx_Insertar_Referencias_NCV_FDV(_Formulario As Form,
+                                             _TblDetalle As DataTable,
+                                             ByRef _Tbl_Mevento_Edo As DataTable,
+                                             _RowEntidad As DataRow) As Boolean
 
         Dim _Idmaeddo_Dori As Integer
 
@@ -210,13 +210,15 @@ Public Class Class_Referencias_DTE
                             .Pro_Sql_Filtro_Otro_Filtro = "And Edo.NUDONODEFI = 0"
                             .Pro_TipoDoc_Seleccionado = Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado
                             .Rdb_Tipo_Documento_Uno.Checked = True
-                            .Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "FCV", "WHERE TIDO IN ('FCV','BLV')")
+                            .Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "FCV", "Where TIDO In ('FCV','BLV')")
                             .Rdb_Estado_Vigente.Checked = True
 
                             .Rdb_Estado_Todos.Checked = True
                             .Grupo_Funcionario.Enabled = True
                             .Grupo_Producto.Enabled = False
                             .Rdb_Fecha_Emision_Cualquiera.Checked = True
+                            .Pro_Row_Entidad = _RowEntidad
+                            .Rdb_Entidad_Una.Checked = True
 
                             .ShowDialog(_Formulario)
 
@@ -243,38 +245,54 @@ Public Class Class_Referencias_DTE
 
                         End If
 
-                        Consulta_sql = "Select Isnull(KOTABLA,'??') As KOTABLA,Isnull(KOCARAC,'??') As KOCARAC,Isnull(NOKOCARAC,'??') As NOKOCARAC,Z1.* 
+                        Dim _InsertarRegistro = True
+
+                        If CBool(_Tbl_Mevento_Edo.Rows.Count) Then
+                            For Each _FlMv As DataRow In _Tbl_Mevento_Edo.Rows
+                                If _FlMv.Item("ARCHIRSE") = "MAEEDO" And _FlMv.Item("IDRSE") = _Idrse Then
+                                    _InsertarRegistro = False
+                                    Exit For
+                                End If
+                            Next
+                        End If
+
+                        If _InsertarRegistro Then
+
+                            Consulta_sql = "Select Isnull(KOTABLA,'??') As KOTABLA,Isnull(KOCARAC,'??') As KOCARAC,Isnull(NOKOCARAC,'??') As NOKOCARAC,Z1.* 
                                     From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Z1
                                     Left Join TABCARAC 
                                     On Equiv_Kotabla = KOTABLA And Equiv_Kocarac = KOCARAC
                                     Where Tabla = 'CODREF_SII_NCV' And CodigoTabla = '" & _CodigoTabla & "'"
 
-                        Dim _Row_RefCarac As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                            Dim _Row_RefCarac As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                        Dim _Kotabla = Trim(_Row_RefCarac.Item("KOTABLA")) '"SET-FE"
-                        Dim _Kocarac = Trim(_Row_RefCarac.Item("KOCARAC"))
-                        Dim _Nokocarac = Trim(_Row_RefCarac.Item("NOKOCARAC"))
+                            Dim _Kotabla = Trim(_Row_RefCarac.Item("KOTABLA")) '"SET-FE"
+                            Dim _Kocarac = Trim(_Row_RefCarac.Item("KOCARAC"))
+                            Dim _Nokocarac = Trim(_Row_RefCarac.Item("NOKOCARAC"))
 
-                        Consulta_sql = "Select TIDO,NUDO,FEEMDO From MAEEDO Where IDMAEEDO = " & _Idrse
-                        Dim _FlRef As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                            Consulta_sql = "Select TIDO,NUDO,FEEMDO From MAEEDO Where IDMAEEDO = " & _Idrse
+                            Dim _FlRef As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                        Dim _Nudopa = String.Empty
-                        Dim _NroLinRef = Tbl_Referencias.Rows.Count + 1
-                        Dim _TpoDocRef = Fx_Tipo_DTE_VS_TIDO(_FlRef.Item("TIDO"))
-                        Dim _FolioRef = Convert.ToInt32(_FlRef.Item("NUDO"))
-                        Dim _RUTOt = String.Empty
-                        Dim _IdAdicOtr = String.Empty
-                        Dim _FchRef = _FlRef.Item("FEEMDO")
-                        Dim _CodRef = _CodigoTabla
-                        Dim _RazonRef = _NombreTabla
+                            Dim _Nudopa = String.Empty
+                            Dim _NroLinRef = Tbl_Referencias.Rows.Count + 1
+                            Dim _TpoDocRef = Fx_Tipo_DTE_VS_TIDO(_FlRef.Item("TIDO"))
+                            Dim _FolioRef = Convert.ToInt32(_FlRef.Item("NUDO"))
+                            Dim _RUTOt = String.Empty
+                            Dim _IdAdicOtr = String.Empty
+                            Dim _FchRef = _FlRef.Item("FEEMDO")
+                            Dim _CodRef = Val(_CodigoTabla)
+                            Dim _RazonRef = _NombreTabla
 
-                        Fx_Row_Nueva_Referencia(0, 0, "", _Nudopa,
-                                                     _NroLinRef, _TpoDocRef, _FolioRef, _RUTOt, _IdAdicOtr, _FchRef, _CodRef, _RazonRef)
+                            Fx_Row_Nueva_Referencia(0, 0, "", _Nudopa,
+                                                         _NroLinRef, _TpoDocRef, _FolioRef, _RUTOt, _IdAdicOtr, _FchRef, _CodRef, _RazonRef)
 
-                        Fx_Row_Nueva_Linea_Mevento(0, "MAEEDO", 0, FUNCIONARIO, _Fecha, _Kotabla, _Kocarac, _Nokocarac,
-                                               "MAEEDO", _Idrse, _Fecha, "", "", _Tbl_Mevento_Edo)
+                            Fx_Row_Nueva_Linea_Mevento(0, "MAEEDO", 0, FUNCIONARIO, _Fecha, _Kotabla, _Kocarac, _Nokocarac,
+                                                   "MAEEDO", _Idrse, _Fecha, "", "", _Tbl_Mevento_Edo)
+
+                        End If
 
                     End If
+
 
                 End If
 

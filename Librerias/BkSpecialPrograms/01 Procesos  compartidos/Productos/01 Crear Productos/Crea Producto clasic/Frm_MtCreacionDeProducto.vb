@@ -14,7 +14,6 @@ Public Class Frm_MtCreacionDeProducto
     Dim SuperFamilia, Familia, SubFamilia As String
     Dim ListaCostoPro, Marca, Rubro, ClasifLibre, JefePro, ZonaPro As String
 
-    'Dim _Ds_Producto As New Ds_Producto
     Dim _Preguntar_Crear_Otro As Boolean
     Dim _MaxCarac_Ref_Producto As Integer
 
@@ -29,6 +28,13 @@ Public Class Frm_MtCreacionDeProducto
     Dim _Cl_Producto As Cl_Producto
 
     Dim Union = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "UNION" & vbCrLf
+
+    Dim _Cl_CompUdMedidas As New Bk_Comporamiento_UdMedidas.Cl_CompUdMedidas
+    Dim _NNmarca As New Bk_Comporamiento_UdMedidas.Nmarca
+
+    Public Property GrabarEnOtraBase As Boolean
+
+
     Public ReadOnly Property Pro_Grabar() As Boolean
         Get
             Return _Grabar
@@ -39,7 +45,7 @@ Public Class Frm_MtCreacionDeProducto
         Get
             Return _RowProducto
         End Get
-        Set(ByVal value As DataRow)
+        Set(value As DataRow)
             _RowProducto = value
         End Set
     End Property
@@ -75,15 +81,15 @@ Public Class Frm_MtCreacionDeProducto
         Familia = ""
         SubFamilia = ""
 
-        caract_combo(Cmb_Ud01pr)
-        Consulta_sql = "SELECT CodigoTabla AS Padre,CodigoTabla AS Hijo" & vbCrLf &
-                       "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones WHERE Tabla = 'RTU' ORDER BY Orden"
-        Cmb_Ud01pr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        'caract_combo(Cmb_Ud01pr)
+        'Consulta_sql = "SELECT CodigoTabla AS Padre,CodigoTabla AS Hijo" & vbCrLf &
+        '               "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones WHERE Tabla = 'RTU' ORDER BY Orden"
+        'Cmb_Ud01pr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-        caract_combo(Cmb_Ud02pr)
-        Consulta_sql = "SELECT CodigoTabla AS Padre,CodigoTabla AS Hijo" & vbCrLf &
-                       "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones WHERE Tabla = 'RTU' ORDER BY Orden"
-        Cmb_Ud02pr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        'caract_combo(Cmb_Ud02pr)
+        'Consulta_sql = "SELECT CodigoTabla AS Padre,CodigoTabla AS Hijo" & vbCrLf &
+        '               "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones WHERE Tabla = 'RTU' ORDER BY Orden"
+        'Cmb_Ud02pr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         Dim _Arr_Bloquea_Pr(,) As String = {{"", ""},
                                             {"C", "Bloqueado para compras"},
@@ -93,14 +99,14 @@ Public Class Frm_MtCreacionDeProducto
         Cmb_Bloqueapr.SelectedValue = ""
 
 
-        Dim _Arr_Tipo_Productos(,) As String = {{"FIN", "Insumo productivo"},
-                                               {"FLN", "Artículo multiproposito"},
-                                               {"FPN", "Articulo estándar"},
-                                               {"FPS", "Articulo seriado"},
-                                               {"FUN", "Herramienta estándar"},
-                                               {"FUS", "Herramienta seriada"},
-                                               {"GEN", "Génerico o agrupador de artículos"},
-                                               {"SSN", "Servicios y similares"}}
+        Dim _Arr_Tipo_Productos(,) As String = {{"FPN", "Articulo estándar"},
+                                                {"FPS", "Articulo seriado"},
+                                                {"FIN", "Insumo productivo"},
+                                                {"FUN", "Herramienta estándar"},
+                                                {"FUS", "Herramienta seriada"},
+                                                {"FLN", "Artículo multiproposito"},
+                                                {"SSN", "Servicios y similares"},
+                                                {"GEN", "Génerico o agrupador de artículos"}}
         Sb_Llenar_Combos(_Arr_Tipo_Productos, Cmb_Tipr)
         Cmb_Tipr.SelectedValue = "FPN"
 
@@ -128,17 +134,54 @@ Public Class Frm_MtCreacionDeProducto
         Sb_Llenar_Combos(_Arr_Rgpr, Cmb_Rgpr)
         Cmb_Rgpr.SelectedValue = "N"
 
+        Dim _Arr_Funclote_Pr(,) As String = {{"", "Manual muestra Ult. Nro. Lote"},
+                                            {"A", "A Alfanumérico, manual y libre"},
+                                            {"B", "B Numérico correlativo por producto"},
+                                            {"C", "C Numérico correlativo general"},
+                                            {"D", "D Año mas correlativo general"},
+                                            {"E", "E Año, Mes mas correlativo general"},
+                                            {"F", "F Numérico mayor y Unico por Dcto."}}
+        Sb_Llenar_Combos(_Arr_Funclote_Pr, Cmb_Funclote)
+        Cmb_Funclote.SelectedValue = ""
+
+        Dim _Arr_Comportamiento(,) As String = {
+                                    {1, "1. Solicitar unidad en que se hará la transacción"},
+                                    {2, "2. Comprar en 1era. Udad. Vender en 1era. Udad."},
+                                    {3, "3. Comprar en 2da. Udad. Vender en 1era. Udad."},
+                                    {4, "4. Comprar en 1era. Udad. Vender en 2da. Udad."},
+                                    {5, "5. Comprar en 2da. Udad. Vender en 2da. Udad."},
+                                    {6, "6. Solicitar Udad. si es compra, Vender en 1era. Udad."},
+                                    {7, "7. Solicitar Udad. si es compra, Vender en 2da. Udad."},
+                                    {8, "8. Comprar en 1era. Udad. Solicitar Udad. si es venta"},
+                                    {9, "9. Comprar en 2da. Udad. Solicitar Udad. si es venta"},
+                                    {10, "10. Utilizar la unidad indivisible (solo para RTU Constante)"},
+                                    {11, "11. Vender en 1era. Udad. Sin dividir 2da. Udad"}}
+        Sb_Llenar_Combos(_Arr_Comportamiento, Cmb_Nmarca_Comportamiento)
+        Cmb_Nmarca_Comportamiento.SelectedValue = 1
+
+        Dim _Arr_Tratamiento(,) As String = {
+                            {1, "1. Caso normal, respetar RTU definida"},
+                            {2, "2. Solicitar Ancho, Largo y Alto para obtener cantidad 1era. Udad"},
+                            {3, "3. Solicitar Ancho y Largo para obtener cantidad 1era. Udad. (MT2)"},
+                            {4, "4. Solicitar Ancho y Largo para obtener cantidad 1era. Udad. (CM2)"},
+                            {5, "5. Solicitar cantidad solo en Udad. seleccionada y calcular por RTU la otra Udad."},
+                            {6, "6. Calcular RTU en forma invertida"},
+                            {7, "7. Solicitar cantidad para ambas unidades del producto"},
+                            {8, "8. Solicitar RTU del producto"},
+                            {9, "9. RTU variable"},
+                            {10, "10. RTU constante"}}
+        Sb_Llenar_Combos(_Arr_Tratamiento, Cmb_Nmarca_Tratamiento)
+        Cmb_Nmarca_Tratamiento.SelectedValue = 1
+
     End Sub
 
 #End Region
 
 #Region "FUNCIONES ESPECIALES"
 
-    Sub Sb_Actualizar_Grilla(ByVal _Grilla As DataGridView)
+    Sub Sb_Actualizar_Grilla(_Grilla As DataGridView)
 
         With _Grilla
-
-            ' .DataSource = _Tbl
 
             .Columns("Select").HeaderText = "Sel."
             .Columns("Select").Width = 50
@@ -151,15 +194,15 @@ Public Class Frm_MtCreacionDeProducto
 
     End Sub
 
-    Private Function Chks(ByVal Chk As CheckBox) As Integer
+    Private Function Chks(Chk As CheckBox) As Integer
         Dim Nro As Integer = 0
         If Chk.Checked = True Then Nro = 1
         Return Nro
     End Function
 
-    Private Function ChequearTodo(ByVal Grilla As DataGridView,
-                                  ByVal Chk As CheckBoxX,
-                                  ByVal NombreTabla As String)
+    Private Function ChequearTodo(Grilla As DataGridView,
+                                  Chk As CheckBoxX,
+                                  NombreTabla As String)
 
         Dim Chequeo As Boolean
         Chequeo = Chk.Checked
@@ -170,9 +213,9 @@ Public Class Frm_MtCreacionDeProducto
 
     End Function
 
-    Private Function CodigoSugerido(ByVal TIPR As String,
-                                    ByVal _Iniciales As String,
-                                    ByVal _MaxCarac_Codigo As Integer) As String
+    Private Function CodigoSugerido(TIPR As String,
+                                    _Iniciales As String,
+                                    _MaxCarac_Codigo As Integer) As String
 
         Dim _CodigoS As String
         Dim _Lop As Boolean = True
@@ -205,18 +248,16 @@ Public Class Frm_MtCreacionDeProducto
 
 #End Region
 
-    Public Sub New(ByVal Accion As Cl_Producto.Enum_Accion,
-                   ByVal Codigo As String,
-                   ByVal Preguntar_Crear_Otro As Boolean,
-                   ByVal Crear_Alternativo As Boolean)
+    Public Sub New(Accion As Cl_Producto.Enum_Accion,
+                   Codigo As String,
+                   Preguntar_Crear_Otro As Boolean,
+                   Crear_Alternativo As Boolean)
 
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
-
-        ' Sb_Limpiar()
 
         _Cl_Producto = New Cl_Producto()
         _Cl_Producto.Sb_Cargar_Producto(Codigo)
@@ -231,12 +272,6 @@ Public Class Frm_MtCreacionDeProducto
         AddHandler Txt_Tolelote.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros
         AddHandler Txt_Vidamedia.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros
         AddHandler Txt_Rlud.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros
-
-        'AddHandler Cmb_Mrpr.SelectedIndexChanged, AddressOf Cmbmarcas_SelectedIndexChanged
-        'AddHandler Cmb_Rupr.SelectedIndexChanged, AddressOf Cmbrubros_SelectedIndexChanged
-        'AddHandler Cmb_Clalibpr.SelectedIndexChanged, AddressOf Cmbclalibpr_SelectedIndexChanged
-        'AddHandler Cmb_Kofupr.SelectedIndexChanged, AddressOf CmbJefeProducto_SelectedIndexChanged
-        'AddHandler Cmb_Zonapr.SelectedIndexChanged, AddressOf CmbZonaProducto_SelectedIndexChanged
 
         AddHandler Txt_Pesoubic.Validated, AddressOf Sb_Txt_Numerico_Validated
         AddHandler Txt_Ltsubic.Validated, AddressOf Sb_Txt_Numerico_Validated
@@ -274,7 +309,21 @@ Public Class Frm_MtCreacionDeProducto
 
     End Sub
 
-    Private Sub Frm_MtCreacionDeProducto_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_MtCreacionDeProducto_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+
+        AddHandler Btn_Dim_01.Click, AddressOf Btn_Dim_Click
+        AddHandler Btn_Dim_02.Click, AddressOf Btn_Dim_Click
+        AddHandler Btn_Dim_03.Click, AddressOf Btn_Dim_Click
+        AddHandler Btn_Dim_04.Click, AddressOf Btn_Dim_Click
+        AddHandler Btn_Dim_05.Click, AddressOf Btn_Dim_Click
+        AddHandler Btn_Dim_06.Click, AddressOf Btn_Dim_Click
+        AddHandler Btn_Dim_07.Click, AddressOf Btn_Dim_Click
+        AddHandler Btn_Dim_08.Click, AddressOf Btn_Dim_Click
+        AddHandler Btn_Dim_09.Click, AddressOf Btn_Dim_Click
+        AddHandler Btn_Dim_10.Click, AddressOf Btn_Dim_Click
+        AddHandler Btn_Dim_11.Click, AddressOf Btn_Dim_Click
+        AddHandler Btn_Dim_12.Click, AddressOf Btn_Dim_Click
+        AddHandler Btn_Dim_13.Click, AddressOf Btn_Dim_Click
 
         Sb_Limpiar()
 
@@ -308,6 +357,9 @@ Public Class Frm_MtCreacionDeProducto
         Txt_Tolelote.Text = 0
         Txt_Ltsubic.Text = 0
         Txt_Vidamedia.Text = 0
+        Txt_Alto.Text = 0
+        Txt_Largo.Text = 0
+        Txt_Ancho.Text = 0
 
         Txt_Koprra.Text = numero_(Val(_Sql.Fx_Trae_Dato("MAEPR WITH ( NOLOCK )", "MAX(KOPRRA)+1")), 6)
 
@@ -337,9 +389,41 @@ Public Class Frm_MtCreacionDeProducto
 
         Btn_Dimensiones.Visible = (_Cl_Producto.Pro_Accion = Cl_Producto.Enum_Accion.Editar)
 
+        Dim _Existe As Boolean
+
+        _Existe = _Sql.Fx_Exite_Campo("MAEPR", "NOKOPRAMP")
+
+        Lbl_Nokoprmap.Visible = _Existe
+        Txt_Nokopramp.Visible = Lbl_Nokoprmap.Visible
+
+        '_Existe = _Sql.Fx_Exite_Campo("MAEPR", "CAMBIOSUJ")
+
+        'Chk_Cambiosuj.Visible = True
+
+        'Chk_Cambiosuj.Visible = _Existe
+        'LabelX28.Visible = Chk_Cambiosuj.Visible
+
+        '_Existe = _Sql.Fx_Exite_Campo("MAEPROBS", "LARGO")
+
+        'Lbl_Largo.Visible = _Existe
+        'Txt_Largo.Visible = Lbl_Largo.Visible
+
+        '_Existe = _Sql.Fx_Exite_Campo("MAEPROBS", "ALTO")
+
+        'Lbl_Alto.Visible = _Existe
+        'Txt_Alto.Visible = Lbl_Alto.Visible
+
+        '_Existe = _Sql.Fx_Exite_Campo("MAEPROBS", "ANCHO")
+
+        'Lbl_Ancho.Visible = _Existe
+        'Txt_Ancho.Visible = Lbl_Ancho.Visible
+
+        Cmb_Nmarca_Comportamiento.Enabled = (Txt_Ud01pr.Text <> Txt_Ud02pr.Text)
+        Cmb_Nmarca_Tratamiento.Enabled = (Txt_Ud01pr.Text <> Txt_Ud02pr.Text)
+
     End Sub
 
-    Private Sub BtnxGrabar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Grabar.Click
+    Private Sub BtnxGrabar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Grabar.Click
         Sb_Grabar1()
     End Sub
 
@@ -357,7 +441,7 @@ Public Class Frm_MtCreacionDeProducto
             Return
         End If
 
-        If String.IsNullOrEmpty(Trim(Cmb_Ud01pr.Text)) Or String.IsNullOrEmpty(Trim(Cmb_Ud02pr.Text)) Then
+        If String.IsNullOrEmpty(Trim(Txt_Ud01pr.Text)) Or String.IsNullOrEmpty(Trim(Txt_Ud02pr.Text)) Then
             MessageBoxEx.Show(Me, "Falta la unidad de mediad", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
@@ -460,8 +544,8 @@ Public Class Frm_MtCreacionDeProducto
 
         _RowProducto.Item("TIPR") = Cmb_Tipr.SelectedValue.ToString
 
-        _RowProducto.Item("UD01PR") = Cmb_Ud01pr.SelectedValue.ToString.Trim
-        _RowProducto.Item("UD02PR") = Cmb_Ud02pr.SelectedValue.ToString.Trim
+        _RowProducto.Item("UD01PR") = Txt_Ud01pr.Text.Trim
+        _RowProducto.Item("UD02PR") = Txt_Ud02pr.Text.Trim
         _RowProducto.Item("RLUD") = Txt_Rlud.Tag
 
         _RowProducto.Item("BLOQUEAPR") = Cmb_Bloqueapr.SelectedValue.ToString
@@ -474,15 +558,15 @@ Public Class Frm_MtCreacionDeProducto
         Dim _Divisible2 As String
 
         If Chk_Divisible.Checked Then
-            _Divisible = "S"
-        Else
             _Divisible = "N"
+        Else
+            _Divisible = "S"
         End If
 
         If Chk_Divisible2.Checked Then
-            _Divisible2 = "S"
-        Else
             _Divisible2 = "N"
+        Else
+            _Divisible2 = "S"
         End If
 
         _RowProducto.Item("TRATALOTE") = Chk_Tratalote.Checked ' Stock por lote según origen
@@ -528,8 +612,35 @@ Public Class Frm_MtCreacionDeProducto
         _RowProducto.Item("ATPR") = ""
         _RowProducto.Item("PLANO") = ""
 
+        _RowProducto.Item("EXENTO") = Chk_Exento.Checked
 
-        '  TOLELOTE, VIDAMEDIA
+        _RowProducto.Item("FUNCLOTE") = Cmb_Funclote.SelectedValue
+        _RowProducto.Item("NMARCA") = _Cl_CompUdMedidas.Fx_Trae_NMARCA(CInt(Cmb_Nmarca_Comportamiento.SelectedValue), CInt(Cmb_Nmarca_Tratamiento.SelectedValue))
+
+        _RowProducto.Item("NOKOPRAMP") = Txt_Nokopramp.Text.Trim
+
+        Dim _Koprdim As String
+
+        _Koprdim = Btn_Dim_01.Text &
+                   Btn_Dim_02.Text &
+                   Btn_Dim_03.Text &
+                   Btn_Dim_04.Text &
+                   Btn_Dim_05.Text &
+                   Btn_Dim_06.Text &
+                   Btn_Dim_07.Text &
+                   Btn_Dim_08.Text &
+                   Btn_Dim_09.Text &
+                   Btn_Dim_10.Text &
+                   Btn_Dim_11.Text &
+                   Btn_Dim_12.Text &
+                   Btn_Dim_13.Text
+
+        _RowProducto.Item("KOPRDIM") = _Koprdim
+        _RowProducto.Item("NODIM1") = Txt_Nodim1.Text
+        _RowProducto.Item("NODIM2") = Txt_Nodim2.Text
+        _RowProducto.Item("NODIM3") = Txt_Nodim3.Text
+
+        _RowProducto.Item("CAMBIOSUJ") = Chk_Cambiosuj.Checked
 
         With _Cl_Producto
 
@@ -537,10 +648,14 @@ Public Class Frm_MtCreacionDeProducto
             .Pro_Maeprobs.Rows(0).Item("MENSAJE02") = Txt_Mensaje02.Text
             .Pro_Maeprobs.Rows(0).Item("MENSAJE03") = Txt_Mensaje03.Text
 
+            .Pro_Maeprobs.Rows(0).Item("ALTO") = Txt_Alto.Text
+            .Pro_Maeprobs.Rows(0).Item("LARGO") = Txt_Largo.Text
+            .Pro_Maeprobs.Rows(0).Item("ANCHO") = Txt_Ancho.Text
+
             _Crear_Alternativo = False
 
 
-            Dim _Producto_Creado As Boolean
+            Dim _Producto_Creado As String
 
             If _Cl_Producto.Pro_Accion = Cl_Producto.Enum_Accion.Nuevo Then
                 _Producto_Creado = _Cl_Producto.Fx_Crear_Nuevo_Producto
@@ -548,27 +663,34 @@ Public Class Frm_MtCreacionDeProducto
                 _Producto_Creado = _Cl_Producto.Fx_Editar_Producto
             End If
 
-
-            If _Producto_Creado Then
-
-                If _Cl_Producto.Pro_Accion = Cl_Producto.Enum_Accion.Nuevo Then
-
-                    Consulta_sql =
-                    "Insert Into " & _Global_BaseBk & "Zw_Prod_Asociacion (Codigo,Codigo_Nodo,DescripcionBusqueda,Para_filtro,Clas_unica,Producto)" & vbCrLf &
-                    "Values" & vbCrLf &
-                    "('" & _RowProducto.Item("KOPR") & "',0,'" & _RowProducto.Item("KOPR") & " " & _RowProducto.Item("NOKOPR") & "',0,0,1)"
-                    _Sql.Ej_consulta_IDU(Consulta_sql)
-
-                End If
-
-            Else
+            If Not String.IsNullOrEmpty(_Producto_Creado) Then
+                MessageBoxEx.Show(Me, _Producto_Creado, "Problema al crear el producto en Random", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
             End If
+
+            If _Cl_Producto.Pro_Accion = Cl_Producto.Enum_Accion.Nuevo Then
+
+                Consulta_sql =
+                "Insert Into " & _Global_BaseBk & "Zw_Prod_Asociacion (Codigo,Codigo_Nodo,DescripcionBusqueda,Para_filtro,Clas_unica,Producto)" & vbCrLf &
+                "Values" & vbCrLf &
+                "('" & _RowProducto.Item("KOPR") & "',0,'" & _RowProducto.Item("KOPR") & " " & _RowProducto.Item("NOKOPR") & "',0,0,1)"
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            End If
+
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Prod_Dimensiones Where Codigo = '" & Txt_Kopr.Text & "'" & vbCrLf &
+                           "Insert Into " & _Global_BaseBk & "Zw_Prod_Dimensiones (Codigo,Peso,Alto,Largo,Ancho) Values " &
+                           "('" & Txt_Kopr.Text & "'," &
+                           De_Num_a_Tx_01(Txt_Pesoubic.Text, False, 5) & "," &
+                           De_Num_a_Tx_01(Txt_Alto.Text, False, 5) & "," &
+                           De_Num_a_Tx_01(Txt_Largo.Text, False, 5) & "," &
+                           De_Num_a_Tx_01(Txt_Ancho.Text, False, 5) & ")"
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
 
             If _Cl_Producto.Pro_Accion = Cl_Producto.Enum_Accion.Nuevo Then
 
-                If _Producto_Creado Then
+                If String.IsNullOrEmpty(_Producto_Creado) Then
 
                     If _Pr_Creacion_Exigir_Precio Then
                         Dim _PuedeGrabarSinPrecios As Boolean
@@ -709,6 +831,53 @@ Sigue_Loop_01:
                         Return
                     End If
 
+                    If _Global_Row_Configuracion_General.Item("PermitirMigrarProductosBaseExterna") Then
+
+                        Dim _Codigo As String = Txt_Kopr.Text
+
+                        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbProd_Nuevos = 1"
+                        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                        For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
+
+                            Dim _Id_Conexion As Integer = _FilaCx.Item("Id")
+                            Dim _BaseDeDatos As String = _FilaCx.Item("BaseDeDatos")
+                            Dim _Cl_Migrar_Producto As New Bk_Migrar_Producto.Cl_Migrar_Producto(_Id_Conexion)
+
+                            If _Cl_Migrar_Producto.SePuedeMigrar Then
+
+                                Dim _GrbProd_Nuevos = _Cl_Migrar_Producto.Row_DnExt.Item("GrbProd_Nuevos")
+                                Dim _GrbEnti_Nuevas = _Cl_Migrar_Producto.Row_DnExt.Item("GrbEnti_Nuevas")
+                                Dim _GrbProd_Bodegas = _Cl_Migrar_Producto.Row_DnExt.Item("GrbProd_Bodegas")
+                                Dim _GrbProd_Listas = _Cl_Migrar_Producto.Row_DnExt.Item("GrbProd_Listas")
+
+                                If _GrbProd_Nuevos Then
+
+                                    If _Cl_Migrar_Producto.Fx_Migrar_Producto(_Codigo) Then
+                                        MessageBoxEx.Show(Me, "Producto exportado correctamente hacia la base de datos externa" & vbCrLf &
+                                                          "Base de datos: " & _BaseDeDatos,
+                                                          "Crear producto en base externa", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                    Else
+                                        MessageBoxEx.Show(Me, "No se pudo migrar el producto hacia la base de datos externa" & vbCrLf &
+                                                          "Base de datos: " & _BaseDeDatos & vbCrLf & vbCrLf & _Cl_Migrar_Producto.ProError,
+                                                          "Crear producto en base externa",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                    End If
+
+                                End If
+
+                            Else
+                                MessageBoxEx.Show(Me, "No fue posible crear el producto en base de datos externa" & vbCrLf & vbCrLf &
+                                                  "Base de datos: " & _BaseDeDatos & vbCrLf & vbCrLf &
+                                                  _Cl_Migrar_Producto.ProError, "Crear producto en base externa",
+                                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                            End If
+
+                        Next
+
+                    End If
+
+
                     If _Preguntar_Crear_Otro Then
 
                         If MessageBoxEx.Show(Me, "¿Desea crear un nuevo producto?",
@@ -756,7 +925,7 @@ Sigue_Loop_01:
             Return
         End If
 
-        If String.IsNullOrEmpty(Trim(Cmb_Ud01pr.Text)) Or String.IsNullOrEmpty(Trim(Cmb_Ud02pr.Text)) Then
+        If String.IsNullOrEmpty(Txt_Ud01pr.Text.Trim) Or String.IsNullOrEmpty(Txt_Ud02pr.Text.Trim) Then
             MessageBoxEx.Show(Me, "Falta la unidad de mediad", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
@@ -768,7 +937,6 @@ Sigue_Loop_01:
             Return
 
         End If
-
 
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("MAEPR", "KOPR <> '" & Trim(Txt_Kopr.Text) &
                                                "' AND NOKOPR = '" & Trim(Txt_Nokopr.Text) & "'")
@@ -859,8 +1027,8 @@ Sigue_Loop_01:
 
         _RowProducto.Item("TIPR") = Cmb_Tipr.SelectedValue.ToString
 
-        _RowProducto.Item("UD01PR") = Cmb_Ud01pr.SelectedValue.ToString.Trim
-        _RowProducto.Item("UD02PR") = Cmb_Ud02pr.SelectedValue.ToString.Trim
+        _RowProducto.Item("UD01PR") = Txt_Ud01pr.Text.Trim
+        _RowProducto.Item("UD02PR") = Txt_Ud02pr.Text.Trim
         _RowProducto.Item("RLUD") = Txt_Rlud.Tag
 
         _RowProducto.Item("BLOQUEAPR") = Cmb_Bloqueapr.SelectedValue.ToString
@@ -873,15 +1041,15 @@ Sigue_Loop_01:
         Dim _Divisible2 As String
 
         If Chk_Divisible.Checked Then
-            _Divisible = "S"
-        Else
             _Divisible = "N"
+        Else
+            _Divisible = "S"
         End If
 
         If Chk_Divisible2.Checked Then
-            _Divisible2 = "S"
-        Else
             _Divisible2 = "N"
+        Else
+            _Divisible2 = "S"
         End If
 
         _RowProducto.Item("TRATALOTE") = Chk_Tratalote.Checked ' Stock por lote según origen
@@ -1007,60 +1175,60 @@ Sigue_Loop_01:
                         'Do
 
                         Dim FrmBa As New Frm_MtCreaProd_01_IngBusqEspecial
-                            FrmBa.TxtCodigo.Text = _RowProducto.Item("KOPR")
-                            FrmBa.TxtDescripcion.Text = _RowProducto.Item("NOKOPR")
-                            FrmBa.ShowDialog(Me)
+                        FrmBa.TxtCodigo.Text = _RowProducto.Item("KOPR")
+                        FrmBa.TxtDescripcion.Text = _RowProducto.Item("NOKOPR")
+                        FrmBa.ShowDialog(Me)
 
-                            Dim _Tbl As DataTable
+                        Dim _Tbl As DataTable
 
-                            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
-                                           "Where Producto = 0 And Codigo_Nodo In (Select Codigo_Nodo" & Space(1) &
-                                           "From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & Space(1) &
-                                           "Where Clas_Unica_X_Producto = 0 And Es_Seleccionable = 1)" & vbCrLf &
-                                           "And Codigo = '" & Txt_Kopr.Text & "'"
-                            _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
+                                       "Where Producto = 0 And Codigo_Nodo In (Select Codigo_Nodo" & Space(1) &
+                                       "From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & Space(1) &
+                                       "Where Clas_Unica_X_Producto = 0 And Es_Seleccionable = 1)" & vbCrLf &
+                                       "And Codigo = '" & Txt_Kopr.Text & "'"
+                        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-                            _PuedeGrabarSinAsociaciones = CBool(_Tbl.Rows.Count)
+                        _PuedeGrabarSinAsociaciones = CBool(_Tbl.Rows.Count)
 
-                            If Not CBool(_Tbl.Rows.Count) Then
-                                _PuedeGrabarSinAsociaciones = Fx_Tiene_Permiso(Me, "Prod016")
-                                If Not _PuedeGrabarSinAsociaciones Then
-                                    Fx_Eliminar_Producto(Txt_Kopr.Text, Txt_Nokopr.Text, False)
-                                    Return
-                                End If
-                            End If
-
-                            Dim _Reg_Obligatorios = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_TblArbol_Asociaciones", "Clas_Unica_X_Producto = 1 And Nodo_Raiz = 0")
-
-                            ' ASOCIACIONES UNICAS Y OBLIGATORIAS
-
-                            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
-                                           "Where Clas_Unica_X_Producto = 1 And Nodo_Raiz = 0 And Codigo_Nodo Not In" & Space(1) &
-                                           "(Select Codigo_Nodo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & Txt_Kopr.Text & "')"
-                            _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-                            If CBool(_Tbl.Rows.Count) Then
-
-                                Dim _Msg As String = String.Empty
-                                For Each _Fl As DataRow In _Tbl.Rows
-                                    _Msg = _Msg & " - " & _Fl.Item("Descripcion") & vbCrLf
-                                Next
-                                MessageBoxEx.Show(Me, "Le faltan " & _Tbl.Rows.Count & " asociaciones por marcar" & vbCrLf & vbCrLf & _Msg, "Validación",
-                                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
-                                _PuedeGrabarSinAsociaciones_Unicas = Fx_Tiene_Permiso(Me, "Prod050")
-                            Else
-                                _PuedeGrabarSinAsociaciones_Unicas = True
-                            End If
-
-                            If _PuedeGrabarSinAsociaciones And _PuedeGrabarSinAsociaciones_Unicas Then
-                                _Grabar_Sin_Asiciaciones = True
-                            End If
-
-                            If Not _PuedeGrabarSinAsociaciones Or Not _PuedeGrabarSinAsociaciones_Unicas Then
+                        If Not CBool(_Tbl.Rows.Count) Then
+                            _PuedeGrabarSinAsociaciones = Fx_Tiene_Permiso(Me, "Prod016")
+                            If Not _PuedeGrabarSinAsociaciones Then
                                 Fx_Eliminar_Producto(Txt_Kopr.Text, Txt_Nokopr.Text, False)
                                 Return
                             End If
+                        End If
+
+                        Dim _Reg_Obligatorios = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_TblArbol_Asociaciones", "Clas_Unica_X_Producto = 1 And Nodo_Raiz = 0")
+
+                        ' ASOCIACIONES UNICAS Y OBLIGATORIAS
+
+                        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
+                                       "Where Clas_Unica_X_Producto = 1 And Nodo_Raiz = 0 And Codigo_Nodo Not In" & Space(1) &
+                                       "(Select Codigo_Nodo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & Txt_Kopr.Text & "')"
+                        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                        If CBool(_Tbl.Rows.Count) Then
+
+                            Dim _Msg As String = String.Empty
+                            For Each _Fl As DataRow In _Tbl.Rows
+                                _Msg = _Msg & " - " & _Fl.Item("Descripcion") & vbCrLf
+                            Next
+                            MessageBoxEx.Show(Me, "Le faltan " & _Tbl.Rows.Count & " asociaciones por marcar" & vbCrLf & vbCrLf & _Msg, "Validación",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                            _PuedeGrabarSinAsociaciones_Unicas = Fx_Tiene_Permiso(Me, "Prod050")
+                        Else
+                            _PuedeGrabarSinAsociaciones_Unicas = True
+                        End If
+
+                        If _PuedeGrabarSinAsociaciones And _PuedeGrabarSinAsociaciones_Unicas Then
+                            _Grabar_Sin_Asiciaciones = True
+                        End If
+
+                        If Not _PuedeGrabarSinAsociaciones Or Not _PuedeGrabarSinAsociaciones_Unicas Then
+                            Fx_Eliminar_Producto(Txt_Kopr.Text, Txt_Nokopr.Text, False)
+                            Return
+                        End If
 
                         'Loop While Not _Grabar_Sin_Asiciaciones
 
@@ -1140,45 +1308,45 @@ Sigue_Loop_01:
     End Sub
 
 
-    Private Sub Txtcodigoprincipal_Leave(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Txtcodigoprincipal_Leave(sender As System.Object, e As System.EventArgs)
         If _Cl_Producto.Pro_Accion = Cl_Producto.Enum_Accion.Nuevo Then
             If Fx_ValidarExistenciaDeCodigo(sender.text, "KOPR") = True Then Txt_Kopr.Focus()
         End If
     End Sub
 
-    Private Sub Txtcodigotecnico_Leave(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Txtcodigotecnico_Leave(sender As System.Object, e As System.EventArgs)
         If _Cl_Producto.Pro_Accion = Cl_Producto.Enum_Accion.Nuevo Then
             If Fx_ValidarExistenciaDeCodigo(sender.text, "KOPRTE") = True Then Txt_Koprte.Focus()
         End If
     End Sub
 
-    Private Sub Txtcodigoprincipal_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Txtcodigoprincipal_TextChanged(sender As System.Object, e As System.EventArgs)
         Txt_Koprte.Text = Txt_Kopr.Text
     End Sub
 
-    Private Sub ChkSelEmpresas_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChkSelEmpresas.CheckedChanged
+    Private Sub ChkSelEmpresas_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles ChkSelEmpresas.CheckedChanged
         ChequearTodo(GrillaEmpresa, ChkSelEmpresas, "Empresa")
     End Sub
 
-    Private Sub ChkSelBodegas_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChkSelBodegas.CheckedChanged
+    Private Sub ChkSelBodegas_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles ChkSelBodegas.CheckedChanged
         ChequearTodo(GrillaBodegas, ChkSelBodegas, "Bodega")
     End Sub
 
-    Private Sub ChkSelListas_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChkSelListas.CheckedChanged
+    Private Sub ChkSelListas_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles ChkSelListas.CheckedChanged
         ChequearTodo(GrillaListaDePrecios, ChkSelListas, "Listas")
     End Sub
 
-    Private Sub ChkSelTodo_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChkSelTodo.CheckedChanged
+    Private Sub ChkSelTodo_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles ChkSelTodo.CheckedChanged
         ChkSelEmpresas.Checked = ChkSelTodo.Checked
         ChkSelBodegas.Checked = ChkSelTodo.Checked
         ChkSelListas.Checked = ChkSelTodo.Checked
     End Sub
 
-    Private Sub TxtDescripcionLarga_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub TxtDescripcionLarga_TextChanged(sender As System.Object, e As System.EventArgs)
         Txt_Nokoprra.Text = Mid(Txt_Nokopr.Text, 1, 20)
     End Sub
 
-    Private Sub CmbSuperFamilia_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmbSuperFamilia.SelectedIndexChanged
+    Private Sub CmbSuperFamilia_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles CmbSuperFamilia.SelectedIndexChanged
         Try
 
             SuperFamilia = CmbSuperFamilia.SelectedValue.ToString
@@ -1201,7 +1369,7 @@ Sigue_Loop_01:
         End Try
     End Sub
 
-    Private Sub CmbFamilia_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmbFamilia.SelectedIndexChanged
+    Private Sub CmbFamilia_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles CmbFamilia.SelectedIndexChanged
         Try
             Familia = CmbFamilia.SelectedValue.ToString
         Catch ex As Exception
@@ -1220,7 +1388,7 @@ Sigue_Loop_01:
         End Try
     End Sub
 
-    Private Sub CmbSubFamilia_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmbSubFamilia.SelectedIndexChanged
+    Private Sub CmbSubFamilia_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles CmbSubFamilia.SelectedIndexChanged
         Try
             SubFamilia = CmbSubFamilia.SelectedValue.ToString
         Catch ex As Exception
@@ -1228,7 +1396,7 @@ Sigue_Loop_01:
         End Try
     End Sub
 
-    Private Sub BtnFamilias_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnFamilias.Click
+    Private Sub BtnFamilias_Click(sender As System.Object, e As System.EventArgs) Handles BtnFamilias.Click
         If Fx_Tiene_Permiso(Me, "Tbl00001") Then
 
             Dim Fm As New Frm_Familias_Lista(Frm_Familias_Lista.Enum_Tipo_Vista_Familias.Super_Familias)
@@ -1250,7 +1418,7 @@ Sigue_Loop_01:
         End If
     End Sub
 
-    Private Sub Cmbmarcas_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Cmbmarcas_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
         Try
             Marca = Cmb_Mrpr.SelectedValue.ToString
         Catch ex As Exception
@@ -1258,23 +1426,23 @@ Sigue_Loop_01:
         End Try
     End Sub
 
-    Private Sub Cmbrubros_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Cmbrubros_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
         Rubro = Cmb_Rupr.SelectedValue.ToString
     End Sub
 
-    Private Sub Cmbclalibpr_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Cmbclalibpr_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
         ClasifLibre = Cmb_Clalibpr.SelectedValue.ToString
     End Sub
 
-    Private Sub CmbJefeProducto_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub CmbJefeProducto_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
         JefePro = Cmb_Kofupr.SelectedValue.ToString
     End Sub
 
-    Private Sub CmbZonaProducto_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub CmbZonaProducto_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
         ZonaPro = Cmb_Zonapr.SelectedValue.ToString
     End Sub
 
-    Private Sub Cmblista_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Cmblista_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
         Try
             ListaCostoPro = Cmb_Codlista.SelectedValue.ToString
         Catch ex As Exception
@@ -1282,18 +1450,18 @@ Sigue_Loop_01:
         End Try
     End Sub
 
-    'Private Sub BtnCodAlternativo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    'Private Sub BtnCodAlternativo_Click(sender As System.Object, e As System.EventArgs)
     '    Dim Fr As New Frm_CreaProductos_04_CodAlternativo(Txt_Kopr.Text)
     '    Fr.BtnBuscarEntidad.Enabled = False
     '    Fr.ShowDialog(Me)
     '    Fr.Dispose()
     'End Sub
 
-    Private Sub BtnMantPrecios_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mant_Precios.Click
+    Private Sub BtnMantPrecios_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mant_Precios.Click
         Fx_Ingresar_Precio_Nuevo_Producto(_RowProducto)
     End Sub
 
-    Function Fx_Ingresar_Cod_Alternativo(ByVal _RowProducto As DataRow) As Boolean
+    Function Fx_Ingresar_Cod_Alternativo(_RowProducto As DataRow) As Boolean
 
         If Fx_Tiene_Permiso(Me, "Prod020") Then
 
@@ -1310,7 +1478,7 @@ Sigue_Loop_01:
         End If
 
     End Function
-    Function Fx_Ingresar_Precio_Nuevo_Producto(ByVal _RowProducto As DataRow) As Boolean
+    Function Fx_Ingresar_Precio_Nuevo_Producto(_RowProducto As DataRow) As Boolean
 
         Dim _Grabacion_Realizada As Boolean
 
@@ -1337,7 +1505,7 @@ Sigue_Loop_01:
 
     End Function
 
-    Function Fx_Ingresar_Descripcion_por_Arbol_de_clasificacion(ByVal _RowProducto As DataRow) As Boolean
+    Function Fx_Ingresar_Descripcion_por_Arbol_de_clasificacion(_RowProducto As DataRow) As Boolean
 
         If Fx_Tiene_Permiso(Me, "Prod009") Then
 
@@ -1348,7 +1516,7 @@ Sigue_Loop_01:
                 .ShowDialog(Me)
             End With
 
-            Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Asociacion", _
+            Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Asociacion",
                                                                  "Codigo = '" & _RowProducto.Item("KOPR") & "' And Producto = 0"))
             Return _Reg
 
@@ -1356,7 +1524,7 @@ Sigue_Loop_01:
 
     End Function
 
-    Function Fx_Ingresar_Descripcion_por_Arbol_de_clasificacion(ByVal _RowProducto As DataRow, ByVal _Permiso As String) As Boolean
+    Function Fx_Ingresar_Descripcion_por_Arbol_de_clasificacion(_RowProducto As DataRow, _Permiso As String) As Boolean
 
         Dim _Codigo As String = _RowProducto.Item("KOPR")
 
@@ -1373,7 +1541,7 @@ Sigue_Loop_01:
 
     End Function
 
-    Private Sub BtnAsociaciones_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Asociaciones.Click
+    Private Sub BtnAsociaciones_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Asociaciones.Click
         If Fx_Tiene_Permiso(Me, "Tbl00002") Then
             Dim Fm As New Frm_MtCreaProd_01_IngBusqEspecial
             Fm.TxtCodigo.Text = Txt_Kopr.Text
@@ -1399,13 +1567,17 @@ Sigue_Loop_01:
         Dim Fm As New Frm_Archivo_TXT
         Fm.Text = "FICHA TECNICA DEL PRODUCTO"
         Fm.Pro_Grabar_En_Archivo = False
-        Fm.Txt_Texto.MaxLength = 255
-        Fm.Pro_Texto_Log = NuloPorNro(_Cl_Producto.Pro_Maeficha.Rows(0).Item("FICHA"), "")
+        Fm.Txt_Texto.MaxLength = 80 * 20
+        Fm.Pro_Texto_Log = _Cl_Producto.Ficha 'NuloPorNro(_Cl_Producto.Pro_Maeficha.Rows(0).Item("FICHA"), "")
         Fm.Ancho = 800
         Fm.Alto = 280
         Fm.ShowDialog(Me)
         If Fm.Pro_Grabar Then
-            _Cl_Producto.Pro_Maeficha.Rows(0).Item("FICHA") = Fm.Pro_Texto_Log
+            Try
+                _Cl_Producto.Ficha = Fm.Pro_Texto_Log.ToString.Trim
+            Catch ex As Exception
+                _Cl_Producto.Ficha = String.Empty
+            End Try
         End If
         Fm.Dispose()
 
@@ -1415,6 +1587,12 @@ Sigue_Loop_01:
 
         Dim Fm As New Frm_Dimensiones_Pr(Txt_Kopr.Text, False)
         Fm.ShowDialog(Me)
+        If Fm.Grabar Then
+            Txt_Alto.Text = Fm.Txt_Alto.Text
+            Txt_Ancho.Text = Fm.Txt_Ancho.Text
+            Txt_Largo.Text = Fm.Txt_Largo.Text
+            Txt_Pesoubic.Text = Fm.Txt_Peso.Text
+        End If
         Fm.Dispose()
 
     End Sub
@@ -1431,8 +1609,8 @@ Sigue_Loop_01:
         Txt_Nokoprra.Text = NuloPorNro(_RowProducto.Item("NOKOPRRA"), "") 'Mid(_RowProducto.Item("NOKOPR"), 1, 20)
 
         Cmb_Tipr.SelectedValue = _RowProducto.Item("TIPR")
-        Cmb_Ud01pr.SelectedValue = NuloPorNro(_RowProducto.Item("UD01PR"), "UN")
-        Cmb_Ud02pr.SelectedValue = NuloPorNro(_RowProducto.Item("UD02PR"), "UN")
+        Txt_Ud01pr.Text = NuloPorNro(_RowProducto.Item("UD01PR"), "UN")
+        Txt_Ud02pr.Text = NuloPorNro(_RowProducto.Item("UD02PR"), "UN")
 
         Txt_Rlud.Tag = NuloPorNro(_RowProducto.Item("RLUD"), 1)
         Txt_Rlud.Text = NuloPorNro(_RowProducto.Item("RLUD"), 1)
@@ -1462,17 +1640,39 @@ Sigue_Loop_01:
         Txt_Tolelote.Text = NuloPorNro(_RowProducto.Item("TOLELOTE"), 0)
         Txt_Vidamedia.Text = NuloPorNro(_RowProducto.Item("VIDAMEDIA"), 0)
 
-        'Consulta_sql = "Select Top 1 * From MAEPROBS Where KOPR = '" & _Codigo & "'"
-        'Dim _RowMaeprobs As DataRow = '_Sql.Fx_Get_DataRow(Consulta_sql)
+        Dim _Existe As Boolean
 
-        If CBool(_Cl_Producto.Pro_Maeprobs.Rows.Count) Then
-            Txt_Mensaje01.Text = _Cl_Producto.Pro_Maeprobs.Rows(0).Item("MENSAJE01")
-            Txt_Mensaje02.Text = _Cl_Producto.Pro_Maeprobs.Rows(0).Item("MENSAJE02")
-            Txt_Mensaje03.Text = _Cl_Producto.Pro_Maeprobs.Rows(0).Item("MENSAJE03")
+        If _Sql.Fx_Exite_Campo("MAEPR", "ALTO") And _Sql.Fx_Exite_Campo("MAEPR", "LARGO") And _Sql.Fx_Exite_Campo("MAEPR", "ANCHO") Then
+            _Existe = True
+        End If
+
+        Txt_Mensaje01.Text = String.Empty
+        Txt_Mensaje02.Text = String.Empty
+        Txt_Mensaje03.Text = String.Empty
+
+        If _Existe Then
+
+            If CBool(_Cl_Producto.Pro_Maeprobs.Rows.Count) Then
+                Txt_Mensaje01.Text = _Cl_Producto.Pro_Maeprobs.Rows(0).Item("MENSAJE01")
+                Txt_Mensaje02.Text = _Cl_Producto.Pro_Maeprobs.Rows(0).Item("MENSAJE02")
+                Txt_Mensaje03.Text = _Cl_Producto.Pro_Maeprobs.Rows(0).Item("MENSAJE03")
+                Txt_Alto.Text = NuloPorNro(_Cl_Producto.Pro_Maeprobs.Rows(0).Item("ALTO"), 0)
+                Txt_Largo.Text = NuloPorNro(_Cl_Producto.Pro_Maeprobs.Rows(0).Item("LARGO"), 0)
+                Txt_Ancho.Text = NuloPorNro(_Cl_Producto.Pro_Maeprobs.Rows(0).Item("ANCHO"), 0)
+            End If
+
         Else
-            Txt_Mensaje01.Text = String.Empty
-            Txt_Mensaje02.Text = String.Empty
-            Txt_Mensaje03.Text = String.Empty
+
+            Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Prod_Dimensiones Where Codigo = '" & _RowProducto.Item("KOPR") & "'"
+            Dim _Row_dimensiones As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not IsNothing(_Row_dimensiones) Then
+                Txt_Pesoubic.Text = NuloPorNro(_Row_dimensiones.Item("Peso"), 0)
+                Txt_Alto.Text = NuloPorNro(_Row_dimensiones.Item("Alto"), 0)
+                Txt_Largo.Text = NuloPorNro(_Row_dimensiones.Item("Largo"), 0)
+                Txt_Ancho.Text = NuloPorNro(_Row_dimensiones.Item("Ancho"), 0)
+            End If
+
         End If
 
         Chk_Conubic.Checked = NuloPorNro(_RowProducto.Item("CONUBIC"), False)
@@ -1483,6 +1683,7 @@ Sigue_Loop_01:
         Chk_Stockaseg.Checked = NuloPorNro(_RowProducto.Item("STOCKASEG"), False)
         Chk_Tratalote.Checked = NuloPorNro(_RowProducto.Item("TRATALOTE"), False)
         Chk_Tratvmedia.Checked = NuloPorNro(_RowProducto.Item("TRATVMEDIA"), False)
+        Chk_Exento.Checked = NuloPorNro(_RowProducto.Item("EXENTO"), False)
 
         Dim _Divisible As String = NuloPorNro(_RowProducto.Item("DIVISIBLE"), "0")
         Dim _Divisible2 As String = NuloPorNro(_RowProducto.Item("DIVISIBLE2"), "0")
@@ -1495,6 +1696,38 @@ Sigue_Loop_01:
             Chk_Divisible2.Checked = True
         End If
 
+        Txt_Nodim1.Text = NuloPorNro(_RowProducto.Item("NODIM1"), "")
+        Txt_Nodim2.Text = NuloPorNro(_RowProducto.Item("NODIM2"), "")
+        Txt_Nodim3.Text = NuloPorNro(_RowProducto.Item("NODIM3"), "")
+
+        Dim _Koprdim As String = NuloPorNro(_RowProducto.Item("KOPRDIM"), "")
+
+        Btn_Dim_01.Text = Mid(_Koprdim, 1, 1)
+        Btn_Dim_02.Text = Mid(_Koprdim, 2, 1)
+        Btn_Dim_03.Text = Mid(_Koprdim, 3, 1)
+        Btn_Dim_04.Text = Mid(_Koprdim, 4, 1)
+        Btn_Dim_05.Text = Mid(_Koprdim, 5, 1)
+        Btn_Dim_06.Text = Mid(_Koprdim, 6, 1)
+        Btn_Dim_07.Text = Mid(_Koprdim, 7, 1)
+        Btn_Dim_08.Text = Mid(_Koprdim, 8, 1)
+        Btn_Dim_09.Text = Mid(_Koprdim, 9, 1)
+        Btn_Dim_10.Text = Mid(_Koprdim, 10, 1)
+        Btn_Dim_11.Text = Mid(_Koprdim, 11, 1)
+        Btn_Dim_12.Text = Mid(_Koprdim, 12, 1)
+        Btn_Dim_13.Text = Mid(_Koprdim, 13, 1)
+
+        Cmb_Funclote.SelectedValue = NuloPorNro(_RowProducto.Item("FUNCLOTE").ToString.Trim, "")
+
+        Chk_Cambiosuj.Checked = NuloPorNro(_RowProducto.Item("CAMBIOSUJ"), False)
+        Txt_Nokopramp.Text = NuloPorNro(_RowProducto.Item("NOKOPRAMP"), "")
+
+        Dim _Nmarca = NuloPorNro(_RowProducto.Item("NMARCA").ToString.Trim, "")
+
+        _NNmarca = _Cl_CompUdMedidas.Fx_Decifra_Nmarca(_Nmarca)
+
+        Cmb_Nmarca_Tratamiento.SelectedValue = CInt(_NNmarca.Tratamiento)
+        Cmb_Nmarca_Comportamiento.SelectedValue = CInt(_NNmarca.Comportamiento)
+
         GrillaEmpresa.DataSource = _Cl_Producto.Pro_Tbl_Empresas
         GrillaBodegas.DataSource = _Cl_Producto.Pro_Tbl_Bodegas
         GrillaListaDePrecios.DataSource = _Cl_Producto.Pro_Tbl_Listas
@@ -1503,11 +1736,178 @@ Sigue_Loop_01:
         Sb_Actualizar_Grilla(GrillaEmpresa)
         Sb_Actualizar_Grilla(GrillaBodegas)
         Sb_Actualizar_Grilla(GrillaListaDePrecios)
-        Sb_Actualizar_Grilla(GrillaImpuestos)
+
+
+        With GrillaImpuestos
+
+            Dim _DisplayIndex = 0
+
+            OcultarEncabezadoGrilla(GrillaImpuestos, True)
+
+            .Columns("Select").HeaderText = "Sel."
+            .Columns("Select").Width = 50
+            .Columns("Select").ReadOnly = False
+            .Columns("Select").Visible = True
+            .Columns("Select").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Codigo").HeaderText = "Código"
+            .Columns("Codigo").Width = 100
+            .Columns("Codigo").Visible = True
+            .Columns("Codigo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Descripcion").HeaderText = "Descripción"
+            .Columns("Descripcion").Width = 300
+            .Columns("Descripcion").Visible = True
+            .Columns("Descripcion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            Dim _Exite As Boolean = _Sql.Fx_Exite_Campo("TABIMPR", "NOAPLICEN")
+
+            .Columns("Compras").HeaderText = "Compras"
+            .Columns("Compras").Width = 50
+            .Columns("Compras").DisplayIndex = _DisplayIndex
+            .Columns("Compras").Visible = _Exite
+            _DisplayIndex += 1
+
+            .Columns("Ventas").HeaderText = "Ventas"
+            .Columns("Ventas").Width = 50
+            .Columns("Ventas").DisplayIndex = _DisplayIndex
+            .Columns("Ventas").Visible = _Exite
+            _DisplayIndex += 1
+
+            .Columns("Stock").HeaderText = "Stock"
+            .Columns("Stock").Width = 50
+            .Columns("Stock").DisplayIndex = _DisplayIndex
+            .Columns("Stock").Visible = _Exite
+            _DisplayIndex += 1
+
+            .Columns("Boleta").HeaderText = "Boleta"
+            .Columns("Boleta").Width = 50
+            .Columns("Boleta").DisplayIndex = _DisplayIndex
+            .Columns("Boleta").Visible = _Exite
+            _DisplayIndex += 1
+
+            .Columns("POIM").HeaderText = "%"
+            .Columns("POIM").Width = 40
+            .Columns("POIM").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("POIM").Visible = True
+            .Columns("POIM").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("MEIM").HeaderText = "Ecuación"
+            .Columns("MEIM").Width = 150
+            .Columns("MEIM").Visible = True
+            .Columns("MEIM").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+        End With
+
 
     End Sub
 
-    Private Sub BtnCodAlternativosProducto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnCodAlternativosProducto.Click
+    Private Sub Chk_Tratalote_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Tratalote.CheckedChanged
+        If Chk_Tratalote.Checked Then
+            Chk_Lotecaja.Checked = False
+        End If
+    End Sub
+
+    Private Sub Chk_Lotecaja_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Lotecaja.CheckedChanged
+        If Chk_Lotecaja.Checked Then
+            Chk_Tratalote.Checked = False
+        End If
+    End Sub
+
+    Private Sub GrillaImpuestos_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles GrillaImpuestos.CellEndEdit
+
+        Dim _Fila As DataGridViewRow = GrillaImpuestos.CurrentRow
+        Dim _Cabeza = GrillaImpuestos.Columns(GrillaImpuestos.CurrentCell.ColumnIndex).Name
+
+        If _Cabeza = "Select" Then
+            If _Fila.Cells("Select").Value Then
+                _Fila.Cells("Compras").Value = "Si"
+                _Fila.Cells("Ventas").Value = "Si"
+                _Fila.Cells("Stock").Value = "Si"
+                _Fila.Cells("Boleta").Value = "Si"
+            Else
+                _Fila.Cells("Compras").Value = String.Empty
+                _Fila.Cells("Ventas").Value = String.Empty
+                _Fila.Cells("Stock").Value = String.Empty
+                _Fila.Cells("Boleta").Value = String.Empty
+            End If
+        End If
+
+    End Sub
+
+    Private Sub GrillaImpuestos_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles GrillaImpuestos.CellDoubleClick
+
+        Dim _Fila As DataGridViewRow = GrillaImpuestos.CurrentRow
+        Dim _Cabeza = GrillaImpuestos.Columns(GrillaImpuestos.CurrentCell.ColumnIndex).Name
+
+        If _Cabeza = "Compras" Or _Cabeza = "Ventas" Or _Cabeza = "Stock" Or _Cabeza = "Boleta" Then
+            If _Fila.Cells(_Cabeza).Value = "Si" Then
+                _Fila.Cells(_Cabeza).Value = "No"
+            Else
+                _Fila.Cells(_Cabeza).Value = "Si"
+            End If
+        End If
+
+    End Sub
+
+    Private Sub GrillaImpuestos_MouseUp(sender As Object, e As MouseEventArgs) Handles GrillaImpuestos.MouseUp
+        GrillaImpuestos.EndEdit()
+    End Sub
+
+    Private Sub Btn_Dim_Click(sender As Object, e As EventArgs)
+
+        Dim _Valor As String
+
+        If Rdb_Raiz.Checked Then _Valor = "R"
+        If Rdb_1raDimension.Checked Then _Valor = "1"
+        If Rdb_2daDimension.Checked Then _Valor = "2"
+        If Rdb_3raDimension.Checked Then _Valor = "3"
+
+        sender.Text = _Valor
+
+    End Sub
+
+    Private Sub STab_Dimensiones_Click(sender As Object, e As EventArgs) Handles STab_Dimensiones.Click
+
+        Btn_01.Text = Mid(Txt_Kopr.Text, 1, 1)
+        Btn_02.Text = Mid(Txt_Kopr.Text, 2, 1)
+        Btn_03.Text = Mid(Txt_Kopr.Text, 3, 1)
+        Btn_04.Text = Mid(Txt_Kopr.Text, 4, 1)
+        Btn_05.Text = Mid(Txt_Kopr.Text, 5, 1)
+        Btn_06.Text = Mid(Txt_Kopr.Text, 6, 1)
+        Btn_07.Text = Mid(Txt_Kopr.Text, 7, 1)
+        Btn_08.Text = Mid(Txt_Kopr.Text, 8, 1)
+        Btn_09.Text = Mid(Txt_Kopr.Text, 9, 1)
+        Btn_10.Text = Mid(Txt_Kopr.Text, 10, 1)
+        Btn_11.Text = Mid(Txt_Kopr.Text, 11, 1)
+        Btn_12.Text = Mid(Txt_Kopr.Text, 12, 1)
+        Btn_13.Text = Mid(Txt_Kopr.Text, 13, 1)
+
+        Lbl_Dim_Codigo.Text = Txt_Kopr.Text
+        Lbl_Dim_Descripcion.Text = Txt_Nokopr.Text
+
+    End Sub
+
+    Private Sub Txt_Ud02pr_TextChanged(sender As Object, e As EventArgs) Handles Txt_Ud02pr.TextChanged
+
+        Cmb_Nmarca_Comportamiento.Enabled = (Txt_Ud01pr.Text <> Txt_Ud02pr.Text)
+        Cmb_Nmarca_Tratamiento.Enabled = (Txt_Ud01pr.Text <> Txt_Ud02pr.Text)
+
+    End Sub
+
+    Private Sub Txt_Ud01pr_TextChanged(sender As Object, e As EventArgs) Handles Txt_Ud01pr.TextChanged
+
+        Cmb_Nmarca_Comportamiento.Enabled = (Txt_Ud01pr.Text <> Txt_Ud02pr.Text)
+        Cmb_Nmarca_Tratamiento.Enabled = (Txt_Ud01pr.Text <> Txt_Ud02pr.Text)
+
+    End Sub
+
+    Private Sub BtnCodAlternativosProducto_Click(sender As System.Object, e As System.EventArgs) Handles BtnCodAlternativosProducto.Click
         If Fx_Tiene_Permiso(Me, "Prod020") Then
             Dim Fm As New Frm_CodAlternativo_Ver
             Fm.TxtCodigo.Text = _RowProducto.Item("KOPR")
@@ -1518,11 +1918,11 @@ Sigue_Loop_01:
         End If
     End Sub
 
-    Private Sub Btn_Marcas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Marcas.Click
+    Private Sub Btn_Marcas_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Marcas.Click
         If Fx_Tiene_Permiso(Me, "Tbl00016") Then
 
             Dim _Marca = Trim(Cmb_Mrpr.SelectedValue)
-            Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Marcas, _
+            Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Marcas,
                                                                  Frm_Tabla_Caracterizaciones_01_Listado.Accion.Mantencion_Tabla)
             Fm.Text = "MARCAS"
             Fm.ShowDialog(Me)
@@ -1534,11 +1934,11 @@ Sigue_Loop_01:
         End If
     End Sub
 
-    Private Sub Btn_Rubro_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Rubro.Click
+    Private Sub Btn_Rubro_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Rubro.Click
         If Fx_Tiene_Permiso(Me, "Tbl00017") Then
 
             Dim _Rubro = Cmb_Rupr.SelectedValue
-            Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Rubros, _
+            Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Rubros,
                                                                  Frm_Tabla_Caracterizaciones_01_Listado.Accion.Mantencion_Tabla)
             Fm.Text = "RUBROS"
             Fm.ShowDialog(Me)
@@ -1551,11 +1951,11 @@ Sigue_Loop_01:
         End If
     End Sub
 
-    Private Sub ButtonX2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonX2.Click
+    Private Sub ButtonX2_Click(sender As System.Object, e As System.EventArgs) Handles ButtonX2.Click
         If Fx_Tiene_Permiso(Me, "Tbl00020") Then
 
             Dim _ClasifLibre = Cmb_Clalibpr.SelectedValue
-            Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Claslibre, _
+            Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Claslibre,
                                                                   Frm_Tabla_Caracterizaciones_01_Listado.Accion.Mantencion_Tabla)
             Fm.Text = "CLASIFICACION LIBRE"
             Fm.ShowDialog(Me)
@@ -1568,7 +1968,7 @@ Sigue_Loop_01:
         End If
     End Sub
 
-    Private Sub Btn_Zonas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Zonas.Click
+    Private Sub Btn_Zonas_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Zonas.Click
 
         MessageBoxEx.Show(Me, "En desarrollo")
         Return
@@ -1583,7 +1983,7 @@ Sigue_Loop_01:
         End If
     End Sub
 
-    Private Sub Btn_TablaClasificaciones_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_TablaClasificaciones.Click
+    Private Sub Btn_TablaClasificaciones_Click(sender As System.Object, e As System.EventArgs) Handles Btn_TablaClasificaciones.Click
         If Fx_Tiene_Permiso(Me, "Tbl00002") Then
             Dim Fm As New Frm_Arbol_Asociacion_02(False, 0, False, Frm_Arbol_Asociacion_02.Enum_Clasificacion.Dinamica, 0)
             Fm.Pro_Identificador_NodoPadre = 0
@@ -1592,7 +1992,7 @@ Sigue_Loop_01:
         End If
     End Sub
 
-    Private Sub Btn_Imagenes_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Imagenes.Click
+    Private Sub Btn_Imagenes_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Imagenes.Click
 
         Dim Fm As New Frm_Imagenes_X_Producto(Txt_Kopr.Text)
 
@@ -1606,9 +2006,9 @@ Sigue_Loop_01:
 
     End Sub
 
-    Function Fx_ValidarExistenciaDeCodigo(ByVal Codigo As String,
-                                       ByVal Campo As String,
-                                       Optional ByVal MostrarMensaje As Boolean = True)
+    Function Fx_ValidarExistenciaDeCodigo(Codigo As String,
+                                       Campo As String,
+                                       Optional MostrarMensaje As Boolean = True)
         If _Sql.Fx_Trae_Dato("MAEPR", Campo, Campo & " = '" & Codigo & "'") <> "" Then
 
             If MostrarMensaje = True Then
@@ -1702,4 +2102,644 @@ Sigue_Loop_01:
 
     End Function
 
+
 End Class
+
+Namespace Bk_Comporamiento_UdMedidas
+
+    Public Class Cl_CompUdMedidas
+
+        Enum Enum_Comportamiento
+            nn
+            c01_Solicitar_Ud_Que_Hara_Transaccion
+            c02_Comprar_en_1ra_Udad_Vender_1ra_Udad
+            c03_Comprar_en_2da_Udad_Vender_1ra_Udad
+            c04_Comprar_en_1ra_Udad_Vender_2da_Udad
+            c05_Comprar_en_2da_Udad_Vender_2da_Udad
+            c06_Solicitar_Udad_si_es_compra_Vender_1ra_Udad
+            c07_Solicitar_Udad_si_es_compra_Vender_2da_Udad
+            c08_Comrar_en_1ra_Udad_Solicitar_Udad_si_es_venta
+            c09_Comrar_en_2da_Udad_Solicitar_Udad_si_es_venta
+            c10_Utilizar_unidad_indivisible_solo_RTU_constante
+            c11_Vender_en_1ra_Udad_sin_dividir_2da_Udad
+        End Enum
+
+        Enum Enum_Tratamientos_RTU
+            nn
+            c01_Caso_normal_respetar_RTU_definida
+            c02_Solicitar_Ancho_Largo_y_Alto_Para_obtener_1ra_Udad
+            c03_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_MT2
+            c04_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_CM2
+            c05_Solicitar_cant_solo_Udad_seleccionada_y_calcular_x_RTU_la_otra_Udad
+            c06_Calcular_RTU_forma_invertida
+            c07_Solicitar_cantidad_ambas_unidades_del_producto
+            c08_Solicitar_RTU_producto
+            c09_RTU_variable
+            c10_RTU_constante
+        End Enum
+
+        Function Fx_Trae_NMARCA(_Comportamiento As Enum_Comportamiento,
+                                _Tratamientos_RTU As Enum_Tratamientos_RTU) As String
+
+#Region "c01_Caso_normal_respetar_RTU_definida"
+
+            If _Comportamiento = Enum_Comportamiento.c01_Solicitar_Ud_Que_Hara_Transaccion And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c01_Caso_normal_respetar_RTU_definida Then
+                Return ""
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c02_Comprar_en_1ra_Udad_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c01_Caso_normal_respetar_RTU_definida Then
+                Return "1"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c03_Comprar_en_2da_Udad_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c01_Caso_normal_respetar_RTU_definida Then
+                Return "2"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c04_Comprar_en_1ra_Udad_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c01_Caso_normal_respetar_RTU_definida Then
+                Return "3"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c05_Comprar_en_2da_Udad_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c01_Caso_normal_respetar_RTU_definida Then
+                Return "4"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c06_Solicitar_Udad_si_es_compra_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c01_Caso_normal_respetar_RTU_definida Then
+                Return "a"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c07_Solicitar_Udad_si_es_compra_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c01_Caso_normal_respetar_RTU_definida Then
+                Return "g"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c08_Comrar_en_1ra_Udad_Solicitar_Udad_si_es_venta And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c01_Caso_normal_respetar_RTU_definida Then
+                Return "m"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c09_Comrar_en_2da_Udad_Solicitar_Udad_si_es_venta And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c01_Caso_normal_respetar_RTU_definida Then
+                Return "s"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c10_Utilizar_unidad_indivisible_solo_RTU_constante And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c01_Caso_normal_respetar_RTU_definida Then
+                Return ""
+            End If
+
+#End Region
+
+#Region "c02_Solicitar_Ancho_Largo_y_Alto_Para_obtener_1ra_Udad"
+
+            If _Comportamiento = Enum_Comportamiento.c01_Solicitar_Ud_Que_Hara_Transaccion And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c02_Solicitar_Ancho_Largo_y_Alto_Para_obtener_1ra_Udad Then
+                Return "A"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c02_Comprar_en_1ra_Udad_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c02_Solicitar_Ancho_Largo_y_Alto_Para_obtener_1ra_Udad Then
+                Return "5"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c03_Comprar_en_2da_Udad_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c02_Solicitar_Ancho_Largo_y_Alto_Para_obtener_1ra_Udad Then
+                Return "F"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c04_Comprar_en_1ra_Udad_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c02_Solicitar_Ancho_Largo_y_Alto_Para_obtener_1ra_Udad Then
+                Return "K"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c05_Comprar_en_2da_Udad_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c02_Solicitar_Ancho_Largo_y_Alto_Para_obtener_1ra_Udad Then
+                Return "P"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c06_Solicitar_Udad_si_es_compra_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c02_Solicitar_Ancho_Largo_y_Alto_Para_obtener_1ra_Udad Then
+                Return "b"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c07_Solicitar_Udad_si_es_compra_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c02_Solicitar_Ancho_Largo_y_Alto_Para_obtener_1ra_Udad Then
+                Return "h"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c08_Comrar_en_1ra_Udad_Solicitar_Udad_si_es_venta And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c02_Solicitar_Ancho_Largo_y_Alto_Para_obtener_1ra_Udad Then
+                Return "n"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c09_Comrar_en_2da_Udad_Solicitar_Udad_si_es_venta And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c02_Solicitar_Ancho_Largo_y_Alto_Para_obtener_1ra_Udad Then
+                Return "t"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c10_Utilizar_unidad_indivisible_solo_RTU_constante And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c02_Solicitar_Ancho_Largo_y_Alto_Para_obtener_1ra_Udad Then
+                Return ""
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c11_Vender_en_1ra_Udad_sin_dividir_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c02_Solicitar_Ancho_Largo_y_Alto_Para_obtener_1ra_Udad Then
+                Return "A"
+            End If
+
+#End Region
+
+#Region "c03_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_MT2"
+
+            If _Comportamiento = Enum_Comportamiento.c01_Solicitar_Ud_Que_Hara_Transaccion And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c03_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_MT2 Then
+                Return "B"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c02_Comprar_en_1ra_Udad_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c03_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_MT2 Then
+                Return "6"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c03_Comprar_en_2da_Udad_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c03_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_MT2 Then
+                Return "G"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c04_Comprar_en_1ra_Udad_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c03_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_MT2 Then
+                Return "L"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c05_Comprar_en_2da_Udad_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c03_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_MT2 Then
+                Return "Q"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c06_Solicitar_Udad_si_es_compra_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c03_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_MT2 Then
+                Return "c"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c07_Solicitar_Udad_si_es_compra_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c03_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_MT2 Then
+                Return "i"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c08_Comrar_en_1ra_Udad_Solicitar_Udad_si_es_venta And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c03_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_MT2 Then
+                Return "o"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c09_Comrar_en_2da_Udad_Solicitar_Udad_si_es_venta And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c03_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_MT2 Then
+                Return "u"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c10_Utilizar_unidad_indivisible_solo_RTU_constante And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c03_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_MT2 Then
+                Return ""
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c11_Vender_en_1ra_Udad_sin_dividir_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c03_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_MT2 Then
+                Return "B"
+            End If
+
+#End Region
+
+#Region "c04_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_CM2"
+
+            If _Comportamiento = Enum_Comportamiento.c01_Solicitar_Ud_Que_Hara_Transaccion And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c04_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_CM2 Then
+                Return "C"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c02_Comprar_en_1ra_Udad_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c04_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_CM2 Then
+                Return "7"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c03_Comprar_en_2da_Udad_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c04_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_CM2 Then
+                Return "H"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c04_Comprar_en_1ra_Udad_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c04_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_CM2 Then
+                Return "M"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c05_Comprar_en_2da_Udad_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c04_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_CM2 Then
+                Return "R"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c06_Solicitar_Udad_si_es_compra_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c04_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_CM2 Then
+                Return "d"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c07_Solicitar_Udad_si_es_compra_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c04_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_CM2 Then
+                Return "j"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c08_Comrar_en_1ra_Udad_Solicitar_Udad_si_es_venta And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c04_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_CM2 Then
+                Return "p"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c09_Comrar_en_2da_Udad_Solicitar_Udad_si_es_venta And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c04_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_CM2 Then
+                Return "v"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c10_Utilizar_unidad_indivisible_solo_RTU_constante And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c04_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_CM2 Then
+                Return ""
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c11_Vender_en_1ra_Udad_sin_dividir_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c04_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_CM2 Then
+                Return "C"
+            End If
+
+#End Region
+
+#Region "c05_Solicitar_cant_solo_Udad_seleccionada_y_calcular_x_RTU_la_otra_Udad"
+
+            If _Comportamiento = Enum_Comportamiento.c01_Solicitar_Ud_Que_Hara_Transaccion And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c05_Solicitar_cant_solo_Udad_seleccionada_y_calcular_x_RTU_la_otra_Udad Then
+                Return "D"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c02_Comprar_en_1ra_Udad_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c05_Solicitar_cant_solo_Udad_seleccionada_y_calcular_x_RTU_la_otra_Udad Then
+                Return "8"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c03_Comprar_en_2da_Udad_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c05_Solicitar_cant_solo_Udad_seleccionada_y_calcular_x_RTU_la_otra_Udad Then
+                Return "I"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c04_Comprar_en_1ra_Udad_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c05_Solicitar_cant_solo_Udad_seleccionada_y_calcular_x_RTU_la_otra_Udad Then
+                Return "N"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c05_Comprar_en_2da_Udad_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c05_Solicitar_cant_solo_Udad_seleccionada_y_calcular_x_RTU_la_otra_Udad Then
+                Return "S"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c06_Solicitar_Udad_si_es_compra_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c05_Solicitar_cant_solo_Udad_seleccionada_y_calcular_x_RTU_la_otra_Udad Then
+                Return "e"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c07_Solicitar_Udad_si_es_compra_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c05_Solicitar_cant_solo_Udad_seleccionada_y_calcular_x_RTU_la_otra_Udad Then
+                Return "k"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c08_Comrar_en_1ra_Udad_Solicitar_Udad_si_es_venta And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c05_Solicitar_cant_solo_Udad_seleccionada_y_calcular_x_RTU_la_otra_Udad Then
+                Return "q"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c09_Comrar_en_2da_Udad_Solicitar_Udad_si_es_venta And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c05_Solicitar_cant_solo_Udad_seleccionada_y_calcular_x_RTU_la_otra_Udad Then
+                Return "w"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c10_Utilizar_unidad_indivisible_solo_RTU_constante And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c05_Solicitar_cant_solo_Udad_seleccionada_y_calcular_x_RTU_la_otra_Udad Then
+                Return ""
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c11_Vender_en_1ra_Udad_sin_dividir_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c05_Solicitar_cant_solo_Udad_seleccionada_y_calcular_x_RTU_la_otra_Udad Then
+                Return "D"
+            End If
+
+#End Region
+
+#Region "c06_Calcular_RTU_forma_invertida"
+
+            If _Comportamiento = Enum_Comportamiento.c01_Solicitar_Ud_Que_Hara_Transaccion And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c06_Calcular_RTU_forma_invertida Then
+                Return "E"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c02_Comprar_en_1ra_Udad_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c06_Calcular_RTU_forma_invertida Then
+                Return "9"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c03_Comprar_en_2da_Udad_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c06_Calcular_RTU_forma_invertida Then
+                Return "J"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c04_Comprar_en_1ra_Udad_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c06_Calcular_RTU_forma_invertida Then
+                Return "O"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c05_Comprar_en_2da_Udad_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c06_Calcular_RTU_forma_invertida Then
+                Return "T"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c06_Solicitar_Udad_si_es_compra_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c06_Calcular_RTU_forma_invertida Then
+                Return "f"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c07_Solicitar_Udad_si_es_compra_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c06_Calcular_RTU_forma_invertida Then
+                Return "l"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c08_Comrar_en_1ra_Udad_Solicitar_Udad_si_es_venta And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c06_Calcular_RTU_forma_invertida Then
+                Return "r"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c09_Comrar_en_2da_Udad_Solicitar_Udad_si_es_venta And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c06_Calcular_RTU_forma_invertida Then
+                Return "x"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c10_Utilizar_unidad_indivisible_solo_RTU_constante And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c06_Calcular_RTU_forma_invertida Then
+                Return ""
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c11_Vender_en_1ra_Udad_sin_dividir_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c06_Calcular_RTU_forma_invertida Then
+                Return "E"
+            End If
+
+#End Region
+
+#Region "c07_Solicitar_cantidad_ambas_unidades_del_producto"
+
+            If _Comportamiento = Enum_Comportamiento.c01_Solicitar_Ud_Que_Hara_Transaccion And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c07_Solicitar_cantidad_ambas_unidades_del_producto Then
+                Return ">"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c02_Comprar_en_1ra_Udad_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c07_Solicitar_cantidad_ambas_unidades_del_producto Then
+                Return "<"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c03_Comprar_en_2da_Udad_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c07_Solicitar_cantidad_ambas_unidades_del_producto Then
+                Return "_"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c04_Comprar_en_1ra_Udad_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c07_Solicitar_cantidad_ambas_unidades_del_producto Then
+                Return "-"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c05_Comprar_en_2da_Udad_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c07_Solicitar_cantidad_ambas_unidades_del_producto Then
+                Return "("
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c06_Solicitar_Udad_si_es_compra_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c07_Solicitar_cantidad_ambas_unidades_del_producto Then
+                Return ")"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c07_Solicitar_Udad_si_es_compra_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c07_Solicitar_cantidad_ambas_unidades_del_producto Then
+                Return "["
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c08_Comrar_en_1ra_Udad_Solicitar_Udad_si_es_venta And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c07_Solicitar_cantidad_ambas_unidades_del_producto Then
+                Return "]"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c09_Comrar_en_2da_Udad_Solicitar_Udad_si_es_venta And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c07_Solicitar_cantidad_ambas_unidades_del_producto Then
+                Return "*"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c10_Utilizar_unidad_indivisible_solo_RTU_constante And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c07_Solicitar_cantidad_ambas_unidades_del_producto Then
+                Return ""
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c11_Vender_en_1ra_Udad_sin_dividir_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c07_Solicitar_cantidad_ambas_unidades_del_producto Then
+                Return ">"
+            End If
+
+#End Region
+
+#Region "c08_Solicitar_RTU_producto"
+
+            If _Comportamiento = Enum_Comportamiento.c01_Solicitar_Ud_Que_Hara_Transaccion And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c08_Solicitar_RTU_producto Then
+                Return "W"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c02_Comprar_en_1ra_Udad_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c08_Solicitar_RTU_producto Then
+                Return "X"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c03_Comprar_en_2da_Udad_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c08_Solicitar_RTU_producto Then
+                Return "Y"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c04_Comprar_en_1ra_Udad_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c08_Solicitar_RTU_producto Then
+                Return "Z"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c05_Comprar_en_2da_Udad_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c08_Solicitar_RTU_producto Then
+                Return "U"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c06_Solicitar_Udad_si_es_compra_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c08_Solicitar_RTU_producto Then
+                Return "V"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c07_Solicitar_Udad_si_es_compra_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c08_Solicitar_RTU_producto Then
+                Return "y"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c08_Comrar_en_1ra_Udad_Solicitar_Udad_si_es_venta And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c08_Solicitar_RTU_producto Then
+                Return "z"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c09_Comrar_en_2da_Udad_Solicitar_Udad_si_es_venta And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c08_Solicitar_RTU_producto Then
+                Return "+"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c10_Utilizar_unidad_indivisible_solo_RTU_constante And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c08_Solicitar_RTU_producto Then
+                Return ""
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c11_Vender_en_1ra_Udad_sin_dividir_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c08_Solicitar_RTU_producto Then
+                Return "W"
+            End If
+
+#End Region
+
+#Region "c09_RTU_variable"
+
+            If _Comportamiento = Enum_Comportamiento.c01_Solicitar_Ud_Que_Hara_Transaccion And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c09_RTU_variable Then
+                Return "¡"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c02_Comprar_en_1ra_Udad_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c09_RTU_variable Then
+                Return "¿"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c03_Comprar_en_2da_Udad_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c09_RTU_variable Then
+                Return "^"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c04_Comprar_en_1ra_Udad_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c09_RTU_variable Then
+                Return "\"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c05_Comprar_en_2da_Udad_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c09_RTU_variable Then
+                Return "#"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c06_Solicitar_Udad_si_es_compra_Vender_1ra_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c09_RTU_variable Then
+                Return "@"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c07_Solicitar_Udad_si_es_compra_Vender_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c09_RTU_variable Then
+                Return "|"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c08_Comrar_en_1ra_Udad_Solicitar_Udad_si_es_venta And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c09_RTU_variable Then
+                Return "&"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c09_Comrar_en_2da_Udad_Solicitar_Udad_si_es_venta And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c09_RTU_variable Then
+                Return "$"
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c10_Utilizar_unidad_indivisible_solo_RTU_constante And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c09_RTU_variable Then
+                Return ""
+            End If
+
+            If _Comportamiento = Enum_Comportamiento.c11_Vender_en_1ra_Udad_sin_dividir_2da_Udad And
+                _Tratamientos_RTU = Enum_Tratamientos_RTU.c09_RTU_variable Then
+                Return "¡"
+            End If
+
+
+#End Region
+
+            Return ""
+
+        End Function
+
+        Function Fx_Decifra_Nmarca(_Nmarca As String) As Bk_Comporamiento_UdMedidas.Nmarca
+
+            Dim _FxNmarca As New Bk_Comporamiento_UdMedidas.Nmarca
+
+            _FxNmarca.Nmarca = _Nmarca
+
+            If String.IsNullOrEmpty(_Nmarca) Then
+                _FxNmarca.Comportamiento = Enum_Comportamiento.c01_Solicitar_Ud_Que_Hara_Transaccion
+                _FxNmarca.Tratamiento = Enum_Tratamientos_RTU.c01_Caso_normal_respetar_RTU_definida
+            End If
+
+            Select Case _Nmarca
+                Case "", "1", "2", "3", "4", "a", "g", "m", "s"
+                    _FxNmarca.Tratamiento = Enum_Tratamientos_RTU.c01_Caso_normal_respetar_RTU_definida
+                Case "A", "5", "F", "K", "p", "b", "h", "n", "t"
+                    _FxNmarca.Tratamiento = Enum_Tratamientos_RTU.c02_Solicitar_Ancho_Largo_y_Alto_Para_obtener_1ra_Udad
+                Case "B", "6", "G", "L", "q", "c", "i", "o", "u"
+                    _FxNmarca.Tratamiento = Enum_Tratamientos_RTU.c03_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_MT2
+                Case "C", "7", "H", "M", "r", "d", "j", "p", "v"
+                    _FxNmarca.Tratamiento = Enum_Tratamientos_RTU.c04_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_CM2
+                Case "D", "8", "I", "N", "s", "e", "k", "q", "w"
+                    _FxNmarca.Tratamiento = Enum_Tratamientos_RTU.c05_Solicitar_cant_solo_Udad_seleccionada_y_calcular_x_RTU_la_otra_Udad
+                Case "E", "9", "J", "O", "T", "f", "l", "r", "x"
+                    _FxNmarca.Tratamiento = Enum_Tratamientos_RTU.c06_Calcular_RTU_forma_invertida
+                Case ">", "<", "_", "-", "(", ")", "[", "]", "*"
+                    _FxNmarca.Tratamiento = Enum_Tratamientos_RTU.c07_Solicitar_cantidad_ambas_unidades_del_producto
+                Case "W", "X", "Y", "Z", "U", "V", "y", "z", "+"
+                    _FxNmarca.Tratamiento = Enum_Tratamientos_RTU.c08_Solicitar_RTU_producto
+                Case "¡", "¿", "^", "\", "#", "@", "|", "&", "$", ""
+                    _FxNmarca.Tratamiento = Enum_Tratamientos_RTU.c09_RTU_variable
+                Case "Ñ"
+                    _FxNmarca.Tratamiento = Enum_Tratamientos_RTU.c10_RTU_constante
+            End Select
+
+            Select Case _Nmarca
+                Case "", "A", "B", "C", "D", "E", ">", "W", "¡"
+                    _FxNmarca.Comportamiento = Enum_Tratamientos_RTU.c01_Caso_normal_respetar_RTU_definida
+                Case "1", "5", "6", "7", "8", "9", "<", "X", "¿"
+                    _FxNmarca.Comportamiento = Enum_Tratamientos_RTU.c02_Solicitar_Ancho_Largo_y_Alto_Para_obtener_1ra_Udad
+                Case "2", "F", "G", "H", "I", "J", "_", "Y", "^"
+                    _FxNmarca.Comportamiento = Enum_Tratamientos_RTU.c03_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_MT2
+                Case "3", "K", "L", "M", "N", "O", "-", "Z", "\"
+                    _FxNmarca.Comportamiento = Enum_Tratamientos_RTU.c04_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_CM2
+                Case "4", "p", "q", "r", "s", "T", "(", "U", "#"
+                    _FxNmarca.Comportamiento = Enum_Tratamientos_RTU.c05_Solicitar_cant_solo_Udad_seleccionada_y_calcular_x_RTU_la_otra_Udad
+                Case "a", "b", "c", "d", "e", "f", ")", "V", "@"
+                    _FxNmarca.Comportamiento = Enum_Tratamientos_RTU.c06_Calcular_RTU_forma_invertida
+                Case "g", "h", "i", "j", "k", "l", "[", "y", "|"
+                    _FxNmarca.Comportamiento = Enum_Tratamientos_RTU.c07_Solicitar_cantidad_ambas_unidades_del_producto
+                Case "m", "n", "o", "p", "q", "r", "]", "z", "&"
+                    _FxNmarca.Comportamiento = Enum_Tratamientos_RTU.c08_Solicitar_RTU_producto
+                Case "s", "t", "u", "v", "w", "x", "*", "+", "$"
+                    _FxNmarca.Comportamiento = Enum_Tratamientos_RTU.c09_RTU_variable
+                Case "Ñ"
+                    _FxNmarca.Comportamiento = Enum_Tratamientos_RTU.c10_RTU_constante
+            End Select
+
+            Return _FxNmarca
+
+        End Function
+
+    End Class
+
+    Public Class Nmarca
+        Public Property Nmarca As String
+        Public Property Comportamiento As Cl_CompUdMedidas.Enum_Comportamiento
+        Public Property Tratamiento As Cl_CompUdMedidas.Enum_Tratamientos_RTU
+
+    End Class
+
+End Namespace

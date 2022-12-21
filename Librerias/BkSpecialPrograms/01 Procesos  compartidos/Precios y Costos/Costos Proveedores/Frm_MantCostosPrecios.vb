@@ -89,8 +89,11 @@ Public Class Frm_MantCostosPrecios
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_Detalle_MouseDown
 
-        'Sb_Actualizar_Grilla(True)
         Sb_Actualizar_Grilla(True, True)
+
+        AddHandler Chk_Quitar_Sin_Usar.CheckedChanged, AddressOf Chk_CheckedChanged
+        AddHandler Chk_Quitar_Bloqueados_venta.CheckedChanged, AddressOf Chk_CheckedChanged
+        AddHandler Chk_NoUsar_Bloqueados.CheckedChanged, AddressOf Chk_CheckedChanged
 
         Me.ActiveControl = Txt_Buscar
 
@@ -211,11 +214,20 @@ Public Class Frm_MantCostosPrecios
 
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
-            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Costos & " Set Repetidos = (Select Count(*) From " & _Nombre_Tbl_Paso_Costos & " Z2 Where Z1.Codigo = Z2.Codigo And Z2.No_Usar = 0)
+            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Costos & " Set Repetidos = (Select Count(*) From " & _Nombre_Tbl_Paso_Costos & " Z2 Where Z1.Codigo = Z2.Codigo And Z1. And Z2.No_Usar = 0)
+                            From " & _Nombre_Tbl_Paso_Costos & " Z1
+                            Update " & _Nombre_Tbl_Paso_Costos & " Set RepetidosAlt = (Select Count(*) From " & _Nombre_Tbl_Paso_Costos & " Z2 Where Z1.CodAlternativo = Z2.CodAlternativo And Z2.No_Usar = 0)
                             From " & _Nombre_Tbl_Paso_Costos & " Z1
                             Update " & _Nombre_Tbl_Paso_Costos & " Set Descripcion = Rtrim(Ltrim(Descripcion))+' [Repetido '+Rtrim(Ltrim(Str(Repetidos)))+']'
                             Where Repetidos > 1"
             _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+            Consulta_sql = "Select * From " & _Nombre_Tbl_Paso_Costos & " Where RepetidosAlt > 1"
+            Dim _Tbl_Repetidos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            For Each _Flr As DataRow In _Tbl_Repetidos.Rows
+
+            Next
 
             Chk_OrdenDeLlegada.Visible = False
 
@@ -406,7 +418,7 @@ Public Class Frm_MantCostosPrecios
             Dim _No_Usar = _Fila.Cells("No_Usar").Value
 
             If _Repetidos > 1 Then
-                _Fila.DefaultCellStyle.ForeColor = Color.Red '.Cells("Grado_Prioridad").Style.ForeColor = Color.White
+                _Fila.DefaultCellStyle.ForeColor = Color.Purple
             End If
 
             If _No_Usar Then
@@ -467,8 +479,8 @@ Public Class Frm_MantCostosPrecios
                             Select Distinct " & _Id_Padre & ",'" & _CodLista & "','" & _CodProveedor & "','" & _SucProveedor & "',Tc.KOPRAL,Mp.KOPR,Mp.NOKOPR,Tc.NOKOPRAL,0,0,RLUD,'" & _FechaVigencia & "',0,0,0,0,0,0,0,1,0,0,0,0
                                 From TABCODAL Tc 
                                     Inner Join MAEPR Mp On Tc.KOPR = Mp.KOPR
-                                        Where Tc.KOEN = '" & _CodProveedor & "' And Tc.KOPR Not In
-                                            (Select Codigo From " & _Global_BaseBk & "Zw_ListaPreCosto " &
+                                        Where Tc.KOEN = '" & _CodProveedor & "' And Tc.KOPRAL Not In
+                                            (Select CodAlternativo From " & _Global_BaseBk & "Zw_ListaPreCosto " &
                                                 "Where Id_Padre = " & _Id_Padre & ")--Where Proveedor = '" & _CodProveedor & "' And Sucursal = '" & _SucProveedor & "' And Lista = '" & _CodLista & "' And FechaVigencia = '" & _FechaVigencia & "')
 
                             Update " & _Global_BaseBk & "Zw_ListaPreCosto Set Flete = RECARGO
@@ -503,12 +515,6 @@ Public Class Frm_MantCostosPrecios
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaPreCosto Set Rtu = (Select RLUD From MAEPR Where KOPR = Codigo)"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaPreCosto Set CodAlternativo = KOPRAL 
-                            From " & _Global_BaseBk & "Zw_ListaPreCosto Lpc
-                            Inner Join TABCODAL On KOEN = Proveedor And KOPR = Codigo
-                            Where Proveedor = '" & _CodProveedor & "' And Lista = '" & _CodLista & "'"
-            _Sql.Ej_consulta_IDU(Consulta_sql)
-
             Consulta_sql = "Insert Into " & _Nombre_Tbl_Paso_Costos & " (Lista,Proveedor,Sucursal,CodAlternativo,Codigo,Descripcion,Descripcion_Alt,CostoUd1,CostoUd2,Rtu,FechaVigencia,
                             Desc1,Desc2,Desc3,Desc4,Desc5,DescSuma,Flete,Un_Compra,Un_MinCompra,Ac_Oferta,Ac_Disponible,Ac_Cotizar,Ud1,Ud2,Pm,Uc1,Uc2,No_Usar,Id_Hijo,Id_Padre)
                             Select Distinct Lista,Proveedor,Sucursal,CodAlternativo,Codigo,Mp.NOKOPR As Descripcion,Tda.NOKOPRAL As Descripcion_Alt,CostoUd1,CostoUd2,Rtu,FechaVigencia,
@@ -523,11 +529,20 @@ Public Class Frm_MantCostosPrecios
 
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
-            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Costos & " Set Repetidos = (Select Count(*) From " & _Nombre_Tbl_Paso_Costos & " Z2 Where Z1.Codigo = Z2.Codigo And Z2.No_Usar = 0)
-                            From " & _Nombre_Tbl_Paso_Costos & " Z1
-                            Update " & _Nombre_Tbl_Paso_Costos & " Set Descripcion = Rtrim(Ltrim(Descripcion))+' [Repetido '+Rtrim(Ltrim(Str(Repetidos)))+']'
-                            Where Repetidos > 1"
+            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Costos & " Set Repetidos = (Select Count(*) From " & _Nombre_Tbl_Paso_Costos & " Z2 Where Z1.Codigo = Z2.Codigo)
+                            From " & _Nombre_Tbl_Paso_Costos & " Z1"
             _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Costos & " Set RepetidosAlt = (Select Count(*) From " & _Nombre_Tbl_Paso_Costos & " Z2 Where Z1.CodAlternativo = Z2.CodAlternativo)
+                            From " & _Nombre_Tbl_Paso_Costos & " Z1"
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Costos & " Set Repetido = 1" & vbCrLf &
+                           "Where Repetidos > 1 or RepetidosAlt > 1"
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+            Consulta_sql = "Select * From " & _Nombre_Tbl_Paso_Costos & " Where RepetidosAlt > 1"
+            Dim _Tbl_Repetidos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
             Chk_OrdenDeLlegada.Visible = False
 
@@ -535,20 +550,37 @@ Public Class Frm_MantCostosPrecios
 
         End If
 
-        Dim _Filtro_Sin_Usar As String
-
-        If Chk_Quitar_Sin_Usar.Checked Then
-
-            _Filtro_Sin_Usar = "And No_Usar = 0"
-
+        If Chk_NoUsar_Bloqueados.Checked Then
+            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Costos & " Set No_Usar = 1" & vbCrLf &
+                           "From " & _Nombre_Tbl_Paso_Costos & " As PrPro
+                            Inner Join MAEPR On KOPR = Codigo And BLOQUEAPR <> ''"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
         End If
 
-        Consulta_sql = "Select PrPro.*,MAEPR.BLOQUEAPR,Cast(0 As Float) As Neto_Cn_Dscto 
-                        From " & _Nombre_Tbl_Paso_Costos & " As PrPro
-                        Inner Join MAEPR On KOPR = Codigo
-                        Where 1 > 0 And BLOQUEAPR = '' " & _Filtro_Sin_Usar & "
-                        Order by Codigo"
+        Dim _Filtro_Adicional As String
 
+        If Chk_Quitar_Sin_Usar.Checked Then
+            _Filtro_Adicional = "And No_Usar = 0" & vbCrLf
+        End If
+
+        If Chk_Quitar_Bloqueados_venta.Checked Then
+            _Filtro_Adicional += "And Bloqueapr = ''"
+        End If
+
+        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Costos & " Set Bloqueapr = BLOQUEAPR" & vbCrLf &
+                       "From " & _Nombre_Tbl_Paso_Costos & " As PrPro
+                        Inner Join MAEPR On KOPR = Codigo"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        'Consulta_sql = "Select PrPro.*,MAEPR.BLOQUEAPR,Cast(0 As Float) As Neto_Cn_Dscto 
+        '                From " & _Nombre_Tbl_Paso_Costos & " As PrPro
+        '                Inner Join MAEPR On KOPR = Codigo
+        '                Where 1 > 0 And BLOQUEAPR = '' " & _Filtro_Sin_Usar & "
+        '                Order by Codigo"
+
+        Consulta_sql = "Select * From " & _Nombre_Tbl_Paso_Costos & vbCrLf &
+                       "Where 1 > 0 " & vbCrLf & _Filtro_Adicional & vbCrLf &
+                       "Order by Codigo"
         _Ds = _Sql.Fx_Get_DataSet(Consulta_sql)
 
         _Dv.Table = _Ds.Tables("Table")
@@ -571,14 +603,15 @@ Public Class Frm_MantCostosPrecios
             .Columns(_Campo).DisplayIndex = _Displayindex
             _Displayindex += 1
 
-            '_Campo = "Lista"
-            '.Columns(_Campo).Width = 35
-            '.Columns(_Campo).HeaderText = "LP"
-            '.Columns(_Campo).ReadOnly = True
-            ''.Columns(_Campo).Frozen = True
-            '.Columns(_Campo).Visible = True
-            '.Columns(_Campo).DisplayIndex = _Displayindex
-            '_Displayindex += 1
+            _Campo = "Bloqueapr"
+            .Columns(_Campo).Width = 15
+            .Columns(_Campo).HeaderText = "B"
+            .Columns(_Campo).ToolTipText = "Bloquedados ('vacía' = No bloqueado, 'C' = Bloq. Compras, 'V' = Bloq. Ventas, 'T' = Bloqueado compras, ventas y producción)"
+            .Columns(_Campo).ReadOnly = True
+            .Columns(_Campo).Visible = True
+            .Columns(_Campo).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns(_Campo).DisplayIndex = _Displayindex
+            _Displayindex += 1
 
             _Campo = "Codigo"
             .Columns(_Campo).Width = 90
@@ -598,6 +631,16 @@ Public Class Frm_MantCostosPrecios
             .Columns(_Campo).DisplayIndex = _Displayindex
             _Displayindex += 1
 
+            _Campo = "Repetido"
+            .Columns(_Campo).Width = 30
+            .Columns(_Campo).HeaderText = "R"
+            .Columns(_Campo).ToolTipText = "Código repetido"
+            .Columns(_Campo).ReadOnly = True
+            .Columns(_Campo).Visible = True
+            .Columns(_Campo).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns(_Campo).DisplayIndex = _Displayindex
+            _Displayindex += 1
+
             _Campo = "Codalternativo"
             .Columns(_Campo).Width = 110
             .Columns(_Campo).HeaderText = "SKU. Proveedor"
@@ -608,7 +651,7 @@ Public Class Frm_MantCostosPrecios
             _Displayindex += 1
 
             _Campo = "Descripcion"
-            .Columns(_Campo).Width = 295
+            .Columns(_Campo).Width = 295 - 15 - 30
             .Columns(_Campo).HeaderText = "Descripción"
             .Columns(_Campo).ReadOnly = True
             '.Columns(_Campo).Frozen = True
@@ -718,7 +761,7 @@ Public Class Frm_MantCostosPrecios
             Dim _No_Usar = _Fila.Cells("No_Usar").Value
 
             If _Repetidos > 1 Then
-                _Fila.DefaultCellStyle.ForeColor = Rojo '.Cells("Grado_Prioridad").Style.ForeColor = Color.White
+                _Fila.DefaultCellStyle.ForeColor = Color.Purple
             End If
 
             If _No_Usar Then
@@ -943,7 +986,7 @@ Public Class Frm_MantCostosPrecios
                     _Fila.DefaultCellStyle.ForeColor = Rojo
                     _Fila.DefaultCellStyle.Font = New Font(Font.Name, Font.Size, FontStyle.Strikeout)
                 Else
-                    _Fila.DefaultCellStyle.ForeColor = Color.Black
+                    _Fila.DefaultCellStyle.ForeColor = Color.Purple 'Color.Black
                     _Fila.DefaultCellStyle.Font = New Font(Font.Name, Font.Size, FontStyle.Regular)
                 End If
 
@@ -958,6 +1001,12 @@ Public Class Frm_MantCostosPrecios
 
     Private Sub BtnGrabar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnGrabar.Click
         'Sb_Grabar()
+
+        If Chk_Ver_Solo_Repetidos.Checked Then
+            MessageBoxEx.Show(Me, "Debe quitar el Check [" & Chk_Ver_Solo_Repetidos.Text & "]", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         Sb_Grabar_New()
     End Sub
 
@@ -1038,6 +1087,34 @@ Public Class Frm_MantCostosPrecios
 
         Grilla.Refresh()
 
+        Consulta_sql = "Select Z2.*," & vbCrLf &
+                        "(Select Count(*) From " & _Nombre_Tbl_Paso_Costos & " Z1 Where Z1.Codigo = Z2.Codigo And Z1.No_Usar = 0) As Veces_NoUsar" & vbCrLf &
+                        "Into #Paso" & vbCrLf &
+                        "From " & _Nombre_Tbl_Paso_Costos & " Z2" &
+                        vbCrLf &
+                        vbCrLf &
+                        "Select Distinct Codigo From #Paso" & vbCrLf &
+                        "Where (Repetidos > 1 Or RepetidosAlt > 1) And Veces_NoUsar > 1" & vbCrLf &
+                        vbCrLf &
+                        "Select * From #Paso" & vbCrLf &
+                        "Where (Repetidos > 1 Or RepetidosAlt > 1) And Veces_NoUsar > 1" & vbCrLf &
+                        vbCrLf &
+                        "Drop table #Paso"
+
+        Dim _TblRepetidos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        If _TblRepetidos.Rows.Count Then
+            MessageBoxEx.Show(Me, "Existen " & _TblRepetidos.Rows.Count & " producto(s) que tienen mas de un código alternativo para el proveedor." & vbCrLf & vbCrLf &
+                              "Debe dejar solo un código alternativo activo para cada producto." & vbCrLf &
+                              "El código alternativo que no corresponda debe marcarlo como [No Usar]", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_ListaPreCosto" & vbCrLf &
+                       "Where Id In (Select Id_Hijo From " & _Nombre_Tbl_Paso_Costos & " Where RepetidosAlt > 1 And No_Usar = 1)"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
         Dim _Reg = Grilla.RowCount
 
         Dim _SqlActListaRandom As String = String.Empty
@@ -1058,13 +1135,8 @@ Public Class Frm_MantCostosPrecios
 
         Next
 
-        'If MessageBoxEx.Show(Me, "¿Desea actualizar los precios en la lista "" de Random inmediatamente?", "Actualizar lista Random",
-        '                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-
         _SqlActListaRandom = "Update TABPRE Set PP01UD = CostoUd1,PP02UD = CostoUd2" & _Sql_Equivalentes & vbCrLf &
-                              "From " & _Nombre_Tbl_Paso_Costos & " Tbp Inner Join TABPRE On KOLT = Tbp.Lista And KOPR = Tbp.Codigo And No_Usar = 0" & vbCrLf
-
-        'End If
+                             "From " & _Nombre_Tbl_Paso_Costos & " Tbp Inner Join TABPRE On KOLT = Tbp.Lista And KOPR = Tbp.Codigo And No_Usar = 0" & vbCrLf
 
         Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaPreCosto Set 
                         Descripcion = Tbp.Descripcion,
@@ -1094,9 +1166,13 @@ Public Class Frm_MantCostosPrecios
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
-            For Each _Fila As DataRow In _Ds.Tables(0).Rows
-                _Fila.Item("Select") = False
-            Next
+            'For Each _Fila As DataRow In _Ds.Tables(0).Rows
+            '    _Fila.Item("Select") = False
+            'Next
+
+            Chk_Ver_Solo_Repetidos.Checked = False
+
+            Sb_Actualizar_Grilla(True, True)
 
             MessageBoxEx.Show(Me, FormatNumber(_Reg, 0) & " Dato(s) actualizado(s) lista: " & _CodLista, "Actualizar Costos",
                                   MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -1278,6 +1354,10 @@ Public Class Frm_MantCostosPrecios
             Btn_Refrescar.Enabled = False
             Btn_Importar_Desde_Excel.Enabled = False
             BtnExportarExcel.Enabled = False
+
+            Btn_Actualizar_Lista_Random.Enabled = False
+            Btn_ImportarFletes.Enabled = False
+            Btn_ImportarPreciosOtraLista.Enabled = False
 
             Txt_Buscar.Enabled = False
             Grilla.Enabled = False
@@ -1493,7 +1573,8 @@ Public Class Frm_MantCostosPrecios
                 _Actualizar = False
 
                 If _Tbl_Errores.Rows.Count < Filas Then
-                    If MessageBoxEx.Show(Me, "¿Desea cargar igualmente las filas correctas?", "Cargar filas correctas",
+                    If MessageBoxEx.Show(Me, "Existente resgistros que no fueron validados, sin embargo otros sí" & vbCrLf & vbCrLf &
+                                         "¿Desea cargar igualmente las filas correctas?", "Importar datos",
                                          MessageBoxButtons.YesNo, MessageBoxIcon.Question) Then
                         _Actualizar = True
                     End If
@@ -1517,15 +1598,6 @@ Public Class Frm_MantCostosPrecios
 
         Catch ex As Exception
 
-            'MessageBoxEx.Show(Me, "Problema en la fila N° " & i & vbCrLf & ex.Message, _
-            '                  "Problema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-
-            'Consulta_sql = "Truncate table " & TblPasoCostos
-            '_Sql.Ej_consulta_IDU(Consulta_sql, False)
-
-            'Return False
-            'Finally
-
             MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
         Finally
@@ -1539,6 +1611,10 @@ Public Class Frm_MantCostosPrecios
             Btn_Refrescar.Enabled = True
             Btn_Importar_Desde_Excel.Enabled = True
             BtnExportarExcel.Enabled = True
+
+            Btn_Actualizar_Lista_Random.Enabled = True
+            Btn_ImportarFletes.Enabled = True
+            Btn_ImportarPreciosOtraLista.Enabled = True
 
             Txt_Buscar.Enabled = True
             Grilla.Enabled = True
@@ -1711,7 +1787,29 @@ Public Class Frm_MantCostosPrecios
     Private Sub Txt_Buscar_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Buscar.KeyDown
 
         If e.KeyValue = Keys.Enter Then
-            _Dv.RowFilter = String.Format("Codigo+CodAlternativo+Descripcion Like '%{0}%'", Txt_Buscar.Text.Trim)
+
+            If Chk_Ver_Solo_Repetidos.Checked Then
+                _Dv.RowFilter = String.Format("Codigo+CodAlternativo+Descripcion Like '%{0}%' And Repetido = 1", Txt_Buscar.Text.Trim)
+            Else
+                _Dv.RowFilter = String.Format("Codigo+CodAlternativo+Descripcion Like '%{0}%'", Txt_Buscar.Text.Trim)
+            End If
+
+            For Each _Fila As DataGridViewRow In Grilla.Rows
+
+                Dim _Repetidos = _Fila.Cells("Repetidos").Value
+                Dim _No_Usar = _Fila.Cells("No_Usar").Value
+
+                If _Repetidos > 1 Then
+                    _Fila.DefaultCellStyle.ForeColor = Color.Purple
+                End If
+
+                If _No_Usar Then
+                    _Fila.DefaultCellStyle.ForeColor = Color.Red
+                    _Fila.DefaultCellStyle.Font = New Font(Font.Name, Font.Size, FontStyle.Strikeout)
+                End If
+
+            Next
+
         End If
 
     End Sub
@@ -1784,7 +1882,7 @@ Public Class Frm_MantCostosPrecios
             Dim _No_Usar = _Fila.Cells("No_Usar").Value
 
             If _Repetidos > 1 Then
-                _Fila.DefaultCellStyle.ForeColor = Rojo
+                _Fila.DefaultCellStyle.ForeColor = Color.Purple
             End If
 
             If _No_Usar Then
@@ -1804,7 +1902,7 @@ Public Class Frm_MantCostosPrecios
             Dim _No_Usar = _Fila.Cells("No_Usar").Value
 
             If _Repetidos > 1 Then
-                _Fila.DefaultCellStyle.ForeColor = Rojo
+                _Fila.DefaultCellStyle.ForeColor = Color.Purple
             End If
 
             If _No_Usar Then
@@ -1838,8 +1936,7 @@ Public Class Frm_MantCostosPrecios
 
     End Sub
 
-    Private Sub Chk_Quitar_Sin_Usar_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Quitar_Sin_Usar.CheckedChanged
-        'Sb_Actualizar_Grilla(False)
+    Private Sub Chk_CheckedChanged(sender As Object, e As EventArgs)
         Sb_Actualizar_Grilla(True, True)
     End Sub
 
@@ -1958,6 +2055,19 @@ Public Class Frm_MantCostosPrecios
             Me.Sb_Actualizar_Grilla(False, True)
             MessageBoxEx.Show(Me, "Datos importados", "Importar", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
+
+    End Sub
+
+    Private Sub Chk_Ver_Solo_Repetidos_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Ver_Solo_Repetidos.CheckedChanged
+
+        Dim _e As New KeyEventArgs(Keys.Enter)
+
+        Call Txt_Buscar_KeyDown(Nothing, _e)
+    End Sub
+
+    Private Sub Chk_NoUsar_Bloqueados_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_NoUsar_Bloqueados.CheckedChanged
+
+
 
     End Sub
 

@@ -72,6 +72,13 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_Producto_Uno = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Txt_Producto = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Chk_Mostrar_Vales_Transitorios = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_Placapat = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_Ocdo = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_CodRetirador = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo_documento.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
@@ -84,6 +91,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Grupo_Entidad.SuspendLayout()
         Me.Grupo_Funcionario.SuspendLayout()
         Me.Grupo_Producto.SuspendLayout()
+        Me.GroupPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Btn_Entidad_Una
@@ -105,7 +113,9 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         '
         Me.Rdb_Entidad_Una.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Entidad_Una.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Entidad_Una.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Entidad_Una.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Entidad_Una.FocusCuesEnabled = False
         Me.Rdb_Entidad_Una.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Entidad_Una.Location = New System.Drawing.Point(3, 45)
         Me.Rdb_Entidad_Una.Name = "Rdb_Entidad_Una"
@@ -139,6 +149,8 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         '
         Me.ChkBuscarEntidadFisica.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.ChkBuscarEntidadFisica.CheckBoxImageChecked = CType(resources.GetObject("ChkBuscarEntidadFisica.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.ChkBuscarEntidadFisica.FocusCuesEnabled = False
         Me.ChkBuscarEntidadFisica.ForeColor = System.Drawing.Color.Black
         Me.ChkBuscarEntidadFisica.Location = New System.Drawing.Point(559, 15)
         Me.ChkBuscarEntidadFisica.Name = "ChkBuscarEntidadFisica"
@@ -154,10 +166,12 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         '
         Me.Rdb_Entidad_Todas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Entidad_Todas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Entidad_Todas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Entidad_Todas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Entidad_Todas.Checked = True
         Me.Rdb_Entidad_Todas.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Entidad_Todas.CheckValue = "Y"
+        Me.Rdb_Entidad_Todas.FocusCuesEnabled = False
         Me.Rdb_Entidad_Todas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Entidad_Todas.Location = New System.Drawing.Point(3, 15)
         Me.Rdb_Entidad_Todas.Name = "Rdb_Entidad_Todas"
@@ -189,9 +203,9 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnAceptar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 472)
+        Me.Bar1.Location = New System.Drawing.Point(0, 557)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(702, 41)
+        Me.Bar1.Size = New System.Drawing.Size(700, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 12
@@ -231,7 +245,9 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         '
         Me.Rdb_Tipo_Documento_Uno.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Tipo_Documento_Uno.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Tipo_Documento_Uno.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Tipo_Documento_Uno.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Tipo_Documento_Uno.FocusCuesEnabled = False
         Me.Rdb_Tipo_Documento_Uno.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Tipo_Documento_Uno.Location = New System.Drawing.Point(4, 3)
         Me.Rdb_Tipo_Documento_Uno.Name = "Rdb_Tipo_Documento_Uno"
@@ -286,10 +302,12 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         '
         Me.Rdb_Fecha_Emision_Cualquiera.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Fecha_Emision_Cualquiera.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Fecha_Emision_Cualquiera.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Fecha_Emision_Cualquiera.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Fecha_Emision_Cualquiera.Checked = True
         Me.Rdb_Fecha_Emision_Cualquiera.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Fecha_Emision_Cualquiera.CheckValue = "Y"
+        Me.Rdb_Fecha_Emision_Cualquiera.FocusCuesEnabled = False
         Me.Rdb_Fecha_Emision_Cualquiera.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Fecha_Emision_Cualquiera.Location = New System.Drawing.Point(3, 3)
         Me.Rdb_Fecha_Emision_Cualquiera.Name = "Rdb_Fecha_Emision_Cualquiera"
@@ -305,11 +323,13 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         '
         Me.Rdb_Fecha_Emision_Desde_Hasta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Fecha_Emision_Desde_Hasta.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Fecha_Emision_Desde_Hasta.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Fecha_Emision_Desde_Hasta.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Fecha_Emision_Desde_Hasta.FocusCuesEnabled = False
         Me.Rdb_Fecha_Emision_Desde_Hasta.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Fecha_Emision_Desde_Hasta.Location = New System.Drawing.Point(3, 23)
         Me.Rdb_Fecha_Emision_Desde_Hasta.Name = "Rdb_Fecha_Emision_Desde_Hasta"
-        Me.Rdb_Fecha_Emision_Desde_Hasta.Size = New System.Drawing.Size(97, 23)
+        Me.Rdb_Fecha_Emision_Desde_Hasta.Size = New System.Drawing.Size(97, 26)
         Me.Rdb_Fecha_Emision_Desde_Hasta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Fecha_Emision_Desde_Hasta.TabIndex = 24
         Me.Rdb_Fecha_Emision_Desde_Hasta.Text = "Emitidos entre"
@@ -349,10 +369,12 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         '
         Me.Rdb_Estado_Todos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Estado_Todos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Estado_Todos.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Estado_Todos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Estado_Todos.Checked = True
         Me.Rdb_Estado_Todos.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Estado_Todos.CheckValue = "Y"
+        Me.Rdb_Estado_Todos.FocusCuesEnabled = False
         Me.Rdb_Estado_Todos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Estado_Todos.Location = New System.Drawing.Point(3, 3)
         Me.Rdb_Estado_Todos.Name = "Rdb_Estado_Todos"
@@ -368,11 +390,13 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         '
         Me.Rdb_Estado_Vigente.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Estado_Vigente.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Estado_Vigente.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Estado_Vigente.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Estado_Vigente.FocusCuesEnabled = False
         Me.Rdb_Estado_Vigente.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Estado_Vigente.Location = New System.Drawing.Point(3, 32)
         Me.Rdb_Estado_Vigente.Name = "Rdb_Estado_Vigente"
-        Me.Rdb_Estado_Vigente.Size = New System.Drawing.Size(74, 23)
+        Me.Rdb_Estado_Vigente.Size = New System.Drawing.Size(74, 31)
         Me.Rdb_Estado_Vigente.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Estado_Vigente.TabIndex = 22
         Me.Rdb_Estado_Vigente.Text = "Vigente"
@@ -384,9 +408,11 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         '
         Me.Rdb_Estado_Cerradas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Estado_Cerradas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Estado_Cerradas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Estado_Cerradas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Estado_Cerradas.FocusCuesEnabled = False
         Me.Rdb_Estado_Cerradas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Estado_Cerradas.Location = New System.Drawing.Point(3, 61)
+        Me.Rdb_Estado_Cerradas.Location = New System.Drawing.Point(3, 69)
         Me.Rdb_Estado_Cerradas.Name = "Rdb_Estado_Cerradas"
         Me.Rdb_Estado_Cerradas.Size = New System.Drawing.Size(74, 23)
         Me.Rdb_Estado_Cerradas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -400,11 +426,13 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         '
         Me.Rdb_Funcionarios_Uno.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Funcionarios_Uno.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Funcionarios_Uno.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Funcionarios_Uno.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Funcionarios_Uno.FocusCuesEnabled = False
         Me.Rdb_Funcionarios_Uno.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Funcionarios_Uno.Location = New System.Drawing.Point(181, 12)
         Me.Rdb_Funcionarios_Uno.Name = "Rdb_Funcionarios_Uno"
-        Me.Rdb_Funcionarios_Uno.Size = New System.Drawing.Size(106, 23)
+        Me.Rdb_Funcionarios_Uno.Size = New System.Drawing.Size(106, 24)
         Me.Rdb_Funcionarios_Uno.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Funcionarios_Uno.TabIndex = 26
         Me.Rdb_Funcionarios_Uno.Text = "Uno en especifico"
@@ -441,14 +469,16 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         '
         Me.Rdb_Funcionarios_Todos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Funcionarios_Todos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Funcionarios_Todos.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Funcionarios_Todos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Funcionarios_Todos.Checked = True
         Me.Rdb_Funcionarios_Todos.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Funcionarios_Todos.CheckValue = "Y"
+        Me.Rdb_Funcionarios_Todos.FocusCuesEnabled = False
         Me.Rdb_Funcionarios_Todos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Funcionarios_Todos.Location = New System.Drawing.Point(3, 13)
         Me.Rdb_Funcionarios_Todos.Name = "Rdb_Funcionarios_Todos"
-        Me.Rdb_Funcionarios_Todos.Size = New System.Drawing.Size(56, 23)
+        Me.Rdb_Funcionarios_Todos.Size = New System.Drawing.Size(56, 22)
         Me.Rdb_Funcionarios_Todos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Funcionarios_Todos.TabIndex = 20
         Me.Rdb_Funcionarios_Todos.Text = "Todos"
@@ -460,11 +490,13 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         '
         Me.Rdb_Funcionarios_Algunos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Funcionarios_Algunos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Funcionarios_Algunos.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Funcionarios_Algunos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Funcionarios_Algunos.FocusCuesEnabled = False
         Me.Rdb_Funcionarios_Algunos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Funcionarios_Algunos.Location = New System.Drawing.Point(65, 13)
         Me.Rdb_Funcionarios_Algunos.Name = "Rdb_Funcionarios_Algunos"
-        Me.Rdb_Funcionarios_Algunos.Size = New System.Drawing.Size(64, 23)
+        Me.Rdb_Funcionarios_Algunos.Size = New System.Drawing.Size(64, 22)
         Me.Rdb_Funcionarios_Algunos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Funcionarios_Algunos.TabIndex = 19
         Me.Rdb_Funcionarios_Algunos.Text = "Algunos"
@@ -536,7 +568,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.TableLayoutPanel3.ColumnCount = 3
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 124.0!))
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Sucursal_Doc_Algunas, 2, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Sucursal_Doc_Todas, 1, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.LabelX2, 0, 0)
@@ -555,9 +587,10 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         '
         Me.Rdb_Sucursal_Doc_Algunas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Sucursal_Doc_Algunas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Sucursal_Doc_Algunas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Sucursal_Doc_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Sucursal_Doc_Algunas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Sucursal_Doc_Algunas.Location = New System.Drawing.Point(264, 4)
+        Me.Rdb_Sucursal_Doc_Algunas.Location = New System.Drawing.Point(260, 4)
         Me.Rdb_Sucursal_Doc_Algunas.Name = "Rdb_Sucursal_Doc_Algunas"
         Me.Rdb_Sucursal_Doc_Algunas.Size = New System.Drawing.Size(94, 17)
         Me.Rdb_Sucursal_Doc_Algunas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -571,12 +604,13 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         '
         Me.Rdb_Sucursal_Doc_Todas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Sucursal_Doc_Todas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Sucursal_Doc_Todas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Sucursal_Doc_Todas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Sucursal_Doc_Todas.Checked = True
         Me.Rdb_Sucursal_Doc_Todas.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Sucursal_Doc_Todas.CheckValue = "Y"
         Me.Rdb_Sucursal_Doc_Todas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Sucursal_Doc_Todas.Location = New System.Drawing.Point(172, 4)
+        Me.Rdb_Sucursal_Doc_Todas.Location = New System.Drawing.Point(168, 4)
         Me.Rdb_Sucursal_Doc_Todas.Name = "Rdb_Sucursal_Doc_Todas"
         Me.Rdb_Sucursal_Doc_Todas.Size = New System.Drawing.Size(85, 17)
         Me.Rdb_Sucursal_Doc_Todas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -633,11 +667,13 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         '
         Me.Rdb_Ver_Primeros.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Ver_Primeros.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Ver_Primeros.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Ver_Primeros.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Ver_Primeros.FocusCuesEnabled = False
         Me.Rdb_Ver_Primeros.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Ver_Primeros.Location = New System.Drawing.Point(3, 3)
         Me.Rdb_Ver_Primeros.Name = "Rdb_Ver_Primeros"
-        Me.Rdb_Ver_Primeros.Size = New System.Drawing.Size(68, 23)
+        Me.Rdb_Ver_Primeros.Size = New System.Drawing.Size(68, 22)
         Me.Rdb_Ver_Primeros.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Ver_Primeros.TabIndex = 23
         Me.Rdb_Ver_Primeros.Text = "Primeros"
@@ -649,14 +685,16 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         '
         Me.Rdb_Ver_Ultimos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Ver_Ultimos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Ver_Ultimos.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Ver_Ultimos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Ver_Ultimos.Checked = True
         Me.Rdb_Ver_Ultimos.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Ver_Ultimos.CheckValue = "Y"
+        Me.Rdb_Ver_Ultimos.FocusCuesEnabled = False
         Me.Rdb_Ver_Ultimos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Ver_Ultimos.Location = New System.Drawing.Point(77, 3)
         Me.Rdb_Ver_Ultimos.Name = "Rdb_Ver_Ultimos"
-        Me.Rdb_Ver_Ultimos.Size = New System.Drawing.Size(65, 23)
+        Me.Rdb_Ver_Ultimos.Size = New System.Drawing.Size(65, 22)
         Me.Rdb_Ver_Ultimos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Ver_Ultimos.TabIndex = 22
         Me.Rdb_Ver_Ultimos.Text = "Ultimos"
@@ -855,9 +893,9 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.TableLayoutPanel1.BackColor = System.Drawing.Color.Transparent
         Me.TableLayoutPanel1.ColumnCount = 1
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.Rdb_Estado_Cerradas, 0, 2)
         Me.TableLayoutPanel1.Controls.Add(Me.Rdb_Estado_Vigente, 0, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.Rdb_Estado_Todos, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Rdb_Estado_Cerradas, 0, 2)
         Me.TableLayoutPanel1.ForeColor = System.Drawing.Color.Black
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(17, 23)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
@@ -920,6 +958,8 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         '
         Me.Chk_Todas_Sucursales.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Todas_Sucursales.CheckBoxImageChecked = CType(resources.GetObject("Chk_Todas_Sucursales.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Todas_Sucursales.FocusCuesEnabled = False
         Me.Chk_Todas_Sucursales.ForeColor = System.Drawing.Color.Black
         Me.Chk_Todas_Sucursales.Location = New System.Drawing.Point(398, 15)
         Me.Chk_Todas_Sucursales.Name = "Chk_Todas_Sucursales"
@@ -1034,10 +1074,12 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         '
         Me.Rdb_Producto_Todos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Producto_Todos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Producto_Todos.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Producto_Todos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Producto_Todos.Checked = True
         Me.Rdb_Producto_Todos.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Producto_Todos.CheckValue = "Y"
+        Me.Rdb_Producto_Todos.FocusCuesEnabled = False
         Me.Rdb_Producto_Todos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Producto_Todos.Location = New System.Drawing.Point(3, 3)
         Me.Rdb_Producto_Todos.Name = "Rdb_Producto_Todos"
@@ -1053,7 +1095,9 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         '
         Me.Rdb_Producto_Uno.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Producto_Uno.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Producto_Uno.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Producto_Uno.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Producto_Uno.FocusCuesEnabled = False
         Me.Rdb_Producto_Uno.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Producto_Uno.Location = New System.Drawing.Point(3, 32)
         Me.Rdb_Producto_Uno.Name = "Rdb_Producto_Uno"
@@ -1082,27 +1126,181 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         'Chk_Mostrar_Vales_Transitorios
         '
+        Me.Chk_Mostrar_Vales_Transitorios.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Chk_Mostrar_Vales_Transitorios.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.Chk_Mostrar_Vales_Transitorios.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Mostrar_Vales_Transitorios.CheckBoxImageChecked = CType(resources.GetObject("Chk_Mostrar_Vales_Transitorios.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Mostrar_Vales_Transitorios.Checked = True
         Me.Chk_Mostrar_Vales_Transitorios.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_Mostrar_Vales_Transitorios.CheckValue = "Y"
+        Me.Chk_Mostrar_Vales_Transitorios.FocusCuesEnabled = False
         Me.Chk_Mostrar_Vales_Transitorios.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Mostrar_Vales_Transitorios.Location = New System.Drawing.Point(12, 447)
+        Me.Chk_Mostrar_Vales_Transitorios.Location = New System.Drawing.Point(12, 532)
         Me.Chk_Mostrar_Vales_Transitorios.Name = "Chk_Mostrar_Vales_Transitorios"
-        Me.Chk_Mostrar_Vales_Transitorios.Size = New System.Drawing.Size(183, 23)
+        Me.Chk_Mostrar_Vales_Transitorios.Size = New System.Drawing.Size(183, 19)
         Me.Chk_Mostrar_Vales_Transitorios.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Mostrar_Vales_Transitorios.TabIndex = 35
         Me.Chk_Mostrar_Vales_Transitorios.Text = "Mostrar vales transitorios"
+        '
+        'GroupPanel1
+        '
+        Me.GroupPanel1.BackColor = System.Drawing.Color.White
+        Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Txt_Placapat)
+        Me.GroupPanel1.Controls.Add(Me.LabelX5)
+        Me.GroupPanel1.Controls.Add(Me.Txt_CodRetirador)
+        Me.GroupPanel1.Controls.Add(Me.LabelX4)
+        Me.GroupPanel1.Controls.Add(Me.Txt_Ocdo)
+        Me.GroupPanel1.Controls.Add(Me.LabelX3)
+        Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel1.Location = New System.Drawing.Point(12, 447)
+        Me.GroupPanel1.Name = "GroupPanel1"
+        Me.GroupPanel1.Size = New System.Drawing.Size(680, 74)
+        '
+        '
+        '
+        Me.GroupPanel1.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel1.Style.BackColorGradientAngle = 90
+        Me.GroupPanel1.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel1.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderBottomWidth = 1
+        Me.GroupPanel1.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel1.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderLeftWidth = 1
+        Me.GroupPanel1.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderRightWidth = 1
+        Me.GroupPanel1.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderTopWidth = 1
+        Me.GroupPanel1.Style.CornerDiameter = 4
+        Me.GroupPanel1.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel1.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel1.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel1.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel1.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel1.TabIndex = 36
+        Me.GroupPanel1.Text = "Ordenes de compra / Retiradores de mercadería / Patente asociada"
+        '
+        'Txt_Placapat
+        '
+        Me.Txt_Placapat.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Placapat.Border.Class = "TextBoxBorder"
+        Me.Txt_Placapat.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Placapat.ButtonCustom.Image = CType(resources.GetObject("Txt_Placapat.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Placapat.ButtonCustom.Visible = True
+        Me.Txt_Placapat.ButtonCustom2.Image = CType(resources.GetObject("Txt_Placapat.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Placapat.ButtonCustom2.Visible = True
+        Me.Txt_Placapat.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Placapat.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Placapat.Location = New System.Drawing.Point(537, 23)
+        Me.Txt_Placapat.MaxLength = 20
+        Me.Txt_Placapat.Name = "Txt_Placapat"
+        Me.Txt_Placapat.PreventEnterBeep = True
+        Me.Txt_Placapat.ReadOnly = True
+        Me.Txt_Placapat.Size = New System.Drawing.Size(122, 22)
+        Me.Txt_Placapat.TabIndex = 7
+        '
+        'LabelX5
+        '
+        Me.LabelX5.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX5.ForeColor = System.Drawing.Color.Black
+        Me.LabelX5.Location = New System.Drawing.Point(537, 3)
+        Me.LabelX5.Name = "LabelX5"
+        Me.LabelX5.Size = New System.Drawing.Size(89, 23)
+        Me.LabelX5.TabIndex = 6
+        Me.LabelX5.Text = "Placa Patente"
+        '
+        'Txt_Ocdo
+        '
+        Me.Txt_Ocdo.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Ocdo.Border.Class = "TextBoxBorder"
+        Me.Txt_Ocdo.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Ocdo.ButtonCustom.Image = CType(resources.GetObject("Txt_Ocdo.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Ocdo.ButtonCustom.Visible = True
+        Me.Txt_Ocdo.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Ocdo.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Ocdo.Location = New System.Drawing.Point(9, 23)
+        Me.Txt_Ocdo.MaxLength = 20
+        Me.Txt_Ocdo.Name = "Txt_Ocdo"
+        Me.Txt_Ocdo.PreventEnterBeep = True
+        Me.Txt_Ocdo.Size = New System.Drawing.Size(120, 22)
+        Me.Txt_Ocdo.TabIndex = 3
+        '
+        'LabelX3
+        '
+        Me.LabelX3.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX3.ForeColor = System.Drawing.Color.Black
+        Me.LabelX3.Location = New System.Drawing.Point(9, 3)
+        Me.LabelX3.Name = "LabelX3"
+        Me.LabelX3.Size = New System.Drawing.Size(89, 23)
+        Me.LabelX3.TabIndex = 2
+        Me.LabelX3.Text = "Orden de compra"
+        '
+        'Txt_CodRetirador
+        '
+        Me.Txt_CodRetirador.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CodRetirador.Border.Class = "TextBoxBorder"
+        Me.Txt_CodRetirador.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CodRetirador.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_CodRetirador.ButtonCustom.Visible = True
+        Me.Txt_CodRetirador.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_CodRetirador.ButtonCustom2.Visible = True
+        Me.Txt_CodRetirador.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CodRetirador.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CodRetirador.Location = New System.Drawing.Point(138, 23)
+        Me.Txt_CodRetirador.MaxLength = 20
+        Me.Txt_CodRetirador.Name = "Txt_CodRetirador"
+        Me.Txt_CodRetirador.PreventEnterBeep = True
+        Me.Txt_CodRetirador.ReadOnly = True
+        Me.Txt_CodRetirador.Size = New System.Drawing.Size(391, 22)
+        Me.Txt_CodRetirador.TabIndex = 9
+        '
+        'LabelX4
+        '
+        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.ForeColor = System.Drawing.Color.Black
+        Me.LabelX4.Location = New System.Drawing.Point(139, 3)
+        Me.LabelX4.Name = "LabelX4"
+        Me.LabelX4.Size = New System.Drawing.Size(161, 23)
+        Me.LabelX4.TabIndex = 8
+        Me.LabelX4.Text = "Retirador de mercaderías"
         '
         'Frm_BusquedaDocumento_Filtro
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(702, 513)
+        Me.ClientSize = New System.Drawing.Size(700, 598)
+        Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Chk_Mostrar_Vales_Transitorios)
         Me.Controls.Add(Me.Grupo_Producto)
         Me.Controls.Add(Me.Grupo_Funcionario)
@@ -1136,6 +1334,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Grupo_Entidad.ResumeLayout(False)
         Me.Grupo_Funcionario.ResumeLayout(False)
         Me.Grupo_Producto.ResumeLayout(False)
+        Me.GroupPanel1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -1188,4 +1387,11 @@ Partial Class Frm_BusquedaDocumento_Filtro
     Friend WithEvents DtpFechaInicio As DevComponents.Editors.DateTimeAdv.DateTimeInput
     Public WithEvents Chk_Todas_Sucursales As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_Mostrar_Vales_Transitorios As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents Txt_Placapat As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_Ocdo As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_CodRetirador As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
 End Class

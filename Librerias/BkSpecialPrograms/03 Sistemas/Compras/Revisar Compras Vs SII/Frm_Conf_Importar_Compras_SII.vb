@@ -1,5 +1,4 @@
-﻿'Imports Lib_Bakapp_VarClassFunc
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_Conf_Importar_Compras_SII
 
@@ -13,6 +12,8 @@ Public Class Frm_Conf_Importar_Compras_SII
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 

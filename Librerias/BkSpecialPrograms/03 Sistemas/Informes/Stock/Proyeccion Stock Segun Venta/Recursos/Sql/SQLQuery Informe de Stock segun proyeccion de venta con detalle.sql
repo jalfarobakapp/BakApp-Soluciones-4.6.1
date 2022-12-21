@@ -124,12 +124,17 @@ Begin
 				   From MAEDDO Where EMPRESA = Empresa And SULIDO = Sucursal And BOSULIDO = Bodega And TIDO = ''OCC'' And KOPRCT = Codigo And FEERLI Between '''+CONVERT(varchar,@FechaDesde,112)+''' And '''+CONVERT(varchar,@FechaHasta,112)+'''),0)'
 	Exec(@sqlTbl)
 
-		Set @sqlTbl = 'Update #PasoVentas Set [RSF'+@Campo+'] = Isnull((Select Sum(Isnull(CAPRCO1,0)-(Isnull(CAPRAD1,0)+Isnull(CAPREX1,0))) 
-				   From MAEDDO Where EMPRESA = Empresa And SULIDO = Sucursal And BOSULIDO = Bodega And TIDO = ''FCC'' And KOPRCT = Codigo And FEERLI < '''+CONVERT(varchar,@FechaDesde,112)+'''),0)'
-	Exec(@sqlTbl)
-	Print @sqlTbl
+	--	Set @sqlTbl = 'Update #PasoVentas Set [RSF'+@Campo+'] = Isnull((Select Sum(Isnull(CAPRCO1,0)-(Isnull(CAPRAD1,0)+Isnull(CAPREX1,0))) 
+	--			   From MAEDDO Where EMPRESA = Empresa And SULIDO = Sucursal And BOSULIDO = Bodega And TIDO = ''FCC'' And KOPRCT = Codigo And FEERLI < '''+CONVERT(varchar,@FechaDesde,112)+'''),0)'
+	--Exec(@sqlTbl)
+	--Print @sqlTbl
 
-		Set @sqlTbl = 'Update #PasoVentas Set [RSF'+@Campo+'] = [RSF'+@Campo+'] + Isnull((Select Sum(Isnull(CAPRCO1,0)-(Isnull(CAPRAD1,0)+Isnull(CAPREX1,0))) 
+	--	Set @sqlTbl = 'Update #PasoVentas Set [RSF'+@Campo+'] = [RSF'+@Campo+'] + Isnull((Select Sum(Isnull(CAPRCO1,0)-(Isnull(CAPRAD1,0)+Isnull(CAPREX1,0))) 
+	--			   From MAEDDO Where EMPRESA = Empresa And SULIDO = Sucursal And BOSULIDO = Bodega And TIDO = ''FCC'' And KOPRCT = Codigo And FEERLI Between '''+CONVERT(varchar,@FechaDesde,112)+''' And '''+CONVERT(varchar,@FechaHasta,112)+'''),0)'
+	--Exec(@sqlTbl)
+	--Print @sqlTbl
+
+    		Set @sqlTbl = 'Update #PasoVentas Set [RSF'+@Campo+'] = Isnull((Select Sum(Isnull(CAPRCO1,0)-(Isnull(CAPRAD1,0)+Isnull(CAPREX1,0))) 
 				   From MAEDDO Where EMPRESA = Empresa And SULIDO = Sucursal And BOSULIDO = Bodega And TIDO = ''FCC'' And KOPRCT = Codigo And FEERLI Between '''+CONVERT(varchar,@FechaDesde,112)+''' And '''+CONVERT(varchar,@FechaHasta,112)+'''),0)'
 	Exec(@sqlTbl)
 	Print @sqlTbl
@@ -193,38 +198,7 @@ Left Join TABRU Rub On Rub.KORU = Mp.RUPR
 Left Join TABCARAC Tcl On Tcl.KOTABLA = 'CLALIBPR' And KOCARAC = Mp.CLALIBPR  
 Drop Table #PasoVentas
 
-/*
-Select * From TblPsJa
-Order By Identificacdor_NodoPadre,Codigo_Madre,Codigo
 
-Select Identificacdor_NodoPadre As Campo,Descripcion_Consolid As Descripcion,
-	   SUM(CantUd1) As CantUd1,Sum(Stock_Fisico) As Stock_Fisico,Sum(Stock_Pendiente) As Stock_Pendiente,
-	   --SUM([PJul-2022]) As [PJul-2022],SUM([RSFJul-2022]) As [RSFJul-2022],SUM([SJul-2022]) As [SAgo-2022],
-	   SUM([PAgo-2022]) As [PAgo-2022],SUM([RSFAgo-2022]) As [RSFAgo-2022],SUM([SAgo-2022]) As [SAgo-2022],
-	   SUM([PSep-2022]) As [PSep-2022],SUM([RSFSep-2022]) As [RSFSep-2022],SUM([SSep-2022]) As [SSep-2022],
-	   SUM([POct-2022]) As [POct-2022],SUM([RSFOct-2022]) As [RSFOct-2022],SUM([SOct-2022]) As [SOct-2022],
-	   SUM([PNov-2022]) As [PNov-2022],SUM([RSFNov-2022]) As [RSNov-2022],SUM([SNov-2022]) As [SNov-2022],
-	   SUM([PDic-2022]) As [PDic-2022],SUM([RSFDic-2022]) As [RSDic-2022],SUM([SDic-2022]) As [SDic-2022],
-	   SUM([PEne-2023]) As [PEne-2023],SUM([RSFEne-2023]) As [RSEne-2023],SUM([SEne-2023]) As [SEne-2023]
-From TblPsJa
-Group By Identificacdor_NodoPadre,Descripcion_Consolid
-
-
-Select Codigo As Campo,Descripcion As Descripcion,
-	   SUM(CantUd1) As CantUd1,SUM(PromVta) As PromVta,Sum(Stock_Fisico) As Stock_Fisico,Sum(Stock_Pendiente) As Stock_Pendiente,
-	   --SUM([PJul-2022]) As [PJul-2022],SUM([RSFJul-2022]) As [RSFJul-2022],SUM([SJul-2022]) As [SAgo-2022],
-	   SUM([PAgo-2022]) As [PAgo-2022],SUM([RSFAgo-2022]) As [RSFAgo-2022],SUM([SAgo-2022]) As [SAgo-2022],
-	   SUM([PSep-2022]) As [PSep-2022],SUM([RSFSep-2022]) As [RSFSep-2022],SUM([SSep-2022]) As [SSep-2022],
-	   SUM([POct-2022]) As [POct-2022],SUM([RSFOct-2022]) As [RSFOct-2022],SUM([SOct-2022]) As [SOct-2022],
-	   SUM([PNov-2022]) As [PNov-2022],SUM([RSFNov-2022]) As [RSNov-2022],SUM([SNov-2022]) As [SNov-2022],
-	   SUM([PDic-2022]) As [PDic-2022],SUM([RSFDic-2022]) As [RSDic-2022],SUM([SDic-2022]) As [SDic-2022],
-	   SUM([PEne-2023]) As [PEne-2023],SUM([RSFEne-2023]) As [RSEne-2023],SUM([SEne-2023]) As [SEne-2023]
-From TblPsJa
-Where Identificacdor_NodoPadre = 2
-Group By Codigo,Descripcion
-*/
-
---Drop table TblPsJa
 
 
 

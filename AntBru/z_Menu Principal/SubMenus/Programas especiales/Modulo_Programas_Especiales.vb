@@ -144,13 +144,17 @@ Public Class Modulo_Programas_Especiales
 
     End Sub
 
-    'Private Sub Btn_DTE_Respuestas_XML_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_DTE_Respuestas_XML.Click
+    Private Sub Btn_DTE_Respuestas_XML_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_DTE_Respuestas_XML.Click
 
-    '    Dim Fm As New Frm_Recibir_Correos_DTE
-    '    Fm.ShowDialog(Me)
-    '    Fm.Dispose()
+        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Mail0005") Then
 
-    'End Sub
+            Dim Fm As New Frm_Recibir_Correos_DTE
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
+        End If
+
+    End Sub
 
     Private Sub Btn_Precios_PrestaShop_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Precios_PrestaShop.Click
 

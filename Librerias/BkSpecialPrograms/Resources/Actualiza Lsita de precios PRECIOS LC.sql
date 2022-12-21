@@ -1,4 +1,6 @@
 
+Declare @Empresa char(2)
+Set @Empresa = '#Empresa#'
 
 -- // Creación de tabla de paso 
 
@@ -111,7 +113,7 @@ WHERE     (dbo.TABPRE.KOLT IN
                           SELECT Lista FROM dbo.Zw_ListaLC_Listas Where Accion in (1,2)
                           )) AND 
                                (dbo.MAEPR.KOPR = @Codigo) AND 
-                               (dbo.MAEPREM.EMPRESA = '01')
+                               (dbo.MAEPREM.EMPRESA = @Empresa)
  
                       
 --select * from Zw_ListaLC_TblPasoListas ORDER BY Lista

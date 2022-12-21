@@ -47,6 +47,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Chk_Incluir_COV = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Stock_Fisico = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
         Me.Chk_Excluye_FLN = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -60,7 +61,6 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Filtros_Bodega = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Clasificacion_Productos = New DevComponents.DotNetBar.ButtonItem()
-        Me.Chk_Incluir_COV = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel5.SuspendLayout()
         Me.TableLayoutPanel6.SuspendLayout()
         CType(Me.Dtp_Fecha_Recepcion_Hasta, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -720,6 +720,22 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.GroupPanel1.TabIndex = 116
         Me.GroupPanel1.Text = "Tipo de documentos"
         '
+        'Chk_Incluir_COV
+        '
+        Me.Chk_Incluir_COV.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Incluir_COV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Incluir_COV.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Incluir_COV.Location = New System.Drawing.Point(19, 163)
+        Me.Chk_Incluir_COV.Name = "Chk_Incluir_COV"
+        Me.Chk_Incluir_COV.Size = New System.Drawing.Size(203, 23)
+        Me.Chk_Incluir_COV.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Incluir_COV.TabIndex = 6
+        Me.Chk_Incluir_COV.Text = "Incluir cotizaciones (COV)"
+        Me.Chk_Incluir_COV.Visible = False
+        '
         'Chk_Stock_Fisico
         '
         Me.Chk_Stock_Fisico.BackColor = System.Drawing.Color.White
@@ -793,6 +809,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.Btn_Ejecutar_Informe.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Ejecutar_Informe.ForeColor = System.Drawing.Color.Black
         Me.Btn_Ejecutar_Informe.Image = CType(resources.GetObject("Btn_Ejecutar_Informe.Image"), System.Drawing.Image)
+        Me.Btn_Ejecutar_Informe.ImageAlt = CType(resources.GetObject("Btn_Ejecutar_Informe.ImageAlt"), System.Drawing.Image)
         Me.Btn_Ejecutar_Informe.Name = "Btn_Ejecutar_Informe"
         Me.Btn_Ejecutar_Informe.Text = "Procesar informe"
         '
@@ -895,7 +912,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ButtonItem1})
         Me.Bar2.Location = New System.Drawing.Point(0, 0)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(422, 41)
+        Me.Bar2.Size = New System.Drawing.Size(422, 33)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar2.TabIndex = 120
@@ -913,29 +930,16 @@ Partial Class Frm_Informe_Compr_No_Despachados
         'Btn_Filtros_Bodega
         '
         Me.Btn_Filtros_Bodega.Image = CType(resources.GetObject("Btn_Filtros_Bodega.Image"), System.Drawing.Image)
+        Me.Btn_Filtros_Bodega.ImageAlt = CType(resources.GetObject("Btn_Filtros_Bodega.ImageAlt"), System.Drawing.Image)
         Me.Btn_Filtros_Bodega.Name = "Btn_Filtros_Bodega"
         Me.Btn_Filtros_Bodega.Text = "Bodegas"
         '
         'Btn_Clasificacion_Productos
         '
         Me.Btn_Clasificacion_Productos.Image = CType(resources.GetObject("Btn_Clasificacion_Productos.Image"), System.Drawing.Image)
+        Me.Btn_Clasificacion_Productos.ImageAlt = CType(resources.GetObject("Btn_Clasificacion_Productos.ImageAlt"), System.Drawing.Image)
         Me.Btn_Clasificacion_Productos.Name = "Btn_Clasificacion_Productos"
         Me.Btn_Clasificacion_Productos.Text = "Filtros (Super familia, Marcas, Clasificación, Rubro, Zonas)"
-        '
-        'Chk_Incluir_COV
-        '
-        Me.Chk_Incluir_COV.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Incluir_COV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Incluir_COV.Location = New System.Drawing.Point(19, 163)
-        Me.Chk_Incluir_COV.Name = "Chk_Incluir_COV"
-        Me.Chk_Incluir_COV.Size = New System.Drawing.Size(203, 23)
-        Me.Chk_Incluir_COV.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Incluir_COV.TabIndex = 6
-        Me.Chk_Incluir_COV.Text = "Incluir cotizaciones (COV)"
-        Me.Chk_Incluir_COV.Visible = False
         '
         'Frm_Informe_Compr_No_Despachados
         '

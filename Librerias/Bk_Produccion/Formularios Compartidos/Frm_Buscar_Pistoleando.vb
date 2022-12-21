@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+ï»¿Imports DevComponents.DotNetBar
 Imports BkSpecialPrograms
 
 
@@ -19,7 +19,7 @@ Public Class Frm_Buscar_Pistoleando
         Get
             Return _Filtro_Extra
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Filtro_Extra = value
         End Set
     End Property
@@ -44,12 +44,12 @@ Public Class Frm_Buscar_Pistoleando
     Dim _Tipo_Busqueda As Enum_Tipo_Busqueda
     Dim _Cerrar_automaticamente As Boolean
 
-    Public Sub New(ByVal Tipo_Busqueda As Enum_Tipo_Busqueda)
+    Public Sub New(Tipo_Busqueda As Enum_Tipo_Busqueda)
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
 
         _Tipo_Busqueda = Tipo_Busqueda
 
@@ -58,7 +58,7 @@ Public Class Frm_Buscar_Pistoleando
 
     End Sub
 
-    Private Sub Frm_Buscar_Pistoleando_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Buscar_Pistoleando_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Tiempo_Cierre_Automatico.Interval = (1000 * 60) * 2
         Tiempo_Cierre_Automatico.Enabled = _Cerrar_automaticamente
@@ -85,7 +85,7 @@ Public Class Frm_Buscar_Pistoleando
 
     End Sub
 
-    Private Sub Btn_Aceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Aceptar.Click
+    Private Sub Btn_Aceptar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Aceptar.Click
 
         Dim _Campo As String
         Dim _Tabla As String
@@ -103,14 +103,14 @@ Public Class Frm_Buscar_Pistoleando
                 _Campo = "PWFU" : _Tabla = "PMAEOB"
         End Select
 
-        Consulta_sql = "Select Top 1 * From " & _Tabla & vbCrLf & _
-                       "Where 1 > 0 And " & _Campo & " = '" & Txt_Numero.Text & "'" & vbCrLf & _
+        Consulta_sql = "Select Top 1 * From " & _Tabla & vbCrLf &
+                       "Where 1 > 0 And " & _Campo & " = '" & Txt_Numero.Text & "'" & vbCrLf &
                        _Filtro_Extra
 
         _Row_Fila = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If _Row_Fila Is Nothing Then
-            MessageBoxEx.Show(Me, "Registro no encontrado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, "Registro no encontrado", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_Numero.Text = String.Empty
             Txt_Numero.Focus()
         Else
@@ -119,7 +119,7 @@ Public Class Frm_Buscar_Pistoleando
 
     End Sub
 
-    Private Sub Txt_Numero_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Txt_Numero.KeyDown
+    Private Sub Txt_Numero_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles Txt_Numero.KeyDown
 
         If e.KeyValue = Keys.Enter Then
             Call Btn_Aceptar_Click(Nothing, Nothing)

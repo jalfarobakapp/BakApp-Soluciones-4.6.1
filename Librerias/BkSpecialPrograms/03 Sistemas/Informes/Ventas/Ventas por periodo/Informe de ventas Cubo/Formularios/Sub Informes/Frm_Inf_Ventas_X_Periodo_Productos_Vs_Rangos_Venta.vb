@@ -81,13 +81,13 @@ Public Class Frm_Inf_Ventas_X_Periodo_Productos_Vs_Rangos_Venta
             .Columns("Cant_Expectativa").HeaderText = "Qty. Expectativa"
             .Columns("Cant_Expectativa").Width = 80
             .Columns("Cant_Expectativa").Visible = True
-            .Columns("Cant_Expectativa").DefaultCellStyle.Format = "###,##"
+            .Columns("Cant_Expectativa").DefaultCellStyle.Format = "###,#0"
             .Columns("Cant_Expectativa").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
 
             .Columns("Cant_Realidad").HeaderText = "Qty. Realidad"
             .Columns("Cant_Realidad").Width = 80
             .Columns("Cant_Realidad").Visible = True
-            .Columns("Cant_Realidad").DefaultCellStyle.Format = "###,##"
+            .Columns("Cant_Realidad").DefaultCellStyle.Format = "###,#0"
             .Columns("Cant_Realidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
 
             .Columns("Expectativa").HeaderText = "Expectativa"
@@ -148,20 +148,23 @@ Public Class Frm_Inf_Ventas_X_Periodo_Productos_Vs_Rangos_Venta
             Dim _StockTeoriUd1 = NuloPorNro(_Fila.Cells("StockTeoriUd1").Value, 0)
 
             If _Expectativa > _Realidad Then
-                '_Fila.Cells("CODIGO").Style.ForeColor = Color.Red
-                _Fila.Cells("DESCRIPCION").Style.ForeColor = Color.Red
-                _Fila.Cells("Realidad").Style.ForeColor = Color.Red
-                _Fila.DefaultCellStyle.BackColor = Color.PaleGoldenrod 'Khaki
+
+                If Global_Thema <> Enum_Themas.Oscuro Then
+                    _Fila.DefaultCellStyle.BackColor = Color.PaleGoldenrod
+                End If
+
+                _Fila.Cells("CODIGO").Style.ForeColor = Rojo
+                _Fila.Cells("DESCRIPCION").Style.ForeColor = Rojo
+                _Fila.Cells("Realidad").Style.ForeColor = Rojo
+
             Else
-                '_Fila.Cells("CODIGO").Style.ForeColor = Color.Red
-                _Fila.Cells("DESCRIPCION").Style.ForeColor = Color.Black
-                _Fila.Cells("Realidad").Style.ForeColor = Color.Green
+                _Fila.Cells("Realidad").Style.ForeColor = Verde
             End If
 
             If _StockTeoriUd1 <= 0 Then
-                _Fila.Cells("StockTeoriUd1").Style.ForeColor = Color.Red
+                _Fila.Cells("StockTeoriUd1").Style.ForeColor = Rojo
             Else
-                _Fila.Cells("StockTeoriUd1").Style.ForeColor = Color.Green
+                _Fila.Cells("StockTeoriUd1").Style.ForeColor = Verde
             End If
 
         Next

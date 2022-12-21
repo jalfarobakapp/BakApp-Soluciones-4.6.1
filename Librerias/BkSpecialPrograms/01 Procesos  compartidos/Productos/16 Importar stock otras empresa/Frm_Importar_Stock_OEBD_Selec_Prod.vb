@@ -18,33 +18,6 @@ Public Class Frm_Importar_Stock_OEBD_Selec_Prod
     Dim _Row_DnExt As DataRow
     Dim _Row_DbExtMaest As DataRow
 
-    Private Sub Btn_Grabar_Configuracion_Click(sender As Object, e As EventArgs) Handles Btn_Grabar_Configuracion.Click
-
-        Dim _Id = _Row_DbExtMaest.Item("Id")
-
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DbExt_Maest Set " &
-                       "Activo = 1," &
-                       "Empresa_Ori = '" & _Empresa_Ori & "'," &
-                       "Sucursal_Ori = '" & _Sucursal_Ori & "'," &
-                       "Bodega_Ori = '" & _Bodega_Ori & "'," &
-                       "Empresa_Des = '" & _Empresa_Des & "'," &
-                       "Sucursal_Des = '" & _Sucursal_Des & "'," &
-                       "Bodega_Des = '" & _Bodega_Des & "'" & vbCrLf &
-                       "Where Id = " & _Id
-
-        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-
-            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-            Sb_Cargar_Datos_Conexion()
-            Btn_Grabar_Configuracion.Enabled = False
-            Btn_Bodega_Origen.Enabled = False
-            Btn_Bodega_Destino.Enabled = False
-
-        End If
-
-    End Sub
-
     Public Sub New(_Id_Conexion As Integer)
 
         ' Esta llamada es exigida por el diseñador.
@@ -95,6 +68,34 @@ Public Class Frm_Importar_Stock_OEBD_Selec_Prod
         Sb_Enable_Botones()
 
     End Sub
+    Private Sub Btn_Grabar_Configuracion_Click(sender As Object, e As EventArgs) Handles Btn_Grabar_Configuracion.Click
+
+        Dim _Id = _Row_DbExtMaest.Item("Id")
+
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DbExt_Maest Set " &
+                       "Activo = 1," &
+                       "Empresa_Ori = '" & _Empresa_Ori & "'," &
+                       "Sucursal_Ori = '" & _Sucursal_Ori & "'," &
+                       "Bodega_Ori = '" & _Bodega_Ori & "'," &
+                       "Empresa_Des = '" & _Empresa_Des & "'," &
+                       "Sucursal_Des = '" & _Sucursal_Des & "'," &
+                       "Bodega_Des = '" & _Bodega_Des & "'," & vbCrLf &
+                       "NombreBod_Ori = '" & _Row_DbExtMaest.Item("NombreBod_Ori") & "'," & vbCrLf &
+                       "NombreBod_Des = '" & _Row_DbExtMaest.Item("NombreBod_Des") & "'" & vbCrLf &
+                       "Where Id = " & _Id
+
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+
+            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Sb_Cargar_Datos_Conexion()
+            Btn_Grabar_Configuracion.Enabled = False
+            Btn_Bodega_Origen.Enabled = False
+            Btn_Bodega_Destino.Enabled = False
+
+        End If
+
+    End Sub
 
     Sub Sb_Cargar_Datos_Conexion()
 
@@ -113,15 +114,21 @@ Public Class Frm_Importar_Stock_OEBD_Selec_Prod
         Lbl_Bodega_Origen.Text = "Empresa: " & _Empresa_Ori & ", Sucursal: " & _Sucursal_Ori & ", Bodega: " & _Bodega_Ori
         Lbl_Bodega_Destino.Text = "Empresa: " & _Empresa_Des & ", Sucursal: " & _Sucursal_Des & ", Bodega: " & _Bodega_Des
 
-        Btn_Grabar_Configuracion.Enabled = Not _Activo
+        Btn_Grabar_Configuracion.Enabled = True
         Grupo_Seleccion_Productos.Enabled = _Activo
         Btn_Aceptar.Enabled = _Activo
 
+        Dim _ServidorPuerto As String = _Servidor
+
+        If Not String.IsNullOrEmpty(_Puerto) Then
+            _ServidorPuerto += "," & _Puerto
+        End If
+
         _Cadena_ConexionSQL_Server_Origen = "data " &
-                                                    "source = " & _Servidor & "; " &
-                                                    "initial catalog = " & _BaseDeDatos & "; " &
-                                                    "user id = " & _Usuario & "; " &
-                                                    "password = " & _Clave
+                                            "source = " & _ServidorPuerto & "; " &
+                                            "initial catalog = " & _BaseDeDatos & "; " &
+                                            "user id = " & _Usuario & "; " &
+                                            "password = " & _Clave
 
     End Sub
 
@@ -215,6 +222,7 @@ Public Class Frm_Importar_Stock_OEBD_Selec_Prod
         Fm_b.Pro_Empresa = ModEmpresa
         Fm_b.Pro_Sucursal = ModSucursal
         Fm_b.Pro_Bodega = ModBodega
+        Fm_b.RevisarPermisosBodega = False
         Fm_b.Pedir_Permiso = False
         Fm_b.ShowDialog(Me)
 
@@ -223,6 +231,7 @@ Public Class Frm_Importar_Stock_OEBD_Selec_Prod
             _Row_DbExtMaest.Item("Empresa_Ori") = Fm_b.Pro_RowBodega.Item("EMPRESA")
             _Row_DbExtMaest.Item("Sucursal_Ori") = Fm_b.Pro_RowBodega.Item("KOSU")
             _Row_DbExtMaest.Item("Bodega_Ori") = Fm_b.Pro_RowBodega.Item("KOBO")
+            _Row_DbExtMaest.Item("NombreBod_Ori") = Fm_b.Pro_RowBodega.Item("NOKOBO").ToString.Trim
 
         End If
 
@@ -248,6 +257,7 @@ Public Class Frm_Importar_Stock_OEBD_Selec_Prod
             _Row_DbExtMaest.Item("Empresa_Des") = Fm_b.Pro_RowBodega.Item("EMPRESA")
             _Row_DbExtMaest.Item("Sucursal_Des") = Fm_b.Pro_RowBodega.Item("KOSU")
             _Row_DbExtMaest.Item("Bodega_Des") = Fm_b.Pro_RowBodega.Item("KOBO")
+            _Row_DbExtMaest.Item("NombreBod_Des") = Fm_b.Pro_RowBodega.Item("NOKOBO").ToString.Trim
 
         End If
 

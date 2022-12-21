@@ -253,4 +253,17 @@ Public Class Productos
         End If
 
     End Sub
+
+    Private Sub Btn_ImpAdicionalXProd_Click(sender As Object, e As EventArgs) Handles Btn_ImpAdicionalXProd.Click
+
+        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Prod072") Then
+
+            Dim Fm As New Frm_ImpAdicXProd_Lista
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
+        End If
+
+    End Sub
+
 End Class

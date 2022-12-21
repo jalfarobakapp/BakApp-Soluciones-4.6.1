@@ -103,7 +103,6 @@ Update #Paso Set Prom_Diario_R1 = Case When @Dias_R1 > 0 Then Isnull(Total_R1/@D
 Update #Paso Set Expectativa = Case When @Dias_R2 > 0 Then Prom_Diario_R1*@Dias_R2 Else 0 End,
                  Realidad = Prom_Diario_R2 * @Dias_R2 
 
-
 Update #Paso Set PromCant_Diario_R1 = Case When @Dias_R1 > 0 Then Isnull(Cant_R1/@Dias_R1,0) Else 0 End,
                  PromCant_Diario_R2 = Case When @Dias_R2 > 0 Then Isnull(Cant_R2/@Dias_R2,0) Else 0 End, 
                  PromCant_R1 = Case When @Meses_R1 > 0 Then Isnull(Cant_R1/@Meses_R1,0) Else 0 End,

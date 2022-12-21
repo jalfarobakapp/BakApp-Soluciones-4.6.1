@@ -1,7 +1,5 @@
-﻿'Imports BkSpecialPrograms
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 Imports System.Data.SqlClient
-'Imports Lib_Bakapp_VarClassFunc
 
 Public Class Frm_St_Documento
 
@@ -54,7 +52,7 @@ Public Class Frm_St_Documento
 
     Dim _Accion As Accion
 
-    Public Sub New(ByVal Accion As Accion)
+    Public Sub New(Accion As Accion)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -67,13 +65,13 @@ Public Class Frm_St_Documento
 
     End Sub
 
-    Private Sub Sb_Frm_St_Documento_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+    Private Sub Sb_Frm_St_Documento_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs)
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Frm_St_Documento_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_St_Documento_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         If _Accion = Accion.Nuevo Then
 
@@ -96,7 +94,7 @@ Public Class Frm_St_Documento
             Sb_Actualizar_Txt()
 
             AddHandler Btn_Check_In.Click, AddressOf Btn_Check_In_Click
-            AddHandler Btn_Grabar.Click, AddressOf Sb_New_OT_Grabar_Nueva_OT
+            'AddHandler Btn_Grabar.Click, AddressOf Sb_New_OT_Grabar_Nueva_OT
 
             Btn_Direccion_Servicio.Enabled = Chk_Serv_Domicilio.Checked
 
@@ -163,7 +161,7 @@ Public Class Frm_St_Documento
 
     End Sub
 
-    Sub Sb_Editar_Activar_Desactivar_Objetos(ByVal _Activar As Boolean)
+    Sub Sb_Editar_Activar_Desactivar_Objetos(_Activar As Boolean)
 
         'Grupo_Chk_Tipo_Reparacion.Enabled = _Activar
 
@@ -289,10 +287,11 @@ Public Class Frm_St_Documento
             .Columns("Nro_Ot").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             .Columns("Nro_Ot").Visible = True
 
-            '.Columns("CodEntidad").ReadOnly = True
-            '.Columns("CodEntidad").Width = 80
-            '.Columns("CodEntidad").HeaderText = "Entidad"
-            '.Columns("CodEntidad").Visible = True
+            .Columns("Sub_Ot").ReadOnly = True
+            .Columns("Sub_Ot").Width = 60
+            .Columns("Sub_Ot").HeaderText = "Sub OT"
+            .Columns("Sub_Ot").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Sub_Ot").Visible = True
 
             .Columns("Rut").ReadOnly = True
             .Columns("Rut").Width = 90
@@ -300,7 +299,7 @@ Public Class Frm_St_Documento
             .Columns("Rut").Visible = True
 
             .Columns("Cliente").ReadOnly = True
-            .Columns("Cliente").Width = 270
+            .Columns("Cliente").Width = 270 - 40
             .Columns("Cliente").HeaderText = "Nombre del cliente"
             .Columns("Cliente").Visible = True
 
@@ -374,9 +373,9 @@ Public Class Frm_St_Documento
                         If CBool(Fm.Tbl_Formatos.Rows.Count) Then
 
                             Dim _NombreFormato = String.Empty
-                            Fm.ShowDialog(Me)                            'Dim _NombreFormato = Fm.Pro_NombreFormato
+                            Fm.ShowDialog(Me)
 
-                            If Fm.Formato_Seleccionado Then ' Not String.IsNullOrEmpty(_NombreFormato) Then
+                            If Fm.Formato_Seleccionado Then
                                 _NombreFormato = Fm.Row_Formato_Seleccionado.Item("NombreFormato")
                                 Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
                                                                                False, True, "", False, 0, False, "")
@@ -469,10 +468,10 @@ Public Class Frm_St_Documento
         Dim _Observaciones As String = "Documento generado desde Sis. Servicio técnico Bakapp" & vbCrLf & "Nro OT: " & _Nro_OT
 
         Dim _Costo As Double = _Sql.Fx_Trae_Dato("TABPRE", "PP01UD",
-                                                     "KOLT = '" & ModListaPrecioVenta & "' And KOPR = '" & _RowProducto.Item("KOPR") & "'", True)
+                                                 "KOLT = '" & ModListaPrecioVenta & "' And KOPR = '" & _RowProducto.Item("KOPR") & "'", True)
 
         Consulta_sql = "Select '" & _ServTecnico_Sucursal & "' As Sucursal,'" & _ServTecnico_Bodega & "' As Bodega,'" & _RowProducto.Item("KOPR") & "' As Codigo,
-                            1 As Cantidad," & De_Num_a_Tx_01(_Costo, False, 5) & " As Costo"
+                        1 As Cantidad," & De_Num_a_Tx_01(_Costo, False, 5) & " As Costo"
         Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         Dim Fm As New Frm_Formulario_Documento("GRP", csGlobales.Enum_Tipo_Documento.Guia_Recepcion_Prestamos_GRP_PRE,
@@ -563,8 +562,8 @@ Public Class Frm_St_Documento
 
     End Sub
 
-    Function Fx_Crear_OT(ByVal _DsDocumento As DataSet,
-                            ByRef _Nro_Ot As String) As Integer
+    Function Fx_Crear_OT(_DsDocumento As DataSet,
+                         ByRef _Nro_Ot As String) As Integer
 
 
         Dim _Id_Ot As Integer
@@ -768,7 +767,6 @@ Public Class Frm_St_Documento
             ' --------------------------------------------------- GARANTIA ---------------------------------------
             If Chk_Serv_Garantia.Checked Then
 
-
                 Dim _Idmaeedo = _Row_Doc_Garantia.Item("IDMAEEDO")
                 Dim _Tido = _Row_Doc_Garantia.Item("TIDO")
                 Dim _Nudo = _Row_Doc_Garantia.Item("NUDO")
@@ -840,7 +838,7 @@ Public Class Frm_St_Documento
 
     End Function
 
-    Private Sub Btn_Check_In_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Check_In_Click(sender As System.Object, e As System.EventArgs)
 
         Dim Fm As New Frm_St_Estado_01_Ingreso_Check_In(_Id_Ot, Frm_St_Estado_01_Ingreso_Check_In.Accion.Nuevo)
         Fm.Pro_DsDocumento = _DsDocumento
@@ -991,8 +989,8 @@ Public Class Frm_St_Documento
 
     End Sub
 
-    Function Fx_Editar_OT(ByVal _DsDocumento As DataSet,
-                          ByVal _Id_Ot As Integer) As Boolean
+    Function Fx_Editar_OT(_DsDocumento As DataSet,
+                          _Id_Ot As Integer) As Boolean
 
 
         Dim myTrans As SqlClient.SqlTransaction
@@ -1367,16 +1365,6 @@ Public Class Frm_St_Documento
             Return False
         End If
 
-        'If String.IsNullOrEmpty(Txt_Email_Contacto.Text) Then
-        'Beep()
-        'ToastNotification.Show(Me, "FALTA EMAIL", _
-        '                       Imagenes_32x32.Images.Item("warning.png"), _
-        '                       2 * 1000, eToastGlowColor.Red, _
-        '                       eToastPosition.MiddleCenter)
-        'Txt_Email_Contacto.Focus()
-        'Return False
-        'End If
-
         If Not String.IsNullOrEmpty(Trim(Txt_Email_Contacto.Text)) Then
 
             If Not Fx_Validar_Email(Txt_Email_Contacto.Text) Then
@@ -1707,12 +1695,12 @@ Public Class Frm_St_Documento
 
 #Region "PROCEDIMIENTOS LOGISTICA"
 
-    Function Fx_Estados(ByVal _St_Etapa As StepItem,
-                       ByVal _Encabezado As String,
-                       ByVal _Espera As String,
-                       ByVal _Etapa As String,
-                       ByVal _Color_Arriba As Color,
-                       ByVal _Color_Abajo As Color)
+    Function Fx_Estados(_St_Etapa As StepItem,
+                       _Encabezado As String,
+                       _Espera As String,
+                       _Etapa As String,
+                       _Color_Arriba As Color,
+                       _Color_Abajo As Color)
 
         Dim _Leyenda As String = "<font size=" & Chr(34) & "+2" & Chr(34) & "><b>" & _Encabezado &
                               "</b></font><br/><font size=" & Chr(34) & "-1" & Chr(34) & ">" & _Espera & "<br/>" & _Etapa & "</font>"
@@ -1735,8 +1723,8 @@ Public Class Frm_St_Documento
 
 #Region "CARGAR COMBOS"
 
-    Sub Sb_Cargar_Marcas(ByVal _Marca As String,
-                         Optional ByVal _Solo_Esta_Marca As Boolean = False)
+    Sub Sb_Cargar_Marcas(_Marca As String,
+                         Optional _Solo_Esta_Marca As Boolean = False)
 
         Dim _Condicion = String.Empty
 
@@ -1752,8 +1740,8 @@ Public Class Frm_St_Documento
 
     End Sub
 
-    Sub Sb_Cargar_Categoria(ByVal _Categoria As String,
-                         Optional ByVal _Solo_Esta_Categoria As Boolean = False)
+    Sub Sb_Cargar_Categoria(_Categoria As String,
+                         Optional _Solo_Esta_Categoria As Boolean = False)
 
         Dim _Condicion = String.Empty
 
@@ -1769,8 +1757,8 @@ Public Class Frm_St_Documento
 
     End Sub
 
-    Sub Sb_Cargar_Modelo(ByVal _Modelo As String,
-                         Optional ByVal _Solo_Este_Modelo As Boolean = False)
+    Sub Sb_Cargar_Modelo(_Modelo As String,
+                         Optional _Solo_Este_Modelo As Boolean = False)
 
         Dim _Condicion = String.Empty
 
@@ -1790,7 +1778,7 @@ Public Class Frm_St_Documento
 
 #Region "BOTONES MAQUINA, MARCA, MODELO, CATEGORIAS"
 
-    Private Sub Btn_Tipo_Maquina_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Tipo_Maquina.Click
+    Private Sub Btn_Tipo_Maquina_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Tipo_Maquina.Click
         Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Maquina_ST,
                                                     Frm_Tabla_Caracterizaciones_01_Listado.Accion.Seleccionar)
         Fm.Text = "Seleccionar Maquina"
@@ -1805,7 +1793,7 @@ Public Class Frm_St_Documento
         Fm.Dispose()
     End Sub
 
-    Private Sub Btn_Marca_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Marca.Click
+    Private Sub Btn_Marca_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Marca.Click
 
         Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Marcas,
                                                         Frm_Tabla_Caracterizaciones_01_Listado.Accion.Seleccionar)
@@ -1822,7 +1810,7 @@ Public Class Frm_St_Documento
 
     End Sub
 
-    Private Sub Btn_Modelo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Modelo.Click
+    Private Sub Btn_Modelo_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Modelo.Click
 
         Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Modelos_ST,
                                                       Frm_Tabla_Caracterizaciones_01_Listado.Accion.Seleccionar)
@@ -1839,7 +1827,7 @@ Public Class Frm_St_Documento
 
     End Sub
 
-    Private Sub Btn_Categorias_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Categorias.Click
+    Private Sub Btn_Categorias_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Categorias.Click
 
         Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Categorias_ST,
                                                      Frm_Tabla_Caracterizaciones_01_Listado.Accion.Seleccionar)
@@ -1910,7 +1898,9 @@ Public Class Frm_St_Documento
         Fm.Pro_Imagenes_32x32 = Imagenes_32x32
         Fm.ShowDialog(Me)
         If Fm.Pro_Grabar Then
-            _Abrir_Documento = True
+            If String.IsNullOrEmpty(_DsDocumento.Tables(0).Rows(0).Item("Pertenece")) Then
+                _Abrir_Documento = True
+            End If
             Me.Close()
         End If
         Fm.Dispose()
@@ -2130,20 +2120,20 @@ Public Class Frm_St_Documento
 #End Region
 
 
-    Private Sub Estado_MouseEnter(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Estado_MouseEnter(sender As System.Object, e As System.EventArgs)
         sender.VALUE = 0
     End Sub
 
 
-    Private Sub Estado_MouseLeave(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Estado_MouseLeave(sender As System.Object, e As System.EventArgs)
         sender.VALUE = 100
     End Sub
 
-    Private Sub Chk_Serv_Garantia_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Chk_Serv_Garantia_CheckedChanged(sender As System.Object, e As System.EventArgs)
         Btn_Documento_Garantia.Enabled = Chk_Serv_Garantia.Checked
     End Sub
 
-    Private Sub Btn_Documento_Garantia_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Documento_Garantia.Click
+    Private Sub Btn_Documento_Garantia_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Documento_Garantia.Click
 
         Btn_Garantia_Ver_Documento.Text = "Ver Documento"
 
@@ -2166,7 +2156,7 @@ Public Class Frm_St_Documento
 
 
 
-    Private Sub Btn_Garantia_Ver_Documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Garantia_Ver_Documento.Click
+    Private Sub Btn_Garantia_Ver_Documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Garantia_Ver_Documento.Click
 
         If _Garantia_Documento_Externo Then
 
@@ -2185,7 +2175,7 @@ Public Class Frm_St_Documento
 
     End Sub
 
-    Private Sub Btn_Garantia_Cambiar_Documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Garantia_Cambiar_Documento.Click
+    Private Sub Btn_Garantia_Cambiar_Documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Garantia_Cambiar_Documento.Click
         ShowContextMenu(Menu_Contextual_Documentos_Grarantia)
         Return
         'Dim _RowDocumento = Fx_Garantia_Traer_Documento()
@@ -2205,8 +2195,6 @@ Public Class Frm_St_Documento
 
     Function Fx_Garantia_Traer_Documento() As DataRow
 
-        'Dim _RowDocumento As DataRow
-
         Dim Fm As New Frm_BusquedaDocumento_Filtro(False)
         Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "FCV", "Where TIDO IN ('FCV','BLV')")
         Fm.Pro_TipoDoc_Seleccionado = Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado
@@ -2223,7 +2211,7 @@ Public Class Frm_St_Documento
     End Function
 
 
-    Private Sub Btn_Editar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Editar.Click
+    Private Sub Btn_Editar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Editar.Click
 
         If Fx_Tiene_Permiso(Me, "Stec0003") Then
 
@@ -2246,7 +2234,7 @@ Public Class Frm_St_Documento
 
     End Sub
 
-    Private Sub Btn_Cancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cancelar.Click
+    Private Sub Btn_Cancelar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cancelar.Click
         _Abrir_Documento = True
         Me.Close()
     End Sub
@@ -2258,7 +2246,7 @@ Public Class Frm_St_Documento
         Get
             Return _DsDocumento
         End Get
-        Set(ByVal value As DataSet)
+        Set(value As DataSet)
             _DsDocumento = value
         End Set
     End Property
@@ -2267,7 +2255,7 @@ Public Class Frm_St_Documento
         Get
             Return _RowEntidad
         End Get
-        Set(ByVal value As DataRow)
+        Set(value As DataRow)
             _RowEntidad = value
         End Set
     End Property
@@ -2276,7 +2264,7 @@ Public Class Frm_St_Documento
         Get
             Return _Id_Ot
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _Id_Ot = value
         End Set
     End Property
@@ -2285,7 +2273,7 @@ Public Class Frm_St_Documento
         Get
             Return _Abrir_Documento
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
 
         End Set
     End Property
@@ -2294,7 +2282,7 @@ Public Class Frm_St_Documento
         Get
             Return _Grabar
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
 
         End Set
     End Property
@@ -2303,7 +2291,7 @@ Public Class Frm_St_Documento
         Get
             Return _Nulo
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
 
         End Set
     End Property
@@ -2312,7 +2300,7 @@ Public Class Frm_St_Documento
         Get
             Return _Accion
         End Get
-        Set(ByVal value As Accion)
+        Set(value As Accion)
             _Accion = value
         End Set
     End Property
@@ -2321,7 +2309,7 @@ Public Class Frm_St_Documento
         Get
 
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _Id_Correo = value
         End Set
     End Property
@@ -2329,7 +2317,7 @@ Public Class Frm_St_Documento
 #End Region
 
 
-    Private Sub Btn_Direccion_Servicio_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Direccion_Servicio.Click
+    Private Sub Btn_Direccion_Servicio_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Direccion_Servicio.Click
 
         Dim Fm As New Frm_St_Documento_Dir_Serv_Domicilio
         Fm.Pro_DsDocumento = _DsDocumento
@@ -2341,11 +2329,11 @@ Public Class Frm_St_Documento
 
     End Sub
 
-    Private Sub Chk_Serv_Domicilio_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Chk_Serv_Domicilio.CheckedChanged
+    Private Sub Chk_Serv_Domicilio_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles Chk_Serv_Domicilio.CheckedChanged
         Btn_Direccion_Servicio.Enabled = Chk_Serv_Domicilio.Checked
     End Sub
 
-    Private Sub Frm_St_Documento_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+    Private Sub Frm_St_Documento_FormClosing(sender As System.Object, e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
         If _Accion = Accion.Nuevo Then
             If Not _Abrir_Documento Then
 
@@ -2374,12 +2362,12 @@ Public Class Frm_St_Documento
         End If
     End Sub
 
-    Private Sub Btn_Grabar_Y_Cerrar_Executed(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Grabar_Y_Cerrar.Executed
+    Private Sub Btn_Grabar_Y_Cerrar_Executed(sender As System.Object, e As System.EventArgs) Handles Btn_Grabar_Y_Cerrar.Executed
         TaskDialog.Close(eTaskDialogResult.Yes)
         Sb_New_OT_Grabar_Nueva_OT()
     End Sub
 
-    Private Sub Btn_Anular_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Anular.Click
+    Private Sub Btn_Anular_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Anular.Click
 
         If Fx_Tiene_Permiso(Me, "Stec0004") Then
             If MessageBoxEx.Show(Me, "¿Esta seguro de anular el documento?", "Anular documento",
@@ -2401,7 +2389,7 @@ Public Class Frm_St_Documento
 
     End Sub
 
-    Private Sub Btn_Cerrar_OT_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cerrar_OT.Click
+    Private Sub Btn_Cerrar_OT_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cerrar_OT.Click
 
         If Fx_Tiene_Permiso(Me, "Stec0011") Then
 
@@ -2428,11 +2416,11 @@ Public Class Frm_St_Documento
 
     End Sub
 
-    Private Sub Btn_Imprimir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Imprimir.Click
+    Private Sub Btn_Imprimir_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Imprimir.Click
         ShowContextMenu(Menu_Contextual_Impresion)
     End Sub
 
-    Private Sub Btn_Imprimir_Acta_ingreso_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Imprimir_Acta_ingreso.Click
+    Private Sub Btn_Imprimir_Acta_ingreso_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Imprimir_Acta_ingreso.Click
 
         If Fx_Tiene_Permiso(Me, "Stec0012") Then
 
@@ -2446,13 +2434,13 @@ Public Class Frm_St_Documento
 
     End Sub
 
-    Private Sub Btn_Imprimir_Evaluacion_Tecnico_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Imprimir_Evaluacion_Tecnico.Click
+    Private Sub Btn_Imprimir_Evaluacion_Tecnico_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Imprimir_Evaluacion_Tecnico.Click
         If Fx_Tiene_Permiso(Me, "Stec0013") Then
             Sb_Imprimir_Reporte_Evaluacion_Tecnico()
         End If
     End Sub
 
-    Private Sub Btn_Imprimir_Reporte_Final_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Imprimir_Reporte_Final.Click
+    Private Sub Btn_Imprimir_Reporte_Final_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Imprimir_Reporte_Final.Click
         If Fx_Tiene_Permiso(Me, "Stec0014") Then
             Sb_Imprimir_Reporte_Reparacion_Final()
         End If
@@ -2895,15 +2883,15 @@ Public Class Frm_St_Documento
 #End Region
 
 
-    Private Sub Btn_Doc_Externo_Boleta_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Doc_Externo_Boleta.Click
+    Private Sub Btn_Doc_Externo_Boleta_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Doc_Externo_Boleta.Click
         Sb_Incorporar_Numero_Documento_Externo("Boleta")
     End Sub
 
-    Private Sub Btn_Doc_Externo_Factura_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Doc_Externo_Factura.Click
+    Private Sub Btn_Doc_Externo_Factura_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Doc_Externo_Factura.Click
         Sb_Incorporar_Numero_Documento_Externo("Factura")
     End Sub
 
-    Sub Sb_Incorporar_Numero_Documento_Externo(ByVal _Tipo_Documento As String)
+    Sub Sb_Incorporar_Numero_Documento_Externo(_Tipo_Documento As String)
 
         Dim _Tido As String = String.Empty
 
@@ -2936,7 +2924,8 @@ Public Class Frm_St_Documento
 
     End Sub
 
-    Private Sub Btn_Documento_Sistema_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Documento_Sistema.Click
+    Private Sub Btn_Documento_Sistema_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Documento_Sistema.Click
+
         Dim _RowDocumento = Fx_Garantia_Traer_Documento()
 
         If Not (_RowDocumento Is Nothing) Then
@@ -2963,7 +2952,7 @@ Public Class Frm_St_Documento
 
     End Sub
 
-    Private Sub Btn_Garantia_Agregar_Documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Garantia_Agregar_Documento.Click
+    Private Sub Btn_Garantia_Agregar_Documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Garantia_Agregar_Documento.Click
         ShowContextMenu(Menu_Contextual_Documentos_Grarantia)
     End Sub
 
@@ -2984,23 +2973,28 @@ Public Class Frm_St_Documento
             .Pro_Sucursal_Busqueda = ModSucursal
             .Pro_Bodega_Busqueda = ModBodega
             .Pro_Lista_Busqueda = ModListaPrecioVenta
-            '.CambiarCodigoToolStripMenuItem.Visible = True
-            '.Txtdescripcion.Text = _Codigo
             .Pro_Mostrar_Info = True
             .ShowDialog(Me)
-
-            '_RowProducto = ._Tbl_Producto_Seleccionado.Rows(0)
             _RowProducto = .Pro_RowProducto
             Dim _Seleccionado = .Pro_Seleccionado
             .Dispose()
 
             If _Seleccionado Then
-                Txt_Producto.Tag = Trim(_RowProducto.Item("KOPR"))
-                Txt_Producto.Text = Txt_Producto.Tag & " - " & Trim(_RowProducto.Item("NOKOPR"))
+
+                Txt_Producto.Tag = _RowProducto.Item("KOPR").ToString.Trim
 
                 Consulta_sql = My.Resources.Recursos_Info_Producto.SQLQuery_DatosDelProducto
                 Consulta_sql = Replace(Consulta_sql, "#Codigo#", Txt_Producto.Tag)
                 _RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                Dim _Descripcion As String = _RowProducto.Item("NOKOPR").ToString.Trim
+
+                Dim _Aceptar As Boolean = InputBox_Bk(Me, "Descripción del producto", "Producto a reparar",
+                                                      _Descripcion, False, _Tipo_Mayus_Minus.Mayusculas, 50, False, _Tipo_Imagen.Texto)
+
+                If _Aceptar Then
+                    _RowProducto.Item("NOKOPR") = _Descripcion.ToString.Trim
+                End If
 
                 Lbl_Marca.Text = _RowProducto.Item("Marca")
                 Lbl_Rubro.Text = _RowProducto.Item("Rubro")
@@ -3010,6 +3004,9 @@ Public Class Frm_St_Documento
 
                 Lbl_Clas_Libre.Text = _Sql.Fx_Trae_Dato("TABCARAC", "NOKOCARAC",
                                               "KOTABLA = 'CLALIBPR' and KOCARAC = '" & _RowProducto.Item("CLALIBPR") & "'")
+
+
+                Txt_Producto.Text = Txt_Producto.Tag & " - " & _RowProducto.Item("NOKOPR")
 
             End If
 
@@ -3155,4 +3152,7 @@ Public Class Frm_St_Documento
 
     End Sub
 
+    Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
+        Sb_New_OT_Grabar_Nueva_OT()
+    End Sub
 End Class

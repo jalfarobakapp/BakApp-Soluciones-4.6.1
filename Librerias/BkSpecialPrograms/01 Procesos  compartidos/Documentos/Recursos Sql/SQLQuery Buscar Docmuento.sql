@@ -54,6 +54,7 @@ SELECT  Top #CantidadDoc#
              #Otro_Filtro#          -- Otro filtro adicional, extra
              #Funcionario#          -- AND KODU IN ('')
              #Producto#             -- AND KODU IN ('')
+             #Observaciones#
              #ValesTransitorios#    -- AND NUDONODEFI In (0,1)
 
     #Orden#

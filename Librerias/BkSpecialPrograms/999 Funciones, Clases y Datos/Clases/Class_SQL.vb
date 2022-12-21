@@ -21,7 +21,7 @@ Public Class Class_SQL
                             Optional MostrarError As Boolean = True) As Boolean
         Try
             'Abrimos la conexión con la base de datos
-
+            _Error = String.Empty
             Sb_Abrir_Conexion(_Cn)
             'System.Windows.Forms.Application.DoEvents()
             Dim cmd As System.Data.SqlClient.SqlCommand
@@ -99,7 +99,7 @@ Public Class Class_SQL
 
         Try
 
-            Sb_Abrir_Conexion(_Cn)
+            Sb_Abrir_Conexion(_Cn, _Mostrar_Error)
 
             If Not String.IsNullOrEmpty(_Error) Then
                 _Mostrar_Error = False
@@ -300,7 +300,7 @@ Public Class Class_SQL
     End Function
 
     'System.Windows.Forms.Application.DoEvents()
-    Sub Sb_Abrir_Conexion(_Cn As SqlConnection)
+    Sub Sb_Abrir_Conexion(_Cn As SqlConnection, Optional _Mostrar_Error As Boolean = True)
 
         _Error = String.Empty
 
@@ -316,10 +316,9 @@ Public Class Class_SQL
 
         Catch ex As SqlClient.SqlException 'Exception
             _Error = ex.Message
-            MsgBox(ex.Message)
-            'MessageBox.Show("ERROR al conectar o recuperar los datos:" & vbCrLf & _
-            '                ex.Message, "Conectar con la base", _
-            '                MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            If _Mostrar_Error Then
+                MsgBox(ex.Message)
+            End If
         End Try
 
     End Sub
@@ -707,7 +706,53 @@ Public Class Class_SQL
 
     End Function
 
+    Function Fx_Existe_Tabla(_Tabla As String, _Global_BaseBk As String) As Boolean
+
+        Dim _ConsultaSql As String
+
+        If _Tabla.Contains(_Global_BaseBk) Then
+
+            _Tabla = Replace(_Tabla, _Global_BaseBk, "")
+            _ConsultaSql = "USE " & Replace(_Global_BaseBk, ".dbo.", "") & "
+                            SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" & _Tabla & "'"
+
+        Else
+
+            _ConsultaSql = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" & _Tabla & "'"
+
+        End If
+
+        Dim _Tbl As DataTable = Fx_Get_Tablas(_ConsultaSql)
+
+        Return _Tbl.Rows.Count
+
+    End Function
+
     Function Fx_Exite_Campo(_Tabla As String, _Campo As String) As Boolean
+
+        Dim _ConsultaSql As String
+
+        If _Tabla.Contains(_Global_BaseBk) Then
+
+            _Tabla = Replace(_Tabla, _Global_BaseBk, "")
+            _ConsultaSql = "USE " & Replace(_Global_BaseBk, ".dbo.", "") & "
+                            SELECT * FROM INFORMATION_SCHEMA.COLUMNS" & vbCrLf &
+                            "WHERE COLUMN_NAME = '" & _Campo & "' AND TABLE_NAME = '" & _Tabla & "'"
+
+        Else
+
+            _ConsultaSql = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS" & vbCrLf &
+                                   "WHERE COLUMN_NAME = '" & _Campo & "' AND TABLE_NAME = '" & _Tabla & "'"
+
+        End If
+
+        Dim _Tbl As DataTable = Fx_Get_Tablas(_ConsultaSql)
+
+        Return CBool(_Tbl.Rows.Count)
+
+    End Function
+
+    Function Fx_Exite_Campo(_Tabla As String, _Campo As String, _Global_BaseBk As String) As Boolean
 
         Dim _ConsultaSql As String
 

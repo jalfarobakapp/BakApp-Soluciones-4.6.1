@@ -22,6 +22,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
     Dim _Fecha_Desde_Origen As Date
 
     Dim _Tbl_Filtro_Entidad As DataTable
+    Dim _Tbl_Filtro_SucursalDoc As DataTable
     Dim _Tbl_Filtro_Sucursales As DataTable
     Dim _Tbl_Filtro_Bodegas As DataTable
 
@@ -48,6 +49,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
     Dim _Tbl_Filtro_Lista_Precio_Docu As DataTable
 
     Dim _Filtro_Entidad_Todas As Boolean
+    Dim _Filtro_SucursalDoc_Todas As Boolean
     Dim _Filtro_Sucursales_Todas As Boolean
     Dim _Filtro_Bodegas_Todas As Boolean
 
@@ -141,7 +143,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             'Return _Fl_Sucursales
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             '_Fl_Sucursales = value
         End Set
     End Property
@@ -149,7 +151,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             'Return _Fl_Bodegas
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             '_Fl_Bodegas = value
         End Set
     End Property
@@ -157,7 +159,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             'Return _Fl_Entidades
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             '_Fl_Entidades = value
         End Set
     End Property
@@ -165,7 +167,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             'Return _Fl_Super_Familias
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             '_Fl_Super_Familias = value
         End Set
     End Property
@@ -173,7 +175,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             'Return _Fl_Ciudades
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             '_Fl_Ciudades = value
         End Set
     End Property
@@ -181,7 +183,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             'Return _Fl_Comunas
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             '_Fl_Comunas = value
         End Set
     End Property
@@ -189,7 +191,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             'Return _Fl_Productos_Consolidados
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             '_Fl_Productos_Consolidados = value
         End Set
     End Property
@@ -197,7 +199,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             'Return _Fl_Funcionarios
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             '_Fl_Funcionarios = value
         End Set
     End Property
@@ -205,7 +207,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Tbl_Filtro_Productos
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Productos = value
         End Set
     End Property
@@ -213,7 +215,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Tbl_Filtro_Super_Familias
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Super_Familias = value
         End Set
     End Property
@@ -221,7 +223,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Tbl_Filtro_Marcas
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Marcas = value
         End Set
     End Property
@@ -229,7 +231,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Tbl_Filtro_Rubro_Productos
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Rubro_Productos = value
         End Set
     End Property
@@ -237,7 +239,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Tbl_Filtro_Clalibpr
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Clalibpr = value
         End Set
     End Property
@@ -245,7 +247,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Tbl_Filtro_Zonas_Productos
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Zonas_Productos = value
         End Set
     End Property
@@ -253,7 +255,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Tbl_Filtro_Entidad
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Entidad = value
         End Set
     End Property
@@ -261,7 +263,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Tbl_Filtro_Ciudad
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Ciudad = value
         End Set
     End Property
@@ -269,7 +271,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Tbl_Filtro_Comunas
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Comunas = value
         End Set
     End Property
@@ -277,7 +279,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Tbl_Filtro_Rubro_Entidades
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Rubro_Entidades = value
         End Set
     End Property
@@ -285,7 +287,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Tbl_Filtro_Zonas_Entidades
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Zonas_Entidades = value
         End Set
     End Property
@@ -293,7 +295,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Tbl_Filtro_Responzables
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Responzables = value
         End Set
     End Property
@@ -301,7 +303,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Tbl_Filtro_Vendedores
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Vendedores = value
         End Set
     End Property
@@ -309,7 +311,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Tbl_Filtro_Vendedores_Asignados
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Vendedores_Asignados = value
         End Set
     End Property
@@ -317,7 +319,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Filtro_Productos_Todos
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Filtro_Productos_Todos = value
         End Set
     End Property
@@ -325,7 +327,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Filtro_Marcas_Todas
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Filtro_Marcas_Todas = value
         End Set
     End Property
@@ -333,7 +335,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Filtro_Super_Familias_Todas
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Filtro_Super_Familias_Todas = value
         End Set
     End Property
@@ -341,7 +343,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Filtro_Rubro_Productos_Todas
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Filtro_Rubro_Productos_Todas = value
         End Set
     End Property
@@ -349,7 +351,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Filtro_Clalibpr_Todas
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Filtro_Clalibpr_Todas = value
         End Set
     End Property
@@ -357,7 +359,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Filtro_Zonas_Productos_Todas
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Filtro_Zonas_Productos_Todas = value
         End Set
     End Property
@@ -365,7 +367,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Filtro_Responzables_Todas
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Filtro_Responzables_Todas = value
         End Set
     End Property
@@ -373,7 +375,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Filtro_Vendedores_Todas
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Filtro_Vendedores_Todas = value
         End Set
     End Property
@@ -381,7 +383,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Filtro_Vendedores_Asignados_Todas
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Filtro_Vendedores_Asignados_Todas = value
         End Set
     End Property
@@ -389,7 +391,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Filtro_Entidad_Todas
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Filtro_Entidad_Todas = value
         End Set
     End Property
@@ -397,7 +399,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Filtro_Ciudad_Todas
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Filtro_Ciudad_Todas = value
         End Set
     End Property
@@ -405,7 +407,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Filtro_Comunas_Todas
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Filtro_Comunas_Todas = value
         End Set
     End Property
@@ -413,7 +415,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Filtro_Rubro_Entidades_Todas
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Filtro_Rubro_Entidades_Todas = value
         End Set
     End Property
@@ -421,7 +423,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return _Filtro_Zonas_Entidades_Todas
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Filtro_Zonas_Entidades_Todas = value
         End Set
     End Property
@@ -429,7 +431,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return Me.Top
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _Top = value
         End Set
     End Property
@@ -437,7 +439,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return Me.Left
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _Left = value
         End Set
     End Property
@@ -445,7 +447,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return Dtp_Fecha_Desde.Value
         End Get
-        Set(ByVal value As Date)
+        Set(value As Date)
             Dtp_Fecha_Desde.Value = value
         End Set
     End Property
@@ -453,7 +455,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Get
             Return Dtp_Fecha_Hasta.Value
         End Get
-        Set(ByVal value As Date)
+        Set(value As Date)
             Dtp_Fecha_Hasta.Value = value
         End Set
     End Property
@@ -489,6 +491,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         _Unidad = Unidad
         _Correr_a_la_derecha = Correr_a_la_derecha
 
+        _Filtro_SucursalDoc_Todas = True
         _Filtro_Sucursales_Todas = True
         _Filtro_Bodegas_Todas = True
 
@@ -538,7 +541,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Frm_Inf_Ventas_X_Periodo_Sucursal_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Inf_Ventas_X_Periodo_Sucursal_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         _Nodo_Padre_Back = 0
 
@@ -679,7 +682,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
         caract_combo(Cmb_Vista_Informe)
         Cmb_Vista_Informe.DataSource = _Tbl
-        Cmb_Vista_Informe.SelectedValue = "SULIDO"
+        Cmb_Vista_Informe.SelectedValue = "SUDO" '"SULIDO"
 
         _Row_Vista = Fx_Crea_Tabla_Con_Filtro(_Tbl_Vista_Informe,
                                          "CODIGO = '" & Cmb_Vista_Informe.SelectedValue & "'", "Id").Rows(0)
@@ -1046,7 +1049,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     Function Fx_Filtro_Detalle(Optional _Incluye_Fechas As Boolean = True)
 
-        Dim _Filtro_Sucursales,
+        Dim _Filtro_SucursalDoc,
+            _Filtro_Sucursales,
             _Filtro_Bodegas,
             _Filtro_Entidades,
             _Filtro_Ciudad,
@@ -1069,6 +1073,13 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Filtro_ClasLibre,
             _Filtro_Lista_Precio_Asig,
             _Filtro_Lista_Precio_Docu As String
+
+        If _Filtro_SucursalDoc_Todas Then
+            _Filtro_SucursalDoc = String.Empty
+        Else
+            _Filtro_SucursalDoc = Generar_Filtro_IN(_Tbl_Filtro_SucursalDoc, "Chk", "Codigo", False, True, "'")
+            _Filtro_SucursalDoc = "And SUDO IN " & _Filtro_SucursalDoc & vbCrLf
+        End If
 
         If _Filtro_Sucursales_Todas Then
             _Filtro_Sucursales = String.Empty
@@ -1250,7 +1261,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Filtro_Tipr = "And PRCT = 0" & vbCrLf
         End If
 
-        Dim _Filtro_Externo = _Filtro_Sucursales &
+        Dim _Filtro_Externo = _Filtro_SucursalDoc &
+                              _Filtro_Sucursales &
                               _Filtro_Bodegas &
                               _Filtro_Entidades &
                               _Filtro_Ciudad &
@@ -1327,7 +1339,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Function
 
-    Private Sub Sb_Grilla_Detalle_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_Detalle_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
@@ -1339,19 +1351,19 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End If
     End Sub
 
-    Private Sub Sb_Frm_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+    Private Sub Sb_Frm_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs)
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Rdb_Orden_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Rdb_Orden_CheckedChanged(sender As System.Object, e As System.EventArgs)
         If CType(sender, DevComponents.DotNetBar.Controls.CheckBoxX).Checked Then
             Sb_Actualizar_Grilla(False)
         End If
     End Sub
 
-    Private Sub Btn_Graficar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Graficar.Click
+    Private Sub Btn_Graficar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Graficar.Click
         If Fx_Tiene_Permiso(Me, "Inf00020") Then
             Dim Fm As New Frm_Inf_Ventas_X_Periodo_Graficos(_Nombre_Tabla_Paso,
                                                             _Cp_Codigo,
@@ -1362,14 +1374,14 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End If
     End Sub
 
-    Private Sub Btn_Actualizar_Informe_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Actualizar_Informe.Click
+    Private Sub Btn_Actualizar_Informe_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Actualizar_Informe.Click
         Sb_Actualizar_Grilla(False)
     End Sub
 
 
 #Region "GRAFICOS"
 
-    Function Fx_Filtro_Fecha(ByVal Fecha_Desde As Date, ByVal Fecha_Hasta As Date) As String
+    Function Fx_Filtro_Fecha(Fecha_Desde As Date, Fecha_Hasta As Date) As String
 
         Dim _Fecha_Entre As String
 
@@ -1393,7 +1405,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Sub Sb_Generar_Grafica_Linea_De_Tiempo(ByVal _Grafico As Chart)
+    Sub Sb_Generar_Grafica_Linea_De_Tiempo(_Grafico As Chart)
 
         _Grafico.Series.Clear()
 
@@ -1594,7 +1606,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Sub Sb_Generar_Grafica_Linea_De_Tiempo_Arbol(ByVal _Grafico As Chart)
+    Sub Sb_Generar_Grafica_Linea_De_Tiempo_Arbol(_Grafico As Chart)
 
         _Grafico.Series.Clear()
 
@@ -2185,7 +2197,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Function Fx_Mes(ByVal Mes As Integer) As String
+    Function Fx_Mes(Mes As Integer) As String
 
         Dim _Mes As String
 
@@ -2304,7 +2316,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Sub Sb_Marcar_Grafico_Barras(ByVal _Codigo As String)
+    Sub Sb_Marcar_Grafico_Barras(_Codigo As String)
 
         ' Set series appearance
         Dim marker As MarkerStyle = MarkerStyle.None
@@ -2516,7 +2528,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
 #End Region
 
-    Private Sub Sb_Grilla_CellEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Sb_Grilla_CellEnter(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Try
 
@@ -2554,31 +2566,31 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Chk_Ver_Pie_3D_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Chk_Ver_Pie_3D.CheckedChanged
+    Private Sub Chk_Ver_Pie_3D_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles Chk_Ver_Pie_3D.CheckedChanged
         'Grafico_Pie.ChartAreas(0).Area3DStyle.Enable3D = Chk_Ver_Pie_3D.Checked
     End Sub
 
-    Private Sub Rdb_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Rdb_CheckedChanged(sender As System.Object, e As System.EventArgs)
         Sb_Grafico_Pie_Acumulativo()
     End Sub
 
-    Private Sub Btn_Filtrar_Entidades_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtrar_Entidades.Click
+    Private Sub Btn_Filtrar_Entidades_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtrar_Entidades.Click
         ShowContextMenu(Menu_Contextual_Filtros_Entidades)
     End Sub
 
-    Private Sub Btn_Filtrar_Productos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtrar_Productos.Click
+    Private Sub Btn_Filtrar_Productos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtrar_Productos.Click
         ShowContextMenu(Menu_Contextual_Filtros_Productos)
     End Sub
 
-    Private Sub Btn_Filtrar_Suc_Bod_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtrar_Suc_Bod.Click
+    Private Sub Btn_Filtrar_Suc_Bod_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtrar_Suc_Bod.Click
         ShowContextMenu(Menu_Contextual_Filtros_Suc_Bod)
     End Sub
 
-    Private Sub Btn_Filtrar_Funcionarios_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtrar_Funcionarios.Click
+    Private Sub Btn_Filtrar_Funcionarios_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtrar_Funcionarios.Click
         ShowContextMenu(Menu_Contextual_Filtros_Funcionarios)
     End Sub
 
-    Private Sub Btn_Filtro_Pro_Productos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtro_Pro_Productos.Click
+    Private Sub Btn_Filtro_Pro_Productos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Pro_Productos.Click
         Dim _SqlFiltro_Fechas As String
 
         _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
@@ -2600,7 +2612,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End If
     End Sub
 
-    Private Sub Btn_Filtro_Pro_Super_Familias_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtro_Pro_Super_Familias.Click
+    Private Sub Btn_Filtro_Pro_Super_Familias_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Pro_Super_Familias.Click
 
         Dim _SqlFiltro_Fechas As String
 
@@ -2628,7 +2640,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End If
     End Sub
 
-    Private Sub Btn_Filtro_Pro_Familias_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtro_Pro_Familias.Click
+    Private Sub Btn_Filtro_Pro_Familias_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Pro_Familias.Click
 
         Dim _SqlFiltro_Fechas As String
 
@@ -2670,7 +2682,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Btn_Filtro_Pro_Sub_Familias_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtro_Pro_Sub_Familias.Click
+    Private Sub Btn_Filtro_Pro_Sub_Familias_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Pro_Sub_Familias.Click
 
         Dim _SqlFiltro_Fechas As String
 
@@ -2725,7 +2737,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Btn_Filtro_Pro_Marcas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtro_Pro_Marcas.Click
+    Private Sub Btn_Filtro_Pro_Marcas_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Pro_Marcas.Click
 
         Dim _SqlFiltro_Fechas As String
 
@@ -2754,7 +2766,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Btn_Filtro_Pro_Clas_Libre_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtro_Pro_Clas_Libre.Click
+    Private Sub Btn_Filtro_Pro_Clas_Libre_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Pro_Clas_Libre.Click
 
         Dim _SqlFiltro_Fechas As String
 
@@ -2783,7 +2795,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Btn_Filtro_Pro_Rubros_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtro_Pro_Rubros.Click
+    Private Sub Btn_Filtro_Pro_Rubros_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Pro_Rubros.Click
 
         Dim _SqlFiltro_Fechas As String
 
@@ -2812,7 +2824,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Btn_Filtro_Pro_Zonas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtro_Pro_Zonas.Click
+    Private Sub Btn_Filtro_Pro_Zonas_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Pro_Zonas.Click
 
         Dim _SqlFiltro_Fechas As String
 
@@ -2841,7 +2853,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Btn_Filtro_Ent_Ciudades_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtro_Ent_Ciudades.Click
+    Private Sub Btn_Filtro_Ent_Ciudades_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Ent_Ciudades.Click
         Dim _SqlFiltro_Fechas As String
 
         _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
@@ -2868,7 +2880,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End If
     End Sub
 
-    Private Sub Btn_Filtro_Ent_Comunas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtro_Ent_Comunas.Click
+    Private Sub Btn_Filtro_Ent_Comunas_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Ent_Comunas.Click
         Dim _SqlFiltro_Fechas As String
 
         _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
@@ -2907,7 +2919,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End If
     End Sub
 
-    Private Sub Btn_Filtro_Ent_Rubros_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtro_Ent_Rubros.Click
+    Private Sub Btn_Filtro_Ent_Rubros_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Ent_Rubros.Click
         Dim _SqlFiltro_Fechas As String
 
         _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
@@ -2934,7 +2946,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End If
     End Sub
 
-    Private Sub Btn_Filtro_Ent_Zonas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtro_Ent_Zonas.Click
+    Private Sub Btn_Filtro_Ent_Zonas_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Ent_Zonas.Click
         Dim _SqlFiltro_Fechas As String
 
         _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
@@ -2961,7 +2973,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End If
     End Sub
 
-    Private Sub Btn_Filtro_Ent_Tipo_Entidad_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtro_Ent_Tipo_Entidad.Click
+    Private Sub Btn_Filtro_Ent_Tipo_Entidad_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Ent_Tipo_Entidad.Click
         Dim _SqlFiltro_Fechas As String
 
         _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
@@ -2988,7 +3000,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End If
     End Sub
 
-    Private Sub Btn_Filtro_Ent_Act_Economica_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtro_Ent_Act_Economica.Click
+    Private Sub Btn_Filtro_Ent_Act_Economica_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Ent_Act_Economica.Click
         Dim _SqlFiltro_Fechas As String
 
         _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
@@ -3015,7 +3027,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End If
     End Sub
 
-    Private Sub Btn_Filtro_Ent_Tamano_Empresa_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtro_Ent_Tamano_Empresa.Click
+    Private Sub Btn_Filtro_Ent_Tamano_Empresa_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Ent_Tamano_Empresa.Click
         Dim _SqlFiltro_Fechas As String
 
         _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
@@ -3042,7 +3054,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End If
     End Sub
 
-    Private Sub Btn_Filtro_Responzables_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtro_Responzables.Click
+    Private Sub Btn_Filtro_Responzables_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Responzables.Click
         Dim _SqlFiltro_Fechas As String
 
         _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
@@ -3068,7 +3080,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End If
     End Sub
 
-    Private Sub Btn_Filtro_Vendedores_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtro_Vendedores.Click
+    Private Sub Btn_Filtro_Vendedores_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Vendedores.Click
         If Fx_Tiene_Permiso(Me, "Inf00025") Then
             Dim _SqlFiltro_Fechas As String
 
@@ -3096,7 +3108,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End If
     End Sub
 
-    Private Sub Btn_Filtro_Sucursales_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtro_Sucursales.Click
+    Private Sub Btn_Filtro_Sucursales_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Sucursales.Click
 
         Dim _SqlFiltro_Fechas As String
 
@@ -3125,7 +3137,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Btn_Filtro_Bodegas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtro_Bodegas.Click
+    Private Sub Btn_Filtro_Bodegas_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Bodegas.Click
 
         Dim _SqlFiltro_Fechas As String
 
@@ -3217,6 +3229,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             Btn_Filtrar_Productos.Image = Nothing
         End If
 
+        Btn_Filtro_SucursalDoc.Image = Fx_Imagen_Filtro(_Filtro_SucursalDoc_Todas)
         Btn_Filtro_Sucursales.Image = Fx_Imagen_Filtro(_Filtro_Sucursales_Todas)
         Btn_Filtro_Bodegas.Image = Fx_Imagen_Filtro(_Filtro_Bodegas_Todas)
 
@@ -3228,7 +3241,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Function Fx_Imagen_Filtro(ByVal _Todas As Boolean) As Image
+    Function Fx_Imagen_Filtro(_Todas As Boolean) As Image
 
         If _Todas Then
             Return Nothing
@@ -3238,7 +3251,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Function
 
-    Private Sub Btn_Informe_X_Clientes_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Informe_X_Clientes.Click
+    Private Sub Btn_Informe_X_Clientes_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informe_X_Clientes.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cod = _Fila.Cells("CODIGO").Value
@@ -3291,7 +3304,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Btn_Informe_X_Documentos_Entidades_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Informe_X_Documentos_Entidades.Click
+    Private Sub Btn_Informe_X_Documentos_Entidades_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informe_X_Documentos_Entidades.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cod = _Fila.Cells("CODIGO").Value
@@ -3339,7 +3352,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Btn_Informe_X_Productos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Informe_X_Productos.Click
+    Private Sub Btn_Informe_X_Productos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informe_X_Productos.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cod = _Fila.Cells("CODIGO").Value
@@ -3388,7 +3401,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
     End Sub
 
 
-    Private Sub Btn_Vista_Informe_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Vista_Informe.Click
+    Private Sub Btn_Vista_Informe_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Vista_Informe.Click
 
         Dim Fm As New Frm_Arbol_Asociacion_05_Busqueda(Frm_Arbol_Asociacion_05_Busqueda.Enum_Tipo_De_Carpeta.Clas_Unica_Ambas, False)
         Fm.Pro_Seleccionar_Todo = _Filtro_Clas_BakApp_Todas
@@ -3417,7 +3430,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
@@ -3453,7 +3466,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Sb_Cmb_Vista_Informe_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Sb_Cmb_Vista_Informe_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
 
         _Row_Vista = Fx_Crea_Tabla_Con_Filtro(_Tbl_Vista_Informe,
                                               "CODIGO = '" & Cmb_Vista_Informe.SelectedValue & "'", "Id").Rows(0)
@@ -3469,7 +3482,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Btn_Atras_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Atras.Click
+    Private Sub Btn_Atras_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Atras.Click
 
         Dim _Nodo_Padre = _Row_Vista.Item("Nodo_Padre")
 
@@ -3493,7 +3506,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Btn_Arbol_Asociaciones_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Arbol_Asociaciones.Click
+    Private Sub Btn_Arbol_Asociaciones_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Arbol_Asociaciones.Click
         If Fx_Tiene_Permiso(Me, "Tbl00002") Then
             Dim Fm As New Frm_Arbol_Asociacion_02(False, 0, False, Frm_Arbol_Asociacion_02.Enum_Clasificacion.Unica, 0)
             Fm.Pro_Identificador_NodoPadre = 0
@@ -3502,12 +3515,15 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End If
     End Sub
 
-    Private Sub Btn_Filtrar_Clas_BakApp_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtrar_Clas_BakApp.Click
+    Private Sub Btn_Filtrar_Clas_BakApp_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtrar_Clas_BakApp.Click
+
+        Me.Cursor = Cursors.WaitCursor
 
         Try
             Me.Enabled = False
-            Me.Cursor = Cursors.WaitCursor
             Me.Refresh()
+
+            Application.DoEvents()
 
             Dim Fm As New Frm_Arbol_Asociacion_05_Busqueda(Frm_Arbol_Asociacion_05_Busqueda.Enum_Tipo_De_Carpeta.Clas_Unica_Ambas, True)
             Fm.Pro_Seleccionar_Todo = _Filtro_Clas_BakApp_Todas
@@ -3540,7 +3556,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Btn_Totar_Pie_Derecha_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Totar_Pie_Derecha.Click
+    Private Sub Btn_Totar_Pie_Derecha_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Totar_Pie_Derecha.Click
         _Rotacion -= 5
         If _Rotacion <= 0 Then
             _Rotacion = 360
@@ -3548,7 +3564,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Grafico_Pie.Series(0)("PieStartAngle") = _Rotacion.ToString()
     End Sub
 
-    Private Sub Btn_Totar_Pie_Izquierda_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Totar_Pie_Izquierda.Click
+    Private Sub Btn_Totar_Pie_Izquierda_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Totar_Pie_Izquierda.Click
         _Rotacion += 5
         If _Rotacion >= 360 Then
             _Rotacion = 0
@@ -3556,19 +3572,19 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Grafico_Pie.Series(0)("PieStartAngle") = _Rotacion.ToString()
     End Sub
 
-    Private Sub Rdb_Pie_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Rdb_Pie_CheckedChanged(sender As System.Object, e As System.EventArgs)
         If CType(sender, DevComponents.DotNetBar.Controls.CheckBoxX).Checked Then
             Sb_Grafico_Pie_Acumulativo()
         End If
     End Sub
 
-    Private Sub Btn_Grafico_Linea_Tiempo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Grafico_Linea_Tiempo.Click
+    Private Sub Btn_Grafico_Linea_Tiempo_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Grafico_Linea_Tiempo.Click
         Dim Fm As New Frm_Inf_Ventas_Grafico_Linea_Tiempo(Grafico_Linea_De_Tiempo)
         Fm.ShowDialog(Me)
         Fm.Dispose()
     End Sub
 
-    Private Sub Grafico_Linea_De_Tiempo_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Grafico_Linea_De_Tiempo.MouseDown
+    Private Sub Grafico_Linea_De_Tiempo_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles Grafico_Linea_De_Tiempo.MouseDown
         Dim result As HitTestResult = Grafico_Linea_De_Tiempo.HitTest(e.X, e.Y)
         If result IsNot Nothing AndAlso result.[Object] IsNot Nothing Then
             ' When user hits the LegendItem
@@ -3598,7 +3614,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End If
     End Sub
 
-    Private Sub Btn_Filtro_Ent_Entidades_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtro_Ent_Entidades.Click
+    Private Sub Btn_Filtro_Ent_Entidades_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Ent_Entidades.Click
 
         Dim _SqlFiltro_Fechas As String
 
@@ -3624,7 +3640,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Btn_Consulta_Ventas_X_Cliente_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Consulta_Ventas_X_Cliente.Click
+    Private Sub Btn_Consulta_Ventas_X_Cliente_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Consulta_Ventas_X_Cliente.Click
         ShowContextMenu(Menu_Contextual_Consulta_Entidades)
     End Sub
 
@@ -3686,7 +3702,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Btn_Consulta_Ventas_X_Cliente_X_Asignados_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Consulta_Ventas_X_Cliente_X_Asignados.Click
+    Private Sub Btn_Consulta_Ventas_X_Cliente_X_Asignados_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Consulta_Ventas_X_Cliente_X_Asignados.Click
 
         Sb_Informe_Clientes_X_Vendedor(FUNCIONARIO, Nombre_funcionario_activo)
 
@@ -3723,7 +3739,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Btn_Actualizar_Datos_Informe_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Actualizar_Datos_Informe.Click
+    Private Sub Btn_Actualizar_Datos_Informe_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Actualizar_Datos_Informe.Click
 
         Dim Fm As New Frm_Inf_Ventas_X_Periodo_Fechas(Frm_Inf_Ventas_X_Periodo_Fechas.Enum_Acciones.Actializar_Informe_Manual)
         Fm.Nombre_Tabla_Paso = _Nombre_Tabla_Paso
@@ -3736,7 +3752,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Fm.Dispose()
     End Sub
 
-    Private Sub Btn_Reperar_Datos_Informe_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Reperar_Datos_Informe.Click
+    Private Sub Btn_Reperar_Datos_Informe_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Reperar_Datos_Informe.Click
 
         Dim Fm As New Frm_Inf_Ventas_X_Periodo_Fechas(Frm_Inf_Ventas_X_Periodo_Fechas.Enum_Acciones.Actualizar_Filtro)
         Fm.Nombre_Tabla_Paso = _Nombre_Tabla_Paso
@@ -3750,19 +3766,19 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Btn_Mantencion_Datos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mantencion_Datos.Click
+    Private Sub Btn_Mantencion_Datos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mantencion_Datos.Click
         ShowContextMenu(Menu_Contextual_Mantencion_Informe)
     End Sub
 
-    Private Sub Btn_Excel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Excel.Click
+    Private Sub Btn_Excel_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Excel.Click
         If Fx_Tiene_Permiso(Me, "Inf00042") Then ExportarTabla_JetExcel_Tabla(_Tbl_Informe, Me, "Informe")
     End Sub
 
-    Private Sub Btn_Crear_NVV_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Crear_Venta.Click
+    Private Sub Btn_Crear_NVV_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Crear_Venta.Click
         ShowContextMenu(Menu_Contextual_Ventas)
     End Sub
 
-    Private Function Fx_CheckForm(ByVal _form As Form) As Form
+    Private Function Fx_CheckForm(_form As Form) As Form
 
         If Not (_form Is Nothing) Then
             For Each f As Form In Application.OpenForms
@@ -3776,7 +3792,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Function
 
-    Private Sub Btn_Cotizacion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cotizacion.Click
+    Private Sub Btn_Cotizacion_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cotizacion.Click
 
         If Fx_Tiene_Permiso(Me, "Bkp00045") Then
 
@@ -3790,9 +3806,9 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Btn_Nota_de_venta_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Nota_de_venta.Click
+    Private Sub Btn_Nota_de_venta_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Nota_de_venta.Click
 
-        If Fx_Tiene_Permiso(Me, "Bkp00040") Then
+        If Fx_Tiene_Permiso(Me, "Bkp00041") Then
 
             Dim Fm_Post As New Frm_Formulario_Documento("NVV", csGlobales.Enum_Tipo_Documento.Venta, False)
             'Fm_Post.Btn_Minimizar.Visible = True
@@ -3809,7 +3825,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Sb_Cargar_Combo_Vista_Informe()
     End Sub
 
-    Private Sub Btn_Copiar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Copiar.Click
+    Private Sub Btn_Copiar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Copiar.Click
         With Grilla
 
             Dim _Cabeza = .Columns(.CurrentCell.ColumnIndex).Name
@@ -3824,7 +3840,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End With
     End Sub
 
-    Private Sub Btn_Filtro_Vendedor_Asignado_Entidad_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtro_Vendedor_Asignado_Entidad.Click
+    Private Sub Btn_Filtro_Vendedor_Asignado_Entidad_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Vendedor_Asignado_Entidad.Click
         If Fx_Tiene_Permiso(Me, "Inf00025") Then
             Dim _SqlFiltro_Fechas As String
 
@@ -3875,7 +3891,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Private Sub Tiempo_revisa_actualizacion_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Tiempo_revisa_actualizacion.Tick
+    Private Sub Tiempo_revisa_actualizacion_Tick(sender As System.Object, e As System.EventArgs) Handles Tiempo_revisa_actualizacion.Tick
 
         Try
 
@@ -4109,6 +4125,35 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                 Sb_Actualizar_Grilla(False)
             Else
                 Cmb_Vista_Informe.SelectedValue = "KOLTPR"
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_Filtro_SucursalDoc_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_SucursalDoc.Click
+
+        Dim _SqlFiltro_Fechas As String
+
+        _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
+                             Format(Dtp_Fecha_Hasta.Value, "yyyyMMdd") & "'" & vbCrLf
+
+        Dim _Sql_Filtro_Condicion_Extra = "And EMPRESA+KOSU In (Select Distinct EMPRESA+SUDO From " &
+                                          _Nombre_Tabla_Paso & vbCrLf & _SqlFiltro_Fechas & ")"
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl_Filtro_SucursalDoc,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Sucursales, _Sql_Filtro_Condicion_Extra,
+                               _Filtro_SucursalDoc_Todas, False) Then
+
+            _Tbl_Filtro_SucursalDoc = _Filtrar.Pro_Tbl_Filtro
+            _Filtro_SucursalDoc_Todas = _Filtrar.Pro_Filtro_Todas
+
+            If Cmb_Vista_Informe.SelectedValue = "SUDO" Then
+                Sb_Actualizar_Grilla(False)
+            Else
+                Cmb_Vista_Informe.SelectedValue = "SUDO"
             End If
 
         End If

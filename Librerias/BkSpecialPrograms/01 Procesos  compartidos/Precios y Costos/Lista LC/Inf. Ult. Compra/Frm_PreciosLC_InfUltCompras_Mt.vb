@@ -1,4 +1,4 @@
-Public Class Frm_PreciosLC_InfUltCompras_Mt
+锘縋ublic Class Frm_PreciosLC_InfUltCompras_Mt
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -17,10 +17,10 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
 
     Public Sub New()
 
-        ' Esta llamada es exigida por el dise馻dor.
+        ' Esta llamada es exigida por el dise帽ador.
         InitializeComponent()
 
-        ' Agregue cualquier inicializaci髇 despu閟 de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaci贸n despu茅s de la llamada a InitializeComponent().
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
         Sb_Formato_Generico_Grilla(GrillaProdActualizados, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
@@ -122,10 +122,10 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
 
 
             .Columns("Codigo").Width = 100
-            .Columns("Codigo").HeaderText = "C骴igo"
+            .Columns("Codigo").HeaderText = "C贸digo"
 
             .Columns("Descripcion").Width = 300
-            .Columns("Descripcion").HeaderText = "Descripci髇"
+            .Columns("Descripcion").HeaderText = "Descripci贸n"
 
             .Columns("Mcosto").Width = 70
             .Columns("Mcosto").HeaderText = "Mejor costo (Anterior)"
@@ -160,16 +160,16 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
 
 
             .Columns("Tido_UlRc").Width = 50
-            .Columns("Tido_UlRc").HeaderText = "Tipo Doc. (Ult. recepci髇)"
+            .Columns("Tido_UlRc").HeaderText = "Tipo Doc. (Ult. recepci贸n)"
 
             .Columns("Nudo_UlRc").Width = 80
-            .Columns("Nudo_UlRc").HeaderText = "N鷐ero Doc. (Ult. recepci髇)"
+            .Columns("Nudo_UlRc").HeaderText = "N煤mero Doc. (Ult. recepci贸n)"
 
             .Columns("Fecha_UlRc").Width = 80
-            .Columns("Fecha_UlRc").HeaderText = "Fecha Doc. (Ult. recepci髇)"
+            .Columns("Fecha_UlRc").HeaderText = "Fecha Doc. (Ult. recepci贸n)"
 
             .Columns("dias").Width = 40
-            .Columns("dias").HeaderText = "D韆s dif."
+            .Columns("dias").HeaderText = "D铆as dif."
 
             'FormatoGrilla(GrillaProdActualizados, 3)
 
@@ -243,11 +243,11 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
                 .Columns("FEEMLI").Visible = True
 
                 .Columns("KOPRCT").Width = 100
-                .Columns("KOPRCT").HeaderText = "C骴igo producto"
+                .Columns("KOPRCT").HeaderText = "C贸digo producto"
                 .Columns("KOPRCT").Visible = True
 
                 .Columns("NOKOPR").Width = 300
-                .Columns("NOKOPR").HeaderText = "Descripci髇 producto"
+                .Columns("NOKOPR").HeaderText = "Descripci贸n producto"
                 .Columns("NOKOPR").Visible = True
 
                 .Columns("UD02PR").Width = 60
@@ -316,7 +316,8 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Desde#", _Fecha_Desde)
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Hasta#", _Fecha_Hasta)
         Consulta_sql = Replace(Consulta_sql, "#Condicion#", _Condicion)
-
+        Consulta_sql = Replace(Consulta_sql, "#Global_BaseBk#", _Global_BaseBk)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
 
         _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -347,13 +348,13 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
             _DisplayIndex += 1
 
             .Columns("KOPRCT").Width = 100
-            .Columns("KOPRCT").HeaderText = "C骴igo producto"
+            .Columns("KOPRCT").HeaderText = "C贸digo producto"
             .Columns("KOPRCT").Visible = True
             .Columns("KOPRCT").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("NOKOPR").Width = 300
-            .Columns("NOKOPR").HeaderText = "Descripci髇 producto"
+            .Columns("NOKOPR").HeaderText = "Descripci贸n producto"
             .Columns("NOKOPR").Visible = True
             .Columns("NOKOPR").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -522,7 +523,7 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
                         Dim _Codigo As String = _Fila.Cells("KOPRCT").Value.ToString.Trim
 
                         Dim Fm As New Frm_PreciosLC_Mt01
-                        Fm.CargarProducto(_Codigo)
+                        Fm.Sb_Cargar_Producto(_Codigo)
                         Fm.Txtcodigo.Text = _Codigo
                         Fm.Cerrar_Al_Grabar = True
                         Fm.ShowDialog(Me)
@@ -574,7 +575,7 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
                         Dim _Codigo As String = _Fila.Cells("KOPRCT").Value.ToString.Trim
 
                         Dim Fm As New Frm_PreciosLC_Mt01
-                        Fm.CargarProducto(_Codigo)
+                        Fm.Sb_Cargar_Producto(_Codigo)
                         Fm.Txtcodigo.Text = _Codigo
                         Fm.Cerrar_Al_Grabar = True
                         Fm.ShowDialog(Me)

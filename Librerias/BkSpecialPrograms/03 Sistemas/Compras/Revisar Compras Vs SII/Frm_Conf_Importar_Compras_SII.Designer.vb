@@ -68,6 +68,7 @@ Partial Class Frm_Conf_Importar_Compras_SII
         Me.Btn_Abrir_Libro_SII.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Abrir_Libro_SII.ForeColor = System.Drawing.Color.Black
         Me.Btn_Abrir_Libro_SII.Image = CType(resources.GetObject("Btn_Abrir_Libro_SII.Image"), System.Drawing.Image)
+        Me.Btn_Abrir_Libro_SII.ImageAlt = CType(resources.GetObject("Btn_Abrir_Libro_SII.ImageAlt"), System.Drawing.Image)
         Me.Btn_Abrir_Libro_SII.Name = "Btn_Abrir_Libro_SII"
         Me.Btn_Abrir_Libro_SII.Tooltip = "Abrir libro"
         '
@@ -76,6 +77,7 @@ Partial Class Frm_Conf_Importar_Compras_SII
         Me.Btn_Cargar_Libro_SII.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Cargar_Libro_SII.ForeColor = System.Drawing.Color.Black
         Me.Btn_Cargar_Libro_SII.Image = CType(resources.GetObject("Btn_Cargar_Libro_SII.Image"), System.Drawing.Image)
+        Me.Btn_Cargar_Libro_SII.ImageAlt = CType(resources.GetObject("Btn_Cargar_Libro_SII.ImageAlt"), System.Drawing.Image)
         Me.Btn_Cargar_Libro_SII.Name = "Btn_Cargar_Libro_SII"
         Me.Btn_Cargar_Libro_SII.Tooltip = "Buscar archivo Excel"
         '

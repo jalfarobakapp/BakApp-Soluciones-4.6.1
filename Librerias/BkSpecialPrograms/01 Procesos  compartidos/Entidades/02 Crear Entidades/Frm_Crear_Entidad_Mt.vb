@@ -30,7 +30,7 @@ Public Class Frm_Crear_Entidad_Mt
         Get
             Return _CreaNuevaEntidad
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _CreaNuevaEntidad = value
         End Set
     End Property
@@ -38,7 +38,7 @@ Public Class Frm_Crear_Entidad_Mt
         Get
             Return _Crear_Entidad
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Crear_Entidad = value
         End Set
     End Property
@@ -46,7 +46,7 @@ Public Class Frm_Crear_Entidad_Mt
         Get
             Return _Editar_Entidad
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Editar_Entidad = value
         End Set
     End Property
@@ -54,7 +54,7 @@ Public Class Frm_Crear_Entidad_Mt
         Get
             Return _Grabar
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Grabar = value
         End Set
     End Property
@@ -62,7 +62,7 @@ Public Class Frm_Crear_Entidad_Mt
         Get
             Return _Elimnar
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Elimnar = value
         End Set
     End Property
@@ -239,10 +239,9 @@ Public Class Frm_Crear_Entidad_Mt
 
     End Sub
 
-    Private Sub Frm_Crear_Entidad_Mt_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+    Private Sub Frm_Crear_Entidad_Mt_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
-        Lbl_Libera_NVV.Visible = _Existe_Tbl_Entidades_Bakapp
-        Sw_Libera_NVV.Visible = _Existe_Tbl_Entidades_Bakapp
+        Chk_Libera_NVV.Visible = _Existe_Tbl_Entidades_Bakapp
 
         If _Crear_Entidad Then
 
@@ -299,8 +298,7 @@ Public Class Frm_Crear_Entidad_Mt
         AddHandler Grilla_Cuentas.CellEndEdit, AddressOf Grilla_Cuentas_CellValueChanged
         AddHandler Grilla_Cuentas.MouseDown, AddressOf Sb_Grilla_Cuentas_MouseDown
         AddHandler Grilla_Maeenmail.MouseDown, AddressOf Sb_Grilla_Maennmail_MouseDown
-
-        AddHandler Sw_Libera_NVV.ValueChanged, AddressOf Sw_Libera_NVV_ValueChanged
+        AddHandler Chk_Libera_NVV.CheckedChanged, AddressOf Chk_Libera_NVV_CheckedChanged
 
         Btn_Direcciones_Despachos.Visible = True
 
@@ -510,7 +508,7 @@ Public Class Frm_Crear_Entidad_Mt
 
     End Function
 
-    Private Sub BtnxGrabar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnxGrabar.Click
+    Private Sub BtnxGrabar_Click(sender As System.Object, e As System.EventArgs) Handles BtnxGrabar.Click
 
         Dim _Koen As String = TxtxCodEntidad.Text
         Dim _Suen As String = TxtxSucursal.Text
@@ -602,7 +600,7 @@ Public Class Frm_Crear_Entidad_Mt
 
             Dim _Suma As Double = _CRTO + _CRSD + _CRCH + _CRLT + _CRPA
 
-            If Sw_Libera_NVV.Value And _Suma > 0 Then
+            If Chk_Libera_NVV.Checked And _Suma > 0 Then
 
                 TabControl1.SelectedTabIndex = 3
 
@@ -832,7 +830,6 @@ Public Class Frm_Crear_Entidad_Mt
 
             ElseIf _Editar_Entidad Then
 
-
                 If ChkxBloqueadaVyC.Checked <> _BlocDesb_VtayCmp Then
                     Consulta_sql += vbCrLf & vbCrLf & _Sql_BlocDesb_VtayCmp
                 End If
@@ -840,6 +837,10 @@ Public Class Frm_Crear_Entidad_Mt
                 If ChkxBlocCompras.Checked <> _BlocDesb_Compra Then
                     Consulta_sql += vbCrLf & vbCrLf & _Sql_BlocDesb_Compra
                 End If
+
+                _Reg = CBool(_Sql.Fx_Cuenta_Registros("INFORMATION_SCHEMA.COLUMNS",
+                                          "COLUMN_NAME = 'FEMOEN' AND TABLE_NAME = 'MAEEN'"))
+                If _Reg Then Consulta_sql += "Update MAEEN Set FEMOEN = Getdate() WHERE KOEN=@koen AND SUEN=@suen" & vbCrLf
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                 Comando.Transaction = myTrans
@@ -914,7 +915,9 @@ Public Class Frm_Crear_Entidad_Mt
 
             If _Existe_Tbl_Entidades_Bakapp Then
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Entidades Set Libera_NVV = " & Convert.ToInt32(Sw_Libera_NVV.Value) & vbCrLf &
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Entidades Set " & vbCrLf &
+                               "Libera_NVV = " & Convert.ToInt32(Chk_Libera_NVV.Checked) & vbCrLf &
+                               ",FacAuto = " & Convert.ToInt32(Chk_FacAuto.Checked) & vbCrLf &
                                "Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
@@ -1022,7 +1025,7 @@ Public Class Frm_Crear_Entidad_Mt
 
     End Sub
 
-    Sub Sb_Llena_Combo_Tipo_Pago(ByVal _Cmb As DataGridViewComboBoxColumn)
+    Sub Sb_Llena_Combo_Tipo_Pago(_Cmb As DataGridViewComboBoxColumn)
 
         _Cmb.ValueMember = "Padre"
         _Cmb.DisplayMember = "Hijo"
@@ -1051,7 +1054,7 @@ Public Class Frm_Crear_Entidad_Mt
 
     End Sub
 
-    'Private Sub CmbxPais_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    'Private Sub CmbxPais_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
     '    Try
 
     '        Pais = CmbxPais.SelectedValue
@@ -1074,7 +1077,7 @@ Public Class Frm_Crear_Entidad_Mt
     '    End Try
     'End Sub
 
-    'Private Sub CmbxCiudad_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    'Private Sub CmbxCiudad_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
     '    Try
     '        Ciudad = CmbxCiudad.SelectedValue.ToString
     '    Catch ex As Exception
@@ -1093,11 +1096,11 @@ Public Class Frm_Crear_Entidad_Mt
     '    End Try
     'End Sub
 
-    Private Sub TxtxRazonSocial_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtxRazonSocial.TextChanged
+    Private Sub TxtxRazonSocial_TextChanged(sender As System.Object, e As System.EventArgs) Handles TxtxRazonSocial.TextChanged
         TxtxRazonSocialAmpliada.Text = TxtxRazonSocial.Text
     End Sub
 
-    Private Sub TxtxRut_Validating(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles TxtxRut.Validating
+    Private Sub TxtxRut_Validating(sender As System.Object, e As System.ComponentModel.CancelEventArgs) Handles TxtxRut.Validating
 
         Dim _Rut As String
 
@@ -1157,7 +1160,7 @@ Public Class Frm_Crear_Entidad_Mt
 
     End Sub
 
-    Private Sub TxtxSucursal_Validating(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles TxtxSucursal.Validating
+    Private Sub TxtxSucursal_Validating(sender As System.Object, e As System.ComponentModel.CancelEventArgs) Handles TxtxSucursal.Validating
 
 
         Dim EncuetraEnt As Integer = _Sql.Fx_Cuenta_Registros("MAEEN", "KOEN = '" & TxtxCodEntidad.Text & "' And SUEN = '" & TxtxSucursal.Text & "'")
@@ -1214,21 +1217,21 @@ Public Class Frm_Crear_Entidad_Mt
 
     End Sub
 
-    Private Sub TxtxRazonSocial_Validating(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles TxtxRazonSocial.Validating
+    Private Sub TxtxRazonSocial_Validating(sender As System.Object, e As System.ComponentModel.CancelEventArgs) Handles TxtxRazonSocial.Validating
         If String.IsNullOrEmpty(Trim(TxtxRazonSocial.Text)) Then
             MessageBoxEx.Show("La razón social no puede estar vacía", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             e.Cancel = True
         End If
     End Sub
 
-    Private Sub TxtxDireccion_Validating(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles TxtxDireccion.Validating
+    Private Sub TxtxDireccion_Validating(sender As System.Object, e As System.ComponentModel.CancelEventArgs) Handles TxtxDireccion.Validating
         If String.IsNullOrEmpty(Trim(TxtxDireccion.Text)) Then
             MessageBoxEx.Show("La dirección no puede estar vacía", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             e.Cancel = True
         End If
     End Sub
 
-    Private Sub TxtxGiro_Validating(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles TxtxGiro.Validating
+    Private Sub TxtxGiro_Validating(sender As System.Object, e As System.ComponentModel.CancelEventArgs) Handles TxtxGiro.Validating
         If String.IsNullOrEmpty(Trim(TxtxGiro.Text)) Then
             MessageBoxEx.Show("El Giro no puede estar vacío", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             e.Cancel = True
@@ -1242,23 +1245,23 @@ Public Class Frm_Crear_Entidad_Mt
 
     End Sub
 
-    Private Sub BtnModVendedor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnModVendedor.Click
+    Private Sub BtnModVendedor_Click(sender As System.Object, e As System.EventArgs) Handles BtnModVendedor.Click
         CmbxVendedor.Enabled = Fx_Tiene_Permiso(Me, "CfEnt006")
         BtnModVendedor.Enabled = Not CmbxVendedor.Enabled
     End Sub
 
-    Private Sub BtnModListas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnModListas.Click
+    Private Sub BtnModListas_Click(sender As System.Object, e As System.EventArgs) Handles BtnModListas.Click
         CmbxListaCosto.Enabled = Fx_Tiene_Permiso(Me, "CfEnt008")
         CmbxListaVenta.Enabled = CmbxListaCosto.Enabled
         BtnModListas.Enabled = Not CmbxListaCosto.Enabled
     End Sub
 
-    Private Sub BtnModCobrador_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnModCobrador.Click
+    Private Sub BtnModCobrador_Click(sender As System.Object, e As System.EventArgs) Handles BtnModCobrador.Click
         CmbxCobrador.Enabled = Fx_Tiene_Permiso(Me, "CfEnt007")
         BtnModCobrador.Enabled = Not CmbxCobrador.Enabled
     End Sub
 
-    Private Sub BtnModCredito_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnModCredito.Click
+    Private Sub BtnModCredito_Click(sender As System.Object, e As System.EventArgs) Handles BtnModCredito.Click
 
         Dim _Enable As Boolean = Fx_Tiene_Permiso(Me, "CfEnt009")
 
@@ -1273,7 +1276,7 @@ Public Class Frm_Crear_Entidad_Mt
         TxtxDiasEntreVenci.Enabled = _Enable
         TxtxMorosidadP.Enabled = _Enable
 
-        Sw_Libera_NVV.Enabled = _Enable
+        Chk_Libera_NVV.Enabled = _Enable
 
         If _Enable Then TxtxCtoTotal.Focus()
 
@@ -1296,7 +1299,13 @@ Public Class Frm_Crear_Entidad_Mt
             TxtxCodEntidad.Text = _Koen
             TxtxSucursal.Text = _Suen
             TipoSuc = _RowEntidad.Item("TIPOSUC")
-            TxtxRut.Text = Trim(_RowEntidad.Item("RTEN")) & "-" & Trim(RutDigito(_RowEntidad.Item("RTEN")))
+
+            Try
+                TxtxRut.Text = Trim(_RowEntidad.Item("RTEN")) & "-" & Trim(RutDigito(_RowEntidad.Item("RTEN")))
+            Catch ex As Exception
+                TxtxRut.Text = Trim(_RowEntidad.Item("RTEN")) '& "-" & Trim(RutDigito(_RowEntidad.Item("RTEN")))
+            End Try
+
             CmbxTipoEntidad.SelectedValue = _RowEntidad.Item("TIEN")
             TxtxRazonSocial.Text = Trim(_RowEntidad.Item("NOKOEN"))
             TxtxDireccion.Text = Trim(_RowEntidad.Item("DIEN"))
@@ -1389,6 +1398,7 @@ Public Class Frm_Crear_Entidad_Mt
             ChkxEnsEsEmisorDocumento.Checked = _RowEntidad.Item("RECEPELECT")
             ChkxEntNoAfecCtaCte.Checked = _RowEntidad.Item("NOTRAEDEUD")
             ChkxEntPreferencial.Checked = _RowEntidad.Item("PREFEN")
+            Chk_Occobli.Checked = _RowEntidad.Item("OCCOBLI")
 
             ChkxExigeNVV.Checked = _RowEntidad.Item("NVVPIDEPIE")
 
@@ -1447,7 +1457,8 @@ Public Class Frm_Crear_Entidad_Mt
 
                 End If
 
-                Sw_Libera_NVV.Value = _Row_Entidades.Item("Libera_NVV")
+                Chk_Libera_NVV.Checked = _Row_Entidades.Item("Libera_NVV")
+                Chk_FacAuto.Checked = _Row_Entidades.Item("FacAuto")
 
             End If
 
@@ -1459,20 +1470,20 @@ Public Class Frm_Crear_Entidad_Mt
 
     End Function
 
-    Private Sub BtnCrearContacto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub BtnCrearContacto_Click(sender As System.Object, e As System.EventArgs)
         Dim Fm As New Frm_Crear_Entidad_Mt_Crear_Contactos
         Fm._CodEntidad = TxtxCodEntidad.Text
         Fm.ShowDialog(Me)
     End Sub
 
-    Sub PresionaEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs)
+    Sub PresionaEnter(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs)
         If e.KeyChar = Convert.ToChar(Keys.Return) Then
             SendKeys.Send("{TAB}")
             e.Handled = True
         End If
     End Sub
 
-    Private Sub TxtxCodEntidad_Validating(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles TxtxCodEntidad.Validating
+    Private Sub TxtxCodEntidad_Validating(sender As System.Object, e As System.ComponentModel.CancelEventArgs) Handles TxtxCodEntidad.Validating
 
         If String.IsNullOrEmpty(Trim(TxtxCodEntidad.Text)) Then
 
@@ -1567,7 +1578,7 @@ Public Class Frm_Crear_Entidad_Mt
         End If
     End Sub
 
-    Private Sub BtnContactosEntidad_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnContactosEntidad.Click
+    Private Sub BtnContactosEntidad_Click(sender As System.Object, e As System.EventArgs) Handles BtnContactosEntidad.Click
 
         Dim Fm As New Frm_Crear_Entidad_Mt_Lista_contactos(False)
         Fm.Pro_CodEntidad = TxtxCodEntidad.Text
@@ -1577,25 +1588,25 @@ Public Class Frm_Crear_Entidad_Mt
 
     End Sub
 
-    Private Sub ChkxExigeNVV_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChkxExigeNVV.CheckedChanged
+    Private Sub ChkxExigeNVV_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles ChkxExigeNVV.CheckedChanged
         TxtxPorcAnticipo.Enabled = ChkxExigeNVV.Checked
     End Sub
 
-    Private Sub BtnEliminarUser_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnEliminarUser.Click
+    Private Sub BtnEliminarUser_Click(sender As System.Object, e As System.EventArgs) Handles BtnEliminarUser.Click
         If Fx_Eliminar_Entidad(TxtxCodEntidad.Text, TxtxSucursal.Text, Me) Then
             _Elimnar = True
             Me.Close()
         End If
     End Sub
 
-    Private Sub Btn_ComentariosCtaCte_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_ComentariosCtaCte.Click
+    Private Sub Btn_ComentariosCtaCte_Click(sender As System.Object, e As System.EventArgs) Handles Btn_ComentariosCtaCte.Click
         Dim Fm As New Frm_Crear_Entidad_Mt_Obs_CtaCte
         Fm.Pro_CodEntidad = TxtxCodEntidad.Text
         Fm.Pro_SucEntidad = TxtxSucursal.Text
         Fm.ShowDialog(Me)
     End Sub
 
-    Private Sub Sb_ChkxBloqueadaVyC(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Sb_ChkxBloqueadaVyC(sender As System.Object, e As System.EventArgs)
 
         Dim _Palabra As String
         Dim _BloDes As String
@@ -1633,7 +1644,7 @@ Public Class Frm_Crear_Entidad_Mt
 
     End Sub
 
-    Private Sub Sb_ChkxBlocCompras(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Sb_ChkxBlocCompras(sender As System.Object, e As System.EventArgs)
 
         Dim _Palabra As String
         Dim _BloDes As String
@@ -1673,7 +1684,7 @@ Public Class Frm_Crear_Entidad_Mt
 
     End Sub
 
-    Private Sub Btn_TipoEntidad_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_TipoEntidad.Click
+    Private Sub Btn_TipoEntidad_Click(sender As System.Object, e As System.EventArgs) Handles Btn_TipoEntidad.Click
         If Fx_Tiene_Permiso(Me, "Tbl00015") Then
             Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Tipoentidad,
                                                                  Frm_Tabla_Caracterizaciones_01_Listado.Accion.Mantencion_Tabla)
@@ -1689,7 +1700,7 @@ Public Class Frm_Crear_Entidad_Mt
         End If
     End Sub
 
-    Private Sub Btn_TamnoEmpresa_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_TamnoEmpresa.Click
+    Private Sub Btn_TamnoEmpresa_Click(sender As System.Object, e As System.EventArgs) Handles Btn_TamnoEmpresa.Click
         If Fx_Tiene_Permiso(Me, "Tbl00013") Then
             Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Tamanoempr,
                                                                   Frm_Tabla_Caracterizaciones_01_Listado.Accion.Mantencion_Tabla)
@@ -1705,7 +1716,7 @@ Public Class Frm_Crear_Entidad_Mt
         End If
     End Sub
 
-    Private Sub Btn_Rubro_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Rubro.Click
+    Private Sub Btn_Rubro_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Rubro.Click
         If Fx_Tiene_Permiso(Me, "Tbl00017") Then
             Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Rubros,
                                                                  Frm_Tabla_Caracterizaciones_01_Listado.Accion.Mantencion_Tabla)
@@ -1721,7 +1732,7 @@ Public Class Frm_Crear_Entidad_Mt
         End If
     End Sub
 
-    Private Sub Btn_ActividadEconomica_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_ActividadEconomica.Click
+    Private Sub Btn_ActividadEconomica_Click(sender As System.Object, e As System.EventArgs) Handles Btn_ActividadEconomica.Click
         If Fx_Tiene_Permiso(Me, "Tbl00012") Then
             Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Actividade,
                                                                  Frm_Tabla_Caracterizaciones_01_Listado.Accion.Mantencion_Tabla)
@@ -1738,7 +1749,7 @@ Public Class Frm_Crear_Entidad_Mt
         End If
     End Sub
 
-    Private Sub Btn_Transportista_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Transportista.Click
+    Private Sub Btn_Transportista_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Transportista.Click
 
         If Fx_Tiene_Permiso(Me, "") Then
             Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Transporte,
@@ -1754,7 +1765,7 @@ Public Class Frm_Crear_Entidad_Mt
         End If
     End Sub
 
-    Private Sub Btn_Asociar_Marcas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Asociar_Marcas.Click
+    Private Sub Btn_Asociar_Marcas_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Asociar_Marcas.Click
 
         Dim Fm As New Frm_ProveedoresVSMarcas
         Fm.TxtCodigo.Text = TxtxCodEntidad.Text
@@ -1765,7 +1776,7 @@ Public Class Frm_Crear_Entidad_Mt
 
     End Sub
 
-    Private Sub Btn_Anotaciones_a_la_entidad_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Anotaciones_a_la_entidad.Click
+    Private Sub Btn_Anotaciones_a_la_entidad_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Anotaciones_a_la_entidad.Click
 
         Dim _Idmaeen As Integer = _RowEntidad.Item("IDMAEEN")
 
@@ -1775,7 +1786,7 @@ Public Class Frm_Crear_Entidad_Mt
 
     End Sub
 
-    Private Sub Btn_Agregar_CtaCte_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Agregar_CtaCte.Click
+    Private Sub Btn_Agregar_CtaCte_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Agregar_CtaCte.Click
 
         Dim _Koen = TxtxCodEntidad.Text
 
@@ -1874,7 +1885,7 @@ Public Class Frm_Crear_Entidad_Mt
 
     End Sub
 
-    Sub Sb_Llena_Combo_Tipo_Pago_Cell(ByVal _Cmb As DataGridViewComboBoxCell)
+    Sub Sb_Llena_Combo_Tipo_Pago_Cell(_Cmb As DataGridViewComboBoxCell)
 
         'caract_combo(_Cmb)
         _Cmb.ValueMember = "Padre"
@@ -1904,7 +1915,7 @@ Public Class Frm_Crear_Entidad_Mt
 
     End Sub
 
-    Sub Sb_Cell_Banco(ByVal _Fila As DataGridViewRow, ByVal _Koendp As String)
+    Sub Sb_Cell_Banco(_Fila As DataGridViewRow, _Koendp As String)
 
         'Dim _Koendp = Trim(_Fila.Cells("BANCO").Value)
         Dim _Tidepen = _Fila.Cells("_TIPOPAGO").Value
@@ -1921,7 +1932,7 @@ Public Class Frm_Crear_Entidad_Mt
 
     End Sub
 
-    Private Sub Grilla_Cuentas_CellMouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles Grilla_Cuentas.CellMouseUp
+    Private Sub Grilla_Cuentas_CellMouseUp(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles Grilla_Cuentas.CellMouseUp
 
         Try
             Dim _Cabeza = Grilla_Cuentas.Columns(Grilla_Cuentas.CurrentCell.ColumnIndex).Name
@@ -1935,7 +1946,7 @@ Public Class Frm_Crear_Entidad_Mt
 
     End Sub
 
-    Private Sub Grilla_Cuentas_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Grilla_Cuentas_CellValueChanged(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
         'Handles Grilla_Cuentas.CellValueChanged
         Dim _Cabeza = Grilla_Cuentas.Columns(Grilla_Cuentas.CurrentCell.ColumnIndex).Name
 
@@ -1997,7 +2008,7 @@ Public Class Frm_Crear_Entidad_Mt
 
     End Sub
 
-    Sub Sb_TipoPago(ByVal _Fila As DataGridViewRow)
+    Sub Sb_TipoPago(_Fila As DataGridViewRow)
 
         Dim _TP = _Fila.Cells("_TIPOPAGO")
         Dim _TipoPago = _Fila.Cells("_TIPOPAGO").Value
@@ -2112,7 +2123,7 @@ Public Class Frm_Crear_Entidad_Mt
 
 #End Region
 
-    Private Sub Grilla_Cuentas_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Cuentas.CellDoubleClick
+    Private Sub Grilla_Cuentas_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Cuentas.CellDoubleClick
 
         Dim _Cabeza = Grilla_Cuentas.Columns(Grilla_Cuentas.CurrentCell.ColumnIndex).Name
         Dim _Fila As DataGridViewRow = Grilla_Cuentas.Rows(Grilla_Cuentas.CurrentRow.Index)
@@ -2183,28 +2194,6 @@ Public Class Frm_Crear_Entidad_Mt
 
     End Sub
 
-    Private Sub Sw_Libera_NVV_ValueChanged(sender As Object, e As EventArgs)
-
-        If Sw_Libera_NVV.Value Then
-
-            Dim _CRTO As Double = TxtxCtoTotal.Tag
-            Dim _CRSD As Double = TxtxCtoSinDocumentar.Tag
-            Dim _CRCH As Double = TxtxCtoEnCheques.Tag
-            Dim _CRLT As Double = TxtxCtoEnLetra.Tag
-            Dim _CRPA As Double = TxtxCtoEnPagare.Tag
-
-            Dim _Suma = _CRTO + _CRSD + _CRCH + _CRLT + _CRPA
-
-            If Sw_Libera_NVV.Value And _Suma > 0 Then
-                MessageBoxEx.Show(Me, "No puede dejar Libera NVV en [SI] cuando la entidad tiene créditos asociados" & vbCrLf &
-                                  "Para poder dejar en [SI] debe dejar todos los créditos en cero", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Sw_Libera_NVV.Value = False
-            End If
-
-        End If
-
-    End Sub
-
     Private Sub Sb_Txt_Nros_Validated(sender As Object, e As EventArgs)
         CType(sender, Controls.TextBoxX).Tag = Val(CType(sender, Controls.TextBoxX).Text)
         CType(sender, Controls.TextBoxX).Text = FormatNumber(CType(sender, Controls.TextBoxX).Tag, 0)
@@ -2214,7 +2203,34 @@ Public Class Frm_Crear_Entidad_Mt
         CType(sender, Controls.TextBoxX).Text = CType(sender, Controls.TextBoxX).Tag
     End Sub
 
-    Private Sub Btn_Cta_Eliminar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cta_Eliminar.Click
+    Private Sub Chk_Libera_NVV_CheckedChanged(sender As Object, e As EventArgs)
+
+        If Chk_Libera_NVV.Checked Then
+
+            Dim _CRTO As Double = TxtxCtoTotal.Tag
+            Dim _CRSD As Double = TxtxCtoSinDocumentar.Tag
+            Dim _CRCH As Double = TxtxCtoEnCheques.Tag
+            Dim _CRLT As Double = TxtxCtoEnLetra.Tag
+            Dim _CRPA As Double = TxtxCtoEnPagare.Tag
+
+            Dim _Suma = _CRTO + _CRSD + _CRCH + _CRLT + _CRPA
+
+            If _Suma > 0 Then
+                MessageBoxEx.Show(Me, "No puede dejar Libera NVV en [SI] cuando la entidad tiene créditos asociados" & vbCrLf &
+                                  "Para poder dejar en [SI] debe dejar todos los créditos en cero", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Chk_Libera_NVV.Checked = False
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_Modificar_FacAuto_Click(sender As Object, e As EventArgs) Handles Btn_Modificar_FacAuto.Click
+        Chk_FacAuto.Enabled = Fx_Tiene_Permiso(Me, "CfEnt028")
+        Btn_Modificar_FacAuto.Enabled = Not Chk_FacAuto.Enabled
+    End Sub
+
+    Private Sub Btn_Cta_Eliminar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cta_Eliminar.Click
 
         If MessageBoxEx.Show(Me, "¿Confirma la eliminación de la cuenta?", "Eliminar cuenta",
                              MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
@@ -2228,7 +2244,7 @@ Public Class Frm_Crear_Entidad_Mt
 
     End Sub
 
-    Private Sub Sb_Grilla_Cuentas_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_Cuentas_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
@@ -2242,7 +2258,7 @@ Public Class Frm_Crear_Entidad_Mt
         End If
     End Sub
 
-    Private Sub Sb_Grilla_Maennmail_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_Maennmail_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)

@@ -285,6 +285,30 @@ Public Class Frm_Formulario_Lector_Barra
 
         If Chk_LeerSoloUnaVezCodBarra.Checked Then
 
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_CodQRLogDoc" & vbCrLf &
+                               "Where CodigoQR = '" & _CodQRUnicosLeido & "' And Tido = 'GRI'"
+            Dim _TblQrDoc As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            If _TblQrDoc.Rows.Count Then
+
+                Dim _Msg = String.Empty
+                Txt_Codigo_Barras.Text = String.Empty
+                Dim _Cnt = 0
+
+                For Each _Fl As DataRow In _TblQrDoc.Rows
+                    _Msg += _Fl.Item("Tido") & "-" & _Fl.Item("Nudo")
+                    _Cnt += 1
+                    If _Cnt < _TblQrDoc.Rows.Count Then
+                        _Msg += "; "
+                    End If
+                Next
+
+                Sb_Confirmar_Lectura("El código ya fue leído en otro(s) documento(s) GRI",
+                                         "No puede leer mas de una vez el mismo código en otro documento" & vbCrLf & vbCrLf &
+                                         "Documento(s): " & _Msg)
+                Return
+            End If
+
             For Each _CodQr As String In _ListaCodQRUnicosLeidos
 
                 If _CodQr = _CodQRUnicosLeido Then

@@ -180,11 +180,18 @@ Public Class Class_Prestashop
             _Filtro_id_product = String.Empty
         End If
 
-        Consulta_sql = "Select '" & Sitio & "' As Nombre_Pagina,P1.id_product,reference As Codigo,P4.name as Descripcion,P2.price As Precio,P3.quantity As Cantidad,P1.active 
+        'Consulta_sql = "Select '" & Sitio & "' As Nombre_Pagina,P1.id_product,reference As Codigo,P4.name as Descripcion,P2.price As Precio,P3.quantity As Cantidad,P1.active 
+        '                From ps_product P1 
+        '                inner Join ps_product_shop P2 On P1.id_product = P2.id_product
+        '                inner Join ps_stock_available P3 On P1.id_product = P3.id_product
+        '                inner join ps_product_lang P4 On P1.id_product = P4.id_product" & vbCrLf &
+        '                _Filtro_id_product
+
+        Consulta_sql = "Select '" & Sitio & "' As Nombre_Pagina,P1.id_product,reference As Codigo,ifnull(P4.name,'S/D') as Descripcion,ifnull(P2.price,0) As Precio,ifnull(P3.quantity,0) As Cantidad,P1.active 
                         From ps_product P1 
-                        inner Join ps_product_shop P2 On P1.id_product = P2.id_product
-                        inner Join ps_stock_available P3 On P1.id_product = P3.id_product
-                        inner join ps_product_lang P4 On P1.id_product = P4.id_product" & vbCrLf &
+                        Left Join ps_product_shop P2 On P1.id_product = P2.id_product
+                        left Join ps_stock_available P3 On P1.id_product = P3.id_product
+                        left join ps_product_lang P4 On P1.id_product = P4.id_product" & vbCrLf &
                         _Filtro_id_product
 
         Fx_Tbl_Productos_Prestashop = _Clas_Ps.Fx_Get_Datatable(Consulta_sql)
@@ -750,7 +757,7 @@ Public Class Class_Prestashop
             End If
 
             _Contador += 1
-            Progress_Porcent.Value = ((_Contador * 100) / _Tbl_Prod_PrestaShop.Rows.Count) 'Mas
+            Progress_Porcent.Value = ((_Contador * 100) / _Tbl_Prod_PrestaShop.Rows.Count)
             Progress_Canti.Value += 1
 
             Etiqueta1.Text = "Producto: " & _Descripcion
@@ -760,7 +767,7 @@ Public Class Class_Prestashop
 
             If _Cancelar Then
                 If MessageBoxEx.Show("¿Esta seguro de detener el proceso?", "Detener proceso",
-                                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+                                      MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
                     Exit For
                 Else
                     _Cancelar = False

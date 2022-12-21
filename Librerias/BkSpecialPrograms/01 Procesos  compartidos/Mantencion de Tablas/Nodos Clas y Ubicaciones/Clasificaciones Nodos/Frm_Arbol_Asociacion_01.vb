@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+ÔªøImports DevComponents.DotNetBar
 Imports System.Windows.Forms
 Imports System.Data.SqlClient
 Imports System.IO
@@ -58,17 +58,19 @@ Public Class Frm_Arbol_Asociacion_01
 
     Public Sub New()
 
-        ' Llamada necesaria para el DiseÒador de Windows Forms.
+        ' Llamada necesaria para el Dise√±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicializaciÛn despuÈs de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaci√≥n despu√©s de la llamada a InitializeComponent().
 
-        ' Agregue cualquier inicializaciÛn despuÈs de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaci√≥n despu√©s de la llamada a InitializeComponent().
         If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresa & "\Clasificaciones_prod") Then
             System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresa & "\Clasificaciones_prod")
         End If
 
         TreeView1.AllowDrop = False
+
+        Sb_Color_Botones_Barra(Bar2)
 
     End Sub
 
@@ -98,7 +100,7 @@ Public Class Frm_Arbol_Asociacion_01
 
         TreeView1.Nodes.Clear() ' = Nothing
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo & "'" & vbCrLf & _
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo & "'" & vbCrLf &
                        "And Para_filtro = 0"
 
         _Tbl_Nodos_Asociacios_Producto = _Sql.Fx_Get_Tablas(Consulta_sql) '_SQL.Fx_Get_Tablas(Consulta_sql)
@@ -112,25 +114,25 @@ Public Class Frm_Arbol_Asociacion_01
             TreeView1.CheckBoxes = False
 
             If Chk_Ver_Clas_Unicas.Checked Then
-                Consulta_sql = "Select Codigo_Nodo,Identificacdor_NodoPadre,Descripcion" & vbCrLf & _
-                            "FROM " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf & _
-                            "Where Codigo_Nodo in (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf & _
-                            "Where Codigo = '" & _Codigo & "' And Producto = 0 And Codigo_Nodo In (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones))" & vbCrLf & _
+                Consulta_sql = "Select Codigo_Nodo,Identificacdor_NodoPadre,Descripcion" & vbCrLf &
+                            "FROM " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
+                            "Where Codigo_Nodo in (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
+                            "Where Codigo = '" & _Codigo & "' And Producto = 0 And Codigo_Nodo In (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones))" & vbCrLf &
                             "Order By Identificacdor_NodoPadre, Descripcion"
             Else
-                Consulta_sql = "Select Codigo_Nodo,Identificacdor_NodoPadre,Descripcion" & vbCrLf & _
-                            "FROM " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf & _
-                            "Where Codigo_Nodo in (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf & _
-                            "Where Codigo = '" & _Codigo & "' And Producto = 0 And Codigo_Nodo In (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones))" & vbCrLf & _
-                            "And Clas_Unica_X_Producto = 0" & vbCrLf & _
+                Consulta_sql = "Select Codigo_Nodo,Identificacdor_NodoPadre,Descripcion" & vbCrLf &
+                            "FROM " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
+                            "Where Codigo_Nodo in (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
+                            "Where Codigo = '" & _Codigo & "' And Producto = 0 And Codigo_Nodo In (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones))" & vbCrLf &
+                            "And Clas_Unica_X_Producto = 0" & vbCrLf &
                             "Order By Identificacdor_NodoPadre, Descripcion"
             End If
 
             Me.MaximizeBox = False
         Else
             Me.Text = "ARBOL DE ASOCIACIONES DE PRODUCTOS"
-            Consulta_sql = "Select Codigo_Nodo,Identificacdor_NodoPadre,Descripcion" & vbCrLf & _
-                           "FROM " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf & _
+            Consulta_sql = "Select Codigo_Nodo,Identificacdor_NodoPadre,Descripcion" & vbCrLf &
+                           "FROM " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
                            "Where (Clas_Unica_X_Producto = 0) or (Clas_Unica_X_Producto = 1 And Es_Seleccionable = 0)"
 
         End If
@@ -164,14 +166,14 @@ Public Class Frm_Arbol_Asociacion_01
 
     End Sub
 
-    Private Sub CrearNodosDelPadre(ByVal indicePadre As Integer, _
+    Private Sub CrearNodosDelPadre(ByVal indicePadre As Integer,
                                        ByVal nodePadre As TreeNode)
 
         Dim dataViewHijos As DataView
 
-        ' Crear un DataView con los Nodos que dependen del Nodo padre pasado como par·metro.
+        ' Crear un DataView con los Nodos que dependen del Nodo padre pasado como par√°metro.
         dataViewHijos = New DataView(Datos_Arbol.Tables("Arbol_Asociacion"))
-        dataViewHijos.RowFilter = _
+        dataViewHijos.RowFilter =
         Datos_Arbol.Tables("Arbol_Asociacion").Columns("Identificacdor_NodoPadre").ColumnName + " = " + indicePadre.ToString()
 
         ' Agregar al TreeView los nodos Hijos que se han obtenido en el DataView.
@@ -188,7 +190,7 @@ Public Class Frm_Arbol_Asociacion_01
 
             Dim _Full As String
 
-            ' si el par·metro nodoPadre es nulo es porque es la primera llamada, son los Nodos
+            ' si el par√°metro nodoPadre es nulo es porque es la primera llamada, son los Nodos
             ' del primer nivel que no dependen de otro nodo.
             If nodePadre Is Nothing Then
 
@@ -198,7 +200,7 @@ Public Class Frm_Arbol_Asociacion_01
 
             Else
                 _Full = nodePadre.FullPath & "\" & nuevoNodo 'nuevoNodo.FullPath
-                ' se aÒade el nuevo nodo al nodo padre.
+                ' se a√±ade el nuevo nodo al nodo padre.
                 'Dim _Es_Ubicacion = _Sql.Fx_Trae_Dato(, "Es_Seleccionable", _
                 '                                         "Zw_TblArbol_Asociaciones", _
                 '                                         "Descripcion = '" & nuevoNodo & "' And Es_Ubicacion = 1 And Es_Padre = 0 And Es_Seleccionable = 1", True)
@@ -230,7 +232,7 @@ Public Class Frm_Arbol_Asociacion_01
                 End If
             End If
 
-            ' Llamada recurrente al mismo mÈtodo para agregar los Hijos del Nodo reciÈn agregado.
+            ' Llamada recurrente al mismo m√©todo para agregar los Hijos del Nodo reci√©n agregado.
 
             Dim tvn() As TreeNode = TreeView1.Nodes.Find(_Full, True)
             'If tvn IsNot Nothing AndAlso tvn.Length > 0 Then
@@ -244,14 +246,14 @@ Public Class Frm_Arbol_Asociacion_01
     End Sub
 
 
-    Private Sub Recorrer_Nodos(ByVal indicePadre As Integer, _
+    Private Sub Recorrer_Nodos(ByVal indicePadre As Integer,
                                ByVal nodePadre As TreeNode)
 
         Dim dataViewHijos As DataView
 
-        ' Crear un DataView con los Nodos que dependen del Nodo padre pasado como par·metro.
+        ' Crear un DataView con los Nodos que dependen del Nodo padre pasado como par√°metro.
         dataViewHijos = New DataView(Datos_Arbol.Tables("Arbol_Asociacion"))
-        dataViewHijos.RowFilter = _
+        dataViewHijos.RowFilter =
         Datos_Arbol.Tables("Arbol_Asociacion").Columns("Identificacdor_NodoPadre").ColumnName + " = " + indicePadre.ToString()
 
         ' Agregar al TreeView los nodos Hijos que se han obtenido en el DataView.
@@ -260,18 +262,18 @@ Public Class Frm_Arbol_Asociacion_01
             Dim nuevoNodo As New TreeNode
             nuevoNodo.Text = dataRowCurrent("Descripcion").ToString().Trim()
 
-            ' si el par·metro nodoPadre es nulo es porque es la primera llamada, son los Nodos
+            ' si el par√°metro nodoPadre es nulo es porque es la primera llamada, son los Nodos
             ' del primer nivel que no dependen de otro nodo.
             If nodePadre Is Nothing Then
                 nuevoNodo.SelectedImageIndex = 0
                 TreeView1.Nodes.Add(nuevoNodo)
             Else
-                ' se aÒade el nuevo nodo al nodo padre.
+                ' se a√±ade el nuevo nodo al nodo padre.
                 nuevoNodo.SelectedImageIndex = 3
                 nodePadre.Nodes.Add(nuevoNodo)
             End If
 
-            ' Llamada recurrente al mismo mÈtodo para agregar los Hijos del Nodo reciÈn agregado.
+            ' Llamada recurrente al mismo m√©todo para agregar los Hijos del Nodo reci√©n agregado.
             CrearNodosDelPadre(Int32.Parse(dataRowCurrent("Identificador_Nodo").ToString()), nuevoNodo)
         Next dataRowCurrent
 
@@ -283,7 +285,7 @@ Public Class Frm_Arbol_Asociacion_01
 
     Private Sub RecorrerNodos(ByVal treeNode As TreeNode)
         Try
-            'Si el nodo que recibimos tiene hijos se recorrer·
+            'Si el nodo que recibimos tiene hijos se recorrer√°
             'para luego verificar si esta o no checado
             For Each tn As TreeNode In treeNode.Nodes
                 'Se Verifica si esta marcado...
@@ -300,7 +302,7 @@ Public Class Frm_Arbol_Asociacion_01
                     ' MessageBox.Show(tn.Text)
                 End If
                 'Ahora hago verificacion a los hijos del nodo actual            
-                'Esta iteraciÛn no acabara hasta llegar al ultimo nodo principal
+                'Esta iteraci√≥n no acabara hasta llegar al ultimo nodo principal
                 RecorrerNodos(tn)
             Next
         Catch ex As Exception
@@ -308,7 +310,7 @@ Public Class Frm_Arbol_Asociacion_01
         End Try
     End Sub
 
-    Private Sub AgregarAsociaciÛnToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AgregarAsociaciÛnToolStripMenuItem.Click
+    Private Sub AgregarAsociaci√≥nToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AgregarAsociaci√≥nToolStripMenuItem.Click
         ' pregunto si hay un nodo seleccionado
         If Fx_Tiene_Permiso(Me, "Tbl00007") Then
             If IsNothing(TreeView1.SelectedNode) = False Then
@@ -329,8 +331,8 @@ Public Class Frm_Arbol_Asociacion_01
                     Dim _Descripcion As String
 
                     Dim _Aceptar As Boolean = InputBox_Bk(Me,
-                                                         "Escriba la descripciÛn para la clasificaciÛn",
-                                                         "Crear asociaciÛn", _Descripcion, False, _Tipo_Mayus_Minus.Mayusculas)
+                                                         "Escriba la descripci√≥n para la clasificaci√≥n",
+                                                         "Crear asociaci√≥n", _Descripcion, False, _Tipo_Mayus_Minus.Mayusculas)
 
                     If _Aceptar Then
 
@@ -338,9 +340,9 @@ Public Class Frm_Arbol_Asociacion_01
 
                         If _Como_Padre Then
 
-                            If MessageBoxEx.Show(Me, "øDesea crear claificaciÛn como padre?" & vbCrLf & vbCrLf &
+                            If MessageBoxEx.Show(Me, "¬øDesea crear claificaci√≥n como padre?" & vbCrLf & vbCrLf &
                                                  Tn.FullPath & "\" & _Descripcion,
-                                                 "Crear clasificaciÛn",
+                                                 "Crear clasificaci√≥n",
                                                  MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.No Then
                                 _Como_Padre = False
                             Else
@@ -361,12 +363,12 @@ Public Class Frm_Arbol_Asociacion_01
                     End If
 
                 Else
-                    MessageBoxEx.Show(Me, "Esta clasificaciÛn no permite asignar sub-clasificaciones", _
-                                      "Agregar sub-clasificaciÛn", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    MessageBoxEx.Show(Me, "Esta clasificaci√≥n no permite asignar sub-clasificaciones",
+                                      "Agregar sub-clasificaci√≥n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 End If
             Else
-                MessageBoxEx.Show(Me, "No hay un nodo seleccionado para agregar uno nuevo.", _
-                                  "Agregar sub-clasificaciÛn", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                MessageBoxEx.Show(Me, "No hay un nodo seleccionado para agregar uno nuevo.",
+                                  "Agregar sub-clasificaci√≥n", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
         End If
     End Sub
@@ -450,7 +452,7 @@ Public Class Frm_Arbol_Asociacion_01
 
     End Sub
 
-    Private Sub EliminarAsociaciÛnsoloSiHaSidoCreadaDesdeEsteAsistenteToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EliminarAsociaciÛnsoloSiHaSidoCreadaDesdeEsteAsistenteToolStripMenuItem.Click
+    Private Sub EliminarAsociaci√≥nsoloSiHaSidoCreadaDesdeEsteAsistenteToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EliminarAsociaci√≥nsoloSiHaSidoCreadaDesdeEsteAsistenteToolStripMenuItem.Click
         ' pregunto si hay un nodo seleccionado
         If IsNothing(TreeView1.SelectedNode) = False Then
 
@@ -466,11 +468,11 @@ Public Class Frm_Arbol_Asociacion_01
                 ' elimino el nodo seleccionado
                 TreeView1.SelectedNode.Remove()
             Else
-                MessageBoxEx.Show(Me, "Esta clasificaciÛn se debe eliminar desde el administrador de clasificaciones", _
-                                     "ValidaciÛn", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "Esta clasificaci√≥n se debe eliminar desde el administrador de clasificaciones",
+                                     "Validaci√≥n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
         Else
-            MessageBox.Show("No hay un nodo seleccionado para eliminar.", _
+            MessageBox.Show("No hay un nodo seleccionado para eliminar.",
                             "Eliminar nodo", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
     End Sub
@@ -491,9 +493,9 @@ Public Class Frm_Arbol_Asociacion_01
 
     End Sub
 
-    Private Sub BuildCSV(ByVal nodes As TreeNodeCollection, _
-                         ByRef csvData As String, _
-                         ByVal depth As Integer, _
+    Private Sub BuildCSV(ByVal nodes As TreeNodeCollection,
+                         ByRef csvData As String,
+                         ByVal depth As Integer,
                          Optional ByVal _Cadena As String = "")
         For Each node As TreeNode In nodes
 
@@ -543,11 +545,11 @@ Public Class Frm_Arbol_Asociacion_01
                         csvData = Replace(csvData, "\", ",")
                         writer.Write(csvData)
                     End Using
-                    MessageBoxEx.Show(Me, "Archivo guardado correctamente" & vbCrLf & _
+                    MessageBoxEx.Show(Me, "Archivo guardado correctamente" & vbCrLf &
                                          "Ruta: " & _Dir, "Exportar a csv", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End If
             Else
-                MessageBoxEx.Show(Me, "No exiten datos que exportar", _
+                MessageBoxEx.Show(Me, "No exiten datos que exportar",
                                   "Exportar a .csv", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
 
@@ -662,9 +664,9 @@ Public Class Frm_Arbol_Asociacion_01
 
 
     Private Sub Sb_TreeView_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-        ' pregunto si el botÛn que estoy pulsando es el izquierdo para poder arrastrar el nodo
+        ' pregunto si el bot√≥n que estoy pulsando es el izquierdo para poder arrastrar el nodo
         If e.Button.Left = MouseButtons.Left Then
-            ' seÒalo que se est· haciendo un Drag and Drop dentro del TreeView
+            ' se√±alo que se est√° haciendo un Drag and Drop dentro del TreeView
             DragDropTreeView = True
 
             ' obtengo el arbol del control TreeView1
@@ -674,7 +676,7 @@ Public Class Frm_Arbol_Asociacion_01
             Dim node As TreeNode
             node = tree.GetNodeAt(e.X, e.Y)
 
-            ' establezco el nodo del ·rbol seleccionado actualmente en el control TreeView
+            ' establezco el nodo del √°rbol seleccionado actualmente en el control TreeView
             tree.SelectedNode = node
 
             ' guardo los datos del origen del nodo
@@ -682,7 +684,7 @@ Public Class Frm_Arbol_Asociacion_01
 
             If Not (node Is Nothing) Then node.SelectedImageIndex = node.ImageIndex
 
-            ' inicio la operaciÛn Drag and Drop con una copia clonada del nodo.
+            ' inicio la operaci√≥n Drag and Drop con una copia clonada del nodo.
             If Not node Is Nothing Then
                 tree.DoDragDrop(node.Clone(), DragDropEffects.Copy)
             End If
@@ -691,23 +693,23 @@ Public Class Frm_Arbol_Asociacion_01
 
     Private Sub Sb_TreeView_DragDrop(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DragEventArgs)
         If DragDropTreeView = True Then
-            ' determino si los datos almacenados en la instancia est·n asociados al formato especificado del TreeView
+            ' determino si los datos almacenados en la instancia est√°n asociados al formato especificado del TreeView
             If e.Data.GetDataPresent("System.Windows.Forms.TreeNode", False) Then
                 ' variable que sirve para guardar el valor de un punto en coordenadas X e Y
                 Dim pt As Point
                 ' variable que sirve para guardar el valor del nodo de destino
                 Dim DestinationNode As TreeNode
 
-                ' uso PointToClient para calcular la ubicaciÛn del mouse sobre el control TreeView
+                ' uso PointToClient para calcular la ubicaci√≥n del mouse sobre el control TreeView
                 pt = CType(sender, TreeView).PointToClient(New Point(e.X, e.Y))
-                ' uso este punto para recuperar el nodo de destino dentro del ·rbol del control TreeView.
+                ' uso este punto para recuperar el nodo de destino dentro del √°rbol del control TreeView.
                 DestinationNode = CType(sender, TreeView).GetNodeAt(pt)
                 ' verifico que el nodo de destino sea distinto al nodo de origen
                 If DestinationNode.FullPath <> NodoOrigen.FullPath Then
                     DestinationNode.Nodes.Add(CType(NodoOrigen.Clone, TreeNode))
-                    ' expando el nodo padre donde agregue el nuevo nodo. Sin esto, solo aparecerÌa el signo +.
+                    ' expando el nodo padre donde agregue el nuevo nodo. Sin esto, solo aparecer√≠a el signo +.
                     DestinationNode.Expand()
-                    ' elimino el nodo de origen dentro del ·rbol
+                    ' elimino el nodo de origen dentro del √°rbol
                     NodoOrigen.Remove()
                 End If
             End If
@@ -715,18 +717,18 @@ Public Class Frm_Arbol_Asociacion_01
     End Sub
 
     Private Sub Sb_TreeView_DragOver(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DragEventArgs)
-        ' Verifica si dentro del TreeView se est· arrastrando
+        ' Verifica si dentro del TreeView se est√° arrastrando
         If DragDropTreeView Then
-            ' deshabilita la actualizaciÛn en pantalla del control TreeView 
+            ' deshabilita la actualizaci√≥n en pantalla del control TreeView 
             TreeView1.BeginUpdate()
 
-            ' obtengo el ·rbol
+            ' obtengo el √°rbol
             Dim tree As TreeView = CType(sender, TreeView)
 
-            ' establezco el efecto de la operaciÛn Drag and Drop
+            ' establezco el efecto de la operaci√≥n Drag and Drop
             e.Effect = DragDropEffects.None
 
-            ' pregunto por si el formato es v·lido?
+            ' pregunto por si el formato es v√°lido?
             If Not e.Data.GetData(GetType(TreeNode)) Is Nothing Then
 
                 ' Obtengo el punto en la pantalla.
@@ -735,23 +737,23 @@ Public Class Frm_Arbol_Asociacion_01
                 ' Convierto a un punto en el sistema de coordenadas del control TreeView
                 pt = tree.PointToClient(pt)
 
-                ' pregunto si el mouse est· sobre un nodo v·lido
+                ' pregunto si el mouse est√° sobre un nodo v√°lido
                 Dim node As TreeNode = tree.GetNodeAt(pt)
                 If Not node Is Nothing Then
-                    ' establezco el efecto de la operaciÛn Drag and Drop
+                    ' establezco el efecto de la operaci√≥n Drag and Drop
                     e.Effect = DragDropEffects.Copy
-                    ' establezco el nodo del ·rbol seleccionado actualmente en el control TreeView
+                    ' establezco el nodo del √°rbol seleccionado actualmente en el control TreeView
                     tree.SelectedNode = node
                 End If
 
             End If
-            ' habilita la actualizaciÛn en pantalla del control TreeView
+            ' habilita la actualizaci√≥n en pantalla del control TreeView
             TreeView1.EndUpdate()
         End If
     End Sub
 
     Private Sub Sb_TreeView1_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-        ' seÒalo que no est· haciendo un Drag and Drop dentro del TreeView
+        ' se√±alo que no est√° haciendo un Drag and Drop dentro del TreeView
         DragDropTreeView = False
     End Sub
 
@@ -829,7 +831,7 @@ Public Class Frm_Arbol_Asociacion_01
         Catch ex As Exception
             'MessageBoxEx.Show(ex.Message)
         End Try
-        
+
 
     End Sub
 

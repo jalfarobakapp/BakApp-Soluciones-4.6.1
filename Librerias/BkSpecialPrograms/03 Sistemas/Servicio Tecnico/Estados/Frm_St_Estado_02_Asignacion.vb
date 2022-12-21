@@ -1,7 +1,7 @@
-Imports DevComponents.DotNetBar
-'Imports Lib_Bakapp_VarClassFunc
+ï»¿'Imports Lib_Bakapp_VarClassFunc
 'Imports BkSpecialPrograms
 Imports System.Data.SqlClient
+Imports DevComponents.DotNetBar
 
 Public Class Frm_St_Estado_02_Asignacion
 
@@ -74,10 +74,10 @@ Public Class Frm_St_Estado_02_Asignacion
 #End Region
     Public Sub New(ByVal Id_Ot As Integer, ByVal Accion As Accion)
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
         _Accion = Accion
         _Id_Ot = Id_Ot
 
@@ -128,7 +128,7 @@ Public Class Frm_St_Estado_02_Asignacion
 
     End Sub
 
-    Sub Sb_Cargar_Tecnicos(ByVal _Tecnico As String, _
+    Sub Sb_Cargar_Tecnicos(ByVal _Tecnico As String,
                            Optional ByVal _Solo_Este_Tecnico As Boolean = False)
 
         Dim _Condicion = String.Empty
@@ -138,8 +138,8 @@ Public Class Frm_St_Estado_02_Asignacion
         End If
 
         caract_combo(Cmb_Tecnico)
-        Consulta_sql = "SELECT CodFuncionario AS Padre,NomFuncionario AS Hijo" & vbCrLf & _
-                       "FROM " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller" & vbCrLf & _
+        Consulta_sql = "SELECT CodFuncionario AS Padre,NomFuncionario AS Hijo" & vbCrLf &
+                       "FROM " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller" & vbCrLf &
                        "WHERE 1 > 0" & _Condicion & " ORDER BY Hijo"
         Cmb_Tecnico.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
         Cmb_Tecnico.SelectedValue = _Tecnico
@@ -164,7 +164,7 @@ Public Class Frm_St_Estado_02_Asignacion
 
         Dim _CodFuncionario As String = Cmb_Tecnico.SelectedValue
 
-        Consulta_sql = "Select top 1 * From " & _Global_BaseBk & " Zw_St_Conf_Tecnicos_Taller" & vbCrLf & _
+        Consulta_sql = "Select top 1 * From " & _Global_BaseBk & " Zw_St_Conf_Tecnicos_Taller" & vbCrLf &
                        "Where CodFuncionario = '" & _CodFuncionario & "'"
 
         Dim _TblTecnico As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -187,9 +187,9 @@ Public Class Frm_St_Estado_02_Asignacion
 
         If String.IsNullOrEmpty(NuloPorNro(Cmb_Tecnico.SelectedValue, "")) Then
             Beep()
-            ToastNotification.Show(Me, "DEBE ASIGNAR UN TECNICO U/O TALLER", _
-                                   Imagenes_32x32.Images.Item("warning.png"), _
-                                   2 * 1000, eToastGlowColor.Red, _
+            ToastNotification.Show(Me, "DEBE ASIGNAR UN TECNICO U/O TALLER",
+                                   Imagenes_32x32.Images.Item("warning.png"),
+                                   2 * 1000, eToastGlowColor.Red,
                                    eToastPosition.MiddleCenter)
             Cmb_Tecnico.Focus()
             Return
@@ -197,39 +197,72 @@ Public Class Frm_St_Estado_02_Asignacion
 
         If String.IsNullOrEmpty(Txt_Nota.Text) Then
             Beep()
-            ToastNotification.Show(Me, "FALTA NOTA PARA LA ASIGNACION", _
-                                   Imagenes_32x32.Images.Item("warning.png"), _
-                                   2 * 1000, eToastGlowColor.Red, _
+            ToastNotification.Show(Me, "FALTA NOTA PARA LA ASIGNACION",
+                                   Imagenes_32x32.Images.Item("warning.png"),
+                                   2 * 1000, eToastGlowColor.Red,
                                    eToastPosition.MiddleCenter)
             Txt_Nota.Focus()
             Return
         End If
 
-        If Fx_Fijar_Estado() Then
+        Txt_Nota.Text = Replace(Txt_Nota.Text.Trim, "'", "Â´")
 
-            _Row_Encabezado.Item("CodEstado") = "A"
-            _Row_Encabezado.Item("CodTecnico_Asignado") = Cmb_Tecnico.SelectedValue
-            _Row_Encabezado.Item("Tecnico_Asignado") = Trim(Cmb_Tecnico.Text)
+        For _i = 0 To 31
+            Txt_Nota.Text = Replace(Txt_Nota.Text, Chr(_i), " ")
+        Next
 
+        If _Accion = Accion.Nuevo Then
 
-            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado", _
-                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Dim _Pertenece As String = _Row_Encabezado.Item("Pertenece")
 
-            _Grabar = True
-            Me.Close()
+            If String.IsNullOrEmpty(_Pertenece) Then
+
+                If Fx_Fijar_Estado() Then
+
+                    _Row_Encabezado.Item("CodEstado") = "A"
+                    _Row_Encabezado.Item("CodTecnico_Asignado") = Cmb_Tecnico.SelectedValue
+                    _Row_Encabezado.Item("Tecnico_Asignado") = Trim(Cmb_Tecnico.Text)
+
+                    MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                    _Grabar = True
+                    Me.Close()
+
+                End If
+
+            Else
+
+                MessageBoxEx.Show(Me, "Esta Sub-Ot pertenece a un lote de productos ingresados bajo la misma descripciÃ³n" & vbCrLf &
+                                  "Se fijara el estado para todos los productos de esta OT que pertenescan a esta Sub-Ot",
+                                  "InformaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                Dim _Nro_Ot = _Row_Encabezado.Item("Nro_Ot")
+
+                If Fx_Fijar_Estado(_Nro_Ot, _Pertenece, Txt_Nota.Text) Then
+
+                    MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                    _Grabar = True
+                    Me.Close()
+
+                End If
+
+            End If
 
         End If
+
+
 
     End Sub
 
     Function Fx_Fijar_Estado() As Boolean
 
-        Dim _Nota_Etapa_02 As String = Replace(Trim(Txt_Nota.Text), "'", "´")
+        Dim _Nota_Etapa_02 As String = Replace(Trim(Txt_Nota.Text), "'", "Â´")
 
         For _i = 0 To 31
             _Nota_Etapa_02 = Replace(_Nota_Etapa_02, Chr(_i), " ")
         Next
-
 
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
@@ -237,7 +270,6 @@ Public Class Frm_St_Estado_02_Asignacion
         Dim _Cn As New SqlConnection
 
         Try
-
 
             _Sql.Sb_Abrir_Conexion(_Cn)
             myTrans = _Cn.BeginTransaction()
@@ -275,13 +307,9 @@ Public Class Frm_St_Estado_02_Asignacion
 
             End If
 
-
-
-
             Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
-
 
             '**********************************'**********************************
 
@@ -290,6 +318,64 @@ Public Class Frm_St_Estado_02_Asignacion
 
             Return True
 
+
+        Catch ex As Exception
+            '
+            'Consulta_sql = "ROLLBACK TRANSACTION"
+            'Ej_consulta_IDU(Consulta_sql, cn1)
+            MsgBox(ex.Message)
+            myTrans.Rollback()
+
+            Return 0
+        End Try
+
+    End Function
+
+    Function Fx_Fijar_Estado(_Nro_Ot As String,
+                             _Pertenece As String,
+                             _Nota_Etapa_02 As String) As Boolean
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Encabezado" & vbCrLf &
+                       "Where Nro_Ot = '" & _Nro_Ot & "' --And Pertenece = '" & _Pertenece & "'"
+        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim _Cn As New SqlConnection
+
+        Try
+
+            _Sql.Sb_Abrir_Conexion(_Cn)
+            myTrans = _Cn.BeginTransaction()
+
+            ' INSERTAR ENCABEZADO DE DOCUMENTO
+
+            For Each _Fila As DataRow In _Tbl.Rows
+
+                Dim _Id_Ot = _Fila.Item("Id_Ot")
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set" & vbCrLf &
+                               "CodEstado = 'A',CodTecnico_Asignado = '" & Cmb_Tecnico.SelectedValue & "'" & vbCrLf &
+                               "Where Id_Ot = " & _Id_Ot & vbCrLf &
+                               "Insert Into " & _Global_BaseBk & "Zw_St_OT_Estados " &
+                               "(Id_Ot,CodEstado,Fecha_Fijacion,CodFuncionario,NomFuncionario) Values " &
+                               "(" & _Id_Ot & ",'A',GetDate(),'" & FUNCIONARIO & "','" & Nombre_funcionario_activo & "')" & vbCrLf &
+                               "Update " & _Global_BaseBk & "Zw_St_OT_Notas Set Nota_Etapa_02 = '" & _Nota_Etapa_02 & "'" & vbCrLf &
+                               "Where Id_Ot = " & _Id_Ot
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            Next
+
+            '**********************************'**********************************
+
+            myTrans.Commit()
+            _Sql.Sb_Cerrar_Conexion(_Cn)
+
+            Return True
 
         Catch ex As Exception
             '
@@ -335,15 +421,15 @@ Public Class Frm_St_Estado_02_Asignacion
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_OT_Estados", "Id_Ot = " & _Id_Ot & " And CodEstado = 'P'")
 
         If CBool(_Reg) Then
-            MessageBoxEx.Show(Me, "No se puede modificar el estado, ya que existe un estado posterior", "Validación", _
+            MessageBoxEx.Show(Me, "No se puede modificar el estado, ya que existe un estado posterior", "ValidaciÃ³n",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
         Else
 
             _Editando_documento = True
             Beep()
-            ToastNotification.Show(Me, "AHORA ES POSIBLE ACTUALIZAR EL DOCUMENTO", _
-                                   Btn_Editar.Image, _
-                                   1 * 1000, eToastGlowColor.Green, _
+            ToastNotification.Show(Me, "AHORA ES POSIBLE ACTUALIZAR EL DOCUMENTO",
+                                   Btn_Editar.Image,
+                                   1 * 1000, eToastGlowColor.Green,
                                    eToastPosition.MiddleCenter)
 
             Btn_Grabar.Visible = True
@@ -367,7 +453,7 @@ Public Class Frm_St_Estado_02_Asignacion
         Me.Close()
     End Sub
 
-   
+
     Private Sub Btn_Direccion_Servicio_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Direccion_Servicio.Click
 
         Dim Fm As New Frm_St_Documento_Dir_Serv_Domicilio

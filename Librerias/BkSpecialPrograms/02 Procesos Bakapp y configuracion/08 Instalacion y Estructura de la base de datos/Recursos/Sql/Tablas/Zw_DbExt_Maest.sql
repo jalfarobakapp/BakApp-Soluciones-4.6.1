@@ -10,6 +10,8 @@ CREATE TABLE [dbo].[Zw_DbExt_Maest](
 	[Empresa_Des]	[char](2)		NOT NULL DEFAULT (''),
 	[Sucursal_Des]	[varchar](3)	NOT NULL DEFAULT (''),
 	[Bodega_Des]	[varchar](3)	NOT NULL DEFAULT (''),
+	[NombreBod_Ori]	[varchar](50)	NOT NULL DEFAULT (''),
+	[NombreBod_Des]	[varchar](50)	NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_DbExt_Maest] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

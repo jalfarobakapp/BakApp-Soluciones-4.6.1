@@ -361,6 +361,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("CfEnt025", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("CfEnt026", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("CfEnt027", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("CfEnt028", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Crv0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Crv0002", _Objeto, _Formulario)
@@ -394,6 +395,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Mail0002", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Mail0003", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Mail0004", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Mail0005", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Pick0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Pick0002", _Objeto, _Formulario)
@@ -774,6 +776,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Prod069", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Prod070", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Prod071", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Prod072", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("NO00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("NO00002", _Objeto, _Formulario)
@@ -845,6 +848,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Sql00002", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Sql00003", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Sql00004", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Sql00005", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Tbl00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Tbl00002", _Objeto, _Formulario)
@@ -1558,19 +1562,20 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "INGRESAR A LA FICHA DE LA COMPAÑIA DE SEGUROS DEL CLIENTE"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
                 _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
-
             Case "CfEnt025"
                 _DescripcionPermiso = "EDITAR FICHA DE LA COMPAÑIA DE SEGUROS DEL CLIENTE"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
                 _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
-
             Case "CfEnt026"
                 _DescripcionPermiso = "VER CONTACTOS DE LA ENTIDAD"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
                 _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
-
             Case "CfEnt027"
                 _DescripcionPermiso = "VER DIRECCIONES DE DESPACHO DE LA ENTIDAD"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
+                _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
+            Case "CfEnt028"
+                _DescripcionPermiso = "CAMBIAR CONDICION QUE PERMITE DECIDIR SI FACTURA AUTOMATICAMENTE LAS NOTAS DE VENTA DE LA ENTIDAD"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
                 _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
 
@@ -1711,6 +1716,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.CORREO.ToString
             Case "Mail0004"
                 _DescripcionPermiso = "ELIMINAR CORREO SMTP"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.CORREO, 6)
+                _NombreFamiliaPermiso = _Fml.CORREO.ToString
+            Case "Mail0005"
+                _DescripcionPermiso = "INGRESAR AL SISTEMA DE IMPORTAR RECEPCION DE CORREOS DE PROVEEDORES DTE XML"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.CORREO, 6)
                 _NombreFamiliaPermiso = _Fml.CORREO.ToString
         End Select
@@ -2007,7 +2016,7 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 
             Case "Bkp00057"
-                _DescripcionPermiso = "EXTENEDER FECHA DE DESPACHO EN DOCUMENTOS DE VENTA"
+                _DescripcionPermiso = "EXTENDER FECHA DE DESPACHO EN DOCUMENTOS DE VENTA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 
@@ -3379,6 +3388,10 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "LEVANTAR IMAGENES EN FORMA MASIVA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
+            Case "Prod072"
+                _DescripcionPermiso = "INGRESAR A CONFIGURACION DE IMPRESION ADICIONAL POR PRODUCTO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
+                _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
 
         End Select
 
@@ -3700,6 +3713,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.SQL_CONSULTAS.ToString
             Case "Sql00004"
                 _DescripcionPermiso = "PODER CREAR CONSULTAS SQL GLOBALES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SQL_CONSULTAS, 6)
+                _NombreFamiliaPermiso = _Fml.SQL_CONSULTAS.ToString
+            Case "Sql00005"
+                _DescripcionPermiso = "PODER CREAR/EDITAR CONSULTAS SQL PERSONALIDAS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.SQL_CONSULTAS, 6)
                 _NombreFamiliaPermiso = _Fml.SQL_CONSULTAS.ToString
 

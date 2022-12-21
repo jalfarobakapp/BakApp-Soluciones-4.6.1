@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_FacturacionElectronica
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -42,6 +42,15 @@ Partial Class Frm_FacturacionElectronica
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Id_Dte = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Btn_Consultar_Boleta = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_ReFirmarEnvioCorreo = New DevComponents.DotNetBar.ButtonX()
+        Me.Txt_Id_Dte2 = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_Idmaeedo2 = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Btn_RefirmarIdmaeedo = New DevComponents.DotNetBar.ButtonX()
+        Me.LabelX8 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_Id_Aec = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Btn_AEC = New DevComponents.DotNetBar.ButtonX()
         Me.SuspendLayout()
         '
         'Btn_Consumo_Folios
@@ -224,7 +233,7 @@ Partial Class Frm_FacturacionElectronica
         Me.Chk_AmbienteCertificacion.Size = New System.Drawing.Size(322, 23)
         Me.Chk_AmbienteCertificacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_AmbienteCertificacion.TabIndex = 14
-        Me.Chk_AmbienteCertificacion.Text = "Ambiente Certificaci�n"
+        Me.Chk_AmbienteCertificacion.Text = "Ambiente Certificación"
         '
         'Btn_Enviar_Boleta
         '
@@ -308,11 +317,143 @@ Partial Class Frm_FacturacionElectronica
         Me.Btn_Consultar_Boleta.TabIndex = 20
         Me.Btn_Consultar_Boleta.Text = "Consultar Boleta..."
         '
+        'Btn_ReFirmarEnvioCorreo
+        '
+        Me.Btn_ReFirmarEnvioCorreo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_ReFirmarEnvioCorreo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_ReFirmarEnvioCorreo.Location = New System.Drawing.Point(26, 411)
+        Me.Btn_ReFirmarEnvioCorreo.Name = "Btn_ReFirmarEnvioCorreo"
+        Me.Btn_ReFirmarEnvioCorreo.Size = New System.Drawing.Size(135, 23)
+        Me.Btn_ReFirmarEnvioCorreo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_ReFirmarEnvioCorreo.TabIndex = 21
+        Me.Btn_ReFirmarEnvioCorreo.Text = "Re-firmar con Id_Dte"
+        '
+        'Txt_Id_Dte2
+        '
+        Me.Txt_Id_Dte2.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Id_Dte2.Border.Class = "TextBoxBorder"
+        Me.Txt_Id_Dte2.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Id_Dte2.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Id_Dte2.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Id_Dte2.Location = New System.Drawing.Point(244, 412)
+        Me.Txt_Id_Dte2.Name = "Txt_Id_Dte2"
+        Me.Txt_Id_Dte2.PreventEnterBeep = True
+        Me.Txt_Id_Dte2.Size = New System.Drawing.Size(100, 22)
+        Me.Txt_Id_Dte2.TabIndex = 22
+        '
+        'LabelX6
+        '
+        Me.LabelX6.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX6.ForeColor = System.Drawing.Color.Black
+        Me.LabelX6.Location = New System.Drawing.Point(172, 412)
+        Me.LabelX6.Name = "LabelX6"
+        Me.LabelX6.Size = New System.Drawing.Size(66, 23)
+        Me.LabelX6.TabIndex = 23
+        Me.LabelX6.Text = "Id Dte"
+        '
+        'LabelX7
+        '
+        Me.LabelX7.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX7.ForeColor = System.Drawing.Color.Black
+        Me.LabelX7.Location = New System.Drawing.Point(172, 452)
+        Me.LabelX7.Name = "LabelX7"
+        Me.LabelX7.Size = New System.Drawing.Size(66, 23)
+        Me.LabelX7.TabIndex = 26
+        Me.LabelX7.Text = "Idmaeedo"
+        '
+        'Txt_Idmaeedo2
+        '
+        Me.Txt_Idmaeedo2.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Idmaeedo2.Border.Class = "TextBoxBorder"
+        Me.Txt_Idmaeedo2.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Idmaeedo2.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Idmaeedo2.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Idmaeedo2.Location = New System.Drawing.Point(244, 452)
+        Me.Txt_Idmaeedo2.Name = "Txt_Idmaeedo2"
+        Me.Txt_Idmaeedo2.PreventEnterBeep = True
+        Me.Txt_Idmaeedo2.Size = New System.Drawing.Size(100, 22)
+        Me.Txt_Idmaeedo2.TabIndex = 25
+        '
+        'Btn_RefirmarIdmaeedo
+        '
+        Me.Btn_RefirmarIdmaeedo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_RefirmarIdmaeedo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_RefirmarIdmaeedo.Location = New System.Drawing.Point(26, 451)
+        Me.Btn_RefirmarIdmaeedo.Name = "Btn_RefirmarIdmaeedo"
+        Me.Btn_RefirmarIdmaeedo.Size = New System.Drawing.Size(135, 23)
+        Me.Btn_RefirmarIdmaeedo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_RefirmarIdmaeedo.TabIndex = 24
+        Me.Btn_RefirmarIdmaeedo.Text = "Re-firmar Con IDMAEEDO"
+        '
+        'LabelX8
+        '
+        Me.LabelX8.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX8.ForeColor = System.Drawing.Color.Black
+        Me.LabelX8.Location = New System.Drawing.Point(172, 487)
+        Me.LabelX8.Name = "LabelX8"
+        Me.LabelX8.Size = New System.Drawing.Size(66, 23)
+        Me.LabelX8.TabIndex = 29
+        Me.LabelX8.Text = "Id Dte"
+        '
+        'Txt_Id_Aec
+        '
+        Me.Txt_Id_Aec.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Id_Aec.Border.Class = "TextBoxBorder"
+        Me.Txt_Id_Aec.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Id_Aec.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Id_Aec.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Id_Aec.Location = New System.Drawing.Point(244, 487)
+        Me.Txt_Id_Aec.Name = "Txt_Id_Aec"
+        Me.Txt_Id_Aec.PreventEnterBeep = True
+        Me.Txt_Id_Aec.Size = New System.Drawing.Size(100, 22)
+        Me.Txt_Id_Aec.TabIndex = 28
+        '
+        'Btn_AEC
+        '
+        Me.Btn_AEC.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_AEC.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_AEC.Location = New System.Drawing.Point(26, 486)
+        Me.Btn_AEC.Name = "Btn_AEC"
+        Me.Btn_AEC.Size = New System.Drawing.Size(135, 23)
+        Me.Btn_AEC.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_AEC.TabIndex = 27
+        Me.Btn_AEC.Text = "Enviar Cesion AEC"
+        '
         'Frm_FacturacionElectronica
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(653, 436)
+        Me.ClientSize = New System.Drawing.Size(653, 521)
+        Me.Controls.Add(Me.LabelX8)
+        Me.Controls.Add(Me.Txt_Id_Aec)
+        Me.Controls.Add(Me.Btn_AEC)
+        Me.Controls.Add(Me.LabelX7)
+        Me.Controls.Add(Me.Txt_Idmaeedo2)
+        Me.Controls.Add(Me.Btn_RefirmarIdmaeedo)
+        Me.Controls.Add(Me.LabelX6)
+        Me.Controls.Add(Me.Txt_Id_Dte2)
+        Me.Controls.Add(Me.Btn_ReFirmarEnvioCorreo)
         Me.Controls.Add(Me.Btn_Consultar_Boleta)
         Me.Controls.Add(Me.LabelX5)
         Me.Controls.Add(Me.Txt_Id_Dte)
@@ -361,4 +502,13 @@ Partial Class Frm_FacturacionElectronica
     Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_Id_Dte As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Btn_Consultar_Boleta As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Btn_ReFirmarEnvioCorreo As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Txt_Id_Dte2 As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_Idmaeedo2 As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Btn_RefirmarIdmaeedo As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents LabelX8 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_Id_Aec As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Btn_AEC As DevComponents.DotNetBar.ButtonX
 End Class

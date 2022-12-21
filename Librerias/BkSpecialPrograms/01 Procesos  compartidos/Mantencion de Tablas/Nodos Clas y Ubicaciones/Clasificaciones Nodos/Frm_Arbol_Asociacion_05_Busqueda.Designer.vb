@@ -420,6 +420,7 @@ Partial Class Frm_Arbol_Asociacion_05_Busqueda
         Me.Btn_Aceptar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Aceptar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Aceptar.Image = CType(resources.GetObject("Btn_Aceptar.Image"), System.Drawing.Image)
+        Me.Btn_Aceptar.ImageAlt = CType(resources.GetObject("Btn_Aceptar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Aceptar.Name = "Btn_Aceptar"
         Me.Btn_Aceptar.Tooltip = "Grabar"
         '
@@ -428,8 +429,10 @@ Partial Class Frm_Arbol_Asociacion_05_Busqueda
         Me.Btn_Salir_Sin_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Salir_Sin_Grabar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Salir_Sin_Grabar.Image = CType(resources.GetObject("Btn_Salir_Sin_Grabar.Image"), System.Drawing.Image)
+        Me.Btn_Salir_Sin_Grabar.ImageAlt = CType(resources.GetObject("Btn_Salir_Sin_Grabar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Salir_Sin_Grabar.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
         Me.Btn_Salir_Sin_Grabar.Name = "Btn_Salir_Sin_Grabar"
-        Me.Btn_Salir_Sin_Grabar.Text = "Salir sin grabar"
+        Me.Btn_Salir_Sin_Grabar.Text = "Salir sin seleccionar"
         '
         'Lbl_Full_Path
         '

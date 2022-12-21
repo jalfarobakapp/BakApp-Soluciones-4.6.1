@@ -118,6 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="SQLQuery_Actualiza_datos_InfStockProyecVnta" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\sqlquery actualiza datos infstockproyecvnta.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="SQLQuery_Crear_Tabla_Paso_InfStockProyecVnta" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\sqlquery crear tabla paso infstockproyecvnta.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="SQLQuery_Informe_de_Stock_segun_proyeccion_de_venta_con_detalle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\sqlquery informe de stock segun proyeccion de venta con detalle.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

@@ -9,6 +9,11 @@ CREATE TABLE [dbo].[Zw_DbExt_Conexion](
 	[Clave]				[varchar](50)	NOT NULL DEFAULT (''),
 	[BaseDeDatos]		[varchar](50)	NOT NULL DEFAULT (''),
 	[Empresa]   		[char](2)   	NOT NULL DEFAULT (''),
+	[GrbProd_Nuevos]    [bit]      	    NOT NULL DEFAULT (0),
+	[GrbEnti_Nuevas]    [bit]      	    NOT NULL DEFAULT (0),
+    [GrbProd_Bodegas]	[varchar](50)	NOT NULL DEFAULT (''),
+    [GrbProd_Listas]	[varchar](50)	NOT NULL DEFAULT (''),
+    [GrbOCC_Nuevas]     [bit]      	    NOT NULL DEFAULT (0),    
  CONSTRAINT [PK_Zw_DbExt_Conexion] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

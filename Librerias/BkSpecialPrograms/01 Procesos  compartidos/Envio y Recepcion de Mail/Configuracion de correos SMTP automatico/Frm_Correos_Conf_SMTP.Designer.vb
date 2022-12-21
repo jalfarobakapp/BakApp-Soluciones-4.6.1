@@ -151,7 +151,7 @@ Partial Class Frm_Correos_Conf_SMTP
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.90566!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 238.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 199.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 236.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 237.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX2, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Txt_Host_SMTP, 4, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX1, 3, 0)
@@ -193,7 +193,7 @@ Partial Class Frm_Correos_Conf_SMTP
         Me.Txt_Host_SMTP.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Host_SMTP.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Host_SMTP.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Host_SMTP.Location = New System.Drawing.Point(532, 3)
+        Me.Txt_Host_SMTP.Location = New System.Drawing.Point(531, 3)
         Me.Txt_Host_SMTP.Name = "Txt_Host_SMTP"
         Me.Txt_Host_SMTP.PreventEnterBeep = True
         Me.Txt_Host_SMTP.Size = New System.Drawing.Size(210, 22)
@@ -207,7 +207,7 @@ Partial Class Frm_Correos_Conf_SMTP
         '
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(333, 3)
+        Me.LabelX1.Location = New System.Drawing.Point(332, 3)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(173, 21)
         Me.LabelX1.TabIndex = 0
@@ -223,7 +223,7 @@ Partial Class Frm_Correos_Conf_SMTP
         Me.Txt_Remitente.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Remitente.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Remitente.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Remitente.Location = New System.Drawing.Point(95, 3)
+        Me.Txt_Remitente.Location = New System.Drawing.Point(94, 3)
         Me.Txt_Remitente.Name = "Txt_Remitente"
         Me.Txt_Remitente.PreventEnterBeep = True
         Me.Txt_Remitente.Size = New System.Drawing.Size(232, 22)
@@ -239,7 +239,7 @@ Partial Class Frm_Correos_Conf_SMTP
         Me.LabelX3.ForeColor = System.Drawing.Color.Black
         Me.LabelX3.Location = New System.Drawing.Point(3, 30)
         Me.LabelX3.Name = "LabelX3"
-        Me.LabelX3.Size = New System.Drawing.Size(54, 21)
+        Me.LabelX3.Size = New System.Drawing.Size(53, 21)
         Me.LabelX3.TabIndex = 4
         Me.LabelX3.Text = "Contraseña"
         '
@@ -253,7 +253,7 @@ Partial Class Frm_Correos_Conf_SMTP
         Me.Txt_Contrasena.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Contrasena.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Contrasena.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Contrasena.Location = New System.Drawing.Point(95, 30)
+        Me.Txt_Contrasena.Location = New System.Drawing.Point(94, 30)
         Me.Txt_Contrasena.Name = "Txt_Contrasena"
         Me.Txt_Contrasena.PreventEnterBeep = True
         Me.Txt_Contrasena.Size = New System.Drawing.Size(232, 22)
@@ -267,7 +267,7 @@ Partial Class Frm_Correos_Conf_SMTP
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(333, 30)
+        Me.LabelX4.Location = New System.Drawing.Point(332, 30)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(75, 21)
         Me.LabelX4.TabIndex = 6
@@ -283,7 +283,7 @@ Partial Class Frm_Correos_Conf_SMTP
         Me.Txt_Puerto.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Puerto.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Puerto.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Puerto.Location = New System.Drawing.Point(532, 30)
+        Me.Txt_Puerto.Location = New System.Drawing.Point(531, 30)
         Me.Txt_Puerto.Name = "Txt_Puerto"
         Me.Txt_Puerto.PreventEnterBeep = True
         Me.Txt_Puerto.Size = New System.Drawing.Size(50, 22)

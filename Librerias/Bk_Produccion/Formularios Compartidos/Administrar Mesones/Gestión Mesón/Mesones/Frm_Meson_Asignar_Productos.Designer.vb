@@ -75,8 +75,17 @@ Partial Class Frm_Meson_Asignar_Productos
         Me.ButtonItem4 = New DevComponents.DotNetBar.ButtonItem()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Fijar_Prioridad = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_AplicarBusqueda = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Btn_AplicarBusqueda2 = New DevComponents.DotNetBar.ButtonX()
+        Me.Txt_BuscarXInsumo = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_BuscarXProducto = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_BuscarXEntidad = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Descripcion = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Rdb_Ver_Todas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Ver_Abiertas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Ver_Terminadas = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -104,9 +113,9 @@ Partial Class Frm_Meson_Asignar_Productos
         Me.GroupPanel2.Controls.Add(Me.ContextMenuBar1)
         Me.GroupPanel2.Controls.Add(Me.Grilla_Pote)
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel2.Location = New System.Drawing.Point(3, 71)
+        Me.GroupPanel2.Location = New System.Drawing.Point(3, 96)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(675, 189)
+        Me.GroupPanel2.Size = New System.Drawing.Size(839, 189)
         '
         '
         '
@@ -396,7 +405,7 @@ Partial Class Frm_Meson_Asignar_Productos
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla_Pote.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla_Pote.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla_Pote.Size = New System.Drawing.Size(669, 166)
+        Me.Grilla_Pote.Size = New System.Drawing.Size(833, 166)
         Me.Grilla_Pote.TabIndex = 1
         '
         'GroupPanel1
@@ -405,9 +414,9 @@ Partial Class Frm_Meson_Asignar_Productos
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel1.Controls.Add(Me.Grilla_Potl)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(3, 302)
+        Me.GroupPanel1.Location = New System.Drawing.Point(3, 320)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(675, 150)
+        Me.GroupPanel1.Size = New System.Drawing.Size(839, 132)
         '
         '
         '
@@ -477,7 +486,7 @@ Partial Class Frm_Meson_Asignar_Productos
         DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla_Potl.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla_Potl.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla_Potl.Size = New System.Drawing.Size(669, 127)
+        Me.Grilla_Potl.Size = New System.Drawing.Size(833, 109)
         Me.Grilla_Potl.TabIndex = 1
         '
         'GroupPanel3
@@ -488,7 +497,7 @@ Partial Class Frm_Meson_Asignar_Productos
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel3.Location = New System.Drawing.Point(3, 458)
         Me.GroupPanel3.Name = "GroupPanel3"
-        Me.GroupPanel3.Size = New System.Drawing.Size(675, 246)
+        Me.GroupPanel3.Size = New System.Drawing.Size(839, 246)
         '
         '
         '
@@ -558,7 +567,7 @@ Partial Class Frm_Meson_Asignar_Productos
         DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla_Potpr.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
         Me.Grilla_Potpr.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla_Potpr.Size = New System.Drawing.Size(669, 223)
+        Me.Grilla_Potpr.Size = New System.Drawing.Size(833, 223)
         Me.Grilla_Potpr.TabIndex = 1
         '
         'ButtonItem1
@@ -606,10 +615,10 @@ Partial Class Frm_Meson_Asignar_Productos
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Fijar_Prioridad})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Fijar_Prioridad, Me.Btn_AplicarBusqueda})
         Me.Bar1.Location = New System.Drawing.Point(0, 739)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(684, 41)
+        Me.Bar1.Size = New System.Drawing.Size(852, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 106
@@ -626,15 +635,32 @@ Partial Class Frm_Meson_Asignar_Productos
         Me.Btn_Fijar_Prioridad.Tooltip = "Grabar"
         Me.Btn_Fijar_Prioridad.Visible = False
         '
+        'Btn_AplicarBusqueda
+        '
+        Me.Btn_AplicarBusqueda.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_AplicarBusqueda.ForeColor = System.Drawing.Color.Black
+        Me.Btn_AplicarBusqueda.Image = CType(resources.GetObject("Btn_AplicarBusqueda.Image"), System.Drawing.Image)
+        Me.Btn_AplicarBusqueda.ImageAlt = CType(resources.GetObject("Btn_AplicarBusqueda.ImageAlt"), System.Drawing.Image)
+        Me.Btn_AplicarBusqueda.Name = "Btn_AplicarBusqueda"
+        Me.Btn_AplicarBusqueda.Tooltip = "Aplicar busqueda"
+        '
         'GroupPanel4
         '
         Me.GroupPanel4.BackColor = System.Drawing.Color.White
         Me.GroupPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel4.Controls.Add(Me.Btn_AplicarBusqueda2)
+        Me.GroupPanel4.Controls.Add(Me.Txt_BuscarXInsumo)
+        Me.GroupPanel4.Controls.Add(Me.LabelX4)
+        Me.GroupPanel4.Controls.Add(Me.Txt_BuscarXProducto)
+        Me.GroupPanel4.Controls.Add(Me.LabelX3)
+        Me.GroupPanel4.Controls.Add(Me.Txt_BuscarXEntidad)
+        Me.GroupPanel4.Controls.Add(Me.LabelX2)
         Me.GroupPanel4.Controls.Add(Me.Txt_Descripcion)
+        Me.GroupPanel4.Controls.Add(Me.LabelX1)
         Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel4.Location = New System.Drawing.Point(3, 12)
         Me.GroupPanel4.Name = "GroupPanel4"
-        Me.GroupPanel4.Size = New System.Drawing.Size(675, 53)
+        Me.GroupPanel4.Size = New System.Drawing.Size(839, 78)
         '
         '
         '
@@ -666,6 +692,125 @@ Partial Class Frm_Meson_Asignar_Productos
         Me.GroupPanel4.TabIndex = 108
         Me.GroupPanel4.Text = "Buscar OT por Numero o referencia"
         '
+        'Btn_AplicarBusqueda2
+        '
+        Me.Btn_AplicarBusqueda2.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_AplicarBusqueda2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_AplicarBusqueda2.Image = CType(resources.GetObject("Btn_AplicarBusqueda2.Image"), System.Drawing.Image)
+        Me.Btn_AplicarBusqueda2.ImageAlt = CType(resources.GetObject("Btn_AplicarBusqueda2.ImageAlt"), System.Drawing.Image)
+        Me.Btn_AplicarBusqueda2.Location = New System.Drawing.Point(755, 29)
+        Me.Btn_AplicarBusqueda2.Name = "Btn_AplicarBusqueda2"
+        Me.Btn_AplicarBusqueda2.Size = New System.Drawing.Size(71, 23)
+        Me.Btn_AplicarBusqueda2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_AplicarBusqueda2.TabIndex = 12
+        Me.Btn_AplicarBusqueda2.Text = "Buscar..."
+        Me.Btn_AplicarBusqueda2.Tooltip = "Aplicar busqueda"
+        '
+        'Txt_BuscarXInsumo
+        '
+        Me.Txt_BuscarXInsumo.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_BuscarXInsumo.Border.Class = "TextBoxBorder"
+        Me.Txt_BuscarXInsumo.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_BuscarXInsumo.ButtonCustom.Image = CType(resources.GetObject("Txt_BuscarXInsumo.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_BuscarXInsumo.ButtonCustom.Visible = True
+        Me.Txt_BuscarXInsumo.ButtonCustom2.Image = CType(resources.GetObject("Txt_BuscarXInsumo.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_BuscarXInsumo.ButtonCustom2.Visible = True
+        Me.Txt_BuscarXInsumo.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_BuscarXInsumo.ForeColor = System.Drawing.Color.Black
+        Me.Txt_BuscarXInsumo.Location = New System.Drawing.Point(604, 30)
+        Me.Txt_BuscarXInsumo.Name = "Txt_BuscarXInsumo"
+        Me.Txt_BuscarXInsumo.PreventEnterBeep = True
+        Me.Txt_BuscarXInsumo.ReadOnly = True
+        Me.Txt_BuscarXInsumo.Size = New System.Drawing.Size(145, 22)
+        Me.Txt_BuscarXInsumo.TabIndex = 10
+        '
+        'LabelX4
+        '
+        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.ForeColor = System.Drawing.Color.Black
+        Me.LabelX4.Location = New System.Drawing.Point(604, 10)
+        Me.LabelX4.Name = "LabelX4"
+        Me.LabelX4.Size = New System.Drawing.Size(145, 23)
+        Me.LabelX4.TabIndex = 11
+        Me.LabelX4.Text = "Insumo utilizado"
+        '
+        'Txt_BuscarXProducto
+        '
+        Me.Txt_BuscarXProducto.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_BuscarXProducto.Border.Class = "TextBoxBorder"
+        Me.Txt_BuscarXProducto.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_BuscarXProducto.ButtonCustom.Image = CType(resources.GetObject("Txt_BuscarXProducto.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_BuscarXProducto.ButtonCustom.Visible = True
+        Me.Txt_BuscarXProducto.ButtonCustom2.Image = CType(resources.GetObject("Txt_BuscarXProducto.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_BuscarXProducto.ButtonCustom2.Visible = True
+        Me.Txt_BuscarXProducto.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_BuscarXProducto.ForeColor = System.Drawing.Color.Black
+        Me.Txt_BuscarXProducto.Location = New System.Drawing.Point(453, 30)
+        Me.Txt_BuscarXProducto.Name = "Txt_BuscarXProducto"
+        Me.Txt_BuscarXProducto.PreventEnterBeep = True
+        Me.Txt_BuscarXProducto.ReadOnly = True
+        Me.Txt_BuscarXProducto.Size = New System.Drawing.Size(145, 22)
+        Me.Txt_BuscarXProducto.TabIndex = 8
+        '
+        'LabelX3
+        '
+        Me.LabelX3.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX3.ForeColor = System.Drawing.Color.Black
+        Me.LabelX3.Location = New System.Drawing.Point(453, 10)
+        Me.LabelX3.Name = "LabelX3"
+        Me.LabelX3.Size = New System.Drawing.Size(145, 23)
+        Me.LabelX3.TabIndex = 9
+        Me.LabelX3.Text = "Producto a fabricar"
+        '
+        'Txt_BuscarXEntidad
+        '
+        Me.Txt_BuscarXEntidad.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_BuscarXEntidad.Border.Class = "TextBoxBorder"
+        Me.Txt_BuscarXEntidad.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_BuscarXEntidad.ButtonCustom.Image = CType(resources.GetObject("Txt_BuscarXEntidad.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_BuscarXEntidad.ButtonCustom.Visible = True
+        Me.Txt_BuscarXEntidad.ButtonCustom2.Image = CType(resources.GetObject("Txt_BuscarXEntidad.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_BuscarXEntidad.ButtonCustom2.Visible = True
+        Me.Txt_BuscarXEntidad.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_BuscarXEntidad.ForeColor = System.Drawing.Color.Black
+        Me.Txt_BuscarXEntidad.Location = New System.Drawing.Point(330, 30)
+        Me.Txt_BuscarXEntidad.Name = "Txt_BuscarXEntidad"
+        Me.Txt_BuscarXEntidad.PreventEnterBeep = True
+        Me.Txt_BuscarXEntidad.ReadOnly = True
+        Me.Txt_BuscarXEntidad.Size = New System.Drawing.Size(117, 22)
+        Me.Txt_BuscarXEntidad.TabIndex = 6
+        '
+        'LabelX2
+        '
+        Me.LabelX2.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX2.ForeColor = System.Drawing.Color.Black
+        Me.LabelX2.Location = New System.Drawing.Point(330, 10)
+        Me.LabelX2.Name = "LabelX2"
+        Me.LabelX2.Size = New System.Drawing.Size(75, 23)
+        Me.LabelX2.TabIndex = 7
+        Me.LabelX2.Text = "Entidad"
+        '
         'Txt_Descripcion
         '
         Me.Txt_Descripcion.BackColor = System.Drawing.Color.White
@@ -674,13 +819,29 @@ Partial Class Frm_Meson_Asignar_Productos
         '
         Me.Txt_Descripcion.Border.Class = "TextBoxBorder"
         Me.Txt_Descripcion.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Descripcion.ButtonCustom.Image = CType(resources.GetObject("Txt_Descripcion.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Descripcion.ButtonCustom.Visible = True
         Me.Txt_Descripcion.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Descripcion.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Descripcion.Location = New System.Drawing.Point(0, 6)
+        Me.Txt_Descripcion.Location = New System.Drawing.Point(3, 30)
         Me.Txt_Descripcion.Name = "Txt_Descripcion"
         Me.Txt_Descripcion.PreventEnterBeep = True
-        Me.Txt_Descripcion.Size = New System.Drawing.Size(666, 22)
+        Me.Txt_Descripcion.Size = New System.Drawing.Size(321, 22)
         Me.Txt_Descripcion.TabIndex = 3
+        '
+        'LabelX1
+        '
+        Me.LabelX1.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.ForeColor = System.Drawing.Color.Black
+        Me.LabelX1.Location = New System.Drawing.Point(3, 10)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(228, 23)
+        Me.LabelX1.TabIndex = 5
+        Me.LabelX1.Text = "Número de OT o Referencia"
         '
         'Rdb_Ver_Todas
         '
@@ -689,6 +850,8 @@ Partial Class Frm_Meson_Asignar_Productos
         '
         '
         Me.Rdb_Ver_Todas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Ver_Todas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Ver_Todas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_Ver_Todas.CheckBoxImageUnChecked = CType(resources.GetObject("Rdb_Ver_Todas.CheckBoxImageUnChecked"), System.Drawing.Image)
         Me.Rdb_Ver_Todas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Ver_Todas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Ver_Todas.Location = New System.Drawing.Point(243, 710)
@@ -705,6 +868,8 @@ Partial Class Frm_Meson_Asignar_Productos
         '
         '
         Me.Rdb_Ver_Abiertas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Ver_Abiertas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Ver_Abiertas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_Ver_Abiertas.CheckBoxImageUnChecked = CType(resources.GetObject("Rdb_Ver_Abiertas.CheckBoxImageUnChecked"), System.Drawing.Image)
         Me.Rdb_Ver_Abiertas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Ver_Abiertas.Checked = True
         Me.Rdb_Ver_Abiertas.CheckState = System.Windows.Forms.CheckState.Checked
@@ -724,6 +889,8 @@ Partial Class Frm_Meson_Asignar_Productos
         '
         '
         Me.Rdb_Ver_Terminadas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Ver_Terminadas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Ver_Terminadas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_Ver_Terminadas.CheckBoxImageUnChecked = CType(resources.GetObject("Rdb_Ver_Terminadas.CheckBoxImageUnChecked"), System.Drawing.Image)
         Me.Rdb_Ver_Terminadas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Ver_Terminadas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Ver_Terminadas.Location = New System.Drawing.Point(68, 710)
@@ -747,6 +914,8 @@ Partial Class Frm_Meson_Asignar_Productos
         '
         '
         Me.Rdb_Ver_Suspendidas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Ver_Suspendidas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Ver_Suspendidas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_Ver_Suspendidas.CheckBoxImageUnChecked = CType(resources.GetObject("Rdb_Ver_Suspendidas.CheckBoxImageUnChecked"), System.Drawing.Image)
         Me.Rdb_Ver_Suspendidas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Ver_Suspendidas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Ver_Suspendidas.Location = New System.Drawing.Point(147, 710)
@@ -762,7 +931,7 @@ Partial Class Frm_Meson_Asignar_Productos
         Me.Btn_Abrir_OT_Ms.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Abrir_OT_Ms.Image = CType(resources.GetObject("Btn_Abrir_OT_Ms.Image"), System.Drawing.Image)
         Me.Btn_Abrir_OT_Ms.ImageAlt = CType(resources.GetObject("Btn_Abrir_OT_Ms.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Abrir_OT_Ms.Location = New System.Drawing.Point(3, 266)
+        Me.Btn_Abrir_OT_Ms.Location = New System.Drawing.Point(3, 291)
         Me.Btn_Abrir_OT_Ms.Name = "Btn_Abrir_OT_Ms"
         Me.Btn_Abrir_OT_Ms.Size = New System.Drawing.Size(115, 23)
         Me.Btn_Abrir_OT_Ms.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -775,7 +944,7 @@ Partial Class Frm_Meson_Asignar_Productos
         Me.Btn_Suspender_OT_Ms.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Suspender_OT_Ms.Image = CType(resources.GetObject("Btn_Suspender_OT_Ms.Image"), System.Drawing.Image)
         Me.Btn_Suspender_OT_Ms.ImageAlt = CType(resources.GetObject("Btn_Suspender_OT_Ms.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Suspender_OT_Ms.Location = New System.Drawing.Point(124, 266)
+        Me.Btn_Suspender_OT_Ms.Location = New System.Drawing.Point(124, 291)
         Me.Btn_Suspender_OT_Ms.Name = "Btn_Suspender_OT_Ms"
         Me.Btn_Suspender_OT_Ms.Size = New System.Drawing.Size(115, 23)
         Me.Btn_Suspender_OT_Ms.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -788,7 +957,7 @@ Partial Class Frm_Meson_Asignar_Productos
         Me.Btn_Cerrar_OT_Ms.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Cerrar_OT_Ms.Image = CType(resources.GetObject("Btn_Cerrar_OT_Ms.Image"), System.Drawing.Image)
         Me.Btn_Cerrar_OT_Ms.ImageAlt = CType(resources.GetObject("Btn_Cerrar_OT_Ms.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Cerrar_OT_Ms.Location = New System.Drawing.Point(245, 266)
+        Me.Btn_Cerrar_OT_Ms.Location = New System.Drawing.Point(245, 291)
         Me.Btn_Cerrar_OT_Ms.Name = "Btn_Cerrar_OT_Ms"
         Me.Btn_Cerrar_OT_Ms.Size = New System.Drawing.Size(115, 23)
         Me.Btn_Cerrar_OT_Ms.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -807,7 +976,7 @@ Partial Class Frm_Meson_Asignar_Productos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(684, 780)
+        Me.ClientSize = New System.Drawing.Size(852, 780)
         Me.Controls.Add(Me.Btn_Cerrar_OT_Ms)
         Me.Controls.Add(Me.Btn_Suspender_OT_Ms)
         Me.Controls.Add(Me.Btn_Abrir_OT_Ms)
@@ -895,4 +1064,13 @@ Partial Class Frm_Meson_Asignar_Productos
     Friend WithEvents Btn_Ver_Meson As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Ver_Doc_Comercial As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Reimprimir_Comprobante_EnvRec As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_BuscarXEntidad As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_BuscarXProducto As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_BuscarXInsumo As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
+    Public WithEvents Btn_AplicarBusqueda As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_AplicarBusqueda2 As DevComponents.DotNetBar.ButtonX
 End Class

@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+ï»¿Imports DevComponents.DotNetBar
 'Imports Lib_Bakapp_VarClassFunc
 'Imports BkSpecialPrograms
 Imports System.Data.SqlClient
@@ -30,14 +30,16 @@ Public Class Frm_St_Estado_03_Presupuesto
 
     Public Sub New(ByVal Id_Ot As Integer, ByVal Accion As Accion)
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
         _Accion = Accion
         _Id_Ot = Id_Ot
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+
+        Sb_Color_Botones_Barra(Bar2)
 
     End Sub
 
@@ -50,7 +52,7 @@ Public Class Frm_St_Estado_03_Presupuesto
         Sb_Actualizar_Grilla()
         If _Tbl_DetProd.Rows.Count = 0 Then Sb_New_OT_Agregar_Fila()
 
-        AddHandler Grilla.RowPostPaint, AddressOf Sb_RowsPostPaint
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         If _Accion = Accion.Nuevo Then
 
@@ -110,7 +112,7 @@ Public Class Frm_St_Estado_03_Presupuesto
                 Catch ex As Exception
 
                 End Try
-                
+
             End If
         Next
 
@@ -128,7 +130,7 @@ Public Class Frm_St_Estado_03_Presupuesto
             Grilla.AllowUserToAddRows = True
         End If
 
-        'Super_Tab.SelectedTabIndex = 0
+        Me.ActiveControl = Txt_Horas_Mano_de_Obra
 
     End Sub
 
@@ -175,7 +177,7 @@ Public Class Frm_St_Estado_03_Presupuesto
             OcultarEncabezadoGrilla(Grilla, True)
 
             .Columns("Codigo").Visible = True
-            .Columns("Codigo").HeaderText = "Código"
+            .Columns("Codigo").HeaderText = "CÃ³digo"
             .Columns("Codigo").Width = 100
             .Columns("Codigo").DisplayIndex = 0
             .Columns("Codigo").ReadOnly = True
@@ -260,8 +262,8 @@ Public Class Frm_St_Estado_03_Presupuesto
 
             If _Accion = Accion.Nuevo Then
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set " & _
-                               "CodEstado = 'P'" & vbCrLf & _
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set " &
+                               "CodEstado = 'P'" & vbCrLf &
                                "Where Id_Ot  = " & _Id_Ot
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
@@ -274,9 +276,9 @@ Public Class Frm_St_Estado_03_Presupuesto
             Dim _HH As String = De_Num_a_Tx_01(_Horas_Mano_de_Obra_Asignado, False, 5)
 
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set " & _
-                           "Horas_Mano_de_Obra_Asignado = " & _HH & vbCrLf & _
-                           ",Horas_Mano_de_Obra_Repara = " & _HH & vbCrLf & _
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set " &
+                           "Horas_Mano_de_Obra_Asignado = " & _HH & vbCrLf &
+                           ",Horas_Mano_de_Obra_Repara = " & _HH & vbCrLf &
                            "Where Id_Ot  = " & _Id_Ot
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
@@ -323,10 +325,10 @@ Public Class Frm_St_Estado_03_Presupuesto
 
                         If Not _Nuevo_Item Then
 
-                            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_DetProd (Id_Ot,Utilizado,Codigo,Descripcion,Cantidad,Ud,Un," & _
-                                           "CantUd1,CantUd2,Precio,Neto_Linea,Iva_Linea,Total_Linea) Values " & _
-                                           "(" & _Id_Ot & "," & _Utilizado & ",'" & _Codigo & "','" & _Descripcion & "'," & _Cantidad & _
-                                           ",'" & _Ud & "'," & _Un & "," & _CantUd1 & "," & _CantUd2 & "," & _Precio & _
+                            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_DetProd (Id_Ot,Utilizado,Codigo,Descripcion,Cantidad,Ud,Un," &
+                                           "CantUd1,CantUd2,Precio,Neto_Linea,Iva_Linea,Total_Linea) Values " &
+                                           "(" & _Id_Ot & "," & _Utilizado & ",'" & _Codigo & "','" & _Descripcion & "'," & _Cantidad &
+                                           ",'" & _Ud & "'," & _Un & "," & _CantUd1 & "," & _CantUd2 & "," & _Precio &
                                            "," & _Neto_Linea & "," & _Iva_Linea & "," & _Total_Linea & ")"
 
                             Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
@@ -353,8 +355,8 @@ Public Class Frm_St_Estado_03_Presupuesto
                 _Defecto_encontrado = Replace(_Defecto_encontrado, Chr(_i), " ")
             Next
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Notas Set " & vbCrLf & _
-                           "Defecto_encontrado = '" & _Defecto_encontrado & "',Reparacion_a_realizar = '" & _Reparacion_a_realizar & "'" & vbCrLf & _
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Notas Set " & vbCrLf &
+                           "Defecto_encontrado = '" & _Defecto_encontrado & "',Reparacion_a_realizar = '" & _Reparacion_a_realizar & "'" & vbCrLf &
                            "Where Id_Ot = " & _Id_Ot
 
 
@@ -367,8 +369,8 @@ Public Class Frm_St_Estado_03_Presupuesto
 
             If _Accion = Accion.Nuevo Then
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Estados " & _
-                               "(Id_Ot,CodEstado,Fecha_Fijacion,CodFuncionario,NomFuncionario) Values " & _
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Estados " &
+                               "(Id_Ot,CodEstado,Fecha_Fijacion,CodFuncionario,NomFuncionario) Values " &
                                "(" & _Id_Ot & ",'P',GetDate(),'" & FUNCIONARIO & "','" & Nombre_funcionario_activo & "')"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
@@ -570,7 +572,7 @@ Public Class Frm_St_Estado_03_Presupuesto
                             Grilla.Rows.RemoveAt(Grilla.CurrentRow.Index)
                             Grilla.Refresh()
                         Else
-                            If MessageBoxEx.Show(Me, "¿Esta seguro de eliminar la(s) fila(s) seleccionada(s)?", _
+                            If MessageBoxEx.Show(Me, "Â¿Esta seguro de eliminar la(s) fila(s) seleccionada(s)?",
                                                                      "Eliminar fila", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
 
                                 Grilla.Rows.RemoveAt(Grilla.CurrentRow.Index)
@@ -589,7 +591,7 @@ Public Class Frm_St_Estado_03_Presupuesto
                     Grilla.Columns(_Cabeza).ReadOnly = True
             End Select
 
-            
+
         Catch ex As Exception
 
         Finally
@@ -626,7 +628,7 @@ Public Class Frm_St_Estado_03_Presupuesto
             Dim ob As Brush = SystemBrushes.ControlText
             e.Graphics.DrawString(RowsNumber, Me.Font, ob, e.RowBounds.Location.X + 15, e.RowBounds.Location.Y + ((e.RowBounds.Height - size.Height) / 2))
         Catch ex As Exception
-            MessageBox.Show(ex.Message, "vb.net", _
+            MessageBox.Show(ex.Message, "vb.net",
          MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
@@ -705,11 +707,11 @@ Public Class Frm_St_Estado_03_Presupuesto
 
         Dim caracter As Char = e.KeyChar
 
-        ' comprobar si es un número con isNumber, si es el backspace, si el caracter  
+        ' comprobar si es un nÃºmero con isNumber, si es el backspace, si el caracter  
         ' es el separador decimal, y que no contiene ya el separador  
-        If (Char.IsNumber(caracter)) Or _
-        (caracter = ChrW(Keys.Back)) Or _
-        (caracter = ",") And _
+        If (Char.IsNumber(caracter)) Or
+        (caracter = ChrW(Keys.Back)) Or
+        (caracter = ",") And
         (_Texto.Text.Contains(",") = False) Then
             e.Handled = False
         Else
@@ -726,9 +728,9 @@ Public Class Frm_St_Estado_03_Presupuesto
 
         If String.IsNullOrEmpty(Txt_Horas_Mano_de_Obra.Text) Then
             Beep()
-            ToastNotification.Show(Me, "FALTA MANO DE HOBRA (HORAS)", _
-                                   Imagenes_32x32.Images.Item("warning.png"), _
-                                   2 * 1000, eToastGlowColor.Red, _
+            ToastNotification.Show(Me, "FALTA MANO DE HOBRA (HORAS)",
+                                   Imagenes_32x32.Images.Item("warning.png"),
+                                   2 * 1000, eToastGlowColor.Red,
                                    eToastPosition.MiddleCenter)
             Txt_Horas_Mano_de_Obra.Focus()
             Return
@@ -736,9 +738,9 @@ Public Class Frm_St_Estado_03_Presupuesto
 
         If String.IsNullOrEmpty(Txt_Defecto_encontrado.Text) Then
             Beep()
-            ToastNotification.Show(Me, "FALTA DEFECTO ENCONTRADO", _
-                                   Imagenes_32x32.Images.Item("warning.png"), _
-                                   2 * 1000, eToastGlowColor.Red, _
+            ToastNotification.Show(Me, "FALTA DEFECTO ENCONTRADO",
+                                   Imagenes_32x32.Images.Item("warning.png"),
+                                   2 * 1000, eToastGlowColor.Red,
                                    eToastPosition.MiddleCenter)
             Txt_Defecto_encontrado.Focus()
             'Super_Tab.SelectedTabIndex = 0
@@ -747,9 +749,9 @@ Public Class Frm_St_Estado_03_Presupuesto
 
         If String.IsNullOrEmpty(Txt_Reparacion_a_realizar.Text) Then
             Beep()
-            ToastNotification.Show(Me, "FALTA REPARACION A REALIZAR", _
-                                   Imagenes_32x32.Images.Item("warning.png"), _
-                                   2 * 1000, eToastGlowColor.Red, _
+            ToastNotification.Show(Me, "FALTA REPARACION A REALIZAR",
+                                   Imagenes_32x32.Images.Item("warning.png"),
+                                   2 * 1000, eToastGlowColor.Red,
                                    eToastPosition.MiddleCenter)
             'Super_Tab.SelectedTabIndex = 1
             Txt_Reparacion_a_realizar.Focus()
@@ -766,8 +768,8 @@ Public Class Frm_St_Estado_03_Presupuesto
             End If
 
             If Not CBool(Grilla.Rows.Count) Or _Fila.IsNewRow Then
-                If MessageBoxEx.Show(Me, "¿Desea agregar productos a la reparación?", _
-                                     "No incluyo productos al presupuesto", MessageBoxButtons.YesNo, _
+                If MessageBoxEx.Show(Me, "Â¿Desea agregar productos a la reparaciÃ³n?",
+                                     "No incluyo productos al presupuesto", MessageBoxButtons.YesNo,
                                      MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
                     'Super_Tab.SelectedTabIndex = 2
                     Return
@@ -778,7 +780,7 @@ Public Class Frm_St_Estado_03_Presupuesto
 
         If Fx_Fijar_Estado() Then
 
-            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado", _
+            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado",
                               MessageBoxButtons.OK, MessageBoxIcon.Information)
             _Grabar = True
             Me.Close()
@@ -863,7 +865,7 @@ Public Class Frm_St_Estado_03_Presupuesto
     End Sub
 
     Private Sub Grilla_DefaultValuesNeeded(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewRowEventArgs) Handles Grilla.DefaultValuesNeeded
-       
+
         With e.Row
 
             .Cells("Nuevo_Item").Value = True
@@ -897,25 +899,25 @@ Public Class Frm_St_Estado_03_Presupuesto
             Dim caracter As Char = e.KeyChar
 
             If e.KeyChar = "."c Then
-                ' si se pulsa la coma se convertirá en punto
+                ' si se pulsa la coma se convertirÃ¡ en punto
                 'e.Handled = True
                 SendKeys.Send(",")
                 e.KeyChar = ","c
                 caracter = ","
             End If
 
-            ' comprobar si la celda en edición corresponde a la columna 1 o 2
+            ' comprobar si la celda en ediciÃ³n corresponde a la columna 1 o 2
             'If Cabeza = "CantComprar" Then
             ' Obtener caracter  
 
             ' referencia a la celda  
             Dim txt As TextBox = CType(sender, TextBox)
 
-            ' comprobar si es un número con isNumber, si es el backspace, si el caracter  
+            ' comprobar si es un nÃºmero con isNumber, si es el backspace, si el caracter  
             ' es el separador decimal, y que no contiene ya el separador  
-            If (Char.IsNumber(caracter)) Or _
-            (caracter = ChrW(Keys.Back)) Or _
-            (caracter = ",") And _
+            If (Char.IsNumber(caracter)) Or
+            (caracter = ChrW(Keys.Back)) Or
+            (caracter = ",") And
             (txt.Text.Contains(",") = False) Then
                 e.Handled = False
             Else
@@ -930,15 +932,15 @@ Public Class Frm_St_Estado_03_Presupuesto
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_OT_Estados", "Id_Ot = " & _Id_Ot & " And CodEstado = 'C'")
 
         If CBool(_Reg) Then
-            MessageBoxEx.Show(Me, "No se puede modificar el estado, ya que existe un estado posterior", "Validación", _
+            MessageBoxEx.Show(Me, "No se puede modificar el estado, ya que existe un estado posterior", "ValidaciÃ³n",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
         Else
 
             _Editando_documento = True
             Beep()
-            ToastNotification.Show(Me, "AHORA ES POSIBLE ACTUALIZAR EL DOCUMENTO", _
-                                   Btn_Editar.Image, _
-                                   1 * 1000, eToastGlowColor.Green, _
+            ToastNotification.Show(Me, "AHORA ES POSIBLE ACTUALIZAR EL DOCUMENTO",
+                                   Btn_Editar.Image,
+                                   1 * 1000, eToastGlowColor.Green,
                                    eToastPosition.MiddleCenter)
 
             Btn_Grabar.Visible = True

@@ -7,7 +7,8 @@ Into #Paso_Pote
 FROM POTE 
 Left JOIN #Base_Bakapp#Zw_Pdp_OT_Prioridad Pd ON Pd.Idpote=IDPOTE
 WHERE ESODD = '#Tipo_OT#' And EMPRESA = @Empresa 
-AND NUMOT+REFERENCIA LIKE '%#Filtro#%' 
+--AND NUMOT+REFERENCIA LIKE '%#Filtro#%' 
+#NuevoFiltro#
 ORDER BY NUMOT
 
 

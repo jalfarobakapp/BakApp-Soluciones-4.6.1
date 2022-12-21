@@ -1,9 +1,9 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_Dimensiones
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,9 +20,8 @@ Partial Class Frm_Dimensiones
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Dimensiones))
         Me.TxtR1 = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -31,7 +30,6 @@ Partial Class Frm_Dimensiones
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.BtnGrabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo = New System.Windows.Forms.GroupBox()
-        Me.StyleManager1 = New DevComponents.DotNetBar.StyleManager(Me.components)
         Me.Highlighter1 = New DevComponents.DotNetBar.Validator.Highlighter()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo.SuspendLayout()
@@ -118,11 +116,6 @@ Partial Class Frm_Dimensiones
         Me.Grupo.TabStop = False
         Me.Grupo.Text = "Dimensiones"
         '
-        'StyleManager1
-        '
-        Me.StyleManager1.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro
-        Me.StyleManager1.MetroColorParameters = New DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer)), System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(114, Byte), Integer), CType(CType(198, Byte), Integer)))
-        '
         'Highlighter1
         '
         Me.Highlighter1.ContainerControl = Me
@@ -159,5 +152,4 @@ Partial Class Frm_Dimensiones
     Friend WithEvents BtnGrabar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grupo As System.Windows.Forms.GroupBox
     Friend WithEvents Highlighter1 As DevComponents.DotNetBar.Validator.Highlighter
-    Friend WithEvents StyleManager1 As DevComponents.DotNetBar.StyleManager
 End Class

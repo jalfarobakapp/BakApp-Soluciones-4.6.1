@@ -1,7 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HEFESTO.CONSULTA.TRACKID", "HEFESTO.CONSULTA.TRACKID\HEFESTO.CONSULTA.TRACKID.csproj", "{7EAA3266-F348-45C7-ADCB-B4B9EFA1E19E}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32228.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HEFESTO.CONSULTA.TRACKID", "HEFESTO.CONSULTA.TRACKID.csproj", "{7EAA3266-F348-45C7-ADCB-B4B9EFA1E19E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,5 +18,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {94053839-981A-4469-A2D3-FA03A5DEF63D}
 	EndGlobalSection
 EndGlobal

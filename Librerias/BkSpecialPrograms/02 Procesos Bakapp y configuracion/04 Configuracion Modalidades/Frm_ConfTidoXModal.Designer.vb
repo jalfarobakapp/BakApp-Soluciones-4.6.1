@@ -35,6 +35,8 @@ Partial Class Frm_ConfTidoXModal
         Me.Txt_NombreFormato_PDF = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Btn_InfNumeracion = New DevComponents.DotNetBar.ButtonX()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.LabelX16 = New DevComponents.DotNetBar.LabelX()
+        Me.Rdb_TimbrarXRandom = New DevComponents.DotNetBar.Controls.SwitchButton()
         Me.Btn_BuscarFormatoCorreo_Quitar = New DevComponents.DotNetBar.ButtonX()
         Me.Btn_BuscarCorreo_Quitar = New DevComponents.DotNetBar.ButtonX()
         Me.Txt_NombreFormato_Correo = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -64,8 +66,6 @@ Partial Class Frm_ConfTidoXModal
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Rdb_TimbrarXRandom = New DevComponents.DotNetBar.Controls.SwitchButton()
-        Me.LabelX16 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel1.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -126,7 +126,7 @@ Partial Class Frm_ConfTidoXModal
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.54812!))
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.45188!))
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 53.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55.0!))
         Me.TableLayoutPanel2.Controls.Add(Me.Btn_BuscarFormatoImpPDF_Quitar, 3, 1)
         Me.TableLayoutPanel2.Controls.Add(Me.BuscarFormatoImpNormal_Quitar, 3, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.Btn_BuscarFormatoImpPDF, 2, 1)
@@ -149,7 +149,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Btn_BuscarFormatoImpPDF_Quitar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_BuscarFormatoImpPDF_Quitar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarFormatoImpPDF_Quitar.Image = CType(resources.GetObject("Btn_BuscarFormatoImpPDF_Quitar.Image"), System.Drawing.Image)
-        Me.Btn_BuscarFormatoImpPDF_Quitar.Location = New System.Drawing.Point(562, 30)
+        Me.Btn_BuscarFormatoImpPDF_Quitar.Location = New System.Drawing.Point(560, 30)
         Me.Btn_BuscarFormatoImpPDF_Quitar.Name = "Btn_BuscarFormatoImpPDF_Quitar"
         Me.Btn_BuscarFormatoImpPDF_Quitar.Size = New System.Drawing.Size(28, 21)
         Me.Btn_BuscarFormatoImpPDF_Quitar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -161,7 +161,7 @@ Partial Class Frm_ConfTidoXModal
         Me.BuscarFormatoImpNormal_Quitar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.BuscarFormatoImpNormal_Quitar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.BuscarFormatoImpNormal_Quitar.Image = CType(resources.GetObject("BuscarFormatoImpNormal_Quitar.Image"), System.Drawing.Image)
-        Me.BuscarFormatoImpNormal_Quitar.Location = New System.Drawing.Point(562, 3)
+        Me.BuscarFormatoImpNormal_Quitar.Location = New System.Drawing.Point(560, 3)
         Me.BuscarFormatoImpNormal_Quitar.Name = "BuscarFormatoImpNormal_Quitar"
         Me.BuscarFormatoImpNormal_Quitar.Size = New System.Drawing.Size(28, 21)
         Me.BuscarFormatoImpNormal_Quitar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -173,7 +173,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Btn_BuscarFormatoImpPDF.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_BuscarFormatoImpPDF.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarFormatoImpPDF.Image = CType(resources.GetObject("Btn_BuscarFormatoImpPDF.Image"), System.Drawing.Image)
-        Me.Btn_BuscarFormatoImpPDF.Location = New System.Drawing.Point(517, 30)
+        Me.Btn_BuscarFormatoImpPDF.Location = New System.Drawing.Point(515, 30)
         Me.Btn_BuscarFormatoImpPDF.Name = "Btn_BuscarFormatoImpPDF"
         Me.Btn_BuscarFormatoImpPDF.Size = New System.Drawing.Size(39, 22)
         Me.Btn_BuscarFormatoImpPDF.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -213,7 +213,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Btn_BuscarFormatoImpNormal.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_BuscarFormatoImpNormal.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarFormatoImpNormal.Image = CType(resources.GetObject("Btn_BuscarFormatoImpNormal.Image"), System.Drawing.Image)
-        Me.Btn_BuscarFormatoImpNormal.Location = New System.Drawing.Point(517, 3)
+        Me.Btn_BuscarFormatoImpNormal.Location = New System.Drawing.Point(515, 3)
         Me.Btn_BuscarFormatoImpNormal.Name = "Btn_BuscarFormatoImpNormal"
         Me.Btn_BuscarFormatoImpNormal.Size = New System.Drawing.Size(39, 21)
         Me.Btn_BuscarFormatoImpNormal.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -234,7 +234,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Txt_Nombreformato.Name = "Txt_Nombreformato"
         Me.Txt_Nombreformato.PreventEnterBeep = True
         Me.Txt_Nombreformato.ReadOnly = True
-        Me.Txt_Nombreformato.Size = New System.Drawing.Size(398, 22)
+        Me.Txt_Nombreformato.Size = New System.Drawing.Size(396, 22)
         Me.Txt_Nombreformato.TabIndex = 9
         '
         'Txt_NombreFormato_PDF
@@ -251,7 +251,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Txt_NombreFormato_PDF.Name = "Txt_NombreFormato_PDF"
         Me.Txt_NombreFormato_PDF.PreventEnterBeep = True
         Me.Txt_NombreFormato_PDF.ReadOnly = True
-        Me.Txt_NombreFormato_PDF.Size = New System.Drawing.Size(398, 22)
+        Me.Txt_NombreFormato_PDF.Size = New System.Drawing.Size(396, 22)
         Me.Txt_NombreFormato_PDF.TabIndex = 10
         '
         'Btn_InfNumeracion
@@ -273,7 +273,7 @@ Partial Class Frm_ConfTidoXModal
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.72285!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.27715!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 43.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 54.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 56.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX16, 1, 9)
         Me.TableLayoutPanel1.Controls.Add(Me.Rdb_TimbrarXRandom, 0, 9)
         Me.TableLayoutPanel1.Controls.Add(Me.Btn_BuscarFormatoCorreo_Quitar, 3, 8)
@@ -315,12 +315,44 @@ Partial Class Frm_ConfTidoXModal
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(613, 281)
         Me.TableLayoutPanel1.TabIndex = 17
         '
+        'LabelX16
+        '
+        Me.LabelX16.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX16.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX16.ForeColor = System.Drawing.Color.Black
+        Me.LabelX16.Location = New System.Drawing.Point(114, 255)
+        Me.LabelX16.Name = "LabelX16"
+        Me.LabelX16.Size = New System.Drawing.Size(396, 21)
+        Me.LabelX16.TabIndex = 104
+        Me.LabelX16.Text = "Timbrar eléctronicamente siempre por Random ."
+        '
+        'Rdb_TimbrarXRandom
+        '
+        Me.Rdb_TimbrarXRandom.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_TimbrarXRandom.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Rdb_TimbrarXRandom.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_TimbrarXRandom.Location = New System.Drawing.Point(3, 255)
+        Me.Rdb_TimbrarXRandom.Name = "Rdb_TimbrarXRandom"
+        Me.Rdb_TimbrarXRandom.OffText = "No"
+        Me.Rdb_TimbrarXRandom.OnText = "Si"
+        Me.Rdb_TimbrarXRandom.Size = New System.Drawing.Size(66, 21)
+        Me.Rdb_TimbrarXRandom.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_TimbrarXRandom.TabIndex = 104
+        Me.Rdb_TimbrarXRandom.Value = True
+        Me.Rdb_TimbrarXRandom.ValueObject = "Y"
+        '
         'Btn_BuscarFormatoCorreo_Quitar
         '
         Me.Btn_BuscarFormatoCorreo_Quitar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_BuscarFormatoCorreo_Quitar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarFormatoCorreo_Quitar.Image = CType(resources.GetObject("Btn_BuscarFormatoCorreo_Quitar.Image"), System.Drawing.Image)
-        Me.Btn_BuscarFormatoCorreo_Quitar.Location = New System.Drawing.Point(561, 227)
+        Me.Btn_BuscarFormatoCorreo_Quitar.Location = New System.Drawing.Point(559, 227)
         Me.Btn_BuscarFormatoCorreo_Quitar.Name = "Btn_BuscarFormatoCorreo_Quitar"
         Me.Btn_BuscarFormatoCorreo_Quitar.Size = New System.Drawing.Size(28, 21)
         Me.Btn_BuscarFormatoCorreo_Quitar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -332,7 +364,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Btn_BuscarCorreo_Quitar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_BuscarCorreo_Quitar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarCorreo_Quitar.Image = CType(resources.GetObject("Btn_BuscarCorreo_Quitar.Image"), System.Drawing.Image)
-        Me.Btn_BuscarCorreo_Quitar.Location = New System.Drawing.Point(561, 199)
+        Me.Btn_BuscarCorreo_Quitar.Location = New System.Drawing.Point(559, 199)
         Me.Btn_BuscarCorreo_Quitar.Name = "Btn_BuscarCorreo_Quitar"
         Me.Btn_BuscarCorreo_Quitar.Size = New System.Drawing.Size(28, 21)
         Me.Btn_BuscarCorreo_Quitar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -349,11 +381,11 @@ Partial Class Frm_ConfTidoXModal
         Me.Txt_NombreFormato_Correo.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_NombreFormato_Correo.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_NombreFormato_Correo.ForeColor = System.Drawing.Color.Black
-        Me.Txt_NombreFormato_Correo.Location = New System.Drawing.Point(115, 227)
+        Me.Txt_NombreFormato_Correo.Location = New System.Drawing.Point(114, 227)
         Me.Txt_NombreFormato_Correo.Name = "Txt_NombreFormato_Correo"
         Me.Txt_NombreFormato_Correo.PreventEnterBeep = True
         Me.Txt_NombreFormato_Correo.ReadOnly = True
-        Me.Txt_NombreFormato_Correo.Size = New System.Drawing.Size(397, 22)
+        Me.Txt_NombreFormato_Correo.Size = New System.Drawing.Size(396, 22)
         Me.Txt_NombreFormato_Correo.TabIndex = 23
         '
         'LabelX14
@@ -366,7 +398,7 @@ Partial Class Frm_ConfTidoXModal
         Me.LabelX14.ForeColor = System.Drawing.Color.Black
         Me.LabelX14.Location = New System.Drawing.Point(3, 227)
         Me.LabelX14.Name = "LabelX14"
-        Me.LabelX14.Size = New System.Drawing.Size(106, 21)
+        Me.LabelX14.Size = New System.Drawing.Size(105, 21)
         Me.LabelX14.TabIndex = 22
         Me.LabelX14.Text = "For. Adjunto"
         '
@@ -378,9 +410,9 @@ Partial Class Frm_ConfTidoXModal
         '
         Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX13.ForeColor = System.Drawing.Color.Black
-        Me.LabelX13.Location = New System.Drawing.Point(115, 171)
+        Me.LabelX13.Location = New System.Drawing.Point(114, 171)
         Me.LabelX13.Name = "LabelX13"
-        Me.LabelX13.Size = New System.Drawing.Size(397, 21)
+        Me.LabelX13.Size = New System.Drawing.Size(396, 21)
         Me.LabelX13.TabIndex = 24
         Me.LabelX13.Text = "Enviar correos despues de grabar documento"
         '
@@ -394,11 +426,11 @@ Partial Class Frm_ConfTidoXModal
         Me.Txt_Id_Correo.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Id_Correo.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Id_Correo.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Id_Correo.Location = New System.Drawing.Point(115, 199)
+        Me.Txt_Id_Correo.Location = New System.Drawing.Point(114, 199)
         Me.Txt_Id_Correo.Name = "Txt_Id_Correo"
         Me.Txt_Id_Correo.PreventEnterBeep = True
         Me.Txt_Id_Correo.ReadOnly = True
-        Me.Txt_Id_Correo.Size = New System.Drawing.Size(397, 22)
+        Me.Txt_Id_Correo.Size = New System.Drawing.Size(396, 22)
         Me.Txt_Id_Correo.TabIndex = 22
         '
         'LabelX12
@@ -409,9 +441,9 @@ Partial Class Frm_ConfTidoXModal
         '
         Me.LabelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX12.ForeColor = System.Drawing.Color.Black
-        Me.LabelX12.Location = New System.Drawing.Point(115, 143)
+        Me.LabelX12.Location = New System.Drawing.Point(114, 143)
         Me.LabelX12.Name = "LabelX12"
-        Me.LabelX12.Size = New System.Drawing.Size(397, 20)
+        Me.LabelX12.Size = New System.Drawing.Size(396, 20)
         Me.LabelX12.TabIndex = 20
         Me.LabelX12.Text = "Obliga a ingresar transportista"
         '
@@ -425,7 +457,7 @@ Partial Class Frm_ConfTidoXModal
         Me.LabelX5.ForeColor = System.Drawing.Color.Black
         Me.LabelX5.Location = New System.Drawing.Point(3, 199)
         Me.LabelX5.Name = "LabelX5"
-        Me.LabelX5.Size = New System.Drawing.Size(106, 21)
+        Me.LabelX5.Size = New System.Drawing.Size(105, 21)
         Me.LabelX5.TabIndex = 21
         Me.LabelX5.Text = "Correo por defecto"
         '
@@ -473,9 +505,9 @@ Partial Class Frm_ConfTidoXModal
         '
         Me.LabelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX8.ForeColor = System.Drawing.Color.Black
-        Me.LabelX8.Location = New System.Drawing.Point(115, 115)
+        Me.LabelX8.Location = New System.Drawing.Point(114, 115)
         Me.LabelX8.Name = "LabelX8"
-        Me.LabelX8.Size = New System.Drawing.Size(397, 20)
+        Me.LabelX8.Size = New System.Drawing.Size(396, 20)
         Me.LabelX8.TabIndex = 19
         Me.LabelX8.Text = "Obliga grabar despacho cuando hay bodegas distintas en el detalle del documento"
         '
@@ -505,7 +537,7 @@ Partial Class Frm_ConfTidoXModal
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(115, 3)
+        Me.LabelX4.Location = New System.Drawing.Point(114, 3)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(149, 21)
         Me.LabelX4.TabIndex = 11
@@ -537,7 +569,7 @@ Partial Class Frm_ConfTidoXModal
         '
         Me.LabelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX9.ForeColor = System.Drawing.Color.Black
-        Me.LabelX9.Location = New System.Drawing.Point(115, 31)
+        Me.LabelX9.Location = New System.Drawing.Point(114, 31)
         Me.LabelX9.Name = "LabelX9"
         Me.LabelX9.Size = New System.Drawing.Size(267, 21)
         Me.LabelX9.TabIndex = 18
@@ -569,7 +601,7 @@ Partial Class Frm_ConfTidoXModal
         '
         Me.LabelX10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX10.ForeColor = System.Drawing.Color.Black
-        Me.LabelX10.Location = New System.Drawing.Point(115, 59)
+        Me.LabelX10.Location = New System.Drawing.Point(114, 59)
         Me.LabelX10.Name = "LabelX10"
         Me.LabelX10.Size = New System.Drawing.Size(149, 20)
         Me.LabelX10.TabIndex = 18
@@ -601,7 +633,7 @@ Partial Class Frm_ConfTidoXModal
         '
         Me.LabelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX11.ForeColor = System.Drawing.Color.Black
-        Me.LabelX11.Location = New System.Drawing.Point(115, 87)
+        Me.LabelX11.Location = New System.Drawing.Point(114, 87)
         Me.LabelX11.Name = "LabelX11"
         Me.LabelX11.Size = New System.Drawing.Size(149, 21)
         Me.LabelX11.TabIndex = 18
@@ -612,7 +644,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Btn_BuscarCorreo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_BuscarCorreo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarCorreo.Image = CType(resources.GetObject("Btn_BuscarCorreo.Image"), System.Drawing.Image)
-        Me.Btn_BuscarCorreo.Location = New System.Drawing.Point(518, 199)
+        Me.Btn_BuscarCorreo.Location = New System.Drawing.Point(516, 199)
         Me.Btn_BuscarCorreo.Name = "Btn_BuscarCorreo"
         Me.Btn_BuscarCorreo.Size = New System.Drawing.Size(31, 21)
         Me.Btn_BuscarCorreo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -642,7 +674,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Btn_BuscarFormatoCorreo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_BuscarFormatoCorreo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarFormatoCorreo.Image = CType(resources.GetObject("Btn_BuscarFormatoCorreo.Image"), System.Drawing.Image)
-        Me.Btn_BuscarFormatoCorreo.Location = New System.Drawing.Point(518, 227)
+        Me.Btn_BuscarFormatoCorreo.Location = New System.Drawing.Point(516, 227)
         Me.Btn_BuscarFormatoCorreo.Name = "Btn_BuscarFormatoCorreo"
         Me.Btn_BuscarFormatoCorreo.Size = New System.Drawing.Size(31, 21)
         Me.Btn_BuscarFormatoCorreo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -749,38 +781,6 @@ Partial Class Frm_ConfTidoXModal
         Me.Btn_Grabar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_Grabar.Name = "Btn_Grabar"
         Me.Btn_Grabar.Tooltip = "Grabar"
-        '
-        'Rdb_TimbrarXRandom
-        '
-        Me.Rdb_TimbrarXRandom.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Rdb_TimbrarXRandom.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Rdb_TimbrarXRandom.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_TimbrarXRandom.Location = New System.Drawing.Point(3, 255)
-        Me.Rdb_TimbrarXRandom.Name = "Rdb_TimbrarXRandom"
-        Me.Rdb_TimbrarXRandom.OffText = "No"
-        Me.Rdb_TimbrarXRandom.OnText = "Si"
-        Me.Rdb_TimbrarXRandom.Size = New System.Drawing.Size(66, 21)
-        Me.Rdb_TimbrarXRandom.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_TimbrarXRandom.TabIndex = 104
-        Me.Rdb_TimbrarXRandom.Value = True
-        Me.Rdb_TimbrarXRandom.ValueObject = "Y"
-        '
-        'LabelX16
-        '
-        Me.LabelX16.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX16.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX16.ForeColor = System.Drawing.Color.Black
-        Me.LabelX16.Location = New System.Drawing.Point(115, 255)
-        Me.LabelX16.Name = "LabelX16"
-        Me.LabelX16.Size = New System.Drawing.Size(397, 21)
-        Me.LabelX16.TabIndex = 104
-        Me.LabelX16.Text = "Timbrar eléctronicamente siempre por Random ."
         '
         'Frm_ConfTidoXModal
         '

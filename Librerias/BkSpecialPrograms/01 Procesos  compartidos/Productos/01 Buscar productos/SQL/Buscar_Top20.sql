@@ -47,7 +47,7 @@ Select Top 20
 	   Ltrim(Rtrim(Isnull(Tb.DATOSUBIC,''))) AS 'DATOSUBIC',
        Isnull(Tc1.NOKOCARAC,'') AS 'FAMILIA',
 	   Cast(Case When Mp.ATPR = 'OCU' Then 1 Else 0 End As Bit) as 'Oculto',
-       Isnull(Mf.FICHA,'') As Ficha
+       Cast('' As Varchar(Max)) As Ficha
 
 Into #Paso_Maepr      
     From #Paso--MAEPR Mp
@@ -61,6 +61,21 @@ Into #Paso_Maepr
                         
 Select * From #Paso_Maepr
 Order BY Porc Desc  
+
+DECLARE @Kopr AS varchar(13)
+DECLARE @Ficha AS varchar(max)
+DECLARE ProdInfo CURSOR FOR SELECT Codigo,FICHA FROM #Paso_Maepr Inner Join MAEFICHD On KOPR = Codigo Where FICHA <> '' Order By KOPR,SEMILLA
+OPEN ProdInfo
+FETCH NEXT FROM ProdInfo INTO @Kopr,@Ficha
+WHILE @@fetch_status = 0
+BEGIN
+    --PRINT @Kopr
+    --PRINT @Ficha
+    FETCH NEXT FROM ProdInfo INTO @Kopr,@Ficha
+	Update #Paso_Maepr Set Ficha = Ficha+@Ficha+' ' Where Codigo = @Kopr
+END
+CLOSE ProdInfo
+DEALLOCATE ProdInfo	 
 
 Drop Table #Paso_Maepr
 Drop Table #Paso

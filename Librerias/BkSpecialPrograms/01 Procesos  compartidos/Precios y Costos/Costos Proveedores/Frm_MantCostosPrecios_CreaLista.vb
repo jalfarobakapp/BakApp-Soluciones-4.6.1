@@ -173,18 +173,22 @@ Public Class Frm_MantCostosPrecios_CreaLista
         End If
 
         Consulta_sql = "Select Max(FechaVigenciaHasta) As FechaHastaMax From " & _Global_BaseBk & "Zw_ListaPreCosto_Enc" & vbCrLf &
-                       "Where Id <> " & _Id_Lista & " And Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "'"
+                       "Where Id <> " & _Id_Lista & " And Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "' And FechaVigenciaHasta <= '" & Format(_FechaHoy, "yyyyMMdd") & "'"
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If Not IsNothing(_Row) And Not (_Row.Item("FechaHastaMax") Is DBNull.Value) Then
 
+            'If _Accion = Enum_Accion.Crear Then
+
             Dim _FechaHastaMax As Date = NuloPorNro(_Row.Item("FechaHastaMax"), _FechaDesde)
 
-            If _FechaDesde <= _FechaHastaMax Then
-                MessageBoxEx.Show(Me, "La fecha ""Desde"" no puede ser menor o igual a la fecha " & _FechaHastaMax, "Validación",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return False
-            End If
+                If _FechaDesde <= _FechaHastaMax Then
+                    MessageBoxEx.Show(Me, "La fecha ""Desde"" no puede ser menor o igual a la fecha " & _FechaHastaMax, "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return False
+                End If
+
+            'End If
 
         End If
 
