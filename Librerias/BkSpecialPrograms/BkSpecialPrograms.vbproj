@@ -1483,6 +1483,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Dte2Imp\Cl_Dte2XmlPDF.vb" />
+    <Compile Include="03 Sistemas\Fincred-Pays\Cl_Api_Fincred.vb" />
     <Compile Include="03 Sistemas\Impresión de Barras\Configuracion\Frm_Barras_ConfPuerto_OD.Designer.vb">
       <DependentUpon>Frm_Barras_ConfPuerto_OD.vb</DependentUpon>
     </Compile>
