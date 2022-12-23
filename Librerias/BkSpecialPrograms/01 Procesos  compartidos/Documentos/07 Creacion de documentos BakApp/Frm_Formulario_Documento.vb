@@ -433,7 +433,7 @@ Public Class Frm_Formulario_Documento
         _Solicitar_Observaciones_Al_Grabar = Solicitar_Observaciones_Al_Grabar
 
         Sb_Formato_Generico_Grilla(Grilla_Encabezado, 18, New Font("Tahoma", 8), Color.White, ScrollBars.Vertical, False, False, False)
-        Sb_Formato_Generico_Grilla(Grilla_Detalle, 18, New Font("Tahoma", 8), Color.White, ScrollBars.Vertical, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_Detalle, 18, New Font("Tahoma", 8), Color.White, ScrollBars.Both, True, False, False)
 
         _Tido = Tido
         _Tido_Original = Tido
@@ -2513,7 +2513,7 @@ Public Class Frm_Formulario_Documento
             _DisplayIndex += 1
 
             .ScrollBarAppearance = eScrollBarAppearance.ApplicationScroll
-            .ScrollBars = ScrollBars.Vertical
+            .ScrollBars = ScrollBars.Both 'ScrollBars.Vertical
 
             If Not Global_Thema = Enum_Themas.Oscuro Then
                 .BackgroundColor = Color.White
@@ -13198,6 +13198,11 @@ Public Class Frm_Formulario_Documento
 
             If Not Fx_Validar_Restricciones_Por_Tipo_Documento_Y_Relacion() Then
                 Return
+            End If
+
+            '  VALIDACION FINCRED
+            If _Tido = "NVV" Then
+                Fx_Vaidar_Fincred()
             End If
 
             If String.IsNullOrEmpty(_TblEncabezado.Rows(0).Item("NroDocumento").ToString.Trim) Then
@@ -24333,6 +24338,10 @@ Public Class Frm_Formulario_Documento
 
     Private Sub Btn_Crear_Desde_DTEXMLCompra_Click(sender As Object, e As EventArgs) Handles Btn_Crear_Desde_DTEXMLCompra.Click
 
+        If Not Fx_Tiene_Permiso(Me, "Doc00081") Then
+            Return
+        End If
+
         If _RowEntidad Is Nothing Then
             MessageBoxEx.Show(Me, "Falta entidad en el documento",
                               "Validación",
@@ -24541,6 +24550,7 @@ Public Class Frm_Formulario_Documento
 
                         _New_Fila.Cells("Codigo").Value = _Codigo
                         _New_Fila.Cells("Cantidad").Value = _Cantidad
+                        _New_Fila.Cells("CodigoProv").Value = _Kopral
 
                         Dim _Precio_Old As Double = _New_Fila.Cells("Precio").Value
 
@@ -24575,17 +24585,21 @@ Public Class Frm_Formulario_Documento
             Dim _DsctoGlobal = 0
             Dim _RecarGlobal = 0
 
-            For Each _Fila As Bk_GenDoc2DTE.DscRcgGlobal In _Respuesta.DscRcgGlobal
+            If Not IsNothing(_Respuesta.DscRcgGlobal) Then
 
-                Dim _TpoMov = _Fila.TpoMov
+                For Each _Fila As Bk_GenDoc2DTE.DscRcgGlobal In _Respuesta.DscRcgGlobal
 
-                If _TpoMov = "D" Then
-                    _DsctoGlobal += 1
-                Else
-                    _RecarGlobal += 1
-                End If
+                    Dim _TpoMov = _Fila.TpoMov
 
-            Next
+                    If _TpoMov = "D" Then
+                        _DsctoGlobal += 1
+                    Else
+                        _RecarGlobal += 1
+                    End If
+
+                Next
+
+            End If
 
             If CBool(_DsctoGlobal) Then
                 MessageBoxEx.Show(Me, "Existen descuentos globales" & vbCrLf &
@@ -24637,6 +24651,58 @@ Public Class Frm_Formulario_Documento
                                                                   _CodFuncionario_Autoriza, _NroRemota, _Permiso_Presencial, True, False)
 
         Return True
+
+    End Function
+
+
+    Function Fx_Vaidar_Fincred() As Boolean
+
+        _Row_Encabezado_Doc = _TblEncabezado.Rows(0)
+
+        Dim _Rut_girador As String = _RowEntidad.Item("Rut")
+
+        _Rut_girador = Replace(_Rut_girador, "-", "")
+        _Rut_girador = Replace(_Rut_girador, ".", "")
+
+        Dim _Rut_comprador As String
+        Dim _Numero_transaccion_cliente As Integer = 1000
+        Dim _Numero_documento_transaccion As String = 1000
+        Dim _Producto As Cl_Fincred_Bakapp.Cl_Fincred_SQL.Producto = Cl_Fincred_Bakapp.Cl_Fincred_SQL.Producto.Facturas
+        Dim _Banco As Integer = 0
+        Dim _Monto_total_venta As Double = _Row_Encabezado_Doc.Item("TotalBrutoDoc")
+        Dim _Cantidad_documentos_venta As Integer = 1
+        Dim _Num_primer_doc As Integer = 1000
+        Dim _Fec_primer_venc As String = Format(_Row_Encabezado_Doc.Item("Fecha_1er_Vencimiento"), "ddMMyyyy")
+        Dim _Num_telefono As String = _RowEntidad.Item("FOEN").ToString.Trim
+
+        Dim _ProductoV = _Producto + 1
+
+        _Rut_girador = "118549252" ' APROBACION DE PRUEBAS
+        _Rut_girador = "094005051" ' NEGACION DE PRUEBAS
+
+        _Rut_comprador = _Rut_girador
+
+        Dim _Fincred As New Cl_Fincred_Bakapp.Cl_Fincred_SQL(1)
+        _Fincred.Fx_Generar_Consulta(_Rut_girador,
+                                     _Rut_comprador,
+                                     _Numero_transaccion_cliente,
+                                     _Numero_documento_transaccion,
+                                     _ProductoV,
+                                     _Banco,
+                                     _Monto_total_venta,
+                                     _Cantidad_documentos_venta,
+                                     _Num_primer_doc,
+                                     _Fec_primer_venc,
+                                     _Num_telefono)
+
+        If _Fincred.Respuesta.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Fincred.Respuesta.TramaRespuesta.descripcion_negacion & vbCrLf &
+                              "Código de autorización: " & _Fincred.Respuesta.TramaRespuesta.documentos(0).autorizacion,
+                              "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Else
+            MessageBoxEx.Show(Me, _Fincred.Respuesta.MensajeError & vbCrLf &
+                              "Código de autorización: RECHAZADO", "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
 
     End Function
 

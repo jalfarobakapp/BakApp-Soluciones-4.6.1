@@ -1188,34 +1188,38 @@ Public Class Cl_Dte2XmlPDF
 
                 Dim Tbl_DscRcgGlobal = _Dset_DTE.Tables("DscRcgGlobal")
 
-                For Each _Fila As DataRow In Tbl_DscRcgGlobal.Rows
+                If Not IsNothing(Tbl_DscRcgGlobal) Then
 
-                    Dim ID = _Fila.Item("Documento_Id")
+                    For Each _Fila As DataRow In Tbl_DscRcgGlobal.Rows
 
-                    If ID = _Documento_Id Then
+                        Dim ID = _Fila.Item("Documento_Id")
 
-                        Dim _TpoMov As String = _Fila.Item("TpoMov")
-                        Dim _GlosaDR As String = _Fila.Item("GlosaDR")
-                        Dim _TpoValor As String = _Fila.Item("TpoValor")
-                        Dim _ValorDR As Double = Valor_Columna(_Fila, 0, "ValorDR", True)
+                        If ID = _Documento_Id Then
 
-                        If _TpoMov = "D" And _TpoValor = "$" Then _ValorDR = _ValorDR * -1
+                            Dim _TpoMov As String = _Fila.Item("TpoMov")
+                            Dim _GlosaDR As String = _Fila.Item("GlosaDR")
+                            Dim _TpoValor As String = _Fila.Item("TpoValor")
+                            Dim _ValorDR As Double = Valor_Columna(_Fila, 0, "ValorDR", True)
 
-                        Dim _DecuentoPct = Rellenar(FormatNumber(_ValorDR, 2), 4, " ", False)
-                        Dim _DescuentoMonto = Rellenar(FormatNumber(_ValorDR, 0), 13, " ", False)
+                            If _TpoMov = "D" And _TpoValor = "$" Then _ValorDR = _ValorDR * -1
 
-                        pgfx.DrawString(_GlosaDR, FteNormal_C_7, XBrushes.Black, 140, Ypos)
+                            Dim _DecuentoPct = Rellenar(FormatNumber(_ValorDR, 2), 4, " ", False)
+                            Dim _DescuentoMonto = Rellenar(FormatNumber(_ValorDR, 0), 13, " ", False)
 
-                        If _TpoValor = "%" Then
-                            pgfx.DrawString(_DecuentoPct, FteNormal_C_7, XBrushes.Black, 446, Ypos) ' porcentaje descuento
-                        Else
-                            pgfx.DrawString(_DescuentoMonto, FteNormal_C_7, XBrushes.Black, 530, Ypos) ' valor descuento
+                            pgfx.DrawString(_GlosaDR, FteNormal_C_7, XBrushes.Black, 140, Ypos)
+
+                            If _TpoValor = "%" Then
+                                pgfx.DrawString(_DecuentoPct, FteNormal_C_7, XBrushes.Black, 446, Ypos) ' porcentaje descuento
+                            Else
+                                pgfx.DrawString(_DescuentoMonto, FteNormal_C_7, XBrushes.Black, 530, Ypos) ' valor descuento
+                            End If
+                            Ypos += 8
+
                         End If
-                        Ypos += 8
 
-                    End If
+                    Next
 
-                Next
+                End If
 
                 Dim elipse As XSize
                 elipse.Height = 10
