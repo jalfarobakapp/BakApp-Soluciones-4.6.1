@@ -341,13 +341,51 @@ Public Class Frm_Demonio_DTEMonitor
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_DTE_Trackid Where Id = " & _Id_Trackid
         Dim _RowTrackid As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+        Dim _Id_Dte = _RowTrackid.Item("Id_Dte")
         Dim _Idmaeedo = _RowTrackid.Item("Idmaeedo")
 
         Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
         Dim _Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Dim _Tido As String = _Maeedo.Item("TIDO")
-        Dim _Nudo As String = _Maeedo.Item("NUDO")
+        Dim _Tido As String
+        Dim _Nudo As String
+
+        If IsNothing(_Maeedo) Then
+
+            Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_DTE_Documentos Where Id_Dte = " & _Id_Dte
+            Dim _Row_Dte As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row_Dte) Then
+                _Resp.EsCorrecto = False
+                _Resp.Mensaje = "No se encontro registros con el Id_Dte: " & _Id_Dte & ", Idmaeedo: " & _Idmaeedo
+                _Resultado = _Resp
+                Return False
+            End If
+
+            _Tido = _Row_Dte.Item("Tido")
+            _Nudo = _Row_Dte.Item("Nudo")
+
+            Consulta_sql = "Select * From MAEEDO Where TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
+            _Maeedo = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Maeedo) Then
+                _Resp.EsCorrecto = False
+                _Resp.Mensaje = "No se encontro el documento: " & _Tido & "-" & _Nudo
+                _Resultado = _Resp
+                Return False
+            End If
+
+            _Idmaeedo = _Maeedo.Item("IDMAEEDO")
+
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Idmaeedo = " & _Idmaeedo & " Where Id_Dte = " & _Id_Dte & vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Idmaeedo = " & _Idmaeedo & " Where Id_Dte = " & _Id_Dte
+            _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+        End If
+
+        _Tido = _Maeedo.Item("TIDO")
+        _Nudo = _Maeedo.Item("NUDO")
+
         Dim _RutEmisor As String
 
         Dim _Cn As String

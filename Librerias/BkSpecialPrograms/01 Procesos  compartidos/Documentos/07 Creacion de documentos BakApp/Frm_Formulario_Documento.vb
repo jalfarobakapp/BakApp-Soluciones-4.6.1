@@ -13201,9 +13201,9 @@ Public Class Frm_Formulario_Documento
             End If
 
             '  VALIDACION FINCRED
-            'If _Tido = "NVV" Then
-            '    Fx_Vaidar_Fincred()
-            'End If
+            If _Tido = "NVV" Then
+                Fx_Vaidar_Fincred()
+            End If
 
             If String.IsNullOrEmpty(_TblEncabezado.Rows(0).Item("NroDocumento").ToString.Trim) Then
                 MessageBoxEx.Show(Me, "Debe indicar un número de documento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)

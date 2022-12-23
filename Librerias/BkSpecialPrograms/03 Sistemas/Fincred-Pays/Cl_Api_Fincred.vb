@@ -37,10 +37,10 @@ Namespace Cl_APIs
 
                 Select Case TramaRespuesta.estado_transaccion
                     Case 0
-                        _Respuesta.EsCorrecto = False
-                    Case 1
                         _Respuesta.EsCorrecto = True
-                    Case 2
+                    Case 1
+                        _Respuesta.EsCorrecto = False
+                    Case 9
                         _Respuesta.EsCorrecto = False
                 End Select
 
