@@ -65,7 +65,7 @@
                        "ROUND(ISNULL(dbo." & Tbl1 & ".PPPRNERE2, 0) / ISNULL(dbo." & Tbl1 & ".RLUDPR, 0), 3) AS Ult_Compra, ISNULL(dbo.Zw_ListaLC_ValPro.Mcosto, " & vbCrLf &
                        "0) AS Mcosto, dbo." & Tbl1 & ".TIDO, dbo." & Tbl1 & ".NUDO, dbo." & Tbl1 & ".FEEMLI, dbo." & Tbl1 & ".ENDO, " & vbCrLf &
                        "dbo." & Tbl1 & ".SUENDO, dbo." & Tbl1 & ".NOKOEN, dbo." & Tbl1 & ".SULIDO, dbo." & Tbl1 & ".BOSULIDO" & vbCrLf &
-                       "FROM         dbo." & Tbl1 & " LEFT OUTER JOIN" & vbCrLf &
+                       "From dbo." & Tbl1 & " LEFT OUTER JOIN" & vbCrLf &
                        "dbo.Zw_ListaLC_ValPro ON dbo." & Tbl1 & ".KOPRCT = dbo.Zw_ListaLC_ValPro.Codigo LEFT OUTER JOIN" & vbCrLf &
                        "dbo.MAEPREM ON dbo." & Tbl1 & ".KOPRCT = dbo.MAEPREM.KOPR" & vbCrLf &
                        "where " & vbCrLf &
@@ -421,8 +421,8 @@
             Dim Mcosto, McostoNew As Double
             'Dim _FechaModif As Date = FormatDateTime(_Fila.Cells("FechaModif").Value, DateFormat.ShortDate)
 
-            CostoPM = (_Fila.Cells("PM").Value)
-            CostoUC = (_Fila.Cells("PPUL01").Value)
+            CostoPM = NuloPorNro(_Fila.Cells("PM").Value, 0)
+            CostoUC = NuloPorNro(_Fila.Cells("PPUL01").Value, 0)
             Mcosto = NuloPorNro(_Fila.Cells("MCosto").Value, 0)
 
             If CostoPM > CostoUC Then

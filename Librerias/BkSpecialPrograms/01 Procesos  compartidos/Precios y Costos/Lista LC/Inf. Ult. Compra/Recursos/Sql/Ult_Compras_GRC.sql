@@ -31,7 +31,7 @@ SELECT DISTINCT    Ddo.IDMAEEDO,
 Into #Tbl_Paso2
 From MAEDDO Ddo 
 	   Left Join MAEEN On Ddo.ENDO = dbo.MAEEN.KOEN AND Ddo.SUENDO = dbo.MAEEN.SUEN
-		Left Join MAEPREM Mpen On Mpen.KOPR = Ddo.KOPRCT And Mpen.EMPRESA = '01' 
+		Left Join MAEPREM Mpen On Mpen.KOPR = Ddo.KOPRCT And Mpen.EMPRESA = @Empresa
 Where Ddo.TIDO = 'GRC' And Ddo.FEEMLI BETWEEN @Fecha_Desde AND @Fecha_Hasta
 Group By Ddo.IDMAEEDO,Ddo.IDMAEDDO,Ddo.NUDO, Ddo.ENDO, Ddo.SUENDO, dbo.MAEEN.NOKOEN, Ddo.KOPRCT, Ddo.UDTRPR, Ddo.RLUDPR, 
                       Ddo.CAPRCO1, Ddo.CAPRCO2, Ddo.UD01PR, Ddo.UD02PR, Ddo.PPPRNE, Ddo.NOKOPR, 
