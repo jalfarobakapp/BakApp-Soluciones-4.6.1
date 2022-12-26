@@ -469,6 +469,13 @@ Public Class Frm_MantCostosPrecios
 
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_ListaPreCosto Where Proveedor = '" & _CodProveedor & "' And Lista = '" & _CodLista & "' And CodAlternativo = ''
                             Delete " & _Global_BaseBk & "Zw_ListaPreCosto Where Proveedor = '" & _CodProveedor & "' And CodAlternativo = ''
+                            Delete " & _Global_BaseBk & "Zw_ListaPreCosto Where Proveedor = '" & _CodProveedor & "' And Descripcion = '' And Descripcion_Alt = ''
+
+                            Delete " & _Global_BaseBk & "Zw_ListaPreCosto
+                            Where CodAlternativo In (Select Tcd.KOPRAL From TABCODAL Tcd
+                            Left Join " & _Global_BaseBk & "Zw_ListaPreCosto Lc  On KOEN = Proveedor And KOPRAL = CodAlternativo And KOPR = Codigo And Id_Padre = " & _Id_Padre & "
+                            Where KOEN = '" & _CodProveedor & "' And Codigo is null)
+
 
                             Delete " & _Global_BaseBk & "Zw_ListaPreCosto
                             Where CodAlternativo Not In (Select KOPRAL From TABCODAL Where KOEN = '" & _CodProveedor & "')
