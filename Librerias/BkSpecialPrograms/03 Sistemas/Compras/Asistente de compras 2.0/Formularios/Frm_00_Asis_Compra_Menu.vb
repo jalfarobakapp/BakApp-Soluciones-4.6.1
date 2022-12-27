@@ -58,18 +58,13 @@ Public Class Frm_00_Asis_Compra_Menu
     Dim _TblFiltroProductos_Proveedor As DataTable
     Dim _Cancelar As Boolean
 
-    Dim _Accion_Automatica As Boolean
     Dim _Modo_OCC As Boolean
     Dim _Modo_NVI As Boolean
 
     Public Property Accion_Automatica As Boolean
-        Get
-            Return _Accion_Automatica
-        End Get
-        Set(value As Boolean)
-            _Accion_Automatica = value
-        End Set
-    End Property
+    Public Property GenerarAutomaticamenteOCCProveedorStar As Boolean
+    Public Property GenerarAutomaticamenteNVI As Boolean
+    Public Property GenerarAutomaticamenteOCCProveedores As Boolean
 
     Public Property Modo_OCC As Boolean
         Get
@@ -1402,8 +1397,12 @@ Public Class Frm_00_Asis_Compra_Menu
                     End If
                 End If
 
-                If Chk_DbExt_SincronizarPRBD.Checked Then 'CBool(Txt_DbExt_Nombre_Conexion.Tag) Then
-                    Sb_Actualizar_Stock_Desde_Una_Empresa_A_Otra(_TblProductos_Con_Reemplazo)
+                If Not GenerarAutomaticamenteOCCProveedores And Not GenerarAutomaticamenteNVI Then
+
+                    If Chk_DbExt_SincronizarPRBD.Checked Or GenerarAutomaticamenteOCCProveedorStar Then
+                        Sb_Actualizar_Stock_Desde_Una_Empresa_A_Otra(_TblProductos_Con_Reemplazo)
+                    End If
+
                 End If
 
                 Fm_Espera = New Frm_Form_Esperar
@@ -2110,6 +2109,10 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Pro_Tbl_Filtro_Zonas = _Tbl_Filtro_Zonas
 
         Fm.Accion_Automatica = _Accion_Automatica
+        Fm.GenerarAutomaticamenteOCCProveedores = GenerarAutomaticamenteOCCProveedores
+        Fm.GenerarAutomaticamenteOCCProveedorStar = GenerarAutomaticamenteOCCProveedorStar
+        Fm.GenerarAutomaticamenteNVI = GenerarAutomaticamenteNVI
+
         Fm.Modo_OCC = Modo_OCC
         Fm.Modo_NVI = _Modo_NVI
         Fm.ShowDialog(Me)

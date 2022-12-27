@@ -111,6 +111,18 @@ Public Class Modulo_Compras
     Private Sub ButtonItem1_Click(sender As Object, e As EventArgs) Handles ButtonItem1.Click
         Dim Fm As New Frm_00_Asis_Compra_Menu
         Fm.Accion_Automatica = True
+        Fm.GenerarAutomaticamenteOCCProveedores = True
+        Fm.Modo_OCC = True
+        Fm.Tipo_Informe = "Asistente de compras"
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+    End Sub
+
+    Private Sub ButtonItem2_Click(sender As Object, e As EventArgs) Handles ButtonItem2.Click
+        Dim Fm As New Frm_00_Asis_Compra_Menu
+        Fm.Accion_Automatica = True
+        Fm.GenerarAutomaticamenteOCCProveedorStar = True
+        Fm.Modo_OCC = True
         Fm.Tipo_Informe = "Asistente de compras"
         Fm.ShowDialog(Me)
         Fm.Dispose()

@@ -13144,8 +13144,10 @@ Public Class Frm_Formulario_Documento
 
             Me.Enabled = False
 
-            If Fr_Alerta_Stock.Visible Then
-                Fr_Alerta_Stock.Close()
+            If Me.Visible Then
+                If Fr_Alerta_Stock.Visible Then
+                    Fr_Alerta_Stock.Close()
+                End If
             End If
 
             Dim _Vizado As Boolean
@@ -14028,7 +14030,9 @@ Public Class Frm_Formulario_Documento
 
                         End If
 
-                        Me.Close()
+                        If Me.Visible Then
+                            Me.Close()
+                        End If
 
                     Else
 
@@ -15079,13 +15083,19 @@ Public Class Frm_Formulario_Documento
         Dim _Revisar_Fincred As Boolean
         Dim _Fincred_Respuesta As New Fincred_API.Respuesta
 
-        If _Tido = "NVV" And _Global_Row_Configuracion_Estacion.Item("FincredPaysNVV") Then
-            _Revisar_Fincred = True
-        End If
+        Try
 
-        If _Tido = "FCV" And _Global_Row_Configuracion_Estacion.Item("FincredPaysFCV") Then
-            _Revisar_Fincred = True
-        End If
+            If _Tido = "NVV" And _Global_Row_Configuracion_Estacion.Item("FincredPaysNVV") Then
+                _Revisar_Fincred = True
+            End If
+
+            If _Tido = "FCV" And _Global_Row_Configuracion_Estacion.Item("FincredPaysFCV") Then
+                _Revisar_Fincred = True
+            End If
+
+        Catch ex As Exception
+            _Revisar_Fincred = False
+        End Try
 
         If _TipoGrab = _Tipo_de_Grabacion.Nuevo_documento Then
 
@@ -15107,7 +15117,6 @@ Public Class Frm_Formulario_Documento
                 End If
 
             End If
-
 
             _Idmaeedo = _New_Doc.Fx_Crear_Documento(_Tido,
                                                     _Nudo,
