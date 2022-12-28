@@ -34,6 +34,8 @@ Public Class Frm_St_Estado_05_Reparacion
         Editar
     End Enum
 
+    Public Property CodTecnico_Repara As String
+
     Public Sub New(ByVal Accion As Accion)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -63,6 +65,11 @@ Public Class Frm_St_Estado_05_Reparacion
 
             _Tecnico = _Row_Encabezado.Item("CodTecnico_Asignado")
 
+            If Not String.IsNullOrEmpty(CodTecnico_Repara) Then
+                _Tecnico = CodTecnico_Repara
+                Cmb_Tecnico.Enabled = False
+            End If
+
             Sb_Cargar_Tecnicos(_Tecnico)
             Txt_Horas_Mano_de_Obra.Text = _Row_Encabezado.Item("Horas_Mano_de_Obra_Repara")
             Btn_Fijar_Estado.Visible = True
@@ -81,7 +88,6 @@ Public Class Frm_St_Estado_05_Reparacion
 
             Sb_Cargar_Tecnicos(_Tecnico, True)
 
-            'Reparacion_Realizada, Chk_no_se_pudo_reparar, Motivo_no_reparo
             Chk_No_se_pudo_reparar_el_equipo.Checked = _Row_Notas.Item("Chk_no_se_pudo_reparar")
 
             If Chk_No_se_pudo_reparar_el_equipo.Checked Then

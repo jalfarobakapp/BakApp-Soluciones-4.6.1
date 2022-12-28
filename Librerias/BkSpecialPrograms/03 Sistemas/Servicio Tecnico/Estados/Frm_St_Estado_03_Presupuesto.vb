@@ -1,6 +1,4 @@
 ﻿Imports DevComponents.DotNetBar
-'Imports Lib_Bakapp_VarClassFunc
-'Imports BkSpecialPrograms
 Imports System.Data.SqlClient
 
 Public Class Frm_St_Estado_03_Presupuesto
@@ -28,7 +26,9 @@ Public Class Frm_St_Estado_03_Presupuesto
         Editar
     End Enum
 
-    Public Sub New(ByVal Id_Ot As Integer, ByVal Accion As Accion)
+    Public Property CodTecnico_Presupuesta As String
+
+    Public Sub New(Id_Ot As Integer, Accion As Accion)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -43,12 +43,23 @@ Public Class Frm_St_Estado_03_Presupuesto
 
     End Sub
 
-    Private Sub Frm_St_Estado_03_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_St_Estado_03_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Dim _CodFuncionario = _Row_Encabezado.Item("CodTecnico_Asignado")
 
+        If _Accion = Accion.Editar Then
+            CodTecnico_Presupuesta = _Row_Encabezado.Item("CodTecnico_Presupuesta").ToString.Trim
+        End If
+
+        If String.IsNullOrEmpty(CodTecnico_Presupuesta) Then
+            CodTecnico_Presupuesta = _CodFuncionario
+        Else
+            _CodFuncionario = CodTecnico_Presupuesta
+        End If
+
+
         Txt_Tecnico_Taller.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller", "NomFuncionario",
-                                           "CodFuncionario = '" & _CodFuncionario & "'")
+                                           "CodFuncionario = '" & _CodFuncionario & "'").ToString.Trim
         Sb_Actualizar_Grilla()
         If _Tbl_DetProd.Rows.Count = 0 Then Sb_New_OT_Agregar_Fila()
 
@@ -88,7 +99,6 @@ Public Class Frm_St_Estado_03_Presupuesto
             Txt_Reparacion_a_realizar.FocusHighlightEnabled = False
 
             Txt_Horas_Mano_de_Obra.Enabled = False
-
 
             Btn_Fijar_Estado.Visible = False
             Btn_Editar.Visible = True
@@ -134,7 +144,7 @@ Public Class Frm_St_Estado_03_Presupuesto
 
     End Sub
 
-    Private Sub Frm_St_Estado_03_Presupuesto_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
+    Private Sub Frm_St_Estado_03_Presupuesto_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
 
         'Dim _InT = Super_Tab.SelectedTabIndex
         If e.KeyValue = Keys.Down Then
@@ -263,7 +273,7 @@ Public Class Frm_St_Estado_03_Presupuesto
             If _Accion = Accion.Nuevo Then
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set " &
-                               "CodEstado = 'P'" & vbCrLf &
+                               "CodEstado = 'P',CodTecnico_Presupuesta = '" & CodTecnico_Presupuesta & "'" & vbCrLf &
                                "Where Id_Ot  = " & _Id_Ot
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
@@ -272,9 +282,7 @@ Public Class Frm_St_Estado_03_Presupuesto
 
             End If
 
-
             Dim _HH As String = De_Num_a_Tx_01(_Horas_Mano_de_Obra_Asignado, False, 5)
-
 
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set " &
                            "Horas_Mano_de_Obra_Asignado = " & _HH & vbCrLf &
@@ -338,7 +346,9 @@ Public Class Frm_St_Estado_03_Presupuesto
                         End If
 
                     End If
+
                 Next
+
             End If
 
 
@@ -404,14 +414,14 @@ Public Class Frm_St_Estado_03_Presupuesto
 
 #End Region
 
-    Private Sub Btn_Salir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Salir.Click
+    Private Sub Btn_Salir_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Salir.Click
         Grilla.EndEdit()
         Me.Close()
     End Sub
 
 #Region "EVENTOS GRILLA"
 
-    Private Sub Grilla_CellEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Grilla_CellEnter(sender As Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -434,7 +444,7 @@ Public Class Frm_St_Estado_03_Presupuesto
 
     End Sub
 
-    Private Sub Grilla_CellBeginEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellCancelEventArgs)
+    Private Sub Grilla_CellBeginEdit(sender As Object, e As System.Windows.Forms.DataGridViewCellCancelEventArgs)
 
         Bar2.Enabled = False
 
@@ -469,7 +479,7 @@ Public Class Frm_St_Estado_03_Presupuesto
 
     End Sub
 
-    Private Sub Grilla_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Grilla_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -537,7 +547,7 @@ Public Class Frm_St_Estado_03_Presupuesto
         'Grilla.AllowUserToAddRows = True
     End Sub
 
-    Private Sub Grilla_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+    Private Sub Grilla_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs)
         Try
             Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
             Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -602,7 +612,7 @@ Public Class Frm_St_Estado_03_Presupuesto
 
     End Sub
 
-    Private Sub Grilla_EditingControlShowing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs)
+    Private Sub Grilla_EditingControlShowing(sender As System.Object, e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs)
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
         Dim validar As TextBox = CType(e.Control, TextBox)
 
@@ -614,7 +624,7 @@ Public Class Frm_St_Estado_03_Presupuesto
 
     End Sub
 
-    Sub Sb_RowsPostPaint(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewRowPostPaintEventArgs)
+    Sub Sb_RowsPostPaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPostPaintEventArgs)
         Try
             'Captura el numero de filas del datagridview
             Dim RowsNumber As String = (e.RowIndex + 1).ToString
@@ -634,7 +644,7 @@ Public Class Frm_St_Estado_03_Presupuesto
     End Sub
 
 
-    Function Fx_Buscar_Producto(ByVal _Codigo As String) As DataRow
+    Function Fx_Buscar_Producto(_Codigo As String) As DataRow
 
         Dim _TblProducto As DataTable
 
@@ -683,12 +693,12 @@ Public Class Frm_St_Estado_03_Presupuesto
 
 #Region "EVENTOS TXT MANO DE OBRA"
 
-    Private Sub Txt_Horas_Mano_de_Obra_Validating(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs)
+    Private Sub Txt_Horas_Mano_de_Obra_Validating(sender As System.Object, e As System.ComponentModel.CancelEventArgs)
         _Horas_Mano_de_Obra_Asignado = De_Txt_a_Num_01(Txt_Horas_Mano_de_Obra.Text, 2)
         Txt_Horas_Mano_de_Obra.Text = FormatNumber(_Horas_Mano_de_Obra_Asignado, 2)
     End Sub
 
-    Private Sub Txt_Horas_Mano_de_Obra_Enter(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Txt_Horas_Mano_de_Obra_Enter(sender As System.Object, e As System.EventArgs)
         If CBool(_Horas_Mano_de_Obra_Asignado) Then
             Txt_Horas_Mano_de_Obra.Text = _Horas_Mano_de_Obra_Asignado
         Else
@@ -696,7 +706,7 @@ Public Class Frm_St_Estado_03_Presupuesto
         End If
     End Sub
 
-    Private Sub Txt_Horas_Mano_de_Obra_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs)
+    Private Sub Txt_Horas_Mano_de_Obra_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs)
 
         Dim _Texto = CType(sender, TextBox)
 
@@ -724,7 +734,7 @@ Public Class Frm_St_Estado_03_Presupuesto
 
 #Region "EVENTOS BOTON GRABAR"
 
-    Private Sub Btn_Fijar_Estado_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Fijar_Estado_Click(sender As System.Object, e As System.EventArgs)
 
         If String.IsNullOrEmpty(Txt_Horas_Mano_de_Obra.Text) Then
             Beep()
@@ -743,7 +753,6 @@ Public Class Frm_St_Estado_03_Presupuesto
                                    2 * 1000, eToastGlowColor.Red,
                                    eToastPosition.MiddleCenter)
             Txt_Defecto_encontrado.Focus()
-            'Super_Tab.SelectedTabIndex = 0
             Return
         End If
 
@@ -753,7 +762,6 @@ Public Class Frm_St_Estado_03_Presupuesto
                                    Imagenes_32x32.Images.Item("warning.png"),
                                    2 * 1000, eToastGlowColor.Red,
                                    eToastPosition.MiddleCenter)
-            'Super_Tab.SelectedTabIndex = 1
             Txt_Reparacion_a_realizar.Focus()
             Return
         End If
@@ -764,14 +772,12 @@ Public Class Frm_St_Estado_03_Presupuesto
 
             If CBool(Grilla.Rows.Count) Then
                 _Fila = Grilla.Rows(0)
-                'Dim _Nuevo_Item As Boolean = _Fila.Cells("Nuevo_Item").Value
             End If
 
             If Not CBool(Grilla.Rows.Count) Or _Fila.IsNewRow Then
                 If MessageBoxEx.Show(Me, "¿Desea agregar productos a la reparación?",
                                      "No incluyo productos al presupuesto", MessageBoxButtons.YesNo,
                                      MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
-                    'Super_Tab.SelectedTabIndex = 2
                     Return
                 End If
             End If
@@ -797,7 +803,7 @@ Public Class Frm_St_Estado_03_Presupuesto
         Get
             Return _DsDocumento
         End Get
-        Set(ByVal value As DataSet)
+        Set(value As DataSet)
             _DsDocumento = value
             _Row_Encabezado = _DsDocumento.Tables(0).Rows(0)
             _Tbl_DetProd = _DsDocumento.Tables(1)
@@ -810,7 +816,7 @@ Public Class Frm_St_Estado_03_Presupuesto
         Get
             Return _Grabar
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
 
         End Set
     End Property
@@ -819,7 +825,7 @@ Public Class Frm_St_Estado_03_Presupuesto
         Get
             Return _Editando_documento
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Editando_documento = value
         End Set
     End Property
@@ -829,19 +835,19 @@ Public Class Frm_St_Estado_03_Presupuesto
         Get
             Return Imagenes_32x32
         End Get
-        Set(ByVal value As ImageList)
+        Set(value As ImageList)
             Imagenes_32x32 = value
         End Set
     End Property
 
 #End Region
 
-    Private Sub Grilla_CellValidating(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellValidatingEventArgs) Handles Grilla.CellValidating
+    Private Sub Grilla_CellValidating(sender As System.Object, e As System.Windows.Forms.DataGridViewCellValidatingEventArgs) Handles Grilla.CellValidating
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
     End Sub
 
 
-    Private Sub Grilla_RowValidating(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellCancelEventArgs) Handles Grilla.RowValidating
+    Private Sub Grilla_RowValidating(sender As Object, e As System.Windows.Forms.DataGridViewCellCancelEventArgs) Handles Grilla.RowValidating
         ' e.Cancel = True
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
@@ -856,7 +862,7 @@ Public Class Frm_St_Estado_03_Presupuesto
     End Sub
 
 
-    Private Sub Grilla_DataError(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewDataErrorEventArgs) Handles Grilla.DataError
+    Private Sub Grilla_DataError(sender As Object, e As System.Windows.Forms.DataGridViewDataErrorEventArgs) Handles Grilla.DataError
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -864,7 +870,7 @@ Public Class Frm_St_Estado_03_Presupuesto
         MessageBoxEx.Show(e.Exception.ToString)
     End Sub
 
-    Private Sub Grilla_DefaultValuesNeeded(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewRowEventArgs) Handles Grilla.DefaultValuesNeeded
+    Private Sub Grilla_DefaultValuesNeeded(sender As System.Object, e As System.Windows.Forms.DataGridViewRowEventArgs) Handles Grilla.DefaultValuesNeeded
 
         With e.Row
 
@@ -888,7 +894,7 @@ Public Class Frm_St_Estado_03_Presupuesto
 
     End Sub
 
-    Public Sub Fx_Validar_Keypress_Nros_Grilla(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs)
+    Public Sub Fx_Validar_Keypress_Nros_Grilla(sender As Object, e As System.Windows.Forms.KeyPressEventArgs)
         ' evento Keypress  
 
         ' obtener indice de la columna  
@@ -927,7 +933,7 @@ Public Class Frm_St_Estado_03_Presupuesto
         End With
     End Sub
 
-    Private Sub Btn_Editar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Editar.Click
+    Private Sub Btn_Editar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Editar.Click
 
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_OT_Estados", "Id_Ot = " & _Id_Ot & " And CodEstado = 'C'")
 
@@ -969,7 +975,7 @@ Public Class Frm_St_Estado_03_Presupuesto
         Me.Refresh()
     End Sub
 
-    Private Sub Btn_Cancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cancelar.Click
+    Private Sub Btn_Cancelar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cancelar.Click
         Me.Close()
     End Sub
 

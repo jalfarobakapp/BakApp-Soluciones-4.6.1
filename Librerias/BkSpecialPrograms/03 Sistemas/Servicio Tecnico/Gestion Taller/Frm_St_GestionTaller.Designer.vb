@@ -26,6 +26,7 @@ Partial Class Frm_St_GestionTaller
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_St_GestionTaller))
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Super_TabS = New DevComponents.DotNetBar.SuperTabStrip()
@@ -158,13 +159,13 @@ Partial Class Frm_St_GestionTaller
         '
         Me.Tab_03_Asignadas.GlobalItem = False
         Me.Tab_03_Asignadas.Name = "Tab_03_Asignadas"
-        Me.Tab_03_Asignadas.Text = "Asignadas a un técnico."
+        Me.Tab_03_Asignadas.Text = "Generar presupuesto"
         '
         'Tab_04_Presupuesto
         '
         Me.Tab_04_Presupuesto.GlobalItem = False
         Me.Tab_04_Presupuesto.Name = "Tab_04_Presupuesto"
-        Me.Tab_04_Presupuesto.Text = "Presupuesto"
+        Me.Tab_04_Presupuesto.Text = "En Reparación (dar de alta)"
         '
         'Timer_Cerrar_Sesion
         '
@@ -193,6 +194,7 @@ Partial Class Frm_St_GestionTaller
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Frm_St_GestionTaller"
