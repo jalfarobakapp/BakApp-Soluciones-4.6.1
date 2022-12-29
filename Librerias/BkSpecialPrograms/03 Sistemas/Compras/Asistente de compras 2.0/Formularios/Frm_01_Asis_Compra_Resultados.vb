@@ -75,9 +75,12 @@ Public Class Frm_01_Asis_Compra_Resultados
         End Set
     End Property
 
-    Public Property GenerarAutomaticamenteOCCProveedorStar As Boolean
-    Public Property GenerarAutomaticamenteNVI As Boolean
-    Public Property GenerarAutomaticamenteOCCProveedores As Boolean
+    Public Property Auto_GenerarAutomaticamenteOCCProveedorStar As Boolean
+    Public Property Auto_GenerarAutomaticamenteNVI As Boolean
+    Public Property Auto_GenerarAutomaticamenteOCCProveedores As Boolean
+    Public Property Auto_CorreoCc As String
+    Public Property Auto_Id_Correo As String
+    Public Property Auto_NombreFormato_PDF As String
 
     Public Property Pro_Tbl_Filtro_Super_Familias() As DataTable
         Get
@@ -176,7 +179,6 @@ Public Class Frm_01_Asis_Compra_Resultados
             Sb_Parametros_Revisar()
         End Set
     End Property
-
     Public Property Pro_Nombre_Tbl_Paso_Informe() As String
         Get
             Return _Nombre_Tbl_Paso_Informe
@@ -7932,7 +7934,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         Timer_Ejecucion_Automatica.Stop()
 
-        If GenerarAutomaticamenteOCCProveedores Then
+        If Auto_GenerarAutomaticamenteOCCProveedores Then
 
             Call BtnProceso_Prov_Auto_Click(Nothing, Nothing)
 
@@ -7983,8 +7985,14 @@ Drop Table #Paso"
 
             For Each _Fl As GeneraOccAuto.OCC_Auto In _Generar_OCC.Occ_Auto
 
-                _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, _Fl.Email, "jalfaro@bakapp.cl", 37, "Tam. Carta")
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_AcpAuto (NombreEquipo,Modalidad,Idmaeedo,Tido,Nudo,FechaEmision,Informacion,ErrorGrabar) Values " &
+                               "('" & _NombreEquipo & "','" & Modalidad & "'," & _Fl.Idmaeedo & ",'" & _Fl.Tido & "','" & _Fl.Nudo & "'" &
+                               ",'" & Format(_Fl.Feemdo, "yyyyMMdd") & "','" & NuloPorNro(_Fl.MensajeError, "") & "'," & Convert.ToInt32(_Fl.ErrorGrabar) & ")"
+                _Sql.Ej_consulta_IDU(Consulta_sql)
 
+                _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, _Fl.Email, Auto_CorreoCc, Auto_Id_Correo, Auto_NombreFormato_PDF)
+                ' 37
+                ' "Tam. Carta"
                 MessageBoxEx.Show(Me, "Tido: " & _Fl.Tido & "-" & _Fl.Nudo & vbCrLf &
                                   "Email: " & _Fl.Email, "OCC Generada", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
@@ -7994,7 +8002,7 @@ Drop Table #Paso"
 
         End If
 
-        If GenerarAutomaticamenteOCCProveedorStar Then
+        If Auto_GenerarAutomaticamenteOCCProveedorStar Then
 
             Call BtnProceso_Prov_Auto_Especial_Click(Nothing, Nothing)
 
@@ -8420,6 +8428,7 @@ Drop Table #Paso"
                 _Occ_Auto.Email = Trim(_Sql.Fx_Trae_Dato("MAEEN", "EMAILCOMER", "KOEN = '" & _Koen & "' And SUEN = '" & _Suen & "'"))
                 _Occ_Auto.Tido = "OCC"
                 _Occ_Auto.Nudo = _Sql.Fx_Trae_Dato("MAEEDO", "NUDO", "IDMAEEDO = " & _New_Idmaeedo)
+                _Occ_Auto.Feemdo = _Sql.Fx_Trae_Dato("MAEEDO", "FEEMDO", "IDMAEEDO = " & _New_Idmaeedo)
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_Log_Compras Set" & vbCrLf &
                                "Idmaeedo_Ult_occ = " & _New_Idmaeedo & "," &
@@ -8620,9 +8629,12 @@ Namespace GeneraOccAuto
         Public Property Idmaeedo As Integer
         Public Property Tido As String
         Public Property Nudo As String
+        Public Property Feemdo As DateTime
         Public Property Endo As String
         Public Property Suendo As String
         Public Property Email As String
+        Public Property ErrorGrabar As Boolean
+        Public Property MensajeError As String
 
     End Class
 

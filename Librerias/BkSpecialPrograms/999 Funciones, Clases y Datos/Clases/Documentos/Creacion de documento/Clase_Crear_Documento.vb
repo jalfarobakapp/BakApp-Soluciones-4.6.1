@@ -576,7 +576,7 @@ Public Class Clase_Crear_Documento
                         _Vabrli = De_Num_a_Tx_01(Math.Round(.Item("ValBrutoLinea"), 5), False, 5)
 
                         _Feemli = Format(.Item("FechaEmision"), "yyyyMMdd")
-                        _Feerli = Format(.Item("FechaRecepcion"), "yyyyMMdd")
+                        _Feerli = Format(NuloPorNro(.Item("FechaRecepcion"), _Row_Encabezado.Item("FechaRecepcion")), "yyyyMMdd")
 
                         _Kofuaulido = Replace(NuloPorNro(.Item("CodFunAutoriza"), ""), "xyz", "")
                         _Observa = NuloPorNro(.Item("Observa"), "")

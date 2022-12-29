@@ -62,10 +62,10 @@ Public Class Frm_00_Asis_Compra_Menu
     Dim _Modo_NVI As Boolean
 
     Public Property Accion_Automatica As Boolean
-    Public Property GenerarAutomaticamenteOCCProveedorStar As Boolean
-    Public Property GenerarAutomaticamenteNVI As Boolean
-    Public Property GenerarAutomaticamenteOCCProveedores As Boolean
-
+    Public Property Auto_GenerarAutomaticamenteOCCProveedorStar As Boolean
+    Public Property Auto_GenerarAutomaticamenteNVI As Boolean
+    Public Property Auto_GenerarAutomaticamenteOCCProveedores As Boolean
+    Public Property Auto_CorreoCc As String
     Public Property Modo_OCC As Boolean
         Get
             Return _Modo_OCC
@@ -802,6 +802,21 @@ Public Class Frm_00_Asis_Compra_Menu
                                       Chk_DbExt_SincronizarPRBD.Name, Class_SQLite.Enum_Type._Boolean, Chk_DbExt_SincronizarPRBD.Checked, _Actualizar)
 
 
+        ' AUTOMATIZACION
+        '   Id Correo envio OCC Automaticas
+        _Sql.Sb_Parametro_Informe_Sql(Txt_CtaCorreoEnvioAutomatizado, "Compras_Asistente",
+                                      Txt_CtaCorreoEnvioAutomatizado.Name, Class_SQLite.Enum_Type._String, Txt_CtaCorreoEnvioAutomatizado.Tag, _Actualizar)
+        '   Nombre formato PDF adjunto OCC Automaticas
+        _Sql.Sb_Parametro_Informe_Sql(Txt_NombreFormato_PDF, "Compras_Asistente",
+                                      Txt_NombreFormato_PDF.Name, Class_SQLite.Enum_Type._String, Txt_NombreFormato_PDF.Text, _Actualizar)
+        ' Destinatarios CC para envio de OCC automatizada
+        _Sql.Sb_Parametro_Informe_Sql(Txt_CorreoCc, "Compras_Asistente",
+                                      Txt_CorreoCc.Name, Class_SQLite.Enum_Type._String, Txt_CorreoCc.Text, _Actualizar)
+
+        If Not _Actualizar Then
+            Txt_CtaCorreoEnvioAutomatizado.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Nombre_Correo", "Id = " & Txt_CtaCorreoEnvioAutomatizado.Tag)
+        End If
+
     End Sub
 
     'Sub Sb_Actualizar_Revisar_Sqlite()
@@ -1397,9 +1412,9 @@ Public Class Frm_00_Asis_Compra_Menu
                     End If
                 End If
 
-                If Not GenerarAutomaticamenteOCCProveedores And Not GenerarAutomaticamenteNVI Then
+                If Not Auto_GenerarAutomaticamenteOCCProveedores And Not Auto_GenerarAutomaticamenteNVI Then
 
-                    If Chk_DbExt_SincronizarPRBD.Checked Or GenerarAutomaticamenteOCCProveedorStar Then
+                    If Chk_DbExt_SincronizarPRBD.Checked Or Auto_GenerarAutomaticamenteOCCProveedorStar Then
                         Sb_Actualizar_Stock_Desde_Una_Empresa_A_Otra(_TblProductos_Con_Reemplazo)
                     End If
 
@@ -2109,9 +2124,9 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Pro_Tbl_Filtro_Zonas = _Tbl_Filtro_Zonas
 
         Fm.Accion_Automatica = _Accion_Automatica
-        Fm.GenerarAutomaticamenteOCCProveedores = GenerarAutomaticamenteOCCProveedores
-        Fm.GenerarAutomaticamenteOCCProveedorStar = GenerarAutomaticamenteOCCProveedorStar
-        Fm.GenerarAutomaticamenteNVI = GenerarAutomaticamenteNVI
+        Fm.Auto_GenerarAutomaticamenteOCCProveedores = Auto_GenerarAutomaticamenteOCCProveedores
+        Fm.Auto_GenerarAutomaticamenteOCCProveedorStar = Auto_GenerarAutomaticamenteOCCProveedorStar
+        Fm.Auto_GenerarAutomaticamenteNVI = Auto_GenerarAutomaticamenteNVI
 
         Fm.Modo_OCC = Modo_OCC
         Fm.Modo_NVI = _Modo_NVI
@@ -2933,4 +2948,53 @@ Public Class Frm_00_Asis_Compra_Menu
         Grupo_DbExt.Enabled = Chk_DbExt_SincronizarPRBD.Checked
     End Sub
 
+    Private Sub Txt_CtaCorreoEnvioAutomatizado_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CtaCorreoEnvioAutomatizado.ButtonCustomClick
+
+        Dim _Row_Email As DataRow
+
+        Dim Fm As New Frm_Correos_SMTP
+        Fm.Pro_Seleccionar = True
+        Fm.ShowDialog(Me)
+        _Row_Email = Fm.Pro_Row_Fila_Seleccionada
+        Fm.Dispose()
+
+        If Not IsNothing(_Row_Email) Then
+            Txt_CtaCorreoEnvioAutomatizado.Tag = _Row_Email.Item("Id")
+            Txt_CtaCorreoEnvioAutomatizado.Text = _Row_Email.Item("Nombre_Correo").ToString.Trim
+        End If
+
+    End Sub
+
+    Private Sub Txt_NombreFormato_PDF_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_NombreFormato_PDF.ButtonCustomClick
+
+        Dim Fm As New Frm_Seleccionar_Formato("OCC")
+
+        If CBool(Fm.Tbl_Formatos.Rows.Count) Then
+
+            Fm.ShowDialog(Me)
+            If Fm.Formato_Seleccionado Then
+                Txt_NombreFormato_PDF.Tag = Fm.Row_Formato_Seleccionado.Item("NombreFormato").ToString.Trim
+                Txt_NombreFormato_PDF.Text = Fm.Row_Formato_Seleccionado.Item("NombreFormato").ToString.Trim
+            End If
+
+        Else
+            MessageBoxEx.Show(Me, "No existen formatos adicionales para este documento", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
+
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Txt_NombreFormato_PDF_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_NombreFormato_PDF.ButtonCustom2Click
+        If MessageBoxEx.Show(Me, "Confirma quitar el formato", "Quitar formato", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Txt_NombreFormato_PDF.Text = String.Empty
+        End If
+    End Sub
+
+    Private Sub Txt_CtaCorreoEnvioAutomatizado_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CtaCorreoEnvioAutomatizado.ButtonCustom2Click
+        If MessageBoxEx.Show(Me, "Confirma quitar el correo", "Quitar correo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Txt_CtaCorreoEnvioAutomatizado.Text = String.Empty
+        End If
+    End Sub
 End Class
