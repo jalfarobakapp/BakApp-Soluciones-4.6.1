@@ -118,7 +118,7 @@ Public Class Frm_Importar_Stock_OEBD
     Private Sub Tiempo_Accion_Automatico_Tick(sender As Object, e As EventArgs) Handles Tiempo_Accion_Automatico.Tick
         Tiempo_Accion_Automatico.Enabled = False
         If Not (_TblProductos Is Nothing) Then
-            Sb_Procesar(_TblProductos, True)
+            Sb_Procesar(_TblProductos, False)
         End If
     End Sub
 
@@ -167,8 +167,10 @@ Public Class Frm_Importar_Stock_OEBD
                                   "Productos encontrador", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End If
             Else
-                MessageBoxEx.Show(Me, "No se encontraron productos relacionados entre ambas bases en el listado enviado",
+                If _Mostrar_Mensajes Then
+                    MessageBoxEx.Show(Me, "No se encontraron productos relacionados entre ambas bases en el listado enviado",
                                   "Productos no encontrados", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                End If
                 Me.Close()
                 Return
             End If
@@ -224,9 +226,11 @@ Public Class Frm_Importar_Stock_OEBD
 
                 If _Cancelar Then
                     AddToLog("Consolidación Stock", "Acción cancelada por el usuario")
-                    MessageBoxEx.Show(Me, "Acción cancelada por el usuario" & vbCrLf &
+                    If _Mostrar_Mensajes Then
+                        MessageBoxEx.Show(Me, "Acción cancelada por el usuario" & vbCrLf &
                                       "Total productos IMPORTADOS " & _Contador_Encontrados,
                                       "Cancelar importación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    End If
                     Return
                 End If
 
@@ -235,8 +239,10 @@ Public Class Frm_Importar_Stock_OEBD
             If Not String.IsNullOrEmpty(_SqlQuery) Then
                 If _Sql.Ej_consulta_IDU(_SqlQuery) Then
                     AddToLog("Datos importados correctamente", "Fin importación")
-                    MessageBoxEx.Show(Me, FormatNumber(_Contador_Encontrados, 0) & " Productos importados correctamente",
+                    If _Mostrar_Mensajes Then
+                        MessageBoxEx.Show(Me, FormatNumber(_Contador_Encontrados, 0) & " Productos importados correctamente",
                              "Importar stock", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    End If
                 End If
             End If
 

@@ -1356,11 +1356,11 @@ Public Class Frm_Pagos_Generales
 
                 For Each _Row As DataRow In _Tbl_Maedpce.Rows
 
-                    Dim _Idrsd = _Row.Item("IDRSD")
+                    Dim _Idrsd = NuloPorNro(_Row.Item("IDRSD"), 0)
 
                     If _Idrsd = _Idmaeedo_Nc Then
                         Throw New System.Exception("El documento ya está asociado a los pagos" & vbCrLf & vbCrLf &
-                                                           "No puede asignar la nota de crédito Nro: " & _Nudo & " más de una vez")
+                                                    "No puede asignar la nota de crédito Nro: " & _Nudo & " más de una vez")
                     End If
 
                 Next

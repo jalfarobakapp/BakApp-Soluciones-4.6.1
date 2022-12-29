@@ -224,10 +224,10 @@
 
                 Dim Fm0 As New Frm_St_Estado_03_Presupuesto(_Id_Ot, Frm_St_Estado_03_Presupuesto.Accion.Nuevo)
                 Fm0.Pro_DsDocumento = _DsDocumento
-                'Fm1.Pro_Imagenes_32x32 = Imagenes_32x32
+                Fm0.CodTecnico_Presupuesta = _CodFuncionario_Activo
                 Fm0.ShowDialog(Me)
                 If Fm0.Pro_Grabar Then
-
+                    Sb_Actualizar_Grilla()
                 End If
                 Fm0.Dispose()
 
@@ -235,12 +235,12 @@
 
                 Dim Fm1 As New Frm_St_Estado_05_Reparacion(Frm_St_Estado_05_Reparacion.Accion.Nuevo)
                 Fm1.Pro_RowEntidad = _RowEntidad
-                'Fm1.Pro_Imagenes_32x32 = Imagenes_32x32
                 Fm1.Pro_Id_Ot = _Id_Ot
                 Fm1.Pro_DsDocumento = _DsDocumento
+                Fm1.CodTecnico_Repara = _CodFuncionario_Activo
                 Fm1.ShowDialog(Me)
                 If Fm1.Pro_Fijar_Estado Then
-
+                    Sb_Actualizar_Grilla()
                 End If
                 Fm1.Dispose()
 

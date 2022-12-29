@@ -1,13 +1,13 @@
 ﻿Imports System.Net
-Imports BkSpecialPrograms.Cl_APIs
+Imports BkSpecialPrograms.Fincred_API
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 
-Namespace Cl_APIs
+Namespace Fincred_API
 
     Public Class Cl_Api_Fincred
 
-        Public Property TramaRespuesta As Cl_APIs.TramaRespuesta
+        Public Property TramaRespuesta As Fincred_API.TramaRespuesta
         Public Property JsonRespuesta As String
         Public Property JsonDocumentos As String
 
@@ -16,7 +16,7 @@ Namespace Cl_APIs
             Dim _Respuesta As New Respuesta
 
             JsonRespuesta = String.Empty
-            TramaRespuesta = New Cl_APIs.TramaRespuesta
+            TramaRespuesta = New Fincred_API.TramaRespuesta
 
             Try
 
@@ -29,7 +29,7 @@ Namespace Cl_APIs
                     JsonRespuesta = _webClient.DownloadString(_requestUrl + _json)
                 End Using
 
-                TramaRespuesta = JsonConvert.DeserializeObject(Of Cl_APIs.TramaRespuesta)(JsonRespuesta)
+                TramaRespuesta = JsonConvert.DeserializeObject(Of Fincred_API.TramaRespuesta)(JsonRespuesta)
 
                 Dim _TramaRespuesta As JObject = JsonConvert.DeserializeObject(Of Object)(JsonRespuesta)
                 JsonDocumentos = _TramaRespuesta.GetValue("documentos").ToString()
@@ -107,7 +107,7 @@ Namespace Cl_APIs
 
         Function CrearListaDocumento(_json As String) As List(Of documentos)
 
-            TramaRespuesta = JsonConvert.DeserializeObject(Of Cl_APIs.TramaRespuesta)(_json)
+            TramaRespuesta = JsonConvert.DeserializeObject(Of Fincred_API.TramaRespuesta)(_json)
 
             Dim _TramaRespuesta As JObject = JsonConvert.DeserializeObject(Of Object)(_json)
 
@@ -156,7 +156,7 @@ Namespace Cl_APIs
         Public Property estado_transaccion As Integer
         Public Property codigo_negacion_transaccion As Integer
         Public Property descripcion_negacion As String
-        Public Property documentos As List(Of Cl_APIs.documentos)
+        Public Property documentos As List(Of Fincred_API.documentos)
 
     End Class
 
@@ -171,6 +171,7 @@ Namespace Cl_APIs
         Public Property EsCorrecto As Boolean
         Public Property MensajeError As String
         Public Property TramaRespuesta As TramaRespuesta
+        Public Property Id_TramaRespuesta As Integer
 
     End Class
 
@@ -242,7 +243,7 @@ Namespace Cl_Fincred_Bakapp
 
             Respuesta = Nothing
 
-            Dim _Cl_API_Fincred As New Cl_APIs.Cl_Api_Fincred
+            Dim _Cl_API_Fincred As New Fincred_API.Cl_Api_Fincred
 
             'Dim _token As String = String.Empty ' "FCcbee66b69882652d8a2b662c983e4fa2P"
 
@@ -267,6 +268,96 @@ Namespace Cl_Fincred_Bakapp
 
             Dim _json As String = _Cl_API_Fincred.CrearJsonConsulta(_trama)
             Dim _Respuesta As Respuesta = _Cl_API_Fincred.ConsultarDatos(_json)
+
+            Respuesta = _Respuesta
+
+            Return True
+
+        End Function
+
+        Function Fx_Generar_Consulta(_Rut_girador As String,
+                                     _Rut_comprador As String,
+                                     _Numero_transaccion_cliente As Integer,
+                                     _Numero_documento_transaccion As String,
+                                     _Producto As Producto,
+                                     _Banco As Integer,
+                                     _Monto_total_venta As Double,
+                                     _Cantidad_documentos_venta As Integer,
+                                     _Num_primer_doc As Integer,
+                                     _Fec_primer_venc As String,
+                                     _Num_telefono As String,
+                                     _Tido As String,
+                                     _Nudo As String) As Boolean
+
+            Respuesta = Nothing
+
+            Dim _Cl_API_Fincred As New Fincred_API.Cl_Api_Fincred
+
+            'Dim _token As String = String.Empty ' "FCcbee66b69882652d8a2b662c983e4fa2P"
+
+            Dim _trama As New Trama
+
+            _trama.trama = "pays"
+            _trama.token = Fincred_Config.Token
+            _trama.usuario = Fincred_Config.Usuario
+            _trama.clave = Fincred_Config.Clave
+            _trama.producto = _Producto
+            _trama.origen_transaccion = 2
+            _trama.rut_girador = _Rut_girador
+            _trama.rut_comprador = _Rut_comprador
+            _trama.numero_transaccion_cliente = _Numero_transaccion_cliente
+            _trama.numero_documento_transaccion = _Numero_documento_transaccion
+            _trama.banco = _Banco
+            _trama.monto_total_venta = _Monto_total_venta
+            _trama.cantidad_documentos_venta = _Cantidad_documentos_venta
+            _trama.num_primer_doc = _Num_primer_doc
+            _trama.fec_primer_venc = _Fec_primer_venc
+            _trama.num_telefono = _Num_telefono
+
+            Dim _Respuesta As New Respuesta
+
+            Dim _Json As String = _Cl_API_Fincred.CrearJsonConsulta(_trama)
+            Dim _Id_TramaRespuesta As Integer
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Fincred_TramaRespuesta (Token,Producto,Origen_transaccion,Rut_girador,Rut_comprador," &
+                           "Numero_transaccion_cliente,Numero_documento_transaccion,Banco,Monto_total_venta," &
+                           "Cantidad_documentos_venta,Codigo_negacion_transaccion," &
+                           "Descripcion_negacion,EnProceso,Idmaeedo,Tido,Nudo,Json) Values ('" & _trama.token & "'," & _trama.producto &
+                           "," & _trama.origen_transaccion & ",'" & _trama.rut_girador & "','" & _trama.rut_comprador & "'" &
+                           "," & _trama.numero_transaccion_cliente & ",'" & _trama.numero_documento_transaccion & "'" &
+                           "," & _trama.banco & "," & _trama.monto_total_venta & "," & _trama.cantidad_documentos_venta &
+                           ",0,'',1,0,'" & _Tido & "','" & _Nudo & "','" & _Json & "')"
+            If Not _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_TramaRespuesta, False) Then
+                _Respuesta.EsCorrecto = False
+                _Respuesta.MensajeError = _Sql.Pro_Error
+                Respuesta = _Respuesta
+                Return False
+            End If
+
+            'Consulta_sql = "Update " & _Global_BaseBk & "Zw_Fincred_TramaRespuesta Set Numero_transaccion_cliente = " & _Id_TramaRespuesta & vbCrLf &
+            '               "Where Id = " & _Id_TramaRespuesta
+            '_Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+            _Respuesta = _Cl_API_Fincred.ConsultarDatos(_Json)
+            _Respuesta.Id_TramaRespuesta = _Id_TramaRespuesta
+
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Fincred_TramaRespuesta Set " &
+                           "Estado_transaccion = " & _Respuesta.TramaRespuesta.estado_transaccion &
+                           ",Codigo_negacion_transaccion = " & _Respuesta.TramaRespuesta.codigo_negacion_transaccion &
+                           ",Descripcion_negacion = '" & _Respuesta.TramaRespuesta.descripcion_negacion & "'" &
+                           "Where Id = " & _Id_TramaRespuesta
+            _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+            If Not IsNothing(_Respuesta.TramaRespuesta.documentos) Then
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Fincred_Documentos (Id_TR, Nro_documento,Monto_documento,Fecha_vencimiento,Autorizacion) Values " &
+                               "(" & _Id_TramaRespuesta &
+                               "," & _Respuesta.TramaRespuesta.documentos(0).nro_documento &
+                               "," & _Respuesta.TramaRespuesta.documentos(0).monto_documento &
+                               ",'" & _Fec_primer_venc & "','" & _Respuesta.TramaRespuesta.documentos(0).autorizacion & "')"
+                _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+            End If
 
             Respuesta = _Respuesta
 

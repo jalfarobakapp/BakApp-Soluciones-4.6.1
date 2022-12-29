@@ -13144,8 +13144,10 @@ Public Class Frm_Formulario_Documento
 
             Me.Enabled = False
 
-            If Fr_Alerta_Stock.Visible Then
-                Fr_Alerta_Stock.Close()
+            If Me.Visible Then
+                If Fr_Alerta_Stock.Visible Then
+                    Fr_Alerta_Stock.Close()
+                End If
             End If
 
             Dim _Vizado As Boolean
@@ -14028,7 +14030,9 @@ Public Class Frm_Formulario_Documento
 
                         End If
 
-                        Me.Close()
+                        If Me.Visible Then
+                            Me.Close()
+                        End If
 
                     Else
 
@@ -15076,7 +15080,43 @@ Public Class Frm_Formulario_Documento
 
         Dim _Origen_Modificado_Intertanto As Boolean
 
+        Dim _Revisar_Fincred As Boolean
+        Dim _Fincred_Respuesta As New Fincred_API.Respuesta
+
+        Try
+
+            If _Tido = "NVV" And _Global_Row_Configuracion_Estacion.Item("FincredPaysNVV") Then
+                _Revisar_Fincred = True
+            End If
+
+            If _Tido = "FCV" And _Global_Row_Configuracion_Estacion.Item("FincredPaysFCV") Then
+                _Revisar_Fincred = True
+            End If
+
+        Catch ex As Exception
+            _Revisar_Fincred = False
+        End Try
+
         If _TipoGrab = _Tipo_de_Grabacion.Nuevo_documento Then
+
+            If _Revisar_Fincred Then
+
+                _Fincred_Respuesta = Fx_Vaidar_Fincred()
+
+                If _Fincred_Respuesta.EsCorrecto Then
+
+                    MessageBoxEx.Show(Me, _Fincred_Respuesta.TramaRespuesta.descripcion_negacion & vbCrLf &
+                                          "Código de autorización: " & _Fincred_Respuesta.TramaRespuesta.documentos(0).autorizacion,
+                                          "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Else
+                    MessageBoxEx.Show(Me, _Fincred_Respuesta.MensajeError & vbCrLf &
+                                              "Código de autorización: RECHAZADO", "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                    Return 0
+
+                End If
+
+            End If
 
             _Idmaeedo = _New_Doc.Fx_Crear_Documento(_Tido,
                                                     _Nudo,
@@ -15103,6 +15143,19 @@ Public Class Frm_Formulario_Documento
             Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             _New_Idmaeedo = _Idmaeedo
+
+            If _Revisar_Fincred Then
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Fincred_TramaRespuesta Set " &
+                               "EnProceso = 0,Idmaeedo = " & _Idmaeedo & ",Tido = '" & _Tido & "',Nudo = '" & _Nudo & "'" & vbCrLf &
+                               "Where Id = " & _Fincred_Respuesta.Id_TramaRespuesta & vbCrLf &
+                               "Update " & _Global_BaseBk & "Zw_Fincred_Documentos Set " &
+                               "Nro_documento = " & _Idmaeedo & vbCrLf &
+                               "Where Id_TR = " & _Fincred_Respuesta.Id_TramaRespuesta
+                _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+            End If
+
 
             'Clonar OCC en otra base de datos
 
@@ -24655,7 +24708,9 @@ Public Class Frm_Formulario_Documento
     End Function
 
 
-    Function Fx_Vaidar_Fincred() As Boolean
+    Function Fx_Vaidar_Fincred() As Fincred_API.Respuesta
+
+        Dim _Respuesta As New Fincred_API.Respuesta
 
         _Row_Encabezado_Doc = _TblEncabezado.Rows(0)
 
@@ -24664,21 +24719,23 @@ Public Class Frm_Formulario_Documento
         _Rut_girador = Replace(_Rut_girador, "-", "")
         _Rut_girador = Replace(_Rut_girador, ".", "")
 
+        Dim Generator As System.Random = New System.Random()
+
         Dim _Rut_comprador As String
-        Dim _Numero_transaccion_cliente As Integer = 1000
-        Dim _Numero_documento_transaccion As String = 1000
+        Dim _Numero_transaccion_cliente As Integer = Generator.Next(10000, 99999)
+        Dim _Numero_documento_transaccion As String = "XXXXXXXXX"
         Dim _Producto As Cl_Fincred_Bakapp.Cl_Fincred_SQL.Producto = Cl_Fincred_Bakapp.Cl_Fincred_SQL.Producto.Facturas
         Dim _Banco As Integer = 0
         Dim _Monto_total_venta As Double = _Row_Encabezado_Doc.Item("TotalBrutoDoc")
         Dim _Cantidad_documentos_venta As Integer = 1
-        Dim _Num_primer_doc As Integer = 1000
+        Dim _Num_primer_doc As Integer = _Numero_transaccion_cliente
         Dim _Fec_primer_venc As String = Format(_Row_Encabezado_Doc.Item("Fecha_1er_Vencimiento"), "ddMMyyyy")
         Dim _Num_telefono As String = _RowEntidad.Item("FOEN").ToString.Trim
 
         Dim _ProductoV = _Producto + 1
 
         _Rut_girador = "118549252" ' APROBACION DE PRUEBAS
-        _Rut_girador = "094005051" ' NEGACION DE PRUEBAS
+        '_Rut_girador = "094005051" ' NEGACION DE PRUEBAS
 
         _Rut_comprador = _Rut_girador
 
@@ -24693,16 +24750,20 @@ Public Class Frm_Formulario_Documento
                                      _Cantidad_documentos_venta,
                                      _Num_primer_doc,
                                      _Fec_primer_venc,
-                                     _Num_telefono)
+                                     _Num_telefono,
+                                     _Tido,
+                                     "XXXXXXXXXX")
 
-        If _Fincred.Respuesta.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Fincred.Respuesta.TramaRespuesta.descripcion_negacion & vbCrLf &
-                              "Código de autorización: " & _Fincred.Respuesta.TramaRespuesta.documentos(0).autorizacion,
-                              "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        Else
-            MessageBoxEx.Show(Me, _Fincred.Respuesta.MensajeError & vbCrLf &
-                              "Código de autorización: RECHAZADO", "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        End If
+        'If _Fincred.Respuesta.EsCorrecto Then
+        '    MessageBoxEx.Show(Me, _Fincred.Respuesta.TramaRespuesta.descripcion_negacion & vbCrLf &
+        '                      "Código de autorización: " & _Fincred.Respuesta.TramaRespuesta.documentos(0).autorizacion,
+        '                      "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        'Else
+        '    MessageBoxEx.Show(Me, _Fincred.Respuesta.MensajeError & vbCrLf &
+        '                      "Código de autorización: RECHAZADO", "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        'End If
+
+        Return _Fincred.Respuesta
 
     End Function
 

@@ -75,6 +75,13 @@ Public Class Frm_01_Asis_Compra_Resultados
         End Set
     End Property
 
+    Public Property Auto_GenerarAutomaticamenteOCCProveedorStar As Boolean
+    Public Property Auto_GenerarAutomaticamenteNVI As Boolean
+    Public Property Auto_GenerarAutomaticamenteOCCProveedores As Boolean
+    Public Property Auto_CorreoCc As String
+    Public Property Auto_Id_Correo As String
+    Public Property Auto_NombreFormato_PDF As String
+
     Public Property Pro_Tbl_Filtro_Super_Familias() As DataTable
         Get
             Return _Tbl_Filtro_Super_Familias
@@ -172,7 +179,6 @@ Public Class Frm_01_Asis_Compra_Resultados
             Sb_Parametros_Revisar()
         End Set
     End Property
-
     Public Property Pro_Nombre_Tbl_Paso_Informe() As String
         Get
             Return _Nombre_Tbl_Paso_Informe
@@ -2021,11 +2027,11 @@ Public Class Frm_01_Asis_Compra_Resultados
                     Sb_Refrescar_Grilla_Principal(Grilla, False, False)
                 Else
                     If MessageBoxEx.Show(Me, "¿Desea seguir trabajando con el mismo proveedor?" & vbCrLf & vbCrLf &
-                                                         "Proveedor: " & _Row_Entidad.Item("NOKOEN"), "Asistente de compras",
-                                                                                                      MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
-                        Call Btn_Quitar_Filtro_Proveedor_Click(Nothing, Nothing)
-                    Else
+                                         "Proveedor: " & _Row_Entidad.Item("NOKOEN"), "Asistente de compras",
+                                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                         Sb_Refrescar_Grilla_Principal(Grilla, False, False)
+                    Else
+                        Call Btn_Quitar_Filtro_Proveedor_Click(Nothing, Nothing)
                     End If
                 End If
 
@@ -2193,6 +2199,10 @@ Public Class Frm_01_Asis_Compra_Resultados
 
 
     Sub Sb_Grilla_Marcar(Grilla As DataGridView, _Marcar_Todo As Boolean)
+
+        If Accion_Automatica Then
+            Return
+        End If
 
         With Grilla
 
@@ -4135,14 +4145,6 @@ Public Class Frm_01_Asis_Compra_Resultados
         Fm.ShowDialog(Me)
         _Proceso_Automatico_Ejecutado = Fm.Pro_Proceso_Generado
         Fm.Dispose()
-
-        If _Proceso_Automatico_Ejecutado Then
-
-            BtnProceso_Prov_Auto.Enabled = False
-            Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = _Proceso_Automatico_Ejecutado
-            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
-
-        End If
 
     End Sub
 
@@ -7929,8 +7931,91 @@ Public Class Frm_01_Asis_Compra_Resultados
     End Sub
 
     Private Sub Timer_Ejecucion_Automatica_Tick(sender As Object, e As EventArgs) Handles Timer_Ejecucion_Automatica.Tick
+
         Timer_Ejecucion_Automatica.Stop()
-        Call BtnProceso_Prov_Auto_Click(Nothing, Nothing)
+
+        If Auto_GenerarAutomaticamenteOCCProveedores Then
+
+            Call BtnProceso_Prov_Auto_Click(Nothing, Nothing)
+
+            BtnProceso_Prov_Auto.Enabled = False
+            Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = _Proceso_Automatico_Ejecutado
+            Chk_Quitar_Ventas_Calzadas.Checked = True
+            Chk_Quitare_Sospechosos_Stock.Checked = True
+
+            Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = True
+            Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = True
+            Chk_Quitar_Comprados.Checked = True
+            Chk_Mostrar_Solo_Productos_A_Comprar.Checked = True
+
+            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
+
+            Consulta_sql = "Select Distinct CodProveedor As KOEN,CodSucProveedor As SUEN,
+(Select Top 1 NOKOEN From MAEEN Where KOEN = CodProveedor and SUEN = CodSucProveedor ) As RAZON,
+Count(Codigo) As Productos,CAST(Null As datetime) As FechaUltCompra
+Into #Paso
+From " & _Nombre_Tbl_Paso_Informe & "
+Where CodProveedor <> '' AND CantComprar > 0 And OccGenerada = 0 And Comprar = 1
+And CodProveedor In (Select KOEN From MAEEN Where KOEN+NOKOEN Like '%%')
+And Con_Stock_CriticoUd1 = 1
+And CantComprar > 0
+And Refleo = 0
+And Sospecha_Baja_Rotacion = 0
+Group by CodProveedor,CodSucProveedor
+
+Update #Paso Set FechaUltCompra = (Select Top 1 FEEMDO From MAEEDO Where TIDO = 'FCC' And ENDO = KOEN And SUENDO = SUEN Order By FEEMDO Desc)
+
+Select * From #Paso Order By FechaUltCompra
+
+Drop Table #Paso"
+
+            Dim _Tbl_Proveedores As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            Dim _Generar_OCC As New GeneraOccAuto.Generar_OCC
+
+            For Each _Fila As DataRow In _Tbl_Proveedores.Rows
+
+                Dim _CodEntidad As String = _Fila.Item("KOEN")
+                Dim _SucEntidad As String = _Fila.Item("SUEN")
+                Dim _FechaUltCompra As DateTime = _Fila.Item("FechaUltCompra")
+
+                Sb_Genarar_OCC_Automaticas_Por_Proveedor(_CodEntidad, _SucEntidad, _Generar_OCC)
+
+            Next
+
+            For Each _Fl As GeneraOccAuto.OCC_Auto In _Generar_OCC.Occ_Auto
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_AcpAuto (NombreEquipo,Modalidad,Idmaeedo,Tido,Nudo,FechaEmision,Informacion,ErrorGrabar) Values " &
+                               "('" & _NombreEquipo & "','" & Modalidad & "'," & _Fl.Idmaeedo & ",'" & _Fl.Tido & "','" & _Fl.Nudo & "'" &
+                               ",'" & Format(_Fl.Feemdo, "yyyyMMdd") & "','" & NuloPorNro(_Fl.MensajeError, "") & "'," & Convert.ToInt32(_Fl.ErrorGrabar) & ")"
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, _Fl.Email, Auto_CorreoCc, Auto_Id_Correo, Auto_NombreFormato_PDF)
+                ' 37
+                ' "Tam. Carta"
+                MessageBoxEx.Show(Me, "Tido: " & _Fl.Tido & "-" & _Fl.Nudo & vbCrLf &
+                                  "Email: " & _Fl.Email, "OCC Generada", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Next
+
+            Me.Close()
+
+        End If
+
+        If Auto_GenerarAutomaticamenteOCCProveedorStar Then
+
+            Call BtnProceso_Prov_Auto_Especial_Click(Nothing, Nothing)
+
+            BtnProceso_Prov_Auto_Especial.Enabled = False
+            BtnProceso_Prov_Auto.Enabled = False
+            Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = _Proceso_Automatico_Ejecutado
+            Chk_Quitar_Ventas_Calzadas.Checked = True
+            Chk_Quitare_Sospechosos_Stock.Checked = True
+
+            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
+
+        End If
+
     End Sub
 
     Private Sub Btn_PorcUltCompXProv_Click(sender As Object, e As EventArgs) Handles Btn_PorcUltCompXProv.Click
@@ -7992,11 +8077,6 @@ Public Class Frm_01_Asis_Compra_Resultados
         Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CodProveedor = '',CodSucProveedor = ''"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-        'Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set StockUd1BodStar = STFI1,StockUd2BodStar = STFI2" & vbCrLf &
-        '               "From " & _Nombre_Tbl_Paso_Informe & vbCrLf &
-        '               "Inner Join MAEST On EMPRESA = '" & _EmpPstar & "' And KOSU = '" & _SucPstar & "' And KOBO = '" & _BodPstar & "' And KOPR = Codigo" & vbCrLf &
-        '               "Where Comprar = 1 And STFI1 > 0"
-
         Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set StockUd1BodStar = StfiBodExt1,StockUd2BodStar = StfiBodExt2" & vbCrLf &
                        "From " & _Nombre_Tbl_Paso_Informe & " Tbps" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_Prod_Stock TbSt On " &
@@ -8022,7 +8102,6 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         Call Btn_Actualizar_Informe_Click(Nothing, Nothing)
 
-
     End Sub
 
     Sub Txt_Codigo_KeyDown(sender As Object, e As KeyEventArgs)
@@ -8039,4 +8118,526 @@ Public Class Frm_01_Asis_Compra_Resultados
         End If
     End Sub
 
+    Function Sb_Genarar_OCC_Automaticas_Por_Proveedor(_CodEntidad As String, _SucEntidad As String, ByRef _Generar_OCC As GeneraOccAuto.Generar_OCC)
+
+        _RowProveedor = Fx_Traer_Datos_Entidad(_CodEntidad, _SucEntidad)
+
+        Sb_Grilla_Actualizar_Informe(Fm_Hijo.Grilla)
+        Sb_Grilla_Marcar(Fm_Hijo.Grilla, False)
+
+        Fm_Hijo.Btn_Quitar_Filtro_Proveedor.Enabled = True
+        Btn_Quitar_Filtro_Proveedor_Ribon.Enabled = True
+        Fm_Hijo.Chk_Ver_Doc_Solo_Proveedor.Enabled = True
+
+        '_Generar_OCC.OccGeneradas = True
+
+        Dim _Occ_Auto As New GeneraOccAuto.OCC_Auto
+
+        If CBool(Fm_Hijo.Grilla.RowCount) Then
+
+            _Occ_Auto = Fx_Crear_OCC_Auto()
+
+            _Generar_OCC.Occ_Auto.Add(_Occ_Auto)
+
+            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
+
+            If CBool(Fm_Hijo.Grilla.RowCount) Then
+                Sb_Genarar_OCC_Automaticas_Por_Proveedor(_CodEntidad, _SucEntidad, _Generar_OCC)
+            End If
+
+        End If
+
+    End Function
+
+    Function Fx_Crear_OCC_Auto() As GeneraOccAuto.OCC_Auto
+
+        Dim _Occ_Auto As New GeneraOccAuto.OCC_Auto
+
+        Dim _Endo, _Suendo As String
+        Dim _Endofi, _Suendofi As String
+        Dim _Koen, _Suen As String
+
+        Dim _Row_Entidad As DataRow
+        Dim _Row_Entidad_Fisica As DataRow
+
+        If Chk_Ent_Fisica.Checked Then
+
+            _Endofi = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor",
+                                        "Funcionario = '" & FUNCIONARIO & "' AND Campo = 'Koen' AND Informe = 'Compras_Asistente'")
+            _Suendofi = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor",
+                                        "Funcionario = '" & FUNCIONARIO & "' AND Campo = 'Suen' AND Informe = 'Compras_Asistente'")
+
+        End If
+
+        Dim _Todos_Los_Proveedores As Boolean
+
+        If Not _Rdb_Productos_Proveedor Then
+            _Todos_Los_Proveedores = True
+        End If
+
+        If _Todos_Los_Proveedores Then
+
+            If (_RowProveedor Is Nothing) Then
+
+                MessageBoxEx.Show(Me, "Debe seleccionar el proveedor en filtrar proveedor",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return _Occ_Auto
+
+                Dim Fm1 = New Frm_04_Asis_Compra_Proveedores(Frm_04_Asis_Compra_Proveedores.TipoBusqueda.Proveedores_Seleccionados, "", True)
+                Fm1.ShowDialog(Me)
+
+                If Not (Fm1.Pro_RowProveedor Is Nothing) Then
+                    _Koen = Fm1.Pro_RowProveedor.Item("KOEN")
+                    _Suen = Fm1.Pro_RowProveedor.Item("SUEN")
+                Else
+                    Return _Occ_Auto
+                End If
+            Else
+                _Koen = _RowProveedor.Item("KOEN")
+                _Suen = _RowProveedor.Item("SUEN")
+            End If
+
+        End If
+
+        If Chk_Ent_Fisica.Checked Then
+
+            If _Todos_Los_Proveedores Then
+                _Endofi = Trim(_Koen)
+                _Suendofi = Trim(_Suen)
+            Else
+                'CodEntidadFisica = NuloPorNro(Fila_.Item("CodEntidadSel"), "")
+                'CodSucEntidadFisica = NuloPorNro(Fila_.Item("SucEntidadSel"), "")
+            End If
+
+            MessageBoxEx.Show(Me, "Debe seleccionar un proveedor para generar la orden de compra, " &
+                              "ya que está marcada la opción entidad física", "Seleccionar proveedor",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Dim FmBe As New Frm_BuscarEntidad_Mt(False)
+            FmBe.ShowDialog(Me)
+
+            If FmBe.Pro_Entidad_Seleccionada Then
+
+                _Endo = Trim(FmBe.Pro_RowEntidad.Item("KOEN"))
+                _Suendo = Trim(FmBe.Pro_RowEntidad.Item("SUEN"))
+
+                _Koen = _Endo
+                _Suen = _Suendo
+
+            Else
+                MessageBoxEx.Show("No se seleccionó ningún proveedor para realizar la Orden de compra",
+                                  "Falta proveedor", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Return _Occ_Auto
+            End If
+
+        Else
+            If Not _RowProveedor Is Nothing Then
+                _Koen = _RowProveedor.Item("KOEN")
+                _Suen = _RowProveedor.Item("SUEN")
+            End If
+        End If
+
+        _Occ_Auto.Endo = _Koen
+        _Occ_Auto.Suendo = _Suen
+
+        Consulta_sql = "Select Top 1 *,KOEN AS ENDO, SUEN AS SUENDO From MAEEN" & vbCrLf &
+                       "Where KOEN = '" & _Koen & "' And SUEN = '" & _Suen & "'"
+        _Row_Entidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Consulta_sql = "Select Top 1 *,KOEN AS ENDO, SUEN AS SUENDO From MAEEN" & vbCrLf &
+                       "Where KOEN = '" & _Endofi & "' And SUEN = '" & _Suendofi & "'"
+        _Row_Entidad_Fisica = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _CodProveedor As String = _Koen
+        Dim _CodSucProveedor As String = _Suen
+
+        If Chk_Ent_Fisica.Checked Then
+            _CodProveedor = _Endofi
+            _CodSucProveedor = _Suendofi
+        End If
+
+        Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_Actualizar_Costos_en_Lista_de_Proveedores
+        Dim _ElistaCom As String = Mid(_Global_Row_Configuracion_Estacion.Item("ELISTACOM"), 6, 3)
+
+        Consulta_sql = Replace(Consulta_sql, "#Lista#", _ElistaCom)
+        Consulta_sql = Replace(Consulta_sql, "#Entidad#", _CodProveedor)
+        Consulta_sql = Replace(Consulta_sql, "#Sucursal#", "")
+        Consulta_sql = Replace(Consulta_sql, "Zw_InfCompras", _Nombre_Tbl_Paso_Informe)
+        Consulta_sql = Replace(Consulta_sql, "Zw_ListaPreCosto", _Global_BaseBk & "Zw_ListaPreCosto")
+
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, Modalidad, "OCC", True)
+        Dim _NroLineasXpag As Integer = _RowFormato.Item("NroLineasXpag")
+
+        Dim _Largo_Variable As Boolean = _RowFormato.Item("Largo_Variable")
+        Dim _Registros As Integer = Fm_Hijo.Grilla.Rows.Count
+
+        Dim _Top = String.Empty
+
+        If _Largo_Variable Then
+            If Not CBool(_NroLineasXpag) Then
+                _NroLineasXpag = 500
+            End If
+        End If
+
+        If _NroLineasXpag > 0 Then _Top = "Top " & _NroLineasXpag
+
+        'Dim _Ud As Integer
+        'If Rdb_Ud1_Compra.Checked Then : _Ud = 1 : Else : _Ud = 2 : End If
+
+        Dim _Condicion As String = String.Empty
+
+
+        If Chk_Mostrar_Solo_Stock_Critico.Checked Then
+            _Condicion += "And Con_Stock_CriticoUd" & Ud & " = 1" & vbCrLf
+        End If
+
+        If Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked Then
+            _Condicion += "And StockPedidoUd" & Ud & " = 0" & vbCrLf
+        End If
+
+        If Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked Then
+            _Condicion += "And CantComprar > 0" & vbCrLf
+        End If
+
+        If Chk_Quitar_Comprados.Checked Then
+            _Condicion += "And OccGenerada = 0" & vbCrLf
+        End If
+
+        If Chk_Mostrar_Solo_Productos_A_Comprar.Checked Then
+            _Condicion += "And Comprar = 1" & vbCrLf
+        End If
+
+        If Chk_Quitar_Ventas_Calzadas.Checked Then
+            _Condicion += "And Refleo = 0" & vbCrLf
+        End If
+
+        If Chk_Quitare_Sospechosos_Stock.Checked Then
+            _Condicion += "And Sospecha_Baja_Rotacion = 0" & vbCrLf
+        End If
+
+        Dim _Orden_Codigo As String
+
+        If Fm_Hijo.Grilla.SortOrder = Windows.Forms.SortOrder.Ascending Then
+            _Orden_Codigo = Fm_Hijo.Grilla.SortedColumn.Name
+        ElseIf Fm_Hijo.Grilla.SortOrder = Windows.Forms.SortOrder.Descending Then
+            _Orden_Codigo = Fm_Hijo.Grilla.SortedColumn.Name & " Desc"
+        Else
+            _Orden_Codigo = "Codigo"
+        End If
+
+        If Rd_Costo_Lista_Proveedor.Checked Then
+
+            Dim _Lista As String = Cmb_Lista_Costos.SelectedItem.Value
+
+            Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER
+
+                            Select Distinct " & _Top & " '" & FUNCIONARIO & "' As KOFULIDO,Tb.Codigo As KOPRCT,Tb.Descripcion As NOKOPR,
+                            Tb.Descripcion as Descripcion,Tb.CodAlternativo,'" & _Lista & "' As KOLTPR,UD1,UD2,
+                            0 As CostoUd1,0 As CostoUd2,0 As Precio, Tb.Rtu,CantComprar As Cantidad,
+                            0 As Desc1,0 As Desc2,0 As Desc3,0 As Desc4,0 As Desc5,0 As DescSuma,0 As PRCT,'' As TICT,TIPR,0 As PODTGLLI," & Ud & " as UDTRPR,
+                            Isnull(Trc.RECARGO,0) As POTENCIA,'' As KOFUAULIDO,'' As KOOPLIDO,
+                            0 As IDMAEEDO,0 As IDMAEDDO,'" & ModEmpresa & "' As EMPRESA,'" & ModSucursal & "' As SULIDO,'" & ModBodega & "' As BOSULIDO,'' As ENDO,'' As SUENDO,GetDate() As FEEMLI,
+                            '' As TIDO,'' As NUDO,'' As NULIDO,0 As CantUd1_Dori,0 As CantUd2_Dori,'' As OBSERVA,
+                            0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,
+							0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta
+
+                            From  " & _Nombre_Tbl_Paso_Informe & " Tb
+
+                            Inner Join TABCODAL Tcl On Tcl.KOEN = Tb.CodProveedor And Tb.Codigo = Tcl.KOPR And Tcl.KOPRAL = Tb.CodAlternativo
+                                Left Join TABRECPR Trc On Trc.KOEN = Tb.CodProveedor and Trc.KOPR = Tb.Codigo
+                                    Inner Join MAEPR Mp On Mp.KOPR = Tb.Codigo
+                                        Where Tb.CantComprar > 0 And Tb.CodSucProveedor = '" & _Suen & "'
+                                            And Tb.CodProveedor = '" & _Koen & "' And Tb.OccGenerada = 0 And Comprar = 1
+                            " & _Condicion & vbCrLf &
+                            "Order by " & _Orden_Codigo & "
+                             Select * From MAEIMLI Where 1<0  
+                                 Select * From MAEDTLI Where 1 < 0 
+                                 Select 'Documento generado desde Asistente de compras BakApp' as OBDO"
+
+        ElseIf Rd_Costo_Ultimo_Documento_Seleccionado.Checked Then
+
+            '[Costo_Compra_RealUd1]     [float]       DEFAULT (0),
+            '[Costo_Compra_RealUd2]     [float]       DEFAULT (0),
+            '[Costo_Compra]             [float]       DEFAULT (0),
+            '[Dscto_Compra]             [float]       DEFAULT (0),
+
+            Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER" &
+                            vbCrLf &
+                           "Select Distinct " & _Top & " '" & FUNCIONARIO & "' As KOFULIDO,Codigo As KOPRCT,
+                            Descripcion,Descripcion As NOKOPR,CodAlternativo,'" & ModListaPrecioCosto & "' As KOLTPR,UD1,UD2,
+                            Costo_Ult_Compra as CostoUd1,Costo_Ult_Compra as CostoUd2,
+                            Costo_Ult_Compra As Precio,Rtu,CantComprar As Cantidad,Dscto_Ult_Compra as Desc1,
+                            0 as Desc2,0 as Desc3,0 as Desc4,0 as Desc5,0 As PRCT,'' As TICT,TIPR," & Ud & " as UDTRPR,0 as POTENCIA,'' As KOFUAULIDO,'' As KOOPLIDO,
+                            0 As IDMAEEDO,0 As IDMAEDDO,'" & ModEmpresa & "' As EMPRESA,'" & ModSucursal & "' As SULIDO,'" & ModBodega & "' As BOSULIDO,
+                            '' As ENDO,'' As SUENDO,
+                            GetDate() As FEEMLI,'' As TIDO,'' As NUDO,'' As NULIDO,0 As CantUd1_Dori,0 As CantUd2_Dori,'' As OBSERVA,
+                            0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,
+							0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta
+                            From " & _Nombre_Tbl_Paso_Informe & "
+                            Inner Join MAEPR Mp On Mp.KOPR = Codigo
+                            Where
+                            CantComprar > 0 And CodProveedor = '" & Trim(_CodProveedor) & "' And CodSucProveedor = '" & Trim(_CodSucProveedor) & "'
+                            And OccGenerada = 0 And Comprar = 1" & vbCrLf &
+                            _Condicion & vbCrLf & " 
+                            Order by " & _Orden_Codigo & " 
+                            Select * From MAEIMLI Where 1<0  
+                            Select * From MAEDTLI Where 1<0  
+                            Select 'Documento generado desde Asistente de compras BakApp' as OBDO"
+
+        End If
+
+        Dim _Ds_New_Documento As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+
+
+        Dim _TblDetalle As DataTable = _Ds_New_Documento.Tables(1)
+
+        If _TblDetalle.Rows.Count Then
+
+            Me.Enabled = False
+
+            Dim _New_Idmaeedo As Integer
+
+            Dim Fm_Espera As New Frm_Form_Esperar
+            Fm_Espera.Pro_Texto = "Armando orden de compra" & vbCrLf & "por favor espere..."
+            Fm_Espera.BarraCircular.IsRunning = True
+            Fm_Espera.Show(Me)
+
+            Dim Fm_Post As New Frm_Formulario_Documento("OCC", csGlobales.Enum_Tipo_Documento.Compra, False, True, False)
+
+            Fm_Post.Pro_Agrupar_Reemplazos = Chk_Traer_Productos_De_Reemplazo.Checked
+            Fm_Post.Pro_RowEntidad = _Row_Entidad
+            Fm_Post.Pro_RowEntidad_Despacho = _Row_Entidad_Fisica
+            Fm_Post.Pro_Lista_de_precios_de_proveedores = Rd_Costo_Lista_Proveedor.Checked
+            Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(Me, _Ds_New_Documento, True, False, Nothing, False, False)
+
+            Fm_Post.MinimizeBox = False
+
+            Fm_Espera.Close()
+            Fm_Espera.Dispose()
+
+            'Fm_Post.Sb_Grabar_Documento(_New_Idmaeedo, False)
+            Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento)
+            _New_Idmaeedo = Fm_Post.Pro_Idmaeedo
+            Fm_Post.Dispose()
+
+            Me.Enabled = True
+
+            If CBool(_New_Idmaeedo) Then
+
+                _Occ_Auto.Idmaeedo = _New_Idmaeedo
+                _Occ_Auto.Email = Trim(_Sql.Fx_Trae_Dato("MAEEN", "EMAILCOMER", "KOEN = '" & _Koen & "' And SUEN = '" & _Suen & "'"))
+                _Occ_Auto.Tido = "OCC"
+                _Occ_Auto.Nudo = _Sql.Fx_Trae_Dato("MAEEDO", "NUDO", "IDMAEEDO = " & _New_Idmaeedo)
+                _Occ_Auto.Feemdo = _Sql.Fx_Trae_Dato("MAEEDO", "FEEMDO", "IDMAEEDO = " & _New_Idmaeedo)
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_Log_Compras Set" & vbCrLf &
+                               "Idmaeedo_Ult_occ = " & _New_Idmaeedo & "," &
+                               "Fecha_Ult_occ = GetDate()" & vbCrLf &
+                               "From " & _Nombre_Tbl_Paso_Informe & " Tpaso" & vbCrLf &
+                               "Inner Join " & _Global_BaseBk & "Zw_Prod_Log_Compras Zlog On Tpaso.Codigo = Zlog.Codigo" & vbCrLf &
+                               "Where NombreEquipo = '" & _NombreEquipo & "'" & Space(1) &
+                               "And CodFuncionario = '" & FUNCIONARIO & "'" & Space(1) &
+                               "And Tpaso.Codigo In (Select KOPRCT From MAEDDO Where IDMAEEDO = " & _New_Idmaeedo & ")"
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                Dim _Codigo As String
+
+                Consulta_sql = "Select KOPRCT From MAEDDO Where IDMAEEDO = " & _New_Idmaeedo
+                Dim _Tb As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                If CBool(_Tb.Rows.Count) Then
+                    For Each Fila As DataRow In _Tb.Rows
+
+                        _Codigo = Fila.Item("KOPRCT")
+
+                        Consulta_sql += "Update " & _Nombre_Tbl_Paso_Informe & vbCrLf &
+                                       "Set OccGenerada = 1,IdOCC = " & _New_Idmaeedo & vbCrLf &
+                                       "Where Codigo = '" & _Codigo & "'" & vbCrLf &
+                                       "And CodProveedor = '" & _Koen & "' And CodSucProveedor = '" & _Suen & "'" & vbCrLf
+
+                    Next
+
+                    If Not String.IsNullOrEmpty(Consulta_sql) Then
+                        _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+                    End If
+                Else
+                    MessageBoxEx.Show(Me, "No se encontro la orden de compra en el sistema", "Error inesperado",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                End If
+
+
+            End If
+
+            If Chk_Ent_Fisica.Checked Then
+                _Koen = _Endofi
+                _Suen = _Suendofi
+            End If
+
+        Else
+            MessageBoxEx.Show(Me, "No existen productos seleccionados para comprar desde el tratamiento",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+        End If
+
+        Return _Occ_Auto
+
+    End Function
+
 End Class
+
+
+Namespace GeneraOccAuto
+
+    Public Class Generar_OCC
+
+        Public Property OccGeneradas As Boolean
+        Public Property Occ_Auto As New List(Of OCC_Auto)
+
+        Function Fx_Enviar_Notificacion_Correo_Al_Diablito(_Idmaeedo As Integer,
+                                                           _Para As String,
+                                                           _Cc As String,
+                                                           _Id_Correo As Integer,
+                                                           _NombreFormato_PDF As String) As String
+
+            Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+            Dim Consulta_sql As String
+            Dim _Error = String.Empty
+
+            Try
+
+                Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
+                Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                Dim _Tido As String = _Row_Maeedo.Item("TIDO")
+                Dim _Nudo As String = _Row_Maeedo.Item("NUDO")
+
+                If String.IsNullOrEmpty(_Para.Trim) Then
+                    Throw New System.Exception("Falta el correo del cliente")
+                End If
+
+                If Not Fx_Validar_Email(_Para) Then
+                    Throw New System.Exception("El correo para: [" & _Para & "] no es una cuenta de correos valida")
+                End If
+
+                If Not String.IsNullOrEmpty(_Cc) Then
+
+                    If Not Fx_Validar_Email(_Cc) Then
+
+                        If _Cc.Contains(";") Then
+                            Dim _Ccs = _Cc.Split(";")
+
+                            For Each _Correos In _Ccs
+                                If Not Fx_Validar_Email(_Correos) Then
+                                    Throw New System.Exception("El correo CC: [" & _Correos & "] no es una cuenta de correos valida")
+                                End If
+                            Next
+                        Else
+                            If Not Fx_Validar_Email(_Cc) Then
+                                Throw New System.Exception("El correo CC: [" & _Cc & "] no es una cuenta de correos valida")
+                            End If
+                        End If
+
+                    End If
+
+                End If
+
+                'Dim _Id_Dte As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Trackid", "Id_Dte", "Idmaeedo = " & _Idmaeedo & " And (Aceptado = 1 or Reparo = 1)", True)
+                'Dim _Id_Dte As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Trackid", "Id_Dte", "Id = " & _Id_Trackid, True)
+
+                'If Not CBool(_Id_Dte) Then
+                '    Throw New System.Exception("No se encontro registro en tabla Zw_DTE_Trackid del sistema")
+                'End If
+
+                'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Documentos Where Id_Dte = " & _Id_Dte
+                'Dim _Row_DTE As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                'If IsNothing(_Row_DTE) Then
+                '    Throw New System.Exception("No se encontro registro en tabla Zw_DTE_Documentos del sistema")
+                'End If
+
+                'If String.IsNullOrEmpty(_Row_DTE.Item("CaratulaXml")) Then
+                '    Throw New System.Exception("No se encontro el archivo CaratulaXml en la tabla Zw_DTE_Documentos del sistema")
+                'End If
+
+                'Dim _Id_Correo As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion",
+                '                                              "Valor",
+                '                                              "Campo = 'Id_Correo' And Empresa = '" & ModEmpresa & "'")
+
+                'If Not CBool(_Id_Correo) Then
+                '    Throw New System.Exception("Falta asignar un correo de notificación en la configuración del sistema DTE")
+                'End If
+
+                'Dim _NombreFormato_PDF As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion",
+                '                                                     "Valor",
+                '                                                     "Campo = 'NombreFormato_PDF_" & _Tido & "' And Empresa = '" & ModEmpresa & "'")
+
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos Corr Where Id = " & _Id_Correo
+                Dim _Row_Correo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                If IsNothing(_Row_Correo) Then
+                    Throw New System.Exception("No existe configuración para el envio de correos")
+                End If
+
+                Dim _Nombre_Correo As String = _Row_Correo.Item("Nombre_Correo")
+                Dim _Asunto As String = _Row_Correo.Item("Asunto")
+                Dim _Mensaje As String = _Row_Correo.Item("CuerpoMensaje")
+
+                If String.IsNullOrEmpty(_Asunto) Then
+                    _Asunto = "Correo de notificación de pedido " & RazonEmpresa
+                End If
+
+                _Mensaje = Replace(_Mensaje, "&lt;", "<")
+                _Mensaje = Replace(_Mensaje, "&gt;", ">")
+                _Mensaje = Replace(_Mensaje, "&quot;", """")
+
+                _Mensaje = Replace(_Mensaje, "'", "''")
+
+                If Not String.IsNullOrEmpty(_Nombre_Correo) Then
+
+                    Dim _Fecha = "Getdate()"
+                    Dim _Adjuntar_Documento As Boolean = Not String.IsNullOrEmpty(_NombreFormato_PDF)
+
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo (Id_Correo,Nombre_Correo,CodFuncionario,Asunto," &
+                                    "Para,Cc,Idmaeedo,Tido,Nudo,NombreFormato,Enviar,Mensaje,Fecha,Adjuntar_Documento,Doc_Adjuntos)" &
+                                    vbCrLf &
+                                    "Values (" & _Id_Correo & ",'" & _Nombre_Correo & "','','" & _Asunto & "','" & _Para & "','" & _Cc &
+                                    "'," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "','" & _NombreFormato_PDF & "',1,'" & _Mensaje & "'," & _Fecha &
+                                    "," & Convert.ToInt32(_Adjuntar_Documento) & ",'')"
+
+                    _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+                    _Error = _Sql.Pro_Error
+
+                    If Not String.IsNullOrEmpty(_Error) Then
+                        Throw New System.Exception(_Error)
+                    End If
+
+                End If
+
+            Catch ex As Exception
+                _Error = ex.Message
+            End Try
+
+            Return _Error
+
+        End Function
+
+    End Class
+
+    Public Class OCC_Auto
+
+        Public Property Idmaeedo As Integer
+        Public Property Tido As String
+        Public Property Nudo As String
+        Public Property Feemdo As DateTime
+        Public Property Endo As String
+        Public Property Suendo As String
+        Public Property Email As String
+        Public Property ErrorGrabar As Boolean
+        Public Property MensajeError As String
+
+    End Class
+
+End Namespace

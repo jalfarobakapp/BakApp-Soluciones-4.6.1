@@ -44,6 +44,10 @@ SELECT  Id_Ot,Nro_Ot,Sub_Ot,Id_Ot_Padre,Empresa,Sucursal,Bodega,CodEntidad,SucEn
         (Select top 1 NomFuncionario 
 			From #Db_BakApp#Zw_St_Conf_Tecnicos_Taller 
 			Where CodFuncionario = CodTecnico_Repara) as Tecnico_Repara,
+        CodTecnico_Presupuesta,
+        (Select top 1 NomFuncionario 
+			From #Db_BakApp#Zw_St_Conf_Tecnicos_Taller 
+			Where CodFuncionario = CodTecnico_Presupuesta) as Tecnico_Presupuesta,
         Horas_Mano_de_Obra_Asignado, 
         Horas_Mano_de_Obra_Repara,
         Chk_Equipo_Reparado, Idmaeedo_COV, Nudo_COV, Neto, Iva, Total,

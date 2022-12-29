@@ -10,12 +10,12 @@ Public Class SolAsisCompraModos
         Get
             Return _Menu_Extra
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Menu_Extra = value
         End Set
     End Property
 
-    Public Sub New(ByVal Fm_Menu_Padre As Metro.MetroAppForm)
+    Public Sub New(Fm_Menu_Padre As Metro.MetroAppForm)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()

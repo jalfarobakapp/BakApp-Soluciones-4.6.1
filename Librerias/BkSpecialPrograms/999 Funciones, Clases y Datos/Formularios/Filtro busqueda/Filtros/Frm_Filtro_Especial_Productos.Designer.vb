@@ -68,9 +68,9 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Aceptar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 267)
+        Me.Bar1.Location = New System.Drawing.Point(0, 259)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(330, 33)
+        Me.Bar1.Size = New System.Drawing.Size(330, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 14
@@ -82,6 +82,7 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.Btn_Aceptar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Aceptar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Aceptar.Image = CType(resources.GetObject("Btn_Aceptar.Image"), System.Drawing.Image)
+        Me.Btn_Aceptar.ImageAlt = CType(resources.GetObject("Btn_Aceptar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Aceptar.Name = "Btn_Aceptar"
         Me.Btn_Aceptar.Text = "Aceptar"
         '
@@ -178,7 +179,9 @@ Partial Class Frm_Filtro_Especial_Productos
         '
         '
         Me.Rdb_Clasificacion_Libre_Algunas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Clasificacion_Libre_Algunas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Clasificacion_Libre_Algunas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Clasificacion_Libre_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Clasificacion_Libre_Algunas.FocusCuesEnabled = False
         Me.Rdb_Clasificacion_Libre_Algunas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Clasificacion_Libre_Algunas.Location = New System.Drawing.Point(193, 3)
         Me.Rdb_Clasificacion_Libre_Algunas.Name = "Rdb_Clasificacion_Libre_Algunas"
@@ -194,10 +197,12 @@ Partial Class Frm_Filtro_Especial_Productos
         '
         '
         Me.Rdb_Clasificacion_Masisa_Todas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Clasificacion_Masisa_Todas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Clasificacion_Masisa_Todas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Clasificacion_Masisa_Todas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Clasificacion_Masisa_Todas.Checked = True
         Me.Rdb_Clasificacion_Masisa_Todas.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Clasificacion_Masisa_Todas.CheckValue = "Y"
+        Me.Rdb_Clasificacion_Masisa_Todas.FocusCuesEnabled = False
         Me.Rdb_Clasificacion_Masisa_Todas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Clasificacion_Masisa_Todas.Location = New System.Drawing.Point(109, 3)
         Me.Rdb_Clasificacion_Masisa_Todas.Name = "Rdb_Clasificacion_Masisa_Todas"
@@ -244,7 +249,9 @@ Partial Class Frm_Filtro_Especial_Productos
         '
         '
         Me.Rdb_Zonas_Algunas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Zonas_Algunas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Zonas_Algunas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Zonas_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Zonas_Algunas.FocusCuesEnabled = False
         Me.Rdb_Zonas_Algunas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Zonas_Algunas.Location = New System.Drawing.Point(193, 3)
         Me.Rdb_Zonas_Algunas.Name = "Rdb_Zonas_Algunas"
@@ -260,10 +267,12 @@ Partial Class Frm_Filtro_Especial_Productos
         '
         '
         Me.Rdb_Zonas_Todas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Zonas_Todas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Zonas_Todas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Zonas_Todas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Zonas_Todas.Checked = True
         Me.Rdb_Zonas_Todas.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Zonas_Todas.CheckValue = "Y"
+        Me.Rdb_Zonas_Todas.FocusCuesEnabled = False
         Me.Rdb_Zonas_Todas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Zonas_Todas.Location = New System.Drawing.Point(109, 3)
         Me.Rdb_Zonas_Todas.Name = "Rdb_Zonas_Todas"
@@ -310,7 +319,9 @@ Partial Class Frm_Filtro_Especial_Productos
         '
         '
         Me.Rdb_Super_Familias_Algunas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Super_Familias_Algunas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Super_Familias_Algunas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Super_Familias_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Super_Familias_Algunas.FocusCuesEnabled = False
         Me.Rdb_Super_Familias_Algunas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Super_Familias_Algunas.Location = New System.Drawing.Point(193, 3)
         Me.Rdb_Super_Familias_Algunas.Name = "Rdb_Super_Familias_Algunas"
@@ -326,10 +337,12 @@ Partial Class Frm_Filtro_Especial_Productos
         '
         '
         Me.Rdb_Super_Familias_Todas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Super_Familias_Todas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Super_Familias_Todas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Super_Familias_Todas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Super_Familias_Todas.Checked = True
         Me.Rdb_Super_Familias_Todas.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Super_Familias_Todas.CheckValue = "Y"
+        Me.Rdb_Super_Familias_Todas.FocusCuesEnabled = False
         Me.Rdb_Super_Familias_Todas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Super_Familias_Todas.Location = New System.Drawing.Point(109, 3)
         Me.Rdb_Super_Familias_Todas.Name = "Rdb_Super_Familias_Todas"
@@ -376,7 +389,9 @@ Partial Class Frm_Filtro_Especial_Productos
         '
         '
         Me.Rdb_Rubros_Algunos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Rubros_Algunos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Rubros_Algunos.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Rubros_Algunos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Rubros_Algunos.FocusCuesEnabled = False
         Me.Rdb_Rubros_Algunos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Rubros_Algunos.Location = New System.Drawing.Point(193, 3)
         Me.Rdb_Rubros_Algunos.Name = "Rdb_Rubros_Algunos"
@@ -392,10 +407,12 @@ Partial Class Frm_Filtro_Especial_Productos
         '
         '
         Me.Rdb_Rubros_Todos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Rubros_Todos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Rubros_Todos.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Rubros_Todos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Rubros_Todos.Checked = True
         Me.Rdb_Rubros_Todos.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Rubros_Todos.CheckValue = "Y"
+        Me.Rdb_Rubros_Todos.FocusCuesEnabled = False
         Me.Rdb_Rubros_Todos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Rubros_Todos.Location = New System.Drawing.Point(109, 3)
         Me.Rdb_Rubros_Todos.Name = "Rdb_Rubros_Todos"
@@ -442,7 +459,9 @@ Partial Class Frm_Filtro_Especial_Productos
         '
         '
         Me.Rdb_Marcas_Algunas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Marcas_Algunas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Marcas_Algunas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Marcas_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Marcas_Algunas.FocusCuesEnabled = False
         Me.Rdb_Marcas_Algunas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Marcas_Algunas.Location = New System.Drawing.Point(193, 3)
         Me.Rdb_Marcas_Algunas.Name = "Rdb_Marcas_Algunas"
@@ -458,10 +477,12 @@ Partial Class Frm_Filtro_Especial_Productos
         '
         '
         Me.Rdb_Marcas_Todas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Marcas_Todas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Marcas_Todas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Marcas_Todas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Marcas_Todas.Checked = True
         Me.Rdb_Marcas_Todas.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Marcas_Todas.CheckValue = "Y"
+        Me.Rdb_Marcas_Todas.FocusCuesEnabled = False
         Me.Rdb_Marcas_Todas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Marcas_Todas.Location = New System.Drawing.Point(109, 3)
         Me.Rdb_Marcas_Todas.Name = "Rdb_Marcas_Todas"
@@ -508,7 +529,9 @@ Partial Class Frm_Filtro_Especial_Productos
         '
         '
         Me.Rdb_Productos_Algunos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Productos_Algunos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Productos_Algunos.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Productos_Algunos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Productos_Algunos.FocusCuesEnabled = False
         Me.Rdb_Productos_Algunos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Productos_Algunos.Location = New System.Drawing.Point(193, 3)
         Me.Rdb_Productos_Algunos.Name = "Rdb_Productos_Algunos"
@@ -524,10 +547,12 @@ Partial Class Frm_Filtro_Especial_Productos
         '
         '
         Me.Rdb_Productos_Todos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Productos_Todos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Productos_Todos.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Productos_Todos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Productos_Todos.Checked = True
         Me.Rdb_Productos_Todos.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Productos_Todos.CheckValue = "Y"
+        Me.Rdb_Productos_Todos.FocusCuesEnabled = False
         Me.Rdb_Productos_Todos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Productos_Todos.Location = New System.Drawing.Point(109, 3)
         Me.Rdb_Productos_Todos.Name = "Rdb_Productos_Todos"

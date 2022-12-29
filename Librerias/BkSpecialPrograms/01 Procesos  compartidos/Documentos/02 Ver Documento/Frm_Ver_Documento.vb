@@ -4167,10 +4167,6 @@ Public Class Frm_Ver_Documento
                 Return
             End If
 
-            'If _RechazadoSII Then
-
-            'End If
-
             Dim _Firmar As Boolean = Not _DocFirmado
 
             If _DocFirmado And Not String.IsNullOrEmpty(_Trackid) Then
@@ -4212,9 +4208,6 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
-    Private Sub Btn_Mnu_Reenvio_Correo_DTE_Hefesto_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Reenvio_Correo_DTE_Hefesto.Click
-
-    End Sub
 
     Private Sub Btn_Mnu_Exportar_XML_Hefesto_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Exportar_XML_Hefesto.Click
         Call Btn_Mnu_Exportar_XML_Click(Nothing, Nothing)

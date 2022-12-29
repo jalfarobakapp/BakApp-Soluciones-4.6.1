@@ -1,5 +1,4 @@
-'Imports Lib_Bakapp_VarClassFunc
-Imports DevComponents.DotNetBar
+ï»¿Imports DevComponents.DotNetBar
 
 Public Class Frm_Filtro_Especial_Productos
 
@@ -12,26 +11,22 @@ Public Class Frm_Filtro_Especial_Productos
     Dim _Tbl_Filtro_Clalibpr As DataTable
     Dim _Tbl_Filtro_Zonas As DataTable
 
-    Dim _Filtro_Extra_Productos, _
-        _Filtro_Extra_Super_Familias, _
-        _Filtro_Extra_Marcas, _
-        _Filtro_Extra_Rubro, _
-        _Filtro_Extra_Clalibpr, _
+    Dim _Filtro_Extra_Productos,
+        _Filtro_Extra_Super_Familias,
+        _Filtro_Extra_Marcas,
+        _Filtro_Extra_Rubro,
+        _Filtro_Extra_Clalibpr,
         _Filtro_Extra_Zonas As String
 
     Dim _Aceptar As Boolean
 
     Public ReadOnly Property Pro_Aceptar() As Boolean
-        Get
-            Return _Aceptar
-        End Get
-    End Property
 
     Public Property Pro_Tbl_Filtro_Productos() As DataTable
         Get
             Return _Tbl_Filtro_Productos
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Productos = value
         End Set
     End Property
@@ -39,7 +34,7 @@ Public Class Frm_Filtro_Especial_Productos
         Get
             Return _Tbl_Filtro_Super_Familias
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Super_Familias = value
         End Set
     End Property
@@ -47,7 +42,7 @@ Public Class Frm_Filtro_Especial_Productos
         Get
             Return _Tbl_Filtro_Marcas
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Marcas = value
         End Set
     End Property
@@ -55,7 +50,7 @@ Public Class Frm_Filtro_Especial_Productos
         Get
             Return _Tbl_Filtro_Rubro
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Rubro = value
         End Set
     End Property
@@ -63,7 +58,7 @@ Public Class Frm_Filtro_Especial_Productos
         Get
             Return _Tbl_Filtro_Clalibpr
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Clalibpr = value
         End Set
     End Property
@@ -71,7 +66,7 @@ Public Class Frm_Filtro_Especial_Productos
         Get
             Return _Tbl_Filtro_Zonas
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Zonas = value
         End Set
     End Property
@@ -80,7 +75,7 @@ Public Class Frm_Filtro_Especial_Productos
         Get
             Return Rdb_Marcas_Todas.Checked
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             If value Then
                 Rdb_Marcas_Todas.Checked = True
             Else
@@ -92,7 +87,7 @@ Public Class Frm_Filtro_Especial_Productos
         Get
             Return Rdb_Productos_Todos.Checked
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             If value Then
                 Rdb_Productos_Todos.Checked = True
             Else
@@ -104,7 +99,7 @@ Public Class Frm_Filtro_Especial_Productos
         Get
             Return Rdb_Super_Familias_Todas.Checked
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             If value Then
                 Rdb_Super_Familias_Todas.Checked = True
             Else
@@ -116,7 +111,7 @@ Public Class Frm_Filtro_Especial_Productos
         Get
             Return Rdb_Rubros_Todos.Checked
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             If value Then
                 Rdb_Rubros_Todos.Checked = True
             Else
@@ -128,7 +123,7 @@ Public Class Frm_Filtro_Especial_Productos
         Get
             Return Rdb_Clasificacion_Masisa_Todas.Checked
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             If value Then
                 Rdb_Clasificacion_Masisa_Todas.Checked = True
             Else
@@ -140,7 +135,7 @@ Public Class Frm_Filtro_Especial_Productos
         Get
             Return Rdb_Zonas_Todas.Checked
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             If value Then
                 Rdb_Zonas_Todas.Checked = True
             Else
@@ -153,7 +148,7 @@ Public Class Frm_Filtro_Especial_Productos
         Get
             Return _Filtro_Extra_Productos
         End Get
-        Set(ByVal value)
+        Set(value)
             _Filtro_Extra_Productos = value
         End Set
     End Property
@@ -161,7 +156,7 @@ Public Class Frm_Filtro_Especial_Productos
         Get
             Return _Filtro_Extra_Super_Familias
         End Get
-        Set(ByVal value)
+        Set(value)
             _Filtro_Extra_Super_Familias = value
         End Set
     End Property
@@ -169,7 +164,7 @@ Public Class Frm_Filtro_Especial_Productos
         Get
             Return _Filtro_Extra_Marcas
         End Get
-        Set(ByVal value)
+        Set(value)
             _Filtro_Extra_Marcas = value
         End Set
     End Property
@@ -177,7 +172,7 @@ Public Class Frm_Filtro_Especial_Productos
         Get
             Return _Filtro_Extra_Rubro
         End Get
-        Set(ByVal value)
+        Set(value)
             _Filtro_Extra_Rubro = value
         End Set
     End Property
@@ -185,7 +180,7 @@ Public Class Frm_Filtro_Especial_Productos
         Get
             Return _Filtro_Extra_Clalibpr
         End Get
-        Set(ByVal value)
+        Set(value)
             _Filtro_Extra_Clalibpr = value
         End Set
     End Property
@@ -193,23 +188,24 @@ Public Class Frm_Filtro_Especial_Productos
         Get
             Return _Filtro_Extra_Zonas
         End Get
-        Set(ByVal value)
+        Set(value)
             _Filtro_Extra_Zonas = value
         End Set
     End Property
 
     Public Sub New()
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
+
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
-    Private Sub Frm_Filtro_Especial_Productos_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Filtro_Especial_Productos_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
-        'AddHandler Rdb_Productos_Algunos.Click, AddressOf Rdb_CheckedChanged
         AddHandler Rdb_Productos_Algunos.CheckedChanged, AddressOf Rdb_CheckedChanged
         AddHandler Rdb_Clasificacion_Libre_Algunas.CheckedChanged, AddressOf Rdb_CheckedChanged
         AddHandler Rdb_Marcas_Algunas.CheckedChanged, AddressOf Rdb_CheckedChanged
@@ -221,7 +217,7 @@ Public Class Frm_Filtro_Especial_Productos
 
     End Sub
 
-    Private Sub Rdb_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Rdb_CheckedChanged(sender As System.Object, e As System.EventArgs)
 
         Dim _Control As DevComponents.DotNetBar.Controls.CheckBoxX = sender
         Dim _Control_Todas As DevComponents.DotNetBar.Controls.CheckBoxX
@@ -326,17 +322,17 @@ Public Class Frm_Filtro_Especial_Productos
 
     End Sub
 
-    Private Sub BtnSalir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub BtnSalir_Click(sender As System.Object, e As System.EventArgs)
         Me.Close()
     End Sub
 
-    Private Sub Frm_Filtro_Especial_Productos_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Filtro_Especial_Productos_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Btn_Aceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Aceptar.Click
+    Private Sub Btn_Aceptar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Aceptar.Click
 
         Dim _Faltan_Productos As Boolean
 
@@ -350,7 +346,7 @@ Public Class Frm_Filtro_Especial_Productos
 
             If _Faltan_Productos Then
 
-                MessageBoxEx.Show(Me, "Debe seleccionar algún producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "Debe seleccionar algÃºn producto", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Rdb_CheckedChanged(Rdb_Productos_Algunos, Nothing)
                 Return
 
