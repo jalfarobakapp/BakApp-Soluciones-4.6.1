@@ -21,6 +21,7 @@ Public Class Frm_00_Asis_Compra_Menu
     Public _DsFiltros As New DsFiltros
     Dim _TblFiltroProductos
 
+    Dim _Tbl_Filtro_Productos As DataTable
     Dim _Tbl_Filtro_Super_Familias As DataTable
     Dim _Tbl_Filtro_Marcas As DataTable
     Dim _Tbl_Filtro_Rubro As DataTable
@@ -30,6 +31,7 @@ Public Class Frm_00_Asis_Compra_Menu
     Dim _TblBodCompra As DataTable
     Dim _TblBodVenta As DataTable
 
+    Dim _Filtro_Productos_Todos As Boolean
     Dim _Filtro_Marcas_Todas As Boolean
     Dim _Filtro_Super_Familias_Todas As Boolean
     Dim _Filtro_Rubro_Todas As Boolean
@@ -498,6 +500,8 @@ Public Class Frm_00_Asis_Compra_Menu
 
             If Rdb_Productos_Proveedor.Checked Then
 
+                _Filtro_Productos_Todos = True
+
                 Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Tmp_Prm_Informes" & vbCrLf &
                                "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente' And Campo In ('Koen','Suen') And Modalidad = '" & Modalidad & "'"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
@@ -805,7 +809,7 @@ Public Class Frm_00_Asis_Compra_Menu
         ' AUTOMATIZACION
         '   Id Correo envio OCC Automaticas
         _Sql.Sb_Parametro_Informe_Sql(Txt_CtaCorreoEnvioAutomatizado, "Compras_Asistente",
-                                      Txt_CtaCorreoEnvioAutomatizado.Name, Class_SQLite.Enum_Type._String, Txt_CtaCorreoEnvioAutomatizado.Tag, _Actualizar)
+                                      Txt_CtaCorreoEnvioAutomatizado.Name, Class_SQLite.Enum_Type._String, Txt_CtaCorreoEnvioAutomatizado.Text, _Actualizar)
         '   Nombre formato PDF adjunto OCC Automaticas
         _Sql.Sb_Parametro_Informe_Sql(Txt_NombreFormato_PDF, "Compras_Asistente",
                                       Txt_NombreFormato_PDF.Name, Class_SQLite.Enum_Type._String, Txt_NombreFormato_PDF.Text, _Actualizar)
@@ -813,9 +817,9 @@ Public Class Frm_00_Asis_Compra_Menu
         _Sql.Sb_Parametro_Informe_Sql(Txt_CorreoCc, "Compras_Asistente",
                                       Txt_CorreoCc.Name, Class_SQLite.Enum_Type._String, Txt_CorreoCc.Text, _Actualizar)
 
-        If Not _Actualizar Then
-            Txt_CtaCorreoEnvioAutomatizado.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Nombre_Correo", "Id = " & Txt_CtaCorreoEnvioAutomatizado.Tag)
-        End If
+        'If Not _Actualizar Then
+        '    Txt_CtaCorreoEnvioAutomatizado.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Nombre_Correo", "Id = " & Txt_CtaCorreoEnvioAutomatizado.Tag)
+        'End If
 
     End Sub
 
@@ -2798,18 +2802,150 @@ Public Class Frm_00_Asis_Compra_Menu
 
         Dim _Sql_Filtro_Condicion_Extra = "And TIPR = 'FPN' And KOPR In (Select KOPR From TABCODAL Where KOEN = '" & _Koen & "')"
 
-        Dim _Filtrar As New Clas_Filtros_Random(Me)
 
-        If _Filtrar.Fx_Filtrar(_TblFiltroProductos_Proveedor,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
-                               False, False) Then
+        Dim Fm As New Frm_Filtro_Especial_Productos
 
-            _TblFiltroProductos_Proveedor = _Filtrar.Pro_Tbl_Filtro
-            If _Filtrar.Pro_Filtro_Todas Then
-                _TblFiltroProductos_Proveedor = Nothing
+        Fm.Pro_Filtro_Extra_Productos = _Sql_Filtro_Condicion_Extra
+        Fm.Pro_Filtro_Extra_Marcas = "And KOMR In (Select MRPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
+        Fm.Pro_Filtro_Extra_Super_Familias = "And KOFM In (Select FMPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
+        Fm.Pro_Filtro_Extra_Rubro_Productos = "And KORU In (Select RUPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
+        Fm.Pro_Filtro_Extra_Clalibpr = "And KOCARAC In (Select CLALIBPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
+        Fm.Pro_Filtro_Extra_Zonas = "And KOZO In (Select ZONAPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
+
+
+        Fm.Pro_Filtro_Productos_Todos = _Filtro_Productos_Todos
+        Fm.Pro_Filtro_Clalibpr_Todas = _Filtro_Clalibpr_Todas
+        Fm.Pro_Filtro_Marcas_Todas = _Filtro_Marcas_Todas
+        Fm.Pro_Filtro_Rubro_Todas = _Filtro_Rubro_Todas
+        Fm.Pro_Filtro_Super_Familias_Todas = _Filtro_Super_Familias_Todas
+        Fm.Pro_Filtro_Zonas_Todas = _Filtro_Zonas_Todas
+
+        Fm.Pro_Tbl_Filtro_Productos = _Tbl_Filtro_Productos
+        Fm.Pro_Tbl_Filtro_Clalibpr = _Tbl_Filtro_Clalibpr
+        Fm.Pro_Tbl_Filtro_Marcas = _Tbl_Filtro_Marcas
+        Fm.Pro_Tbl_Filtro_Rubro = _Tbl_Filtro_Rubro
+        Fm.Pro_Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
+        Fm.Pro_Tbl_Filtro_Zonas = _Tbl_Filtro_Zonas
+
+        Fm.ShowDialog(Me)
+
+        _Tbl_Filtro_Productos = Fm.Pro_Tbl_Filtro_Productos
+        _Tbl_Filtro_Clalibpr = Fm.Pro_Tbl_Filtro_Clalibpr
+        _Tbl_Filtro_Marcas = Fm.Pro_Tbl_Filtro_Marcas
+        _Tbl_Filtro_Rubro = Fm.Pro_Tbl_Filtro_Rubro
+        _Tbl_Filtro_Super_Familias = Fm.Pro_Tbl_Filtro_Super_Familias
+        _Tbl_Filtro_Zonas = Fm.Pro_Tbl_Filtro_Zonas
+
+        _Filtro_Productos_Todos = Fm.Pro_Filtro_Productos_Todos
+        _Filtro_Clalibpr_Todas = Fm.Pro_Filtro_Clalibpr_Todas
+        _Filtro_Marcas_Todas = Fm.Pro_Filtro_Marcas_Todas
+        _Filtro_Rubro_Todas = Fm.Pro_Filtro_Rubro_Todas
+        _Filtro_Super_Familias_Todas = Fm.Pro_Filtro_Super_Familias_Todas
+        _Filtro_Zonas_Todas = Fm.Pro_Filtro_Zonas_Todas
+
+        Fm.Dispose()
+
+        '---- FILTROS -------------------------------
+
+        Dim _Filtro_Productos = String.Empty
+        Dim _Filtro_Rubros = String.Empty
+        Dim _Filtro_Marcas = String.Empty
+        Dim _Filtro_Zonas = String.Empty
+        Dim _Filtro_SuperFamilias = String.Empty
+        Dim _Filtro_ClasLibre = String.Empty
+        Dim _Filtro_Bodega = String.Empty
+
+
+        If _Filtro_Productos_Todos Then
+
+            If Not _Filtro_Rubro_Todas Then
+                _Filtro_Rubros = Generar_Filtro_IN(_Tbl_Filtro_Rubro, "Chk", "Codigo", False, True, "'")
+                _Filtro_Rubros = "And KOPR IN (Select KOPR From MAEPR Where RUPR In " & _Filtro_Rubros & ")"
             End If
 
+            If Not _Filtro_Marcas_Todas Then
+                _Filtro_Marcas = Generar_Filtro_IN(_Tbl_Filtro_Marcas, "Chk", "Codigo", False, True, "'")
+                _Filtro_Marcas = "And KOPR IN (Select KOPR From MAEPR Where MRPR In " & _Filtro_Marcas & ")"
+            End If
+
+            If Not _Filtro_Super_Familias_Todas Then
+                _Filtro_SuperFamilias = Generar_Filtro_IN(_Tbl_Filtro_Super_Familias, "Chk", "Codigo", False, True, "'")
+                _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where FMPR In " & _Filtro_SuperFamilias & ")"
+            End If
+
+            If Not _Filtro_Clalibpr_Todas Then
+                _Filtro_ClasLibre = Generar_Filtro_IN(_Tbl_Filtro_Clalibpr, "Chk", "Codigo", False, True, "'")
+                _Filtro_ClasLibre = "And KOPR IN (Select KOPR From MAEPR Where CLALIBPR In " & _Filtro_ClasLibre & ")"
+            End If
+
+            If Not _Filtro_Zonas_Todas Then
+                _Filtro_Zonas = Generar_Filtro_IN(_Tbl_Filtro_Zonas, "Chk", "Codigo", False, True, "'")
+                _Filtro_Zonas = "And KOPR IN (Select KOPR From MAEPR Where ZONAPR In " & _Filtro_Zonas & ")"
+            End If
+
+        Else
+
+            If IsNothing(_Tbl_Filtro_Productos) Then
+                Return
+            End If
+
+            _Filtro_Productos = Generar_Filtro_IN(_Tbl_Filtro_Productos, "Chk", "Codigo", False, True, "'")
+            _Filtro_Productos = "And KOPR IN " & _Filtro_Productos
+
         End If
+
+        '---------------------------
+
+        Consulta_sql = "Select Cast(1 As Bit) As Chk,KOPR as Codigo From MAEPR Where 1 > 0" & vbCrLf &
+                        _Filtro_Productos & vbCrLf &
+                        _Filtro_Bodega & vbCrLf &
+                        _Filtro_ClasLibre & vbCrLf &
+                        _Filtro_Marcas & vbCrLf &
+                        _Filtro_Rubros & vbCrLf &
+                        _Filtro_SuperFamilias & vbCrLf &
+                        _Filtro_Zonas
+
+        _TblFiltroProductos_Proveedor = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        'If Rdb_Traer_No_Bloqueados.Checked Then
+        '    Consulta_sql += Rdb_Traer_No_Bloqueados.Tag.ToString
+        'End If
+
+        'If Rdb_Traer_Bloqueados_Compras.Checked Then
+        '    Consulta_sql += Rdb_Traer_Bloqueados_Compras.Tag.ToString
+        'End If
+
+        'If Rdb_Traer_Bloqueados_Venta.Checked Then
+        '    Consulta_sql += Rdb_Traer_Bloqueados_Venta.Tag.ToString
+        'End If
+
+        'If Rdb_Traer_Bloqueados_Compra_y_Venta.Checked Then
+        '    Consulta_sql += Rdb_Traer_Bloqueados_Compra_y_Venta.Tag.ToString
+        'End If
+
+        'If Rdb_Traer_Bloqueados_Compra_Venta_y_Produccion.Checked Then
+        '    Consulta_sql += Rdb_Traer_Bloqueados_Compra_Venta_y_Produccion.Tag.ToString
+        'End If
+
+
+
+
+
+
+
+
+        'Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        'If _Filtrar.Fx_Filtrar(_TblFiltroProductos_Proveedor,
+        '                       Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
+        '                       False, False) Then
+
+        '    _TblFiltroProductos_Proveedor = _Filtrar.Pro_Tbl_Filtro
+        '    If _Filtrar.Pro_Filtro_Todas Then
+        '        _TblFiltroProductos_Proveedor = Nothing
+        '    End If
+
+        'End If
 
     End Sub
 

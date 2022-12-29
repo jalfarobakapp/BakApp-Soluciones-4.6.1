@@ -8417,7 +8417,9 @@ Drop Table #Paso"
             Fm_Espera.Close()
             Fm_Espera.Dispose()
 
-            Fm_Post.Sb_Grabar_Documento(_New_Idmaeedo, False)
+            'Fm_Post.Sb_Grabar_Documento(_New_Idmaeedo, False)
+            Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento)
+            _New_Idmaeedo = Fm_Post.Pro_Idmaeedo
             Fm_Post.Dispose()
 
             Me.Enabled = True

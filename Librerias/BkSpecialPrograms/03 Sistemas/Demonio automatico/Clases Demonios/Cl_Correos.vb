@@ -279,7 +279,7 @@ Public Class Cl_Correos
                        "Where NombreEquipo = '" & _Nombre_Equipo & "' And Enviar = 0 And Enviado = 0 And Intentos <= 2"
         _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
-        '_Nombre_Equipo = "SRV-RANDOM"
+        '_Nombre_Equipo = "JALFARO_PC_2018"
 
         Consulta_Sql = "Select Top " & CantMmail & " *,Isnull(NOKOFU,'Funcionario?????') As 'Nombre_Funcionario'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo" & vbCrLf &
@@ -666,6 +666,7 @@ Public Class Cl_Correos
                             '                                              _Puerto,
                             '                                              _SSL,
                             '                                              False)
+
 
                             _Correo_Enviado = EnviarCorreo.Fx_Enviar_Mail2(_Host,
                                                                           _Remitente,

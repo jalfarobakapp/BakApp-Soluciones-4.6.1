@@ -234,6 +234,11 @@ Public Class Frm_Correos_Conf
 
         Try
 
+            If String.IsNullOrEmpty(_Asunto.Trim) Then
+                Throw New System.Exception("El Asunto no puede estar vacio")
+            End If
+
+
             'DEFINE QUE ESTAMOS ENVIANDO UN MAIL EN FORMATO HTML
             Dim _VistaHTML As AlternateView = AlternateView.CreateAlternateViewFromString(_Cuerpo, Nothing, System.Net.Mime.MediaTypeNames.Text.Html)
 
@@ -391,6 +396,7 @@ Public Class Frm_Correos_Conf
             Return True
 
         Catch ex As Exception
+
             If _Mostrar_Error Then
                 MsgBox(ex.Message)
             End If
