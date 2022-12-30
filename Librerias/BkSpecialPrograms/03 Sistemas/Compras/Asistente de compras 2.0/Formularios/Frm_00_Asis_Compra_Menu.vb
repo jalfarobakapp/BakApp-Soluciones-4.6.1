@@ -30,6 +30,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
     Dim _TblBodCompra As DataTable
     Dim _TblBodVenta As DataTable
+    Dim _TblBodReabastecen As DataTable
 
     Dim _Filtro_Productos_Todos As Boolean
     Dim _Filtro_Marcas_Todas As Boolean
@@ -60,33 +61,15 @@ Public Class Frm_00_Asis_Compra_Menu
     Dim _TblFiltroProductos_Proveedor As DataTable
     Dim _Cancelar As Boolean
 
-    Dim _Modo_OCC As Boolean
-    Dim _Modo_NVI As Boolean
-
     Public Property Accion_Automatica As Boolean
     Public Property Auto_GenerarAutomaticamenteOCCProveedorStar As Boolean
     Public Property Auto_GenerarAutomaticamenteNVI As Boolean
     Public Property Auto_GenerarAutomaticamenteOCCProveedores As Boolean
     Public Property Auto_CorreoCc As String
     Public Property Modalidad_Estudio As String
-
+    Public Property Modo_ConfAuto As Boolean
     Public Property Modo_OCC As Boolean
-        Get
-            Return _Modo_OCC
-        End Get
-        Set(value As Boolean)
-            _Modo_OCC = value
-        End Set
-    End Property
-
     Public Property Modo_NVI As Boolean
-        Get
-            Return _Modo_NVI
-        End Get
-        Set(value As Boolean)
-            _Modo_NVI = value
-        End Set
-    End Property
 
     'Dim'_LiteSql As Class_SQLite
 
@@ -136,9 +119,11 @@ Public Class Frm_00_Asis_Compra_Menu
 
         If _Accion_Automatica Then
             Timer_Ejecucion_Automatica.Start()
+            Bar.Enabled = False
         End If
 
         Tab_Costos_OCC.Visible = _Modo_OCC
+        Tab_Automatizacion.Visible = False
 
         If _Modo_OCC Then
             Me.Text += " MODO OCC"
@@ -154,6 +139,13 @@ Public Class Frm_00_Asis_Compra_Menu
             Layaut_UlProdXProv.Visible = False
             Me.Text += " MODO NVI"
             Tab_ConexionExterna.Visible = False
+            Tab_Automatizacion.Visible = True
+        End If
+
+        If _Modo_ConfAuto Then
+            Tab_Automatizacion.Visible = True
+            BtnProcesarInf.Visible = False
+            Btn_Imprimir_Maestra.Visible = False
         End If
 
     End Sub
@@ -421,8 +413,9 @@ Public Class Frm_00_Asis_Compra_Menu
                            "And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = ''"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
-            _Sql.Sb_Actualizar_Filtro_Tmp(_TblBodCompra, "Compras_Asistente", "Bodegas_Stock")
-            _Sql.Sb_Actualizar_Filtro_Tmp(_TblBodVenta, "Compras_Asistente", "Bodegas_Rotacion_Vta")
+            _Sql.Sb_Actualizar_Filtro_Tmp(_TblBodCompra, "Compras_Asistente", "Bodegas_Stock", Modalidad_Estudio)
+            _Sql.Sb_Actualizar_Filtro_Tmp(_TblBodVenta, "Compras_Asistente", "Bodegas_Rotacion_Vta", Modalidad_Estudio)
+            _Sql.Sb_Actualizar_Filtro_Tmp(_TblBodReabastecen, "Compras_Asistente", "Bodegas_Reabastecen", Modalidad_Estudio)
 
         End If
 
@@ -619,9 +612,15 @@ Public Class Frm_00_Asis_Compra_Menu
                                              Cmb_Documento_Compra.Name, Class_SQLite.Enum_Type._ComboBox, Cmb_Documento_Compra.SelectedValue, _Actualizar)
         End If
 
+
+        Dtp_Fecha_Tope_Proveedores_Automaticos.Value = DateAdd(DateInterval.Month, -Input_FechaTopeBusquedaProveedores.Value, Now.Date)
+
         '   Costos de la lista del proveedor
         _Sql.Sb_Parametro_Informe_Sql(Dtp_Fecha_Tope_Proveedores_Automaticos, "Compras_Asistente",
                                              Dtp_Fecha_Tope_Proveedores_Automaticos.Name, Class_SQLite.Enum_Type._Date, Dtp_Fecha_Tope_Proveedores_Automaticos.Value, _Actualizar)
+
+        _Sql.Sb_Parametro_Informe_Sql(Input_FechaTopeBusquedaProveedores, "Compras_Asistente",
+                                             Input_FechaTopeBusquedaProveedores.Name, Class_SQLite.Enum_Type._Double, Input_FechaTopeBusquedaProveedores.Value, _Actualizar)
 
 
         ''   Ticket Traer Cod. Alternativos desde Bakapp
@@ -698,6 +697,11 @@ Public Class Frm_00_Asis_Compra_Menu
                            "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
                            "And Filtro = 'Bodegas_Rotacion_Vta' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad_Estudio & "'"
             _TblBodVenta = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
+                           "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
+                           "And Filtro = 'Bodegas_Reabastecen' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
+            _TblBodReabastecen = _Sql.Fx_Get_Tablas(Consulta_sql)
         End If
 
 
@@ -812,14 +816,14 @@ Public Class Frm_00_Asis_Compra_Menu
 
         ' AUTOMATIZACION
         '   Id Correo envio OCC Automaticas
-        _Sql.Sb_Parametro_Informe_Sql(Txt_CtaCorreoEnvioAutomatizado, "Compras_Asistente",
-                                      Txt_CtaCorreoEnvioAutomatizado.Name, Class_SQLite.Enum_Type._String, Txt_CtaCorreoEnvioAutomatizado.Text, _Actualizar)
+        _Sql.Sb_Parametro_Informe_Sql(Txt_CtaCorreoEnvioAutomatizado_OCC, "Compras_Asistente",
+                                      Txt_CtaCorreoEnvioAutomatizado_OCC.Name, Class_SQLite.Enum_Type._String, Txt_CtaCorreoEnvioAutomatizado_OCC.Text, _Actualizar)
         '   Nombre formato PDF adjunto OCC Automaticas
-        _Sql.Sb_Parametro_Informe_Sql(Txt_NombreFormato_PDF, "Compras_Asistente",
-                                      Txt_NombreFormato_PDF.Name, Class_SQLite.Enum_Type._String, Txt_NombreFormato_PDF.Text, _Actualizar)
+        _Sql.Sb_Parametro_Informe_Sql(Txt_NombreFormato_PDF_OCC, "Compras_Asistente",
+                                      Txt_NombreFormato_PDF_OCC.Name, Class_SQLite.Enum_Type._String, Txt_NombreFormato_PDF_OCC.Text, _Actualizar)
         ' Destinatarios CC para envio de OCC automatizada
-        _Sql.Sb_Parametro_Informe_Sql(Txt_CorreoCc, "Compras_Asistente",
-                                      Txt_CorreoCc.Name, Class_SQLite.Enum_Type._String, Txt_CorreoCc.Text, _Actualizar)
+        _Sql.Sb_Parametro_Informe_Sql(Txt_CorreoCc_OCC, "Compras_Asistente",
+                                      Txt_CorreoCc_OCC.Name, Class_SQLite.Enum_Type._String, Txt_CorreoCc_OCC.Text, _Actualizar)
 
         'If Not _Actualizar Then
         '    Txt_CtaCorreoEnvioAutomatizado.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Nombre_Correo", "Id = " & Txt_CtaCorreoEnvioAutomatizado.Tag)
@@ -2115,7 +2119,7 @@ Public Class Frm_00_Asis_Compra_Menu
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
 
-        Dim Fm As New Frm_01_Asis_Compra_Resultados
+        Dim Fm As New Frm_01_Asis_Compra_Resultados(Modalidad_Estudio)
 
         Fm.Pro_Nombre_Tbl_Paso_Informe = _TblPasoInforme
 
@@ -2135,9 +2139,9 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Auto_GenerarAutomaticamenteOCCProveedores = Auto_GenerarAutomaticamenteOCCProveedores
         Fm.Auto_GenerarAutomaticamenteOCCProveedorStar = Auto_GenerarAutomaticamenteOCCProveedorStar
         Fm.Auto_GenerarAutomaticamenteNVI = Auto_GenerarAutomaticamenteNVI
-        Fm.Auto_CorreoCc = Txt_CorreoCc.Text
-        Fm.Auto_Id_Correo = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Id", "Nombre_Correo = '" & Txt_CtaCorreoEnvioAutomatizado.Text & "'")
-        Fm.Auto_NombreFormato_PDF = Txt_NombreFormato_PDF.Text
+        Fm.Auto_CorreoCc = Txt_CorreoCc_OCC.Text
+        Fm.Auto_Id_Correo = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Id", "Nombre_Correo = '" & Txt_CtaCorreoEnvioAutomatizado_OCC.Text & "'")
+        Fm.Auto_NombreFormato_PDF = Txt_NombreFormato_PDF_OCC.Text
 
         Fm.Modo_OCC = Modo_OCC
         Fm.Modo_NVI = _Modo_NVI
@@ -2152,7 +2156,10 @@ Public Class Frm_00_Asis_Compra_Menu
 
         Me.Enabled = False
         _Sql.Sb_Eliminar_Tabla_De_Paso(_TblPasoInforme)
-        Sb_Parametros_Informe_Sql(True)
+
+        If Not _Accion_Automatica Then
+            Sb_Parametros_Informe_Sql(True)
+        End If
 
     End Sub
 
@@ -2988,6 +2995,7 @@ Public Class Frm_00_Asis_Compra_Menu
     Private Sub Timer_Ejecucion_Automatica_Tick(sender As Object, e As EventArgs) Handles Timer_Ejecucion_Automatica.Tick
         Timer_Ejecucion_Automatica.Stop()
         Call BtnProcesarInf_Click(Nothing, Nothing)
+        Me.Close()
     End Sub
 
     Private Sub Txt_DbExt_Nombre_Conexion_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_DbExt_Nombre_Conexion.ButtonCustomClick
@@ -3091,7 +3099,7 @@ Public Class Frm_00_Asis_Compra_Menu
         Grupo_DbExt.Enabled = Chk_DbExt_SincronizarPRBD.Checked
     End Sub
 
-    Private Sub Txt_CtaCorreoEnvioAutomatizado_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CtaCorreoEnvioAutomatizado.ButtonCustomClick
+    Private Sub Txt_CtaCorreoEnvioAutomatizado_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CtaCorreoEnvioAutomatizado_OCC.ButtonCustomClick
 
         Dim _Row_Email As DataRow
 
@@ -3102,13 +3110,13 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Dispose()
 
         If Not IsNothing(_Row_Email) Then
-            Txt_CtaCorreoEnvioAutomatizado.Tag = _Row_Email.Item("Id")
-            Txt_CtaCorreoEnvioAutomatizado.Text = _Row_Email.Item("Nombre_Correo").ToString.Trim
+            Txt_CtaCorreoEnvioAutomatizado_OCC.Tag = _Row_Email.Item("Id")
+            Txt_CtaCorreoEnvioAutomatizado_OCC.Text = _Row_Email.Item("Nombre_Correo").ToString.Trim
         End If
 
     End Sub
 
-    Private Sub Txt_NombreFormato_PDF_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_NombreFormato_PDF.ButtonCustomClick
+    Private Sub Txt_NombreFormato_PDF_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_NombreFormato_PDF_OCC.ButtonCustomClick
 
         Dim Fm As New Frm_Seleccionar_Formato("OCC")
 
@@ -3116,8 +3124,8 @@ Public Class Frm_00_Asis_Compra_Menu
 
             Fm.ShowDialog(Me)
             If Fm.Formato_Seleccionado Then
-                Txt_NombreFormato_PDF.Tag = Fm.Row_Formato_Seleccionado.Item("NombreFormato").ToString.Trim
-                Txt_NombreFormato_PDF.Text = Fm.Row_Formato_Seleccionado.Item("NombreFormato").ToString.Trim
+                Txt_NombreFormato_PDF_OCC.Tag = Fm.Row_Formato_Seleccionado.Item("NombreFormato").ToString.Trim
+                Txt_NombreFormato_PDF_OCC.Text = Fm.Row_Formato_Seleccionado.Item("NombreFormato").ToString.Trim
             End If
 
         Else
@@ -3129,15 +3137,53 @@ Public Class Frm_00_Asis_Compra_Menu
 
     End Sub
 
-    Private Sub Txt_NombreFormato_PDF_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_NombreFormato_PDF.ButtonCustom2Click
+    Private Sub Txt_NombreFormato_PDF_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_NombreFormato_PDF_OCC.ButtonCustom2Click
         If MessageBoxEx.Show(Me, "Confirma quitar el formato", "Quitar formato", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-            Txt_NombreFormato_PDF.Text = String.Empty
+            Txt_NombreFormato_PDF_OCC.Text = String.Empty
         End If
     End Sub
 
-    Private Sub Txt_CtaCorreoEnvioAutomatizado_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CtaCorreoEnvioAutomatizado.ButtonCustom2Click
+    Private Sub Txt_CtaCorreoEnvioAutomatizado_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CtaCorreoEnvioAutomatizado_OCC.ButtonCustom2Click
         If MessageBoxEx.Show(Me, "Confirma quitar el correo", "Quitar correo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-            Txt_CtaCorreoEnvioAutomatizado.Text = String.Empty
+            Txt_CtaCorreoEnvioAutomatizado_OCC.Text = String.Empty
         End If
     End Sub
+
+    Private Sub Btn_Bodega_NVI_Estudio_Click(sender As Object, e As EventArgs) Handles Btn_Bodega_NVI_Estudio.Click
+
+        Dim Fm As New Frm_Filtro_Especial_Informes(Frm_Filtro_Especial_Informes._Tabla_Fl._Bodegas, False)
+        Fm.Pro_Tbl_Filtro = _TblBodReabastecen
+
+        Fm.ShowDialog(Me)
+
+        If Fm.Pro_Filtrar Then
+
+            _TblBodReabastecen = Fm.Pro_Tbl_Filtro
+
+            'If Fm.Pro_Filtrar_Todo Then
+            '    _Filtro_Bodegas_Est_Vta_Todas = True
+            'Else
+            '    If (_TblBodCompra Is Nothing) Then
+            '        _Filtro_Bodegas_Est_Vta_Todas = True
+            '    Else
+            '        _Filtro_Bodegas_Est_Vta_Todas = False
+            '    End If
+            'End If
+
+        End If
+
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_GrabarConfiguracion_Click(sender As Object, e As EventArgs) Handles Btn_GrabarConfiguracion.Click
+
+        Sb_Parametros_Informe_Sql(True)
+
+        MessageBoxEx.Show(Me, "Configuración guardada correctamente", "Guardar configuración", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Me.Close()
+
+    End Sub
+
+
 End Class

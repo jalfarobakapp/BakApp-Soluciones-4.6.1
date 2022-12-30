@@ -32,9 +32,10 @@ Partial Class Modulo_Compras
         Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnCambiarDeUsuario = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem2 = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Asociar_Prod_Funcionarios = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
-        Me.ButtonItem2 = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem3 = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -152,7 +153,7 @@ Partial Class Modulo_Compras
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir, Me.BtnCambiarDeUsuario, Me.ButtonItem1, Me.ButtonItem2, Me.Btn_Asociar_Prod_Funcionarios})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir, Me.BtnCambiarDeUsuario, Me.ButtonItem3, Me.ButtonItem2, Me.ButtonItem1, Me.Btn_Asociar_Prod_Funcionarios})
         Me.Bar2.Location = New System.Drawing.Point(0, 198)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(632, 41)
@@ -186,6 +187,12 @@ Partial Class Modulo_Compras
         Me.ButtonItem1.Name = "ButtonItem1"
         Me.ButtonItem1.Text = "PRB Proveedores"
         '
+        'ButtonItem2
+        '
+        Me.ButtonItem2.ForeColor = System.Drawing.Color.Black
+        Me.ButtonItem2.Name = "ButtonItem2"
+        Me.ButtonItem2.Text = "PRB Proveedor Star"
+        '
         'Btn_Asociar_Prod_Funcionarios
         '
         Me.Btn_Asociar_Prod_Funcionarios.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
@@ -211,11 +218,11 @@ Partial Class Modulo_Compras
         Me.LabelX1.TabIndex = 29
         Me.LabelX1.Text = "<font color=""#349FCE""><b>COMPRAS</b></font>"
         '
-        'ButtonItem2
+        'ButtonItem3
         '
-        Me.ButtonItem2.ForeColor = System.Drawing.Color.Black
-        Me.ButtonItem2.Name = "ButtonItem2"
-        Me.ButtonItem2.Text = "PRB Proveedor Star"
+        Me.ButtonItem3.ForeColor = System.Drawing.Color.Black
+        Me.ButtonItem3.Name = "ButtonItem3"
+        Me.ButtonItem3.Text = "NVI Automatica"
         '
         'Modulo_Compras
         '
@@ -242,4 +249,5 @@ Partial Class Modulo_Compras
     Friend WithEvents Btn_Asociar_Prod_Funcionarios As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents ButtonItem1 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents ButtonItem2 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ButtonItem3 As DevComponents.DotNetBar.ButtonItem
 End Class

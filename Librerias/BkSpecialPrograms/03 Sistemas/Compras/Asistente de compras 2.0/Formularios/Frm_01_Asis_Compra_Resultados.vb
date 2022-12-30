@@ -66,6 +66,8 @@ Public Class Frm_01_Asis_Compra_Resultados
     Dim _Modo_NVI As Boolean
     Dim _Modo_OCC As Boolean
 
+    Dim _Modalidad_Estudio As String
+
     Public Property Accion_Automatica As Boolean
         Get
             Return _Accion_Automatica
@@ -216,10 +218,12 @@ Public Class Frm_01_Asis_Compra_Resultados
         End Set
     End Property
 
-    Public Sub New()
+    Public Sub New(_Modalidad_Estudio As String)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
+
+        Me._Modalidad_Estudio = _Modalidad_Estudio
 
         Sb_Cargar_Combos()
 
@@ -283,7 +287,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Tmp_Prm_Informes
                         Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente' And Campo = 'Cmb_Lista_de_costos' " &
-                        "And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
+                        "And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & _Modalidad_Estudio & "'"
         Dim _Row_Prm As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Lista = String.Empty
@@ -318,7 +322,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         _Rdb_Productos_Proveedor = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor",
                                                                     "Funcionario = '" & FUNCIONARIO & "'" & Space(1) &
                                                                     "And Campo = 'Rdb_Productos_Proveedor'" & Space(1) &
-                                                                    "And Informe = 'Compras_Asistente' And Modalidad = '" & Modalidad & "'", , , , True)
+                                                                    "And Informe = 'Compras_Asistente' And Modalidad = '" & _Modalidad_Estudio & "'", , , , True)
 
         Fm_Hijo.WindowState = FormWindowState.Maximized
         Fm_Hijo.MdiParent = Me
@@ -327,11 +331,11 @@ Public Class Frm_01_Asis_Compra_Resultados
         _Rdb_RotDias = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor",
                                                                     "Funcionario = '" & FUNCIONARIO & "'" & Space(1) &
                                                                     "And Campo = 'Rdb_RotDias'" & Space(1) &
-                                                                    "And Informe = 'Compras_Asistente' And Modalidad = '" & Modalidad & "'", , , , True)
+                                                                    "And Informe = 'Compras_Asistente' And Modalidad = '" & _Modalidad_Estudio & "'", , , , True)
         _Rdb_RotMeses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor",
                                                                     "Funcionario = '" & FUNCIONARIO & "'" & Space(1) &
                                                                     "And Campo = 'Rdb_RotMeses'" & Space(1) &
-                                                                    "And Informe = 'Compras_Asistente' And Modalidad = '" & Modalidad & "'", , , , True)
+                                                                    "And Informe = 'Compras_Asistente' And Modalidad = '" & _Modalidad_Estudio & "'", , , , True)
 
         _Rdb_RotDias = False
         _Rdb_RotMeses = True
@@ -419,12 +423,11 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     Private Sub Frm_01_AsisCompra_Resultados_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
 
-        Sb_Parametros_Informe_Sql(True)
-
-        If Fr_Alerta_Stock.Visible Then
-
-            Fr_Alerta_Stock.Close()
-
+        If Not Accion_Automatica Then
+            Sb_Parametros_Informe_Sql(True)
+            If Fr_Alerta_Stock.Visible Then
+                Fr_Alerta_Stock.Close()
+            End If
         End If
 
     End Sub
@@ -1814,7 +1817,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, Modalidad, "OCC", True)
+        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, _Modalidad_Estudio, "OCC", True)
         Dim _NroLineasXpag As Integer = _RowFormato.Item("NroLineasXpag")
 
         Dim _Largo_Variable As Boolean = _RowFormato.Item("Largo_Variable")
@@ -4488,8 +4491,8 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         If (_RowProveedor Is Nothing) Then
 
-            _Koen = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Compras_Asistente' And Campo = 'Koen' And Funcionario = '" & FUNCIONARIO & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'")
-            _Suen = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Compras_Asistente' And Campo = 'Suen' And Funcionario = '" & FUNCIONARIO & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'")
+            _Koen = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Compras_Asistente' And Campo = 'Koen' And Funcionario = '" & FUNCIONARIO & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & _Modalidad_Estudio & "'")
+            _Suen = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Compras_Asistente' And Campo = 'Suen' And Funcionario = '" & FUNCIONARIO & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & _Modalidad_Estudio & "'")
 
             Fm_Hijo.Txt_Proveedor.Text = String.Empty
             _RowProveedor = Fx_Traer_Datos_Entidad(_Koen, _Suen)
@@ -4614,12 +4617,12 @@ Public Class Frm_01_Asis_Compra_Resultados
         'If Not _Eliminar_Todo Then
         Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda 
                             Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente' 
-                            And Filtro = 'Bodegas_Stock' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
+                            And Filtro = 'Bodegas_Stock' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & _Modalidad_Estudio & "'"
         _TblBodCompra = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda 
                            Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente' 
-                           And Filtro = 'Bodegas_Rotacion_Vta'  And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
+                           And Filtro = 'Bodegas_Rotacion_Vta'  And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & _Modalidad_Estudio & "'"
         _TblBodVenta = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         '   Calculo para saber cuanto comprar S.V.R en Mediana
@@ -5007,7 +5010,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     Private Sub Btn_Crear_Orden_Asistente_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Crear_Orden_Asistente.Click
 
-        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, Modalidad, "OCC", True)
+        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, _Modalidad_Estudio, "OCC", True)
 
         If Not (_RowFormato Is Nothing) Then
 
@@ -6628,14 +6631,6 @@ Public Class Frm_01_Asis_Compra_Resultados
         Dim _Bod_Solicita As String
         Dim _Tbl_Productos As DataTable
 
-        'Dim _Ud As Integer
-
-        'If Rdb_Ud1_Compra.Checked Then
-        '    _Ud = 1
-        'Else
-        '    _Ud = 2
-        'End If
-
         If _TblBodCompra.Rows.Count = 1 Then
 
             _Bod_Solicita = _TblBodCompra.Rows(0).Item("Codigo")
@@ -6688,7 +6683,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
             Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                            "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
-                           "And Filtro = 'Bodegas_Reabastecen' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
+                           "And Filtro = 'Bodegas_Reabastecen' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & _Modalidad_Estudio & "'"
             Dim _TblBodReabastecen As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
 
@@ -6697,7 +6692,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
                 _TblBodReabastecen = _Filtrar.Pro_Tbl_Filtro
 
-                _Sql.Sb_Actualizar_Filtro_Tmp(_TblBodReabastecen, "Compras_Asistente", "Bodegas_Reabastecen")
+                _Sql.Sb_Actualizar_Filtro_Tmp(_TblBodReabastecen, "Compras_Asistente", "Bodegas_Reabastecen", _Modalidad_Estudio)
 
                 Dim Fm_Espera As New Frm_Form_Esperar
                 Fm_Espera.Pro_Texto = "Haciendo analisis en las bodegas. Por favor espere..."
@@ -7118,12 +7113,6 @@ Public Class Frm_01_Asis_Compra_Resultados
 
                                         Dim _Row_NVI As DataRow = Fx_Crear_NVI_Manual(_Tbl_ProductosSol, _Suc_Recep, _Bod_Recep, _Fecha_Emision, _Ud, _TblPaso)
 
-                                        'Fm_Espera.Close()
-
-                                        'If Not IsNothing(_Row_NVI) Then
-
-                                        '    MessageBoxEx.Show(Me, "NVI:" & _Row_NVI.Item("NUDO"), "NVI creada con existo", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
                                         Dim _Ids As String = Generar_Filtro_IN(_Tbl_ProductosSol, "", "Id", True, False, "")
 
                                         If Not IsNothing(_Row_NVI) Then
@@ -7390,6 +7379,113 @@ Public Class Frm_01_Asis_Compra_Resultados
                 End If
 
             End If
+
+        End If
+
+    End Function
+
+    Function Fx_Crear_NVI_Auto(_Tbl_Productos As DataTable,
+                               _Suc_Destino As String,
+                               _Bod_Destino As String,
+                               _Fecha_Emision As Date,
+                               _Ud As Integer,
+                               _TblPaso As String) As GeneraOccAuto.Doc_Auto
+
+        Dim _Nvi_Auto As New GeneraOccAuto.Doc_Auto
+
+        Consulta_sql = "Select * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+        Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Koen = _Row_Configp.Item("RUT")
+
+        Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Koen & "' And SUEN = '" & _Suc_Destino & "'"
+        Dim _Row_Entidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Lista = ModListaPrecioCosto
+
+        Dim _Tido = "NVI"
+
+        Dim _Emp_Pedir As String = _Tbl_Productos.Rows(0).Item("Empresa")
+        Dim _Suc_Pedir As String = _Tbl_Productos.Rows(0).Item("Sucursal")
+        Dim _Bod_Pedir As String = _Tbl_Productos.Rows(0).Item("Bodega")
+
+        'Dim _Lista As String = _Global_Row_Configuracion_General.Item("Lista_Precios_Proveedores")
+        Dim _Filtro_Productos As String = Generar_Filtro_IN(_Tbl_Productos, "", "Codigo", False, False, "'")
+
+        Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER
+
+                        Select Top 20 '" & FUNCIONARIO & "' As KOFULIDO,Tb.Codigo As KOPRCT,Tb.Descripcion As NOKOPR,
+                        '' As Descripcion,'' As CodAlternativo,'" & _Lista & "' As KOLTPR,UD01PR As UD1,UD02PR As UD2,
+                        Isnull(Mpm.PM,1) As CostoUd1,Isnull(Mpm.PM,1) * Mp.RLUD As CostoUd2,0 As Precio, Mp.RLUD As Rtu,Pedir As Cantidad,
+                        0 As Desc1,0 As Desc2,0 As Desc3,0 As Desc4,0 As Desc5,0 As DescSuma,0 As PRCT,'' As TICT,TIPR,0 As PODTGLLI," & Ud & " as UDTRPR,
+                        0 As POTENCIA,'' As KOFUAULIDO,'' As KOOPLIDO,
+                        0 As IDMAEEDO,0 As IDMAEDDO,'" & _Emp_Pedir & "' As EMPRESA,'" & _Suc_Pedir & "' As SULIDO,'" & _Bod_Pedir & "' As BOSULIDO,'' As ENDO,'' As SUENDO,GetDate() As FEEMLI,
+                        '' As TIDO,'' As NUDO,'' As NULIDO,0 As CantUd1_Dori,0 As CantUd2_Dori,'' As OBSERVA,
+                        0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,
+						0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta
+
+                        From  " & _TblPaso & " Tb
+
+                        Inner Join MAEPR Mp On Mp.KOPR = Tb.Codigo
+                            Left Join MAEPREM Mpm On Mpm.KOPR = Mp.KOPR And Mpm.EMPRESA = '" & _Emp_Pedir & "'
+                                 Where Mp.KOPR In " & _Filtro_Productos & "
+                        
+                        Select * From MAEIMLI Where 1 < 0  
+                        Select * From MAEDTLI Where 1 < 0 
+                        Select 'Documento generado desde Asistente de compras BakApp' As OBDO"
+
+        Dim _Ds_New_Documento As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+
+        Dim _TblDetalle As DataTable = _Ds_New_Documento.Tables(1)
+
+        If _TblDetalle.Rows.Count Then
+
+            Me.Enabled = False
+
+            Dim _New_Idmaeedo As Integer
+
+            Dim Fm_Espera As New Frm_Form_Esperar
+            Fm_Espera.Pro_Texto = "Armando NVI (Orden de entrega interna)" & vbCrLf & "por favor espere..."
+            Fm_Espera.BarraCircular.IsRunning = True
+            Fm_Espera.Show(Me)
+
+            Dim Fm_Post As New Frm_Formulario_Documento(_Tido,
+                                                        csGlobales.Enum_Tipo_Documento.Nota_Venta_Interna,
+                                                        False, True, True)
+
+            Fm_Post.Pro_Agrupar_Reemplazos = Chk_Traer_Productos_De_Reemplazo.Checked
+            Fm_Post.Pro_RowEntidad = _Row_Entidad
+            Fm_Post.Pro_Lista_de_precios_de_proveedores = Rd_Costo_Lista_Proveedor.Checked
+            Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(Me, _Ds_New_Documento, True, False, _Fecha_Emision, False, True)
+
+            Fm_Post.MinimizeBox = False
+            Fm_Post.Pro_Bodega_Destino = _Bod_Destino
+
+            Fm_Espera.Close()
+            Fm_Espera.Dispose()
+
+            Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento)
+            _New_Idmaeedo = Fm_Post.Pro_Idmaeedo
+
+            Fm_Post.Dispose()
+
+            Me.Enabled = True
+
+            If CBool(_New_Idmaeedo) Then
+
+                If CBool(_New_Idmaeedo) Then
+
+                    _Nvi_Auto.Idmaeedo = _New_Idmaeedo
+                    _Nvi_Auto.Email = Auto_CorreoCc
+                    _Nvi_Auto.Tido = "NVI"
+                    _Nvi_Auto.Nudo = _Sql.Fx_Trae_Dato("MAEEDO", "NUDO", "IDMAEEDO = " & _New_Idmaeedo)
+                    _Nvi_Auto.Feemdo = _Sql.Fx_Trae_Dato("MAEEDO", "FEEMDO", "IDMAEEDO = " & _New_Idmaeedo)
+
+                End If
+
+            End If
+
+            Return _Nvi_Auto
 
         End If
 
@@ -7971,7 +8067,7 @@ Drop Table #Paso"
 
             Dim _Tbl_Proveedores As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-            Dim _Generar_OCC As New GeneraOccAuto.Generar_OCC
+            Dim _Generar_OCC As New GeneraOccAuto.Generar_Doc_Auto
 
             For Each _Fila As DataRow In _Tbl_Proveedores.Rows
 
@@ -7983,10 +8079,10 @@ Drop Table #Paso"
 
             Next
 
-            For Each _Fl As GeneraOccAuto.OCC_Auto In _Generar_OCC.Occ_Auto
+            For Each _Fl As GeneraOccAuto.Doc_Auto In _Generar_OCC.Doc_Auto
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_AcpAuto (NombreEquipo,Modalidad,Idmaeedo,Tido,Nudo,FechaEmision,Informacion,ErrorGrabar) Values " &
-                               "('" & _NombreEquipo & "','" & Modalidad & "'," & _Fl.Idmaeedo & ",'" & _Fl.Tido & "','" & _Fl.Nudo & "'" &
+                               "('" & _NombreEquipo & "','" & _Modalidad_Estudio & "'," & _Fl.Idmaeedo & ",'" & _Fl.Tido & "','" & _Fl.Nudo & "'" &
                                ",'" & Format(_Fl.Feemdo, "yyyyMMdd") & "','" & NuloPorNro(_Fl.MensajeError, "") & "'," & Convert.ToInt32(_Fl.ErrorGrabar) & ")"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
@@ -8013,6 +8109,47 @@ Drop Table #Paso"
             Chk_Quitare_Sospechosos_Stock.Checked = True
 
             Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
+
+        End If
+
+        If Auto_GenerarAutomaticamenteNVI Then
+
+            Call BtnProceso_Prov_Auto_Click(Nothing, Nothing)
+
+            BtnProceso_Prov_Auto.Enabled = False
+
+            Chk_Restar_Stok_Bodega.Checked = True
+            Chk_Quitar_Bloqueados_Compra.Checked = True
+            Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = True
+            Chk_Mostrar_Solo_Productos_A_Comprar.Checked = True
+            Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = True
+            Chk_Quitar_Comprados.Checked = True
+            Chk_Mostrar_Solo_Stock_Critico.Checked = True
+            Chk_Quitar_Ventas_Calzadas.Checked = True
+            Chk_Quitare_Sospechosos_Stock.Checked = True
+
+
+            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
+
+            Dim _Generar_NVI As New GeneraOccAuto.Generar_Doc_Auto
+
+            Sb_Estudio_NVI_Auto(_Generar_NVI)
+
+            For Each _Fl As GeneraOccAuto.Doc_Auto In _Generar_NVI.Doc_Auto
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_AcpAuto (NombreEquipo,Modalidad,Idmaeedo,Tido,Nudo,FechaEmision,Informacion,ErrorGrabar) Values " &
+                               "('" & _NombreEquipo & "','" & _Modalidad_Estudio & "'," & _Fl.Idmaeedo & ",'" & _Fl.Tido & "','" & _Fl.Nudo & "'" &
+                               ",'" & Format(_Fl.Feemdo, "yyyyMMdd") & "','" & NuloPorNro(_Fl.MensajeError, "") & "'," & Convert.ToInt32(_Fl.ErrorGrabar) & ")"
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                _Generar_NVI.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, _Fl.Email, Auto_CorreoCc, Auto_Id_Correo, Auto_NombreFormato_PDF)
+
+                MessageBoxEx.Show(Me, "Tido: " & _Fl.Tido & "-" & _Fl.Nudo & vbCrLf &
+                                  "Email: " & _Fl.Email, "NVI Generada", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Next
+
+            Me.Close()
 
         End If
 
@@ -8045,16 +8182,16 @@ Drop Table #Paso"
         Dim _Id = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
                                                  "Valor",
                                                  "Informe = 'Compras_Asistente' And Campo = 'Txt_DbExt_Nombre_Conexion' And NombreEquipo = '" & _NombreEquipo & "' " &
-                                                 "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad & "'")
+                                                 "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & _Modalidad_Estudio & "'")
 
         _CodProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
                                                  "Valor",
                                                  "Informe = 'Compras_Asistente' And Campo = 'Koen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
-                                                 "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad & "'")
+                                                 "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & _Modalidad_Estudio & "'")
         _CodSucProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
                                                     "Valor",
                                                     "Informe = 'Compras_Asistente' And Campo = 'Suen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
-                                                    "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad & "'")
+                                                    "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & _Modalidad_Estudio & "'")
 
         Consulta_sql = "Select * From MAEEN Where KOEN = '" & _CodProveedor_Pstar & "' And SUEN = '" & _CodSucProveedor_Pstar & "'"
         _RowProveedor = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -8118,7 +8255,7 @@ Drop Table #Paso"
         End If
     End Sub
 
-    Function Sb_Genarar_OCC_Automaticas_Por_Proveedor(_CodEntidad As String, _SucEntidad As String, ByRef _Generar_OCC As GeneraOccAuto.Generar_OCC)
+    Function Sb_Genarar_OCC_Automaticas_Por_Proveedor(_CodEntidad As String, _SucEntidad As String, ByRef _Generar_OCC As GeneraOccAuto.Generar_Doc_Auto)
 
         _RowProveedor = Fx_Traer_Datos_Entidad(_CodEntidad, _SucEntidad)
 
@@ -8131,13 +8268,13 @@ Drop Table #Paso"
 
         '_Generar_OCC.OccGeneradas = True
 
-        Dim _Occ_Auto As New GeneraOccAuto.OCC_Auto
+        Dim _Occ_Auto As New GeneraOccAuto.Doc_Auto
 
         If CBool(Fm_Hijo.Grilla.RowCount) Then
 
             _Occ_Auto = Fx_Crear_OCC_Auto()
 
-            _Generar_OCC.Occ_Auto.Add(_Occ_Auto)
+            _Generar_OCC.Doc_Auto.Add(_Occ_Auto)
 
             Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
 
@@ -8149,9 +8286,9 @@ Drop Table #Paso"
 
     End Function
 
-    Function Fx_Crear_OCC_Auto() As GeneraOccAuto.OCC_Auto
+    Function Fx_Crear_OCC_Auto() As GeneraOccAuto.Doc_Auto
 
-        Dim _Occ_Auto As New GeneraOccAuto.OCC_Auto
+        Dim _Occ_Auto As New GeneraOccAuto.Doc_Auto
 
         Dim _Endo, _Suendo As String
         Dim _Endofi, _Suendofi As String
@@ -8267,7 +8404,7 @@ Drop Table #Paso"
 
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, Modalidad, "OCC", True)
+        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, _Modalidad_Estudio, "OCC", True)
         Dim _NroLineasXpag As Integer = _RowFormato.Item("NroLineasXpag")
 
         Dim _Largo_Variable As Boolean = _RowFormato.Item("Largo_Variable")
@@ -8485,15 +8622,581 @@ Drop Table #Paso"
 
     End Function
 
+    Sub Sb_Estudio_NVI_Auto(ByRef _Generar_NVI As GeneraOccAuto.Generar_Doc_Auto)
+
+        Dim _Bod_Solicita As String
+        Dim _Tbl_Productos As DataTable
+
+        If _TblBodCompra.Rows.Count = 1 Then
+
+            _Bod_Solicita = _TblBodCompra.Rows(0).Item("Codigo")
+
+            Dim _Emp_Recep = Mid(_Bod_Solicita, 1, 2)
+            Dim _Suc_Recep = Mid(_Bod_Solicita, 3, 3)
+            Dim _Bod_Recep = Mid(_Bod_Solicita, 6, 3)
+
+            Dim _Sql_Filtro_Condicion_Extra = "And KOBO <> '" & _Bod_Recep & "'"
+
+            Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+            Dim _TblPaso As String = "Tbl_PasoSolBod" & FUNCIONARIO.Trim
+
+            _Sql.Sb_Eliminar_Tabla_De_Paso(_TblPaso)
+
+            Consulta_sql = "CREATE TABLE [dbo].[" & _TblPaso & "](
+                         [Id]					[int] IDENTITY(1,1) NOT NULL,
+                         [Empresa]				[varchar](2)        NOT NULL DEFAULT (''),
+                         [Sucursal]				[varchar](3)        NOT NULL DEFAULT (''),
+                         [Bodega]				[varchar](3)        NOT NULL DEFAULT (''),
+                         [Codigo]				[char](13)          NOT NULL DEFAULT (''),
+                         [Descripcion]			[varchar](50)       NOT NULL DEFAULT (''),
+                         [Codigo_Nodo]			[int]               NOT NULL DEFAULT (0),
+                         [Costo]	            [float]             NOT NULL DEFAULT (0),
+                         [Stock_Fisico_Madre]	[float]             NOT NULL DEFAULT (0),
+                         [Stock_Fisico_Prod]	[float]             NOT NULL DEFAULT (0),
+                         [Stock_Disponible]		[float]             NOT NULL DEFAULT (0),
+                         [Stock_CriticoUd1_Rd]	[float]             NOT NULL DEFAULT (0),
+                         [CantComprar]			[float]             NOT NULL DEFAULT (0),
+                         [TStock]				[float]             NOT NULL DEFAULT (0),
+                         [RotDiariaUd1]			[float]             NOT NULL DEFAULT (0),
+                         [RotMensualUd1]		[float]             NOT NULL DEFAULT (0),
+                         [Dias]					[int]               NOT NULL DEFAULT (0),
+                         [Solicitar]			[float]             NOT NULL DEFAULT (0),
+                         [Pedir]				[float]             NOT NULL DEFAULT (0),
+                         [Pedir_Hnos]			[float]             NOT NULL DEFAULT (0),
+                         [Observacion]			[varchar](50)       NOT NULL DEFAULT (''),
+                         [NVI]       			[varchar](10)       NOT NULL DEFAULT (''),
+                         [Idmaeedo]     		[int]               NOT NULL DEFAULT (0),
+                         [Ubicacion]    		[varchar](20)       NOT NULL DEFAULT (''),
+                         [NVI_Pendientes]     	[varchar](1000)     NOT NULL DEFAULT (''),
+                         [Fecha_Ult_Venta]      [Datetime],
+                            ) ON [PRIMARY]"
+
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
+                           "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
+                           "And Filtro = 'Bodegas_Reabastecen' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & _Modalidad_Estudio & "'"
+            Dim _TblBodReabastecen As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+
+            If CBool(_TblBodReabastecen.Rows.Count) Then
+
+                _Sql.Sb_Actualizar_Filtro_Tmp(_TblBodReabastecen, "Compras_Asistente", "Bodegas_Reabastecen", _Modalidad_Estudio)
+
+                Dim Fm_Espera As New Frm_Form_Esperar
+                Fm_Espera.Pro_Texto = "Haciendo analisis en las bodegas internas. Por favor espere..."
+                Fm_Espera.BarraCircular.IsRunning = True
+                Fm_Espera.Show(Me)
+
+                Try
+                    Me.Enabled = False
+
+                    For Each _FlBodegas As DataRow In _TblBodReabastecen.Rows
+
+                        Dim _Bod_Codigo = _FlBodegas.Item("Codigo")
+                        Dim _Bod_Descripcion = _FlBodegas.Item("Descripcion")
+
+                        Dim _Emp = Trim(Mid(_Bod_Codigo, 1, 2))
+                        Dim _Suc = Trim(Mid(_Bod_Codigo, 3, 3))
+                        Dim _Bod = Trim(Mid(_Bod_Codigo, 6, 3))
+
+                        Fx_Productos_A_Solicitar_Otras_Bodegas(_Emp, _Suc, _Bod, _TblPaso)
+
+                    Next
+
+                    Consulta_sql = "Select * Into #Paso1 From " & _TblPaso & " Z1 Where Solicitar = CantComprar And (Select Count(*) From " & _TblPaso & " Z2 Where Z1.Codigo = Z2.Codigo) > 1 Order By Codigo_Nodo
+                                    Select * Into #Paso2 From " & _TblPaso & " Z1 Where Solicitar < CantComprar And (Select Count(*) From " & _TblPaso & " Z2 Where Z1.Codigo = Z2.Codigo) > 1 And Codigo In (Select Codigo From #Paso1)
+
+                                    Delete " & _TblPaso & " Where Id In (Select Id From #Paso2)
+                                    Drop Table #Paso1"
+
+                    _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                    Consulta_sql = "Select Distinct Empresa,Sucursal,Bodega From " & _TblPaso & " Z1 Where (Select Count(*) From " & _TblPaso & " Z2 Where Z1.Codigo = Z2.Codigo) > 1"
+                    Dim _TblProdAmbasBodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                    If CBool(_TblProdAmbasBodegas.Rows.Count) Then
+
+                        For Each _FlBodegas As DataRow In _TblProdAmbasBodegas.Rows
+
+                            Dim _Emp = _FlBodegas.Item("Empresa")
+                            Dim _Suc = _FlBodegas.Item("Sucursal")
+                            Dim _Bod = _FlBodegas.Item("Bodega")
+
+                            Consulta_sql = "Delete " & _TblPaso & "
+                                            Where Id In (Select Id From " & _TblPaso & " Z1  Where Empresa = '" & _Emp & "' And Sucursal = '" & _Suc & "' And Bodega = '" & _Bod & "' And (Select Count(*) From " & _TblPaso & " Z2 Where Z1.Codigo = Z2.Codigo) > 1) "
+                            _Sql.Ej_consulta_IDU(Consulta_sql)
+                        Next
+
+                    End If
+
+                    Fm_Espera.Close()
+
+                    Consulta_sql = "Select * From " & _TblPaso
+                    _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                    If Not CBool(_Tbl_Productos.Rows.Count) Then
+                        MessageBoxEx.Show(Me, "No se encontraron productos en otras bodegas", "Reabastecimiento entre bodegas",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        Return
+                    End If
+
+                    If CBool(_Tbl_Productos.Rows.Count) Then
+
+                        Dim _Filtro_Codigos_Madre = Generar_Filtro_IN(_Tbl_Productos, "", "Codigo_Nodo", False, False, "")
+                        Dim _Filtro_Pro As String = Generar_Filtro_IN(_Tbl_Productos, "", "Codigo", False, False, "'")
+
+                        Consulta_sql = "
+                                Select Codigo 
+                                Into #Paso
+                                From " & _Global_BaseBk & "Zw_Prod_Asociacion 
+                                Where Codigo_Nodo In " & _Filtro_Codigos_Madre & " And Para_filtro = 1
+
+                                Insert Into #Paso (Codigo)
+                                Select KOPR From MAEPR
+                                Where KOPR In " & _Filtro_Pro & "
+
+                                Select KOPR As Codigo,'',NOKOPR,UD01PR,UD02PR,RLUD,CLALIBPR,RUPR,MRPR,ZONAPR,FMPR,PFPR,HFPR,BLOQUEAPR,ATPR
+                                FROM MAEPR
+                                Where KOPR In (Select Distinct Codigo From #Paso)
+
+                                Drop Table #Paso"
+
+                        Dim _TblProductos_Con_Reemplazo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                        Dim _Filtro_Productos As String = Generar_Filtro_IN(_TblProductos_Con_Reemplazo, "", "Codigo", False, False, "'")
+
+                        Dim Fm2 As New Frm_Consolidacion_Stock_PP(_Filtro_Productos)
+                        Fm2.Pro_Ejecutar_Automaticamente = True
+                        Fm2.ShowDialog(Me)
+                        Fm2.Dispose()
+
+                    End If
+
+                    Fm_Espera = New Frm_Form_Esperar
+                    Fm_Espera.Pro_Texto = "Haciendo analisis en las bodegas. Por favor espere..."
+                    Fm_Espera.BarraCircular.IsRunning = True
+                    Fm_Espera.Show(Me)
+
+                    Dim _Tbl_Productos_Copy As DataTable = _Tbl_Productos.Copy()
+
+                    ' Hay que ir incrementando e ir poniendo los productos hermanos para pedir, se deben pedir los que tengan stock suficiente...
+
+                    For Each _Fila As DataRow In _Tbl_Productos_Copy.Rows
+
+                        Dim _Emp_Reab As String = _Fila.Item("Empresa")
+                        Dim _Suc_Reab As String = _Fila.Item("Sucursal")
+                        Dim _Bod_Reab As String = _Fila.Item("Bodega")
+                        Dim _Codigo As String = _Fila.Item("Codigo")
+                        Dim _Codigo_Nodo As Integer = _Fila.Item("Codigo_Nodo")
+                        Dim _Stock_Fisico_Madre As Double = _Fila.Item("Stock_Fisico_Madre")
+                        Dim _Stock_Fisico_Prod As Double = _Fila.Item("Stock_Fisico_Prod")
+                        Dim _Stock_Disponible As Double = Fx_Stock_Disponible("FCV", ModEmpresa, _Suc_Reab, _Bod_Reab, _Codigo, _Ud, "STFI" & Ud)
+
+                        Dim _Solicitar As Double = _Fila.Item("Solicitar")
+                        Dim _Pedir As Double = _Fila.Item("Pedir")
+                        Dim _Pedir_Hnos As Double = _Fila.Item("Pedir_Hnos")
+
+                        Dim _Cant_Solicitada As Double = 0
+                        Dim _Saldo As Double = _Pedir_Hnos
+
+                        Consulta_sql = "Update " & _TblPaso & " Set Stock_Disponible = " & De_Num_a_Tx_01(_Stock_Disponible, False, 5) & " 
+                                        Where Empresa = '" & _Emp_Reab & "' And Sucursal = '" & _Suc_Reab & "' And Bodega = '" & _Bod_Reab & "' And Codigo = '" & _Codigo & "'"
+                        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                        If CBool(_Pedir_Hnos) Then
+
+                            Consulta_sql = "Select Mst.*,Mp.NOKOPR,Isnull(Mpe.PM,1) As PM 
+                                                From MAEST Mst
+                                                Left Join MAEPR Mp On Mp.KOPR = Mst.KOPR
+                                                Left Join MAEPREM Mpe On Mpe.EMPRESA = '" & _Emp_Reab & "' And Mpe.KOPR = Mp.KOPR
+                                            Where Mst.EMPRESA = '" & _Emp_Reab & "' And KOSU = '" & _Suc_Reab & "' And KOBO = '" & _Bod_Reab & "' 
+                                            And Mst.KOPR In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion " &
+                                            "Where Codigo_Nodo = " & _Codigo_Nodo & " And Para_filtro = 1) And Mst.KOPR <> '" & _Codigo & "'
+                                        Order By Mst.STFI1 Desc"
+                            Dim _Tbl_Hnos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                            For Each _Fila_H As DataRow In _Tbl_Hnos.Rows
+
+                                Dim _Kopr As String = _Fila_H.Item("KOPR")
+                                Dim _Nokopr As String = _Fila_H.Item("NOKOPR").ToString.Trim
+                                Dim _Stfi As Double = _Fila_H.Item("STFI" & Ud)
+                                _Stock_Disponible = Fx_Stock_Disponible("FCV", ModEmpresa, _Suc_Reab, _Bod_Reab, _Kopr, _Ud, "STFI" & Ud)
+                                Dim _Costo As Double = _Fila_H.Item("PM")
+                                Dim _Salir = False
+
+                                'If _Kopr = "0928341001JPN" Then
+                                '    Dim _as = "d"
+                                'End If
+
+                                If CBool(_Stock_Disponible) Then
+
+                                    If _Stock_Disponible >= _Saldo Then
+                                        _Pedir = _Saldo
+                                        _Salir = True
+                                    Else
+                                        _Pedir = _Stock_Disponible
+                                        _Saldo -= _Pedir
+                                    End If
+
+                                    Dim _Observacion As String = "Se pide por el producto (" & _Codigo.ToString.Trim & ")"
+
+                                    Consulta_sql = "Insert Into " & _TblPaso & " (Empresa,Sucursal,Bodega,Codigo,Descripcion,Codigo_Nodo," &
+                                                "Stock_Fisico_Madre,Stock_Fisico_Prod,Stock_Disponible,Solicitar,Pedir,Pedir_Hnos,Costo,Observacion,NVI,Idmaeedo,Ubicacion) Values " &
+                                                "('" & _Emp_Reab & "','" & _Suc_Reab & "','" & _Bod_Reab & "','" & _Kopr & "','" & _Nokopr &
+                                                "'," & _Codigo_Nodo &
+                                                "," & De_Num_a_Tx_01(_Stock_Fisico_Madre, False, 5) &
+                                                "," & De_Num_a_Tx_01(_Stfi, False, 5) &
+                                                "," & De_Num_a_Tx_01(_Stock_Disponible, False, 5) &
+                                                "," & De_Num_a_Tx_01(_Solicitar, False, 5) &
+                                                "," & De_Num_a_Tx_01(_Pedir, False, 5) &
+                                                "," & De_Num_a_Tx_01(_Pedir_Hnos, False, 5) &
+                                                "," & De_Num_a_Tx_01(_Costo, False, 5) & ",'" & _Observacion & "','',0,'')"
+                                    _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                                    If _Salir Then
+                                        Exit For
+                                    End If
+
+                                End If
+
+                            Next
+
+                        End If
+
+                    Next
+
+                    Fm_Espera.Close()
+
+                    Consulta_sql = "Select * From " & _TblPaso
+                    _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                    For Each _Fl As DataRow In _Tbl_Productos.Rows
+
+                        Dim _Id As Integer = _Fl.Item("Id")
+                        Dim _Empresa As String = _Fl.Item("Empresa")
+                        Dim _Sucursal As String = _Fl.Item("Sucursal")
+                        Dim _Bodega As String = _Fl.Item("Bodega")
+                        Dim _Codigo As String = _Fl.Item("Codigo")
+                        Dim _Pedir As Double = _Fl.Item("Pedir")
+                        Dim _Obs As String = String.Empty
+
+                        If CBool(_Pedir) Then
+
+                            Consulta_sql = "Select * From MAEDDO 
+                                        Where TIDO = 'NVI' And EMPRESA = '" & _Empresa & "' And SULIDO = '" & _Sucursal &
+                                    "' And BOSULIDO = '" & _Bodega & "' And KOPRCT = '" & _Codigo & "' And ESLIDO = ''"
+                            Dim _TblNviPdtes As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                            Dim _C = 0
+
+                            For Each _FlNvi As DataRow In _TblNviPdtes.Rows
+
+                                _C += 1
+
+                                Dim _Idmaeedo As Integer = _FlNvi.Item("IDMAEEDO")
+                                Dim _Cantidad As Double = _FlNvi.Item("CAPRCO" & Ud) - (_FlNvi.Item("CAPRAD" & Ud) + _FlNvi.Item("CAPREX" & Ud))
+
+                                Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("MAEEDO", "IDMAEEDO = " & _Idmaeedo & " And BODESTI = '" & _Bod_Recep & "'"))
+
+                                If _Reg Then
+
+                                    _Obs = _FlNvi.Item("NUDO") & " - Cant: " & FormatNumber(_Cantidad, 0)
+
+                                End If
+
+                                If _C <> _TblNviPdtes.Rows.Count Then
+                                    _Obs += ", "
+                                End If
+
+                            Next
+
+                            Consulta_sql = "Update " & _TblPaso & " Set NVI_Pendientes = '" & _Obs & "' Where Id = " & _Id
+                            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                        End If
+
+                    Next
+
+                    Consulta_sql = "Update " & _TblPaso & " Set Fecha_Ult_Venta = Isnull((Select Top 1 Fecha_Ult_Venta From " & _Nombre_Tbl_Paso_Informe & " Z2 Where Z1.Codigo_Nodo = Z2.Codigo_Nodo),'19000101')
+                                    From " & _TblPaso & " Z1"
+                    _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                    Consulta_sql = "Select * From " & _TblPaso
+                    _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                    Dim _Reg2 = _Sql.Fx_Cuenta_Registros(_TblPaso, "NVI_Pendientes <> ''")
+
+                    If CBool(_Reg2) Then
+
+                        Consulta_sql = "Update " & _TblPaso & " Set Pedir = 0 Where NVI_Pendientes <> ''"
+                        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+#Region "_Reg2"
+
+                        'Dim Chk_Seguir_No_Quitar As New Command
+                        'Chk_Seguir_No_Quitar.Checked = False
+                        'Chk_Seguir_No_Quitar.Name = "Chk_Seguir_No_Quitar"
+                        'Chk_Seguir_No_Quitar.Text = "Seguir con la gestión, no quitar productos que ya tienen NVI"
+
+                        'Dim Chk_Seguir_Quitar As New Command
+                        'Chk_Seguir_Quitar.Checked = False
+                        'Chk_Seguir_Quitar.Name = "Chk_Seguir_Quitar"
+                        'Chk_Seguir_Quitar.Text = "Seguir con la gestión y quitar productos que ya tienen NVI"
+
+                        'Dim _Opciones1() As Command = {Chk_Seguir_No_Quitar, Chk_Seguir_Quitar}
+
+                        'Dim _Info1 As New TaskDialogInfo("Validación del sistema",
+                        '  eTaskDialogIcon.Shield,
+                        '  "Algunos productos ya tienen NVI",
+                        '  "Existen algunos productos que ya tienen solicitud hacia otras bodegas (NVI)" & Environment.NewLine &
+                        '  "Marque su opción",
+                        '  eTaskDialogButton.Ok + eTaskDialogButton.Cancel _
+                        '  , eTaskDialogBackgroundColor.Red, _Opciones1, Nothing, Nothing, Nothing, Nothing)
+
+                        'Dim _Resultado1 As eTaskDialogResult = TaskDialog.Show(_Info1)
+
+                        'If _Resultado1 = eTaskDialogResult.Ok Then
+
+                        '    If Chk_Seguir_No_Quitar.Checked Or Chk_Seguir_Quitar.Checked Then
+
+                        '        If Chk_Seguir_Quitar.Checked Then
+
+                        '            Consulta_sql = "Update " & _TblPaso & " Set Pedir = 0 Where NVI_Pendientes <> ''"
+                        '            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                        '        End If
+
+                        '        If MessageBoxEx.Show(Me, "¿Desea exportar el resultado a Excel?", "Exportar a excel",
+                        '                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+
+                        '            Consulta_sql = "Select * From " & _TblPaso
+                        '            _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                        '            ExportarTabla_JetExcel_Tabla(_Tbl_Productos, Me, "Prod. con NVI")
+
+                        '        End If
+
+                        '    Else
+
+                        '        MessageBoxEx.Show(Me, "Debe seleccionar una opción", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        '        _Sql.Sb_Eliminar_Tabla_De_Paso(_TblPaso)
+                        '        Return
+
+                        '    End If
+
+                        'Else
+
+                        '    _Sql.Sb_Eliminar_Tabla_De_Paso(_TblPaso)
+                        '    Return
+
+                        'End If
+
+#End Region
+
+                    End If
+
+                    _Reg2 = _Sql.Fx_Cuenta_Registros(_TblPaso, "Pedir > 0")
+
+                    If _Reg2 = 0 Then
+
+                        Consulta_sql = "Select Ddo.IDMAEDDO,Edo.TIDO,Edo.NUDO,Codigo,Codigo_Nodo,Descripcion,CAPRCO" & Ud & " As Cantidad
+                                        From MAEDDO Ddo
+                                            Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
+                                                Inner Join " & _TblPaso & " On Codigo = KOPRCT
+                                        Where Edo.TIDO = 'NVI' And Edo.SUDO = '" & _Suc_Recep & "' AND Edo.BODESTI = '" & _Bod_Recep & "' 
+                                          And Ddo.ESLIDO = '' And NVI_Pendientes <> ''"
+                        _Tbl_Productos_Copy = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                        Consulta_sql = String.Empty
+
+                        For Each _Fila As DataRow In _Tbl_Productos_Copy.Rows
+
+                            Dim _Codigo As String = _Fila.Item("Codigo")
+                            Dim _Codigo_Nodo As String = _Fila.Item("Codigo_Nodo")
+                            Dim _Cantidad As Double = _Fila.Item("Cantidad")
+
+                            If _Codigo_Nodo = 0 Then
+
+                                Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CantComprar = CantComprar - " & De_Num_a_Tx_01(_Cantidad, False, 5) & vbCrLf &
+                                           "Where Codigo = '" & _Codigo & "'"
+                                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                            Else
+
+                                Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CantComprar = CantComprar - " & De_Num_a_Tx_01(_Cantidad, False, 5) & vbCrLf &
+                                               "Where Codigo_Nodo = '" & _Codigo_Nodo & "'"
+                                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                            End If
+
+                        Next
+
+                        MessageBoxEx.Show(Me, "No hay productos que pedir a otras bodegas", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                        Return
+
+                    End If
+
+                    Dim _Fecha_Emision As Date = FechaDelServidor()
+
+                    'Dim Chk_Crear_NVI As New Command
+                    'Chk_Crear_NVI.Checked = False
+                    'Chk_Crear_NVI.Name = "Chk_Crear_NVI"
+                    'Chk_Crear_NVI.Text = "Crear NVI (Generar documento de compromiso interno)"
+
+                    'Dim Chk_Exportar_Excel As New Command
+                    'Chk_Exportar_Excel.Checked = False
+                    'Chk_Exportar_Excel.Name = "Chk_Exportar_Excel"
+                    'Chk_Exportar_Excel.Text = "Exportar el listado a Excel (No generar NVI)"
+
+                    'Dim Chk_Exportar_Excel_Crear_NVI As New Command
+                    'Chk_Exportar_Excel_Crear_NVI.Checked = False
+                    'Chk_Exportar_Excel_Crear_NVI.Name = "Chk_Exportar_Excel_Crear_NVI"
+                    'Chk_Exportar_Excel_Crear_NVI.Text = "Crear NVI y Exportar listado a Excel"
+
+                    'Dim Chk_Quitar_Productos As New Command
+                    'Chk_Quitar_Productos.Checked = False
+                    'Chk_Quitar_Productos.Name = "Chk_Quitar_Productos"
+                    'Chk_Quitar_Productos.Text = "Quitar productos del tratamiento"
+
+                    'Dim _Opciones() As Command = {Chk_Crear_NVI, Chk_Exportar_Excel_Crear_NVI, Chk_Exportar_Excel, Chk_Quitar_Productos}
+
+                    'Dim _Info As New TaskDialogInfo("Validación del sistema",
+                    '      eTaskDialogIcon.ShieldOk,
+                    '      "Productos encontrados en otras bodegas",
+                    '      "Existen varios productos que no es necesario comprarlos sino que se pueden pedir a otras bodegas" & Environment.NewLine &
+                    '      "Marque su opción",
+                    '      eTaskDialogButton.Ok + eTaskDialogButton.Cancel _
+                    '      , eTaskDialogBackgroundColor.Red, _Opciones, Nothing, Nothing, Nothing, Nothing)
+
+                    'Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
+
+                    Dim _Crear_NVI = True
+
+                    Consulta_sql = "Update " & _TblPaso & " Set Ubicacion = (Select DATOSUBIC From TABBOPR Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR = Codigo)"
+                    _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                    If _Crear_NVI Then
+
+                        For Each _FlBodegas As DataRow In _TblBodReabastecen.Rows
+
+                            Dim _Bod_Codigo = _FlBodegas.Item("Codigo")
+                            Dim _Bod_Descripcion = _FlBodegas.Item("Descripcion")
+
+                            Dim _Emp = Trim(Mid(_Bod_Codigo, 1, 2))
+                            Dim _Suc = Trim(Mid(_Bod_Codigo, 3, 3))
+                            Dim _Bod = Trim(Mid(_Bod_Codigo, 6, 3))
+
+                            Dim _Tbl_ProductosSol As DataTable
+                            Dim _Seguir = True
+
+                            Do While _Seguir
+
+                                Consulta_sql = "Select Top 20 * From " & _TblPaso & " 
+                                                    Where NVI = '' And Empresa = '" & _Emp & "' And Sucursal = '" & _Suc & "' And Pedir > 0 Order By Ubicacion"
+                                _Tbl_ProductosSol = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                                _Seguir = CBool(_Tbl_ProductosSol.Rows.Count)
+
+                                If _Seguir Then
+
+                                    Dim _Nvi_Auto As New GeneraOccAuto.Doc_Auto
+
+                                    _Nvi_Auto = Fx_Crear_NVI_Auto(_Tbl_ProductosSol, _Suc_Recep, _Bod_Recep, _Fecha_Emision, _Ud, _TblPaso)
+
+                                    _Generar_NVI.Doc_Auto.Add(_Nvi_Auto)
+
+                                    Dim _Ids As String = Generar_Filtro_IN(_Tbl_ProductosSol, "", "Id", True, False, "")
+
+                                    If CBool(_Nvi_Auto.Idmaeedo) Then
+                                        Consulta_sql = "Update " & _TblPaso & " Set NVI = '" & _Nvi_Auto.Nudo & "',Idmaeedo = " & _Nvi_Auto.Idmaeedo & " Where Id In " & _Ids
+                                        _Sql.Ej_consulta_IDU(Consulta_sql)
+                                    Else
+                                        Consulta_sql = "Update " & _TblPaso & " Set NVI = 'XXXXX',Observacion = 'No se crea NVI, el usuario no la grabo' Where Id In " & _Ids
+                                        _Sql.Ej_consulta_IDU(Consulta_sql)
+                                    End If
+
+                                End If
+
+                            Loop
+
+                        Next
+
+                        Consulta_sql = String.Empty
+
+                        Consulta_sql = "Select KOPRCT As Codigo,CAPRCO" & Ud & " As Cantidad,Codigo_Nodo
+                                            From MAEDDO 
+                                            Left Join " & _TblPaso & " On KOPRCT = Codigo
+                                            Where IDMAEEDO In
+                                            (Select Distinct Idmaeedo From " & _TblPaso & " Where Idmaeedo <> 0)"
+
+                        Dim _Tbl_ProdNVI As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                        Consulta_sql = String.Empty
+
+                        For Each _Fila As DataRow In _Tbl_ProdNVI.Rows
+
+                            Dim _Codigo As String = _Fila.Item("Codigo")
+                            Dim _Codigo_Nodo As String = _Fila.Item("Codigo_Nodo")
+                            Dim _Cantidad As Double = _Fila.Item("Cantidad")
+
+                            If _Codigo_Nodo = 0 Then
+                                Consulta_sql += "Update " & _Nombre_Tbl_Paso_Informe & " Set CantComprar = CantComprar - " & De_Num_a_Tx_01(_Cantidad, False, 5) & vbCrLf &
+                                                    "Where Codigo = '" & _Codigo & "'" & vbCrLf
+                            Else
+                                Consulta_sql += "Update " & _Nombre_Tbl_Paso_Informe & " Set CantComprar = CantComprar - " & De_Num_a_Tx_01(_Cantidad, False, 5) & vbCrLf &
+                                                    "Where Codigo_Nodo = '" & _Codigo_Nodo & "'" & vbCrLf
+                            End If
+
+                        Next
+
+                        If Not String.IsNullOrEmpty(Consulta_sql) Then
+
+                            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+
+                                MessageBoxEx.Show(Me, "Los productos que fueron solicitados con NVI se quitaron las cantidades de esta solicitud" & vbCrLf & vbCrLf &
+                                                  _Tbl_ProdNVI.Rows.Count & " registro(s) encontrado(s) en la(s) bodega(s) ",
+                                                 "Restar stock de compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                                Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
+
+                            End If
+
+                        End If
+
+                    End If
+
+                    _Sql.Sb_Eliminar_Tabla_De_Paso(_TblPaso)
+
+                Catch ex As Exception
+                    MessageBoxEx.Show(Me, ex.Message, "Problema al generar el estudio", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Finally
+                    Me.Enabled = True
+                    Fm_Espera.Close()
+                End Try
+
+            End If
+
+        Else
+            MessageBoxEx.Show(Me, "¡Debe tener seleccionada solo una bodega para el estudio de bodegas!", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
+
+
+    End Sub
+
 End Class
 
 
 Namespace GeneraOccAuto
 
-    Public Class Generar_OCC
+    Public Class Generar_Doc_Auto
 
-        Public Property OccGeneradas As Boolean
-        Public Property Occ_Auto As New List(Of OCC_Auto)
+        Public Property DocGenerados As Boolean
+        Public Property Doc_Auto As New List(Of Doc_Auto)
+        Public Property Mensaje As String
 
         Function Fx_Enviar_Notificacion_Correo_Al_Diablito(_Idmaeedo As Integer,
                                                            _Para As String,
@@ -8626,7 +9329,7 @@ Namespace GeneraOccAuto
 
     End Class
 
-    Public Class OCC_Auto
+    Public Class Doc_Auto
 
         Public Property Idmaeedo As Integer
         Public Property Tido As String

@@ -114,7 +114,6 @@ Public Class Modulo_Compras
         Fm.Auto_GenerarAutomaticamenteOCCProveedores = True
         Fm.Modo_OCC = True
         Fm.Tipo_Informe = "Asistente de compras"
-        'Fm.Auto_CorreoCc = "jalfaro@bakapp.cl"
         Fm.ShowDialog(Me)
         Fm.Dispose()
     End Sub
@@ -125,8 +124,18 @@ Public Class Modulo_Compras
         Fm.Auto_GenerarAutomaticamenteOCCProveedorStar = True
         Fm.Modo_OCC = True
         Fm.Tipo_Informe = "Asistente de compras"
-        Fm.Auto_CorreoCc = "jalfaro@bakapp.cl"
         Fm.ShowDialog(Me)
         Fm.Dispose()
     End Sub
+
+    Private Sub ButtonItem3_Click(sender As Object, e As EventArgs) Handles ButtonItem3.Click
+        Dim Fm As New Frm_00_Asis_Compra_Menu(Modalidad)
+        Fm.Accion_Automatica = True
+        Fm.Auto_GenerarAutomaticamenteNVI = True
+        Fm.Modo_NVI = True
+        Fm.Tipo_Informe = "Asistente de compras"
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+    End Sub
+
 End Class
