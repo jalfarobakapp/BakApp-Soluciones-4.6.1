@@ -26,7 +26,7 @@ Public Class SolAsisCompraModos
     End Sub
 
     Private Sub Btn_Modo_OCC_Click(sender As Object, e As EventArgs) Handles Btn_Modo_OCC.Click
-        Dim Fm As New Frm_00_Asis_Compra_Menu
+        Dim Fm As New Frm_00_Asis_Compra_Menu(Modalidad)
         Fm.Tipo_Informe = "Asistente de compras"
         Fm.Modo_OCC = True
         Fm.ShowDialog(Me)
@@ -34,7 +34,7 @@ Public Class SolAsisCompraModos
     End Sub
 
     Private Sub Btn_Modo_NVI_Click(sender As Object, e As EventArgs) Handles Btn_Modo_NVI.Click
-        Dim Fm As New Frm_00_Asis_Compra_Menu
+        Dim Fm As New Frm_00_Asis_Compra_Menu(Modalidad)
         Fm.Tipo_Informe = "Asistente de compras"
         Fm.Modo_NVI = True
         Fm.Modo_OCC = False

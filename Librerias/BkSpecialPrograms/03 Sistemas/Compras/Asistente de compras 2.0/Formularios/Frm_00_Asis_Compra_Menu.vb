@@ -68,6 +68,8 @@ Public Class Frm_00_Asis_Compra_Menu
     Public Property Auto_GenerarAutomaticamenteNVI As Boolean
     Public Property Auto_GenerarAutomaticamenteOCCProveedores As Boolean
     Public Property Auto_CorreoCc As String
+    Public Property Modalidad_Estudio As String
+
     Public Property Modo_OCC As Boolean
         Get
             Return _Modo_OCC
@@ -88,7 +90,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
     'Dim'_LiteSql As Class_SQLite
 
-    Public Sub New()
+    Public Sub New(_Modalidad_Estudio As String)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -96,6 +98,8 @@ Public Class Frm_00_Asis_Compra_Menu
         'Dim _Directorio_Base_LiteSql As String = Application.StartupPath & "\Data\Configuracion_Local\BK_lite.db"
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+
+        Modalidad_Estudio = _Modalidad_Estudio
 
         Sb_Cargar_Combos()
 
@@ -400,7 +404,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
     Sub Sb_Parametros_Informe_Sql(_Actualizar As Boolean)
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Tmp_Prm_Informes Set Modalidad = '" & Modalidad & "'
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Tmp_Prm_Informes Set Modalidad = '" & Modalidad_Estudio & "'
                         Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
                        "And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = ''"
         _Sql.Ej_consulta_IDU(Consulta_sql)
@@ -409,7 +413,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Tmp_Prm_Informes" & vbCrLf &
                            "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
-                           "And Grupo = 'Seleccion_Productos' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
+                           "And Grupo = 'Seleccion_Productos' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad_Estudio & "'"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
             Consulta_sql = "Delete From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
@@ -428,7 +432,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
                 _RowProveedor = Nothing
                 Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Tmp_Prm_Informes" & vbCrLf &
-                               "Where NombreEquipo = '" & _NombreEquipo & "' And Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente' And Campo In ('Koen','Suen') And Modalidad = '" & Modalidad & "'"
+                               "Where NombreEquipo = '" & _NombreEquipo & "' And Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente' And Campo In ('Koen','Suen') And Modalidad = '" & Modalidad_Estudio & "'"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
             End If
@@ -487,9 +491,9 @@ Public Class Frm_00_Asis_Compra_Menu
         If (_RowProveedor Is Nothing) Then
 
             _Koen = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor",
-                                      "Informe = 'Compras_Asistente' And Campo = 'Koen' And NombreEquipo = '" & _NombreEquipo & "' And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad & "'")
+                                      "Informe = 'Compras_Asistente' And Campo = 'Koen' And NombreEquipo = '" & _NombreEquipo & "' And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad_Estudio & "'")
             _Suen = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor",
-                                      "Informe = 'Compras_Asistente' And Campo = 'Suen' And NombreEquipo = '" & _NombreEquipo & "' And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad & "'")
+                                      "Informe = 'Compras_Asistente' And Campo = 'Suen' And NombreEquipo = '" & _NombreEquipo & "' And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad_Estudio & "'")
 
             Txt_Proveedor.Text = String.Empty
             _RowProveedor = Fx_Traer_Datos_Entidad(_Koen, _Suen)
@@ -503,7 +507,7 @@ Public Class Frm_00_Asis_Compra_Menu
                 _Filtro_Productos_Todos = True
 
                 Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Tmp_Prm_Informes" & vbCrLf &
-                               "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente' And Campo In ('Koen','Suen') And Modalidad = '" & Modalidad & "'"
+                               "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente' And Campo In ('Koen','Suen') And Modalidad = '" & Modalidad_Estudio & "'"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
                 _Koen = Trim(_RowProveedor.Item("KOEN"))
@@ -674,12 +678,12 @@ Public Class Frm_00_Asis_Compra_Menu
         _Sql.Sb_Parametro_Informe_Sql(Chk_Rotacion_Con_Ent_Excluidas, "Compras_Asistente",
                                              Chk_Rotacion_Con_Ent_Excluidas.Name, Class_SQLite.Enum_Type._Boolean, Chk_Rotacion_Con_Ent_Excluidas.Checked, _Actualizar)
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda Set Modalidad = '" & Modalidad & "'" & vbCrLf &
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda Set Modalidad = '" & Modalidad_Estudio & "'" & vbCrLf &
                        "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
                        "And Filtro = 'Bodegas_Stock' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = ''"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda Set Modalidad = '" & Modalidad & "'" & vbCrLf &
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda Set Modalidad = '" & Modalidad_Estudio & "'" & vbCrLf &
                        "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
                        "And Filtro = 'Bodegas_Rotacion_Vta' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = ''"
         _Sql.Ej_consulta_IDU(Consulta_sql)
@@ -687,12 +691,12 @@ Public Class Frm_00_Asis_Compra_Menu
         If Not _Actualizar Then
             Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                            "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
-                           "And Filtro = 'Bodegas_Stock' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
+                           "And Filtro = 'Bodegas_Stock' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad_Estudio & "'"
             _TblBodCompra = _Sql.Fx_Get_Tablas(Consulta_sql)
 
             Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                            "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
-                           "And Filtro = 'Bodegas_Rotacion_Vta' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
+                           "And Filtro = 'Bodegas_Rotacion_Vta' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad_Estudio & "'"
             _TblBodVenta = _Sql.Fx_Get_Tablas(Consulta_sql)
         End If
 
@@ -768,9 +772,9 @@ Public Class Frm_00_Asis_Compra_Menu
         If (_RowProveedor_Especial Is Nothing) Then
 
             _Koen_Especial = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor",
-                                      "Informe = 'Compras_Asistente' And Campo = 'Koen_Especial' And NombreEquipo = '" & _NombreEquipo & "' And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad & "'")
+                                      "Informe = 'Compras_Asistente' And Campo = 'Koen_Especial' And NombreEquipo = '" & _NombreEquipo & "' And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad_Estudio & "'")
             _Suen_Especial = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor",
-                                      "Informe = 'Compras_Asistente' And Campo = 'Suen_Especial' And NombreEquipo = '" & _NombreEquipo & "' And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad & "'")
+                                      "Informe = 'Compras_Asistente' And Campo = 'Suen_Especial' And NombreEquipo = '" & _NombreEquipo & "' And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad_Estudio & "'")
 
             Txt_ProvEspecial.Text = String.Empty
             _RowProveedor_Especial = Fx_Traer_Datos_Entidad(_Koen_Especial, _Suen_Especial)
@@ -780,7 +784,7 @@ Public Class Frm_00_Asis_Compra_Menu
         If Not (_RowProveedor_Especial Is Nothing) Then
 
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Tmp_Prm_Informes" & vbCrLf &
-                           "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente' And Campo In ('Koen_Especial','Suen_Especial') And Modalidad = '" & Modalidad & "'"
+                           "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente' And Campo In ('Koen_Especial','Suen_Especial') And Modalidad = '" & Modalidad_Estudio & "'"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
             _Koen_Especial = Trim(_RowProveedor_Especial.Item("KOEN"))
@@ -2131,6 +2135,9 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Auto_GenerarAutomaticamenteOCCProveedores = Auto_GenerarAutomaticamenteOCCProveedores
         Fm.Auto_GenerarAutomaticamenteOCCProveedorStar = Auto_GenerarAutomaticamenteOCCProveedorStar
         Fm.Auto_GenerarAutomaticamenteNVI = Auto_GenerarAutomaticamenteNVI
+        Fm.Auto_CorreoCc = Txt_CorreoCc.Text
+        Fm.Auto_Id_Correo = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Id", "Nombre_Correo = '" & Txt_CtaCorreoEnvioAutomatizado.Text & "'")
+        Fm.Auto_NombreFormato_PDF = Txt_NombreFormato_PDF.Text
 
         Fm.Modo_OCC = Modo_OCC
         Fm.Modo_NVI = _Modo_NVI
