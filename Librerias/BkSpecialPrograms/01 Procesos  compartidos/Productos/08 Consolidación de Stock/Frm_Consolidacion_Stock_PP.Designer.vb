@@ -44,6 +44,7 @@ Partial Class Frm_Consolidacion_Stock_PP
         '
         '
         Me.Progreso_Porc.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Progreso_Porc.FocusCuesEnabled = False
         Me.Progreso_Porc.Location = New System.Drawing.Point(65, 12)
         Me.Progreso_Porc.Name = "Progreso_Porc"
         Me.Progreso_Porc.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
@@ -60,6 +61,7 @@ Partial Class Frm_Consolidacion_Stock_PP
         '
         '
         Me.Progreso_Cont.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Progreso_Cont.FocusCuesEnabled = False
         Me.Progreso_Cont.Location = New System.Drawing.Point(12, 12)
         Me.Progreso_Cont.Name = "Progreso_Cont"
         Me.Progreso_Cont.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
@@ -163,6 +165,7 @@ Partial Class Frm_Consolidacion_Stock_PP
         Me.Chk_Reservar_Ventas_Pendientes_Bakapp.Checked = True
         Me.Chk_Reservar_Ventas_Pendientes_Bakapp.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_Reservar_Ventas_Pendientes_Bakapp.CheckValue = "Y"
+        Me.Chk_Reservar_Ventas_Pendientes_Bakapp.FocusCuesEnabled = False
         Me.Chk_Reservar_Ventas_Pendientes_Bakapp.ForeColor = System.Drawing.Color.Black
         Me.Chk_Reservar_Ventas_Pendientes_Bakapp.Location = New System.Drawing.Point(12, 160)
         Me.Chk_Reservar_Ventas_Pendientes_Bakapp.Name = "Chk_Reservar_Ventas_Pendientes_Bakapp"

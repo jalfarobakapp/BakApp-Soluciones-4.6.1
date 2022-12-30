@@ -109,14 +109,16 @@ Partial Class Frm_Consolidacion_Stock_PP_Selec_Prod
         '
         '
         Me.Rdb_Productos_Todos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Productos_Todos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Productos_Todos.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Productos_Todos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Productos_Todos.Checked = True
         Me.Rdb_Productos_Todos.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Productos_Todos.CheckValue = "Y"
+        Me.Rdb_Productos_Todos.FocusCuesEnabled = False
         Me.Rdb_Productos_Todos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Productos_Todos.Location = New System.Drawing.Point(3, 3)
         Me.Rdb_Productos_Todos.Name = "Rdb_Productos_Todos"
-        Me.Rdb_Productos_Todos.Size = New System.Drawing.Size(92, 22)
+        Me.Rdb_Productos_Todos.Size = New System.Drawing.Size(92, 21)
         Me.Rdb_Productos_Todos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Productos_Todos.TabIndex = 53
         Me.Rdb_Productos_Todos.Text = "Todos"
@@ -127,11 +129,13 @@ Partial Class Frm_Consolidacion_Stock_PP_Selec_Prod
         '
         '
         Me.Rdb_Productos_Con_Movimientos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Productos_Con_Movimientos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Productos_Con_Movimientos.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Productos_Con_Movimientos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Productos_Con_Movimientos.FocusCuesEnabled = False
         Me.Rdb_Productos_Con_Movimientos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Productos_Con_Movimientos.Location = New System.Drawing.Point(3, 31)
         Me.Rdb_Productos_Con_Movimientos.Name = "Rdb_Productos_Con_Movimientos"
-        Me.Rdb_Productos_Con_Movimientos.Size = New System.Drawing.Size(128, 22)
+        Me.Rdb_Productos_Con_Movimientos.Size = New System.Drawing.Size(128, 21)
         Me.Rdb_Productos_Con_Movimientos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Productos_Con_Movimientos.TabIndex = 55
         Me.Rdb_Productos_Con_Movimientos.Text = "Con movimientos"
@@ -142,11 +146,13 @@ Partial Class Frm_Consolidacion_Stock_PP_Selec_Prod
         '
         '
         Me.Rdb_Productos_Seleccionar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Productos_Seleccionar.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Productos_Seleccionar.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Productos_Seleccionar.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Productos_Seleccionar.FocusCuesEnabled = False
         Me.Rdb_Productos_Seleccionar.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Productos_Seleccionar.Location = New System.Drawing.Point(3, 59)
         Me.Rdb_Productos_Seleccionar.Name = "Rdb_Productos_Seleccionar"
-        Me.Rdb_Productos_Seleccionar.Size = New System.Drawing.Size(128, 22)
+        Me.Rdb_Productos_Seleccionar.Size = New System.Drawing.Size(128, 21)
         Me.Rdb_Productos_Seleccionar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Productos_Seleccionar.TabIndex = 56
         Me.Rdb_Productos_Seleccionar.Text = "Seleccionar productos"

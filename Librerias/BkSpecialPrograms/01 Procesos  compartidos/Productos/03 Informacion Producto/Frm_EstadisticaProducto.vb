@@ -2767,7 +2767,7 @@ Public Class Frm_EstadisticaProducto
                            "Where Funcionario = '" & FUNCIONARIO & "' And Informe = '" & _Informe & "'" & Space(1) &
                            "And Grupo = 'Bodegas_Vta' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
             _Sql.Ej_consulta_IDU(Consulta_sql)
-            _Sql.Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Bodegas, _Informe, "Bodegas_Vta")
+            _Sql.Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Bodegas, _Informe, "Bodegas_Vta", Modalidad)
 
         End If
 

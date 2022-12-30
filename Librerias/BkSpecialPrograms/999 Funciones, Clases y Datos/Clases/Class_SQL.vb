@@ -652,7 +652,7 @@ Public Class Class_SQL
 
     End Sub
 
-    Sub Sb_Actualizar_Filtro_Tmp(_Tbl As DataTable, _Informe As String, _Filtro As String)
+    Sub Sb_Actualizar_Filtro_Tmp(_Tbl As DataTable, _Informe As String, _Filtro As String, _Modalidad As String)
 
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
         Dim Consulta_sql As String
@@ -663,7 +663,7 @@ Public Class Class_SQL
 
                 Consulta_sql = "Delete From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                                "Where Funcionario = '" & FUNCIONARIO & "' And Informe = '" & _Informe & "'" & Space(1) &
-                               "And Filtro = '" & _Filtro & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad In ('','" & Modalidad & "')" & vbCrLf
+                               "And Filtro = '" & _Filtro & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad In ('','" & _Modalidad & "')" & vbCrLf
 
                 For Each _Fila As DataRow In _Tbl.Rows
 
@@ -671,8 +671,8 @@ Public Class Class_SQL
                     Dim _Codigo = _Fila.Item("Codigo")
                     Dim _Descripcion = _Fila.Item("Descripcion")
 
-                    Consulta_sql += "INSERT INTO " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda (Funcionario,Informe,Filtro,Chk,Codigo,Descripcion,NombreEquipo,Modalidad) VALUES" & Space(1) &
-                                    "('" & FUNCIONARIO & "','" & _Informe & "','" & _Filtro & "'," & _Chk & ",'" & _Codigo & "','" & _Descripcion & "','" & _NombreEquipo & "','" & Modalidad & "')" & vbCrLf
+                    Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda (Funcionario,Informe,Filtro,Chk,Codigo,Descripcion,NombreEquipo,Modalidad) VALUES" & Space(1) &
+                                    "('" & FUNCIONARIO & "','" & _Informe & "','" & _Filtro & "'," & _Chk & ",'" & _Codigo & "','" & _Descripcion & "','" & _NombreEquipo & "','" & _Modalidad & "')" & vbCrLf
 
                 Next
 

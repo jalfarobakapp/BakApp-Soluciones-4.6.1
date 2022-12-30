@@ -525,6 +525,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Compras\Modulo_Compras.resx">
       <DependentUpon>Modulo_Compras.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Compras\SolAsisCompraModos.resx">
       <DependentUpon>SolAsisCompraModos.vb</DependentUpon>
