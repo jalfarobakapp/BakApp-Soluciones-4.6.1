@@ -1323,11 +1323,25 @@ Public Class Frm_00_Asis_Compra_Menu
 
         If Not _Filtro_Bodegas_Est_Vta_Todas Then
             If IsNothing(_TblBodVenta) Then
-                MessageBoxEx.Show(Me, "Debe seleccionar las bodegas para el estudio de la rotación de venta", "Validación",
+                MessageBoxEx.Show(Me, "Debe seleccionar las bodegas para el estudio de la rotación de venta" & vbCrLf & vbCrLf &
+                                  "Pestaña: Calc.Vta.Promedio" & vbCrLf &
+                                  "Botón: Bodegas estudio", "Validación",
                                   MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
             End If
         End If
+
+        If Not _Filtro_Bodegas_Todas Then
+            If IsNothing(_TblBodCompra) Then
+                MessageBoxEx.Show(Me, "Debe seleccionar las bodegas para abastecer" & vbCrLf & vbCrLf &
+                                  "Pestaña: Excluir / Incluir (Opc. dinámicas)" & vbCrLf &
+                                  "Botón: Bodegas de estudio de stock", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+        End If
+
+
 
         If Chk_DbExt_SincronizarPRBD.Checked And Txt_DbExt_Nombre_Conexion.Tag = 0 Then
             MessageBoxEx.Show(Me, "Faltan los datos de conexión hacia la base de datos externa" & vbCrLf & vbCrLf &
