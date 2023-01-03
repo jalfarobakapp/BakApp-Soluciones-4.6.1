@@ -148,6 +148,9 @@ Public Class Frm_00_Asis_Compra_Menu
             Btn_Imprimir_Maestra.Visible = False
         End If
 
+        _Filtro_Productos_Todos = True
+        Btn_GrabarConfiguracion.Visible = _Modo_ConfAuto
+
     End Sub
 
     Sub Sb_Cargar_Combos()
@@ -1317,6 +1320,28 @@ Public Class Frm_00_Asis_Compra_Menu
             End If
 
         End If
+
+        If Not _Filtro_Bodegas_Est_Vta_Todas Then
+            If IsNothing(_TblBodVenta) Then
+                MessageBoxEx.Show(Me, "Debe seleccionar las bodegas para el estudio de la rotación de venta" & vbCrLf & vbCrLf &
+                                  "Pestaña: Calc.Vta.Promedio" & vbCrLf &
+                                  "Botón: Bodegas estudio", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+        End If
+
+        If Not _Filtro_Bodegas_Todas Then
+            If IsNothing(_TblBodCompra) Then
+                MessageBoxEx.Show(Me, "Debe seleccionar las bodegas para abastecer" & vbCrLf & vbCrLf &
+                                  "Pestaña: Excluir / Incluir (Opc. dinámicas)" & vbCrLf &
+                                  "Botón: Bodegas de estudio de stock", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+        End If
+
+
 
         If Chk_DbExt_SincronizarPRBD.Checked And Txt_DbExt_Nombre_Conexion.Tag = 0 Then
             MessageBoxEx.Show(Me, "Faltan los datos de conexión hacia la base de datos externa" & vbCrLf & vbCrLf &
@@ -3178,8 +3203,9 @@ Public Class Frm_00_Asis_Compra_Menu
 
     Private Sub Btn_GrabarConfiguracion_Click(sender As Object, e As EventArgs) Handles Btn_GrabarConfiguracion.Click
 
+        Me.Enabled = False
         Sb_Parametros_Informe_Sql(True)
-
+        Me.Enabled = True
         MessageBoxEx.Show(Me, "Configuración guardada correctamente", "Guardar configuración", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Me.Close()
 

@@ -31,11 +31,11 @@ Partial Class Modulo_Compras
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnCambiarDeUsuario = New DevComponents.DotNetBar.ButtonItem()
-        Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem3 = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem2 = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Asociar_Prod_Funcionarios = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
-        Me.ButtonItem3 = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -181,17 +181,26 @@ Partial Class Modulo_Compras
         Me.BtnCambiarDeUsuario.Name = "BtnCambiarDeUsuario"
         Me.BtnCambiarDeUsuario.Tooltip = "Cambiar de usuario"
         '
-        'ButtonItem1
+        'ButtonItem3
         '
-        Me.ButtonItem1.ForeColor = System.Drawing.Color.Black
-        Me.ButtonItem1.Name = "ButtonItem1"
-        Me.ButtonItem1.Text = "PRB Proveedores"
+        Me.ButtonItem3.ForeColor = System.Drawing.Color.Black
+        Me.ButtonItem3.Name = "ButtonItem3"
+        Me.ButtonItem3.Text = "NVI Automatica"
+        Me.ButtonItem3.Visible = False
         '
         'ButtonItem2
         '
         Me.ButtonItem2.ForeColor = System.Drawing.Color.Black
         Me.ButtonItem2.Name = "ButtonItem2"
         Me.ButtonItem2.Text = "PRB Proveedor Star"
+        Me.ButtonItem2.Visible = False
+        '
+        'ButtonItem1
+        '
+        Me.ButtonItem1.ForeColor = System.Drawing.Color.Black
+        Me.ButtonItem1.Name = "ButtonItem1"
+        Me.ButtonItem1.Text = "PRB Proveedores"
+        Me.ButtonItem1.Visible = False
         '
         'Btn_Asociar_Prod_Funcionarios
         '
@@ -217,12 +226,6 @@ Partial Class Modulo_Compras
         Me.LabelX1.Size = New System.Drawing.Size(245, 49)
         Me.LabelX1.TabIndex = 29
         Me.LabelX1.Text = "<font color=""#349FCE""><b>COMPRAS</b></font>"
-        '
-        'ButtonItem3
-        '
-        Me.ButtonItem3.ForeColor = System.Drawing.Color.Black
-        Me.ButtonItem3.Name = "ButtonItem3"
-        Me.ButtonItem3.Text = "NVI Automatica"
         '
         'Modulo_Compras
         '
