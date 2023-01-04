@@ -711,7 +711,7 @@ Buscar:
 
             If _Abrir_Seleccionado Then
 
-                If _Tbl_Paso.Rows.Count = 1 Then
+                If _Tbl_Paso.Rows.Count = 1 And Not _Abrir_Cerrar_Documentos_Compromiso Then
 
                     Dim _Idmaeedo As Integer = _Tbl_Paso.Rows(0).Item("IDMAEEDO")
                     Dim _TipoDoc As String = Trim(_Tbl_Paso.Rows(0).Item("TipoDoc"))
