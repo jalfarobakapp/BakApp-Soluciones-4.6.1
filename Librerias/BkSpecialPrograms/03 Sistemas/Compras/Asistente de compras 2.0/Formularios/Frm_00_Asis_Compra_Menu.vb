@@ -1245,9 +1245,23 @@ Public Class Frm_00_Asis_Compra_Menu
             Dim _Suen = _RowProveedor.Item("SUEN")
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Entidades" & vbCrLf &
-                "Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
+                           "Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
             Dim _Row_Entidades As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+            _Tbl_Filtro_Productos = Nothing
+            _Tbl_Filtro_Super_Familias = Nothing
+            _Tbl_Filtro_Marcas = Nothing
+            _Tbl_Filtro_Rubro = Nothing
+            _Tbl_Filtro_Clalibpr = Nothing
+            _Tbl_Filtro_Zonas = Nothing
+
+            _Filtro_Productos_Todos = True
+            _Filtro_Marcas_Todas = True
+            _Filtro_Super_Familias_Todas = True
+            _Filtro_Rubro_Todas = True
+            _Filtro_Clalibpr_Todas = True
+            _Filtro_Zonas_Todas = True
+            _Filtro_Bodegas_Todas = True
 
             If Not IsNothing(_Row_Entidades) Then
 

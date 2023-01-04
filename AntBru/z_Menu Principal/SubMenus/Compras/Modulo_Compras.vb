@@ -31,6 +31,10 @@ Public Class Modulo_Compras
             Btn_Asistente_Compras.Enabled = False
         End If
 
+        ButtonItem1.Visible = (RutEmpresa = "79514800-0")
+        ButtonItem2.Visible = (RutEmpresa = "79514800-0")
+        ButtonItem3.Visible = (RutEmpresa = "79514800-0")
+
     End Sub
 
     Private Sub BtnSalir_Click(sender As System.Object, e As System.EventArgs) Handles BtnSalir.Click

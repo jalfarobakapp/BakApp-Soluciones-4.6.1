@@ -168,6 +168,7 @@
                         Isnull((Select top 1 PPUL02 From MAEPREM Where EMPRESA = '" & _Empresa & "' And KOPR = '" & _Codigo & "'),0) As 'PU02',
                         Isnull((Select top 1 KOPRAL From TABCODAL Where KOEN = '' And KOPR = '" & _Codigo & "'),'') As Codigo_Alternativo,
                         Isnull((Select Top 1 NOKOMR From TABMR Where KOMR = MRPR),'') As Marca,
+                        Cast(0 As Float) As PU01_Neto,Cast(0 As Float) As PU02_Neto,Cast(0 As Float) As PU01_Bruto,Cast(0 As Float) As PU02_Bruto,
                         Mapa.Nombre_Mapa,isnull(Sector.Nombre_Sector,'') As Nombre_Sector,Isnull(Ubic.Descripcion_Ubic,'') As Descripcion_Ubic,
                         Isnull(Ubic.Columna,'') As Columna,Isnull(Ubic.NomColumna,'') As NomColumna,
                         Isnull(Ubic.Fila,'') As Fila,Isnull(Ubic.Alto,0) As Alto,Isnull(Ubic.Ancho,0) As Ancho,Isnull(Ubic.Peso_Max,0) As Peso_Max,

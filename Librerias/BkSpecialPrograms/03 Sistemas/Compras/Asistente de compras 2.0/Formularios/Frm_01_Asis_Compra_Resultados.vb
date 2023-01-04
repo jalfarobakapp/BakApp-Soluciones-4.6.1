@@ -8102,13 +8102,40 @@ Drop Table #Paso"
 
             Call BtnProceso_Prov_Auto_Especial_Click(Nothing, Nothing)
 
-            BtnProceso_Prov_Auto_Especial.Enabled = False
             BtnProceso_Prov_Auto.Enabled = False
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = _Proceso_Automatico_Ejecutado
             Chk_Quitar_Ventas_Calzadas.Checked = True
             Chk_Quitare_Sospechosos_Stock.Checked = True
 
-            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
+            Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = True
+            Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = True
+            Chk_Quitar_Comprados.Checked = True
+            Chk_Mostrar_Solo_Productos_A_Comprar.Checked = True
+
+            Dim _Generar_OCC As New GeneraOccAuto.Generar_Doc_Auto
+
+            Dim _CodEntidad As String = _RowProveedor.Item("KOEN")
+            Dim _SucEntidad As String = _RowProveedor.Item("SUEN")
+            '    Dim _FechaUltCompra As DateTime = _Fila.Item("FechaUltCompra")
+
+            Sb_Genarar_OCC_Automaticas_Por_Proveedor(_CodEntidad, _SucEntidad, _Generar_OCC)
+
+            For Each _Fl As GeneraOccAuto.Doc_Auto In _Generar_OCC.Doc_Auto
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_AcpAuto (NombreEquipo,Modalidad,Idmaeedo,Tido,Nudo,FechaEmision,Informacion,ErrorGrabar) Values " &
+                               "('" & _NombreEquipo & "','" & _Modalidad_Estudio & "'," & _Fl.Idmaeedo & ",'" & _Fl.Tido & "','" & _Fl.Nudo & "'" &
+                               ",'" & Format(_Fl.Feemdo, "yyyyMMdd") & "','" & NuloPorNro(_Fl.MensajeError, "") & "'," & Convert.ToInt32(_Fl.ErrorGrabar) & ")"
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                '_Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, _Fl.Email, Auto_CorreoCc, Auto_Id_Correo, Auto_NombreFormato_PDF)
+                ' 37
+                ' "Tam. Carta"
+                MessageBoxEx.Show(Me, "Tido: " & _Fl.Tido & "-" & _Fl.Nudo & vbCrLf &
+                                  "Email: " & _Fl.Email, "OCC Generada", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Next
+
+            Me.Close()
 
         End If
 
