@@ -463,14 +463,18 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
             Warning_Box_Cupo_Exedido.Text = "<b>  Cliente con cupo</b><i></i>"
         End If
 
-        If Btn_CambCodPago.Visible Then
-            Btn_CambCodPago.Visible = Not _Global_Row_Configuracion_Estacion.Item("Fincred_Usar")
-            Btn_FincredPays.Visible = _Global_Row_Configuracion_Estacion.Item("Fincred_Usar")
-        End If
+        If _RowEntidad.Item("CRTO") = 0 And _RowEntidad.Item("DIPRVE") = 0 Then
 
-        If RevFincred Then
-            Warning_Box_Cupo_Exedido.Image = Imagenes_16x16.Images.Item("warning.png")
-            Warning_Box_Cupo_Exedido.Text = "<b> Cliente con cupo excedido</b><i> Venta sera revisada por FINCRED PAYS </i>"
+            If Btn_CambCodPago.Visible Then
+                Btn_CambCodPago.Visible = Not _Global_Row_Configuracion_Estacion.Item("Fincred_Usar")
+                Btn_FincredPays.Visible = _Global_Row_Configuracion_Estacion.Item("Fincred_Usar")
+            End If
+
+            If RevFincred Then
+                Warning_Box_Cupo_Exedido.Image = Imagenes_16x16.Images.Item("warning.png")
+                Warning_Box_Cupo_Exedido.Text = "<b>  Cliente con cupo excedido</b><i> Venta sera revisada por FINCRED PAYS </i>"
+            End If
+
         End If
 
     End Sub
@@ -717,6 +721,15 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
     End Sub
 
     Private Sub Btn_FincredPays_Click(sender As Object, e As EventArgs) Handles Btn_FincredPays.Click
+
+        Dim _Foen As String = _Sql.Fx_Trae_Dato("MAEEN", "FOEN", "KOEN = '" & _RowEntidad.Item("KOEN") & "' And SUEN = '" & _RowEntidad.Item("SUEN") & "'")
+
+        If String.IsNullOrEmpty(_Foen) Then
+            MessageBoxEx.Show(Me, "Falta el teléfono en la ficha del cliente" & vbCrLf &
+                              "No se puede realizar esta gestión sin un numero de teléfono de contacto.", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Grupo_CondPago.Enabled = True
         Btn_FincredPays.Enabled = False
@@ -1004,7 +1017,8 @@ AND DPCE.EMPRESA='" & ModEmpresa & "'  AND DPCE.ESASDP='P'
             If _Dias_1er_Vencimiento > 0 Then
                 Warning_Box_Cupo_Exedido.Image = Imagenes_16x16.Images.Item("warning.png")
                 Warning_Box_Cupo_Exedido.Text = "<b>  Cliente con cupo excedido</b><i> Venta sera revisada por FINCRED PAYS </i>"
-                MessageBoxEx.Show(Me, "Este documento sera evaluado por FINCRED al grabar el documento definitivamente", "FINCRED",
+                MessageBoxEx.Show(Me, "Este documento sera evaluado por FINCRED" & vbCrLf &
+                                  "La validación se hara al momento de grabar el documento definitivamente", "FINCRED",
                           MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 RevFincred = True
             End If

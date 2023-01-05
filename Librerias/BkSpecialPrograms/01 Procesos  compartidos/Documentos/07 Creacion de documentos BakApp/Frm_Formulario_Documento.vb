@@ -15109,12 +15109,13 @@ Public Class Frm_Formulario_Documento
                                           "Código de autorización: " & _Fincred_Respuesta.TramaRespuesta.documentos(0).autorizacion,
                                           "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Else
-                    MessageBoxEx.Show(Me, _Fincred_Respuesta.MensajeError & vbCrLf &
-                                              "Código de autorización: RECHAZADO" & vbCrLf & vbCrLf &
-                                              "El documento debera seguir el conducto regular, se quitaran los plazos de vencimineto" & vbCrLf &
-                                              "Para continuar debera volver a GRABAR el documento",
+                    MessageBoxEx.Show(Me, "Código de autorización: RECHAZADO" & vbCrLf &
+                                      "Respuesta FINCRED: " & _Fincred_Respuesta.MensajeError & vbCrLf & vbCrLf &
+                                      "El documento debera seguir el conducto regular, se quitaran los plazos de vencimineto" & vbCrLf &
+                                      "Para continuar debera volver a GRABAR el documento",
                                       "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
+                    _TblEncabezado.Rows(0).Item("IdFincred") = _Fincred_Respuesta.Id_TramaRespuesta
                     _TblEncabezado.Rows(0).Item("RevFincred") = False
                     _TblEncabezado.Rows(0).Item("FechaEmision") = _TblEncabezado.Rows(0).Item("FechaEmision")
                     _TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento") = _TblEncabezado.Rows(0).Item("FechaEmision")
@@ -15155,14 +15156,16 @@ Public Class Frm_Formulario_Documento
 
             _New_Idmaeedo = _Idmaeedo
 
-            If _Revisar_Fincred Then
+            If CBool(_TblEncabezado.Rows(0).Item("IdFincred")) Then
+
+                Dim _IdFincred = _TblEncabezado.Rows(0).Item("IdFincred")
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Fincred_TramaRespuesta Set " &
                                "EnProceso = 0,Idmaeedo = " & _Idmaeedo & ",Tido = '" & _Tido & "',Nudo = '" & _Nudo & "'" & vbCrLf &
-                               "Where Id = " & _Fincred_Respuesta.Id_TramaRespuesta & vbCrLf &
+                               "Where Id = " & _IdFincred & vbCrLf &
                                "Update " & _Global_BaseBk & "Zw_Fincred_Documentos Set " &
                                "Nro_documento = " & _Idmaeedo & vbCrLf &
-                               "Where Id_TR = " & _Fincred_Respuesta.Id_TramaRespuesta
+                               "Where Id_TR = " & _IdFincred
                 _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
             End If

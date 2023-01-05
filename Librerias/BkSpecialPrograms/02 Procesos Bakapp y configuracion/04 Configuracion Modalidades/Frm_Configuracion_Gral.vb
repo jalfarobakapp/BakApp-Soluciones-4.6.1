@@ -50,7 +50,7 @@ Public Class Frm_Configuracion_Gral
         SuperTabControl1.SelectedTabIndex = 0
 
         SpTab_DatosEmpresa.Visible = (_Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Empresas") And _Modalidad_General)
-        SpTab_FincredPays.Visible = (RutEmpresaActiva = "")
+        SpTab_FincredPays.Visible = (RutEmpresaActiva = "76095906-5" Or RutEmpresaActiva = "79514800-0")
 
         Txt_Fincred_Id_Token.Text = String.Empty
 

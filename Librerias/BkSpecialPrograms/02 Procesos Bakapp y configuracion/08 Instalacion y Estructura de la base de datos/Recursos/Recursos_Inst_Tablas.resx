@@ -121,6 +121,12 @@
   <data name="Recursos_Inst_Tablas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>recursos_inst_tablas.resx;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="Recursos_Inst_Tablas1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>recursos_inst_tablas.resx;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Recursos_Inst_Tablas_Designer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>recursos_inst_tablas.designer.vb;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="Zw_CashDro_Operaciones" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_cashdro_operaciones.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
@@ -315,6 +321,15 @@
   </data>
   <data name="Zw_Estaciones_Ruta_PDF" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_estaciones_ruta_pdf.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Fincred_Config" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_fincred_config.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Fincred_Documentos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_fincred_documentos.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Fincred_TramaRespuesta" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_fincred_tramarespuesta.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Zw_Format_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_format_01.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>

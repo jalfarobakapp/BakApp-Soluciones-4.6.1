@@ -739,6 +739,14 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Estaciones_Impresoras
             Case "Zw_Estaciones_Ruta_PDF"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Estaciones_Ruta_PDF
+
+            Case "Zw_Fincred_Config"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Fincred_Config
+            Case "Zw_Fincred_Documentos"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Fincred_Documentos
+            Case "Zw_Fincred_TramaRespuesta"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Fincred_TramaRespuesta
+
             Case "Zw_Format_01"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Format_01
             Case "Zw_Format_02"

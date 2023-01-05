@@ -1,4 +1,6 @@
-﻿Public Class Frm_FincredTokens
+﻿Imports DevComponents.DotNetBar
+
+Public Class Frm_FincredTokens
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -152,4 +154,28 @@
 
     End Sub
 
+    Private Sub Btn_Fincred_Eliminar_Click(sender As Object, e As EventArgs) Handles Btn_Fincred_Eliminar.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Id = _Fila.Cells("Id").Value
+
+        Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Configuracion", "Fincred_Id_Token = " & _Id)
+
+        If CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "No es posible eliminar este Token, ya que hay modalidades asociadas a el." & vbCrLf &
+                              "Para eliminarlo debe quitar el Token de todas las modalidades", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Confirma la eliminación del Token?", "Eliminar cuenta",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Fincred_Config Where Id = " & _Id
+            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                Grilla.Rows.RemoveAt(Grilla.CurrentRow.Index)
+            End If
+
+        End If
+
+    End Sub
 End Class

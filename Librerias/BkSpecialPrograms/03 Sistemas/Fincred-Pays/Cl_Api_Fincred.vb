@@ -350,16 +350,20 @@ Namespace Cl_Fincred_Bakapp
 
             If Not IsNothing(_Respuesta.TramaRespuesta.documentos) Then
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Fincred_Documentos (Id_TR, Nro_documento,Monto_documento,Fecha_vencimiento,Autorizacion) Values " &
+                If _Respuesta.TramaRespuesta.documentos(0).autorizacion <> "RECHAZADO" Then
+
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Fincred_Documentos (Id_TR, Nro_documento,Monto_documento,Fecha_vencimiento,Autorizacion) Values " &
                                "(" & _Id_TramaRespuesta &
                                "," & _Respuesta.TramaRespuesta.documentos(0).nro_documento &
                                "," & _Respuesta.TramaRespuesta.documentos(0).monto_documento &
                                ",'" & _Fec_primer_venc & "','" & _Respuesta.TramaRespuesta.documentos(0).autorizacion & "')"
-                _Sql.Ej_consulta_IDU(Consulta_sql, False)
+                    _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+                End If
 
             End If
 
-            Respuesta = _Respuesta
+                Respuesta = _Respuesta
 
             Return True
 
