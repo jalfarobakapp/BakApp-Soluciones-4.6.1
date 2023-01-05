@@ -9,7 +9,6 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
     Dim _DsInfCredito As DataSet 'New DS_InfCredito
 
     Dim _TblSinDocumentar As DataTable
-    'Dim _TblPagos As DataTable
 
     Dim _TblCheques,
         _TblPagos,
@@ -57,6 +56,8 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
     Dim _CodFuncionario_permiso As String
 
     Dim _Rojo, _Azul, _Verde As Color
+
+    Public Property RevFincred As Boolean
     Enum Enum_Accion
         Visualizar
         Permiso_Deuda_Vencida
@@ -410,7 +411,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
 
         Warning_Box_Deuda.Text = Warning_Box_Deuda.Text & " (Días de morosidad permitida " & _Dimoper & ")"
 
-        If _Crto_Disponible < 0 Then '_Crsd_Disponible <0 Then
+        If _Crto_Disponible < 0 Then
             If _Autorizar_Venta_Con_Cupo_Exedido Then
                 Warning_Box_Cupo_Exedido.Image = Imagenes_16x16.Images.Item("warning.png")
                 Warning_Box_Cupo_Exedido.Text = "<b>  Cliente con cupo excedido</b><i> Venta autorizada por " & _Fun_Auto_Cupo_Exe & " </i>"
@@ -460,6 +461,20 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Else
             Warning_Box_Cupo_Exedido.Image = Imagenes_16x16.Images.Item("ok.png")
             Warning_Box_Cupo_Exedido.Text = "<b>  Cliente con cupo</b><i></i>"
+        End If
+
+        If _RowEntidad.Item("CRTO") = 0 And _RowEntidad.Item("DIPRVE") = 0 Then
+
+            If Btn_CambCodPago.Visible Then
+                Btn_CambCodPago.Visible = Not _Global_Row_Configuracion_Estacion.Item("Fincred_Usar")
+                Btn_FincredPays.Visible = _Global_Row_Configuracion_Estacion.Item("Fincred_Usar")
+            End If
+
+            If RevFincred Then
+                Warning_Box_Cupo_Exedido.Image = Imagenes_16x16.Images.Item("warning.png")
+                Warning_Box_Cupo_Exedido.Text = "<b>  Cliente con cupo excedido</b><i> Venta sera revisada por FINCRED PAYS </i>"
+            End If
+
         End If
 
     End Sub
@@ -703,6 +718,23 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
+    End Sub
+
+    Private Sub Btn_FincredPays_Click(sender As Object, e As EventArgs) Handles Btn_FincredPays.Click
+
+        Dim _Foen As String = _Sql.Fx_Trae_Dato("MAEEN", "FOEN", "KOEN = '" & _RowEntidad.Item("KOEN") & "' And SUEN = '" & _RowEntidad.Item("SUEN") & "'")
+
+        If String.IsNullOrEmpty(_Foen) Then
+            MessageBoxEx.Show(Me, "Falta el teléfono en la ficha del cliente" & vbCrLf &
+                              "No se puede realizar esta gestión sin un numero de teléfono de contacto.", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Grupo_CondPago.Enabled = True
+        Btn_FincredPays.Enabled = False
+        Txt_Cuotas.Focus()
+
     End Sub
 
     Public Function Fx_Revisar_Situacion_Credito(_Formulario As Form,
@@ -980,6 +1012,18 @@ AND DPCE.EMPRESA='" & ModEmpresa & "'  AND DPCE.ESASDP='P'
     End Sub
 
     Private Sub Btn_AceptarVencimientos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_AceptarVencimientos.Click
+
+        If _Global_Row_Configuracion_Estacion.Item("Fincred_Usar") Then
+            If _Dias_1er_Vencimiento > 0 Then
+                Warning_Box_Cupo_Exedido.Image = Imagenes_16x16.Images.Item("warning.png")
+                Warning_Box_Cupo_Exedido.Text = "<b>  Cliente con cupo excedido</b><i> Venta sera revisada por FINCRED PAYS </i>"
+                MessageBoxEx.Show(Me, "Este documento sera evaluado por FINCRED" & vbCrLf &
+                                  "La validación se hara al momento de grabar el documento definitivamente", "FINCRED",
+                          MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                RevFincred = True
+            End If
+        End If
+
         _Grabar_Vencimientos = True
         Me.Close()
     End Sub
@@ -1059,10 +1103,12 @@ AND DPCE.EMPRESA='" & ModEmpresa & "'  AND DPCE.ESASDP='P'
 
     End Sub
     Private Sub Btn_CambCodPago_Click(sender As System.Object, e As System.EventArgs) Handles Btn_CambCodPago.Click
+
         If Fx_Tiene_Permiso(Me, "Bkp00034") Then
             Grupo_CondPago.Enabled = True
             Txt_Cuotas.Focus()
         End If
+
     End Sub
     Private Sub Warning_Box_Deuda_Cupo_Exedido_OptionsClick(sender As System.Object, e As System.EventArgs) Handles Warning_Box_Deuda.OptionsClick
         SuperTabControl1.SelectedTabIndex = 1

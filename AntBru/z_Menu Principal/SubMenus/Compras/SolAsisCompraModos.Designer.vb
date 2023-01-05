@@ -30,6 +30,8 @@ Partial Class SolAsisCompraModos
         Me.ItemContainer1 = New DevComponents.DotNetBar.ItemContainer()
         Me.Btn_Modo_OCC = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Modo_NVI = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.ButtonItem2 = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem3 = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -52,7 +54,7 @@ Partial Class SolAsisCompraModos
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir, Me.ButtonItem2, Me.ButtonItem3})
         Me.Bar2.Location = New System.Drawing.Point(0, 190)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(437, 41)
@@ -148,6 +150,20 @@ Partial Class SolAsisCompraModos
         Me.Btn_Modo_NVI.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
         Me.Btn_Modo_NVI.TileStyle.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
         '
+        'ButtonItem2
+        '
+        Me.ButtonItem2.ForeColor = System.Drawing.Color.Black
+        Me.ButtonItem2.Name = "ButtonItem2"
+        Me.ButtonItem2.Text = "Conf. OCC"
+        Me.ButtonItem2.Visible = False
+        '
+        'ButtonItem3
+        '
+        Me.ButtonItem3.ForeColor = System.Drawing.Color.Black
+        Me.ButtonItem3.Name = "ButtonItem3"
+        Me.ButtonItem3.Text = "Conf. NVI"
+        Me.ButtonItem3.Visible = False
+        '
         'SolAsisCompraModos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -169,4 +185,6 @@ Partial Class SolAsisCompraModos
     Friend WithEvents ItemContainer1 As DevComponents.DotNetBar.ItemContainer
     Private WithEvents Btn_Modo_OCC As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Modo_NVI As DevComponents.DotNetBar.Metro.MetroTileItem
+    Friend WithEvents ButtonItem2 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ButtonItem3 As DevComponents.DotNetBar.ButtonItem
 End Class

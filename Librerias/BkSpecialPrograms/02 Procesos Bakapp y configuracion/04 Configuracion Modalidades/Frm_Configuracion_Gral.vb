@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports System.Security.Cryptography
+Imports DevComponents.DotNetBar
 Public Class Frm_Configuracion_Gral
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -49,6 +50,9 @@ Public Class Frm_Configuracion_Gral
         SuperTabControl1.SelectedTabIndex = 0
 
         SpTab_DatosEmpresa.Visible = (_Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Empresas") And _Modalidad_General)
+        SpTab_FincredPays.Visible = (RutEmpresaActiva = "76095906-5" Or RutEmpresaActiva = "79514800-0")
+
+        Txt_Fincred_Id_Token.Text = String.Empty
 
         If SpTab_DatosEmpresa.Visible Then
 
@@ -191,6 +195,15 @@ Public Class Frm_Configuracion_Gral
                 Txt_Lista_Precios_Proveedores.Text = _RowLista.Item("KOLT") & " - " & _RowLista.Item("NOKOLT")
             End If
 
+            If SpTab_FincredPays.Visible Then
+
+                Txt_Fincred_Id_Token.Tag = .Item("Fincred_Id_Token")
+                Chk_Fincred_Usar.Checked = .Item("Fincred_Usar")
+                Sb_Revisar_Fincred_Token(Txt_Fincred_Id_Token.Tag)
+
+            End If
+
+
         End With
 
         Chk_Revisar_Tasa_de_Cambio.Enabled = _Modalidad_General
@@ -243,6 +256,13 @@ Public Class Frm_Configuracion_Gral
         Txt_Lista_Precios_Proveedores.Enabled = _Modalidad_General
 
         Grupo_RecepXMLComp.Enabled = _Modalidad_General
+
+        Chk_Fincred_Usar.Enabled = Not _Modalidad_General
+        Txt_Fincred_Id_Token.Enabled = Not _Modalidad_General
+
+        Btn_FincredConfiguracion.Enabled = _Modalidad_General
+        LabelX22.Enabled = _Modalidad_General
+        Line1.Enabled = _Modalidad_General
 
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
@@ -420,6 +440,8 @@ Public Class Frm_Configuracion_Gral
                        ",RecepXMLCmp_MarcaAgua = '" & Txt_RecepXMLCmp_MarcaAgua.Text.Trim & "'" & vbCrLf &
                        ",PermitirMigrarProductosBaseExterna = " & Convert.ToInt32(Chk_PermitirMigrarProductosBaseExterna.Checked) & vbCrLf &
                        ",Lista_Precios_Proveedores = '" & Txt_Lista_Precios_Proveedores.Tag & "'" & vbCrLf &
+                       ",Fincred_Usar = " & Convert.ToInt32(Chk_Fincred_Usar.Checked) & vbCrLf &
+                       ",Fincred_Id_Token = " & Txt_Fincred_Id_Token.Tag & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
 
 
@@ -524,6 +546,48 @@ Public Class Frm_Configuracion_Gral
             Txt_Lista_Precios_Proveedores.Tag = _Tbl_Lista_Seleccionada.Rows(0).Item("Lista")
             Txt_Lista_Precios_Proveedores.Text = _Tbl_Lista_Seleccionada.Rows(0).Item("Lista").ToString.Trim &
                                                 " - " & _Tbl_Lista_Seleccionada.Rows(0).Item("Nombre_Lista").ToString.Trim
+        End If
+
+    End Sub
+
+    Private Sub Btn_FincredConfiguracion_Click(sender As Object, e As EventArgs) Handles Btn_FincredConfiguracion.Click
+
+        Dim Fm As New Frm_FincredTokens
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Txt_TokenFincred_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Fincred_Id_Token.ButtonCustomClick
+
+        Dim Fm As New Frm_FincredTokens
+        Fm.Seleccionar = True
+        Fm.ShowDialog(Me)
+        If Not IsNothing(Fm.RowToken) Then
+            Sb_Revisar_Fincred_Token(Fm.RowToken.Item("Id"))
+        End If
+        Fm.Dispose()
+
+    End Sub
+
+    Sub Sb_Revisar_Fincred_Token(_Id As Integer)
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Fincred_Config Where Id = " & _Id
+        Dim _RowToken As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not IsNothing(_RowToken) Then
+            Txt_Fincred_Id_Token.Tag = _RowToken.Item("Id")
+            Txt_Fincred_Id_Token.Text = _RowToken.Item("Token") & " - Nombre Sucursal: " & _RowToken.Item("NombreSucursal")
+
+            If _RowToken.Item("AmbientePruebas") Then
+                Txt_Fincred_Id_Token.Text += ", Ambiente de pruebas"
+            End If
+        Else
+            Txt_Fincred_Id_Token.Tag = 0
+            Txt_Fincred_Id_Token.Text = "No hay Token asignado, no se revisara el crédito..."
+            If _Modalidad_General Then
+                Txt_Fincred_Id_Token.Text = String.Empty
+            End If
         End If
 
     End Sub

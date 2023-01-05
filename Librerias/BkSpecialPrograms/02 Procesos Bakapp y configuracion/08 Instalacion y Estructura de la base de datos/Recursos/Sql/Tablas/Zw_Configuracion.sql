@@ -88,6 +88,8 @@ CREATE TABLE [dbo].[Zw_Configuracion](
 [RecepXMLCmp_ElimiCorreosPOP3]                          [bit]           NOT NULL DEFAULT (0),         
 [RecepXMLCmp_MarcaAgua]                                 [varchar](20)   NOT NULL DEFAULT (''),
 [PermitirMigrarProductosBaseExterna]                    [bit]           NOT NULL DEFAULT (0), 
+[Fincred_Usar]                                          [bit]           NOT NULL DEFAULT (0), 
+[Fincred_Id_Token]                                      [int]           NOT NULL DEFAULT (0), 
 CONSTRAINT [PK_Zw_Configuracion] PRIMARY KEY CLUSTERED 
 (
 	[Modalidad] ASC

@@ -23,14 +23,14 @@ Public Class Frm_Conceptos_ObliXDoc
 
     Private Sub Frm_Conceptos_ObliXDoc_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Sb_Cargar_Tabla()
+        Sb_Actualizar_Grilla()
 
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
     End Sub
 
-    Sub Sb_Cargar_Tabla()
+    Sub Sb_Actualizar_Grilla()
 
         Consulta_sql = "Select Id, Modalidad, Tido, Tidp, Concepto, NOKOCT,NombreTabla,DescripcionTabla
                         From " & _Global_BaseBk & "Zw_Docu_ObligPg
@@ -90,7 +90,7 @@ Public Class Frm_Conceptos_ObliXDoc
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
-        Sb_Cargar_Tabla()
+        Sb_Actualizar_Grilla()
 
     End Sub
 
@@ -122,7 +122,7 @@ Public Class Frm_Conceptos_ObliXDoc
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
-        Sb_Cargar_Tabla()
+        Sb_Actualizar_Grilla()
 
     End Sub
     Private Sub Sb_Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)

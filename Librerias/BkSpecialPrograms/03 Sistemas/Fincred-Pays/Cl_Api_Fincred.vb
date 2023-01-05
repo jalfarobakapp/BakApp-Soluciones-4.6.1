@@ -63,6 +63,15 @@ Namespace Fincred_API
             Catch ex As Exception
                 _Respuesta.EsCorrecto = False
                 _Respuesta.MensajeError = ex.Message
+
+                If String.IsNullOrEmpty(JsonRespuesta) Then
+                    TramaRespuesta = JsonConvert.DeserializeObject(Of Fincred_API.TramaRespuesta)(_json)
+                End If
+
+                TramaRespuesta.descripcion_negacion = ex.Message
+                TramaRespuesta.codigo_negacion_transaccion = 1
+                _Respuesta.TramaRespuesta = TramaRespuesta
+
             End Try
 
             Return _Respuesta
@@ -312,7 +321,7 @@ Namespace Cl_Fincred_Bakapp
             _trama.cantidad_documentos_venta = _Cantidad_documentos_venta
             _trama.num_primer_doc = _Num_primer_doc
             _trama.fec_primer_venc = _Fec_primer_venc
-            _trama.num_telefono = _Num_telefono
+            _trama.num_telefono = Replace(_Num_telefono.Trim, " ", "")
 
             Dim _Respuesta As New Respuesta
 
@@ -348,14 +357,22 @@ Namespace Cl_Fincred_Bakapp
                            "Where Id = " & _Id_TramaRespuesta
             _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
-            If Not IsNothing(_Respuesta.TramaRespuesta.documentos) Then
+            If Not IsNothing(_Respuesta.TramaRespuesta) Then
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Fincred_Documentos (Id_TR, Nro_documento,Monto_documento,Fecha_vencimiento,Autorizacion) Values " &
-                               "(" & _Id_TramaRespuesta &
-                               "," & _Respuesta.TramaRespuesta.documentos(0).nro_documento &
-                               "," & _Respuesta.TramaRespuesta.documentos(0).monto_documento &
-                               ",'" & _Fec_primer_venc & "','" & _Respuesta.TramaRespuesta.documentos(0).autorizacion & "')"
-                _Sql.Ej_consulta_IDU(Consulta_sql, False)
+                If Not IsNothing(_Respuesta.TramaRespuesta.documentos) Then
+
+                    If _Respuesta.TramaRespuesta.documentos(0).autorizacion <> "RECHAZADO" Then
+
+                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Fincred_Documentos (Id_TR, Nro_documento,Monto_documento,Fecha_vencimiento,Autorizacion) Values " &
+                                   "(" & _Id_TramaRespuesta &
+                                   "," & _Respuesta.TramaRespuesta.documentos(0).nro_documento &
+                                   "," & _Respuesta.TramaRespuesta.documentos(0).monto_documento &
+                                   ",'" & _Fec_primer_venc & "','" & _Respuesta.TramaRespuesta.documentos(0).autorizacion & "')"
+                        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+                    End If
+
+                End If
 
             End If
 

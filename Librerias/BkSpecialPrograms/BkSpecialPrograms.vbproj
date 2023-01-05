@@ -597,6 +597,18 @@
     <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random_Ficha.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Formularios\Fincred\Frm_Fincred.Designer.vb">
+      <DependentUpon>Frm_Fincred.vb</DependentUpon>
+    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Formularios\Fincred\Frm_Fincred.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Formularios\Fincred\Frm_FincredTokens.Designer.vb">
+      <DependentUpon>Frm_FincredTokens.vb</DependentUpon>
+    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Formularios\Fincred\Frm_FincredTokens.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Configuracion_Gral.Designer.vb">
       <DependentUpon>Frm_Configuracion_Gral.vb</DependentUpon>
     </Compile>
@@ -4049,6 +4061,12 @@
     <EmbeddedResource Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random_Ficha.resx">
       <DependentUpon>Frm_Usuarios_Random_Ficha.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Formularios\Fincred\Frm_Fincred.resx">
+      <DependentUpon>Frm_Fincred.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Formularios\Fincred\Frm_FincredTokens.resx">
+      <DependentUpon>Frm_FincredTokens.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Configuracion_Gral.resx">
       <DependentUpon>Frm_Configuracion_Gral.vb</DependentUpon>
     </EmbeddedResource>
@@ -7169,6 +7187,9 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Estaciones_Impresoras.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Estaciones_Poswi.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Estaciones_Ruta_PDF.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Fincred_Config.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Fincred_Documentos.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Fincred_TramaRespuesta.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Format_01.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Format_02.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Format_Fx.sql" />

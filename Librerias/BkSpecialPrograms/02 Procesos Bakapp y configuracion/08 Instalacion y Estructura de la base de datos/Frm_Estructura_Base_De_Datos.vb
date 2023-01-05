@@ -138,6 +138,11 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Estaciones_Impresoras", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Estaciones_Ruta_PDF", _Modificar, Lbl_Eventos)
 
+            'FINCRED
+            .Sb_Revisar_Tabla2(Me, "Zw_Fincred_Config", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Fincred_Documentos", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Fincred_TramaRespuesta", _Modificar, Lbl_Eventos)
+
             'FORMATOS DE DOCUMENTOS
             .Sb_Revisar_Tabla2(Me, "Zw_Format_01", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Format_02", _Modificar, Lbl_Eventos)

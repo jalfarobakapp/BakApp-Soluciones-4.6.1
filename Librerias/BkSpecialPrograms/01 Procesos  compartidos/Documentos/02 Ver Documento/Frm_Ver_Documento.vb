@@ -208,6 +208,7 @@ Public Class Frm_Ver_Documento
         Sb_Formato_Generico_Grilla(GrillaEncabezado, 17, New Font("Tahoma", 8), Color.LightYellow, ScrollBars.None, False, False, False)
         Sb_Formato_Generico_Grilla(GrillaDetalleDoc, 15, New Font("Tahoma", 8), Color.LightYellow, ScrollBars.Both, True, False, False)
 
+
         Select Case _Tipo_Apertura
 
             Case Enum_Tipo_Apertura.Desde_Random_SQL
@@ -237,6 +238,15 @@ Public Class Frm_Ver_Documento
                 Btn_Grabar_Documentos.Visible = False
 
                 Sb_Abrir_Documento_Desde_Random_SQL()
+
+                Consulta_sql = "Select FResp.*,Isnull(FDoc.Autorizacion,'RECHAZADO') As CodAutorizacion" & vbCrLf &
+                        "From Zw_Fincred_TramaRespuesta FResp" & vbCrLf &
+                        "Left Join Zw_Fincred_Documentos FDoc On FResp.Id = FDoc.Id_TR" & vbCrLf &
+                        "Where (Idmaeedo = " & _Idmaeedo & ")"
+
+                _Reg = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Fincred_TramaRespuesta", "Idmaeedo = " & _Idmaeedo))
+
+                Btn_InfFincred.Visible = _Reg
 
                 If _Correr_a_la_derecha Then
                     Me.Top += 10
@@ -4575,6 +4585,29 @@ Public Class Frm_Ver_Documento
 
         End If
 
+
+    End Sub
+
+    Private Sub Btn_InfFincred_Click(sender As Object, e As EventArgs) Handles Btn_InfFincred.Click
+
+        Consulta_sql = "Select FResp.*,Isnull(FDoc.Autorizacion,'RECHAZADO') As CodAutorizacion" & vbCrLf &
+                        "From " & _Global_BaseBk & "Zw_Fincred_TramaRespuesta FResp" & vbCrLf &
+                        "Left Join " & _Global_BaseBk & "Zw_Fincred_Documentos FDoc On FResp.Id = FDoc.Id_TR" & vbCrLf &
+                        "Where (Idmaeedo = " & _Idmaeedo & ")"
+        Dim _RowFincred As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Codigo_negacion_transaccion = _RowFincred.Item("Codigo_negacion_transaccion")
+        Dim _Descripcion_negacion = _RowFincred.Item("Descripcion_negacion")
+        Dim _CodAutorizacion = _RowFincred.Item("CodAutorizacion")
+
+        If _Codigo_negacion_transaccion = 0 Then
+            MessageBoxEx.Show(Me, "Revisión de parte de FINCRED autorizada" & vbCrLf & vbCrLf &
+                              "Código autorización: " & _CodAutorizacion & vbCrLf &
+                              "Respuesta Fincred: " & _Descripcion_negacion, "Información FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Else
+            MessageBoxEx.Show(Me, "Revisión de parte de FINCRED RECHAZADA" & vbCrLf & vbCrLf &
+                              "Respuesta Fincred: " & _Descripcion_negacion, "Información FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
 
     End Sub
 
