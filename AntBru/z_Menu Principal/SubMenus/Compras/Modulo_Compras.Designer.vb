@@ -31,9 +31,13 @@ Partial Class Modulo_Compras
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnCambiarDeUsuario = New DevComponents.DotNetBar.ButtonItem()
-        Me.ButtonItem3 = New DevComponents.DotNetBar.ButtonItem()
-        Me.ButtonItem2 = New DevComponents.DotNetBar.ButtonItem()
-        Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Prb_Automatizaciones = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_NVI = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_OCCStar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_OCCProveedores = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_EjecutarTodas = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Asociar_Prod_Funcionarios = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -153,7 +157,7 @@ Partial Class Modulo_Compras
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir, Me.BtnCambiarDeUsuario, Me.ButtonItem3, Me.ButtonItem2, Me.ButtonItem1, Me.Btn_Asociar_Prod_Funcionarios})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir, Me.BtnCambiarDeUsuario, Me.Btn_Prb_Automatizaciones, Me.Btn_Asociar_Prod_Funcionarios})
         Me.Bar2.Location = New System.Drawing.Point(0, 198)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(632, 41)
@@ -181,26 +185,63 @@ Partial Class Modulo_Compras
         Me.BtnCambiarDeUsuario.Name = "BtnCambiarDeUsuario"
         Me.BtnCambiarDeUsuario.Tooltip = "Cambiar de usuario"
         '
-        'ButtonItem3
+        'Btn_Prb_Automatizaciones
         '
-        Me.ButtonItem3.ForeColor = System.Drawing.Color.Black
-        Me.ButtonItem3.Name = "ButtonItem3"
-        Me.ButtonItem3.Text = "NVI Automatica"
-        Me.ButtonItem3.Visible = False
+        Me.Btn_Prb_Automatizaciones.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Prb_Automatizaciones.Name = "Btn_Prb_Automatizaciones"
+        Me.Btn_Prb_Automatizaciones.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem2, Me.Btn_NVI, Me.Btn_OCCStar, Me.Btn_OCCProveedores, Me.LabelItem1, Me.Btn_EjecutarTodas})
+        Me.Btn_Prb_Automatizaciones.Text = "PRB Procedimientos"
+        Me.Btn_Prb_Automatizaciones.Visible = False
         '
-        'ButtonItem2
+        'LabelItem2
         '
-        Me.ButtonItem2.ForeColor = System.Drawing.Color.Black
-        Me.ButtonItem2.Name = "ButtonItem2"
-        Me.ButtonItem2.Text = "PRB Proveedor Star"
-        Me.ButtonItem2.Visible = False
+        Me.LabelItem2.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem2.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem2.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem2.Name = "LabelItem2"
+        Me.LabelItem2.PaddingBottom = 1
+        Me.LabelItem2.PaddingLeft = 10
+        Me.LabelItem2.PaddingTop = 1
+        Me.LabelItem2.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem2.Text = "Prueba de uno en uno"
         '
-        'ButtonItem1
+        'Btn_NVI
         '
-        Me.ButtonItem1.ForeColor = System.Drawing.Color.Black
-        Me.ButtonItem1.Name = "ButtonItem1"
-        Me.ButtonItem1.Text = "PRB Proveedores"
-        Me.ButtonItem1.Visible = False
+        Me.Btn_NVI.ForeColor = System.Drawing.Color.Black
+        Me.Btn_NVI.Name = "Btn_NVI"
+        Me.Btn_NVI.Text = "NVI Automatica"
+        '
+        'Btn_OCCStar
+        '
+        Me.Btn_OCCStar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_OCCStar.Name = "Btn_OCCStar"
+        Me.Btn_OCCStar.Text = "PRB Proveedor Star"
+        '
+        'Btn_OCCProveedores
+        '
+        Me.Btn_OCCProveedores.ForeColor = System.Drawing.Color.Black
+        Me.Btn_OCCProveedores.Name = "Btn_OCCProveedores"
+        Me.Btn_OCCProveedores.Text = "PRB Proveedores"
+        '
+        'LabelItem1
+        '
+        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem1.Name = "LabelItem1"
+        Me.LabelItem1.PaddingBottom = 1
+        Me.LabelItem1.PaddingLeft = 10
+        Me.LabelItem1.PaddingTop = 1
+        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem1.Text = "Prueba completa"
+        '
+        'Btn_EjecutarTodas
+        '
+        Me.Btn_EjecutarTodas.ForeColor = System.Drawing.Color.Black
+        Me.Btn_EjecutarTodas.Name = "Btn_EjecutarTodas"
+        Me.Btn_EjecutarTodas.Text = "Ejecutar todos..."
         '
         'Btn_Asociar_Prod_Funcionarios
         '
@@ -250,7 +291,11 @@ Partial Class Modulo_Compras
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Private WithEvents Btn_Recomendacion_Compra As DevComponents.DotNetBar.Metro.MetroTileItem
     Friend WithEvents Btn_Asociar_Prod_Funcionarios As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents ButtonItem1 As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents ButtonItem2 As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents ButtonItem3 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_OCCProveedores As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_OCCStar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_NVI As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Prb_Automatizaciones As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem2 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_EjecutarTodas As DevComponents.DotNetBar.ButtonItem
 End Class

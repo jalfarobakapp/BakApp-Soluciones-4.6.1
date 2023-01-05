@@ -23,6 +23,9 @@ Public Class SolAsisCompraModos
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         _Fm_Menu_Padre = Fm_Menu_Padre
 
+        ButtonItem2.Visible = (RutEmpresa = "79514800-0")
+        ButtonItem3.Visible = (RutEmpresa = "79514800-0")
+
     End Sub
 
     Private Sub Btn_Modo_OCC_Click(sender As Object, e As EventArgs) Handles Btn_Modo_OCC.Click
@@ -45,4 +48,24 @@ Public Class SolAsisCompraModos
     Private Sub BtnSalir_Click(sender As Object, e As EventArgs) Handles BtnSalir.Click
         _Fm_Menu_Padre.CloseModalPanel(Me, DevComponents.DotNetBar.Controls.eSlideSide.Left)
     End Sub
+
+    Private Sub ButtonItem2_Click(sender As Object, e As EventArgs) Handles ButtonItem2.Click
+        Dim Fm As New Frm_00_Asis_Compra_Menu(Modalidad)
+        Fm.Tipo_Informe = "Asistente de compras Configuración de OCC automatizadas"
+        Fm.Modo_OCC = True
+        Fm.Modo_ConfAuto = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+    End Sub
+
+    Private Sub ButtonItem3_Click(sender As Object, e As EventArgs) Handles ButtonItem3.Click
+        Dim Fm As New Frm_00_Asis_Compra_Menu(Modalidad)
+        Fm.Tipo_Informe = "Asistente de compras Configuración de NVI automatizadas"
+        Fm.Modo_NVI = True
+        Fm.Modo_OCC = False
+        Fm.Modo_ConfAuto = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+    End Sub
+
 End Class

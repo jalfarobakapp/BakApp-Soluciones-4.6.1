@@ -8089,8 +8089,8 @@ Drop Table #Paso"
                 _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, _Fl.Email, Auto_CorreoCc, Auto_Id_Correo, Auto_NombreFormato_PDF)
                 ' 37
                 ' "Tam. Carta"
-                MessageBoxEx.Show(Me, "Tido: " & _Fl.Tido & "-" & _Fl.Nudo & vbCrLf &
-                                  "Email: " & _Fl.Email, "OCC Generada", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                'MessageBoxEx.Show(Me, "Tido: " & _Fl.Tido & "-" & _Fl.Nudo & vbCrLf &
+                '                  "Email: " & _Fl.Email, "OCC Generada", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             Next
 
@@ -8127,11 +8127,11 @@ Drop Table #Paso"
                                ",'" & Format(_Fl.Feemdo, "yyyyMMdd") & "','" & NuloPorNro(_Fl.MensajeError, "") & "'," & Convert.ToInt32(_Fl.ErrorGrabar) & ")"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
-                '_Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, _Fl.Email, Auto_CorreoCc, Auto_Id_Correo, Auto_NombreFormato_PDF)
+                _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, Auto_CorreoCc, "", Auto_Id_Correo, Auto_NombreFormato_PDF)
                 ' 37
                 ' "Tam. Carta"
-                MessageBoxEx.Show(Me, "Tido: " & _Fl.Tido & "-" & _Fl.Nudo & vbCrLf &
-                                  "Email: " & _Fl.Email, "OCC Generada", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                'MessageBoxEx.Show(Me, "Tido: " & _Fl.Tido & "-" & _Fl.Nudo & vbCrLf &
+                '                  "Email: " & _Fl.Email, "OCC Generada", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             Next
 
@@ -8169,10 +8169,10 @@ Drop Table #Paso"
                                ",'" & Format(_Fl.Feemdo, "yyyyMMdd") & "','" & NuloPorNro(_Fl.MensajeError, "") & "'," & Convert.ToInt32(_Fl.ErrorGrabar) & ")"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
-                _Generar_NVI.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, _Fl.Email, Auto_CorreoCc, Auto_Id_Correo, Auto_NombreFormato_PDF)
+                _Generar_NVI.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, Auto_CorreoCc, "", Auto_Id_Correo, Auto_NombreFormato_PDF)
 
-                MessageBoxEx.Show(Me, "Tido: " & _Fl.Tido & "-" & _Fl.Nudo & vbCrLf &
-                                  "Email: " & _Fl.Email, "NVI Generada", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                'MessageBoxEx.Show(Me, "Tido: " & _Fl.Tido & "-" & _Fl.Nudo & vbCrLf &
+                '                  "Email: " & _Fl.Email, "NVI Generada", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             Next
 
@@ -9183,9 +9183,9 @@ Drop Table #Paso"
 
                             If _Sql.Ej_consulta_IDU(Consulta_sql) Then
 
-                                MessageBoxEx.Show(Me, "Los productos que fueron solicitados con NVI se quitaron las cantidades de esta solicitud" & vbCrLf & vbCrLf &
-                                                  _Tbl_ProdNVI.Rows.Count & " registro(s) encontrado(s) en la(s) bodega(s) ",
-                                                 "Restar stock de compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                'MessageBoxEx.Show(Me, "Los productos que fueron solicitados con NVI se quitaron las cantidades de esta solicitud" & vbCrLf & vbCrLf &
+                                '                  _Tbl_ProdNVI.Rows.Count & " registro(s) encontrado(s) en la(s) bodega(s) ",
+                                '                 "Restar stock de compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                                 Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
 

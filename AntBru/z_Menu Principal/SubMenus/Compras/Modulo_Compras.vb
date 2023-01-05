@@ -31,9 +31,7 @@ Public Class Modulo_Compras
             Btn_Asistente_Compras.Enabled = False
         End If
 
-        ButtonItem1.Visible = (RutEmpresa = "79514800-0")
-        ButtonItem2.Visible = (RutEmpresa = "79514800-0")
-        ButtonItem3.Visible = (RutEmpresa = "79514800-0")
+        Btn_Prb_Automatizaciones.Visible = (RutEmpresa = "79514800-0")
 
     End Sub
 
@@ -112,7 +110,7 @@ Public Class Modulo_Compras
 
     End Sub
 
-    Private Sub ButtonItem1_Click(sender As Object, e As EventArgs) Handles ButtonItem1.Click
+    Private Sub Btn_OCCProveedores_Click(sender As Object, e As EventArgs) Handles Btn_OCCProveedores.Click
         Dim Fm As New Frm_00_Asis_Compra_Menu(Modalidad)
         Fm.Accion_Automatica = True
         Fm.Auto_GenerarAutomaticamenteOCCProveedores = True
@@ -122,7 +120,7 @@ Public Class Modulo_Compras
         Fm.Dispose()
     End Sub
 
-    Private Sub ButtonItem2_Click(sender As Object, e As EventArgs) Handles ButtonItem2.Click
+    Private Sub Btn_OCCStar_Click(sender As Object, e As EventArgs) Handles Btn_OCCStar.Click
         Dim Fm As New Frm_00_Asis_Compra_Menu(Modalidad)
         Fm.Accion_Automatica = True
         Fm.Auto_GenerarAutomaticamenteOCCProveedorStar = True
@@ -132,7 +130,7 @@ Public Class Modulo_Compras
         Fm.Dispose()
     End Sub
 
-    Private Sub ButtonItem3_Click(sender As Object, e As EventArgs) Handles ButtonItem3.Click
+    Private Sub Btn_NVI_Click(sender As Object, e As EventArgs) Handles Btn_NVI.Click
         Dim Fm As New Frm_00_Asis_Compra_Menu(Modalidad)
         Fm.Accion_Automatica = True
         Fm.Auto_GenerarAutomaticamenteNVI = True
@@ -140,6 +138,14 @@ Public Class Modulo_Compras
         Fm.Tipo_Informe = "Asistente de compras"
         Fm.ShowDialog(Me)
         Fm.Dispose()
+    End Sub
+
+    Private Sub Btn_EjecutarTodas_Click(sender As Object, e As EventArgs) Handles Btn_EjecutarTodas.Click
+
+        Call Btn_NVI_Click(Nothing, Nothing)
+        Call Btn_OCCStar_Click(Nothing, Nothing)
+        Call Btn_OCCProveedores_Click(Nothing, Nothing)
+
     End Sub
 
 End Class

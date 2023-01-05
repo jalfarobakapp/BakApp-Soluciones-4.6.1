@@ -15099,7 +15099,7 @@ Public Class Frm_Formulario_Documento
 
         If _TipoGrab = _Tipo_de_Grabacion.Nuevo_documento Then
 
-            If _Revisar_Fincred Then
+            If _Revisar_Fincred And _Tido = "NVV" Then
 
                 _Fincred_Respuesta = Fx_Vaidar_Fincred()
 

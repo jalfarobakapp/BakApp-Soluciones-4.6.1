@@ -122,7 +122,7 @@ Public Class Frm_00_Asis_Compra_Menu
             Bar.Enabled = False
         End If
 
-        Tab_Costos_OCC.Visible = _Modo_OCC
+        Tab_Costos_OCC.Visible = (_Modo_OCC Or _Modo_ConfAuto)
         Tab_Automatizacion.Visible = False
 
         If _Modo_OCC Then
@@ -828,8 +828,21 @@ Public Class Frm_00_Asis_Compra_Menu
         _Sql.Sb_Parametro_Informe_Sql(Txt_CorreoCc_OCC, "Compras_Asistente",
                                       Txt_CorreoCc_OCC.Name, Class_SQLite.Enum_Type._String, Txt_CorreoCc_OCC.Text, _Actualizar)
 
+
+        '   Id Correo envio NVI Automaticas
+        _Sql.Sb_Parametro_Informe_Sql(Txt_CtaCorreoEnvioAutomatizado_NVI, "Compras_Asistente",
+                                      Txt_CtaCorreoEnvioAutomatizado_NVI.Name, Class_SQLite.Enum_Type._String, Txt_CtaCorreoEnvioAutomatizado_NVI.Text, _Actualizar)
+        '   Nombre formato PDF adjunto NVI Automaticas
+        _Sql.Sb_Parametro_Informe_Sql(Txt_NombreFormato_PDF_NVI, "Compras_Asistente",
+                                      Txt_NombreFormato_PDF_NVI.Name, Class_SQLite.Enum_Type._String, Txt_NombreFormato_PDF_NVI.Text, _Actualizar)
+        ' Destinatarios CC para envio de NVI automatizada
+        _Sql.Sb_Parametro_Informe_Sql(Txt_CorreoCc_NVI, "Compras_Asistente",
+                                      Txt_CorreoCc_NVI.Name, Class_SQLite.Enum_Type._String, Txt_CorreoCc_NVI.Text, _Actualizar)
+
+
         'If Not _Actualizar Then
-        '    Txt_CtaCorreoEnvioAutomatizado.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Nombre_Correo", "Id = " & Txt_CtaCorreoEnvioAutomatizado.Tag)
+        '    Txt_CtaCorreoEnvioAutomatizado_OCC.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Nombre_Correo", "Id = " & Txt_CtaCorreoEnvioAutomatizado_OCC.Tag)
+        '    Txt_CtaCorreoEnvioAutomatizado_NVI.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Nombre_Correo", "Id = " & Txt_CtaCorreoEnvioAutomatizado_NVI.Tag)
         'End If
 
     End Sub
@@ -2178,9 +2191,16 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Auto_GenerarAutomaticamenteOCCProveedores = Auto_GenerarAutomaticamenteOCCProveedores
         Fm.Auto_GenerarAutomaticamenteOCCProveedorStar = Auto_GenerarAutomaticamenteOCCProveedorStar
         Fm.Auto_GenerarAutomaticamenteNVI = Auto_GenerarAutomaticamenteNVI
-        Fm.Auto_CorreoCc = Txt_CorreoCc_OCC.Text
-        Fm.Auto_Id_Correo = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Id", "Nombre_Correo = '" & Txt_CtaCorreoEnvioAutomatizado_OCC.Text & "'")
-        Fm.Auto_NombreFormato_PDF = Txt_NombreFormato_PDF_OCC.Text
+
+        If Auto_GenerarAutomaticamenteNVI Then
+            Fm.Auto_CorreoCc = Txt_CorreoCc_NVI.Text
+            Fm.Auto_Id_Correo = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Id", "Nombre_Correo = '" & Txt_CtaCorreoEnvioAutomatizado_NVI.Text & "'")
+            Fm.Auto_NombreFormato_PDF = Txt_NombreFormato_PDF_NVI.Text
+        Else
+            Fm.Auto_CorreoCc = Txt_CorreoCc_OCC.Text
+            Fm.Auto_Id_Correo = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Id", "Nombre_Correo = '" & Txt_CtaCorreoEnvioAutomatizado_OCC.Text & "'")
+            Fm.Auto_NombreFormato_PDF = Txt_NombreFormato_PDF_OCC.Text
+        End If
 
         Fm.Modo_OCC = Modo_OCC
         Fm.Modo_NVI = _Modo_NVI
@@ -2196,7 +2216,7 @@ Public Class Frm_00_Asis_Compra_Menu
         Me.Enabled = False
         _Sql.Sb_Eliminar_Tabla_De_Paso(_TblPasoInforme)
 
-        If Not _Accion_Automatica Then
+        If Not Modo_ConfAuto Then
             Sb_Parametros_Informe_Sql(True)
         End If
 
@@ -3178,12 +3198,14 @@ Public Class Frm_00_Asis_Compra_Menu
 
     Private Sub Txt_NombreFormato_PDF_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_NombreFormato_PDF_OCC.ButtonCustom2Click
         If MessageBoxEx.Show(Me, "Confirma quitar el formato", "Quitar formato", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Txt_NombreFormato_PDF_OCC.Tag = String.Empty
             Txt_NombreFormato_PDF_OCC.Text = String.Empty
         End If
     End Sub
 
     Private Sub Txt_CtaCorreoEnvioAutomatizado_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CtaCorreoEnvioAutomatizado_OCC.ButtonCustom2Click
         If MessageBoxEx.Show(Me, "Confirma quitar el correo", "Quitar correo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Txt_CtaCorreoEnvioAutomatizado_OCC.Tag = 0
             Txt_CtaCorreoEnvioAutomatizado_OCC.Text = String.Empty
         End If
     End Sub
@@ -3225,5 +3247,55 @@ Public Class Frm_00_Asis_Compra_Menu
 
     End Sub
 
+    Private Sub Txt_CtaCorreoEnvioAutomatizado_NVI_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CtaCorreoEnvioAutomatizado_NVI.ButtonCustomClick
 
+        Dim _Row_Email As DataRow
+
+        Dim Fm As New Frm_Correos_SMTP
+        Fm.Pro_Seleccionar = True
+        Fm.ShowDialog(Me)
+        _Row_Email = Fm.Pro_Row_Fila_Seleccionada
+        Fm.Dispose()
+
+        If Not IsNothing(_Row_Email) Then
+            Txt_CtaCorreoEnvioAutomatizado_NVI.Tag = _Row_Email.Item("Id")
+            Txt_CtaCorreoEnvioAutomatizado_NVI.Text = _Row_Email.Item("Nombre_Correo").ToString.Trim
+        End If
+
+    End Sub
+
+    Private Sub Txt_CtaCorreoEnvioAutomatizado_NVI_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CtaCorreoEnvioAutomatizado_NVI.ButtonCustom2Click
+        If MessageBoxEx.Show(Me, "Confirma quitar el correo", "Quitar correo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Txt_CtaCorreoEnvioAutomatizado_NVI.Tag = 0
+            Txt_CtaCorreoEnvioAutomatizado_NVI.Text = String.Empty
+        End If
+    End Sub
+
+    Private Sub Txt_NombreFormato_PDF_NVI_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_NombreFormato_PDF_NVI.ButtonCustomClick
+
+        Dim Fm As New Frm_Seleccionar_Formato("NVI")
+
+        If CBool(Fm.Tbl_Formatos.Rows.Count) Then
+
+            Fm.ShowDialog(Me)
+            If Fm.Formato_Seleccionado Then
+                Txt_NombreFormato_PDF_NVI.Tag = Fm.Row_Formato_Seleccionado.Item("NombreFormato").ToString.Trim
+                Txt_NombreFormato_PDF_NVI.Text = Fm.Row_Formato_Seleccionado.Item("NombreFormato").ToString.Trim
+            End If
+
+        Else
+            MessageBoxEx.Show(Me, "No existen formatos adicionales para este documento", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
+
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Txt_NombreFormato_PDF_NVI_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_NombreFormato_PDF_NVI.ButtonCustom2Click
+        If MessageBoxEx.Show(Me, "Confirma quitar el formato", "Quitar formato", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Txt_NombreFormato_PDF_NVI.Tag = String.Empty
+            Txt_NombreFormato_PDF_NVI.Text = String.Empty
+        End If
+    End Sub
 End Class
