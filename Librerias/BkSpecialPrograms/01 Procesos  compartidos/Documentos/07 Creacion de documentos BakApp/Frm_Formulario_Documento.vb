@@ -12875,6 +12875,9 @@ Public Class Frm_Formulario_Documento
                 Fm_D.Pro_Dias_1er_Vencimiento = .Item("Dias_1er_Vencimiento")
                 Fm_D.Pro_Dias_Vencimiento = .Item("Dias_Vencimiento")
 
+                'Fincred
+                Fm_D.RevFincred = .Item("RevFincred")
+
                 If _Vizado Or _Revision_Remota Then
                     Fm_D.Btn_CambCodPago.Enabled = False
                 End If
@@ -12889,6 +12892,9 @@ Public Class Frm_Formulario_Documento
                     .Item("Cuotas") = Fm_D.Pro_Cuotas
                     .Item("Dias_1er_Vencimiento") = Fm_D.Pro_Dias_1er_Vencimiento
                     .Item("Dias_Vencimiento") = Fm_D.Pro_Dias_Vencimiento
+
+                    'Fincred
+                    .Item("RevFincred") = Fm_D.RevFincred
 
                     If _Vizado Then
 
@@ -15085,13 +15091,7 @@ Public Class Frm_Formulario_Documento
 
         Try
 
-            If _Tido = "NVV" And _Global_Row_Configuracion_Estacion.Item("FincredPaysNVV") Then
-                _Revisar_Fincred = True
-            End If
-
-            If _Tido = "FCV" And _Global_Row_Configuracion_Estacion.Item("FincredPaysFCV") Then
-                _Revisar_Fincred = True
-            End If
+            _Revisar_Fincred = _TblEncabezado.Rows(0).Item("RevFincred")
 
         Catch ex As Exception
             _Revisar_Fincred = False
@@ -15110,7 +15110,18 @@ Public Class Frm_Formulario_Documento
                                           "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Else
                     MessageBoxEx.Show(Me, _Fincred_Respuesta.MensajeError & vbCrLf &
-                                              "Código de autorización: RECHAZADO", "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                              "Código de autorización: RECHAZADO" & vbCrLf & vbCrLf &
+                                              "El documento debera seguir el conducto regular, se quitaran los plazos de vencimineto" & vbCrLf &
+                                              "Para continuar debera volver a GRABAR el documento",
+                                      "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                    _TblEncabezado.Rows(0).Item("RevFincred") = False
+                    _TblEncabezado.Rows(0).Item("FechaEmision") = _TblEncabezado.Rows(0).Item("FechaEmision")
+                    _TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento") = _TblEncabezado.Rows(0).Item("FechaEmision")
+                    _TblEncabezado.Rows(0).Item("FechaUltVencimiento") = _TblEncabezado.Rows(0).Item("FechaEmision")
+                    _TblEncabezado.Rows(0).Item("Cuotas") = 0
+                    _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento") = 0
+                    _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = 0
 
                     Return 0
 
@@ -19875,6 +19886,10 @@ Public Class Frm_Formulario_Documento
 
                     End If
 
+                    If _TblEncabezado.Rows(0).Item("RevFincred") Then
+                        _Revisar = False
+                    End If
+
                     If _Revisar Then
                         _Autorizado = False : _Necesita_Permiso = False
                         _Autorizado = Fx_Validad_Cupo_Excedido(_Necesita_Permiso)
@@ -19908,8 +19923,6 @@ Public Class Frm_Formulario_Documento
                 Sb_Revisar_Permiso("ODp00017", _Autorizado, _Necesita_Permiso)
 
             End If
-
-
 
         End If
 
@@ -24734,12 +24747,14 @@ Public Class Frm_Formulario_Documento
 
         Dim _ProductoV = _Producto + 1
 
-        _Rut_girador = "118549252" ' APROBACION DE PRUEBAS
+        '_Rut_girador = "118549252" ' APROBACION DE PRUEBAS
         '_Rut_girador = "094005051" ' NEGACION DE PRUEBAS
 
         _Rut_comprador = _Rut_girador
 
-        Dim _Fincred As New Cl_Fincred_Bakapp.Cl_Fincred_SQL(1)
+        Dim _Fincred_Id_Token = _Global_Row_Configuracion_Estacion.Item("Fincred_Id_Token")
+
+        Dim _Fincred As New Cl_Fincred_Bakapp.Cl_Fincred_SQL(_Fincred_Id_Token)
         _Fincred.Fx_Generar_Consulta(_Rut_girador,
                                      _Rut_comprador,
                                      _Numero_transaccion_cliente,
@@ -24753,15 +24768,6 @@ Public Class Frm_Formulario_Documento
                                      _Num_telefono,
                                      _Tido,
                                      "XXXXXXXXXX")
-
-        'If _Fincred.Respuesta.EsCorrecto Then
-        '    MessageBoxEx.Show(Me, _Fincred.Respuesta.TramaRespuesta.descripcion_negacion & vbCrLf &
-        '                      "Código de autorización: " & _Fincred.Respuesta.TramaRespuesta.documentos(0).autorizacion,
-        '                      "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        'Else
-        '    MessageBoxEx.Show(Me, _Fincred.Respuesta.MensajeError & vbCrLf &
-        '                      "Código de autorización: RECHAZADO", "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        'End If
 
         Return _Fincred.Respuesta
 

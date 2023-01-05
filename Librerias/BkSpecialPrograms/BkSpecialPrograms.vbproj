@@ -597,6 +597,18 @@
     <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random_Ficha.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Formularios\Fincred\Frm_Fincred.Designer.vb">
+      <DependentUpon>Frm_Fincred.vb</DependentUpon>
+    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Formularios\Fincred\Frm_Fincred.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Formularios\Fincred\Frm_FincredTokens.Designer.vb">
+      <DependentUpon>Frm_FincredTokens.vb</DependentUpon>
+    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Formularios\Fincred\Frm_FincredTokens.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Configuracion_Gral.Designer.vb">
       <DependentUpon>Frm_Configuracion_Gral.vb</DependentUpon>
     </Compile>
@@ -4048,6 +4060,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random_Ficha.resx">
       <DependentUpon>Frm_Usuarios_Random_Ficha.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Formularios\Fincred\Frm_Fincred.resx">
+      <DependentUpon>Frm_Fincred.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Formularios\Fincred\Frm_FincredTokens.resx">
+      <DependentUpon>Frm_FincredTokens.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Configuracion_Gral.resx">
       <DependentUpon>Frm_Configuracion_Gral.vb</DependentUpon>
