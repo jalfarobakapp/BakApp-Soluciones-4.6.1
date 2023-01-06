@@ -383,9 +383,9 @@ Public Class Clas_Pago_Banco_De_Chile_F400
                     If _Email <> "" Then
                         _NumeroMensaje = _NumeroMensaje + 1
                         _NroEmail = Rellenar(_NumeroMensaje, 4, "0", False)
-                        _Linea = _Linea & _NroEmail  ' WorksheetFunction.Rept("0", 4 - Len(NumeroMensaje)) & NumeroMensaje
+                        _Linea = _Linea & _NroEmail
                     Else
-                        _Linea = _Linea & Rellenar(_NumeroMensaje, 4, "0", False) & "0"
+                        _Linea = _Linea & Rellenar(_NumeroMensaje, 4, "0", False) ' & "0"
                     End If
 
                     '  Linea = Linea & WorksheetFunction.Rept("0", 4 - Len(NumeroMensaje)) & NumeroMensaje

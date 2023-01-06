@@ -239,11 +239,6 @@ Public Class Frm_Ver_Documento
 
                 Sb_Abrir_Documento_Desde_Random_SQL()
 
-                Consulta_sql = "Select FResp.*,Isnull(FDoc.Autorizacion,'RECHAZADO') As CodAutorizacion" & vbCrLf &
-                        "From Zw_Fincred_TramaRespuesta FResp" & vbCrLf &
-                        "Left Join Zw_Fincred_Documentos FDoc On FResp.Id = FDoc.Id_TR" & vbCrLf &
-                        "Where (Idmaeedo = " & _Idmaeedo & ")"
-
                 _Reg = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Fincred_TramaRespuesta", "Idmaeedo = " & _Idmaeedo))
 
                 Btn_InfFincred.Visible = _Reg
