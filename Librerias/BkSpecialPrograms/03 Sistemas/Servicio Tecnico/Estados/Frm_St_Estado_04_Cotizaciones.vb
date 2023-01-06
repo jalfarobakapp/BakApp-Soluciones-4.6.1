@@ -1066,7 +1066,7 @@ Public Class Frm_St_Estado_04_Cotizaciones
         Dim _New_Idmaeedo = Fm.Pro_Idmaeedo
         Fm.Dispose()
 
-        _New_Idmaeedo = 339718
+        '_New_Idmaeedo = 339727
 
         If CBool(_New_Idmaeedo) Then
 
