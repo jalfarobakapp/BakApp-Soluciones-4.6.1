@@ -3356,6 +3356,8 @@ Public Class Frm_01_Asis_Compra_Resultados
                 .Pro_Proyeccion_Tiempo_Reposicion = Clas_Asistente_Compras.Enum_Proyeccion.Meses
             End If
 
+            .Chk_SumerStockExternoAlFisico = Chk_SumerStockExternoAlFisico.Checked
+
             .Sb_Actualizar_Rotacion(_Codigo, _Actualizar_Dias_Stock_En_Bodega)
 
         End With
@@ -3795,6 +3797,9 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         _Clas_Asistente_Compras.Pro_Filtro_Bodegas_Todas = _Filtro_Bodegas_Todas
         _Clas_Asistente_Compras.Pro_Tbl_Filtro_Bodegas = _TblBodCompra
+
+        _Clas_Asistente_Compras.Chk_SumerStockExternoAlFisico = Chk_SumerStockExternoAlFisico.Checked
+
         _Clas_Asistente_Compras.Sb_Actualizar_Stock()
 
     End Sub
@@ -4636,6 +4641,14 @@ Public Class Frm_01_Asis_Compra_Resultados
         '   Incluir o no incluir movimientos hacia la producción (GDI -> ODT)
         _Sql.Sb_Parametro_Informe_Sql(Chk_Incluir_Salidas_GDI_OT, "Compras_Asistente",
                                              Chk_Incluir_Salidas_GDI_OT.Name, Class_SQLite.Enum_Type._Boolean, Chk_Incluir_Salidas_GDI_OT.Checked, _Actualizar)
+
+
+
+
+        ' Sumar Stock Externo al Stock Fisico
+        _Sql.Sb_Parametro_Informe_Sql(Chk_SumerStockExternoAlFisico, "Compras_Asistente",
+                                      Chk_SumerStockExternoAlFisico.Name, Class_SQLite.Enum_Type._Boolean, Chk_SumerStockExternoAlFisico.Checked, _Actualizar)
+
 
 
     End Sub

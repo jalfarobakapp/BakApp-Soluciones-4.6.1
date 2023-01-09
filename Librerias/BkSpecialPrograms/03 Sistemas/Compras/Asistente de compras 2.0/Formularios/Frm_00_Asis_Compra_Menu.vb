@@ -840,10 +840,10 @@ Public Class Frm_00_Asis_Compra_Menu
                                       Txt_CorreoCc_NVI.Name, Class_SQLite.Enum_Type._String, Txt_CorreoCc_NVI.Text, _Actualizar)
 
 
-        'If Not _Actualizar Then
-        '    Txt_CtaCorreoEnvioAutomatizado_OCC.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Nombre_Correo", "Id = " & Txt_CtaCorreoEnvioAutomatizado_OCC.Tag)
-        '    Txt_CtaCorreoEnvioAutomatizado_NVI.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Nombre_Correo", "Id = " & Txt_CtaCorreoEnvioAutomatizado_NVI.Tag)
-        'End If
+        ' Sumar Stock Externo al Stock Fisico
+        _Sql.Sb_Parametro_Informe_Sql(Chk_SumerStockExternoAlFisico, "Compras_Asistente",
+                                      Chk_SumerStockExternoAlFisico.Name, Class_SQLite.Enum_Type._Boolean, Chk_SumerStockExternoAlFisico.Checked, _Actualizar)
+
 
     End Sub
 

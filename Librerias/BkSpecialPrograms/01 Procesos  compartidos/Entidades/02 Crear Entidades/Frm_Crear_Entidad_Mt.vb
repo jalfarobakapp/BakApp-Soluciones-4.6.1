@@ -854,7 +854,6 @@ Public Class Frm_Crear_Entidad_Mt
 
                 If _Fila.RowState <> DataRowState.Deleted Then
 
-                    'Dim _Koen = _Fila.Item("KOEN")
                     Dim _Tipopago = _Fila.Item("TIPOPAGO")
                     Dim _Emisor = _Fila.Item("EMISOR")
                     Dim _Cuenta = _Fila.Item("CUENTA")
@@ -883,9 +882,6 @@ Public Class Frm_Crear_Entidad_Mt
                 Consulta_sql = "Delete MAEENMAIL Where KOEN = '" & TxtxCodEntidad.Text & "'" & vbCrLf & vbCrLf
 
                 For Each _Fila As DataRow In _Tbl_Maeenmail.Rows
-
-                    'Dim _Koen As String = _Fila.Item("KOEN")
-                    'Dim _Suen As String = _Fila.Item("SUEN")
 
                     Dim _Komail As String = _Fila.Item("KOMAIL")
                     Dim _Name_komail As String = _Fila.Item("NAME_KOMAIL")
@@ -928,7 +924,6 @@ Public Class Frm_Crear_Entidad_Mt
 
             myTrans.Commit()
             SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
-
 
             _Grabar = True
             Me.Close()
