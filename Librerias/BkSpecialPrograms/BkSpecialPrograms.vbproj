@@ -5276,6 +5276,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Frm_St_Filtrar_Ordenes_de_trabajo.resx">
       <DependentUpon>Frm_St_Filtrar_Ordenes_de_trabajo.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Frm_St_Ordenes_de_trabajo.resx">
       <DependentUpon>Frm_St_Ordenes_de_trabajo.vb</DependentUpon>
