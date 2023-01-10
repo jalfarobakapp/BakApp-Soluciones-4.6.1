@@ -48,6 +48,14 @@ Partial Class Frm_Configuracion_Gral
         Me.Cmb_TipoValor_Bruto_Neto = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
+        Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Btn_FincredConfiguracion = New DevComponents.DotNetBar.ButtonX()
+        Me.LabelX22 = New DevComponents.DotNetBar.LabelX()
+        Me.Line1 = New DevComponents.DotNetBar.Controls.Line()
+        Me.Txt_Fincred_Id_Token = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX21 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_Fincred_Usar = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.SpTab_FincredPays = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
         Me.Chk_LeerSoloUnaVezCodBarra = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -61,6 +69,42 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_Pedir_Permiso_Para_Usar_Stanby = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Revisar_Taza_Solo_Mon_Extranjeras = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.SpTab_General = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_CpActeco = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX14 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_CpComuna = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_CpEmpresa = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX12 = New DevComponents.DotNetBar.LabelX()
+        Me.Btn_Editar_Datos_Empresa = New DevComponents.DotNetBar.ButtonX()
+        Me.Txt_CpGiro = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX11 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_CpCiudad = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX8 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_CpPais = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_CpDireccion = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_CpRazon = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_CpNcorto = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_CpRut = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
+        Me.SpTab_DatosEmpresa = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel7 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_PermitirMigrarProductosBaseExterna = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.chk_Pr_Creacion_Exigir_Dimensiones = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Pr_Creacion_Exigir_Precio = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Cmb_Nodo_Raiz_Asociados = New DevComponents.DotNetBar.Controls.ComboBoxEx()
+        Me.LabelX15 = New DevComponents.DotNetBar.LabelX()
+        Me.SpTab_Productos = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel6 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Chk_CriterioFechaGDVconFechaDistintaDocOrigenObligatorio = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
@@ -93,74 +137,30 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_Revisar_OCC_Pendientes_X_Productos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Solicitar_Permiso_OCC_SOC = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.SpTab_Compras = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel7 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_PermitirMigrarProductosBaseExterna = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.chk_Pr_Creacion_Exigir_Dimensiones = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_Pr_Creacion_Exigir_Precio = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Cmb_Nodo_Raiz_Asociados = New DevComponents.DotNetBar.Controls.ComboBoxEx()
-        Me.LabelX15 = New DevComponents.DotNetBar.LabelX()
-        Me.SpTab_Productos = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Txt_CpActeco = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX14 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_CpComuna = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_CpEmpresa = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX12 = New DevComponents.DotNetBar.LabelX()
-        Me.Btn_Editar_Datos_Empresa = New DevComponents.DotNetBar.ButtonX()
-        Me.Txt_CpGiro = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX11 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_CpCiudad = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX8 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_CpPais = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_CpDireccion = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_CpRazon = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_CpNcorto = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_CpRut = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
-        Me.SpTab_DatosEmpresa = New DevComponents.DotNetBar.SuperTabItem()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Numeraciones_Documento = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Excluir_Documentos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_DocConceptosVsPagos = New DevComponents.DotNetBar.ButtonItem()
         Me.CheckBoxX2 = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.SpTab_FincredPays = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.Chk_Fincred_Usar = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Btn_FincredConfiguracion = New DevComponents.DotNetBar.ButtonX()
-        Me.Txt_Fincred_Id_Token = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX21 = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX22 = New DevComponents.DotNetBar.LabelX()
-        Me.Line1 = New DevComponents.DotNetBar.Controls.Line()
         Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.Input_Monto_Max_CRV_FacMasiva, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel4.SuspendLayout()
         CType(Me.Input_Dias_Max_Fecha_Despacho, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
+        Me.SuperTabControlPanel3.SuspendLayout()
         Me.SuperTabControlPanel1.SuspendLayout()
         Me.TableLayoutPanel5.SuspendLayout()
+        Me.SuperTabControlPanel2.SuspendLayout()
+        Me.GroupPanel1.SuspendLayout()
+        Me.SuperTabControlPanel7.SuspendLayout()
+        Me.TableLayoutPanel2.SuspendLayout()
         Me.SuperTabControlPanel6.SuspendLayout()
         Me.SuperTabControlPanel5.SuspendLayout()
         Me.Grupo_RecepXMLComp.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
-        Me.SuperTabControlPanel7.SuspendLayout()
-        Me.TableLayoutPanel2.SuspendLayout()
-        Me.SuperTabControlPanel2.SuspendLayout()
-        Me.GroupPanel1.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SuperTabControlPanel3.SuspendLayout()
         Me.SuspendLayout()
         '
         'TableLayoutPanel3
@@ -605,8 +605,8 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel7)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel6)
@@ -622,6 +622,119 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControl1.TabIndex = 97
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SpTab_General, Me.SpTab_Compras, Me.SpTab_Ventas, Me.SpTab_Productos, Me.SpTab_DatosEmpresa, Me.SpTab_FincredPays})
         Me.SuperTabControl1.Text = "SuperTabControl1"
+        '
+        'SuperTabControlPanel3
+        '
+        Me.SuperTabControlPanel3.Controls.Add(Me.Btn_FincredConfiguracion)
+        Me.SuperTabControlPanel3.Controls.Add(Me.LabelX22)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Line1)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Txt_Fincred_Id_Token)
+        Me.SuperTabControlPanel3.Controls.Add(Me.LabelX21)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Chk_Fincred_Usar)
+        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(672, 539)
+        Me.SuperTabControlPanel3.TabIndex = 0
+        Me.SuperTabControlPanel3.TabItem = Me.SpTab_FincredPays
+        '
+        'Btn_FincredConfiguracion
+        '
+        Me.Btn_FincredConfiguracion.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_FincredConfiguracion.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_FincredConfiguracion.Location = New System.Drawing.Point(6, 97)
+        Me.Btn_FincredConfiguracion.Name = "Btn_FincredConfiguracion"
+        Me.Btn_FincredConfiguracion.Size = New System.Drawing.Size(199, 23)
+        Me.Btn_FincredConfiguracion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_FincredConfiguracion.TabIndex = 126
+        Me.Btn_FincredConfiguracion.Text = "FINCRED PAYS Configuración Tokens"
+        '
+        'LabelX22
+        '
+        Me.LabelX22.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX22.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX22.ForeColor = System.Drawing.Color.Black
+        Me.LabelX22.Location = New System.Drawing.Point(6, 76)
+        Me.LabelX22.Name = "LabelX22"
+        Me.LabelX22.Size = New System.Drawing.Size(135, 23)
+        Me.LabelX22.TabIndex = 131
+        Me.LabelX22.Text = "Configuración"
+        '
+        'Line1
+        '
+        Me.Line1.BackColor = System.Drawing.Color.Transparent
+        Me.Line1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.Line1.ForeColor = System.Drawing.Color.Black
+        Me.Line1.Location = New System.Drawing.Point(6, 63)
+        Me.Line1.Name = "Line1"
+        Me.Line1.Size = New System.Drawing.Size(513, 23)
+        Me.Line1.TabIndex = 132
+        Me.Line1.Text = "Line1"
+        '
+        'Txt_Fincred_Id_Token
+        '
+        Me.Txt_Fincred_Id_Token.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Fincred_Id_Token.Border.Class = "TextBoxBorder"
+        Me.Txt_Fincred_Id_Token.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Fincred_Id_Token.ButtonCustom.Image = CType(resources.GetObject("Txt_Fincred_Id_Token.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Fincred_Id_Token.ButtonCustom.Visible = True
+        Me.Txt_Fincred_Id_Token.ButtonCustom2.Image = CType(resources.GetObject("Txt_Fincred_Id_Token.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Fincred_Id_Token.ButtonCustom2.Visible = True
+        Me.Txt_Fincred_Id_Token.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Fincred_Id_Token.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Fincred_Id_Token.Location = New System.Drawing.Point(45, 32)
+        Me.Txt_Fincred_Id_Token.Name = "Txt_Fincred_Id_Token"
+        Me.Txt_Fincred_Id_Token.PreventEnterBeep = True
+        Me.Txt_Fincred_Id_Token.ReadOnly = True
+        Me.Txt_Fincred_Id_Token.Size = New System.Drawing.Size(612, 22)
+        Me.Txt_Fincred_Id_Token.TabIndex = 129
+        Me.Txt_Fincred_Id_Token.Tag = "0"
+        Me.Txt_Fincred_Id_Token.Text = "FCc4c28b367e14df88993ad475dedf6b77P - Sucursal: Nombre de Sucursal, Ambiente de p" &
+    "ruebas"
+        '
+        'LabelX21
+        '
+        Me.LabelX21.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX21.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX21.ForeColor = System.Drawing.Color.Black
+        Me.LabelX21.Location = New System.Drawing.Point(3, 32)
+        Me.LabelX21.Name = "LabelX21"
+        Me.LabelX21.Size = New System.Drawing.Size(43, 23)
+        Me.LabelX21.TabIndex = 130
+        Me.LabelX21.Text = "Token"
+        '
+        'Chk_Fincred_Usar
+        '
+        Me.Chk_Fincred_Usar.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Fincred_Usar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Fincred_Usar.CheckBoxImageChecked = CType(resources.GetObject("Chk_Fincred_Usar.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Fincred_Usar.FocusCuesEnabled = False
+        Me.Chk_Fincred_Usar.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Fincred_Usar.Location = New System.Drawing.Point(3, 12)
+        Me.Chk_Fincred_Usar.Name = "Chk_Fincred_Usar"
+        Me.Chk_Fincred_Usar.Size = New System.Drawing.Size(483, 14)
+        Me.Chk_Fincred_Usar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Fincred_Usar.TabIndex = 127
+        Me.Chk_Fincred_Usar.Text = "Usar Fincred para la revisión de clientes sin crédito"
+        '
+        'SpTab_FincredPays
+        '
+        Me.SpTab_FincredPays.AttachedControl = Me.SuperTabControlPanel3
+        Me.SpTab_FincredPays.GlobalItem = False
+        Me.SpTab_FincredPays.Name = "SpTab_FincredPays"
+        Me.SpTab_FincredPays.Text = "Fincred Pays"
         '
         'SuperTabControlPanel1
         '
@@ -840,6 +953,604 @@ Partial Class Frm_Configuracion_Gral
         Me.SpTab_General.Name = "SpTab_General"
         Me.SpTab_General.Text = "General"
         '
+        'SuperTabControlPanel2
+        '
+        Me.SuperTabControlPanel2.Controls.Add(Me.GroupPanel1)
+        Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(672, 539)
+        Me.SuperTabControlPanel2.TabIndex = 0
+        Me.SuperTabControlPanel2.TabItem = Me.SpTab_DatosEmpresa
+        '
+        'GroupPanel1
+        '
+        Me.GroupPanel1.BackColor = System.Drawing.Color.White
+        Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Txt_CpActeco)
+        Me.GroupPanel1.Controls.Add(Me.LabelX14)
+        Me.GroupPanel1.Controls.Add(Me.Txt_CpComuna)
+        Me.GroupPanel1.Controls.Add(Me.LabelX13)
+        Me.GroupPanel1.Controls.Add(Me.Txt_CpEmpresa)
+        Me.GroupPanel1.Controls.Add(Me.LabelX12)
+        Me.GroupPanel1.Controls.Add(Me.Btn_Editar_Datos_Empresa)
+        Me.GroupPanel1.Controls.Add(Me.Txt_CpGiro)
+        Me.GroupPanel1.Controls.Add(Me.LabelX11)
+        Me.GroupPanel1.Controls.Add(Me.Txt_CpCiudad)
+        Me.GroupPanel1.Controls.Add(Me.LabelX8)
+        Me.GroupPanel1.Controls.Add(Me.Txt_CpPais)
+        Me.GroupPanel1.Controls.Add(Me.LabelX7)
+        Me.GroupPanel1.Controls.Add(Me.Txt_CpDireccion)
+        Me.GroupPanel1.Controls.Add(Me.LabelX6)
+        Me.GroupPanel1.Controls.Add(Me.Txt_CpRazon)
+        Me.GroupPanel1.Controls.Add(Me.LabelX5)
+        Me.GroupPanel1.Controls.Add(Me.Txt_CpNcorto)
+        Me.GroupPanel1.Controls.Add(Me.LabelX4)
+        Me.GroupPanel1.Controls.Add(Me.Txt_CpRut)
+        Me.GroupPanel1.Controls.Add(Me.LabelX3)
+        Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel1.Location = New System.Drawing.Point(15, 3)
+        Me.GroupPanel1.Name = "GroupPanel1"
+        Me.GroupPanel1.Size = New System.Drawing.Size(645, 360)
+        '
+        '
+        '
+        Me.GroupPanel1.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel1.Style.BackColorGradientAngle = 90
+        Me.GroupPanel1.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel1.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderBottomWidth = 1
+        Me.GroupPanel1.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel1.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderLeftWidth = 1
+        Me.GroupPanel1.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderRightWidth = 1
+        Me.GroupPanel1.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderTopWidth = 1
+        Me.GroupPanel1.Style.CornerDiameter = 4
+        Me.GroupPanel1.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel1.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel1.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel1.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel1.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel1.TabIndex = 0
+        Me.GroupPanel1.Text = "Datos de la empresa"
+        '
+        'Txt_CpActeco
+        '
+        Me.Txt_CpActeco.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CpActeco.Border.Class = "TextBoxBorder"
+        Me.Txt_CpActeco.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CpActeco.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CpActeco.Enabled = False
+        Me.Txt_CpActeco.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CpActeco.Location = New System.Drawing.Point(105, 266)
+        Me.Txt_CpActeco.Name = "Txt_CpActeco"
+        Me.Txt_CpActeco.PreventEnterBeep = True
+        Me.Txt_CpActeco.Size = New System.Drawing.Size(100, 22)
+        Me.Txt_CpActeco.TabIndex = 27
+        '
+        'LabelX14
+        '
+        Me.LabelX14.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX14.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX14.ForeColor = System.Drawing.Color.Black
+        Me.LabelX14.Location = New System.Drawing.Point(24, 266)
+        Me.LabelX14.Name = "LabelX14"
+        Me.LabelX14.Size = New System.Drawing.Size(75, 23)
+        Me.LabelX14.TabIndex = 26
+        Me.LabelX14.Text = "Acteco"
+        '
+        'Txt_CpComuna
+        '
+        Me.Txt_CpComuna.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CpComuna.Border.Class = "TextBoxBorder"
+        Me.Txt_CpComuna.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CpComuna.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CpComuna.Enabled = False
+        Me.Txt_CpComuna.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CpComuna.Location = New System.Drawing.Point(105, 210)
+        Me.Txt_CpComuna.Name = "Txt_CpComuna"
+        Me.Txt_CpComuna.PreventEnterBeep = True
+        Me.Txt_CpComuna.Size = New System.Drawing.Size(173, 22)
+        Me.Txt_CpComuna.TabIndex = 25
+        '
+        'LabelX13
+        '
+        Me.LabelX13.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX13.ForeColor = System.Drawing.Color.Black
+        Me.LabelX13.Location = New System.Drawing.Point(24, 209)
+        Me.LabelX13.Name = "LabelX13"
+        Me.LabelX13.Size = New System.Drawing.Size(99, 23)
+        Me.LabelX13.TabIndex = 24
+        Me.LabelX13.Text = "Comuna"
+        '
+        'Txt_CpEmpresa
+        '
+        Me.Txt_CpEmpresa.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CpEmpresa.Border.Class = "TextBoxBorder"
+        Me.Txt_CpEmpresa.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CpEmpresa.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CpEmpresa.Enabled = False
+        Me.Txt_CpEmpresa.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CpEmpresa.Location = New System.Drawing.Point(105, 8)
+        Me.Txt_CpEmpresa.Name = "Txt_CpEmpresa"
+        Me.Txt_CpEmpresa.PreventEnterBeep = True
+        Me.Txt_CpEmpresa.Size = New System.Drawing.Size(37, 22)
+        Me.Txt_CpEmpresa.TabIndex = 16
+        Me.Txt_CpEmpresa.Text = "01"
+        Me.Txt_CpEmpresa.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'LabelX12
+        '
+        Me.LabelX12.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX12.ForeColor = System.Drawing.Color.Black
+        Me.LabelX12.Location = New System.Drawing.Point(24, 8)
+        Me.LabelX12.Name = "LabelX12"
+        Me.LabelX12.Size = New System.Drawing.Size(75, 23)
+        Me.LabelX12.TabIndex = 15
+        Me.LabelX12.Text = "Empresa"
+        '
+        'Btn_Editar_Datos_Empresa
+        '
+        Me.Btn_Editar_Datos_Empresa.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Editar_Datos_Empresa.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Editar_Datos_Empresa.Location = New System.Drawing.Point(24, 304)
+        Me.Btn_Editar_Datos_Empresa.Name = "Btn_Editar_Datos_Empresa"
+        Me.Btn_Editar_Datos_Empresa.Size = New System.Drawing.Size(144, 23)
+        Me.Btn_Editar_Datos_Empresa.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Editar_Datos_Empresa.TabIndex = 14
+        Me.Btn_Editar_Datos_Empresa.Text = "Editar datos de la empresa"
+        '
+        'Txt_CpGiro
+        '
+        Me.Txt_CpGiro.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CpGiro.Border.Class = "TextBoxBorder"
+        Me.Txt_CpGiro.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CpGiro.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CpGiro.Enabled = False
+        Me.Txt_CpGiro.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CpGiro.Location = New System.Drawing.Point(105, 238)
+        Me.Txt_CpGiro.Name = "Txt_CpGiro"
+        Me.Txt_CpGiro.PreventEnterBeep = True
+        Me.Txt_CpGiro.Size = New System.Drawing.Size(357, 22)
+        Me.Txt_CpGiro.TabIndex = 23
+        '
+        'LabelX11
+        '
+        Me.LabelX11.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX11.ForeColor = System.Drawing.Color.Black
+        Me.LabelX11.Location = New System.Drawing.Point(24, 238)
+        Me.LabelX11.Name = "LabelX11"
+        Me.LabelX11.Size = New System.Drawing.Size(99, 23)
+        Me.LabelX11.TabIndex = 12
+        Me.LabelX11.Text = "Giro"
+        '
+        'Txt_CpCiudad
+        '
+        Me.Txt_CpCiudad.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CpCiudad.Border.Class = "TextBoxBorder"
+        Me.Txt_CpCiudad.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CpCiudad.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CpCiudad.Enabled = False
+        Me.Txt_CpCiudad.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CpCiudad.Location = New System.Drawing.Point(105, 182)
+        Me.Txt_CpCiudad.Name = "Txt_CpCiudad"
+        Me.Txt_CpCiudad.PreventEnterBeep = True
+        Me.Txt_CpCiudad.Size = New System.Drawing.Size(173, 22)
+        Me.Txt_CpCiudad.TabIndex = 22
+        '
+        'LabelX8
+        '
+        Me.LabelX8.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX8.ForeColor = System.Drawing.Color.Black
+        Me.LabelX8.Location = New System.Drawing.Point(24, 183)
+        Me.LabelX8.Name = "LabelX8"
+        Me.LabelX8.Size = New System.Drawing.Size(99, 23)
+        Me.LabelX8.TabIndex = 10
+        Me.LabelX8.Text = "Ciudad"
+        '
+        'Txt_CpPais
+        '
+        Me.Txt_CpPais.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CpPais.Border.Class = "TextBoxBorder"
+        Me.Txt_CpPais.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CpPais.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CpPais.Enabled = False
+        Me.Txt_CpPais.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CpPais.Location = New System.Drawing.Point(105, 154)
+        Me.Txt_CpPais.Name = "Txt_CpPais"
+        Me.Txt_CpPais.PreventEnterBeep = True
+        Me.Txt_CpPais.Size = New System.Drawing.Size(173, 22)
+        Me.Txt_CpPais.TabIndex = 21
+        '
+        'LabelX7
+        '
+        Me.LabelX7.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX7.ForeColor = System.Drawing.Color.Black
+        Me.LabelX7.Location = New System.Drawing.Point(24, 155)
+        Me.LabelX7.Name = "LabelX7"
+        Me.LabelX7.Size = New System.Drawing.Size(99, 23)
+        Me.LabelX7.TabIndex = 8
+        Me.LabelX7.Text = "Pais"
+        '
+        'Txt_CpDireccion
+        '
+        Me.Txt_CpDireccion.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CpDireccion.Border.Class = "TextBoxBorder"
+        Me.Txt_CpDireccion.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CpDireccion.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CpDireccion.Enabled = False
+        Me.Txt_CpDireccion.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CpDireccion.Location = New System.Drawing.Point(105, 124)
+        Me.Txt_CpDireccion.Name = "Txt_CpDireccion"
+        Me.Txt_CpDireccion.PreventEnterBeep = True
+        Me.Txt_CpDireccion.Size = New System.Drawing.Size(357, 22)
+        Me.Txt_CpDireccion.TabIndex = 20
+        '
+        'LabelX6
+        '
+        Me.LabelX6.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX6.ForeColor = System.Drawing.Color.Black
+        Me.LabelX6.Location = New System.Drawing.Point(24, 125)
+        Me.LabelX6.Name = "LabelX6"
+        Me.LabelX6.Size = New System.Drawing.Size(99, 23)
+        Me.LabelX6.TabIndex = 6
+        Me.LabelX6.Text = "Dirección"
+        '
+        'Txt_CpRazon
+        '
+        Me.Txt_CpRazon.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CpRazon.Border.Class = "TextBoxBorder"
+        Me.Txt_CpRazon.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CpRazon.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CpRazon.Enabled = False
+        Me.Txt_CpRazon.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CpRazon.Location = New System.Drawing.Point(105, 94)
+        Me.Txt_CpRazon.Name = "Txt_CpRazon"
+        Me.Txt_CpRazon.PreventEnterBeep = True
+        Me.Txt_CpRazon.Size = New System.Drawing.Size(357, 22)
+        Me.Txt_CpRazon.TabIndex = 19
+        '
+        'LabelX5
+        '
+        Me.LabelX5.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX5.ForeColor = System.Drawing.Color.Black
+        Me.LabelX5.Location = New System.Drawing.Point(24, 95)
+        Me.LabelX5.Name = "LabelX5"
+        Me.LabelX5.Size = New System.Drawing.Size(99, 23)
+        Me.LabelX5.TabIndex = 4
+        Me.LabelX5.Text = "Razón social"
+        '
+        'Txt_CpNcorto
+        '
+        Me.Txt_CpNcorto.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CpNcorto.Border.Class = "TextBoxBorder"
+        Me.Txt_CpNcorto.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CpNcorto.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CpNcorto.Enabled = False
+        Me.Txt_CpNcorto.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CpNcorto.Location = New System.Drawing.Point(105, 64)
+        Me.Txt_CpNcorto.Name = "Txt_CpNcorto"
+        Me.Txt_CpNcorto.PreventEnterBeep = True
+        Me.Txt_CpNcorto.Size = New System.Drawing.Size(173, 22)
+        Me.Txt_CpNcorto.TabIndex = 18
+        '
+        'LabelX4
+        '
+        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.ForeColor = System.Drawing.Color.Black
+        Me.LabelX4.Location = New System.Drawing.Point(24, 65)
+        Me.LabelX4.Name = "LabelX4"
+        Me.LabelX4.Size = New System.Drawing.Size(99, 23)
+        Me.LabelX4.TabIndex = 2
+        Me.LabelX4.Text = "Nombre corto"
+        '
+        'Txt_CpRut
+        '
+        Me.Txt_CpRut.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CpRut.Border.Class = "TextBoxBorder"
+        Me.Txt_CpRut.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CpRut.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CpRut.Enabled = False
+        Me.Txt_CpRut.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CpRut.Location = New System.Drawing.Point(105, 36)
+        Me.Txt_CpRut.Name = "Txt_CpRut"
+        Me.Txt_CpRut.PreventEnterBeep = True
+        Me.Txt_CpRut.Size = New System.Drawing.Size(100, 22)
+        Me.Txt_CpRut.TabIndex = 17
+        '
+        'LabelX3
+        '
+        Me.LabelX3.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX3.ForeColor = System.Drawing.Color.Black
+        Me.LabelX3.Location = New System.Drawing.Point(24, 36)
+        Me.LabelX3.Name = "LabelX3"
+        Me.LabelX3.Size = New System.Drawing.Size(75, 23)
+        Me.LabelX3.TabIndex = 0
+        Me.LabelX3.Text = "Rut"
+        '
+        'SpTab_DatosEmpresa
+        '
+        Me.SpTab_DatosEmpresa.AttachedControl = Me.SuperTabControlPanel2
+        Me.SpTab_DatosEmpresa.GlobalItem = False
+        Me.SpTab_DatosEmpresa.Name = "SpTab_DatosEmpresa"
+        Me.SpTab_DatosEmpresa.Text = "Datos Empresa"
+        '
+        'SuperTabControlPanel7
+        '
+        Me.SuperTabControlPanel7.Controls.Add(Me.TableLayoutPanel2)
+        Me.SuperTabControlPanel7.Controls.Add(Me.Cmb_Nodo_Raiz_Asociados)
+        Me.SuperTabControlPanel7.Controls.Add(Me.LabelX15)
+        Me.SuperTabControlPanel7.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel7.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel7.Name = "SuperTabControlPanel7"
+        Me.SuperTabControlPanel7.Size = New System.Drawing.Size(672, 539)
+        Me.SuperTabControlPanel7.TabIndex = 0
+        Me.SuperTabControlPanel7.TabItem = Me.SpTab_Productos
+        '
+        'TableLayoutPanel2
+        '
+        Me.TableLayoutPanel2.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel2.ColumnCount = 1
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel2.Controls.Add(Me.Chk_Pr_Desc_Producto_Solo_Mayusculas, 0, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Chk_PermitirMigrarProductosBaseExterna, 0, 6)
+        Me.TableLayoutPanel2.Controls.Add(Me.Chk_BloqCambNomCONCEPTOSEnDocumentos, 0, 5)
+        Me.TableLayoutPanel2.Controls.Add(Me.chk_Pr_Creacion_Exigir_Dimensiones, 0, 4)
+        Me.TableLayoutPanel2.Controls.Add(Me.Chk_Pr_Creacion_Exigir_Precio, 0, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo, 0, 3)
+        Me.TableLayoutPanel2.Controls.Add(Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda, 0, 2)
+        Me.TableLayoutPanel2.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 4)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 7
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(666, 141)
+        Me.TableLayoutPanel2.TabIndex = 101
+        '
+        'Chk_Pr_Desc_Producto_Solo_Mayusculas
+        '
+        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pr_Desc_Producto_Solo_Mayusculas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Pr_Desc_Producto_Solo_Mayusculas.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.FocusCuesEnabled = False
+        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.Location = New System.Drawing.Point(3, 3)
+        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.Name = "Chk_Pr_Desc_Producto_Solo_Mayusculas"
+        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.Size = New System.Drawing.Size(283, 14)
+        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.TabIndex = 86
+        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.Text = "Crear descripción de productos con solo mayúsculas"
+        '
+        'Chk_PermitirMigrarProductosBaseExterna
+        '
+        Me.Chk_PermitirMigrarProductosBaseExterna.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_PermitirMigrarProductosBaseExterna.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_PermitirMigrarProductosBaseExterna.CheckBoxImageChecked = CType(resources.GetObject("Chk_PermitirMigrarProductosBaseExterna.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_PermitirMigrarProductosBaseExterna.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_PermitirMigrarProductosBaseExterna.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_PermitirMigrarProductosBaseExterna.FocusCuesEnabled = False
+        Me.Chk_PermitirMigrarProductosBaseExterna.ForeColor = System.Drawing.Color.Black
+        Me.Chk_PermitirMigrarProductosBaseExterna.Location = New System.Drawing.Point(3, 123)
+        Me.Chk_PermitirMigrarProductosBaseExterna.Name = "Chk_PermitirMigrarProductosBaseExterna"
+        Me.Chk_PermitirMigrarProductosBaseExterna.Size = New System.Drawing.Size(551, 15)
+        Me.Chk_PermitirMigrarProductosBaseExterna.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_PermitirMigrarProductosBaseExterna.TabIndex = 100
+        Me.Chk_PermitirMigrarProductosBaseExterna.Text = "Permitir migrar productos a base de datos externa."
+        '
+        'Chk_BloqCambNomCONCEPTOSEnDocumentos
+        '
+        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.CheckBoxImageChecked = CType(resources.GetObject("Chk_BloqCambNomCONCEPTOSEnDocumentos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_BloqCambNomCONCEPTOSEnDocumentos.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.FocusCuesEnabled = False
+        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.ForeColor = System.Drawing.Color.Black
+        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.Location = New System.Drawing.Point(3, 103)
+        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.Name = "Chk_BloqCambNomCONCEPTOSEnDocumentos"
+        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.Size = New System.Drawing.Size(551, 14)
+        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.TabIndex = 99
+        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.Text = "Bloquear la opción de cambiar el nombre a los CONCEPTOS en los documentos"
+        '
+        'chk_Pr_Creacion_Exigir_Dimensiones
+        '
+        Me.chk_Pr_Creacion_Exigir_Dimensiones.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.chk_Pr_Creacion_Exigir_Dimensiones.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.chk_Pr_Creacion_Exigir_Dimensiones.CheckBoxImageChecked = CType(resources.GetObject("chk_Pr_Creacion_Exigir_Dimensiones.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.chk_Pr_Creacion_Exigir_Dimensiones.CheckBoxImageIndeterminate = CType(resources.GetObject("chk_Pr_Creacion_Exigir_Dimensiones.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.chk_Pr_Creacion_Exigir_Dimensiones.FocusCuesEnabled = False
+        Me.chk_Pr_Creacion_Exigir_Dimensiones.ForeColor = System.Drawing.Color.Black
+        Me.chk_Pr_Creacion_Exigir_Dimensiones.Location = New System.Drawing.Point(3, 83)
+        Me.chk_Pr_Creacion_Exigir_Dimensiones.Name = "chk_Pr_Creacion_Exigir_Dimensiones"
+        Me.chk_Pr_Creacion_Exigir_Dimensiones.Size = New System.Drawing.Size(283, 14)
+        Me.chk_Pr_Creacion_Exigir_Dimensiones.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.chk_Pr_Creacion_Exigir_Dimensiones.TabIndex = 97
+        Me.chk_Pr_Creacion_Exigir_Dimensiones.Text = "Al crear el producto exigir dimensiones"
+        '
+        'Chk_Pr_Creacion_Exigir_Precio
+        '
+        Me.Chk_Pr_Creacion_Exigir_Precio.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Pr_Creacion_Exigir_Precio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Pr_Creacion_Exigir_Precio.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pr_Creacion_Exigir_Precio.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Pr_Creacion_Exigir_Precio.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Pr_Creacion_Exigir_Precio.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_Pr_Creacion_Exigir_Precio.FocusCuesEnabled = False
+        Me.Chk_Pr_Creacion_Exigir_Precio.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Pr_Creacion_Exigir_Precio.Location = New System.Drawing.Point(3, 23)
+        Me.Chk_Pr_Creacion_Exigir_Precio.Name = "Chk_Pr_Creacion_Exigir_Precio"
+        Me.Chk_Pr_Creacion_Exigir_Precio.Size = New System.Drawing.Size(283, 14)
+        Me.Chk_Pr_Creacion_Exigir_Precio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Pr_Creacion_Exigir_Precio.TabIndex = 94
+        Me.Chk_Pr_Creacion_Exigir_Precio.Text = "Al crear el producto exigir el precio"
+        '
+        'Chk_Pr_Creacion_Exigir_Codigo_Alternativo
+        '
+        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pr_Creacion_Exigir_Codigo_Alternativo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Pr_Creacion_Exigir_Codigo_Alternativo.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.FocusCuesEnabled = False
+        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.Location = New System.Drawing.Point(3, 63)
+        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.Name = "Chk_Pr_Creacion_Exigir_Codigo_Alternativo"
+        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.Size = New System.Drawing.Size(283, 14)
+        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.TabIndex = 96
+        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.Text = "Al crear el producto exigir código alternativo"
+        '
+        'Chk_Pr_Creacion_Exigir_Clasificacion_busqueda
+        '
+        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.FocusCuesEnabled = False
+        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.Location = New System.Drawing.Point(3, 43)
+        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.Name = "Chk_Pr_Creacion_Exigir_Clasificacion_busqueda"
+        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.Size = New System.Drawing.Size(283, 14)
+        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.TabIndex = 95
+        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.Text = "Al crear el producto exigir clasificación de búsqueda"
+        '
+        'Cmb_Nodo_Raiz_Asociados
+        '
+        Me.Cmb_Nodo_Raiz_Asociados.DisplayMember = "Text"
+        Me.Cmb_Nodo_Raiz_Asociados.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_Nodo_Raiz_Asociados.ForeColor = System.Drawing.Color.Black
+        Me.Cmb_Nodo_Raiz_Asociados.FormattingEnabled = True
+        Me.Cmb_Nodo_Raiz_Asociados.ItemHeight = 16
+        Me.Cmb_Nodo_Raiz_Asociados.Location = New System.Drawing.Point(180, 482)
+        Me.Cmb_Nodo_Raiz_Asociados.Name = "Cmb_Nodo_Raiz_Asociados"
+        Me.Cmb_Nodo_Raiz_Asociados.Size = New System.Drawing.Size(161, 22)
+        Me.Cmb_Nodo_Raiz_Asociados.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Cmb_Nodo_Raiz_Asociados.TabIndex = 98
+        '
+        'LabelX15
+        '
+        Me.LabelX15.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX15.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX15.ForeColor = System.Drawing.Color.Black
+        Me.LabelX15.Location = New System.Drawing.Point(6, 482)
+        Me.LabelX15.Name = "LabelX15"
+        Me.LabelX15.Size = New System.Drawing.Size(168, 18)
+        Me.LabelX15.TabIndex = 97
+        Me.LabelX15.Text = "Carpeta raíz productos asociados"
+        '
+        'SpTab_Productos
+        '
+        Me.SpTab_Productos.AttachedControl = Me.SuperTabControlPanel7
+        Me.SpTab_Productos.GlobalItem = False
+        Me.SpTab_Productos.Name = "SpTab_Productos"
+        Me.SpTab_Productos.Text = "Productos/Conceptos"
+        '
         'SuperTabControlPanel6
         '
         Me.SuperTabControlPanel6.Controls.Add(Me.Chk_CriterioFechaGDVconFechaDistintaDocOrigenObligatorio)
@@ -853,9 +1564,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel6.Controls.Add(Me.TableLayoutPanel3)
         Me.SuperTabControlPanel6.Controls.Add(Me.TableLayoutPanel4)
         Me.SuperTabControlPanel6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(0, 0)
         Me.SuperTabControlPanel6.Name = "SuperTabControlPanel6"
-        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(672, 512)
+        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(672, 539)
         Me.SuperTabControlPanel6.TabIndex = 0
         Me.SuperTabControlPanel6.TabItem = Me.SpTab_Ventas
         '
@@ -1368,604 +2079,6 @@ Partial Class Frm_Configuracion_Gral
         Me.SpTab_Compras.Name = "SpTab_Compras"
         Me.SpTab_Compras.Text = "Compras"
         '
-        'SuperTabControlPanel7
-        '
-        Me.SuperTabControlPanel7.Controls.Add(Me.TableLayoutPanel2)
-        Me.SuperTabControlPanel7.Controls.Add(Me.Cmb_Nodo_Raiz_Asociados)
-        Me.SuperTabControlPanel7.Controls.Add(Me.LabelX15)
-        Me.SuperTabControlPanel7.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel7.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel7.Name = "SuperTabControlPanel7"
-        Me.SuperTabControlPanel7.Size = New System.Drawing.Size(672, 512)
-        Me.SuperTabControlPanel7.TabIndex = 0
-        Me.SuperTabControlPanel7.TabItem = Me.SpTab_Productos
-        '
-        'TableLayoutPanel2
-        '
-        Me.TableLayoutPanel2.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel2.ColumnCount = 1
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel2.Controls.Add(Me.Chk_Pr_Desc_Producto_Solo_Mayusculas, 0, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.Chk_PermitirMigrarProductosBaseExterna, 0, 6)
-        Me.TableLayoutPanel2.Controls.Add(Me.Chk_BloqCambNomCONCEPTOSEnDocumentos, 0, 5)
-        Me.TableLayoutPanel2.Controls.Add(Me.chk_Pr_Creacion_Exigir_Dimensiones, 0, 4)
-        Me.TableLayoutPanel2.Controls.Add(Me.Chk_Pr_Creacion_Exigir_Precio, 0, 1)
-        Me.TableLayoutPanel2.Controls.Add(Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo, 0, 3)
-        Me.TableLayoutPanel2.Controls.Add(Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda, 0, 2)
-        Me.TableLayoutPanel2.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 4)
-        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
-        Me.TableLayoutPanel2.RowCount = 7
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(666, 141)
-        Me.TableLayoutPanel2.TabIndex = 101
-        '
-        'Chk_Pr_Desc_Producto_Solo_Mayusculas
-        '
-        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pr_Desc_Producto_Solo_Mayusculas.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Pr_Desc_Producto_Solo_Mayusculas.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.FocusCuesEnabled = False
-        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.Location = New System.Drawing.Point(3, 3)
-        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.Name = "Chk_Pr_Desc_Producto_Solo_Mayusculas"
-        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.Size = New System.Drawing.Size(283, 14)
-        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.TabIndex = 86
-        Me.Chk_Pr_Desc_Producto_Solo_Mayusculas.Text = "Crear descripción de productos con solo mayúsculas"
-        '
-        'Chk_PermitirMigrarProductosBaseExterna
-        '
-        Me.Chk_PermitirMigrarProductosBaseExterna.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_PermitirMigrarProductosBaseExterna.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_PermitirMigrarProductosBaseExterna.CheckBoxImageChecked = CType(resources.GetObject("Chk_PermitirMigrarProductosBaseExterna.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_PermitirMigrarProductosBaseExterna.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_PermitirMigrarProductosBaseExterna.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_PermitirMigrarProductosBaseExterna.FocusCuesEnabled = False
-        Me.Chk_PermitirMigrarProductosBaseExterna.ForeColor = System.Drawing.Color.Black
-        Me.Chk_PermitirMigrarProductosBaseExterna.Location = New System.Drawing.Point(3, 123)
-        Me.Chk_PermitirMigrarProductosBaseExterna.Name = "Chk_PermitirMigrarProductosBaseExterna"
-        Me.Chk_PermitirMigrarProductosBaseExterna.Size = New System.Drawing.Size(551, 15)
-        Me.Chk_PermitirMigrarProductosBaseExterna.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_PermitirMigrarProductosBaseExterna.TabIndex = 100
-        Me.Chk_PermitirMigrarProductosBaseExterna.Text = "Permitir migrar productos a base de datos externa."
-        '
-        'Chk_BloqCambNomCONCEPTOSEnDocumentos
-        '
-        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.CheckBoxImageChecked = CType(resources.GetObject("Chk_BloqCambNomCONCEPTOSEnDocumentos.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_BloqCambNomCONCEPTOSEnDocumentos.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.FocusCuesEnabled = False
-        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.ForeColor = System.Drawing.Color.Black
-        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.Location = New System.Drawing.Point(3, 103)
-        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.Name = "Chk_BloqCambNomCONCEPTOSEnDocumentos"
-        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.Size = New System.Drawing.Size(551, 14)
-        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.TabIndex = 99
-        Me.Chk_BloqCambNomCONCEPTOSEnDocumentos.Text = "Bloquear la opción de cambiar el nombre a los CONCEPTOS en los documentos"
-        '
-        'chk_Pr_Creacion_Exigir_Dimensiones
-        '
-        Me.chk_Pr_Creacion_Exigir_Dimensiones.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.chk_Pr_Creacion_Exigir_Dimensiones.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.chk_Pr_Creacion_Exigir_Dimensiones.CheckBoxImageChecked = CType(resources.GetObject("chk_Pr_Creacion_Exigir_Dimensiones.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.chk_Pr_Creacion_Exigir_Dimensiones.CheckBoxImageIndeterminate = CType(resources.GetObject("chk_Pr_Creacion_Exigir_Dimensiones.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.chk_Pr_Creacion_Exigir_Dimensiones.FocusCuesEnabled = False
-        Me.chk_Pr_Creacion_Exigir_Dimensiones.ForeColor = System.Drawing.Color.Black
-        Me.chk_Pr_Creacion_Exigir_Dimensiones.Location = New System.Drawing.Point(3, 83)
-        Me.chk_Pr_Creacion_Exigir_Dimensiones.Name = "chk_Pr_Creacion_Exigir_Dimensiones"
-        Me.chk_Pr_Creacion_Exigir_Dimensiones.Size = New System.Drawing.Size(283, 14)
-        Me.chk_Pr_Creacion_Exigir_Dimensiones.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.chk_Pr_Creacion_Exigir_Dimensiones.TabIndex = 97
-        Me.chk_Pr_Creacion_Exigir_Dimensiones.Text = "Al crear el producto exigir dimensiones"
-        '
-        'Chk_Pr_Creacion_Exigir_Precio
-        '
-        Me.Chk_Pr_Creacion_Exigir_Precio.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Pr_Creacion_Exigir_Precio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Pr_Creacion_Exigir_Precio.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pr_Creacion_Exigir_Precio.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Pr_Creacion_Exigir_Precio.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Pr_Creacion_Exigir_Precio.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_Pr_Creacion_Exigir_Precio.FocusCuesEnabled = False
-        Me.Chk_Pr_Creacion_Exigir_Precio.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Pr_Creacion_Exigir_Precio.Location = New System.Drawing.Point(3, 23)
-        Me.Chk_Pr_Creacion_Exigir_Precio.Name = "Chk_Pr_Creacion_Exigir_Precio"
-        Me.Chk_Pr_Creacion_Exigir_Precio.Size = New System.Drawing.Size(283, 14)
-        Me.Chk_Pr_Creacion_Exigir_Precio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Pr_Creacion_Exigir_Precio.TabIndex = 94
-        Me.Chk_Pr_Creacion_Exigir_Precio.Text = "Al crear el producto exigir el precio"
-        '
-        'Chk_Pr_Creacion_Exigir_Codigo_Alternativo
-        '
-        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pr_Creacion_Exigir_Codigo_Alternativo.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Pr_Creacion_Exigir_Codigo_Alternativo.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.FocusCuesEnabled = False
-        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.Location = New System.Drawing.Point(3, 63)
-        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.Name = "Chk_Pr_Creacion_Exigir_Codigo_Alternativo"
-        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.Size = New System.Drawing.Size(283, 14)
-        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.TabIndex = 96
-        Me.Chk_Pr_Creacion_Exigir_Codigo_Alternativo.Text = "Al crear el producto exigir código alternativo"
-        '
-        'Chk_Pr_Creacion_Exigir_Clasificacion_busqueda
-        '
-        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.FocusCuesEnabled = False
-        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.Location = New System.Drawing.Point(3, 43)
-        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.Name = "Chk_Pr_Creacion_Exigir_Clasificacion_busqueda"
-        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.Size = New System.Drawing.Size(283, 14)
-        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.TabIndex = 95
-        Me.Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.Text = "Al crear el producto exigir clasificación de búsqueda"
-        '
-        'Cmb_Nodo_Raiz_Asociados
-        '
-        Me.Cmb_Nodo_Raiz_Asociados.DisplayMember = "Text"
-        Me.Cmb_Nodo_Raiz_Asociados.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.Cmb_Nodo_Raiz_Asociados.ForeColor = System.Drawing.Color.Black
-        Me.Cmb_Nodo_Raiz_Asociados.FormattingEnabled = True
-        Me.Cmb_Nodo_Raiz_Asociados.ItemHeight = 16
-        Me.Cmb_Nodo_Raiz_Asociados.Location = New System.Drawing.Point(180, 482)
-        Me.Cmb_Nodo_Raiz_Asociados.Name = "Cmb_Nodo_Raiz_Asociados"
-        Me.Cmb_Nodo_Raiz_Asociados.Size = New System.Drawing.Size(161, 22)
-        Me.Cmb_Nodo_Raiz_Asociados.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Cmb_Nodo_Raiz_Asociados.TabIndex = 98
-        '
-        'LabelX15
-        '
-        Me.LabelX15.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.LabelX15.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX15.ForeColor = System.Drawing.Color.Black
-        Me.LabelX15.Location = New System.Drawing.Point(6, 482)
-        Me.LabelX15.Name = "LabelX15"
-        Me.LabelX15.Size = New System.Drawing.Size(168, 18)
-        Me.LabelX15.TabIndex = 97
-        Me.LabelX15.Text = "Carpeta raíz productos asociados"
-        '
-        'SpTab_Productos
-        '
-        Me.SpTab_Productos.AttachedControl = Me.SuperTabControlPanel7
-        Me.SpTab_Productos.GlobalItem = False
-        Me.SpTab_Productos.Name = "SpTab_Productos"
-        Me.SpTab_Productos.Text = "Productos/Conceptos"
-        '
-        'SuperTabControlPanel2
-        '
-        Me.SuperTabControlPanel2.Controls.Add(Me.GroupPanel1)
-        Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(672, 512)
-        Me.SuperTabControlPanel2.TabIndex = 0
-        Me.SuperTabControlPanel2.TabItem = Me.SpTab_DatosEmpresa
-        '
-        'GroupPanel1
-        '
-        Me.GroupPanel1.BackColor = System.Drawing.Color.White
-        Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel1.Controls.Add(Me.Txt_CpActeco)
-        Me.GroupPanel1.Controls.Add(Me.LabelX14)
-        Me.GroupPanel1.Controls.Add(Me.Txt_CpComuna)
-        Me.GroupPanel1.Controls.Add(Me.LabelX13)
-        Me.GroupPanel1.Controls.Add(Me.Txt_CpEmpresa)
-        Me.GroupPanel1.Controls.Add(Me.LabelX12)
-        Me.GroupPanel1.Controls.Add(Me.Btn_Editar_Datos_Empresa)
-        Me.GroupPanel1.Controls.Add(Me.Txt_CpGiro)
-        Me.GroupPanel1.Controls.Add(Me.LabelX11)
-        Me.GroupPanel1.Controls.Add(Me.Txt_CpCiudad)
-        Me.GroupPanel1.Controls.Add(Me.LabelX8)
-        Me.GroupPanel1.Controls.Add(Me.Txt_CpPais)
-        Me.GroupPanel1.Controls.Add(Me.LabelX7)
-        Me.GroupPanel1.Controls.Add(Me.Txt_CpDireccion)
-        Me.GroupPanel1.Controls.Add(Me.LabelX6)
-        Me.GroupPanel1.Controls.Add(Me.Txt_CpRazon)
-        Me.GroupPanel1.Controls.Add(Me.LabelX5)
-        Me.GroupPanel1.Controls.Add(Me.Txt_CpNcorto)
-        Me.GroupPanel1.Controls.Add(Me.LabelX4)
-        Me.GroupPanel1.Controls.Add(Me.Txt_CpRut)
-        Me.GroupPanel1.Controls.Add(Me.LabelX3)
-        Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(15, 3)
-        Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(645, 360)
-        '
-        '
-        '
-        Me.GroupPanel1.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.GroupPanel1.Style.BackColorGradientAngle = 90
-        Me.GroupPanel1.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.GroupPanel1.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel1.Style.BorderBottomWidth = 1
-        Me.GroupPanel1.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
-        Me.GroupPanel1.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel1.Style.BorderLeftWidth = 1
-        Me.GroupPanel1.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel1.Style.BorderRightWidth = 1
-        Me.GroupPanel1.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel1.Style.BorderTopWidth = 1
-        Me.GroupPanel1.Style.CornerDiameter = 4
-        Me.GroupPanel1.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.GroupPanel1.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
-        Me.GroupPanel1.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
-        Me.GroupPanel1.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
-        '
-        '
-        '
-        Me.GroupPanel1.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.GroupPanel1.TabIndex = 0
-        Me.GroupPanel1.Text = "Datos de la empresa"
-        '
-        'Txt_CpActeco
-        '
-        Me.Txt_CpActeco.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_CpActeco.Border.Class = "TextBoxBorder"
-        Me.Txt_CpActeco.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CpActeco.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CpActeco.Enabled = False
-        Me.Txt_CpActeco.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CpActeco.Location = New System.Drawing.Point(105, 266)
-        Me.Txt_CpActeco.Name = "Txt_CpActeco"
-        Me.Txt_CpActeco.PreventEnterBeep = True
-        Me.Txt_CpActeco.Size = New System.Drawing.Size(100, 22)
-        Me.Txt_CpActeco.TabIndex = 27
-        '
-        'LabelX14
-        '
-        Me.LabelX14.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX14.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX14.ForeColor = System.Drawing.Color.Black
-        Me.LabelX14.Location = New System.Drawing.Point(24, 266)
-        Me.LabelX14.Name = "LabelX14"
-        Me.LabelX14.Size = New System.Drawing.Size(75, 23)
-        Me.LabelX14.TabIndex = 26
-        Me.LabelX14.Text = "Acteco"
-        '
-        'Txt_CpComuna
-        '
-        Me.Txt_CpComuna.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_CpComuna.Border.Class = "TextBoxBorder"
-        Me.Txt_CpComuna.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CpComuna.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CpComuna.Enabled = False
-        Me.Txt_CpComuna.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CpComuna.Location = New System.Drawing.Point(105, 210)
-        Me.Txt_CpComuna.Name = "Txt_CpComuna"
-        Me.Txt_CpComuna.PreventEnterBeep = True
-        Me.Txt_CpComuna.Size = New System.Drawing.Size(173, 22)
-        Me.Txt_CpComuna.TabIndex = 25
-        '
-        'LabelX13
-        '
-        Me.LabelX13.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX13.ForeColor = System.Drawing.Color.Black
-        Me.LabelX13.Location = New System.Drawing.Point(24, 209)
-        Me.LabelX13.Name = "LabelX13"
-        Me.LabelX13.Size = New System.Drawing.Size(99, 23)
-        Me.LabelX13.TabIndex = 24
-        Me.LabelX13.Text = "Comuna"
-        '
-        'Txt_CpEmpresa
-        '
-        Me.Txt_CpEmpresa.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_CpEmpresa.Border.Class = "TextBoxBorder"
-        Me.Txt_CpEmpresa.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CpEmpresa.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CpEmpresa.Enabled = False
-        Me.Txt_CpEmpresa.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CpEmpresa.Location = New System.Drawing.Point(105, 8)
-        Me.Txt_CpEmpresa.Name = "Txt_CpEmpresa"
-        Me.Txt_CpEmpresa.PreventEnterBeep = True
-        Me.Txt_CpEmpresa.Size = New System.Drawing.Size(37, 22)
-        Me.Txt_CpEmpresa.TabIndex = 16
-        Me.Txt_CpEmpresa.Text = "01"
-        Me.Txt_CpEmpresa.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'LabelX12
-        '
-        Me.LabelX12.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX12.ForeColor = System.Drawing.Color.Black
-        Me.LabelX12.Location = New System.Drawing.Point(24, 8)
-        Me.LabelX12.Name = "LabelX12"
-        Me.LabelX12.Size = New System.Drawing.Size(75, 23)
-        Me.LabelX12.TabIndex = 15
-        Me.LabelX12.Text = "Empresa"
-        '
-        'Btn_Editar_Datos_Empresa
-        '
-        Me.Btn_Editar_Datos_Empresa.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Editar_Datos_Empresa.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Editar_Datos_Empresa.Location = New System.Drawing.Point(24, 304)
-        Me.Btn_Editar_Datos_Empresa.Name = "Btn_Editar_Datos_Empresa"
-        Me.Btn_Editar_Datos_Empresa.Size = New System.Drawing.Size(144, 23)
-        Me.Btn_Editar_Datos_Empresa.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Editar_Datos_Empresa.TabIndex = 14
-        Me.Btn_Editar_Datos_Empresa.Text = "Editar datos de la empresa"
-        '
-        'Txt_CpGiro
-        '
-        Me.Txt_CpGiro.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_CpGiro.Border.Class = "TextBoxBorder"
-        Me.Txt_CpGiro.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CpGiro.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CpGiro.Enabled = False
-        Me.Txt_CpGiro.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CpGiro.Location = New System.Drawing.Point(105, 238)
-        Me.Txt_CpGiro.Name = "Txt_CpGiro"
-        Me.Txt_CpGiro.PreventEnterBeep = True
-        Me.Txt_CpGiro.Size = New System.Drawing.Size(357, 22)
-        Me.Txt_CpGiro.TabIndex = 23
-        '
-        'LabelX11
-        '
-        Me.LabelX11.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX11.ForeColor = System.Drawing.Color.Black
-        Me.LabelX11.Location = New System.Drawing.Point(24, 238)
-        Me.LabelX11.Name = "LabelX11"
-        Me.LabelX11.Size = New System.Drawing.Size(99, 23)
-        Me.LabelX11.TabIndex = 12
-        Me.LabelX11.Text = "Giro"
-        '
-        'Txt_CpCiudad
-        '
-        Me.Txt_CpCiudad.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_CpCiudad.Border.Class = "TextBoxBorder"
-        Me.Txt_CpCiudad.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CpCiudad.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CpCiudad.Enabled = False
-        Me.Txt_CpCiudad.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CpCiudad.Location = New System.Drawing.Point(105, 182)
-        Me.Txt_CpCiudad.Name = "Txt_CpCiudad"
-        Me.Txt_CpCiudad.PreventEnterBeep = True
-        Me.Txt_CpCiudad.Size = New System.Drawing.Size(173, 22)
-        Me.Txt_CpCiudad.TabIndex = 22
-        '
-        'LabelX8
-        '
-        Me.LabelX8.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX8.ForeColor = System.Drawing.Color.Black
-        Me.LabelX8.Location = New System.Drawing.Point(24, 183)
-        Me.LabelX8.Name = "LabelX8"
-        Me.LabelX8.Size = New System.Drawing.Size(99, 23)
-        Me.LabelX8.TabIndex = 10
-        Me.LabelX8.Text = "Ciudad"
-        '
-        'Txt_CpPais
-        '
-        Me.Txt_CpPais.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_CpPais.Border.Class = "TextBoxBorder"
-        Me.Txt_CpPais.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CpPais.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CpPais.Enabled = False
-        Me.Txt_CpPais.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CpPais.Location = New System.Drawing.Point(105, 154)
-        Me.Txt_CpPais.Name = "Txt_CpPais"
-        Me.Txt_CpPais.PreventEnterBeep = True
-        Me.Txt_CpPais.Size = New System.Drawing.Size(173, 22)
-        Me.Txt_CpPais.TabIndex = 21
-        '
-        'LabelX7
-        '
-        Me.LabelX7.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX7.ForeColor = System.Drawing.Color.Black
-        Me.LabelX7.Location = New System.Drawing.Point(24, 155)
-        Me.LabelX7.Name = "LabelX7"
-        Me.LabelX7.Size = New System.Drawing.Size(99, 23)
-        Me.LabelX7.TabIndex = 8
-        Me.LabelX7.Text = "Pais"
-        '
-        'Txt_CpDireccion
-        '
-        Me.Txt_CpDireccion.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_CpDireccion.Border.Class = "TextBoxBorder"
-        Me.Txt_CpDireccion.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CpDireccion.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CpDireccion.Enabled = False
-        Me.Txt_CpDireccion.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CpDireccion.Location = New System.Drawing.Point(105, 124)
-        Me.Txt_CpDireccion.Name = "Txt_CpDireccion"
-        Me.Txt_CpDireccion.PreventEnterBeep = True
-        Me.Txt_CpDireccion.Size = New System.Drawing.Size(357, 22)
-        Me.Txt_CpDireccion.TabIndex = 20
-        '
-        'LabelX6
-        '
-        Me.LabelX6.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX6.ForeColor = System.Drawing.Color.Black
-        Me.LabelX6.Location = New System.Drawing.Point(24, 125)
-        Me.LabelX6.Name = "LabelX6"
-        Me.LabelX6.Size = New System.Drawing.Size(99, 23)
-        Me.LabelX6.TabIndex = 6
-        Me.LabelX6.Text = "Dirección"
-        '
-        'Txt_CpRazon
-        '
-        Me.Txt_CpRazon.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_CpRazon.Border.Class = "TextBoxBorder"
-        Me.Txt_CpRazon.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CpRazon.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CpRazon.Enabled = False
-        Me.Txt_CpRazon.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CpRazon.Location = New System.Drawing.Point(105, 94)
-        Me.Txt_CpRazon.Name = "Txt_CpRazon"
-        Me.Txt_CpRazon.PreventEnterBeep = True
-        Me.Txt_CpRazon.Size = New System.Drawing.Size(357, 22)
-        Me.Txt_CpRazon.TabIndex = 19
-        '
-        'LabelX5
-        '
-        Me.LabelX5.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX5.ForeColor = System.Drawing.Color.Black
-        Me.LabelX5.Location = New System.Drawing.Point(24, 95)
-        Me.LabelX5.Name = "LabelX5"
-        Me.LabelX5.Size = New System.Drawing.Size(99, 23)
-        Me.LabelX5.TabIndex = 4
-        Me.LabelX5.Text = "Razón social"
-        '
-        'Txt_CpNcorto
-        '
-        Me.Txt_CpNcorto.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_CpNcorto.Border.Class = "TextBoxBorder"
-        Me.Txt_CpNcorto.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CpNcorto.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CpNcorto.Enabled = False
-        Me.Txt_CpNcorto.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CpNcorto.Location = New System.Drawing.Point(105, 64)
-        Me.Txt_CpNcorto.Name = "Txt_CpNcorto"
-        Me.Txt_CpNcorto.PreventEnterBeep = True
-        Me.Txt_CpNcorto.Size = New System.Drawing.Size(173, 22)
-        Me.Txt_CpNcorto.TabIndex = 18
-        '
-        'LabelX4
-        '
-        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(24, 65)
-        Me.LabelX4.Name = "LabelX4"
-        Me.LabelX4.Size = New System.Drawing.Size(99, 23)
-        Me.LabelX4.TabIndex = 2
-        Me.LabelX4.Text = "Nombre corto"
-        '
-        'Txt_CpRut
-        '
-        Me.Txt_CpRut.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_CpRut.Border.Class = "TextBoxBorder"
-        Me.Txt_CpRut.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CpRut.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CpRut.Enabled = False
-        Me.Txt_CpRut.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CpRut.Location = New System.Drawing.Point(105, 36)
-        Me.Txt_CpRut.Name = "Txt_CpRut"
-        Me.Txt_CpRut.PreventEnterBeep = True
-        Me.Txt_CpRut.Size = New System.Drawing.Size(100, 22)
-        Me.Txt_CpRut.TabIndex = 17
-        '
-        'LabelX3
-        '
-        Me.LabelX3.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX3.ForeColor = System.Drawing.Color.Black
-        Me.LabelX3.Location = New System.Drawing.Point(24, 36)
-        Me.LabelX3.Name = "LabelX3"
-        Me.LabelX3.Size = New System.Drawing.Size(75, 23)
-        Me.LabelX3.TabIndex = 0
-        Me.LabelX3.Text = "Rut"
-        '
-        'SpTab_DatosEmpresa
-        '
-        Me.SpTab_DatosEmpresa.AttachedControl = Me.SuperTabControlPanel2
-        Me.SpTab_DatosEmpresa.GlobalItem = False
-        Me.SpTab_DatosEmpresa.Name = "SpTab_DatosEmpresa"
-        Me.SpTab_DatosEmpresa.Text = "Datos Empresa"
-        '
         'Bar1
         '
         Me.Bar1.AntiAlias = True
@@ -2035,116 +2148,6 @@ Partial Class Frm_Configuracion_Gral
         Me.CheckBoxX2.TabIndex = 117
         Me.CheckBoxX2.Text = "Ambiente de pruebas y certificación"
         '
-        'SpTab_FincredPays
-        '
-        Me.SpTab_FincredPays.AttachedControl = Me.SuperTabControlPanel3
-        Me.SpTab_FincredPays.GlobalItem = False
-        Me.SpTab_FincredPays.Name = "SpTab_FincredPays"
-        Me.SpTab_FincredPays.Text = "Fincred Pays"
-        '
-        'SuperTabControlPanel3
-        '
-        Me.SuperTabControlPanel3.Controls.Add(Me.Btn_FincredConfiguracion)
-        Me.SuperTabControlPanel3.Controls.Add(Me.LabelX22)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Line1)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Txt_Fincred_Id_Token)
-        Me.SuperTabControlPanel3.Controls.Add(Me.LabelX21)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Chk_Fincred_Usar)
-        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(672, 512)
-        Me.SuperTabControlPanel3.TabIndex = 0
-        Me.SuperTabControlPanel3.TabItem = Me.SpTab_FincredPays
-        '
-        'Chk_Fincred_Usar
-        '
-        Me.Chk_Fincred_Usar.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Fincred_Usar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Fincred_Usar.CheckBoxImageChecked = CType(resources.GetObject("Chk_Fincred_Usar.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Fincred_Usar.FocusCuesEnabled = False
-        Me.Chk_Fincred_Usar.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Fincred_Usar.Location = New System.Drawing.Point(3, 12)
-        Me.Chk_Fincred_Usar.Name = "Chk_Fincred_Usar"
-        Me.Chk_Fincred_Usar.Size = New System.Drawing.Size(483, 14)
-        Me.Chk_Fincred_Usar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Fincred_Usar.TabIndex = 127
-        Me.Chk_Fincred_Usar.Text = "Usar Fincred para la revisión de clientes sin crédito"
-        '
-        'Btn_FincredConfiguracion
-        '
-        Me.Btn_FincredConfiguracion.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_FincredConfiguracion.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_FincredConfiguracion.Location = New System.Drawing.Point(6, 97)
-        Me.Btn_FincredConfiguracion.Name = "Btn_FincredConfiguracion"
-        Me.Btn_FincredConfiguracion.Size = New System.Drawing.Size(199, 23)
-        Me.Btn_FincredConfiguracion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_FincredConfiguracion.TabIndex = 126
-        Me.Btn_FincredConfiguracion.Text = "FINCRED PAYS Configuración Tokens"
-        '
-        'Txt_Fincred_Id_Token
-        '
-        Me.Txt_Fincred_Id_Token.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_Fincred_Id_Token.Border.Class = "TextBoxBorder"
-        Me.Txt_Fincred_Id_Token.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Fincred_Id_Token.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_Fincred_Id_Token.ButtonCustom.Visible = True
-        Me.Txt_Fincred_Id_Token.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image"), System.Drawing.Image)
-        Me.Txt_Fincred_Id_Token.ButtonCustom2.Visible = True
-        Me.Txt_Fincred_Id_Token.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Fincred_Id_Token.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Fincred_Id_Token.Location = New System.Drawing.Point(45, 32)
-        Me.Txt_Fincred_Id_Token.Name = "Txt_Fincred_Id_Token"
-        Me.Txt_Fincred_Id_Token.PreventEnterBeep = True
-        Me.Txt_Fincred_Id_Token.ReadOnly = True
-        Me.Txt_Fincred_Id_Token.Size = New System.Drawing.Size(612, 22)
-        Me.Txt_Fincred_Id_Token.TabIndex = 129
-        Me.Txt_Fincred_Id_Token.Tag = "0"
-        Me.Txt_Fincred_Id_Token.Text = "FCc4c28b367e14df88993ad475dedf6b77P - Sucursal: Nombre de Sucursal, Ambiente de p" &
-    "ruebas"
-        '
-        'LabelX21
-        '
-        Me.LabelX21.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX21.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX21.Location = New System.Drawing.Point(3, 32)
-        Me.LabelX21.Name = "LabelX21"
-        Me.LabelX21.Size = New System.Drawing.Size(43, 23)
-        Me.LabelX21.TabIndex = 130
-        Me.LabelX21.Text = "Token"
-        '
-        'LabelX22
-        '
-        Me.LabelX22.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX22.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX22.Location = New System.Drawing.Point(6, 76)
-        Me.LabelX22.Name = "LabelX22"
-        Me.LabelX22.Size = New System.Drawing.Size(135, 23)
-        Me.LabelX22.TabIndex = 131
-        Me.LabelX22.Text = "Configuración"
-        '
-        'Line1
-        '
-        Me.Line1.BackColor = System.Drawing.Color.Transparent
-        Me.Line1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.Line1.Location = New System.Drawing.Point(6, 63)
-        Me.Line1.Name = "Line1"
-        Me.Line1.Size = New System.Drawing.Size(513, 23)
-        Me.Line1.TabIndex = 132
-        Me.Line1.Text = "Line1"
-        '
         'Frm_Configuracion_Gral
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2167,18 +2170,18 @@ Partial Class Frm_Configuracion_Gral
         CType(Me.Input_Dias_Max_Fecha_Despacho, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
+        Me.SuperTabControlPanel3.ResumeLayout(False)
         Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.TableLayoutPanel5.ResumeLayout(False)
+        Me.SuperTabControlPanel2.ResumeLayout(False)
+        Me.GroupPanel1.ResumeLayout(False)
+        Me.SuperTabControlPanel7.ResumeLayout(False)
+        Me.TableLayoutPanel2.ResumeLayout(False)
         Me.SuperTabControlPanel6.ResumeLayout(False)
         Me.SuperTabControlPanel5.ResumeLayout(False)
         Me.Grupo_RecepXMLComp.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
-        Me.SuperTabControlPanel7.ResumeLayout(False)
-        Me.TableLayoutPanel2.ResumeLayout(False)
-        Me.SuperTabControlPanel2.ResumeLayout(False)
-        Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SuperTabControlPanel3.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub

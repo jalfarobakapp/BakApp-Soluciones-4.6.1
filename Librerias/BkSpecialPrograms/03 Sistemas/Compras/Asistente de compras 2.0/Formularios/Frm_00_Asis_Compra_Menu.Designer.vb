@@ -26,12 +26,12 @@ Partial Class Frm_00_Asis_Compra_Menu
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_00_Asis_Compra_Menu))
         Me.Txt_Proveedor = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Bar = New DevComponents.DotNetBar.Bar()
+        Me.Btn_GrabarConfiguracion = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnProcesarInf = New DevComponents.DotNetBar.ButtonItem()
         Me.Chk_Procesar_Uno_A_Uno = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Btn_Imprimir_Maestra = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Cancelar = New DevComponents.DotNetBar.ButtonItem()
         Me.Circular_Progress1 = New DevComponents.DotNetBar.CircularProgressItem()
-        Me.Btn_GrabarConfiguracion = New DevComponents.DotNetBar.ButtonItem()
         Me.ControlContainerItem1 = New DevComponents.DotNetBar.ControlContainerItem()
         Me.Chk_Sacar_Productos_Sin_Rotacion = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Dtp_Fecha_Vta_Desde_Estacional = New System.Windows.Forms.DateTimePicker()
@@ -190,6 +190,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Timer_Ejecucion_Automatica = New System.Windows.Forms.Timer(Me.components)
         Me.HelpProvider1 = New System.Windows.Forms.HelpProvider()
         Me.Chk_Sumar_Vta_Ult_Year = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_SumerStockExternoAlFisico = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Bar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel6.SuspendLayout()
         Me.Layout_Producto.SuspendLayout()
@@ -259,12 +260,23 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Bar.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_GrabarConfiguracion, Me.BtnProcesarInf, Me.Chk_Procesar_Uno_A_Uno, Me.Btn_Imprimir_Maestra, Me.Btn_Cancelar, Me.Circular_Progress1})
         Me.Bar.Location = New System.Drawing.Point(0, 580)
         Me.Bar.Name = "Bar"
-        Me.Bar.Size = New System.Drawing.Size(566, 41)
+        Me.Bar.Size = New System.Drawing.Size(568, 41)
         Me.Bar.Stretch = True
         Me.Bar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar.TabIndex = 13
         Me.Bar.TabStop = False
         Me.Bar.Text = "Bar1"
+        '
+        'Btn_GrabarConfiguracion
+        '
+        Me.Btn_GrabarConfiguracion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_GrabarConfiguracion.FontBold = True
+        Me.Btn_GrabarConfiguracion.ForeColor = System.Drawing.Color.Navy
+        Me.Btn_GrabarConfiguracion.Image = CType(resources.GetObject("Btn_GrabarConfiguracion.Image"), System.Drawing.Image)
+        Me.Btn_GrabarConfiguracion.ImageAlt = CType(resources.GetObject("Btn_GrabarConfiguracion.ImageAlt"), System.Drawing.Image)
+        Me.Btn_GrabarConfiguracion.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_GrabarConfiguracion.Name = "Btn_GrabarConfiguracion"
+        Me.Btn_GrabarConfiguracion.Tooltip = "Grabar configuración actual"
         '
         'BtnProcesarInf
         '
@@ -308,17 +320,6 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Circular_Progress1.Name = "Circular_Progress1"
         Me.Circular_Progress1.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Dot
         Me.Circular_Progress1.Visible = False
-        '
-        'Btn_GrabarConfiguracion
-        '
-        Me.Btn_GrabarConfiguracion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_GrabarConfiguracion.FontBold = True
-        Me.Btn_GrabarConfiguracion.ForeColor = System.Drawing.Color.Navy
-        Me.Btn_GrabarConfiguracion.Image = CType(resources.GetObject("Btn_GrabarConfiguracion.Image"), System.Drawing.Image)
-        Me.Btn_GrabarConfiguracion.ImageAlt = CType(resources.GetObject("Btn_GrabarConfiguracion.ImageAlt"), System.Drawing.Image)
-        Me.Btn_GrabarConfiguracion.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_GrabarConfiguracion.Name = "Btn_GrabarConfiguracion"
-        Me.Btn_GrabarConfiguracion.Tooltip = "Grabar configuración actual"
         '
         'ControlContainerItem1
         '
@@ -893,14 +894,14 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.STabConfiguracion.ControlBox.MenuBox.Name = ""
         Me.STabConfiguracion.ControlBox.Name = ""
         Me.STabConfiguracion.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.STabConfiguracion.ControlBox.MenuBox, Me.STabConfiguracion.ControlBox.CloseBox})
-        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel3)
+        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel2)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel8)
-        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel6)
-        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel1)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel4)
+        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel6)
+        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel3)
+        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel1)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel5)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel7)
-        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel2)
         Me.STabConfiguracion.ForeColor = System.Drawing.Color.Black
         Me.STabConfiguracion.Location = New System.Drawing.Point(14, 322)
         Me.STabConfiguracion.Name = "STabConfiguracion"
@@ -1029,7 +1030,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.TableLayoutPanel8.ColumnCount = 3
         Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.56221!))
         Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.43779!))
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 310.0!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 312.0!))
         Me.TableLayoutPanel8.Controls.Add(Me.LabelX9, 0, 0)
         Me.TableLayoutPanel8.Controls.Add(Me.Rdb_Ud1_Compra, 1, 0)
         Me.TableLayoutPanel8.Controls.Add(Me.Rdb_Ud2_Compra, 2, 0)
@@ -1070,7 +1071,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Rdb_Ud1_Compra.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Ud1_Compra.Location = New System.Drawing.Point(67, 3)
         Me.Rdb_Ud1_Compra.Name = "Rdb_Ud1_Compra"
-        Me.Rdb_Ud1_Compra.Size = New System.Drawing.Size(117, 20)
+        Me.Rdb_Ud1_Compra.Size = New System.Drawing.Size(115, 20)
         Me.Rdb_Ud1_Compra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Ud1_Compra.TabIndex = 57
         Me.Rdb_Ud1_Compra.Text = "[Ud. 1] Primera Unidad "
@@ -1085,7 +1086,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Rdb_Ud2_Compra.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Ud2_Compra.FocusCuesEnabled = False
         Me.Rdb_Ud2_Compra.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Ud2_Compra.Location = New System.Drawing.Point(190, 3)
+        Me.Rdb_Ud2_Compra.Location = New System.Drawing.Point(188, 3)
         Me.Rdb_Ud2_Compra.Name = "Rdb_Ud2_Compra"
         Me.Rdb_Ud2_Compra.Size = New System.Drawing.Size(143, 20)
         Me.Rdb_Ud2_Compra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1245,7 +1246,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.SuperTabControlPanel8.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel8.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel8.Name = "SuperTabControlPanel8"
-        Me.SuperTabControlPanel8.Size = New System.Drawing.Size(539, 205)
+        Me.SuperTabControlPanel8.Size = New System.Drawing.Size(1031, 205)
         Me.SuperTabControlPanel8.TabIndex = 0
         Me.SuperTabControlPanel8.TabItem = Me.Tab_Automatizacion
         '
@@ -1449,9 +1450,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         Me.SuperTabControlPanel10.Controls.Add(Me.GroupPanel2)
         Me.SuperTabControlPanel10.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel10.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel10.Location = New System.Drawing.Point(0, 0)
         Me.SuperTabControlPanel10.Name = "SuperTabControlPanel10"
-        Me.SuperTabControlPanel10.Size = New System.Drawing.Size(527, 168)
+        Me.SuperTabControlPanel10.Size = New System.Drawing.Size(527, 195)
         Me.SuperTabControlPanel10.TabIndex = 0
         Me.SuperTabControlPanel10.TabItem = Me.SubTabConfAuto_NVI
         '
@@ -1643,9 +1644,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.SuperTabControlPanel6.Controls.Add(Me.LabelX4)
         Me.SuperTabControlPanel6.Controls.Add(Me.LabelX3)
         Me.SuperTabControlPanel6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel6.Name = "SuperTabControlPanel6"
-        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(539, 232)
+        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(539, 205)
         Me.SuperTabControlPanel6.TabIndex = 0
         Me.SuperTabControlPanel6.TabItem = Me.Tab_Costos_OCC
         '
@@ -2279,9 +2280,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Restar_Stok_Bodega)
         Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Quitar_Bloqueados_Compra)
         Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
-        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(539, 232)
+        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(1031, 205)
         Me.SuperTabControlPanel4.TabIndex = 0
         Me.SuperTabControlPanel4.TabItem = Me.Tab_Excluir_Incluir
         '
@@ -2481,9 +2482,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.SuperTabControlPanel2.Controls.Add(Me.Chk_DbExt_SincronizarPRBD)
         Me.SuperTabControlPanel2.Controls.Add(Me.Grupo_DbExt)
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(539, 232)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(539, 205)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.Tab_ConexionExterna
         '
@@ -2506,6 +2507,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         Me.Grupo_DbExt.BackColor = System.Drawing.Color.White
         Me.Grupo_DbExt.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_DbExt.Controls.Add(Me.Chk_SumerStockExternoAlFisico)
         Me.Grupo_DbExt.Controls.Add(Me.LabelX17)
         Me.Grupo_DbExt.Controls.Add(Me.Txt_DbExt_NombreBod_Des)
         Me.Grupo_DbExt.Controls.Add(Me.Txt_ProvEspecial)
@@ -2907,7 +2909,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.MetroStatusBar1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.MetroStatusBar1.Location = New System.Drawing.Point(0, 621)
         Me.MetroStatusBar1.Name = "MetroStatusBar1"
-        Me.MetroStatusBar1.Size = New System.Drawing.Size(566, 22)
+        Me.MetroStatusBar1.Size = New System.Drawing.Size(568, 22)
         Me.MetroStatusBar1.TabIndex = 52
         Me.MetroStatusBar1.Text = "MetroStatusBar1"
         '
@@ -2996,11 +2998,28 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Chk_Sumar_Vta_Ult_Year.Text = "Actualizar datos de ultimas ventas en un año BLV y FCV"
         Me.Chk_Sumar_Vta_Ult_Year.Visible = False
         '
+        'Chk_SumerStockExternoAlFisico
+        '
+        Me.Chk_SumerStockExternoAlFisico.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_SumerStockExternoAlFisico.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SumerStockExternoAlFisico.CheckBoxImageChecked = CType(resources.GetObject("Chk_SumerStockExternoAlFisico.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SumerStockExternoAlFisico.FocusCuesEnabled = False
+        Me.Chk_SumerStockExternoAlFisico.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SumerStockExternoAlFisico.Location = New System.Drawing.Point(133, 94)
+        Me.Chk_SumerStockExternoAlFisico.Name = "Chk_SumerStockExternoAlFisico"
+        Me.Chk_SumerStockExternoAlFisico.Size = New System.Drawing.Size(210, 20)
+        Me.Chk_SumerStockExternoAlFisico.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SumerStockExternoAlFisico.TabIndex = 10020
+        Me.Chk_SumerStockExternoAlFisico.Text = "Sumar stock externo al físico"
+        '
         'Frm_00_Asis_Compra_Menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(566, 643)
+        Me.ClientSize = New System.Drawing.Size(568, 643)
         Me.Controls.Add(Me.Chk_Sumar_Vta_Ult_Year)
         Me.Controls.Add(Me.TableLayoutPanel3)
         Me.Controls.Add(Me.Chk_Incluir_Servicios)
@@ -3237,4 +3256,5 @@ Partial Class Frm_00_Asis_Compra_Menu
     Friend WithEvents LabelX27 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX28 As DevComponents.DotNetBar.LabelX
     Friend WithEvents SubTabConfAuto_NVI As DevComponents.DotNetBar.SuperTabItem
+    Friend WithEvents Chk_SumerStockExternoAlFisico As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

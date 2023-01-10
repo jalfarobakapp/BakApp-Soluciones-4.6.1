@@ -187,26 +187,6 @@ Public Class Frm_Crear_Entidad_Mt_Lista_contactos
         End If
     End Sub
 
-    Private Sub GrillaContactos_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GrillaContactos.CellContentDoubleClick
-
-        If _Seleccionar_Contacto Then
-            _Tbl_DatosContacto = Fx_Buscar_Contacto(_CodEntidad)
-            _ContactoSeleccionado = True
-            Me.Close()
-            Return
-        End If
-
-        'If _Crear_Editar_Eliminar Then
-        Sb_Editar_Contacto()
-        'Else
-        '    _Tbl_DatosContacto = Fx_Buscar_Contacto(_CodEntidad)
-        '    _ContactoSeleccionado = True
-        '    Me.Close()
-        'End If
-
-    End Sub
-
-
     Private Sub GrillaContactos_CellEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GrillaContactos.CellEnter
 
         Try
@@ -248,5 +228,16 @@ Public Class Frm_Crear_Entidad_Mt_Lista_contactos
 
     Private Sub Btn_Eliminar_Contacto_Click(sender As Object, e As EventArgs) Handles Btn_Eliminar_Contacto.Click
         Sb_Eliminar_Contacto()
+    End Sub
+
+    Private Sub GrillaContactos_CellDoubleClick_1(sender As Object, e As DataGridViewCellEventArgs) Handles GrillaContactos.CellDoubleClick
+        If _Seleccionar_Contacto Then
+            _Tbl_DatosContacto = Fx_Buscar_Contacto(_CodEntidad)
+            _ContactoSeleccionado = True
+            Me.Close()
+            Return
+        End If
+
+        Sb_Editar_Contacto()
     End Sub
 End Class

@@ -767,7 +767,7 @@ Public Class Clas_Hefesto_Dte_Libro
                 _Razon_Social = Replace(_Fila.Item("RazonSocial"), "'", "")
                 _Folio = _Fila.Item("Folio")
 
-                If _Folio = 138484 Then
+                If _Folio = 176723 Then
                     Dim a = 0
                 End If
                 'If _Compras_Pendientes Then

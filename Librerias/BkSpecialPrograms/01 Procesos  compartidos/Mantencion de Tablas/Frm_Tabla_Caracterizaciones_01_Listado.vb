@@ -87,19 +87,20 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
         Reclamos_Preguntas
         Despachos_Tipo_Venta
         Despachos_Tipo_Envio
+        ZonaProducto
     End Enum
 
     Public Property Pro_Ano_Feriados() As Integer
         Get
             Return _Ano_Feriados
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _Ano_Feriados = value
         End Set
     End Property
 
-    Public Sub New(ByVal Tabla As Enum_Tablas_Random, _
-                   ByVal Accion_Fm As Accion)
+    Public Sub New(Tabla As Enum_Tablas_Random,
+                   Accion_Fm As Accion)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -117,7 +118,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
     End Sub
 
-    Private Sub Frm_Tabla_Caracterizaciones_01_Listado_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Tabla_Caracterizaciones_01_Listado_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         If _Accion = Accion.Mantencion_Tabla Then
             Me.Top += 30
@@ -139,7 +140,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
     End Sub
 
-    Sub Sb_Actualizar_Grilla(ByVal Descripcion As String)
+    Sub Sb_Actualizar_Grilla(Descripcion As String)
 
         If Not String.IsNullOrEmpty(TxtDescripcion.Text) Then
             If _Accion = Accion.Seleccionar Then
@@ -158,27 +159,27 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
             _Condicion_Padre = "And Padre_Tabla = '" & _Padre_Tabla & "' And Padre_CodigoTabla = '" & _Padre_CodigoTabla & "'" & vbCrLf
         End If
 
-        Dim Condicion = _
-               CADENA_A_BUSCAR(Descripcion, _
+        Dim Condicion =
+               CADENA_A_BUSCAR(Descripcion,
                                "CodigoTabla+NombreTabla LIKE '%")
 
         Dim _Orden As String
 
         If _Tabla = Enum_Tablas_Random.Feriados_Anuales Then
-            Consulta_sql = "SELECT Cast(0 as Bit) as Nuevo_Item,*" & vbCrLf & _
-                       "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
-                       "Where Tabla = '" & _CodTablaClass & "'" & vbCrLf & _
-                       "And CodigoTabla+NombreTabla like '%" & Condicion & "%'" & vbCrLf & _
-                       _Condicion_Padre & _
-                       "And Fecha Between '" & _Ano_Feriados & "0101' And '" & _Ano_Feriados & "1231'" & vbCrLf & _
+            Consulta_sql = "SELECT Cast(0 as Bit) as Nuevo_Item,*" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                       "Where Tabla = '" & _CodTablaClass & "'" & vbCrLf &
+                       "And CodigoTabla+NombreTabla like '%" & Condicion & "%'" & vbCrLf &
+                       _Condicion_Padre &
+                       "And Fecha Between '" & _Ano_Feriados & "0101' And '" & _Ano_Feriados & "1231'" & vbCrLf &
                        "Order By Fecha"
         Else
 
-            Consulta_sql = "SELECT Cast(0 as Bit) as Nuevo_Item,*" & vbCrLf & _
-                       "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
-                       "Where Tabla = '" & _CodTablaClass & "'" & vbCrLf & _
-                       "And CodigoTabla+NombreTabla like '%" & Condicion & "%'" & vbCrLf & _
-                       _Condicion_Padre & _
+            Consulta_sql = "SELECT Cast(0 as Bit) as Nuevo_Item,*" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                       "Where Tabla = '" & _CodTablaClass & "'" & vbCrLf &
+                       "And CodigoTabla+NombreTabla like '%" & Condicion & "%'" & vbCrLf &
+                       _Condicion_Padre &
                        "Order By Orden"
         End If
 
@@ -260,14 +261,14 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
                 Btn_Grabar.Visible = False
                 Grilla.ContextMenuStrip = Nothing
                 AddHandler Grilla.CellDoubleClick, AddressOf Grilla_CellDoubleClick
-               Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
+                Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
 
             Case Accion.Multiseleccion
 
                 Btn_Seleccionar.Visible = True
                 Btn_Grabar.Visible = False
                 Grilla.ContextMenuStrip = Nothing
-               Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, True)
+                Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, True)
 
                 If Not (_TblFilasSeleccionadas Is Nothing) Then
 
@@ -301,13 +302,13 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
                     End If
                 End With
 
-               Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+                Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
         End Select
 
     End Sub
 
-    Private Sub BtnCrear_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnCrear.Click
+    Private Sub BtnCrear_Click(sender As System.Object, e As System.EventArgs) Handles BtnCrear.Click
 
         If _Accion = Accion.Seleccionar Or _Accion = Accion.Multiseleccion Then
 
@@ -337,7 +338,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
 
 
-    Private Sub Frm_Tabla_Caracterizaciones_01_Listado_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Tabla_Caracterizaciones_01_Listado_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Sb_Salir()
         ElseIf e.KeyValue = Keys.Down Then
@@ -358,7 +359,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
                     Catch ex As Exception
 
                     End Try
-                    
+
                 End If
 
             End If
@@ -366,7 +367,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
         End If
     End Sub
 
-    Private Sub Grilla_CellBeginEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellCancelEventArgs) Handles Grilla.CellBeginEdit
+    Private Sub Grilla_CellBeginEdit(sender As Object, e As System.Windows.Forms.DataGridViewCellCancelEventArgs) Handles Grilla.CellBeginEdit
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -391,7 +392,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
     End Sub
 
-    Private Sub Grilla_CellEndEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEndEdit
+    Private Sub Grilla_CellEndEdit(sender As Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEndEdit
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -416,14 +417,14 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
                             _Fila.Cells("Fecha").Value = _Fecha_Dig
                             _Fila.Cells("CodigoTabla").Value = FormatDateTime(_Fecha_Dig, DateFormat.ShortDate)
                         Else
-                            MessageBoxEx.Show(Me, "Las fecha deben ser del año " & _Ano_Feriados, _
+                            MessageBoxEx.Show(Me, "Las fecha deben ser del año " & _Ano_Feriados,
                                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                             _CodigoTabla = String.Empty
                             _Eliminar_Fila = True
                         End If
 
                     Catch ex As Exception
-                        MessageBoxEx.Show(Me, "El formato de la fecha no corresponde" & vbCrLf & _
+                        MessageBoxEx.Show(Me, "El formato de la fecha no corresponde" & vbCrLf &
                                           "El formato debe ser el siguiente dd/mm/aaaa", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                         _CodigoTabla = String.Empty
                         _Eliminar_Fila = True
@@ -469,7 +470,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
     End Sub
 
-    Private Sub Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Grilla.MouseDown
+    Private Sub Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles Grilla.MouseDown
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
@@ -483,11 +484,11 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
         End If
     End Sub
 
-    Private Sub EditarDescripciónToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EditarDescripciónToolStripMenuItem.Click
+    Private Sub EditarDescripciónToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles EditarDescripciónToolStripMenuItem.Click
         Grilla.BeginEdit(True)
     End Sub
 
-    Private Sub TxtDescripcion_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtDescripcion.TextChanged
+    Private Sub TxtDescripcion_TextChanged(sender As System.Object, e As System.EventArgs) Handles TxtDescripcion.TextChanged
 
         If _Accion = Accion.Seleccionar Then
             _dv.RowFilter = String.Format("NombreTabla Like '%{0}%'", TxtDescripcion.Text)
@@ -507,7 +508,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
             If _Modificado Then
 
-                If MessageBoxEx.Show(Me, "¿Desea guardar los cambios?", "Salir", _
+                If MessageBoxEx.Show(Me, "¿Desea guardar los cambios?", "Salir",
                                      MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
                     Sb_Grabar()
                 End If
@@ -518,7 +519,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
         Me.Close()
     End Sub
 
-    Private Sub Btn_Grabar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Grabar.Click
+    Private Sub Btn_Grabar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Grabar.Click
 
         Sb_Grabar()
 
@@ -562,25 +563,25 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
                         _Fecha = Format(_Fila.Item("Fecha"), "yyyyMMdd")
 
-                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones " & vbCrLf & _
-                                   "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo," & _
-                                   "Padre_Tabla,Padre_CodigoTabla,Fecha) Values " & vbCrLf & _
-                                   "('" & _CodTablaClass & "'," & _
-                                   "''," & _
-                                   "'" & _Codigo & "'," & _
-                                   "'" & _Descripcion & _
-                                   "'," & Nro & _
-                                   ",0,0,0,'" & _Padre_Tabla & _
-                                   "','" & _Padre_CodigoTabla & _
+                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones " & vbCrLf &
+                                   "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo," &
+                                   "Padre_Tabla,Padre_CodigoTabla,Fecha) Values " & vbCrLf &
+                                   "('" & _CodTablaClass & "'," &
+                                   "''," &
+                                   "'" & _Codigo & "'," &
+                                   "'" & _Descripcion &
+                                   "'," & Nro &
+                                   ",0,0,0,'" & _Padre_Tabla &
+                                   "','" & _Padre_CodigoTabla &
                                    "','" & _Fecha & "')" & vbCrLf
 
                     Else
-                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones " & vbCrLf & _
-                                    "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo," & _
-                                    "Padre_Tabla,Padre_CodigoTabla) Values " & vbCrLf & _
-                                    "('" & _CodTablaClass & "'," & _
-                                    "''," & _
-                                    "'" & _Codigo & "'," & _
+                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones " & vbCrLf &
+                                    "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo," &
+                                    "Padre_Tabla,Padre_CodigoTabla) Values " & vbCrLf &
+                                    "('" & _CodTablaClass & "'," &
+                                    "''," &
+                                    "'" & _Codigo & "'," &
                                     "'" & _Descripcion & "'," & Nro & ",0,0,0,'" & _Padre_Tabla & "','" & _Padre_CodigoTabla & "')" & vbCrLf
                     End If
 
@@ -603,17 +604,17 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
                         _Fecha = Format(_Fila.Item("Fecha"), "yyyyMMdd")
 
-                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Set " & _
-                                   "NombreTabla = '" & _Descripcion & "',Fecha = '" & _Fecha & "'" & vbCrLf & _
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Set " &
+                                   "NombreTabla = '" & _Descripcion & "',Fecha = '" & _Fecha & "'" & vbCrLf &
                                    "Where Tabla = '" & _CodTablaClass & "' And CodigoTabla = '" & _Codigo & "'"
 
                     Else
-                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Set " & _
-                                   "NombreTabla = '" & _Descripcion & "'" & vbCrLf & _
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Set " &
+                                   "NombreTabla = '" & _Descripcion & "'" & vbCrLf &
                                    "Where Tabla = '" & _CodTablaClass & "' And CodigoTabla = '" & _Codigo & "'"
                     End If
 
-                     _Sql.Ej_consulta_IDU(Consulta_Sql)
+                    _Sql.Ej_consulta_IDU(Consulta_sql)
 
                     _Modificadas += 1
                 Case DataRowState.Unchanged ' Sin cambios
@@ -636,28 +637,28 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
             If _Filtro_Elimina = "()" Then _CondiCodigos = String.Empty
 
-            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
                            "Where Tabla = '" & _CodTablaClass & "'" & vbCrLf & _CondiCodigos
 
-             _Sql.Ej_consulta_IDU(Consulta_Sql)
+            _Sql.Ej_consulta_IDU(Consulta_sql)
 
         End If
 
         Consulta_sql = _Arr_Info_Tabla(2)
 
         If Not String.IsNullOrEmpty(Trim(Consulta_sql)) Then
-             _Sql.Ej_consulta_IDU(Consulta_Sql)
+            _Sql.Ej_consulta_IDU(Consulta_sql)
         End If
 
         Sb_Actualizar_Grilla("")
 
 
-        ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button, _
+        ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
                                2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
 
     End Sub
 
-    Private Sub EliminarFilaToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EliminarFilaToolStripMenuItem.Click
+    Private Sub EliminarFilaToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles EliminarFilaToolStripMenuItem.Click
         Try
             Grilla.Rows.RemoveAt(Grilla.CurrentRow.Index)
         Catch ex As Exception
@@ -665,26 +666,26 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
         End Try
     End Sub
 
-    Private Sub Btn_ExportarExcel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_ExportarExcel.Click
+    Private Sub Btn_ExportarExcel_Click(sender As System.Object, e As System.EventArgs) Handles Btn_ExportarExcel.Click
 
         Dim _TblFiltroProductos As DataTable = _DsTablas.Tables("Zw_TablaDeCaracterizaciones") '_Ds_Caract.Tables("Tbl_Caracterizaciones")
         Dim _Modificado As Boolean = _Global_Fx_Cambio_en_la_Grilla(_TblFiltroProductos)
 
         If _Modificado Then
-            MessageBoxEx.Show(Me, "SE EXOPOTARAN A EXCEL SOLO LAS FILAS QUE ESTAN GRABADAS EN LA BASE DE DATOS", _
+            MessageBoxEx.Show(Me, "SE EXOPOTARAN A EXCEL SOLO LAS FILAS QUE ESTAN GRABADAS EN LA BASE DE DATOS",
                               "EXPORTAR A EXCEL", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End If
 
-        Consulta_sql = "SELECT CodigoTabla as 'Codigo',DescripcionTabla as 'Descripcion tabla',NombreTabla as 'Nombre tabla'" & vbCrLf & _
-                       "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
-                       "Where Tabla = '" & _CodTablaClass & "'" & vbCrLf & _
+        Consulta_sql = "SELECT CodigoTabla as 'Codigo',DescripcionTabla as 'Descripcion tabla',NombreTabla as 'Nombre tabla'" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                       "Where Tabla = '" & _CodTablaClass & "'" & vbCrLf &
                        "Order by NombreTabla"
 
         ExportarTabla_JetExcel(Consulta_sql, Me, _CodTablaClass)
 
     End Sub
 
-    Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         With Grilla
 
@@ -694,18 +695,18 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
                 Dim _Tbl As DataTable
 
-                Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
+                Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
                                "Where Tabla = '" & _CodTablaClass & "' and CodigoTabla = '" & _CodigoTabla & "'"
 
-                _Tbl = _SQL.Fx_Get_Tablas(Consulta_sql)
+                _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
 
                 If CBool(_Tbl.Rows.Count) Then
                     _RowFilaSeleccionada = _Tbl.Rows(0)
                     Me.Close()
                 Else
                     Beep()
-                    ToastNotification.Show(Me, "ESTA FILA NO ESTA GRABADA EN LA BASE DE DATOS" & vbCrLf & _
-                                           "NO SE PUEDE SELECCIONAR", My.Resources.button_rounded_red_delete, _
+                    ToastNotification.Show(Me, "ESTA FILA NO ESTA GRABADA EN LA BASE DE DATOS" & vbCrLf &
+                                           "NO SE PUEDE SELECCIONAR", My.Resources.button_rounded_red_delete,
                                              2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
                     Sb_Actualizar_Grilla("")
                 End If
@@ -717,14 +718,14 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
     End Sub
 
-    Private Sub TxtDescripcion_KeyDown_Filtro_Mantencion(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+    Private Sub TxtDescripcion_KeyDown_Filtro_Mantencion(sender As System.Object, e As System.Windows.Forms.KeyEventArgs)
         If e.KeyValue = Keys.Enter Then
             '_dv.RowFilter = "NombreTabla Like '%" & TxtDescripcion.Text & "%'"
             BuscarDatoEnGrilla(TxtDescripcion.Text, "NombreTabla", Grilla)
         End If
     End Sub
 
-    Private Sub TxtDescripcion_KeyDown_Filtro_Seleccion(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+    Private Sub TxtDescripcion_KeyDown_Filtro_Seleccion(sender As System.Object, e As System.Windows.Forms.KeyEventArgs)
         'If e.KeyValue = Keys.Enter Then
         _dv.RowFilter = "NombreTabla Like '%" & TxtDescripcion.Text & "%'"
         'BuscarDatoEnGrilla(TxtDescripcion.Text, "NombreTabla", Grilla)
@@ -732,7 +733,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
     End Sub
 
     Private Sub Sb_Nueva_Linea()
-        
+
         Dim NewFila As DataRow
         NewFila = _DsTablas.Tables("Zw_TablaDeCaracterizaciones").NewRow
         With NewFila
@@ -749,9 +750,9 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
     End Sub
 
-    
 
-    Function Fx_Info_Tabla(ByVal _Tabla_Random As Enum_Tablas_Random) As String()
+
+    Function Fx_Info_Tabla(_Tabla_Random As Enum_Tablas_Random) As String()
 
         Dim _Tabla As String
         Dim _Arrgeglo(3) As String
@@ -783,130 +784,130 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
             Case Enum_Tablas_Random.Marcas
                 _Arrgeglo(0) = 20
                 _Arrgeglo(1) = "MARCAS"
-                _Arrgeglo(2) = "Truncate table TABMR" & vbCrLf & _
-                               "Insert Into TABMR (KOMR,NOKOMR)" & vbCrLf & _
-                               "Select DISTINCT CodigoTabla,SUBSTRING(NombreTabla,1,30)" & vbCrLf & _
-                               "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'MARCAS'" & vbCrLf & _
+                _Arrgeglo(2) = "Truncate table TABMR" & vbCrLf &
+                               "Insert Into TABMR (KOMR,NOKOMR)" & vbCrLf &
+                               "Select DISTINCT CodigoTabla,SUBSTRING(NombreTabla,1,30)" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'MARCAS'" & vbCrLf &
                                "And NombreTabla <> ''"
                 _Arrgeglo(3) = 30
 
-                Consulta_sql = "-- MARCAS" & vbCrLf & _
-                               "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
-                               "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf & _
-                               "Select 'MARCAS','', KOMR, NOKOMR,rank() OVER (ORDER BY KOMR) as Orden,0,0,0 " & _
+                Consulta_sql = "-- MARCAS" & vbCrLf &
+                               "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                               "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf &
+                               "Select 'MARCAS','', KOMR, NOKOMR,rank() OVER (ORDER BY KOMR) as Orden,0,0,0 " &
                                "From TABMR Order By Orden"
 
             Case Enum_Tablas_Random.Rubros
                 _Arrgeglo(0) = 3
                 _Arrgeglo(1) = "RUBROS"
-                _Arrgeglo(2) = "Truncate table TABRU" & vbCrLf & _
-                               "Insert Into TABRU (KORU,NOKORU) Select CodigoTabla,NombreTabla" & vbCrLf & _
+                _Arrgeglo(2) = "Truncate table TABRU" & vbCrLf &
+                               "Insert Into TABRU (KORU,NOKORU) Select CodigoTabla,NombreTabla" & vbCrLf &
                                "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'RUBROS'"
                 _Arrgeglo(3) = 30
 
-                Consulta_sql = "-- RUBROS" & vbCrLf & _
-                               "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
-                               "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf & _
-                               "Select 'RUBROS','', KORU, NOKORU,rank() OVER (ORDER BY KORU) as Orden,0,0,0 " & _
+                Consulta_sql = "-- RUBROS" & vbCrLf &
+                               "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                               "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf &
+                               "Select 'RUBROS','', KORU, NOKORU,rank() OVER (ORDER BY KORU) as Orden,0,0,0 " &
                                "From TABRU Order By Orden"
 
             Case Enum_Tablas_Random.Claslibre
                 _Arrgeglo(0) = 10
                 _Arrgeglo(1) = "CLALIBPR"
-                _Arrgeglo(2) = "Delete TABCARAC Where KOTABLA = 'CLALIBPR'" & vbCrLf & _
-                               "Insert Into TABCARAC (KOTABLA,NOKOTABLA,KOCARAC,NOKOCARAC) Select Tabla,'',CodigoTabla,NombreTabla" & vbCrLf & _
+                _Arrgeglo(2) = "Delete TABCARAC Where KOTABLA = 'CLALIBPR'" & vbCrLf &
+                               "Insert Into TABCARAC (KOTABLA,NOKOTABLA,KOCARAC,NOKOCARAC) Select Tabla,'',CodigoTabla,NombreTabla" & vbCrLf &
                                "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'CLALIBPR'"
                 _Arrgeglo(3) = 50
 
-                Consulta_sql = "-- CLASIFICACION LIBRE" & vbCrLf & _
-                               "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
-                               "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf & _
-                               "SELECT 'CLALIBPR','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " & _
+                Consulta_sql = "-- CLASIFICACION LIBRE" & vbCrLf &
+                               "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                               "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf &
+                               "SELECT 'CLALIBPR','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " &
                                "WHERE KOTABLA = 'CLALIBPR'"
 
             Case Enum_Tablas_Random.Actividade
                 _Arrgeglo(0) = 10
                 _Arrgeglo(1) = "ACTIVIDADE"
-                _Arrgeglo(2) = "Delete TABCARAC Where KOTABLA = 'ACTIVIDADE'" & vbCrLf & _
-                               "Insert Into TABCARAC (KOTABLA,NOKOTABLA,KOCARAC,NOKOCARAC) Select Tabla,'',CodigoTabla,NombreTabla" & vbCrLf & _
+                _Arrgeglo(2) = "Delete TABCARAC Where KOTABLA = 'ACTIVIDADE'" & vbCrLf &
+                               "Insert Into TABCARAC (KOTABLA,NOKOTABLA,KOCARAC,NOKOCARAC) Select Tabla,'',CodigoTabla,NombreTabla" & vbCrLf &
                                "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'ACTIVIDADE'"
                 _Arrgeglo(3) = 50
 
-                Consulta_sql = "-- ACTIVIDAD ECONOMICA ENTIDAD" & vbCrLf & _
-                               "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
-                               "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf & _
-                               "SELECT 'ACTIVIDADE','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " & _
+                Consulta_sql = "-- ACTIVIDAD ECONOMICA ENTIDAD" & vbCrLf &
+                               "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                               "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf &
+                               "SELECT 'ACTIVIDADE','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " &
                                "WHERE KOTABLA = 'ACTIVIDADE'"
 
 
             Case Enum_Tablas_Random.Tipoentidad
                 _Arrgeglo(0) = 10
                 _Arrgeglo(1) = "TIPOENTIDA"
-                _Arrgeglo(2) = "Delete TABCARAC Where KOTABLA = 'TIPOENTIDA'" & vbCrLf & _
-                               "Insert Into TABCARAC (KOTABLA,NOKOTABLA,KOCARAC,NOKOCARAC) Select Tabla,'',CodigoTabla,NombreTabla" & vbCrLf & _
+                _Arrgeglo(2) = "Delete TABCARAC Where KOTABLA = 'TIPOENTIDA'" & vbCrLf &
+                               "Insert Into TABCARAC (KOTABLA,NOKOTABLA,KOCARAC,NOKOCARAC) Select Tabla,'',CodigoTabla,NombreTabla" & vbCrLf &
                                "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'TIPOENTIDA'"
                 _Arrgeglo(3) = 50
 
-                Consulta_sql = "-- TIPO ENTIDAD" & vbCrLf & _
-                               "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
-                               "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf & _
-                               "SELECT 'TIPOENTIDA','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " & _
+                Consulta_sql = "-- TIPO ENTIDAD" & vbCrLf &
+                               "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                               "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf &
+                               "SELECT 'TIPOENTIDA','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " &
                                "WHERE KOTABLA = 'TIPOENTIDA'"
 
             Case Enum_Tablas_Random.Tamanoempr
                 _Arrgeglo(0) = 10
                 _Arrgeglo(1) = "TAMA¥OEMPR"
-                _Arrgeglo(2) = "Delete TABCARAC Where KOTABLA = 'TAMA¥OEMPR'" & vbCrLf & _
-                               "Insert Into TABCARAC (KOTABLA,NOKOTABLA,KOCARAC,NOKOCARAC) Select Tabla,'',CodigoTabla,NombreTabla" & vbCrLf & _
+                _Arrgeglo(2) = "Delete TABCARAC Where KOTABLA = 'TAMA¥OEMPR'" & vbCrLf &
+                               "Insert Into TABCARAC (KOTABLA,NOKOTABLA,KOCARAC,NOKOCARAC) Select Tabla,'',CodigoTabla,NombreTabla" & vbCrLf &
                                "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'TAMA¥OEMPR'"
                 _Arrgeglo(3) = 50
 
-                Consulta_sql = "-- TAMAÑO EMPRESA" & vbCrLf & _
-                               "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
-                               "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf & _
-                               "SELECT 'TAMA¥OEMPR','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " & _
+                Consulta_sql = "-- TAMAÑO EMPRESA" & vbCrLf &
+                               "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                               "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf &
+                               "SELECT 'TAMA¥OEMPR','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " &
                                "WHERE KOTABLA = 'TAMA¥OEMPR'"
 
             Case Enum_Tablas_Random.Cargos
                 _Arrgeglo(0) = 10
                 _Arrgeglo(1) = "CARGOS"
-                _Arrgeglo(2) = "Delete TABCARAC Where KOTABLA = 'CARGOS'" & vbCrLf & _
-                               "Insert Into TABCARAC (KOTABLA,NOKOTABLA,KOCARAC,NOKOCARAC) Select Tabla,'',CodigoTabla,NombreTabla" & vbCrLf & _
+                _Arrgeglo(2) = "Delete TABCARAC Where KOTABLA = 'CARGOS'" & vbCrLf &
+                               "Insert Into TABCARAC (KOTABLA,NOKOTABLA,KOCARAC,NOKOCARAC) Select Tabla,'',CodigoTabla,NombreTabla" & vbCrLf &
                                "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'CARGOS'"
                 _Arrgeglo(3) = 50
 
-                Consulta_sql = "-- CARGOS" & vbCrLf & _
-                               "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
-                               "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf & _
-                               "SELECT 'CARGOS','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " & _
+                Consulta_sql = "-- CARGOS" & vbCrLf &
+                               "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                               "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf &
+                               "SELECT 'CARGOS','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " &
                                "WHERE KOTABLA = 'CARGOS'"
 
             Case Enum_Tablas_Random.Areasactiv
                 _Arrgeglo(0) = 10
                 _Arrgeglo(1) = "AREASACTIV"
-                _Arrgeglo(2) = "Delete TABCARAC Where KOTABLA = 'AREASACTIV'" & vbCrLf & _
-                               "Insert Into TABCARAC (KOTABLA,NOKOTABLA,KOCARAC,NOKOCARAC) Select Tabla,'',CodigoTabla,NombreTabla" & vbCrLf & _
+                _Arrgeglo(2) = "Delete TABCARAC Where KOTABLA = 'AREASACTIV'" & vbCrLf &
+                               "Insert Into TABCARAC (KOTABLA,NOKOTABLA,KOCARAC,NOKOCARAC) Select Tabla,'',CodigoTabla,NombreTabla" & vbCrLf &
                                "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'AREASACTIV'"
                 _Arrgeglo(3) = 50
 
-                Consulta_sql = "-- AREAS ACTIVIDAD ENTIDADES" & vbCrLf & _
-                               "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
-                               "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf & _
-                               "SELECT 'AREASACTIV','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " & _
+                Consulta_sql = "-- AREAS ACTIVIDAD ENTIDADES" & vbCrLf &
+                               "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                               "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf &
+                               "SELECT 'AREASACTIV','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " &
                                "WHERE KOTABLA = 'AREASACTIV'"
 
             Case Enum_Tablas_Random.Transporte
                 _Arrgeglo(0) = 10
                 _Arrgeglo(1) = "TRANSPORTE"
-                _Arrgeglo(2) = "Delete TABCARAC Where KOTABLA = 'TRANSPORTE'" & vbCrLf & _
-                               "Insert Into TABCARAC (KOTABLA,NOKOTABLA,KOCARAC,NOKOCARAC) Select Tabla,'',CodigoTabla,NombreTabla" & vbCrLf & _
+                _Arrgeglo(2) = "Delete TABCARAC Where KOTABLA = 'TRANSPORTE'" & vbCrLf &
+                               "Insert Into TABCARAC (KOTABLA,NOKOTABLA,KOCARAC,NOKOCARAC) Select Tabla,'',CodigoTabla,NombreTabla" & vbCrLf &
                                "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'TRANSPORTE'"
                 _Arrgeglo(3) = 50
 
-                Consulta_sql = "-- TRANSPORTE" & vbCrLf & _
-                               "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
-                               "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf & _
-                               "SELECT 'TRANSPORTE','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " & _
+                Consulta_sql = "-- TRANSPORTE" & vbCrLf &
+                               "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                               "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf &
+                               "SELECT 'TRANSPORTE','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " &
                                "WHERE KOTABLA = 'TRANSPORTE'"
 
             Case Enum_Tablas_Random.Maquina_ST
@@ -1029,6 +1030,20 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
                 _Arrgeglo(2) = String.Empty
                 _Arrgeglo(3) = 50
 
+            Case Enum_Tablas_Random.ZonaProducto
+                _Arrgeglo(0) = 10
+                _Arrgeglo(1) = "ZONAPRODUC"
+                _Arrgeglo(2) = "Delete TABCARAC Where KOTABLA = 'ZONAPRODUC'" & vbCrLf &
+                               "Insert Into TABCARAC (KOTABLA,NOKOTABLA,KOCARAC,NOKOCARAC) Select Tabla,'',CodigoTabla,NombreTabla" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'ZONAPRODUC'"
+                _Arrgeglo(3) = 50
+
+                Consulta_sql = "-- CLASIFICACION LIBRE" & vbCrLf &
+                               "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                               "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf &
+                               "SELECT 'ZONAPRODUC','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " &
+                               "WHERE KOTABLA = 'ZONAPRODUC'"
+
         End Select
 
         If Not String.IsNullOrEmpty(Consulta_sql) Then
@@ -1036,8 +1051,8 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
             Dim _Sql_Class As New Class_SQL(Cadena_ConexionSQL_Server)
 
 
-            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
-                           "Where Tabla = '" & _Arrgeglo(1) & "'" & vbCrLf & vbCrLf & _
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                           "Where Tabla = '" & _Arrgeglo(1) & "'" & vbCrLf & vbCrLf &
                            Consulta_sql
 
             _Sql_Class.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
@@ -1049,45 +1064,46 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
         '---------------------------------------------------------------------------------------------------------------------
 
-        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
-                       "Where Tabla In ('ARTICULO','COLOR','MEDIDA','MARCAS','RUBROS','CLALIBPR','CLASLIBRE'," & _
-                       "'ACTIVIDADE','TIPOENTIDA','TAMA¥OEMPR','CARGOS','AREASACTIV','TRANSPORTE')" & vbCrLf & vbCrLf & _
-                       "-- ARTICULO" & vbCrLf & _
-                       "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
-                       "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf & _
-                       "SELECT 'ARTICULO','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " & _
-                       "WHERE KOTABLA = 'ARTICULO'" & _
-                       vbCrLf & _
-                       vbCrLf & _
-                       "-- COLOR" & vbCrLf & _
-                       "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
-                       "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf & _
-                       "SELECT 'COLOR','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " & _
-                       "WHERE KOTABLA = 'COLOR'" & _
-                       vbCrLf & _
-                       vbCrLf & _
-                       "-- MEDIDA" & vbCrLf & _
-                       "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
-                       "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf & _
-                       "SELECT 'MEDIDA','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " & _
-                       "WHERE KOTABLA = 'MEDIDA'" & _
-                       vbCrLf & _
-                       vbCrLf & _
-                       vbCrLf & _
-                       vbCrLf & _
-                       vbCrLf & _
-                       vbCrLf & _
-                       vbCrLf & _
-                       vbCrLf & _
-                       vbCrLf & _
-                       vbCrLf & _
-                       vbCrLf & _
-                       vbCrLf & _
-                       vbCrLf & _
-                       vbCrLf & _
-                       vbCrLf & _
-                       vbCrLf & _
-                       vbCrLf & _
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                       "Where Tabla In ('ARTICULO','COLOR','MEDIDA','MARCAS','RUBROS','CLALIBPR','CLASLIBRE'," &
+                       "'ACTIVIDADE','TIPOENTIDA','TAMA¥OEMPR','CARGOS','AREASACTIV','TRANSPORTE','ZONAPRODUC')" & vbCrLf &
+                       vbCrLf &
+                       "-- ARTICULO" & vbCrLf &
+                       "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                       "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf &
+                       "SELECT 'ARTICULO','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " &
+                       "WHERE KOTABLA = 'ARTICULO'" &
+                       vbCrLf &
+                       vbCrLf &
+                       "-- COLOR" & vbCrLf &
+                       "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                       "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf &
+                       "SELECT 'COLOR','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " &
+                       "WHERE KOTABLA = 'COLOR'" &
+                       vbCrLf &
+                       vbCrLf &
+                       "-- MEDIDA" & vbCrLf &
+                       "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                       "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf &
+                       "SELECT 'MEDIDA','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " &
+                       "WHERE KOTABLA = 'MEDIDA'" &
+                       vbCrLf &
+                       vbCrLf &
+                       vbCrLf &
+                       vbCrLf &
+                       vbCrLf &
+                       vbCrLf &
+                       vbCrLf &
+                       vbCrLf &
+                       vbCrLf &
+                       vbCrLf &
+                       vbCrLf &
+                       vbCrLf &
+                       vbCrLf &
+                       vbCrLf &
+                       vbCrLf &
+                       vbCrLf &
+                       vbCrLf &
                        vbCrLf
 
 
@@ -1097,7 +1113,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
     End Function
 
-    Private Sub Btn_Seleccionar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Seleccionar.Click
+    Private Sub Btn_Seleccionar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Seleccionar.Click
         _Seleccion = True
         Me.Close()
     End Sub
@@ -1106,7 +1122,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
         Get
             Return _RowFilaSeleccionada
         End Get
-        Set(ByVal value As DataRow)
+        Set(value As DataRow)
             _RowFilaSeleccionada = value
         End Set
     End Property
@@ -1115,7 +1131,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
         Get
             Return _dv.Table
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _TblFilasSeleccionadas = value
         End Set
     End Property
@@ -1124,7 +1140,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
         Get
             Return _Seleccion
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
 
         End Set
     End Property
@@ -1133,7 +1149,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
         Get
             Return _Cerrar_al_grabar
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Cerrar_al_grabar = value
         End Set
     End Property
@@ -1142,7 +1158,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
         Get
             Return _Padre_Tabla
         End Get
-        Set(ByVal value)
+        Set(value)
             _Padre_Tabla = value
         End Set
     End Property
@@ -1151,12 +1167,12 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
         Get
             Return _Padre_CodigoTabla
         End Get
-        Set(ByVal value)
+        Set(value)
             _Padre_CodigoTabla = value
         End Set
     End Property
 
-    Private Sub Grilla_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Grilla.MouseUp
+    Private Sub Grilla_MouseUp(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Grilla.MouseUp
         Grilla.EndEdit()
     End Sub
 

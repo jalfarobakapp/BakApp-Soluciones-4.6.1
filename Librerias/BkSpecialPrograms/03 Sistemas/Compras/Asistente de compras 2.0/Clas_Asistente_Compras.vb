@@ -37,6 +37,8 @@ Public Class Clas_Asistente_Compras
     Dim _Rdb_Rot_Mediana As Boolean
     Dim _Rdb_Rot_Promedio As Boolean
 
+    Public Property Chk_SumerStockExternoAlFisico As Boolean
+
     Enum Enum_Proyeccion
         Dias
         Semanas
@@ -415,6 +417,9 @@ Public Class Clas_Asistente_Compras
             '_Sql.Ej_consulta_IDU(Consulta_sql)
             'End If
 
+            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set" & Space(1) & " Stock_Fisico_Ud1_Negativo = 0,Stock_Fisico_Ud2_Negativo = 0"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
             Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set" & Space(1) & " Stock_Fisico_Ud1 = 0,Stock_Fisico_Ud1_Negativo = 1 Where Stock_Fisico_Ud1 < 0
                             Update " & _Nombre_Tbl_Paso_Informe & " Set" & Space(1) & " Stock_Fisico_Ud2 = 0,Stock_Fisico_Ud2_Negativo = 1 Where Stock_Fisico_Ud2 < 0"
             _Sql.Ej_consulta_IDU(Consulta_sql)
@@ -508,15 +513,19 @@ Public Class Clas_Asistente_Compras
 
             '_Dias_Proyeccion_Venta = _Dias_Prom_Mensual
 
+            Dim _DCS = 3 ' Decimales, cantidad sugerida
+
+            If _Ud = 1 Then _DCS = 0
+
             If _Chk_Restar_Stok_Bodega Then
 
                 If _Proyeccion_Metodo_Abastecer = Enum_Proyeccion.Dias Then
                     Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
-                                   "CantSugeridaTot = Round(((RotCalculo*" & _Dias_Abastecer & ") * " & _Porc_Crecimiento & ") - StockUd" & _Ud & ",0)" & vbCrLf &
+                                   "CantSugeridaTot = Round(((RotCalculo*" & _Dias_Abastecer & ") * " & _Porc_Crecimiento & ") - StockUd" & _Ud & "," & _DCS & ")" & vbCrLf &
                                    "Where 1 > 0"
                 Else
                     Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
-                                   "CantSugeridaTot = Round(((RotCalculo*" & _Meses_Abastecer & ") * " & _Porc_Crecimiento & ") - StockUd" & _Ud & ",0)" & vbCrLf &
+                                   "CantSugeridaTot = Round(((RotCalculo*" & _Meses_Abastecer & ") * " & _Porc_Crecimiento & ") - StockUd" & _Ud & "," & _DCS & ")" & vbCrLf &
                                    "Where 1 > 0"
                 End If
 
@@ -524,11 +533,11 @@ Public Class Clas_Asistente_Compras
 
                 If _Proyeccion_Metodo_Abastecer = Enum_Proyeccion.Dias Then
                     Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
-                                   "CantSugeridaTot = Round((" & _Dias_Abastecer & " * RotCalculo) * " & _Porc_Crecimiento & ",0)" & vbCrLf &
+                                   "CantSugeridaTot = Round((" & _Dias_Abastecer & " * RotCalculo) * " & _Porc_Crecimiento & "," & _DCS & ")" & vbCrLf &
                                    "Where 1 > 0"
                 Else
                     Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
-                                   "CantSugeridaTot = Round((" & _Meses_Abastecer & " * (RotCalculo)) * " & _Porc_Crecimiento & ",0)" & vbCrLf &
+                                   "CantSugeridaTot = Round((" & _Meses_Abastecer & " * (RotCalculo)) * " & _Porc_Crecimiento & "," & _DCS & ")" & vbCrLf &
                                    "Where 1 > 0"
                 End If
 
@@ -1094,6 +1103,30 @@ Public Class Clas_Asistente_Compras
         Consulta_sql = Replace(Consulta_sql, "#CodFuncionario#", FUNCIONARIO)
         Consulta_sql = Replace(Consulta_sql, "#Filtro_Bodega#", _Filtro_Bodega)
         Consulta_sql = Replace(Consulta_sql, "Zw_Prod_Asociacion", _Global_BaseBk & "Zw_Prod_Asociacion")
+
+        If Chk_SumerStockExternoAlFisico Then
+
+            Dim _StockBodExterna As String
+
+            _Filtro_Bodega = Generar_Filtro_IN(_Tbl_Filtro_Bodegas, "Chk", "Codigo", False, True, "'")
+
+            _StockBodExterna = "Update #Paso Set StfiBodExt1 = Isnull((Select SUM(Ztk.StfiBodExt1)" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_Prod_Stock Ztk" & vbCrLf &
+                               "Where #Paso.KOPR = Ztk.Codigo And Empresa+Sucursal+Bodega In " & _Filtro_Bodega & "),0)" & vbCrLf &
+                               "Update #Paso Set StfiBodExt2 = Isnull((Select SUM(Ztk.StfiBodExt2)" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_Prod_Stock Ztk" & vbCrLf &
+                               "Where #Paso.KOPR = Ztk.Codigo And Empresa+Sucursal+Bodega In " & _Filtro_Bodega & "),0)"
+
+            _StockBodExterna = "Update #Paso Set STFI1 = STFI1 + Isnull((Select SUM(Ztk.StfiBodExt1)" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_Prod_Stock Ztk" & vbCrLf &
+                               "Where #Paso.KOPR = Ztk.Codigo And Empresa+Sucursal+Bodega In " & _Filtro_Bodega & "),0)" & vbCrLf &
+                               "Update #Paso Set STFI2 = STFI2 + Isnull((Select SUM(Ztk.StfiBodExt2)" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_Prod_Stock Ztk" & vbCrLf &
+                               "Where #Paso.KOPR = Ztk.Codigo And Empresa+Sucursal+Bodega In " & _Filtro_Bodega & "),0)"
+
+            Consulta_sql = Replace(Consulta_sql, "--InsertarStockFisicoDeBodegaExterna", _StockBodExterna)
+
+        End If
 
         _Sql.Ej_consulta_IDU(Consulta_sql)
 

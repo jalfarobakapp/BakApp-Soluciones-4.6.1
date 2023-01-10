@@ -39,7 +39,7 @@ Public Class Frm_01_Asis_Compra_Resultados_Hijo
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Both, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Both, True, False, True)
 
         Sb_Formato_Generico_Grilla(Grilla_GRC, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
         Sb_Formato_Generico_Grilla(Grilla_FCC, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
@@ -67,6 +67,10 @@ Public Class Frm_01_Asis_Compra_Resultados_Hijo
         Dim Fm As New Frm_EOQ
         Fm.ShowDialog(Me)
         Fm.Dispose()
+    End Sub
+
+    Private Sub Frm_01_Asis_Compra_Resultados_Hijo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
     End Sub
 
     Private Sub Sb_Grilla_Detalle_Producto_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs)

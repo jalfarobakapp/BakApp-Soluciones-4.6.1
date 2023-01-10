@@ -1,10 +1,19 @@
 
 
-Select KOPR,Cast('' As Varchar(30)) As Codigo_Nodo_Madre,Sum(STFI1) As STFI1,Sum(STFI2) As STFI2,Sum(STOCNV1C) As STOCNV1C,Sum(STOCNV2C) As STOCNV2C,Sum(STDV1C) As STDV1C,Sum(STDV2C) As STDV2C 
+Select KOPR,Cast('' As Varchar(30)) As Codigo_Nodo_Madre,
+       Sum(STFI1) As STFI1,
+       CAST(0 As Float) As StfiBodExt1,
+       Sum(STFI2) As STFI2,
+       CAST(0 As Float) As StfiBodExt2,
+       Sum(STOCNV1C) As STOCNV1C,Sum(STOCNV2C) As STOCNV2C,Sum(STDV1C) As STDV1C,Sum(STDV2C) As STDV2C 
 Into #Paso
 From MAEST
 Where KOPR In (Select Codigo From #TablaPaso#) #Filtro_Bodega#--And EMPRESA+KOSU+KOBO In ('01CM PR','01WCMWCM')
 Group By KOPR
+
+
+--InsertarStockFisicoDeBodegaExterna
+
 
 Update #Paso Set Codigo_Nodo_Madre = (Select Top 1 Codigo_Nodo_Madre From #TablaPaso# Where KOPR = Codigo)
 
@@ -54,52 +63,3 @@ Inner Join #TablaPaso# Ztbl On Ztbl.Codigo_Nodo_Madre = #Paso1.Codigo_Nodo_Madre
 Drop Table #Paso
 Drop Table #Paso1
 
-
-
-
-
---UPDATE #TablaPaso#
---SET 
-
---StockUd1 = 
---Isnull((SELECT ROUND(SUM(STFI1),2) 
---FROM MAEST WHERE KOPR In (Select Distinct Codigo From Zw_Prod_Asociacion Z2 Where Codigo_Nodo = Codigo_Nodo_Madre And Z1.Codigo <> Z2.Codigo
---                          Union Select Z1.Codigo) 
---#Filtro_Bodega# And STFI1 > 0),0),
-
---StockPedidoUd1 = 
---Isnull((SELECT ROUND(SUM(STOCNV1C),2) 
---FROM MAEST WHERE KOPR In (Select Distinct Codigo From Zw_Prod_Asociacion Z2 Where Codigo_Nodo = Codigo_Nodo_Madre And Z1.Codigo <> Z2.Codigo
---                          Union Select Z1.Codigo) 
---#Filtro_Bodega# ),0),
-
---StockUd2 = 
---Isnull((SELECT ROUND(SUM(STFI2),2)
---FROM MAEST WHERE KOPR In (Select Distinct Codigo From Zw_Prod_Asociacion Z2 Where Codigo_Nodo = Codigo_Nodo_Madre And Z1.Codigo <> Z2.Codigo
---                          Union Select Z1.Codigo) 
---#Filtro_Bodega# And STFI1 > 0 ),0),
-
---StockPedidoUd2 = 
---Isnull((SELECT ROUND(SUM(STOCNV2C),2)
---FROM MAEST WHERE KOPR In (Select Distinct Codigo From Zw_Prod_Asociacion Z2 Where Codigo_Nodo = Codigo_Nodo_Madre And Z1.Codigo <> Z2.Codigo
---                          Union Select Z1.Codigo) 
---#Filtro_Bodega# ),0),
-
---StockFacSinRecepUd1 =
---Isnull((SELECT ROUND(SUM(STDV1C),2)
---FROM MAEST WHERE KOPR In (Select Distinct Codigo From Zw_Prod_Asociacion Z2 Where Codigo_Nodo = Codigo_Nodo_Madre And Z1.Codigo <> Z2.Codigo
---                          Union Select Z1.Codigo) 
---#Filtro_Bodega# ),0),
-
---StockFacSinRecepUd2 =
---Isnull((SELECT ROUND(SUM(STDV2C),2)
---FROM MAEST WHERE KOPR In (Select Distinct Codigo From Zw_Prod_Asociacion Z2 Where Codigo_Nodo = Codigo_Nodo_Madre And Z1.Codigo <> Z2.Codigo
---                          Union Select Z1.Codigo) 
---#Filtro_Bodega# ),0)
-
---From #TablaPaso# Z1
-
-
---Update #TablaPaso# Set Stock_Fisico_Ud1 = StockUd1,
---                       Stock_Fisico_Ud2 = StockUd2
-                      

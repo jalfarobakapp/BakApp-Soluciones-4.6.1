@@ -1,5 +1,5 @@
-﻿Imports DevComponents.DotNetBar
-Imports System.Data.SqlClient
+﻿Imports System.Data.SqlClient
+Imports DevComponents.DotNetBar
 
 Public Class Frm_St_Estado_03_Presupuesto
 
@@ -27,6 +27,7 @@ Public Class Frm_St_Estado_03_Presupuesto
     End Enum
 
     Public Property CodTecnico_Presupuesta As String
+    Public Property ObligaIngProdPresupuesto As Boolean
 
     Public Sub New(Id_Ot As Integer, Accion As Accion)
 
@@ -40,6 +41,8 @@ Public Class Frm_St_Estado_03_Presupuesto
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
         Sb_Color_Botones_Barra(Bar2)
+
+        ObligaIngProdPresupuesto = _Global_Row_Configuracion_Estacion.Item("ServTecnico_ObligaIngProdPresupuesto")
 
     End Sub
 
@@ -737,31 +740,19 @@ Public Class Frm_St_Estado_03_Presupuesto
     Private Sub Btn_Fijar_Estado_Click(sender As System.Object, e As System.EventArgs)
 
         If String.IsNullOrEmpty(Txt_Horas_Mano_de_Obra.Text) Then
-            Beep()
-            ToastNotification.Show(Me, "FALTA MANO DE HOBRA (HORAS)",
-                                   Imagenes_32x32.Images.Item("warning.png"),
-                                   2 * 1000, eToastGlowColor.Red,
-                                   eToastPosition.MiddleCenter)
+            MessageBoxEx.Show(Me, "FALTA MANO DE HOBRA (HORAS)", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_Horas_Mano_de_Obra.Focus()
             Return
         End If
 
         If String.IsNullOrEmpty(Txt_Defecto_encontrado.Text) Then
-            Beep()
-            ToastNotification.Show(Me, "FALTA DEFECTO ENCONTRADO",
-                                   Imagenes_32x32.Images.Item("warning.png"),
-                                   2 * 1000, eToastGlowColor.Red,
-                                   eToastPosition.MiddleCenter)
+            MessageBoxEx.Show(Me, "FALTA DEFECTO ENCONTRADO", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_Defecto_encontrado.Focus()
             Return
         End If
 
         If String.IsNullOrEmpty(Txt_Reparacion_a_realizar.Text) Then
-            Beep()
-            ToastNotification.Show(Me, "FALTA REPARACION A REALIZAR",
-                                   Imagenes_32x32.Images.Item("warning.png"),
-                                   2 * 1000, eToastGlowColor.Red,
-                                   eToastPosition.MiddleCenter)
+            MessageBoxEx.Show(Me, "FALTA REPARACION A REALIZAR", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_Reparacion_a_realizar.Focus()
             Return
         End If
@@ -772,13 +763,37 @@ Public Class Frm_St_Estado_03_Presupuesto
 
             If CBool(Grilla.Rows.Count) Then
                 _Fila = Grilla.Rows(0)
+
+                If Not _Fila.IsNewRow Then
+                    If Not _Fila.Cells("Nuevo_Item").Value And _Fila.Cells("Cantidad").Value <= 0 Then
+                        MessageBoxEx.Show(Me, "No pueden haber productos con cantidad igual o menor a cero", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        Return
+                    End If
+                End If
+
             End If
 
-            If Not CBool(Grilla.Rows.Count) Or _Fila.IsNewRow Then
-                If MessageBoxEx.Show(Me, "¿Desea agregar productos a la reparación?",
-                                     "No incluyo productos al presupuesto", MessageBoxButtons.YesNo,
-                                     MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+            If ObligaIngProdPresupuesto Then
+                If Not CBool(Grilla.Rows.Count) Or _Fila.IsNewRow Then
+                    MessageBoxEx.Show(Me, "Falta agregar un producto en el presupuesto" & vbCrLf &
+                                         "Debe por lo menos ingresar algun servicio de reparación" & vbCrLf & vbCrLf &
+                                         "Para agregar un producto debe hacer lo siguiente:" & vbCrLf &
+                                         "Debe posicionarse sobre la celda del Coódigo y hacer doble [Enter] para buscar algún producto e ingresarlo al presupuesto",
+                                         "Validación", MessageBoxButtons.OK,
+                                         MessageBoxIcon.Stop)
+
+                    Grilla.Focus()
                     Return
+
+                End If
+            Else
+                If Not CBool(Grilla.Rows.Count) Or _Fila.IsNewRow Then
+                    If MessageBoxEx.Show(Me, "¿Desea agregar productos a la reparación?",
+                                         "No incluyo productos al presupuesto", MessageBoxButtons.YesNo,
+                                         MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+
+                        Return
+                    End If
                 End If
             End If
 

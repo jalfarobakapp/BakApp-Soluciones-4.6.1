@@ -3356,6 +3356,8 @@ Public Class Frm_01_Asis_Compra_Resultados
                 .Pro_Proyeccion_Tiempo_Reposicion = Clas_Asistente_Compras.Enum_Proyeccion.Meses
             End If
 
+            .Chk_SumerStockExternoAlFisico = Chk_SumerStockExternoAlFisico.Checked
+
             .Sb_Actualizar_Rotacion(_Codigo, _Actualizar_Dias_Stock_En_Bodega)
 
         End With
@@ -3795,6 +3797,9 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         _Clas_Asistente_Compras.Pro_Filtro_Bodegas_Todas = _Filtro_Bodegas_Todas
         _Clas_Asistente_Compras.Pro_Tbl_Filtro_Bodegas = _TblBodCompra
+
+        _Clas_Asistente_Compras.Chk_SumerStockExternoAlFisico = Chk_SumerStockExternoAlFisico.Checked
+
         _Clas_Asistente_Compras.Sb_Actualizar_Stock()
 
     End Sub
@@ -4509,7 +4514,47 @@ Public Class Frm_01_Asis_Compra_Resultados
             _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Koen", Class_SQLite.Enum_Type._String, _Koen, _Actualizar, "Seleccion_Productos")
             _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Suen", Class_SQLite.Enum_Type._String, _Suen, _Actualizar, "Seleccion_Productos")
 
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Entidades" & vbCrLf &
+                "Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
+            Dim _Row_Entidades As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+
+            If Not IsNothing(_Row_Entidades) Then
+
+                If Not _Actualizar Then
+
+                    Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue = NuloPorNro(_Row_Entidades.Item("Metodo_Abastecer_Dias_Meses"), 1)
+                    Cmb_Tiempo_Reposicion_Dias_Meses.SelectedValue = NuloPorNro(_Row_Entidades.Item("Tiempo_Reposicion_Dias_Meses"), 1)
+
+                    Input_Dias_a_Abastecer.Value = _Row_Entidades.Item("Dias_a_Abastecer")
+                    Input_Tiempo_Reposicion.Value = _Row_Entidades.Item("Tiempo_Reposicion")
+
+                End If
+
+            End If
+
+            If _Actualizar Then
+
+                If IsNothing(_Row_Entidades) Then
+
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Entidades (CodEntidad,CodSucEntidad,Libera_NVV) Values ('" & _Koen & "','" & _Suen & "',0)" & vbCrLf &
+                                   "Select * From " & _Global_BaseBk & "Zw_Entidades where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
+                    _Row_Entidades = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                End If
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Entidades Set " & vbCrLf &
+                           "Metodo_Abastecer_Dias_Meses = " & Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue & "," &
+                           "Dias_a_Abastecer = " & Input_Dias_a_Abastecer.Value & "," &
+                           "Tiempo_Reposicion_Dias_Meses = " & Cmb_Tiempo_Reposicion_Dias_Meses.SelectedValue & "," &
+                           "Tiempo_Reposicion = " & Input_Tiempo_Reposicion.Value & vbCrLf &
+                           "Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            End If
+
         End If
+
 
         '   Seleccionar si el proveedor es entidad fisica
         _Sql.Sb_Parametro_Informe_Sql(Chk_Ent_Fisica, "Compras_Asistente",
@@ -4636,6 +4681,14 @@ Public Class Frm_01_Asis_Compra_Resultados
         '   Incluir o no incluir movimientos hacia la producción (GDI -> ODT)
         _Sql.Sb_Parametro_Informe_Sql(Chk_Incluir_Salidas_GDI_OT, "Compras_Asistente",
                                              Chk_Incluir_Salidas_GDI_OT.Name, Class_SQLite.Enum_Type._Boolean, Chk_Incluir_Salidas_GDI_OT.Checked, _Actualizar)
+
+
+
+
+        ' Sumar Stock Externo al Stock Fisico
+        _Sql.Sb_Parametro_Informe_Sql(Chk_SumerStockExternoAlFisico, "Compras_Asistente",
+                                      Chk_SumerStockExternoAlFisico.Name, Class_SQLite.Enum_Type._Boolean, Chk_SumerStockExternoAlFisico.Checked, _Actualizar)
+
 
 
     End Sub
