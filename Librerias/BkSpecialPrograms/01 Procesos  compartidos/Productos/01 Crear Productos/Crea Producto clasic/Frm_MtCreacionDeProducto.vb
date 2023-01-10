@@ -123,8 +123,14 @@ Public Class Frm_MtCreacionDeProducto
         JefePro = ""
         Cmb_Kofupr.SelectedValue = JefePro
 
+        'caract_combo(Cmb_Zonapr)
+        'Consulta_sql = Union & "SELECT KOZO AS Padre,NOKOZO AS Hijo FROM TABZO"
+        'Cmb_Zonapr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        'ZonaPro = ""
+        'Cmb_Zonapr.SelectedValue = ZonaPro
+
         caract_combo(Cmb_Zonapr)
-        Consulta_sql = Union & "SELECT KOZO AS Padre,NOKOZO AS Hijo FROM TABZO"
+        Consulta_sql = Union & "SELECT KOCARAC AS Padre,LTRIM(RTRIM(KOCARAC))+'-'+LTRIM(RTRIM(NOKOCARAC)) AS Hijo FROM TABCARAC WHERE KOTABLA = 'ZONAPRODUC' ORDER BY Hijo"
         Cmb_Zonapr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
         ZonaPro = ""
         Cmb_Zonapr.SelectedValue = ZonaPro
@@ -1975,10 +1981,16 @@ Sigue_Loop_01:
         If Fx_Tiene_Permiso(Me, "Tbl00018") Then
             Dim _ZonaPro = Cmb_Zonapr.SelectedValue
 
-            caract_combo(Cmb_Zonapr)
-            Consulta_sql = Union & "SELECT KOZO AS Padre,NOKOZO AS Hijo FROM TABZO"
-            Cmb_Zonapr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
-            Cmb_Zonapr.SelectedValue = _ZonaPro
+            Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Claslibre,
+                                                                  Frm_Tabla_Caracterizaciones_01_Listado.Accion.Mantencion_Tabla)
+            Fm.Text = "CLASIFICACION LIBRE"
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
+            caract_combo(Cmb_Clalibpr)
+            Consulta_sql = Union & "SELECT KOCARAC AS Padre,LTRIM(RTRIM(KOCARAC))+'-'+LTRIM(RTRIM(NOKOCARAC)) AS Hijo FROM TABCARAC WHERE KOTABLA = 'CLALIBPR' ORDER BY Hijo"
+            Cmb_Clalibpr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Cmb_Clalibpr.SelectedValue = _ZonaPro
 
         End If
     End Sub

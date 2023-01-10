@@ -763,6 +763,14 @@ Public Class Frm_St_Estado_03_Presupuesto
 
             If CBool(Grilla.Rows.Count) Then
                 _Fila = Grilla.Rows(0)
+
+                If Not _Fila.IsNewRow Then
+                    If Not _Fila.Cells("Nuevo_Item").Value And _Fila.Cells("Cantidad").Value <= 0 Then
+                        MessageBoxEx.Show(Me, "No pueden haber productos con cantidad igual o menor a cero", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        Return
+                    End If
+                End If
+
             End If
 
             If ObligaIngProdPresupuesto Then

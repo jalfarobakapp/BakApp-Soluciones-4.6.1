@@ -958,6 +958,7 @@ Public Class Frm_St_Estado_04_Cotizaciones
                     .Item("Estado_D") = "En Evaluación..."
                     .Item("Fecha_Doc") = _Feemdo
                     .Item("Fecha_Asociacion") = FechaDelServidor()
+                    .Item("Garantia") = False
                     .Item("Seleccionado") = True
 
                     _TblCotizaciones.Rows.Add(NewFila)
