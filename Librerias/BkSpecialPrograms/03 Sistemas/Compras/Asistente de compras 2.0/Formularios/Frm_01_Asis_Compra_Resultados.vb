@@ -317,12 +317,14 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     Private Sub Frm_01_AsisCompra_Resultados_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
-        Sb_Parametros_Informe_Sql(False)
+
 
         _Rdb_Productos_Proveedor = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor",
                                                                     "Funcionario = '" & FUNCIONARIO & "'" & Space(1) &
                                                                     "And Campo = 'Rdb_Productos_Proveedor'" & Space(1) &
                                                                     "And Informe = 'Compras_Asistente' And Modalidad = '" & _Modalidad_Estudio & "'", , , , True)
+
+        Sb_Parametros_Informe_Sql(False)
 
         Fm_Hijo.WindowState = FormWindowState.Maximized
         Fm_Hijo.MdiParent = Me
@@ -4504,7 +4506,33 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         End If
 
-        If Not (_RowProveedor Is Nothing) Then
+
+        '   Seleccionar si el proveedor es entidad fisica
+        _Sql.Sb_Parametro_Informe_Sql(Chk_Ent_Fisica, "Compras_Asistente",
+                                             Chk_Ent_Fisica.Name, Class_SQLite.Enum_Type._Boolean, Chk_Ent_Fisica.Checked, _Actualizar)
+
+        '   Seleccionar si el proveedor es entidad fisica
+        _Sql.Sb_Parametro_Informe_Sql(Chk_Traer_Productos_De_Reemplazo, "Compras_Asistente",
+                                             Chk_Traer_Productos_De_Reemplazo.Name, Class_SQLite.Enum_Type._Boolean, Chk_Traer_Productos_De_Reemplazo.Checked, _Actualizar)
+
+        '   Tipo de compra, Nacional / Comercio Exterior
+        _Sql.Sb_Parametro_Informe_Sql(Fm_Hijo.Cmb_Tipo_de_compra, "Compras_Asistente",
+                                             Fm_Hijo.Cmb_Tipo_de_compra.Name, Class_SQLite.Enum_Type._ComboBox, Fm_Hijo.Cmb_Tipo_de_compra.SelectedValue, _Actualizar)
+
+        '   Tiempo para aprobicionamiento
+        _Sql.Sb_Parametro_Informe_Sql(Cmb_Metodo_Abastecer_Dias_Meses, "Compras_Asistente", Cmb_Metodo_Abastecer_Dias_Meses.Name,
+                                             Class_SQLite.Enum_Type._ComboBox, Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue, _Actualizar)
+        _Sql.Sb_Parametro_Informe_Sql(Input_Dias_a_Abastecer, "Compras_Asistente",
+                                             Input_Dias_a_Abastecer.Name, Class_SQLite.Enum_Type._Double, Input_Dias_a_Abastecer.Value, _Actualizar)
+
+        '   Tiempo de reposición (Lead Time, _Actualizar)
+        _Sql.Sb_Parametro_Informe_Sql(Cmb_Tiempo_Reposicion_Dias_Meses, "Compras_Asistente",
+                                             Cmb_Tiempo_Reposicion_Dias_Meses.Name, Class_SQLite.Enum_Type._ComboBox, Cmb_Tiempo_Reposicion_Dias_Meses.SelectedValue, _Actualizar)
+        _Sql.Sb_Parametro_Informe_Sql(Input_Tiempo_Reposicion, "Compras_Asistente",
+                                             Input_Tiempo_Reposicion.Name, Class_SQLite.Enum_Type._Double, Input_Tiempo_Reposicion.Value, _Actualizar)
+
+
+        If _Rdb_Productos_Proveedor And Not (_RowProveedor Is Nothing) Then
 
             _Koen = Trim(_RowProveedor.Item("KOEN"))
             _Suen = Trim(_RowProveedor.Item("SUEN"))
@@ -4556,29 +4584,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         End If
 
 
-        '   Seleccionar si el proveedor es entidad fisica
-        _Sql.Sb_Parametro_Informe_Sql(Chk_Ent_Fisica, "Compras_Asistente",
-                                             Chk_Ent_Fisica.Name, Class_SQLite.Enum_Type._Boolean, Chk_Ent_Fisica.Checked, _Actualizar)
 
-        '   Seleccionar si el proveedor es entidad fisica
-        _Sql.Sb_Parametro_Informe_Sql(Chk_Traer_Productos_De_Reemplazo, "Compras_Asistente",
-                                             Chk_Traer_Productos_De_Reemplazo.Name, Class_SQLite.Enum_Type._Boolean, Chk_Traer_Productos_De_Reemplazo.Checked, _Actualizar)
-
-        '   Tipo de compra, Nacional / Comercio Exterior
-        _Sql.Sb_Parametro_Informe_Sql(Fm_Hijo.Cmb_Tipo_de_compra, "Compras_Asistente",
-                                             Fm_Hijo.Cmb_Tipo_de_compra.Name, Class_SQLite.Enum_Type._ComboBox, Fm_Hijo.Cmb_Tipo_de_compra.SelectedValue, _Actualizar)
-
-        '   Tiempo para aprobicionamiento
-        _Sql.Sb_Parametro_Informe_Sql(Cmb_Metodo_Abastecer_Dias_Meses, "Compras_Asistente", Cmb_Metodo_Abastecer_Dias_Meses.Name,
-                                             Class_SQLite.Enum_Type._ComboBox, Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue, _Actualizar)
-        _Sql.Sb_Parametro_Informe_Sql(Input_Dias_a_Abastecer, "Compras_Asistente",
-                                             Input_Dias_a_Abastecer.Name, Class_SQLite.Enum_Type._Double, Input_Dias_a_Abastecer.Value, _Actualizar)
-
-        '   Tiempo de reposición (Lead Time, _Actualizar)
-        _Sql.Sb_Parametro_Informe_Sql(Cmb_Tiempo_Reposicion_Dias_Meses, "Compras_Asistente",
-                                             Cmb_Tiempo_Reposicion_Dias_Meses.Name, Class_SQLite.Enum_Type._ComboBox, Cmb_Tiempo_Reposicion_Dias_Meses.SelectedValue, _Actualizar)
-        _Sql.Sb_Parametro_Informe_Sql(Input_Tiempo_Reposicion, "Compras_Asistente",
-                                             Input_Tiempo_Reposicion.Name, Class_SQLite.Enum_Type._Double, Input_Tiempo_Reposicion.Value, _Actualizar)
 
         '   Considera Sabado
         _Sql.Sb_Parametro_Informe_Sql(Chk_Sabado, "Compras_Asistente",
@@ -5335,8 +5341,8 @@ Public Class Frm_01_Asis_Compra_Resultados
                 _CantComprar = Math.Ceiling(_CantSugeridaTot)
 
                 Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & Space(1) &
-                               "Set CantComprar = " & De_Num_a_Tx_01(_CantComprar, False, 5) & vbCrLf &
-                               "Where Codigo = '" & _Codigo & "' And Es_Agrupador = 1"
+                               "Set Comprar = 1, CantComprar = " & De_Num_a_Tx_01(_CantComprar, False, 5) & vbCrLf &
+                               "Where Codigo = '" & _Codigo & "' And Es_Agrupador = " & Convert.ToInt32(Chk_Sumar_Rotacion_Hermanos.Checked)
 
                 If _Sql.Ej_consulta_IDU(Consulta_sql) Then
                     _Row.Cells("CantComprar").Value = _CantComprar

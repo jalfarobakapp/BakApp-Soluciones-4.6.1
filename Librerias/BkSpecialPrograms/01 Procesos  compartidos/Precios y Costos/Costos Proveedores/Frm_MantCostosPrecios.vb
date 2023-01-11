@@ -32,6 +32,8 @@ Public Class Frm_MantCostosPrecios
     Dim _Dv As New DataView
     Dim _Ds As DataSet
 
+    Public Property EsListaOferta As Boolean
+
     Public ReadOnly Property Pro_Grabacion_Realizada()
         Get
             Return _Grabacion_Realizada
@@ -467,19 +469,19 @@ Public Class Frm_MantCostosPrecios
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_ListaPreCosto Where Codigo Not In (Select KOPR From MAEPR)"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
-            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_ListaPreCosto Where Proveedor = '" & _CodProveedor & "' And Lista = '" & _CodLista & "' And CodAlternativo = ''
-                            Delete " & _Global_BaseBk & "Zw_ListaPreCosto Where Proveedor = '" & _CodProveedor & "' And CodAlternativo = ''
-                            Delete " & _Global_BaseBk & "Zw_ListaPreCosto Where Proveedor = '" & _CodProveedor & "' And Descripcion = '' And Descripcion_Alt = ''
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_ListaPreCosto Where Proveedor = '" & _CodProveedor & "' And Lista = '" & _CodLista & "' And CodAlternativo = '' And Id_Padre = " & _Id_Padre & "
+                            Delete " & _Global_BaseBk & "Zw_ListaPreCosto Where Proveedor = '" & _CodProveedor & "' And CodAlternativo = '' And Id_Padre = " & _Id_Padre & "
+                            Delete " & _Global_BaseBk & "Zw_ListaPreCosto Where Proveedor = '" & _CodProveedor & "' And Descripcion = '' And Descripcion_Alt = '' And Id_Padre = " & _Id_Padre & "
 
                             Delete " & _Global_BaseBk & "Zw_ListaPreCosto
                             Where CodAlternativo In (Select Tcd.KOPRAL From TABCODAL Tcd
                             Left Join " & _Global_BaseBk & "Zw_ListaPreCosto Lc  On KOEN = Proveedor And KOPRAL = CodAlternativo And KOPR = Codigo And Id_Padre = " & _Id_Padre & "
-                            Where KOEN = '" & _CodProveedor & "' And Codigo is null)
+                            Where KOEN = '" & _CodProveedor & "' And Codigo Is Null) And Id_Padre = " & _Id_Padre & "
 
 
                             Delete " & _Global_BaseBk & "Zw_ListaPreCosto
                             Where CodAlternativo Not In (Select KOPRAL From TABCODAL Where KOEN = '" & _CodProveedor & "')
-                            And Proveedor = '" & _CodProveedor & "' And Sucursal= '" & _SucProveedor & "' And Lista = '" & _CodLista & "'
+                            And Proveedor = '" & _CodProveedor & "' And Sucursal= '" & _SucProveedor & "' And Lista = '" & _CodLista & "' And Id_Padre = " & _Id_Padre & "
                                                        
                             Insert Into " & _Global_BaseBk & "Zw_ListaPreCosto (Id_Padre,Lista,Proveedor,Sucursal,CodAlternativo,Codigo,Descripcion,Descripcion_Alt,CostoUd1, 
                             CostoUd2,Rtu,FechaVigencia,Desc1,Desc2,Desc3,Desc4,Desc5,DescSuma,Flete,Un_Compra,Un_MinCompra,Ac_Oferta,Ac_Disponible,Ac_Cotizar)
@@ -510,7 +512,16 @@ Public Class Frm_MantCostosPrecios
                 _Suc = ", Sucursal (" & _SucProveedor.Trim & ")"
             End If
 
-            Me.Text = "Tratamiento de costos (" & _CodLista & ") del proveedor: " & _CodProveedor.Trim & " - " & _RazonProveedor.Trim & _Suc
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_ListaPreCosto_Enc Where Id = " & _Id_Padre
+            Dim _RowEnc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _NombreLista As String
+
+            If Not IsNothing(_RowEnc) Then
+                _NombreLista = _RowEnc.Item("NombreLista").ToString.Trim
+            End If
+
+            Me.Text = "Tratamiento de costos (" & _CodLista & ") del proveedor: " & _CodProveedor.Trim & " - " & _RazonProveedor.Trim & _Suc & " (Lista: " & _NombreLista & ")"
 
             Dim _Base = Replace(_Global_BaseBk, ".dbo.", "")
 
@@ -617,6 +628,14 @@ Public Class Frm_MantCostosPrecios
             .Columns(_Campo).ReadOnly = True
             .Columns(_Campo).Visible = True
             .Columns(_Campo).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns(_Campo).DisplayIndex = _Displayindex
+            _Displayindex += 1
+
+            _Campo = "EsListaOferta"
+            .Columns(_Campo).Width = 35
+            .Columns(_Campo).HeaderText = "Oferta"
+            .Columns(_Campo).ReadOnly = False
+            .Columns(_Campo).Visible = EsListaOferta
             .Columns(_Campo).DisplayIndex = _Displayindex
             _Displayindex += 1
 
@@ -2053,6 +2072,7 @@ Public Class Frm_MantCostosPrecios
 	                    Desc5 = CSt.Desc5, 
 	                    DescSuma = CSt.DescSuma, 
 	                    Flete = CSt.Flete,
+                        No_Usar = CSt.No_Usar,
                         [Select] = 1
                  From " & _Nombre_Tbl_Paso_Costos & " Paso
                  Left Join " & _Global_BaseBk & "Zw_ListaPreCosto CSt On Paso.Proveedor = CSt.Proveedor And Paso.Sucursal = CSt.Sucursal And Paso.Codigo = CSt.Codigo

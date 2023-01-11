@@ -88,51 +88,12 @@ Public Class Frm_MantCostosPrecios_LV
         Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_ListaPreCosto_Enc",
                                                        "Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "'"))
 
-        If Not _Reg Then
+        If Not _Reg Then Sb_Insertar_Lista_Costos(False)
 
-            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_ListaPreCosto " & vbCrLf &
-                           "Where Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "' And CostoUd1 = 0 And CostoUd2 = 0"
-            _Sql.Ej_consulta_IDU(Consulta_sql)
+        _Reg = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_ListaPreCosto_Enc",
+                                                       "Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "' And EsListaOferta = 1"))
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaPreCosto Set FechaVigencia = CONVERT(VARCHAR(10), GETDATE(), 103),Id_Padre = 0" & vbCrLf &
-                           "Where Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "'"
-            _Sql.Ej_consulta_IDU(Consulta_sql)
-
-            Consulta_sql = "Select Distinct Cast(0 As Bit) As Vigente,Lista,Proveedor,Sucursal,FechaVigencia" & vbCrLf &
-               "From " & _Global_BaseBk & "Zw_ListaPreCosto" & vbCrLf &
-               "Where Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "' And Id_Padre = 0 And CostoUd1 <> 0" & vbCrLf &
-               "Order By FechaVigencia"
-            Dim _Tbl_Listas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-            For Each _Fila As DataRow In _Tbl_Listas.Rows
-
-                Dim _Id_Padre As Integer
-                Dim _Lista As String = _Fila.Item("Lista")
-                Dim _FechaVigenciaDesde As String = Format(_Fila.Item("FechaVigencia"), "yyyyMMdd")
-                Dim _FechaVigenciaHasta As String = Format(DateAdd(DateInterval.Month, 1, _Fila.Item("FechaVigencia")), "yyyyMMdd")
-                Dim _Nombre_Lista As String
-
-                _Nombre_Lista = Fx_Mes_Palabra(CType(_Fila.Item("FechaVigencia"), Date).Month) & " - " & CType(_Fila.Item("FechaVigencia"), Date).Year
-
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_ListaPreCosto_Enc (Lista,Proveedor,Sucursal,FechaVigenciaDesde,FechaVigenciaHasta,NombreLista,Vigente) Values " &
-                               "('" & _Lista & "','" & _Koen & "','" & _Suen & "','" & _FechaVigenciaDesde & "','" & _FechaVigenciaHasta & "','" & _Nombre_Lista.ToUpper & "',1)"
-                If _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Padre) Then
-
-                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaPreCosto Set Id_Padre = " & _Id_Padre & vbCrLf &
-                                   "Where Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "' And Lista = '" & _Lista & "' And FechaVigencia = '" & _FechaVigenciaDesde & "'"
-                    _Sql.Ej_consulta_IDU(Consulta_sql)
-
-                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaPreCosto Set Flete = RECARGO
-                                    From " & _Global_BaseBk & "Zw_ListaPreCosto
-                                    Inner Join TABRECPR On KOEN = Proveedor And KOPR = Codigo
-                                    Where Id_Padre = " & _Id_Padre
-                    _Sql.Ej_consulta_IDU(Consulta_sql)
-
-                End If
-
-            Next
-
-        End If
+        If Not _Reg Then Sb_Insertar_Lista_Costos(True)
 
         Sb_Actualizar_Grilla()
 
@@ -386,6 +347,54 @@ Public Class Frm_MantCostosPrecios_LV
     Private Sub Btn_CambiarProveedor_Click(sender As Object, e As EventArgs) Handles Btn_CambiarProveedor.Click
         _BuscarOtroProveedor = True
         Me.Close()
+    End Sub
+
+    Sub Sb_Insertar_Lista_Costos(_EsListaOferta As Boolean)
+
+        Dim _Elf As Integer = Convert.ToUInt32(_EsListaOferta)
+
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_ListaPreCosto " & vbCrLf &
+                       "Where Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "' And CostoUd1 = 0 And CostoUd2 = 0 And EsListaOferta = " & _Elf
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaPreCosto Set FechaVigencia = CONVERT(VARCHAR(10), GETDATE(), 103),Id_Padre = 0" & vbCrLf &
+                       "Where Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "' And EsListaOferta = " & _Elf
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Consulta_sql = "Select Distinct Cast(0 As Bit) As Vigente,Lista,Proveedor,Sucursal,FechaVigencia" & vbCrLf &
+           "From " & _Global_BaseBk & "Zw_ListaPreCosto" & vbCrLf &
+           "Where Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "' And Id_Padre = 0 And CostoUd1 <> 0" & vbCrLf &
+           "Order By FechaVigencia"
+        Dim _Tbl_Listas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        For Each _Fila As DataRow In _Tbl_Listas.Rows
+
+            Dim _Id_Padre As Integer
+            Dim _Lista As String = _Fila.Item("Lista")
+            Dim _FechaVigenciaDesde As String = Format(_Fila.Item("FechaVigencia"), "yyyyMMdd")
+            Dim _FechaVigenciaHasta As String = Format(DateAdd(DateInterval.Month, 1, _Fila.Item("FechaVigencia")), "yyyyMMdd")
+            Dim _Nombre_Lista As String
+
+            _Nombre_Lista = Fx_Mes_Palabra(CType(_Fila.Item("FechaVigencia"), Date).Month) & " - " & CType(_Fila.Item("FechaVigencia"), Date).Year
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_ListaPreCosto_Enc (Lista,Proveedor,Sucursal,FechaVigenciaDesde,FechaVigenciaHasta,NombreLista,Vigente,EsListaOferta) Values " &
+                           "('" & _Lista & "','" & _Koen & "','" & _Suen & "','" & _FechaVigenciaDesde & "','" & _FechaVigenciaHasta & "','" & _Nombre_Lista.ToUpper & "',1," & _Elf & ")"
+            If _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Padre) Then
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaPreCosto Set Id_Padre = " & _Id_Padre & vbCrLf &
+                               "Where Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "' And Lista = '" & _Lista & "' And FechaVigencia = '" & _FechaVigenciaDesde & "'"
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaPreCosto Set Flete = RECARGO
+                                    From " & _Global_BaseBk & "Zw_ListaPreCosto
+                                    Inner Join TABRECPR On KOEN = Proveedor And KOPR = Codigo
+                                    Where Id_Padre = " & _Id_Padre
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            End If
+
+        Next
+
     End Sub
 
 End Class

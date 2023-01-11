@@ -243,12 +243,7 @@ Namespace Bk_Migrar_Producto
 
                     Dim _NombreTabla As String = _Ds_Producto.Tables(table).TableName
 
-                    'If _Ds_Producto.Tables(table).TableName.Contains(_Global_BaseBk) Then
-                    '    Consulta &= "SET IDENTITY_INSERT " & _Ds_Producto.Tables(table).TableName & " ON;" & vbCrLf &
-                    '                "INSERT INTO " & _Ds_Producto.Tables(table).TableName & "("
-                    'Else
                     Consulta &= "INSERT INTO " & _NombreTabla & "("
-                    'End If
 
                     Dim _CantColumnas As Integer = _Ds_Producto.Tables(table).Columns.Count - 1
 
@@ -281,11 +276,6 @@ Namespace Bk_Migrar_Producto
                         Consulta &= ","
                     Next
                     Consulta &= ";" & vbCrLf
-                    'If _Ds_Producto.Tables(table).TableName.Contains(_Global_BaseBk) Then
-                    '    Consulta = Consulta.Replace("),;", ");SET IDENTITY_INSERT " & _Ds_Producto.Tables(table).TableName & " OFF;")
-                    'Else
-                    '    Consulta = Consulta.Replace("),;", ");")
-                    'End If
 
                     Consulta = Consulta.Replace("),;", ");")
 
