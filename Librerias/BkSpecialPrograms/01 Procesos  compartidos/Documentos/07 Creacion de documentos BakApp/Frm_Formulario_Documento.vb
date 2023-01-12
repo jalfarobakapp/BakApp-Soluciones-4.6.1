@@ -19852,7 +19852,7 @@ Public Class Frm_Formulario_Documento
                 _Autorizado = Fx_Validad_Morosidad(_Necesita_Permiso)
                 Sb_Revisar_Permiso("Bkp00019", _Autorizado, _Necesita_Permiso)
 
-                If _Tido = "NVV" Then
+                If _Tido = "NVV" Or _Tido = "GDV" Or _Tido = "GDP" Then
 
                     _Autorizado = False : _Necesita_Permiso = False
                     _Autorizado = Fx_Validad_MinimoVenta(_Necesita_Permiso)
