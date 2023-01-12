@@ -239,7 +239,10 @@ Public Class Frm_Ver_Documento
 
                 Sb_Abrir_Documento_Desde_Random_SQL()
 
-                _Reg = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Fincred_TramaRespuesta", "Idmaeedo = " & _Idmaeedo))
+                If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Fincred_TramaRespuesta") Then
+                    _Reg = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Fincred_TramaRespuesta", "Idmaeedo = " & _Idmaeedo))
+                End If
+
 
                 Btn_InfFincred.Visible = _Reg
 
