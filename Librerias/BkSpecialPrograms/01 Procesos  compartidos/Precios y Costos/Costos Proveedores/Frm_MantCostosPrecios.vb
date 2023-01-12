@@ -631,13 +631,14 @@ Public Class Frm_MantCostosPrecios
             .Columns(_Campo).DisplayIndex = _Displayindex
             _Displayindex += 1
 
-            _Campo = "EsListaOferta"
-            .Columns(_Campo).Width = 35
-            .Columns(_Campo).HeaderText = "Oferta"
-            .Columns(_Campo).ReadOnly = False
-            .Columns(_Campo).Visible = EsListaOferta
-            .Columns(_Campo).DisplayIndex = _Displayindex
-            _Displayindex += 1
+            'Ojo... Hay que agregar este campo en la creación de la tabla de paso
+            '_Campo = "EsOferta"
+            '.Columns(_Campo).Width = 35
+            '.Columns(_Campo).HeaderText = "Oferta"
+            '.Columns(_Campo).ReadOnly = False
+            '.Columns(_Campo).Visible = EsListaOferta
+            '.Columns(_Campo).DisplayIndex = _Displayindex
+            '_Displayindex += 1
 
             _Campo = "Codigo"
             .Columns(_Campo).Width = 90

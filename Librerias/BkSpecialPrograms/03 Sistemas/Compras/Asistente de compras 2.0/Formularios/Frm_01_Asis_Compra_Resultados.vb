@@ -8140,12 +8140,14 @@ Drop Table #Paso"
 
             For Each _Fl As GeneraOccAuto.Doc_Auto In _Generar_OCC.Doc_Auto
 
+                Dim _Id_Acp As Integer
+
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_AcpAuto (NombreEquipo,Modalidad,Idmaeedo,Tido,Nudo,FechaEmision,Informacion,ErrorGrabar) Values " &
                                "('" & _NombreEquipo & "','" & _Modalidad_Estudio & "'," & _Fl.Idmaeedo & ",'" & _Fl.Tido & "','" & _Fl.Nudo & "'" &
                                ",'" & Format(_Fl.Feemdo, "yyyyMMdd") & "','" & NuloPorNro(_Fl.MensajeError, "") & "'," & Convert.ToInt32(_Fl.ErrorGrabar) & ")"
-                _Sql.Ej_consulta_IDU(Consulta_sql)
+                _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Acp)
 
-                _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, _Fl.Email, Auto_CorreoCc, Auto_Id_Correo, Auto_NombreFormato_PDF)
+                _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, _Fl.Email, Auto_CorreoCc, Auto_Id_Correo, Auto_NombreFormato_PDF, _Id_Acp)
                 ' 37
                 ' "Tam. Carta"
                 'MessageBoxEx.Show(Me, "Tido: " & _Fl.Tido & "-" & _Fl.Nudo & vbCrLf &
@@ -8181,12 +8183,14 @@ Drop Table #Paso"
 
             For Each _Fl As GeneraOccAuto.Doc_Auto In _Generar_OCC.Doc_Auto
 
+                Dim _Id_Acp As Integer
+
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_AcpAuto (NombreEquipo,Modalidad,Idmaeedo,Tido,Nudo,FechaEmision,Informacion,ErrorGrabar) Values " &
                                "('" & _NombreEquipo & "','" & _Modalidad_Estudio & "'," & _Fl.Idmaeedo & ",'" & _Fl.Tido & "','" & _Fl.Nudo & "'" &
                                ",'" & Format(_Fl.Feemdo, "yyyyMMdd") & "','" & NuloPorNro(_Fl.MensajeError, "") & "'," & Convert.ToInt32(_Fl.ErrorGrabar) & ")"
-                _Sql.Ej_consulta_IDU(Consulta_sql)
+                _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Acp)
 
-                _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, Auto_CorreoCc, "", Auto_Id_Correo, Auto_NombreFormato_PDF)
+                _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, Auto_CorreoCc, "", Auto_Id_Correo, Auto_NombreFormato_PDF, _Id_Acp)
                 ' 37
                 ' "Tam. Carta"
                 'MessageBoxEx.Show(Me, "Tido: " & _Fl.Tido & "-" & _Fl.Nudo & vbCrLf &
@@ -8223,15 +8227,14 @@ Drop Table #Paso"
 
             For Each _Fl As GeneraOccAuto.Doc_Auto In _Generar_NVI.Doc_Auto
 
+                Dim _Id_Acp As Integer
+
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_AcpAuto (NombreEquipo,Modalidad,Idmaeedo,Tido,Nudo,FechaEmision,Informacion,ErrorGrabar) Values " &
                                "('" & _NombreEquipo & "','" & _Modalidad_Estudio & "'," & _Fl.Idmaeedo & ",'" & _Fl.Tido & "','" & _Fl.Nudo & "'" &
                                ",'" & Format(_Fl.Feemdo, "yyyyMMdd") & "','" & NuloPorNro(_Fl.MensajeError, "") & "'," & Convert.ToInt32(_Fl.ErrorGrabar) & ")"
-                _Sql.Ej_consulta_IDU(Consulta_sql)
+                _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Acp)
 
-                _Generar_NVI.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, Auto_CorreoCc, "", Auto_Id_Correo, Auto_NombreFormato_PDF)
-
-                'MessageBoxEx.Show(Me, "Tido: " & _Fl.Tido & "-" & _Fl.Nudo & vbCrLf &
-                '                  "Email: " & _Fl.Email, "NVI Generada", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                _Generar_NVI.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, Auto_CorreoCc, "", Auto_Id_Correo, Auto_NombreFormato_PDF, _Id_Acp)
 
             Next
 
@@ -9288,7 +9291,8 @@ Namespace GeneraOccAuto
                                                            _Para As String,
                                                            _Cc As String,
                                                            _Id_Correo As Integer,
-                                                           _NombreFormato_PDF As String) As String
+                                                           _NombreFormato_PDF As String,
+                                                           _Id_Acp As Integer) As String
 
             Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
             Dim Consulta_sql As String
@@ -9389,11 +9393,11 @@ Namespace GeneraOccAuto
                     Dim _Adjuntar_Documento As Boolean = Not String.IsNullOrEmpty(_NombreFormato_PDF)
 
                     Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo (Id_Correo,Nombre_Correo,CodFuncionario,Asunto," &
-                                    "Para,Cc,Idmaeedo,Tido,Nudo,NombreFormato,Enviar,Mensaje,Fecha,Adjuntar_Documento,Doc_Adjuntos)" &
+                                    "Para,Cc,Idmaeedo,Tido,Nudo,NombreFormato,Enviar,Mensaje,Fecha,Adjuntar_Documento,Doc_Adjuntos,Id_Acp)" &
                                     vbCrLf &
                                     "Values (" & _Id_Correo & ",'" & _Nombre_Correo & "','','" & _Asunto & "','" & _Para & "','" & _Cc &
                                     "'," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "','" & _NombreFormato_PDF & "',1,'" & _Mensaje & "'," & _Fecha &
-                                    "," & Convert.ToInt32(_Adjuntar_Documento) & ",'')"
+                                    "," & Convert.ToInt32(_Adjuntar_Documento) & ",''," & _Id_Acp & ")"
 
                     _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 

@@ -90,10 +90,10 @@ Public Class Frm_MantCostosPrecios_LV
 
         If Not _Reg Then Sb_Insertar_Lista_Costos(False)
 
-        _Reg = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_ListaPreCosto_Enc",
-                                                       "Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "' And EsListaOferta = 1"))
+        '_Reg = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_ListaPreCosto_Enc",
+        '                                               "Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "' And EsListaOferta = 1"))
 
-        If Not _Reg Then Sb_Insertar_Lista_Costos(True)
+        'If Not _Reg Then Sb_Insertar_Lista_Costos(True)
 
         Sb_Actualizar_Grilla()
 
@@ -354,11 +354,11 @@ Public Class Frm_MantCostosPrecios_LV
         Dim _Elf As Integer = Convert.ToUInt32(_EsListaOferta)
 
         Consulta_sql = "Delete " & _Global_BaseBk & "Zw_ListaPreCosto " & vbCrLf &
-                       "Where Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "' And CostoUd1 = 0 And CostoUd2 = 0 And EsListaOferta = " & _Elf
+                       "Where Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "' And CostoUd1 = 0 And CostoUd2 = 0 And EsOferta = " & _Elf
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
         Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaPreCosto Set FechaVigencia = CONVERT(VARCHAR(10), GETDATE(), 103),Id_Padre = 0" & vbCrLf &
-                       "Where Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "' And EsListaOferta = " & _Elf
+                       "Where Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "' And EsOferta = " & _Elf
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
         Consulta_sql = "Select Distinct Cast(0 As Bit) As Vigente,Lista,Proveedor,Sucursal,FechaVigencia" & vbCrLf &
