@@ -327,6 +327,7 @@ Public Class Cl_Correos
                 Dim _Adjuntar_DTE = _Fila.Item("Adjuntar_DTE")
                 Dim _Id_Dte = _Fila.Item("Id_Dte")
                 Dim _Id_Trackid = _Fila.Item("Id_Trackid")
+                Dim _Id_Acp = _Fila.Item("Id_Acp")
 
                 'Dim _Subtido As String = _Sql.Fx_Trae_Dato("MAEEDO", "SUBTIDO", "IDMAEEDO = " & _IdMaeedo)
 
@@ -387,6 +388,7 @@ Public Class Cl_Correos
                     _Adjuntar_Documento = False
 
                 End If
+#Region "ADJUNTAR DTE"
 
                 If _Adjuntar_DTE Then
 
@@ -435,6 +437,10 @@ Public Class Cl_Correos
                     End If
 
                 End If
+
+#End Region
+
+#Region "ADJUNTAR DOCUMENTOS"
 
                 If _Adjuntar_Documento Then
 
@@ -527,6 +533,8 @@ Public Class Cl_Correos
                     End If
 
                 End If
+
+#End Region
 
                 If String.IsNullOrEmpty(_Error) Then
 
@@ -655,19 +663,6 @@ Public Class Cl_Correos
                             '_Para = "jalfaro@bakapp.cl"
                             '_Cc = "jorgealfarogzlz@gmail.com;jorgealfarogzlz@hotmail.com"
 
-                            '_Correo_Enviado = EnviarCorreo.Fx_Enviar_Mail(_Host,
-                            '                                              _Remitente,
-                            '                                              _Contrasena,
-                            '                                              _Para,
-                            '                                              _Cc,
-                            '                                              _Asunto,
-                            '                                              _CuerpoMensaje,
-                            '                                              _Archivos_Adjuntos,
-                            '                                              _Puerto,
-                            '                                              _SSL,
-                            '                                              False)
-
-
                             _Correo_Enviado = EnviarCorreo.Fx_Enviar_Mail2(_Host,
                                                                           _Remitente,
                                                                           _Contrasena,
@@ -711,10 +706,18 @@ Public Class Cl_Correos
 
                                 Consulta_Sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set MailEnviado = 1,ErrorMailToDiablito = 0,ErrorEnviarMail = 0" & vbCrLf &
                                                "Where Id = " & _Id_Trackid
-                                _Sql.Ej_consulta_IDU(Consulta_Sql)
+                                _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
                                 Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_NotifxCorreo (Id_Dte,Idmaeedo,FechaEnvio,Destinatarios,Id_Trackid) Values " &
                                                "(" & _Id_Dte & "," & _IdMaeedo & ",Getdate(),'" & _Destinatarios & "'," & _Id_Trackid & ")"
+                                _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+                            End If
+
+                            If CBool(_Id_Acp) Then
+
+                                Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_AcpAuto Set EmailEnviado = 1, Destinatarios = 'Para: " & _Para & ",Cc: " & _Cc & "'" & vbCrLf &
+                                               "Where Id = " & _Id_Acp
                                 _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
                             End If
