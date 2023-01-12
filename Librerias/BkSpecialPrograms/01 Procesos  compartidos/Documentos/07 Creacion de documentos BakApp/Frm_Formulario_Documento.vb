@@ -16586,6 +16586,8 @@ Public Class Frm_Formulario_Documento
 
             End If
 
+            Dim _Merardo_Ori As String = _RowMaeedo_Origen.Item("MEARDO")
+
             For Each _Fila As DataRow In _TblMaeddo_Origen.Rows
 
                 Dim _Codigo As String = _Fila.Item("KOPRCT")
@@ -16669,6 +16671,12 @@ Public Class Frm_Formulario_Documento
                 Catch ex As Exception
                     _DescuentoPorc = 0
                 End Try
+
+                If _Tido = "NCV" And _Tido_Origen = "BLV" Then
+                    If _Merardo_Ori = "B" And ChkValores.Checked Then
+                        _DescuentoPorc = 0
+                    End If
+                End If
 
                 Dim _CodFunAutoriza = _Fila.Item("KOFUAULIDO").ToString.Trim
                 Dim _CodPermiso = _Fila.Item("KOOPLIDO")

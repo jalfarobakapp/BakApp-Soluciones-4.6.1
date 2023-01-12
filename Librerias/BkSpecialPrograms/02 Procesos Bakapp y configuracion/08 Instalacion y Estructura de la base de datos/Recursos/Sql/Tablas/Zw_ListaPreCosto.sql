@@ -28,7 +28,8 @@ CREATE TABLE [dbo].[Zw_ListaPreCosto](
 	[No_Usar]			    [bit]			NOT NULL DEFAULT (0),
     [Id_Padre]              [int]           NOT NULL DEFAULT (0),
 	[CodFuncionario_Edita]  [varchar](3)    NOT NULL DEFAULT (''),
-	[FechaEdita]            [datetime]      NULL
+	[FechaEdita]            [datetime]      NULL,
+    [EsOferta]		        [bit]			NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_ListaPreCosto] PRIMARY KEY CLUSTERED 
 (
 	[Lista] ASC,

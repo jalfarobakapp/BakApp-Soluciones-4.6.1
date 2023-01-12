@@ -1976,21 +1976,21 @@ Sigue_Loop_01:
 
     Private Sub Btn_Zonas_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Zonas.Click
 
-        MessageBoxEx.Show(Me, "En desarrollo")
-        Return
+        'MessageBoxEx.Show(Me, "En desarrollo")
+        'Return
         If Fx_Tiene_Permiso(Me, "Tbl00018") Then
             Dim _ZonaPro = Cmb_Zonapr.SelectedValue
 
-            Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Claslibre,
+            Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.ZonaProducto,
                                                                   Frm_Tabla_Caracterizaciones_01_Listado.Accion.Mantencion_Tabla)
-            Fm.Text = "CLASIFICACION LIBRE"
+            Fm.Text = "ZONA PRODUCTO"
             Fm.ShowDialog(Me)
             Fm.Dispose()
 
-            caract_combo(Cmb_Clalibpr)
-            Consulta_sql = Union & "SELECT KOCARAC AS Padre,LTRIM(RTRIM(KOCARAC))+'-'+LTRIM(RTRIM(NOKOCARAC)) AS Hijo FROM TABCARAC WHERE KOTABLA = 'CLALIBPR' ORDER BY Hijo"
-            Cmb_Clalibpr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
-            Cmb_Clalibpr.SelectedValue = _ZonaPro
+            caract_combo(Cmb_Zonapr)
+            Consulta_sql = Union & "SELECT KOCARAC AS Padre,LTRIM(RTRIM(KOCARAC))+'-'+LTRIM(RTRIM(NOKOCARAC)) AS Hijo FROM TABCARAC WHERE KOTABLA = 'ZONAPRODUC' ORDER BY Hijo"
+            Cmb_Zonapr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Cmb_Zonapr.SelectedValue = ZonaPro
 
         End If
     End Sub
