@@ -16586,7 +16586,19 @@ Public Class Frm_Formulario_Documento
 
             End If
 
-            Dim _Merardo_Ori As String = _RowMaeedo_Origen.Item("MEARDO")
+            Dim _Merardo_Ori As String
+
+            Try
+                _Merardo_Ori = _RowMaeedo_Origen.Item("MEARDO")
+            Catch ex As Exception
+
+                If ChkValores.Checked Then
+                    _Merardo_Ori = "N"
+                Else
+                    _Merardo_Ori = "B"
+                End If
+
+            End Try
 
             For Each _Fila As DataRow In _TblMaeddo_Origen.Rows
 

@@ -1946,7 +1946,7 @@ Public Module Modulo_Precios_Costos
         Catch ex As Exception
 
             If Not IsNothing(_Formulario) Then
-                MessageBoxEx.Show(_Formulario, "La función que viene desde la lista " & _Kolt & " tiene errores" & vbCrLf & vbCrLf & _Fx & ex.Message, "Validación",
+                MessageBoxEx.Show(_Formulario, "La función que viene desde la lista " & _Kolt & " tiene errores" & vbCrLf & vbCrLf & _Fx & " " & ex.Message, "Validación",
                       MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
 
