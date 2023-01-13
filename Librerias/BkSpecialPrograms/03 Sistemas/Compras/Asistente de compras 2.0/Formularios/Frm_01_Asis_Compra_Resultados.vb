@@ -1883,7 +1883,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
             Dim _Lista As String = Cmb_Lista_Costos.SelectedItem.Value
 
-            Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER
+            Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER,'N' As MEARDO
 
                             Select Distinct " & _Top & " '" & FUNCIONARIO & "' As KOFULIDO,Tb.Codigo As KOPRCT,Tb.Descripcion As NOKOPR,
                             Tb.Descripcion as Descripcion,Tb.CodAlternativo,'" & _Lista & "' As KOLTPR,UD1,UD2,
@@ -1915,7 +1915,7 @@ Public Class Frm_01_Asis_Compra_Resultados
             '[Costo_Compra]             [float]       DEFAULT (0),
             '[Dscto_Compra]             [float]       DEFAULT (0),
 
-            Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER" &
+            Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER,'N' As MEARDO" &
                             vbCrLf &
                            "Select Distinct " & _Top & " '" & FUNCIONARIO & "' As KOFULIDO,Codigo As KOPRCT,
                             Descripcion,Descripcion As NOKOPR,CodAlternativo,'" & ModListaPrecioCosto & "' As KOLTPR,UD1,UD2,
@@ -7368,7 +7368,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         'Dim _Lista As String = _Global_Row_Configuracion_General.Item("Lista_Precios_Proveedores")
         Dim _Filtro_Productos As String = Generar_Filtro_IN(_Tbl_Productos, "", "Codigo", False, False, "'")
 
-        Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER
+        Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER,'N' As MEARDO
 
                         Select Top 20 '" & FUNCIONARIO & "' As KOFULIDO,Tb.Codigo As KOPRCT,Tb.Descripcion As NOKOPR,
                         '' As Descripcion,'' As CodAlternativo,'" & _Lista & "' As KOLTPR,UD01PR As UD1,UD02PR As UD2,
@@ -7471,7 +7471,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         'Dim _Lista As String = _Global_Row_Configuracion_General.Item("Lista_Precios_Proveedores")
         Dim _Filtro_Productos As String = Generar_Filtro_IN(_Tbl_Productos, "", "Codigo", False, False, "'")
 
-        Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER
+        Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER,'N' As MEARDO
 
                         Select Top 20 '" & FUNCIONARIO & "' As KOFULIDO,Tb.Codigo As KOPRCT,Tb.Descripcion As NOKOPR,
                         '' As Descripcion,'' As CodAlternativo,'" & _Lista & "' As KOLTPR,UD01PR As UD1,UD02PR As UD2,
@@ -8557,7 +8557,7 @@ Drop Table #Paso"
 
             Dim _Lista As String = Cmb_Lista_Costos.SelectedItem.Value
 
-            Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER
+            Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER,'N' As MEARDO
 
                             Select Distinct " & _Top & " '" & FUNCIONARIO & "' As KOFULIDO,Tb.Codigo As KOPRCT,Tb.Descripcion As NOKOPR,
                             Tb.Descripcion as Descripcion,Tb.CodAlternativo,'" & _Lista & "' As KOLTPR,UD1,UD2,
