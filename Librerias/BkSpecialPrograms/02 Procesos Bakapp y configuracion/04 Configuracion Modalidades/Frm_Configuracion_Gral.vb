@@ -257,7 +257,7 @@ Public Class Frm_Configuracion_Gral
 
         Grupo_RecepXMLComp.Enabled = _Modalidad_General
 
-        Chk_Fincred_Usar.Enabled = Not _Modalidad_General
+        'Chk_Fincred_Usar.Enabled = Not _Modalidad_General
         Txt_Fincred_Id_Token.Enabled = Not _Modalidad_General
 
         Btn_FincredConfiguracion.Enabled = _Modalidad_General

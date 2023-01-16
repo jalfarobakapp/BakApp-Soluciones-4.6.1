@@ -237,6 +237,11 @@ Public Class Frm_Crear_Entidad_Mt
 
         Sb_Color_Botones_Barra(Bar1)
 
+        Chk_RevCredFincred.Visible = _Global_Row_Configuracion_General.Item("Fincred_Usar")
+        Btn_Modificar_RevCredFincred.Visible = _Global_Row_Configuracion_General.Item("Fincred_Usar")
+
+        'CheckBox1.Visible = _Global_Row_Configuracion_General.Item("Fincred_Usar")
+
     End Sub
 
     Private Sub Frm_Crear_Entidad_Mt_Load(sender As Object, e As System.EventArgs) Handles Me.Load
@@ -301,6 +306,11 @@ Public Class Frm_Crear_Entidad_Mt
         AddHandler Chk_Libera_NVV.CheckedChanged, AddressOf Chk_Libera_NVV_CheckedChanged
 
         Btn_Direcciones_Despachos.Visible = True
+
+        'Chk_RevCredFincred.Enabled = _Global_Row_Configuracion_General.Item("Fincred_Usar")
+        'Btn_Modificar_RevCredFincred.Enabled = Chk_RevCredFincred.Enabled
+
+        'Chk_RevCredFincred.Visible = True
 
     End Sub
 
@@ -425,7 +435,6 @@ Public Class Frm_Crear_Entidad_Mt
         Next
 
     End Sub
-
 
     Function Fx_Nueva_Linea_Cta(_Tbl As DataTable,
                                 _Koen As String,
@@ -914,6 +923,7 @@ Public Class Frm_Crear_Entidad_Mt
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Entidades Set " & vbCrLf &
                                "Libera_NVV = " & Convert.ToInt32(Chk_Libera_NVV.Checked) & vbCrLf &
                                ",FacAuto = " & Convert.ToInt32(Chk_FacAuto.Checked) & vbCrLf &
+                               ",RevFincred = " & Convert.ToInt32(Chk_RevCredFincred.Checked) & vbCrLf &
                                "Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
@@ -1454,6 +1464,7 @@ Public Class Frm_Crear_Entidad_Mt
 
                 Chk_Libera_NVV.Checked = _Row_Entidades.Item("Libera_NVV")
                 Chk_FacAuto.Checked = _Row_Entidades.Item("FacAuto")
+                Chk_RevCredFincred.Checked = _Row_Entidades.Item("RevFincred")
 
             End If
 
@@ -2223,6 +2234,11 @@ Public Class Frm_Crear_Entidad_Mt
     Private Sub Btn_Modificar_FacAuto_Click(sender As Object, e As EventArgs) Handles Btn_Modificar_FacAuto.Click
         Chk_FacAuto.Enabled = Fx_Tiene_Permiso(Me, "CfEnt028")
         Btn_Modificar_FacAuto.Enabled = Not Chk_FacAuto.Enabled
+    End Sub
+
+    Private Sub Btn_Modificar_RevCredFincred_Click(sender As Object, e As EventArgs) Handles Btn_Modificar_RevCredFincred.Click
+        Chk_RevCredFincred.Enabled = Fx_Tiene_Permiso(Me, "CfEnt029")
+        Btn_Modificar_RevCredFincred.Enabled = Not Chk_RevCredFincred.Enabled
     End Sub
 
     Private Sub Btn_Cta_Eliminar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cta_Eliminar.Click

@@ -362,6 +362,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("CfEnt026", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("CfEnt027", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("CfEnt028", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("CfEnt029", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Crv0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Crv0002", _Objeto, _Formulario)
@@ -1577,6 +1578,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
             Case "CfEnt028"
                 _DescripcionPermiso = "CAMBIAR CONDICION QUE PERMITE DECIDIR SI FACTURA AUTOMATICAMENTE LAS NOTAS DE VENTA DE LA ENTIDAD"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
+                _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
+            Case "CfEnt029"
+                _DescripcionPermiso = "EDITAR SELECCION DE CREDITO FINCRED"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
                 _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
 
