@@ -584,10 +584,19 @@ Public Class Frm_Configuracion_Gral
             End If
         Else
             Txt_Fincred_Id_Token.Tag = 0
-            Txt_Fincred_Id_Token.Text = "No hay Token asignado, no se revisara el crédito..."
+            Txt_Fincred_Id_Token.Text = "No hay Token asignado, no se revisara el crédito en esta modalidad..."
             If _Modalidad_General Then
                 Txt_Fincred_Id_Token.Text = String.Empty
             End If
+        End If
+
+    End Sub
+
+    Private Sub Txt_Fincred_Id_Token_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Fincred_Id_Token.ButtonCustom2Click
+
+        If MessageBoxEx.Show(Me, "¿Confirma quitar el Token actual?", "Quitar Token",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Sb_Revisar_Fincred_Token(0)
         End If
 
     End Sub
