@@ -636,9 +636,31 @@ Public Class Frm_St_Estado_04_Cotizaciones
         _Fila.Cells("Estado_D").Value = "ACEPTADO"
         _Fila.Cells("Seleccionado").Value = True
 
-        Btn_Agregar_Cotizacion.Enabled = False
-        Sb_Marcar_Grilla()
-        Me.Refresh()
+        Dim _Idmaeedo = _Fila.Cells("Idmaeedo").Value
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Doc_Asociados Where Idmaeedo = " & _Idmaeedo
+        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        If _Tbl.Rows.Count > 1 Then
+
+            MessageBoxEx.Show(Me, "Existen mas Sub-OT asociadas a esta cotización" & vbCrLf &
+                              "Se [ACEPTARA] el presupuesto para todas", "Sub-OT asociadas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+
+        End If
+
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Doc_Asociados Set Estado = 'A' Where Idmaeedo = " & _Idmaeedo
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            MessageBoxEx.Show(Me, "Presupuesto marcada como [ACEPTADO] correctamente", "Aceptar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Desea Fijar el estado?", "Aceptar y fijar estado", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
+            Call Btn_Fijar_Estado_Click(Nothing, Nothing)
+        Else
+            Btn_Agregar_Cotizacion.Enabled = False
+            Sb_Marcar_Grilla()
+            Me.Refresh()
+        End If
 
     End Sub
 
@@ -648,16 +670,36 @@ Public Class Frm_St_Estado_04_Cotizaciones
             _Row.Cells("Seleccionado").Value = False
         Next
 
-        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
         _Fila.Cells("Estado").Value = "R"
         _Fila.Cells("Estado_D").Value = "RECHAZADO"
         _Fila.Cells("Seleccionado").Value = True
 
+        Dim _Id = _Fila.Cells("Id").Value
+        Dim _Idmaeedo = _Fila.Cells("Idmaeedo").Value
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Doc_Asociados Where Idmaeedo = " & _Idmaeedo
+        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        If _Tbl.Rows.Count > 1 Then
+
+            MessageBoxEx.Show(Me, "Existen mas Sub-OT asociadas a esta cotización" & vbCrLf &
+                              "Se [RECHAZARA] el presupuesto para todas", "Sub-OT asociadas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+
+        End If
+
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Doc_Asociados Set Estado = 'R' Where Idmaeedo = " & _Idmaeedo
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            MessageBoxEx.Show(Me, "Presupuesto marcada como [RECHAZADO] correctamente", "Rechazar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+
         Btn_Agregar_Cotizacion.Enabled = True
         Sb_Marcar_Grilla()
         Me.Refresh()
+
     End Sub
 
     Private Sub Btn_Presupuestos_Evaluacion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Presupuestos_Evaluacion.Click
@@ -690,6 +732,23 @@ Public Class Frm_St_Estado_04_Cotizaciones
 
         Next
 
+        Dim _Idmaeedov = _Fila.Cells("Idmaeedo").Value
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Doc_Asociados Where Idmaeedo = " & _Idmaeedov
+        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        If _Tbl.Rows.Count > 1 Then
+
+            MessageBoxEx.Show(Me, "Existen mas Sub-OT asociadas a esta cotización" & vbCrLf &
+                              "Se dejara como [EVALUACION] el presupuesto para todas", "Sub-OT asociadas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+
+        End If
+
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Doc_Asociados Set Estado = 'E' Where Idmaeedo = " & _Idmaeedov
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            MessageBoxEx.Show(Me, "Presupuesto marcada como [En Evaluación..] correctamente", "Aceptar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
 
         _Fila.Cells("Estado").Value = "E"
         _Fila.Cells("Estado_D").Value = "En Evaluación.."
@@ -960,6 +1019,7 @@ Public Class Frm_St_Estado_04_Cotizaciones
                     .Item("Fecha_Asociacion") = FechaDelServidor()
                     .Item("Garantia") = False
                     .Item("Seleccionado") = True
+                    .Item("Documento_Externo") = False
 
                     _TblCotizaciones.Rows.Add(NewFila)
 
@@ -994,6 +1054,9 @@ Public Class Frm_St_Estado_04_Cotizaciones
                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
+
+        Dim _COV_Solo_Esta_SubOT As Boolean
+        Dim _Id_Ot_Padre As Integer = _Row_Encabezado.Item("Id_Ot_Padre")
 
         If _Reg = 1 Then
             Consulta_sql = "Select Det.*,Enc.Nro_Ot,Enc.Sub_Ot,Enc.Empresa,Enc.Sucursal,Enc.Bodega,'ODST OT: '+Enc.Nro_Ot+'-'+Enc.Sub_Ot As 'Observa'" & vbCrLf &
@@ -1038,13 +1101,16 @@ Public Class Frm_St_Estado_04_Cotizaciones
                "Left Join " & _Global_BaseBk & "Zw_St_OT_Encabezado Enc On Enc.Id_Ot = Det.Id_Ot" & vbCrLf &
                "Where Det.Id_Ot = " & _Id_Ot
 
+                _COV_Solo_Esta_SubOT = True
+
             End If
 
             If Chk_Genarar_COV_Todas_Las_OT.Checked Then
                 Consulta_sql = "Select Det.*,Enc.Nro_Ot,Enc.Sub_Ot,Enc.Empresa,Enc.Sucursal,Enc.Bodega,'ODST OT: '+Enc.Nro_Ot+'-'+Enc.Sub_Ot As 'Observa'" & vbCrLf &
                                "From " & _Global_BaseBk & "Zw_St_OT_DetProd Det" & vbCrLf &
                                "Left Join " & _Global_BaseBk & "Zw_St_OT_Encabezado Enc On Enc.Id_Ot = Det.Id_Ot" & vbCrLf &
-                               "Where Det.Id_Ot In (Select Id_Ot From " & _Global_BaseBk & "Zw_St_OT_Encabezado Where Nro_Ot = '" & _Nro_Ot & "')"
+                               "Where Det.Id_Ot In (Select Id_Ot From " & _Global_BaseBk & "Zw_St_OT_Encabezado Where Nro_Ot = '" & _Nro_Ot & "')" & vbCrLf &
+                               "And Det.Id_Ot Not In (Select Id_Ot From " & _Global_BaseBk & "Zw_St_OT_Doc_Asociados Where Tido = 'COV' And Estado In ('A','E'))"
             End If
 
         End If
@@ -1074,8 +1140,15 @@ Public Class Frm_St_Estado_04_Cotizaciones
             MessageBoxEx.Show(Me, "Cotización creada correctamente" & vbCrLf & "Se adjuntara a la orden de servicio",
                               "Crear cotización", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_DetProd " & vbCrLf &
+            If _COV_Solo_Esta_SubOT Then
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_DetProd " & vbCrLf &
+                               "Where Id_Ot = " & _Id_Ot
+            Else
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_DetProd " & vbCrLf &
                                "Where Id_Ot In (Select Id_Ot From " & _Global_BaseBk & "Zw_St_OT_Encabezado Where Nro_Ot = '" & _Nro_Ot & "')"
+            End If
+
+
             Dim _Tbl_SubOt As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
             Dim _SqlQuery = String.Empty
 

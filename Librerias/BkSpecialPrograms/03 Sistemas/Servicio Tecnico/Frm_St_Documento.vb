@@ -950,10 +950,6 @@ Public Class Frm_St_Documento
                 If Not IsNothing(_Row_GRP) Then
                     Lbl_GRP.Text = _Row_GRP.Item("NUDO")
                     Lbl_GRP.Tag = _Row_GRP.Item("IDMAEEDO")
-                Else
-                    'Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set Idmaeedo_GRP_PRE = 0 
-                    '                Where Id_Ot = " & _Row_Encabezado.Item("Id_Ot")
-                    '_Sql.Ej_consulta_IDU(Consulta_sql)
                 End If
 
             End If
@@ -3096,6 +3092,27 @@ Public Class Frm_St_Documento
             .Dispose()
 
         End With
+
+        If CBool(_IdMaeedo) Then
+
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set Idmaeedo_GRP_PRE = " & _IdMaeedo & vbCrLf &
+                           "Where Id_Ot = " & _Id_Ot
+            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                MessageBoxEx.Show(Me, "Guía de recepción asociada correctamente", "Guía de recpción",
+                                     MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                _Row_Encabezado.Item("Idmaeedo_GRP_PRE") = _IdMaeedo
+                Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Row_Encabezado.Item("Idmaeedo_GRP_PRE")
+                Dim _Row_GRP As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                If Not IsNothing(_Row_GRP) Then
+                    Lbl_GRP.Text = _Row_GRP.Item("NUDO")
+                    Lbl_GRP.Tag = _Row_GRP.Item("IDMAEEDO")
+                End If
+
+            End If
+
+        End If
 
     End Sub
 
