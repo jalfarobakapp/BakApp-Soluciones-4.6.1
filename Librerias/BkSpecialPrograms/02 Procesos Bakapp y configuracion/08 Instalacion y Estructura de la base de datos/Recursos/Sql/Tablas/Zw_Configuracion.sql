@@ -90,6 +90,7 @@ CREATE TABLE [dbo].[Zw_Configuracion](
 [PermitirMigrarProductosBaseExterna]                    [bit]           NOT NULL DEFAULT (0), 
 [Fincred_Usar]                                          [bit]           NOT NULL DEFAULT (0), 
 [Fincred_Id_Token]                                      [int]           NOT NULL DEFAULT (0), 
+[ServTecnico_ObligaIngProdPresupuesto]                  [bit]           NOT NULL DEFAULT (0), 
 CONSTRAINT [PK_Zw_Configuracion] PRIMARY KEY CLUSTERED 
 (
 	[Modalidad] ASC

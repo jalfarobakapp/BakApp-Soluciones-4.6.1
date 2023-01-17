@@ -109,7 +109,7 @@ Order by Semilla
 
 -- COTIZACIONES TABLA (6)
 
-SELECT Id_Ot,Idmaeedo,Tido,Nudo,Estado,
+SELECT Id,Id_Ot,Idmaeedo,Tido,Nudo,Estado,
 		Case Estado 
 			When 'E' Then 'En Evaluación...' 
 			When 'A' Then 'ACEPTADO' 
@@ -125,7 +125,7 @@ Where Id_Ot = @Id_Ot and Tido In ('COV','NVV')
 
 -- DETALLE PRODUCTOS COTIZACION APROBADA (7)
 
-SELECT  Id_Ot, Cast(0 as Bit) As Chk_Validado,Semilla, Utilizado, Codigo, Descripcion, Cantidad, Cantidad_Utilizada,Ud, 
+SELECT Id_Ot, Cast(0 as Bit) As Chk_Validado,Semilla, Utilizado, Codigo, Descripcion, Cantidad, Cantidad_Utilizada,Ud, 
         Un, CantUd1, CantUd2, Precio, Neto_Linea, Iva_Linea, Total_Linea,Desde_COV, Idmaeedo_Cov,Idmaeddo_Cov
 FROM    #Db_BakApp#Zw_St_OT_DetProd
 Where Id_Ot = @Id_Ot And Desde_COV = 1

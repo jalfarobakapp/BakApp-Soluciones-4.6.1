@@ -425,9 +425,15 @@ Public Class Frm_St_Ordenes_de_trabajo
                     Case "A"
                         '_Row_Estado_2 = _Fila
                         Dim _Fecha As Date = _Fila.Item("Fecha_Fijacion")
-                        Dim _Tecnico_Asignado = _Fila_Dg.Cells("Tecnico_Asignado").Value
+                        Dim _Tecnico_Asignado As String
 
-                        Fx_Estados(Estado_02_Asignar_Tecnico, "Asignado", Trim(_Fila_Dg.Cells("Tecnico_Asignado").Value),
+                        Try
+                            _Tecnico_Asignado = _Fila_Dg.Cells("Tecnico_Asignado").Value
+                        Catch ex As Exception
+                            _Tecnico_Asignado = String.Empty
+                        End Try
+
+                        Fx_Estados(Estado_02_Asignar_Tecnico, "Asignado", _Tecnico_Asignado.Trim,
                                    "Fecha: " & FormatDateTime(_Fecha, DateFormat.ShortDate),
                                    Color.GreenYellow, Color.GreenYellow, 100)
 

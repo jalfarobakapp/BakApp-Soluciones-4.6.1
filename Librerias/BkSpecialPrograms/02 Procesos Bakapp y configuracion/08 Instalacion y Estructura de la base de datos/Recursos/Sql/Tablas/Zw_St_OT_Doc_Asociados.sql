@@ -2,6 +2,7 @@ USE [#Base#]
 
 
 CREATE TABLE [dbo].[Zw_St_OT_Doc_Asociados](
+    [Id]                [int]          IDENTITY(1,1) NOT NULL,
 	[Id_Ot]				[int]          NOT NULL DEFAULT (0),
 	[Idmaeedo]			[int]          NOT NULL DEFAULT (0),
 	[Tido]				[char](3)      NOT NULL DEFAULT (''),

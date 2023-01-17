@@ -463,19 +463,19 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
             Warning_Box_Cupo_Exedido.Text = "<b>  Cliente con cupo</b><i></i>"
         End If
 
-        If _RowEntidad.Item("CRTO") = 0 And _RowEntidad.Item("DIPRVE") = 0 Then
+        'If _RowEntidad.Item("CRTO") = 0 And _RowEntidad.Item("DIPRVE") = 0 Then
 
-            If Btn_CambCodPago.Visible Then
-                Btn_CambCodPago.Visible = Not _Global_Row_Configuracion_Estacion.Item("Fincred_Usar")
-                Btn_FincredPays.Visible = _Global_Row_Configuracion_Estacion.Item("Fincred_Usar")
-            End If
+        '    If Btn_CambCodPago.Visible Then
+        '        Btn_CambCodPago.Visible = Not _Global_Row_Configuracion_Estacion.Item("Fincred_Usar")
+        '        Btn_FincredPays.Visible = _Global_Row_Configuracion_Estacion.Item("Fincred_Usar")
+        '    End If
 
-            If RevFincred Then
-                Warning_Box_Cupo_Exedido.Image = Imagenes_16x16.Images.Item("warning.png")
-                Warning_Box_Cupo_Exedido.Text = "<b>  Cliente con cupo excedido</b><i> Venta sera revisada por FINCRED PAYS </i>"
-            End If
+        '    If RevFincred Then
+        '        Warning_Box_Cupo_Exedido.Image = Imagenes_16x16.Images.Item("warning.png")
+        '        Warning_Box_Cupo_Exedido.Text = "<b>  Cliente con cupo excedido</b><i> Venta sera revisada por FINCRED PAYS </i>"
+        '    End If
 
-        End If
+        'End If
 
     End Sub
 

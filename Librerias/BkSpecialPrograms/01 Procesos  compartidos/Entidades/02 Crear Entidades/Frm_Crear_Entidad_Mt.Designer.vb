@@ -23,13 +23,13 @@ Partial Class Frm_Crear_Entidad_Mt
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Crear_Entidad_Mt))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TxtxCodEntidad = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.TxtxSucursal = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -136,8 +136,6 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.Btn_Anotaciones_a_la_entidad = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Direcciones_Despachos = New DevComponents.DotNetBar.ButtonItem()
         Me.TabControl1 = New DevComponents.DotNetBar.TabControl()
-        Me.TabControlPanel3 = New DevComponents.DotNetBar.TabControlPanel()
-        Me.TabItem3 = New DevComponents.DotNetBar.TabItem(Me.components)
         Me.TabControlPanel1 = New DevComponents.DotNetBar.TabControlPanel()
         Me.GroupPanel9 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Comuna = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -145,6 +143,8 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.Btn_Buscar_Comuna = New DevComponents.DotNetBar.ButtonX()
         Me.LabelX40 = New DevComponents.DotNetBar.LabelX()
         Me.TabItem1 = New DevComponents.DotNetBar.TabItem(Me.components)
+        Me.TabControlPanel3 = New DevComponents.DotNetBar.TabControlPanel()
+        Me.TabItem3 = New DevComponents.DotNetBar.TabItem(Me.components)
         Me.TabControlPanel2 = New DevComponents.DotNetBar.TabControlPanel()
         Me.TabItem2 = New DevComponents.DotNetBar.TabItem(Me.components)
         Me.TabControlPanel4 = New DevComponents.DotNetBar.TabControlPanel()
@@ -256,6 +256,8 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.Btn_Ver_Link = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Ir_Ubicacion_Link = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Ver_Documento = New DevComponents.DotNetBar.ButtonItem()
+        Me.Chk_RevCredFincred = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Btn_Modificar_RevCredFincred = New DevComponents.DotNetBar.ButtonX()
         Me.GroupPanel6.SuspendLayout()
         Me.GroupPanel5.SuspendLayout()
         Me.GroupPanel4.SuspendLayout()
@@ -266,9 +268,9 @@ Partial Class Frm_Crear_Entidad_Mt
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl1.SuspendLayout()
-        Me.TabControlPanel3.SuspendLayout()
         Me.TabControlPanel1.SuspendLayout()
         Me.GroupPanel9.SuspendLayout()
+        Me.TabControlPanel3.SuspendLayout()
         Me.TabControlPanel2.SuspendLayout()
         Me.TabControlPanel4.SuspendLayout()
         Me.GroupPanel7.SuspendLayout()
@@ -1177,6 +1179,7 @@ Partial Class Frm_Crear_Entidad_Mt
         '
         Me.Chk_Miercoles.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Miercoles.CheckBoxImageChecked = CType(resources.GetObject("Chk_Miercoles.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Miercoles.FocusCuesEnabled = False
         Me.Chk_Miercoles.ForeColor = System.Drawing.Color.Black
         Me.Chk_Miercoles.Location = New System.Drawing.Point(333, 46)
         Me.Chk_Miercoles.Name = "Chk_Miercoles"
@@ -1193,6 +1196,7 @@ Partial Class Frm_Crear_Entidad_Mt
         '
         Me.Chk_Jueves.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Jueves.CheckBoxImageChecked = CType(resources.GetObject("Chk_Jueves.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Jueves.FocusCuesEnabled = False
         Me.Chk_Jueves.ForeColor = System.Drawing.Color.Black
         Me.Chk_Jueves.Location = New System.Drawing.Point(376, 46)
         Me.Chk_Jueves.Name = "Chk_Jueves"
@@ -1209,6 +1213,7 @@ Partial Class Frm_Crear_Entidad_Mt
         '
         Me.Chk_Domingo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Domingo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Domingo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Domingo.FocusCuesEnabled = False
         Me.Chk_Domingo.ForeColor = System.Drawing.Color.Black
         Me.Chk_Domingo.Location = New System.Drawing.Point(502, 46)
         Me.Chk_Domingo.Name = "Chk_Domingo"
@@ -1225,6 +1230,7 @@ Partial Class Frm_Crear_Entidad_Mt
         '
         Me.Chk_Martes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Martes.CheckBoxImageChecked = CType(resources.GetObject("Chk_Martes.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Martes.FocusCuesEnabled = False
         Me.Chk_Martes.ForeColor = System.Drawing.Color.Black
         Me.Chk_Martes.Location = New System.Drawing.Point(290, 46)
         Me.Chk_Martes.Name = "Chk_Martes"
@@ -1241,6 +1247,7 @@ Partial Class Frm_Crear_Entidad_Mt
         '
         Me.Chk_Lunes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Lunes.CheckBoxImageChecked = CType(resources.GetObject("Chk_Lunes.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Lunes.FocusCuesEnabled = False
         Me.Chk_Lunes.ForeColor = System.Drawing.Color.Black
         Me.Chk_Lunes.Location = New System.Drawing.Point(247, 46)
         Me.Chk_Lunes.Name = "Chk_Lunes"
@@ -1257,6 +1264,7 @@ Partial Class Frm_Crear_Entidad_Mt
         '
         Me.Chk_Viernes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Viernes.CheckBoxImageChecked = CType(resources.GetObject("Chk_Viernes.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Viernes.FocusCuesEnabled = False
         Me.Chk_Viernes.ForeColor = System.Drawing.Color.Black
         Me.Chk_Viernes.Location = New System.Drawing.Point(419, 46)
         Me.Chk_Viernes.Name = "Chk_Viernes"
@@ -1273,6 +1281,7 @@ Partial Class Frm_Crear_Entidad_Mt
         '
         Me.Chk_Sabado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Sabado.CheckBoxImageChecked = CType(resources.GetObject("Chk_Sabado.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Sabado.FocusCuesEnabled = False
         Me.Chk_Sabado.ForeColor = System.Drawing.Color.Black
         Me.Chk_Sabado.Location = New System.Drawing.Point(462, 46)
         Me.Chk_Sabado.Name = "Chk_Sabado"
@@ -1334,6 +1343,7 @@ Partial Class Frm_Crear_Entidad_Mt
         '
         Me.Chk_Occobli.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Occobli.CheckBoxImageChecked = CType(resources.GetObject("Chk_Occobli.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Occobli.FocusCuesEnabled = False
         Me.Chk_Occobli.ForeColor = System.Drawing.Color.Black
         Me.Chk_Occobli.Location = New System.Drawing.Point(327, 39)
         Me.Chk_Occobli.Name = "Chk_Occobli"
@@ -1351,8 +1361,9 @@ Partial Class Frm_Crear_Entidad_Mt
         '
         Me.ChkxEnsEsEmisorDocumento.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.ChkxEnsEsEmisorDocumento.CheckBoxImageChecked = CType(resources.GetObject("ChkxEnsEsEmisorDocumento.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.ChkxEnsEsEmisorDocumento.FocusCuesEnabled = False
         Me.ChkxEnsEsEmisorDocumento.ForeColor = System.Drawing.Color.Black
-        Me.ChkxEnsEsEmisorDocumento.Location = New System.Drawing.Point(6, 39)
+        Me.ChkxEnsEsEmisorDocumento.Location = New System.Drawing.Point(3, 39)
         Me.ChkxEnsEsEmisorDocumento.Name = "ChkxEnsEsEmisorDocumento"
         Me.ChkxEnsEsEmisorDocumento.Size = New System.Drawing.Size(265, 18)
         Me.ChkxEnsEsEmisorDocumento.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1368,8 +1379,9 @@ Partial Class Frm_Crear_Entidad_Mt
         '
         Me.ChkxBloqueadaVyC.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.ChkxBloqueadaVyC.CheckBoxImageChecked = CType(resources.GetObject("ChkxBloqueadaVyC.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.ChkxBloqueadaVyC.FocusCuesEnabled = False
         Me.ChkxBloqueadaVyC.ForeColor = System.Drawing.Color.Black
-        Me.ChkxBloqueadaVyC.Location = New System.Drawing.Point(6, 3)
+        Me.ChkxBloqueadaVyC.Location = New System.Drawing.Point(3, 3)
         Me.ChkxBloqueadaVyC.Name = "ChkxBloqueadaVyC"
         Me.ChkxBloqueadaVyC.Size = New System.Drawing.Size(191, 16)
         Me.ChkxBloqueadaVyC.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1385,6 +1397,7 @@ Partial Class Frm_Crear_Entidad_Mt
         '
         Me.ChkxEntPreferencial.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.ChkxEntPreferencial.CheckBoxImageChecked = CType(resources.GetObject("ChkxEntPreferencial.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.ChkxEntPreferencial.FocusCuesEnabled = False
         Me.ChkxEntPreferencial.ForeColor = System.Drawing.Color.Black
         Me.ChkxEntPreferencial.Location = New System.Drawing.Point(327, 21)
         Me.ChkxEntPreferencial.Name = "ChkxEntPreferencial"
@@ -1402,8 +1415,9 @@ Partial Class Frm_Crear_Entidad_Mt
         '
         Me.ChkxEntNoAfecCtaCte.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.ChkxEntNoAfecCtaCte.CheckBoxImageChecked = CType(resources.GetObject("ChkxEntNoAfecCtaCte.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.ChkxEntNoAfecCtaCte.FocusCuesEnabled = False
         Me.ChkxEntNoAfecCtaCte.ForeColor = System.Drawing.Color.Black
-        Me.ChkxEntNoAfecCtaCte.Location = New System.Drawing.Point(6, 21)
+        Me.ChkxEntNoAfecCtaCte.Location = New System.Drawing.Point(3, 21)
         Me.ChkxEntNoAfecCtaCte.Name = "ChkxEntNoAfecCtaCte"
         Me.ChkxEntNoAfecCtaCte.Size = New System.Drawing.Size(251, 19)
         Me.ChkxEntNoAfecCtaCte.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1420,8 +1434,9 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.Chk_Ferefauto.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Ferefauto.CheckBoxImageChecked = CType(resources.GetObject("Chk_Ferefauto.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Ferefauto.Enabled = False
+        Me.Chk_Ferefauto.FocusCuesEnabled = False
         Me.Chk_Ferefauto.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Ferefauto.Location = New System.Drawing.Point(6, 57)
+        Me.Chk_Ferefauto.Location = New System.Drawing.Point(3, 57)
         Me.Chk_Ferefauto.Name = "Chk_Ferefauto"
         Me.Chk_Ferefauto.Size = New System.Drawing.Size(514, 19)
         Me.Chk_Ferefauto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1438,6 +1453,7 @@ Partial Class Frm_Crear_Entidad_Mt
         '
         Me.ChkxBlocCompras.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.ChkxBlocCompras.CheckBoxImageChecked = CType(resources.GetObject("ChkxBlocCompras.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.ChkxBlocCompras.FocusCuesEnabled = False
         Me.ChkxBlocCompras.ForeColor = System.Drawing.Color.Black
         Me.ChkxBlocCompras.Location = New System.Drawing.Point(327, 3)
         Me.ChkxBlocCompras.Name = "ChkxBlocCompras"
@@ -1451,6 +1467,8 @@ Partial Class Frm_Crear_Entidad_Mt
         '
         Me.GroupPanel2.BackColor = System.Drawing.Color.White
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.Controls.Add(Me.Btn_Modificar_RevCredFincred)
+        Me.GroupPanel2.Controls.Add(Me.Chk_RevCredFincred)
         Me.GroupPanel2.Controls.Add(Me.ButtonX2)
         Me.GroupPanel2.Controls.Add(Me.Btn_Modificar_FacAuto)
         Me.GroupPanel2.Controls.Add(Me.Chk_Libera_NVV)
@@ -1551,6 +1569,7 @@ Partial Class Frm_Crear_Entidad_Mt
         '
         Me.Chk_Libera_NVV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Libera_NVV.CheckBoxImageChecked = CType(resources.GetObject("Chk_Libera_NVV.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Libera_NVV.FocusCuesEnabled = False
         Me.Chk_Libera_NVV.ForeColor = System.Drawing.Color.Black
         Me.Chk_Libera_NVV.Location = New System.Drawing.Point(3, 187)
         Me.Chk_Libera_NVV.Name = "Chk_Libera_NVV"
@@ -1569,6 +1588,7 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.Chk_FacAuto.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_FacAuto.CheckBoxImageChecked = CType(resources.GetObject("Chk_FacAuto.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_FacAuto.Enabled = False
+        Me.Chk_FacAuto.FocusCuesEnabled = False
         Me.Chk_FacAuto.ForeColor = System.Drawing.Color.Black
         Me.Chk_FacAuto.Location = New System.Drawing.Point(3, 207)
         Me.Chk_FacAuto.Name = "Chk_FacAuto"
@@ -1667,6 +1687,7 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.ChkxNoPermitirSup1erVenci.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.ChkxNoPermitirSup1erVenci.CheckBoxImageChecked = CType(resources.GetObject("ChkxNoPermitirSup1erVenci.CheckBoxImageChecked"), System.Drawing.Image)
         Me.ChkxNoPermitirSup1erVenci.Enabled = False
+        Me.ChkxNoPermitirSup1erVenci.FocusCuesEnabled = False
         Me.ChkxNoPermitirSup1erVenci.ForeColor = System.Drawing.Color.Black
         Me.ChkxNoPermitirSup1erVenci.Location = New System.Drawing.Point(3, 168)
         Me.ChkxNoPermitirSup1erVenci.Name = "ChkxNoPermitirSup1erVenci"
@@ -1964,6 +1985,7 @@ Partial Class Frm_Crear_Entidad_Mt
         '
         Me.ChkxExigeNVV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.ChkxExigeNVV.CheckBoxImageChecked = CType(resources.GetObject("ChkxExigeNVV.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.ChkxExigeNVV.FocusCuesEnabled = False
         Me.ChkxExigeNVV.ForeColor = System.Drawing.Color.Black
         Me.ChkxExigeNVV.Location = New System.Drawing.Point(3, 150)
         Me.ChkxExigeNVV.Name = "ChkxExigeNVV"
@@ -2219,13 +2241,13 @@ Partial Class Frm_Crear_Entidad_Mt
         '
         Me.TabControl1.BackColor = System.Drawing.Color.White
         Me.TabControl1.CanReorderTabs = True
-        Me.TabControl1.Controls.Add(Me.TabControlPanel1)
         Me.TabControl1.Controls.Add(Me.TabControlPanel3)
         Me.TabControl1.Controls.Add(Me.TabControlPanel2)
-        Me.TabControl1.Controls.Add(Me.TabControlPanel4)
         Me.TabControl1.Controls.Add(Me.TabControlPanel6)
-        Me.TabControl1.Controls.Add(Me.TabControlPanel7)
         Me.TabControl1.Controls.Add(Me.TabControlPanel5)
+        Me.TabControl1.Controls.Add(Me.TabControlPanel1)
+        Me.TabControl1.Controls.Add(Me.TabControlPanel7)
+        Me.TabControl1.Controls.Add(Me.TabControlPanel4)
         Me.TabControl1.ForeColor = System.Drawing.Color.Black
         Me.TabControl1.Location = New System.Drawing.Point(2, 12)
         Me.TabControl1.Name = "TabControl1"
@@ -2242,34 +2264,6 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.TabControl1.Tabs.Add(Me.TabItem6)
         Me.TabControl1.Tabs.Add(Me.TabItem7)
         Me.TabControl1.Tabs.Add(Me.TabItem8)
-        '
-        'TabControlPanel3
-        '
-        Me.TabControlPanel3.Controls.Add(Me.DtpxFechaCreacion)
-        Me.TabControlPanel3.Controls.Add(Me.GroupPanel2)
-        Me.TabControlPanel3.Controls.Add(Me.LabelX7)
-        Me.TabControlPanel3.Controls.Add(Me.GroupPanel4)
-        Me.TabControlPanel3.Controls.Add(Me.GroupPanel3)
-        Me.TabControlPanel3.DisabledBackColor = System.Drawing.Color.Empty
-        Me.TabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabControlPanel3.Location = New System.Drawing.Point(0, 27)
-        Me.TabControlPanel3.Name = "TabControlPanel3"
-        Me.TabControlPanel3.Padding = New System.Windows.Forms.Padding(1)
-        Me.TabControlPanel3.Size = New System.Drawing.Size(604, 464)
-        Me.TabControlPanel3.Style.BackColor1.Color = System.Drawing.Color.White
-        Me.TabControlPanel3.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.TabControlPanel3.Style.BorderColor.Color = System.Drawing.Color.FromArgb(CType(CType(211, Byte), Integer), CType(CType(211, Byte), Integer), CType(CType(211, Byte), Integer))
-        Me.TabControlPanel3.Style.BorderSide = CType(((DevComponents.DotNetBar.eBorderSide.Left Or DevComponents.DotNetBar.eBorderSide.Right) _
-            Or DevComponents.DotNetBar.eBorderSide.Bottom), DevComponents.DotNetBar.eBorderSide)
-        Me.TabControlPanel3.Style.GradientAngle = 90
-        Me.TabControlPanel3.TabIndex = 3
-        Me.TabControlPanel3.TabItem = Me.TabItem3
-        '
-        'TabItem3
-        '
-        Me.TabItem3.AttachedControl = Me.TabControlPanel3
-        Me.TabItem3.Name = "TabItem3"
-        Me.TabItem3.Text = "Crédito"
         '
         'TabControlPanel1
         '
@@ -2428,6 +2422,34 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.TabItem1.AttachedControl = Me.TabControlPanel1
         Me.TabItem1.Name = "TabItem1"
         Me.TabItem1.Text = "Datos de identificación"
+        '
+        'TabControlPanel3
+        '
+        Me.TabControlPanel3.Controls.Add(Me.DtpxFechaCreacion)
+        Me.TabControlPanel3.Controls.Add(Me.GroupPanel2)
+        Me.TabControlPanel3.Controls.Add(Me.LabelX7)
+        Me.TabControlPanel3.Controls.Add(Me.GroupPanel4)
+        Me.TabControlPanel3.Controls.Add(Me.GroupPanel3)
+        Me.TabControlPanel3.DisabledBackColor = System.Drawing.Color.Empty
+        Me.TabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabControlPanel3.Location = New System.Drawing.Point(0, 27)
+        Me.TabControlPanel3.Name = "TabControlPanel3"
+        Me.TabControlPanel3.Padding = New System.Windows.Forms.Padding(1)
+        Me.TabControlPanel3.Size = New System.Drawing.Size(604, 464)
+        Me.TabControlPanel3.Style.BackColor1.Color = System.Drawing.Color.White
+        Me.TabControlPanel3.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.TabControlPanel3.Style.BorderColor.Color = System.Drawing.Color.FromArgb(CType(CType(211, Byte), Integer), CType(CType(211, Byte), Integer), CType(CType(211, Byte), Integer))
+        Me.TabControlPanel3.Style.BorderSide = CType(((DevComponents.DotNetBar.eBorderSide.Left Or DevComponents.DotNetBar.eBorderSide.Right) _
+            Or DevComponents.DotNetBar.eBorderSide.Bottom), DevComponents.DotNetBar.eBorderSide)
+        Me.TabControlPanel3.Style.GradientAngle = 90
+        Me.TabControlPanel3.TabIndex = 3
+        Me.TabControlPanel3.TabItem = Me.TabItem3
+        '
+        'TabItem3
+        '
+        Me.TabItem3.AttachedControl = Me.TabControlPanel3
+        Me.TabItem3.Name = "TabItem3"
+        Me.TabItem3.Text = "Crédito"
         '
         'TabControlPanel2
         '
@@ -3693,36 +3715,36 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.Grilla_Maeenmail.AllowUserToAddRows = False
         Me.Grilla_Maeenmail.AllowUserToDeleteRows = False
         Me.Grilla_Maeenmail.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Maeenmail.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle22.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle22.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle22.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Maeenmail.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle22
         Me.Grilla_Maeenmail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Maeenmail.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle23.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle23.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle23.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle23.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Maeenmail.DefaultCellStyle = DataGridViewCellStyle23
         Me.Grilla_Maeenmail.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Maeenmail.EnableHeadersVisualStyles = False
         Me.Grilla_Maeenmail.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_Maeenmail.Location = New System.Drawing.Point(0, 0)
         Me.Grilla_Maeenmail.Name = "Grilla_Maeenmail"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Maeenmail.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle24.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle24.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle24.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Maeenmail.RowHeadersDefaultCellStyle = DataGridViewCellStyle24
         Me.Grilla_Maeenmail.Size = New System.Drawing.Size(580, 179)
         Me.Grilla_Maeenmail.StandardTab = True
         Me.Grilla_Maeenmail.TabIndex = 30
@@ -4080,36 +4102,36 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.Grilla_Cuentas.AllowUserToAddRows = False
         Me.Grilla_Cuentas.AllowUserToDeleteRows = False
         Me.Grilla_Cuentas.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Cuentas.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle19.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle19.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle19.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Cuentas.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle19
         Me.Grilla_Cuentas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Cuentas.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle20.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle20.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle20.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle20.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Cuentas.DefaultCellStyle = DataGridViewCellStyle20
         Me.Grilla_Cuentas.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Cuentas.EnableHeadersVisualStyles = False
         Me.Grilla_Cuentas.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_Cuentas.Location = New System.Drawing.Point(0, 0)
         Me.Grilla_Cuentas.Name = "Grilla_Cuentas"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Cuentas.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle21.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle21.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle21.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle21.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Cuentas.RowHeadersDefaultCellStyle = DataGridViewCellStyle21
         Me.Grilla_Cuentas.Size = New System.Drawing.Size(580, 170)
         Me.Grilla_Cuentas.StandardTab = True
         Me.Grilla_Cuentas.TabIndex = 30
@@ -4196,6 +4218,35 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.Btn_Ver_Documento.Name = "Btn_Ver_Documento"
         Me.Btn_Ver_Documento.Text = "Ver documento (ligado a traza externa)"
         '
+        'Chk_RevCredFincred
+        '
+        Me.Chk_RevCredFincred.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_RevCredFincred.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_RevCredFincred.CheckBoxImageChecked = CType(resources.GetObject("Chk_RevCredFincred.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_RevCredFincred.Enabled = False
+        Me.Chk_RevCredFincred.Location = New System.Drawing.Point(327, 207)
+        Me.Chk_RevCredFincred.Name = "Chk_RevCredFincred"
+        Me.Chk_RevCredFincred.Size = New System.Drawing.Size(154, 23)
+        Me.Chk_RevCredFincred.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_RevCredFincred.TabIndex = 61
+        Me.Chk_RevCredFincred.Text = "Revisar crédito con FINCRED"
+        '
+        'Btn_Modificar_RevCredFincred
+        '
+        Me.Btn_Modificar_RevCredFincred.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Modificar_RevCredFincred.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Highlighter1.SetHighlightOnFocus(Me.Btn_Modificar_RevCredFincred, True)
+        Me.Btn_Modificar_RevCredFincred.Location = New System.Drawing.Point(487, 207)
+        Me.Btn_Modificar_RevCredFincred.Name = "Btn_Modificar_RevCredFincred"
+        Me.Btn_Modificar_RevCredFincred.Size = New System.Drawing.Size(59, 21)
+        Me.Btn_Modificar_RevCredFincred.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Modificar_RevCredFincred.TabIndex = 62
+        Me.Btn_Modificar_RevCredFincred.TabStop = False
+        Me.Btn_Modificar_RevCredFincred.Text = "Modificar"
+        '
         'Frm_Crear_Entidad_Mt
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -4223,9 +4274,9 @@ Partial Class Frm_Crear_Entidad_Mt
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabControl1.ResumeLayout(False)
-        Me.TabControlPanel3.ResumeLayout(False)
         Me.TabControlPanel1.ResumeLayout(False)
         Me.GroupPanel9.ResumeLayout(False)
+        Me.TabControlPanel3.ResumeLayout(False)
         Me.TabControlPanel2.ResumeLayout(False)
         Me.TabControlPanel4.ResumeLayout(False)
         Me.GroupPanel7.ResumeLayout(False)
@@ -4484,4 +4535,6 @@ Partial Class Frm_Crear_Entidad_Mt
     Friend WithEvents Chk_FacAuto As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents ButtonX2 As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Btn_Modificar_FacAuto As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Btn_Modificar_RevCredFincred As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Chk_RevCredFincred As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

@@ -48,14 +48,6 @@ Partial Class Frm_Configuracion_Gral
         Me.Cmb_TipoValor_Bruto_Neto = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
-        Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.Btn_FincredConfiguracion = New DevComponents.DotNetBar.ButtonX()
-        Me.LabelX22 = New DevComponents.DotNetBar.LabelX()
-        Me.Line1 = New DevComponents.DotNetBar.Controls.Line()
-        Me.Txt_Fincred_Id_Token = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX21 = New DevComponents.DotNetBar.LabelX()
-        Me.Chk_Fincred_Usar = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.SpTab_FincredPays = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
         Me.Chk_LeerSoloUnaVezCodBarra = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -69,6 +61,14 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_Pedir_Permiso_Para_Usar_Stanby = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Revisar_Taza_Solo_Mon_Extranjeras = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.SpTab_General = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Btn_FincredConfiguracion = New DevComponents.DotNetBar.ButtonX()
+        Me.LabelX22 = New DevComponents.DotNetBar.LabelX()
+        Me.Line1 = New DevComponents.DotNetBar.Controls.Line()
+        Me.Txt_Fincred_Id_Token = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX21 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_Fincred_Usar = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.SpTab_FincredPays = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_CpActeco = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -149,9 +149,9 @@ Partial Class Frm_Configuracion_Gral
         CType(Me.Input_Dias_Max_Fecha_Despacho, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
-        Me.SuperTabControlPanel3.SuspendLayout()
         Me.SuperTabControlPanel1.SuspendLayout()
         Me.TableLayoutPanel5.SuspendLayout()
+        Me.SuperTabControlPanel3.SuspendLayout()
         Me.SuperTabControlPanel2.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
         Me.SuperTabControlPanel7.SuspendLayout()
@@ -605,8 +605,8 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel7)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel6)
@@ -622,119 +622,6 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControl1.TabIndex = 97
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SpTab_General, Me.SpTab_Compras, Me.SpTab_Ventas, Me.SpTab_Productos, Me.SpTab_DatosEmpresa, Me.SpTab_FincredPays})
         Me.SuperTabControl1.Text = "SuperTabControl1"
-        '
-        'SuperTabControlPanel3
-        '
-        Me.SuperTabControlPanel3.Controls.Add(Me.Btn_FincredConfiguracion)
-        Me.SuperTabControlPanel3.Controls.Add(Me.LabelX22)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Line1)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Txt_Fincred_Id_Token)
-        Me.SuperTabControlPanel3.Controls.Add(Me.LabelX21)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Chk_Fincred_Usar)
-        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 0)
-        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(672, 539)
-        Me.SuperTabControlPanel3.TabIndex = 0
-        Me.SuperTabControlPanel3.TabItem = Me.SpTab_FincredPays
-        '
-        'Btn_FincredConfiguracion
-        '
-        Me.Btn_FincredConfiguracion.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_FincredConfiguracion.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_FincredConfiguracion.Location = New System.Drawing.Point(6, 97)
-        Me.Btn_FincredConfiguracion.Name = "Btn_FincredConfiguracion"
-        Me.Btn_FincredConfiguracion.Size = New System.Drawing.Size(199, 23)
-        Me.Btn_FincredConfiguracion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_FincredConfiguracion.TabIndex = 126
-        Me.Btn_FincredConfiguracion.Text = "FINCRED PAYS Configuración Tokens"
-        '
-        'LabelX22
-        '
-        Me.LabelX22.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX22.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX22.ForeColor = System.Drawing.Color.Black
-        Me.LabelX22.Location = New System.Drawing.Point(6, 76)
-        Me.LabelX22.Name = "LabelX22"
-        Me.LabelX22.Size = New System.Drawing.Size(135, 23)
-        Me.LabelX22.TabIndex = 131
-        Me.LabelX22.Text = "Configuración"
-        '
-        'Line1
-        '
-        Me.Line1.BackColor = System.Drawing.Color.Transparent
-        Me.Line1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.Line1.ForeColor = System.Drawing.Color.Black
-        Me.Line1.Location = New System.Drawing.Point(6, 63)
-        Me.Line1.Name = "Line1"
-        Me.Line1.Size = New System.Drawing.Size(513, 23)
-        Me.Line1.TabIndex = 132
-        Me.Line1.Text = "Line1"
-        '
-        'Txt_Fincred_Id_Token
-        '
-        Me.Txt_Fincred_Id_Token.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_Fincred_Id_Token.Border.Class = "TextBoxBorder"
-        Me.Txt_Fincred_Id_Token.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Fincred_Id_Token.ButtonCustom.Image = CType(resources.GetObject("Txt_Fincred_Id_Token.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_Fincred_Id_Token.ButtonCustom.Visible = True
-        Me.Txt_Fincred_Id_Token.ButtonCustom2.Image = CType(resources.GetObject("Txt_Fincred_Id_Token.ButtonCustom2.Image"), System.Drawing.Image)
-        Me.Txt_Fincred_Id_Token.ButtonCustom2.Visible = True
-        Me.Txt_Fincred_Id_Token.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Fincred_Id_Token.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Fincred_Id_Token.Location = New System.Drawing.Point(45, 32)
-        Me.Txt_Fincred_Id_Token.Name = "Txt_Fincred_Id_Token"
-        Me.Txt_Fincred_Id_Token.PreventEnterBeep = True
-        Me.Txt_Fincred_Id_Token.ReadOnly = True
-        Me.Txt_Fincred_Id_Token.Size = New System.Drawing.Size(612, 22)
-        Me.Txt_Fincred_Id_Token.TabIndex = 129
-        Me.Txt_Fincred_Id_Token.Tag = "0"
-        Me.Txt_Fincred_Id_Token.Text = "FCc4c28b367e14df88993ad475dedf6b77P - Sucursal: Nombre de Sucursal, Ambiente de p" &
-    "ruebas"
-        '
-        'LabelX21
-        '
-        Me.LabelX21.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX21.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX21.ForeColor = System.Drawing.Color.Black
-        Me.LabelX21.Location = New System.Drawing.Point(3, 32)
-        Me.LabelX21.Name = "LabelX21"
-        Me.LabelX21.Size = New System.Drawing.Size(43, 23)
-        Me.LabelX21.TabIndex = 130
-        Me.LabelX21.Text = "Token"
-        '
-        'Chk_Fincred_Usar
-        '
-        Me.Chk_Fincred_Usar.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Fincred_Usar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Fincred_Usar.CheckBoxImageChecked = CType(resources.GetObject("Chk_Fincred_Usar.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Fincred_Usar.FocusCuesEnabled = False
-        Me.Chk_Fincred_Usar.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Fincred_Usar.Location = New System.Drawing.Point(3, 12)
-        Me.Chk_Fincred_Usar.Name = "Chk_Fincred_Usar"
-        Me.Chk_Fincred_Usar.Size = New System.Drawing.Size(483, 14)
-        Me.Chk_Fincred_Usar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Fincred_Usar.TabIndex = 127
-        Me.Chk_Fincred_Usar.Text = "Usar Fincred para la revisión de clientes sin crédito"
-        '
-        'SpTab_FincredPays
-        '
-        Me.SpTab_FincredPays.AttachedControl = Me.SuperTabControlPanel3
-        Me.SpTab_FincredPays.GlobalItem = False
-        Me.SpTab_FincredPays.Name = "SpTab_FincredPays"
-        Me.SpTab_FincredPays.Text = "Fincred Pays"
         '
         'SuperTabControlPanel1
         '
@@ -952,6 +839,119 @@ Partial Class Frm_Configuracion_Gral
         Me.SpTab_General.GlobalItem = False
         Me.SpTab_General.Name = "SpTab_General"
         Me.SpTab_General.Text = "General"
+        '
+        'SuperTabControlPanel3
+        '
+        Me.SuperTabControlPanel3.Controls.Add(Me.Btn_FincredConfiguracion)
+        Me.SuperTabControlPanel3.Controls.Add(Me.LabelX22)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Line1)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Txt_Fincred_Id_Token)
+        Me.SuperTabControlPanel3.Controls.Add(Me.LabelX21)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Chk_Fincred_Usar)
+        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(672, 512)
+        Me.SuperTabControlPanel3.TabIndex = 0
+        Me.SuperTabControlPanel3.TabItem = Me.SpTab_FincredPays
+        '
+        'Btn_FincredConfiguracion
+        '
+        Me.Btn_FincredConfiguracion.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_FincredConfiguracion.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_FincredConfiguracion.Location = New System.Drawing.Point(6, 97)
+        Me.Btn_FincredConfiguracion.Name = "Btn_FincredConfiguracion"
+        Me.Btn_FincredConfiguracion.Size = New System.Drawing.Size(199, 23)
+        Me.Btn_FincredConfiguracion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_FincredConfiguracion.TabIndex = 126
+        Me.Btn_FincredConfiguracion.Text = "FINCRED PAYS Configuración Tokens"
+        '
+        'LabelX22
+        '
+        Me.LabelX22.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX22.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX22.ForeColor = System.Drawing.Color.Black
+        Me.LabelX22.Location = New System.Drawing.Point(6, 76)
+        Me.LabelX22.Name = "LabelX22"
+        Me.LabelX22.Size = New System.Drawing.Size(135, 23)
+        Me.LabelX22.TabIndex = 131
+        Me.LabelX22.Text = "Configuración"
+        '
+        'Line1
+        '
+        Me.Line1.BackColor = System.Drawing.Color.Transparent
+        Me.Line1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.Line1.ForeColor = System.Drawing.Color.Black
+        Me.Line1.Location = New System.Drawing.Point(6, 63)
+        Me.Line1.Name = "Line1"
+        Me.Line1.Size = New System.Drawing.Size(513, 23)
+        Me.Line1.TabIndex = 132
+        Me.Line1.Text = "Line1"
+        '
+        'Txt_Fincred_Id_Token
+        '
+        Me.Txt_Fincred_Id_Token.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Fincred_Id_Token.Border.Class = "TextBoxBorder"
+        Me.Txt_Fincred_Id_Token.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Fincred_Id_Token.ButtonCustom.Image = CType(resources.GetObject("Txt_Fincred_Id_Token.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Fincred_Id_Token.ButtonCustom.Visible = True
+        Me.Txt_Fincred_Id_Token.ButtonCustom2.Image = CType(resources.GetObject("Txt_Fincred_Id_Token.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Fincred_Id_Token.ButtonCustom2.Visible = True
+        Me.Txt_Fincred_Id_Token.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Fincred_Id_Token.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Fincred_Id_Token.Location = New System.Drawing.Point(45, 32)
+        Me.Txt_Fincred_Id_Token.Name = "Txt_Fincred_Id_Token"
+        Me.Txt_Fincred_Id_Token.PreventEnterBeep = True
+        Me.Txt_Fincred_Id_Token.ReadOnly = True
+        Me.Txt_Fincred_Id_Token.Size = New System.Drawing.Size(612, 22)
+        Me.Txt_Fincred_Id_Token.TabIndex = 129
+        Me.Txt_Fincred_Id_Token.Tag = "0"
+        Me.Txt_Fincred_Id_Token.Text = "FCc4c28b367e14df88993ad475dedf6b77P - Sucursal: Nombre de Sucursal, Ambiente de p" &
+    "ruebas"
+        '
+        'LabelX21
+        '
+        Me.LabelX21.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX21.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX21.ForeColor = System.Drawing.Color.Black
+        Me.LabelX21.Location = New System.Drawing.Point(3, 32)
+        Me.LabelX21.Name = "LabelX21"
+        Me.LabelX21.Size = New System.Drawing.Size(43, 23)
+        Me.LabelX21.TabIndex = 130
+        Me.LabelX21.Text = "Token"
+        '
+        'Chk_Fincred_Usar
+        '
+        Me.Chk_Fincred_Usar.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Fincred_Usar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Fincred_Usar.CheckBoxImageChecked = CType(resources.GetObject("Chk_Fincred_Usar.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Fincred_Usar.FocusCuesEnabled = False
+        Me.Chk_Fincred_Usar.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Fincred_Usar.Location = New System.Drawing.Point(3, 12)
+        Me.Chk_Fincred_Usar.Name = "Chk_Fincred_Usar"
+        Me.Chk_Fincred_Usar.Size = New System.Drawing.Size(483, 14)
+        Me.Chk_Fincred_Usar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Fincred_Usar.TabIndex = 127
+        Me.Chk_Fincred_Usar.Text = "Usar Fincred para la revisión de crédito"
+        '
+        'SpTab_FincredPays
+        '
+        Me.SpTab_FincredPays.AttachedControl = Me.SuperTabControlPanel3
+        Me.SpTab_FincredPays.GlobalItem = False
+        Me.SpTab_FincredPays.Name = "SpTab_FincredPays"
+        Me.SpTab_FincredPays.Text = "Fincred Pays"
         '
         'SuperTabControlPanel2
         '
@@ -2170,9 +2170,9 @@ Partial Class Frm_Configuracion_Gral
         CType(Me.Input_Dias_Max_Fecha_Despacho, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
-        Me.SuperTabControlPanel3.ResumeLayout(False)
         Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.TableLayoutPanel5.ResumeLayout(False)
+        Me.SuperTabControlPanel3.ResumeLayout(False)
         Me.SuperTabControlPanel2.ResumeLayout(False)
         Me.GroupPanel1.ResumeLayout(False)
         Me.SuperTabControlPanel7.ResumeLayout(False)

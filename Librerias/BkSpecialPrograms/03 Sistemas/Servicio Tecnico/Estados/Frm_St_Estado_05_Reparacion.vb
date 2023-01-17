@@ -380,13 +380,9 @@ Public Class Frm_St_Estado_05_Reparacion
 
     Function Fx_Se_Puede_Grabar() As Boolean
 
-        If String.IsNullOrEmpty(Txt_Reparacion_Realizada.Text) Then
-            Beep()
-            ToastNotification.Show(Me, "FALTA INFORME DE REPARACION REALIZADA",
-                                   Imagenes_32x32.Images.Item("warning.png"),
-                                   2 * 1000, eToastGlowColor.Red,
-                                   eToastPosition.MiddleCenter)
-            'Super_Tab.SelectedTabIndex = 1
+        If String.IsNullOrWhiteSpace(Txt_Reparacion_Realizada.Text) Then
+            MessageBoxEx.Show(Me, "FALTA INFORME DE REPARACION REALIZADA", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Reparacion_Realizada.Text = String.Empty
             Txt_Reparacion_Realizada.Focus()
             Return False
         End If

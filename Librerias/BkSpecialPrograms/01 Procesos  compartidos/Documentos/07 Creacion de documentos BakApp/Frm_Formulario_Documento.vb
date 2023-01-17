@@ -3361,6 +3361,9 @@ Public Class Frm_Formulario_Documento
         _TblEncabezado.Rows(0).Item("Cuotas") = _Cuotas
         _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento") = _Dias_1er_Vencimiento
         _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = _Dias_Vencimiento
+        _TblEncabezado.Rows(0).Item("RevFincred") = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades",
+                                                                      "RevFincred",
+                                                                      "CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "'")
         _TblObservaciones.Rows(0).Item("Forma_pago") = _Forma_pago
 
 
@@ -12894,7 +12897,7 @@ Public Class Frm_Formulario_Documento
                     .Item("Dias_Vencimiento") = Fm_D.Pro_Dias_Vencimiento
 
                     'Fincred
-                    .Item("RevFincred") = Fm_D.RevFincred
+                    '.Item("RevFincred") = Fm_D.RevFincred
 
                     If _Vizado Then
 
@@ -15089,13 +15092,10 @@ Public Class Frm_Formulario_Documento
         Dim _Revisar_Fincred As Boolean
         Dim _Fincred_Respuesta As New Fincred_API.Respuesta
 
-        Try
 
+        If _Global_Row_Configuracion_General.Item("Fincred_Usar") And _Global_Row_Configuracion_Estacion.Item("Fincred_Usar") Then
             _Revisar_Fincred = _TblEncabezado.Rows(0).Item("RevFincred")
-
-        Catch ex As Exception
-            _Revisar_Fincred = False
-        End Try
+        End If
 
         If _TipoGrab = _Tipo_de_Grabacion.Nuevo_documento Then
 

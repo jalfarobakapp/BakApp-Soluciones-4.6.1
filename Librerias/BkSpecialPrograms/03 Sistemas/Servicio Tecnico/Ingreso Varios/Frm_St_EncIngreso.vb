@@ -362,7 +362,7 @@ Public Class Frm_St_EncIngreso
                     Return
                 End If
 
-                If _Id_Ot = 1 And i = 1 Then
+                If _Id_Ot_Padre = 0 And _Id_Ot = 1 And i = 1 Then
                     _Id_Ot_Padre = _NuevaOt.Id_Ot
                     _Nro_Ot = _NuevaOt.Nro_Ot
                 End If
@@ -375,16 +375,39 @@ Public Class Frm_St_EncIngreso
 
         Cl_OrdenServicio.OrdenGrabada = True
 
-        If Cl_OrdenServicio.DsDocumento.Tables(0).Rows.Count = 1 Then
-            _Id_Ot = _Id_Ot_Padre
-            _Id_Ot_Padre = 0
-        End If
+        '_Id_Ot_Padre = _Id_Ot
+
+        'If Cl_OrdenServicio.DsDocumento.Tables(0).Rows.Count = 1 Then
+        '    _Id_Ot = _Id_Ot_Padre
+        '    _Id_Ot_Padre = 0
+        'End If
+
+        Sb_Agregar_GRP(_Id_Ot_Padre, _Id_Ot, _Nro_Ot)
+
+        Me.Close()
+
+    End Sub
+
+
+    Sub Sb_Agregar_GRP(_Id_Ot_Padre As Integer, _Id_Ot As Integer, _Nro_Ot As String)
 
         Dim _Nro_GRP As String
         Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese Nro Interno/Guía o Factura del cliente", "Recepción de producto", _Nro_GRP,
                                               False, _Tipo_Mayus_Minus.Mayusculas, 10, True)
 
         If _Aceptar Then
+
+            Dim _Endo = _Cl_OrdenServicio.RowEntidad.Item("KOEN")
+            Dim _Suen = _Cl_OrdenServicio.RowEntidad.Item("SUEN")
+
+            Dim _Reg = _Sql.Fx_Cuenta_Registros("MAEEDO", "TIDO = 'GRP' And NUDO = '" & numero_(_Nro_GRP, 10) & "' And ENDO = '" & _Endo & "' And SUENDO = '" & _Suen & "'")
+
+            If CBool(_Reg) Then
+                MessageBoxEx.Show(Me, "Ya existe una GRP con el Nro: " & _Nro_GRP & vbCrLf &
+                                  "No se puede ingresar otra GRP con el mismo número", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Sb_Agregar_GRP(_Id_Ot_Padre, _Id_Ot, _Nro_Ot)
+                Return
+            End If
 
             Dim _Idmaeedo As Integer = Fx_Crear_GRP_PRE(_Id_Ot_Padre, _Id_Ot, _Nro_Ot, _Nro_GRP)
 
@@ -427,10 +450,7 @@ Public Class Frm_St_EncIngreso
 
         End If
 
-        Me.Close()
-
     End Sub
-
 
     Function Fx_Crear_GRP_PRE(_Id_Ot_Padre As Integer, _Id_Ot As Integer, _Nro_OT As String, _Nro_GRP As String) As Integer
 

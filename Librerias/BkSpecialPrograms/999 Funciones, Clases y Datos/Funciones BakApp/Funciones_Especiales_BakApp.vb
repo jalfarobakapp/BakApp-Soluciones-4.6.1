@@ -1650,13 +1650,15 @@ End Module
 
 Public Module Modulo_Precios_Costos
 
-    Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+    'Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
     Public Sub Actualizar_Precio_BkRandom(_Lista As String,
                                           _Tabla As String,
                                           _Condicion_Extra As String,
                                           _ActualizarFormula As Boolean)
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Dim _Formula = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_ListaPreGlobal", "FormulaPrecio", "Lista = '" & _Lista & "'")
         Dim _Formula2 = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_ListaPreGlobal", "FormulaPrecio2", "Lista = '" & _Lista & "'")
@@ -1673,6 +1675,8 @@ Public Module Modulo_Precios_Costos
 
     Public Sub Sb_Actualizar_Precio_Formula_BkRandom(_Lista As String,
                                                      _TblProductos As DataTable)
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
         If CBool(_TblProductos.Rows.Count) Then
 
@@ -1707,6 +1711,8 @@ Public Module Modulo_Precios_Costos
 
     Function Fx_Precio_Formula(_CPrecio As _Campo_Precio,
                                _RowPrecio As DataRow)
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Dim _Ej_Fx_documento As Boolean = _RowPrecio.Item("Ej_Fx_documento")
 
@@ -1770,8 +1776,6 @@ Public Module Modulo_Precios_Costos
 
                 _Fx1 = Replace(_Fx1, ",", ".")
 
-                Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
-
                 Consulta_sql = "Select " & _Fx1 & " As Valor"
                 Dim _RowPr As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -1799,6 +1803,8 @@ Public Module Modulo_Precios_Costos
                                         _Cantidad As Double,
                                         _Caprco1 As Double,
                                         _Caprco2 As Double) As Double
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Dim _PrecioLinea As Double
         Dim _Fx As String
@@ -1965,6 +1971,7 @@ Public Module Modulo_Precios_Costos
                                       _vCantUd1 As Double,
                                       _vCantUd2 As Double)
 
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
         If (_RowPrecio Is Nothing) Then
             Return 0
@@ -2127,6 +2134,8 @@ Public Module Modulo_Precios_Costos
                                                _vCantUd1 As Double,
                                                _vCantUd2 As Double)
 
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
         If (_RowPrecio Is Nothing) Then
             Return 0
         End If
@@ -2277,6 +2286,8 @@ Public Module Modulo_Precios_Costos
                                              _vCantUd1 As Double,
                                              _vCantUd2 As Double) As String
 
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
         Dim _Ecuacion_Original As String = _Ecuacion
 
         Dim _Ecuaciones = Split(_Ecuacion, ">")
@@ -2393,6 +2404,8 @@ Public Module Modulo_Precios_Costos
 
     Sub Sb_Buscar_Valor_En_Dimensiones(ByRef _Fx1 As String, _Codigo As String, _Koen As String)
 
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
         Dim _Contiene_Campos As Boolean
 
         For Each _Caracter As String In _Fx1.ToString
@@ -2483,6 +2496,8 @@ Public Module Modulo_Precios_Costos
 
     Function FX_Traer_Valor_Concepto(_RowConcepto As DataRow, _Koen As String) As Double
 
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
         Dim _Codigo As String = _RowConcepto.Item("KOCT")
         Dim _Poct As Double = _RowConcepto.Item("POCT")
         Dim _Ecuct As String = _RowConcepto.Item("ECUCT")
@@ -2570,6 +2585,8 @@ Public Module Modulo_Precios_Costos
     End Enum
 
     Function Fx_Redondear_Precio(_Precio As Double, _Redondedo As Redondeo) As Double
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Dim _Valor As String = De_Num_a_Tx_01(_Precio, False, 5)
 
@@ -2793,6 +2810,8 @@ Public Module Modulo_Precios_Costos
                                 _Es_Documento_Interno As Boolean,
                                 _Lista_Busqueda As String,
                                 _Crear_Producto As Boolean) As DataRow
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
         _Codigo = Trim(_Codigo)
 

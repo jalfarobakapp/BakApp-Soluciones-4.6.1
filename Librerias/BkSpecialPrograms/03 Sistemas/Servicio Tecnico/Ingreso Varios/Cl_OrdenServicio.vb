@@ -344,15 +344,14 @@ Public Class Cl_OrdenServicio
             End While
             dfd.Close()
 
-            If Not CBool(_Id_Ot_Padre) Then
+            If Not CBool(_Id_Ot_Padre) Then _Id_Ot_Padre = _Id_Ot
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set Id_Ot_Padre = " & _Id_Ot & vbCrLf &
-                               "Where Id_Ot = " & _Id_Ot
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set Id_Ot_Padre = " & _Id_Ot_Padre & vbCrLf &
+                           "Where Id_Ot = " & _Id_Ot
 
-                Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
-                Comando.Transaction = myTrans
-                Comando.ExecuteNonQuery()
-            End If
+            Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
 
 
             ' --------------------------------------------------- DETALLE CHEK-IN ---------------------------------------

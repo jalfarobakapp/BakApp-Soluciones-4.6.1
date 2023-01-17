@@ -487,12 +487,12 @@ Public Class Frm_St_Estado_03_Presupuesto
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
-        Dim _Codigo As String '= _Fila.Cells("Codigo").Value
+        Dim _Codigo As String
 
         Dim _RowProducto As DataRow
 
         If _Cabeza = "Codigo" Then
-            'If _Fila.IsNewRow Then
+
             If (_Fila.Cells("Codigo").Value Is DBNull.Value) Then
                 _Fila.Cells("Codigo").Value = String.Empty
                 Grilla.EndEdit()
@@ -504,6 +504,7 @@ Public Class Frm_St_Estado_03_Presupuesto
             _RowProducto = Fx_Buscar_Producto(_Codigo)
 
             If Not (_RowProducto Is Nothing) Then
+
                 _Fila.Cells("Id_Ot").Value = _Id_Ot
                 _Fila.Cells("Codigo").Value = _RowProducto.Item("KOPR")
                 _Fila.Cells("Descripcion").Value = _RowProducto.Item("NOKOPR")
@@ -514,27 +515,23 @@ Public Class Frm_St_Estado_03_Presupuesto
                     Grilla.AllowUserToAddRows = False
                 End If
 
-                SendKeys.Send("{TAB}")
-                SendKeys.Send("{TAB}")
-                SendKeys.Send("{TAB}")
-                'SendKeys.Send(Keys.Right)
-                'SendKeys.Send(Keys.Right)
-                'SendKeys.Send(Keys.Right)
-                'Sb_New_OT_Agregar_Fila()393939
-                ' Grilla.CurrentCell = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Cantidad")
+                'SendKeys.Send("{TAB}")
+                'SendKeys.Send("{TAB}")
+                'SendKeys.Send("{TAB}")
+                SendKeys.Send("{LEFT}")
+                SendKeys.Send("{LEFT}")
+                SendKeys.Send("{LEFT}")
+
+                'Grilla.CurrentCell = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Cantidad")
             Else
-                'Return
                 Try
                     Grilla.Rows.RemoveAt(Grilla.CurrentRow.Index)
                     Grilla.Refresh()
                 Catch ex As Exception
 
                 End Try
-
-                '_Fila.Cells("Codigo").Value = Nothing
-                'Grilla.EndEdit()
             End If
-            'End If
+
         ElseIf _Cabeza = "Cantidad" Then
 
             If Grilla.Rows.Count - 1 = _Fila.Index Then
@@ -547,7 +544,7 @@ Public Class Frm_St_Estado_03_Presupuesto
 
         Bar2.Enabled = True
         Me.Refresh()
-        'Grilla.AllowUserToAddRows = True
+
     End Sub
 
     Private Sub Grilla_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs)
@@ -745,14 +742,16 @@ Public Class Frm_St_Estado_03_Presupuesto
             Return
         End If
 
-        If String.IsNullOrEmpty(Txt_Defecto_encontrado.Text) Then
+        If String.IsNullOrWhiteSpace(Txt_Defecto_encontrado.Text) Then
             MessageBoxEx.Show(Me, "FALTA DEFECTO ENCONTRADO", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Defecto_encontrado.Text = String.Empty
             Txt_Defecto_encontrado.Focus()
             Return
         End If
 
-        If String.IsNullOrEmpty(Txt_Reparacion_a_realizar.Text) Then
+        If String.IsNullOrWhiteSpace(Txt_Reparacion_a_realizar.Text) Then
             MessageBoxEx.Show(Me, "FALTA REPARACION A REALIZAR", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Reparacion_a_realizar.Text = String.Empty
             Txt_Reparacion_a_realizar.Focus()
             Return
         End If
