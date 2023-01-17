@@ -1060,6 +1060,11 @@ Drop Table #Paso_Tabim"
                 _SqlQuery += "Update MAEPR Set NOKOPRAMP = '" & _RowProducto.Item("NOKOPRAMP").ToString.Trim & "' Where KOPR = '" & _kopr & "'" & vbCrLf
             End If
 
+            Dim _Fecrpr As Date = _Sql.Fx_Trae_Dato("MAEPR", "FECRPR", "KOPR = '" & _kopr & "'")
+            Dim _FecrprStr = Format(_Fecrpr, "yyyyMMdd")
+
+            _SqlQuery += "Update MAEPR Set FECRPR = '" & _FecrprStr & "' Where KOPR = '" & _kopr & "'" & vbCrLf
+
             _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery)
 
             Return _Sql.Pro_Error
