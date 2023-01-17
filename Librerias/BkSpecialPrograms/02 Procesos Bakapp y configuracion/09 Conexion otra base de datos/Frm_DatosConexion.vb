@@ -179,6 +179,7 @@ Public Class Frm_DatosConexion
             If _Tbl.Rows.Count = 1 Then
 
                 Fila = _Tbl.Rows(0)
+                _Empresa_Conec = "01"
 
             Else
 
