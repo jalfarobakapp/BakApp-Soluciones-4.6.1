@@ -684,6 +684,10 @@ Public Class Frm_MtCreacionDeProducto
 
             End If
 
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_Asociacion Set DescripcionBusqueda = '" & Txt_Kopr.Text.Trim & " " & Txt_Nokopr.Text & "'" & vbCrLf &
+                           "Where Codigo = '" & Txt_Kopr.Text & "' And Producto = 1"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Prod_Dimensiones Where Codigo = '" & Txt_Kopr.Text & "'" & vbCrLf &
                            "Insert Into " & _Global_BaseBk & "Zw_Prod_Dimensiones (Codigo,Peso,Alto,Largo,Ancho) Values " &
                            "('" & Txt_Kopr.Text & "'," &
