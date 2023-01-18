@@ -138,17 +138,21 @@ Public Class Modulo_Lista_Precios_Costos
 
     Private Sub MetroTileItem1_Click(sender As Object, e As EventArgs) Handles MetroTileItem1.Click
 
-        Dim Fm As New Frm_PreciosLC_Mt01
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
+        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Pre0002") Then
+            Dim Fm As New Frm_PreciosLC_Mt01
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+        End If
 
     End Sub
 
     Private Sub MetroTileItem2_Click(sender As Object, e As EventArgs) Handles MetroTileItem2.Click
 
-        Dim Fm As New Frm_PreciosLC_InfUltCompras_Mt
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
+        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Pre0002") Then
+            Dim Fm As New Frm_PreciosLC_InfUltCompras_Mt
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+        End If
 
     End Sub
 

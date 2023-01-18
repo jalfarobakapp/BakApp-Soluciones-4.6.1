@@ -157,12 +157,6 @@ Public Class Frm_Diseno_Doc_y_Ubic
         '    Fx_Crear_Txt(PosicionX, PosicionY)
     End Sub
 
-
-
-
-
-
-
     Private Sub TabPage2_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
         PosicionX = e.X.ToString
         PosicionY = e.Y.ToString
@@ -172,8 +166,6 @@ Public Class Frm_Diseno_Doc_y_Ubic
         PosicionX = e.X.ToString
         PosicionY = e.Y.ToString
     End Sub
-
-
 
     Protected Overrides Sub Finalize()
         MyBase.Finalize()
@@ -186,7 +178,6 @@ Public Class Frm_Diseno_Doc_y_Ubic
     Private Sub LineaToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         'Fx_Crear_Linea(PosicionX, 200, PosicionY)
     End Sub
-
 
     Private Sub Frm_Diseno_Doc_y_Ubic_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
@@ -220,7 +211,6 @@ Public Class Frm_Diseno_Doc_y_Ubic
             Next
 
         End If
-
 
         AddHandler CType(Sld_Tam_Alto, SliderItem).ValueChanged, AddressOf Control_Tamano_Obj_Alto_ValueChanged
         AddHandler CType(Sld_Tam_Ancho, SliderItem).ValueChanged, AddressOf Control_Tamano_Obj_Ancho_ValueChanged

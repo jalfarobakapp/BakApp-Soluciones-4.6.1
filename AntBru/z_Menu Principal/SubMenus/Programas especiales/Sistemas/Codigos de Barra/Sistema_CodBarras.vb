@@ -111,6 +111,8 @@ Public Class Sistema_CodBarras
                 Fm_B.ShowDialog(Me)
                 Fm_B.Dispose()
 
+                Sb_ImpBarras_Ubicaciones()
+
             End If
 
         End If
