@@ -27,7 +27,6 @@ Public Class Sistema_CodBarras
         AddHandler BtnConfiguracion.Click, AddressOf Sb_Configuracion_Local
         AddHandler BtnImpBarras_Producto.Click, AddressOf Sb_ImpBarras_Producto
         AddHandler BtnImpBarras_Documento.Click, AddressOf Sb_ImpBarras_Documento
-        AddHandler BtnImpBarras_Ubicaciones.Click, AddressOf Sb_ImpBarras_Ubicaciones
         AddHandler BtnCrearCodigosBarra.Click, AddressOf Sb_Crear_codigos_de_Barra
 
     End Sub
@@ -94,13 +93,15 @@ Public Class Sistema_CodBarras
 
 #Region "IMPRIMIR BARRAS DE UBICACIONES"
 
-    Sub Sb_ImpBarras_Ubicaciones()
+    Sub Sb_ImpBarras_Ubicaciones(_BuscarUbicGrilla As Boolean, _Codigo_Sector As String)
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "7Brr0005") Then
 
             Dim _RowSector As DataRow
 
             Dim Fm As New Frm_Ubicaciones_Buscar
+            Fm.BuscarUbicGrilla = _BuscarUbicGrilla
+            Fm.Codigo_Sector = _Codigo_Sector
             Fm.ShowDialog(Me)
             _RowSector = Fm.Pro_RowSector
             Fm.Dispose()
@@ -111,11 +112,14 @@ Public Class Sistema_CodBarras
                 Fm_B.ShowDialog(Me)
                 Fm_B.Dispose()
 
-                Sb_ImpBarras_Ubicaciones()
+                Sb_ImpBarras_Ubicaciones(True, _RowSector.Item("Codigo_Sector"))
 
             End If
 
         End If
+
+        '        Public Property BuscarUbicGrilla As Boolean
+        'Public Property Codigo_Sector As String
 
     End Sub
 
@@ -173,4 +177,7 @@ Public Class Sistema_CodBarras
 
     End Sub
 
+    Private Sub BtnImpBarras_Ubicaciones_Click(sender As Object, e As EventArgs) Handles BtnImpBarras_Ubicaciones.Click
+        Sb_ImpBarras_Ubicaciones(False, "")
+    End Sub
 End Class

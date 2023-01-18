@@ -28,7 +28,7 @@ Public Class Frm_ImpBarras_Ubicaciones
 
         _RowSector = RowSector
 
-        Sb_Formato_Generico_Grilla(Grilla, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
         If Global_Thema = Enum_Themas.Oscuro Then
             BtnImprimirEtiqueta.ForeColor = Color.White
@@ -56,6 +56,7 @@ Public Class Frm_ImpBarras_Ubicaciones
 
         AddHandler BtnImprimirEtiqueta.Click, AddressOf Sb_Imprimir_Etiquetas
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        AddHandler Chk_ImpSubSectorSinPuntitos.CheckedChanged, AddressOf Sb_Actualizar_Grilla
 
     End Sub
 
@@ -80,19 +81,35 @@ Public Class Frm_ImpBarras_Ubicaciones
             _Nombre_Mapa = _Tbl.Rows(0).Item("Nombre_Mapa")
         End If
 
-        Me.Text = "Sector: " & _Nombre_Mapa & " " & _Nombre_Sector & " - " & _Codigo_Sector
+        Me.Text = "Sector: [" & _Codigo_Sector & "] " & _Nombre_Mapa & " " & _Nombre_Sector & " - " & _Codigo_Sector
 
-        Consulta_sql = "Select Distinct Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Descripcion_Ubic,Cast(0 as Int) as Cantidad" & vbCrLf &
+        If Chk_ImpSubSectorSinPuntitos.Checked Then
+            Consulta_sql = "Select Distinct Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector," & vbCrLf &
+                        "Case When Es_SubSector = 1 Then REPLACE(Codigo_Ubic,'...','') Else Codigo_Ubic End As Codigo_Ubic," & vbCrLf &
+                        "Case When Es_SubSector = 1 Then REPLACE(Descripcion_Ubic,'...','') Else Descripcion_Ubic End As Descripcion_Ubic," & vbCrLf &
+                        "Es_SubSector,Cast(0 as Int) as Cantidad" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega" & vbCrLf &
                        "Where Empresa = '" & _Empresa &
                        "' And Sucursal = '" & _Sucursal &
                        "' And Bodega = '" & _Bodega &
                        "' And Id_Mapa = " & _Id_Mapa &
-                       "  And Codigo_Sector = '" & _Codigo_Sector &
-                       "' And Es_SubSector = 0 And Descripcion_Ubic <> '.'" & vbCrLf &
+                       "  And Codigo_Sector = '" & _Codigo_Sector & "' And Descripcion_Ubic <> '.' --And Es_SubSector = 0" & vbCrLf &
                        "Order by Codigo_Ubic"
+        Else
+            Consulta_sql = "Select Distinct Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Descripcion_Ubic," & vbCrLf &
+                        "Es_SubSector,Cast(0 as Int) as Cantidad" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega" & vbCrLf &
+                       "Where Empresa = '" & _Empresa &
+                       "' And Sucursal = '" & _Sucursal &
+                       "' And Bodega = '" & _Bodega &
+                       "' And Id_Mapa = " & _Id_Mapa &
+                       "  And Codigo_Sector = '" & _Codigo_Sector & "' And Descripcion_Ubic <> '.' --And Es_SubSector = 0" & vbCrLf &
+                       "Order by Codigo_Ubic"
+        End If
 
         Dim _TblUbicaciones = _Sql.Fx_Get_Tablas(Consulta_sql) ' _DsEstante.Tables(1)
+
+        Dim _DisplayIndex = 0
 
         With Grilla
 
@@ -103,31 +120,34 @@ Public Class Frm_ImpBarras_Ubicaciones
             .Columns("Codigo_Ubic").HeaderText = "Ubicación"
             .Columns("Codigo_Ubic").ReadOnly = True
             .Columns("Codigo_Ubic").Visible = True
-            '.Columns("Codigo_Ubic").DisplayIndex = 0
+            .Columns("Codigo_Ubic").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            .Columns("Descripcion_Ubic").Width = 100
+            .Columns("Descripcion_Ubic").Width = 80
             .Columns("Descripcion_Ubic").HeaderText = "Coordenada"
             .Columns("Descripcion_Ubic").ReadOnly = True
             .Columns("Descripcion_Ubic").Visible = True
-            .Columns("Descripcion_Ubic").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            '.Columns("Descripcion_Ubic").DisplayIndex = 1
+            .Columns("Descripcion_Ubic").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            '.Columns("Fila").Width = 50
-            '.Columns("Fila").HeaderText = "Nivel"
-            '.Columns("Fila").ReadOnly = True
-            '.Columns("Fila").Visible = True
-            '.Columns("Fila").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            '.Columns("Fila").DisplayIndex = 2
+            .Columns("Es_SubSector").Width = 30
+            .Columns("Es_SubSector").HeaderText = "S.S"
+            .Columns("Es_SubSector").ToolTipText = "Es Sub-Sector"
+            .Columns("Es_SubSector").ReadOnly = True
+            .Columns("Es_SubSector").Visible = True
+            .Columns("Es_SubSector").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Es_SubSector").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Cantidad").Width = 60
             .Columns("Cantidad").HeaderText = "Cantidad"
             .Columns("Cantidad").DefaultCellStyle.Format = "###,##"
             .Columns("Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Cantidad").Visible = True
-            '.Columns("Cantidad").DisplayIndex = 1
+            .Columns("Cantidad").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
         End With
-
 
     End Sub
 
@@ -206,7 +226,12 @@ Public Class Frm_ImpBarras_Ubicaciones
 
                     If Veces < 1 Then Veces = 1
 
-                    Dim _CodUbicacion = Trim(_Fila.Item("Codigo_Ubic"))
+                    Dim _Es_SubSector As Boolean = _Fila.Item("Es_SubSector")
+                    Dim _CodUbicacion As String = _Fila.Item("Codigo_Ubic").trim
+
+                    If _Es_SubSector And Not _CodUbicacion.Contains("...") Then
+                        _CodUbicacion += "..."
+                    End If
 
                     For w = 1 To Veces
 
@@ -219,7 +244,8 @@ Public Class Frm_ImpBarras_Ubicaciones
                                                    _Bodega,
                                                    _Id_Mapa,
                                                    _Codigo_Sector,
-                                                   _CodUbicacion)
+                                                   _CodUbicacion,
+                                                   Chk_ImpSubSectorSinPuntitos.Checked)
 
                     Next
                 End If
@@ -244,7 +270,13 @@ Public Class Frm_ImpBarras_Ubicaciones
     Private Sub Btn_Dejar_En_1_Click(sender As Object, e As EventArgs) Handles Btn_Dejar_En_1.Click
 
         For Each _Fila As DataGridViewRow In Grilla.Rows
-            _Fila.Cells("Cantidad").Value = 1
+            If CBool(_Fila.Cells("Cantidad").Value) Then
+                _Fila.Cells("Cantidad").Value = 0
+                Btn_Dejar_En_1.Text = "Poner cantidad 1 a todos"
+            Else
+                _Fila.Cells("Cantidad").Value = 1
+                Btn_Dejar_En_1.Text = "Poner cantidad 0 a todos"
+            End If
         Next
 
     End Sub
