@@ -456,7 +456,7 @@ Partial Class Frm_St_Documento
         Me.LabelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX12.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX12.ForeColor = System.Drawing.Color.Black
-        Me.LabelX12.Location = New System.Drawing.Point(5, 86)
+        Me.LabelX12.Location = New System.Drawing.Point(5, 83)
         Me.LabelX12.Name = "LabelX12"
         Me.LabelX12.Size = New System.Drawing.Size(51, 19)
         Me.LabelX12.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
@@ -994,7 +994,7 @@ Partial Class Frm_St_Documento
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Editar, Me.Btn_Cancelar, Me.Btn_Anular, Me.Btn_Check_In, Me.Btn_Cerrar_OT, Me.Btn_Imprimir})
         Me.Bar2.Location = New System.Drawing.Point(0, 544)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(800, 41)
+        Me.Bar2.Size = New System.Drawing.Size(798, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 86
@@ -1512,7 +1512,7 @@ Partial Class Frm_St_Documento
         Me.ButtonX2.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.ButtonX2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.ButtonX2.Image = CType(resources.GetObject("ButtonX2.Image"), System.Drawing.Image)
-        Me.ButtonX2.Location = New System.Drawing.Point(346, 86)
+        Me.ButtonX2.Location = New System.Drawing.Point(346, 83)
         Me.ButtonX2.Name = "ButtonX2"
         Me.ButtonX2.Size = New System.Drawing.Size(102, 19)
         Me.ButtonX2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1528,7 +1528,7 @@ Partial Class Frm_St_Documento
         '
         Me.Lbl_GRP.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_GRP.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_GRP.Location = New System.Drawing.Point(91, 86)
+        Me.Lbl_GRP.Location = New System.Drawing.Point(91, 83)
         Me.Lbl_GRP.Name = "Lbl_GRP"
         Me.Lbl_GRP.Size = New System.Drawing.Size(177, 19)
         Me.Lbl_GRP.TabIndex = 94
@@ -1556,7 +1556,7 @@ Partial Class Frm_St_Documento
         '
         Me.LabelX20.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX20.ForeColor = System.Drawing.Color.Black
-        Me.LabelX20.Location = New System.Drawing.Point(5, 32)
+        Me.LabelX20.Location = New System.Drawing.Point(5, 31)
         Me.LabelX20.Name = "LabelX20"
         Me.LabelX20.Size = New System.Drawing.Size(59, 15)
         Me.LabelX20.TabIndex = 35
@@ -1570,7 +1570,7 @@ Partial Class Frm_St_Documento
         '
         Me.Lbl_Familia.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Familia.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Familia.Location = New System.Drawing.Point(91, 32)
+        Me.Lbl_Familia.Location = New System.Drawing.Point(91, 31)
         Me.Lbl_Familia.Name = "Lbl_Familia"
         Me.Lbl_Familia.Size = New System.Drawing.Size(177, 15)
         Me.Lbl_Familia.TabIndex = 36
@@ -1598,7 +1598,7 @@ Partial Class Frm_St_Documento
         '
         Me.Lbl_Marca.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Marca.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Marca.Location = New System.Drawing.Point(346, 32)
+        Me.Lbl_Marca.Location = New System.Drawing.Point(346, 31)
         Me.Lbl_Marca.Name = "Lbl_Marca"
         Me.Lbl_Marca.Size = New System.Drawing.Size(164, 15)
         Me.Lbl_Marca.TabIndex = 40
@@ -1612,7 +1612,7 @@ Partial Class Frm_St_Documento
         '
         Me.LabelX21.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX21.ForeColor = System.Drawing.Color.Black
-        Me.LabelX21.Location = New System.Drawing.Point(276, 32)
+        Me.LabelX21.Location = New System.Drawing.Point(276, 31)
         Me.LabelX21.Name = "LabelX21"
         Me.LabelX21.Size = New System.Drawing.Size(62, 15)
         Me.LabelX21.TabIndex = 38
@@ -1626,7 +1626,7 @@ Partial Class Frm_St_Documento
         '
         Me.LabelX22.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX22.ForeColor = System.Drawing.Color.Black
-        Me.LabelX22.Location = New System.Drawing.Point(91, 59)
+        Me.LabelX22.Location = New System.Drawing.Point(91, 57)
         Me.LabelX22.Name = "LabelX22"
         Me.LabelX22.Size = New System.Drawing.Size(177, 18)
         Me.LabelX22.TabIndex = 42
@@ -1654,7 +1654,7 @@ Partial Class Frm_St_Documento
         '
         Me.Lbl_Rubro.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Rubro.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Rubro.Location = New System.Drawing.Point(346, 59)
+        Me.Lbl_Rubro.Location = New System.Drawing.Point(346, 57)
         Me.Lbl_Rubro.Name = "Lbl_Rubro"
         Me.Lbl_Rubro.Size = New System.Drawing.Size(164, 15)
         Me.Lbl_Rubro.TabIndex = 39
@@ -1682,7 +1682,7 @@ Partial Class Frm_St_Documento
         '
         Me.Lbl_Sub_Familia.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Sub_Familia.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Sub_Familia.Location = New System.Drawing.Point(276, 59)
+        Me.Lbl_Sub_Familia.Location = New System.Drawing.Point(276, 57)
         Me.Lbl_Sub_Familia.Name = "Lbl_Sub_Familia"
         Me.Lbl_Sub_Familia.Size = New System.Drawing.Size(62, 18)
         Me.Lbl_Sub_Familia.TabIndex = 44
@@ -1696,7 +1696,7 @@ Partial Class Frm_St_Documento
         '
         Me.LabelX24.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX24.ForeColor = System.Drawing.Color.Black
-        Me.LabelX24.Location = New System.Drawing.Point(5, 59)
+        Me.LabelX24.Location = New System.Drawing.Point(5, 57)
         Me.LabelX24.Name = "LabelX24"
         Me.LabelX24.Size = New System.Drawing.Size(59, 15)
         Me.LabelX24.TabIndex = 37
@@ -1707,7 +1707,7 @@ Partial Class Frm_St_Documento
         Me.Btn_Ver_GRP_PRE.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Ver_GRP_PRE.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Ver_GRP_PRE.Image = CType(resources.GetObject("Btn_Ver_GRP_PRE.Image"), System.Drawing.Image)
-        Me.Btn_Ver_GRP_PRE.Location = New System.Drawing.Point(276, 86)
+        Me.Btn_Ver_GRP_PRE.Location = New System.Drawing.Point(276, 83)
         Me.Btn_Ver_GRP_PRE.Name = "Btn_Ver_GRP_PRE"
         Me.Btn_Ver_GRP_PRE.Size = New System.Drawing.Size(62, 19)
         Me.Btn_Ver_GRP_PRE.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1783,7 +1783,7 @@ Partial Class Frm_St_Documento
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 585)
+        Me.ClientSize = New System.Drawing.Size(798, 585)
         Me.Controls.Add(Me.Tabs_Producto)
         Me.Controls.Add(Me.ContextMenuBar1)
         Me.Controls.Add(Me.Txt_Nro_Serie)

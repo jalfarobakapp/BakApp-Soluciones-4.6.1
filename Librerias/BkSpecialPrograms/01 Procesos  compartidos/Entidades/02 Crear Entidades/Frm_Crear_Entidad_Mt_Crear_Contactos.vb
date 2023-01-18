@@ -60,12 +60,7 @@ Public Class Frm_Crear_Entidad_Mt_Crear_Contactos
         If _Crear Then
 
             If String.IsNullOrEmpty(Trim(TxtRut.Text)) Then
-
-                Beep()
-                ToastNotification.Show(Me, "FALTA RUT (CODIGO) DEL CONTACTO",
-                                       My.Resources.button_rounded_red_delete,
-                                       2 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
-
+                MessageBoxEx.Show(Me, "FALTA RUT (CODIGO) DEL CONTACTO", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 TxtRut.Focus()
                 Return
             End If
@@ -73,7 +68,6 @@ Public Class Frm_Crear_Entidad_Mt_Crear_Contactos
             Dim _Reg As Boolean = _Sql.Fx_Cuenta_Registros("MAEENCON", "KOEN = '" & _CodEntidad & "' AND RUTCONTACT = '" & TxtRut.Text & "'")
 
             If _Reg Then
-
                 MessageBoxEx.Show(Me, "¡El Rut(código) del contacto ya existe!" & vbCrLf &
                                      "No puede guardar 2 contactos con el mismo código", "Validación",
                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -83,22 +77,13 @@ Public Class Frm_Crear_Entidad_Mt_Crear_Contactos
             End If
 
             If String.IsNullOrEmpty(Trim(TxtRazonSocial.Text)) Then
-
-                Beep()
-                ToastNotification.Show(Me, "FALTA NOMBRE DEL CONTACTO",
-                                       My.Resources.button_rounded_red_delete,
-                                       2 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
+                MessageBoxEx.Show(Me, "FALTA NOMBRE DEL CONTACTO", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 TxtRazonSocial.Focus()
                 Return
             End If
 
             If String.IsNullOrEmpty(Trim(TxtTelefono.Text)) Then
-
-                Beep()
-                ToastNotification.Show(Me, "FALTA TELEFONO",
-                                       My.Resources.button_rounded_red_delete,
-                                       2 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
-
+                MessageBoxEx.Show(Me, "FALTA EL TELEFONO", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 TxtTelefono.Focus()
                 Return
             End If
@@ -114,18 +99,21 @@ Public Class Frm_Crear_Entidad_Mt_Crear_Contactos
             'Return
             'End If
 
-            If String.IsNullOrEmpty(Trim(TxtEmail.Text)) Then
+            'If String.IsNullOrEmpty(Trim(TxtEmail.Text)) Then
+            '    MessageBoxEx.Show(Me, "FALTA EL CORREO", "Validar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            '    TxtEmail.Focus()
+            '    Return
+            'End If
 
-                Beep()
-                ToastNotification.Show(Me, "FALTA EMAIL",
-                                       My.Resources.button_rounded_red_delete,
-                                       2 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
-
-                CmbCargo.Focus()
+            If Not Fx_Validar_Email(TxtEmail.Text.Trim) Then
+                If String.IsNullOrWhiteSpace(TxtEmail.Text.Trim) Then
+                    MessageBoxEx.Show(Me, "FALTA EL CORREO", "Validar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Else
+                    MessageBoxEx.Show(Me, "CORREO INVALIDO", "Validar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                End If
+                TxtEmail.Focus()
                 Return
             End If
-
-
         End If
 
         Consulta_sql = "DELETE MAEENCON WHERE KOEN = '" & _CodEntidad & "' AND RUTCONTACT = '" & TxtRut.Text & "'" & vbCrLf &
@@ -225,6 +213,6 @@ Public Class Frm_Crear_Entidad_Mt_Crear_Contactos
     End Sub
 
     Private Sub Frm_Crear_Entidad_Mt_Crear_Contactos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        TxtEmail.CharacterCasing = CharacterCasing.Lower
     End Sub
 End Class

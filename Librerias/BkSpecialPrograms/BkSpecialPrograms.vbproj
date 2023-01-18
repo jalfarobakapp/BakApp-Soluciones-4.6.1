@@ -4069,6 +4069,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Configuracion_Gral.resx">
       <DependentUpon>Frm_Configuracion_Gral.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_ConfTidoXModal.resx">
       <DependentUpon>Frm_ConfTidoXModal.vb</DependentUpon>

@@ -179,6 +179,7 @@ Public Class Frm_DatosConexion
             If _Tbl.Rows.Count = 1 Then
 
                 Fila = _Tbl.Rows(0)
+                _Empresa_Conec = "01"
 
             Else
 
@@ -204,8 +205,6 @@ Public Class Frm_DatosConexion
                     _Empresa_Conec = _Codigo
                     _Razon_Conec = _Descripcion
 
-                    Txt_Empresa.Text = _Empresa_Conec
-
                     Consulta_sql = "SELECT TOP 1 RUT,RAZON,NCORTO FROM CONFIGP Where EMPRESA = '" & _Empresa_Conec & "'"
                     Fila = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -217,6 +216,7 @@ Public Class Frm_DatosConexion
 
             End If
 
+            Txt_Empresa.Text = _Empresa_Conec
 
             Dim _Rut = Fila.Item("RUT").ToString.Trim
             Dim _Razon = Fila.Item("RAZON").ToString.Trim

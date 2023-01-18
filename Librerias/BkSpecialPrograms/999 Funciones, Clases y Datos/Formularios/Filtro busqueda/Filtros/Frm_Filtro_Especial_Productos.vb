@@ -278,7 +278,7 @@ Public Class Frm_Filtro_Especial_Productos
 
         If _Control.Checked Then
 
-            Dim Fm As New Frm_Filtro_Especial_Informes(_Tabla_Fl, False)
+            Dim Fm As New Frm_Filtro_Especial_Informes(_Tabla_Fl, True)
             Fm.Pro_Tbl_Filtro = _Tbl_Filtro
             Fm.Pro_Sql_Filtro_Condicion_Extra = _Sql_Filtro_Condicion_Extra
             Fm.ShowDialog(Me)

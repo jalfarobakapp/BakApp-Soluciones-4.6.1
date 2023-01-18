@@ -37,6 +37,7 @@ Public Class Frm_St_Documento
     Dim _Nulo As Boolean
 
     Dim _Id_Ot As Integer
+    Dim _Id_Ot_Padre As Integer
     Dim _Id_Correo As Integer
 
     Dim _Garantia_Documento_Externo As Boolean
@@ -47,10 +48,12 @@ Public Class Frm_St_Documento
         Editar
     End Enum
 
-    'Dim _Cadena_de_conexion_SQL = Cadena_ConexionSQL_Server
-    Dim _Sql_Query As New Class_SQL(Cadena_ConexionSQL_Server)
 
+    Dim _Sql_Query As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim _Accion As Accion
+
+    Dim _EditarContactoTodasLasSubOT As Boolean
+    Dim _TieneHnosSubOT As Integer
 
     Public Sub New(Accion As Accion)
 
@@ -117,7 +120,8 @@ Public Class Frm_St_Documento
             Btn_Check_In.Visible = False
             Btn_Grabar.Enabled = False
             Btn_Editar.Visible = True
-            Sb_Old_OT_Traer_OT() '(_Id_Ot)
+
+            Sb_Old_OT_Traer_OT()
 
             AddHandler Btn_Grabar.Click, AddressOf Sb_Editar_OT
 
@@ -150,10 +154,14 @@ Public Class Frm_St_Documento
                 Tabs_Producto.Tabs(0).Visible = False
             End If
 
+            If CBool(_Id_Ot_Padre) Then
+                _TieneHnosSubOT = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_OT_Encabezado", "Id_Ot_Padre = " & _Id_Ot_Padre)
+            End If
+
         End If
 
 
-        If Trim(_Row_Encabezado.Item("CodEstado")) = "CE" Or Trim(_Row_Encabezado.Item("CodEstado")) = "N" Then
+            If Trim(_Row_Encabezado.Item("CodEstado")) = "CE" Or Trim(_Row_Encabezado.Item("CodEstado")) = "N" Then
             Btn_Editar.Visible = False
         End If
 
@@ -180,6 +188,7 @@ Public Class Frm_St_Documento
         Btn_Direccion_Servicio.Enabled = Chk_Serv_Domicilio.Checked
         Btn_Documento_Garantia.Enabled = Chk_Serv_Garantia.Checked
         Btn_Garantia_Cambiar_Documento.Enabled = _Activar
+        Btn_Contacto.Enabled = _Activar
 
         Btn_Tipo_Maquina.Enabled = _Activar
         Btn_Modelo.Enabled = _Activar
@@ -1089,8 +1098,6 @@ Public Class Frm_St_Documento
                            "Where Id_Ot = " & _Id_Ot
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
-
-
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
 
@@ -1218,7 +1225,19 @@ Public Class Frm_St_Documento
 
             '**********************************'*****************************************************************
 
+            If _EditarContactoTodasLasSubOT Then
 
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set " & vbCrLf &
+               "Nombre_Contacto = '" & _Nombre_Contacto & "'," &
+               "Telefono_Contacto = '" & _Telefono_Contacto & "'," &
+               "Email_Contacto = '" & _Email_Contacto & "'" & vbCrLf &
+               "Where Id_Ot_Padre = " & _Id_Ot_Padre
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End If
 
 
             myTrans.Commit()
@@ -1250,7 +1269,6 @@ Public Class Frm_St_Documento
         Dim _codCategorias As String = NuloPorNro(_Row_Encabezado.Item("CodCategoria"), "") 'Cmb_Categoria.SelectedValue
 
         If IsNothing(_RowProducto) Then
-
             Beep()
             ToastNotification.Show(Me, "FALTA INGRESAR EL PRODUCTO",
                                        Imagenes_32x32.Images.Item("warning.png"),
@@ -1302,15 +1320,18 @@ Public Class Frm_St_Documento
 
         End If
 
+        If _Accion = Accion.Nuevo Then
 
-        If String.IsNullOrEmpty(Txt_Nro_Serie.Text) Then
-            Beep()
-            ToastNotification.Show(Me, "FALTA NUMERO DE SERIE DE LA MAQUINA (CHASIS)",
-                                   Imagenes_32x32.Images.Item("warning.png"),
-                                   2 * 1000, eToastGlowColor.Red,
-                                   eToastPosition.MiddleCenter)
-            Txt_Nro_Serie.Focus()
-            Return False
+            If String.IsNullOrEmpty(Txt_Nro_Serie.Text) Then
+                Beep()
+                ToastNotification.Show(Me, "FALTA NUMERO DE SERIE DE LA MAQUINA (CHASIS)",
+                                       Imagenes_32x32.Images.Item("warning.png"),
+                                       2 * 1000, eToastGlowColor.Red,
+                                       eToastPosition.MiddleCenter)
+                Txt_Nro_Serie.Focus()
+                Return False
+            End If
+
         End If
 
         If String.IsNullOrEmpty(Txt_Defecto_segun_cliente.Text) Then
@@ -1379,7 +1400,7 @@ Public Class Frm_St_Documento
         With _Row_Encabezado
 
             .Item("NroSerie") = Txt_Nro_Serie.Text
-            .Item("NroOcc_Cliente") = String.Empty
+            If _Accion = Accion.Nuevo Then .Item("NroOcc_Cliente") = String.Empty
 
             .Item("Chk_Serv_Domicilio") = Chk_Serv_Domicilio.Checked
             .Item("Chk_Serv_Reparacion_Stock") = Chk_Serv_Reparacion_Stock.Checked
@@ -1390,60 +1411,65 @@ Public Class Frm_St_Documento
             .Item("Chk_Serv_Garantia") = Chk_Serv_Garantia.Checked
             .Item("Chk_Serv_Demostracion_Maquina") = Chk_Serv_Demostracion_Maquina.Checked
 
-            .Item("Chk_Equipo_Reparado") = False
-            .Item("Idmaeedo_COV") = 0
-            .Item("Nudo_COV") = String.Empty
-            .Item("Neto") = 0
-            .Item("Iva") = 0
-            .Item("Total") = 0
+            If _Accion = Accion.Nuevo Then .Item("Chk_Equipo_Reparado") = False
+            If _Accion = Accion.Nuevo Then .Item("Idmaeedo_COV") = 0
+            If _Accion = Accion.Nuevo Then .Item("Nudo_COV") = String.Empty
+            If _Accion = Accion.Nuevo Then .Item("Neto") = 0
+            If _Accion = Accion.Nuevo Then .Item("Iva") = 0
+            If _Accion = Accion.Nuevo Then .Item("Total") = 0
 
         End With
 
         With _Row_Notas
-            .Item("Defecto_segun_cliente") = Trim(Txt_Defecto_segun_cliente.Text)
-            .Item("Nota_Etapa_01") = Trim(Txt_Nota.Text)
+            .Item("Defecto_segun_cliente") = Txt_Defecto_segun_cliente.Text.Trim
+            .Item("Nota_Etapa_01") = Txt_Nota.Text.Trim
         End With
 
         Dim _Contador = 0
         Dim _Check_In, _Accesorios As Boolean
 
-        If CBool(_Tbl_ChekIn.Rows.Count) Then
-            For Each _F As DataRow In _Tbl_ChekIn.Rows
-                If _F.RowState <> DataRowState.Deleted Then
-                    _Contador += 1
+        If _Accion = Accion.Nuevo Then
+
+            If CBool(_Tbl_ChekIn.Rows.Count) Then
+                For Each _F As DataRow In _Tbl_ChekIn.Rows
+                    If _F.RowState <> DataRowState.Deleted Then
+                        _Contador += 1
+                    End If
+                Next
+                If CBool(_Contador) Then
+                    _Check_In = True
                 End If
-            Next
-            If CBool(_Contador) Then
-                _Check_In = True
             End If
-        End If
 
-        If Not _Check_In Then
-            If MessageBoxEx.Show(Me, "¿Desea continuar sin realizar el Check-In?",
-                                 "No se realizó el Check-In",
-                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.No Then
-                Return False
-            End If
-        End If
-
-        If CBool(_Tbl_Accesorios.Rows.Count) Then
-            For Each _F As DataRow In _Tbl_Accesorios.Rows
-                If _F.RowState <> DataRowState.Deleted Then
-                    _Contador += 1
+            If Not _Check_In Then
+                If MessageBoxEx.Show(Me, "¿Desea continuar sin realizar el Check-In?",
+                                     "No se realizó el Check-In",
+                                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.No Then
+                    Return False
                 End If
-            Next
-            If CBool(_Contador) Then
-                _Accesorios = True
             End If
-        End If
 
-        If Not _Accesorios Then
-            If MessageBoxEx.Show(Me, "¿Desea continuar sin incorporar accesorios?",
+            If CBool(_Tbl_Accesorios.Rows.Count) Then
+                For Each _F As DataRow In _Tbl_Accesorios.Rows
+                    If _F.RowState <> DataRowState.Deleted Then
+                        _Contador += 1
+                    End If
+                Next
+                If CBool(_Contador) Then
+                    _Accesorios = True
+                End If
+            End If
+
+            If Not _Accesorios Then
+                If MessageBoxEx.Show(Me, "¿Desea continuar sin incorporar accesorios?",
                                  "No se ingresaron accesorios con la maquina",
                                  MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.No Then
-                Return False
+                    Return False
+                End If
             End If
+
         End If
+
         Return True
 
     End Function
@@ -1865,9 +1891,19 @@ Public Class Frm_St_Documento
         Dim _Editando_Documento As Boolean
         Dim _Grabar As Boolean
 
+        Dim _Editar = True
+
+        For Each _Fl As DataRow In _Tbl_Estado.Rows
+            If _Fl.Item("CodEstado") = "P" Then
+                _Editar = False
+                Exit For
+            End If
+        Next
+
         Dim Fm As New Frm_St_Estado_01_Ingreso_Check_In(_Id_Ot, Frm_St_Estado_01_Ingreso_Check_In.Accion.Editar)
         Fm.Pro_DsDocumento = _DsDocumento
         Fm.Pro_Imagenes_32x32 = Imagenes_32x32
+        Fm.Btn_Editar.Enabled = _Editar
         Fm.ShowDialog(Me)
         _Editando_Documento = Fm.Pro_Editando_Documento
         _Grabar = Fm.Pro_Grabar
@@ -1905,8 +1941,18 @@ Public Class Frm_St_Documento
 
     Sub Sb_Estado_02_Asignar_Editar()
 
+        Dim _Editar = True
+
+        For Each _Fl As DataRow In _Tbl_Estado.Rows
+            If _Fl.Item("CodEstado") = "P" Then
+                _Editar = False
+                Exit For
+            End If
+        Next
+
         Dim Fm As New Frm_St_Estado_02_Asignacion(_Id_Ot, Frm_St_Estado_02_Asignacion.Accion.Editar)
         Fm.Pro_DsDocumento = _DsDocumento
+        Fm.Btn_Editar.Enabled = _Editar
         Fm.ShowDialog(Me)
         Dim _Editando_Documento As Boolean = Fm.Pro_Editando_Documento
         Dim _Grabar As Boolean = Fm.Pro_Grabar
@@ -1948,9 +1994,19 @@ Public Class Frm_St_Documento
 
     Sub Sb_Estado_03_Presupuesto_Editar()
 
+        Dim _Editar = True
+
+        For Each _Fl As DataRow In _Tbl_Estado.Rows
+            If _Fl.Item("CodEstado") = "C" Then
+                _Editar = False
+                Exit For
+            End If
+        Next
+
         Dim Fm As New Frm_St_Estado_03_Presupuesto(_Id_Ot, Frm_St_Estado_03_Presupuesto.Accion.Editar)
         Fm.Pro_DsDocumento = _DsDocumento
         Fm.Pro_Imagenes_32x32 = Imagenes_32x32
+        Fm.Btn_Editar.Enabled = _Editar
         Fm.ShowDialog(Me)
         Dim _Editando_Documento As Boolean = Fm.Pro_Editando_Documento
         Dim _Grabar As Boolean = Fm.Pro_Grabar
@@ -1984,10 +2040,20 @@ Public Class Frm_St_Documento
 
     Sub Sb_Estado_04_Cotizacion_Lectura()
 
+        Dim _Editar = True
+
+        For Each _Fl As DataRow In _Tbl_Estado.Rows
+            If _Fl.Item("CodEstado") = "R" Then
+                _Editar = False
+                Exit For
+            End If
+        Next
+
         Dim Fm As New Frm_St_Estado_04_Cotizaciones(Frm_St_Estado_04_Cotizaciones.Accion.Editar)
         Fm.Pro_RowEntidad = _RowEntidad
         Fm.Pro_Id_Ot = _Id_Ot
         Fm.Pro_DsDocumento = _DsDocumento
+        Fm.Btn_Editar.Enabled = _Editar
         Fm.ShowDialog(Me)
         Dim _Editando_Documento As Boolean = Fm.Pro_Editando_Documento
         Fm.Dispose()
@@ -2021,11 +2087,21 @@ Public Class Frm_St_Documento
 
     Sub Sb_Estado_05_Reparacion_Lectura()
 
+        Dim _Editar = True
+
+        For Each _Fl As DataRow In _Tbl_Estado.Rows
+            If _Fl.Item("CodEstado") = "V" Then
+                _Editar = False
+                Exit For
+            End If
+        Next
+
         Dim Fm As New Frm_St_Estado_05_Reparacion(Frm_St_Estado_05_Reparacion.Accion.Editar)
         Fm.Pro_RowEntidad = _RowEntidad
         Fm.Pro_Imagenes_32x32 = Imagenes_32x32
         Fm.Pro_Id_Ot = _Id_Ot
         Fm.Pro_DsDocumento = _DsDocumento
+        Fm.Btn_Editar.Enabled = _Editar
         Fm.ShowDialog(Me)
         Dim _Editando_Documento As Boolean = Fm.Pro_Editando_Documento
         Fm.Dispose()
@@ -2256,7 +2332,7 @@ Public Class Frm_St_Documento
         End Set
     End Property
 
-    Public Property Pro_Id_Ot() As Integer
+    Public Property Id_Ot() As Integer
         Get
             Return _Id_Ot
         End Get
@@ -2307,6 +2383,15 @@ Public Class Frm_St_Documento
         End Get
         Set(value As Integer)
             _Id_Correo = value
+        End Set
+    End Property
+
+    Public Property Id_Ot_Padre As Integer
+        Get
+            Return _Id_Ot_Padre
+        End Get
+        Set(value As Integer)
+            _Id_Ot_Padre = value
         End Set
     End Property
 
@@ -3156,11 +3241,22 @@ Public Class Frm_St_Documento
         Fm.ShowDialog(Me)
 
         If Fm.Pro_ContactoSeleccionado Then
+
+            _EditarContactoTodasLasSubOT = False
+
+            If _TieneHnosSubOT Then
+                If MessageBoxEx.Show(Me, "¿Desea cambiar el contacto para todas las Sub-OT?", "Cambiar contacto",
+                                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                    _EditarContactoTodasLasSubOT = True
+                End If
+            End If
+
             _RowContacto = Fm.Pro_Tbl_DatosContacto.Rows(0)
             Txt_Email_Contacto.Text = _RowContacto.Item("EMAILCON").ToString.Trim
             Txt_Nombre_Contacto.Text = _RowContacto.Item("NOKOCON").ToString.Trim
             Txt_Telefono_Contacto.Text = _RowContacto.Item("FONOCON").ToString.Trim
             Txt_Defecto_segun_cliente.Focus()
+
         Else
             MessageBoxEx.Show(Me, "No se seleccionó ningún contacto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
@@ -3170,6 +3266,6 @@ Public Class Frm_St_Documento
     End Sub
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
-        Sb_New_OT_Grabar_Nueva_OT()
+        'Sb_New_OT_Grabar_Nueva_OT()
     End Sub
 End Class
