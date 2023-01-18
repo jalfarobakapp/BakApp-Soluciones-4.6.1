@@ -9,6 +9,9 @@ Public Class Frm_Ubicaciones_Buscar
     Dim _TblSectores As DataTable
     Dim _RowSector As DataRow
 
+    Public Property BuscarUbicGrilla As Boolean
+    Public Property Codigo_Sector As String
+
     Public ReadOnly Property Pro_RowSector() As DataRow
         Get
             Return _RowSector
@@ -31,7 +34,12 @@ Public Class Frm_Ubicaciones_Buscar
     End Sub
 
     Private Sub Frm_Ubicaciones_Buscar_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        Sb_Buscar_Ubicacion("")
+        Sb_Buscar_Ubicacion(Txt_Descripcion_Ubicacion.Text)
+
+        If BuscarUbicGrilla Then
+            BuscarDatoEnGrilla(Codigo_Sector, "Codigo_Sector", Grilla)
+        End If
+
     End Sub
 
     Sub Sb_Buscar_Ubicacion(ByVal _Sector As String)

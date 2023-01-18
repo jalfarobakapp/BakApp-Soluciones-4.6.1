@@ -280,10 +280,18 @@
                               _Bodega As String,
                               _Id_Mapa As Integer,
                               _Codigo_Sector As String,
-                              _CodUbicacion As String)
+                              _Codigo_Ubic As String,
+                              _ImpSubSectorSinPuntitos As Boolean)
 
 
-        Dim _RowUbicacion = Fx_Datos_Ubicacion(_Empresa, _Sucursal, _Bodega, _Id_Mapa, _Codigo_Sector, _CodUbicacion)
+        Consulta_sql = "Select Mapa.Nombre_Mapa,Sector.Nombre_Sector,Ubic.*
+                        From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Ubic
+                        Left Join " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Enc Mapa On Mapa.Id_Mapa = Ubic.Id_Mapa
+                        Left Join " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det Sector On Sector.Id_Mapa = Ubic.Id_Mapa And Sector.Codigo_Sector = Ubic.Codigo_Sector
+                        Where Ubic.Empresa = '" & _Empresa & "' And Ubic.Sucursal = '" & _Sucursal & "' And Ubic.Bodega = '" & _Bodega &
+                        "' And Ubic.Id_Mapa = " & _Id_Mapa & " And Ubic.Codigo_Sector = '" & _Codigo_Sector & "' And Ubic.Codigo_Ubic = '" & _Codigo_Ubic & "'"
+
+        Dim _RowUbicacion = _Sql.Fx_Get_DataRow(Consulta_sql) ' Fx_Datos_Ubicacion(_Empresa, _Sucursal, _Bodega, _Id_Mapa, _Codigo_Sector, _CodUbicacion)
 
         If Not IsNothing(_RowUbicacion) Then
 
@@ -296,6 +304,11 @@
 
             _Wms_Mapa_Nombre = _RowUbicacion.Item("Nombre_Mapa")
             _Wms_Ubicacion_Nombre = _RowUbicacion.Item("Descripcion_Ubic")
+
+            If _ImpSubSectorSinPuntitos Then
+                _Wms_Sector_Codigo = Replace(_Wms_Sector_Codigo, "...", "")
+                _Wms_Sector_Nombre = Replace(_Wms_Sector_Nombre, "...", "")
+            End If
 
         End If
 
@@ -773,12 +786,6 @@
                                         _Id_Mapa As Integer,
                                         _Codigo_Sector As String,
                                         _Codigo_Ubic As String) As DataRow
-
-        'Consulta_sql = "SELECT *" & vbCrLf &
-        '               "FROM " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega" & vbCrLf &
-        '               "Where Empresa = '" & _Empresa & "' and Sucursal = '" & _Sucursal &
-        '               "' And Bodega = '" & _Bodega & "' And Id_Mapa = " & _Id_Mapa &
-        '               " And Codigo_Sector = '" & _Codigo_Sector & "' And Codigo_Ubic = '" & _Codigo_Ubic & "'"
 
         Consulta_sql = "Select Mapa.Nombre_Mapa,Sector.Nombre_Sector,Ubic.*
                         From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Ubic
