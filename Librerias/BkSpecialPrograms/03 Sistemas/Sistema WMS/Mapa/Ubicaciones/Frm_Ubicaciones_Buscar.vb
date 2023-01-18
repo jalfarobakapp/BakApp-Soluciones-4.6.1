@@ -108,7 +108,9 @@ Public Class Frm_Ubicaciones_Buscar
     End Sub
 
     Private Sub Txt_Descripcion_Ubicacion_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Txt_Descripcion_Ubicacion.TextChanged
-        Sb_Buscar_Ubicacion(Trim(Txt_Descripcion_Ubicacion.Text))
+        If String.IsNullOrWhiteSpace(Txt_Descripcion_Ubicacion.Text) Then
+            Sb_Buscar_Ubicacion(Trim(Txt_Descripcion_Ubicacion.Text))
+        End If
     End Sub
 
     Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
@@ -133,4 +135,9 @@ Public Class Frm_Ubicaciones_Buscar
         End If
     End Sub
 
+    Private Sub Txt_Descripcion_Ubicacion_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Descripcion_Ubicacion.KeyDown
+        If e.KeyValue = Keys.Enter Or e.KeyValue = Keys.Space Then
+            Sb_Buscar_Ubicacion(Trim(Txt_Descripcion_Ubicacion.Text))
+        End If
+    End Sub
 End Class

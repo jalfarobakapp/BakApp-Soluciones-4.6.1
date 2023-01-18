@@ -233,7 +233,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
         ElseIf _Configuracion_Diseno = _TipoDiseno.Mapa_Bodega_Crear_Ubicaciones Then
 
             'AddHandler Btn_Mnu_Objeto_Sector_Ubicaciones.Click, AddressOf Control_Ubicacion_Asignar_Productos_Clic
-            ' AddHandler Btn_Grabar.Click, AddressOf Sb_Btn_Grabar_Click
+            'AddHandler Btn_Grabar.Click, AddressOf Sb_Btn_Grabar_Click
 
         ElseIf _Configuracion_Diseno = _TipoDiseno.Mapa_Bodega_Asignar_Ubicaciones Then
 
@@ -856,7 +856,6 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
     Sub Sb_Abrir_Mapas()
 
-
         ShapeContainer1.Shapes.Clear()
 
         Consulta_sql = "SELECT Tipo_Objeto,Nombre_Objeto,Codigo_Sector,Nombre_Sector,Texto," &
@@ -895,6 +894,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
                             _Tipo_Objeto = _TipoElemento.ETIQUETA
                         Case "SECTOR"
                             _Tipo_Objeto = _TipoElemento.SECTOR
+                        Case "SUB-SECTOR"
                     End Select
 
                     Dim _Nombre_Objeto As String = .Item("Nombre_Objeto")
@@ -929,11 +929,6 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
                         Dim _LblObjeto As New LabelX
 
-                        '_LblObjeto = Fx_Crear_Sector(_X_Columna, _Y_Fila, _BackColor, _ForeColor, _Tipo_Objeto, _Nombre_Objeto, _
-                        '                                _Codigo_Sector, _Texto, _Font_Nombre, _Font_Tamano, _Font_Estilo, _Font_Negrita, _Font_Italic, _
-                        '                                _Font_Tachado, _Font_Subrayado, _Alto_H, _Ancho_W, CBool(_Relleno), _Orientacion, _
-                        '                                _Configuracion_Diseno, _Nombre_Sector)
-
                         _LblObjeto = Fx_Crear_Sector(_X_Columna, _Y_Fila, _BackColor, _ForeColor, _Tipo_Objeto, _Nombre_Objeto,
                                                         _Codigo_Sector, _Texto, _Font_Nombre, _Font_Tamano, _Font_Estilo,
                                                         _Alto_H, _Ancho_W, CBool(_Relleno), _Orientacion,
@@ -947,7 +942,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
                             End If
                         End If
 
-                    ElseIf True Then
+                    ElseIf _Tobj <> "SUB-SECTOR" Then
                         Dim _BoxElemnto As New RectangleShape
                         _BoxElemnto = Fx_Crear_Elemento(_X_Columna, _Y_Fila, _BackColor, _ForeColor, _Tipo_Objeto, _Nombre_Objeto,
                                                         _Codigo_Sector, _Texto, _Font_Nombre, _Font_Tamano, _Font_Negrita, _Font_Italic,
@@ -958,13 +953,9 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
                     End If
 
-
                 End With
 
             Next
-
-            'If  _Sql.Ej_consulta_IDU(Consulta_Sql) = True Then
-            'MsgBox("Datos guardados correctamente", MsgBoxStyle.Information, "Color de fuente")
 
         End If
 
