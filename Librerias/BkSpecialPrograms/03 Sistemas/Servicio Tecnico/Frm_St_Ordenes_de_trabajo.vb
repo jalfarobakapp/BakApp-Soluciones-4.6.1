@@ -321,8 +321,9 @@ Public Class Frm_St_Ordenes_de_trabajo
         Dim _Abrir_Documento As Boolean
 
         Dim _Id_Ot = _Fila.Cells("Id_Ot").Value
+        Dim _Id_Ot_Padre = _Fila.Cells("Id_Ot_Padre").Value
 
-        Consulta_sql = My.Resources.Recursos_Locales.SqlQuery_Traer_OT
+        Consulta_Sql = My.Resources.Recursos_Locales.SqlQuery_Traer_OT
         Consulta_sql = Replace(Consulta_sql, "#Id_Ot#", _Id_Ot)
         Consulta_sql = Replace(Consulta_sql, "#Db_BakApp#", _Global_BaseBk)
         '#Id_Ot# #Db_BakApp#
@@ -333,7 +334,8 @@ Public Class Frm_St_Ordenes_de_trabajo
 
 
         Dim Fm As New Frm_St_Documento(Frm_St_Documento.Accion.Editar)
-        Fm.Pro_Id_Ot = _Id_Ot
+        Fm.Id_Ot = _Id_Ot
+        Fm.Id_Ot_Padre = _Id_Ot_Padre
         Fm.Pro_DsDocumento = _DsDocumento
         Fm.ShowDialog(Me)
         _Abrir_Documento = Fm.Pro_Abrir_Documeneto
