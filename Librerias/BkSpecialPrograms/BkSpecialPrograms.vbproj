@@ -7123,6 +7123,7 @@
     <None Include="01 Procesos  compartidos\Productos\01 Buscar productos\SQL\Buscar_Top20.sql" />
     <None Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Inf. Ult. Compra\Recursos\Sql\Ult_Compras_GRC.sql" />
     <Content Include="01 Procesos  compartidos\Precios y Costos\01 Mantención Listas Random\Recursos Lista Precio\Leyenda ayuda lista de precios.txt" />
+    <None Include="01 Procesos  compartidos\Productos\01 Crear Productos\Crea Producto clasic\Recursos\Sql\SqlQuery_Editar_Producto.sql" />
     <Content Include="01 Procesos  compartidos\Productos\03 Informacion Producto\Recursos\Sql\SQLQuery Calculo de cumplimiento de entregas por parte de un proveedor por Producto.sql" />
     <Content Include="01 Procesos  compartidos\Remotas\Cadenas Remotas\Recursos\Sql\SQLQuery Reenviar Solicitud De Permiso.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_CashDro_Operaciones.sql" />
@@ -7150,6 +7151,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_CRV_Viajes.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DbExt_Conexion.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DbExt_Maest.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Demonio_AcpAuto.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Demonio_Archivador.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Demonio_Cof_Estacion.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Demonio_Doc_Emitidos_Aviso_Correo.sql" />

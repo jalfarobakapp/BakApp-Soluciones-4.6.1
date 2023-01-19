@@ -355,6 +355,7 @@ Public Class Cl_Correos
                 If IsNothing(_Row_Documento) Then
 
                     _Error += "No se encontro el documento " & _Tido & "-" & _Nudo & " (IDMAEEDO: " & _IdMaeedo & ")"
+                    _Intentos = 3
 
                 Else
 

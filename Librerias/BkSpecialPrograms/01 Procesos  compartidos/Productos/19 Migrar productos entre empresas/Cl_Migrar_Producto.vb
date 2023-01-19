@@ -93,17 +93,6 @@ Namespace Bk_Migrar_Producto
 
         Public Sub Sub_ObtenerServExt(_Id_Conexion As Integer)
 
-            'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Maest Where Id = " & _Id_Conexion & "--GrbProd_Nuevos = 1"
-            '_Row_DbExtMaest = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-            'If IsNothing(Row_DbExtMaest) Then
-            '    ProError = "No existe registro en la tabla Zw_DbExt_Maest para hacer esta gestión" & vbCrLf &
-            '               "Informe al administrador del sistema"
-            '    Return
-            'End If
-
-            'Dim _Id_Conexion = Row_DbExtMaest.Item("Id_Conexion")
-
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where Id = " & _Id_Conexion
             _Row_DnExt = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -145,6 +134,8 @@ Namespace Bk_Migrar_Producto
 
         End Sub
 
+
+
         Function Fx_Migrar_Producto(_Codigo As String) As Boolean
 
             ProError = String.Empty
@@ -167,7 +158,7 @@ Namespace Bk_Migrar_Producto
 
                 _Ds_Producto_Local = Fx_BuscarProducto(_Codigo, _Global_BaseBk, _Sql)
 
-                _Consulta_sql = GenerarConsultaMigracion(_Ds_Producto_Local, BdBakappExt) & vbCrLf
+                _Consulta_sql = Fx_Insertar_Nuevo_Producto(_Ds_Producto_Local, BdBakappExt) & vbCrLf
                 _Consulta_sql += Fx_Insertar_Bodegas(_Codigo) & vbCrLf
                 _Consulta_sql += Fx_Insertar_Listas(_Codigo)
 
@@ -233,7 +224,7 @@ Namespace Bk_Migrar_Producto
             Return _Tbl
         End Function
 
-        Private Function GenerarConsultaMigracion(_Ds_Producto As DataSet, BdBakappExt As String) As String
+        Private Function Fx_Insertar_Nuevo_Producto(_Ds_Producto As DataSet, BdBakappExt As String) As String
 
             Dim Consulta = String.Empty
 
@@ -244,6 +235,61 @@ Namespace Bk_Migrar_Producto
                     Dim _NombreTabla As String = _Ds_Producto.Tables(table).TableName
 
                     Consulta &= "INSERT INTO " & _NombreTabla & "("
+
+                    Dim _CantColumnas As Integer = _Ds_Producto.Tables(table).Columns.Count - 1
+
+                    If _NombreTabla = "MAEFICHD" Then
+                        _CantColumnas = _CantColumnas - 1
+                    End If
+
+                    Dim _IColum = 0
+
+                    If _NombreTabla.Contains("Zw_Prod_Asociacion") Then
+                        _IColum = 1
+                    End If
+
+                    For column = _IColum To _CantColumnas
+                        Consulta &= _Ds_Producto.Tables(table).Columns(column).ColumnName & ","
+                    Next
+                    Consulta &= ")"
+                    Consulta = Consulta.Replace(",)", ")")
+
+                    Consulta &= " VALUES "
+
+                    For row = 0 To _Ds_Producto.Tables(table).Rows.Count - 1
+                        Consulta &= "("
+                        For column = _IColum To _CantColumnas
+                            Consulta &= "'"
+                            Consulta &= _Ds_Producto.Tables(table).Rows(row)(column).ToString().Replace(",", ".") & "',"
+                        Next
+                        Consulta &= ")"
+                        Consulta = Consulta.Replace(",)", ")")
+                        Consulta &= ","
+                    Next
+                    Consulta &= ";" & vbCrLf
+
+                    Consulta = Consulta.Replace("),;", ");")
+
+                End If
+
+            Next
+
+            Consulta = Consulta.Replace(_Global_BaseBk, BdBakappExt)
+            Return Consulta
+
+        End Function
+
+        Private Function Fx_Editar_Producto(_Ds_Producto As DataSet, BdBakappExt As String) As String
+
+            Dim Consulta = String.Empty
+
+            For table = 0 To _Ds_Producto.Tables.Count - 1
+
+                If _Ds_Producto.Tables(table).Rows.Count > 0 Then
+
+                    Dim _NombreTabla As String = _Ds_Producto.Tables(table).TableName
+
+                    Consulta &= "Update " & _NombreTabla & " Set " & vbCrLf
 
                     Dim _CantColumnas As Integer = _Ds_Producto.Tables(table).Columns.Count - 1
 
@@ -340,6 +386,66 @@ Namespace Bk_Migrar_Producto
 
     End Class
 
+    Public Class Cl_Migrar_Producto2
+
+        Dim Consulta_sql As String
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Public Function Fx_CadenaConexionServExt(_Id_Conexion As Integer) As ConexionExternas
+
+            Dim Consulta_sql As String
+            Dim _ConexionExternas As New ConexionExternas
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where Id = " & _Id_Conexion
+            Dim _Row_DnExt As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _Servidor = _Row_DnExt.Item("Servidor")
+            Dim _Puerto = _Row_DnExt.Item("Puerto")
+            Dim _Usuario = _Row_DnExt.Item("Usuario")
+            Dim _Clave = _Row_DnExt.Item("Clave")
+            Dim _BaseDeDatos = _Row_DnExt.Item("BaseDeDatos")
+
+            Dim _ServidorPuerto As String = _Servidor
+
+            If Not String.IsNullOrEmpty(_Puerto) Then
+                _ServidorPuerto = _Servidor & "," & _Puerto
+            End If
+
+            _ConexionExternas.Cadena_ConexionSQL_Server_Ext = "data " &
+                                                              "source = " & _ServidorPuerto & "; " &
+                                                              "initial catalog = " & _BaseDeDatos & "; " &
+                                                              "user id = " & _Usuario & "; " &
+                                                              "password = " & _Clave
+
+            Dim _Sql2 = New Class_SQL(_ConexionExternas.Cadena_ConexionSQL_Server_Ext)
+
+            Consulta_sql = "Select * From CONFIGP Where EMPRESA = '" & _Row_DnExt.Item("Empresa") & "'"
+            Dim _RowConfigp As DataRow = _Sql2.Fx_Get_DataRow(Consulta_sql, False)
+
+            If Not IsNothing(_RowConfigp) Then
+                _ConexionExternas.EsCorrecto = True
+                _ConexionExternas.MensajeError = "Conexión exitosa"
+            Else
+                _ConexionExternas.MensajeError = _Sql2.Pro_Error & vbCrLf & "No es posible conectarse con la base de datos externa. Revise los datos de conexión." & vbCrLf &
+                    "Informe al administrador del sistema"
+            End If
+
+            Return _ConexionExternas
+
+        End Function
+
+    End Class
+
+    Public Class ConexionExternas
+
+        Public Property EsCorrecto As Boolean
+        Public Property Cadena_ConexionSQL_Server_Ext As String
+        Public Property MensajeError As String
+
+    End Class
+
 End Namespace
+
+
 
 

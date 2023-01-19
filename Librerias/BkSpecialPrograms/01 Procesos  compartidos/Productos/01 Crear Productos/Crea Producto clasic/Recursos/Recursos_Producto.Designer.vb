@@ -22,7 +22,7 @@ Namespace My.Resources
     '''<summary>
     '''  Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
     Friend Class Recursos_Producto
@@ -102,6 +102,47 @@ Namespace My.Resources
         Friend Shared ReadOnly Property SqlQuery_Crear_Producto() As String
             Get
                 Return ResourceManager.GetString("SqlQuery_Crear_Producto", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a 
+        '''Declare 
+        '''
+        '''@TIPR char(3),
+        '''@KOPR char(13),
+        '''@NOKOPR varchar(50),
+        '''@KOPRRA char(6),
+        '''@NOKOPRRA varchar(20),
+        '''@KOPRTE char(20),
+        '''@KOGE char(13),
+        '''@NMARCA char(1),
+        '''@UD01PR char(2),
+        '''@UD02PR char(2),
+        '''@RLUD float,
+        '''@POIVPR float,
+        '''@NUIMPR float,
+        '''@RGPR char(1),
+        '''@STMIPR float,
+        '''@STMAPR float,
+        '''@MRPR char(20),
+        '''@ATPR char(3),
+        '''@RUPR char(3),
+        '''@STFI1 float,
+        '''@STDV1 float,
+        '''@STOCNV1 float,
+        '''@STFI2 float,
+        '''@STDV2 float,
+        '''@STOCNV2 float,
+        '''@PPUL01 float,
+        '''@PPUL02 float,
+        '''@MOUL char(3),
+        '''@TIMOUL char(1),
+        '''@TAUL fl [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property SqlQuery_Editar_Producto() As String
+            Get
+                Return ResourceManager.GetString("SqlQuery_Editar_Producto", resourceCulture)
             End Get
         End Property
     End Class

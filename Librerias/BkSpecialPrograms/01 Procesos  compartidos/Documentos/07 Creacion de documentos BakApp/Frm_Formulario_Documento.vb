@@ -3363,7 +3363,7 @@ Public Class Frm_Formulario_Documento
         _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = _Dias_Vencimiento
         _TblEncabezado.Rows(0).Item("RevFincred") = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades",
                                                                       "RevFincred",
-                                                                      "CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "'")
+                                                                      "CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "'",,,, True)
         _TblObservaciones.Rows(0).Item("Forma_pago") = _Forma_pago
 
 
