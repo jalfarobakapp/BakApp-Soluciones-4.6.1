@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports BkSpecialPrograms.Bk_Migrar_Producto
+Imports DevComponents.DotNetBar
 
 Public Class Frm_Familias_Lista
 
@@ -49,6 +50,8 @@ Public Class Frm_Familias_Lista
         Sub_Familias
     End Enum
 
+    Public Property Grabar As Boolean
+
     Public Sub New(_Tipo_Vista_Familias As Enum_Tipo_Vista_Familias)
 
         ' Esta llamada es exigida por el diseñador.
@@ -71,6 +74,7 @@ Public Class Frm_Familias_Lista
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         Btn_Exportar_Excel.Visible = False
+        Btn_Sincronizar.Visible = False
 
         Select Case _Tipo_Vista_Familias
             Case Enum_Tipo_Vista_Familias.Super_Familias
@@ -79,6 +83,7 @@ Public Class Frm_Familias_Lista
                 Me.Text = "SUPER FAMILIAS"
                 Lbl_Encabezado.Text = String.Empty
                 Btn_Exportar_Excel.Visible = True
+                Btn_Sincronizar.Visible = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_DbExt_Conexion", "SincroFamilias = 1"))
             Case Enum_Tipo_Vista_Familias.Familias
                 AddHandler Btn_Crear.Click, AddressOf Sb_Crear_Familias
                 Btn_Crear.Text = "Crear Familias"
@@ -284,6 +289,7 @@ Public Class Frm_Familias_Lista
         Fm.ShowDialog(Me)
         If Fm.Grabar Then
             Sb_Actualizar_Grilla()
+            Sb_Sincronizar_Bases_Externas()
         End If
         Fm.Dispose()
 
@@ -296,6 +302,7 @@ Public Class Frm_Familias_Lista
         Fm.ShowDialog(Me)
         If Fm.Grabar Then
             Sb_Actualizar_Grilla()
+            Sb_Sincronizar_Bases_Externas()
         End If
         Fm.Dispose()
 
@@ -309,6 +316,7 @@ Public Class Frm_Familias_Lista
         Fm.ShowDialog(Me)
         If Fm.Grabar Then
             Sb_Actualizar_Grilla()
+            Sb_Sincronizar_Bases_Externas()
         End If
         Fm.Dispose()
 
@@ -364,6 +372,8 @@ Public Class Frm_Familias_Lista
 
                 MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Super Familia", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
+                Sb_Sincronizar_Bases_Externas()
+
             End If
 
         End If
@@ -394,6 +404,8 @@ Public Class Frm_Familias_Lista
                 BuscarDatoEnGrilla(_Localidad, "Localidad", Grilla)
 
                 MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Ciudad/Región", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Sb_Sincronizar_Bases_Externas()
+
             End If
 
         End If
@@ -426,6 +438,8 @@ Public Class Frm_Familias_Lista
                 BuscarDatoEnGrilla(_Localidad, "Localidad", Grilla)
 
                 MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Comuna", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Sb_Sincronizar_Bases_Externas()
+
             End If
 
         End If
@@ -470,8 +484,11 @@ Public Class Frm_Familias_Lista
             Consulta_Sql = "Delete TABPF Where KOFM = '" & _Kofm & "' And KOPF = '" & _Kopf & "'"
 
             If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
+
                 Grilla.Rows.RemoveAt(Grilla.CurrentRow.Index)
                 MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Super Familia", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Sb_Sincronizar_Bases_Externas()
+
             End If
 
         End If
@@ -517,6 +534,7 @@ Public Class Frm_Familias_Lista
             If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
                 Grilla.Rows.RemoveAt(Grilla.CurrentRow.Index)
                 MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Super Familia", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Sb_Sincronizar_Bases_Externas()
             End If
 
         End If
@@ -551,8 +569,11 @@ Public Class Frm_Familias_Lista
             Consulta_Sql = "Delete TABHF Where KOFM = '" & _Kofm & "' And KOPF = '" & _Kopf & "' And KOHF = '" & _Kohf & "'"
 
             If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
+
                 Grilla.Rows.RemoveAt(Grilla.CurrentRow.Index)
                 MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Super Familia", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Sb_Sincronizar_Bases_Externas()
+
             End If
 
         End If
@@ -563,6 +584,182 @@ Public Class Frm_Familias_Lista
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
+    End Sub
+
+    Sub Sb_Sincronizar_Bases_Externas()
+
+        Dim _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where SincroFamilias = 1"
+        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+
+        If _Tbl_Conexiones.Rows.Count Then
+
+            Dim _SqlQuerySel, _SqlQueryDel, _SqlQueryIns As String
+
+            Select Case _Tipo_Vista_Familias
+                Case Enum_Tipo_Vista_Familias.Super_Familias
+
+                    _SqlQuerySel = "Select * From TABFM"
+                    _SqlQueryDel = "Truncate Table TABFM"
+
+                Case Enum_Tipo_Vista_Familias.Familias
+
+                    _SqlQuerySel = "Select KOPF,NOKOPF From TABPF Where KOFM = '" & _Kofm & "'"
+                    _SqlQueryDel = "Delete TABPF Where KOFM = '" & _Kofm & "'"
+
+                Case Enum_Tipo_Vista_Familias.Sub_Familias
+
+                    _SqlQuerySel = "Select KOHF,NOKOHF From TABHF Where KOFM = '" & _Kofm & "' And KOPF = '" & _Kopf & "'"
+                    _SqlQueryDel = "Delete TABHF Where KOFM = '" & _Kofm & "' And KOPF = '" & _Kopf & "'"
+
+            End Select
+
+
+            Dim _Cl_ConexionExterna As New Cl_ConexionExterna
+            Dim _Conexion As New ConexionExternas
+
+            Dim _Tabla1 As DataTable = _Sql.Fx_Get_Tablas(_SqlQuerySel)
+
+            For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
+
+                Dim _Id_Conexion As Integer = _FilaCx.Item("Id")
+                _Conexion = _Cl_ConexionExterna.Fx_CadenaConexionServExt(_Id_Conexion)
+
+                If _Conexion.EsCorrecto Then
+
+                    Dim _Sql2 As New Class_SQL(_Conexion.Cadena_ConexionSQL_Server_Ext)
+
+                    _SqlQueryIns = String.Empty
+
+                    For Each _Fila As DataRow In _Tabla1.Rows
+
+                        Dim _V1 = _Fila.Item(0)
+                        Dim _V2 = _Fila.Item(1).ToString.Trim
+
+                        Select Case _Tipo_Vista_Familias
+                            Case Enum_Tipo_Vista_Familias.Super_Familias
+                                _SqlQueryIns += "Insert Into TABFM (KOFM,NOKOFM) Values ('" & _V1 & "','" & _V2 & "')" & vbCrLf
+                            Case Enum_Tipo_Vista_Familias.Familias
+                                _SqlQueryIns += "Insert Into TABPF (KOFM,KOPF,NOKOPF) Values ('" & _Kofm & "','" & _V1 & "','" & _V2 & "')" & vbCrLf
+                            Case Enum_Tipo_Vista_Familias.Sub_Familias
+                                _SqlQueryIns += "Insert Into TABHF (KOFM,KOPF,KOHF,NOKOHF) Values ('" & _Kofm & "','" & _Kopf & "','" & _V1 & "','" & _V2 & "')" & vbCrLf
+                        End Select
+
+                    Next
+
+                    Consulta_Sql = _SqlQueryDel & vbCrLf & _SqlQueryIns
+
+                    If _Sql2.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql) Then
+                        MessageBoxEx.Show(Me, "Datos actualizado en la base de datos externa" & vbCrLf & vbCrLf &
+                                          "Base de dato: " & _FilaCx.Item("BaseDeDatos"), "Sincronización base externa",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Else
+                        MessageBoxEx.Show(Me, "Error al actualizar la base de datos externa" & vbCrLf & vbCrLf &
+                                          "Base de dato: " & _FilaCx.Item("BaseDeDatos") & vbCrLf &
+                                          _Sql2.Pro_Error, "Sincronización base externa",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    End If
+
+                End If
+
+            Next
+
+        End If
+
+    End Sub
+
+    Sub Sb_Sincronizar_Bases_Externas_Todo()
+
+        Dim _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where SincroFamilias = 1"
+        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+
+        If _Tbl_Conexiones.Rows.Count Then
+
+            Dim _SqlQuerySel, _SqlQueryDel, _SqlQueryIns As String
+
+            Dim _Cl_ConexionExterna As New Cl_ConexionExterna
+            Dim _Conexion As New ConexionExternas
+
+            For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
+
+                Dim _Id_Conexion As Integer = _FilaCx.Item("Id")
+                _Conexion = _Cl_ConexionExterna.Fx_CadenaConexionServExt(_Id_Conexion)
+
+                If _Conexion.EsCorrecto Then
+
+                    Dim _Sql2 As New Class_SQL(_Conexion.Cadena_ConexionSQL_Server_Ext)
+
+                    _SqlQueryIns = String.Empty
+
+                    _SqlQuerySel = "Select * From TABFM"
+                    Dim _Tabfm As DataTable = _Sql.Fx_Get_Tablas(_SqlQuerySel)
+
+                    For Each _Fila As DataRow In _Tabfm.Rows
+
+                        Dim _V1 = _Fila.Item(0)
+                        Dim _V2 = _Fila.Item(1).ToString.Trim
+
+                        _SqlQueryIns += "Insert Into TABFM (KOFM,NOKOFM) Values ('" & _V1 & "','" & _V2 & "')" & vbCrLf
+
+                    Next
+
+                    _SqlQueryIns += vbCrLf
+
+                    _SqlQuerySel = "Select * From TABPF"
+                    Dim _Tabpf As DataTable = _Sql.Fx_Get_Tablas(_SqlQuerySel)
+
+                    For Each _Fila As DataRow In _Tabpf.Rows
+
+                        Dim _V1 = _Fila.Item(0)
+                        Dim _V2 = _Fila.Item(1)
+                        Dim _V3 = _Fila.Item(2).ToString.Trim
+
+                        _SqlQueryIns += "Insert Into TABPF (KOFM,KOPF,NOKOPF) Values ('" & _V1 & "','" & _V2 & "','" & _V3 & "')" & vbCrLf
+
+                    Next
+
+                    _SqlQueryIns += vbCrLf
+
+                    _SqlQuerySel = "Select * From TABHF"
+                    Dim _Tabhf As DataTable = _Sql.Fx_Get_Tablas(_SqlQuerySel)
+
+                    For Each _Fila As DataRow In _Tabhf.Rows
+
+                        Dim _V1 = _Fila.Item(0)
+                        Dim _V2 = _Fila.Item(1)
+                        Dim _V3 = _Fila.Item(2)
+                        Dim _V4 = _Fila.Item(3).ToString.Trim
+
+                        _SqlQueryIns += "Insert Into TABHF (KOFM,KOPF,KOHF,NOKOHF) Values ('" & _V1 & "','" & _V2 & "','" & _V3 & "','" & _V4 & "')" & vbCrLf
+
+                    Next
+
+                    _SqlQueryDel = "Truncate Table TABFM" & vbCrLf &
+                                   "Truncate Table TABPF" & vbCrLf &
+                                   "Truncate Table TABHF" & vbCrLf
+
+                    Consulta_Sql = _SqlQueryDel & vbCrLf & _SqlQueryIns
+
+                    If _Sql2.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql) Then
+                        MessageBoxEx.Show(Me, "Datos actualizado en la base de datos externa" & vbCrLf & vbCrLf &
+                                          "Base de dato: " & _FilaCx.Item("BaseDeDatos"), "Sincronización base externa",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Else
+                        MessageBoxEx.Show(Me, "Error al actualizar la base de datos externa" & vbCrLf & vbCrLf &
+                                          "Base de dato: " & _FilaCx.Item("BaseDeDatos") & vbCrLf &
+                                          _Sql2.Pro_Error, "Sincronización base externa",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    End If
+
+                End If
+
+            Next
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_Sincronizar_Click(sender As Object, e As EventArgs) Handles Btn_Sincronizar.Click
+        Sb_Sincronizar_Bases_Externas_Todo()
     End Sub
 
 

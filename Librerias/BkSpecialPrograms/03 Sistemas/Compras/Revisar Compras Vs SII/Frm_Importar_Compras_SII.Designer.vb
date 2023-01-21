@@ -24,6 +24,7 @@ Partial Class Frm_Importar_Compras_SII
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Importar_Compras_SII))
         Me.Grupo_01 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_Log = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Chk_Primera_Fila_Es_encabezado = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Circular_Progres_Porc = New DevComponents.DotNetBar.Controls.CircularProgress()
         Me.Circular_Progres_Val = New DevComponents.DotNetBar.Controls.CircularProgress()
@@ -31,7 +32,6 @@ Partial Class Frm_Importar_Compras_SII
         Me.Btn_Importar_Desde_XML = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Cancelar = New DevComponents.DotNetBar.ButtonItem()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.Txt_Log = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Grupo_01.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -40,10 +40,10 @@ Partial Class Frm_Importar_Compras_SII
         '
         Me.Grupo_01.BackColor = System.Drawing.Color.White
         Me.Grupo_01.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_01.Controls.Add(Me.Circular_Progres_Val)
         Me.Grupo_01.Controls.Add(Me.Txt_Log)
         Me.Grupo_01.Controls.Add(Me.Chk_Primera_Fila_Es_encabezado)
         Me.Grupo_01.Controls.Add(Me.Circular_Progres_Porc)
-        Me.Grupo_01.Controls.Add(Me.Circular_Progres_Val)
         Me.Grupo_01.DisabledBackColor = System.Drawing.Color.Empty
         Me.Grupo_01.Location = New System.Drawing.Point(12, 12)
         Me.Grupo_01.Name = "Grupo_01"
@@ -79,6 +79,27 @@ Partial Class Frm_Importar_Compras_SII
         Me.Grupo_01.TabIndex = 80
         Me.Grupo_01.Text = "Log"
         '
+        'Txt_Log
+        '
+        Me.Txt_Log.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Txt_Log.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Log.Border.Class = "TextBoxBorder"
+        Me.Txt_Log.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Log.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Log.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Log.Location = New System.Drawing.Point(59, 3)
+        Me.Txt_Log.Multiline = True
+        Me.Txt_Log.Name = "Txt_Log"
+        Me.Txt_Log.PreventEnterBeep = True
+        Me.Txt_Log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.Txt_Log.Size = New System.Drawing.Size(515, 97)
+        Me.Txt_Log.TabIndex = 81
+        '
         'Chk_Primera_Fila_Es_encabezado
         '
         Me.Chk_Primera_Fila_Es_encabezado.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
@@ -91,6 +112,7 @@ Partial Class Frm_Importar_Compras_SII
         Me.Chk_Primera_Fila_Es_encabezado.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_Primera_Fila_Es_encabezado.CheckValue = "Y"
         Me.Chk_Primera_Fila_Es_encabezado.Enabled = False
+        Me.Chk_Primera_Fila_Es_encabezado.FocusCuesEnabled = False
         Me.Chk_Primera_Fila_Es_encabezado.ForeColor = System.Drawing.Color.Black
         Me.Chk_Primera_Fila_Es_encabezado.Location = New System.Drawing.Point(3, 106)
         Me.Chk_Primera_Fila_Es_encabezado.Name = "Chk_Primera_Fila_Es_encabezado"
@@ -106,6 +128,7 @@ Partial Class Frm_Importar_Compras_SII
         '
         '
         Me.Circular_Progres_Porc.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Circular_Progres_Porc.FocusCuesEnabled = False
         Me.Circular_Progres_Porc.Location = New System.Drawing.Point(4, 3)
         Me.Circular_Progres_Porc.Name = "Circular_Progres_Porc"
         Me.Circular_Progres_Porc.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
@@ -122,6 +145,7 @@ Partial Class Frm_Importar_Compras_SII
         '
         '
         Me.Circular_Progres_Val.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Circular_Progres_Val.FocusCuesEnabled = False
         Me.Circular_Progres_Val.Location = New System.Drawing.Point(-1, 53)
         Me.Circular_Progres_Val.Name = "Circular_Progres_Val"
         Me.Circular_Progres_Val.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
@@ -170,27 +194,6 @@ Partial Class Frm_Importar_Compras_SII
         'OpenFileDialog1
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
-        '
-        'Txt_Log
-        '
-        Me.Txt_Log.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Txt_Log.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_Log.Border.Class = "TextBoxBorder"
-        Me.Txt_Log.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Log.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Log.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Log.Location = New System.Drawing.Point(59, 3)
-        Me.Txt_Log.Multiline = True
-        Me.Txt_Log.Name = "Txt_Log"
-        Me.Txt_Log.PreventEnterBeep = True
-        Me.Txt_Log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.Txt_Log.Size = New System.Drawing.Size(515, 97)
-        Me.Txt_Log.TabIndex = 81
         '
         'Frm_Importar_Compras_SII
         '

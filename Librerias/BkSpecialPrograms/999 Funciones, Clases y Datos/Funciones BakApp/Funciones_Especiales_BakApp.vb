@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Security.Cryptography
+Imports BkSpecialPrograms.Bk_Migrar_Producto
 Imports DevComponents.DotNetBar
 Imports Newtonsoft.Json
 
@@ -5473,7 +5474,51 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
+    Sub Sb_EjecConsultaBasesExternas(_Formulario As Form, _SqlQuery As String, _Mostrar_Mensaje As Boolean)
 
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Dim _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where SincroProductos = 1"
+        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+
+        If _Tbl_Conexiones.Rows.Count Then
+
+            Dim _Cl_ConexionExterna As New Cl_ConexionExterna
+            Dim _Conexion As New ConexionExternas
+
+            For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
+
+                Dim _Id_Conexion As Integer = _FilaCx.Item("Id")
+                _Conexion = _Cl_ConexionExterna.Fx_CadenaConexionServExt(_Id_Conexion)
+
+                If _Conexion.EsCorrecto Then
+
+                    _SqlQuery = Replace(_SqlQuery, _Global_BaseBk, _Conexion.Global_BaseBk)
+
+                    Dim _Sql2 As New Class_SQL(_Conexion.Cadena_ConexionSQL_Server_Ext)
+
+                    If _Sql2.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery) Then
+                        If _Mostrar_Mensaje Then
+                            MessageBoxEx.Show(_Formulario, "Datos actualizado en la base de datos externa" & vbCrLf & vbCrLf &
+                                          "Base de dato: " & _FilaCx.Item("BaseDeDatos"), "Sincronización base externa",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        End If
+                    Else
+                        If _Mostrar_Mensaje Then
+                            MessageBoxEx.Show(_Formulario, "Error al actualizar la base de datos externa" & vbCrLf & vbCrLf &
+                                          "Base de dato: " & _FilaCx.Item("BaseDeDatos") & vbCrLf &
+                                          _Sql2.Pro_Error, "Sincronización base externa",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        End If
+                    End If
+
+                End If
+
+            Next
+
+        End If
+
+    End Sub
 
 End Module
 

@@ -4000,6 +4000,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Mantencion de Tablas\Familias\Frm_Familias_Lista.resx">
       <DependentUpon>Frm_Familias_Lista.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Precios y Costos\01 Mantención Listas Random\Precios Futuros\Frm_PrecioFuturoRd.resx">
       <DependentUpon>Frm_PrecioFuturoRd.vb</DependentUpon>
