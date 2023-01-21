@@ -653,6 +653,27 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
+        '''CREATE TABLE [dbo].[Zw_Demonio_AcpAuto](
+        '''	[Id]				[int] IDENTITY(1,1) NOT NULL,
+        '''	[NombreEquipo]		[varchar](50)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Modalidad]			[varchar](5)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Idmaeedo]			[int]				NOT NULL DEFAULT (0),
+        '''	[Tido]				[varchar](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nudo]				[varchar](10)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[FechaEmision]		[datetime]			NULL,
+        '''	[Informacion]		[varchar](max)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[ErrorGrabar]		[bit]				NOT NULL DEFAULT (0),
+        '''	[EmailEnviado]		[b [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Demonio_AcpAuto() As String
+            Get
+                Return ResourceManager.GetString("Zw_Demonio_AcpAuto", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
         '''CREATE TABLE [dbo].[Zw_Demonio_Archivador](
         '''	[Idmaeedo]	[int]			NOT NULL,
         '''	[Tido]		[char](3)		NOT NULL  DEFAULT (&apos;&apos;),
@@ -699,14 +720,13 @@ Namespace My.Resources
         '''
         '''CREATE TABLE [dbo].[Zw_Demonio_Doc_Emitidos_Aviso_Correo](
         '''	[Id]					[int] IDENTITY(1,1) NOT NULL,
-        '''	[NombreEquipo]			[varchar](50) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Nombre_Correo]			[varchar](50) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[CodFuncionario]		[char](3) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Asunto]				[varchar](200) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Para]					[varchar](500) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Cc]					[varchar](500) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Idmaeedo]				[int] NOT NULL DEFAULT (0),
-        '''	[Tido]					[varchar](50) NOT N [resto de la cadena truncado]&quot;;.
+        '''	[NombreEquipo]			[varchar](50)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nombre_Correo]			[varchar](50)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodFuncionario]		[char](3)           NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Asunto]				[varchar](200)      NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Para]					[varchar](500)      NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Cc]					[varchar](500)      NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Idmaeedo]				[int]               NOT [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Demonio_Doc_Emitidos_Aviso_Correo() As String
             Get
@@ -1775,15 +1795,13 @@ Namespace My.Resources
         '''
         '''CREATE TABLE [dbo].[Zw_ListaPreCosto_Enc](
         '''	[Id]                        [int] IDENTITY(1,1) NOT NULL,
-        '''	[Lista]						[char](3) NOT NULL,
-        '''	[Proveedor]					[varchar](13) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Sucursal]					[varchar](10) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[FechaVigenciaDesde]		[datetime] NOT NULL,
-        '''	[FechaVigenciaHasta]		[datetime] NULL,
-        '''	[NombreLista]				[varchar](50) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[CodFuncionario_Crea]		[varchar](3) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[FechaCreacion]				[datetime] NULL,
-        '''	[Vigen [resto de la cadena truncado]&quot;;.
+        '''	[Lista]						[char](3)           NOT NULL,
+        '''	[Proveedor]					[varchar](13)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]					[varchar](10)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[FechaVigenciaDesde]		[datetime]          NOT NULL,
+        '''	[FechaVigenciaHasta]		[datetime]          NULL,
+        '''	[NombreLista]				[varchar](50)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodFuncionario_Crea]		[varchar](3)        NOT NULL DEFAULT [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_ListaPreCosto_Enc() As String
             Get
@@ -3408,6 +3426,7 @@ Namespace My.Resources
         '''
         '''
         '''CREATE TABLE [dbo].[Zw_St_OT_Doc_Asociados](
+        '''    [Id]                [int]          IDENTITY(1,1) NOT NULL,
         '''	[Id_Ot]				[int]          NOT NULL DEFAULT (0),
         '''	[Idmaeedo]			[int]          NOT NULL DEFAULT (0),
         '''	[Tido]				[char](3)      NOT NULL DEFAULT (&apos;&apos;),
@@ -3415,8 +3434,7 @@ Namespace My.Resources
         '''	[Estado]			[char](1)      NOT NULL DEFAULT (&apos;&apos;),
         '''	[Fecha_Doc]			[datetime]     NOT NULL DEFAULT (Getdate()),
         '''	[Fecha_Asociacion]	[datetime]     NOT NULL DEFAULT (Getdate()),
-        '''	[Garantia]			[bit]          NOT NULL DEFAULT (0),
-        '''	[Seleccionado]	 [resto de la cadena truncado]&quot;;.
+        '''	[Ga [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_St_OT_Doc_Asociados() As String
             Get

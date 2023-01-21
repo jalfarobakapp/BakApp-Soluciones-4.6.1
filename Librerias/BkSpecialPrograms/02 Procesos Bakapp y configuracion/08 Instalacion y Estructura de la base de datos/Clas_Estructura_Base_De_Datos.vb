@@ -693,6 +693,8 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Demonio_Wordpress
             Case "Zw_Demonio_FacAuto"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Demonio_FacAuto
+            Case "Zw_Demonio_AcpAuto"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Demonio_AcpAuto
 
             Case "Zw_Docu_Archivos"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Docu_Archivos

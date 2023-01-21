@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Familias_Lista
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -44,6 +44,7 @@ Partial Class Frm_Familias_Lista
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Exportar_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Crear = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Sincronizar = New DevComponents.DotNetBar.ButtonItem()
         Me.Lbl_Encabezado = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -256,7 +257,7 @@ Partial Class Frm_Familias_Lista
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(68, 23)
         Me.LabelX2.TabIndex = 13
-        Me.LabelX2.Text = "Descripción"
+        Me.LabelX2.Text = "DescripciÃ³n"
         '
         'Txt_Descripcion
         '
@@ -280,10 +281,10 @@ Partial Class Frm_Familias_Lista
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Exportar_Excel, Me.Btn_Crear})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Exportar_Excel, Me.Btn_Crear, Me.Btn_Sincronizar})
         Me.Bar1.Location = New System.Drawing.Point(0, 485)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(589, 41)
+        Me.Bar1.Size = New System.Drawing.Size(585, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 20
@@ -306,6 +307,16 @@ Partial Class Frm_Familias_Lista
         Me.Btn_Crear.Name = "Btn_Crear"
         Me.Btn_Crear.Text = "Aceptar"
         '
+        'Btn_Sincronizar
+        '
+        Me.Btn_Sincronizar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Sincronizar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Sincronizar.Image = CType(resources.GetObject("Btn_Sincronizar.Image"), System.Drawing.Image)
+        Me.Btn_Sincronizar.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
+        Me.Btn_Sincronizar.Name = "Btn_Sincronizar"
+        Me.Btn_Sincronizar.Text = "Sincronizar BDExt."
+        Me.Btn_Sincronizar.Tooltip = "Sincronizar tablas de familias con bases de datos externas"
+        '
         'Lbl_Encabezado
         '
         Me.Lbl_Encabezado.BackColor = System.Drawing.Color.Transparent
@@ -318,13 +329,13 @@ Partial Class Frm_Familias_Lista
         Me.Lbl_Encabezado.Name = "Lbl_Encabezado"
         Me.Lbl_Encabezado.Size = New System.Drawing.Size(570, 23)
         Me.Lbl_Encabezado.TabIndex = 24
-        Me.Lbl_Encabezado.Text = "Descripción"
+        Me.Lbl_Encabezado.Text = "DescripciÃ³n"
         '
         'Frm_Familias_Lista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(589, 526)
+        Me.ClientSize = New System.Drawing.Size(585, 526)
         Me.Controls.Add(Me.Lbl_Encabezado)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.GroupPanel1)
@@ -367,4 +378,5 @@ Partial Class Frm_Familias_Lista
     Friend WithEvents Lbl_Encabezado As DevComponents.DotNetBar.LabelX
     Friend WithEvents Menu_Contextual_Familia As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Menu_Contextual_Sub_Familia As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Sincronizar As DevComponents.DotNetBar.ButtonItem
 End Class

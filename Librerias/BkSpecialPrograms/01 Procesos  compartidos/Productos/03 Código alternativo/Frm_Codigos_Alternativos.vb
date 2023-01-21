@@ -286,13 +286,11 @@ Public Class Frm_Codigos_Alternativos
                     Return
                 End If
 
-                If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-
-                    Beep()
-                    ToastNotification.Show(Me, "CODIGO ELIMINADO CORRECTAMENTE", My.Resources.cross,
+                Beep()
+                ToastNotification.Show(Me, "CODIGO ELIMINADO CORRECTAMENTE", My.Resources.cross,
                                            1 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
 
-                End If
+                Sb_EjecConsultaBasesExternas(Me, Consulta_sql, True)
 
                 Grilla.Rows.RemoveAt(Grilla.CurrentRow.Index)
 

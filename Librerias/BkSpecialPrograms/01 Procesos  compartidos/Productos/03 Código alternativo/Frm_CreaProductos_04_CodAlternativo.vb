@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports BkSpecialPrograms.Bk_Migrar_Producto
+Imports DevComponents.DotNetBar
 
 Public Class Frm_CreaProductos_04_CodAlternativo
 
@@ -388,7 +389,11 @@ Public Class Frm_CreaProductos_04_CodAlternativo
 
         End If
 
-        If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+        Dim _SqlQueryExt = String.Empty
+
+        If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+            _SqlQueryExt = Consulta_sql
+        Else
             MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problema al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
@@ -408,14 +413,22 @@ Public Class Frm_CreaProductos_04_CodAlternativo
 
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
 
+            'Sb_EjecConsultaBasesExternas(Consulta_sql)
+            _SqlQueryExt += vbCrLf & vbCrLf & Consulta_sql
+
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Prod_Asociacion where Clas_unica = 1" & vbCrLf &
                            "And Codigo = '" & _Kopr & "' And DescripcionBusqueda = '" & _Nokopral & "'" & vbCrLf & vbCrLf &
                            "Insert Into " & _Global_BaseBk & "Zw_Prod_Asociacion (Codigo,Codigo_Nodo,DescripcionBusqueda,Clas_unica)" & vbCrLf &
                            "Values ('" & _Kopr & "',0,'" & _Nokopral & "',1)"
 
-            _Sql.Ej_consulta_IDU(Consulta_sql)
+            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                'Sb_EjecConsultaBasesExternas(Consulta_sql)
+                _SqlQueryExt += vbCrLf & vbCrLf & Consulta_sql
+            End If
 
         End If
+
+        Sb_EjecConsultaBasesExternas(Me, _SqlQueryExt, True)
 
         Me.Close()
 
@@ -530,21 +543,15 @@ Public Class Frm_CreaProductos_04_CodAlternativo
                                vbCrLf &
                                "Delete " & _Global_BaseBk & "Zw_Prod_CodQR Where CodigoQR = '" & _CodigoQR & "'"
 
-                _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
-
-                If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
                     MessageBoxEx.Show(Me, _Sql.Pro_Error, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     Return
                 End If
 
-                If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                    _Eliminado = True
-                    Me.Close()
-                    Beep()
-                    'ToastNotification.Show(Me, "CODIGO ELIMINADO CORRECTAMENTE", My.Resources.cross,
-                    '                       1 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
+                Sb_EjecConsultaBasesExternas(Me, Consulta_sql, True)
 
-                End If
+                _Eliminado = True
+                Me.Close()
 
             End If
 
@@ -611,4 +618,8 @@ Public Class Frm_CreaProductos_04_CodAlternativo
 
         Fm.Dispose()
     End Sub
+
+
+
+
 End Class

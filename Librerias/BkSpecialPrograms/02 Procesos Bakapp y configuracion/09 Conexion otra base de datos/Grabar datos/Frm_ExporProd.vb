@@ -37,6 +37,14 @@ Public Class Frm_ExporProd
         Chk_GrbEnti_Nuevas.Checked = _Row_DbExt_Conexion.Item("GrbEnti_Nuevas")
         Chk_GrbOCC_Nuevas.Checked = _Row_DbExt_Conexion.Item("GrbOCC_Nuevas")
 
+        Chk_SincroProductos.Checked = _Row_DbExt_Conexion.Item("SincroProductos")
+        Chk_SincroMarcas.Checked = _Row_DbExt_Conexion.Item("SincroMarcas")
+        Chk_SincroFamilias.Checked = _Row_DbExt_Conexion.Item("SincroFamilias")
+        Chk_SincroRubros.Checked = _Row_DbExt_Conexion.Item("SincroRubros")
+        Chk_SincroClaslib.Checked = _Row_DbExt_Conexion.Item("SincroClaslib")
+        Chk_SincroZonasProd.Checked = _Row_DbExt_Conexion.Item("SincroZonasProd")
+        Chk_SincroZonas.Checked = _Row_DbExt_Conexion.Item("SincroZonas")
+
         Dim _Sql2 As New Class_SQL(_Cadena_ConexionSQL_Server_BodExterna)
 
         Try
@@ -116,6 +124,15 @@ Public Class Frm_ExporProd
         Dim _GrbProd_Nuevos As Integer = Convert.ToInt32(Chk_GrbProd_Nuevos.Checked)
         Dim _GrbEnti_Nuevas As Integer = Convert.ToInt32(Chk_GrbEnti_Nuevas.Checked)
         Dim _GrbOCC_Nuevas As Integer = Convert.ToInt32(Chk_GrbOCC_Nuevas.Checked)
+
+        Dim _SincroProductos As Integer = Convert.ToInt32(Chk_SincroProductos.Checked)
+        Dim _SincroMarcas As Integer = Convert.ToInt32(Chk_SincroMarcas.Checked)
+        Dim _SincroFamilias As Integer = Convert.ToInt32(Chk_SincroFamilias.Checked)
+        Dim _SincroRubros As Integer = Convert.ToInt32(Chk_SincroRubros.Checked)
+        Dim _SincroClaslib As Integer = Convert.ToInt32(Chk_SincroClaslib.Checked)
+        Dim _SincroZonasProd As Integer = Convert.ToInt32(Chk_SincroZonasProd.Checked)
+        Dim _SincroZonas As Integer = Convert.ToInt32(Chk_SincroZonas.Checked)
+
         Dim _GrbProd_BodTodas As Integer = Convert.ToInt32(Bodegas_Todas)
         Dim _GrbProd_LisTodas As Integer = Convert.ToInt32(Listas_Todas)
         Dim _GrbProd_Bodegas As String
@@ -146,6 +163,13 @@ Public Class Frm_ExporProd
                        ",GrbOCC_Nuevas = " & _GrbOCC_Nuevas &
                        ",GrbProd_Bodegas = '" & _GrbProd_Bodegas & "'" &
                        ",GrbProd_Listas = '" & _GrbProd_Listas & "'" & vbCrLf &
+                       ",SincroProductos = " & _SincroProductos &
+                       ",SincroMarcas = " & _SincroMarcas &
+                       ",SincroFamilias = " & _SincroFamilias &
+                       ",SincroRubros = " & _SincroRubros &
+                       ",SincroClaslib = " & _SincroClaslib &
+                       ",SincroZonasProd = " & _SincroZonasProd &
+                       ",SincroZonas = " & _SincroZonas &
                        "Where Id = " & _Id
         If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
             MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)

@@ -837,7 +837,7 @@ Public Class Clase_Crear_Documento
                             Else
 
                                 If (_Tido = "NCV" And Not _Tidopa.Contains("G")) Or (_Tido = "GDD" And _Subtido = String.Empty) Or
-                                   (_Tido = "GRD" And _Tidopa = "FCV") Then
+                                   (_Tido = "GRD" And _Tidopa = "FCV") Or (_Tido = "GRD" And _Tidopa = "BLV") Then
 
                                     _Caprnc1 = De_Num_a_Tx_01(_CantUd1, False, 5)
                                     _Caprnc2 = De_Num_a_Tx_01(_CantUd2, False, 5)

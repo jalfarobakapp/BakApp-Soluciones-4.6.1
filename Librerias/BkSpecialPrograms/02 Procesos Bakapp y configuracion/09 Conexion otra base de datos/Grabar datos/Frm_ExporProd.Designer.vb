@@ -33,6 +33,13 @@ Partial Class Frm_ExporProd
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Chk_GrbEnti_Nuevas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_GrbOCC_Nuevas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_SincroProductos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_SincroMarcas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_SincroRubros = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_SincroFamilias = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_SincroClaslib = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_SincroZonasProd = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_SincroZonas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -152,7 +159,7 @@ Partial Class Frm_ExporProd
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 219)
+        Me.Bar1.Location = New System.Drawing.Point(0, 373)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(335, 41)
         Me.Bar1.Stretch = True
@@ -179,7 +186,7 @@ Partial Class Frm_ExporProd
         Me.Chk_GrbEnti_Nuevas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_GrbEnti_Nuevas.CheckBoxImageChecked = CType(resources.GetObject("Chk_GrbEnti_Nuevas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_GrbEnti_Nuevas.ForeColor = System.Drawing.Color.Black
-        Me.Chk_GrbEnti_Nuevas.Location = New System.Drawing.Point(12, 146)
+        Me.Chk_GrbEnti_Nuevas.Location = New System.Drawing.Point(12, 312)
         Me.Chk_GrbEnti_Nuevas.Name = "Chk_GrbEnti_Nuevas"
         Me.Chk_GrbEnti_Nuevas.Size = New System.Drawing.Size(311, 23)
         Me.Chk_GrbEnti_Nuevas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -195,18 +202,137 @@ Partial Class Frm_ExporProd
         Me.Chk_GrbOCC_Nuevas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_GrbOCC_Nuevas.CheckBoxImageChecked = CType(resources.GetObject("Chk_GrbOCC_Nuevas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_GrbOCC_Nuevas.ForeColor = System.Drawing.Color.Black
-        Me.Chk_GrbOCC_Nuevas.Location = New System.Drawing.Point(12, 175)
+        Me.Chk_GrbOCC_Nuevas.Location = New System.Drawing.Point(12, 332)
         Me.Chk_GrbOCC_Nuevas.Name = "Chk_GrbOCC_Nuevas"
         Me.Chk_GrbOCC_Nuevas.Size = New System.Drawing.Size(311, 23)
         Me.Chk_GrbOCC_Nuevas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_GrbOCC_Nuevas.TabIndex = 128
         Me.Chk_GrbOCC_Nuevas.Text = "Grabar OCC en la otra empresa"
         '
+        'Chk_SincroProductos
+        '
+        Me.Chk_SincroProductos.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_SincroProductos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SincroProductos.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroProductos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroProductos.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SincroProductos.Location = New System.Drawing.Point(12, 155)
+        Me.Chk_SincroProductos.Name = "Chk_SincroProductos"
+        Me.Chk_SincroProductos.Size = New System.Drawing.Size(293, 23)
+        Me.Chk_SincroProductos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SincroProductos.TabIndex = 129
+        Me.Chk_SincroProductos.Text = "Sincronizar productos entre ambas empresas"
+        '
+        'Chk_SincroMarcas
+        '
+        Me.Chk_SincroMarcas.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_SincroMarcas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SincroMarcas.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroMarcas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroMarcas.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SincroMarcas.Location = New System.Drawing.Point(12, 175)
+        Me.Chk_SincroMarcas.Name = "Chk_SincroMarcas"
+        Me.Chk_SincroMarcas.Size = New System.Drawing.Size(293, 23)
+        Me.Chk_SincroMarcas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SincroMarcas.TabIndex = 130
+        Me.Chk_SincroMarcas.Text = "Sincronizar Marcas"
+        '
+        'Chk_SincroRubros
+        '
+        Me.Chk_SincroRubros.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_SincroRubros.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SincroRubros.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroRubros.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroRubros.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SincroRubros.Location = New System.Drawing.Point(12, 194)
+        Me.Chk_SincroRubros.Name = "Chk_SincroRubros"
+        Me.Chk_SincroRubros.Size = New System.Drawing.Size(293, 23)
+        Me.Chk_SincroRubros.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SincroRubros.TabIndex = 131
+        Me.Chk_SincroRubros.Text = "Sincronizar Rubros"
+        '
+        'Chk_SincroFamilias
+        '
+        Me.Chk_SincroFamilias.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_SincroFamilias.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SincroFamilias.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroFamilias.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroFamilias.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SincroFamilias.Location = New System.Drawing.Point(12, 214)
+        Me.Chk_SincroFamilias.Name = "Chk_SincroFamilias"
+        Me.Chk_SincroFamilias.Size = New System.Drawing.Size(293, 23)
+        Me.Chk_SincroFamilias.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SincroFamilias.TabIndex = 132
+        Me.Chk_SincroFamilias.Text = "Sincronizar Super familias/familias/subfamilias"
+        '
+        'Chk_SincroClaslib
+        '
+        Me.Chk_SincroClaslib.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_SincroClaslib.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SincroClaslib.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroClaslib.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroClaslib.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SincroClaslib.Location = New System.Drawing.Point(12, 233)
+        Me.Chk_SincroClaslib.Name = "Chk_SincroClaslib"
+        Me.Chk_SincroClaslib.Size = New System.Drawing.Size(293, 23)
+        Me.Chk_SincroClaslib.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SincroClaslib.TabIndex = 133
+        Me.Chk_SincroClaslib.Text = "Sincronizar Clasificación libre"
+        '
+        'Chk_SincroZonasProd
+        '
+        Me.Chk_SincroZonasProd.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_SincroZonasProd.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SincroZonasProd.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroZonasProd.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroZonasProd.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SincroZonasProd.Location = New System.Drawing.Point(12, 252)
+        Me.Chk_SincroZonasProd.Name = "Chk_SincroZonasProd"
+        Me.Chk_SincroZonasProd.Size = New System.Drawing.Size(293, 23)
+        Me.Chk_SincroZonasProd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SincroZonasProd.TabIndex = 134
+        Me.Chk_SincroZonasProd.Text = "Sincronizar Zonas (producto)"
+        '
+        'Chk_SincroZonas
+        '
+        Me.Chk_SincroZonas.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_SincroZonas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SincroZonas.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroZonas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroZonas.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SincroZonas.Location = New System.Drawing.Point(12, 274)
+        Me.Chk_SincroZonas.Name = "Chk_SincroZonas"
+        Me.Chk_SincroZonas.Size = New System.Drawing.Size(293, 23)
+        Me.Chk_SincroZonas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SincroZonas.TabIndex = 135
+        Me.Chk_SincroZonas.Text = "Sincronizar Zonas"
+        '
         'Frm_ExporProd
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(335, 260)
+        Me.ClientSize = New System.Drawing.Size(335, 414)
+        Me.Controls.Add(Me.Chk_SincroZonas)
+        Me.Controls.Add(Me.Chk_SincroZonasProd)
+        Me.Controls.Add(Me.Chk_SincroClaslib)
+        Me.Controls.Add(Me.Chk_SincroFamilias)
+        Me.Controls.Add(Me.Chk_SincroRubros)
+        Me.Controls.Add(Me.Chk_SincroMarcas)
+        Me.Controls.Add(Me.Chk_SincroProductos)
         Me.Controls.Add(Me.Chk_GrbOCC_Nuevas)
         Me.Controls.Add(Me.Chk_GrbEnti_Nuevas)
         Me.Controls.Add(Me.Bar1)
@@ -239,4 +365,11 @@ Partial Class Frm_ExporProd
     Friend WithEvents Btn_Listas As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Btn_Bodegas As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Chk_GrbOCC_Nuevas As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_SincroProductos As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_SincroMarcas As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_SincroRubros As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_SincroFamilias As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_SincroClaslib As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_SincroZonasProd As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_SincroZonas As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

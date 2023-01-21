@@ -1,17 +1,13 @@
-﻿Imports System
-Imports System.Linq
-Imports System.Text
-'Imports Lib_Bakapp_VarClassFunc
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 
 Public Class Clase_Crear_Documento_Htm
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Function Fx_Crear_Documento_Htm(ByVal _IdMaeedo As Integer,
-                                           ByVal _Ruta_Archivo As String,
-                                           Optional ByVal _Mostrar_Precios As Boolean = True) As Boolean
+    Function Fx_Crear_Documento_Htm(_IdMaeedo As Integer,
+                                    _Ruta_Archivo As String,
+                                    Optional _Mostrar_Precios As Boolean = True) As Boolean
         Try
 
             ' Acento en Html
@@ -211,8 +207,8 @@ Public Class Clase_Crear_Documento_Htm
     End Function
 
 
-    'Shared Sub Html_Pdf(ByVal Ruta_Html As String, _
-    '             ByVal Ruta_Pdf As String)
+    'Shared Sub Html_Pdf(Ruta_Html As String, _
+    '             Ruta_Pdf As String)
 
     '    ComponentInfo.SetLicense("FREE-LIMITED-KEY")
 
@@ -229,7 +225,7 @@ Public Class Clase_Crear_Documento_Htm
     'FreeLimitReachedAction()
     '    document.Save(Ruta_Pdf)
     'End Sub
-    ' Sub xx(ByVal sender, ByVal e)
+    ' Sub xx(sender, e)
     '    e.FreeLimitReachedAction = FreeLimitReachedAction.ContinueAsTrial
     'End Sub
 

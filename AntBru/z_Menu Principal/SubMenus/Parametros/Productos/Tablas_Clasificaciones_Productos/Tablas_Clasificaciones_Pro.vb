@@ -62,19 +62,19 @@ Public Class Tablas_Clasificaciones_Pro
     End Sub
 
     Private Sub Btn_Zonas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Zonas.Click
-        MessageBoxEx.Show(Me, "En desarrollo")
-        Return
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Tbl00018") Then
-            'Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado
-            'Fm._CodTablaClass = "ZONAS"
-            'Fm.Text = "ZONAS"
-            'Fm.ShowDialog(Me)
+        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Tbl00017") Then
+            Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.ZonaProducto,
+                                                                 Frm_Tabla_Caracterizaciones_01_Listado.Accion.Mantencion_Tabla)
+            Fm.Text = "ZONA PRODUCTOS"
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
         End If
     End Sub
 
     Private Sub Btn_Rubros_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Rubros.Click
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Tbl00017") Then
-            Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Rubros, Frm_Tabla_Caracterizaciones_01_Listado.Accion.Mantencion_Tabla)
+            Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Rubros,
+                                                                 Frm_Tabla_Caracterizaciones_01_Listado.Accion.Mantencion_Tabla)
             Fm.Text = "RUBROS"
             Fm.ShowDialog(Me)
             Fm.Dispose()

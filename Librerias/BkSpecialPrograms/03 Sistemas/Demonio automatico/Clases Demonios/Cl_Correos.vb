@@ -329,7 +329,6 @@ Public Class Cl_Correos
                 Dim _Id_Trackid = _Fila.Item("Id_Trackid")
                 Dim _Id_Acp = _Fila.Item("Id_Acp")
 
-                'Dim _Subtido As String = _Sql.Fx_Trae_Dato("MAEEDO", "SUBTIDO", "IDMAEEDO = " & _IdMaeedo)
 
                 Dim _Existe_File
 
@@ -355,6 +354,7 @@ Public Class Cl_Correos
                 If IsNothing(_Row_Documento) Then
 
                     _Error += "No se encontro el documento " & _Tido & "-" & _Nudo & " (IDMAEEDO: " & _IdMaeedo & ")"
+                    _Intentos = 3
 
                 Else
 
@@ -538,14 +538,18 @@ Public Class Cl_Correos
 
                 If String.IsNullOrEmpty(_Error) Then
 
+                    Dim _CuerpoMensaje As String = _Fila.Item("Mensaje")
+
                     Dim _Crea_Html As New Clase_Crear_Documento_Htm
                     Dim _Ruta_Html As String = AppPath() & "\Data\" & RutEmpresa & "\Tmp"
 
                     Dim _Cuerpo_Html
 
-                    If CBool(_IdMaeedo) Then
+                    If CBool(_IdMaeedo) And (_CuerpoMensaje.Contains("<HTML>") Or _CuerpoMensaje.Contains("<HTML_SC>")) Then
 
-                        If _Crea_Html.Fx_Crear_Documento_Htm(_IdMaeedo, _Ruta_Html, True) Then
+                        Dim _Mostrar_Precios As Boolean = Not (_CuerpoMensaje.Contains("<HTML_SP>"))
+
+                        If _Crea_Html.Fx_Crear_Documento_Htm(_IdMaeedo, _Ruta_Html, _Mostrar_Precios) Then
                             Dim _Dir As String = _Ruta_Html & "\Documento.Htm"
                             _Cuerpo_Html = LeeArchivo(_Dir)
                         End If
@@ -558,7 +562,6 @@ Public Class Cl_Correos
 
                     If _Row_Correo IsNot Nothing Then
 
-                        Dim _CuerpoMensaje = _Fila.Item("Mensaje")
 
                         Dim _Remitente = Trim(_Row_Correo.Item("Remitente"))
                         Dim _Host = _Row_Correo.Item("Host")
@@ -623,7 +626,8 @@ Public Class Cl_Correos
                             _Asunto = "Envío de correo automático por BakApp…"
                         End If
 
-                        _CuerpoMensaje = Replace(_CuerpoMensaje, "<HTML>", _Cuerpo_Html & vbCrLf)
+                        _CuerpoMensaje = Replace(_CuerpoMensaje, "<HTML>", _Cuerpo_Html & vbCrLf)    ' Html con precio y cantidad
+                        _CuerpoMensaje = Replace(_CuerpoMensaje, "<HTML_SP>", _Cuerpo_Html & vbCrLf) ' Html sin precio, solo cantidades
 
                         Sb_Llenar_Variables_Etiquetas_Documento(_Asunto, _IdMaeedo)
                         Sb_Llenar_Variables_Etiquetas_Documento(_CuerpoMensaje, _IdMaeedo)
