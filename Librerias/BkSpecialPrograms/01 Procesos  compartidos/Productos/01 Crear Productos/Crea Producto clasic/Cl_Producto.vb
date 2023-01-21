@@ -147,6 +147,10 @@ Public Class Cl_Producto
     Dim _pmifrs As String
     Dim _fepmifrs As String
 
+    Dim _alto As String
+    Dim _ancho As String
+    Dim _largo As String
+
 #End Region
 
 #End Region
@@ -1042,13 +1046,14 @@ Drop Table #Paso_Tabim"
 
     End Function
 
-    Function Fx_Editar_Producto_Base_Externa(_Cadena_ConexionSQL_Server_Externa As String)
+    Function Fx_Editar_Producto_Base_Externa(_Cadena_ConexionSQL_Server_Externa As String,
+                                             _Global_BaseBk As String) As String
 
-        Dim _SqlEx As New Class_SQL(_Cadena_ConexionSQL_Server_Externa)
+        'Dim _SqlEx As New Class_SQL(_Cadena_ConexionSQL_Server_Externa)
+
+        Dim _SqlQuery = String.Empty
 
         Try
-
-            Dim _SqlQuery = String.Empty
 
             Dim _Ficha As String = Replace(NuloPorNro(_Tbl_Maefichd.Rows(0).Item("FICHA"), ""), "'", "''")
 
@@ -1151,21 +1156,30 @@ Drop Table #Paso_Tabim"
                 _SqlQuery += "Update MAEPR Set NOKOPRAMP = '" & _RowProducto.Item("NOKOPRAMP").ToString.Trim & "' Where KOPR = '" & _kopr & "'" & vbCrLf
             End If
 
-            'Dim _Fecrpr As Date = _Sql.Fx_Trae_Dato("MAEPR", "FECRPR", "KOPR = '" & _kopr & "'")
-            'Dim _FecrprStr = Format(_Fecrpr, "yyyyMMdd")
-            '_SqlQuery += "Update MAEPR Set FECRPR = '" & _FecrprStr & "' Where KOPR = '" & _kopr & "'" & vbCrLf
+            _SqlQuery += "Update " & _Global_BaseBk & "Zw_Prod_Asociacion Set DescripcionBusqueda = '" & _kopr.Trim & " " & _nokopr & "'" & vbCrLf &
+                         "Where Codigo = '" & _kopr & "' And Producto = 1" & vbCrLf
 
-            _SqlEx.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery)
+            _alto = Pro_Maeprobs.Rows(0).Item("ALTO")
+            _largo = Pro_Maeprobs.Rows(0).Item("LARGO")
+            _ancho = Pro_Maeprobs.Rows(0).Item("ANCHO")
 
-            Return _Sql.Pro_Error
+            _SqlQuery += "Delete " & _Global_BaseBk & "Zw_Prod_Dimensiones Where Codigo = '" & _kopr & "'" & vbCrLf &
+                         "Insert Into " & _Global_BaseBk & "Zw_Prod_Dimensiones (Codigo,Peso,Alto,Largo,Ancho) Values " &
+                           "('" & _kopr & "'," &
+                           De_Num_a_Tx_01(_pesoubic, False, 5) & "," &
+                           De_Num_a_Tx_01(_alto, False, 5) & "," &
+                           De_Num_a_Tx_01(_largo, False, 5) & "," &
+                           De_Num_a_Tx_01(_ancho, False, 5) & ")" & vbCrLf
+
+            '_SqlEx.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery)
+
+            'Return _Sql.Pro_Error
 
         Catch ex As Exception
-            'myTrans.Rollback()
-            'SQL_ServerClass.Sb_Cerrar_Conexion(Cn)
-            'MsgBox(ex.Message)
-            '_Producto_Creado = False
-            Return ex.Message
+            _SqlQuery = String.Empty
         End Try
+
+        Return _SqlQuery
 
     End Function
 

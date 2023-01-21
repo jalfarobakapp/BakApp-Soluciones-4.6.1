@@ -4228,6 +4228,7 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Recursos_Producto.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Productos\02 Mantencion de Imagenes\Frm_Imagenes_X_Producto.resx">
       <DependentUpon>Frm_Imagenes_X_Producto.vb</DependentUpon>

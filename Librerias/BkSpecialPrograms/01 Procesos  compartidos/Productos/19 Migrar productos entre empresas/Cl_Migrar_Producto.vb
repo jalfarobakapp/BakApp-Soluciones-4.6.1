@@ -386,10 +386,21 @@ Namespace Bk_Migrar_Producto
 
     End Class
 
-    Public Class Cl_Migrar_Producto2
+    Public Class Cl_ConexionExterna
 
         Dim Consulta_sql As String
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Dim _Row_DnExt As DataRow
+
+        Public Property Row_DnExt As DataRow
+            Get
+                Return _Row_DnExt
+            End Get
+            Set(value As DataRow)
+                _Row_DnExt = value
+            End Set
+        End Property
 
         Public Function Fx_CadenaConexionServExt(_Id_Conexion As Integer) As ConexionExternas
 
@@ -397,7 +408,7 @@ Namespace Bk_Migrar_Producto
             Dim _ConexionExternas As New ConexionExternas
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where Id = " & _Id_Conexion
-            Dim _Row_DnExt As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            _Row_DnExt = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Dim _Servidor = _Row_DnExt.Item("Servidor")
             Dim _Puerto = _Row_DnExt.Item("Puerto")
@@ -423,8 +434,24 @@ Namespace Bk_Migrar_Producto
             Dim _RowConfigp As DataRow = _Sql2.Fx_Get_DataRow(Consulta_sql, False)
 
             If Not IsNothing(_RowConfigp) Then
+
+                Consulta_sql = "Select Top 1 *,NOKOCARAC+'.dbo.' As Global_BaseBk From TABCARAC Where KOTABLA = 'BAKAPP' And KOCARAC = 'BASE'"
+                Dim _Row_Tabcarac As DataRow = _Sql2.Fx_Get_DataRow(Consulta_sql)
+
                 _ConexionExternas.EsCorrecto = True
                 _ConexionExternas.MensajeError = "Conexión exitosa"
+                _ConexionExternas.Global_BaseBk = _Row_Tabcarac.Item("Global_BaseBk")
+                _ConexionExternas.GrbEnti_Nuevas = _Row_DnExt.Item("GrbEnti_Nuevas")
+                _ConexionExternas.GrbProd_Nuevos = _Row_DnExt.Item("GrbProd_Nuevos")
+                _ConexionExternas.SincroProductos = _Row_DnExt.Item("SincroProductos")
+                _ConexionExternas.SincroRubros = _Row_DnExt.Item("SincroRubros")
+                _ConexionExternas.SincroZonasProd = _Row_DnExt.Item("SincroZonasProd")
+                _ConexionExternas.SincroClaslib = _Row_DnExt.Item("SincroClaslib")
+                _ConexionExternas.SincroFamilias = _Row_DnExt.Item("SincroFamilias")
+                _ConexionExternas.SincroMarcas = _Row_DnExt.Item("SincroMarcas")
+                _ConexionExternas.SincroRubros = _Row_DnExt.Item("SincroRubros")
+                _ConexionExternas.SincroZonas = _Row_DnExt.Item("SincroZonas")
+
             Else
                 _ConexionExternas.MensajeError = _Sql2.Pro_Error & vbCrLf & "No es posible conectarse con la base de datos externa. Revise los datos de conexión." & vbCrLf &
                     "Informe al administrador del sistema"
@@ -440,7 +467,19 @@ Namespace Bk_Migrar_Producto
 
         Public Property EsCorrecto As Boolean
         Public Property Cadena_ConexionSQL_Server_Ext As String
+        Public Property Global_BaseBk As String
         Public Property MensajeError As String
+        Public Property GrbEnti_Nuevas As Boolean
+        Public Property GrbProd_Nuevos As Boolean
+        Public Property SincroProductos As Boolean
+        Public Property SincroMarcas As Boolean
+        Public Property SincroFamilias As Boolean
+        Public Property SincroRubros As Boolean
+        Public Property SincroClaslib As Boolean
+        Public Property SincroZonasProd As Boolean
+        Public Property SincroZonas As Boolean
+
+
 
     End Class
 

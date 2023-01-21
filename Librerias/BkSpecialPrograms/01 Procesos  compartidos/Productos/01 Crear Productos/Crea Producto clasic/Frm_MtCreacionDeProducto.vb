@@ -687,7 +687,7 @@ Public Class Frm_MtCreacionDeProducto
 
                         Dim _Id_Conexion As Integer = _FilaCx.Item("Id")
                         Dim _BaseDeDatos As String = _FilaCx.Item("BaseDeDatos")
-                        Dim _Cl_Migrar_Producto As New Bk_Migrar_Producto.Cl_Migrar_Producto2
+                        Dim _Cl_Migrar_Producto As New Bk_Migrar_Producto.Cl_ConexionExterna
 
                         Dim _ConexionExternas As New Bk_Migrar_Producto.ConexionExternas
 
@@ -695,19 +695,23 @@ Public Class Frm_MtCreacionDeProducto
 
                         If _ConexionExternas.EsCorrecto Then
 
-                            _Producto_Creado = _Cl_Producto.Fx_Editar_Producto_Base_Externa(_ConexionExternas.Cadena_ConexionSQL_Server_Ext)
+                            Dim _Sql2 = New Class_SQL(_ConexionExternas.Cadena_ConexionSQL_Server_Ext)
 
-                            If String.IsNullOrEmpty(_Producto_Creado) Then
+                            If _ConexionExternas.SincroProductos Then
 
-                                MessageBoxEx.Show(Me, "Producto editado correctamente en la base de datos externa" & vbCrLf &
-                                                          "Base de datos: " & _BaseDeDatos,
-                                                          "Crear producto en base externa", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                            Else
-                                MessageBoxEx.Show(Me, "No se pudo migrar el producto hacia la base de datos externa" & vbCrLf &
-                                                      "Base de datos: " & _BaseDeDatos & vbCrLf & vbCrLf & _Producto_Creado,
-                                                      "Crear producto en base externa",
-                                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                Consulta_sql = _Cl_Producto.Fx_Editar_Producto_Base_Externa(_ConexionExternas.Cadena_ConexionSQL_Server_Ext,
+                                                                                            _ConexionExternas.Global_BaseBk)
 
+                                If _Sql2.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+                                    MessageBoxEx.Show(Me, "Producto editado correctamente en la base de datos externa" & vbCrLf &
+                                                              "Base de datos: " & _BaseDeDatos,
+                                                              "Crear producto en base externa", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                Else
+                                    MessageBoxEx.Show(Me, "No se pudo migrar el producto hacia la base de datos externa" & vbCrLf &
+                                                          "Base de datos: " & _BaseDeDatos & vbCrLf & vbCrLf & _Sql2.Pro_Error,
+                                                          "Crear producto en base externa",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                End If
 
                             End If
 
