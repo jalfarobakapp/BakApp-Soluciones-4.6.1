@@ -41,8 +41,8 @@ Public Class Frm_ExporProd
         Chk_SincroMarcas.Checked = _Row_DbExt_Conexion.Item("SincroMarcas")
         Chk_SincroFamilias.Checked = _Row_DbExt_Conexion.Item("SincroFamilias")
         Chk_SincroRubros.Checked = _Row_DbExt_Conexion.Item("SincroRubros")
-        Chk_SincroClaslib.Checked = _Row_DbExt_Conexion.Item("SincroClaslib")
-        Chk_SincroZonasProd.Checked = _Row_DbExt_Conexion.Item("SincroZonasProd")
+        Chk_SincroClaslib.Checked = _Row_DbExt_Conexion.Item("SincroClaslibre")
+        Chk_SincroZonasProd.Checked = _Row_DbExt_Conexion.Item("SincroZonaProducto")
         Chk_SincroZonas.Checked = _Row_DbExt_Conexion.Item("SincroZonas")
 
         Dim _Sql2 As New Class_SQL(_Cadena_ConexionSQL_Server_BodExterna)
@@ -167,8 +167,8 @@ Public Class Frm_ExporProd
                        ",SincroMarcas = " & _SincroMarcas &
                        ",SincroFamilias = " & _SincroFamilias &
                        ",SincroRubros = " & _SincroRubros &
-                       ",SincroClaslib = " & _SincroClaslib &
-                       ",SincroZonasProd = " & _SincroZonasProd &
+                       ",SincroClaslibre = " & _SincroClaslib &
+                       ",SincroZonaProducto = " & _SincroZonasProd &
                        ",SincroZonas = " & _SincroZonas &
                        "Where Id = " & _Id
         If _Sql.Ej_consulta_IDU(Consulta_Sql) Then

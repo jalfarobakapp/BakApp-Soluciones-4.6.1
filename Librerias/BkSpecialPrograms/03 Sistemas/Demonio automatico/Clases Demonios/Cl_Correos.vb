@@ -545,7 +545,7 @@ Public Class Cl_Correos
 
                     Dim _Cuerpo_Html
 
-                    If CBool(_IdMaeedo) And (_CuerpoMensaje.Contains("<HTML>") Or _CuerpoMensaje.Contains("<HTML_SC>")) Then
+                    If CBool(_IdMaeedo) And (_CuerpoMensaje.Contains("<HTML>") Or _CuerpoMensaje.Contains("<HTML_SP>")) Then
 
                         Dim _Mostrar_Precios As Boolean = Not (_CuerpoMensaje.Contains("<HTML_SP>"))
 
@@ -591,8 +591,8 @@ Public Class Cl_Correos
                                     Dim _Nombre_Usuario = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Email", "CodFuncionario = '" & _CodFuncionario & "'")
 
                                     Consulta_Sql = "Select Nombre_Usuario,Contrasena,Host,Puerto, SSL" & vbCrLf &
-                                               "From " & _Global_BaseBk & "Zw_Correos_Cuentas" & vbCrLf &
-                                               "Where Nombre_Usuario = '" & _Nombre_Usuario & "'"
+                                                   "From " & _Global_BaseBk & "Zw_Correos_Cuentas" & vbCrLf &
+                                                   "Where Nombre_Usuario = '" & _Nombre_Usuario & "'"
                                     Dim _Row_SmtpUsuario As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
                                     If Not IsNothing(_Row_SmtpUsuario) Then

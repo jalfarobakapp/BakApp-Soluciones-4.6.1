@@ -531,81 +531,87 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
         Sb_Grabar()
 
-        Dim _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where SincroTablas = 1"
-        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _CampoSincro As String = "Sincro" & _Tabla.ToString
 
-        If _Tbl_Conexiones.Rows.Count Then
+        If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_DbExt_Conexion", _CampoSincro) Then
 
-            Dim _SqlQuery As String
+            Dim _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where " & _CampoSincro & " = 1"
+            Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
 
-            If _InfoTabla.EsTablaRandom Then
-                If _InfoTabla.EsTablaTabcarac Then
-                    _SqlQuery = "Select " & _InfoTabla.Campo & " As Codigo," & _InfoTabla.Descripcion & " As Descripcion From " & _InfoTabla.Tabla & vbCrLf &
-                                "Where KOTABLA = '" & _InfoTabla.TablaEnTblCaracterizaciones & "'"
+            If _Tbl_Conexiones.Rows.Count Then
+
+                Dim _SqlQuery As String
+
+                If _InfoTabla.EsTablaRandom Then
+                    If _InfoTabla.EsTablaTabcarac Then
+                        _SqlQuery = "Select " & _InfoTabla.Campo & " As Codigo," & _InfoTabla.Descripcion & " As Descripcion From " & _InfoTabla.Tabla & vbCrLf &
+                                    "Where KOTABLA = '" & _InfoTabla.TablaEnTblCaracterizaciones & "'"
+                    Else
+                        _SqlQuery = "Select " & _InfoTabla.Campo & " As Codigo," & _InfoTabla.Descripcion & " As Descripcion From " & _InfoTabla.Tabla
+                    End If
                 Else
                     _SqlQuery = "Select " & _InfoTabla.Campo & " As Codigo," & _InfoTabla.Descripcion & " As Descripcion From " & _InfoTabla.Tabla
                 End If
-            Else
-                _SqlQuery = "Select " & _InfoTabla.Campo & " As Codigo," & _InfoTabla.Descripcion & " As Descripcion From " & _InfoTabla.Tabla
-            End If
-            'SELECT 'CLALIBPR','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0 FROM TABCARAC WHERE KOTABLA = 'CLALIBPR'
-            Dim _Cl_ConexionExterna As New Cl_ConexionExterna
-            Dim _Conexion As New ConexionExternas
+                'SELECT 'CLALIBPR','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0 FROM TABCARAC WHERE KOTABLA = 'CLALIBPR'
+                Dim _Cl_ConexionExterna As New Cl_ConexionExterna
+                Dim _Conexion As New ConexionExternas
 
-            Dim _Tabla1 As DataTable = _Sql.Fx_Get_Tablas(_SqlQuery)
+                Dim _Tabla1 As DataTable = _Sql.Fx_Get_Tablas(_SqlQuery)
 
-            For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
+                For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
 
-                Dim _Id_Conexion As Integer = _FilaCx.Item("Id")
-                _Conexion = _Cl_ConexionExterna.Fx_CadenaConexionServExt(_Id_Conexion)
+                    Dim _Id_Conexion As Integer = _FilaCx.Item("Id")
+                    _Conexion = _Cl_ConexionExterna.Fx_CadenaConexionServExt(_Id_Conexion)
 
-                If _Conexion.EsCorrecto Then
+                    If _Conexion.EsCorrecto Then
 
-                    Dim _Sql2 As New Class_SQL(_Conexion.Cadena_ConexionSQL_Server_Ext)
-
-                    If _InfoTabla.EsTablaTabcarac Then
-                        Consulta_sql = "Delete TABCARAC Where KOTABLA = '" & _InfoTabla.TablaEnTblCaracterizaciones & "'" & vbCrLf
-                    Else
-                        Consulta_sql = "Truncate table " & _InfoTabla.Tabla & vbCrLf
-                    End If
-
-                    For Each _Fila As DataRow In _Tabla1.Rows
-
-                        Dim _V1 = _Fila.Item(0)
-                        Dim _V2 = _Fila.Item(1).ToString.trim
+                        Dim _Sql2 As New Class_SQL(_Conexion.Cadena_ConexionSQL_Server_Ext)
 
                         If _InfoTabla.EsTablaTabcarac Then
-                            Consulta_sql += "Insert Into " & _InfoTabla.Tabla & " (KOTABLA," & _InfoTabla.Campo & "," & _InfoTabla.Descripcion.ToString.Trim & ") Values ('" & _InfoTabla.TablaEnTblCaracterizaciones & "','" & _V1 & "','" & _V2 & "')" & vbCrLf
+                            Consulta_sql = "Delete TABCARAC Where KOTABLA = '" & _InfoTabla.TablaEnTblCaracterizaciones & "'" & vbCrLf
                         Else
-                            Consulta_sql += "Insert Into " & _InfoTabla.Tabla & " (" & _InfoTabla.Campo & "," & _InfoTabla.Descripcion.ToString.Trim & ") Values ('" & _V1 & "','" & _V2 & "')" & vbCrLf
+                            Consulta_sql = "Truncate table " & _InfoTabla.Tabla & vbCrLf
                         End If
 
-                    Next
+                        For Each _Fila As DataRow In _Tabla1.Rows
 
-                    '_Sql2.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+                            Dim _V1 = _Fila.Item(0)
+                            Dim _V2 = _Fila.Item(1).ToString.Trim
 
-                    If Not String.IsNullOrEmpty(_InfoTabla.SqlQueryActualizaTablaCaracterizaciones) Then
+                            If _InfoTabla.EsTablaTabcarac Then
+                                Consulta_sql += "Insert Into " & _InfoTabla.Tabla & " (KOTABLA," & _InfoTabla.Campo & "," & _InfoTabla.Descripcion.ToString.Trim & ") Values ('" & _InfoTabla.TablaEnTblCaracterizaciones & "','" & _V1 & "','" & _V2 & "')" & vbCrLf
+                            Else
+                                Consulta_sql += "Insert Into " & _InfoTabla.Tabla & " (" & _InfoTabla.Campo & "," & _InfoTabla.Descripcion.ToString.Trim & ") Values ('" & _V1 & "','" & _V2 & "')" & vbCrLf
+                            End If
 
-                        Consulta_sql += "Delete " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
-                                        "Where Tabla = '" & _InfoTabla.TablaEnTblCaracterizaciones & "'" & vbCrLf & vbCrLf &
-                                        _InfoTabla.SqlQueryActualizaTablaCaracterizaciones
-
-                        Consulta_sql = Replace(Consulta_sql, _Global_BaseBk, _Conexion.Global_BaseBk)
+                        Next
 
                         '_Sql2.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
+                        If Not String.IsNullOrEmpty(_InfoTabla.SqlQueryActualizaTablaCaracterizaciones) Then
+
+                            Consulta_sql += "Delete " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                                            "Where Tabla = '" & _InfoTabla.TablaEnTblCaracterizaciones & "'" & vbCrLf & vbCrLf &
+                                            _InfoTabla.SqlQueryActualizaTablaCaracterizaciones
+
+                            Consulta_sql = Replace(Consulta_sql, _Global_BaseBk, _Conexion.Global_BaseBk)
+
+                            '_Sql2.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+                        End If
+
+                        If _Sql2.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+                            MessageBoxEx.Show(Me, "Datos actualizado en la base de datos externa", "Sincronización base externa", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        Else
+                            MessageBoxEx.Show(Me, "Error al actualizar la base de datos externa" & vbCrLf &
+                                              _Sql2.Pro_Error, "Sincronización base externa", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        End If
+
                     End If
 
-                    If _Sql2.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
-                        MessageBoxEx.Show(Me, "Datos actualizado en la base de datos externa", "Sincronización base externa", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    Else
-                        MessageBoxEx.Show(Me, "Error al actualizar la base de datos externa" & vbCrLf &
-                                          _Sql2.Pro_Error, "Sincronización base externa", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    End If
+                Next
 
-                End If
-
-            Next
+            End If
 
         End If
 

@@ -15105,6 +15105,8 @@ Public Class Frm_Formulario_Documento
 
                 If _Fincred_Respuesta.EsCorrecto Then
 
+                    _TblEncabezado.Rows(0).Item("IdFincred") = _Fincred_Respuesta.Id_TramaRespuesta
+
                     MessageBoxEx.Show(Me, _Fincred_Respuesta.TramaRespuesta.descripcion_negacion & vbCrLf &
                                           "Código de autorización: " & _Fincred_Respuesta.TramaRespuesta.documentos(0).autorizacion,
                                           "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
