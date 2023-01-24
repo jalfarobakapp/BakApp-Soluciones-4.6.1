@@ -1810,6 +1810,10 @@ Public Class Frm_Demonio_01
                                             "'EL PRODUCTO NO EXISTE DENTRO DEL CATALOGO DE RANDOM','" & _Empresa & "')" & vbCrLf
                             End If
 
+                            If sku = "AGT-19-0005" Or sku.Contains("AGT") Then
+                                Dim _Aca = 0
+                            End If
+
                             Application.DoEvents()
 
                             Lbl_Wordpress_productos.Text = "Revisando " & FormatNumber(_Contador, 0) & " de " & FormatNumber(Productos.Count, 0) & " productos..."

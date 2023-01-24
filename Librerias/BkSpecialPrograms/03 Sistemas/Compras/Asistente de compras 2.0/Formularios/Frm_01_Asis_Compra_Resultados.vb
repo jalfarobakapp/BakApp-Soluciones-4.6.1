@@ -4156,6 +4156,10 @@ Public Class Frm_01_Asis_Compra_Resultados
         _Proceso_Automatico_Ejecutado = Fm.Pro_Proceso_Generado
         Fm.Dispose()
 
+        If _Proceso_Automatico_Ejecutado Then
+            Call Btn_Actualizar_Informe_Click(Nothing, Nothing)
+        End If
+
     End Sub
 
     Private Sub Frm_01_AsisCompra_Resultados_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
@@ -8166,7 +8170,7 @@ Drop Table #Paso"
             BtnProceso_Prov_Auto.Enabled = False
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = _Proceso_Automatico_Ejecutado
             Chk_Quitar_Ventas_Calzadas.Checked = True
-            Chk_Quitare_Sospechosos_Stock.Checked = True
+            'Chk_Quitare_Sospechosos_Stock.Checked = True
 
             Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = True
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = True
@@ -8216,7 +8220,7 @@ Drop Table #Paso"
             Chk_Quitar_Comprados.Checked = True
             Chk_Mostrar_Solo_Stock_Critico.Checked = True
             Chk_Quitar_Ventas_Calzadas.Checked = True
-            Chk_Quitare_Sospechosos_Stock.Checked = True
+            'Chk_Quitare_Sospechosos_Stock.Checked = True
 
 
             Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)

@@ -25,27 +25,6 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_01_Asis_Compra_Resultados))
         Me.RibbonControl1 = New DevComponents.DotNetBar.RibbonControl()
-        Me.RibbonPanel1 = New DevComponents.DotNetBar.RibbonPanel()
-        Me.RibbonPanel3 = New DevComponents.DotNetBar.RibbonPanel()
-        Me.Ribon_Proyeccion = New DevComponents.DotNetBar.RibbonBar()
-        Me.Btn_Proyeccion_Mensual = New DevComponents.DotNetBar.ButtonItem()
-        Me.Ribon_Consolidar_Stock_Act_Rotacion = New DevComponents.DotNetBar.RibbonBar()
-        Me.Btn_Consolidar_Stock = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Poner_Cantidades_Comprar = New DevComponents.DotNetBar.ButtonItem()
-        Me.RibbonBar2 = New DevComponents.DotNetBar.RibbonBar()
-        Me.ItemContainer2 = New DevComponents.DotNetBar.ItemContainer()
-        Me.Btn_Ver_Productos = New DevComponents.DotNetBar.ButtonItem()
-        Me.CmmdBuscarInf = New DevComponents.DotNetBar.Command(Me.components)
-        Me.Btn_Buscar_Productos = New DevComponents.DotNetBar.ButtonItem()
-        Me.RibbonBar5 = New DevComponents.DotNetBar.RibbonBar()
-        Me.ItemContainer7 = New DevComponents.DotNetBar.ItemContainer()
-        Me.BtnDejarCantEnCero = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Dejar_En_Cero_Refleos = New DevComponents.DotNetBar.ButtonItem()
-        Me.Ribon_Filtro_Bodegas = New DevComponents.DotNetBar.RibbonBar()
-        Me.ItemContainer6 = New DevComponents.DotNetBar.ItemContainer()
-        Me.BtnSelectBodegas = New DevComponents.DotNetBar.ButtonItem()
-        Me.BtnSelectEstrellas = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Entidades_Excluidas = New DevComponents.DotNetBar.ButtonItem()
         Me.RibbonPanel2 = New DevComponents.DotNetBar.RibbonPanel()
         Me.RibbonPanel4 = New DevComponents.DotNetBar.RibbonPanel()
         Me.RibbonBar4 = New DevComponents.DotNetBar.RibbonBar()
@@ -76,33 +55,6 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.Chk_Trabajando_Con_Proyeccion = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Chk_Incluir_Salidas_GDI_OT = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Chk_SumerStockExternoAlFisico = New DevComponents.DotNetBar.CheckBoxItem()
-        Me.RibbonPanel7 = New DevComponents.DotNetBar.RibbonPanel()
-        Me.RibbonBar7 = New DevComponents.DotNetBar.RibbonBar()
-        Me.ItemContainer13 = New DevComponents.DotNetBar.ItemContainer()
-        Me.Rdb_Rot_Mediana = New DevComponents.DotNetBar.CheckBoxItem()
-        Me.Rdb_Rot_Promedio = New DevComponents.DotNetBar.CheckBoxItem()
-        Me.RibbonBar3 = New DevComponents.DotNetBar.RibbonBar()
-        Me.ItemContainer9 = New DevComponents.DotNetBar.ItemContainer()
-        Me.Rdb_Agrupar_x_Asociados = New DevComponents.DotNetBar.CheckBoxItem()
-        Me.Rdb_Agrupar_x_Reemplazos = New DevComponents.DotNetBar.CheckBoxItem()
-        Me.RibbonBar1 = New DevComponents.DotNetBar.RibbonBar()
-        Me.Btn_Actualizar_Rotacion = New DevComponents.DotNetBar.ButtonItem()
-        Me.Rb_Calculo_Cantidad = New DevComponents.DotNetBar.ButtonItem()
-        Me.Ribon_Fin_De_Semana = New DevComponents.DotNetBar.RibbonBar()
-        Me.ItemContainer3 = New DevComponents.DotNetBar.ItemContainer()
-        Me.Chk_Sabado = New DevComponents.DotNetBar.CheckBoxItem()
-        Me.Chk_Domingo = New DevComponents.DotNetBar.CheckBoxItem()
-        Me.Ribon_Parametros_Rotacion = New DevComponents.DotNetBar.RibbonBar()
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-        Me.Cmb_Tiempo_Reposicion_Dias_Meses = New DevComponents.DotNetBar.Controls.ComboBoxEx()
-        Me.Cmb_Metodo_Abastecer_Dias_Meses = New DevComponents.DotNetBar.Controls.ComboBoxEx()
-        Me.Input_Porc_Crecimiento = New DevComponents.Editors.IntegerInput()
-        Me.Input_Tiempo_Reposicion = New DevComponents.Editors.IntegerInput()
-        Me.Input_Dias_a_Abastecer = New DevComponents.Editors.IntegerInput()
-        Me.LblStockCritico = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.ControlContainerItem2 = New DevComponents.DotNetBar.ControlContainerItem()
         Me.RibbonPanel5 = New DevComponents.DotNetBar.RibbonPanel()
         Me.RibbonPanel6 = New DevComponents.DotNetBar.RibbonPanel()
         Me.RibbonBar9 = New DevComponents.DotNetBar.RibbonBar()
@@ -130,6 +82,54 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.Chk_Traer_Solo_Proveedores_Relacion_Con_El_Producto = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Chk_Ent_Fisica = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Chk_Solo_Proveedores_CodAlternativo = New DevComponents.DotNetBar.CheckBoxItem()
+        Me.RibbonPanel1 = New DevComponents.DotNetBar.RibbonPanel()
+        Me.RibbonPanel3 = New DevComponents.DotNetBar.RibbonPanel()
+        Me.Ribon_Proyeccion = New DevComponents.DotNetBar.RibbonBar()
+        Me.Btn_Proyeccion_Mensual = New DevComponents.DotNetBar.ButtonItem()
+        Me.Ribon_Consolidar_Stock_Act_Rotacion = New DevComponents.DotNetBar.RibbonBar()
+        Me.Btn_Consolidar_Stock = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Poner_Cantidades_Comprar = New DevComponents.DotNetBar.ButtonItem()
+        Me.RibbonBar2 = New DevComponents.DotNetBar.RibbonBar()
+        Me.ItemContainer2 = New DevComponents.DotNetBar.ItemContainer()
+        Me.Btn_Ver_Productos = New DevComponents.DotNetBar.ButtonItem()
+        Me.CmmdBuscarInf = New DevComponents.DotNetBar.Command(Me.components)
+        Me.Btn_Buscar_Productos = New DevComponents.DotNetBar.ButtonItem()
+        Me.RibbonBar5 = New DevComponents.DotNetBar.RibbonBar()
+        Me.ItemContainer7 = New DevComponents.DotNetBar.ItemContainer()
+        Me.BtnDejarCantEnCero = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Dejar_En_Cero_Refleos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Ribon_Filtro_Bodegas = New DevComponents.DotNetBar.RibbonBar()
+        Me.ItemContainer6 = New DevComponents.DotNetBar.ItemContainer()
+        Me.BtnSelectBodegas = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnSelectEstrellas = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Entidades_Excluidas = New DevComponents.DotNetBar.ButtonItem()
+        Me.RibbonPanel7 = New DevComponents.DotNetBar.RibbonPanel()
+        Me.RibbonBar7 = New DevComponents.DotNetBar.RibbonBar()
+        Me.ItemContainer13 = New DevComponents.DotNetBar.ItemContainer()
+        Me.Rdb_Rot_Mediana = New DevComponents.DotNetBar.CheckBoxItem()
+        Me.Rdb_Rot_Promedio = New DevComponents.DotNetBar.CheckBoxItem()
+        Me.RibbonBar3 = New DevComponents.DotNetBar.RibbonBar()
+        Me.ItemContainer9 = New DevComponents.DotNetBar.ItemContainer()
+        Me.Rdb_Agrupar_x_Asociados = New DevComponents.DotNetBar.CheckBoxItem()
+        Me.Rdb_Agrupar_x_Reemplazos = New DevComponents.DotNetBar.CheckBoxItem()
+        Me.RibbonBar1 = New DevComponents.DotNetBar.RibbonBar()
+        Me.Btn_Actualizar_Rotacion = New DevComponents.DotNetBar.ButtonItem()
+        Me.Rb_Calculo_Cantidad = New DevComponents.DotNetBar.ButtonItem()
+        Me.Ribon_Fin_De_Semana = New DevComponents.DotNetBar.RibbonBar()
+        Me.ItemContainer3 = New DevComponents.DotNetBar.ItemContainer()
+        Me.Chk_Sabado = New DevComponents.DotNetBar.CheckBoxItem()
+        Me.Chk_Domingo = New DevComponents.DotNetBar.CheckBoxItem()
+        Me.Ribon_Parametros_Rotacion = New DevComponents.DotNetBar.RibbonBar()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Cmb_Tiempo_Reposicion_Dias_Meses = New DevComponents.DotNetBar.Controls.ComboBoxEx()
+        Me.Cmb_Metodo_Abastecer_Dias_Meses = New DevComponents.DotNetBar.Controls.ComboBoxEx()
+        Me.Input_Porc_Crecimiento = New DevComponents.Editors.IntegerInput()
+        Me.Input_Tiempo_Reposicion = New DevComponents.Editors.IntegerInput()
+        Me.Input_Dias_a_Abastecer = New DevComponents.Editors.IntegerInput()
+        Me.LblStockCritico = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.ControlContainerItem2 = New DevComponents.DotNetBar.ControlContainerItem()
         Me.ApplicationButton1 = New DevComponents.DotNetBar.ApplicationButton()
         Me.ItemContainer1 = New DevComponents.DotNetBar.ItemContainer()
         Me.BtnGenrarOcc = New DevComponents.DotNetBar.ButtonItem()
@@ -187,20 +187,20 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.Btn_Rotacion_Productos_Con_Rot_Vencida = New DevComponents.DotNetBar.ButtonItem()
         Me.Timer_Ejecucion_Automatica = New System.Windows.Forms.Timer(Me.components)
         Me.RibbonControl1.SuspendLayout()
-        Me.RibbonPanel1.SuspendLayout()
-        Me.RibbonPanel3.SuspendLayout()
         Me.RibbonPanel2.SuspendLayout()
         Me.RibbonPanel4.SuspendLayout()
         Me.Ribon_Ud.SuspendLayout()
+        Me.RibbonPanel5.SuspendLayout()
+        Me.RibbonPanel6.SuspendLayout()
+        Me.Ribon_Costos.SuspendLayout()
+        Me.RibbonPanel1.SuspendLayout()
+        Me.RibbonPanel3.SuspendLayout()
         Me.RibbonPanel7.SuspendLayout()
         Me.Ribon_Parametros_Rotacion.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         CType(Me.Input_Porc_Crecimiento, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Input_Tiempo_Reposicion, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Input_Dias_a_Abastecer, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RibbonPanel5.SuspendLayout()
-        Me.RibbonPanel6.SuspendLayout()
-        Me.Ribon_Costos.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -214,10 +214,10 @@ Partial Class Frm_01_Asis_Compra_Resultados
         '
         Me.RibbonControl1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.RibbonControl1.CaptionVisible = True
-        Me.RibbonControl1.Controls.Add(Me.RibbonPanel2)
+        Me.RibbonControl1.Controls.Add(Me.RibbonPanel5)
         Me.RibbonControl1.Controls.Add(Me.RibbonPanel1)
         Me.RibbonControl1.Controls.Add(Me.RibbonPanel7)
-        Me.RibbonControl1.Controls.Add(Me.RibbonPanel5)
+        Me.RibbonControl1.Controls.Add(Me.RibbonPanel2)
         Me.RibbonControl1.Dock = System.Windows.Forms.DockStyle.Top
         Me.RibbonControl1.ForeColor = System.Drawing.Color.Black
         Me.RibbonControl1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ApplicationButton1, Me.Rb_Proveedores, Me.Rb_Herramientas, Me.Rb_Opcion_Indicadores, Me.Rb_Calculo_Qcompra, Me.Btn_Actualizar_Informe, Me.Btn_Actualizar_datos_Informe, Me.Btn_Actualizar_Rotacion_Vta, Me.Btn_Rotacion_Estacional})
@@ -245,6 +245,779 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.RibbonControl1.TabGroupHeight = 14
         Me.RibbonControl1.TabIndex = 0
         Me.RibbonControl1.Text = "RESULTADO INFORME ASISTENTE DE COMPRAS..."
+        '
+        'RibbonPanel2
+        '
+        Me.RibbonPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.RibbonPanel2.Controls.Add(Me.RibbonPanel4)
+        Me.RibbonPanel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RibbonPanel2.Location = New System.Drawing.Point(0, 61)
+        Me.RibbonPanel2.Name = "RibbonPanel2"
+        Me.RibbonPanel2.Padding = New System.Windows.Forms.Padding(3, 0, 3, 2)
+        Me.RibbonPanel2.Size = New System.Drawing.Size(1439, 93)
+        '
+        '
+        '
+        Me.RibbonPanel2.Style.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.RibbonPanel2.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.RibbonPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.RibbonPanel2.TabIndex = 2
+        Me.RibbonPanel2.Visible = False
+        '
+        'RibbonPanel4
+        '
+        Me.RibbonPanel4.AutoScroll = True
+        Me.RibbonPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.RibbonPanel4.Controls.Add(Me.RibbonBar4)
+        Me.RibbonPanel4.Controls.Add(Me.Ribon_Ud)
+        Me.RibbonPanel4.Controls.Add(Me.Ribon_Excluir_Incluir)
+        Me.RibbonPanel4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RibbonPanel4.Location = New System.Drawing.Point(3, 0)
+        Me.RibbonPanel4.Name = "RibbonPanel4"
+        Me.RibbonPanel4.Padding = New System.Windows.Forms.Padding(3, 0, 3, 2)
+        Me.RibbonPanel4.Size = New System.Drawing.Size(1433, 91)
+        '
+        '
+        '
+        Me.RibbonPanel4.Style.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.RibbonPanel4.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.RibbonPanel4.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.RibbonPanel4.TabIndex = 3
+        '
+        'RibbonBar4
+        '
+        Me.RibbonBar4.AutoOverflowEnabled = True
+        '
+        '
+        '
+        Me.RibbonBar4.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.RibbonBar4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.RibbonBar4.ContainerControlProcessDialogKey = True
+        Me.RibbonBar4.Dock = System.Windows.Forms.DockStyle.Left
+        Me.RibbonBar4.DragDropSupport = True
+        Me.RibbonBar4.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItemContainer10})
+        Me.RibbonBar4.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        Me.RibbonBar4.Location = New System.Drawing.Point(1149, 0)
+        Me.RibbonBar4.Name = "RibbonBar4"
+        Me.RibbonBar4.Size = New System.Drawing.Size(99, 89)
+        Me.RibbonBar4.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.RibbonBar4.TabIndex = 18
+        Me.RibbonBar4.Text = "Ver valores en..."
+        '
+        '
+        '
+        Me.RibbonBar4.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.RibbonBar4.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        'ItemContainer10
+        '
+        '
+        '
+        '
+        Me.ItemContainer10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.ItemContainer10.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical
+        Me.ItemContainer10.Name = "ItemContainer10"
+        Me.ItemContainer10.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Rdb_Valores_Netos, Me.Rdb_Valores_Brutos})
+        '
+        '
+        '
+        Me.ItemContainer10.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.ItemContainer10.VerticalItemAlignment = DevComponents.DotNetBar.eVerticalItemsAlignment.Middle
+        '
+        'Rdb_Valores_Netos
+        '
+        Me.Rdb_Valores_Netos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Valores_Netos.Checked = True
+        Me.Rdb_Valores_Netos.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_Valores_Netos.Name = "Rdb_Valores_Netos"
+        Me.Rdb_Valores_Netos.Text = "Valores Netos"
+        '
+        'Rdb_Valores_Brutos
+        '
+        Me.Rdb_Valores_Brutos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Valores_Brutos.Name = "Rdb_Valores_Brutos"
+        Me.Rdb_Valores_Brutos.Text = "Valores Brutos"
+        '
+        'Ribon_Ud
+        '
+        Me.Ribon_Ud.AutoOverflowEnabled = True
+        '
+        '
+        '
+        Me.Ribon_Ud.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.Ribon_Ud.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Ribon_Ud.ContainerControlProcessDialogKey = True
+        Me.Ribon_Ud.Controls.Add(Me.Rdb_Ud1_Compra)
+        Me.Ribon_Ud.Controls.Add(Me.Rdb_Ud2_Compra)
+        Me.Ribon_Ud.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Ribon_Ud.DragDropSupport = True
+        Me.Ribon_Ud.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItemContainer4})
+        Me.Ribon_Ud.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        Me.Ribon_Ud.Location = New System.Drawing.Point(1071, 0)
+        Me.Ribon_Ud.Name = "Ribon_Ud"
+        Me.Ribon_Ud.Size = New System.Drawing.Size(78, 89)
+        Me.Ribon_Ud.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Ribon_Ud.TabIndex = 17
+        Me.Ribon_Ud.Text = "Ud. Compra"
+        '
+        '
+        '
+        Me.Ribon_Ud.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.Ribon_Ud.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        'Rdb_Ud1_Compra
+        '
+        Me.Rdb_Ud1_Compra.AutoSize = True
+        Me.Rdb_Ud1_Compra.BackColor = System.Drawing.Color.Transparent
+        Me.Rdb_Ud1_Compra.Location = New System.Drawing.Point(4, 19)
+        Me.Rdb_Ud1_Compra.Name = "Rdb_Ud1_Compra"
+        Me.Rdb_Ud1_Compra.Size = New System.Drawing.Size(68, 17)
+        Me.Rdb_Ud1_Compra.TabIndex = 12
+        Me.Rdb_Ud1_Compra.TabStop = True
+        Me.Rdb_Ud1_Compra.Tag = "1"
+        Me.Rdb_Ud1_Compra.Text = "Unidad 1"
+        Me.Rdb_Ud1_Compra.UseVisualStyleBackColor = False
+        '
+        'Rdb_Ud2_Compra
+        '
+        Me.Rdb_Ud2_Compra.AutoSize = True
+        Me.Rdb_Ud2_Compra.BackColor = System.Drawing.Color.Transparent
+        Me.Rdb_Ud2_Compra.Location = New System.Drawing.Point(4, 40)
+        Me.Rdb_Ud2_Compra.Name = "Rdb_Ud2_Compra"
+        Me.Rdb_Ud2_Compra.Size = New System.Drawing.Size(68, 17)
+        Me.Rdb_Ud2_Compra.TabIndex = 12
+        Me.Rdb_Ud2_Compra.TabStop = True
+        Me.Rdb_Ud2_Compra.Tag = "2"
+        Me.Rdb_Ud2_Compra.Text = "Unidad 2"
+        Me.Rdb_Ud2_Compra.UseVisualStyleBackColor = False
+        '
+        'ItemContainer4
+        '
+        '
+        '
+        '
+        Me.ItemContainer4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.ItemContainer4.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical
+        Me.ItemContainer4.Name = "ItemContainer4"
+        Me.ItemContainer4.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ControlContainerItem5, Me.ControlContainerItem6})
+        Me.ItemContainer4.TitlePosition = DevComponents.DotNetBar.eTitlePosition.Bottom
+        '
+        '
+        '
+        Me.ItemContainer4.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.ItemContainer4.VerticalItemAlignment = DevComponents.DotNetBar.eVerticalItemsAlignment.Middle
+        '
+        'ControlContainerItem5
+        '
+        Me.ControlContainerItem5.AllowItemResize = False
+        Me.ControlContainerItem5.Control = Me.Rdb_Ud1_Compra
+        Me.ControlContainerItem5.MenuVisibility = DevComponents.DotNetBar.eMenuVisibility.VisibleAlways
+        Me.ControlContainerItem5.Name = "ControlContainerItem5"
+        '
+        'ControlContainerItem6
+        '
+        Me.ControlContainerItem6.AllowItemResize = False
+        Me.ControlContainerItem6.Control = Me.Rdb_Ud2_Compra
+        Me.ControlContainerItem6.MenuVisibility = DevComponents.DotNetBar.eMenuVisibility.VisibleAlways
+        Me.ControlContainerItem6.Name = "ControlContainerItem6"
+        '
+        'Ribon_Excluir_Incluir
+        '
+        Me.Ribon_Excluir_Incluir.AutoOverflowEnabled = True
+        '
+        '
+        '
+        Me.Ribon_Excluir_Incluir.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.Ribon_Excluir_Incluir.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Ribon_Excluir_Incluir.ContainerControlProcessDialogKey = True
+        Me.Ribon_Excluir_Incluir.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Ribon_Excluir_Incluir.DragDropSupport = True
+        Me.Ribon_Excluir_Incluir.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItemContainer8})
+        Me.Ribon_Excluir_Incluir.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        Me.Ribon_Excluir_Incluir.Location = New System.Drawing.Point(3, 0)
+        Me.Ribon_Excluir_Incluir.Name = "Ribon_Excluir_Incluir"
+        Me.Ribon_Excluir_Incluir.Size = New System.Drawing.Size(1068, 89)
+        Me.Ribon_Excluir_Incluir.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Ribon_Excluir_Incluir.TabIndex = 1
+        Me.Ribon_Excluir_Incluir.Text = "Excluir - Incluir"
+        '
+        '
+        '
+        Me.Ribon_Excluir_Incluir.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.Ribon_Excluir_Incluir.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        'ItemContainer8
+        '
+        '
+        '
+        '
+        Me.ItemContainer8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.ItemContainer8.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical
+        Me.ItemContainer8.MultiLine = True
+        Me.ItemContainer8.Name = "ItemContainer8"
+        Me.ItemContainer8.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Chk_Sacar_Productos_Sin_Rotacion, Me.Chk_Restar_Stok_Bodega, Me.Chk_Quitar_Bloqueados_Compra, Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI, Me.Chk_Mostrar_Solo_Productos_A_Comprar, Me.Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero, Me.Chk_Quitar_Comprados, Me.Chk_Traer_Productos_De_Reemplazo, Me.Chk_Sumar_Rotacion_Hermanos, Me.Chk_Rotacion_Con_Ent_Excluidas, Me.Chk_Mostrar_Solo_Stock_Critico, Me.Chk_Quitar_Ventas_Calzadas, Me.Chk_Quitare_Sospechosos_Stock, Me.Chk_Trabajando_Con_Proyeccion, Me.Chk_Incluir_Salidas_GDI_OT, Me.Chk_SumerStockExternoAlFisico})
+        '
+        '
+        '
+        Me.ItemContainer8.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        'Chk_Sacar_Productos_Sin_Rotacion
+        '
+        Me.Chk_Sacar_Productos_Sin_Rotacion.Name = "Chk_Sacar_Productos_Sin_Rotacion"
+        Me.Chk_Sacar_Productos_Sin_Rotacion.Text = "Sacar productos sin rotación"
+        Me.Chk_Sacar_Productos_Sin_Rotacion.Tooltip = "Quitar productos que no han tenido rotación en los 3 ultimos periodos"
+        '
+        'Chk_Restar_Stok_Bodega
+        '
+        Me.Chk_Restar_Stok_Bodega.Name = "Chk_Restar_Stok_Bodega"
+        Me.Chk_Restar_Stok_Bodega.Text = "Restar stock de bodega"
+        '
+        'Chk_Quitar_Bloqueados_Compra
+        '
+        Me.Chk_Quitar_Bloqueados_Compra.Name = "Chk_Quitar_Bloqueados_Compra"
+        Me.Chk_Quitar_Bloqueados_Compra.Text = "Quitar bloqueados compra"
+        '
+        'Chk_No_Considera_Con_Stock_Pedido_OCC_NVI
+        '
+        Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Name = "Chk_No_Considera_Con_Stock_Pedido_OCC_NVI"
+        Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Text = "Quitar productos <br/>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "con <b>Stock pedido</b>. <br/>( Tiene <b><font color=""#ED" &
+    "1C24"">OCC</font></b> o <b><font color=""#ED1C24"">NVI </font></b>)"
+        '
+        'Chk_Mostrar_Solo_Productos_A_Comprar
+        '
+        Me.Chk_Mostrar_Solo_Productos_A_Comprar.Name = "Chk_Mostrar_Solo_Productos_A_Comprar"
+        Me.Chk_Mostrar_Solo_Productos_A_Comprar.Text = "Mostrar solo productos a Comprar"
+        '
+        'Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero
+        '
+        Me.Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Name = "Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero"
+        Me.Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Text = "Mostrar solo productos " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "con cantidad a comprar" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "mayor a 0"
+        '
+        'Chk_Quitar_Comprados
+        '
+        Me.Chk_Quitar_Comprados.Name = "Chk_Quitar_Comprados"
+        Me.Chk_Quitar_Comprados.Text = "Quitar comprados"
+        '
+        'Chk_Traer_Productos_De_Reemplazo
+        '
+        Me.Chk_Traer_Productos_De_Reemplazo.Enabled = False
+        Me.Chk_Traer_Productos_De_Reemplazo.Name = "Chk_Traer_Productos_De_Reemplazo"
+        Me.Chk_Traer_Productos_De_Reemplazo.Text = "Traer productos de reemplazo"
+        '
+        'Chk_Sumar_Rotacion_Hermanos
+        '
+        Me.Chk_Sumar_Rotacion_Hermanos.Enabled = False
+        Me.Chk_Sumar_Rotacion_Hermanos.Name = "Chk_Sumar_Rotacion_Hermanos"
+        Me.Chk_Sumar_Rotacion_Hermanos.Text = "Sumar Rotación de Hnos."
+        '
+        'Chk_Rotacion_Con_Ent_Excluidas
+        '
+        Me.Chk_Rotacion_Con_Ent_Excluidas.Enabled = False
+        Me.Chk_Rotacion_Con_Ent_Excluidas.Name = "Chk_Rotacion_Con_Ent_Excluidas"
+        Me.Chk_Rotacion_Con_Ent_Excluidas.Text = "Rotación con Ent. Excluidas"
+        '
+        'Chk_Mostrar_Solo_Stock_Critico
+        '
+        Me.Chk_Mostrar_Solo_Stock_Critico.Name = "Chk_Mostrar_Solo_Stock_Critico"
+        Me.Chk_Mostrar_Solo_Stock_Critico.Text = "Mostrar productos solo con Stock Critico"
+        '
+        'Chk_Quitar_Ventas_Calzadas
+        '
+        Me.Chk_Quitar_Ventas_Calzadas.Name = "Chk_Quitar_Ventas_Calzadas"
+        Me.Chk_Quitar_Ventas_Calzadas.Text = "Quitar Refleos (Ventas Calzadas)"
+        '
+        'Chk_Quitare_Sospechosos_Stock
+        '
+        Me.Chk_Quitare_Sospechosos_Stock.Name = "Chk_Quitare_Sospechosos_Stock"
+        Me.Chk_Quitare_Sospechosos_Stock.Text = "Quitar Sospechosos de baja rotación de venta"
+        '
+        'Chk_Trabajando_Con_Proyeccion
+        '
+        Me.Chk_Trabajando_Con_Proyeccion.Enabled = False
+        Me.Chk_Trabajando_Con_Proyeccion.Name = "Chk_Trabajando_Con_Proyeccion"
+        Me.Chk_Trabajando_Con_Proyeccion.Text = "Trabajando con proyección"
+        '
+        'Chk_Incluir_Salidas_GDI_OT
+        '
+        Me.Chk_Incluir_Salidas_GDI_OT.Enabled = False
+        Me.Chk_Incluir_Salidas_GDI_OT.Name = "Chk_Incluir_Salidas_GDI_OT"
+        Me.Chk_Incluir_Salidas_GDI_OT.Text = "Incluye Mov. GDI ODT"
+        '
+        'Chk_SumerStockExternoAlFisico
+        '
+        Me.Chk_SumerStockExternoAlFisico.Name = "Chk_SumerStockExternoAlFisico"
+        Me.Chk_SumerStockExternoAlFisico.Text = "Sumar stock externo al físico"
+        '
+        'RibbonPanel5
+        '
+        Me.RibbonPanel5.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.RibbonPanel5.Controls.Add(Me.RibbonPanel6)
+        Me.RibbonPanel5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RibbonPanel5.Location = New System.Drawing.Point(0, 61)
+        Me.RibbonPanel5.Name = "RibbonPanel5"
+        Me.RibbonPanel5.Padding = New System.Windows.Forms.Padding(3, 0, 3, 2)
+        Me.RibbonPanel5.Size = New System.Drawing.Size(1439, 93)
+        '
+        '
+        '
+        Me.RibbonPanel5.Style.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.RibbonPanel5.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.RibbonPanel5.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.RibbonPanel5.TabIndex = 3
+        '
+        'RibbonPanel6
+        '
+        Me.RibbonPanel6.AutoScroll = True
+        Me.RibbonPanel6.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.RibbonPanel6.Controls.Add(Me.RibbonBar9)
+        Me.RibbonPanel6.Controls.Add(Me.RibbonBar8)
+        Me.RibbonPanel6.Controls.Add(Me.RibbonBar6)
+        Me.RibbonPanel6.Controls.Add(Me.Ribon_Filtrar_Proveedor)
+        Me.RibbonPanel6.Controls.Add(Me.Ribon_Proceso_Automatico)
+        Me.RibbonPanel6.Controls.Add(Me.Ribon_Costos)
+        Me.RibbonPanel6.Controls.Add(Me.Ribon_Proveedor_Proveedor_Unico)
+        Me.RibbonPanel6.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RibbonPanel6.Location = New System.Drawing.Point(3, 0)
+        Me.RibbonPanel6.Name = "RibbonPanel6"
+        Me.RibbonPanel6.Padding = New System.Windows.Forms.Padding(3, 0, 3, 2)
+        Me.RibbonPanel6.Size = New System.Drawing.Size(1433, 91)
+        '
+        '
+        '
+        Me.RibbonPanel6.Style.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.RibbonPanel6.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.RibbonPanel6.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.RibbonPanel6.TabIndex = 4
+        '
+        'RibbonBar9
+        '
+        Me.RibbonBar9.AutoOverflowEnabled = True
+        '
+        '
+        '
+        Me.RibbonBar9.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.RibbonBar9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.RibbonBar9.ContainerControlProcessDialogKey = True
+        Me.RibbonBar9.Dock = System.Windows.Forms.DockStyle.Left
+        Me.RibbonBar9.DragDropSupport = True
+        Me.RibbonBar9.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnProceso_Prov_Auto_Especial})
+        Me.RibbonBar9.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        Me.RibbonBar9.Location = New System.Drawing.Point(1094, 0)
+        Me.RibbonBar9.Name = "RibbonBar9"
+        Me.RibbonBar9.Size = New System.Drawing.Size(172, 89)
+        Me.RibbonBar9.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.RibbonBar9.TabIndex = 13
+        Me.RibbonBar9.Text = "Proceso automático"
+        '
+        '
+        '
+        Me.RibbonBar9.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.RibbonBar9.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        'BtnProceso_Prov_Auto_Especial
+        '
+        Me.BtnProceso_Prov_Auto_Especial.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.BtnProceso_Prov_Auto_Especial.Image = CType(resources.GetObject("BtnProceso_Prov_Auto_Especial.Image"), System.Drawing.Image)
+        Me.BtnProceso_Prov_Auto_Especial.ImageAlt = CType(resources.GetObject("BtnProceso_Prov_Auto_Especial.ImageAlt"), System.Drawing.Image)
+        Me.BtnProceso_Prov_Auto_Especial.Name = "BtnProceso_Prov_Auto_Especial"
+        Me.BtnProceso_Prov_Auto_Especial.SubItemsExpandWidth = 14
+        Me.BtnProceso_Prov_Auto_Especial.Text = "Calcular auto. cant. <br/>de compra prov. especial"
+        Me.BtnProceso_Prov_Auto_Especial.Tooltip = "Calcula automaticamente las cantidades a comprar para el proveedor estrella"
+        '
+        'RibbonBar8
+        '
+        Me.RibbonBar8.AutoOverflowEnabled = True
+        '
+        '
+        '
+        Me.RibbonBar8.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.RibbonBar8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.RibbonBar8.ContainerControlProcessDialogKey = True
+        Me.RibbonBar8.Dock = System.Windows.Forms.DockStyle.Left
+        Me.RibbonBar8.DragDropSupport = True
+        Me.RibbonBar8.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_PorcUltCompXProv})
+        Me.RibbonBar8.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        Me.RibbonBar8.Location = New System.Drawing.Point(966, 0)
+        Me.RibbonBar8.Name = "RibbonBar8"
+        Me.RibbonBar8.Size = New System.Drawing.Size(128, 89)
+        Me.RibbonBar8.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.RibbonBar8.TabIndex = 12
+        Me.RibbonBar8.Text = "Cumplimiento"
+        '
+        '
+        '
+        Me.RibbonBar8.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.RibbonBar8.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        'Btn_PorcUltCompXProv
+        '
+        Me.Btn_PorcUltCompXProv.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_PorcUltCompXProv.Image = CType(resources.GetObject("Btn_PorcUltCompXProv.Image"), System.Drawing.Image)
+        Me.Btn_PorcUltCompXProv.ImageAlt = CType(resources.GetObject("Btn_PorcUltCompXProv.ImageAlt"), System.Drawing.Image)
+        Me.Btn_PorcUltCompXProv.Name = "Btn_PorcUltCompXProv"
+        Me.Btn_PorcUltCompXProv.SubItemsExpandWidth = 14
+        Me.Btn_PorcUltCompXProv.Text = "% Cumplimiento<br/>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & " entrega por<br/>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "proveedor<br/>"
+        '
+        'RibbonBar6
+        '
+        Me.RibbonBar6.AutoOverflowEnabled = True
+        '
+        '
+        '
+        Me.RibbonBar6.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.RibbonBar6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.RibbonBar6.ContainerControlProcessDialogKey = True
+        Me.RibbonBar6.Dock = System.Windows.Forms.DockStyle.Left
+        Me.RibbonBar6.DragDropSupport = True
+        Me.RibbonBar6.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Lista_Costos_Proveedor})
+        Me.RibbonBar6.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        Me.RibbonBar6.Location = New System.Drawing.Point(878, 0)
+        Me.RibbonBar6.Name = "RibbonBar6"
+        Me.RibbonBar6.Size = New System.Drawing.Size(88, 89)
+        Me.RibbonBar6.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.RibbonBar6.TabIndex = 11
+        Me.RibbonBar6.Text = "Costos proveedor"
+        '
+        '
+        '
+        Me.RibbonBar6.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.RibbonBar6.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        'Btn_Lista_Costos_Proveedor
+        '
+        Me.Btn_Lista_Costos_Proveedor.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Lista_Costos_Proveedor.Image = CType(resources.GetObject("Btn_Lista_Costos_Proveedor.Image"), System.Drawing.Image)
+        Me.Btn_Lista_Costos_Proveedor.ImageAlt = CType(resources.GetObject("Btn_Lista_Costos_Proveedor.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Lista_Costos_Proveedor.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Lista_Costos_Proveedor.Name = "Btn_Lista_Costos_Proveedor"
+        Me.Btn_Lista_Costos_Proveedor.SubItemsExpandWidth = 14
+        Me.Btn_Lista_Costos_Proveedor.Text = "Lista de costos por proveedor"
+        '
+        'Ribon_Filtrar_Proveedor
+        '
+        Me.Ribon_Filtrar_Proveedor.AutoOverflowEnabled = True
+        '
+        '
+        '
+        Me.Ribon_Filtrar_Proveedor.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.Ribon_Filtrar_Proveedor.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Ribon_Filtrar_Proveedor.ContainerControlProcessDialogKey = True
+        Me.Ribon_Filtrar_Proveedor.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Ribon_Filtrar_Proveedor.DragDropSupport = True
+        Me.Ribon_Filtrar_Proveedor.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItemContainer12})
+        Me.Ribon_Filtrar_Proveedor.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        Me.Ribon_Filtrar_Proveedor.Location = New System.Drawing.Point(735, 0)
+        Me.Ribon_Filtrar_Proveedor.Name = "Ribon_Filtrar_Proveedor"
+        Me.Ribon_Filtrar_Proveedor.Size = New System.Drawing.Size(143, 89)
+        Me.Ribon_Filtrar_Proveedor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Ribon_Filtrar_Proveedor.TabIndex = 10
+        Me.Ribon_Filtrar_Proveedor.Text = "Filtrar proveedor"
+        '
+        '
+        '
+        Me.Ribon_Filtrar_Proveedor.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.Ribon_Filtrar_Proveedor.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        'ItemContainer12
+        '
+        '
+        '
+        '
+        Me.ItemContainer12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.ItemContainer12.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical
+        Me.ItemContainer12.Name = "ItemContainer12"
+        Me.ItemContainer12.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Filtrar_Proveedor_Ribon, Me.Btn_Quitar_Filtro_Proveedor_Ribon})
+        '
+        '
+        '
+        Me.ItemContainer12.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        'Btn_Filtrar_Proveedor_Ribon
+        '
+        Me.Btn_Filtrar_Proveedor_Ribon.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Filtrar_Proveedor_Ribon.Image = CType(resources.GetObject("Btn_Filtrar_Proveedor_Ribon.Image"), System.Drawing.Image)
+        Me.Btn_Filtrar_Proveedor_Ribon.Name = "Btn_Filtrar_Proveedor_Ribon"
+        Me.Btn_Filtrar_Proveedor_Ribon.Text = "Filtrar Proveedor"
+        '
+        'Btn_Quitar_Filtro_Proveedor_Ribon
+        '
+        Me.Btn_Quitar_Filtro_Proveedor_Ribon.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Quitar_Filtro_Proveedor_Ribon.Enabled = False
+        Me.Btn_Quitar_Filtro_Proveedor_Ribon.Image = CType(resources.GetObject("Btn_Quitar_Filtro_Proveedor_Ribon.Image"), System.Drawing.Image)
+        Me.Btn_Quitar_Filtro_Proveedor_Ribon.Name = "Btn_Quitar_Filtro_Proveedor_Ribon"
+        Me.Btn_Quitar_Filtro_Proveedor_Ribon.Text = "Quitar Filtro Proveedor"
+        '
+        'Ribon_Proceso_Automatico
+        '
+        Me.Ribon_Proceso_Automatico.AutoOverflowEnabled = True
+        '
+        '
+        '
+        Me.Ribon_Proceso_Automatico.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.Ribon_Proceso_Automatico.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Ribon_Proceso_Automatico.ContainerControlProcessDialogKey = True
+        Me.Ribon_Proceso_Automatico.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Ribon_Proceso_Automatico.DragDropSupport = True
+        Me.Ribon_Proceso_Automatico.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnProceso_Prov_Auto})
+        Me.Ribon_Proceso_Automatico.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        Me.Ribon_Proceso_Automatico.Location = New System.Drawing.Point(476, 0)
+        Me.Ribon_Proceso_Automatico.Name = "Ribon_Proceso_Automatico"
+        Me.Ribon_Proceso_Automatico.Size = New System.Drawing.Size(259, 89)
+        Me.Ribon_Proceso_Automatico.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Ribon_Proceso_Automatico.TabIndex = 9
+        Me.Ribon_Proceso_Automatico.Text = "Proceso automático"
+        '
+        '
+        '
+        Me.Ribon_Proceso_Automatico.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.Ribon_Proceso_Automatico.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        'BtnProceso_Prov_Auto
+        '
+        Me.BtnProceso_Prov_Auto.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.BtnProceso_Prov_Auto.Image = CType(resources.GetObject("BtnProceso_Prov_Auto.Image"), System.Drawing.Image)
+        Me.BtnProceso_Prov_Auto.ImageAlt = CType(resources.GetObject("BtnProceso_Prov_Auto.ImageAlt"), System.Drawing.Image)
+        Me.BtnProceso_Prov_Auto.Name = "BtnProceso_Prov_Auto"
+        Me.BtnProceso_Prov_Auto.SubItemsExpandWidth = 14
+        Me.BtnProceso_Prov_Auto.Text = "Calcular automaticamente las <br/>cantidades de compra<br/>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<b> - Incorpora prov" &
+    "eedor con mejor precio</b>. <br/>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<b> - Junta compras de prod. de reemplazo</b>" &
+    ". <br/>"
+        Me.BtnProceso_Prov_Auto.Tooltip = "Calcula automaticamente las cantidades a comprar, agrupa por productos de reempla" &
+    "zo"
+        '
+        'Ribon_Costos
+        '
+        Me.Ribon_Costos.AutoOverflowEnabled = True
+        '
+        '
+        '
+        Me.Ribon_Costos.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.Ribon_Costos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Ribon_Costos.ContainerControlProcessDialogKey = True
+        Me.Ribon_Costos.Controls.Add(Me.Rd_Costo_Ultimo_Documento_Seleccionado)
+        Me.Ribon_Costos.Controls.Add(Me.Rd_Costo_Lista_Proveedor)
+        Me.Ribon_Costos.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Ribon_Costos.DragDropSupport = True
+        Me.Ribon_Costos.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItemContainer5})
+        Me.Ribon_Costos.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        Me.Ribon_Costos.Location = New System.Drawing.Point(291, 0)
+        Me.Ribon_Costos.Name = "Ribon_Costos"
+        Me.Ribon_Costos.Size = New System.Drawing.Size(185, 89)
+        Me.Ribon_Costos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Ribon_Costos.TabIndex = 8
+        Me.Ribon_Costos.Text = "Costo para la Orden de Compra"
+        '
+        '
+        '
+        Me.Ribon_Costos.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.Ribon_Costos.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        'Rd_Costo_Ultimo_Documento_Seleccionado
+        '
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.AutoSize = True
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.BackColor = System.Drawing.Color.Transparent
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Location = New System.Drawing.Point(4, 7)
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Name = "Rd_Costo_Ultimo_Documento_Seleccionado"
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Size = New System.Drawing.Size(175, 17)
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.TabIndex = 12
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.TabStop = True
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Text = "Desde la última GRC/OCC/FCC"
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.UseVisualStyleBackColor = False
+        '
+        'Rd_Costo_Lista_Proveedor
+        '
+        Me.Rd_Costo_Lista_Proveedor.AutoSize = True
+        Me.Rd_Costo_Lista_Proveedor.BackColor = System.Drawing.Color.Transparent
+        Me.Rd_Costo_Lista_Proveedor.Location = New System.Drawing.Point(4, 28)
+        Me.Rd_Costo_Lista_Proveedor.Name = "Rd_Costo_Lista_Proveedor"
+        Me.Rd_Costo_Lista_Proveedor.Size = New System.Drawing.Size(174, 17)
+        Me.Rd_Costo_Lista_Proveedor.TabIndex = 12
+        Me.Rd_Costo_Lista_Proveedor.TabStop = True
+        Me.Rd_Costo_Lista_Proveedor.Text = "Precio de lista del proveedor     "
+        Me.Rd_Costo_Lista_Proveedor.UseVisualStyleBackColor = False
+        '
+        'ItemContainer5
+        '
+        '
+        '
+        '
+        Me.ItemContainer5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.ItemContainer5.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical
+        Me.ItemContainer5.Name = "ItemContainer5"
+        Me.ItemContainer5.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ControlContainerItem3, Me.ControlContainerItem7, Me.Cmb_Lista_Costos})
+        '
+        '
+        '
+        Me.ItemContainer5.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.ItemContainer5.VerticalItemAlignment = DevComponents.DotNetBar.eVerticalItemsAlignment.Middle
+        '
+        'ControlContainerItem3
+        '
+        Me.ControlContainerItem3.AllowItemResize = False
+        Me.ControlContainerItem3.Control = Me.Rd_Costo_Ultimo_Documento_Seleccionado
+        Me.ControlContainerItem3.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Center
+        Me.ControlContainerItem3.MenuVisibility = DevComponents.DotNetBar.eMenuVisibility.VisibleAlways
+        Me.ControlContainerItem3.Name = "ControlContainerItem3"
+        '
+        'ControlContainerItem7
+        '
+        Me.ControlContainerItem7.AllowItemResize = False
+        Me.ControlContainerItem7.Control = Me.Rd_Costo_Lista_Proveedor
+        Me.ControlContainerItem7.MenuVisibility = DevComponents.DotNetBar.eMenuVisibility.VisibleAlways
+        Me.ControlContainerItem7.Name = "ControlContainerItem7"
+        '
+        'Cmb_Lista_Costos
+        '
+        Me.Cmb_Lista_Costos.DropDownHeight = 106
+        Me.Cmb_Lista_Costos.Items.AddRange(New Object() {Me.ComboItem1})
+        Me.Cmb_Lista_Costos.LabelForeColor = System.Drawing.Color.Yellow
+        Me.Cmb_Lista_Costos.Name = "Cmb_Lista_Costos"
+        Me.Cmb_Lista_Costos.Text = "ComboBoxItem1"
+        '
+        'ComboItem1
+        '
+        Me.ComboItem1.BackColor = System.Drawing.Color.Black
+        Me.ComboItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.ComboItem1.Text = "ComboItem1"
+        '
+        'Ribon_Proveedor_Proveedor_Unico
+        '
+        Me.Ribon_Proveedor_Proveedor_Unico.AutoOverflowEnabled = True
+        '
+        '
+        '
+        Me.Ribon_Proveedor_Proveedor_Unico.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.Ribon_Proveedor_Proveedor_Unico.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Ribon_Proveedor_Proveedor_Unico.ContainerControlProcessDialogKey = True
+        Me.Ribon_Proveedor_Proveedor_Unico.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Ribon_Proveedor_Proveedor_Unico.DragDropSupport = True
+        Me.Ribon_Proveedor_Proveedor_Unico.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItemContainer11})
+        Me.Ribon_Proveedor_Proveedor_Unico.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        Me.Ribon_Proveedor_Proveedor_Unico.Location = New System.Drawing.Point(3, 0)
+        Me.Ribon_Proveedor_Proveedor_Unico.Name = "Ribon_Proveedor_Proveedor_Unico"
+        Me.Ribon_Proveedor_Proveedor_Unico.Size = New System.Drawing.Size(288, 89)
+        Me.Ribon_Proveedor_Proveedor_Unico.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Ribon_Proveedor_Proveedor_Unico.TabIndex = 1
+        Me.Ribon_Proveedor_Proveedor_Unico.Text = "Información del Proveedor"
+        '
+        '
+        '
+        Me.Ribon_Proveedor_Proveedor_Unico.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.Ribon_Proveedor_Proveedor_Unico.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Ribon_Proveedor_Proveedor_Unico.VerticalItemAlignment = DevComponents.DotNetBar.eVerticalItemsAlignment.Middle
+        '
+        'ItemContainer11
+        '
+        '
+        '
+        '
+        Me.ItemContainer11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.ItemContainer11.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical
+        Me.ItemContainer11.Name = "ItemContainer11"
+        Me.ItemContainer11.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Chk_Traer_Solo_Proveedores_Relacion_Con_El_Producto, Me.Chk_Ent_Fisica, Me.Chk_Solo_Proveedores_CodAlternativo})
+        '
+        '
+        '
+        Me.ItemContainer11.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        'Chk_Traer_Solo_Proveedores_Relacion_Con_El_Producto
+        '
+        Me.Chk_Traer_Solo_Proveedores_Relacion_Con_El_Producto.Name = "Chk_Traer_Solo_Proveedores_Relacion_Con_El_Producto"
+        Me.Chk_Traer_Solo_Proveedores_Relacion_Con_El_Producto.Text = "Traer solo proveedores vinculados con cada producto"
+        '
+        'Chk_Ent_Fisica
+        '
+        Me.Chk_Ent_Fisica.Name = "Chk_Ent_Fisica"
+        Me.Chk_Ent_Fisica.Text = "considerar proveedor(es) como entidad física"
+        '
+        'Chk_Solo_Proveedores_CodAlternativo
+        '
+        Me.Chk_Solo_Proveedores_CodAlternativo.Name = "Chk_Solo_Proveedores_CodAlternativo"
+        Me.Chk_Solo_Proveedores_CodAlternativo.Text = "Traer solo proveedores con código alternativo"
         '
         'RibbonPanel1
         '
@@ -583,337 +1356,6 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.Btn_Entidades_Excluidas.ImageAlt = CType(resources.GetObject("Btn_Entidades_Excluidas.ImageAlt"), System.Drawing.Image)
         Me.Btn_Entidades_Excluidas.Name = "Btn_Entidades_Excluidas"
         Me.Btn_Entidades_Excluidas.Text = "Entidades excluidas"
-        '
-        'RibbonPanel2
-        '
-        Me.RibbonPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.RibbonPanel2.Controls.Add(Me.RibbonPanel4)
-        Me.RibbonPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RibbonPanel2.Location = New System.Drawing.Point(0, 61)
-        Me.RibbonPanel2.Name = "RibbonPanel2"
-        Me.RibbonPanel2.Padding = New System.Windows.Forms.Padding(3, 0, 3, 2)
-        Me.RibbonPanel2.Size = New System.Drawing.Size(1439, 93)
-        '
-        '
-        '
-        Me.RibbonPanel2.Style.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.RibbonPanel2.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.RibbonPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.RibbonPanel2.TabIndex = 2
-        '
-        'RibbonPanel4
-        '
-        Me.RibbonPanel4.AutoScroll = True
-        Me.RibbonPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.RibbonPanel4.Controls.Add(Me.RibbonBar4)
-        Me.RibbonPanel4.Controls.Add(Me.Ribon_Ud)
-        Me.RibbonPanel4.Controls.Add(Me.Ribon_Excluir_Incluir)
-        Me.RibbonPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RibbonPanel4.Location = New System.Drawing.Point(3, 0)
-        Me.RibbonPanel4.Name = "RibbonPanel4"
-        Me.RibbonPanel4.Padding = New System.Windows.Forms.Padding(3, 0, 3, 2)
-        Me.RibbonPanel4.Size = New System.Drawing.Size(1433, 91)
-        '
-        '
-        '
-        Me.RibbonPanel4.Style.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.RibbonPanel4.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.RibbonPanel4.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.RibbonPanel4.TabIndex = 3
-        '
-        'RibbonBar4
-        '
-        Me.RibbonBar4.AutoOverflowEnabled = True
-        '
-        '
-        '
-        Me.RibbonBar4.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.RibbonBar4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.RibbonBar4.ContainerControlProcessDialogKey = True
-        Me.RibbonBar4.Dock = System.Windows.Forms.DockStyle.Left
-        Me.RibbonBar4.DragDropSupport = True
-        Me.RibbonBar4.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItemContainer10})
-        Me.RibbonBar4.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.RibbonBar4.Location = New System.Drawing.Point(1149, 0)
-        Me.RibbonBar4.Name = "RibbonBar4"
-        Me.RibbonBar4.Size = New System.Drawing.Size(99, 89)
-        Me.RibbonBar4.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.RibbonBar4.TabIndex = 18
-        Me.RibbonBar4.Text = "Ver valores en..."
-        '
-        '
-        '
-        Me.RibbonBar4.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.RibbonBar4.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        'ItemContainer10
-        '
-        '
-        '
-        '
-        Me.ItemContainer10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.ItemContainer10.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical
-        Me.ItemContainer10.Name = "ItemContainer10"
-        Me.ItemContainer10.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Rdb_Valores_Netos, Me.Rdb_Valores_Brutos})
-        '
-        '
-        '
-        Me.ItemContainer10.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.ItemContainer10.VerticalItemAlignment = DevComponents.DotNetBar.eVerticalItemsAlignment.Middle
-        '
-        'Rdb_Valores_Netos
-        '
-        Me.Rdb_Valores_Netos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_Valores_Netos.Checked = True
-        Me.Rdb_Valores_Netos.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Rdb_Valores_Netos.Name = "Rdb_Valores_Netos"
-        Me.Rdb_Valores_Netos.Text = "Valores Netos"
-        '
-        'Rdb_Valores_Brutos
-        '
-        Me.Rdb_Valores_Brutos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_Valores_Brutos.Name = "Rdb_Valores_Brutos"
-        Me.Rdb_Valores_Brutos.Text = "Valores Brutos"
-        '
-        'Ribon_Ud
-        '
-        Me.Ribon_Ud.AutoOverflowEnabled = True
-        '
-        '
-        '
-        Me.Ribon_Ud.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.Ribon_Ud.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Ribon_Ud.ContainerControlProcessDialogKey = True
-        Me.Ribon_Ud.Controls.Add(Me.Rdb_Ud1_Compra)
-        Me.Ribon_Ud.Controls.Add(Me.Rdb_Ud2_Compra)
-        Me.Ribon_Ud.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Ribon_Ud.DragDropSupport = True
-        Me.Ribon_Ud.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItemContainer4})
-        Me.Ribon_Ud.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Ribon_Ud.Location = New System.Drawing.Point(1071, 0)
-        Me.Ribon_Ud.Name = "Ribon_Ud"
-        Me.Ribon_Ud.Size = New System.Drawing.Size(78, 89)
-        Me.Ribon_Ud.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Ribon_Ud.TabIndex = 17
-        Me.Ribon_Ud.Text = "Ud. Compra"
-        '
-        '
-        '
-        Me.Ribon_Ud.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.Ribon_Ud.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        'Rdb_Ud1_Compra
-        '
-        Me.Rdb_Ud1_Compra.AutoSize = True
-        Me.Rdb_Ud1_Compra.BackColor = System.Drawing.Color.Transparent
-        Me.Rdb_Ud1_Compra.Location = New System.Drawing.Point(4, 19)
-        Me.Rdb_Ud1_Compra.Name = "Rdb_Ud1_Compra"
-        Me.Rdb_Ud1_Compra.Size = New System.Drawing.Size(68, 17)
-        Me.Rdb_Ud1_Compra.TabIndex = 12
-        Me.Rdb_Ud1_Compra.TabStop = True
-        Me.Rdb_Ud1_Compra.Tag = "1"
-        Me.Rdb_Ud1_Compra.Text = "Unidad 1"
-        Me.Rdb_Ud1_Compra.UseVisualStyleBackColor = False
-        '
-        'Rdb_Ud2_Compra
-        '
-        Me.Rdb_Ud2_Compra.AutoSize = True
-        Me.Rdb_Ud2_Compra.BackColor = System.Drawing.Color.Transparent
-        Me.Rdb_Ud2_Compra.Location = New System.Drawing.Point(4, 40)
-        Me.Rdb_Ud2_Compra.Name = "Rdb_Ud2_Compra"
-        Me.Rdb_Ud2_Compra.Size = New System.Drawing.Size(68, 17)
-        Me.Rdb_Ud2_Compra.TabIndex = 12
-        Me.Rdb_Ud2_Compra.TabStop = True
-        Me.Rdb_Ud2_Compra.Tag = "2"
-        Me.Rdb_Ud2_Compra.Text = "Unidad 2"
-        Me.Rdb_Ud2_Compra.UseVisualStyleBackColor = False
-        '
-        'ItemContainer4
-        '
-        '
-        '
-        '
-        Me.ItemContainer4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.ItemContainer4.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical
-        Me.ItemContainer4.Name = "ItemContainer4"
-        Me.ItemContainer4.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ControlContainerItem5, Me.ControlContainerItem6})
-        Me.ItemContainer4.TitlePosition = DevComponents.DotNetBar.eTitlePosition.Bottom
-        '
-        '
-        '
-        Me.ItemContainer4.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.ItemContainer4.VerticalItemAlignment = DevComponents.DotNetBar.eVerticalItemsAlignment.Middle
-        '
-        'ControlContainerItem5
-        '
-        Me.ControlContainerItem5.AllowItemResize = False
-        Me.ControlContainerItem5.Control = Me.Rdb_Ud1_Compra
-        Me.ControlContainerItem5.MenuVisibility = DevComponents.DotNetBar.eMenuVisibility.VisibleAlways
-        Me.ControlContainerItem5.Name = "ControlContainerItem5"
-        '
-        'ControlContainerItem6
-        '
-        Me.ControlContainerItem6.AllowItemResize = False
-        Me.ControlContainerItem6.Control = Me.Rdb_Ud2_Compra
-        Me.ControlContainerItem6.MenuVisibility = DevComponents.DotNetBar.eMenuVisibility.VisibleAlways
-        Me.ControlContainerItem6.Name = "ControlContainerItem6"
-        '
-        'Ribon_Excluir_Incluir
-        '
-        Me.Ribon_Excluir_Incluir.AutoOverflowEnabled = True
-        '
-        '
-        '
-        Me.Ribon_Excluir_Incluir.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.Ribon_Excluir_Incluir.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Ribon_Excluir_Incluir.ContainerControlProcessDialogKey = True
-        Me.Ribon_Excluir_Incluir.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Ribon_Excluir_Incluir.DragDropSupport = True
-        Me.Ribon_Excluir_Incluir.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItemContainer8})
-        Me.Ribon_Excluir_Incluir.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Ribon_Excluir_Incluir.Location = New System.Drawing.Point(3, 0)
-        Me.Ribon_Excluir_Incluir.Name = "Ribon_Excluir_Incluir"
-        Me.Ribon_Excluir_Incluir.Size = New System.Drawing.Size(1068, 89)
-        Me.Ribon_Excluir_Incluir.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Ribon_Excluir_Incluir.TabIndex = 1
-        Me.Ribon_Excluir_Incluir.Text = "Excluir - Incluir"
-        '
-        '
-        '
-        Me.Ribon_Excluir_Incluir.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.Ribon_Excluir_Incluir.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        'ItemContainer8
-        '
-        '
-        '
-        '
-        Me.ItemContainer8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.ItemContainer8.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical
-        Me.ItemContainer8.MultiLine = True
-        Me.ItemContainer8.Name = "ItemContainer8"
-        Me.ItemContainer8.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Chk_Sacar_Productos_Sin_Rotacion, Me.Chk_Restar_Stok_Bodega, Me.Chk_Quitar_Bloqueados_Compra, Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI, Me.Chk_Mostrar_Solo_Productos_A_Comprar, Me.Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero, Me.Chk_Quitar_Comprados, Me.Chk_Traer_Productos_De_Reemplazo, Me.Chk_Sumar_Rotacion_Hermanos, Me.Chk_Rotacion_Con_Ent_Excluidas, Me.Chk_Mostrar_Solo_Stock_Critico, Me.Chk_Quitar_Ventas_Calzadas, Me.Chk_Quitare_Sospechosos_Stock, Me.Chk_Trabajando_Con_Proyeccion, Me.Chk_Incluir_Salidas_GDI_OT, Me.Chk_SumerStockExternoAlFisico})
-        '
-        '
-        '
-        Me.ItemContainer8.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        'Chk_Sacar_Productos_Sin_Rotacion
-        '
-        Me.Chk_Sacar_Productos_Sin_Rotacion.Name = "Chk_Sacar_Productos_Sin_Rotacion"
-        Me.Chk_Sacar_Productos_Sin_Rotacion.Text = "Sacar productos sin rotación"
-        Me.Chk_Sacar_Productos_Sin_Rotacion.Tooltip = "Quitar productos que no han tenido rotación en los 3 ultimos periodos"
-        '
-        'Chk_Restar_Stok_Bodega
-        '
-        Me.Chk_Restar_Stok_Bodega.Name = "Chk_Restar_Stok_Bodega"
-        Me.Chk_Restar_Stok_Bodega.Text = "Restar stock de bodega"
-        '
-        'Chk_Quitar_Bloqueados_Compra
-        '
-        Me.Chk_Quitar_Bloqueados_Compra.Name = "Chk_Quitar_Bloqueados_Compra"
-        Me.Chk_Quitar_Bloqueados_Compra.Text = "Quitar bloqueados compra"
-        '
-        'Chk_No_Considera_Con_Stock_Pedido_OCC_NVI
-        '
-        Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Name = "Chk_No_Considera_Con_Stock_Pedido_OCC_NVI"
-        Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Text = "Quitar productos <br/>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "con <b>Stock pedido</b>. <br/>( Tiene <b><font color=""#ED" &
-    "1C24"">OCC</font></b> o <b><font color=""#ED1C24"">NVI </font></b>)"
-        '
-        'Chk_Mostrar_Solo_Productos_A_Comprar
-        '
-        Me.Chk_Mostrar_Solo_Productos_A_Comprar.Name = "Chk_Mostrar_Solo_Productos_A_Comprar"
-        Me.Chk_Mostrar_Solo_Productos_A_Comprar.Text = "Mostrar solo productos a Comprar"
-        '
-        'Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero
-        '
-        Me.Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Name = "Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero"
-        Me.Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Text = "Mostrar solo productos " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "con cantidad a comprar" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "mayor a 0"
-        '
-        'Chk_Quitar_Comprados
-        '
-        Me.Chk_Quitar_Comprados.Name = "Chk_Quitar_Comprados"
-        Me.Chk_Quitar_Comprados.Text = "Quitar comprados"
-        '
-        'Chk_Traer_Productos_De_Reemplazo
-        '
-        Me.Chk_Traer_Productos_De_Reemplazo.Enabled = False
-        Me.Chk_Traer_Productos_De_Reemplazo.Name = "Chk_Traer_Productos_De_Reemplazo"
-        Me.Chk_Traer_Productos_De_Reemplazo.Text = "Traer productos de reemplazo"
-        '
-        'Chk_Sumar_Rotacion_Hermanos
-        '
-        Me.Chk_Sumar_Rotacion_Hermanos.Enabled = False
-        Me.Chk_Sumar_Rotacion_Hermanos.Name = "Chk_Sumar_Rotacion_Hermanos"
-        Me.Chk_Sumar_Rotacion_Hermanos.Text = "Sumar Rotación de Hnos."
-        '
-        'Chk_Rotacion_Con_Ent_Excluidas
-        '
-        Me.Chk_Rotacion_Con_Ent_Excluidas.Enabled = False
-        Me.Chk_Rotacion_Con_Ent_Excluidas.Name = "Chk_Rotacion_Con_Ent_Excluidas"
-        Me.Chk_Rotacion_Con_Ent_Excluidas.Text = "Rotación con Ent. Excluidas"
-        '
-        'Chk_Mostrar_Solo_Stock_Critico
-        '
-        Me.Chk_Mostrar_Solo_Stock_Critico.Name = "Chk_Mostrar_Solo_Stock_Critico"
-        Me.Chk_Mostrar_Solo_Stock_Critico.Text = "Mostrar productos solo con Stock Critico"
-        '
-        'Chk_Quitar_Ventas_Calzadas
-        '
-        Me.Chk_Quitar_Ventas_Calzadas.Name = "Chk_Quitar_Ventas_Calzadas"
-        Me.Chk_Quitar_Ventas_Calzadas.Text = "Quitar Refleos (Ventas Calzadas)"
-        '
-        'Chk_Quitare_Sospechosos_Stock
-        '
-        Me.Chk_Quitare_Sospechosos_Stock.Name = "Chk_Quitare_Sospechosos_Stock"
-        Me.Chk_Quitare_Sospechosos_Stock.Text = "Quitar Sospechosos de baja rotación de venta"
-        '
-        'Chk_Trabajando_Con_Proyeccion
-        '
-        Me.Chk_Trabajando_Con_Proyeccion.Enabled = False
-        Me.Chk_Trabajando_Con_Proyeccion.Name = "Chk_Trabajando_Con_Proyeccion"
-        Me.Chk_Trabajando_Con_Proyeccion.Text = "Trabajando con proyección"
-        '
-        'Chk_Incluir_Salidas_GDI_OT
-        '
-        Me.Chk_Incluir_Salidas_GDI_OT.Enabled = False
-        Me.Chk_Incluir_Salidas_GDI_OT.Name = "Chk_Incluir_Salidas_GDI_OT"
-        Me.Chk_Incluir_Salidas_GDI_OT.Text = "Incluye Mov. GDI ODT"
-        '
-        'Chk_SumerStockExternoAlFisico
-        '
-        Me.Chk_SumerStockExternoAlFisico.Name = "Chk_SumerStockExternoAlFisico"
-        Me.Chk_SumerStockExternoAlFisico.Text = "Sumar stock externo al físico"
         '
         'RibbonPanel7
         '
@@ -1335,448 +1777,6 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.ControlContainerItem2.MenuVisibility = DevComponents.DotNetBar.eMenuVisibility.VisibleAlways
         Me.ControlContainerItem2.Name = "ControlContainerItem2"
         '
-        'RibbonPanel5
-        '
-        Me.RibbonPanel5.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.RibbonPanel5.Controls.Add(Me.RibbonPanel6)
-        Me.RibbonPanel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RibbonPanel5.Location = New System.Drawing.Point(0, 61)
-        Me.RibbonPanel5.Name = "RibbonPanel5"
-        Me.RibbonPanel5.Padding = New System.Windows.Forms.Padding(3, 0, 3, 2)
-        Me.RibbonPanel5.Size = New System.Drawing.Size(1439, 93)
-        '
-        '
-        '
-        Me.RibbonPanel5.Style.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.RibbonPanel5.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.RibbonPanel5.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.RibbonPanel5.TabIndex = 3
-        Me.RibbonPanel5.Visible = False
-        '
-        'RibbonPanel6
-        '
-        Me.RibbonPanel6.AutoScroll = True
-        Me.RibbonPanel6.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.RibbonPanel6.Controls.Add(Me.RibbonBar9)
-        Me.RibbonPanel6.Controls.Add(Me.RibbonBar8)
-        Me.RibbonPanel6.Controls.Add(Me.RibbonBar6)
-        Me.RibbonPanel6.Controls.Add(Me.Ribon_Filtrar_Proveedor)
-        Me.RibbonPanel6.Controls.Add(Me.Ribon_Proceso_Automatico)
-        Me.RibbonPanel6.Controls.Add(Me.Ribon_Costos)
-        Me.RibbonPanel6.Controls.Add(Me.Ribon_Proveedor_Proveedor_Unico)
-        Me.RibbonPanel6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RibbonPanel6.Location = New System.Drawing.Point(3, 0)
-        Me.RibbonPanel6.Name = "RibbonPanel6"
-        Me.RibbonPanel6.Padding = New System.Windows.Forms.Padding(3, 0, 3, 2)
-        Me.RibbonPanel6.Size = New System.Drawing.Size(1433, 91)
-        '
-        '
-        '
-        Me.RibbonPanel6.Style.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.RibbonPanel6.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.RibbonPanel6.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.RibbonPanel6.TabIndex = 4
-        '
-        'RibbonBar9
-        '
-        Me.RibbonBar9.AutoOverflowEnabled = True
-        '
-        '
-        '
-        Me.RibbonBar9.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.RibbonBar9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.RibbonBar9.ContainerControlProcessDialogKey = True
-        Me.RibbonBar9.Dock = System.Windows.Forms.DockStyle.Left
-        Me.RibbonBar9.DragDropSupport = True
-        Me.RibbonBar9.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnProceso_Prov_Auto_Especial})
-        Me.RibbonBar9.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.RibbonBar9.Location = New System.Drawing.Point(1094, 0)
-        Me.RibbonBar9.Name = "RibbonBar9"
-        Me.RibbonBar9.Size = New System.Drawing.Size(172, 89)
-        Me.RibbonBar9.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.RibbonBar9.TabIndex = 13
-        Me.RibbonBar9.Text = "Proceso automático"
-        '
-        '
-        '
-        Me.RibbonBar9.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.RibbonBar9.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        'BtnProceso_Prov_Auto_Especial
-        '
-        Me.BtnProceso_Prov_Auto_Especial.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.BtnProceso_Prov_Auto_Especial.Image = CType(resources.GetObject("BtnProceso_Prov_Auto_Especial.Image"), System.Drawing.Image)
-        Me.BtnProceso_Prov_Auto_Especial.ImageAlt = CType(resources.GetObject("BtnProceso_Prov_Auto_Especial.ImageAlt"), System.Drawing.Image)
-        Me.BtnProceso_Prov_Auto_Especial.Name = "BtnProceso_Prov_Auto_Especial"
-        Me.BtnProceso_Prov_Auto_Especial.SubItemsExpandWidth = 14
-        Me.BtnProceso_Prov_Auto_Especial.Text = "Calcular auto. cant. <br/>de compra prov. especial"
-        Me.BtnProceso_Prov_Auto_Especial.Tooltip = "Calcula automaticamente las cantidades a comprar para el proveedor estrella"
-        '
-        'RibbonBar8
-        '
-        Me.RibbonBar8.AutoOverflowEnabled = True
-        '
-        '
-        '
-        Me.RibbonBar8.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.RibbonBar8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.RibbonBar8.ContainerControlProcessDialogKey = True
-        Me.RibbonBar8.Dock = System.Windows.Forms.DockStyle.Left
-        Me.RibbonBar8.DragDropSupport = True
-        Me.RibbonBar8.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_PorcUltCompXProv})
-        Me.RibbonBar8.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.RibbonBar8.Location = New System.Drawing.Point(966, 0)
-        Me.RibbonBar8.Name = "RibbonBar8"
-        Me.RibbonBar8.Size = New System.Drawing.Size(128, 89)
-        Me.RibbonBar8.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.RibbonBar8.TabIndex = 12
-        Me.RibbonBar8.Text = "Cumplimiento"
-        '
-        '
-        '
-        Me.RibbonBar8.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.RibbonBar8.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        'Btn_PorcUltCompXProv
-        '
-        Me.Btn_PorcUltCompXProv.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_PorcUltCompXProv.Image = CType(resources.GetObject("Btn_PorcUltCompXProv.Image"), System.Drawing.Image)
-        Me.Btn_PorcUltCompXProv.ImageAlt = CType(resources.GetObject("Btn_PorcUltCompXProv.ImageAlt"), System.Drawing.Image)
-        Me.Btn_PorcUltCompXProv.Name = "Btn_PorcUltCompXProv"
-        Me.Btn_PorcUltCompXProv.SubItemsExpandWidth = 14
-        Me.Btn_PorcUltCompXProv.Text = "% Cumplimiento<br/>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & " entrega por<br/>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "proveedor<br/>"
-        '
-        'RibbonBar6
-        '
-        Me.RibbonBar6.AutoOverflowEnabled = True
-        '
-        '
-        '
-        Me.RibbonBar6.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.RibbonBar6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.RibbonBar6.ContainerControlProcessDialogKey = True
-        Me.RibbonBar6.Dock = System.Windows.Forms.DockStyle.Left
-        Me.RibbonBar6.DragDropSupport = True
-        Me.RibbonBar6.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Lista_Costos_Proveedor})
-        Me.RibbonBar6.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.RibbonBar6.Location = New System.Drawing.Point(878, 0)
-        Me.RibbonBar6.Name = "RibbonBar6"
-        Me.RibbonBar6.Size = New System.Drawing.Size(88, 89)
-        Me.RibbonBar6.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.RibbonBar6.TabIndex = 11
-        Me.RibbonBar6.Text = "Costos proveedor"
-        '
-        '
-        '
-        Me.RibbonBar6.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.RibbonBar6.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        'Btn_Lista_Costos_Proveedor
-        '
-        Me.Btn_Lista_Costos_Proveedor.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Lista_Costos_Proveedor.Image = CType(resources.GetObject("Btn_Lista_Costos_Proveedor.Image"), System.Drawing.Image)
-        Me.Btn_Lista_Costos_Proveedor.ImageAlt = CType(resources.GetObject("Btn_Lista_Costos_Proveedor.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Lista_Costos_Proveedor.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Lista_Costos_Proveedor.Name = "Btn_Lista_Costos_Proveedor"
-        Me.Btn_Lista_Costos_Proveedor.SubItemsExpandWidth = 14
-        Me.Btn_Lista_Costos_Proveedor.Text = "Lista de costos por proveedor"
-        '
-        'Ribon_Filtrar_Proveedor
-        '
-        Me.Ribon_Filtrar_Proveedor.AutoOverflowEnabled = True
-        '
-        '
-        '
-        Me.Ribon_Filtrar_Proveedor.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.Ribon_Filtrar_Proveedor.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Ribon_Filtrar_Proveedor.ContainerControlProcessDialogKey = True
-        Me.Ribon_Filtrar_Proveedor.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Ribon_Filtrar_Proveedor.DragDropSupport = True
-        Me.Ribon_Filtrar_Proveedor.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItemContainer12})
-        Me.Ribon_Filtrar_Proveedor.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Ribon_Filtrar_Proveedor.Location = New System.Drawing.Point(735, 0)
-        Me.Ribon_Filtrar_Proveedor.Name = "Ribon_Filtrar_Proveedor"
-        Me.Ribon_Filtrar_Proveedor.Size = New System.Drawing.Size(143, 89)
-        Me.Ribon_Filtrar_Proveedor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Ribon_Filtrar_Proveedor.TabIndex = 10
-        Me.Ribon_Filtrar_Proveedor.Text = "Filtrar proveedor"
-        '
-        '
-        '
-        Me.Ribon_Filtrar_Proveedor.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.Ribon_Filtrar_Proveedor.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        'ItemContainer12
-        '
-        '
-        '
-        '
-        Me.ItemContainer12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.ItemContainer12.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical
-        Me.ItemContainer12.Name = "ItemContainer12"
-        Me.ItemContainer12.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Filtrar_Proveedor_Ribon, Me.Btn_Quitar_Filtro_Proveedor_Ribon})
-        '
-        '
-        '
-        Me.ItemContainer12.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        'Btn_Filtrar_Proveedor_Ribon
-        '
-        Me.Btn_Filtrar_Proveedor_Ribon.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Filtrar_Proveedor_Ribon.Image = CType(resources.GetObject("Btn_Filtrar_Proveedor_Ribon.Image"), System.Drawing.Image)
-        Me.Btn_Filtrar_Proveedor_Ribon.Name = "Btn_Filtrar_Proveedor_Ribon"
-        Me.Btn_Filtrar_Proveedor_Ribon.Text = "Filtrar Proveedor"
-        '
-        'Btn_Quitar_Filtro_Proveedor_Ribon
-        '
-        Me.Btn_Quitar_Filtro_Proveedor_Ribon.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Quitar_Filtro_Proveedor_Ribon.Enabled = False
-        Me.Btn_Quitar_Filtro_Proveedor_Ribon.Image = CType(resources.GetObject("Btn_Quitar_Filtro_Proveedor_Ribon.Image"), System.Drawing.Image)
-        Me.Btn_Quitar_Filtro_Proveedor_Ribon.Name = "Btn_Quitar_Filtro_Proveedor_Ribon"
-        Me.Btn_Quitar_Filtro_Proveedor_Ribon.Text = "Quitar Filtro Proveedor"
-        '
-        'Ribon_Proceso_Automatico
-        '
-        Me.Ribon_Proceso_Automatico.AutoOverflowEnabled = True
-        '
-        '
-        '
-        Me.Ribon_Proceso_Automatico.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.Ribon_Proceso_Automatico.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Ribon_Proceso_Automatico.ContainerControlProcessDialogKey = True
-        Me.Ribon_Proceso_Automatico.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Ribon_Proceso_Automatico.DragDropSupport = True
-        Me.Ribon_Proceso_Automatico.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnProceso_Prov_Auto})
-        Me.Ribon_Proceso_Automatico.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Ribon_Proceso_Automatico.Location = New System.Drawing.Point(476, 0)
-        Me.Ribon_Proceso_Automatico.Name = "Ribon_Proceso_Automatico"
-        Me.Ribon_Proceso_Automatico.Size = New System.Drawing.Size(259, 89)
-        Me.Ribon_Proceso_Automatico.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Ribon_Proceso_Automatico.TabIndex = 9
-        Me.Ribon_Proceso_Automatico.Text = "Proceso automático"
-        '
-        '
-        '
-        Me.Ribon_Proceso_Automatico.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.Ribon_Proceso_Automatico.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        'BtnProceso_Prov_Auto
-        '
-        Me.BtnProceso_Prov_Auto.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.BtnProceso_Prov_Auto.Image = CType(resources.GetObject("BtnProceso_Prov_Auto.Image"), System.Drawing.Image)
-        Me.BtnProceso_Prov_Auto.ImageAlt = CType(resources.GetObject("BtnProceso_Prov_Auto.ImageAlt"), System.Drawing.Image)
-        Me.BtnProceso_Prov_Auto.Name = "BtnProceso_Prov_Auto"
-        Me.BtnProceso_Prov_Auto.SubItemsExpandWidth = 14
-        Me.BtnProceso_Prov_Auto.Text = "Calcular automaticamente las <br/>cantidades de compra<br/>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<b> - Incorpora prov" &
-    "eedor con mejor precio</b>. <br/>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<b> - Junta compras de prod. de reemplazo</b>" &
-    ". <br/>"
-        Me.BtnProceso_Prov_Auto.Tooltip = "Calcula automaticamente las cantidades a comprar, agrupa por productos de reempla" &
-    "zo"
-        '
-        'Ribon_Costos
-        '
-        Me.Ribon_Costos.AutoOverflowEnabled = True
-        '
-        '
-        '
-        Me.Ribon_Costos.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.Ribon_Costos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Ribon_Costos.ContainerControlProcessDialogKey = True
-        Me.Ribon_Costos.Controls.Add(Me.Rd_Costo_Ultimo_Documento_Seleccionado)
-        Me.Ribon_Costos.Controls.Add(Me.Rd_Costo_Lista_Proveedor)
-        Me.Ribon_Costos.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Ribon_Costos.DragDropSupport = True
-        Me.Ribon_Costos.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItemContainer5})
-        Me.Ribon_Costos.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Ribon_Costos.Location = New System.Drawing.Point(291, 0)
-        Me.Ribon_Costos.Name = "Ribon_Costos"
-        Me.Ribon_Costos.Size = New System.Drawing.Size(185, 89)
-        Me.Ribon_Costos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Ribon_Costos.TabIndex = 8
-        Me.Ribon_Costos.Text = "Costo para la Orden de Compra"
-        '
-        '
-        '
-        Me.Ribon_Costos.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.Ribon_Costos.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        'Rd_Costo_Ultimo_Documento_Seleccionado
-        '
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.AutoSize = True
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.BackColor = System.Drawing.Color.Transparent
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Location = New System.Drawing.Point(4, 7)
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Name = "Rd_Costo_Ultimo_Documento_Seleccionado"
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Size = New System.Drawing.Size(175, 17)
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.TabIndex = 12
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.TabStop = True
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Text = "Desde la última GRC/OCC/FCC"
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.UseVisualStyleBackColor = False
-        '
-        'Rd_Costo_Lista_Proveedor
-        '
-        Me.Rd_Costo_Lista_Proveedor.AutoSize = True
-        Me.Rd_Costo_Lista_Proveedor.BackColor = System.Drawing.Color.Transparent
-        Me.Rd_Costo_Lista_Proveedor.Location = New System.Drawing.Point(4, 28)
-        Me.Rd_Costo_Lista_Proveedor.Name = "Rd_Costo_Lista_Proveedor"
-        Me.Rd_Costo_Lista_Proveedor.Size = New System.Drawing.Size(174, 17)
-        Me.Rd_Costo_Lista_Proveedor.TabIndex = 12
-        Me.Rd_Costo_Lista_Proveedor.TabStop = True
-        Me.Rd_Costo_Lista_Proveedor.Text = "Precio de lista del proveedor     "
-        Me.Rd_Costo_Lista_Proveedor.UseVisualStyleBackColor = False
-        '
-        'ItemContainer5
-        '
-        '
-        '
-        '
-        Me.ItemContainer5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.ItemContainer5.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical
-        Me.ItemContainer5.Name = "ItemContainer5"
-        Me.ItemContainer5.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ControlContainerItem3, Me.ControlContainerItem7, Me.Cmb_Lista_Costos})
-        '
-        '
-        '
-        Me.ItemContainer5.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.ItemContainer5.VerticalItemAlignment = DevComponents.DotNetBar.eVerticalItemsAlignment.Middle
-        '
-        'ControlContainerItem3
-        '
-        Me.ControlContainerItem3.AllowItemResize = False
-        Me.ControlContainerItem3.Control = Me.Rd_Costo_Ultimo_Documento_Seleccionado
-        Me.ControlContainerItem3.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Center
-        Me.ControlContainerItem3.MenuVisibility = DevComponents.DotNetBar.eMenuVisibility.VisibleAlways
-        Me.ControlContainerItem3.Name = "ControlContainerItem3"
-        '
-        'ControlContainerItem7
-        '
-        Me.ControlContainerItem7.AllowItemResize = False
-        Me.ControlContainerItem7.Control = Me.Rd_Costo_Lista_Proveedor
-        Me.ControlContainerItem7.MenuVisibility = DevComponents.DotNetBar.eMenuVisibility.VisibleAlways
-        Me.ControlContainerItem7.Name = "ControlContainerItem7"
-        '
-        'Cmb_Lista_Costos
-        '
-        Me.Cmb_Lista_Costos.DropDownHeight = 106
-        Me.Cmb_Lista_Costos.Items.AddRange(New Object() {Me.ComboItem1})
-        Me.Cmb_Lista_Costos.LabelForeColor = System.Drawing.Color.Yellow
-        Me.Cmb_Lista_Costos.Name = "Cmb_Lista_Costos"
-        Me.Cmb_Lista_Costos.Text = "ComboBoxItem1"
-        '
-        'ComboItem1
-        '
-        Me.ComboItem1.BackColor = System.Drawing.Color.Black
-        Me.ComboItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.ComboItem1.Text = "ComboItem1"
-        '
-        'Ribon_Proveedor_Proveedor_Unico
-        '
-        Me.Ribon_Proveedor_Proveedor_Unico.AutoOverflowEnabled = True
-        '
-        '
-        '
-        Me.Ribon_Proveedor_Proveedor_Unico.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.Ribon_Proveedor_Proveedor_Unico.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Ribon_Proveedor_Proveedor_Unico.ContainerControlProcessDialogKey = True
-        Me.Ribon_Proveedor_Proveedor_Unico.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Ribon_Proveedor_Proveedor_Unico.DragDropSupport = True
-        Me.Ribon_Proveedor_Proveedor_Unico.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItemContainer11})
-        Me.Ribon_Proveedor_Proveedor_Unico.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Ribon_Proveedor_Proveedor_Unico.Location = New System.Drawing.Point(3, 0)
-        Me.Ribon_Proveedor_Proveedor_Unico.Name = "Ribon_Proveedor_Proveedor_Unico"
-        Me.Ribon_Proveedor_Proveedor_Unico.Size = New System.Drawing.Size(288, 89)
-        Me.Ribon_Proveedor_Proveedor_Unico.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Ribon_Proveedor_Proveedor_Unico.TabIndex = 1
-        Me.Ribon_Proveedor_Proveedor_Unico.Text = "Información del Proveedor"
-        '
-        '
-        '
-        Me.Ribon_Proveedor_Proveedor_Unico.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.Ribon_Proveedor_Proveedor_Unico.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Ribon_Proveedor_Proveedor_Unico.VerticalItemAlignment = DevComponents.DotNetBar.eVerticalItemsAlignment.Middle
-        '
-        'ItemContainer11
-        '
-        '
-        '
-        '
-        Me.ItemContainer11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.ItemContainer11.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical
-        Me.ItemContainer11.Name = "ItemContainer11"
-        Me.ItemContainer11.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Chk_Traer_Solo_Proveedores_Relacion_Con_El_Producto, Me.Chk_Ent_Fisica, Me.Chk_Solo_Proveedores_CodAlternativo})
-        '
-        '
-        '
-        Me.ItemContainer11.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        'Chk_Traer_Solo_Proveedores_Relacion_Con_El_Producto
-        '
-        Me.Chk_Traer_Solo_Proveedores_Relacion_Con_El_Producto.Name = "Chk_Traer_Solo_Proveedores_Relacion_Con_El_Producto"
-        Me.Chk_Traer_Solo_Proveedores_Relacion_Con_El_Producto.Text = "Traer solo proveedores vinculados con cada producto"
-        '
-        'Chk_Ent_Fisica
-        '
-        Me.Chk_Ent_Fisica.Name = "Chk_Ent_Fisica"
-        Me.Chk_Ent_Fisica.Text = "considerar proveedor(es) como entidad física"
-        '
-        'Chk_Solo_Proveedores_CodAlternativo
-        '
-        Me.Chk_Solo_Proveedores_CodAlternativo.Name = "Chk_Solo_Proveedores_CodAlternativo"
-        Me.Chk_Solo_Proveedores_CodAlternativo.Text = "Traer solo proveedores con código alternativo"
-        '
         'ApplicationButton1
         '
         Me.ApplicationButton1.AutoExpandOnClick = True
@@ -1907,6 +1907,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         '
         'Rb_Proveedores
         '
+        Me.Rb_Proveedores.Checked = True
         Me.Rb_Proveedores.Name = "Rb_Proveedores"
         Me.Rb_Proveedores.Panel = Me.RibbonPanel5
         Me.Rb_Proveedores.Text = "Proveedor(es)"
@@ -1919,7 +1920,6 @@ Partial Class Frm_01_Asis_Compra_Resultados
         '
         'Rb_Opcion_Indicadores
         '
-        Me.Rb_Opcion_Indicadores.Checked = True
         Me.Rb_Opcion_Indicadores.Name = "Rb_Opcion_Indicadores"
         Me.Rb_Opcion_Indicadores.Panel = Me.RibbonPanel2
         Me.Rb_Opcion_Indicadores.Text = "Opciones Incluir/Excluir"
@@ -2209,7 +2209,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         '
         'Frm_01_Asis_Compra_Resultados
         '
-        Me.ClientSize = New System.Drawing.Size(1449, 450)
+        Me.ClientSize = New System.Drawing.Size(1449, 446)
         Me.Controls.Add(Me.ContextMenuBar1)
         Me.Controls.Add(Me.RibbonControl1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -2222,12 +2222,16 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.RibbonControl1.ResumeLayout(False)
         Me.RibbonControl1.PerformLayout()
-        Me.RibbonPanel1.ResumeLayout(False)
-        Me.RibbonPanel3.ResumeLayout(False)
         Me.RibbonPanel2.ResumeLayout(False)
         Me.RibbonPanel4.ResumeLayout(False)
         Me.Ribon_Ud.ResumeLayout(False)
         Me.Ribon_Ud.PerformLayout()
+        Me.RibbonPanel5.ResumeLayout(False)
+        Me.RibbonPanel6.ResumeLayout(False)
+        Me.Ribon_Costos.ResumeLayout(False)
+        Me.Ribon_Costos.PerformLayout()
+        Me.RibbonPanel1.ResumeLayout(False)
+        Me.RibbonPanel3.ResumeLayout(False)
         Me.RibbonPanel7.ResumeLayout(False)
         Me.Ribon_Parametros_Rotacion.ResumeLayout(False)
         Me.GroupBox3.ResumeLayout(False)
@@ -2235,10 +2239,6 @@ Partial Class Frm_01_Asis_Compra_Resultados
         CType(Me.Input_Porc_Crecimiento, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Input_Tiempo_Reposicion, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Input_Dias_a_Abastecer, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.RibbonPanel5.ResumeLayout(False)
-        Me.RibbonPanel6.ResumeLayout(False)
-        Me.Ribon_Costos.ResumeLayout(False)
-        Me.Ribon_Costos.PerformLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
