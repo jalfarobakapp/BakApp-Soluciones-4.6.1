@@ -219,7 +219,7 @@ Public Class Frm_Importar_Stock_OEBD_Selec_Prod
         Cadena_ConexionSQL_Server = _Cadena_ConexionSQL_Server_Origen
 
         Dim Fm_b As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-        Fm_b.Pro_Empresa = ModEmpresa
+        Fm_b.Pro_Empresa = _Empresa_Ori
         Fm_b.Pro_Sucursal = ModSucursal
         Fm_b.Pro_Bodega = ModBodega
         Fm_b.RevisarPermisosBodega = False

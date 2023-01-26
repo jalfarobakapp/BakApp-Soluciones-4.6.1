@@ -72,6 +72,9 @@ Public Class Frm_Formulario_Observaciones
         End Set
     End Property
 
+    Public Property TieneOrdenDeDespacho As Boolean
+    Public Property CambiarFechaEnDetalle As Boolean
+
     Public Sub New(Ds_Matriz_Documentos As DataSet,
                    Row_Entidad As DataRow,
                    Tipo_Documento As csGlobales.Enum_Tipo_Documento,
@@ -238,11 +241,18 @@ Public Class Frm_Formulario_Observaciones
         For Each _Fila As DataRow In _TblDetalle.Rows
 
             Try
-                Dim _Feerli = NuloPorNro(_Fila.Item("FechaRecepcion"), "Nulo")
 
-                If _Feerli = "Nulo" Then
+                If CambiarFechaEnDetalle Or
+                    (FormatDateTime(DtpFechaEntrega.Value, DateFormat.ShortDate) <> FormatDateTime(_Row_Encabezado.Item("FechaRecepcion"), DateFormat.ShortDate)) Then
                     _Fila.Item("FechaRecepcion") = DtpFechaEntrega.Value
+                Else
+                    Dim _Feerli = NuloPorNro(_Fila.Item("FechaRecepcion"), "Nulo")
+
+                    If _Feerli = "Nulo" Then
+                        _Fila.Item("FechaRecepcion") = DtpFechaEntrega.Value
+                    End If
                 End If
+
             Catch ex As Exception
 
             End Try
@@ -522,10 +532,7 @@ Public Class Frm_Formulario_Observaciones
     End Sub
 
     Private Sub Btn_Grabar_Observaciones_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Grabar_Observaciones.Click
-        'If Fx_Grabar_Observaciones() Then
-        _Grabar = False
-        Me.Close()
-        'End If
+        Sb_Grabar(False, False)
     End Sub
 
     Private Sub Warning_Visado_OptionsClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Warning_Visado.OptionsClick
@@ -757,4 +764,11 @@ Public Class Frm_Formulario_Observaciones
         Sb_Grabar(True, True)
     End Sub
 
+    Private Sub DtpFechaEntrega_ButtonDropDownClick(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles DtpFechaEntrega.ButtonDropDownClick
+        If TieneOrdenDeDespacho Then
+            MessageBoxEx.Show(Me, "El documento tiene orden de despacho" & vbCrLf &
+                              "Debe cambiar este datos desde la orden de despacho", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            e.Cancel = True
+        End If
+    End Sub
 End Class

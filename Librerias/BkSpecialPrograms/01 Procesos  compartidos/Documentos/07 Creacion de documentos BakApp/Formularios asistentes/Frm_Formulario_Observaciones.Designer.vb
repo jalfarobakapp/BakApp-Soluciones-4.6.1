@@ -24,9 +24,9 @@ Partial Class Frm_Formulario_Observaciones
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Formulario_Observaciones))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TxtOrdendecompra = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.TxtFormadepago = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -52,11 +52,11 @@ Partial Class Frm_Formulario_Observaciones
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Nombre_Retirador_Mercaderia = New DevComponents.DotNetBar.LabelX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
-        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Grilla_Obs_Adicionales = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.Warning_Visado = New DevComponents.DotNetBar.Controls.WarningBox()
         Me.Imagenes_32x32 = New System.Windows.Forms.ImageList(Me.components)
         CType(Me.DtpFechaEntrega, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -65,9 +65,9 @@ Partial Class Frm_Formulario_Observaciones
         Me.GroupPanel2.SuspendLayout()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
-        Me.SuperTabControlPanel1.SuspendLayout()
         Me.SuperTabControlPanel2.SuspendLayout()
         CType(Me.Grilla_Obs_Adicionales, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuperTabControlPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'TxtOrdendecompra
@@ -519,8 +519,8 @@ Partial Class Frm_Formulario_Observaciones
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
         Me.SuperTabControl1.Location = New System.Drawing.Point(12, 35)
         Me.SuperTabControl1.Name = "SuperTabControl1"
@@ -532,6 +532,63 @@ Partial Class Frm_Formulario_Observaciones
         Me.SuperTabControl1.TabIndex = 40
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem2})
         Me.SuperTabControl1.Text = "SuperTabControl1"
+        '
+        'SuperTabControlPanel2
+        '
+        Me.SuperTabControlPanel2.Controls.Add(Me.Grilla_Obs_Adicionales)
+        Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(668, 254)
+        Me.SuperTabControlPanel2.TabIndex = 0
+        Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
+        '
+        'Grilla_Obs_Adicionales
+        '
+        Me.Grilla_Obs_Adicionales.AllowUserToAddRows = False
+        Me.Grilla_Obs_Adicionales.AllowUserToDeleteRows = False
+        Me.Grilla_Obs_Adicionales.BackgroundColor = System.Drawing.Color.White
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Obs_Adicionales.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.Grilla_Obs_Adicionales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Obs_Adicionales.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Grilla_Obs_Adicionales.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Grilla_Obs_Adicionales.EnableHeadersVisualStyles = False
+        Me.Grilla_Obs_Adicionales.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
+        Me.Grilla_Obs_Adicionales.Location = New System.Drawing.Point(0, 0)
+        Me.Grilla_Obs_Adicionales.Name = "Grilla_Obs_Adicionales"
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Obs_Adicionales.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        Me.Grilla_Obs_Adicionales.Size = New System.Drawing.Size(668, 254)
+        Me.Grilla_Obs_Adicionales.StandardTab = True
+        Me.Grilla_Obs_Adicionales.TabIndex = 28
+        '
+        'SuperTabItem2
+        '
+        Me.SuperTabItem2.AttachedControl = Me.SuperTabControlPanel2
+        Me.SuperTabItem2.GlobalItem = False
+        Me.SuperTabItem2.Image = CType(resources.GetObject("SuperTabItem2.Image"), System.Drawing.Image)
+        Me.SuperTabItem2.Name = "SuperTabItem2"
+        Me.SuperTabItem2.Text = "Observaciones adicionales"
         '
         'SuperTabControlPanel1
         '
@@ -551,63 +608,6 @@ Partial Class Frm_Formulario_Observaciones
         Me.SuperTabItem1.Image = CType(resources.GetObject("SuperTabItem1.Image"), System.Drawing.Image)
         Me.SuperTabItem1.Name = "SuperTabItem1"
         Me.SuperTabItem1.Text = "Observaciones"
-        '
-        'SuperTabControlPanel2
-        '
-        Me.SuperTabControlPanel2.Controls.Add(Me.Grilla_Obs_Adicionales)
-        Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 34)
-        Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(668, 220)
-        Me.SuperTabControlPanel2.TabIndex = 0
-        Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
-        '
-        'Grilla_Obs_Adicionales
-        '
-        Me.Grilla_Obs_Adicionales.AllowUserToAddRows = False
-        Me.Grilla_Obs_Adicionales.AllowUserToDeleteRows = False
-        Me.Grilla_Obs_Adicionales.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Obs_Adicionales.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
-        Me.Grilla_Obs_Adicionales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Obs_Adicionales.DefaultCellStyle = DataGridViewCellStyle5
-        Me.Grilla_Obs_Adicionales.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Grilla_Obs_Adicionales.EnableHeadersVisualStyles = False
-        Me.Grilla_Obs_Adicionales.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
-        Me.Grilla_Obs_Adicionales.Location = New System.Drawing.Point(0, 0)
-        Me.Grilla_Obs_Adicionales.Name = "Grilla_Obs_Adicionales"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Obs_Adicionales.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
-        Me.Grilla_Obs_Adicionales.Size = New System.Drawing.Size(668, 220)
-        Me.Grilla_Obs_Adicionales.StandardTab = True
-        Me.Grilla_Obs_Adicionales.TabIndex = 28
-        '
-        'SuperTabItem2
-        '
-        Me.SuperTabItem2.AttachedControl = Me.SuperTabControlPanel2
-        Me.SuperTabItem2.GlobalItem = False
-        Me.SuperTabItem2.Image = CType(resources.GetObject("SuperTabItem2.Image"), System.Drawing.Image)
-        Me.SuperTabItem2.Name = "SuperTabItem2"
-        Me.SuperTabItem2.Text = "Observaciones adicionales"
         '
         'Warning_Visado
         '
@@ -663,9 +663,9 @@ Partial Class Frm_Formulario_Observaciones
         Me.GroupPanel2.ResumeLayout(False)
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
-        Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.SuperTabControlPanel2.ResumeLayout(False)
         CType(Me.Grilla_Obs_Adicionales, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub

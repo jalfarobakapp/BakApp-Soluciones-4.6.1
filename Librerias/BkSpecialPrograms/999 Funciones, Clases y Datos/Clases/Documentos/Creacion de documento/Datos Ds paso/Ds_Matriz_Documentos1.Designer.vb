@@ -2606,6 +2606,8 @@ Partial Public Class Ds_Matriz_Documentos
         
         Private columnIdFincred As Global.System.Data.DataColumn
         
+        Private columnMontoFincred As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub New()
@@ -3194,6 +3196,14 @@ Partial Public Class Ds_Matriz_Documentos
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property MontoFincredColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnMontoFincred
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -3299,9 +3309,10 @@ Partial Public Class Ds_Matriz_Documentos
                     ByVal MinKgDesp As Double,  _
                     ByVal MinNetoDesp As Double,  _
                     ByVal RevFincred As Boolean,  _
-                    ByVal IdFincred As Integer) As Encabezado_DocRow
+                    ByVal IdFincred As Integer,  _
+                    ByVal MontoFincred As Double) As Encabezado_DocRow
             Dim rowEncabezado_DocRow As Encabezado_DocRow = CType(Me.NewRow,Encabezado_DocRow)
-            Dim columnValuesArray() As Object = New Object() {Id_DocEnc, Post_Venta, Tipo_Documento, Modalidad, Empresa, Sucursal, TipoDoc, NroDocumento, CodEntidad, CodSucEntidad, Nombre_Entidad, FechaEmision, Fecha_1er_Vencimiento, FechaUltVencimiento, FechaRecepcion, FechaMaxRecepcion, Cuotas, Dias_1er_Vencimiento, Dias_Vencimiento, ListaPrecios, CodEntidadFisica, CodSucEntidadFisica, Nombre_Entidad_Fisica, Contacto_Ent, CodFuncionario, NomFuncionario, Centro_Costo, Moneda_Doc, Valor_Dolar, TotalNetoDoc, TotalIvaDoc, TotalIlaDoc, TotalBrutoDoc, Valor_Abonado, CantTotal, CantDesp, DocEn_Neto_Bruto, Es_ValeTransitorio, Es_Electronico, TipoMoneda, Vizado, TotalDsctoReal_Porc, CodUsuario_Permiso_Dscto, Idmaeedo_Origen, Fun_Auto_Deuda_Ven, Total_costo, Total_Porc_Margen, Total_Valor_Margen, Total_Porc_Dscto, Total_Sub_Total_Neto, Id_DocEnc_Padre, Bloquea_Doc, Fun_Auto_Stock_Ins, Fun_Auto_Cupo_Exe, SubTido, Fun_Auto_Fecha_Des, Stand_by, Fun_Auto_Sol_Compra, Tasadorig_Doc, Reserva_NroOCC, Reserva_Idmaeedo, Bodega_Destino, Libro, Fecha_Tributaria, TotalKilos, MinKgDesp, MinNetoDesp, RevFincred, IdFincred}
+            Dim columnValuesArray() As Object = New Object() {Id_DocEnc, Post_Venta, Tipo_Documento, Modalidad, Empresa, Sucursal, TipoDoc, NroDocumento, CodEntidad, CodSucEntidad, Nombre_Entidad, FechaEmision, Fecha_1er_Vencimiento, FechaUltVencimiento, FechaRecepcion, FechaMaxRecepcion, Cuotas, Dias_1er_Vencimiento, Dias_Vencimiento, ListaPrecios, CodEntidadFisica, CodSucEntidadFisica, Nombre_Entidad_Fisica, Contacto_Ent, CodFuncionario, NomFuncionario, Centro_Costo, Moneda_Doc, Valor_Dolar, TotalNetoDoc, TotalIvaDoc, TotalIlaDoc, TotalBrutoDoc, Valor_Abonado, CantTotal, CantDesp, DocEn_Neto_Bruto, Es_ValeTransitorio, Es_Electronico, TipoMoneda, Vizado, TotalDsctoReal_Porc, CodUsuario_Permiso_Dscto, Idmaeedo_Origen, Fun_Auto_Deuda_Ven, Total_costo, Total_Porc_Margen, Total_Valor_Margen, Total_Porc_Dscto, Total_Sub_Total_Neto, Id_DocEnc_Padre, Bloquea_Doc, Fun_Auto_Stock_Ins, Fun_Auto_Cupo_Exe, SubTido, Fun_Auto_Fecha_Des, Stand_by, Fun_Auto_Sol_Compra, Tasadorig_Doc, Reserva_NroOCC, Reserva_Idmaeedo, Bodega_Destino, Libro, Fecha_Tributaria, TotalKilos, MinKgDesp, MinNetoDesp, RevFincred, IdFincred, MontoFincred}
             rowEncabezado_DocRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowEncabezado_DocRow)
             Return rowEncabezado_DocRow
@@ -3393,6 +3404,7 @@ Partial Public Class Ds_Matriz_Documentos
             Me.columnMinNetoDesp = MyBase.Columns("MinNetoDesp")
             Me.columnRevFincred = MyBase.Columns("RevFincred")
             Me.columnIdFincred = MyBase.Columns("IdFincred")
+            Me.columnMontoFincred = MyBase.Columns("MontoFincred")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -3536,6 +3548,8 @@ Partial Public Class Ds_Matriz_Documentos
             MyBase.Columns.Add(Me.columnRevFincred)
             Me.columnIdFincred = New Global.System.Data.DataColumn("IdFincred", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnIdFincred)
+            Me.columnMontoFincred = New Global.System.Data.DataColumn("MontoFincred", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnMontoFincred)
             Me.columnEmpresa.Caption = "DataColumn1"
             Me.columnListaPrecios.Caption = "DataColumn1"
             Me.columnTotalNetoDoc.DefaultValue = CType(0R,Double)
@@ -3544,6 +3558,7 @@ Partial Public Class Ds_Matriz_Documentos
             Me.columnTotalBrutoDoc.DefaultValue = CType(0R,Double)
             Me.columnRevFincred.DefaultValue = CType(false,Boolean)
             Me.columnIdFincred.DefaultValue = CType(0,Integer)
+            Me.columnMontoFincred.DefaultValue = CType(0R,Double)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -9649,6 +9664,21 @@ Partial Public Class Ds_Matriz_Documentos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property MontoFincred() As Double
+            Get
+                Try 
+                    Return CType(Me(Me.tableEncabezado_Doc.MontoFincredColumn),Double)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'MontoFincred' de la tabla 'Encabezado_Doc' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableEncabezado_Doc.MontoFincredColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Function IsId_DocEncNull() As Boolean
             Return Me.IsNull(Me.tableEncabezado_Doc.Id_DocEncColumn)
         End Function
@@ -10473,6 +10503,18 @@ Partial Public Class Ds_Matriz_Documentos
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub SetIdFincredNull()
             Me(Me.tableEncabezado_Doc.IdFincredColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsMontoFincredNull() As Boolean
+            Return Me.IsNull(Me.tableEncabezado_Doc.MontoFincredColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetMontoFincredNull()
+            Me(Me.tableEncabezado_Doc.MontoFincredColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     

@@ -49,6 +49,7 @@ Partial Class Menu
         Me.BtnCambiarDeUsuario = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Actualizar_BakApp = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Prueba_Monto_Palabra = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_CambioDeEmpresa = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnTeamviewer = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Cambio_Empresa = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Desconectar_Bases = New DevComponents.DotNetBar.ButtonItem()
@@ -81,7 +82,6 @@ Partial Class Menu
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         Me.StyleManager1 = New DevComponents.DotNetBar.StyleManager(Me.components)
-        Me.Btn_CambioDeEmpresa = New DevComponents.DotNetBar.ButtonItem()
         MetroTileFrame1 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame2 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame3 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
@@ -668,6 +668,16 @@ Partial Class Menu
         Me.Btn_Prueba_Monto_Palabra.Tooltip = "Descargar actualización"
         Me.Btn_Prueba_Monto_Palabra.Visible = False
         '
+        'Btn_CambioDeEmpresa
+        '
+        Me.Btn_CambioDeEmpresa.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_CambioDeEmpresa.ForeColor = System.Drawing.Color.Black
+        Me.Btn_CambioDeEmpresa.Image = CType(resources.GetObject("Btn_CambioDeEmpresa.Image"), System.Drawing.Image)
+        Me.Btn_CambioDeEmpresa.ImageAlt = CType(resources.GetObject("Btn_CambioDeEmpresa.ImageAlt"), System.Drawing.Image)
+        Me.Btn_CambioDeEmpresa.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_CambioDeEmpresa.Name = "Btn_CambioDeEmpresa"
+        Me.Btn_CambioDeEmpresa.Tooltip = "Cambiar de empresa"
+        '
         'BtnTeamviewer
         '
         Me.BtnTeamviewer.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
@@ -1008,16 +1018,6 @@ Partial Class Menu
         '
         Me.StyleManager1.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro
         Me.StyleManager1.MetroColorParameters = New DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(154, Byte), Integer)))
-        '
-        'Btn_CambioDeEmpresa
-        '
-        Me.Btn_CambioDeEmpresa.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_CambioDeEmpresa.ForeColor = System.Drawing.Color.Black
-        Me.Btn_CambioDeEmpresa.Image = CType(resources.GetObject("Btn_CambioDeEmpresa.Image"), System.Drawing.Image)
-        Me.Btn_CambioDeEmpresa.ImageAlt = CType(resources.GetObject("Btn_CambioDeEmpresa.ImageAlt"), System.Drawing.Image)
-        Me.Btn_CambioDeEmpresa.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_CambioDeEmpresa.Name = "Btn_CambioDeEmpresa"
-        Me.Btn_CambioDeEmpresa.Tooltip = "Cambiar de empresa"
         '
         'Menu
         '

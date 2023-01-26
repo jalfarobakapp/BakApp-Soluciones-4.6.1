@@ -699,19 +699,47 @@ Public Class Frm_MtCreacionDeProducto
 
                             If _ConexionExternas.SincroProductos Then
 
-                                Consulta_sql = _Cl_Producto.Fx_Editar_Producto_Base_Externa(_ConexionExternas.Cadena_ConexionSQL_Server_Ext,
-                                                                                            _ConexionExternas.Global_BaseBk)
+                                Dim _RludExt = _Sql2.Fx_Trae_Dato("MAEPR", "RLUD", "KOPR = '" & _Codigo & "'")
+                                Dim _EditarRtu As Boolean = True
 
-                                If _Sql2.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
-                                    MessageBoxEx.Show(Me, "Producto editado correctamente en la base de datos externa" & vbCrLf &
-                                                              "Base de datos: " & _BaseDeDatos,
-                                                              "Crear producto en base externa", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                                Else
+                                If _RludExt <> Txt_Rlud.Text Then
+                                    _EditarRtu = False
+                                End If
+
+                                _Reg = _Sql2.Fx_Cuenta_Registros("MAEPR", "KOPR = '" & _Codigo & "'")
+
+                                If _Reg = 0 Then
                                     MessageBoxEx.Show(Me, "No se pudo migrar el producto hacia la base de datos externa" & vbCrLf &
-                                                          "Base de datos: " & _BaseDeDatos & vbCrLf & vbCrLf & _Sql2.Pro_Error,
+                                                          "Base de datos: " & _BaseDeDatos & vbCrLf & vbCrLf & "NO EXISTE EL PRODUCTO",
                                                           "Crear producto en base externa",
                                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                Else
+
+                                    Consulta_sql = _Cl_Producto.Fx_Editar_Producto_Base_Externa(_ConexionExternas.Global_BaseBk, _EditarRtu)
+
+                                    If _Sql2.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+
+                                        If _EditarRtu Then
+                                            MessageBoxEx.Show(Me, "Producto editado correctamente en la base de datos externa" & vbCrLf &
+                                                                  "Base de datos: " & _BaseDeDatos,
+                                                                  "Crear producto en base externa", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                        Else
+                                            MessageBoxEx.Show(Me, "Producto editado correctamente en la base de datos externa" & vbCrLf &
+                                                              "Sin embargo la RTU es distinta a la RTU del producto en la base de datos externa" & vbCrLf &
+                                                              "Base de datos: " & _BaseDeDatos & vbCrLf & vbCrLf &
+                                                               "Informe de esta situación al administrador del sistema", "Validación",
+                                                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                        End If
+
+                                    Else
+                                        MessageBoxEx.Show(Me, "No se pudo migrar el producto hacia la base de datos externa" & vbCrLf &
+                                                              "Base de datos: " & _BaseDeDatos & vbCrLf & vbCrLf & _Sql2.Pro_Error,
+                                                              "Crear producto en base externa",
+                                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                    End If
+
                                 End If
+
 
                             End If
 

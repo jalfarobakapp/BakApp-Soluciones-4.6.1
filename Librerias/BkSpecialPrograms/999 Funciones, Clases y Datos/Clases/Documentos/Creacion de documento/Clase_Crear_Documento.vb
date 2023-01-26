@@ -2719,6 +2719,9 @@ Public Class Clase_Crear_Documento
         Dim _Reserva_NroOCC As Integer
         Dim _Reserva_Idmaeedo As Integer
 
+        Dim _RevFincred As Integer
+        Dim _IdFincred As Integer
+        Dim _MontoFincred As String
 
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
@@ -2820,6 +2823,10 @@ Public Class Clase_Crear_Documento
 
                 _Reserva_NroOCC = Convert.ToInt32(.Item("Reserva_NroOCC"))
                 _Reserva_Idmaeedo = Convert.ToInt32(.Item("Reserva_Idmaeedo"))
+
+                _RevFincred = Convert.ToInt32(.Item("RevFincred"))
+                _IdFincred = .Item("IdFincred")
+                _MontoFincred = De_Num_a_Tx_01(.Item("MontoFincred"), False, 5)
 
             End With
 
@@ -3296,6 +3303,9 @@ Public Class Clase_Crear_Documento
                            ",SubTido = '" & _SubTido & "'" & Environment.NewLine &
                            ",Reserva_NroOCC = " & _Reserva_NroOCC & Environment.NewLine &
                            ",Reserva_Idmaeedo = " & _Reserva_Idmaeedo & Environment.NewLine &
+                           ",RevFincred = " & _RevFincred & Environment.NewLine &
+                           ",IdFincred = " & _IdFincred & Environment.NewLine &
+                           ",MontoFincred = " & _MontoFincred & Environment.NewLine &
                            "Where Id_DocEnc = " & _Id_DocEnc
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)

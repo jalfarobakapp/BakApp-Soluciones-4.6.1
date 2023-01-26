@@ -1,5 +1,6 @@
 ﻿Imports BkSpecialPrograms
 Imports DevComponents.DotNetBar
+Imports Newtonsoft.Json.Linq
 
 Public Class Menu
 
@@ -412,8 +413,11 @@ Public Class Menu
 
     Private Sub ButtonX1_Click(sender As Object, e As EventArgs) Handles ButtonX1.Click
 
-        'Dim _Cl_ExportarDoc As New Bk_ExpotarDoc.Cl_ExpotarDoc
-        '_Cl_ExportarDoc.Fx_Importar_Documento(8829553, 1, True, Modalidad)
+        Dim _Cl_Wordpress As New Cl_Wordpress
+
+        Dim Productos As JArray = _Cl_Wordpress.ObtenerProductos()
+        _Cl_Wordpress.ActualizarStock("14687", 0, 42088)
+
         Return
         Dim Fm As New Frm_Migrar_Productos
         Fm.ShowDialog(Me)

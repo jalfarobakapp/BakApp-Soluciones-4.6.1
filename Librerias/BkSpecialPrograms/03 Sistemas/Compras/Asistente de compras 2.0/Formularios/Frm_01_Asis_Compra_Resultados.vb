@@ -2243,6 +2243,8 @@ Public Class Frm_01_Asis_Compra_Resultados
         Dim _TStock As Double
         Dim StockUd1 As Double
         Dim StockUd2 As Double
+        Dim StockPedidoUd1 As Double
+        Dim StockPedidoUd2 As Double
         Dim Bloqueapr As String
 
         Dim _Stock_Fisico_Ud_Negativo As Boolean = _Fila.Cells("Stock_Fisico_Ud" & _Ud & "_Negativo").Value
@@ -2258,6 +2260,9 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         StockUd1 = NuloPorNro(_Fila.Cells("StockUd1").Value, 0)
         StockUd2 = NuloPorNro(_Fila.Cells("StockUd2").Value, 0)
+
+        StockPedidoUd1 = NuloPorNro(_Fila.Cells("StockPedidoUd1").Value, 0)
+        StockPedidoUd2 = NuloPorNro(_Fila.Cells("StockPedidoUd2").Value, 0)
 
         _TStock = NuloPorNro(_Fila.Cells("TStock").Value, 2)
 
@@ -4155,6 +4160,10 @@ Public Class Frm_01_Asis_Compra_Resultados
         Fm.ShowDialog(Me)
         _Proceso_Automatico_Ejecutado = Fm.Pro_Proceso_Generado
         Fm.Dispose()
+
+        If _Proceso_Automatico_Ejecutado Then
+            Call Btn_Actualizar_Informe_Click(Nothing, Nothing)
+        End If
 
     End Sub
 
@@ -8098,10 +8107,11 @@ Public Class Frm_01_Asis_Compra_Resultados
             Chk_Quitar_Ventas_Calzadas.Checked = True
             Chk_Quitare_Sospechosos_Stock.Checked = True
 
-            Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = True
+            'Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = True
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = True
             Chk_Quitar_Comprados.Checked = True
             Chk_Mostrar_Solo_Productos_A_Comprar.Checked = True
+            Chk_Mostrar_Solo_Stock_Critico.Checked = True
 
             Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
 
@@ -8147,6 +8157,8 @@ Drop Table #Paso"
                                ",'" & Format(_Fl.Feemdo, "yyyyMMdd") & "','" & NuloPorNro(_Fl.MensajeError, "") & "'," & Convert.ToInt32(_Fl.ErrorGrabar) & ")"
                 _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Acp)
 
+                Auto_Id_Correo = 37
+
                 _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, _Fl.Email, Auto_CorreoCc, Auto_Id_Correo, Auto_NombreFormato_PDF, _Id_Acp)
                 ' 37
                 ' "Tam. Carta"
@@ -8166,9 +8178,10 @@ Drop Table #Paso"
             BtnProceso_Prov_Auto.Enabled = False
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = _Proceso_Automatico_Ejecutado
             Chk_Quitar_Ventas_Calzadas.Checked = True
-            Chk_Quitare_Sospechosos_Stock.Checked = True
+            Chk_Mostrar_Solo_Stock_Critico.Checked = True
+            'Chk_Quitare_Sospechosos_Stock.Checked = True
 
-            Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = True
+            'Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = True
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = True
             Chk_Quitar_Comprados.Checked = True
             Chk_Mostrar_Solo_Productos_A_Comprar.Checked = True
@@ -8177,7 +8190,7 @@ Drop Table #Paso"
 
             Dim _CodEntidad As String = _RowProveedor.Item("KOEN")
             Dim _SucEntidad As String = _RowProveedor.Item("SUEN")
-            '    Dim _FechaUltCompra As DateTime = _Fila.Item("FechaUltCompra")
+            'Dim _FechaUltCompra As DateTime = _Fila.Item("FechaUltCompra")
 
             Sb_Genarar_OCC_Automaticas_Por_Proveedor(_CodEntidad, _SucEntidad, _Generar_OCC)
 
@@ -8189,6 +8202,8 @@ Drop Table #Paso"
                                "('" & _NombreEquipo & "','" & _Modalidad_Estudio & "'," & _Fl.Idmaeedo & ",'" & _Fl.Tido & "','" & _Fl.Nudo & "'" &
                                ",'" & Format(_Fl.Feemdo, "yyyyMMdd") & "','" & NuloPorNro(_Fl.MensajeError, "") & "'," & Convert.ToInt32(_Fl.ErrorGrabar) & ")"
                 _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Acp)
+
+                Auto_Id_Correo = 37
 
                 _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, Auto_CorreoCc, "", Auto_Id_Correo, Auto_NombreFormato_PDF, _Id_Acp)
                 ' 37
@@ -8210,13 +8225,13 @@ Drop Table #Paso"
 
             Chk_Restar_Stok_Bodega.Checked = True
             Chk_Quitar_Bloqueados_Compra.Checked = True
-            Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = True
+            'Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = True
             Chk_Mostrar_Solo_Productos_A_Comprar.Checked = True
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = True
             Chk_Quitar_Comprados.Checked = True
             Chk_Mostrar_Solo_Stock_Critico.Checked = True
             Chk_Quitar_Ventas_Calzadas.Checked = True
-            Chk_Quitare_Sospechosos_Stock.Checked = True
+            'Chk_Quitare_Sospechosos_Stock.Checked = True
 
 
             Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
@@ -8234,7 +8249,12 @@ Drop Table #Paso"
                                ",'" & Format(_Fl.Feemdo, "yyyyMMdd") & "','" & NuloPorNro(_Fl.MensajeError, "") & "'," & Convert.ToInt32(_Fl.ErrorGrabar) & ")"
                 _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Acp)
 
-                _Generar_NVI.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, Auto_CorreoCc, "", Auto_Id_Correo, Auto_NombreFormato_PDF, _Id_Acp)
+                Try
+                    _Generar_NVI.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, Auto_CorreoCc, "", Auto_Id_Correo, Auto_NombreFormato_PDF, _Id_Acp)
+                Catch ex As Exception
+
+                End Try
+
 
             Next
 

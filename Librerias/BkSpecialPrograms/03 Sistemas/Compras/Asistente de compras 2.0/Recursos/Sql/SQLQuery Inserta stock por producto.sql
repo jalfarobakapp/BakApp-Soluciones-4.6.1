@@ -14,6 +14,7 @@ Group By KOPR
 
 --InsertarStockFisicoDeBodegaExterna
 
+--InsertarStockPedidoEnNVI
 
 Update #Paso Set Codigo_Nodo_Madre = (Select Top 1 Codigo_Nodo_Madre From #TablaPaso# Where KOPR = Codigo)
 

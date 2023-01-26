@@ -256,11 +256,14 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
                                                    "Set CantComprar = " & De_Num_a_Tx_01(_CantComprar, False, 5) & Space(1) &
                                                    "Where Codigo = '" & _Codigo & "'" & vbCrLf
 
-                                Else
-
                                     _SqlQuery_2 += "Delete " & _Tabla_Paso & Space(1) &
                                                    "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "' And Codigo <> '" & _Codigo_Comprar & "'" & vbCrLf
 
+                                    'Else
+
+                                    '    _SqlQuery_2 += "Delete " & _Tabla_Paso & Space(1) &
+                                    '                   "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "' And Codigo <> '" & _Codigo_Comprar & "'" & vbCrLf
+                                    Exit For
                                 End If
 
                             Next
@@ -279,10 +282,14 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
                                                    "Set CantComprar = " & De_Num_a_Tx_01(_CantComprar, False, 5) & Space(1) &
                                                    "Where Codigo = '" & _Codigo & "'" & vbCrLf
 
-                                Else
-
                                     _SqlQuery_2 += "Delete " & _Tabla_Paso & Space(1) &
                                                    "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "' And Codigo <> '" & _Codigo_Comprar & "'" & vbCrLf
+
+                                    Exit For
+                                    'Else
+
+                                    '    _SqlQuery_2 += "Delete " & _Tabla_Paso & Space(1) &
+                                    '                   "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "' And Codigo <> '" & _Codigo_Comprar & "'" & vbCrLf
 
                                 End If
 
@@ -298,6 +305,9 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
                 Next
 
             End If
+
+            _SqlQuery_2 += vbCrLf & "Delete " & _Tabla_Paso & vbCrLf &
+                           "Where Comprar = 0" & vbCrLf
 
             _SqlQuery_2 += vbCrLf & "Update " & _Tabla_Paso & vbCrLf &
                            "Set CodProveedor = Endo_Utl_Compra,CodSucProveedor = Suendo_Utl_Compra" & vbCrLf &
