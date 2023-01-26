@@ -10226,6 +10226,10 @@ Public Class Frm_Formulario_Documento
             .Item("Reserva_NroOCC") = _Reserva_NroOCC
             .Item("Reserva_Idmaeedo") = _Reserva_Idmaeedo
 
+            .Item("RevFincred") = _TblEncabezado_StBy.Rows(0).Item("RevFincred")
+            .Item("IdFincred") = _TblEncabezado_StBy.Rows(0).Item("IdFincred")
+            .Item("MontoFincred") = _TblEncabezado_StBy.Rows(0).Item("MontoFincred")
+
         End With
 
 
@@ -11966,6 +11970,7 @@ Public Class Frm_Formulario_Documento
                     Dim Fm_Obs As New Frm_Formulario_Observaciones(_Ds_Matriz_Documentos, _RowEntidad, _Tipo_Documento, _Documento_Autorizado)
                     Fm_Obs.Warning_Visado.Visible = False
                     Fm_Obs.Btn_Grabar_e_Imprimir.Visible = False
+                    Fm_Obs.Btn_Solo_Grabar.Visible = False
 
                     If _Bloquear_Edicion_Detalle Then
                         Fm_Obs.DtpFechaEntrega.Enabled = False
@@ -11974,6 +11979,8 @@ Public Class Frm_Formulario_Documento
                         Fm_Obs.TxtOrdendecompra.ReadOnly = True
                     End If
 
+                    Fm_Obs.TieneOrdenDeDespacho = Not (IsNothing(_Cl_Despacho))
+                    Fm_Obs.CambiarFechaEnDetalle = True
                     Fm_Obs.ShowDialog(Me)
                     Fm_Obs.Dispose()
 
@@ -13211,10 +13218,10 @@ Public Class Frm_Formulario_Documento
                 Return
             End If
 
-            '  VALIDACION FINCRED
-            'If _Tido = "NVV" Then
-            '    Fx_Vaidar_Fincred()
-            'End If
+            'VALIDACION FINCRED
+            If Not Fx_Revisar_Fincred() Then
+                Return
+            End If
 
             If String.IsNullOrEmpty(_TblEncabezado.Rows(0).Item("NroDocumento").ToString.Trim) Then
                 MessageBoxEx.Show(Me, "Debe indicar un número de documento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -13668,6 +13675,7 @@ Public Class Frm_Formulario_Documento
                     Fm_Obs.Btn_Grabar_Observaciones.Visible = False
                     Fm_Obs.Pro_Class_Referencias_DTE = _Class_Referencias_DTE
                     Fm_Obs.Btn_Grabar_Pagar.Visible = (_Caja_Habilitada And _Post_Venta And (_Tido = "BLV" Or _Tido = "FCV"))
+                    Fm_Obs.TieneOrdenDeDespacho = Not (IsNothing(_Cl_Despacho))
                     Fm_Obs.ShowDialog(Me)
                     _Grabar_Obs = Fm_Obs.Pro_Grabar
                     _Class_Referencias_DTE = Fm_Obs.Pro_Class_Referencias_DTE
@@ -15089,48 +15097,48 @@ Public Class Frm_Formulario_Documento
 
         Dim _Origen_Modificado_Intertanto As Boolean
 
-        Dim _Revisar_Fincred As Boolean
-        Dim _Fincred_Respuesta As New Fincred_API.Respuesta
+        'Dim _Revisar_Fincred As Boolean
+        'Dim _Fincred_Respuesta As New Fincred_API.Respuesta
 
 
-        If _Global_Row_Configuracion_General.Item("Fincred_Usar") And _Global_Row_Configuracion_Estacion.Item("Fincred_Usar") Then
-            _Revisar_Fincred = _TblEncabezado.Rows(0).Item("RevFincred")
-        End If
+        'If _Global_Row_Configuracion_General.Item("Fincred_Usar") And _Global_Row_Configuracion_Estacion.Item("Fincred_Usar") Then
+        '    _Revisar_Fincred = _TblEncabezado.Rows(0).Item("RevFincred")
+        'End If
 
         If _TipoGrab = _Tipo_de_Grabacion.Nuevo_documento Then
 
-            If _Revisar_Fincred And _Tido = "NVV" Then
+            'If _Revisar_Fincred And _Tido = "NVV" Then
 
-                _Fincred_Respuesta = Fx_Vaidar_Fincred()
+            '    _Fincred_Respuesta = Fx_Vaidar_Fincred()
 
-                If _Fincred_Respuesta.EsCorrecto Then
+            '    If _Fincred_Respuesta.EsCorrecto Then
 
-                    _TblEncabezado.Rows(0).Item("IdFincred") = _Fincred_Respuesta.Id_TramaRespuesta
+            '        _TblEncabezado.Rows(0).Item("IdFincred") = _Fincred_Respuesta.Id_TramaRespuesta
 
-                    MessageBoxEx.Show(Me, _Fincred_Respuesta.TramaRespuesta.descripcion_negacion & vbCrLf &
-                                          "Código de autorización: " & _Fincred_Respuesta.TramaRespuesta.documentos(0).autorizacion,
-                                          "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Else
-                    MessageBoxEx.Show(Me, "Código de autorización: RECHAZADO" & vbCrLf &
-                                      "Respuesta FINCRED: " & _Fincred_Respuesta.MensajeError & vbCrLf & vbCrLf &
-                                      "El documento debera seguir el conducto regular, se quitaran los plazos de vencimineto" & vbCrLf &
-                                      "Para continuar debera volver a GRABAR el documento",
-                                      "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            '        MessageBoxEx.Show(Me, _Fincred_Respuesta.TramaRespuesta.descripcion_negacion & vbCrLf &
+            '                              "Código de autorización: " & _Fincred_Respuesta.TramaRespuesta.documentos(0).autorizacion,
+            '                              "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            '    Else
+            '        MessageBoxEx.Show(Me, "Código de autorización: RECHAZADO" & vbCrLf &
+            '                          "Respuesta FINCRED: " & _Fincred_Respuesta.MensajeError & vbCrLf & vbCrLf &
+            '                          "El documento debera seguir el conducto regular, se quitaran los plazos de vencimineto" & vbCrLf &
+            '                          "Para continuar debera volver a GRABAR el documento",
+            '                          "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
-                    _TblEncabezado.Rows(0).Item("IdFincred") = _Fincred_Respuesta.Id_TramaRespuesta
-                    _TblEncabezado.Rows(0).Item("RevFincred") = False
-                    _TblEncabezado.Rows(0).Item("FechaEmision") = _TblEncabezado.Rows(0).Item("FechaEmision")
-                    _TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento") = _TblEncabezado.Rows(0).Item("FechaEmision")
-                    _TblEncabezado.Rows(0).Item("FechaUltVencimiento") = _TblEncabezado.Rows(0).Item("FechaEmision")
-                    _TblEncabezado.Rows(0).Item("Cuotas") = 0
-                    _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento") = 0
-                    _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = 0
+            '        _TblEncabezado.Rows(0).Item("IdFincred") = _Fincred_Respuesta.Id_TramaRespuesta
+            '        _TblEncabezado.Rows(0).Item("RevFincred") = False
+            '        _TblEncabezado.Rows(0).Item("FechaEmision") = _TblEncabezado.Rows(0).Item("FechaEmision")
+            '        _TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento") = _TblEncabezado.Rows(0).Item("FechaEmision")
+            '        _TblEncabezado.Rows(0).Item("FechaUltVencimiento") = _TblEncabezado.Rows(0).Item("FechaEmision")
+            '        _TblEncabezado.Rows(0).Item("Cuotas") = 0
+            '        _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento") = 0
+            '        _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = 0
 
-                    Return 0
+            '        Return 0
 
-                End If
+            '    End If
 
-            End If
+            'End If
 
             _Idmaeedo = _New_Doc.Fx_Crear_Documento(_Tido,
                                                     _Nudo,
@@ -15575,6 +15583,8 @@ Public Class Frm_Formulario_Documento
         Fm_Obs.Txt_Placa.Enabled = _Habilitar
         Fm_Obs.Txt_CodRetirador.Enabled = _Habilitar
         Fm_Obs.Btn_Solo_Grabar.Visible = False
+        Fm_Obs.CambiarFechaEnDetalle = True
+        Fm_Obs.TieneOrdenDeDespacho = Not (IsNothing(_Cl_Despacho))
         Fm_Obs.ShowDialog(Me)
         Fm_Obs.Dispose()
 
@@ -22220,6 +22230,10 @@ Public Class Frm_Formulario_Documento
                     _Cl_Despacho.Sb_Cargar_Despacho(_Cl_Despacho.Id_Despacho)
                     _TblEncabezado.Rows(0).Item("FechaRecepcion") = _Cl_Despacho.Row_Despacho.Item("Fecha_Compromiso")
 
+                    For Each _Fila As DataRow In _TblDetalle.Rows
+                        _Fila.Item("FechaRecepcion") = _Cl_Despacho.Row_Despacho.Item("Fecha_Compromiso")
+                    Next
+
                     If _Cl_Despacho.Row_Despacho.Item("Tipo_Envio") = "RT" Then
                         _TblObservaciones.Rows(0).Item("Observaciones") = _Cl_Despacho.Row_Conf_Despacho.Item("Obs_Retira_Cliente")
                     Else
@@ -24797,6 +24811,65 @@ Public Class Frm_Formulario_Documento
         Return _Fincred.Respuesta
 
     End Function
+
+    Function Fx_Revisar_Fincred() As Boolean
+
+        Dim _Revisar_Fincred As Boolean
+        Dim _Fincred_Respuesta As New Fincred_API.Respuesta
+
+        If _Global_Row_Configuracion_General.Item("Fincred_Usar") And _Global_Row_Configuracion_Estacion.Item("Fincred_Usar") Then
+            _Revisar_Fincred = _TblEncabezado.Rows(0).Item("RevFincred")
+        End If
+
+        Dim _Monto_total_venta As Double = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")
+
+        If Not _Revisar_Fincred Then
+            If _TblEncabezado.Rows(0).Item("TotalBrutoDoc") <> _TblEncabezado.Rows(0).Item("MontoFincred") Then
+                _Revisar_Fincred = True
+                MessageBoxEx.Show(Me, "El Monto revisado por FINCRED cambio." & vbCrLf &
+                                  "Se hara una nueva consulta al sistema FINCRED", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            End If
+        End If
+
+        If _Revisar_Fincred And _Tido = "NVV" Then
+
+            _Fincred_Respuesta = Fx_Vaidar_Fincred()
+
+            _TblEncabezado.Rows(0).Item("MontoFincred") = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")
+            _TblEncabezado.Rows(0).Item("RevFincred") = False
+
+            If _Fincred_Respuesta.EsCorrecto Then
+
+                _TblEncabezado.Rows(0).Item("IdFincred") = _Fincred_Respuesta.Id_TramaRespuesta
+
+                MessageBoxEx.Show(Me, _Fincred_Respuesta.TramaRespuesta.descripcion_negacion & vbCrLf &
+                                      "Código de autorización: " & _Fincred_Respuesta.TramaRespuesta.documentos(0).autorizacion,
+                                      "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Else
+                MessageBoxEx.Show(Me, "Código de autorización: RECHAZADO" & vbCrLf &
+                                  "Respuesta FINCRED: " & _Fincred_Respuesta.MensajeError & vbCrLf & vbCrLf &
+                                  "El documento debera seguir el conducto regular, se quitaran los plazos de vencimineto" & vbCrLf &
+                                  "Para continuar debera volver a GRABAR el documento",
+                                  "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                _TblEncabezado.Rows(0).Item("IdFincred") = _Fincred_Respuesta.Id_TramaRespuesta
+                _TblEncabezado.Rows(0).Item("FechaEmision") = _TblEncabezado.Rows(0).Item("FechaEmision")
+                _TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento") = _TblEncabezado.Rows(0).Item("FechaEmision")
+                _TblEncabezado.Rows(0).Item("FechaUltVencimiento") = _TblEncabezado.Rows(0).Item("FechaEmision")
+                _TblEncabezado.Rows(0).Item("Cuotas") = 0
+                _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento") = 0
+                _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = 0
+
+                Return False
+
+            End If
+
+        End If
+
+        Return True
+
+    End Function
+
 
 End Class
 

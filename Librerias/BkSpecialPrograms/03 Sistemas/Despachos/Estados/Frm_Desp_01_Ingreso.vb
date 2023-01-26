@@ -129,7 +129,7 @@ Public Class Frm_Desp_01_Ingreso
             Txt_Nombre_Cliente.Text = _Cl_Despacho.Row_Entidad.Item("Rut") & " - " & _Cl_Despacho.Row_Entidad.Item("NOKOEN")
             Txt_Referencia.Text = _Row_Despacho.Item("Referencia")
 
-            Dtp_Fecha_Despacho.Value = FechaDelServidor()
+            Dtp_Fecha_Despacho.Value = Ds_Matriz_Documentos.Tables("Encabezado_Doc").Rows(0).Item("FechaRecepcion") 'FechaDelServidor()
             Sb_Habilitar_Controles(True)
 
             Me.ActiveControl = Txt_Referencia
@@ -1262,24 +1262,28 @@ Public Class Frm_Desp_01_Ingreso
 
             Dim _Existe_COV_Chilexpress As Boolean
 
-            If Txt_Transportista.Tag.ToString.Trim = _Row_Conf.Item("CodTransportista").ToString.Trim Then
+            Try
+                If Txt_Transportista.Tag.ToString.Trim = _Row_Conf.Item("CodTransportista").ToString.Trim Then
 
-                If CBool(_Idenvio_Chilexpress) Then
+                    If CBool(_Idenvio_Chilexpress) Then
 
-                    Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Chilexpress_Env Where Idenvio = " & _Idenvio_Chilexpress
-                    Dim _Row_Chilexpress As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+                        Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Chilexpress_Env Where Idenvio = " & _Idenvio_Chilexpress
+                        Dim _Row_Chilexpress As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
-                    If Not IsNothing(_Row_Chilexpress) Then _Existe_COV_Chilexpress = True
+                        If Not IsNothing(_Row_Chilexpress) Then _Existe_COV_Chilexpress = True
+
+                    End If
+
+                    If Not _Existe_COV_Chilexpress Then
+                        MessageBoxEx.Show(Me, "Debe completar todos los datos para el registro de Chilexpress", "Validación",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        Return
+                    End If
 
                 End If
+            Catch ex As Exception
 
-                If Not _Existe_COV_Chilexpress Then
-                    MessageBoxEx.Show(Me, "Debe completar todos los datos para el registro de Chilexpress", "Validación",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    Return
-                End If
-
-            End If
+            End Try
 
         End If
 

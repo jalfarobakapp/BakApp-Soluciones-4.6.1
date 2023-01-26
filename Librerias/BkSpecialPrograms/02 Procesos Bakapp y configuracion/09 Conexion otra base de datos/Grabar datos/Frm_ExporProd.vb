@@ -97,6 +97,7 @@ Public Class Frm_ExporProd
         Dim Fm As New Frm_Filtro_Especial_Informes(_Tabla_Fl, False,, _Tabla, _Campo, _Descripcion)
         Fm.Pro_Tbl_Filtro = _Tbl_Filtro
         Fm.Pro_Sql_Filtro_Condicion_Extra = _Sql_Filtro_Condicion_Extra
+        Fm.Pro_Requiere_Seleccion = False
         Fm.ShowDialog(Me)
 
         If Fm.Pro_Filtrar Then

@@ -885,6 +885,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         '
         Me.Rdb_Ver_documentos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_Ver_documentos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Ver_documentos.FocusCuesEnabled = False
         Me.Rdb_Ver_documentos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Ver_documentos.Location = New System.Drawing.Point(305, 359)
         Me.Rdb_Ver_documentos.Name = "Rdb_Ver_documentos"
@@ -905,6 +906,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.Rdb_Ver_Valores.Checked = True
         Me.Rdb_Ver_Valores.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Ver_Valores.CheckValue = "Y"
+        Me.Rdb_Ver_Valores.FocusCuesEnabled = False
         Me.Rdb_Ver_Valores.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Ver_Valores.Location = New System.Drawing.Point(3, 359)
         Me.Rdb_Ver_Valores.Name = "Rdb_Ver_Valores"
@@ -921,6 +923,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         '
         Me.Rdb_Ver_Cantidades.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_Ver_Cantidades.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Ver_Cantidades.FocusCuesEnabled = False
         Me.Rdb_Ver_Cantidades.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Ver_Cantidades.Location = New System.Drawing.Point(105, 359)
         Me.Rdb_Ver_Cantidades.Name = "Rdb_Ver_Cantidades"
@@ -1427,6 +1430,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         '
         Me.Rdb_Ver_Clientes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_Ver_Clientes.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Ver_Clientes.FocusCuesEnabled = False
         Me.Rdb_Ver_Clientes.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Ver_Clientes.Location = New System.Drawing.Point(233, 359)
         Me.Rdb_Ver_Clientes.Name = "Rdb_Ver_Clientes"
@@ -1758,7 +1762,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.TableLayoutPanel4.ColumnCount = 3
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.8022!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52.1978!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 135.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 137.0!))
         Me.TableLayoutPanel4.Controls.Add(Me.Label7, 2, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.Label5, 1, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.Label8, 0, 1)
@@ -1785,7 +1789,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         '
         Me.Label7.BackColor = System.Drawing.Color.Transparent
         Me.Label7.ForeColor = System.Drawing.Color.Black
-        Me.Label7.Location = New System.Drawing.Point(136, 1)
+        Me.Label7.Location = New System.Drawing.Point(134, 1)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(68, 17)
         Me.Label7.TabIndex = 129
@@ -1796,7 +1800,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         '
         Me.Label5.BackColor = System.Drawing.Color.Transparent
         Me.Label5.ForeColor = System.Drawing.Color.Black
-        Me.Label5.Location = New System.Drawing.Point(67, 1)
+        Me.Label5.Location = New System.Drawing.Point(66, 1)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(54, 16)
         Me.Label5.TabIndex = 128
@@ -1809,7 +1813,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.Label8.ForeColor = System.Drawing.Color.Black
         Me.Label8.Location = New System.Drawing.Point(4, 21)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(56, 19)
+        Me.Label8.Size = New System.Drawing.Size(55, 19)
         Me.Label8.TabIndex = 37
         Me.Label8.Text = "Días de venta"
         Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1818,9 +1822,9 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         '
         Me.Lbl_Dias_Habiles_R1.BackColor = System.Drawing.Color.Transparent
         Me.Lbl_Dias_Habiles_R1.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Dias_Habiles_R1.Location = New System.Drawing.Point(67, 21)
+        Me.Lbl_Dias_Habiles_R1.Location = New System.Drawing.Point(66, 21)
         Me.Lbl_Dias_Habiles_R1.Name = "Lbl_Dias_Habiles_R1"
-        Me.Lbl_Dias_Habiles_R1.Size = New System.Drawing.Size(62, 19)
+        Me.Lbl_Dias_Habiles_R1.Size = New System.Drawing.Size(61, 19)
         Me.Lbl_Dias_Habiles_R1.TabIndex = 38
         Me.Lbl_Dias_Habiles_R1.Text = "999"
         Me.Lbl_Dias_Habiles_R1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -1829,7 +1833,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         '
         Me.Lbl_Dias_Habiles_R2.BackColor = System.Drawing.Color.Transparent
         Me.Lbl_Dias_Habiles_R2.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Dias_Habiles_R2.Location = New System.Drawing.Point(136, 21)
+        Me.Lbl_Dias_Habiles_R2.Location = New System.Drawing.Point(134, 21)
         Me.Lbl_Dias_Habiles_R2.Name = "Lbl_Dias_Habiles_R2"
         Me.Lbl_Dias_Habiles_R2.Size = New System.Drawing.Size(80, 19)
         Me.Lbl_Dias_Habiles_R2.TabIndex = 44
@@ -1851,9 +1855,9 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         '
         Me.Lbl_Prom_Vta_Diario_R1.BackColor = System.Drawing.Color.Transparent
         Me.Lbl_Prom_Vta_Diario_R1.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Prom_Vta_Diario_R1.Location = New System.Drawing.Point(67, 41)
+        Me.Lbl_Prom_Vta_Diario_R1.Location = New System.Drawing.Point(66, 41)
         Me.Lbl_Prom_Vta_Diario_R1.Name = "Lbl_Prom_Vta_Diario_R1"
-        Me.Lbl_Prom_Vta_Diario_R1.Size = New System.Drawing.Size(62, 20)
+        Me.Lbl_Prom_Vta_Diario_R1.Size = New System.Drawing.Size(61, 20)
         Me.Lbl_Prom_Vta_Diario_R1.TabIndex = 34
         Me.Lbl_Prom_Vta_Diario_R1.Text = "$ 99.999.999"
         Me.Lbl_Prom_Vta_Diario_R1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -1862,7 +1866,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         '
         Me.Lbl_Prom_Vta_Diario_R2.BackColor = System.Drawing.Color.Transparent
         Me.Lbl_Prom_Vta_Diario_R2.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Prom_Vta_Diario_R2.Location = New System.Drawing.Point(136, 41)
+        Me.Lbl_Prom_Vta_Diario_R2.Location = New System.Drawing.Point(134, 41)
         Me.Lbl_Prom_Vta_Diario_R2.Name = "Lbl_Prom_Vta_Diario_R2"
         Me.Lbl_Prom_Vta_Diario_R2.Size = New System.Drawing.Size(80, 18)
         Me.Lbl_Prom_Vta_Diario_R2.TabIndex = 36
@@ -1873,9 +1877,9 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         '
         Me.Lbl_Total_R1.BackColor = System.Drawing.Color.Transparent
         Me.Lbl_Total_R1.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Total_R1.Location = New System.Drawing.Point(67, 65)
+        Me.Lbl_Total_R1.Location = New System.Drawing.Point(66, 65)
         Me.Lbl_Total_R1.Name = "Lbl_Total_R1"
-        Me.Lbl_Total_R1.Size = New System.Drawing.Size(62, 18)
+        Me.Lbl_Total_R1.Size = New System.Drawing.Size(61, 18)
         Me.Lbl_Total_R1.TabIndex = 55
         Me.Lbl_Total_R1.Text = "$ 99.999.999"
         Me.Lbl_Total_R1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -1884,7 +1888,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         '
         Me.Lbl_Total_R2.BackColor = System.Drawing.Color.Transparent
         Me.Lbl_Total_R2.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Total_R2.Location = New System.Drawing.Point(136, 65)
+        Me.Lbl_Total_R2.Location = New System.Drawing.Point(134, 65)
         Me.Lbl_Total_R2.Name = "Lbl_Total_R2"
         Me.Lbl_Total_R2.Size = New System.Drawing.Size(80, 18)
         Me.Lbl_Total_R2.TabIndex = 46

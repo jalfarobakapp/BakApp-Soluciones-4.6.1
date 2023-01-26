@@ -77,7 +77,7 @@ Public Class Frm_Kardex_X_Producto_Lista
             Return
         End If
 
-        Sb_Actualizar_Listado()
+        Sb_Actualizar_Listado(False)
 
         AddHandler Grilla_Detalle_Stock.CellDoubleClick, AddressOf Sb_DrobleClic_en_Grilla
         AddHandler GrillaListaProductos.MouseDown, AddressOf Sb_Grilla_MouseDown
@@ -98,7 +98,7 @@ Public Class Frm_Kardex_X_Producto_Lista
 
     End Sub
 
-    Sub Sb_Actualizar_Listado()
+    Sub Sb_Actualizar_Listado(_Ver_Kardex_Asociados As Boolean)
 
         Dim _Texto_Busqueda As String
         Dim _Cadena As String
@@ -110,8 +110,12 @@ Public Class Frm_Kardex_X_Producto_Lista
 
             For i = 0 To _Tx.Length - 1
 
-                _Cadena = CADENA_A_BUSCAR(_Tx(i).Trim, "MP.KOPR+NOKOPR LIKE '%")
-                _Condicion += "(MP.KOPR+NOKOPR LIKE '%" & _Cadena & "%')" & vbCrLf
+                If _Ver_Kardex_Asociados Then
+                    _Condicion += "(MP.KOPR = '" & _Tx(i).Trim & "')" & vbCrLf
+                Else
+                    _Cadena = CADENA_A_BUSCAR(_Tx(i).Trim, "MP.KOPR+NOKOPR LIKE '%")
+                    _Condicion += "(MP.KOPR+NOKOPR LIKE '%" & _Cadena & "%')" & vbCrLf
+                End If
 
                 If i <> _Tx.Length - 1 Then
                     _Condicion += "Or "
@@ -516,11 +520,10 @@ Public Class Frm_Kardex_X_Producto_Lista
 
         If e.KeyValue = Keys.Enter Or e.KeyValue = Keys.Space Then
 
-            'Sb_Buscar_En_Grilla_Dataview(Txt_Descripcion.Text)
-            Sb_Actualizar_Listado()
+            Sb_Actualizar_Listado(False)
 
             If Not CBool(GrillaListaProductos.Rows.Count) Then
-                Sb_Llenar_Stock_Por_Producto(Txt_Descripcion.Text) ', GrillaUd1, 1)
+                Sb_Llenar_Stock_Por_Producto(Txt_Descripcion.Text)
             End If
         End If
 
@@ -585,10 +588,8 @@ Public Class Frm_Kardex_X_Producto_Lista
         Dim _Filtro_Prod_Hermanos = Generar_Filtro_IN(_Tbl_Productos_Hermanos, "", "KOPR", False, False, "", False)
 
         Txt_Descripcion.Text = Replace(_Filtro_Prod_Hermanos, ",", ";")
-        'Cmb_Filtro_Codigo.SelectedValue = "I"
 
-        'Sb_Buscar_En_Grilla_Dataview(Txt_Descripcion.Text)
-        Sb_Actualizar_Listado()
+        Sb_Actualizar_Listado(True)
 
         If BuscarDatoEnGrilla(Trim(_Codigo), "KOPR", GrillaListaProductos) = True Then
             GrillaListaProductos.Focus()

@@ -1,4 +1,6 @@
 ﻿
+Imports BkSpecialPrograms.Bk_Comporamiento_UdMedidas
+
 Public Class Cl_Producto
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -1046,10 +1048,8 @@ Drop Table #Paso_Tabim"
 
     End Function
 
-    Function Fx_Editar_Producto_Base_Externa(_Cadena_ConexionSQL_Server_Externa As String,
-                                             _Global_BaseBk As String) As String
-
-        'Dim _SqlEx As New Class_SQL(_Cadena_ConexionSQL_Server_Externa)
+    Function Fx_Editar_Producto_Base_Externa(_Global_BaseBk As String,
+                                             _EditarRtu As Boolean) As String
 
         Dim _SqlQuery = String.Empty
 
@@ -1063,6 +1063,13 @@ Drop Table #Paso_Tabim"
             '_SqlQuery += My.Resources.Recursos_Producto.SqlQuery_Crear_Producto & vbCrLf & vbCrLf
             _SqlQuery += My.Resources.Recursos_Producto.SqlQuery_Editar_Producto & vbCrLf & vbCrLf
             Sb_Cargar_Variables(_SqlQuery)
+
+            If Not _EditarRtu Then
+                _SqlQuery = Replace(_SqlQuery, "UD01PR = @UD01PR,", "--UD01PR = @UD01PR,")
+                _SqlQuery = Replace(_SqlQuery, "UD02PR = @UD02PR,", "--UD01PR = @UD01PR,")
+                _SqlQuery = Replace(_SqlQuery, "RLUD = @RLUD,", "--RLUD = @RLUD,")
+                _SqlQuery = Replace(_SqlQuery, "NMARCA = @NMARCA,", "--NMARCA = @NMARCA,")
+            End If
 
             'INGRESO DE PRODUCTO EN TABLA DE FICHAS DEL PRODUCTO
 

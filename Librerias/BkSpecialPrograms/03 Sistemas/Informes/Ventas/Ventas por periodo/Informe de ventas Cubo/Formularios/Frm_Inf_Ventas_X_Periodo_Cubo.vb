@@ -801,6 +801,9 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                 _Campo_Mostrar = "Sum(" & _Campo_Mostrar & ")"
             End If
 
+            Dim _GroupBy = "Group By " & _Cp_Codigo & "," & _Cp_Descripcion
+            Dim _Distinct = String.Empty
+
             If Rdb_Ver_Clientes.Checked Or Rdb_Ver_documentos.Checked Then
 
                 Dim _Campos As String
@@ -831,6 +834,9 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
                 _Campo_Mostrar = "(Select Count(Distinct " & _Campos & ") From " & _Nombre_Tabla_Paso & " Z2 Where 1 > 0 " &
                                   _SqlFiltro_Detalle & " And " & _Nombre_Tabla_Paso & "." & _Cp_Codigo & " = Z2." & _Cp_Codigo & ")"
+
+                _Distinct = "Distinct "
+                _GroupBy = String.Empty
 
                 _Formato_Campo = "###,##"
 
@@ -932,7 +938,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                 Consulta_sql = "Declare @Total Float" &
                                 vbCrLf &
                                 vbCrLf &
-                               "Select " & _Cp_Codigo & " As CODIGO," & _Cp_Descripcion & " As DESCRIPCION," &
+                               "Select " & _Distinct & _Cp_Codigo & " As CODIGO," & _Cp_Descripcion & " As DESCRIPCION," &
                                "CAST('' As Varchar(3)) As VND,CAST(0 as Float) As Porc," & _Campo_Mostrar & " As TOTAL" & vbCrLf &
                                "Into #Paso1" & vbCrLf &
                                "From " & _Nombre_Tabla_Paso & vbCrLf &
@@ -943,7 +949,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                                _Filtro_Nodos & vbCrLf &
                                vbCrLf &
                                _SqlFiltro_Arbol_BakApp &
-                               "Group By " & _Cp_Codigo & "," & _Cp_Descripcion &
+                               _GroupBy &
                                vbCrLf &
                                vbCrLf &
                                "Select Isnull(Sum(TOTAL),0) As TOTAL Into #Paso2 From #Paso1" & vbCrLf &
