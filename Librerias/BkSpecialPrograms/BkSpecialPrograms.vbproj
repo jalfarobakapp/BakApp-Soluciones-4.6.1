@@ -5031,6 +5031,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Frm_Formulario_Observaciones.resx">
       <DependentUpon>Frm_Formulario_Observaciones.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Frm_Formulario_Potencia.resx">
       <DependentUpon>Frm_Formulario_Potencia.vb</DependentUpon>
