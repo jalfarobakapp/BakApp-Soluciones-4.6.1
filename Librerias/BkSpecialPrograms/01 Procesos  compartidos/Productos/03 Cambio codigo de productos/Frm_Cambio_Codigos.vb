@@ -44,10 +44,6 @@ Public Class Frm_Cambio_Codigos
                                _Fila_InfoProducto As DataRow,
                                _CodigoTecnicoNew As String) As Boolean
 
-        'Consulta_sql = "SELECT Distinct TABLE_NAME As Tabla FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME Like ('Zw_TblPaso%') Order by TABLE_NAME"
-        'Dim _Tbl_Informes_Ventas_Bakapp As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-
         Dim _Descripcion As String = _Fila_InfoProducto.Item("NOKOPR")
         Dim _Rtu As String = De_Num_a_Tx_01(_Fila_InfoProducto.Item("RLUD"), False, 5)
         Dim _Ud01 As String = _Fila_InfoProducto.Item("UD01PR")
@@ -104,7 +100,6 @@ Public Class Frm_Cambio_Codigos
 
                 Consulta_sql += "Update Zw_Informe_Venta Set KOPRCT = '" & _CodigoNew & "' Where KOPRCT = '" & _CodigoOld & "'" & vbCrLf
 
-
                 If Not String.IsNullOrEmpty(Consulta_sql) Then
 
                     Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
@@ -134,6 +129,111 @@ Public Class Frm_Cambio_Codigos
             MessageBoxEx.Show(Me, "Transacción desecha", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             SQL_ServerClass.Sb_Cerrar_Conexion(_Cn)
         End Try
+
+    End Function
+
+    Function Fx_Cambiar_Codigo_EmpExterna(_CodigoNew As String,
+                                          _CodigoOld As String,
+                                          _CambiarCodTecnico As Boolean,
+                                          _Cambiar_BakApp As Boolean,
+                                          _Responzable As String,
+                                          _Fila_InfoProducto As DataRow,
+                                          _CodigoTecnicoNew As String) As Cl_CambioCodigo
+
+        Dim _Cl_CambioCodigo As New Cl_CambioCodigo
+
+        Dim _Descripcion As String = _Fila_InfoProducto.Item("NOKOPR")
+        Dim _Rtu As String = De_Num_a_Tx_01(_Fila_InfoProducto.Item("RLUD"), False, 5)
+        Dim _Ud01 As String = _Fila_InfoProducto.Item("UD01PR")
+        Dim _Ud02 As String = _Fila_InfoProducto.Item("UD02PR")
+
+        'Dim myTrans As SqlClient.SqlTransaction
+        'Dim Comando As SqlClient.SqlCommand
+
+        'Dim _Cn As New SqlConnection
+        'Dim SQL_ServerClass As New Class_SQL(_Cadena_ConexionSQL_Server_Ext)
+
+        Dim _SqlQuery As String = String.Empty
+
+        Try
+
+            'SQL_ServerClass.Sb_Abrir_Conexion(_Cn)
+            'myTrans = _Cn.BeginTransaction()
+
+            If _CambiarCodTecnico = True Then
+
+                _SqlQuery += "UPDATE MAEPR SET KOPRTE='" & _CodigoTecnicoNew & "' WHERE KOPR='" & _CodigoOld & "'" & vbCrLf &
+                             "UPDATE TABPRE SET KOPRTE='" & _CodigoTecnicoNew & "' WHERE KOPR='" & _CodigoOld & "'" & vbCrLf
+                'Comando = New SqlClient.SqlCommand(_SqlQuery, _Cn)
+                'Comando.Transaction = myTrans
+                'Comando.ExecuteNonQuery()
+
+            End If
+
+            _SqlQuery += My.Resources.Recursos_cambio_productos.SQLQuery_Cambiar_Codigo_Productos_RD
+            _SqlQuery = Replace(_SqlQuery, "#CodigoNew#", _CodigoNew)
+            _SqlQuery = Replace(_SqlQuery, "#CodigoOld#", _CodigoOld)
+            'Comando = New SqlClient.SqlCommand(_SqlQuery, _Cn)
+            'Comando.Transaction = myTrans
+            'Comando.ExecuteNonQuery()
+
+            If _Cambiar_BakApp Then
+
+                Dim _SqlQueryBakapp As String
+
+                _SqlQueryBakapp = My.Resources.Recursos_cambio_productos.SQLQuery_Cambiar_Codigo_Productos_BakApp
+
+                _SqlQueryBakapp = Replace(_SqlQueryBakapp, "Declare @CodigoNew Char(13) = '#CodigoNew#',", "")
+                _SqlQueryBakapp = Replace(_SqlQueryBakapp, "@CodigoOld Char(13) = '#CodigoOld#',", "")
+                _SqlQueryBakapp = Replace(_SqlQueryBakapp, "@Descripcion Varchar(50) = '#Descripcion#'", "Declare @Descripcion Varchar(50) = '#Descripcion#'")
+
+                _SqlQueryBakapp = Replace(_SqlQueryBakapp, "#CodigoNew#", _CodigoNew)
+                _SqlQueryBakapp = Replace(_SqlQueryBakapp, "#CodigoOld#", _CodigoOld)
+                _SqlQueryBakapp = Replace(_SqlQueryBakapp, "#Descripcion#", _Descripcion)
+                _SqlQueryBakapp = Replace(_SqlQueryBakapp, "#Base#", _Global_BaseBk)
+
+
+                _SqlQuery += _SqlQueryBakapp
+
+                'Comando = New SqlClient.SqlCommand(_SqlQuery, _Cn)
+                'Comando.Transaction = myTrans
+                'Comando.ExecuteNonQuery()
+
+                _SqlQuery += "Update Zw_Informe_Venta Set KOPRCT = '" & _CodigoNew & "' Where KOPRCT = '" & _CodigoOld & "'" & vbCrLf
+
+                'If Not String.IsNullOrEmpty(_SqlQuery) Then
+
+                '    Comando = New SqlClient.SqlCommand(_SqlQuery, _Cn)
+                '    Comando.Transaction = myTrans
+                '    Comando.ExecuteNonQuery()
+
+                'End If
+
+            End If
+
+            _SqlQuery += "INSERT INTO " & _Global_BaseBk & "Zw_UnificadosHitory (CodNew,CodOld,DescripcionOld,Ud1Old,Ud2Old," &
+                           "RtuOld,Responzable,Fecha,Accion) VALUES " & vbCrLf &
+                           "('" & _CodigoNew & "','" & _CodigoOld & "','" & _Descripcion & "','" & _Ud01 &
+                           "','" & _Ud02 & "'," & _Rtu & ",'" & _Responzable & "',GetDate(),'Cambio de código')"
+            'Comando = New SqlClient.SqlCommand(_SqlQuery, _Cn)
+            'Comando.Transaction = myTrans
+            'Comando.ExecuteNonQuery()
+
+            'myTrans.Commit()
+            'SQL_ServerClass.Sb_Cerrar_Conexion(_Cn)
+
+            'Return True
+
+            _Cl_CambioCodigo.EsCorrecto = True
+            _Cl_CambioCodigo.SqlQuery = _SqlQuery
+
+        Catch ex As Exception
+            _Cl_CambioCodigo.EsCorrecto = False
+            _Cl_CambioCodigo.SqlQuery = String.Empty
+            _Cl_CambioCodigo.Mensaje = ex.Message
+        End Try
+
+        Return _Cl_CambioCodigo
 
     End Function
 
@@ -298,8 +398,6 @@ Public Class Frm_Cambio_Codigos
 
                 System.Windows.Forms.Application.DoEvents()
 
-                'Dim _Mala As Boolean = False
-
                 Dim _CodigoNew = _Lista_Productos_Arr(i, 0)
                 Dim _CodigoOld = _Lista_Productos_Arr(i, 1)
                 Dim _CodigoTecnico = _Lista_Productos_Arr(i, 2)
@@ -407,4 +505,10 @@ Public Class Frm_Cambio_Codigos
     Private Sub Frm_Cambio_Codigos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     End Sub
+End Class
+
+Public Class Cl_CambioCodigo
+    Public Property EsCorrecto As Boolean
+    Public Property Mensaje As String
+    Public Property SqlQuery As String
 End Class

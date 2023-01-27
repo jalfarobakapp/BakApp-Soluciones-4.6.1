@@ -321,7 +321,6 @@ Public Class Frm_CodAlternativo_Ver
             Beep()
             ToastNotification.Show(Me, "PRODUCTO ACTUALIZADO CORRECTAMENTE", My.Resources.ok_button,
                                    1 * 1000, eToastGlowColor.Blue, eToastPosition.MiddleCenter)
-            'Sb_ActualizarGrilla()
 
         End If
 
