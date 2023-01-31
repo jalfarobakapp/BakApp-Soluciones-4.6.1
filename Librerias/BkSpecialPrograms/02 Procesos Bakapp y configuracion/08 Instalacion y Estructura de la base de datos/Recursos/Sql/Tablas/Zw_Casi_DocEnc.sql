@@ -52,6 +52,9 @@ CREATE TABLE [dbo].[Zw_Casi_DocEnc](
 	[Reserva_NroOCC]	    [bit]			NOT NULL DEFAULT (0),
 	[Reserva_Idmaeedo]	    [int]			NOT NULL DEFAULT (0),
     [Bodega_Destino]        [varchar](3)	NOT NULL DEFAULT (''),
+    [RevFincred]	        [bit]			NOT NULL DEFAULT (0),
+    [IdFincred]	            [int]			NOT NULL DEFAULT (0),
+    [MontoFincred]	        [float]			NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Casi_DocEnc] PRIMARY KEY CLUSTERED 
 (
 	[Id_DocEnc] ASC

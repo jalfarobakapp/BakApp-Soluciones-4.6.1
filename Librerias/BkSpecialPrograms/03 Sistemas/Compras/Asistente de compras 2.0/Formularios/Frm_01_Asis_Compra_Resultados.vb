@@ -8162,7 +8162,7 @@ Drop Table #Paso"
                                ",'" & Format(_Fl.Feemdo, "yyyyMMdd") & "','" & NuloPorNro(_Fl.MensajeError, "") & "'," & Convert.ToInt32(_Fl.ErrorGrabar) & ")"
                 _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Acp)
 
-                Auto_Id_Correo = 37
+                'Auto_Id_Correo = 37
 
                 _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, _Fl.Email, Auto_CorreoCc, Auto_Id_Correo, Auto_NombreFormato_PDF, _Id_Acp)
                 ' 37
@@ -9335,15 +9335,31 @@ Namespace GeneraOccAuto
                     Throw New System.Exception("Falta el correo del cliente")
                 End If
 
-                If Not Fx_Validar_Email(_Para) Then
-                    Throw New System.Exception("El correo para: [" & _Para & "] no es una cuenta de correos valida")
+                If _Para.Contains(";") Then
+
+                    Dim _Paras = _Para.Split(";")
+
+                    For Each Pr As String In _Paras
+                        If Not Fx_Validar_Email(Pr) Then
+                            Throw New System.Exception("El correo para: [" & _Para & "] no es una cuenta de correos valida")
+                        End If
+                    Next
+                Else
+                    If Not Fx_Validar_Email(_Para) Then
+                        Throw New System.Exception("El correo para: [" & _Para & "] no es una cuenta de correos valida")
+                    End If
                 End If
+
+                'If Not Fx_Validar_Email(_Para) Then
+                '    Throw New System.Exception("El correo para: [" & _Para & "] no es una cuenta de correos valida")
+                'End If
 
                 If Not String.IsNullOrEmpty(_Cc) Then
 
                     If Not Fx_Validar_Email(_Cc) Then
 
                         If _Cc.Contains(";") Then
+
                             Dim _Ccs = _Cc.Split(";")
 
                             For Each _Correos In _Ccs
