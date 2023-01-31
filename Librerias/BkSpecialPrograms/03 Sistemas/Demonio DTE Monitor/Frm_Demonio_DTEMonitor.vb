@@ -642,8 +642,8 @@ Public Class Frm_Demonio_DTEMonitor
         Consulta_sql = "Select Top 20 Tid.*,Doc.Tido From " & _Global_BaseBk & "Zw_DTE_Trackid Tid" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_DTE_Documentos Doc On Tid.Id_Dte = Doc.Id_Dte" & vbCrLf &
                        "Where Doc.Tido <> 'BLV' And Tid.AmbienteCertificacion = " & _AmbienteCertificacion & vbCrLf &
-                       "And ((Tid.Procesar = 0 And (Tid.Estado = '-11' Or Tid.Estado = 'SOK' Or Tid.Estado = '107')) Or (Tid.Procesar = 1 And Tid.Procesado = 0))" & vbCrLf &
-                       "And Tid.Idmaeedo Not In  (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid Tid2 Where Tid.Idmaeedo = Tid2.Idmaeedo And ((Informado = 1 And Reparo = 1) or (Aceptado = 1)))" & vbCrLf &
+                       "And ((Tid.Procesar = 0 And (Tid.Estado = '-11' Or Tid.Estado = 'SOK' Or Tid.Estado = '107' Or Tid.Estado = '')) Or (Tid.Procesar = 1 And Tid.Procesado = 0))" & vbCrLf &
+                       "And Tid.Idmaeedo Not In  (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid Tid2 Where Tid.Idmaeedo = Tid2.Idmaeedo And ((Informado = 1 And Reparo = 1 And Estado <> '107') or (Aceptado = 1)))" & vbCrLf &
                        "Order By Tido,Nudo"
 
         Dim _Tbl_DTE_Trackid As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -947,7 +947,7 @@ Public Class Frm_Demonio_DTEMonitor
         Consulta_sql = "Select Top 20 Tid.*,Doc.Tido From " & _Global_BaseBk & "Zw_DTE_Trackid Tid" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_DTE_Documentos Doc On Tid.Id_Dte = Doc.Id_Dte" & vbCrLf &
                        "Where Doc.Tido = 'BLV' And Tid.AmbienteCertificacion = " & _AmbienteCertificacion &
-                       " And ((Tid.Procesar = 0 And (Tid.Estado = '-11' Or Tid.Estado = 'SOK')) Or (Tid.Procesar = 1 And Tid.Procesado = 0))" & vbCrLf &
+                       " And ((Tid.Procesar = 0 And (Tid.Estado = '-11' Or Tid.Estado = 'SOK' Or Tid.Estado = 'REC' Or Tid.Estado = '')) Or (Tid.Procesar = 1 And Tid.Procesado = 0))" & vbCrLf &
                        "Order By Tido,Nudo"
 
         'Consulta_sql = "Select Top 20 Tid.*,Doc.Tido From " & _Global_BaseBk & "Zw_DTE_Trackid Tid" & vbCrLf &
