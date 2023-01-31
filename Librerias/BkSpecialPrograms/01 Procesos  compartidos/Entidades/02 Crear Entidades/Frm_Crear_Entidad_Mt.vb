@@ -599,6 +599,22 @@ Public Class Frm_Crear_Entidad_Mt
 
         End If
 
+        If Not String.IsNullOrEmpty(TxtxEmail1.Text) Then
+            If Not Fx_Validar_Email(TxtxEmail1.Text) Then
+                MessageBoxEx.Show(Me, "el correo de Email [" & TxtxEmail1.Text & "] no es una cuenta de correos valida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                TxtxEmail1.Focus()
+                Return
+            End If
+        End If
+
+        If Not String.IsNullOrEmpty(TxtxEmail2.Text) Then
+            If Not Fx_Validar_Email(TxtxEmail2.Text) Then
+                MessageBoxEx.Show(Me, "el correo de Email [" & TxtxEmail2.Text & "] no es una cuenta de correos valida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                TxtxEmail2.Focus()
+                Return
+            End If
+        End If
+
         If _Existe_Tbl_Entidades_Bakapp Then
 
             Dim _CRTO As Double = TxtxCtoTotal.Text

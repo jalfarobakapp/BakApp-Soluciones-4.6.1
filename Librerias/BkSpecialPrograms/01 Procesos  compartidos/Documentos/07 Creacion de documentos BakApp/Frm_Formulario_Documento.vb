@@ -16136,7 +16136,7 @@ Public Class Frm_Formulario_Documento
             Dim _Fecha_1er_Vencimiento As Date = _Fecha_Emision
             Dim _FechaUltVencimiento As Date = _Fecha_Emision
             Dim _Forma_pago As String
-            Dim _Fecha_Recepcion As Date = _RowMaeedo_Origen.Item("FEER")
+            Dim _Fecha_Recepcion As Date = NuloPorNro(_RowMaeedo_Origen.Item("FEER"), _Fecha_Emision)
 
             Dim _Centro_Costo As String
 
@@ -16478,7 +16478,7 @@ Public Class Frm_Formulario_Documento
             End If
 
             Dim _Feemdo_Origen As Date = _RowMaeedo_Origen.Item("FEEMDO")
-            Dim _Feer_Origen As Date = _RowMaeedo_Origen.Item("FEER")
+            Dim _Feer_Origen As Date = NuloPorNro(_RowMaeedo_Origen.Item("FEER"), _Feemdo_Origen)
             Dim _Fecha_en_linea As Date = _Feemdo_Origen
             Dim _Conservar_Fecha_Origen As Boolean
 
