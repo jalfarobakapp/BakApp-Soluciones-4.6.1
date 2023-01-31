@@ -49,13 +49,9 @@ SELECT
        INNER JOIN MAEEDO AS EDO ON DDO.IDMAEEDO=EDO.IDMAEEDO  
        WHERE EDO.EMPRESA= @Empresa AND DDO.FEEMLI BETWEEN @Fecha1 And @Fecha2
 
-    --   AND 
-    --   EDO.TIDO IN  
-	--   ('FCV', 'FDB', 'FDV', 'FDX', 'FDZ', 'FEV', 'FVL', 'FVT', 'FVX', 'FVZ','FEE', 'BLV','GDV','GDP','NCE', 'NCV', 'NCX', 'NCZ', 'NEV')
-
        And (DDO.TIDO IN ('FCV', 'FDB', 'FDV', 'FDX', 'FDZ', 'FEV', 'FVL', 'FVT', 'FVX', 'FVZ','FEE', 'BLV','GDV','GDP','NCE', 'NCV', 'NCX', 'NCZ', 'NEV') 
             Or 
-            DDO.TIDO In ('GDI','GRI') And DDO.ARCHIRST = 'POTD')
+       DDO.TIDO In ('GDI','GRI') And DDO.ARCHIRST = 'POTD')
 	   #FiltroBodegas# 
        AND DDO.KOPRCT In #Codigo#
        AND DDO.LILG IN ('SI','GR')  

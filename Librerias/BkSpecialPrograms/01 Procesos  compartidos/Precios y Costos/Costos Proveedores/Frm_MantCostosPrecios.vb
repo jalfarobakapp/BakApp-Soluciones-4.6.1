@@ -245,7 +245,7 @@ Public Class Frm_MantCostosPrecios
 
         End If
 
-        Consulta_sql = "Select PrPro.*,MAEPR.BLOQUEAPR,Cast(0 As Float) As Neto_Cn_Dscto 
+        Consulta_sql = "Select PrPro.*,MAEPR.BLOQUEAPR,Cast(0 As Float) As Neto_Cn_Dscto,Cast(0 As Float) As Impuestos 
                         From " & _Nombre_Tbl_Paso_Costos & " As PrPro
                         Inner Join MAEPR On KOPR = Codigo
                         Where 1 > 0 And BLOQUEAPR = '' " & _Filtro_Sin_Usar & "
@@ -402,6 +402,7 @@ Public Class Frm_MantCostosPrecios
         Lbl_Uc2.DataBindings.Clear()
         Lbl_Pm.DataBindings.Clear()
         Lbl_Neto_Cn_Dscto.DataBindings.Clear()
+        Lbl_Impuestos.DataBindings.Clear()
 
         Lbl_Rtu.DataBindings.Add("text", _Dv, "Rtu", True, Nothing, Nothing, "N2")
 
@@ -413,6 +414,8 @@ Public Class Frm_MantCostosPrecios
         Lbl_Uc2.DataBindings.Add("text", _Dv, "Uc2", True, Nothing, Nothing, "C2")
         Lbl_Pm.DataBindings.Add("text", _Dv, "Pm", True, Nothing, Nothing, "C2")
         Lbl_Neto_Cn_Dscto.DataBindings.Add("text", _Dv, "Neto_Cn_Dscto", True, Nothing, Nothing, "C2")
+
+        Lbl_Impuestos.DataBindings.Add("text", _Dv, "Impuestos", True, Nothing, Nothing, "C2")
 
         For Each _Fila As DataGridViewRow In Grilla.Rows
 
@@ -451,6 +454,17 @@ Public Class Frm_MantCostosPrecios
             End If
 
             _Fila.Cells("Neto_Cn_Dscto").Value = _Neto
+
+            Dim _Codigo = _Fila.Cells("Codigo").Value
+
+            Consulta_sql = "Select Case Isnull(Sum(POIM), 0) As Impuesto From TABIM Where KOIM In (Select KOIM From TABIMPR Where KOPR = '" & _Codigo & "')"
+            Dim _RowImp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_RowImp) Then
+                _Fila.Cells("Neto_Cn_Dscto").Value = 0
+            Else
+                _Fila.Cells("Neto_Cn_Dscto").Value = _RowImp.Item("Impuesto")
+            End If
 
         Next
 
@@ -596,7 +610,7 @@ Public Class Frm_MantCostosPrecios
         '                Where 1 > 0 And BLOQUEAPR = '' " & _Filtro_Sin_Usar & "
         '                Order by Codigo"
 
-        Consulta_sql = "Select * From " & _Nombre_Tbl_Paso_Costos & vbCrLf &
+        Consulta_sql = "Select *,Cast(0 As Float) As Impuestos From " & _Nombre_Tbl_Paso_Costos & vbCrLf &
                        "Where 1 > 0 " & vbCrLf & _Filtro_Adicional & vbCrLf &
                        "Order by Codigo"
         _Ds = _Sql.Fx_Get_DataSet(Consulta_sql)
@@ -770,6 +784,7 @@ Public Class Frm_MantCostosPrecios
         Lbl_Uc2.DataBindings.Clear()
         Lbl_Pm.DataBindings.Clear()
         Lbl_Neto_Cn_Dscto.DataBindings.Clear()
+        Lbl_Impuestos.DataBindings.Clear()
 
         Lbl_Rtu.DataBindings.Add("text", _Dv, "Rtu", True, Nothing, Nothing, "N2")
 
@@ -781,6 +796,8 @@ Public Class Frm_MantCostosPrecios
         Lbl_Uc2.DataBindings.Add("text", _Dv, "Uc2", True, Nothing, Nothing, "C2")
         Lbl_Pm.DataBindings.Add("text", _Dv, "Pm", True, Nothing, Nothing, "C2")
         Lbl_Neto_Cn_Dscto.DataBindings.Add("text", _Dv, "Neto_Cn_Dscto", True, Nothing, Nothing, "C2")
+
+        Lbl_Impuestos.DataBindings.Add("text", _Dv, "Impuestos", True, Nothing, Nothing, "C0")
 
         For Each _Fila As DataGridViewRow In Grilla.Rows
 
@@ -819,6 +836,17 @@ Public Class Frm_MantCostosPrecios
             End If
 
             _Fila.Cells("Neto_Cn_Dscto").Value = _Neto
+
+            Dim _Codigo = _Fila.Cells("Codigo").Value
+
+            Consulta_sql = "Select Isnull(Sum(POIM), 0) As Impuesto From TABIM Where KOIM In (Select KOIM From TABIMPR Where KOPR = '" & _Codigo & "')"
+            Dim _RowImp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_RowImp) Then
+                _Fila.Cells("Impuestos").Value = 0
+            Else
+                _Fila.Cells("Impuestos").Value = _RowImp.Item("Impuesto")
+            End If
 
         Next
 

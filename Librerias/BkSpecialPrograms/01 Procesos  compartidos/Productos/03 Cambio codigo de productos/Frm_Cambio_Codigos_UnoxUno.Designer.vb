@@ -37,6 +37,7 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.BtnCambiarCodigo = New DevComponents.DotNetBar.ButtonItem()
+        Me.CheckBoxX1 = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -45,6 +46,7 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.CheckBoxX1)
         Me.GroupPanel1.Controls.Add(Me.LabelX5)
         Me.GroupPanel1.Controls.Add(Me.Txt_Codigo_Tecnico_New)
         Me.GroupPanel1.Controls.Add(Me.LabelX4)
@@ -59,7 +61,7 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(7, 12)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(629, 109)
+        Me.GroupPanel1.Size = New System.Drawing.Size(629, 115)
         '
         '
         '
@@ -114,7 +116,7 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
         Me.Txt_Codigo_Tecnico_New.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Codigo_Tecnico_New.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Codigo_Tecnico_New.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Codigo_Tecnico_New.Location = New System.Drawing.Point(363, 71)
+        Me.Txt_Codigo_Tecnico_New.Location = New System.Drawing.Point(363, 61)
         Me.Txt_Codigo_Tecnico_New.MaxLength = 20
         Me.Txt_Codigo_Tecnico_New.Name = "Txt_Codigo_Tecnico_New"
         Me.Txt_Codigo_Tecnico_New.PreventEnterBeep = True
@@ -129,7 +131,7 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(257, 70)
+        Me.LabelX4.Location = New System.Drawing.Point(257, 60)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(100, 23)
         Me.LabelX4.TabIndex = 9
@@ -162,7 +164,7 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
         Me.ChkCambiarCodigoTecnico.CheckBoxImageChecked = CType(resources.GetObject("ChkCambiarCodigoTecnico.CheckBoxImageChecked"), System.Drawing.Image)
         Me.ChkCambiarCodigoTecnico.FocusCuesEnabled = False
         Me.ChkCambiarCodigoTecnico.ForeColor = System.Drawing.Color.Black
-        Me.ChkCambiarCodigoTecnico.Location = New System.Drawing.Point(483, 70)
+        Me.ChkCambiarCodigoTecnico.Location = New System.Drawing.Point(483, 60)
         Me.ChkCambiarCodigoTecnico.Name = "ChkCambiarCodigoTecnico"
         Me.ChkCambiarCodigoTecnico.Size = New System.Drawing.Size(137, 23)
         Me.ChkCambiarCodigoTecnico.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -179,7 +181,7 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
         Me.Txt_Codigo_New.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Codigo_New.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Codigo_New.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Codigo_New.Location = New System.Drawing.Point(86, 69)
+        Me.Txt_Codigo_New.Location = New System.Drawing.Point(86, 59)
         Me.Txt_Codigo_New.MaxLength = 13
         Me.Txt_Codigo_New.Name = "Txt_Codigo_New"
         Me.Txt_Codigo_New.PreventEnterBeep = True
@@ -194,7 +196,7 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
         '
         Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX3.ForeColor = System.Drawing.Color.Black
-        Me.LabelX3.Location = New System.Drawing.Point(3, 69)
+        Me.LabelX3.Location = New System.Drawing.Point(3, 59)
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(77, 23)
         Me.LabelX3.TabIndex = 4
@@ -271,7 +273,7 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnCambiarCodigo})
-        Me.Bar2.Location = New System.Drawing.Point(0, 134)
+        Me.Bar2.Location = New System.Drawing.Point(0, 136)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(644, 41)
         Me.Bar2.Stretch = True
@@ -289,11 +291,28 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
         Me.BtnCambiarCodigo.Name = "BtnCambiarCodigo"
         Me.BtnCambiarCodigo.Text = "Cambiar código"
         '
+        'CheckBoxX1
+        '
+        Me.CheckBoxX1.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.CheckBoxX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.CheckBoxX1.CheckBoxImageChecked = CType(resources.GetObject("CheckBoxX1.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.CheckBoxX1.FocusCuesEnabled = False
+        Me.CheckBoxX1.ForeColor = System.Drawing.Color.Black
+        Me.CheckBoxX1.Location = New System.Drawing.Point(3, 86)
+        Me.CheckBoxX1.Name = "CheckBoxX1"
+        Me.CheckBoxX1.Size = New System.Drawing.Size(490, 23)
+        Me.CheckBoxX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.CheckBoxX1.TabIndex = 12
+        Me.CheckBoxX1.Text = "Crear como código alternativo el código original para el nuevo código"
+        '
         'Frm_Cambio_Codigos_UnoxUno
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(644, 175)
+        Me.ClientSize = New System.Drawing.Size(644, 177)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True
@@ -326,4 +345,5 @@ Partial Class Frm_Cambio_Codigos_UnoxUno
     Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
     Public WithEvents Txt_Codigo_Tecnico_New As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
+    Public WithEvents CheckBoxX1 As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

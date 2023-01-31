@@ -102,6 +102,16 @@ Public Class Frm_Cambio_Codigos_UnoxUno
                                         ChkCambiarCodigoTecnico.Checked, True, FUNCIONARIO,
                                         _TblPro.Rows(0), Txt_Codigo_Tecnico_New.Text) Then
 
+                        Dim _Cl_CambioCodigo As New Cl_CambioCodigo
+
+                        _Cl_CambioCodigo = Fm.Fx_Cambiar_Codigo_EmpExterna(Txt_Codigo_New.Text, Txt_Codigo_Old.Text,
+                                                                           ChkCambiarCodigoTecnico.Checked, True, FUNCIONARIO,
+                                                                           _TblPro.Rows(0), Txt_Codigo_Tecnico_New.Text)
+
+                        If _Cl_CambioCodigo.EsCorrecto Then
+                            Sb_EjecConsultaBasesExternas(Me, _Cl_CambioCodigo.SqlQuery, True)
+                        End If
+
                         If _Cerrar_al_cambiar Then
                             _CodigoCambiado = True
                             Me.Close()

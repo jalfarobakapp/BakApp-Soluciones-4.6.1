@@ -1,5 +1,5 @@
-﻿Imports DevComponents.DotNetBar
-Imports System.Windows.Forms.DataVisualization.Charting
+﻿Imports System.Windows.Forms.DataVisualization.Charting
+Imports DevComponents.DotNetBar
 
 Public Class Frm_EstadisticaProducto
 
@@ -381,7 +381,7 @@ Public Class Frm_EstadisticaProducto
 
         Sb_Formato_Graficos(Grafico_Desviacion_Estandar, 0, 0)
 
-        For i = 0 To 7
+        For i = 0 To 8
             Sb_Formato_Graficos(Grafico_Mov_Stock, i, i)
         Next
 
@@ -1690,6 +1690,7 @@ Public Class Frm_EstadisticaProducto
         Dim F1 As Integer = 1 'Primerdiadelmes(_Fecha_Inicio).Day
         Dim F2 As Integer = DateDiff(DateInterval.Day, _Fecha_Desde, _Fecha_Hasta) '+ 30 '(365 / 4) + 10 'ultimodiadelmes(_Fecha_Inicio).Day
 
+        Dim _FechaHAsta2 As Date = DateAdd(DateInterval.Day, F2, _Fecha_Desde)
 
         Dim Fecha As Date = _Fecha_Desde
         Dim Contador = 0
@@ -1756,7 +1757,11 @@ Public Class Frm_EstadisticaProducto
                        "Where KOPRCT In " & _Filtro_Productos & " And D.TIDO In ('GRC','GRI','FCC')" & Space(1) & _Filtro_Bodegas & " Order by IDMAEEDO Desc"
         Dim _RowUltCompra As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        For F1 = F1 To F2
+        Dim _FechaActua As Date = FechaDelServidor()
+
+        Do While FechaNw <= _FechaActua
+
+            'For F1 = F1 To F2
 
             System.Windows.Forms.Application.DoEvents()
 
@@ -1764,6 +1769,10 @@ Public Class Frm_EstadisticaProducto
 
             Dim _Row_renglon() As DataRow
             _Row_renglon = Tbl_.Select("FECHA='" & _Fecha_Actual & "'")
+
+            If FechaNw.Date.ToShortDateString = _FechaActua.ToShortDateString Then
+                Dim aca = 0
+            End If
 
             If _Row_renglon.Length > 0 Then
                 Dim _Row As DataRow = _Row_renglon(0)
@@ -1793,7 +1802,7 @@ Public Class Frm_EstadisticaProducto
                     Grafico_Mov_Stock.Series("Series4").Points.AddXY(FechaNw, _Stock_Ingreso)
                 End If
 
-                If _Ultimo_Nro <> _Stock Then
+                If _Ultimo_Nro <> _Stock Or (FechaNw.Date.ToShortDateString = _FechaActua.ToShortDateString) Then
                     Grafico_Mov_Stock.Series("Series2").Points.AddXY(FechaNw, _Stock)
                 End If
 
@@ -1820,8 +1829,10 @@ Public Class Frm_EstadisticaProducto
             Grafico_Mov_Stock.Series("Series5").Points.AddXY(FechaNw, Input_Stock_Minimo.Value)
 
             FechaNw = DateAdd(DateInterval.Day, 1, FechaNw)
+            F1 += 1
+            'Next
 
-        Next
+        Loop
 
         Grafico_Mov_Stock.Series("Series6").Points.AddXY(FechaNw, Input_Stock_Minimo.Value) ' NRO STOCK CRITICO
 

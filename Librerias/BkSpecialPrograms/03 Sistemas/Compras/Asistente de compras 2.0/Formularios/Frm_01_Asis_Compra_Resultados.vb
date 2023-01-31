@@ -371,7 +371,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         AddHandler Fm_Hijo.STab_Ventas.Click, AddressOf STab_Ventas_Compras_Click
         AddHandler Fm_Hijo.STab_Compras.Click, AddressOf STab_Ventas_Compras_Click
 
-        Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, True, True)
+        Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, True, True, False)
 
         AddHandler Rb_Proveedores.Click, AddressOf Sb_Rb_Boton_Click
         AddHandler Rb_Herramientas.Click, AddressOf Sb_Rb_Boton_Click
@@ -420,6 +420,8 @@ Public Class Frm_01_Asis_Compra_Resultados
         If Modo_NVI Then
             BtnProceso_Prov_Auto_Especial.Enabled = False
         End If
+
+        Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, True, True)
 
     End Sub
 
@@ -3244,7 +3246,8 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     Sub Sb_Refrescar_Grilla_Principal(Grilla As DataGridView,
                                       _Actualizar_Rotacion As Boolean,
-                                      _Actualizar_Stock As Boolean)
+                                      _Actualizar_Stock As Boolean,
+                                      Optional _MarcarGrilla As Boolean = True)
         Me.Enabled = False
 
         RemoveHandler Grilla.CellEndEdit, AddressOf Grilla_CellEndEdit
@@ -3263,7 +3266,9 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         Sb_Actualizar_Costos()
 
-        If _Actualizar_Stock Then Sb_Actualizar_Stock()
+        If _Actualizar_Stock Then
+            Sb_Actualizar_Stock()
+        End If
 
         Sb_Actualizar_Rotacion("", _Actualizar_Rotacion)
 
@@ -3271,7 +3276,9 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         Sb_Grilla_Actualizar_Informe(Grilla)
 
-        Sb_Grilla_Marcar(Grilla, False)
+        If _MarcarGrilla Then
+            Sb_Grilla_Marcar(Grilla, False)
+        End If
 
         AddHandler Grilla.CellEndEdit, AddressOf Grilla_CellEndEdit
         AddHandler Grilla.CellBeginEdit, AddressOf Grilla_CellBeginEdit
@@ -3282,8 +3289,6 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         AddHandler Grilla.KeyUp, AddressOf Grilla_KeyUp
         AddHandler Grilla.MouseDown, AddressOf Grilla_MouseDown
-
-        'AddHandler Grilla.CellFormatting, AddressOf Grilla_CellFormatting
 
         If Not String.IsNullOrEmpty(Fm_Hijo.Txt_Descripcion.Text) Then
             _Dv.RowFilter = String.Format("Codigo+Descripcion Like '%{0}%'", Trim(Fm_Hijo.Txt_Descripcion.Text))
@@ -8157,7 +8162,7 @@ Drop Table #Paso"
                                ",'" & Format(_Fl.Feemdo, "yyyyMMdd") & "','" & NuloPorNro(_Fl.MensajeError, "") & "'," & Convert.ToInt32(_Fl.ErrorGrabar) & ")"
                 _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Acp)
 
-                Auto_Id_Correo = 37
+                'Auto_Id_Correo = 37
 
                 _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, _Fl.Email, Auto_CorreoCc, Auto_Id_Correo, Auto_NombreFormato_PDF, _Id_Acp)
                 ' 37
@@ -9330,15 +9335,31 @@ Namespace GeneraOccAuto
                     Throw New System.Exception("Falta el correo del cliente")
                 End If
 
-                If Not Fx_Validar_Email(_Para) Then
-                    Throw New System.Exception("El correo para: [" & _Para & "] no es una cuenta de correos valida")
+                If _Para.Contains(";") Then
+
+                    Dim _Paras = _Para.Split(";")
+
+                    For Each Pr As String In _Paras
+                        If Not Fx_Validar_Email(Pr) Then
+                            Throw New System.Exception("El correo para: [" & _Para & "] no es una cuenta de correos valida")
+                        End If
+                    Next
+                Else
+                    If Not Fx_Validar_Email(_Para) Then
+                        Throw New System.Exception("El correo para: [" & _Para & "] no es una cuenta de correos valida")
+                    End If
                 End If
+
+                'If Not Fx_Validar_Email(_Para) Then
+                '    Throw New System.Exception("El correo para: [" & _Para & "] no es una cuenta de correos valida")
+                'End If
 
                 If Not String.IsNullOrEmpty(_Cc) Then
 
                     If Not Fx_Validar_Email(_Cc) Then
 
                         If _Cc.Contains(";") Then
+
                             Dim _Ccs = _Cc.Split(";")
 
                             For Each _Correos In _Ccs

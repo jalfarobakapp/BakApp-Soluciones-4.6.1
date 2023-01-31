@@ -3361,9 +3361,11 @@ Public Class Frm_Formulario_Documento
         _TblEncabezado.Rows(0).Item("Cuotas") = _Cuotas
         _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento") = _Dias_1er_Vencimiento
         _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = _Dias_Vencimiento
-        _TblEncabezado.Rows(0).Item("RevFincred") = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades",
+        _TblEncabezado.Rows(0).Item("RevFincredEnt") = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades",
                                                                       "RevFincred",
                                                                       "CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "'",,,, True)
+
+        _TblEncabezado.Rows(0).Item("RevFincred") = _TblEncabezado.Rows(0).Item("RevFincredEnt")
         _TblObservaciones.Rows(0).Item("Forma_pago") = _Forma_pago
 
 
@@ -24814,11 +24816,17 @@ Public Class Frm_Formulario_Documento
 
     Function Fx_Revisar_Fincred() As Boolean
 
+        Dim _RevFincredEnt As Boolean
         Dim _Revisar_Fincred As Boolean
         Dim _Fincred_Respuesta As New Fincred_API.Respuesta
 
         If _Global_Row_Configuracion_General.Item("Fincred_Usar") And _Global_Row_Configuracion_Estacion.Item("Fincred_Usar") Then
             _Revisar_Fincred = _TblEncabezado.Rows(0).Item("RevFincred")
+            _RevFincredEnt = _TblEncabezado.Rows(0).Item("RevFincredEnt")
+        End If
+
+        If Not _RevFincredEnt Then
+            Return True
         End If
 
         Dim _Monto_total_venta As Double = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")

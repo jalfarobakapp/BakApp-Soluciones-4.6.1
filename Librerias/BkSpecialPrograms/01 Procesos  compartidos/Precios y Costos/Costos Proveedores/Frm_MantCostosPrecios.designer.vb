@@ -24,9 +24,9 @@ Partial Class Frm_MantCostosPrecios
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_MantCostosPrecios))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Barrar_Menu = New DevComponents.DotNetBar.Bar()
         Me.BtnGrabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Refrescar = New DevComponents.DotNetBar.ButtonItem()
@@ -115,6 +115,8 @@ Partial Class Frm_MantCostosPrecios
         Me.Chk_Quitar_Bloqueados_venta = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Ver_Solo_Repetidos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_NoUsar_Bloqueados = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.GroupPanel12 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Lbl_Impuestos = New DevComponents.DotNetBar.LabelX()
         CType(Me.Barrar_Menu, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -132,6 +134,7 @@ Partial Class Frm_MantCostosPrecios
         Me.GroupPanel11.SuspendLayout()
         CType(Me.Dtp_FechaVigenciaHasta, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_FechaVigenciaDesde, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupPanel12.SuspendLayout()
         Me.SuspendLayout()
         '
         'Barrar_Menu
@@ -233,36 +236,36 @@ Partial Class Frm_MantCostosPrecios
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla.Size = New System.Drawing.Size(1070, 291)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 27
@@ -277,7 +280,7 @@ Partial Class Frm_MantCostosPrecios
         Me.Lbl_Rtu.ForeColor = System.Drawing.Color.Black
         Me.Lbl_Rtu.Location = New System.Drawing.Point(3, 1)
         Me.Lbl_Rtu.Name = "Lbl_Rtu"
-        Me.Lbl_Rtu.Size = New System.Drawing.Size(78, 23)
+        Me.Lbl_Rtu.Size = New System.Drawing.Size(59, 23)
         Me.Lbl_Rtu.TabIndex = 34
         Me.Lbl_Rtu.Text = "R.T.U."
         Me.Lbl_Rtu.TextAlignment = System.Drawing.StringAlignment.Center
@@ -1146,7 +1149,7 @@ Partial Class Frm_MantCostosPrecios
         Me.GroupPanel10.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel10.Location = New System.Drawing.Point(592, 416)
         Me.GroupPanel10.Name = "GroupPanel10"
-        Me.GroupPanel10.Size = New System.Drawing.Size(90, 51)
+        Me.GroupPanel10.Size = New System.Drawing.Size(74, 49)
         '
         '
         '
@@ -1494,11 +1497,67 @@ Partial Class Frm_MantCostosPrecios
         Me.Chk_NoUsar_Bloqueados.TabIndex = 84
         Me.Chk_NoUsar_Bloqueados.Text = """No Usar"" productos bloqueados"
         '
+        'GroupPanel12
+        '
+        Me.GroupPanel12.BackColor = System.Drawing.Color.White
+        Me.GroupPanel12.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel12.Controls.Add(Me.Lbl_Impuestos)
+        Me.GroupPanel12.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel12.Location = New System.Drawing.Point(672, 414)
+        Me.GroupPanel12.Name = "GroupPanel12"
+        Me.GroupPanel12.Size = New System.Drawing.Size(93, 51)
+        '
+        '
+        '
+        Me.GroupPanel12.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel12.Style.BackColorGradientAngle = 90
+        Me.GroupPanel12.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel12.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel12.Style.BorderBottomWidth = 1
+        Me.GroupPanel12.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel12.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel12.Style.BorderLeftWidth = 1
+        Me.GroupPanel12.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel12.Style.BorderRightWidth = 1
+        Me.GroupPanel12.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel12.Style.BorderTopWidth = 1
+        Me.GroupPanel12.Style.CornerDiameter = 4
+        Me.GroupPanel12.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel12.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel12.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel12.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel12.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel12.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel12.TabIndex = 85
+        Me.GroupPanel12.Text = "Impuestos"
+        '
+        'Lbl_Impuestos
+        '
+        Me.Lbl_Impuestos.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_Impuestos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Impuestos.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Impuestos.Location = New System.Drawing.Point(3, 3)
+        Me.Lbl_Impuestos.Name = "Lbl_Impuestos"
+        Me.Lbl_Impuestos.Size = New System.Drawing.Size(78, 23)
+        Me.Lbl_Impuestos.TabIndex = 34
+        Me.Lbl_Impuestos.Text = "IMP"
+        Me.Lbl_Impuestos.TextAlignment = System.Drawing.StringAlignment.Center
+        '
         'Frm_MantCostosPrecios
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1089, 560)
+        Me.Controls.Add(Me.GroupPanel12)
         Me.Controls.Add(Me.Chk_NoUsar_Bloqueados)
         Me.Controls.Add(Me.Chk_Ver_Solo_Repetidos)
         Me.Controls.Add(Me.Chk_Quitar_Bloqueados_venta)
@@ -1546,6 +1605,7 @@ Partial Class Frm_MantCostosPrecios
         Me.GroupPanel11.ResumeLayout(False)
         CType(Me.Dtp_FechaVigenciaHasta, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Dtp_FechaVigenciaDesde, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupPanel12.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -1637,4 +1697,6 @@ Partial Class Frm_MantCostosPrecios
     Public WithEvents Chk_Quitar_Bloqueados_venta As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Chk_Ver_Solo_Repetidos As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Chk_NoUsar_Bloqueados As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents GroupPanel12 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents Lbl_Impuestos As DevComponents.DotNetBar.LabelX
 End Class
