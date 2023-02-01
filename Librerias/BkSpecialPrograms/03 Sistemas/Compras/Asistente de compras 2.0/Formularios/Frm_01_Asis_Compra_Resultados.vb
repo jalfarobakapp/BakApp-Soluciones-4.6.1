@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports BkSpecialPrograms.Frm_InfoEnt_Situacion_Documentos
 Imports DevComponents.DotNetBar
 
 Public Class Frm_01_Asis_Compra_Resultados
@@ -691,6 +692,14 @@ Public Class Frm_01_Asis_Compra_Resultados
                     .Columns("Clasificacion_Rk").Visible = False
                 End If
             End If
+
+            .Columns("ProductoExcluido").Frozen = True
+            .Columns("ProductoExcluido").Width = 25
+            .Columns("ProductoExcluido").HeaderText = "E!"
+            .Columns("ProductoExcluido").ToolTipText = "Producto excluido"
+            .Columns("ProductoExcluido").Visible = True
+            .Columns("ProductoExcluido").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             '' Creamos un nuevo estilo de celda
             ''
@@ -1569,6 +1578,10 @@ Public Class Frm_01_Asis_Compra_Resultados
             _Condicion += Space(1) & "And Sospecha_Baja_Rotacion = 0"
         End If
 
+        If Chk_QuitarProdExcluidos.Checked Then
+            _Condicion += Space(1) & "And ProductoExcluido = 0"
+        End If
+
         Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_Actualizar_Informe_Principal
 
         Consulta_sql = Replace(Consulta_sql, "#TablaPaso#", _Nombre_Tbl_Paso_Informe)
@@ -1869,6 +1882,10 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         If Chk_Quitare_Sospechosos_Stock.Checked Then
             _Condicion += "And Sospecha_Baja_Rotacion = 0" & vbCrLf
+        End If
+
+        If Chk_QuitarProdExcluidos.Checked Then
+            _Condicion += Space(1) & "And ProductoExcluido = 0"
         End If
 
         Dim _Orden_Codigo As String
@@ -4701,8 +4718,6 @@ Public Class Frm_01_Asis_Compra_Resultados
         '   Incluir o no incluir movimientos hacia la producción (GDI -> ODT)
         _Sql.Sb_Parametro_Informe_Sql(Chk_Incluir_Salidas_GDI_OT, "Compras_Asistente",
                                              Chk_Incluir_Salidas_GDI_OT.Name, Class_SQLite.Enum_Type._Boolean, Chk_Incluir_Salidas_GDI_OT.Checked, _Actualizar)
-
-
 
 
         ' Sumar Stock Externo al Stock Fisico
@@ -8518,7 +8533,11 @@ Drop Table #Paso"
 
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, _Modalidad_Estudio, "OCC", True)
+        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Format_01" & vbCrLf &
+                       "Where TipoDoc = 'OCC' And NombreFormato = '" & Auto_NombreFormato_PDF & "'"
+        Dim _RowFormato As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+
         Dim _NroLineasXpag As Integer = _RowFormato.Item("NroLineasXpag")
 
         Dim _Largo_Variable As Boolean = _RowFormato.Item("Largo_Variable")
@@ -8566,6 +8585,10 @@ Drop Table #Paso"
 
         If Chk_Quitare_Sospechosos_Stock.Checked Then
             _Condicion += "And Sospecha_Baja_Rotacion = 0" & vbCrLf
+        End If
+
+        If Chk_QuitarProdExcluidos.Checked Then
+            _Condicion += Space(1) & "And ProductoExcluido = 0"
         End If
 
         Dim _Orden_Codigo As String

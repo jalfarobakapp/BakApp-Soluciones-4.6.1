@@ -203,6 +203,8 @@ Public Class Frm_Configuracion_Gral
 
             End If
 
+            Chk_ListaDesdeSustentatorio.Checked = .Item("ListaDesdeSustentatorio")
+
 
         End With
 
@@ -250,6 +252,7 @@ Public Class Frm_Configuracion_Gral
         Chk_BloqCambNomCONCEPTOSEnDocumentos.Enabled = _Modalidad_General
 
         Chk_PermitirMigrarProductosBaseExterna.Enabled = _Modalidad_General
+        Chk_ListaDesdeSustentatorio.Enabled = _Modalidad_General
 
         Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.Enabled = _Modalidad_General
         LabelX20.Enabled = _Modalidad_General
@@ -442,9 +445,8 @@ Public Class Frm_Configuracion_Gral
                        ",Lista_Precios_Proveedores = '" & Txt_Lista_Precios_Proveedores.Tag & "'" & vbCrLf &
                        ",Fincred_Usar = " & Convert.ToInt32(Chk_Fincred_Usar.Checked) & vbCrLf &
                        ",Fincred_Id_Token = " & Txt_Fincred_Id_Token.Tag & vbCrLf &
+                       ",ListaDesdeSustentatorio = " & Convert.ToInt32(Chk_ListaDesdeSustentatorio.Checked) & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
-
-
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
