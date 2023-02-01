@@ -176,6 +176,7 @@ CREATE TABLE [dbo].[#TablaPaso#](
     [Porc_CumpUlt3Pedidos]      [Float]        DEFAULT (0),
     [StockUd1BodStar]           [Float]        DEFAULT (0),
     [StockUd2BodStar]           [Float]        DEFAULT (0),
+    [ProductoExcluido]          [Bit]          DEFAULT (0),
 
 	CONSTRAInt [PK_Zw_#TablaPaso#_Codigo] PRIMARY KEY CLUSTERED 
 (

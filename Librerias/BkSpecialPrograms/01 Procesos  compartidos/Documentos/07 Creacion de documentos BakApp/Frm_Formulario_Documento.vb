@@ -17265,6 +17265,15 @@ Public Class Frm_Formulario_Documento
 
             Dim _Filad = Grilla_Detalle.Rows(0)
 
+
+            If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "ListaDesdeSustentatorio") Then
+                If _Global_Row_Configuracion_General.Item("ListaDesdeSustentatorio") Then
+                    If _Tido = "GDV" Or _Tido = "FCV" Or _Tido = "BLV" Then
+                        _TblEncabezado.Rows(0).Item("ListaPrecios") = _CodLista
+                    End If
+                End If
+            End If
+
             Sb_Recalcular_Descuentos(_Filad, False, False)
 
             Sb_Marcar_Grilla()

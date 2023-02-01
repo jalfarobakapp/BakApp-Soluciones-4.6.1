@@ -797,7 +797,7 @@ Public Class Frm_MantCostosPrecios
         Lbl_Pm.DataBindings.Add("text", _Dv, "Pm", True, Nothing, Nothing, "C2")
         Lbl_Neto_Cn_Dscto.DataBindings.Add("text", _Dv, "Neto_Cn_Dscto", True, Nothing, Nothing, "C2")
 
-        Lbl_Impuestos.DataBindings.Add("text", _Dv, "Impuestos", True, Nothing, Nothing, "C0")
+        Lbl_Impuestos.DataBindings.Add("text", _Dv, "Impuestos", True, Nothing, Nothing, "C2")
 
         For Each _Fila As DataGridViewRow In Grilla.Rows
 
@@ -839,7 +839,7 @@ Public Class Frm_MantCostosPrecios
 
             Dim _Codigo = _Fila.Cells("Codigo").Value
 
-            Consulta_sql = "Select Isnull(Sum(POIM), 0) As Impuesto From TABIM Where KOIM In (Select KOIM From TABIMPR Where KOPR = '" & _Codigo & "')"
+            Consulta_sql = "Select Isnull(Sum(POIM), 2) As Impuesto From TABIM Where KOIM In (Select KOIM From TABIMPR Where KOPR = '" & _Codigo & "')"
             Dim _RowImp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If IsNothing(_RowImp) Then

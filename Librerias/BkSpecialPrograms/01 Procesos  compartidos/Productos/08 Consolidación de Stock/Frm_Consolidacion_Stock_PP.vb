@@ -42,10 +42,7 @@ Public Class Frm_Consolidacion_Stock_PP
         _TblProductos = _Sql.Fx_Get_Tablas(Consulta_sql)
 
 
-        If Global_Thema = Enum_Themas.Oscuro Then
-            BtnProcesar.ForeColor = Color.White
-            BtnCancelar.ForeColor = Color.White
-        End If
+        Sb_Color_Botones_Barra(Bar2)
 
     End Sub
 

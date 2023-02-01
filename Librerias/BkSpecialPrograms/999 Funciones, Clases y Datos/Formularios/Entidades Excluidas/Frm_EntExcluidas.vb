@@ -18,9 +18,7 @@ Public Class Frm_EntExcluidas
 
         Sb_Formato_Generico_Grilla(Grilla, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
 
-        If Global_Thema = Enum_Themas.Oscuro Then
-            BtnBuscarEntidad.ForeColor = Color.White
-        End If
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
@@ -71,7 +69,6 @@ Public Class Frm_EntExcluidas
             .Columns("Exc").Width = 100
             .Columns("Exc").HeaderText = "Excluida en"
             .Columns("Exc").Visible = True
-
 
         End With
 
@@ -177,15 +174,14 @@ Public Class Frm_EntExcluidas
                     Dim _Sucursal As String = Fila.Item("Sucursal")
                     Dim _Excluida As String = Fila.Item("Excluida")
 
-                    Consulta_sql = "INSERT INTO " & _Global_BaseBk & "Zw_TblInf_EntExcluidas (Excluida,Funcionario,Codigo,Sucursal)" & vbCrLf &
-                                   "VALUES ('" & _Excluida & "','" & FUNCIONARIO & "','" & _Codigo & "','" & _Sucursal & "')"
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_TblInf_EntExcluidas (Excluida,Funcionario,Codigo,Sucursal)" & vbCrLf &
+                                   "Values ('" & _Excluida & "','" & FUNCIONARIO & "','" & _Codigo & "','" & _Sucursal & "')"
                     Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                     Comando.Transaction = myTrans
                     Comando.ExecuteNonQuery()
 
                 End If
 
-                'Excluida,Funcionario,Codigo,Sucursal,Razon
             Next
 
             myTrans.Commit()
