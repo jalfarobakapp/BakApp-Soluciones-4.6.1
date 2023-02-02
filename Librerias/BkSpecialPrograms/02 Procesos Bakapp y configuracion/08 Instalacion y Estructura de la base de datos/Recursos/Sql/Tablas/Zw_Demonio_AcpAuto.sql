@@ -12,7 +12,7 @@ CREATE TABLE [dbo].[Zw_Demonio_AcpAuto](
 	[ErrorGrabar]		[bit]				NOT NULL DEFAULT (0),
 	[EmailEnviado]		[bit]				NOT NULL DEFAULT (0),
 	[Destinatarios]		[varchar](300)		NOT NULL DEFAULT (''),
- CONSTRAINT [PK_Zw_Demonio_AsisCompAuto] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_Zw_Demonio_AcpAuto] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]

@@ -33,6 +33,8 @@ Public Class Frm_Cambio_Codigos_UnoxUno
             Call Txt_Codigo_Old_ButtonCustom2Click(Nothing, Nothing)
         End If
 
+        CheckBoxX1.Checked = True
+
     End Sub
 
 
