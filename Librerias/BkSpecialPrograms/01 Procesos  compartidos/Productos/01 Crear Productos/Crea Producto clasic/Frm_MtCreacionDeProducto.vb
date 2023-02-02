@@ -435,6 +435,12 @@ Public Class Frm_MtCreacionDeProducto
 
     Private Sub Sb_Grabar1()
 
+        If _Cl_Producto.Pro_Accion = Cl_Producto.Enum_Accion.Editar Then
+            If Not Fx_Tiene_Permiso(Me, "Prod014") Then
+                Return
+            End If
+        End If
+
         If String.IsNullOrEmpty(Trim(Txt_Kopr.Text)) Then
             MessageBoxEx.Show(Me, "Debe ingresar código principal", "Código principal", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_Kopr.Focus()
@@ -1676,6 +1682,12 @@ Sigue_Loop_01:
     End Sub
 
     Private Sub Btn_Dimensiones_Click(sender As Object, e As EventArgs) Handles Btn_Dimensiones.Click
+
+        If _Cl_Producto.Pro_Accion = Cl_Producto.Enum_Accion.Editar Then
+            If Not Fx_Tiene_Permiso(Me, "Prod014") Then
+                Return
+            End If
+        End If
 
         Dim Fm As New Frm_Dimensiones_Pr(Txt_Kopr.Text, False)
         Fm.ShowDialog(Me)

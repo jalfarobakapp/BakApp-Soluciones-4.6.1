@@ -206,7 +206,12 @@ Public Class Frm_Configuracion_Gral
             Chk_ListaDesdeSustentatorio.Checked = .Item("ListaDesdeSustentatorio")
 
 
+            Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.Checked = .Item("Crear_FCC_Desde_GRC_Vinculado_SII")
+
+
         End With
+
+        Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.Enabled = Not _Modalidad_General
 
         Chk_Revisar_Tasa_de_Cambio.Enabled = _Modalidad_General
         Chk_Revisar_Taza_Solo_Mon_Extranjeras.Enabled = _Modalidad_General
@@ -411,6 +416,7 @@ Public Class Frm_Configuracion_Gral
                        ",Dias_Max_Fecha_Despacho_Sab = " & Convert.ToInt32(Chk_Dias_Max_Fecha_Despacho_Sab.Checked) & vbCrLf &
                        ",Dias_Max_Fecha_Despacho_Dom = " & Convert.ToInt32(Chk_Dias_Max_Fecha_Despacho_Dom.Checked) & vbCrLf &
                        ",Solicitar_Permiso_OCC_SOC = " & Convert.ToInt32(Chk_Solicitar_Permiso_OCC_SOC.Checked) & vbCrLf &
+                       ",Crear_FCC_Desde_GRC_Vinculado_SII = " & Convert.ToInt32(Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.Checked) & vbCrLf &
                        ",Centro_Costo_Obligatorio_OCC = " & Convert.ToInt32(Chk_Centro_Costo_Obligatorio_OCC.Checked) & vbCrLf &
                        ",No_Solicitar_Permiso_Entidad_Preferencial = " & Convert.ToInt32(Chk_No_Solicitar_Permiso_Entidad_Preferencial.Checked) & vbCrLf &
                        ",Utilizar_NVV_En_Credito_X_Cliente = " & Convert.ToInt32(Chk_Utilizar_NVV_En_Credito_X_Cliente.Checked) & vbCrLf &

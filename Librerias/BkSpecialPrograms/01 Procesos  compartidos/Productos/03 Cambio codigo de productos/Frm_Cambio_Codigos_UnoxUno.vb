@@ -92,6 +92,17 @@ Public Class Frm_Cambio_Codigos_UnoxUno
                     Return
                 End If
 
+                _Existe_PrNew = CBool(_Sql.Fx_Cuenta_Registros("TABCODAL", "KOPRAL = '" & Txt_Codigo_New.Text & "'"))
+
+                If _Existe_PrNew Then
+                    MessageBoxEx.Show(Me, "¡NUEVO CODIGO EXISTE COMO ALTERNATIVO!" & vbCrLf & vbCrLf &
+                                  "El código : " & Trim(Txt_Codigo_Tecnico_New.Text) & " existe como código alternativo y" & vbCrLf &
+                                  "no se puede crear un código de producto que ya exista en la base de datos como alternativo.",
+                                  "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
+
                 If MessageBoxEx.Show("¿Esta seguro de cambiar el código?", "Cambiar código",
                                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
@@ -105,11 +116,21 @@ Public Class Frm_Cambio_Codigos_UnoxUno
                         Dim _Cl_CambioCodigo As New Cl_CambioCodigo
 
                         _Cl_CambioCodigo = Fm.Fx_Cambiar_Codigo_EmpExterna(Txt_Codigo_New.Text, Txt_Codigo_Old.Text,
-                                                                           ChkCambiarCodigoTecnico.Checked, True, FUNCIONARIO,
-                                                                           _TblPro.Rows(0), Txt_Codigo_Tecnico_New.Text)
+                                                                       ChkCambiarCodigoTecnico.Checked, True, FUNCIONARIO,
+                                                                       _TblPro.Rows(0), Txt_Codigo_Tecnico_New.Text)
 
                         If _Cl_CambioCodigo.EsCorrecto Then
                             Sb_EjecConsultaBasesExternas(Me, _Cl_CambioCodigo.SqlQuery, True)
+                        End If
+
+                        If CheckBoxX1.Checked Then
+                            Dim FmAlt As New Frm_CreaProductos_04_CodAlternativo(Txt_Codigo_New.Text, Txt_Codigo_Old.Text, "",
+                                                                                 Frm_CreaProductos_04_CodAlternativo.Enum_Accion.Ambos)
+                            FmAlt.UsarNMarcaDeKOPR = True
+                            FmAlt.Txt_Kopral.Enabled = False
+                            FmAlt.Grupo_Proveedor.Enabled = False
+                            FmAlt.ShowDialog(Me)
+                            FmAlt.Dispose()
                         End If
 
                         If _Cerrar_al_cambiar Then

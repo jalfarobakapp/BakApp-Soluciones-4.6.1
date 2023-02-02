@@ -54,6 +54,9 @@ Public Class Frm_CreaProductos_04_CodAlternativo
         End Set
     End Property
 
+    Public Property UsarNMarcaDeKOPR As Boolean
+
+
     Public Sub New(_Codigo As String, _Kopral As String, _Koen As String, _Accion As Enum_Accion)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -120,42 +123,46 @@ Public Class Frm_CreaProductos_04_CodAlternativo
             Consulta_sql = "Select * From TABCODAL Where KOPR = '" & _Codigo & "' And KOPRAL = '" & _Kopral & "' And KOEN = '" & _Koen.Trim & "'"
             _RowTabcodal = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-            Txt_Nokopral.Text = _RowTabcodal.Item("NOKOPRAL").ToString.Trim
+            If Not IsNothing(_RowTabcodal) Then
 
-            Dim _Nmarca = NuloPorNro(_RowTabcodal.Item("NMARCA").ToString.Trim, "")
+                Txt_Nokopral.Text = _RowTabcodal.Item("NOKOPRAL").ToString.Trim
 
-            _NNmarca = _Cl_CompUdMedidas.Fx_Decifra_Nmarca(_Nmarca)
+                Dim _Nmarca = NuloPorNro(_RowTabcodal.Item("NMARCA").ToString.Trim, "")
 
-            Cmb_Nmarca_Tratamiento.SelectedValue = CInt(_NNmarca.Tratamiento)
-            Cmb_Nmarca_Comportamiento.SelectedValue = CInt(_NNmarca.Comportamiento)
+                _NNmarca = _Cl_CompUdMedidas.Fx_Decifra_Nmarca(_Nmarca)
 
-            Chk_Conmulti.Checked = _RowTabcodal.Item("CONMULTI")
+                Cmb_Nmarca_Tratamiento.SelectedValue = CInt(_NNmarca.Tratamiento)
+                Cmb_Nmarca_Comportamiento.SelectedValue = CInt(_NNmarca.Comportamiento)
 
-            Txt_Cantmincom.Text = NuloPorNro(_RowTabcodal.Item("CANTMINCOM"), 0)
-            Txt_Multdecom.Text = NuloPorNro(_RowTabcodal.Item("MULTDECOM"), 0)
-            Txt_Multiplo.Text = NuloPorNro(_RowTabcodal.Item("MULTIPLO"), 0)
-            Txt_Txtmulti.Text = NuloPorNro(_RowTabcodal.Item("TXTMULTI"), "")
+                Chk_Conmulti.Checked = _RowTabcodal.Item("CONMULTI")
 
-            Txt_Aux01.Text = _RowTabcodal.Item("AUX01").ToString.Trim
-            Txt_Aux02.Text = _RowTabcodal.Item("AUX02").ToString.Trim
-            Txt_Aux03.Text = _RowTabcodal.Item("AUX03").ToString.Trim
-            Txt_Aux04.Text = _RowTabcodal.Item("AUX04").ToString.Trim
-            Txt_Aux05.Text = _RowTabcodal.Item("AUX05").ToString.Trim
-            Txt_Aux06.Text = _RowTabcodal.Item("AUX06").ToString.Trim
+                Txt_Cantmincom.Text = NuloPorNro(_RowTabcodal.Item("CANTMINCOM"), 0)
+                Txt_Multdecom.Text = NuloPorNro(_RowTabcodal.Item("MULTDECOM"), 0)
+                Txt_Multiplo.Text = NuloPorNro(_RowTabcodal.Item("MULTIPLO"), 0)
+                Txt_Txtmulti.Text = NuloPorNro(_RowTabcodal.Item("TXTMULTI"), "")
 
-            Txt_Kopral2.Text = _RowTabcodal.Item("KOPRAL2").ToString.Trim
-            Txt_Kopral3.Text = _RowTabcodal.Item("KOPRAL3").ToString.Trim
-            Txt_Kopral4.Text = _RowTabcodal.Item("KOPRAL4").ToString.Trim
-            Txt_Kopral5.Text = _RowTabcodal.Item("KOPRAL5").ToString.Trim
+                Txt_Aux01.Text = _RowTabcodal.Item("AUX01").ToString.Trim
+                Txt_Aux02.Text = _RowTabcodal.Item("AUX02").ToString.Trim
+                Txt_Aux03.Text = _RowTabcodal.Item("AUX03").ToString.Trim
+                Txt_Aux04.Text = _RowTabcodal.Item("AUX04").ToString.Trim
+                Txt_Aux05.Text = _RowTabcodal.Item("AUX05").ToString.Trim
+                Txt_Aux06.Text = _RowTabcodal.Item("AUX06").ToString.Trim
 
-            Txt_CodigoQR.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Prod_CodQR", "CodigoQR", "Kopral = '" & _Kopral & "'")
+                Txt_Kopral2.Text = _RowTabcodal.Item("KOPRAL2").ToString.Trim
+                Txt_Kopral3.Text = _RowTabcodal.Item("KOPRAL3").ToString.Trim
+                Txt_Kopral4.Text = _RowTabcodal.Item("KOPRAL4").ToString.Trim
+                Txt_Kopral5.Text = _RowTabcodal.Item("KOPRAL5").ToString.Trim
 
-            Stab_3QR.Visible = Not String.IsNullOrEmpty(Txt_CodigoQR.Text)
-            Btn_CodQR.Enabled = String.IsNullOrEmpty(Txt_CodigoQR.Text)
+                Txt_CodigoQR.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Prod_CodQR", "CodigoQR", "Kopral = '" & _Kopral & "'")
 
-            Btn_Eliminar.Visible = True
+                Stab_3QR.Visible = Not String.IsNullOrEmpty(Txt_CodigoQR.Text)
+                Btn_CodQR.Enabled = String.IsNullOrEmpty(Txt_CodigoQR.Text)
 
-            Txt_Kopral.ButtonCustom.Visible = True
+                Btn_Eliminar.Visible = True
+
+                Txt_Kopral.ButtonCustom.Visible = True
+
+            End If
 
         End If
 
@@ -188,6 +195,22 @@ Public Class Frm_CreaProductos_04_CodAlternativo
     End Sub
 
     Private Sub Frm_CrearProductos_04_CodAlternativo_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        If UsarNMarcaDeKOPR Then
+
+            Dim _Nmarca = NuloPorNro(_RowProducto.Item("NMARCA").ToString.Trim, "")
+            Dim _Ud01pr = _RowProducto.Item("UD01PR")
+            Dim _Ud02pr = _RowProducto.Item("UD02PR")
+
+            _NNmarca = _Cl_CompUdMedidas.Fx_Decifra_Nmarca(_Nmarca)
+
+            Cmb_Nmarca_Tratamiento.SelectedValue = CInt(_NNmarca.Tratamiento)
+            Cmb_Nmarca_Comportamiento.SelectedValue = CInt(_NNmarca.Comportamiento)
+
+            Cmb_Nmarca_Comportamiento.Enabled = (_Ud01pr <> _Ud02pr)
+            Cmb_Nmarca_Tratamiento.Enabled = (_Ud01pr <> _Ud02pr)
+
+        End If
 
         SuperTabControl1.SelectedTabIndex = 0
 

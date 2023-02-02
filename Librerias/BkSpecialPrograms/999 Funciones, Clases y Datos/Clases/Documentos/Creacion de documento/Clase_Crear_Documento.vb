@@ -1047,6 +1047,22 @@ Public Class Clase_Crear_Documento
                             _Ppoppr = _Ppprpm
                         End If
 
+                        Dim _ExisteProducto As Boolean
+
+                        Comando = New SqlCommand("SELECT * From MAEPR Where KOPR = '" & _Koprct & "'", cn2)
+                        Comando.Transaction = myTrans
+                        dfd1 = Comando.ExecuteReader()
+
+                        While dfd1.Read()
+                            _ExisteProducto = True
+                        End While
+
+                        dfd1.Close()
+
+                        If Not _ExisteProducto Then
+                            Throw New System.Exception("No se encontro el producto: " & _Koprct.Trim & " - " & _Nokopr.Trim)
+                        End If
+
                         Consulta_sql =
                               "INSERT INTO MAEDDO (IDMAEEDO,ARCHIRST,IDRST,EMPRESA,TIDO,NUDO,ENDO,SUENDO,LILG,NULIDO," & vbCrLf &
                               "SULIDO,BOSULIDO,LUVTLIDO,PROYECTO,KOFULIDO,TIPR,TICT,PRCT,KOPRCT,UDTRPR,RLUDPR,CAPRCO1," & vbCrLf &

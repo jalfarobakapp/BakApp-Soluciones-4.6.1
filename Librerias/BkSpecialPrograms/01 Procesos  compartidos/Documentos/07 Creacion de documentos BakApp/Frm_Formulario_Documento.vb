@@ -13872,8 +13872,8 @@ Public Class Frm_Formulario_Documento
 
                     If _Crear_FCC_Desde_GRC_Vinculado_SII Then
 
-                        Dim _Periodo = Year(_TblEncabezado.Rows(0).Item("FechaEmision")) 'Year(_Row_GRC.Item("FEEMDO"))
-                        Dim _Mes = Month(_TblEncabezado.Rows(0).Item("FechaEmision")) ' Month(_Row_GRC.Item("FEEMDO"))
+                        Dim _Periodo = Year(_TblEncabezado.Rows(0).Item("FechaEmision"))
+                        Dim _Mes = Month(_TblEncabezado.Rows(0).Item("FechaEmision"))
                         Dim _NroDocumento = _TblEncabezado.Rows(0).Item("NroDocumento")
                         Dim _Endo = _TblEncabezado.Rows(0).Item("CodEntidad")
 
