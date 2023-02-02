@@ -1325,38 +1325,38 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
         Dim _Codigo = _RowProducto.Item("KOPR")
 
-        If Fx_Tiene_Permiso(Me, "Prod014") Then
+        'If Fx_Tiene_Permiso(Me, "Prod014") Then
 
-            Dim Fm As New Frm_MtCreacionDeProducto(Cl_Producto.Enum_Accion.Editar, _Codigo, False, False)
-            Fm.BtnCodAlternativosProducto.Visible = True
-            Fm.ShowDialog(Me)
+        Dim Fm As New Frm_MtCreacionDeProducto(Cl_Producto.Enum_Accion.Editar, _Codigo, False, False)
+        Fm.BtnCodAlternativosProducto.Visible = True
+        Fm.ShowDialog(Me)
 
-            If Fm.Pro_Grabar Then
+        If Fm.Pro_Grabar Then
 
-                Dim _Ficha As String
+            Dim _Ficha As String
 
-                Consulta_sql = "Select * From MAEFICHD Where KOPR = '" & _Codigo & "' Order by SEMILLA"
+            Consulta_sql = "Select * From MAEFICHD Where KOPR = '" & _Codigo & "' Order by SEMILLA"
 
-                Dim _Tbl_Maefichd As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Maefichd As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-                For Each _Fichas As DataRow In _Tbl_Maefichd.Rows
-                    _Ficha += _Fichas.Item("FICHA")
-                Next
+            For Each _Fichas As DataRow In _Tbl_Maefichd.Rows
+                _Ficha += _Fichas.Item("FICHA")
+            Next
 
-                _Fila.Cells("Ficha").Value = _Ficha
+            _Fila.Cells("Ficha").Value = _Ficha
 
-                Beep()
-                ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
-                                       2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
-                _Fila.Cells("Descripcion").Value = Fm.Txt_Nokopr.Text
+            Beep()
+            ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
+                                   2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+            _Fila.Cells("Descripcion").Value = Fm.Txt_Nokopr.Text
 
-                Txt_Ficha.Text = _Ficha
-
-            End If
-
-            Fm.Dispose()
+            Txt_Ficha.Text = _Ficha
 
         End If
+
+        Fm.Dispose()
+
+        'End If
 
     End Sub
 

@@ -9400,36 +9400,6 @@ Namespace GeneraOccAuto
 
                 End If
 
-                'Dim _Id_Dte As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Trackid", "Id_Dte", "Idmaeedo = " & _Idmaeedo & " And (Aceptado = 1 or Reparo = 1)", True)
-                'Dim _Id_Dte As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Trackid", "Id_Dte", "Id = " & _Id_Trackid, True)
-
-                'If Not CBool(_Id_Dte) Then
-                '    Throw New System.Exception("No se encontro registro en tabla Zw_DTE_Trackid del sistema")
-                'End If
-
-                'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Documentos Where Id_Dte = " & _Id_Dte
-                'Dim _Row_DTE As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-                'If IsNothing(_Row_DTE) Then
-                '    Throw New System.Exception("No se encontro registro en tabla Zw_DTE_Documentos del sistema")
-                'End If
-
-                'If String.IsNullOrEmpty(_Row_DTE.Item("CaratulaXml")) Then
-                '    Throw New System.Exception("No se encontro el archivo CaratulaXml en la tabla Zw_DTE_Documentos del sistema")
-                'End If
-
-                'Dim _Id_Correo As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion",
-                '                                              "Valor",
-                '                                              "Campo = 'Id_Correo' And Empresa = '" & ModEmpresa & "'")
-
-                'If Not CBool(_Id_Correo) Then
-                '    Throw New System.Exception("Falta asignar un correo de notificación en la configuración del sistema DTE")
-                'End If
-
-                'Dim _NombreFormato_PDF As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion",
-                '                                                     "Valor",
-                '                                                     "Campo = 'NombreFormato_PDF_" & _Tido & "' And Empresa = '" & ModEmpresa & "'")
-
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos Corr Where Id = " & _Id_Correo
                 Dim _Row_Correo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -9456,12 +9426,12 @@ Namespace GeneraOccAuto
                     Dim _Fecha = "Getdate()"
                     Dim _Adjuntar_Documento As Boolean = Not String.IsNullOrEmpty(_NombreFormato_PDF)
 
-                    _Para = ""
+                    Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
-                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo (Id_Correo,Nombre_Correo,CodFuncionario,Asunto," &
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo (NombreEquipo,Id_Correo,Nombre_Correo,CodFuncionario,Asunto," &
                                     "Para,Cc,Idmaeedo,Tido,Nudo,NombreFormato,Enviar,Mensaje,Fecha,Adjuntar_Documento,Doc_Adjuntos,Id_Acp)" &
                                     vbCrLf &
-                                    "Values (" & _Id_Correo & ",'" & _Nombre_Correo & "','','" & _Asunto & "','" & _Para & "','" & _Cc &
+                                    "Values ('" & _NombreEquipo & "'," & _Id_Correo & ",'" & _Nombre_Correo & "','','" & _Asunto & "','" & _Para & "','" & _Cc &
                                     "'," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "','" & _NombreFormato_PDF & "',1,'" & _Mensaje & "'," & _Fecha &
                                     "," & Convert.ToInt32(_Adjuntar_Documento) & ",''," & _Id_Acp & ")"
 

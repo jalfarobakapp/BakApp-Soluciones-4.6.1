@@ -144,12 +144,24 @@ Namespace Bk_Migrar_Producto
             'Busca el producto
             _Ds_Producto_Ext = Fx_BuscarProducto(_Codigo, BdBakappExt, _Sql2)
             'Prueba de generacion de consulta migrar producto Dim ConsultaPR = GenerarConsultaMigracion(_Ds_Producto_Local, BdBakappExt)
-            If _Ds_Producto_Ext.Tables(0).Rows.Count > 0 Then
-                Consulta_sql = "INSERT INTO " & _Global_BaseBk & "[Zw_Migrar_Productos_Log] (Fecha, Kopr, Funcionario, Log) VALUES " &
+            If _Ds_Producto_Ext.Tables(0).Rows.Count > 0 Or _Ds_Producto_Ext.Tables("TABCODAL2").Rows.Count > 0 Then
+
+                If CBool(_Ds_Producto_Ext.Tables(0).Rows.Count) Then
+                    Consulta_sql = "INSERT INTO " & _Global_BaseBk & "[Zw_Migrar_Productos_Log] (Fecha, Kopr, Funcionario, Log) VALUES " &
                     "(Getdate(), '" & _Codigo & "', '" & FUNCIONARIO & "', 'El código de producto ya existe en la base de datos externa.');"
-                _Sql.Ej_consulta_IDU(Consulta_sql, False)
-                ProError = "El Producto ya existe en la base de datos externa."
+                    _Sql.Ej_consulta_IDU(Consulta_sql, False)
+                    ProError = "El Producto ya existe en la base de datos externa."
+                End If
+
+                If CBool(_Ds_Producto_Ext.Tables("TABCODAL2").Rows.Count) Then
+                    Consulta_sql = "INSERT INTO " & _Global_BaseBk & "[Zw_Migrar_Productos_Log] (Fecha, Kopr, Funcionario, Log) VALUES " &
+                    "(Getdate(), '" & _Codigo & "', '" & FUNCIONARIO & "', 'El código existe como código alternativo en la base de datos externa.');"
+                    _Sql.Ej_consulta_IDU(Consulta_sql, False)
+                    ProError = "El código " & _Codigo & " existe como código alternativo en la base externa."
+                End If
+
                 Return False
+
             Else
 
                 ' Crear consulta migracion
@@ -193,6 +205,7 @@ Namespace Bk_Migrar_Producto
             _TablasRandom.Add("TABIMPR;KOPR")
             _TablasRandom.Add("MPROENVA;KOPR")
             _TablasRandom.Add("TABCODAL;KOPR")
+            _TablasRandom.Add("TABCODAL2;KOPRAL")
 
             _TablasBakapp = New List(Of String)
             '_TablasBakapp.Add("Zw_ListaPreCosto;Codigo")
@@ -218,9 +231,12 @@ Namespace Bk_Migrar_Producto
         End Function
 
         Private Function Fx_Tabla(_Nomtabla As String, _Campo As String, _Codigo As String, Conexion As Class_SQL) As DataTable
-            Dim _ConsultaSql = "SELECT * FROM " & _Nomtabla & " WHERE " & _Campo & "='" & _Codigo & "';"
+
+            Dim Tabla = Replace(_Nomtabla, "2", "")
+
+            Dim _ConsultaSql = "SELECT * FROM " & Tabla & " WHERE " & _Campo & "='" & _Codigo & "';"
             Dim _Tbl As DataTable = Conexion.Fx_Get_Tablas(_ConsultaSql)
-            _Tbl.TableName = _Nomtabla '.Replace(_Global_BaseBk, "")
+            _Tbl.TableName = _Nomtabla
             Return _Tbl
         End Function
 
