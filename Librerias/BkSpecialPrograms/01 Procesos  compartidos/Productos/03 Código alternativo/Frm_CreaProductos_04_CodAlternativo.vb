@@ -349,6 +349,15 @@ Public Class Frm_CreaProductos_04_CodAlternativo
             _Txtmulti = String.Empty
         End If
 
+        Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("MAEPR", "KOPR = '" & Txt_Kopral.Text.Trim & "'"))
+
+        If _Reg Then
+            MessageBoxEx.Show(Me, "Código de acceso alternativo no puede ser igual" & vbCrLf &
+                              "al código principal de un producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Kopral.Focus()
+            Return
+        End If
+
         If String.IsNullOrEmpty(Me._Kopral) Then
 
             Consulta_sql = "Select KOPRAL,KOEN,KOPR As 'Codigo',NOKOPRAL," &
@@ -370,7 +379,7 @@ Public Class Frm_CreaProductos_04_CodAlternativo
 
             If Not String.IsNullOrEmpty(_CodigoQR) Then
 
-                Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_CodQR", "CodigoQR = '" & _CodigoQR & "'"))
+                _Reg = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_CodQR", "CodigoQR = '" & _CodigoQR & "'"))
 
                 If _Reg Then
                     MessageBoxEx.Show(Me, "Código QR ya esta resgistrado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -385,7 +394,7 @@ Public Class Frm_CreaProductos_04_CodAlternativo
 
             If String.IsNullOrEmpty(Me._Kopral) Then
 
-                Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("TABCODAL", "KOPRAL = '" & _Kopral & "' And KOEN = ''"))
+                _Reg = CBool(_Sql.Fx_Cuenta_Registros("TABCODAL", "KOPRAL = '" & _Kopral & "' And KOEN = ''"))
 
                 If _Reg Then
                     _Kopral = Fx_Kopral_Alearorios("QRBk")
