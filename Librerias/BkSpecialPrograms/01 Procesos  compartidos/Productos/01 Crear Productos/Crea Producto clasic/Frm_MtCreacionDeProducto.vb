@@ -441,20 +441,24 @@ Public Class Frm_MtCreacionDeProducto
             End If
         End If
 
-        If String.IsNullOrEmpty(Trim(Txt_Kopr.Text)) Then
+        If String.IsNullOrEmpty(Txt_Kopr.Text.Trim) Then
             MessageBoxEx.Show(Me, "Debe ingresar código principal", "Código principal", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_Kopr.Focus()
             Return
         End If
 
-        If String.IsNullOrEmpty(Trim(Txt_Koprte.Text)) Then
+        If String.IsNullOrEmpty(Txt_Koprte.Text.Trim) Then
             MessageBoxEx.Show(Me, "Debe ingresar código técnico", "código técnico", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_Kopr.Focus()
             Return
         End If
 
-        If String.IsNullOrEmpty(Trim(Txt_Ud01pr.Text)) Or String.IsNullOrEmpty(Trim(Txt_Ud02pr.Text)) Then
+        If String.IsNullOrEmpty(Txt_Ud01pr.Text.Trim) Or String.IsNullOrEmpty(Trim(Txt_Ud02pr.Text)) Then
             MessageBoxEx.Show(Me, "Falta la unidad de mediad", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If Not Fx_ValidarExistenciaDeCodigoAlternativo(Txt_Kopr.Text.Trim) Then
             Return
         End If
 
@@ -1409,12 +1413,14 @@ Sigue_Loop_01:
     Private Sub Txtcodigoprincipal_Leave(sender As System.Object, e As System.EventArgs)
         If _Cl_Producto.Pro_Accion = Cl_Producto.Enum_Accion.Nuevo Then
             If Fx_ValidarExistenciaDeCodigo(sender.text, "KOPR") = True Then Txt_Kopr.Focus()
+            If Not Fx_ValidarExistenciaDeCodigoAlternativo(sender.text) Then Txt_Kopr.Focus()
         End If
     End Sub
 
     Private Sub Txtcodigotecnico_Leave(sender As System.Object, e As System.EventArgs)
         If _Cl_Producto.Pro_Accion = Cl_Producto.Enum_Accion.Nuevo Then
             If Fx_ValidarExistenciaDeCodigo(sender.text, "KOPRTE") = True Then Txt_Koprte.Focus()
+            'If Not Fx_ValidarExistenciaDeCodigoAlternativo(sender.text) Then Txt_Kopr.Focus()
         End If
     End Sub
 
@@ -2122,12 +2128,20 @@ Sigue_Loop_01:
         If _Sql.Fx_Trae_Dato("MAEPR", Campo, Campo & " = '" & Codigo & "'") <> "" Then
 
             If MostrarMensaje = True Then
-                MessageBoxEx.Show(Me, "¡Código de producto ya existe!", "Código principal", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "¡Código de producto ya existe!", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
             Return True
         Else
             Return False
         End If
+    End Function
+
+    Function Fx_ValidarExistenciaDeCodigoAlternativo(Codigo As String)
+        If _Sql.Fx_Trae_Dato("TABCODAL", "KOPR", "KOPRAL = '" & Codigo.Trim & "'") <> "" Then
+            MessageBoxEx.Show(Me, "¡Código ya esta creado como alternativo!", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return False
+        End If
+        Return True
     End Function
 
     Function Fx_Eliminar_Producto(_Codigo_a_eliminar As String,

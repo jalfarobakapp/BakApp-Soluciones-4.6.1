@@ -1140,24 +1140,26 @@ Public Class Clas_Asistente_Compras
 
         End If
 
-        Dim _SqlQueryNVI As String
 
-        _Filtro_Bodega = Generar_Filtro_IN(_Tbl_Filtro_Bodegas, "Chk", "Codigo", False, True, "'")
 
-        _SqlQueryNVI = "Select Ddo.KOPRCT,SUM(CAPRCO1-(CAPRAD1+CAPREX1)) As SaldoUd1,SUM(CAPRCO2-(CAPRAD2+CAPREX2)) As SaldoUd2 
-Into #PasoNVI
-From MAEDDO Ddo
-Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
-Where Edo.TIDO = 'NVI' And Edo.EMPRESA+SUDO+BODESTI In " & _Filtro_Bodega & " And Ddo.ESLIDO = '' And Ddo.KOPRCT In (Select Codigo From " & _Nombre_Tbl_Paso_Informe & ")
-Group By Ddo.TIDO,Ddo.NUDO,Ddo.KOPRCT
+        '        Dim _SqlQueryNVI As String
 
-Update #Paso Set STOCNV1C = SaldoUd1,STOCNV2C = SaldoUd2
-From #PasoNVI 
-Inner Join	#Paso On KOPR = KOPRCT
+        '        _Filtro_Bodega = Generar_Filtro_IN(_Tbl_Filtro_Bodegas, "Chk", "Codigo", False, True, "'")
 
-Drop Table #PasoNVI"
+        '        _SqlQueryNVI = "Select Ddo.KOPRCT,SUM(CAPRCO1-(CAPRAD1+CAPREX1)) As SaldoUd1,SUM(CAPRCO2-(CAPRAD2+CAPREX2)) As SaldoUd2 
+        'Into #PasoNVI
+        'From MAEDDO Ddo
+        'Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
+        'Where Edo.TIDO = 'NVI' And Edo.EMPRESA+SUDO+BODESTI In " & _Filtro_Bodega & " And Ddo.ESLIDO = '' And Ddo.KOPRCT In (Select Codigo From " & _Nombre_Tbl_Paso_Informe & ")
+        'Group By Ddo.TIDO,Ddo.NUDO,Ddo.KOPRCT
 
-        Consulta_sql = Replace(Consulta_sql, "--InsertarStockPedidoEnNVI", _SqlQueryNVI)
+        'Update #Paso Set STOCNV1C = SaldoUd1,STOCNV2C = SaldoUd2
+        'From #PasoNVI 
+        'Inner Join	#Paso On KOPR = KOPRCT
+
+        'Drop Table #PasoNVI"
+
+        '        Consulta_sql = Replace(Consulta_sql, "--InsertarStockPedidoEnNVI", _SqlQueryNVI)
 
 
         _Sql.Ej_consulta_IDU(Consulta_sql)

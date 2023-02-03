@@ -140,6 +140,13 @@ Namespace Bk_Migrar_Producto
 
             ProError = String.Empty
 
+            Dim _Reg = _Sql2.Fx_Cuenta_Registros("MAEPR", "KOPR = '" & _Codigo & "'")
+
+            If Not CBool(_Reg) Then
+                Consulta_sql = "Delete TABCODAL Where KOPR = '" & _Codigo & "'"
+                _Sql2.Ej_consulta_IDU(Consulta_sql)
+            End If
+
             Dim BdBakappExt As String = _Sql2.Fx_Obtener_Valores("Select NOKOCARAC From TABCARAC Where KOTABLA = 'BAKAPP';", 1)(0) & ".dbo."
             'Busca el producto
             _Ds_Producto_Ext = Fx_BuscarProducto(_Codigo, BdBakappExt, _Sql2)

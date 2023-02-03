@@ -1631,11 +1631,75 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Dim _Descripcion = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Descripcion").Value
 
         If Fx_Eliminar_Producto(_Codigo, _Descripcion) Then
+
             Grilla.Rows.RemoveAt(Grilla.CurrentRow.Index)
             MessageBoxEx.Show(Me, "Producto eliminado correctamente",
                               "Eliminar producto", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-            'Txtdescripcion.Text = String.Empty
+            If _Global_Row_Configuracion_General.Item("PermitirMigrarProductosBaseExterna") Then
+
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbProd_Nuevos = 1"
+                Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
+
+                    Dim _Id_Conexion As Integer = _FilaCx.Item("Id")
+                    Dim _BaseDeDatos As String = _FilaCx.Item("BaseDeDatos")
+                    Dim _Cl_Migrar_Producto As New Bk_Migrar_Producto.Cl_ConexionExterna
+
+                    Dim _ConexionExternas As New Bk_Migrar_Producto.ConexionExternas
+
+                    _ConexionExternas = _Cl_Migrar_Producto.Fx_CadenaConexionServExt(_Id_Conexion)
+
+                    If _ConexionExternas.EsCorrecto Then
+
+                        Dim _Sql2 = New Class_SQL(_ConexionExternas.Cadena_ConexionSQL_Server_Ext)
+
+                        If _ConexionExternas.SincroProductos Then
+
+                            Dim _Reg = _Sql2.Fx_Cuenta_Registros("MAEPR", "KOPR = '" & _Codigo & "'")
+
+                            If CBool(_Reg) Then
+
+                                Dim _Cl_EliminaProd As New Cl_EliminaProd
+
+                                _Cl_EliminaProd = Fx_Eliminar_Producto_BaseExterna(_Codigo,
+                                                                                   _ConexionExternas.Cadena_ConexionSQL_Server_Ext,
+                                                                                   _ConexionExternas.Global_BaseBk)
+
+                                If _Cl_EliminaProd.EsCorrecto Then
+                                    MessageBoxEx.Show(Me, "Producto eliminado correctamente en la base de datos externa" & vbCrLf &
+                                                      "Base de datos: " & _BaseDeDatos,
+                                                      "Eliminar producto en base externa", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                Else
+
+                                    Dim _Msg As String
+
+                                    For Each _Error As String In _Cl_EliminaProd.Problemas
+                                        _Msg += _Error & vbCrLf
+                                    Next
+
+                                    MessageBoxEx.Show(Me, "No se pudo eliminar el producto de la base de datos externa" & vbCrLf &
+                                                      "Base de datos: " & _BaseDeDatos & vbCrLf & vbCrLf & _Msg,
+                                                      "Eliminar producto en base externa",
+                                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                End If
+
+                            End If
+
+                        End If
+
+                    Else
+                        MessageBoxEx.Show(Me, "No fue posible editar el producto en base de datos externa" & vbCrLf & vbCrLf &
+                                                  "Base de datos: " & _BaseDeDatos & vbCrLf & vbCrLf &
+                                                  _ConexionExternas.MensajeError, "Editar producto en base externa",
+                                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    End If
+
+                Next
+
+            End If
+
             Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
 
         End If
@@ -1647,10 +1711,10 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
         If Fx_Tiene_Permiso(Me, "Prod015") Then
 
-            Dim _Maeddo As Long = _Sql.Fx_Cuenta_Registros("MAEDDO", "KOPRCT = '" & _Codigo_a_eliminar & "'") ' SELECT TOP 1 * FROM MAEDDO WITH ( NOLOCK )  WHERE KOPRCT='PRODUCTO DE P'
-            Dim _Tabcodal As Long = _Sql.Fx_Cuenta_Registros("TABCODAL", "KOPR = '" & _Codigo_a_eliminar & "'") 'SELECT TOP 1 * FROM TABCODAL WITH ( NOLOCK )  WHERE KOPR='PRODUCTO DE P'
-            Dim _Potd As Long = _Sql.Fx_Cuenta_Registros("POTD", "CODIGO = '" & _Codigo_a_eliminar & "'")        'SELECT TOP 1 * FROM POTD WITH ( NOLOCK )  WHERE CODIGO='PRODUCTO DE P'
-            Dim _Kasiddo As Long = _Sql.Fx_Cuenta_Registros("KASIDDO", "KOPRCT = '" & _Codigo_a_eliminar & "'") 'SELECT TOP 1 * FROM KASIDDO WITH ( NOLOCK )  WHERE KOPRCT='PRODUCTO DE P'
+            Dim _Maeddo As Long = _Sql.Fx_Cuenta_Registros("MAEDDO", "KOPRCT = '" & _Codigo_a_eliminar & "'")
+            Dim _Tabcodal As Long = _Sql.Fx_Cuenta_Registros("TABCODAL", "KOPR = '" & _Codigo_a_eliminar & "'")
+            Dim _Potd As Long = _Sql.Fx_Cuenta_Registros("POTD", "CODIGO = '" & _Codigo_a_eliminar & "'")
+            Dim _Kasiddo As Long = _Sql.Fx_Cuenta_Registros("KASIDDO", "KOPRCT = '" & _Codigo_a_eliminar & "'")
 
 
             If CBool(_Maeddo) Then
@@ -1701,6 +1765,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                                "DELETE " & _Global_BaseBk & "Zw_ListaPreCosto WHERE Codigo ='" & _Codigo_a_eliminar & "' And Proveedor = ''" & vbCrLf &
                                "DELETE " & _Global_BaseBk & "Zw_ListaPreProducto WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
                                "DELETE " & _Global_BaseBk & "Zw_Prod_Asociacion WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                               "DELETE " & _Global_BaseBk & "Zw_Prod_Dimensiones WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
                                "UPDATE " & _Global_BaseBk & "Zw_ListaPreCosto Set Codigo = '', Descripcion = ''" & Space(1) &
                                "WHERE  Codigo = '" & _Codigo_a_eliminar & "' AND Proveedor <> ''" & vbCrLf &
                                "DELETE " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo_a_eliminar & "' And Producto = 1"
@@ -1710,6 +1775,71 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             End If
 
         End If
+
+    End Function
+
+
+    Function Fx_Eliminar_Producto_BaseExterna(_Codigo_a_eliminar As String,
+                                              _Cadena_ConexionSQL_Server_Externa As String,
+                                              _Global_BaseBk_Externa As String) As Cl_EliminaProd
+
+        Dim _Sql As New Class_SQL(_Cadena_ConexionSQL_Server_Externa)
+
+        Dim _Cl_EliminaProd As New Cl_EliminaProd
+
+        _Cl_EliminaProd.EsCorrecto = True
+        _Cl_EliminaProd.Problemas = New List(Of String)
+
+        Dim _Maeddo As Long = _Sql.Fx_Cuenta_Registros("MAEDDO", "KOPRCT = '" & _Codigo_a_eliminar & "'")
+        Dim _Tabcodal As Long = _Sql.Fx_Cuenta_Registros("TABCODAL", "KOPR = '" & _Codigo_a_eliminar & "'")
+        Dim _Potd As Long = _Sql.Fx_Cuenta_Registros("POTD", "CODIGO = '" & _Codigo_a_eliminar & "'")
+        Dim _Kasiddo As Long = _Sql.Fx_Cuenta_Registros("KASIDDO", "KOPRCT = '" & _Codigo_a_eliminar & "'")
+
+        If CBool(_Maeddo) Then
+            _Cl_EliminaProd.EsCorrecto = False
+            _Cl_EliminaProd.Problemas.Add("* Producto está presente en documentos de Gestión")
+        End If
+
+        If CBool(_Potd) Then
+            _Cl_EliminaProd.EsCorrecto = False
+            _Cl_EliminaProd.Problemas.Add("* Producto está presente en documentos de Producción")
+        End If
+
+        If CBool(_Kasiddo) Then
+            _Cl_EliminaProd.EsCorrecto = False
+            _Cl_EliminaProd.Problemas.Add("* Producto está presente en documentos de Gestión (Documentos reciclados)")
+        End If
+
+        Consulta_sql = "DELETE " & _Global_BaseBk_Externa & "Zw_ListaPreCosto WHERE (Codigo = '') AND (CodAlternativo = '')" & vbCrLf &
+                        "DELETE PDIMEN    WHERE CODIGO ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                        "DELETE MAEPROBS  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                        "DELETE MAEFICHA  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                        "DELETE MAEFICHD  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                        "DELETE TABIMPR   WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                        "DELETE TABPRE    WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                        "DELETE TABBOPR   WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                        "DELETE MPROENVA  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                        "DELETE MAEPREM   WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                        "DELETE MAEPR     WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                        "DELETE TABCODAL  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                        "DELETE " & _Global_BaseBk_Externa & "Zw_ListaPreCosto WHERE Codigo ='" & _Codigo_a_eliminar & "' And Proveedor = ''" & vbCrLf &
+                        "DELETE " & _Global_BaseBk_Externa & "Zw_ListaPreProducto WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                        "DELETE " & _Global_BaseBk_Externa & "Zw_Prod_Asociacion WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                        "DELETE " & _Global_BaseBk_Externa & "Zw_Prod_Dimensiones WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                        "UPDATE " & _Global_BaseBk_Externa & "Zw_ListaPreCosto Set Codigo = '', Descripcion = ''" & Space(1) &
+                        "WHERE  Codigo = '" & _Codigo_a_eliminar & "' AND Proveedor <> ''" & vbCrLf &
+                        "DELETE " & _Global_BaseBk_Externa & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo_a_eliminar & "' And Producto = 1"
+
+        _Cl_EliminaProd.SqlQueruDelete = Consulta_sql
+
+        If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+            _Cl_EliminaProd.EsCorrecto = True
+        Else
+            _Cl_EliminaProd.EsCorrecto = False
+            _Cl_EliminaProd.Problemas.Add(_Sql.Pro_Error)
+        End If
+
+        Return _Cl_EliminaProd
 
     End Function
 
@@ -2955,5 +3085,13 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     End Sub
 
+
+End Class
+
+Public Class Cl_EliminaProd
+
+    Public Property EsCorrecto As Boolean
+    Public Property Problemas As List(Of String)
+    Public Property SqlQueruDelete As String
 
 End Class
