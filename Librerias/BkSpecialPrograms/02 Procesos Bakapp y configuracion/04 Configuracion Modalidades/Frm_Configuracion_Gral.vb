@@ -204,9 +204,8 @@ Public Class Frm_Configuracion_Gral
             End If
 
             Chk_ListaDesdeSustentatorio.Checked = .Item("ListaDesdeSustentatorio")
-
-
             Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.Checked = .Item("Crear_FCC_Desde_GRC_Vinculado_SII")
+            Chk_AlertaRevNVVConVtasMismoDia.Checked = .Item("AlertaRevNVVConVtasMismoDia")
 
 
         End With
@@ -271,6 +270,8 @@ Public Class Frm_Configuracion_Gral
         Btn_FincredConfiguracion.Enabled = _Modalidad_General
         LabelX22.Enabled = _Modalidad_General
         Line1.Enabled = _Modalidad_General
+
+        Chk_AlertaRevNVVConVtasMismoDia.Enabled = Not _Modalidad_General
 
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
@@ -452,6 +453,7 @@ Public Class Frm_Configuracion_Gral
                        ",Fincred_Usar = " & Convert.ToInt32(Chk_Fincred_Usar.Checked) & vbCrLf &
                        ",Fincred_Id_Token = " & Txt_Fincred_Id_Token.Tag & vbCrLf &
                        ",ListaDesdeSustentatorio = " & Convert.ToInt32(Chk_ListaDesdeSustentatorio.Checked) & vbCrLf &
+                       ",AlertaRevNVVConVtasMismoDia = " & Convert.ToInt32(Chk_AlertaRevNVVConVtasMismoDia.Checked) & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then

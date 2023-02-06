@@ -13704,9 +13704,9 @@ Public Class Frm_Formulario_Documento
                                 _Cl_Despacho = Nothing
 
                                 MessageBoxEx.Show(Me, "Este documento se encontraba con una cotización a Chilexpress." & vbCrLf &
-                                                  "La orden se eliminara y si necesita volver hacer el despacho debe llenar nuevamente la solicitud." & vbCrLf &
-                                                  "No esta permitido salir y volver al documento cuando hay una orden de Chilexpress en proceso",
-                                                  "Validacón Chilexpress", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                              "La orden se eliminara y si necesita volver hacer el despacho debe llenar nuevamente la solicitud." & vbCrLf &
+                                              "No esta permitido salir y volver al documento cuando hay una orden de Chilexpress en proceso",
+                                              "Validacón Chilexpress", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                                 Dim _FilasEliminar As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.Rows.Count - 1)
                                 Sb_Eliminar_Fila(_FilasEliminar, True)
                             End If
@@ -13714,6 +13714,42 @@ Public Class Frm_Formulario_Documento
 
                         Return
                     End If
+
+
+                    If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "AlertaRevNVVConVtasMismoDia") Then
+
+                        Dim _AlertaRevNVVConVtasMismoDia As Boolean = _Global_Row_Configuracion_Estacion.Item("AlertaRevNVVConVtasMismoDia")
+
+                        If _AlertaRevNVVConVtasMismoDia And _Tido = "NVV" Then
+
+                            Dim _CodProductoDoc As String = Generar_Filtro_IN(_TblDetalle, "", "Codigo", False, False, "'")
+                            Dim _Feer As String = Format(_TblEncabezado.Rows(0).Item("FechaRecepcion"), "yyyyMMdd")
+
+                            Consulta_sql = "Select Count(*) As Detalle From MAEDDO Ddo Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
+                                   "Where Edo.ENDO = '" & _RowEntidad.Item("KOEN") & "' And Edo.SUENDO = '" & _RowEntidad.Item("SUEN") & "' " &
+                                   "And Edo.FEER = '" & _Feer & "' And Ddo.KOPRCT In " & _CodProductoDoc &
+                                   " And Ddo.TIPR = 'FPN' And Edo.TIDO In ('FCV','NVV','GDV','BLV')"
+                            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                            If Not IsNothing(_Row) Then
+
+                                If CBool(_Row.Item("Detalle")) Then
+                                    Dim _Msg1 = "Existen documentos de venta con la misma fecha de despacho y a demas incluyen alguno de los productos a vender"
+                                    Dim _Msg2 = "¿DESEA SEGUIR CON LA GRABACION?" & vbCrLf & vbCrLf
+
+                                    If Not Fx_Confirmar_Lectura(_Msg1, _Msg2) Then
+                                        Return
+                                    End If
+                                End If
+
+                            End If
+
+                        End If
+
+                    End If
+
+
+
 
                     Sb_Actualizar_Permisos_Necesarios_Del_Documento_New()
                     _Documento_Autorizado = Fx_Documento_Autorizado()
@@ -13731,7 +13767,7 @@ Public Class Frm_Formulario_Documento
                                 Dim _Suen = _RowEntidad.Item("SUEN")
 
                                 Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_TblInf_EntExcluidas",
-                                                             "Funcionario = '' And Excluida = 'C' And Codigo = '" & _Koen & "' And Sucursal = '" & _Suen & "'")
+                                                         "Funcionario = '' And Excluida = 'C' And Codigo = '" & _Koen & "' And Sucursal = '" & _Suen & "'")
 
                                 If CBool(_Reg) Then
 
@@ -13746,7 +13782,7 @@ Public Class Frm_Formulario_Documento
                                         _Documento_Autorizado = True
 
                                         MessageBoxEx.Show(Me, "Entidad preferencial, no necesita permiso para su aprobación.", "Validación",
-                                                 MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, Me.TopMost)
+                                             MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, Me.TopMost)
 
                                     End If
 
@@ -13769,16 +13805,16 @@ Public Class Frm_Formulario_Documento
                                     If _Enviar_Solicitudes Then
 
                                         Dim _Msg = "El monto de la orden de compra excede su límite de aprobación" & vbCrLf &
-                                                   "La orden de compra quedará a espera de ser aprobada por su jefatura."
+                                               "La orden de compra quedará a espera de ser aprobada por su jefatura."
 
                                         If _Usar_Validador_Prod_X_Compras Then
                                             _Msg = "El monto de la orden de compra excede su límite de aprobación" & vbCrLf &
-                                                   "o existen productos que deben ser aprobados por el funcionario a cargo del articulo" & vbCrLf & vbCrLf &
-                                                   "La orden de compra quedará a espera de ser aprobada por su jefatura y/o funcionario a cargo de los productos a comprar."
+                                               "o existen productos que deben ser aprobados por el funcionario a cargo del articulo" & vbCrLf & vbCrLf &
+                                               "La orden de compra quedará a espera de ser aprobada por su jefatura y/o funcionario a cargo de los productos a comprar."
                                         End If
 
                                         MessageBoxEx.Show(Me, _Msg, "Validación",
-                                                      MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, Me.TopMost)
+                                                  MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, Me.TopMost)
 
                                         _Id_DocEnc = _Cl_Permisos_Asociados.Pro_Id_DocEnc
                                         Dim _Id_Enc = _Cl_Permisos_Asociados.Pro_Id_Enc
@@ -13789,8 +13825,8 @@ Public Class Frm_Formulario_Documento
                                     Else
 
                                         MessageBoxEx.Show(Me, _Cl_Permisos_Asociados.Pro_Error & vbCrLf &
-                                                  "Informe esta situación al administrador del sistema", "Validación", MessageBoxButtons.OK,
-                                                      MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
+                                              "Informe esta situación al administrador del sistema", "Validación", MessageBoxButtons.OK,
+                                                  MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
 
                                         Return
 
@@ -13819,24 +13855,24 @@ Public Class Frm_Formulario_Documento
                             If _Editar_documento Then
 
                                 _CAE_Doc.Sb_Cerrar_Documentos_De_Origen(Me,
-                                                                        Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Anular,
-                                                                        _TblDocumentos_Dori,
-                                                                        _Idmaeedo)
+                                                                    Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Anular,
+                                                                    _TblDocumentos_Dori,
+                                                                    _Idmaeedo)
 
                             Else
 
                                 _CAE_Doc.Sb_Cerrar_Documentos_De_Origen(Me,
-                                                                        Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Cerrar,
-                                                                        _TblDocumentos_Dori,
-                                                                        _Idmaeedo)
+                                                                    Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Cerrar,
+                                                                    _TblDocumentos_Dori,
+                                                                    _Idmaeedo)
 
                             End If
 
                             Sb_Nuevo_Doc(True)
 
                             MessageBoxEx.Show(Me, "Las solicitudes han sido enviadas con el Nro. : " & _Nro_RCadena,
-                                              "Solicitud en cadena de permisos remotos",
-                                              MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, Me.TopMost)
+                                          "Solicitud en cadena de permisos remotos",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, Me.TopMost)
 
 
                             Me.ActiveControl = Grilla_Detalle
@@ -13943,6 +13979,9 @@ Public Class Frm_Formulario_Documento
                     _Cambiar_NroDocumento = False
                 End If
 
+
+
+
                 _Idmaeedo = Fx_Grabar_Documento(_Solicitar_Observaciones_Al_Grabar,
                                                 csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento,
                                                 _Cambiar_NroDocumento,, _Grabar_e_Imprimir, _Grabar_Y_Pagar_Vale)
@@ -13960,10 +13999,10 @@ Public Class Frm_Formulario_Documento
 
                         ' Traspasamos los archivos adjuntos desde el documento Casi_Bakapp hacia el documento definitivo en Random
 
-                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Archivos (Idmaeedo, Nombre_Archivo, Archivo, Fecha, CodFuncionario) 
-                                        Select " & _Idmaeedo & ",Nombre_Archivo,Archivo,Fecha,CodFuncionario 
+                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Archivos (Idmaeedo, Nombre_Archivo, Archivo, Fecha, CodFuncionario) Then
+                            Select Case " & _Idmaeedo & ",Nombre_Archivo,Archivo,Fecha,CodFuncionario 
                                         From " & _Global_BaseBk & "Zw_Casi_DocArc Where NombreEquipo = '" & _NombreEquipo & "' And En_Construccion = 1
-                                        Delete " & _Global_BaseBk & "Zw_Casi_DocArc Where NombreEquipo = '" & _NombreEquipo & "' And En_Construccion = 1"
+                                Delete " & _Global_BaseBk & "Zw_Casi_DocArc Where NombreEquipo = '" & _NombreEquipo & "' And En_Construccion = 1"
                         _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
                     End If

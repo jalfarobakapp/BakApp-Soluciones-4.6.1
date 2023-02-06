@@ -144,6 +144,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Btn_Excluir_Documentos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_DocConceptosVsPagos = New DevComponents.DotNetBar.ButtonItem()
         Me.CheckBoxX2 = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_AlertaRevNVVConVtasMismoDia = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.Input_Monto_Max_CRV_FacMasiva, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel4.SuspendLayout()
@@ -169,6 +170,7 @@ Partial Class Frm_Configuracion_Gral
         Me.TableLayoutPanel3.BackColor = System.Drawing.Color.Transparent
         Me.TableLayoutPanel3.ColumnCount = 1
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_AlertaRevNVVConVtasMismoDia, 0, 15)
         Me.TableLayoutPanel3.Controls.Add(Me.Chk_ListaDesdeSustentatorio, 0, 14)
         Me.TableLayoutPanel3.Controls.Add(Me.Chk_Las_Cotizaciones_No_Revisan_Permisos, 0, 13)
         Me.TableLayoutPanel3.Controls.Add(Me.Chk_Permisos_Descuentos_Por_Responzable, 0, 12)
@@ -187,7 +189,7 @@ Partial Class Frm_Configuracion_Gral
         Me.TableLayoutPanel3.ForeColor = System.Drawing.Color.Black
         Me.TableLayoutPanel3.Location = New System.Drawing.Point(3, 3)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
-        Me.TableLayoutPanel3.RowCount = 15
+        Me.TableLayoutPanel3.RowCount = 16
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142858!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142858!))
@@ -203,7 +205,8 @@ Partial Class Frm_Configuracion_Gral
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142858!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142858!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142858!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(657, 281)
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(657, 295)
         Me.TableLayoutPanel3.TabIndex = 85
         '
         'Chk_ListaDesdeSustentatorio
@@ -218,7 +221,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_ListaDesdeSustentatorio.ForeColor = System.Drawing.Color.Black
         Me.Chk_ListaDesdeSustentatorio.Location = New System.Drawing.Point(3, 256)
         Me.Chk_ListaDesdeSustentatorio.Name = "Chk_ListaDesdeSustentatorio"
-        Me.Chk_ListaDesdeSustentatorio.Size = New System.Drawing.Size(635, 17)
+        Me.Chk_ListaDesdeSustentatorio.Size = New System.Drawing.Size(635, 12)
         Me.Chk_ListaDesdeSustentatorio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_ListaDesdeSustentatorio.TabIndex = 123
         Me.Chk_ListaDesdeSustentatorio.Text = "FCV, BLV y GDV traen simpre lista de costos desde ultimo producto que trae el doc" &
@@ -2169,6 +2172,24 @@ Partial Class Frm_Configuracion_Gral
         Me.CheckBoxX2.TabIndex = 117
         Me.CheckBoxX2.Text = "Ambiente de pruebas y certificación"
         '
+        'Chk_AlertaRevNVVConVtasMismoDia
+        '
+        '
+        '
+        '
+        Me.Chk_AlertaRevNVVConVtasMismoDia.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_AlertaRevNVVConVtasMismoDia.CheckBoxImageChecked = CType(resources.GetObject("Chk_AlertaRevNVVConVtasMismoDia.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_AlertaRevNVVConVtasMismoDia.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_AlertaRevNVVConVtasMismoDia.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_AlertaRevNVVConVtasMismoDia.FocusCuesEnabled = False
+        Me.Chk_AlertaRevNVVConVtasMismoDia.ForeColor = System.Drawing.Color.Black
+        Me.Chk_AlertaRevNVVConVtasMismoDia.Location = New System.Drawing.Point(3, 274)
+        Me.Chk_AlertaRevNVVConVtasMismoDia.Name = "Chk_AlertaRevNVVConVtasMismoDia"
+        Me.Chk_AlertaRevNVVConVtasMismoDia.Size = New System.Drawing.Size(635, 18)
+        Me.Chk_AlertaRevNVVConVtasMismoDia.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_AlertaRevNVVConVtasMismoDia.TabIndex = 123
+        Me.Chk_AlertaRevNVVConVtasMismoDia.Text = "Alertar cuando hayan productos y fecha de despacho con coincidencias al generar N" &
+    "VV"
+        '
         'Frm_Configuracion_Gral
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2327,4 +2348,5 @@ Partial Class Frm_Configuracion_Gral
     Friend WithEvents LabelX22 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Line1 As DevComponents.DotNetBar.Controls.Line
     Friend WithEvents Chk_ListaDesdeSustentatorio As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_AlertaRevNVVConVtasMismoDia As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

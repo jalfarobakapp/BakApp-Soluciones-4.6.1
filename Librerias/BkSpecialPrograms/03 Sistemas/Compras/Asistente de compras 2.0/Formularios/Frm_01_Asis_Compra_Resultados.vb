@@ -8701,7 +8701,10 @@ Drop Table #Paso"
             If CBool(_New_Idmaeedo) Then
 
                 _Occ_Auto.Idmaeedo = _New_Idmaeedo
-                _Occ_Auto.Email = Trim(_Sql.Fx_Trae_Dato("MAEEN", "EMAILCOMER", "KOEN = '" & _Koen & "' And SUEN = '" & _Suen & "'"))
+
+                _Occ_Auto.Email = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades",
+                                                    "EmailCompras", "CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'")
+
                 _Occ_Auto.Tido = "OCC"
                 _Occ_Auto.Nudo = _Sql.Fx_Trae_Dato("MAEEDO", "NUDO", "IDMAEEDO = " & _New_Idmaeedo)
                 _Occ_Auto.Feemdo = _Sql.Fx_Trae_Dato("MAEEDO", "FEEMDO", "IDMAEEDO = " & _New_Idmaeedo)

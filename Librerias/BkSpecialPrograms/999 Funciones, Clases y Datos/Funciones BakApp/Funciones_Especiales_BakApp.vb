@@ -5520,5 +5520,36 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Sub
 
+    Function Fx_Confirmar_Lectura(_Mensaje1 As String, _Mensaje2 As String) As Boolean
+
+        Dim Chk_Confirmar_Lectura As New Command
+        Chk_Confirmar_Lectura.Checked = False
+        Chk_Confirmar_Lectura.Name = "Chk_Confirmar_Lectura"
+        Chk_Confirmar_Lectura.Text = "CONFIRMAR LECTURA DE LA ALERTA"
+
+        Dim _Opciones As Command = Chk_Confirmar_Lectura
+
+        Dim _Info As New TaskDialogInfo("Alerta",
+                  eTaskDialogIcon.ShieldStop,
+                  _Mensaje1, _Mensaje2,
+                  eTaskDialogButton.Yes + eTaskDialogButton.No, eTaskDialogBackgroundColor.Red, Nothing, Nothing,
+                  _Opciones, Nothing, Nothing)
+
+        Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
+
+        If _Resultado = eTaskDialogResult.Yes Then
+
+            If Chk_Confirmar_Lectura.Checked Then
+                Return True
+            Else
+                Return Fx_Confirmar_Lectura(_Mensaje1, _Mensaje2)
+            End If
+
+        Else
+            Return False
+        End If
+
+    End Function
+
 End Module
 

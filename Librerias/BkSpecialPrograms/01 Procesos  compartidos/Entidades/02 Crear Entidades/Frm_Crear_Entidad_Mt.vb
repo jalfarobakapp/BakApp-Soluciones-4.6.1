@@ -530,6 +530,7 @@ Public Class Frm_Crear_Entidad_Mt
 
                 MessageBoxEx.Show(Me, "Código de entidad vacio, debe completar datos", "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                TabControl1.SelectedTabIndex = 0
                 TxtxCodEntidad.Focus()
                 Return
 
@@ -551,30 +552,35 @@ Public Class Frm_Crear_Entidad_Mt
 
             If String.IsNullOrEmpty(CmbxTipoEntidad.Text.Trim) Then
                 MessageBoxEx.Show("Falta el tipo de entidad", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                TabControl1.SelectedTabIndex = 0
                 CmbxTipoEntidad.Focus()
                 Return
             End If
 
             If String.IsNullOrEmpty(TxtxRazonSocial.Text.Trim) Then
                 MessageBoxEx.Show("Faltan la razón social", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                TabControl1.SelectedTabIndex = 0
                 TxtxRazonSocial.Focus()
                 Return
             End If
 
             If String.IsNullOrEmpty(TxtxDireccion.Text.Trim) Then
                 MessageBoxEx.Show("Faltan la dirección", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                TabControl1.SelectedTabIndex = 0
                 TxtxDireccion.Focus()
                 Return
             End If
 
             If String.IsNullOrEmpty(TxtxGiro.Text.Trim) Then
                 MessageBoxEx.Show("Faltan el giro", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                TabControl1.SelectedTabIndex = 0
                 TxtxGiro.Focus()
                 Return
             End If
 
             If String.IsNullOrEmpty(TxtxTelefono.Text.Trim) Then
                 MessageBoxEx.Show("Falta el teléfono de la entidad", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                TabControl1.SelectedTabIndex = 0
                 TxtxTelefono.Focus()
                 Return
             End If
@@ -585,6 +591,7 @@ Public Class Frm_Crear_Entidad_Mt
 
             If String.IsNullOrEmpty(_Pais.Trim) Or String.IsNullOrEmpty(_Ciudad) Or String.IsNullOrEmpty(_Comuna.Trim) Then
                 MessageBoxEx.Show("Faltan pais, ciudad o comuna", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                TabControl1.SelectedTabIndex = 0
                 Call Btn_Buscar_Comuna_Click(Nothing, Nothing)
             End If
 
@@ -602,6 +609,7 @@ Public Class Frm_Crear_Entidad_Mt
         If Not String.IsNullOrEmpty(TxtxEmail1.Text) Then
             If Not Fx_Validar_Email(TxtxEmail1.Text) Then
                 MessageBoxEx.Show(Me, "el correo de Email [" & TxtxEmail1.Text & "] no es una cuenta de correos valida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                TabControl1.SelectedTabIndex = 0
                 TxtxEmail1.Focus()
                 Return
             End If
@@ -609,8 +617,18 @@ Public Class Frm_Crear_Entidad_Mt
 
         If Not String.IsNullOrEmpty(TxtxEmail2.Text) Then
             If Not Fx_Validar_Email(TxtxEmail2.Text) Then
-                MessageBoxEx.Show(Me, "el correo de Email [" & TxtxEmail2.Text & "] no es una cuenta de correos valida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "el correo de Email2 [" & TxtxEmail2.Text & "] no es una cuenta de correos valida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                TabControl1.SelectedTabIndex = 0
                 TxtxEmail2.Focus()
+                Return
+            End If
+        End If
+
+        If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Entidades", "EmailCompras") Then
+            If Not Fx_Validar_Email(Txt_EmailCompras.Text) Then
+                MessageBoxEx.Show(Me, "el correo de Email Compras [" & Txt_EmailCompras.Text & "] no es una cuenta de correos valida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                TabControl1.SelectedTabIndex = 5
+                Txt_EmailCompras.Focus()
                 Return
             End If
         End If
@@ -631,6 +649,7 @@ Public Class Frm_Crear_Entidad_Mt
 
                 MessageBoxEx.Show(Me, "No puede dejar Libera NVV en [SI] cuando la entidad tiene créditos asociados" & vbCrLf &
                                       "Para poder dejar en [SI] debe dejar todos los créditos en cero", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                TabControl1.SelectedTabIndex = 3
                 Return
 
             End If
@@ -936,10 +955,17 @@ Public Class Frm_Crear_Entidad_Mt
 
             If _Existe_Tbl_Entidades_Bakapp Then
 
+                Dim _EmailCompras = String.Empty
+
+                If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Entidades", "EmailCompras") Then
+                    _EmailCompras = ",EmailCompras = '" & Txt_EmailCompras.Text & "'" & vbCrLf
+                End If
+
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Entidades Set " & vbCrLf &
                                "Libera_NVV = " & Convert.ToInt32(Chk_Libera_NVV.Checked) & vbCrLf &
                                ",FacAuto = " & Convert.ToInt32(Chk_FacAuto.Checked) & vbCrLf &
                                ",RevFincred = " & Convert.ToInt32(Chk_RevCredFincred.Checked) & vbCrLf &
+                               _EmailCompras &
                                "Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
@@ -1417,6 +1443,7 @@ Public Class Frm_Crear_Entidad_Mt
             CmbxMoneda.SelectedValue = _RowEntidad.Item("MOCTAEN")
 
             ChkxEnsEsEmisorDocumento.Checked = _RowEntidad.Item("RECEPELECT")
+            Chk_Ferefauto.Checked = _RowEntidad.Item("FEREFAUTO")
             ChkxEntNoAfecCtaCte.Checked = _RowEntidad.Item("NOTRAEDEUD")
             ChkxEntPreferencial.Checked = _RowEntidad.Item("PREFEN")
             Chk_Occobli.Checked = _RowEntidad.Item("OCCOBLI")
@@ -1481,6 +1508,13 @@ Public Class Frm_Crear_Entidad_Mt
                 Chk_Libera_NVV.Checked = _Row_Entidades.Item("Libera_NVV")
                 Chk_FacAuto.Checked = _Row_Entidades.Item("FacAuto")
                 Chk_RevCredFincred.Checked = _Row_Entidades.Item("RevFincred")
+
+                If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Entidades", "EmailCompras") Then
+                    Txt_EmailCompras.Text = _Row_Entidades.Item("EmailCompras")
+                Else
+                    Label31.Visible = False
+                    Txt_EmailCompras.Visible = False
+                End If
 
             End If
 

@@ -17,6 +17,3 @@ DELETE FROM MAEENPRO WHERE KOEN='#KOEN#' AND SUEN='#SUEN#' -- Tabla de proyectos
 INSERT INTO MAEENPRO (KOEN,SUEN,PROYECTO) VALUES ('#KOEN#','#SUEN#','') 
 DELETE FROM MAEENCTA WHERE KOEN='#KOEN#' --  Tabla de cuentas corrientes asociadas a la entidad
 
-
-
---
