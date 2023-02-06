@@ -14,7 +14,8 @@ CREATE TABLE [dbo].[Zw_Entidades](
     [Tiempo_Reposicion_Dias_Meses]  [int]           NOT NULL DEFAULT(0),    
     [Tiempo_Reposicion]	            [int]           NOT NULL DEFAULT(0),    
     [FacAuto]       	            [bit]           NOT NULL DEFAULT(0),    
-    [RevFincred]       	            [bit]           NOT NULL DEFAULT(0),    
+    [RevFincred]       	            [bit]           NOT NULL DEFAULT(0), 
+    [EmailCompras]      		    [varchar](50)   NOT NULL DEFAULT(''),
  CONSTRAINT [PK_Zw_Entidades] PRIMARY KEY CLUSTERED 
 (
 	[CodEntidad] ASC,

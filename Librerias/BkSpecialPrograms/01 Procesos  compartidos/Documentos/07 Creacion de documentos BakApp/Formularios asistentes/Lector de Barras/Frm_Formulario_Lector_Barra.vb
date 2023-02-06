@@ -594,24 +594,7 @@ Public Class Frm_Formulario_Lector_Barra
 
     End Function
 
-    Private Sub Grilla_RowPostPaint(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewRowPostPaintEventArgs)
-        Try
-            'Captura el numero de filas del datagridview
-            Dim RowsNumber As String = (e.RowIndex + 1).ToString
-            While RowsNumber.Length < sender.RowCount.ToString.Length
-                RowsNumber = "0" & RowsNumber
-            End While
-            Dim size As SizeF = e.Graphics.MeasureString(RowsNumber, Me.Font)
-            If sender.RowHeadersWidth < CInt(size.Width + 20) Then
-                sender.RowHeadersWidth = CInt(size.Width + 20)
-            End If
-            Dim ob As Brush = SystemBrushes.ControlText
-            e.Graphics.DrawString(RowsNumber, Me.Font, ob, e.RowBounds.Location.X + 15, e.RowBounds.Location.Y + ((e.RowBounds.Height - size.Height) / 2))
-        Catch ex As Exception
-            MessageBox.Show(ex.Message, "vb.net",
-         MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
+
 
     Private Sub Frm_Formulario_Lector_Barra_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then

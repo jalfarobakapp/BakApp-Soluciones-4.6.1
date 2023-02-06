@@ -92,6 +92,7 @@ CREATE TABLE [dbo].[Zw_Configuracion](
 [Fincred_Id_Token]                                      [int]           NOT NULL DEFAULT (0), 
 [ServTecnico_ObligaIngProdPresupuesto]                  [bit]           NOT NULL DEFAULT (0), 
 [ListaDesdeSustentatorio]                               [bit]           NOT NULL DEFAULT (0), 
+[AlertaRevNVVConVtasMismoDia]                           [bit]           NOT NULL DEFAULT (0), 
 CONSTRAINT [PK_Zw_Configuracion] PRIMARY KEY CLUSTERED 
 (
 	[Modalidad] ASC
