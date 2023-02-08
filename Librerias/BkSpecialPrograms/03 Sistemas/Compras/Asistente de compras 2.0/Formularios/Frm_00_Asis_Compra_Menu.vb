@@ -640,6 +640,19 @@ Public Class Frm_00_Asis_Compra_Menu
         '   Ticket Restar Stock bodega
         _Sql.Sb_Parametro_Informe_Sql(Chk_Restar_Stok_Bodega, "Compras_Asistente",
                                              Chk_Restar_Stok_Bodega.Name, Class_SQLite.Enum_Type._Boolean, Chk_Restar_Stok_Bodega.Checked, _Actualizar)
+        '   Ticket Restar Stock pedido NVI
+        _Sql.Sb_Parametro_Informe_Sql(Chk_Restar_Stock_PedidoNvi, "Compras_Asistente",
+                                             Chk_Restar_Stock_PedidoNvi.Name, Class_SQLite.Enum_Type._Boolean, Chk_Restar_Stock_PedidoNvi.Checked, _Actualizar)
+
+        '   Ticket Restar Stock en transito GTI
+        _Sql.Sb_Parametro_Informe_Sql(Chk_Restar_Stock_TransitoGti, "Compras_Asistente",
+                                             Chk_Restar_Stock_TransitoGti.Name, Class_SQLite.Enum_Type._Boolean, Chk_Restar_Stock_TransitoGti.Checked, _Actualizar)
+
+
+        '   Ticket Restar Stock pedido OCC
+        _Sql.Sb_Parametro_Informe_Sql(Chk_Restar_Stock_PedidoOcc, "Compras_Asistente",
+                                             Chk_Restar_Stock_PedidoOcc.Name, Class_SQLite.Enum_Type._Boolean, Chk_Restar_Stock_PedidoOcc.Checked, _Actualizar)
+
         '   Ticket Quitar bloqueados compra
         _Sql.Sb_Parametro_Informe_Sql(Chk_Quitar_Bloqueados_Compra, "Compras_Asistente",
                                              Chk_Quitar_Bloqueados_Compra.Name, Class_SQLite.Enum_Type._Boolean, Chk_Quitar_Bloqueados_Compra.Checked, _Actualizar)

@@ -668,6 +668,7 @@ Public Class Frm_Demonio_DTEMonitor
                 Dim _Respuesta = _Fila.Item("Respuesta")
                 Dim _Estado = String.Empty
                 Dim _Glosa = String.Empty
+                Dim _Tido = _Fila.Item("Tido")
 
                 If Fx_Esta_Firmando(_Filtro_Id_Trackid, _Id_Trackid) Then
                     Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Procesar = 1" & vbCrLf &
@@ -714,7 +715,7 @@ Public Class Frm_Demonio_DTEMonitor
                         _Procesar = 1
                     End If
 
-                    If _Estado = "EPR" Then
+                    If _Estado = "EPR" And _Tido <> "GTI" Then
                         _EnviarMail = 1
                     End If
 

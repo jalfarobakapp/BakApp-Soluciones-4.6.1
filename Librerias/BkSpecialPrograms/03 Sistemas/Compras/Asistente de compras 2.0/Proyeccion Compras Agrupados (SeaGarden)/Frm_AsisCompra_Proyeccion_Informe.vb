@@ -768,7 +768,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         Fm.ShowDialog(Me)
 
         If Fm.Pro_Informe_Procesado Then
-            _Clas_Asistente_Compras.Sb_Actualizar_Stock()
+            _Clas_Asistente_Compras.Sb_Actualizar_Stock(False)
             _Clas_Asistente_Compras.Sb_Actualizar_Rotacion("", True)
             Sb_Actualizar_SuperGrid()
         End If

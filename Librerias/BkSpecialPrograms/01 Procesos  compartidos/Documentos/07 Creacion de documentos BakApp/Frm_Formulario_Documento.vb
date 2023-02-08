@@ -13749,8 +13749,6 @@ Public Class Frm_Formulario_Documento
                     End If
 
 
-
-
                     Sb_Actualizar_Permisos_Necesarios_Del_Documento_New()
                     _Documento_Autorizado = Fx_Documento_Autorizado()
                     _Vizado = Grilla_Encabezado.Rows(0).Cells("Vizado").Value

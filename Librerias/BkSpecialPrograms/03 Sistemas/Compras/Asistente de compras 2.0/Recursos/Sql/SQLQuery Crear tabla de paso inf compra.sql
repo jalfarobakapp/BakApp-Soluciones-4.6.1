@@ -26,6 +26,11 @@ CREATE TABLE [dbo].[#TablaPaso#](
     
 	[StockPedidoUd1]            [Float]        DEFAULT (0),
 	[StockPedidoUd2]            [Float]        DEFAULT (0),
+    [StockPedidoNVIUd1]         [Float]        DEFAULT (0),
+	[StockPedidoNVIUd2]         [Float]        DEFAULT (0),
+    [StockTransitoUd1]          [Float]        DEFAULT (0),
+    [StockTransitoUd2]          [Float]        DEFAULT (0),
+
 	[StockFacSinRecepUd1]       [Float]        DEFAULT (0),
 	[StockFacSinRecepUd2]       [Float]        DEFAULT (0),
 
@@ -35,7 +40,12 @@ CREATE TABLE [dbo].[#TablaPaso#](
 	[StockUd2_Prod]             [Float]        DEFAULT (0),
 	[StockPedidoUd1_Prod]       [Float]        DEFAULT (0),
 	[StockPedidoUd2_Prod]       [Float]        DEFAULT (0),
-	[StockFacSinRecepUd1_Prod]  [Float]        DEFAULT (0),
+    [StockPedidoNVIUd1_Prod]    [Float]        DEFAULT (0),
+    [StockPedidoNVIUd2_Prod]    [Float]        DEFAULT (0),
+    [StockTransitoUd1_Prod]     [Float]        DEFAULT (0),
+    [StockTransitoUd2_Prod]     [Float]        DEFAULT (0),
+	
+    [StockFacSinRecepUd1_Prod]  [Float]        DEFAULT (0),
 	[StockFacSinRecepUd2_Prod]  [Float]        DEFAULT (0),
 
 	[Ranking_Top]               [Int]          DEFAULT (0),

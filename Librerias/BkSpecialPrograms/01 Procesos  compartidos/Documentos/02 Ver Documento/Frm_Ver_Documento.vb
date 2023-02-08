@@ -1,14 +1,11 @@
-﻿Imports DevComponents.DotNetBar
-Imports System.Drawing.Printing
+﻿Imports System.Drawing.Printing
 Imports System.IO
-
+Imports DevComponents.DotNetBar
 Imports PdfSharp
-Imports PdfSharp.Pdf
-Imports PdfSharp.Pdf.IO
 Imports PdfSharp.Drawing
 Imports PdfSharp.Drawing.Layout
-Imports HEFESTO.FIRMA.DOC.FORM
-Imports HEFESTO.FIRMA.DOCUMENTO
+Imports PdfSharp.Pdf
+Imports PdfSharp.Pdf.IO
 
 Public Class Frm_Ver_Documento
 
@@ -2597,7 +2594,11 @@ Public Class Frm_Ver_Documento
         Dim _Nudo As String = Pro_Row_Maeedo.Item("NUDO")
         Dim _Subtido As String = Pro_Row_Maeedo.Item("SUBTIDO")
 
-        Dim _Email_Para As String = Trim(_Sql.Fx_Trae_Dato("MAEEN", "EMAIL", "KOEN = '" & _Koen & "' And SUEN = '" & _Suen & "'"))
+        Dim _Asunto As String = _Tido & " Nro:" & _Nudo
+        Dim _Para As String '= _Email_Para
+        Dim _Cuerpo = String.Empty
+
+        Dim _Email_Para As String = Trim(_Sql.Fx_Trae_Dato("MAEEN", "EMAILCOMER", "KOEN = '" & _Koen & "' And SUEN = '" & _Suen & "'"))
 
         Dim _Pregunta = MessageBoxEx.Show(Me, "¿Desea adjuntar archivo PDF?", "Adjuntar archivo PDF", vbYesNoCancel, MessageBoxIcon.Question)
 
@@ -2618,55 +2619,76 @@ Public Class Frm_Ver_Documento
 
             End If
 
-            If Fm.Formato_Seleccionado Then
-
-                _Subtido = Fm.Row_Formato_Seleccionado.Item("Subtido")
-                _NombreFormato = Fm.Row_Formato_Seleccionado.Item("NombreFormato")
-
-                Dim _Path = AppPath() & "\Data\" & RutEmpresaActiva & "\Tmp"
-
-                If Not Directory.Exists(_Path) Then
-                    System.IO.Directory.CreateDirectory(_Path)
-                End If
-
-
-                Dim _Doc_Electronico As Boolean = Pro_Row_Maeedo.Item("TIDOELEC")
-
-                Dim _Pdf_Adjunto As New Clas_PDF_Crear_Documento(_Idmaeedo,
-                                                                         _Tido,
-                                                                         _NombreFormato,
-                                                                         _Tido & "-" & _Nudo,
-                                                                         _Path, _Tido & "-" & _Nudo, False)
-                _Pdf_Adjunto.Sb_Crear_PDF("", False, _Pdf_Adjunto.Pro_Nombre_Archivo)
-                Dim _Error_Pdf = _Pdf_Adjunto.Pro_Error
-
-                Dim _Existe_File = System.IO.File.Exists(_Pdf_Adjunto.Pro_Full_Path_Archivo_PDF & "\" & _Pdf_Adjunto.Pro_Nombre_Archivo & ".pdf")
-
-                If _Existe_File Then
-
-                    _Archivo_PDF_Adjunto = _Pdf_Adjunto.Pro_Full_Path_Archivo_PDF & "\" & _Pdf_Adjunto.Pro_Nombre_Archivo & ".pdf"
-
-                    Dim _Envio_Occ_Mail As New Class_Outlook
-
-                    Dim _Asunto As String = _Tido & " Nro:" & _Nudo
-                    Dim _Para As String = _Email_Para
-                    Dim _Cuerpo = "."
-
-                    _Envio_Occ_Mail.Sb_Crear_Correo_Outlook(_Para, _Archivo_PDF_Adjunto, _Asunto, _Cuerpo, True)
-
-                End If
-
-            Else
-
+            If Not Fm.Formato_Seleccionado Then
+                MessageBoxEx.Show(Me, "No se selecciono ningún formato", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
-
             End If
 
-        ElseIf _Pregunta = DialogResult.No Then
-            Sb_Enviar_Doc_Por_Mail(_Idmaeedo, _Email_Para, "", "", Me)
-        Else
-            Return
+
+            _Subtido = Fm.Row_Formato_Seleccionado.Item("Subtido")
+            _NombreFormato = Fm.Row_Formato_Seleccionado.Item("NombreFormato")
+
+            Dim _Path = AppPath() & "\Data\" & RutEmpresaActiva & "\Tmp"
+
+            If Not Directory.Exists(_Path) Then
+                System.IO.Directory.CreateDirectory(_Path)
+            End If
+
+
+            Dim _Doc_Electronico As Boolean = Pro_Row_Maeedo.Item("TIDOELEC")
+
+            Dim _Pdf_Adjunto As New Clas_PDF_Crear_Documento(_Idmaeedo,
+                                                                     _Tido,
+                                                                     _NombreFormato,
+                                                                     _Tido & "-" & _Nudo,
+                                                                     _Path, _Tido & "-" & _Nudo, False)
+            _Pdf_Adjunto.Sb_Crear_PDF("", False, _Pdf_Adjunto.Pro_Nombre_Archivo)
+            Dim _Error_Pdf = _Pdf_Adjunto.Pro_Error
+
+            Dim _Existe_File = System.IO.File.Exists(_Pdf_Adjunto.Pro_Full_Path_Archivo_PDF & "\" & _Pdf_Adjunto.Pro_Nombre_Archivo & ".pdf")
+
+            If _Existe_File Then
+                _Archivo_PDF_Adjunto = _Pdf_Adjunto.Pro_Full_Path_Archivo_PDF & "\" & _Pdf_Adjunto.Pro_Nombre_Archivo & ".pdf"
+            End If
+
         End If
+
+        'ElseIf _Pregunta = DialogResult.No Then
+        '    Sb_Enviar_Doc_Por_Mail(_Idmaeedo, _Email_Para, "", "", Me)
+        'Else
+        '    Return
+
+        Dim Crea_Htm As New Clase_Crear_Documento_Htm
+        Dim _Ruta As String = AppPath() & "\Data\" & RutEmpresa & "\Tmp"
+
+        Dim fic As String = _Ruta & "\Documento.Htm"
+
+        Dim _Mostrar_Precios As Boolean
+
+        If MessageBoxEx.Show(Me, "¿Desea mostrar los precios?", "Enviar documento", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            _Mostrar_Precios = True
+        End If
+
+        If Crea_Htm.Fx_Crear_Documento_Htm(_Idmaeedo, _Ruta, _Mostrar_Precios) Then
+
+            Dim _Cuerpo_Html = LeeArchivo(fic)
+
+            _Cuerpo_Html = Replace(_Cuerpo_Html, "&aacute", "á")
+            _Cuerpo_Html = Replace(_Cuerpo_Html, "&eacute", "é")
+            _Cuerpo_Html = Replace(_Cuerpo_Html, "&iacute", "í")
+            _Cuerpo_Html = Replace(_Cuerpo_Html, "&oacute", "ó")
+            _Cuerpo_Html = Replace(_Cuerpo_Html, "&uacute", "ú")
+            _Cuerpo_Html = Replace(_Cuerpo_Html, "&ntilde", "ñ")
+            _Cuerpo_Html = Replace(_Cuerpo_Html, "&Ntilde", "Ñ")
+            _Cuerpo = _Cuerpo_Html
+
+        End If
+
+        Dim _Envio_Occ_Mail As New Class_Outlook
+
+        _Para = _Email_Para
+
+        _Envio_Occ_Mail.Sb_Crear_Correo_Outlook(_Para, _Archivo_PDF_Adjunto, _Asunto, _Cuerpo, True)
 
     End Sub
 
@@ -2683,7 +2705,7 @@ Public Class Frm_Ver_Documento
 
             MessageBoxEx.Show(Me, "La Entidad que no tiene Email en la tabla de notificaciones por email" & vbCrLf &
                              "Para poder reenviar un correo debe actualizar los datos desde el la ficha de la entidad:" & vbCrLf &
-                             "Desde Maestro de entidades -> Ficha entidad  -> Notificaciones vía correo",
+                             "Desde Maestro de entidades -> Ficha entidad -> Notificaciones vía correo",
                              "El documento no fue enviado", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
 
@@ -2735,7 +2757,7 @@ Public Class Frm_Ver_Documento
 
         If Convert.ToBoolean(_Documentos_Enviados) Then
 
-            MessageBoxEx.Show(Me, "Documentos enviado", "Envio de correo", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBoxEx.Show(Me, "Documento enviado", "Envio de correo", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         End If
 
@@ -3640,7 +3662,7 @@ Public Class Frm_Ver_Documento
             _IVA = _Row_Maeedo.Item("VAIVDO")
 
             '_Exento = De_Txt_a_Num_01(Tbl_Totales.Rows(_Encabezado_Id).Item("MntExe"))
- _
+            _
             Dim _Total_Palabras As String = Trim(UCase(Letras(_MntTotal))) & " ---------"
             pgfx.DrawString("SON :" & _Total_Palabras, FteNegrita_8, XBrushes.Black, 25, Ypos)
             Ypos += 20

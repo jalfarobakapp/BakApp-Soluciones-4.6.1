@@ -1336,7 +1336,8 @@ Public Module Funciones_Especiales_BakApp
                                            _Email_Para As String,
                                            _Encabezado_Cuerpo As String,
                                            _Pie_Cuerpo As String,
-                                           _Form_Origen As Object) As Boolean
+                                           _Form_Origen As Object,
+                                           _Mostrar_Precios As Boolean) As Boolean
 
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -1360,7 +1361,7 @@ Public Module Funciones_Especiales_BakApp
                 Return False
             End If
 
-            If Crea_Htm.Fx_Crear_Documento_Htm(_IdMaeedo_Doc, _Ruta) Then
+            If Crea_Htm.Fx_Crear_Documento_Htm(_IdMaeedo_Doc, _Ruta, _Mostrar_Precios) Then
 
                 ' Acento en Html
                 'á = &aacute
@@ -1401,6 +1402,7 @@ Public Module Funciones_Especiales_BakApp
             MessageBoxEx.Show(_Form_Origen, "No se encontro el documento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return False
         End If
+
     End Function
 
     Function Fx_CadenaConexionSQL(NombreConexion As String,
