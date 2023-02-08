@@ -55,6 +55,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Rdb_Entidades_Algunas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Entidades_Todas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_SoloClientesFincred = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -73,7 +74,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Procesar_Informe, Me.Btn_Entidades_Excluidas, Me.Btn_Configuracion_Local})
-        Me.Bar1.Location = New System.Drawing.Point(0, 387)
+        Me.Bar1.Location = New System.Drawing.Point(0, 412)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(385, 41)
         Me.Bar1.Stretch = True
@@ -302,7 +303,8 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         '
         '
         Me.Progreso_Porc.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Progreso_Porc.Location = New System.Drawing.Point(74, 335)
+        Me.Progreso_Porc.FocusCuesEnabled = False
+        Me.Progreso_Porc.Location = New System.Drawing.Point(74, 353)
         Me.Progreso_Porc.Name = "Progreso_Porc"
         Me.Progreso_Porc.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
         Me.Progreso_Porc.ProgressColor = System.Drawing.Color.SteelBlue
@@ -318,7 +320,8 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         '
         '
         Me.Progreso_Cont.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Progreso_Cont.Location = New System.Drawing.Point(12, 335)
+        Me.Progreso_Cont.FocusCuesEnabled = False
+        Me.Progreso_Cont.Location = New System.Drawing.Point(12, 353)
         Me.Progreso_Cont.Name = "Progreso_Cont"
         Me.Progreso_Cont.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
         Me.Progreso_Cont.ProgressColor = System.Drawing.Color.SteelBlue
@@ -350,8 +353,10 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         '
         '
         Me.Chk_Deuda_Efectiva.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Deuda_Efectiva.CheckBoxImageChecked = CType(resources.GetObject("Chk_Deuda_Efectiva.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Deuda_Efectiva.FocusCuesEnabled = False
         Me.Chk_Deuda_Efectiva.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Deuda_Efectiva.Location = New System.Drawing.Point(8, 144)
+        Me.Chk_Deuda_Efectiva.Location = New System.Drawing.Point(8, 135)
         Me.Chk_Deuda_Efectiva.Name = "Chk_Deuda_Efectiva"
         Me.Chk_Deuda_Efectiva.Size = New System.Drawing.Size(206, 23)
         Me.Chk_Deuda_Efectiva.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -362,6 +367,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         '
         Me.GroupPanel4.BackColor = System.Drawing.Color.White
         Me.GroupPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel4.Controls.Add(Me.Chk_SoloClientesFincred)
         Me.GroupPanel4.Controls.Add(Me.Chk_Excluir_Documentos_Autorizados_Pago)
         Me.GroupPanel4.Controls.Add(Me.TableLayoutPanel5)
         Me.GroupPanel4.Controls.Add(Me.Chk_Deuda_Efectiva)
@@ -371,7 +377,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel4.Location = New System.Drawing.Point(12, 107)
         Me.GroupPanel4.Name = "GroupPanel4"
-        Me.GroupPanel4.Size = New System.Drawing.Size(361, 222)
+        Me.GroupPanel4.Size = New System.Drawing.Size(361, 240)
         '
         '
         '
@@ -410,10 +416,12 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         '
         '
         Me.Chk_Excluir_Documentos_Autorizados_Pago.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Excluir_Documentos_Autorizados_Pago.CheckBoxImageChecked = CType(resources.GetObject("Chk_Excluir_Documentos_Autorizados_Pago.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Excluir_Documentos_Autorizados_Pago.FocusCuesEnabled = False
         Me.Chk_Excluir_Documentos_Autorizados_Pago.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Excluir_Documentos_Autorizados_Pago.Location = New System.Drawing.Point(8, 167)
+        Me.Chk_Excluir_Documentos_Autorizados_Pago.Location = New System.Drawing.Point(8, 164)
         Me.Chk_Excluir_Documentos_Autorizados_Pago.Name = "Chk_Excluir_Documentos_Autorizados_Pago"
-        Me.Chk_Excluir_Documentos_Autorizados_Pago.Size = New System.Drawing.Size(269, 23)
+        Me.Chk_Excluir_Documentos_Autorizados_Pago.Size = New System.Drawing.Size(269, 20)
         Me.Chk_Excluir_Documentos_Autorizados_Pago.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Excluir_Documentos_Autorizados_Pago.TabIndex = 6
         Me.Chk_Excluir_Documentos_Autorizados_Pago.Text = "Excluir documentos autorizados para pago"
@@ -429,7 +437,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.TableLayoutPanel5.Controls.Add(Me.Rdb_Anotaciones_Algunas, 2, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.Rdb_Anotaciones_Todas, 1, 0)
         Me.TableLayoutPanel5.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel5.Location = New System.Drawing.Point(8, 101)
+        Me.TableLayoutPanel5.Location = New System.Drawing.Point(8, 104)
         Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
         Me.TableLayoutPanel5.RowCount = 1
         Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -457,6 +465,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         '
         Me.Rdb_Anotaciones_Algunas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_Anotaciones_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Anotaciones_Algunas.FocusCuesEnabled = False
         Me.Rdb_Anotaciones_Algunas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Anotaciones_Algunas.Location = New System.Drawing.Point(231, 3)
         Me.Rdb_Anotaciones_Algunas.Name = "Rdb_Anotaciones_Algunas"
@@ -476,6 +485,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.Rdb_Anotaciones_Todas.Checked = True
         Me.Rdb_Anotaciones_Todas.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Anotaciones_Todas.CheckValue = "Y"
+        Me.Rdb_Anotaciones_Todas.FocusCuesEnabled = False
         Me.Rdb_Anotaciones_Todas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Anotaciones_Todas.Location = New System.Drawing.Point(140, 3)
         Me.Rdb_Anotaciones_Todas.Name = "Rdb_Anotaciones_Todas"
@@ -495,7 +505,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.TableLayoutPanel4.Controls.Add(Me.Rdb_Vendedores_Algunos, 2, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.Rdb_Vendedores_Todos, 1, 0)
         Me.TableLayoutPanel4.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel4.Location = New System.Drawing.Point(8, 70)
+        Me.TableLayoutPanel4.Location = New System.Drawing.Point(8, 73)
         Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
         Me.TableLayoutPanel4.RowCount = 1
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -523,6 +533,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         '
         Me.Rdb_Vendedores_Algunos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_Vendedores_Algunos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Vendedores_Algunos.FocusCuesEnabled = False
         Me.Rdb_Vendedores_Algunos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Vendedores_Algunos.Location = New System.Drawing.Point(231, 3)
         Me.Rdb_Vendedores_Algunos.Name = "Rdb_Vendedores_Algunos"
@@ -542,6 +553,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.Rdb_Vendedores_Todos.Checked = True
         Me.Rdb_Vendedores_Todos.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Vendedores_Todos.CheckValue = "Y"
+        Me.Rdb_Vendedores_Todos.FocusCuesEnabled = False
         Me.Rdb_Vendedores_Todos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Vendedores_Todos.Location = New System.Drawing.Point(140, 3)
         Me.Rdb_Vendedores_Todos.Name = "Rdb_Vendedores_Todos"
@@ -561,7 +573,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Sucursales_Algunas, 2, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Sucursales_Todas, 1, 0)
         Me.TableLayoutPanel3.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel3.Location = New System.Drawing.Point(8, 42)
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(8, 45)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
         Me.TableLayoutPanel3.RowCount = 1
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -589,6 +601,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         '
         Me.Rdb_Sucursales_Algunas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_Sucursales_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Sucursales_Algunas.FocusCuesEnabled = False
         Me.Rdb_Sucursales_Algunas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Sucursales_Algunas.Location = New System.Drawing.Point(231, 3)
         Me.Rdb_Sucursales_Algunas.Name = "Rdb_Sucursales_Algunas"
@@ -608,6 +621,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.Rdb_Sucursales_Todas.Checked = True
         Me.Rdb_Sucursales_Todas.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Sucursales_Todas.CheckValue = "Y"
+        Me.Rdb_Sucursales_Todas.FocusCuesEnabled = False
         Me.Rdb_Sucursales_Todas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Sucursales_Todas.Location = New System.Drawing.Point(140, 3)
         Me.Rdb_Sucursales_Todas.Name = "Rdb_Sucursales_Todas"
@@ -655,6 +669,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         '
         Me.Rdb_Entidades_Algunas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_Entidades_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Entidades_Algunas.FocusCuesEnabled = False
         Me.Rdb_Entidades_Algunas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Entidades_Algunas.Location = New System.Drawing.Point(231, 3)
         Me.Rdb_Entidades_Algunas.Name = "Rdb_Entidades_Algunas"
@@ -674,6 +689,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.Rdb_Entidades_Todas.Checked = True
         Me.Rdb_Entidades_Todas.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Entidades_Todas.CheckValue = "Y"
+        Me.Rdb_Entidades_Todas.FocusCuesEnabled = False
         Me.Rdb_Entidades_Todas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Entidades_Todas.Location = New System.Drawing.Point(140, 3)
         Me.Rdb_Entidades_Todas.Name = "Rdb_Entidades_Todas"
@@ -682,11 +698,28 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.Rdb_Entidades_Todas.TabIndex = 1
         Me.Rdb_Entidades_Todas.Text = "Todas "
         '
+        'Chk_SoloClientesFincred
+        '
+        Me.Chk_SoloClientesFincred.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_SoloClientesFincred.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SoloClientesFincred.CheckBoxImageChecked = CType(resources.GetObject("Chk_SoloClientesFincred.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SoloClientesFincred.FocusCuesEnabled = False
+        Me.Chk_SoloClientesFincred.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SoloClientesFincred.Location = New System.Drawing.Point(8, 190)
+        Me.Chk_SoloClientesFincred.Name = "Chk_SoloClientesFincred"
+        Me.Chk_SoloClientesFincred.Size = New System.Drawing.Size(206, 23)
+        Me.Chk_SoloClientesFincred.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SoloClientesFincred.TabIndex = 7
+        Me.Chk_SoloClientesFincred.Text = "Mostrar solo clientes FINCRED"
+        '
         'Frm_Inf_Vencimientos_Procesar_Informe
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(385, 428)
+        Me.ClientSize = New System.Drawing.Size(385, 453)
         Me.Controls.Add(Me.GroupPanel4)
         Me.Controls.Add(Me.Lbl_Nombre_Empresa)
         Me.Controls.Add(Me.Progreso_Porc)
@@ -749,4 +782,5 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
     Friend WithEvents Rdb_Anotaciones_Todas As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Btn_Entidades_Excluidas As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Chk_Excluir_Documentos_Autorizados_Pago As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_SoloClientesFincred As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

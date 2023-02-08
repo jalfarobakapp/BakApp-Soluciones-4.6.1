@@ -4876,6 +4876,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Informes\Informe de vencimientos Compras y Ventas\Frm_Inf_Vencimientos_Procesar_Informe.resx">
       <DependentUpon>Frm_Inf_Vencimientos_Procesar_Informe.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Informes\Informe de vencimientos Compras y Ventas\Frm_Inf_Vencimientos_Revisa_Documentos.resx">
       <DependentUpon>Frm_Inf_Vencimientos_Revisa_Documentos.vb</DependentUpon>

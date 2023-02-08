@@ -9478,7 +9478,7 @@ Namespace GeneraOccAuto
 
                     Dim _Fecha = "Getdate()"
                     Dim _Adjuntar_Documento As Boolean = Not String.IsNullOrEmpty(_NombreFormato_PDF)
-                    Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+                    Dim _NombreEquipo As String = String.Empty '_Global_Row_EstacionBk.Item("NombreEquipo")
 
                     _Para = _Para.Trim
 
