@@ -48,6 +48,7 @@ Partial Class Frm_Ver_Documento
         Me.Btn_Eliminar_Anular = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_CopiarDocOtrEmpresa = New DevComponents.DotNetBar.ButtonItem()
         Me.CircularProgressItem1 = New DevComponents.DotNetBar.CircularProgressItem()
+        Me.Btn_InfFincred = New DevComponents.DotNetBar.ButtonItem()
         Me.GrillaDetalleDoc = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Lbl_Totaliza_Cantidades = New DevComponents.DotNetBar.LabelX()
@@ -144,7 +145,6 @@ Partial Class Frm_Ver_Documento
         Me.Panel_Documento = New System.Windows.Forms.Panel()
         Me.ImageList_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Imagenes_32x32 = New System.Windows.Forms.ImageList(Me.components)
-        Me.Btn_InfFincred = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GrillaDetalleDoc, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
@@ -164,7 +164,7 @@ Partial Class Frm_Ver_Documento
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_Documentos, Me.Btn_Observaciones, Me.Btn_Anotaciones_al_documento, Me.Btn_Enviar_documento_por_correo, Me.Btn_Traza_Documento, Me.Btn_Archivos_Adjuntos, Me.Btn_Marcar_Baja_Rotacion, Me.Btn_Imprimir_Documento, Me.Btn_Cierre_Reactivacion_Documento, Me.Btn_Firmar_Documento_DTE, Me.Btn_Revisar_Situacion_Comercial, Me.Btn_Permisos_Asociados, Me.Btn_Ver_Orden_de_despacho, Me.Btn_Consolidar_Stock, Me.Btn_Eliminar_Anular, Me.Btn_CopiarDocOtrEmpresa, Me.CircularProgressItem1, Me.Btn_InfFincred})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_Documentos, Me.Btn_Observaciones, Me.Btn_Anotaciones_al_documento, Me.Btn_Enviar_documento_por_correo, Me.Btn_Traza_Documento, Me.Btn_Archivos_Adjuntos, Me.Btn_Marcar_Baja_Rotacion, Me.Btn_Imprimir_Documento, Me.Btn_Cierre_Reactivacion_Documento, Me.Btn_Firmar_Documento_DTE, Me.Btn_Revisar_Situacion_Comercial, Me.Btn_Permisos_Asociados, Me.Btn_Ver_Orden_de_despacho, Me.Btn_Consolidar_Stock, Me.Btn_Eliminar_Anular, Me.Btn_CopiarDocOtrEmpresa, Me.Btn_InfFincred, Me.CircularProgressItem1})
         Me.Bar2.Location = New System.Drawing.Point(0, 492)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(873, 41)
@@ -324,6 +324,15 @@ Partial Class Frm_Ver_Documento
         'CircularProgressItem1
         '
         Me.CircularProgressItem1.Name = "CircularProgressItem1"
+        '
+        'Btn_InfFincred
+        '
+        Me.Btn_InfFincred.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_InfFincred.ForeColor = System.Drawing.Color.Black
+        Me.Btn_InfFincred.Image = CType(resources.GetObject("Btn_InfFincred.Image"), System.Drawing.Image)
+        Me.Btn_InfFincred.Name = "Btn_InfFincred"
+        Me.Btn_InfFincred.Tooltip = "Ver respuesta FINCRED Pays"
+        Me.Btn_InfFincred.Visible = False
         '
         'GrillaDetalleDoc
         '
@@ -1561,15 +1570,6 @@ Partial Class Frm_Ver_Documento
         Me.Imagenes_32x32.Images.SetKeyName(13, "attach-number-1.png")
         Me.Imagenes_32x32.Images.SetKeyName(14, "attach-number-9-plus.png")
         Me.Imagenes_32x32.Images.SetKeyName(15, "document-attach.png")
-        '
-        'Btn_InfFincred
-        '
-        Me.Btn_InfFincred.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_InfFincred.ForeColor = System.Drawing.Color.Black
-        Me.Btn_InfFincred.Image = CType(resources.GetObject("Btn_InfFincred.Image"), System.Drawing.Image)
-        Me.Btn_InfFincred.Name = "Btn_InfFincred"
-        Me.Btn_InfFincred.Tooltip = "Ver respuesta FINCRED Pays"
-        Me.Btn_InfFincred.Visible = False
         '
         'Frm_Ver_Documento
         '

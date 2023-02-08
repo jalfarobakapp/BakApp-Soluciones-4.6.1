@@ -674,7 +674,7 @@ Public Class Frm_BuscarDocumento_Mt
             System.IO.Directory.CreateDirectory(_Ruta)
         End If
 
-        Sb_Enviar_Doc_Por_Mail(_IdMaeedo_Doc, _Email_Para, "Estimados.", "", Me)
+        Sb_Enviar_Doc_Por_Mail(_IdMaeedo_Doc, _Email_Para, "Estimados.", "", Me, True)
 
     End Sub
 

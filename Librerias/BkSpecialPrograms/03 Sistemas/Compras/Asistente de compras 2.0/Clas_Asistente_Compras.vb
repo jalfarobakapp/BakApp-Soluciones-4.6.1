@@ -24,6 +24,10 @@ Public Class Clas_Asistente_Compras
     Dim _Chk_Rotacion_Con_Ent_Excluidas As Boolean
     Dim _Chk_Trabajando_Con_Proyeccion As Boolean
     Dim _Chk_Restar_Stok_Bodega As Boolean
+    Dim _Chk_Restar_Stok_PedidoNvi As Boolean
+    Dim _Chk_Restar_Stok_PedidoOcc As Boolean
+    Dim _Chk_Restar_Stok_TransitoGti As Boolean
+
     Dim _Chk_Advertir_Rotacion As Boolean
     Dim _Input_Dias_Advertencia_Rotacion As Integer
     Dim _Rdb_Agrupar_x_Asociados As Boolean
@@ -242,6 +246,33 @@ Public Class Clas_Asistente_Compras
         End Set
     End Property
 
+    Public Property Chk_Restar_Stok_PedidoNvi As Boolean
+        Get
+            Return _Chk_Restar_Stok_PedidoNvi
+        End Get
+        Set(value As Boolean)
+            _Chk_Restar_Stok_PedidoNvi = value
+        End Set
+    End Property
+
+    Public Property Chk_Restar_Stok_PedidoOcc As Boolean
+        Get
+            Return _Chk_Restar_Stok_PedidoOcc
+        End Get
+        Set(value As Boolean)
+            _Chk_Restar_Stok_PedidoOcc = value
+        End Set
+    End Property
+
+    Public Property Chk_Restar_Stok_TransitoGti As Boolean
+        Get
+            Return _Chk_Restar_Stok_TransitoGti
+        End Get
+        Set(value As Boolean)
+            _Chk_Restar_Stok_TransitoGti = value
+        End Set
+    End Property
+
     Public Sub New(ByVal Nombre_Tbl_Paso_Informe As String)
         _Nombre_Tbl_Paso_Informe = Nombre_Tbl_Paso_Informe
         _Rdb_RotMeses = True
@@ -435,15 +466,41 @@ Public Class Clas_Asistente_Compras
             'End If
             '_Sql.Ej_consulta_IDU(Consulta_sql)
 
-            If _Proyeccion_Tiempo_Reposicion = Enum_Proyeccion.Dias Then
-                Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set" & Space(1) &
-                               "StockUd" & _Ud & " = (Stock_Fisico_Ud" & _Ud & "+StockPedidoUd" & _Ud & ")---(" & _Tiempo_Reposicion & " * RotCalculo)" & vbCrLf &
-                               "Where (Stock_Fisico_Ud" & _Ud & "+StockPedidoUd" & _Ud & ") > 0"
-            Else
-                Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set" & Space(1) &
-                               "StockUd" & _Ud & " = (Stock_Fisico_Ud" & _Ud & "+StockPedidoUd" & _Ud & ")---(" & _Tiempo_Reposicion_Mensual & " * RotCalculo)" & vbCrLf &
-                               "Where (Stock_Fisico_Ud" & _Ud & "+StockPedidoUd" & _Ud & ") > 0"
+            Dim _StockPedidoNvi = String.Empty
+            Dim _StockTransitoGti = String.Empty
+            Dim _StockPedidoOcc = String.Empty
+            Dim _StockFisico = String.Empty
+
+            If _Chk_Restar_Stok_PedidoNvi Then
+                _StockPedidoNvi = "+StockPedidoNVIUd" & _Ud
             End If
+
+            If _Chk_Restar_Stok_TransitoGti Then
+                _StockTransitoGti = "+StockTransitoUd" & _Ud
+            End If
+
+            If _Chk_Restar_Stok_PedidoOcc Then
+                _StockPedidoOcc = "+StockPedidoUd" & _Ud
+            End If
+
+            If _Chk_Restar_Stok_Bodega Then
+                _StockFisico = "+Stock_Fisico_Ud" & _Ud
+            End If
+
+
+            'If _Proyeccion_Tiempo_Reposicion = Enum_Proyeccion.Dias Then
+            '    Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set" & Space(1) &
+            '                   "StockUd" & _Ud & " = (Stock_Fisico_Ud" & _Ud & "+StockPedidoUd" & _Ud & _StockPedidoNvi & ")---(" & _Tiempo_Reposicion & " * RotCalculo)" & vbCrLf &
+            '                   "Where (Stock_Fisico_Ud" & _Ud & "+StockPedidoUd" & _Ud & ") > 0"
+            'Else
+            '    Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set" & Space(1) &
+            '                   "StockUd" & _Ud & " = (Stock_Fisico_Ud" & _Ud & "+StockPedidoUd" & _Ud & _StockPedidoNvi &")---(" & _Tiempo_Reposicion_Mensual & " * RotCalculo)" & vbCrLf &
+            '                   "Where (Stock_Fisico_Ud" & _Ud & "+StockPedidoUd" & _Ud & ") > 0"
+            'End If
+
+            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set" & Space(1) &
+                           "StockUd" & _Ud & " = 0" & _StockPedidoNvi & _StockTransitoGti & _StockPedidoOcc & _StockFisico & vbCrLf &
+                           "Where (Stock_Fisico_Ud" & _Ud & "+StockPedidoUd" & _Ud & "+StockPedidoNVIUd" & _Ud & "+StockTransitoUd" & _Ud & ") > 0"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
 
@@ -529,30 +586,40 @@ Public Class Clas_Asistente_Compras
 
             If _Ud = 1 Then _DCS = 0
 
-            If _Chk_Restar_Stok_Bodega Then
+            'If _Chk_Restar_Stok_Bodega Then
 
-                If _Proyeccion_Metodo_Abastecer = Enum_Proyeccion.Dias Then
-                    Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
-                                   "CantSugeridaTot = Round(((RotCalculo*" & _Dias_Abastecer & ") * " & _Porc_Crecimiento & ") - StockUd" & _Ud & "," & _DCS & ")" & vbCrLf &
-                                   "Where 1 > 0"
-                Else
-                    Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
-                                   "CantSugeridaTot = Round(((RotCalculo*" & _Meses_Abastecer & ") * " & _Porc_Crecimiento & ") - StockUd" & _Ud & "," & _DCS & ")" & vbCrLf &
-                                   "Where 1 > 0"
-                End If
+            '    If _Proyeccion_Metodo_Abastecer = Enum_Proyeccion.Dias Then
+            '        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
+            '                       "CantSugeridaTot = Round(((RotCalculo*" & _Dias_Abastecer & ") * " & _Porc_Crecimiento & ") - StockUd" & _Ud & "," & _DCS & ")" & vbCrLf &
+            '                       "Where 1 > 0"
+            '    Else
+            '        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
+            '                       "CantSugeridaTot = Round(((RotCalculo*" & _Meses_Abastecer & ") * " & _Porc_Crecimiento & ") - StockUd" & _Ud & "," & _DCS & ")" & vbCrLf &
+            '                       "Where 1 > 0"
+            '    End If
 
+            'Else
+
+            '    If _Proyeccion_Metodo_Abastecer = Enum_Proyeccion.Dias Then
+            '        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
+            '                       "CantSugeridaTot = Round((" & _Dias_Abastecer & " * RotCalculo) * " & _Porc_Crecimiento & "," & _DCS & ")" & vbCrLf &
+            '                       "Where 1 > 0"
+            '    Else
+            '        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
+            '                       "CantSugeridaTot = Round((" & _Meses_Abastecer & " * (RotCalculo)) * " & _Porc_Crecimiento & "," & _DCS & ")" & vbCrLf &
+            '                       "Where 1 > 0"
+            '    End If
+
+            'End If
+
+            If _Proyeccion_Metodo_Abastecer = Enum_Proyeccion.Dias Then
+                Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
+                               "CantSugeridaTot = Round(((RotCalculo*" & _Dias_Abastecer & ") * " & _Porc_Crecimiento & ") - StockUd" & _Ud & "," & _DCS & ")" & vbCrLf &
+                               "Where 1 > 0"
             Else
-
-                If _Proyeccion_Metodo_Abastecer = Enum_Proyeccion.Dias Then
-                    Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
-                                   "CantSugeridaTot = Round((" & _Dias_Abastecer & " * RotCalculo) * " & _Porc_Crecimiento & "," & _DCS & ")" & vbCrLf &
-                                   "Where 1 > 0"
-                Else
-                    Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
-                                   "CantSugeridaTot = Round((" & _Meses_Abastecer & " * (RotCalculo)) * " & _Porc_Crecimiento & "," & _DCS & ")" & vbCrLf &
-                                   "Where 1 > 0"
-                End If
-
+                Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
+                               "CantSugeridaTot = Round(((RotCalculo*" & _Meses_Abastecer & ") * " & _Porc_Crecimiento & ") - StockUd" & _Ud & "," & _DCS & ")" & vbCrLf &
+                               "Where 1 > 0"
             End If
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
@@ -1024,6 +1091,7 @@ Public Class Clas_Asistente_Compras
             _Filtro_Dias += "+Dias_Existencia_Domingos"
         End If
 
+
         Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set Refleo = 0,Sospecha_Baja_Rotacion = 0" &
                        vbCrLf &
                        "Update " & _Nombre_Tbl_Paso_Informe & " Set Refleo = 1" & vbCrLf &
@@ -1034,10 +1102,12 @@ Public Class Clas_Asistente_Compras
                        "Update " & _Nombre_Tbl_Paso_Informe & " Set Sospecha_Baja_Rotacion = 1" & vbCrLf &
                        "Where CantSugeridaTot > 0.45" & Space(1) &
                        "And (FCV_Ult_Year+BLV_Ult_Year)-NCV_Ult_Year < 5 And Refleo = 0" &
+                       "And Fecha_Ult_Venta <= DATEADD(MONTH,-6,GETDATE())" &
                        vbCrLf &
                        vbCrLf &
                        "Update " & _Nombre_Tbl_Paso_Informe & " Set Sospecha_Baja_Rotacion = 1" & vbCrLf &
-                       "Where CantSugeridaTot < 0.45 And ((FCV_Ult_Year+BLV_Ult_Year)-NCV_Ult_Year between 2 And 5 OR RotMensualUd1 < 0.5)"
+                       "Where CantSugeridaTot < 0.45 And ((FCV_Ult_Year+BLV_Ult_Year)-NCV_Ult_Year between 2 And 5 OR RotMensualUd1 < 0.5)" & vbCrLf &
+                       "And Fecha_Ult_Venta <= DATEADD(MONTH,-6,GETDATE())"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
 
@@ -1099,7 +1169,7 @@ Public Class Clas_Asistente_Compras
 
     End Sub
 
-    Sub Sb_Actualizar_Stock()
+    Sub Sb_Actualizar_Stock(_IncluirNVIEnStockPedido As Boolean)
 
         Dim _Filtro_Bodega As String
 
@@ -1141,26 +1211,45 @@ Public Class Clas_Asistente_Compras
         End If
 
 
+        'If _IncluirNVIEnStockPedido Then
 
-        '        Dim _SqlQueryNVI As String
+        Dim _SqlQueryNVI, _SqlQueryGTI, _InsertarStockPedidoEnNVI As String
 
-        '        _Filtro_Bodega = Generar_Filtro_IN(_Tbl_Filtro_Bodegas, "Chk", "Codigo", False, True, "'")
+        _Filtro_Bodega = Generar_Filtro_IN(_Tbl_Filtro_Bodegas, "Chk", "Codigo", False, True, "'")
 
-        '        _SqlQueryNVI = "Select Ddo.KOPRCT,SUM(CAPRCO1-(CAPRAD1+CAPREX1)) As SaldoUd1,SUM(CAPRCO2-(CAPRAD2+CAPREX2)) As SaldoUd2 
-        'Into #PasoNVI
-        'From MAEDDO Ddo
-        'Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
-        'Where Edo.TIDO = 'NVI' And Edo.EMPRESA+SUDO+BODESTI In " & _Filtro_Bodega & " And Ddo.ESLIDO = '' And Ddo.KOPRCT In (Select Codigo From " & _Nombre_Tbl_Paso_Informe & ")
-        'Group By Ddo.TIDO,Ddo.NUDO,Ddo.KOPRCT
+        _SqlQueryNVI = "Select Ddo.KOPRCT,SUM(CAPRCO1-(CAPRAD1+CAPREX1)) As SaldoUd1,SUM(CAPRCO2-(CAPRAD2+CAPREX2)) As SaldoUd2 
+            Into #PasoNVI
+            From MAEDDO Ddo
+            Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
+            Where Edo.TIDO = 'NVI' And Edo.EMPRESA+SUDO+BODESTI In " & _Filtro_Bodega & " And Ddo.ESLIDO = '' And Ddo.KOPRCT In (Select Codigo From " & _Nombre_Tbl_Paso_Informe & ")
+            Group By Ddo.TIDO,Ddo.NUDO,Ddo.KOPRCT
 
-        'Update #Paso Set STOCNV1C = SaldoUd1,STOCNV2C = SaldoUd2
-        'From #PasoNVI 
-        'Inner Join	#Paso On KOPR = KOPRCT
+            Update #Paso Set StPedNVIUd1 = SaldoUd1,StPedNVIUd2 = SaldoUd2
+            From #PasoNVI 
+            Inner Join	#Paso On KOPR = KOPRCT
 
-        'Drop Table #PasoNVI"
+            Drop Table #PasoNVI"
 
-        '        Consulta_sql = Replace(Consulta_sql, "--InsertarStockPedidoEnNVI", _SqlQueryNVI)
+        _Filtro_Bodega = Replace(_Filtro_Bodega.Trim, " ", "")
 
+        _SqlQueryGTI = "Select Ddo.KOPRCT,SUM(CAPRCO1-(CAPRAD1+CAPREX1)) As SaldoUd1,SUM(CAPRCO2-(CAPRAD2+CAPREX2)) As SaldoUd2 
+            Into #PasoGTI
+            From MAEDDO Ddo
+            Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
+            Where Edo.TIDO = 'GTI' And Rtrim(Ltrim(Edo.EMPRESA))+Rtrim(Ltrim(Edo.SUENDO))+Rtrim(Ltrim(Edo.BODESTI)) In " & _Filtro_Bodega & " And Ddo.ESLIDO = '' And Ddo.KOPRCT In (Select Codigo From " & _Nombre_Tbl_Paso_Informe & ")
+            Group By Ddo.TIDO,Ddo.NUDO,Ddo.KOPRCT
+
+            Update #Paso Set StTransitoUd1 = SaldoUd1,StTransitoUd2 = SaldoUd2
+            From #PasoGTI 
+            Inner Join	#Paso On KOPR = KOPRCT
+
+            Drop Table #PasoGTI"
+
+        _InsertarStockPedidoEnNVI = _SqlQueryNVI & vbCrLf & vbCrLf & _SqlQueryGTI
+
+        Consulta_sql = Replace(Consulta_sql, "--InsertarStockPedidoEnNVI", _InsertarStockPedidoEnNVI)
+
+        'End If
 
         _Sql.Ej_consulta_IDU(Consulta_sql)
 

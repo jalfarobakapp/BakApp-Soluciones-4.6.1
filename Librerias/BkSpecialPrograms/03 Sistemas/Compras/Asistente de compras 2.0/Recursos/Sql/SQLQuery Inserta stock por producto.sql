@@ -5,7 +5,11 @@ Select KOPR,Cast('' As Varchar(30)) As Codigo_Nodo_Madre,
        CAST(0 As Float) As StfiBodExt1,
        Sum(STFI2) As STFI2,
        CAST(0 As Float) As StfiBodExt2,
-       Sum(STOCNV1C) As STOCNV1C,Sum(STOCNV2C) As STOCNV2C,Sum(STDV1C) As STDV1C,Sum(STDV2C) As STDV2C 
+       Sum(STOCNV1C) As STOCNV1C,Sum(STOCNV2C) As STOCNV2C,Sum(STDV1C) As STDV1C,Sum(STDV2C) As STDV2C,
+       CAST(0 As Float) As StPedNVIUd1,
+	   CAST(0 As Float) As StPedNVIUd2,
+       CAST(0 As Float) As StTransitoUd1,
+	   CAST(0 As Float) As StTransitoUd2
 Into #Paso
 From MAEST
 Where KOPR In (Select Codigo From #TablaPaso#) #Filtro_Bodega#--And EMPRESA+KOSU+KOBO In ('01CM PR','01WCMWCM')
@@ -18,7 +22,12 @@ Group By KOPR
 
 Update #Paso Set Codigo_Nodo_Madre = (Select Top 1 Codigo_Nodo_Madre From #TablaPaso# Where KOPR = Codigo)
 
-Select Codigo_Nodo_Madre,Sum(STFI1) As STFI1,Sum(STFI2) As STFI2,Sum(STOCNV1C) As STOCNV1C,Sum(STOCNV2C) As STOCNV2C,Sum(STDV1C) As STDV1C,Sum(STDV2C) As STDV2C  
+Select Codigo_Nodo_Madre,
+        Sum(STFI1) As STFI1,Sum(STFI2) As STFI2,
+        Sum(STOCNV1C) As STOCNV1C,Sum(STOCNV2C) As STOCNV2C,
+        Sum(STDV1C) As STDV1C,Sum(STDV2C) As STDV2C,
+        Sum(StPedNVIUd1) As StPedNVIUd1,Sum(StPedNVIUd2) As StPedNVIUd2,
+        Sum(StTransitoUd1) As StTransitoUd1,Sum(StTransitoUd2) As StTransitoUd2
 Into #Paso1
 From #Paso
 Group By Codigo_Nodo_Madre
@@ -38,7 +47,11 @@ StockUd2_Prod = Round(STFI2,2),
 Stock_Fisico_Ud2_Prod = Round(STFI2,2),
 StockPedidoUd2_Prod = Round(STOCNV2C,2),
 StockFacSinRecepUd1_Prod = Round(STDV1C,2),
-StockFacSinRecepUd2_Prod = Round(STDV2C,2)
+StockFacSinRecepUd2_Prod = Round(STDV2C,2),
+StockPedidoNVIUd1_Prod = Round(StPedNVIUd1,2),
+StockPedidoNVIUd2_Prod = Round(StPedNVIUd2,2),
+StockTransitoUd1_Prod = Round(StTransitoUd1,2),
+StockTransitoUd2_Prod = Round(StTransitoUd2,2)
 
 From #Paso 
 Inner Join #TablaPaso# Ztbl On Ztbl.Codigo = #Paso.KOPR
@@ -55,7 +68,11 @@ StockUd2 = Round(STFI2,2),
 Stock_Fisico_Ud2 = Round(STFI2,2),
 StockPedidoUd2 = Round(STOCNV2C,2),
 StockFacSinRecepUd1 = Round(STDV1C,2),
-StockFacSinRecepUd2 = Round(STDV2C,2)
+StockFacSinRecepUd2 = Round(STDV2C,2),
+StockPedidoNVIUd1 = Round(StPedNVIUd1,2),
+StockPedidoNVIUd2 = Round(StPedNVIUd2,2),
+StockTransitoUd1 = Round(StTransitoUd1,2),
+StockTransitoUd2 = Round(StTransitoUd2,2)
 
 From #Paso1 
 Inner Join #TablaPaso# Ztbl On Ztbl.Codigo_Nodo_Madre = #Paso1.Codigo_Nodo_Madre

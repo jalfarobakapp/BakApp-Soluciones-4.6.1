@@ -1,5 +1,5 @@
 ﻿Imports System.Data.SqlClient
-Imports BkSpecialPrograms.Frm_InfoEnt_Situacion_Documentos
+Imports BkSpecialPrograms.GeneraOccAuto
 Imports DevComponents.DotNetBar
 
 Public Class Frm_01_Asis_Compra_Resultados
@@ -318,8 +318,6 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     Private Sub Frm_01_AsisCompra_Resultados_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
-
-
         _Rdb_Productos_Proveedor = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor",
                                                                     "Funcionario = '" & FUNCIONARIO & "'" & Space(1) &
                                                                     "And Campo = 'Rdb_Productos_Proveedor'" & Space(1) &
@@ -512,25 +510,45 @@ Public Class Frm_01_Asis_Compra_Resultados
             .Columns("Stock_Fisico_Ud" & Ud).HeaderText = "Stock actual"
             .Columns("Stock_Fisico_Ud" & Ud).DefaultCellStyle.Format = "##,###0.##"
             .Columns("Stock_Fisico_Ud" & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Stock_Fisico_Ud" & Ud).ToolTipText = "Stock consolidado según bodegas seleccionadas"
+            .Columns("Stock_Fisico_Ud" & Ud).ToolTipText = "Stock físico consolidado según bodegas seleccionadas"
             .Columns("Stock_Fisico_Ud" & Ud).ReadOnly = True
             .Columns("Stock_Fisico_Ud" & Ud).Visible = True
             .Columns("Stock_Fisico_Ud" & Ud).DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            If Not Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked Then
+            'If Not Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked Then
 
-                .Columns("StockPedidoUd" & Ud).Width = 45
-                .Columns("StockPedidoUd" & Ud).HeaderText = "Stock pedido"
-                .Columns("StockPedidoUd" & Ud).DefaultCellStyle.Format = "##,###0.##"
-                .Columns("StockPedidoUd" & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-                .Columns("StockPedidoUd" & Ud).ToolTipText = "Stock consolidado según bodegas seleccionadas"
-                .Columns("StockPedidoUd" & Ud).ReadOnly = True
-                .Columns("StockPedidoUd" & Ud).Visible = True
-                .Columns("StockPedidoUd" & Ud).DisplayIndex = _DisplayIndex
-                _DisplayIndex += 1
+            .Columns("StockPedidoUd" & Ud).Width = 45
+            .Columns("StockPedidoUd" & Ud).HeaderText = "Stock pedido OCC"
+            .Columns("StockPedidoUd" & Ud).DefaultCellStyle.Format = "##,###0.##"
+            .Columns("StockPedidoUd" & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("StockPedidoUd" & Ud).ToolTipText = "Stock pedido pendiente en Ordenes de compra"
+            .Columns("StockPedidoUd" & Ud).ReadOnly = True
+            .Columns("StockPedidoUd" & Ud).Visible = True
+            .Columns("StockPedidoUd" & Ud).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            End If
+            'End If
+
+            .Columns("StockPedidoNVIUd" & Ud).Width = 45
+            .Columns("StockPedidoNVIUd" & Ud).HeaderText = "Stock pedido NVI"
+            .Columns("StockPedidoNVIUd" & Ud).DefaultCellStyle.Format = "##,###0.##"
+            .Columns("StockPedidoNVIUd" & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("StockPedidoNVIUd" & Ud).ToolTipText = "Stock pedido pendiente en Notas de venta internas (NVI)"
+            .Columns("StockPedidoNVIUd" & Ud).ReadOnly = True
+            .Columns("StockPedidoNVIUd" & Ud).Visible = True
+            .Columns("StockPedidoNVIUd" & Ud).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("StockTransitoUd" & Ud).Width = 45
+            .Columns("StockTransitoUd" & Ud).HeaderText = "Stock trans. GTI"
+            .Columns("StockTransitoUd" & Ud).DefaultCellStyle.Format = "##,###0.##"
+            .Columns("StockTransitoUd" & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("StockTransitoUd" & Ud).ToolTipText = "Stock en entransito hacia las bodegas de reposición"
+            .Columns("StockTransitoUd" & Ud).ReadOnly = True
+            .Columns("StockTransitoUd" & Ud).Visible = True
+            .Columns("StockTransitoUd" & Ud).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Stock_CriticoUd" & Ud & "_Rd").Width = 45
             .Columns("Stock_CriticoUd" & Ud & "_Rd").HeaderText = "Stock Critico"
@@ -2043,7 +2061,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
                     Dim _Email_Para As String = Trim(_Sql.Fx_Trae_Dato("MAEEN", "EMAIL", "KOEN = '" & _Koen & "' And SUEN = '" & _Suen & "'"))
 
-                    Sb_Enviar_Doc_Por_Mail(_New_Idmaeedo, _Email_Para, "Estimados.", "", Me)
+                    Sb_Enviar_Doc_Por_Mail(_New_Idmaeedo, _Email_Para, "Estimados.", "", Me, True)
 
                 End If
 
@@ -3353,7 +3371,12 @@ Public Class Frm_01_Asis_Compra_Resultados
             .Pro_Chk_Advertir_Rotacion = False
             .Pro_Chk_Sabado = Chk_Sabado.Checked
             .Pro_Chk_Domingo = Chk_Domingo.Checked
+
             .Pro_Chk_Restar_Stok_Bodega = Chk_Restar_Stok_Bodega.Checked
+            .Chk_Restar_Stok_PedidoNvi = Chk_Restar_Stock_PedidoNvi.Checked
+            .Chk_Restar_Stok_TransitoGti = Chk_Restar_Stock_TransitoGti.Checked
+            .Chk_Restar_Stok_PedidoOcc = Chk_Restar_Stock_PedidoOcc.Checked
+
             .Pro_Chk_Rotacion_Con_Ent_Excluidas = Chk_Rotacion_Con_Ent_Excluidas.Checked
             .Pro_Chk_Trabajando_Con_Proyeccion = Chk_Trabajando_Con_Proyeccion.Checked
 
@@ -3829,7 +3852,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         _Clas_Asistente_Compras.Chk_SumerStockExternoAlFisico = Chk_SumerStockExternoAlFisico.Checked
 
-        _Clas_Asistente_Compras.Sb_Actualizar_Stock()
+        _Clas_Asistente_Compras.Sb_Actualizar_Stock(_Accion_Automatica)
 
     End Sub
 
@@ -4653,16 +4676,31 @@ Public Class Frm_01_Asis_Compra_Resultados
         '   Ticket Restar Stock bodega
         _Sql.Sb_Parametro_Informe_Sql(Chk_Restar_Stok_Bodega, "Compras_Asistente",
                                              Chk_Restar_Stok_Bodega.Name, Class_SQLite.Enum_Type._Boolean, Chk_Restar_Stok_Bodega.Checked, _Actualizar)
+
+        '   Ticket Restar Stock pedido
+        _Sql.Sb_Parametro_Informe_Sql(Chk_Restar_Stock_PedidoNvi, "Compras_Asistente",
+                                             Chk_Restar_Stock_PedidoNvi.Name, Class_SQLite.Enum_Type._Boolean, Chk_Restar_Stock_PedidoNvi.Checked, _Actualizar)
+
+        '   Ticket Restar Stock en transito GTI
+        _Sql.Sb_Parametro_Informe_Sql(Chk_Restar_Stock_TransitoGti, "Compras_Asistente",
+                                             Chk_Restar_Stock_TransitoGti.Name, Class_SQLite.Enum_Type._Boolean, Chk_Restar_Stock_TransitoGti.Checked, _Actualizar)
+
+        '   Ticket Restar Stock pedido OCC
+        _Sql.Sb_Parametro_Informe_Sql(Chk_Restar_Stock_PedidoOcc, "Compras_Asistente",
+                                             Chk_Restar_Stock_PedidoOcc.Name, Class_SQLite.Enum_Type._Boolean, Chk_Restar_Stock_PedidoOcc.Checked, _Actualizar)
+
         '   Ticket Quitar bloqueados compra
         _Sql.Sb_Parametro_Informe_Sql(Chk_Quitar_Bloqueados_Compra, "Compras_Asistente",
                                              Chk_Quitar_Bloqueados_Compra.Name, Class_SQLite.Enum_Type._Boolean, Chk_Quitar_Bloqueados_Compra.Checked, _Actualizar)
         '   Ticket Quitar con OCC o NVI
         _Sql.Sb_Parametro_Informe_Sql(Chk_No_Considera_Con_Stock_Pedido_OCC_NVI, "Compras_Asistente",
                                              Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Name, Class_SQLite.Enum_Type._Boolean, Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked, _Actualizar)
-        '   Ticket Solo Stock critico
-        _Sql.Sb_Parametro_Informe_Sql(Chk_Mostrar_Solo_Stock_Critico, "Compras_Asistente",
-                                             Chk_Mostrar_Solo_Stock_Critico.Name, Class_SQLite.Enum_Type._Boolean, Chk_Mostrar_Solo_Stock_Critico.Checked, _Actualizar)
 
+        '   Ticket Solo Stock critico
+        If Not _Actualizar Then
+            _Sql.Sb_Parametro_Informe_Sql(Chk_Mostrar_Solo_Stock_Critico, "Compras_Asistente",
+                                             Chk_Mostrar_Solo_Stock_Critico.Name, Class_SQLite.Enum_Type._Boolean, Chk_Mostrar_Solo_Stock_Critico.Checked, _Actualizar)
+        End If
         '_Filtro_Bodegas_Est_Vta_Todas = True
 
         '   Venta promedio entre fechas
@@ -5836,7 +5874,7 @@ Public Class Frm_01_Asis_Compra_Resultados
     End Sub
 
     Private Sub Btn_Actualizar_Informe_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Actualizar_Informe.Click
-        Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
+        Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, True)
         If Not String.IsNullOrEmpty(Trim(Fm_Hijo.Txt_Codigo.Text)) Then Sb_Buscar_X_Codigo()
         If Not String.IsNullOrEmpty(Trim(Fm_Hijo.Txt_Descripcion.Text)) Then Sb_Buscar_X_Descripcion()
     End Sub
@@ -8177,9 +8215,25 @@ Drop Table #Paso"
                                ",'" & Format(_Fl.Feemdo, "yyyyMMdd") & "','" & NuloPorNro(_Fl.MensajeError, "") & "'," & Convert.ToInt32(_Fl.ErrorGrabar) & ")"
                 _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Acp)
 
+                If String.IsNullOrEmpty(_Fl.Email) Then
+
+                    _Fl.Email = _Sql.Fx_Trae_Dato("MAEEN",
+                                                    "EMAILCOMER", "KOEN = '" & _Fl.Endo & "' And SUEN = '" & _Fl.Suendo & "'").Trim
+
+                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_AcpAuto Set Informacion = 'Falta correo de compras en ficha de la entidad' Where Id = " & _Id_Acp
+                    _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                End If
+
                 'Auto_Id_Correo = 37
 
-                _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, _Fl.Email, Auto_CorreoCc, Auto_Id_Correo, Auto_NombreFormato_PDF, _Id_Acp)
+                Dim _Error As String = _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, _Fl.Email, Auto_CorreoCc, Auto_Id_Correo, Auto_NombreFormato_PDF, _Id_Acp)
+
+                If Not String.IsNullOrEmpty(_Error) Then
+                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_AcpAuto Set Informacion = Informacion+' -" & _Error.Trim & "' Where Id = " & _Id_Acp
+                    _Sql.Ej_consulta_IDU(Consulta_sql, False)
+                End If
+
                 ' 37
                 ' "Tam. Carta"
                 'MessageBoxEx.Show(Me, "Tido: " & _Fl.Tido & "-" & _Fl.Nudo & vbCrLf &
@@ -8199,7 +8253,7 @@ Drop Table #Paso"
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = _Proceso_Automatico_Ejecutado
             Chk_Quitar_Ventas_Calzadas.Checked = True
             Chk_Mostrar_Solo_Stock_Critico.Checked = True
-            'Chk_Quitare_Sospechosos_Stock.Checked = True
+            Chk_Quitare_Sospechosos_Stock.Checked = True
 
             'Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = True
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = True
@@ -8251,7 +8305,7 @@ Drop Table #Paso"
             Chk_Quitar_Comprados.Checked = True
             Chk_Mostrar_Solo_Stock_Critico.Checked = True
             Chk_Quitar_Ventas_Calzadas.Checked = True
-            'Chk_Quitare_Sospechosos_Stock.Checked = True
+            Chk_Quitare_Sospechosos_Stock.Checked = True
 
 
             Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
@@ -9357,51 +9411,47 @@ Namespace GeneraOccAuto
                 Dim _Tido As String = _Row_Maeedo.Item("TIDO")
                 Dim _Nudo As String = _Row_Maeedo.Item("NUDO")
 
-                If String.IsNullOrEmpty(_Para.Trim) Then
-                    Throw New System.Exception("Falta el correo del cliente")
-                End If
-
-                If _Para.Contains(";") Then
-
-                    Dim _Paras = _Para.Split(";")
-
-                    For Each Pr As String In _Paras
-                        If Not Fx_Validar_Email(Pr) Then
-                            Throw New System.Exception("El correo para: [" & _Para & "] no es una cuenta de correos valida")
-                        End If
-                    Next
-                Else
-                    If Not Fx_Validar_Email(_Para) Then
-                        Throw New System.Exception("El correo para: [" & _Para & "] no es una cuenta de correos valida")
-                    End If
-                End If
-
-                'If Not Fx_Validar_Email(_Para) Then
-                '    Throw New System.Exception("El correo para: [" & _Para & "] no es una cuenta de correos valida")
+                'If String.IsNullOrEmpty(_Para.Trim) Then
+                '    Throw New System.Exception("Falta el correo del cliente")
                 'End If
 
-                If Not String.IsNullOrEmpty(_Cc) Then
+                'If _Para.Contains(";") Then
 
-                    If Not Fx_Validar_Email(_Cc) Then
+                '    Dim _Paras = _Para.Split(";")
 
-                        If _Cc.Contains(";") Then
+                '    For Each Pr As String In _Paras
+                '        If Not Fx_Validar_Email(Pr) Then
+                '            Throw New System.Exception("El correo para: [" & _Para & "] no es una cuenta de correos valida")
+                '        End If
+                '    Next
+                'Else
+                '    If Not Fx_Validar_Email(_Para) Then
+                '        Throw New System.Exception("El correo para: [" & _Para & "] no es una cuenta de correos valida")
+                '    End If
+                'End If
 
-                            Dim _Ccs = _Cc.Split(";")
+                'If Not String.IsNullOrEmpty(_Cc) Then
 
-                            For Each _Correos In _Ccs
-                                If Not Fx_Validar_Email(_Correos) Then
-                                    Throw New System.Exception("El correo CC: [" & _Correos & "] no es una cuenta de correos valida")
-                                End If
-                            Next
-                        Else
-                            If Not Fx_Validar_Email(_Cc) Then
-                                Throw New System.Exception("El correo CC: [" & _Cc & "] no es una cuenta de correos valida")
-                            End If
-                        End If
+                '    If Not Fx_Validar_Email(_Cc) Then
 
-                    End If
+                '        If _Cc.Contains(";") Then
 
-                End If
+                '            Dim _Ccs = _Cc.Split(";")
+
+                '            For Each _Correos In _Ccs
+                '                If Not Fx_Validar_Email(_Correos) Then
+                '                    Throw New System.Exception("El correo CC: [" & _Correos & "] no es una cuenta de correos valida")
+                '                End If
+                '            Next
+                '        Else
+                '            If Not Fx_Validar_Email(_Cc) Then
+                '                Throw New System.Exception("El correo CC: [" & _Cc & "] no es una cuenta de correos valida")
+                '            End If
+                '        End If
+
+                '    End If
+
+                'End If
 
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos Corr Where Id = " & _Id_Correo
                 Dim _Row_Correo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -9428,8 +9478,9 @@ Namespace GeneraOccAuto
 
                     Dim _Fecha = "Getdate()"
                     Dim _Adjuntar_Documento As Boolean = Not String.IsNullOrEmpty(_NombreFormato_PDF)
-
                     Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+                    _Para = _Para.Trim
 
                     Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo (NombreEquipo,Id_Correo,Nombre_Correo,CodFuncionario,Asunto," &
                                     "Para,Cc,Idmaeedo,Tido,Nudo,NombreFormato,Enviar,Mensaje,Fecha,Adjuntar_Documento,Doc_Adjuntos,Id_Acp)" &

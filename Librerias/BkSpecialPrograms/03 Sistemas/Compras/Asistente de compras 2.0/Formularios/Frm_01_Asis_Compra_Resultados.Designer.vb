@@ -41,6 +41,8 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.ItemContainer8 = New DevComponents.DotNetBar.ItemContainer()
         Me.Chk_Sacar_Productos_Sin_Rotacion = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Chk_Restar_Stok_Bodega = New DevComponents.DotNetBar.CheckBoxItem()
+        Me.Chk_Restar_Stock_PedidoNvi = New DevComponents.DotNetBar.CheckBoxItem()
+        Me.Chk_Restar_Stock_PedidoOcc = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Chk_Quitar_Bloqueados_Compra = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Chk_Mostrar_Solo_Productos_A_Comprar = New DevComponents.DotNetBar.CheckBoxItem()
@@ -187,6 +189,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.Btn_Rotacion_Productos_Lista = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Rotacion_Productos_Con_Rot_Vencida = New DevComponents.DotNetBar.ButtonItem()
         Me.Timer_Ejecucion_Automatica = New System.Windows.Forms.Timer(Me.components)
+        Me.Chk_Restar_Stock_TransitoGti = New DevComponents.DotNetBar.CheckBoxItem()
         Me.RibbonControl1.SuspendLayout()
         Me.RibbonPanel2.SuspendLayout()
         Me.RibbonPanel4.SuspendLayout()
@@ -312,7 +315,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.RibbonBar4.DragDropSupport = True
         Me.RibbonBar4.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItemContainer10})
         Me.RibbonBar4.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.RibbonBar4.Location = New System.Drawing.Point(1231, 0)
+        Me.RibbonBar4.Location = New System.Drawing.Point(1241, 0)
         Me.RibbonBar4.Name = "RibbonBar4"
         Me.RibbonBar4.Size = New System.Drawing.Size(99, 103)
         Me.RibbonBar4.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -374,7 +377,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.Ribon_Ud.DragDropSupport = True
         Me.Ribon_Ud.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItemContainer4})
         Me.Ribon_Ud.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Ribon_Ud.Location = New System.Drawing.Point(1153, 0)
+        Me.Ribon_Ud.Location = New System.Drawing.Point(1163, 0)
         Me.Ribon_Ud.Name = "Ribon_Ud"
         Me.Ribon_Ud.Size = New System.Drawing.Size(78, 103)
         Me.Ribon_Ud.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -463,7 +466,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.Ribon_Excluir_Incluir.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.Ribon_Excluir_Incluir.Location = New System.Drawing.Point(3, 0)
         Me.Ribon_Excluir_Incluir.Name = "Ribon_Excluir_Incluir"
-        Me.Ribon_Excluir_Incluir.Size = New System.Drawing.Size(1150, 103)
+        Me.Ribon_Excluir_Incluir.Size = New System.Drawing.Size(1160, 103)
         Me.Ribon_Excluir_Incluir.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Ribon_Excluir_Incluir.TabIndex = 1
         Me.Ribon_Excluir_Incluir.Text = "Excluir - Incluir"
@@ -485,7 +488,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.ItemContainer8.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical
         Me.ItemContainer8.MultiLine = True
         Me.ItemContainer8.Name = "ItemContainer8"
-        Me.ItemContainer8.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Chk_Sacar_Productos_Sin_Rotacion, Me.Chk_Restar_Stok_Bodega, Me.Chk_Quitar_Bloqueados_Compra, Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI, Me.Chk_Mostrar_Solo_Productos_A_Comprar, Me.Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero, Me.Chk_Quitar_Comprados, Me.Chk_Traer_Productos_De_Reemplazo, Me.Chk_Sumar_Rotacion_Hermanos, Me.Chk_Rotacion_Con_Ent_Excluidas, Me.Chk_Mostrar_Solo_Stock_Critico, Me.Chk_Quitar_Ventas_Calzadas, Me.Chk_Quitare_Sospechosos_Stock, Me.Chk_Trabajando_Con_Proyeccion, Me.Chk_Incluir_Salidas_GDI_OT, Me.Chk_SumerStockExternoAlFisico, Me.Chk_QuitarProdExcluidos})
+        Me.ItemContainer8.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Chk_Restar_Stok_Bodega, Me.Chk_Restar_Stock_PedidoNvi, Me.Chk_Restar_Stock_TransitoGti, Me.Chk_Restar_Stock_PedidoOcc, Me.Chk_Quitar_Bloqueados_Compra, Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI, Me.Chk_Mostrar_Solo_Productos_A_Comprar, Me.Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero, Me.Chk_Quitar_Comprados, Me.Chk_Traer_Productos_De_Reemplazo, Me.Chk_Sumar_Rotacion_Hermanos, Me.Chk_Rotacion_Con_Ent_Excluidas, Me.Chk_Mostrar_Solo_Stock_Critico, Me.Chk_Quitar_Ventas_Calzadas, Me.Chk_Quitare_Sospechosos_Stock, Me.Chk_Trabajando_Con_Proyeccion, Me.Chk_Incluir_Salidas_GDI_OT, Me.Chk_SumerStockExternoAlFisico, Me.Chk_QuitarProdExcluidos, Me.Chk_Sacar_Productos_Sin_Rotacion})
         '
         '
         '
@@ -500,7 +503,17 @@ Partial Class Frm_01_Asis_Compra_Resultados
         'Chk_Restar_Stok_Bodega
         '
         Me.Chk_Restar_Stok_Bodega.Name = "Chk_Restar_Stok_Bodega"
-        Me.Chk_Restar_Stok_Bodega.Text = "Restar stock de bodega"
+        Me.Chk_Restar_Stok_Bodega.Text = "Restar stock físico de bodega"
+        '
+        'Chk_Restar_Stock_PedidoNvi
+        '
+        Me.Chk_Restar_Stock_PedidoNvi.Name = "Chk_Restar_Stock_PedidoNvi"
+        Me.Chk_Restar_Stock_PedidoNvi.Text = "Restar stock pedido (NVI)"
+        '
+        'Chk_Restar_Stock_PedidoOcc
+        '
+        Me.Chk_Restar_Stock_PedidoOcc.Name = "Chk_Restar_Stock_PedidoOcc"
+        Me.Chk_Restar_Stock_PedidoOcc.Text = "Restar stock pedido (OCC)"
         '
         'Chk_Quitar_Bloqueados_Compra
         '
@@ -1951,6 +1964,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.Btn_Actualizar_datos_Informe.ImageAlt = CType(resources.GetObject("Btn_Actualizar_datos_Informe.ImageAlt"), System.Drawing.Image)
         Me.Btn_Actualizar_datos_Informe.Name = "Btn_Actualizar_datos_Informe"
         Me.Btn_Actualizar_datos_Informe.Text = "Actualizar informe datos del informe"
+        Me.Btn_Actualizar_datos_Informe.Visible = False
         '
         'Btn_Actualizar_Rotacion_Vta
         '
@@ -2213,9 +2227,14 @@ Partial Class Frm_01_Asis_Compra_Resultados
         '
         Me.Timer_Ejecucion_Automatica.Interval = 2000
         '
+        'Chk_Restar_Stock_TransitoGti
+        '
+        Me.Chk_Restar_Stock_TransitoGti.Name = "Chk_Restar_Stock_TransitoGti"
+        Me.Chk_Restar_Stock_TransitoGti.Text = "Restar stock en transito (GTI)"
+        '
         'Frm_01_Asis_Compra_Resultados
         '
-        Me.ClientSize = New System.Drawing.Size(1449, 441)
+        Me.ClientSize = New System.Drawing.Size(1449, 433)
         Me.Controls.Add(Me.ContextMenuBar1)
         Me.Controls.Add(Me.RibbonControl1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -2412,4 +2431,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
     Friend WithEvents BtnProceso_Prov_Auto_Especial As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Chk_SumerStockExternoAlFisico As DevComponents.DotNetBar.CheckBoxItem
     Friend WithEvents Chk_QuitarProdExcluidos As DevComponents.DotNetBar.CheckBoxItem
+    Public WithEvents Chk_Restar_Stock_PedidoNvi As DevComponents.DotNetBar.CheckBoxItem
+    Friend WithEvents Chk_Restar_Stock_PedidoOcc As DevComponents.DotNetBar.CheckBoxItem
+    Friend WithEvents Chk_Restar_Stock_TransitoGti As DevComponents.DotNetBar.CheckBoxItem
 End Class

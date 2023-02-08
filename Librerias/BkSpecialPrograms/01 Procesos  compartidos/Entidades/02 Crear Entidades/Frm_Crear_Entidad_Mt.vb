@@ -625,11 +625,14 @@ Public Class Frm_Crear_Entidad_Mt
         End If
 
         If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Entidades", "EmailCompras") Then
-            If Not Fx_Validar_Email(Txt_EmailCompras.Text) Then
-                MessageBoxEx.Show(Me, "el correo de Email Compras [" & Txt_EmailCompras.Text & "] no es una cuenta de correos valida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                TabControl1.SelectedTabIndex = 5
-                Txt_EmailCompras.Focus()
-                Return
+            If Not String.IsNullOrEmpty(Txt_EmailCompras.Text) Then
+                Txt_EmailCompras.Text = Txt_EmailCompras.Text.Trim
+                If Not Fx_Validar_Email(Txt_EmailCompras.Text) Then
+                    MessageBoxEx.Show(Me, "el correo de Email Compras [" & Txt_EmailCompras.Text & "] no es una cuenta de correos valida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    TabControl1.SelectedTabIndex = 5
+                    Txt_EmailCompras.Focus()
+                    Return
+                End If
             End If
         End If
 
