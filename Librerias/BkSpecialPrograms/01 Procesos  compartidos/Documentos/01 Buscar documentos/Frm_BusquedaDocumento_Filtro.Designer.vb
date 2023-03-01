@@ -75,10 +75,10 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Placapat = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_Ocdo = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_CodRetirador = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_Ocdo = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo_documento.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
@@ -568,7 +568,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.TableLayoutPanel3.ColumnCount = 3
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 124.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 125.0!))
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Sucursal_Doc_Algunas, 2, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Sucursal_Doc_Todas, 1, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.LabelX2, 0, 0)
@@ -590,7 +590,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_Sucursal_Doc_Algunas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Sucursal_Doc_Algunas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Sucursal_Doc_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Sucursal_Doc_Algunas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Sucursal_Doc_Algunas.Location = New System.Drawing.Point(260, 4)
+        Me.Rdb_Sucursal_Doc_Algunas.Location = New System.Drawing.Point(259, 4)
         Me.Rdb_Sucursal_Doc_Algunas.Name = "Rdb_Sucursal_Doc_Algunas"
         Me.Rdb_Sucursal_Doc_Algunas.Size = New System.Drawing.Size(94, 17)
         Me.Rdb_Sucursal_Doc_Algunas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -610,7 +610,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_Sucursal_Doc_Todas.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Sucursal_Doc_Todas.CheckValue = "Y"
         Me.Rdb_Sucursal_Doc_Todas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Sucursal_Doc_Todas.Location = New System.Drawing.Point(168, 4)
+        Me.Rdb_Sucursal_Doc_Todas.Location = New System.Drawing.Point(167, 4)
         Me.Rdb_Sucursal_Doc_Todas.Name = "Rdb_Sucursal_Doc_Todas"
         Me.Rdb_Sucursal_Doc_Todas.Size = New System.Drawing.Size(85, 17)
         Me.Rdb_Sucursal_Doc_Todas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1226,6 +1226,40 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.LabelX5.TabIndex = 6
         Me.LabelX5.Text = "Placa Patente"
         '
+        'Txt_CodRetirador
+        '
+        Me.Txt_CodRetirador.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CodRetirador.Border.Class = "TextBoxBorder"
+        Me.Txt_CodRetirador.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CodRetirador.ButtonCustom.Visible = True
+        Me.Txt_CodRetirador.ButtonCustom2.Visible = True
+        Me.Txt_CodRetirador.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CodRetirador.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CodRetirador.Location = New System.Drawing.Point(138, 23)
+        Me.Txt_CodRetirador.MaxLength = 20
+        Me.Txt_CodRetirador.Name = "Txt_CodRetirador"
+        Me.Txt_CodRetirador.PreventEnterBeep = True
+        Me.Txt_CodRetirador.ReadOnly = True
+        Me.Txt_CodRetirador.Size = New System.Drawing.Size(391, 22)
+        Me.Txt_CodRetirador.TabIndex = 9
+        '
+        'LabelX4
+        '
+        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.ForeColor = System.Drawing.Color.Black
+        Me.LabelX4.Location = New System.Drawing.Point(139, 3)
+        Me.LabelX4.Name = "LabelX4"
+        Me.LabelX4.Size = New System.Drawing.Size(161, 23)
+        Me.LabelX4.TabIndex = 8
+        Me.LabelX4.Text = "Retirador de mercaderías"
+        '
         'Txt_Ocdo
         '
         Me.Txt_Ocdo.BackColor = System.Drawing.Color.White
@@ -1258,42 +1292,6 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.LabelX3.Size = New System.Drawing.Size(89, 23)
         Me.LabelX3.TabIndex = 2
         Me.LabelX3.Text = "Orden de compra"
-        '
-        'Txt_CodRetirador
-        '
-        Me.Txt_CodRetirador.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_CodRetirador.Border.Class = "TextBoxBorder"
-        Me.Txt_CodRetirador.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CodRetirador.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_CodRetirador.ButtonCustom.Visible = True
-        Me.Txt_CodRetirador.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image"), System.Drawing.Image)
-        Me.Txt_CodRetirador.ButtonCustom2.Visible = True
-        Me.Txt_CodRetirador.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CodRetirador.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CodRetirador.Location = New System.Drawing.Point(138, 23)
-        Me.Txt_CodRetirador.MaxLength = 20
-        Me.Txt_CodRetirador.Name = "Txt_CodRetirador"
-        Me.Txt_CodRetirador.PreventEnterBeep = True
-        Me.Txt_CodRetirador.ReadOnly = True
-        Me.Txt_CodRetirador.Size = New System.Drawing.Size(391, 22)
-        Me.Txt_CodRetirador.TabIndex = 9
-        '
-        'LabelX4
-        '
-        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(139, 3)
-        Me.LabelX4.Name = "LabelX4"
-        Me.LabelX4.Size = New System.Drawing.Size(161, 23)
-        Me.LabelX4.TabIndex = 8
-        Me.LabelX4.Text = "Retirador de mercaderías"
         '
         'Frm_BusquedaDocumento_Filtro
         '
@@ -1386,7 +1384,6 @@ Partial Class Frm_BusquedaDocumento_Filtro
     Friend WithEvents DtpFechaFin As DevComponents.Editors.DateTimeAdv.DateTimeInput
     Friend WithEvents DtpFechaInicio As DevComponents.Editors.DateTimeAdv.DateTimeInput
     Public WithEvents Chk_Todas_Sucursales As DevComponents.DotNetBar.Controls.CheckBoxX
-    Friend WithEvents Chk_Mostrar_Vales_Transitorios As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Txt_Placapat As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
@@ -1394,4 +1391,5 @@ Partial Class Frm_BusquedaDocumento_Filtro
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_CodRetirador As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
+    Public WithEvents Chk_Mostrar_Vales_Transitorios As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

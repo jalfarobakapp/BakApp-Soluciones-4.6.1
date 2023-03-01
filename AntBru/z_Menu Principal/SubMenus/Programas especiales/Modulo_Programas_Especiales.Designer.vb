@@ -40,11 +40,11 @@ Partial Class Modulo_Programas_Especiales
         Me.Btn_Pocket_PC = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Archivador = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Cierre_Reactivacion_Documentos = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Habilitar_Nvv_Para_Facturar = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnCambiarDeUsuario = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
-        Me.Btn_Habilitar_Nvv_Para_Facturar = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -492,6 +492,33 @@ Partial Class Modulo_Programas_Especiales
         Me.Btn_Cierre_Reactivacion_Documentos.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Cierre_Reactivacion_Documentos.TitleText = "BakApp"
         '
+        'Btn_Habilitar_Nvv_Para_Facturar
+        '
+        Me.Btn_Habilitar_Nvv_Para_Facturar.Image = CType(resources.GetObject("Btn_Habilitar_Nvv_Para_Facturar.Image"), System.Drawing.Image)
+        Me.Btn_Habilitar_Nvv_Para_Facturar.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_Habilitar_Nvv_Para_Facturar.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Habilitar_Nvv_Para_Facturar.Name = "Btn_Habilitar_Nvv_Para_Facturar"
+        Me.Btn_Habilitar_Nvv_Para_Facturar.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Habilitar_Nvv_Para_Facturar.Text = "<font size=""+4""><b>HABILITAR NVV PARA FACTURAR</b></font><br/><font size=""-1"">Pro" &
+    "ceso masivo<br/> </font>"
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(209, Byte), Integer), CType(CType(93, Byte), Integer), CType(CType(123, Byte), Integer))
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(209, Byte), Integer), CType(CType(93, Byte), Integer), CType(CType(123, Byte), Integer))
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(209, Byte), Integer), CType(CType(93, Byte), Integer), CType(CType(123, Byte), Integer))
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(209, Byte), Integer), CType(CType(93, Byte), Integer), CType(CType(123, Byte), Integer))
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.PaddingBottom = 4
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.PaddingLeft = 4
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.PaddingRight = 4
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.PaddingTop = 4
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TitleText = "BakApp"
+        '
         'Bar2
         '
         Me.Bar2.AntiAlias = True
@@ -537,33 +564,6 @@ Partial Class Modulo_Programas_Especiales
         Me.LabelX1.Size = New System.Drawing.Size(368, 49)
         Me.LabelX1.TabIndex = 40
         Me.LabelX1.Text = "<font color=""#349FCE""><b>PROGRAMAS ESPECIALES</b></font>"
-        '
-        'Btn_Habilitar_Nvv_Para_Facturar
-        '
-        Me.Btn_Habilitar_Nvv_Para_Facturar.Image = CType(resources.GetObject("Btn_Habilitar_Nvv_Para_Facturar.Image"), System.Drawing.Image)
-        Me.Btn_Habilitar_Nvv_Para_Facturar.ImageIndent = New System.Drawing.Point(8, -10)
-        Me.Btn_Habilitar_Nvv_Para_Facturar.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_Habilitar_Nvv_Para_Facturar.Name = "Btn_Habilitar_Nvv_Para_Facturar"
-        Me.Btn_Habilitar_Nvv_Para_Facturar.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Habilitar_Nvv_Para_Facturar.Text = "<font size=""+4""><b>HABILITAR NVV PARA FACTURAR</b></font><br/><font size=""-1"">Pro" &
-    "ceso masivo<br/> </font>"
-        Me.Btn_Habilitar_Nvv_Para_Facturar.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
-        Me.Btn_Habilitar_Nvv_Para_Facturar.TileSize = New System.Drawing.Size(200, 100)
-        '
-        '
-        '
-        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(209, Byte), Integer), CType(CType(93, Byte), Integer), CType(CType(123, Byte), Integer))
-        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(209, Byte), Integer), CType(CType(93, Byte), Integer), CType(CType(123, Byte), Integer))
-        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(209, Byte), Integer), CType(CType(93, Byte), Integer), CType(CType(123, Byte), Integer))
-        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(209, Byte), Integer), CType(CType(93, Byte), Integer), CType(CType(123, Byte), Integer))
-        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.PaddingBottom = 4
-        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.PaddingLeft = 4
-        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.PaddingRight = 4
-        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.PaddingTop = 4
-        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.TextColor = System.Drawing.Color.White
-        Me.Btn_Habilitar_Nvv_Para_Facturar.TitleText = "BakApp"
         '
         'Modulo_Programas_Especiales
         '

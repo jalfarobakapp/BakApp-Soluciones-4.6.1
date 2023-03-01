@@ -215,6 +215,14 @@ Public Class Frm_BuscarDocumento_Mt
 
         _Tbl_Documentos = _Sql.Fx_Get_Tablas(Consulta_Sql)
 
+        If HabilitarNVVParaFacturar Then
+
+            Dim dc As DataColumn
+            dc = New DataColumn("FunAutoriza", Type.GetType("System.String"))
+            _Tbl_Documentos.Columns.Add(dc)
+
+        End If
+
         With Grilla
 
             .DataSource = _Tbl_Documentos
@@ -474,6 +482,10 @@ Public Class Frm_BuscarDocumento_Mt
             _Actualizar = (Fm.Anulado Or Fm.Eliminado)
 
             Fm.Dispose()
+
+            If HabilitarNVVParaFacturar Then
+                _Actualizar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "HabilitadaFac", "Idmaeedo = " & _Idmaeedo)
+            End If
 
             If _Actualizar Then
                 Sb_Actualizar()
@@ -1163,6 +1175,40 @@ Public Class Frm_BuscarDocumento_Mt
 
             If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") And _Fila.Cells("TIDO").Value = "NVV" Then
 
+                Dim _Autorizado = False
+
+                If FUNCIONARIO = _Fila.Cells("KOFUDO").Value Then
+                    _Autorizado = True
+                Else
+                    For Each _Fila2 As DataGridViewRow In Grilla_Detalle.Rows
+                        If _Fila2.Cells("KOFULIDO").Value = FUNCIONARIO Then
+                            _Autorizado = True
+                            Exit For
+                        End If
+                    Next
+                End If
+
+                Dim _FunAutorizaFac = FUNCIONARIO
+
+                _Fila.Cells("FunAutoriza").Value = String.Empty
+
+                If Not _Autorizado Then
+
+                    Dim _Rows_Usuario_Autoriza As DataRow
+
+                    _Autorizado = Fx_Tiene_Permiso(Me, "Doc00082",,,,,,,,, _Rows_Usuario_Autoriza)
+
+                    If Not _Autorizado Then
+                        _Fila.Cells("Chk").Value = False
+                        Return
+                    End If
+
+                    _FunAutorizaFac = _Rows_Usuario_Autoriza.Item("KOFU")
+
+                End If
+
+                _Fila.Cells("FunAutoriza").Value = _FunAutorizaFac
+
                 If Not Fx_RevisarFincred(_Idmaeedo) Then
                     If MessageBoxEx.Show(Me, "¿Desea habilitar de todas formas la nota de venta?", "Rechazado por FINCRED",
                                          MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
@@ -1475,7 +1521,7 @@ Public Class Frm_BuscarDocumento_Mt
 
                 If _Fila.Item("Chk") Then
                     Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Docu_Ent Set HabilitadaFac = 1, FunAutorizaFac = '" & FUNCIONARIO & "'" & vbCrLf &
-                               "Where Idmaeedo = " & _Idmaeedo
+                                   "Where Idmaeedo = " & _Idmaeedo
                     If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
                         _Habilitado += 1
                     End If

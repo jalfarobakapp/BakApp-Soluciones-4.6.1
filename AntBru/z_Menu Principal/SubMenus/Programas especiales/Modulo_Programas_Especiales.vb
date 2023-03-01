@@ -276,7 +276,7 @@ Public Class Modulo_Programas_Especiales
             _Fm.Rdb_Estado_Todos.Enabled = False
             _Fm.Rdb_Estado_Vigente.Checked = True
             _Fm.Abrir_Cerrar_Documentos_Compromiso = True
-            _Fm.ShowDialog(Me)
+            _Fm.ShowDialog(_Fm_Menu_Padre)
             _Fm.Dispose()
 
         End If
@@ -284,6 +284,14 @@ Public Class Modulo_Programas_Especiales
     End Sub
 
     Private Sub Btn_Habilitar_Nvv_Para_Facturar_Click(sender As Object, e As EventArgs) Handles Btn_Habilitar_Nvv_Para_Facturar.Click
+
+        If Not _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+            MessageBoxEx.Show(Me, "Esta opción no esta habilitada." & vbCrLf &
+                              "Para poder habilitar esta opción debe hacerlo desde la Modalidad General",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
 
         'If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Doc00011") Then
 
@@ -293,7 +301,11 @@ Public Class Modulo_Programas_Especiales
         _Fm.Rdb_Estado_Vigente.Checked = True
         _Fm.Rdb_Estado_Cerradas.Enabled = False
         _Fm.HabilitarNVVParaFacturar = True
-        _Fm.ShowDialog(Me)
+        _Fm.Rdb_Funcionarios_Uno.Checked = True
+        _Fm.Rdb_Fecha_Emision_Desde_Hasta.Checked = True
+        _Fm.Chk_Mostrar_Vales_Transitorios.Checked = False
+        _Fm.Chk_Mostrar_Vales_Transitorios.Enabled = False
+        _Fm.ShowDialog(_Fm_Menu_Padre)
         _Fm.Dispose()
 
         'End If

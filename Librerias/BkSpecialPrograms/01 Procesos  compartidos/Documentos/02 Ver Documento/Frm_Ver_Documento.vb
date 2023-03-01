@@ -4679,7 +4679,7 @@ Public Class Frm_Ver_Documento
 
                 Dim _Autorizado = False
 
-                If FUNCIONARIO = _Row_Maeedo_Doc.Item("KOFUDO") Then
+                If FUNCIONARIO = _TblEncabezado.Rows(0).Item("KOFUDO") Then
                     _Autorizado = True
                 Else
                     For Each _Fila As DataRow In _TblDetalle.Rows
@@ -4693,13 +4693,21 @@ Public Class Frm_Ver_Documento
                 Dim _FunAutorizaFac = FUNCIONARIO
 
                 If Not _Autorizado Then
-                    _Autorizado = Fx_Tiene_Permiso(Me, "")
-                    '_Rows_Info_Remota
 
-                    If Not _Autorizado Then Return
+                    Dim _Rows_Usuario_Autoriza As DataRow
+
+                    _Autorizado = Fx_Tiene_Permiso(Me, "Doc00082",,,,,,,,, _Rows_Usuario_Autoriza)
+
+                    If Not _Autorizado Then
+                        Return
+                    End If
+
+                    _FunAutorizaFac = _Rows_Usuario_Autoriza.Item("KOFU")
+
                 End If
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Ent Set HabilitadaFac = 1, FunAutorizaFac = '" & _FunAutorizaFac & "'"
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Ent Set HabilitadaFac = 1, FunAutorizaFac = '" & _FunAutorizaFac & "'" & vbCrLf &
+                               "Where Idmaeedo = " & _Idmaeedo
                 If _Sql.Ej_consulta_IDU(Consulta_sql) Then
                     MessageBoxEx.Show(Me, "Nota de venta autorizada para poder ser facturada", "Información",
                                       MessageBoxButtons.OK, MessageBoxIcon.Information)
