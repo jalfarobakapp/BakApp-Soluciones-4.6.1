@@ -22,6 +22,8 @@ Public Class Frm_BuscarDocumento_Mt
     Dim _Cerrar_Documentos As Boolean
     Dim _Cerrar_Documentos_Automaticamente As Boolean
 
+    Public Property HabilitarNVVParaFacturar As Boolean
+
     Public Property Pro_Pago_a_Documento() As Boolean
         Get
             Return _Pago_a_Documento
@@ -193,6 +195,8 @@ Public Class Frm_BuscarDocumento_Mt
 
         End If
 
+        Btn_GrabarHabilitarFacturar.Visible = HabilitarNVVParaFacturar
+
         Sb_Actualizar()
 
         AddHandler BtnActualizarLista.Click, AddressOf Sb_Actualizar
@@ -220,8 +224,11 @@ Public Class Frm_BuscarDocumento_Mt
             Dim _DisplayIndex = 0
 
             .Columns("Chk").HeaderText = "Sel"
+
+            If HabilitarNVVParaFacturar Then .Columns("Chk").HeaderText = "Hab"
+
             .Columns("Chk").Width = 30
-            .Columns("Chk").Visible = (_Enviar_Correos_Masivamente Or _Seleccion_Multiple Or Abrir_Cerrar_Documentos_Compromiso)
+            .Columns("Chk").Visible = (_Enviar_Correos_Masivamente Or _Seleccion_Multiple Or Abrir_Cerrar_Documentos_Compromiso Or HabilitarNVVParaFacturar)
             .Columns("Chk").ReadOnly = False
             .Columns("Chk").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -1133,14 +1140,14 @@ Public Class Frm_BuscarDocumento_Mt
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
-        If _Enviar_Correos_Masivamente Then
+        Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
 
-            If _Fila.Cells("Chk").Value Then
+        If _Fila.Cells("Chk").Value Then
+
+            If _Enviar_Correos_Masivamente Then
 
                 Dim _Tido = _Fila.Cells("TIDO").Value
                 Dim _Koen = _Fila.Cells("ENDO").Value
-
-                Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
 
                 Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("MAEENMAIL", "KOEN = '" & _Koen & "' And KOMAIL = '001'"))
 
@@ -1150,6 +1157,17 @@ Public Class Frm_BuscarDocumento_Mt
                                       "Ficha de la entidad -> Notificaciones vía correo",
                                       "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     _Fila.Cells("Chk").Value = False
+                End If
+
+            End If
+
+            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") And _Fila.Cells("TIDO").Value = "NVV" Then
+
+                If Not Fx_RevisarFincred(_Idmaeedo) Then
+                    If MessageBoxEx.Show(Me, "¿Desea habilitar de todas formas la nota de venta?", "Rechazado por FINCRED",
+                                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                        _Fila.Cells("Chk").Value = False
+                    End If
                 End If
 
             End If
@@ -1279,15 +1297,16 @@ Public Class Frm_BuscarDocumento_Mt
     Private Sub Grilla_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles Grilla.CellBeginEdit
 
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
 
-        If Abrir_Cerrar_Documentos_Compromiso Then
+        Dim _Idmaeedo = _Fila.Cells("IDMAEEDO").Value
 
-            Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        If _Cabeza = "Chk" Then
 
-            If _Cabeza = "Chk" Then
+            If Abrir_Cerrar_Documentos_Compromiso Then
 
                 If (_Abrir_Documentos And _Fila.Cells("ESTADO").Value = "Vigente") Or
-                   (_Cerrar_Documentos And _Fila.Cells("ESTADO").Value = "Cerrado") Then
+                    (_Cerrar_Documentos And _Fila.Cells("ESTADO").Value = "Cerrado") Then
                     e.Cancel = True
                     Beep()
                 End If
@@ -1407,6 +1426,185 @@ Public Class Frm_BuscarDocumento_Mt
         End If
 
     End Sub
+
+    Sub Sb_GrabarHabilitarNVVparaFacturar()
+
+        Dim _Registros_Marcados = 0
+        Dim _Cancelar = False
+
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+
+            If _Fila.Cells("Chk").Value Then
+                _Registros_Marcados += 1
+            End If
+
+        Next
+
+        If _Registros_Marcados = 0 Then
+
+            MessageBoxEx.Show(Me, "No hay ningún registro seleccionado", "Habilitar notas de venta para facturar.",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+
+        End If
+
+        Dim _Habilitado = 0
+        Dim _Contador = 1
+
+        Sb_Habilitar_Desabilitar_Controles(False)
+
+        Barra_Progreso.Maximum = 100
+        Barra_Progreso.Value = 0
+        Barra_Progreso.Visible = True
+
+        Dim _HayRegistrosSinHabilitar As Boolean
+
+        For Each _Fila As DataRow In _Tbl_Documentos.Rows
+
+            If _Fila.Item("Chk") Then
+
+                Dim _Idmaeedo As Integer = _Fila.Item("IDMAEEDO")
+
+                If Not Fx_RevisarFincred(_Idmaeedo) Then
+                    If MessageBoxEx.Show(Me, "¿Desea habilitar de todas formas la nota de venta?", "Rechazado por FINCRED",
+                                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                        _Fila.Item("Chk") = False
+                        _HayRegistrosSinHabilitar = True
+                    End If
+                End If
+
+                If _Fila.Item("Chk") Then
+                    Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Docu_Ent Set HabilitadaFac = 1, FunAutorizaFac = '" & FUNCIONARIO & "'" & vbCrLf &
+                               "Where Idmaeedo = " & _Idmaeedo
+                    If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
+                        _Habilitado += 1
+                    End If
+                End If
+
+                Barra_Progreso.Value = ((_Contador * 100) / _Registros_Marcados)
+                _Contador += 1
+
+                Lbl_Status.Text = "(" & Barra_Progreso.Value & "%) - " & Lbl_Status.Text
+
+                If _Cancelar Then
+                    Lbl_Status.Text = "Status..."
+                    Barra_Progreso.Visible = Not _Cancelar
+                End If
+
+                Application.DoEvents()
+
+                If _Cancelar Then
+                    Sb_Habilitar_Desabilitar_Controles(True)
+                    Lbl_Status.Text = "Status..."
+                    Me.Enabled = True
+                    Me.Refresh()
+                    Return
+                End If
+
+            End If
+
+        Next
+
+        Barra_Progreso.Value = 0
+        Barra_Progreso.Visible = False
+        Me.Refresh()
+
+        Sb_Habilitar_Desabilitar_Controles(True)
+
+        If CBool(_Habilitado) Then
+            MessageBoxEx.Show(Me, "Documento(s) habilitado(s) " & _Habilitado, "Habilitar documentos",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+            If _HayRegistrosSinHabilitar Then
+                Sb_Actualizar()
+            Else
+                Me.Close()
+            End If
+        End If
+
+    End Sub
+
+
+    Function Fx_RevisarFincred(_Idmaeedo As Integer) As Boolean
+
+        Dim _RowMaeedo As DataRow
+        Dim _RowEntidad As DataRow
+
+        Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
+        _RowMaeedo = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+        _RowEntidad = Fx_Traer_Datos_Entidad(_RowMaeedo.Item("ENDO"), _RowMaeedo.Item("SUENDO"))
+
+        Dim _RevFincredEnt As Boolean
+
+        If _Global_Row_Configuracion_General.Item("Fincred_Usar") Or _Global_Row_Configuracion_Estacion.Item("Fincred_Usar") Then
+
+            _RevFincredEnt = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades",
+                             "RevFincred",
+                             "CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "'",,,, True)
+
+            '_Revisar_Fincred = _TblEncabezado.Rows(0).Item("RevFincred")
+            '_RevFincredEnt = _TblEncabezado.Rows(0).Item("RevFincredEnt")
+        End If
+
+        If Not _RevFincredEnt Then
+            Return True
+        End If
+
+        Consulta_Sql = "Select FResp.*,Isnull(FDoc.Autorizacion,'RECHAZADO') As CodAutorizacion" & vbCrLf &
+                        "From " & _Global_BaseBk & "Zw_Fincred_TramaRespuesta FResp" & vbCrLf &
+                        "Left Join " & _Global_BaseBk & "Zw_Fincred_Documentos FDoc On FResp.Id = FDoc.Id_TR" & vbCrLf &
+                        "Where (Idmaeedo = " & _Idmaeedo & ")"
+        Dim _RowFincred As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+        Dim _Codigo_negacion_transaccion = _RowFincred.Item("Codigo_negacion_transaccion")
+        Dim _Descripcion_negacion = _RowFincred.Item("Descripcion_negacion")
+        Dim _CodAutorizacion = _RowFincred.Item("CodAutorizacion")
+
+        If _Codigo_negacion_transaccion = 0 Then
+            MessageBoxEx.Show(Me, "Revisión de parte de FINCRED autorizada" & vbCrLf & vbCrLf &
+                              "Código autorización: " & _CodAutorizacion & vbCrLf &
+                              "Respuesta Fincred: " & _Descripcion_negacion, "Información FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return True
+        Else
+            MessageBoxEx.Show(Me, "Revisión de parte de FINCRED RECHAZADA" & vbCrLf & vbCrLf &
+                              "Respuesta Fincred: " & _Descripcion_negacion, "Información FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return False
+        End If
+
+
+
+        Dim _Fincred_Respuesta As New Fincred_API.Respuesta
+
+        _Fincred_Respuesta = Fx_Vaidar_Fincred(_Idmaeedo,
+                                               _RowMaeedo.Item("TIDO"),
+                                               _RowMaeedo.Item("NUDO"),
+                                               _RowEntidad.Item("Rut"),
+                                               _RowMaeedo.Item("VABRDO"),
+                                               _RowMaeedo.Item("FE01VEDO"),
+                                               _RowEntidad.Item("FOEN").ToString.Trim)
+
+        If _Fincred_Respuesta.EsCorrecto Then
+
+            MessageBoxEx.Show(Me, _Fincred_Respuesta.TramaRespuesta.descripcion_negacion & vbCrLf &
+                                  "Código de autorización: " & _Fincred_Respuesta.TramaRespuesta.documentos(0).autorizacion,
+                                  "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Else
+            MessageBoxEx.Show(Me, "Código de autorización: RECHAZADO" & vbCrLf &
+                              "Respuesta FINCRED: " & _Fincred_Respuesta.MensajeError & vbCrLf & vbCrLf &
+                              "El documento debera seguir el conducto regular, se quitaran los plazos de vencimineto.",
+                              "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            Consulta_Sql = "Update MAEEDO Set FE01VEDO = FEEMDO,FEULVEDO = FEEMDO,NUVEDO = 1 Where IDMAEEDO = " & _Idmaeedo
+            _Sql.Ej_consulta_IDU(Consulta_Sql)
+
+            Return False
+
+        End If
+
+        Return True
+
+    End Function
+
 
     Private Sub Tiempo_Cerrar_Documentos_Automaticamente_Tick(sender As Object, e As EventArgs) Handles Tiempo_Cerrar_Documentos_Automaticamente.Tick
         Tiempo_Cerrar_Documentos_Automaticamente.Stop()
@@ -1568,5 +1766,9 @@ Public Class Frm_BuscarDocumento_Mt
 
         Next
 
+    End Sub
+
+    Private Sub Btn_GrabarHabilitarFacturar_Click(sender As Object, e As EventArgs) Handles Btn_GrabarHabilitarFacturar.Click
+        Sb_GrabarHabilitarNVVparaFacturar()
     End Sub
 End Class

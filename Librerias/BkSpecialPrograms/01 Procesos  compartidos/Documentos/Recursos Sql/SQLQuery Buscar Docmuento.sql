@@ -37,6 +37,7 @@ SELECT  Top #CantidadDoc#
 		VABRDO-VAABDO AS SALDO_ACTUAL,
 		VAABDO,
         Edo.TIDOELEC
+ Into #Paso
      FROM MAEEDO Edo WITH ( NOLOCK )    
 		Left Join TABSU Tsu On Edo.EMPRESA = Tsu.EMPRESA And Edo.SUDO = Tsu.KOSU 
 			Left Join MAEEN Mae1 On Edo.ENDO = Mae1.KOEN And Edo.SUENDO = Mae1.SUEN 
@@ -58,3 +59,8 @@ SELECT  Top #CantidadDoc#
              #ValesTransitorios#    -- AND NUDONODEFI In (0,1)
 
     #Orden#
+
+--#OtrasOpciones#
+
+Select * From #Paso
+Drop Table #Paso

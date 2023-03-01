@@ -283,5 +283,21 @@ Public Class Modulo_Programas_Especiales
 
     End Sub
 
+    Private Sub Btn_Habilitar_Nvv_Para_Facturar_Click(sender As Object, e As EventArgs) Handles Btn_Habilitar_Nvv_Para_Facturar.Click
+
+        'If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Doc00011") Then
+
+        Dim _Fm As New Frm_BusquedaDocumento_Filtro(False)
+        _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "NVV", "Where TIDO = 'NVV'")
+        _Fm.Rdb_Estado_Todos.Enabled = False
+        _Fm.Rdb_Estado_Vigente.Checked = True
+        _Fm.Rdb_Estado_Cerradas.Enabled = False
+        _Fm.HabilitarNVVParaFacturar = True
+        _Fm.ShowDialog(Me)
+        _Fm.Dispose()
+
+        'End If
+
+    End Sub
 
 End Class

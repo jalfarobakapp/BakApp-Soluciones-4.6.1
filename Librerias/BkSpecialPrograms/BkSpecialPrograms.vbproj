@@ -7442,6 +7442,10 @@
     <None Include="Resources\bill-credit-card-printer - copia.png" />
     <None Include="Resources\bill-credit-card-save - copia.png" />
     <None Include="Resources\save-banknotes.png" />
+    <None Include="Resources\invoice-forbidden.png" />
+    <None Include="Resources\invoice-ok.png" />
+    <None Include="Resources\invoice-forbidden___copia.png" />
+    <None Include="Resources\invoice-ok___copia.png" />
     <Content Include="Resources\user_add.png" />
     <None Include="Resources\_Trans\_transport_ok.png" />
     <None Include="Resources\_Trans\_transport_lock.png" />

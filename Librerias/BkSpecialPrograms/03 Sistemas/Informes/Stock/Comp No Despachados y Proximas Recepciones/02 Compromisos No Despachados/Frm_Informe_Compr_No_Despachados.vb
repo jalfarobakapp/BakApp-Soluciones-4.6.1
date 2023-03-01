@@ -88,6 +88,10 @@ Public Class Frm_Informe_Compr_No_Despachados
         Dtp_Fecha_Recepcion_Desde.Value = _Fecha_Hoy
         Dtp_Fecha_Recepcion_Hasta.Value = _Fecha_Hoy
 
+        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+            Rdb_NVV.Text = "Notas de venta (NVV) Solo Habilitadas"
+        End If
+
     End Sub
 
     Function Fx_Filtros_Productos() As String
@@ -250,6 +254,11 @@ Public Class Frm_Informe_Compr_No_Despachados
             _Filtro_Documentos = "AND ED.TIDO='NCV'" & vbCrLf
         ElseIf Rdb_NVV.Checked Then
             _Filtro_Documentos = "AND ED.TIDO='NVV'" & vbCrLf
+
+            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+                _Filtro_Documentos += "AND ED.IDMAEEDO In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Docu_Ent Where HabilitadaFac = 1)" & vbCrLf
+            End If
+
         ElseIf Rdb_NVI.Checked Then
             _Filtro_Documentos = "AND ED.TIDO='NVI'" & vbCrLf
         ElseIf Rdb_COV.Checked Then
@@ -297,6 +306,7 @@ Public Class Frm_Informe_Compr_No_Despachados
         Me.Cursor = Cursors.WaitCursor
         Me.Enabled = False
 
+
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
             _Informe_Generado = True
@@ -308,6 +318,15 @@ Public Class Frm_Informe_Compr_No_Despachados
                 Return
             End If
 
+            Me.Cursor = Cursors.Default
+            Me.Enabled = True
+
+            _Reg = _Sql.Fx_Cuenta_Registros(_Tabla_Paso)
+
+            If Not CBool(_Reg) Then
+                MessageBoxEx.Show(Me, "No existen datos que mostrar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
 
             Dim Fm As New Frm_Informe_Prox_Recep_Y_Comp_No_Desp(Frm_Informe_Prox_Recep_Y_Comp_No_Desp.Enum_Informe_Padre.Informe_Compromisos_No_Despachados,
                                                     Frm_Informe_Prox_Recep_Y_Comp_No_Desp.Enum_Informe.Sucursal,
@@ -317,10 +336,6 @@ Public Class Frm_Informe_Compr_No_Despachados
             Fm.Dispose()
 
         End If
-
-        Me.Cursor = Cursors.Default
-        Me.Enabled = True
-
 
     End Sub
 

@@ -5553,5 +5553,64 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
+    Function Fx_Vaidar_Fincred(_Idmaeedo As Integer,
+                               _Tido As String,
+                               _Nudo As String,
+                               _vRut_girador As String,
+                               _vMonto_total_venta As Double,
+                               _vFec_primer_venc As Date,
+                               _vNum_telefono As String) As Fincred_API.Respuesta
+
+        Dim _Respuesta As New Fincred_API.Respuesta
+
+        '_Row_Encabezado_Doc = _TblEncabezado.Rows(0)
+
+        Dim _Rut_girador As String = _vRut_girador '_RowEntidad.Item("Rut")
+
+        _Rut_girador = Replace(_Rut_girador, "-", "")
+        _Rut_girador = Replace(_Rut_girador, ".", "")
+
+        Dim Generator As System.Random = New System.Random()
+
+        Dim _Rut_comprador As String
+        Dim _Numero_transaccion_cliente As Integer = Generator.Next(10000, 99999)
+        Dim _Numero_documento_transaccion As String = "XXXXXXXXX"
+        Dim _Producto As Cl_Fincred_Bakapp.Cl_Fincred_SQL.Producto = Cl_Fincred_Bakapp.Cl_Fincred_SQL.Producto.Facturas
+        Dim _Banco As Integer = 0
+        Dim _Monto_total_venta As Double = _vMonto_total_venta '_Row_Encabezado_Doc.Item("TotalBrutoDoc")
+        Dim _Cantidad_documentos_venta As Integer = 1
+        Dim _Num_primer_doc As Integer = _Numero_transaccion_cliente
+        Dim _Fec_primer_venc As String = Format(_vFec_primer_venc, "ddMMyyyy")
+        Dim _Num_telefono As String = _vNum_telefono '_RowEntidad.Item("FOEN").ToString.Trim
+
+        Dim _ProductoV = _Producto + 1
+
+        '_Rut_girador = "118549252" ' APROBACION DE PRUEBAS
+        '_Rut_girador = "094005051" ' NEGACION DE PRUEBAS
+
+        _Rut_comprador = _Rut_girador
+
+        Dim _Fincred_Id_Token = _Global_Row_Configuracion_Estacion.Item("Fincred_Id_Token")
+
+        Dim _Fincred As New Cl_Fincred_Bakapp.Cl_Fincred_SQL(_Fincred_Id_Token)
+        _Fincred.Fx_Generar_Consulta(_Rut_girador,
+                                     _Rut_comprador,
+                                     _Numero_transaccion_cliente,
+                                     _Numero_documento_transaccion,
+                                     _ProductoV,
+                                     _Banco,
+                                     _Monto_total_venta,
+                                     _Cantidad_documentos_venta,
+                                     _Num_primer_doc,
+                                     _Fec_primer_venc,
+                                     _Num_telefono,
+                                     _Idmaeedo,
+                                     _Tido,
+                                     _Nudo)
+
+        Return _Fincred.Respuesta
+
+    End Function
+
 End Module
 

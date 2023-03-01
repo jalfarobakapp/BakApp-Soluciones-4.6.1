@@ -23,14 +23,110 @@ Partial Class Frm_Ver_Documento
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Ver_Documento))
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
+        Me.CircularProgressItem1 = New DevComponents.DotNetBar.CircularProgressItem()
+        Me.GrillaDetalleDoc = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Lbl_Totaliza_Cantidades = New DevComponents.DotNetBar.LabelX()
+        Me.LblDescripcion = New DevComponents.DotNetBar.LabelX()
+        Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
+        Me.Menu_Contextual_Productos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Lbl_OpcProducto = New DevComponents.DotNetBar.LabelItem()
+        Me.Lbl_Documento_Origen = New DevComponents.DotNetBar.LabelItem()
+        Me.Menu_Contextual_Encabezado = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_Bodega = New DevComponents.DotNetBar.ButtonItem()
+        Me.Lbl_Bodega = New DevComponents.DotNetBar.LabelItem()
+        Me.Menu_Contextual_Vendedor = New DevComponents.DotNetBar.ButtonItem()
+        Me.Lbl_Vendedor = New DevComponents.DotNetBar.LabelItem()
+        Me.Menu_Contextual_Correo = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_Imprimir_Vista_Previa = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_DTE = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_Info_Entidad = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
+        Me.LabelItem4 = New DevComponents.DotNetBar.LabelItem()
+        Me.LabelItem5 = New DevComponents.DotNetBar.LabelItem()
+        Me.Menu_Contextual_Eliminar_Anular = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
+        Me.LabelItem6 = New DevComponents.DotNetBar.LabelItem()
+        Me.Menu_Contextual_DTE_Hefesto = New DevComponents.DotNetBar.ButtonItem()
+        Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.LblTotalNeto = New DevComponents.DotNetBar.LabelX()
+        Me.GroupPanel5 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.LblTotalIva = New DevComponents.DotNetBar.LabelX()
+        Me.GroupPanel6 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.LblTotalBruto = New DevComponents.DotNetBar.LabelX()
+        Me.GroupPanel7 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.LblTotalImpuestos = New DevComponents.DotNetBar.LabelX()
+        Me.GroupPanel13 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Lbl_Responsable = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_Nombre_Entidad_Fisica = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_Nombre_Entidad = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
+        Me.GrillaEncabezado = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.LblTotalAbonado = New DevComponents.DotNetBar.LabelX()
+        Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.LblTotalSaldo = New DevComponents.DotNetBar.LabelX()
+        Me.ImageList_24x24 = New System.Windows.Forms.ImageList(Me.components)
+        Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
+        Me.MStb_Barra = New DevComponents.DotNetBar.Metro.MetroStatusBar()
+        Me.Panel_Documento = New System.Windows.Forms.Panel()
+        Me.ImageList_16x16 = New System.Windows.Forms.ImageList(Me.components)
+        Me.Imagenes_32x32 = New System.Windows.Forms.ImageList(Me.components)
+        Me.Btn_Ver_Pagos = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_VerEntidad = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_VerEntidadFisica = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_Estadisticas_Producto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Observacione_linea_documento = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Anotaciones_a_la_linea = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Consolidar_Stock_X_Producto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Ver_Prod_Asociados_Recargo = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Ver_documento_origen = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Ver_Entidad = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Ver_Vencimientos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Cambiar_Nro_Documento = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Copiar_Encabezado = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Correo_Outlook = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Correo_Diablito = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Imprimir = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Imprimir_Formato_Modalidad = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Imprimir_Otros_Formatos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Imprimir_Diablito = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Vista_Previa = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Vista_Previa_Formato_Modalidad = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Vista_Previa_Otros_Formatos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Imprimir_PDF = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Imprimir_PDF_Formato_Modalidad = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Imprimir_PDF_Otros_Formatos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_GuardarRutaPDFAutomatica = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_VerXMLPDF = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Firmar_Documento_DTE = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Reenvio_Correo_DTE = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Exportar_XML = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Ficha_Entidad = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Ver_Situacion_Cliente = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Info_Plana_Entidad = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Ver_Comportamiento_De_Pago = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Ver_Documentos_Pendientes = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Ver_Cheques_En_Cartera = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Ver_Deuda_Total = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Eliminar_Reciclar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Eliminar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Anular_Reciclar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Anular = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Firmar_Documento_DTE_Hefesto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Reenvio_Correo_DTE_Hefesto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Exportar_XML_Hefesto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Grabar_Documentos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Observaciones = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Anotaciones_al_documento = New DevComponents.DotNetBar.ButtonItem()
@@ -47,104 +143,9 @@ Partial Class Frm_Ver_Documento
         Me.Btn_Consolidar_Stock = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar_Anular = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_CopiarDocOtrEmpresa = New DevComponents.DotNetBar.ButtonItem()
-        Me.CircularProgressItem1 = New DevComponents.DotNetBar.CircularProgressItem()
         Me.Btn_InfFincred = New DevComponents.DotNetBar.ButtonItem()
-        Me.GrillaDetalleDoc = New DevComponents.DotNetBar.Controls.DataGridViewX()
-        Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Lbl_Totaliza_Cantidades = New DevComponents.DotNetBar.LabelX()
-        Me.LblDescripcion = New DevComponents.DotNetBar.LabelX()
-        Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
-        Me.Menu_Contextual_Productos = New DevComponents.DotNetBar.ButtonItem()
-        Me.Lbl_OpcProducto = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_Estadisticas_Producto = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Observacione_linea_documento = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Anotaciones_a_la_linea = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Consolidar_Stock_X_Producto = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Ver_Prod_Asociados_Recargo = New DevComponents.DotNetBar.ButtonItem()
-        Me.Lbl_Documento_Origen = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_Ver_documento_origen = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Menu_Contextual_Encabezado = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Ver_Entidad = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Ver_Vencimientos = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Cambiar_Nro_Documento = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Copiar_Encabezado = New DevComponents.DotNetBar.ButtonItem()
-        Me.Menu_Contextual_Bodega = New DevComponents.DotNetBar.ButtonItem()
-        Me.Lbl_Bodega = New DevComponents.DotNetBar.LabelItem()
-        Me.Menu_Contextual_Vendedor = New DevComponents.DotNetBar.ButtonItem()
-        Me.Lbl_Vendedor = New DevComponents.DotNetBar.LabelItem()
-        Me.Menu_Contextual_Correo = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Correo_Outlook = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Correo_Diablito = New DevComponents.DotNetBar.ButtonItem()
-        Me.Menu_Contextual_Imprimir_Vista_Previa = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_Imprimir = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_Imprimir_Formato_Modalidad = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_Imprimir_Otros_Formatos = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Imprimir_Diablito = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_Vista_Previa = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_Vista_Previa_Formato_Modalidad = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_Vista_Previa_Otros_Formatos = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_Imprimir_PDF = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_Imprimir_PDF_Formato_Modalidad = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_Imprimir_PDF_Otros_Formatos = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_GuardarRutaPDFAutomatica = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_VerXMLPDF = New DevComponents.DotNetBar.ButtonItem()
-        Me.Menu_Contextual_DTE = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_Firmar_Documento_DTE = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_Reenvio_Correo_DTE = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_Exportar_XML = New DevComponents.DotNetBar.ButtonItem()
-        Me.Menu_Contextual_Info_Entidad = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_Mnu_Ficha_Entidad = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Ver_Situacion_Cliente = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Info_Plana_Entidad = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem4 = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_Ver_Comportamiento_De_Pago = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem5 = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_Ver_Documentos_Pendientes = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Ver_Cheques_En_Cartera = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Ver_Deuda_Total = New DevComponents.DotNetBar.ButtonItem()
-        Me.Menu_Contextual_Eliminar_Anular = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_Mnu_Eliminar_Reciclar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_Eliminar = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem6 = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_Mnu_Anular_Reciclar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_Anular = New DevComponents.DotNetBar.ButtonItem()
-        Me.Menu_Contextual_DTE_Hefesto = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_Firmar_Documento_DTE_Hefesto = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_Reenvio_Correo_DTE_Hefesto = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_Exportar_XML_Hefesto = New DevComponents.DotNetBar.ButtonItem()
-        Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.LblTotalNeto = New DevComponents.DotNetBar.LabelX()
-        Me.GroupPanel5 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.LblTotalIva = New DevComponents.DotNetBar.LabelX()
-        Me.GroupPanel6 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.LblTotalBruto = New DevComponents.DotNetBar.LabelX()
-        Me.GroupPanel7 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.LblTotalImpuestos = New DevComponents.DotNetBar.LabelX()
-        Me.GroupPanel13 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Lbl_Responsable = New DevComponents.DotNetBar.LabelX()
-        Me.Lbl_Nombre_Entidad_Fisica = New DevComponents.DotNetBar.LabelX()
-        Me.Lbl_Nombre_Entidad = New DevComponents.DotNetBar.LabelX()
-        Me.Btn_VerEntidad = New DevComponents.DotNetBar.ButtonX()
-        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
-        Me.Btn_VerEntidadFisica = New DevComponents.DotNetBar.ButtonX()
-        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
-        Me.GrillaEncabezado = New DevComponents.DotNetBar.Controls.DataGridViewX()
-        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
-        Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Btn_Ver_Pagos = New DevComponents.DotNetBar.ButtonX()
-        Me.LblTotalAbonado = New DevComponents.DotNetBar.LabelX()
-        Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.LblTotalSaldo = New DevComponents.DotNetBar.LabelX()
-        Me.ImageList_24x24 = New System.Windows.Forms.ImageList(Me.components)
-        Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
-        Me.MStb_Barra = New DevComponents.DotNetBar.Metro.MetroStatusBar()
+        Me.Btn_HabilitarFacturacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Lbl_Tido = New DevComponents.DotNetBar.LabelItem()
-        Me.Panel_Documento = New System.Windows.Forms.Panel()
-        Me.ImageList_16x16 = New System.Windows.Forms.ImageList(Me.components)
-        Me.Imagenes_32x32 = New System.Windows.Forms.ImageList(Me.components)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GrillaDetalleDoc, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
@@ -164,7 +165,7 @@ Partial Class Frm_Ver_Documento
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_Documentos, Me.Btn_Observaciones, Me.Btn_Anotaciones_al_documento, Me.Btn_Enviar_documento_por_correo, Me.Btn_Traza_Documento, Me.Btn_Archivos_Adjuntos, Me.Btn_Marcar_Baja_Rotacion, Me.Btn_Imprimir_Documento, Me.Btn_Cierre_Reactivacion_Documento, Me.Btn_Firmar_Documento_DTE, Me.Btn_Revisar_Situacion_Comercial, Me.Btn_Permisos_Asociados, Me.Btn_Ver_Orden_de_despacho, Me.Btn_Consolidar_Stock, Me.Btn_Eliminar_Anular, Me.Btn_CopiarDocOtrEmpresa, Me.Btn_InfFincred, Me.CircularProgressItem1})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_Documentos, Me.Btn_Observaciones, Me.Btn_Anotaciones_al_documento, Me.Btn_Enviar_documento_por_correo, Me.Btn_Traza_Documento, Me.Btn_Archivos_Adjuntos, Me.Btn_Marcar_Baja_Rotacion, Me.Btn_Imprimir_Documento, Me.Btn_Cierre_Reactivacion_Documento, Me.Btn_Firmar_Documento_DTE, Me.Btn_Revisar_Situacion_Comercial, Me.Btn_Permisos_Asociados, Me.Btn_Ver_Orden_de_despacho, Me.Btn_Consolidar_Stock, Me.Btn_Eliminar_Anular, Me.Btn_CopiarDocOtrEmpresa, Me.Btn_InfFincred, Me.CircularProgressItem1, Me.Btn_HabilitarFacturacion})
         Me.Bar2.Location = New System.Drawing.Point(0, 492)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(873, 41)
@@ -174,201 +175,45 @@ Partial Class Frm_Ver_Documento
         Me.Bar2.TabStop = False
         Me.Bar2.Text = "Bar2"
         '
-        'Btn_Grabar_Documentos
-        '
-        Me.Btn_Grabar_Documentos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Grabar_Documentos.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Grabar_Documentos.Image = CType(resources.GetObject("Btn_Grabar_Documentos.Image"), System.Drawing.Image)
-        Me.Btn_Grabar_Documentos.ImageAlt = CType(resources.GetObject("Btn_Grabar_Documentos.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Grabar_Documentos.Name = "Btn_Grabar_Documentos"
-        Me.Btn_Grabar_Documentos.Tooltip = "Grabar documento en el sistema"
-        '
-        'Btn_Observaciones
-        '
-        Me.Btn_Observaciones.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Observaciones.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Observaciones.Image = CType(resources.GetObject("Btn_Observaciones.Image"), System.Drawing.Image)
-        Me.Btn_Observaciones.ImageAlt = CType(resources.GetObject("Btn_Observaciones.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Observaciones.Name = "Btn_Observaciones"
-        Me.Btn_Observaciones.Tooltip = "Observaciones..."
-        '
-        'Btn_Anotaciones_al_documento
-        '
-        Me.Btn_Anotaciones_al_documento.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Anotaciones_al_documento.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Anotaciones_al_documento.Image = CType(resources.GetObject("Btn_Anotaciones_al_documento.Image"), System.Drawing.Image)
-        Me.Btn_Anotaciones_al_documento.ImageAlt = CType(resources.GetObject("Btn_Anotaciones_al_documento.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Anotaciones_al_documento.Name = "Btn_Anotaciones_al_documento"
-        Me.Btn_Anotaciones_al_documento.Tooltip = "Anotaciones, eventos o links asociados al documento"
-        '
-        'Btn_Enviar_documento_por_correo
-        '
-        Me.Btn_Enviar_documento_por_correo.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Enviar_documento_por_correo.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Enviar_documento_por_correo.Image = CType(resources.GetObject("Btn_Enviar_documento_por_correo.Image"), System.Drawing.Image)
-        Me.Btn_Enviar_documento_por_correo.ImageAlt = CType(resources.GetObject("Btn_Enviar_documento_por_correo.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Enviar_documento_por_correo.Name = "Btn_Enviar_documento_por_correo"
-        Me.Btn_Enviar_documento_por_correo.Tooltip = "Enviar documento por correo"
-        '
-        'Btn_Traza_Documento
-        '
-        Me.Btn_Traza_Documento.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Traza_Documento.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Traza_Documento.Image = CType(resources.GetObject("Btn_Traza_Documento.Image"), System.Drawing.Image)
-        Me.Btn_Traza_Documento.ImageAlt = CType(resources.GetObject("Btn_Traza_Documento.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Traza_Documento.Name = "Btn_Traza_Documento"
-        Me.Btn_Traza_Documento.Tooltip = "Revisar traza del documento"
-        '
-        'Btn_Archivos_Adjuntos
-        '
-        Me.Btn_Archivos_Adjuntos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Archivos_Adjuntos.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Archivos_Adjuntos.Image = CType(resources.GetObject("Btn_Archivos_Adjuntos.Image"), System.Drawing.Image)
-        Me.Btn_Archivos_Adjuntos.ImageAlt = CType(resources.GetObject("Btn_Archivos_Adjuntos.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Archivos_Adjuntos.Name = "Btn_Archivos_Adjuntos"
-        Me.Btn_Archivos_Adjuntos.Tooltip = "Archivos adjuntos al documento"
-        '
-        'Btn_Marcar_Baja_Rotacion
-        '
-        Me.Btn_Marcar_Baja_Rotacion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Marcar_Baja_Rotacion.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Marcar_Baja_Rotacion.Image = CType(resources.GetObject("Btn_Marcar_Baja_Rotacion.Image"), System.Drawing.Image)
-        Me.Btn_Marcar_Baja_Rotacion.ImageAlt = CType(resources.GetObject("Btn_Marcar_Baja_Rotacion.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Marcar_Baja_Rotacion.Name = "Btn_Marcar_Baja_Rotacion"
-        Me.Btn_Marcar_Baja_Rotacion.Tooltip = "Marcar productos con baja rotación"
-        Me.Btn_Marcar_Baja_Rotacion.Visible = False
-        '
-        'Btn_Imprimir_Documento
-        '
-        Me.Btn_Imprimir_Documento.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Imprimir_Documento.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Imprimir_Documento.Image = CType(resources.GetObject("Btn_Imprimir_Documento.Image"), System.Drawing.Image)
-        Me.Btn_Imprimir_Documento.ImageAlt = CType(resources.GetObject("Btn_Imprimir_Documento.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Imprimir_Documento.Name = "Btn_Imprimir_Documento"
-        Me.Btn_Imprimir_Documento.Tooltip = "Imprimir documento"
-        '
-        'Btn_Cierre_Reactivacion_Documento
-        '
-        Me.Btn_Cierre_Reactivacion_Documento.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Cierre_Reactivacion_Documento.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Cierre_Reactivacion_Documento.Image = CType(resources.GetObject("Btn_Cierre_Reactivacion_Documento.Image"), System.Drawing.Image)
-        Me.Btn_Cierre_Reactivacion_Documento.ImageAlt = CType(resources.GetObject("Btn_Cierre_Reactivacion_Documento.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Cierre_Reactivacion_Documento.Name = "Btn_Cierre_Reactivacion_Documento"
-        Me.Btn_Cierre_Reactivacion_Documento.Tooltip = "Cierre o reactivación de documento"
-        '
-        'Btn_Firmar_Documento_DTE
-        '
-        Me.Btn_Firmar_Documento_DTE.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Firmar_Documento_DTE.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Firmar_Documento_DTE.Image = CType(resources.GetObject("Btn_Firmar_Documento_DTE.Image"), System.Drawing.Image)
-        Me.Btn_Firmar_Documento_DTE.ImageAlt = CType(resources.GetObject("Btn_Firmar_Documento_DTE.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Firmar_Documento_DTE.Name = "Btn_Firmar_Documento_DTE"
-        Me.Btn_Firmar_Documento_DTE.Tooltip = "Firmar documento DTE"
-        '
-        'Btn_Revisar_Situacion_Comercial
-        '
-        Me.Btn_Revisar_Situacion_Comercial.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Revisar_Situacion_Comercial.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Revisar_Situacion_Comercial.Image = CType(resources.GetObject("Btn_Revisar_Situacion_Comercial.Image"), System.Drawing.Image)
-        Me.Btn_Revisar_Situacion_Comercial.ImageAlt = CType(resources.GetObject("Btn_Revisar_Situacion_Comercial.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Revisar_Situacion_Comercial.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Revisar_Situacion_Comercial.Name = "Btn_Revisar_Situacion_Comercial"
-        Me.Btn_Revisar_Situacion_Comercial.Tooltip = "Revisar situación conmercial del documento"
-        Me.Btn_Revisar_Situacion_Comercial.Visible = False
-        '
-        'Btn_Permisos_Asociados
-        '
-        Me.Btn_Permisos_Asociados.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Permisos_Asociados.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Permisos_Asociados.Image = CType(resources.GetObject("Btn_Permisos_Asociados.Image"), System.Drawing.Image)
-        Me.Btn_Permisos_Asociados.ImageAlt = CType(resources.GetObject("Btn_Permisos_Asociados.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Permisos_Asociados.Name = "Btn_Permisos_Asociados"
-        Me.Btn_Permisos_Asociados.Tooltip = "Permisos asociados al documento"
-        '
-        'Btn_Ver_Orden_de_despacho
-        '
-        Me.Btn_Ver_Orden_de_despacho.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Ver_Orden_de_despacho.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Ver_Orden_de_despacho.Image = CType(resources.GetObject("Btn_Ver_Orden_de_despacho.Image"), System.Drawing.Image)
-        Me.Btn_Ver_Orden_de_despacho.ImageAlt = CType(resources.GetObject("Btn_Ver_Orden_de_despacho.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Ver_Orden_de_despacho.Name = "Btn_Ver_Orden_de_despacho"
-        Me.Btn_Ver_Orden_de_despacho.Tooltip = "Ver orden de despacho"
-        '
-        'Btn_Consolidar_Stock
-        '
-        Me.Btn_Consolidar_Stock.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Consolidar_Stock.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Consolidar_Stock.Image = CType(resources.GetObject("Btn_Consolidar_Stock.Image"), System.Drawing.Image)
-        Me.Btn_Consolidar_Stock.ImageAlt = CType(resources.GetObject("Btn_Consolidar_Stock.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Consolidar_Stock.Name = "Btn_Consolidar_Stock"
-        Me.Btn_Consolidar_Stock.Tooltip = "Consolidar stock de los productos"
-        '
-        'Btn_Eliminar_Anular
-        '
-        Me.Btn_Eliminar_Anular.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Eliminar_Anular.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Eliminar_Anular.Image = CType(resources.GetObject("Btn_Eliminar_Anular.Image"), System.Drawing.Image)
-        Me.Btn_Eliminar_Anular.ImageAlt = CType(resources.GetObject("Btn_Eliminar_Anular.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Eliminar_Anular.Name = "Btn_Eliminar_Anular"
-        Me.Btn_Eliminar_Anular.Tooltip = "Eliminar o Anular documento"
-        Me.Btn_Eliminar_Anular.Visible = False
-        '
-        'Btn_CopiarDocOtrEmpresa
-        '
-        Me.Btn_CopiarDocOtrEmpresa.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_CopiarDocOtrEmpresa.ForeColor = System.Drawing.Color.Black
-        Me.Btn_CopiarDocOtrEmpresa.Image = CType(resources.GetObject("Btn_CopiarDocOtrEmpresa.Image"), System.Drawing.Image)
-        Me.Btn_CopiarDocOtrEmpresa.Name = "Btn_CopiarDocOtrEmpresa"
-        Me.Btn_CopiarDocOtrEmpresa.Tooltip = "Exportar documento a otra base de datos"
-        '
         'CircularProgressItem1
         '
         Me.CircularProgressItem1.Name = "CircularProgressItem1"
-        '
-        'Btn_InfFincred
-        '
-        Me.Btn_InfFincred.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_InfFincred.ForeColor = System.Drawing.Color.Black
-        Me.Btn_InfFincred.Image = CType(resources.GetObject("Btn_InfFincred.Image"), System.Drawing.Image)
-        Me.Btn_InfFincred.Name = "Btn_InfFincred"
-        Me.Btn_InfFincred.Tooltip = "Ver respuesta FINCRED Pays"
-        Me.Btn_InfFincred.Visible = False
         '
         'GrillaDetalleDoc
         '
         Me.GrillaDetalleDoc.AllowUserToAddRows = False
         Me.GrillaDetalleDoc.AllowUserToDeleteRows = False
         Me.GrillaDetalleDoc.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.GrillaDetalleDoc.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.GrillaDetalleDoc.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.GrillaDetalleDoc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.GrillaDetalleDoc.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.GrillaDetalleDoc.DefaultCellStyle = DataGridViewCellStyle2
         Me.GrillaDetalleDoc.EnableHeadersVisualStyles = False
         Me.GrillaDetalleDoc.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.GrillaDetalleDoc.Location = New System.Drawing.Point(0, 0)
         Me.GrillaDetalleDoc.Name = "GrillaDetalleDoc"
         Me.GrillaDetalleDoc.ReadOnly = True
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.GrillaDetalleDoc.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.GrillaDetalleDoc.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.GrillaDetalleDoc.Size = New System.Drawing.Size(848, 205)
         Me.GrillaDetalleDoc.StandardTab = True
         Me.GrillaDetalleDoc.TabIndex = 27
@@ -425,9 +270,9 @@ Partial Class Frm_Ver_Documento
         Me.Lbl_Totaliza_Cantidades.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Totaliza_Cantidades.Font = New System.Drawing.Font("Courier New", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Lbl_Totaliza_Cantidades.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Totaliza_Cantidades.Location = New System.Drawing.Point(226, 242)
+        Me.Lbl_Totaliza_Cantidades.Location = New System.Drawing.Point(235, 242)
         Me.Lbl_Totaliza_Cantidades.Name = "Lbl_Totaliza_Cantidades"
-        Me.Lbl_Totaliza_Cantidades.Size = New System.Drawing.Size(622, 23)
+        Me.Lbl_Totaliza_Cantidades.Size = New System.Drawing.Size(613, 23)
         Me.Lbl_Totaliza_Cantidades.TabIndex = 97
         Me.Lbl_Totaliza_Cantidades.Text = "."
         Me.Lbl_Totaliza_Cantidades.TextAlignment = System.Drawing.StringAlignment.Far
@@ -482,41 +327,6 @@ Partial Class Frm_Ver_Documento
         Me.Lbl_OpcProducto.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
         Me.Lbl_OpcProducto.Text = "Opciones del producto"
         '
-        'Btn_Estadisticas_Producto
-        '
-        Me.Btn_Estadisticas_Producto.Image = CType(resources.GetObject("Btn_Estadisticas_Producto.Image"), System.Drawing.Image)
-        Me.Btn_Estadisticas_Producto.ImageAlt = CType(resources.GetObject("Btn_Estadisticas_Producto.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Estadisticas_Producto.Name = "Btn_Estadisticas_Producto"
-        Me.Btn_Estadisticas_Producto.Text = "Ver estadísticas del producto/información adicional"
-        '
-        'Btn_Observacione_linea_documento
-        '
-        Me.Btn_Observacione_linea_documento.Image = CType(resources.GetObject("Btn_Observacione_linea_documento.Image"), System.Drawing.Image)
-        Me.Btn_Observacione_linea_documento.ImageAlt = CType(resources.GetObject("Btn_Observacione_linea_documento.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Observacione_linea_documento.Name = "Btn_Observacione_linea_documento"
-        Me.Btn_Observacione_linea_documento.Text = "Observaciones en la línea del documento"
-        '
-        'Btn_Anotaciones_a_la_linea
-        '
-        Me.Btn_Anotaciones_a_la_linea.Image = CType(resources.GetObject("Btn_Anotaciones_a_la_linea.Image"), System.Drawing.Image)
-        Me.Btn_Anotaciones_a_la_linea.ImageAlt = CType(resources.GetObject("Btn_Anotaciones_a_la_linea.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Anotaciones_a_la_linea.Name = "Btn_Anotaciones_a_la_linea"
-        Me.Btn_Anotaciones_a_la_linea.Text = "Anotaciones, eventos o links asociados a la línea del documento"
-        '
-        'Btn_Consolidar_Stock_X_Producto
-        '
-        Me.Btn_Consolidar_Stock_X_Producto.Image = CType(resources.GetObject("Btn_Consolidar_Stock_X_Producto.Image"), System.Drawing.Image)
-        Me.Btn_Consolidar_Stock_X_Producto.ImageAlt = CType(resources.GetObject("Btn_Consolidar_Stock_X_Producto.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Consolidar_Stock_X_Producto.Name = "Btn_Consolidar_Stock_X_Producto"
-        Me.Btn_Consolidar_Stock_X_Producto.Text = "Consolidar stock del producto"
-        '
-        'Btn_Ver_Prod_Asociados_Recargo
-        '
-        Me.Btn_Ver_Prod_Asociados_Recargo.Image = CType(resources.GetObject("Btn_Ver_Prod_Asociados_Recargo.Image"), System.Drawing.Image)
-        Me.Btn_Ver_Prod_Asociados_Recargo.ImageAlt = CType(resources.GetObject("Btn_Ver_Prod_Asociados_Recargo.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Ver_Prod_Asociados_Recargo.Name = "Btn_Ver_Prod_Asociados_Recargo"
-        Me.Btn_Ver_Prod_Asociados_Recargo.Text = "Ver documentos asociados al recargo"
-        '
         'Lbl_Documento_Origen
         '
         Me.Lbl_Documento_Origen.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
@@ -530,54 +340,12 @@ Partial Class Frm_Ver_Documento
         Me.Lbl_Documento_Origen.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
         Me.Lbl_Documento_Origen.Text = "Documento de origen"
         '
-        'Btn_Ver_documento_origen
-        '
-        Me.Btn_Ver_documento_origen.Image = CType(resources.GetObject("Btn_Ver_documento_origen.Image"), System.Drawing.Image)
-        Me.Btn_Ver_documento_origen.ImageAlt = CType(resources.GetObject("Btn_Ver_documento_origen.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Ver_documento_origen.Name = "Btn_Ver_documento_origen"
-        Me.Btn_Ver_documento_origen.Text = "Ver documento de origen"
-        '
-        'Btn_Copiar
-        '
-        Me.Btn_Copiar.Image = CType(resources.GetObject("Btn_Copiar.Image"), System.Drawing.Image)
-        Me.Btn_Copiar.ImageAlt = CType(resources.GetObject("Btn_Copiar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Copiar.Name = "Btn_Copiar"
-        Me.Btn_Copiar.Text = "Copiar (portapapeles)"
-        '
         'Menu_Contextual_Encabezado
         '
         Me.Menu_Contextual_Encabezado.AutoExpandOnClick = True
         Me.Menu_Contextual_Encabezado.Name = "Menu_Contextual_Encabezado"
         Me.Menu_Contextual_Encabezado.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Ver_Entidad, Me.Btn_Ver_Vencimientos, Me.Btn_Cambiar_Nro_Documento, Me.Btn_Copiar_Encabezado})
         Me.Menu_Contextual_Encabezado.Text = "Opciones encabezado"
-        '
-        'Btn_Ver_Entidad
-        '
-        Me.Btn_Ver_Entidad.Image = CType(resources.GetObject("Btn_Ver_Entidad.Image"), System.Drawing.Image)
-        Me.Btn_Ver_Entidad.ImageAlt = CType(resources.GetObject("Btn_Ver_Entidad.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Ver_Entidad.Name = "Btn_Ver_Entidad"
-        Me.Btn_Ver_Entidad.Text = "Ver datos Entidad"
-        '
-        'Btn_Ver_Vencimientos
-        '
-        Me.Btn_Ver_Vencimientos.Image = CType(resources.GetObject("Btn_Ver_Vencimientos.Image"), System.Drawing.Image)
-        Me.Btn_Ver_Vencimientos.ImageAlt = CType(resources.GetObject("Btn_Ver_Vencimientos.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Ver_Vencimientos.Name = "Btn_Ver_Vencimientos"
-        Me.Btn_Ver_Vencimientos.Text = "Ver vencimientos"
-        '
-        'Btn_Cambiar_Nro_Documento
-        '
-        Me.Btn_Cambiar_Nro_Documento.Image = CType(resources.GetObject("Btn_Cambiar_Nro_Documento.Image"), System.Drawing.Image)
-        Me.Btn_Cambiar_Nro_Documento.ImageAlt = CType(resources.GetObject("Btn_Cambiar_Nro_Documento.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Cambiar_Nro_Documento.Name = "Btn_Cambiar_Nro_Documento"
-        Me.Btn_Cambiar_Nro_Documento.Text = "Cambiar número de documento"
-        '
-        'Btn_Copiar_Encabezado
-        '
-        Me.Btn_Copiar_Encabezado.Image = CType(resources.GetObject("Btn_Copiar_Encabezado.Image"), System.Drawing.Image)
-        Me.Btn_Copiar_Encabezado.ImageAlt = CType(resources.GetObject("Btn_Copiar_Encabezado.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Copiar_Encabezado.Name = "Btn_Copiar_Encabezado"
-        Me.Btn_Copiar_Encabezado.Text = "Copiar (portapapeles)"
         '
         'Menu_Contextual_Bodega
         '
@@ -626,19 +394,6 @@ Partial Class Frm_Ver_Documento
         Me.Menu_Contextual_Correo.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Correo_Outlook, Me.Btn_Correo_Diablito})
         Me.Menu_Contextual_Correo.Text = "Opciones correo"
         '
-        'Btn_Correo_Outlook
-        '
-        Me.Btn_Correo_Outlook.Image = CType(resources.GetObject("Btn_Correo_Outlook.Image"), System.Drawing.Image)
-        Me.Btn_Correo_Outlook.Name = "Btn_Correo_Outlook"
-        Me.Btn_Correo_Outlook.Text = "Armar correo solo para Outlook"
-        '
-        'Btn_Correo_Diablito
-        '
-        Me.Btn_Correo_Diablito.Image = CType(resources.GetObject("Btn_Correo_Diablito.Image"), System.Drawing.Image)
-        Me.Btn_Correo_Diablito.ImageAlt = CType(resources.GetObject("Btn_Correo_Diablito.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Correo_Diablito.Name = "Btn_Correo_Diablito"
-        Me.Btn_Correo_Diablito.Text = "Enviar por correo (desde diablito)"
-        '
         'Menu_Contextual_Imprimir_Vista_Previa
         '
         Me.Menu_Contextual_Imprimir_Vista_Previa.AutoExpandOnClick = True
@@ -646,120 +401,12 @@ Partial Class Frm_Ver_Documento
         Me.Menu_Contextual_Imprimir_Vista_Previa.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_Imprimir, Me.Btn_Mnu_Vista_Previa, Me.Btn_Mnu_Imprimir_PDF})
         Me.Menu_Contextual_Imprimir_Vista_Previa.Text = "Imprimir Vista previa"
         '
-        'Btn_Mnu_Imprimir
-        '
-        Me.Btn_Mnu_Imprimir.Image = CType(resources.GetObject("Btn_Mnu_Imprimir.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Imprimir.ImageAlt = CType(resources.GetObject("Btn_Mnu_Imprimir.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Imprimir.Name = "Btn_Mnu_Imprimir"
-        Me.Btn_Mnu_Imprimir.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_Imprimir_Formato_Modalidad, Me.Btn_Mnu_Imprimir_Otros_Formatos, Me.Btn_Imprimir_Diablito})
-        Me.Btn_Mnu_Imprimir.Text = "Imprimir documento"
-        '
-        'Btn_Mnu_Imprimir_Formato_Modalidad
-        '
-        Me.Btn_Mnu_Imprimir_Formato_Modalidad.Image = CType(resources.GetObject("Btn_Mnu_Imprimir_Formato_Modalidad.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Imprimir_Formato_Modalidad.ImageAlt = CType(resources.GetObject("Btn_Mnu_Imprimir_Formato_Modalidad.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Imprimir_Formato_Modalidad.Name = "Btn_Mnu_Imprimir_Formato_Modalidad"
-        Me.Btn_Mnu_Imprimir_Formato_Modalidad.Text = "Imprimir en formato de la modalidad"
-        '
-        'Btn_Mnu_Imprimir_Otros_Formatos
-        '
-        Me.Btn_Mnu_Imprimir_Otros_Formatos.Image = CType(resources.GetObject("Btn_Mnu_Imprimir_Otros_Formatos.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Imprimir_Otros_Formatos.ImageAlt = CType(resources.GetObject("Btn_Mnu_Imprimir_Otros_Formatos.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Imprimir_Otros_Formatos.Name = "Btn_Mnu_Imprimir_Otros_Formatos"
-        Me.Btn_Mnu_Imprimir_Otros_Formatos.Text = "Imprimir en otro formato"
-        '
-        'Btn_Imprimir_Diablito
-        '
-        Me.Btn_Imprimir_Diablito.Image = CType(resources.GetObject("Btn_Imprimir_Diablito.Image"), System.Drawing.Image)
-        Me.Btn_Imprimir_Diablito.ImageAlt = CType(resources.GetObject("Btn_Imprimir_Diablito.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Imprimir_Diablito.Name = "Btn_Imprimir_Diablito"
-        Me.Btn_Imprimir_Diablito.Text = "Imprimir en diablito"
-        '
-        'Btn_Mnu_Vista_Previa
-        '
-        Me.Btn_Mnu_Vista_Previa.Image = CType(resources.GetObject("Btn_Mnu_Vista_Previa.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Vista_Previa.ImageAlt = CType(resources.GetObject("Btn_Mnu_Vista_Previa.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Vista_Previa.Name = "Btn_Mnu_Vista_Previa"
-        Me.Btn_Mnu_Vista_Previa.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_Vista_Previa_Formato_Modalidad, Me.Btn_Mnu_Vista_Previa_Otros_Formatos})
-        Me.Btn_Mnu_Vista_Previa.Text = "Vista previa"
-        '
-        'Btn_Mnu_Vista_Previa_Formato_Modalidad
-        '
-        Me.Btn_Mnu_Vista_Previa_Formato_Modalidad.Image = CType(resources.GetObject("Btn_Mnu_Vista_Previa_Formato_Modalidad.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Vista_Previa_Formato_Modalidad.ImageAlt = CType(resources.GetObject("Btn_Mnu_Vista_Previa_Formato_Modalidad.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Vista_Previa_Formato_Modalidad.Name = "Btn_Mnu_Vista_Previa_Formato_Modalidad"
-        Me.Btn_Mnu_Vista_Previa_Formato_Modalidad.Text = "Vista previa en formato de la modalidad"
-        '
-        'Btn_Mnu_Vista_Previa_Otros_Formatos
-        '
-        Me.Btn_Mnu_Vista_Previa_Otros_Formatos.Image = CType(resources.GetObject("Btn_Mnu_Vista_Previa_Otros_Formatos.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Vista_Previa_Otros_Formatos.ImageAlt = CType(resources.GetObject("Btn_Mnu_Vista_Previa_Otros_Formatos.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Vista_Previa_Otros_Formatos.Name = "Btn_Mnu_Vista_Previa_Otros_Formatos"
-        Me.Btn_Mnu_Vista_Previa_Otros_Formatos.Text = "Vista previa en otro formato"
-        '
-        'Btn_Mnu_Imprimir_PDF
-        '
-        Me.Btn_Mnu_Imprimir_PDF.Image = CType(resources.GetObject("Btn_Mnu_Imprimir_PDF.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Imprimir_PDF.ImageAlt = CType(resources.GetObject("Btn_Mnu_Imprimir_PDF.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Imprimir_PDF.Name = "Btn_Mnu_Imprimir_PDF"
-        Me.Btn_Mnu_Imprimir_PDF.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_Imprimir_PDF_Formato_Modalidad, Me.Btn_Mnu_Imprimir_PDF_Otros_Formatos, Me.Btn_GuardarRutaPDFAutomatica, Me.Btn_VerXMLPDF})
-        Me.Btn_Mnu_Imprimir_PDF.Text = "Exportar a PDF"
-        '
-        'Btn_Mnu_Imprimir_PDF_Formato_Modalidad
-        '
-        Me.Btn_Mnu_Imprimir_PDF_Formato_Modalidad.Image = CType(resources.GetObject("Btn_Mnu_Imprimir_PDF_Formato_Modalidad.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Imprimir_PDF_Formato_Modalidad.ImageAlt = CType(resources.GetObject("Btn_Mnu_Imprimir_PDF_Formato_Modalidad.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Imprimir_PDF_Formato_Modalidad.Name = "Btn_Mnu_Imprimir_PDF_Formato_Modalidad"
-        Me.Btn_Mnu_Imprimir_PDF_Formato_Modalidad.Text = "Imprimir en formato de la modalidad"
-        '
-        'Btn_Mnu_Imprimir_PDF_Otros_Formatos
-        '
-        Me.Btn_Mnu_Imprimir_PDF_Otros_Formatos.Image = CType(resources.GetObject("Btn_Mnu_Imprimir_PDF_Otros_Formatos.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Imprimir_PDF_Otros_Formatos.ImageAlt = CType(resources.GetObject("Btn_Mnu_Imprimir_PDF_Otros_Formatos.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Imprimir_PDF_Otros_Formatos.Name = "Btn_Mnu_Imprimir_PDF_Otros_Formatos"
-        Me.Btn_Mnu_Imprimir_PDF_Otros_Formatos.Text = "Imprimir en otro formato"
-        '
-        'Btn_GuardarRutaPDFAutomatica
-        '
-        Me.Btn_GuardarRutaPDFAutomatica.Image = CType(resources.GetObject("Btn_GuardarRutaPDFAutomatica.Image"), System.Drawing.Image)
-        Me.Btn_GuardarRutaPDFAutomatica.ImageAlt = CType(resources.GetObject("Btn_GuardarRutaPDFAutomatica.ImageAlt"), System.Drawing.Image)
-        Me.Btn_GuardarRutaPDFAutomatica.Name = "Btn_GuardarRutaPDFAutomatica"
-        Me.Btn_GuardarRutaPDFAutomatica.Text = "Guardar PDF en Ruta automática"
-        '
-        'Btn_VerXMLPDF
-        '
-        Me.Btn_VerXMLPDF.Image = CType(resources.GetObject("Btn_VerXMLPDF.Image"), System.Drawing.Image)
-        Me.Btn_VerXMLPDF.ImageAlt = CType(resources.GetObject("Btn_VerXMLPDF.ImageAlt"), System.Drawing.Image)
-        Me.Btn_VerXMLPDF.Name = "Btn_VerXMLPDF"
-        Me.Btn_VerXMLPDF.Text = "Exportar Desde DTE XML"
-        '
         'Menu_Contextual_DTE
         '
         Me.Menu_Contextual_DTE.AutoExpandOnClick = True
         Me.Menu_Contextual_DTE.Name = "Menu_Contextual_DTE"
         Me.Menu_Contextual_DTE.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_Firmar_Documento_DTE, Me.Btn_Mnu_Reenvio_Correo_DTE, Me.Btn_Mnu_Exportar_XML})
         Me.Menu_Contextual_DTE.Text = "Opciones DTE"
-        '
-        'Btn_Mnu_Firmar_Documento_DTE
-        '
-        Me.Btn_Mnu_Firmar_Documento_DTE.Image = CType(resources.GetObject("Btn_Mnu_Firmar_Documento_DTE.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Firmar_Documento_DTE.ImageAlt = CType(resources.GetObject("Btn_Mnu_Firmar_Documento_DTE.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Firmar_Documento_DTE.Name = "Btn_Mnu_Firmar_Documento_DTE"
-        Me.Btn_Mnu_Firmar_Documento_DTE.Text = "Firmar documento DTE"
-        '
-        'Btn_Mnu_Reenvio_Correo_DTE
-        '
-        Me.Btn_Mnu_Reenvio_Correo_DTE.Image = CType(resources.GetObject("Btn_Mnu_Reenvio_Correo_DTE.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Reenvio_Correo_DTE.ImageAlt = CType(resources.GetObject("Btn_Mnu_Reenvio_Correo_DTE.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Reenvio_Correo_DTE.Name = "Btn_Mnu_Reenvio_Correo_DTE"
-        Me.Btn_Mnu_Reenvio_Correo_DTE.Text = "Reenvio Correo DTE"
-        '
-        'Btn_Mnu_Exportar_XML
-        '
-        Me.Btn_Mnu_Exportar_XML.Image = CType(resources.GetObject("Btn_Mnu_Exportar_XML.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Exportar_XML.ImageAlt = CType(resources.GetObject("Btn_Mnu_Exportar_XML.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Exportar_XML.Name = "Btn_Mnu_Exportar_XML"
-        Me.Btn_Mnu_Exportar_XML.Text = "Exportar XML"
         '
         'Menu_Contextual_Info_Entidad
         '
@@ -781,27 +428,6 @@ Partial Class Frm_Ver_Documento
         Me.LabelItem3.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
         Me.LabelItem3.Text = "Información ficha del cliente"
         '
-        'Btn_Mnu_Ficha_Entidad
-        '
-        Me.Btn_Mnu_Ficha_Entidad.Image = CType(resources.GetObject("Btn_Mnu_Ficha_Entidad.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Ficha_Entidad.ImageAlt = CType(resources.GetObject("Btn_Mnu_Ficha_Entidad.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Ficha_Entidad.Name = "Btn_Mnu_Ficha_Entidad"
-        Me.Btn_Mnu_Ficha_Entidad.Text = "Ver ficha de entidad"
-        '
-        'Btn_Ver_Situacion_Cliente
-        '
-        Me.Btn_Ver_Situacion_Cliente.Image = CType(resources.GetObject("Btn_Ver_Situacion_Cliente.Image"), System.Drawing.Image)
-        Me.Btn_Ver_Situacion_Cliente.ImageAlt = CType(resources.GetObject("Btn_Ver_Situacion_Cliente.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Ver_Situacion_Cliente.Name = "Btn_Ver_Situacion_Cliente"
-        Me.Btn_Ver_Situacion_Cliente.Text = "Ver situación del estado de créditos de la entidad"
-        '
-        'Btn_Info_Plana_Entidad
-        '
-        Me.Btn_Info_Plana_Entidad.Image = CType(resources.GetObject("Btn_Info_Plana_Entidad.Image"), System.Drawing.Image)
-        Me.Btn_Info_Plana_Entidad.ImageAlt = CType(resources.GetObject("Btn_Info_Plana_Entidad.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Info_Plana_Entidad.Name = "Btn_Info_Plana_Entidad"
-        Me.Btn_Info_Plana_Entidad.Text = "Información plana entidad"
-        '
         'LabelItem4
         '
         Me.LabelItem4.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
@@ -815,13 +441,6 @@ Partial Class Frm_Ver_Documento
         Me.LabelItem4.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
         Me.LabelItem4.Text = "Comportamiento de pago"
         '
-        'Btn_Ver_Comportamiento_De_Pago
-        '
-        Me.Btn_Ver_Comportamiento_De_Pago.Image = CType(resources.GetObject("Btn_Ver_Comportamiento_De_Pago.Image"), System.Drawing.Image)
-        Me.Btn_Ver_Comportamiento_De_Pago.ImageAlt = CType(resources.GetObject("Btn_Ver_Comportamiento_De_Pago.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Ver_Comportamiento_De_Pago.Name = "Btn_Ver_Comportamiento_De_Pago"
-        Me.Btn_Ver_Comportamiento_De_Pago.Text = "Ver comportamiento de pago del cliente"
-        '
         'LabelItem5
         '
         Me.LabelItem5.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
@@ -834,27 +453,6 @@ Partial Class Frm_Ver_Documento
         Me.LabelItem5.PaddingTop = 1
         Me.LabelItem5.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
         Me.LabelItem5.Text = "Detalle de las deudas"
-        '
-        'Btn_Ver_Documentos_Pendientes
-        '
-        Me.Btn_Ver_Documentos_Pendientes.Image = CType(resources.GetObject("Btn_Ver_Documentos_Pendientes.Image"), System.Drawing.Image)
-        Me.Btn_Ver_Documentos_Pendientes.ImageAlt = CType(resources.GetObject("Btn_Ver_Documentos_Pendientes.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Ver_Documentos_Pendientes.Name = "Btn_Ver_Documentos_Pendientes"
-        Me.Btn_Ver_Documentos_Pendientes.Text = "Ver documentos pendientes de pago"
-        '
-        'Btn_Ver_Cheques_En_Cartera
-        '
-        Me.Btn_Ver_Cheques_En_Cartera.Image = CType(resources.GetObject("Btn_Ver_Cheques_En_Cartera.Image"), System.Drawing.Image)
-        Me.Btn_Ver_Cheques_En_Cartera.ImageAlt = CType(resources.GetObject("Btn_Ver_Cheques_En_Cartera.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Ver_Cheques_En_Cartera.Name = "Btn_Ver_Cheques_En_Cartera"
-        Me.Btn_Ver_Cheques_En_Cartera.Text = "Ver cheques en cartera"
-        '
-        'Btn_Ver_Deuda_Total
-        '
-        Me.Btn_Ver_Deuda_Total.Image = CType(resources.GetObject("Btn_Ver_Deuda_Total.Image"), System.Drawing.Image)
-        Me.Btn_Ver_Deuda_Total.ImageAlt = CType(resources.GetObject("Btn_Ver_Deuda_Total.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Ver_Deuda_Total.Name = "Btn_Ver_Deuda_Total"
-        Me.Btn_Ver_Deuda_Total.Text = "Ver deuda total"
         '
         'Menu_Contextual_Eliminar_Anular
         '
@@ -876,20 +474,6 @@ Partial Class Frm_Ver_Documento
         Me.LabelItem2.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
         Me.LabelItem2.Text = "Eliminar"
         '
-        'Btn_Mnu_Eliminar_Reciclar
-        '
-        Me.Btn_Mnu_Eliminar_Reciclar.Image = CType(resources.GetObject("Btn_Mnu_Eliminar_Reciclar.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Eliminar_Reciclar.ImageAlt = CType(resources.GetObject("Btn_Mnu_Eliminar_Reciclar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Eliminar_Reciclar.Name = "Btn_Mnu_Eliminar_Reciclar"
-        Me.Btn_Mnu_Eliminar_Reciclar.Text = "Eliminar y reciclar (Conserva el Nro original)"
-        '
-        'Btn_Mnu_Eliminar
-        '
-        Me.Btn_Mnu_Eliminar.Image = CType(resources.GetObject("Btn_Mnu_Eliminar.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Mnu_Eliminar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Eliminar.Name = "Btn_Mnu_Eliminar"
-        Me.Btn_Mnu_Eliminar.Text = "Eliminar documento"
-        '
         'LabelItem6
         '
         Me.LabelItem6.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
@@ -903,48 +487,12 @@ Partial Class Frm_Ver_Documento
         Me.LabelItem6.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
         Me.LabelItem6.Text = "Anular"
         '
-        'Btn_Mnu_Anular_Reciclar
-        '
-        Me.Btn_Mnu_Anular_Reciclar.Image = CType(resources.GetObject("Btn_Mnu_Anular_Reciclar.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Anular_Reciclar.ImageAlt = CType(resources.GetObject("Btn_Mnu_Anular_Reciclar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Anular_Reciclar.Name = "Btn_Mnu_Anular_Reciclar"
-        Me.Btn_Mnu_Anular_Reciclar.Text = "Anular y reciclar"
-        '
-        'Btn_Mnu_Anular
-        '
-        Me.Btn_Mnu_Anular.Image = CType(resources.GetObject("Btn_Mnu_Anular.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Anular.ImageAlt = CType(resources.GetObject("Btn_Mnu_Anular.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Anular.Name = "Btn_Mnu_Anular"
-        Me.Btn_Mnu_Anular.Text = "Anular documento"
-        '
         'Menu_Contextual_DTE_Hefesto
         '
         Me.Menu_Contextual_DTE_Hefesto.AutoExpandOnClick = True
         Me.Menu_Contextual_DTE_Hefesto.Name = "Menu_Contextual_DTE_Hefesto"
         Me.Menu_Contextual_DTE_Hefesto.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_Firmar_Documento_DTE_Hefesto, Me.Btn_Mnu_Reenvio_Correo_DTE_Hefesto, Me.Btn_Mnu_Exportar_XML_Hefesto})
         Me.Menu_Contextual_DTE_Hefesto.Text = "Opciones DTE (Hefesto)"
-        '
-        'Btn_Mnu_Firmar_Documento_DTE_Hefesto
-        '
-        Me.Btn_Mnu_Firmar_Documento_DTE_Hefesto.Image = CType(resources.GetObject("Btn_Mnu_Firmar_Documento_DTE_Hefesto.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Firmar_Documento_DTE_Hefesto.ImageAlt = CType(resources.GetObject("Btn_Mnu_Firmar_Documento_DTE_Hefesto.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Firmar_Documento_DTE_Hefesto.Name = "Btn_Mnu_Firmar_Documento_DTE_Hefesto"
-        Me.Btn_Mnu_Firmar_Documento_DTE_Hefesto.Text = "Firmar documento DTE (Hefesto)"
-        '
-        'Btn_Mnu_Reenvio_Correo_DTE_Hefesto
-        '
-        Me.Btn_Mnu_Reenvio_Correo_DTE_Hefesto.Image = CType(resources.GetObject("Btn_Mnu_Reenvio_Correo_DTE_Hefesto.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Reenvio_Correo_DTE_Hefesto.ImageAlt = CType(resources.GetObject("Btn_Mnu_Reenvio_Correo_DTE_Hefesto.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Reenvio_Correo_DTE_Hefesto.Name = "Btn_Mnu_Reenvio_Correo_DTE_Hefesto"
-        Me.Btn_Mnu_Reenvio_Correo_DTE_Hefesto.Text = "Reenvio Correo DTE (Hefesto)"
-        Me.Btn_Mnu_Reenvio_Correo_DTE_Hefesto.Visible = False
-        '
-        'Btn_Mnu_Exportar_XML_Hefesto
-        '
-        Me.Btn_Mnu_Exportar_XML_Hefesto.Image = CType(resources.GetObject("Btn_Mnu_Exportar_XML_Hefesto.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Exportar_XML_Hefesto.ImageAlt = CType(resources.GetObject("Btn_Mnu_Exportar_XML_Hefesto.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Exportar_XML_Hefesto.Name = "Btn_Mnu_Exportar_XML_Hefesto"
-        Me.Btn_Mnu_Exportar_XML_Hefesto.Text = "Exportar XML"
         '
         'GroupPanel4
         '
@@ -1265,17 +813,6 @@ Partial Class Frm_Ver_Documento
         Me.Lbl_Nombre_Entidad.Size = New System.Drawing.Size(310, 22)
         Me.Lbl_Nombre_Entidad.TabIndex = 89
         '
-        'Btn_VerEntidad
-        '
-        Me.Btn_VerEntidad.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_VerEntidad.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_VerEntidad.Image = CType(resources.GetObject("Btn_VerEntidad.Image"), System.Drawing.Image)
-        Me.Btn_VerEntidad.Location = New System.Drawing.Point(3, 64)
-        Me.Btn_VerEntidad.Name = "Btn_VerEntidad"
-        Me.Btn_VerEntidad.Size = New System.Drawing.Size(25, 23)
-        Me.Btn_VerEntidad.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_VerEntidad.TabIndex = 85
-        '
         'LabelX1
         '
         Me.LabelX1.BackColor = System.Drawing.Color.Transparent
@@ -1289,18 +826,6 @@ Partial Class Frm_Ver_Documento
         Me.LabelX1.Size = New System.Drawing.Size(122, 14)
         Me.LabelX1.TabIndex = 84
         Me.LabelX1.Text = "Razón social"
-        '
-        'Btn_VerEntidadFisica
-        '
-        Me.Btn_VerEntidadFisica.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_VerEntidadFisica.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_VerEntidadFisica.Image = CType(resources.GetObject("Btn_VerEntidadFisica.Image"), System.Drawing.Image)
-        Me.Btn_VerEntidadFisica.Location = New System.Drawing.Point(350, 64)
-        Me.Btn_VerEntidadFisica.Name = "Btn_VerEntidadFisica"
-        Me.Btn_VerEntidadFisica.Size = New System.Drawing.Size(25, 23)
-        Me.Btn_VerEntidadFisica.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_VerEntidadFisica.TabIndex = 82
-        Me.Btn_VerEntidadFisica.Visible = False
         '
         'LabelX3
         '
@@ -1321,36 +846,36 @@ Partial Class Frm_Ver_Documento
         Me.GrillaEncabezado.AllowUserToAddRows = False
         Me.GrillaEncabezado.AllowUserToDeleteRows = False
         Me.GrillaEncabezado.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle10.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        DataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.GrillaEncabezado.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.GrillaEncabezado.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.GrillaEncabezado.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle11.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle11.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        DataGridViewCellStyle11.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.GrillaEncabezado.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.GrillaEncabezado.DefaultCellStyle = DataGridViewCellStyle5
         Me.GrillaEncabezado.EnableHeadersVisualStyles = False
         Me.GrillaEncabezado.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.GrillaEncabezado.Location = New System.Drawing.Point(3, 3)
         Me.GrillaEncabezado.Name = "GrillaEncabezado"
         Me.GrillaEncabezado.ReadOnly = True
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle12.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        DataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.GrillaEncabezado.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.GrillaEncabezado.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.GrillaEncabezado.RowHeadersVisible = False
         Me.GrillaEncabezado.RowTemplate.Height = 25
         Me.GrillaEncabezado.Size = New System.Drawing.Size(845, 39)
@@ -1411,18 +936,6 @@ Partial Class Frm_Ver_Documento
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 80
         Me.GroupPanel1.Text = "Abonado"
-        '
-        'Btn_Ver_Pagos
-        '
-        Me.Btn_Ver_Pagos.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Ver_Pagos.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Ver_Pagos.Image = CType(resources.GetObject("Btn_Ver_Pagos.Image"), System.Drawing.Image)
-        Me.Btn_Ver_Pagos.Location = New System.Drawing.Point(1, 5)
-        Me.Btn_Ver_Pagos.Name = "Btn_Ver_Pagos"
-        Me.Btn_Ver_Pagos.Size = New System.Drawing.Size(34, 22)
-        Me.Btn_Ver_Pagos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Ver_Pagos.TabIndex = 82
-        Me.Btn_Ver_Pagos.Tooltip = "Ver pagos del documento"
         '
         'LblTotalAbonado
         '
@@ -1524,15 +1037,6 @@ Partial Class Frm_Ver_Documento
         Me.MStb_Barra.TabIndex = 138
         Me.MStb_Barra.Text = "MetroStatusBar1"
         '
-        'Lbl_Tido
-        '
-        Me.Lbl_Tido.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Lbl_Tido.Image = CType(resources.GetObject("Lbl_Tido.Image"), System.Drawing.Image)
-        Me.Lbl_Tido.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
-        Me.Lbl_Tido.Name = "Lbl_Tido"
-        Me.Lbl_Tido.Text = "NOTA DE CREDITO"
-        Me.Lbl_Tido.TextLineAlignment = System.Drawing.StringAlignment.Near
-        '
         'Panel_Documento
         '
         Me.Panel_Documento.BackColor = System.Drawing.Color.FromArgb(CType(CType(211, Byte), Integer), CType(CType(211, Byte), Integer), CType(CType(211, Byte), Integer))
@@ -1570,6 +1074,512 @@ Partial Class Frm_Ver_Documento
         Me.Imagenes_32x32.Images.SetKeyName(13, "attach-number-1.png")
         Me.Imagenes_32x32.Images.SetKeyName(14, "attach-number-9-plus.png")
         Me.Imagenes_32x32.Images.SetKeyName(15, "document-attach.png")
+        '
+        'Btn_Ver_Pagos
+        '
+        Me.Btn_Ver_Pagos.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Ver_Pagos.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Ver_Pagos.Image = CType(resources.GetObject("Btn_Ver_Pagos.Image"), System.Drawing.Image)
+        Me.Btn_Ver_Pagos.Location = New System.Drawing.Point(1, 5)
+        Me.Btn_Ver_Pagos.Name = "Btn_Ver_Pagos"
+        Me.Btn_Ver_Pagos.Size = New System.Drawing.Size(34, 22)
+        Me.Btn_Ver_Pagos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Ver_Pagos.TabIndex = 82
+        Me.Btn_Ver_Pagos.Tooltip = "Ver pagos del documento"
+        '
+        'Btn_VerEntidad
+        '
+        Me.Btn_VerEntidad.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_VerEntidad.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_VerEntidad.Image = CType(resources.GetObject("Btn_VerEntidad.Image"), System.Drawing.Image)
+        Me.Btn_VerEntidad.Location = New System.Drawing.Point(3, 64)
+        Me.Btn_VerEntidad.Name = "Btn_VerEntidad"
+        Me.Btn_VerEntidad.Size = New System.Drawing.Size(25, 23)
+        Me.Btn_VerEntidad.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_VerEntidad.TabIndex = 85
+        '
+        'Btn_VerEntidadFisica
+        '
+        Me.Btn_VerEntidadFisica.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_VerEntidadFisica.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_VerEntidadFisica.Image = CType(resources.GetObject("Btn_VerEntidadFisica.Image"), System.Drawing.Image)
+        Me.Btn_VerEntidadFisica.Location = New System.Drawing.Point(350, 64)
+        Me.Btn_VerEntidadFisica.Name = "Btn_VerEntidadFisica"
+        Me.Btn_VerEntidadFisica.Size = New System.Drawing.Size(25, 23)
+        Me.Btn_VerEntidadFisica.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_VerEntidadFisica.TabIndex = 82
+        Me.Btn_VerEntidadFisica.Visible = False
+        '
+        'Btn_Estadisticas_Producto
+        '
+        Me.Btn_Estadisticas_Producto.Image = CType(resources.GetObject("Btn_Estadisticas_Producto.Image"), System.Drawing.Image)
+        Me.Btn_Estadisticas_Producto.ImageAlt = CType(resources.GetObject("Btn_Estadisticas_Producto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Estadisticas_Producto.Name = "Btn_Estadisticas_Producto"
+        Me.Btn_Estadisticas_Producto.Text = "Ver estadísticas del producto/información adicional"
+        '
+        'Btn_Observacione_linea_documento
+        '
+        Me.Btn_Observacione_linea_documento.Image = CType(resources.GetObject("Btn_Observacione_linea_documento.Image"), System.Drawing.Image)
+        Me.Btn_Observacione_linea_documento.ImageAlt = CType(resources.GetObject("Btn_Observacione_linea_documento.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Observacione_linea_documento.Name = "Btn_Observacione_linea_documento"
+        Me.Btn_Observacione_linea_documento.Text = "Observaciones en la línea del documento"
+        '
+        'Btn_Anotaciones_a_la_linea
+        '
+        Me.Btn_Anotaciones_a_la_linea.Image = CType(resources.GetObject("Btn_Anotaciones_a_la_linea.Image"), System.Drawing.Image)
+        Me.Btn_Anotaciones_a_la_linea.ImageAlt = CType(resources.GetObject("Btn_Anotaciones_a_la_linea.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Anotaciones_a_la_linea.Name = "Btn_Anotaciones_a_la_linea"
+        Me.Btn_Anotaciones_a_la_linea.Text = "Anotaciones, eventos o links asociados a la línea del documento"
+        '
+        'Btn_Consolidar_Stock_X_Producto
+        '
+        Me.Btn_Consolidar_Stock_X_Producto.Image = CType(resources.GetObject("Btn_Consolidar_Stock_X_Producto.Image"), System.Drawing.Image)
+        Me.Btn_Consolidar_Stock_X_Producto.ImageAlt = CType(resources.GetObject("Btn_Consolidar_Stock_X_Producto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Consolidar_Stock_X_Producto.Name = "Btn_Consolidar_Stock_X_Producto"
+        Me.Btn_Consolidar_Stock_X_Producto.Text = "Consolidar stock del producto"
+        '
+        'Btn_Ver_Prod_Asociados_Recargo
+        '
+        Me.Btn_Ver_Prod_Asociados_Recargo.Image = CType(resources.GetObject("Btn_Ver_Prod_Asociados_Recargo.Image"), System.Drawing.Image)
+        Me.Btn_Ver_Prod_Asociados_Recargo.ImageAlt = CType(resources.GetObject("Btn_Ver_Prod_Asociados_Recargo.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Ver_Prod_Asociados_Recargo.Name = "Btn_Ver_Prod_Asociados_Recargo"
+        Me.Btn_Ver_Prod_Asociados_Recargo.Text = "Ver documentos asociados al recargo"
+        '
+        'Btn_Ver_documento_origen
+        '
+        Me.Btn_Ver_documento_origen.Image = CType(resources.GetObject("Btn_Ver_documento_origen.Image"), System.Drawing.Image)
+        Me.Btn_Ver_documento_origen.ImageAlt = CType(resources.GetObject("Btn_Ver_documento_origen.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Ver_documento_origen.Name = "Btn_Ver_documento_origen"
+        Me.Btn_Ver_documento_origen.Text = "Ver documento de origen"
+        '
+        'Btn_Copiar
+        '
+        Me.Btn_Copiar.Image = CType(resources.GetObject("Btn_Copiar.Image"), System.Drawing.Image)
+        Me.Btn_Copiar.ImageAlt = CType(resources.GetObject("Btn_Copiar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Copiar.Name = "Btn_Copiar"
+        Me.Btn_Copiar.Text = "Copiar (portapapeles)"
+        '
+        'Btn_Ver_Entidad
+        '
+        Me.Btn_Ver_Entidad.Image = CType(resources.GetObject("Btn_Ver_Entidad.Image"), System.Drawing.Image)
+        Me.Btn_Ver_Entidad.ImageAlt = CType(resources.GetObject("Btn_Ver_Entidad.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Ver_Entidad.Name = "Btn_Ver_Entidad"
+        Me.Btn_Ver_Entidad.Text = "Ver datos Entidad"
+        '
+        'Btn_Ver_Vencimientos
+        '
+        Me.Btn_Ver_Vencimientos.Image = CType(resources.GetObject("Btn_Ver_Vencimientos.Image"), System.Drawing.Image)
+        Me.Btn_Ver_Vencimientos.ImageAlt = CType(resources.GetObject("Btn_Ver_Vencimientos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Ver_Vencimientos.Name = "Btn_Ver_Vencimientos"
+        Me.Btn_Ver_Vencimientos.Text = "Ver vencimientos"
+        '
+        'Btn_Cambiar_Nro_Documento
+        '
+        Me.Btn_Cambiar_Nro_Documento.Image = CType(resources.GetObject("Btn_Cambiar_Nro_Documento.Image"), System.Drawing.Image)
+        Me.Btn_Cambiar_Nro_Documento.ImageAlt = CType(resources.GetObject("Btn_Cambiar_Nro_Documento.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Cambiar_Nro_Documento.Name = "Btn_Cambiar_Nro_Documento"
+        Me.Btn_Cambiar_Nro_Documento.Text = "Cambiar número de documento"
+        '
+        'Btn_Copiar_Encabezado
+        '
+        Me.Btn_Copiar_Encabezado.Image = CType(resources.GetObject("Btn_Copiar_Encabezado.Image"), System.Drawing.Image)
+        Me.Btn_Copiar_Encabezado.ImageAlt = CType(resources.GetObject("Btn_Copiar_Encabezado.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Copiar_Encabezado.Name = "Btn_Copiar_Encabezado"
+        Me.Btn_Copiar_Encabezado.Text = "Copiar (portapapeles)"
+        '
+        'Btn_Correo_Outlook
+        '
+        Me.Btn_Correo_Outlook.Image = CType(resources.GetObject("Btn_Correo_Outlook.Image"), System.Drawing.Image)
+        Me.Btn_Correo_Outlook.Name = "Btn_Correo_Outlook"
+        Me.Btn_Correo_Outlook.Text = "Armar correo solo para Outlook"
+        '
+        'Btn_Correo_Diablito
+        '
+        Me.Btn_Correo_Diablito.Image = CType(resources.GetObject("Btn_Correo_Diablito.Image"), System.Drawing.Image)
+        Me.Btn_Correo_Diablito.ImageAlt = CType(resources.GetObject("Btn_Correo_Diablito.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Correo_Diablito.Name = "Btn_Correo_Diablito"
+        Me.Btn_Correo_Diablito.Text = "Enviar por correo (desde diablito)"
+        '
+        'Btn_Mnu_Imprimir
+        '
+        Me.Btn_Mnu_Imprimir.Image = CType(resources.GetObject("Btn_Mnu_Imprimir.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Imprimir.ImageAlt = CType(resources.GetObject("Btn_Mnu_Imprimir.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Imprimir.Name = "Btn_Mnu_Imprimir"
+        Me.Btn_Mnu_Imprimir.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_Imprimir_Formato_Modalidad, Me.Btn_Mnu_Imprimir_Otros_Formatos, Me.Btn_Imprimir_Diablito})
+        Me.Btn_Mnu_Imprimir.Text = "Imprimir documento"
+        '
+        'Btn_Mnu_Imprimir_Formato_Modalidad
+        '
+        Me.Btn_Mnu_Imprimir_Formato_Modalidad.Image = CType(resources.GetObject("Btn_Mnu_Imprimir_Formato_Modalidad.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Imprimir_Formato_Modalidad.ImageAlt = CType(resources.GetObject("Btn_Mnu_Imprimir_Formato_Modalidad.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Imprimir_Formato_Modalidad.Name = "Btn_Mnu_Imprimir_Formato_Modalidad"
+        Me.Btn_Mnu_Imprimir_Formato_Modalidad.Text = "Imprimir en formato de la modalidad"
+        '
+        'Btn_Mnu_Imprimir_Otros_Formatos
+        '
+        Me.Btn_Mnu_Imprimir_Otros_Formatos.Image = CType(resources.GetObject("Btn_Mnu_Imprimir_Otros_Formatos.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Imprimir_Otros_Formatos.ImageAlt = CType(resources.GetObject("Btn_Mnu_Imprimir_Otros_Formatos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Imprimir_Otros_Formatos.Name = "Btn_Mnu_Imprimir_Otros_Formatos"
+        Me.Btn_Mnu_Imprimir_Otros_Formatos.Text = "Imprimir en otro formato"
+        '
+        'Btn_Imprimir_Diablito
+        '
+        Me.Btn_Imprimir_Diablito.Image = CType(resources.GetObject("Btn_Imprimir_Diablito.Image"), System.Drawing.Image)
+        Me.Btn_Imprimir_Diablito.ImageAlt = CType(resources.GetObject("Btn_Imprimir_Diablito.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Imprimir_Diablito.Name = "Btn_Imprimir_Diablito"
+        Me.Btn_Imprimir_Diablito.Text = "Imprimir en diablito"
+        '
+        'Btn_Mnu_Vista_Previa
+        '
+        Me.Btn_Mnu_Vista_Previa.Image = CType(resources.GetObject("Btn_Mnu_Vista_Previa.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Vista_Previa.ImageAlt = CType(resources.GetObject("Btn_Mnu_Vista_Previa.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Vista_Previa.Name = "Btn_Mnu_Vista_Previa"
+        Me.Btn_Mnu_Vista_Previa.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_Vista_Previa_Formato_Modalidad, Me.Btn_Mnu_Vista_Previa_Otros_Formatos})
+        Me.Btn_Mnu_Vista_Previa.Text = "Vista previa"
+        '
+        'Btn_Mnu_Vista_Previa_Formato_Modalidad
+        '
+        Me.Btn_Mnu_Vista_Previa_Formato_Modalidad.Image = CType(resources.GetObject("Btn_Mnu_Vista_Previa_Formato_Modalidad.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Vista_Previa_Formato_Modalidad.ImageAlt = CType(resources.GetObject("Btn_Mnu_Vista_Previa_Formato_Modalidad.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Vista_Previa_Formato_Modalidad.Name = "Btn_Mnu_Vista_Previa_Formato_Modalidad"
+        Me.Btn_Mnu_Vista_Previa_Formato_Modalidad.Text = "Vista previa en formato de la modalidad"
+        '
+        'Btn_Mnu_Vista_Previa_Otros_Formatos
+        '
+        Me.Btn_Mnu_Vista_Previa_Otros_Formatos.Image = CType(resources.GetObject("Btn_Mnu_Vista_Previa_Otros_Formatos.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Vista_Previa_Otros_Formatos.ImageAlt = CType(resources.GetObject("Btn_Mnu_Vista_Previa_Otros_Formatos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Vista_Previa_Otros_Formatos.Name = "Btn_Mnu_Vista_Previa_Otros_Formatos"
+        Me.Btn_Mnu_Vista_Previa_Otros_Formatos.Text = "Vista previa en otro formato"
+        '
+        'Btn_Mnu_Imprimir_PDF
+        '
+        Me.Btn_Mnu_Imprimir_PDF.Image = CType(resources.GetObject("Btn_Mnu_Imprimir_PDF.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Imprimir_PDF.ImageAlt = CType(resources.GetObject("Btn_Mnu_Imprimir_PDF.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Imprimir_PDF.Name = "Btn_Mnu_Imprimir_PDF"
+        Me.Btn_Mnu_Imprimir_PDF.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_Imprimir_PDF_Formato_Modalidad, Me.Btn_Mnu_Imprimir_PDF_Otros_Formatos, Me.Btn_GuardarRutaPDFAutomatica, Me.Btn_VerXMLPDF})
+        Me.Btn_Mnu_Imprimir_PDF.Text = "Exportar a PDF"
+        '
+        'Btn_Mnu_Imprimir_PDF_Formato_Modalidad
+        '
+        Me.Btn_Mnu_Imprimir_PDF_Formato_Modalidad.Image = CType(resources.GetObject("Btn_Mnu_Imprimir_PDF_Formato_Modalidad.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Imprimir_PDF_Formato_Modalidad.ImageAlt = CType(resources.GetObject("Btn_Mnu_Imprimir_PDF_Formato_Modalidad.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Imprimir_PDF_Formato_Modalidad.Name = "Btn_Mnu_Imprimir_PDF_Formato_Modalidad"
+        Me.Btn_Mnu_Imprimir_PDF_Formato_Modalidad.Text = "Imprimir en formato de la modalidad"
+        '
+        'Btn_Mnu_Imprimir_PDF_Otros_Formatos
+        '
+        Me.Btn_Mnu_Imprimir_PDF_Otros_Formatos.Image = CType(resources.GetObject("Btn_Mnu_Imprimir_PDF_Otros_Formatos.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Imprimir_PDF_Otros_Formatos.ImageAlt = CType(resources.GetObject("Btn_Mnu_Imprimir_PDF_Otros_Formatos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Imprimir_PDF_Otros_Formatos.Name = "Btn_Mnu_Imprimir_PDF_Otros_Formatos"
+        Me.Btn_Mnu_Imprimir_PDF_Otros_Formatos.Text = "Imprimir en otro formato"
+        '
+        'Btn_GuardarRutaPDFAutomatica
+        '
+        Me.Btn_GuardarRutaPDFAutomatica.Image = CType(resources.GetObject("Btn_GuardarRutaPDFAutomatica.Image"), System.Drawing.Image)
+        Me.Btn_GuardarRutaPDFAutomatica.ImageAlt = CType(resources.GetObject("Btn_GuardarRutaPDFAutomatica.ImageAlt"), System.Drawing.Image)
+        Me.Btn_GuardarRutaPDFAutomatica.Name = "Btn_GuardarRutaPDFAutomatica"
+        Me.Btn_GuardarRutaPDFAutomatica.Text = "Guardar PDF en Ruta automática"
+        '
+        'Btn_VerXMLPDF
+        '
+        Me.Btn_VerXMLPDF.Image = CType(resources.GetObject("Btn_VerXMLPDF.Image"), System.Drawing.Image)
+        Me.Btn_VerXMLPDF.ImageAlt = CType(resources.GetObject("Btn_VerXMLPDF.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerXMLPDF.Name = "Btn_VerXMLPDF"
+        Me.Btn_VerXMLPDF.Text = "Exportar Desde DTE XML"
+        '
+        'Btn_Mnu_Firmar_Documento_DTE
+        '
+        Me.Btn_Mnu_Firmar_Documento_DTE.Image = CType(resources.GetObject("Btn_Mnu_Firmar_Documento_DTE.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Firmar_Documento_DTE.ImageAlt = CType(resources.GetObject("Btn_Mnu_Firmar_Documento_DTE.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Firmar_Documento_DTE.Name = "Btn_Mnu_Firmar_Documento_DTE"
+        Me.Btn_Mnu_Firmar_Documento_DTE.Text = "Firmar documento DTE"
+        '
+        'Btn_Mnu_Reenvio_Correo_DTE
+        '
+        Me.Btn_Mnu_Reenvio_Correo_DTE.Image = CType(resources.GetObject("Btn_Mnu_Reenvio_Correo_DTE.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Reenvio_Correo_DTE.ImageAlt = CType(resources.GetObject("Btn_Mnu_Reenvio_Correo_DTE.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Reenvio_Correo_DTE.Name = "Btn_Mnu_Reenvio_Correo_DTE"
+        Me.Btn_Mnu_Reenvio_Correo_DTE.Text = "Reenvio Correo DTE"
+        '
+        'Btn_Mnu_Exportar_XML
+        '
+        Me.Btn_Mnu_Exportar_XML.Image = CType(resources.GetObject("Btn_Mnu_Exportar_XML.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Exportar_XML.ImageAlt = CType(resources.GetObject("Btn_Mnu_Exportar_XML.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Exportar_XML.Name = "Btn_Mnu_Exportar_XML"
+        Me.Btn_Mnu_Exportar_XML.Text = "Exportar XML"
+        '
+        'Btn_Mnu_Ficha_Entidad
+        '
+        Me.Btn_Mnu_Ficha_Entidad.Image = CType(resources.GetObject("Btn_Mnu_Ficha_Entidad.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Ficha_Entidad.ImageAlt = CType(resources.GetObject("Btn_Mnu_Ficha_Entidad.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Ficha_Entidad.Name = "Btn_Mnu_Ficha_Entidad"
+        Me.Btn_Mnu_Ficha_Entidad.Text = "Ver ficha de entidad"
+        '
+        'Btn_Ver_Situacion_Cliente
+        '
+        Me.Btn_Ver_Situacion_Cliente.Image = CType(resources.GetObject("Btn_Ver_Situacion_Cliente.Image"), System.Drawing.Image)
+        Me.Btn_Ver_Situacion_Cliente.ImageAlt = CType(resources.GetObject("Btn_Ver_Situacion_Cliente.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Ver_Situacion_Cliente.Name = "Btn_Ver_Situacion_Cliente"
+        Me.Btn_Ver_Situacion_Cliente.Text = "Ver situación del estado de créditos de la entidad"
+        '
+        'Btn_Info_Plana_Entidad
+        '
+        Me.Btn_Info_Plana_Entidad.Image = CType(resources.GetObject("Btn_Info_Plana_Entidad.Image"), System.Drawing.Image)
+        Me.Btn_Info_Plana_Entidad.ImageAlt = CType(resources.GetObject("Btn_Info_Plana_Entidad.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Info_Plana_Entidad.Name = "Btn_Info_Plana_Entidad"
+        Me.Btn_Info_Plana_Entidad.Text = "Información plana entidad"
+        '
+        'Btn_Ver_Comportamiento_De_Pago
+        '
+        Me.Btn_Ver_Comportamiento_De_Pago.Image = CType(resources.GetObject("Btn_Ver_Comportamiento_De_Pago.Image"), System.Drawing.Image)
+        Me.Btn_Ver_Comportamiento_De_Pago.ImageAlt = CType(resources.GetObject("Btn_Ver_Comportamiento_De_Pago.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Ver_Comportamiento_De_Pago.Name = "Btn_Ver_Comportamiento_De_Pago"
+        Me.Btn_Ver_Comportamiento_De_Pago.Text = "Ver comportamiento de pago del cliente"
+        '
+        'Btn_Ver_Documentos_Pendientes
+        '
+        Me.Btn_Ver_Documentos_Pendientes.Image = CType(resources.GetObject("Btn_Ver_Documentos_Pendientes.Image"), System.Drawing.Image)
+        Me.Btn_Ver_Documentos_Pendientes.ImageAlt = CType(resources.GetObject("Btn_Ver_Documentos_Pendientes.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Ver_Documentos_Pendientes.Name = "Btn_Ver_Documentos_Pendientes"
+        Me.Btn_Ver_Documentos_Pendientes.Text = "Ver documentos pendientes de pago"
+        '
+        'Btn_Ver_Cheques_En_Cartera
+        '
+        Me.Btn_Ver_Cheques_En_Cartera.Image = CType(resources.GetObject("Btn_Ver_Cheques_En_Cartera.Image"), System.Drawing.Image)
+        Me.Btn_Ver_Cheques_En_Cartera.ImageAlt = CType(resources.GetObject("Btn_Ver_Cheques_En_Cartera.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Ver_Cheques_En_Cartera.Name = "Btn_Ver_Cheques_En_Cartera"
+        Me.Btn_Ver_Cheques_En_Cartera.Text = "Ver cheques en cartera"
+        '
+        'Btn_Ver_Deuda_Total
+        '
+        Me.Btn_Ver_Deuda_Total.Image = CType(resources.GetObject("Btn_Ver_Deuda_Total.Image"), System.Drawing.Image)
+        Me.Btn_Ver_Deuda_Total.ImageAlt = CType(resources.GetObject("Btn_Ver_Deuda_Total.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Ver_Deuda_Total.Name = "Btn_Ver_Deuda_Total"
+        Me.Btn_Ver_Deuda_Total.Text = "Ver deuda total"
+        '
+        'Btn_Mnu_Eliminar_Reciclar
+        '
+        Me.Btn_Mnu_Eliminar_Reciclar.Image = CType(resources.GetObject("Btn_Mnu_Eliminar_Reciclar.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Eliminar_Reciclar.ImageAlt = CType(resources.GetObject("Btn_Mnu_Eliminar_Reciclar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Eliminar_Reciclar.Name = "Btn_Mnu_Eliminar_Reciclar"
+        Me.Btn_Mnu_Eliminar_Reciclar.Text = "Eliminar y reciclar (Conserva el Nro original)"
+        '
+        'Btn_Mnu_Eliminar
+        '
+        Me.Btn_Mnu_Eliminar.Image = CType(resources.GetObject("Btn_Mnu_Eliminar.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Mnu_Eliminar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Eliminar.Name = "Btn_Mnu_Eliminar"
+        Me.Btn_Mnu_Eliminar.Text = "Eliminar documento"
+        '
+        'Btn_Mnu_Anular_Reciclar
+        '
+        Me.Btn_Mnu_Anular_Reciclar.Image = CType(resources.GetObject("Btn_Mnu_Anular_Reciclar.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Anular_Reciclar.ImageAlt = CType(resources.GetObject("Btn_Mnu_Anular_Reciclar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Anular_Reciclar.Name = "Btn_Mnu_Anular_Reciclar"
+        Me.Btn_Mnu_Anular_Reciclar.Text = "Anular y reciclar"
+        '
+        'Btn_Mnu_Anular
+        '
+        Me.Btn_Mnu_Anular.Image = CType(resources.GetObject("Btn_Mnu_Anular.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Anular.ImageAlt = CType(resources.GetObject("Btn_Mnu_Anular.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Anular.Name = "Btn_Mnu_Anular"
+        Me.Btn_Mnu_Anular.Text = "Anular documento"
+        '
+        'Btn_Mnu_Firmar_Documento_DTE_Hefesto
+        '
+        Me.Btn_Mnu_Firmar_Documento_DTE_Hefesto.Image = CType(resources.GetObject("Btn_Mnu_Firmar_Documento_DTE_Hefesto.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Firmar_Documento_DTE_Hefesto.ImageAlt = CType(resources.GetObject("Btn_Mnu_Firmar_Documento_DTE_Hefesto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Firmar_Documento_DTE_Hefesto.Name = "Btn_Mnu_Firmar_Documento_DTE_Hefesto"
+        Me.Btn_Mnu_Firmar_Documento_DTE_Hefesto.Text = "Firmar documento DTE (Hefesto)"
+        '
+        'Btn_Mnu_Reenvio_Correo_DTE_Hefesto
+        '
+        Me.Btn_Mnu_Reenvio_Correo_DTE_Hefesto.Image = CType(resources.GetObject("Btn_Mnu_Reenvio_Correo_DTE_Hefesto.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Reenvio_Correo_DTE_Hefesto.ImageAlt = CType(resources.GetObject("Btn_Mnu_Reenvio_Correo_DTE_Hefesto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Reenvio_Correo_DTE_Hefesto.Name = "Btn_Mnu_Reenvio_Correo_DTE_Hefesto"
+        Me.Btn_Mnu_Reenvio_Correo_DTE_Hefesto.Text = "Reenvio Correo DTE (Hefesto)"
+        Me.Btn_Mnu_Reenvio_Correo_DTE_Hefesto.Visible = False
+        '
+        'Btn_Mnu_Exportar_XML_Hefesto
+        '
+        Me.Btn_Mnu_Exportar_XML_Hefesto.Image = CType(resources.GetObject("Btn_Mnu_Exportar_XML_Hefesto.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Exportar_XML_Hefesto.ImageAlt = CType(resources.GetObject("Btn_Mnu_Exportar_XML_Hefesto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Exportar_XML_Hefesto.Name = "Btn_Mnu_Exportar_XML_Hefesto"
+        Me.Btn_Mnu_Exportar_XML_Hefesto.Text = "Exportar XML"
+        '
+        'Btn_Grabar_Documentos
+        '
+        Me.Btn_Grabar_Documentos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Grabar_Documentos.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Grabar_Documentos.Image = CType(resources.GetObject("Btn_Grabar_Documentos.Image"), System.Drawing.Image)
+        Me.Btn_Grabar_Documentos.ImageAlt = CType(resources.GetObject("Btn_Grabar_Documentos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Grabar_Documentos.Name = "Btn_Grabar_Documentos"
+        Me.Btn_Grabar_Documentos.Tooltip = "Grabar documento en el sistema"
+        '
+        'Btn_Observaciones
+        '
+        Me.Btn_Observaciones.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Observaciones.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Observaciones.Image = CType(resources.GetObject("Btn_Observaciones.Image"), System.Drawing.Image)
+        Me.Btn_Observaciones.ImageAlt = CType(resources.GetObject("Btn_Observaciones.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Observaciones.Name = "Btn_Observaciones"
+        Me.Btn_Observaciones.Tooltip = "Observaciones..."
+        '
+        'Btn_Anotaciones_al_documento
+        '
+        Me.Btn_Anotaciones_al_documento.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Anotaciones_al_documento.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Anotaciones_al_documento.Image = CType(resources.GetObject("Btn_Anotaciones_al_documento.Image"), System.Drawing.Image)
+        Me.Btn_Anotaciones_al_documento.ImageAlt = CType(resources.GetObject("Btn_Anotaciones_al_documento.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Anotaciones_al_documento.Name = "Btn_Anotaciones_al_documento"
+        Me.Btn_Anotaciones_al_documento.Tooltip = "Anotaciones, eventos o links asociados al documento"
+        '
+        'Btn_Enviar_documento_por_correo
+        '
+        Me.Btn_Enviar_documento_por_correo.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Enviar_documento_por_correo.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Enviar_documento_por_correo.Image = CType(resources.GetObject("Btn_Enviar_documento_por_correo.Image"), System.Drawing.Image)
+        Me.Btn_Enviar_documento_por_correo.ImageAlt = CType(resources.GetObject("Btn_Enviar_documento_por_correo.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Enviar_documento_por_correo.Name = "Btn_Enviar_documento_por_correo"
+        Me.Btn_Enviar_documento_por_correo.Tooltip = "Enviar documento por correo"
+        '
+        'Btn_Traza_Documento
+        '
+        Me.Btn_Traza_Documento.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Traza_Documento.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Traza_Documento.Image = CType(resources.GetObject("Btn_Traza_Documento.Image"), System.Drawing.Image)
+        Me.Btn_Traza_Documento.ImageAlt = CType(resources.GetObject("Btn_Traza_Documento.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Traza_Documento.Name = "Btn_Traza_Documento"
+        Me.Btn_Traza_Documento.Tooltip = "Revisar traza del documento"
+        '
+        'Btn_Archivos_Adjuntos
+        '
+        Me.Btn_Archivos_Adjuntos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Archivos_Adjuntos.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Archivos_Adjuntos.Image = CType(resources.GetObject("Btn_Archivos_Adjuntos.Image"), System.Drawing.Image)
+        Me.Btn_Archivos_Adjuntos.ImageAlt = CType(resources.GetObject("Btn_Archivos_Adjuntos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Archivos_Adjuntos.Name = "Btn_Archivos_Adjuntos"
+        Me.Btn_Archivos_Adjuntos.Tooltip = "Archivos adjuntos al documento"
+        '
+        'Btn_Marcar_Baja_Rotacion
+        '
+        Me.Btn_Marcar_Baja_Rotacion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Marcar_Baja_Rotacion.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Marcar_Baja_Rotacion.Image = CType(resources.GetObject("Btn_Marcar_Baja_Rotacion.Image"), System.Drawing.Image)
+        Me.Btn_Marcar_Baja_Rotacion.ImageAlt = CType(resources.GetObject("Btn_Marcar_Baja_Rotacion.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Marcar_Baja_Rotacion.Name = "Btn_Marcar_Baja_Rotacion"
+        Me.Btn_Marcar_Baja_Rotacion.Tooltip = "Marcar productos con baja rotación"
+        Me.Btn_Marcar_Baja_Rotacion.Visible = False
+        '
+        'Btn_Imprimir_Documento
+        '
+        Me.Btn_Imprimir_Documento.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Imprimir_Documento.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Imprimir_Documento.Image = CType(resources.GetObject("Btn_Imprimir_Documento.Image"), System.Drawing.Image)
+        Me.Btn_Imprimir_Documento.ImageAlt = CType(resources.GetObject("Btn_Imprimir_Documento.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Imprimir_Documento.Name = "Btn_Imprimir_Documento"
+        Me.Btn_Imprimir_Documento.Tooltip = "Imprimir documento"
+        '
+        'Btn_Cierre_Reactivacion_Documento
+        '
+        Me.Btn_Cierre_Reactivacion_Documento.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Cierre_Reactivacion_Documento.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Cierre_Reactivacion_Documento.Image = CType(resources.GetObject("Btn_Cierre_Reactivacion_Documento.Image"), System.Drawing.Image)
+        Me.Btn_Cierre_Reactivacion_Documento.ImageAlt = CType(resources.GetObject("Btn_Cierre_Reactivacion_Documento.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Cierre_Reactivacion_Documento.Name = "Btn_Cierre_Reactivacion_Documento"
+        Me.Btn_Cierre_Reactivacion_Documento.Tooltip = "Cierre o reactivación de documento"
+        '
+        'Btn_Firmar_Documento_DTE
+        '
+        Me.Btn_Firmar_Documento_DTE.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Firmar_Documento_DTE.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Firmar_Documento_DTE.Image = CType(resources.GetObject("Btn_Firmar_Documento_DTE.Image"), System.Drawing.Image)
+        Me.Btn_Firmar_Documento_DTE.ImageAlt = CType(resources.GetObject("Btn_Firmar_Documento_DTE.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Firmar_Documento_DTE.Name = "Btn_Firmar_Documento_DTE"
+        Me.Btn_Firmar_Documento_DTE.Tooltip = "Firmar documento DTE"
+        '
+        'Btn_Revisar_Situacion_Comercial
+        '
+        Me.Btn_Revisar_Situacion_Comercial.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Revisar_Situacion_Comercial.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Revisar_Situacion_Comercial.Image = CType(resources.GetObject("Btn_Revisar_Situacion_Comercial.Image"), System.Drawing.Image)
+        Me.Btn_Revisar_Situacion_Comercial.ImageAlt = CType(resources.GetObject("Btn_Revisar_Situacion_Comercial.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Revisar_Situacion_Comercial.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Revisar_Situacion_Comercial.Name = "Btn_Revisar_Situacion_Comercial"
+        Me.Btn_Revisar_Situacion_Comercial.Tooltip = "Revisar situación conmercial del documento"
+        Me.Btn_Revisar_Situacion_Comercial.Visible = False
+        '
+        'Btn_Permisos_Asociados
+        '
+        Me.Btn_Permisos_Asociados.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Permisos_Asociados.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Permisos_Asociados.Image = CType(resources.GetObject("Btn_Permisos_Asociados.Image"), System.Drawing.Image)
+        Me.Btn_Permisos_Asociados.ImageAlt = CType(resources.GetObject("Btn_Permisos_Asociados.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Permisos_Asociados.Name = "Btn_Permisos_Asociados"
+        Me.Btn_Permisos_Asociados.Tooltip = "Permisos asociados al documento"
+        '
+        'Btn_Ver_Orden_de_despacho
+        '
+        Me.Btn_Ver_Orden_de_despacho.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Ver_Orden_de_despacho.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Ver_Orden_de_despacho.Image = CType(resources.GetObject("Btn_Ver_Orden_de_despacho.Image"), System.Drawing.Image)
+        Me.Btn_Ver_Orden_de_despacho.ImageAlt = CType(resources.GetObject("Btn_Ver_Orden_de_despacho.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Ver_Orden_de_despacho.Name = "Btn_Ver_Orden_de_despacho"
+        Me.Btn_Ver_Orden_de_despacho.Tooltip = "Ver orden de despacho"
+        '
+        'Btn_Consolidar_Stock
+        '
+        Me.Btn_Consolidar_Stock.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Consolidar_Stock.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Consolidar_Stock.Image = CType(resources.GetObject("Btn_Consolidar_Stock.Image"), System.Drawing.Image)
+        Me.Btn_Consolidar_Stock.ImageAlt = CType(resources.GetObject("Btn_Consolidar_Stock.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Consolidar_Stock.Name = "Btn_Consolidar_Stock"
+        Me.Btn_Consolidar_Stock.Tooltip = "Consolidar stock de los productos"
+        '
+        'Btn_Eliminar_Anular
+        '
+        Me.Btn_Eliminar_Anular.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Eliminar_Anular.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Eliminar_Anular.Image = CType(resources.GetObject("Btn_Eliminar_Anular.Image"), System.Drawing.Image)
+        Me.Btn_Eliminar_Anular.ImageAlt = CType(resources.GetObject("Btn_Eliminar_Anular.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Eliminar_Anular.Name = "Btn_Eliminar_Anular"
+        Me.Btn_Eliminar_Anular.Tooltip = "Eliminar o Anular documento"
+        Me.Btn_Eliminar_Anular.Visible = False
+        '
+        'Btn_CopiarDocOtrEmpresa
+        '
+        Me.Btn_CopiarDocOtrEmpresa.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_CopiarDocOtrEmpresa.ForeColor = System.Drawing.Color.Black
+        Me.Btn_CopiarDocOtrEmpresa.Image = CType(resources.GetObject("Btn_CopiarDocOtrEmpresa.Image"), System.Drawing.Image)
+        Me.Btn_CopiarDocOtrEmpresa.Name = "Btn_CopiarDocOtrEmpresa"
+        Me.Btn_CopiarDocOtrEmpresa.Tooltip = "Exportar documento a otra base de datos"
+        '
+        'Btn_InfFincred
+        '
+        Me.Btn_InfFincred.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_InfFincred.ForeColor = System.Drawing.Color.Black
+        Me.Btn_InfFincred.Image = CType(resources.GetObject("Btn_InfFincred.Image"), System.Drawing.Image)
+        Me.Btn_InfFincred.Name = "Btn_InfFincred"
+        Me.Btn_InfFincred.Tooltip = "Ver respuesta FINCRED Pays"
+        Me.Btn_InfFincred.Visible = False
+        '
+        'Btn_HabilitarFacturacion
+        '
+        Me.Btn_HabilitarFacturacion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_HabilitarFacturacion.ForeColor = System.Drawing.Color.Black
+        Me.Btn_HabilitarFacturacion.Image = CType(resources.GetObject("Btn_HabilitarFacturacion.Image"), System.Drawing.Image)
+        Me.Btn_HabilitarFacturacion.ImageAlt = CType(resources.GetObject("Btn_HabilitarFacturacion.ImageAlt"), System.Drawing.Image)
+        Me.Btn_HabilitarFacturacion.Name = "Btn_HabilitarFacturacion"
+        Me.Btn_HabilitarFacturacion.Tooltip = "Habilitar nota de venta para ser facturada"
+        '
+        'Lbl_Tido
+        '
+        Me.Lbl_Tido.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_Tido.Image = CType(resources.GetObject("Lbl_Tido.Image"), System.Drawing.Image)
+        Me.Lbl_Tido.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
+        Me.Lbl_Tido.Name = "Lbl_Tido"
+        Me.Lbl_Tido.Text = "NOTA DE CREDITO"
+        Me.Lbl_Tido.TextLineAlignment = System.Drawing.StringAlignment.Near
         '
         'Frm_Ver_Documento
         '
@@ -1728,4 +1738,5 @@ Partial Class Frm_Ver_Documento
     Public WithEvents Btn_CopiarDocOtrEmpresa As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_VerXMLPDF As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_InfFincred As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_HabilitarFacturacion As DevComponents.DotNetBar.ButtonItem
 End Class

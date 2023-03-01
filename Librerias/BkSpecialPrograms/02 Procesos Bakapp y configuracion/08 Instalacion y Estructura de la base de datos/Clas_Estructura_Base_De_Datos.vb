@@ -675,6 +675,9 @@ Public Class Clas_Estructura_Base_De_Datos
             Case "Zw_DbExt_Maest"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_DbExt_Maest
 
+            Case "Zw_Docu_Ent"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Docu_Ent
+
             Case "Zw_Demonio_Archivador"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Demonio_Archivador
             Case "Zw_Demonio_Cof_Estacion"

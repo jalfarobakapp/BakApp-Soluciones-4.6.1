@@ -44,6 +44,7 @@ Partial Class Modulo_Programas_Especiales
         Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnCambiarDeUsuario = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Btn_Habilitar_Nvv_Para_Facturar = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -75,7 +76,7 @@ Partial Class Modulo_Programas_Especiales
         Me.MnuEspecialOtros.FixedSize = New System.Drawing.Size(1000, 550)
         Me.MnuEspecialOtros.MultiLine = True
         Me.MnuEspecialOtros.Name = "MnuEspecialOtros"
-        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Demonio, Me.BtnSQL2Excel, Me.BtnDTE2PDF, Me.BtnCreditoNegocios, Me.BtnCorreos_SMTP, Me.Btn_CRV_Control_Ruta_Vehiculos, Me.Btn_Etiquetas_De_Barra, Me.BtnCrearFormatos, Me.Btn_DTE_Respuestas_XML, Me.Btn_Precios_PrestaShop, Me.Btn_Revision_Compras_SII, Me.Btn_Huella, Me.Btn_Pocket_PC, Me.Btn_Archivador, Me.Btn_Cierre_Reactivacion_Documentos})
+        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Demonio, Me.BtnSQL2Excel, Me.BtnDTE2PDF, Me.BtnCreditoNegocios, Me.BtnCorreos_SMTP, Me.Btn_CRV_Control_Ruta_Vehiculos, Me.Btn_Etiquetas_De_Barra, Me.BtnCrearFormatos, Me.Btn_DTE_Respuestas_XML, Me.Btn_Precios_PrestaShop, Me.Btn_Revision_Compras_SII, Me.Btn_Huella, Me.Btn_Pocket_PC, Me.Btn_Archivador, Me.Btn_Cierre_Reactivacion_Documentos, Me.Btn_Habilitar_Nvv_Para_Facturar})
         '
         '
         '
@@ -537,6 +538,33 @@ Partial Class Modulo_Programas_Especiales
         Me.LabelX1.TabIndex = 40
         Me.LabelX1.Text = "<font color=""#349FCE""><b>PROGRAMAS ESPECIALES</b></font>"
         '
+        'Btn_Habilitar_Nvv_Para_Facturar
+        '
+        Me.Btn_Habilitar_Nvv_Para_Facturar.Image = CType(resources.GetObject("Btn_Habilitar_Nvv_Para_Facturar.Image"), System.Drawing.Image)
+        Me.Btn_Habilitar_Nvv_Para_Facturar.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_Habilitar_Nvv_Para_Facturar.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Habilitar_Nvv_Para_Facturar.Name = "Btn_Habilitar_Nvv_Para_Facturar"
+        Me.Btn_Habilitar_Nvv_Para_Facturar.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Habilitar_Nvv_Para_Facturar.Text = "<font size=""+4""><b>HABILITAR NVV PARA FACTURAR</b></font><br/><font size=""-1"">Pro" &
+    "ceso masivo<br/> </font>"
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(209, Byte), Integer), CType(CType(93, Byte), Integer), CType(CType(123, Byte), Integer))
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(209, Byte), Integer), CType(CType(93, Byte), Integer), CType(CType(123, Byte), Integer))
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(209, Byte), Integer), CType(CType(93, Byte), Integer), CType(CType(123, Byte), Integer))
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(209, Byte), Integer), CType(CType(93, Byte), Integer), CType(CType(123, Byte), Integer))
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.PaddingBottom = 4
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.PaddingLeft = 4
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.PaddingRight = 4
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.PaddingTop = 4
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Habilitar_Nvv_Para_Facturar.TitleText = "BakApp"
+        '
         'Modulo_Programas_Especiales
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -571,4 +599,5 @@ Partial Class Modulo_Programas_Especiales
     Private WithEvents Btn_Pocket_PC As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Archivador As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Cierre_Reactivacion_Documentos As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_Habilitar_Nvv_Para_Facturar As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

@@ -226,6 +226,8 @@ Public Class Frm_BusquedaDocumento_Filtro
         End Set
     End Property
 
+    Public Property HabilitarNVVParaFacturar As Boolean
+
 #End Region
 
     Public Sub New(Abrir_Seleccionado As Boolean)
@@ -703,6 +705,15 @@ Buscar:
 
         Me.Cursor = Cursors.WaitCursor
 
+        If HabilitarNVVParaFacturar Then
+
+            Dim _SqlQr = "Update #Paso Set Chk = (Select HabilitadaFac From BAKAPP_PRB.dbo.Zw_Docu_Ent Z1 Where Z1.Idmaeedo = #Paso.IDMAEEDO)" & vbCrLf &
+                         "Delete #Paso Where Chk = 1"
+
+            Consulta_sql = Replace(Consulta_sql, "--#OtrasOpciones#", _SqlQr)
+
+        End If
+
         Dim _Tbl_Paso As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         Me.Cursor = Cursors.Default
@@ -769,6 +780,7 @@ Buscar:
             Fm.Abrir_Cerrar_Documentos_Compromiso = _Abrir_Cerrar_Documentos_Compromiso
             Fm.Abrir_Documentos = Rdb_Estado_Cerradas.Checked
             Fm.Cerrar_Documentos = Rdb_Estado_Vigente.Checked
+            Fm.HabilitarNVVParaFacturar = HabilitarNVVParaFacturar
 
             Fm.ShowDialog(Me)
 
