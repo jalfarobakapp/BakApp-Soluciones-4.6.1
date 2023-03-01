@@ -241,6 +241,8 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Despachos_Transportistas", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Despachos_MiniCompXProd", _Modificar, Lbl_Eventos)
 
+            .Sb_Revisar_Tabla2(Me, "Zw_Docu_Ent", _Modificar, Lbl_Eventos)
+
             .Sb_Revisar_Tabla2(Me, "Zw_Referencias_Dte", _Modificar, Lbl_Eventos)
 
             ' PERMISOS REMOTOS

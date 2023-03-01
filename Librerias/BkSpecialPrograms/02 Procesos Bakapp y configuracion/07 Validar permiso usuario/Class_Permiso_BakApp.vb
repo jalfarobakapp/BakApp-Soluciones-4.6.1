@@ -550,6 +550,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00079", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00080", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00081", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00082", _Objeto, _Formulario)
+
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -2397,6 +2399,11 @@ Public Class Class_Permiso_BakApp
 
             Case "Doc00081"
                 _DescripcionPermiso = "CREAR DOCUMENTOS DESDE DTE XML ENVIADO POR PROVEEDORES."
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
+            Case "Doc00082"
+                _DescripcionPermiso = "HABILITAR NOTAS DE VENTA PARA SER FACTURADAS DE OTROS USUARIOS/VENDEDORES"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 

@@ -642,7 +642,7 @@ Public Class Frm_Demonio_DTEMonitor
         Consulta_sql = "Select Top 20 Tid.*,Doc.Tido From " & _Global_BaseBk & "Zw_DTE_Trackid Tid" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_DTE_Documentos Doc On Tid.Id_Dte = Doc.Id_Dte" & vbCrLf &
                        "Where Doc.Tido <> 'BLV' And Tid.AmbienteCertificacion = " & _AmbienteCertificacion & vbCrLf &
-                       "And ((Tid.Procesar = 0 And (Tid.Estado = '-11' Or Tid.Estado = 'SOK' Or Tid.Estado = '107' Or Tid.Estado = '')) Or (Tid.Procesar = 1 And Tid.Procesado = 0))" & vbCrLf &
+                       "And ((Tid.Procesar = 0 And (Tid.Estado = '-11' Or Tid.Estado = 'SOK' Or Tid.Estado = '107' Or Tid.Estado = '') And Tid.Intentos <=3) Or (Tid.Procesar = 1 And Tid.Procesado = 0))" & vbCrLf &
                        "And Tid.Idmaeedo Not In  (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid Tid2 Where Tid.Idmaeedo = Tid2.Idmaeedo And ((Informado = 1 And Reparo = 1 And Estado <> '107') or (Aceptado = 1)))" & vbCrLf &
                        "Order By Tido,Nudo"
 
@@ -704,20 +704,26 @@ Public Class Frm_Demonio_DTEMonitor
 
                 If Fx_Consultar_Trackid_DTE(_Trackid, _Resultado) Then
 
-                    _Respuesta = CType(_Resultado, HEFESTO.CONSULTA.TRACKID.entRespuestaDTE).Glosa
+                    Try
 
-                    Sb_Revisar_Respuesta_Trackid(_Respuesta, _Estado, _Glosa,
-                                                 _Aceptado, _Informado, _Rechazado, _Reparo,
-                                                 _VolverProcesar)
+                        _Respuesta = CType(_Resultado, HEFESTO.CONSULTA.TRACKID.entRespuestaDTE).Glosa
 
-                    If _VolverProcesar And _Intentos <= 3 Then
-                        _Procesado = 0
-                        _Procesar = 1
-                    End If
+                        Sb_Revisar_Respuesta_Trackid(_Respuesta, _Estado, _Glosa,
+                                                     _Aceptado, _Informado, _Rechazado, _Reparo,
+                                                     _VolverProcesar)
 
-                    If _Estado = "EPR" And _Tido <> "GTI" Then
-                        _EnviarMail = 1
-                    End If
+                        If _VolverProcesar And _Intentos <= 3 Then
+                            _Procesado = 0
+                            _Procesar = 1
+                        End If
+
+                        If _Estado = "EPR" And _Tido <> "GTI" Then
+                            _EnviarMail = 1
+                        End If
+
+                    Catch ex As Exception
+                        _Intentos -= 1
+                    End Try
 
                 Else
 

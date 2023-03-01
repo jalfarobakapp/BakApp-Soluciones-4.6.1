@@ -12150,6 +12150,30 @@ Public Class Frm_Formulario_Documento
 
                     If Not IsNothing(_Row_Doc_Relacionado) Then
 
+                        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") And _Tido_Relacionado = "NVV" Then
+
+                            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Docu_Ent Where Idmaeedo = " & _Row_Doc_Relacionado.Item("IDMAEEDO")
+                            Dim _Row_Docu_Ent As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                            Dim _HabilitadaFac = False
+
+                            If Not IsNothing(_Row_Docu_Ent) Then
+                                _HabilitadaFac = _Row_Docu_Ent.Item("HabilitadaFac")
+                            End If
+
+                            If Not _HabilitadaFac Then
+                                _Fila.Cells("CodEntidad").Value = String.Empty
+                                MessageBoxEx.Show(Me, "Esta nota de venta no esta habilitada para ser facturada." & vbCrLf &
+                                      "Según la configuración General las notas de venta deben ser habilitadas para que se puedan facturar",
+                                      "Validación NVV: " & _Nudo_Relacionado, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                If _Cerrar_Al_Grabar Then
+                                    Me.Close()
+                                End If
+                                Return
+                            End If
+
+                        End If
+
                         _CodEntidad = _Row_Doc_Relacionado.Item("ENDO")
                         _CodSucEntidad = _Row_Doc_Relacionado.Item("SUENDO")
                         _Idmaeedo_Relacionado = _Row_Doc_Relacionado.Item("IDMAEEDO")
@@ -15835,6 +15859,27 @@ Public Class Frm_Formulario_Documento
                                     If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00073", Nothing, "", "") Then
                                         Return
                                     End If
+                                End If
+
+                            End If
+
+                            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+
+                                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Docu_Ent Where Idmaeedo = " & _IdMaeedo
+                                Dim _Row_Docu_Ent As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                                Dim _HabilitadaFac = False
+
+                                If Not IsNothing(_Row_Docu_Ent) Then
+                                    _HabilitadaFac = _Row_Docu_Ent.Item("HabilitadaFac")
+                                End If
+
+                                If _HabilitadaFac Then
+
+                                    MessageBoxEx.Show(Me, "Esta nota de venta no puede ser editada, ya que esta habilitada para ser facturada.",
+                                      "Validación NVV: " & _Row_Docu_Ent.Item("Nudo"), MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                    Sb_Limpiar(Modalidad)
+                                    Return
                                 End If
 
                             End If
@@ -24808,63 +24853,10 @@ Public Class Frm_Formulario_Documento
     End Function
 
 
-    Function Fx_Vaidar_Fincred() As Fincred_API.Respuesta
-
-        Dim _Respuesta As New Fincred_API.Respuesta
-
-        _Row_Encabezado_Doc = _TblEncabezado.Rows(0)
-
-        Dim _Rut_girador As String = _RowEntidad.Item("Rut")
-
-        _Rut_girador = Replace(_Rut_girador, "-", "")
-        _Rut_girador = Replace(_Rut_girador, ".", "")
-
-        Dim Generator As System.Random = New System.Random()
-
-        Dim _Rut_comprador As String
-        Dim _Numero_transaccion_cliente As Integer = Generator.Next(10000, 99999)
-        Dim _Numero_documento_transaccion As String = "XXXXXXXXX"
-        Dim _Producto As Cl_Fincred_Bakapp.Cl_Fincred_SQL.Producto = Cl_Fincred_Bakapp.Cl_Fincred_SQL.Producto.Facturas
-        Dim _Banco As Integer = 0
-        Dim _Monto_total_venta As Double = _Row_Encabezado_Doc.Item("TotalBrutoDoc")
-        Dim _Cantidad_documentos_venta As Integer = 1
-        Dim _Num_primer_doc As Integer = _Numero_transaccion_cliente
-        Dim _Fec_primer_venc As String = Format(_Row_Encabezado_Doc.Item("Fecha_1er_Vencimiento"), "ddMMyyyy")
-        Dim _Num_telefono As String = _RowEntidad.Item("FOEN").ToString.Trim
-
-        Dim _ProductoV = _Producto + 1
-
-        '_Rut_girador = "118549252" ' APROBACION DE PRUEBAS
-        '_Rut_girador = "094005051" ' NEGACION DE PRUEBAS
-
-        _Rut_comprador = _Rut_girador
-
-        Dim _Fincred_Id_Token = _Global_Row_Configuracion_Estacion.Item("Fincred_Id_Token")
-
-        Dim _Fincred As New Cl_Fincred_Bakapp.Cl_Fincred_SQL(_Fincred_Id_Token)
-        _Fincred.Fx_Generar_Consulta(_Rut_girador,
-                                     _Rut_comprador,
-                                     _Numero_transaccion_cliente,
-                                     _Numero_documento_transaccion,
-                                     _ProductoV,
-                                     _Banco,
-                                     _Monto_total_venta,
-                                     _Cantidad_documentos_venta,
-                                     _Num_primer_doc,
-                                     _Fec_primer_venc,
-                                     _Num_telefono,
-                                     _Tido,
-                                     "XXXXXXXXXX")
-
-        Return _Fincred.Respuesta
-
-    End Function
-
     Function Fx_Revisar_Fincred() As Boolean
 
         Dim _RevFincredEnt As Boolean
         Dim _Revisar_Fincred As Boolean
-        Dim _Fincred_Respuesta As New Fincred_API.Respuesta
 
         If _Global_Row_Configuracion_General.Item("Fincred_Usar") And _Global_Row_Configuracion_Estacion.Item("Fincred_Usar") Then
             _Revisar_Fincred = _TblEncabezado.Rows(0).Item("RevFincred")
@@ -24887,34 +24879,51 @@ Public Class Frm_Formulario_Documento
 
         If _Revisar_Fincred And _Tido = "NVV" Then
 
-            _Fincred_Respuesta = Fx_Vaidar_Fincred()
+            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
 
-            _TblEncabezado.Rows(0).Item("MontoFincred") = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")
-            _TblEncabezado.Rows(0).Item("RevFincred") = False
+                MessageBoxEx.Show(Me, "Esta nota de venta sera evaluada por FINCRED al momento de ser habilitada para poder ser facturada" & vbCrLf &
+                                  "Recuerde que las condiciones de venta podrian cambiar durante esta validación",
+                                  "Cliente FINCRED",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
 
-            If _Fincred_Respuesta.EsCorrecto Then
-
-                _TblEncabezado.Rows(0).Item("IdFincred") = _Fincred_Respuesta.Id_TramaRespuesta
-
-                MessageBoxEx.Show(Me, _Fincred_Respuesta.TramaRespuesta.descripcion_negacion & vbCrLf &
-                                      "Código de autorización: " & _Fincred_Respuesta.TramaRespuesta.documentos(0).autorizacion,
-                                      "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
-                MessageBoxEx.Show(Me, "Código de autorización: RECHAZADO" & vbCrLf &
-                                  "Respuesta FINCRED: " & _Fincred_Respuesta.MensajeError & vbCrLf & vbCrLf &
-                                  "El documento debera seguir el conducto regular, se quitaran los plazos de vencimineto" & vbCrLf &
-                                  "Para continuar debera volver a GRABAR el documento",
-                                  "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
-                _TblEncabezado.Rows(0).Item("IdFincred") = _Fincred_Respuesta.Id_TramaRespuesta
-                _TblEncabezado.Rows(0).Item("FechaEmision") = _TblEncabezado.Rows(0).Item("FechaEmision")
-                _TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento") = _TblEncabezado.Rows(0).Item("FechaEmision")
-                _TblEncabezado.Rows(0).Item("FechaUltVencimiento") = _TblEncabezado.Rows(0).Item("FechaEmision")
-                _TblEncabezado.Rows(0).Item("Cuotas") = 0
-                _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento") = 0
-                _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = 0
+                Dim _Fincred_Respuesta As New Fincred_API.Respuesta
 
-                Return False
+                _Fincred_Respuesta = Fx_Vaidar_Fincred(0, _Tido, "XXXXXXXXXX",
+                                                       _RowEntidad.Item("Rut"),
+                                                       _Row_Encabezado_Doc.Item("TotalBrutoDoc"),
+                                                       _Row_Encabezado_Doc.Item("_Fecha_1er_Vencimiento"),
+                                                       _RowEntidad.Item("FOEN").ToString.Trim)
+
+                _TblEncabezado.Rows(0).Item("MontoFincred") = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")
+                _TblEncabezado.Rows(0).Item("RevFincred") = False
+
+                If _Fincred_Respuesta.EsCorrecto Then
+
+                    _TblEncabezado.Rows(0).Item("IdFincred") = _Fincred_Respuesta.Id_TramaRespuesta
+
+                    MessageBoxEx.Show(Me, _Fincred_Respuesta.TramaRespuesta.descripcion_negacion & vbCrLf &
+                                          "Código de autorización: " & _Fincred_Respuesta.TramaRespuesta.documentos(0).autorizacion,
+                                          "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Else
+                    MessageBoxEx.Show(Me, "Código de autorización: RECHAZADO" & vbCrLf &
+                                      "Respuesta FINCRED: " & _Fincred_Respuesta.MensajeError & vbCrLf & vbCrLf &
+                                      "El documento debera seguir el conducto regular, se quitaran los plazos de vencimineto" & vbCrLf &
+                                      "Para continuar debera volver a GRABAR el documento",
+                                      "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                    _TblEncabezado.Rows(0).Item("IdFincred") = _Fincred_Respuesta.Id_TramaRespuesta
+                    _TblEncabezado.Rows(0).Item("FechaEmision") = _TblEncabezado.Rows(0).Item("FechaEmision")
+                    _TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento") = _TblEncabezado.Rows(0).Item("FechaEmision")
+                    _TblEncabezado.Rows(0).Item("FechaUltVencimiento") = _TblEncabezado.Rows(0).Item("FechaEmision")
+                    _TblEncabezado.Rows(0).Item("Cuotas") = 0
+                    _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento") = 0
+                    _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = 0
+
+                    Return False
+
+                End If
 
             End If
 

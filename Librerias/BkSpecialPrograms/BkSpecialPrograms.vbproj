@@ -4876,6 +4876,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Informes\Informe de vencimientos Compras y Ventas\Frm_Inf_Vencimientos_Procesar_Informe.resx">
       <DependentUpon>Frm_Inf_Vencimientos_Procesar_Informe.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Informes\Informe de vencimientos Compras y Ventas\Frm_Inf_Vencimientos_Revisa_Documentos.resx">
       <DependentUpon>Frm_Inf_Vencimientos_Revisa_Documentos.vb</DependentUpon>
@@ -7176,6 +7177,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Despachos_Tom.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Despachos_Transportistas.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_Archivos.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_Ent.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_ObligPg.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_Aec.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_Caf.sql" />
@@ -7441,6 +7443,10 @@
     <None Include="Resources\bill-credit-card-printer - copia.png" />
     <None Include="Resources\bill-credit-card-save - copia.png" />
     <None Include="Resources\save-banknotes.png" />
+    <None Include="Resources\invoice-forbidden.png" />
+    <None Include="Resources\invoice-ok.png" />
+    <None Include="Resources\invoice-forbidden___copia.png" />
+    <None Include="Resources\invoice-ok___copia.png" />
     <Content Include="Resources\user_add.png" />
     <None Include="Resources\_Trans\_transport_ok.png" />
     <None Include="Resources\_Trans\_transport_lock.png" />

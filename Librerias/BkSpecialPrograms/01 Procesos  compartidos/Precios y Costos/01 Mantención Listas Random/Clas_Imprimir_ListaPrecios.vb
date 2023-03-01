@@ -297,10 +297,22 @@ Public Class Clas_Imprimir_ListaPrecios
             Dim _FonoLista = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones", "NombreTabla", "Tabla = 'LISTAPRECIO_FONO' And CodigoTabla = '" & _Kolt & "'")
             Dim _Vigencia = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones", "NombreTabla", "Tabla = 'LISTAPRECIO_VIGENCIA' And CodigoTabla = '" & _Kolt & "'")
 
+            ' Se agrega esta funcion para poner observaciones
+            Dim _Observaciones2 = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones", "NombreTabla", "Tabla = 'LISTAPRECIO_OBSERV1' And CodigoTabla = '" & _Kolt & "'")
+
+            '_Observaciones2 = "OBSERVACIONES 2 FDS DSF DSFSD FSDJF SDJF SDLFKJ LSDKFJ DSJF LSDFJLJSD NBN FIN"
+
             e.Graphics.DrawString(_NombreLista, Fx_Fuente(_Enum_Fuentes.Arial, 16, FontStyle.Bold), Brushes.Black, _xPos + 200, _yPos)
             _yPos += 30
             e.Graphics.DrawString("Vigencia:" & _Vigencia, Fx_Fuente(_Enum_Fuentes.Courier_New, _ZFE, FontStyle.Bold), Brushes.Black, _xPos + 250, _yPos)
-            _yPos += 60
+
+            If Not String.IsNullOrWhiteSpace(_Observaciones2) Then
+                _yPos += 30
+                e.Graphics.DrawString("Obs:" & _Observaciones2, Fx_Fuente(_Enum_Fuentes.Courier_New, _ZFE, FontStyle.Bold), Brushes.Black, _xPos + 150, _yPos)
+                _yPos += 30
+            Else
+                _yPos += 60
+            End If
 
             Dim _Observaciones = _WebLista & Space(5) & "Fono: " & _FonoLista ' "www.cisternaspetfood.cl     Fono: 28213320 - 28213373"
             e.Graphics.DrawString(_Observaciones, Fx_Fuente(_Enum_Fuentes.Courier_New, _ZFE, FontStyle.Bold), Brushes.Black, _xPos, _yPos)

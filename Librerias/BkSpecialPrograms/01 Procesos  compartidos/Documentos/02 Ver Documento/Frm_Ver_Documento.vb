@@ -58,6 +58,8 @@ Public Class Frm_Ver_Documento
     Dim _Eliminado As Boolean
     Dim _Anulado As Boolean
 
+    Dim _Row_Docu_Ent As DataRow
+
     Enum _Sector
         Encabezado
         Pie
@@ -751,6 +753,38 @@ Public Class Frm_Ver_Documento
                 Btn_Mnu_Eliminar_Reciclar.Text = "Eliminar y reciclar"
             End If
 
+        End If
+
+        Btn_HabilitarFacturacion.Visible = False
+
+        If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Docu_Ent") Then
+            Consulta_sql = "Select Dce.*,Isnull(NOKOFU,'') As NomFunHabilita From " & _Global_BaseBk & "Zw_Docu_Ent Dce" & vbCrLf &
+                           "Left Join TABFU On Dce.FunAutorizaFac = KOFU" & vbCrLf &
+                           "Where Idmaeedo = " & _Idmaeedo
+            _Row_Docu_Ent = _Sql.Fx_Get_DataRow(Consulta_sql)
+        End If
+
+        If Not IsNothing(_Row_Docu_Ent) And _Tido = "NVV" Then
+            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+                Btn_HabilitarFacturacion.Visible = True
+                If _Row_Docu_Ent.Item("HabilitadaFac") Then
+                    If Global_Thema = Enum_Themas.Oscuro Then
+                        Btn_HabilitarFacturacion.Image = My.Resources.Recursos_Documento.invoice_ok___copia
+                    Else
+                        Btn_HabilitarFacturacion.Image = My.Resources.Recursos_Documento.invoice_ok
+                    End If
+                    Btn_HabilitarFacturacion.Tooltip = "Nota de venta habilitada para ser facturada"
+                    Me.Text += " (*** HABILITADA PARA SER FACTURADA ***)"
+                Else
+                    If Global_Thema = Enum_Themas.Oscuro Then
+                        Btn_HabilitarFacturacion.ImageAlt = My.Resources.Recursos_Documento.invoice_forbidden___copia
+                    Else
+                        Btn_HabilitarFacturacion.ImageAlt = My.Resources.Recursos_Documento.invoice_forbidden
+                    End If
+                    Btn_HabilitarFacturacion.Tooltip = "Habilitar nota de venta para ser facturada"
+                    Me.Text += " (*** NO ESTA HABILITADA PARA SER FACTURADA ***)"
+                End If
+            End If
         End If
 
         Me.Refresh()
@@ -4627,6 +4661,61 @@ Public Class Frm_Ver_Documento
         Else
             MessageBoxEx.Show(Me, "Revisión de parte de FINCRED RECHAZADA" & vbCrLf & vbCrLf &
                               "Respuesta Fincred: " & _Descripcion_negacion, "Información FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
+
+    End Sub
+
+    Private Sub Btn_HabilitarFacturacion_Click(sender As Object, e As EventArgs) Handles Btn_HabilitarFacturacion.Click
+
+        If _Row_Docu_Ent.Item("HabilitadaFac") Then
+            MessageBoxEx.Show(Me, "Nota de venta habilitada para ser facturada." & vbCrLf & vbCrLf &
+                             "Habilitada por: " & _Row_Docu_Ent.Item("NomFunHabilita").ToString.Trim, "NVV Habilitada",
+                             MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Else
+
+            If MessageBoxEx.Show(Me, "Esta Nota de venta NO esta habilitada para ser facturada." & vbCrLf &
+                             "¿Desea habilitar la NVV para que pueda ser facturada?", "Validación",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = DialogResult.Yes Then
+
+                Dim _Autorizado = False
+
+                If FUNCIONARIO = _TblEncabezado.Rows(0).Item("KOFUDO") Then
+                    _Autorizado = True
+                Else
+                    For Each _Fila As DataRow In _TblDetalle.Rows
+                        If _Fila.Item("KOFULIDO") = FUNCIONARIO Then
+                            _Autorizado = True
+                            Exit For
+                        End If
+                    Next
+                End If
+
+                Dim _FunAutorizaFac = FUNCIONARIO
+
+                If Not _Autorizado Then
+
+                    Dim _Rows_Usuario_Autoriza As DataRow
+
+                    _Autorizado = Fx_Tiene_Permiso(Me, "Doc00082",,,,,,,,, _Rows_Usuario_Autoriza)
+
+                    If Not _Autorizado Then
+                        Return
+                    End If
+
+                    _FunAutorizaFac = _Rows_Usuario_Autoriza.Item("KOFU")
+
+                End If
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Ent Set HabilitadaFac = 1, FunAutorizaFac = '" & _FunAutorizaFac & "'" & vbCrLf &
+                               "Where Idmaeedo = " & _Idmaeedo
+                If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                    MessageBoxEx.Show(Me, "Nota de venta autorizada para poder ser facturada", "Información",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Me.Close()
+                End If
+
+            End If
+
         End If
 
     End Sub

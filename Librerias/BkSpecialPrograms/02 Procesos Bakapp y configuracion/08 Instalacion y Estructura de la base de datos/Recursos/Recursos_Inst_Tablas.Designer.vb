@@ -613,15 +613,15 @@ Namespace My.Resources
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
         '''CREATE TABLE [dbo].[Zw_DbExt_Conexion](
-        '''	[Id]				[int] IDENTITY(1,1) NOT NULL,
-        '''	[Nombre_Conexion]	[varchar](100)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Servidor]			[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Puerto]			[varchar](8)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Usuario]			[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Clave]				[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[BaseDeDatos]		[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Empresa]   		[char](2)   	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[GrbProd_Nuevos]    [bit]      	    NOT NULL DEF [resto de la cadena truncado]&quot;;.
+        '''	[Id]				    [int]           IDENTITY(1,1) NOT NULL,
+        '''	[Nombre_Conexion]   	[varchar](100)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Servidor]			    [varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Puerto]			    [varchar](8)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Usuario]			    [varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Clave]				    [varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[BaseDeDatos]		    [varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Empresa]   		    [char](2)   	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[GrbPro [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_DbExt_Conexion() As String
             Get
@@ -1102,6 +1102,27 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Zw_Docu_Archivos() As String
             Get
                 Return ResourceManager.GetString("Zw_Docu_Archivos", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Docu_Ent](
+        '''	[Idmaeedo]			[int]			NOT NULL DEFAULT (0),
+        '''	[NombreEquipo]		[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[TipoEstacion]		[char](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Empresa]			[char](2)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Modalidad]			[varchar](5)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Tido]				[char](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nudo]				[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[FechaHoraGrab]		[datetime]		NULL	 DEFAULT (getdate()),
+        '''	[HabilitadaFac]		[bit]			NOT NULL DEFAULT (0),
+        '''	[FunAu [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Docu_Ent() As String
+            Get
+                Return ResourceManager.GetString("Zw_Docu_Ent", resourceCulture)
             End Get
         End Property
         

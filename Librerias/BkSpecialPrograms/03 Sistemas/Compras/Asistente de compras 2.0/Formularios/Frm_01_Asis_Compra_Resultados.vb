@@ -89,7 +89,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Get
             Return _Tbl_Filtro_Super_Familias
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Super_Familias = value
         End Set
     End Property
@@ -97,7 +97,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Get
             Return _Tbl_Filtro_Marcas
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Marcas = value
         End Set
     End Property
@@ -105,7 +105,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Get
             Return _Tbl_Filtro_Rubro
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Rubro = value
         End Set
     End Property
@@ -113,7 +113,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Get
             Return _Tbl_Filtro_Clalibpr
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Clalibpr = value
         End Set
     End Property
@@ -121,7 +121,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Get
             Return _Tbl_Filtro_Zonas
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _Tbl_Filtro_Zonas = value
         End Set
     End Property
@@ -129,7 +129,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Get
             Return _TblBodCompra
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _TblBodCompra = value
         End Set
     End Property
@@ -137,7 +137,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Get
             Return _Filtro_Marcas_Todas
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Filtro_Marcas_Todas = value
         End Set
     End Property
@@ -145,7 +145,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Get
             Return _Filtro_Super_Familias_Todas
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Filtro_Super_Familias_Todas = value
         End Set
     End Property
@@ -153,7 +153,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Get
             Return _Filtro_Rubro_Todas
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Filtro_Rubro_Todas = value
         End Set
     End Property
@@ -161,7 +161,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Get
             Return _Filtro_Clalibpr_Todas
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Filtro_Clalibpr_Todas = value
         End Set
     End Property
@@ -169,7 +169,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Get
             Return _Filtro_Zonas_Todas
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Filtro_Zonas_Todas = value
         End Set
     End Property
@@ -177,7 +177,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Get
             Return _RowParametros
         End Get
-        Set(ByVal value As DataRow)
+        Set(value As DataRow)
             _RowParametros = value
             Sb_Parametros_Revisar()
         End Set
@@ -186,7 +186,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Get
             Return _Nombre_Tbl_Paso_Informe
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Nombre_Tbl_Paso_Informe = value
         End Set
     End Property
@@ -316,7 +316,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Frm_01_AsisCompra_Resultados_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+    Private Sub Frm_01_AsisCompra_Resultados_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
         _Rdb_Productos_Proveedor = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor",
                                                                     "Funcionario = '" & FUNCIONARIO & "'" & Space(1) &
@@ -424,7 +424,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Frm_01_AsisCompra_Resultados_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+    Private Sub Frm_01_AsisCompra_Resultados_FormClosed(sender As Object, e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
 
         If Not Accion_Automatica Then
             Sb_Parametros_Informe_Sql(True)
@@ -1665,7 +1665,7 @@ Public Class Frm_01_Asis_Compra_Resultados
     End Function
 
 
-    Private Sub CmmdBuscarInf_Executed(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmmdBuscarInf.Executed
+    Private Sub CmmdBuscarInf_Executed(sender As System.Object, e As System.EventArgs) Handles CmmdBuscarInf.Executed
 
         Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
         Fm.Pro_CodEntidad = String.Empty
@@ -1690,7 +1690,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         End If
     End Sub
 
-    Private Function BuscarEnGrilla(ByVal Codigo As String)
+    Private Function BuscarEnGrilla(Codigo As String)
 
         If BuscarDatoEnGrilla(Trim(Codigo), "Codigo", Fm_Hijo.Grilla) Then
             Fm_Hijo.Grilla.CurrentCell = Fm_Hijo.Grilla.Rows(Fm_Hijo.Grilla.CurrentRow.Index).Cells("CantComprar")
@@ -1699,7 +1699,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Function
 
-    Function RevisarExitenciaDeProducto(ByVal Codigo As String) As Boolean
+    Function RevisarExitenciaDeProducto(Codigo As String) As Boolean
 
         Dim Registros As Integer
         Registros = _Sql.Fx_Cuenta_Registros(_Nombre_Tbl_Paso_Informe, "Codigo = '" & Codigo & "'")
@@ -1712,7 +1712,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Function
 
-    Sub AgregarProducto(ByVal Codigo As String)
+    Sub AgregarProducto(Codigo As String)
 
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
             MsgBox("Producto incorporado correctamente", MsgBoxStyle.Information, "Agregar producto adicional")
@@ -1721,7 +1721,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub CmmdImprimirList_Executed(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmmdImprimirList.Executed
+    Private Sub CmmdImprimirList_Executed(sender As System.Object, e As System.EventArgs) Handles CmmdImprimirList.Executed
 
         Consulta_sql = "SELECT Codigo,CodAlternativo AS CodigoAlternativo, Descripcion, UD1, UD2,Rtu" & vbCrLf &
                        "FROM " & _Nombre_Tbl_Paso_Informe & vbCrLf &
@@ -2147,7 +2147,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Function
 
-    Private Sub BtnDejarCantEnCero_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnDejarCantEnCero.Click
+    Private Sub BtnDejarCantEnCero_Click(sender As System.Object, e As System.EventArgs) Handles BtnDejarCantEnCero.Click
 
         If MessageBoxEx.Show(Me, "¿Confirma dejar todas las cantidades a comprar en cero [0]?" & vbCrLf &
                              "Solo de la vista actual Y productos que no han sido comprados con el asistente", "Confirmación",
@@ -2180,8 +2180,8 @@ Public Class Frm_01_Asis_Compra_Resultados
     End Sub
 
     Private Function SumarCantidadesComprar(
-        ByVal nombre_Columna As String,
-        ByVal Dgv As DataGridView) As Double
+        nombre_Columna As String,
+        Dgv As DataGridView) As Double
 
         Dim total As Double = 0
 
@@ -2204,7 +2204,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
 
 
-    Private Sub PressEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs)
+    Private Sub PressEnter(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs)
         Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
         KeyAscii = CShort(SoloNumeros(KeyAscii))
         If KeyAscii = 0 Then
@@ -2225,16 +2225,16 @@ Public Class Frm_01_Asis_Compra_Resultados
         End If
     End Sub
 
-    Private Sub BtnSalir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnSalir.Click
+    Private Sub BtnSalir_Click(sender As System.Object, e As System.EventArgs) Handles BtnSalir.Click
         Me.Close()
     End Sub
 
-    Private Sub BtnExporExcelTodo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnExporExcelTodo.Click
+    Private Sub BtnExporExcelTodo_Click(sender As System.Object, e As System.EventArgs) Handles BtnExporExcelTodo.Click
         Consulta_sql = "SELECT * FROM " & _Nombre_Tbl_Paso_Informe
         ExportarTabla_JetExcel(Consulta_sql, Me)
     End Sub
 
-    Private Sub ChkConsiderarRot_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub ChkConsiderarRot_CheckedChanged(sender As System.Object, e As System.EventArgs)
         LblStockCritico.Enabled = Chk_Mostrar_Solo_Stock_Critico.Checked
         Input_Tiempo_Reposicion.Enabled = Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked
     End Sub
@@ -2520,7 +2520,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
 #Region "PROCEDIMIENTOS GRILLA PRINCIPAL"
 
-    Private Sub Grilla_ColumnHeaderMouseClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellMouseEventArgs)
+    Private Sub Grilla_ColumnHeaderMouseClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs)
 
         Dim Grilla = CType(sender, DataGridView)
 
@@ -2536,7 +2536,7 @@ Public Class Frm_01_Asis_Compra_Resultados
     End Sub
 
 
-    Private Sub Grilla_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Grilla_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Dim Grilla = CType(sender, DataGridView)
 
@@ -2618,7 +2618,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Grilla_CellBeginEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellCancelEventArgs)
+    Private Sub Grilla_CellBeginEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellCancelEventArgs)
 
         Dim Grilla = CType(sender, DataGridView)
 
@@ -2807,7 +2807,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Grilla_EditingControlShowing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs)
+    Private Sub Grilla_EditingControlShowing(sender As System.Object, e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs)
 
         Dim Grilla = CType(sender, DataGridView)
         Dim Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -2820,7 +2820,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         End If
     End Sub
 
-    Private Sub Grilla_CellClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Grilla_CellClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Dim _Fila As DataGridViewRow = Fm_Hijo.Grilla.Rows(Fm_Hijo.Grilla.CurrentRow.Index)
 
@@ -2839,7 +2839,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Grilla_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+    Private Sub Grilla_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs)
 
         Try
 
@@ -2901,7 +2901,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Grilla_CellEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Grilla_CellEnter(sender As Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Try
 
@@ -2930,12 +2930,12 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Grilla_RowEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Grilla_RowEnter(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
 
     End Sub
 
-    Sub Sb_Informacion_Fila_activa(ByVal _Fila As DataGridViewRow)
+    Sub Sb_Informacion_Fila_activa(_Fila As DataGridViewRow)
 
         Dim _Informacion_Fila As String
 
@@ -3005,7 +3005,7 @@ Public Class Frm_01_Asis_Compra_Resultados
     End Sub
 
 
-    Private Sub Grilla_KeyUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+    Private Sub Grilla_KeyUp(sender As System.Object, e As System.Windows.Forms.KeyEventArgs)
         Dim _Tecla As Keys = e.KeyValue
 
         If _Tecla = Keys.Down Or _Tecla = Keys.Up Or _Tecla = Keys.Next Or _Tecla = Keys.Prior Then
@@ -3014,7 +3014,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         End If
     End Sub
 
-    Private Sub Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
 
         Dim Grilla = CType(sender, DataGridView)
 
@@ -3419,7 +3419,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Sub Sb_Actualizar_Rotacion_Old(Optional ByVal _Codigo As String = "")
+    Sub Sb_Actualizar_Rotacion_Old(Optional _Codigo As String = "")
 
         Try
             Me.Enabled = False
@@ -3757,7 +3757,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Function Fx_Actualizar_Rotacion_X_Prodcuto(ByVal _Fila As DataRow) As String
+    Function Fx_Actualizar_Rotacion_X_Prodcuto(_Fila As DataRow) As String
 
 
         Dim _Codigo As String = _Fila.Item("Codigo")
@@ -4013,7 +4013,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
 #End Region
 
-    Private Sub BtnExporExcelSelActual_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnExporExcelSelActual.Click
+    Private Sub BtnExporExcelSelActual_Click(sender As System.Object, e As System.EventArgs) Handles BtnExporExcelSelActual.Click
 
         'EjecutarInforme()
         ExportarTabla_JetExcel_Tabla(_Tbl_Informe, Me, "Inf_Asis_Compra")
@@ -4021,7 +4021,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub BtnExporExcelProdComprar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnExporExcelProdComprar.Click
+    Private Sub BtnExporExcelProdComprar_Click(sender As System.Object, e As System.EventArgs) Handles BtnExporExcelProdComprar.Click
 
         Dim _Nombre_Excel As String = "Productos a comprar"
         'Dim _Ud As Integer
@@ -4085,13 +4085,13 @@ Public Class Frm_01_Asis_Compra_Resultados
     End Sub
 
 
-    Private Sub ButtonItem10_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub ButtonItem10_Click(sender As System.Object, e As System.EventArgs)
         '    Datos.WriteXml(AppPath() & "\Data\InfCompras_01.xml") 'Documento_vta
 
     End Sub
 
 
-    Private Sub BtnSelectBodegas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnSelectBodegas.Click
+    Private Sub BtnSelectBodegas_Click(sender As System.Object, e As System.EventArgs) Handles BtnSelectBodegas.Click
 
         Dim Fm As New Frm_Filtro_Especial_Informes(Frm_Filtro_Especial_Informes._Tabla_Fl._Bodegas, False)
         'Fm.Pro_Seleccionar_Todo = True
@@ -4122,7 +4122,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Return New Command() {Radio1, Radio2}
     End Function
 
-    Private Sub ChkSinRotacion_CheckedChanged(ByVal sender As System.Object, ByVal e As DevComponents.DotNetBar.CheckBoxChangeEventArgs) Handles Chk_Sacar_Productos_Sin_Rotacion.CheckedChanged
+    Private Sub ChkSinRotacion_CheckedChanged(sender As System.Object, e As DevComponents.DotNetBar.CheckBoxChangeEventArgs) Handles Chk_Sacar_Productos_Sin_Rotacion.CheckedChanged
 
         If Chk_Sacar_Productos_Sin_Rotacion.Checked Then
 
@@ -4158,7 +4158,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub ChkEntidadFisica_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub ChkEntidadFisica_CheckedChanged(sender As System.Object, e As System.EventArgs)
 
         Dim Reg As Integer =
        _Sql.Fx_Cuenta_Registros(_Nombre_Tbl_Paso_Informe, "CodProveedor <> '' and CodAlternativo = ''")
@@ -4175,7 +4175,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         End If
     End Sub
 
-    Private Sub ConsultaIntegradaDeStockToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub ConsultaIntegradaDeStockToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs)
 
         Dim _Codigo As String = Fm_Hijo.Grilla.Rows(Fm_Hijo.Grilla.CurrentRow.Index).Cells("Codigo").Value
 
@@ -4186,7 +4186,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub UltimosMovimientosVentasYComprasToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub UltimosMovimientosVentasYComprasToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs)
 
         Dim _Codigo As String = Fm_Hijo.Grilla.Rows(Fm_Hijo.Grilla.CurrentRow.Index).Cells("Codigo").Value
 
@@ -4196,7 +4196,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub BtnProceso_Prov_Auto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnProceso_Prov_Auto.Click
+    Private Sub BtnProceso_Prov_Auto_Click(sender As System.Object, e As System.EventArgs) Handles BtnProceso_Prov_Auto.Click
 
         Dim Fm As New Frm_08_Asis_Compra_IncorpProveedor(_RowParametros)
         Fm.Accion_Automatica = _Accion_Automatica
@@ -4212,13 +4212,13 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Frm_01_AsisCompra_Resultados_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_01_AsisCompra_Resultados_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
+    Private Sub Timer1_Tick(sender As System.Object, e As System.EventArgs) Handles Timer1.Tick
 
         Timer1.Enabled = False
         Timer1.Interval = 300
@@ -4227,7 +4227,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Btn_Estadisticas_Producto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Estadisticas_Producto.Click
+    Private Sub Btn_Estadisticas_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Estadisticas_Producto.Click
 
         Dim _Fila As DataGridViewRow = Fm_Hijo.Grilla.Rows(Fm_Hijo.Grilla.CurrentRow.Index)
 
@@ -4266,7 +4266,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Btn_Quitar_Proveedor_Linea_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Quitar_Proveedor_Linea.Click
+    Private Sub Btn_Quitar_Proveedor_Linea_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Quitar_Proveedor_Linea.Click
 
         Dim _Fila As DataGridViewRow = Fm_Hijo.Grilla.Rows(Fm_Hijo.Grilla.CurrentRow.Index)
         Dim _Tenia_Proveedor As Boolean
@@ -4370,7 +4370,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Btn_Cambiar_CodAlternativo_Proveedor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cambiar_CodAlternativo_Proveedor.Click
+    Private Sub Btn_Cambiar_CodAlternativo_Proveedor_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cambiar_CodAlternativo_Proveedor.Click
 
         Dim _Fila As DataGridViewRow = Fm_Hijo.Grilla.Rows(Fm_Hijo.Grilla.CurrentRow.Index)
 
@@ -4542,7 +4542,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Sub Sb_Parametros_Informe_Sql(ByVal _Actualizar As Boolean)
+    Sub Sb_Parametros_Informe_Sql(_Actualizar As Boolean)
 
         Dim _FechaHoy As Date = FormatDateTime(FechaDelServidor, DateFormat.ShortDate)
         Dim _Fecha_Hoy = Format(_FechaHoy, "dd-MM-yyyy")
@@ -4770,7 +4770,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
 
 
-    Private Sub Btn_Consolidar_Stock_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Consolidar_Stock.Click
+    Private Sub Btn_Consolidar_Stock_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Consolidar_Stock.Click
 
         Dim _Filtro_Productos As String = Generar_Filtro_IN(_Tbl_Informe, "", "Codigo", False, False, "'")
 
@@ -4782,7 +4782,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Btn_Rotacion_Productos_Lista_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Rotacion_Productos_Lista.Click
+    Private Sub Btn_Rotacion_Productos_Lista_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Rotacion_Productos_Lista.Click
 
         Dim Fm As New Frm_Rotacion_Selec_Prod_Parametros
         Fm.Chk_Incluir_Ventas_Entidades_Excluidas.Checked = Chk_Rotacion_Con_Ent_Excluidas.Checked
@@ -4796,7 +4796,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Btn_Rotacion_Productos_Con_Rot_Vencida_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Rotacion_Productos_Con_Rot_Vencida.Click
+    Private Sub Btn_Rotacion_Productos_Con_Rot_Vencida_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Rotacion_Productos_Con_Rot_Vencida.Click
 
         Dim _Fecha As Date = DateAdd(DateInterval.Month, -1, FechaDelServidor)
 
@@ -4828,7 +4828,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Btn_Actualizar_Rotacion_Producto_Actual_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Actualizar_Rotacion_Producto_Actual.Click
+    Private Sub Btn_Actualizar_Rotacion_Producto_Actual_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Actualizar_Rotacion_Producto_Actual.Click
 
         Dim _Fila As DataGridViewRow = Fm_Hijo.Grilla.Rows(Fm_Hijo.Grilla.CurrentRow.Index)
 
@@ -4906,7 +4906,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Sub Sb_Actualizar_Rotacion_Productos_Agrupadores(ByVal _Fila As DataGridViewRow)
+    Sub Sb_Actualizar_Rotacion_Productos_Agrupadores(_Fila As DataGridViewRow)
 
         Dim _Codigo = _Fila.Cells("Codigo").Value
         Dim _CodigoGenerico = _Fila.Cells("CodigoGenerico").Value
@@ -5101,7 +5101,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub BtnSelectEstrellas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnSelectEstrellas.Click
+    Private Sub BtnSelectEstrellas_Click(sender As System.Object, e As System.EventArgs) Handles BtnSelectEstrellas.Click
 
         Dim Fm As New Frm_Filtro_Especial_Productos
         Fm.Pro_Filtro_Clalibpr_Todas = _Filtro_Clalibpr_Todas
@@ -5134,7 +5134,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Btn_Crear_Orden_Asistente_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Crear_Orden_Asistente.Click
+    Private Sub Btn_Crear_Orden_Asistente_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Crear_Orden_Asistente.Click
 
         Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, _Modalidad_Estudio, "OCC", True)
 
@@ -5148,7 +5148,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Btn_Crear_Orden_Compra_Nueva_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Crear_Orden_Compra_Nueva.Click
+    Private Sub Btn_Crear_Orden_Compra_Nueva_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Crear_Orden_Compra_Nueva.Click
 
         Dim Fm As New Frm_Formulario_Documento("OCC", csGlobales.Enum_Tipo_Documento.Compra, False, False, True)
         Fm.MinimizeBox = False
@@ -5157,7 +5157,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Btn_Proyeccion_Mensual_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Proyeccion_Mensual.Click
+    Private Sub Btn_Proyeccion_Mensual_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Proyeccion_Mensual.Click
 
         Sb_Parametros_Actualizar()
 
@@ -5187,7 +5187,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Btn_Dejar_En_Cero_Refleos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Dejar_En_Cero_Refleos.Click
+    Private Sub Btn_Dejar_En_Cero_Refleos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Dejar_En_Cero_Refleos.Click
 
         If MessageBoxEx.Show(Me, "¿Confirma dejar todas las cantidades a comprar en cero [0]?" & vbCrLf &
                              "Solo de la vista actual Y productos marcados con refleo (Ventas Calzadas)", "Confirmación",
@@ -5224,7 +5224,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Btn_Quitar_Filtro_Proveedor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Quitar_Filtro_Proveedor_Click(sender As System.Object, e As System.EventArgs)
 
         _RowProveedor = Nothing
         Fm_Hijo.Txt_Proveedor.Text = String.Empty
@@ -5235,25 +5235,25 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Grilla_CellMouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellMouseEventArgs)
+    Private Sub Grilla_CellMouseUp(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs)
         sender.EndEdit()
     End Sub
 
-    Private Sub Btn_Filtrar_Proveedor_Ribon_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtrar_Proveedor_Ribon.Click
+    Private Sub Btn_Filtrar_Proveedor_Ribon_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtrar_Proveedor_Ribon.Click
         Call Btn_Filtrar_Proveedor_Click(Nothing, Nothing)
     End Sub
 
-    Private Sub Btn_Quitar_Filtro_Proveedor_Ribon_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Quitar_Filtro_Proveedor_Ribon.Click
+    Private Sub Btn_Quitar_Filtro_Proveedor_Ribon_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Quitar_Filtro_Proveedor_Ribon.Click
         Call Btn_Quitar_Filtro_Proveedor_Click(Nothing, Nothing)
     End Sub
 
-    Private Sub Btn_Expor_Excel_Productos_Agrupadores_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Expor_Excel_Productos_Agrupadores.Click
+    Private Sub Btn_Expor_Excel_Productos_Agrupadores_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Expor_Excel_Productos_Agrupadores.Click
         Consulta_sql = "Select * From " & _Nombre_Tbl_Paso_Informe & vbCrLf &
                        "Where Es_Agrupador = 1"
         ExportarTabla_JetExcel(Consulta_sql, Me)
     End Sub
 
-    Private Sub Grilla_DataError(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewDataErrorEventArgs)
+    Private Sub Grilla_DataError(sender As Object, e As System.Windows.Forms.DataGridViewDataErrorEventArgs)
         Try
 
         Catch ex As Exception
@@ -5261,14 +5261,14 @@ Public Class Frm_01_Asis_Compra_Resultados
         End Try
     End Sub
 
-    Private Sub Btn_Entidades_Excluidas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Entidades_Excluidas.Click
+    Private Sub Btn_Entidades_Excluidas_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Entidades_Excluidas.Click
         Dim Fm As New Frm_EntExcluidas
         Fm.ShowInTaskbar = False
         Fm.ShowDialog(Me)
         Fm.Dispose()
     End Sub
 
-    Private Sub Cmb_Proyeccion_Metodo_Abastecer_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Cmb_Proyeccion_Metodo_Abastecer_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
 
         Dim _Valor As Integer = Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue
 
@@ -5296,7 +5296,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         End Select
 
     End Sub
-    Private Sub Cmb_Tiempo_Reposicion_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Cmb_Tiempo_Reposicion_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
 
         Dim _Valor As Integer = Cmb_Tiempo_Reposicion_Dias_Meses.SelectedValue
 
@@ -5369,7 +5369,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Function
 
-    Private Sub Btn_Productos_Reemplazo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Productos_Reemplazo.Click
+    Private Sub Btn_Productos_Reemplazo_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Productos_Reemplazo.Click
 
         Dim _Fila As DataGridViewRow = Fm_Hijo.Grilla.Rows(Fm_Hijo.Grilla.CurrentRow.Index)
 
@@ -5388,7 +5388,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Btn_Poner_Cantidades_Comprar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Poner_Cantidades_Comprar.Click
+    Private Sub Btn_Poner_Cantidades_Comprar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Poner_Cantidades_Comprar.Click
 
         Try
 
@@ -5437,12 +5437,12 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Sb_Rdb_Agrupar_CheckedChanged(ByVal sender As System.Object, ByVal e As DevComponents.DotNetBar.CheckBoxChangeEventArgs)
+    Private Sub Sb_Rdb_Agrupar_CheckedChanged(sender As System.Object, e As DevComponents.DotNetBar.CheckBoxChangeEventArgs)
         Fm_Hijo.Lbl_Costos_Desde.Visible = Rdb_Agrupar_x_Asociados.Checked
         'Cmb_Nodo_Raiz_Asociados.Visible = Rdb_Agrupar_x_Asociados.Checked
     End Sub
 
-    Private Sub Btn_Agrupar_rotacion_de_reemplazos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Rb_Calculo_Cantidad.Click
+    Private Sub Btn_Agrupar_rotacion_de_reemplazos_Click(sender As System.Object, e As System.EventArgs) Handles Rb_Calculo_Cantidad.Click
 
         Dim _Filtro_Bodega As String
 
@@ -5478,7 +5478,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Sub Sb_Actualizar_Rotacion_Agrupando_Por_Asociacion(ByVal _Nodo_Raiz As String)
+    Sub Sb_Actualizar_Rotacion_Agrupando_Por_Asociacion(_Nodo_Raiz As String)
 
         Try
 
@@ -5793,11 +5793,11 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Btn_Actualizar_Rotacion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Actualizar_Rotacion.Click
+    Private Sub Btn_Actualizar_Rotacion_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Actualizar_Rotacion.Click
         ShowContextMenu(Menu_Contextual_Rotacion)
     End Sub
 
-    Private Sub Mnu_Btn_Mant_codigos_alternativos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Mnu_Btn_Mant_codigos_alternativos.Click
+    Private Sub Mnu_Btn_Mant_codigos_alternativos_Click(sender As System.Object, e As System.EventArgs) Handles Mnu_Btn_Mant_codigos_alternativos.Click
 
         Dim _Fila As DataGridViewRow = Fm_Hijo.Grilla.Rows(Fm_Hijo.Grilla.CurrentRow.Index)
 
@@ -5848,7 +5848,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Btn_Infor_Rotacion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Infor_Rotacion.Click
+    Private Sub Btn_Infor_Rotacion_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Infor_Rotacion.Click
 
         Dim _Fila As DataGridViewRow = Fm_Hijo.Grilla.Rows(Fm_Hijo.Grilla.CurrentRow.Index)
 
@@ -5869,11 +5869,11 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Btn_Actualizar_Rotacion_Vta_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Actualizar_Rotacion_Vta.Click
+    Private Sub Btn_Actualizar_Rotacion_Vta_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Actualizar_Rotacion_Vta.Click
         Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, True, True)
     End Sub
 
-    Private Sub Btn_Actualizar_Informe_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Actualizar_Informe.Click
+    Private Sub Btn_Actualizar_Informe_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Actualizar_Informe.Click
         Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, True)
         If Not String.IsNullOrEmpty(Trim(Fm_Hijo.Txt_Codigo.Text)) Then Sb_Buscar_X_Codigo()
         If Not String.IsNullOrEmpty(Trim(Fm_Hijo.Txt_Descripcion.Text)) Then Sb_Buscar_X_Descripcion()
@@ -5888,7 +5888,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Sb_Grilla_Marcar(Fm_Hijo.Grilla, False)
     End Sub
 
-    Private Sub Txt_Descripcion_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+    Private Sub Txt_Descripcion_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs)
         If e.KeyValue = Keys.Enter Then
             Sb_Buscar_X_Descripcion()
         End If
@@ -5915,19 +5915,19 @@ Public Class Frm_01_Asis_Compra_Resultados
         Sb_Grilla_Marcar(Fm_Hijo.Grilla, False)
     End Sub
 
-    Private Sub ButtonX1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub ButtonX1_Click(sender As System.Object, e As System.EventArgs)
         Dim Fm As New Frm_EOQ
         Fm.ShowDialog(Me)
         Fm.Dispose()
     End Sub
 
-    Private Sub Btn_Actualizar_datos_Informe_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Actualizar_datos_Informe.Click
+    Private Sub Btn_Actualizar_datos_Informe_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Actualizar_datos_Informe.Click
         Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, True)
         If Not String.IsNullOrEmpty(Trim(Fm_Hijo.Txt_Codigo.Text)) Then Sb_Buscar_X_Codigo()
         If Not String.IsNullOrEmpty(Trim(Fm_Hijo.Txt_Descripcion.Text)) Then Sb_Buscar_X_Descripcion()
     End Sub
 
-    Private Sub RibbonControl1_TabIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RibbonControl1.TabIndexChanged
+    Private Sub RibbonControl1_TabIndexChanged(sender As System.Object, e As System.EventArgs) Handles RibbonControl1.TabIndexChanged
         If RibbonControl1.TabIndex = 0 Then
             Fm_Hijo.Cmb_Tipo_de_compra.Visible = True
         Else
@@ -5935,7 +5935,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         End If
     End Sub
 
-    Private Sub Sb_Rb_Boton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Sb_Rb_Boton_Click(sender As System.Object, e As System.EventArgs)
         If sender.Name = "Rb_Proveedores" Then
             Fm_Hijo.Lbl_Costos_Desde.Visible = True
             Fm_Hijo.Cmb_Documento_Compra.Visible = True
@@ -5945,7 +5945,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         End If
     End Sub
 
-    Private Sub Chk_Rotacion_Con_Ent_Excluidas_CheckedChanged(ByVal sender As System.Object, ByVal e As DevComponents.DotNetBar.CheckBoxChangeEventArgs) Handles Chk_Rotacion_Con_Ent_Excluidas.CheckedChanged
+    Private Sub Chk_Rotacion_Con_Ent_Excluidas_CheckedChanged(sender As System.Object, e As DevComponents.DotNetBar.CheckBoxChangeEventArgs) Handles Chk_Rotacion_Con_Ent_Excluidas.CheckedChanged
         If Chk_Rotacion_Con_Ent_Excluidas.Checked Then
             If Not Fx_Tiene_Permiso(Me, "Comp0080") Then
                 Chk_Rotacion_Con_Ent_Excluidas.Checked = False
@@ -6693,7 +6693,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Public Function GetFilledTable(ByVal query As String, _Cn As SqlConnection) As DataTable
+    Public Function GetFilledTable(query As String, _Cn As SqlConnection) As DataTable
 
         If _Cn.State = ConnectionState.Open Then
             ' Cerrar conexion
@@ -7958,9 +7958,9 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Sub LlenarPointMchar(ByVal Mchar As DevComponents.DotNetBar.MicroChart,
-                         ByVal Tabla As DataTable,
-                         Optional ByVal Unidad As Integer = 1)
+    Sub LlenarPointMchar(Mchar As DevComponents.DotNetBar.MicroChart,
+                         Tabla As DataTable,
+                         Optional Unidad As Integer = 1)
         Dim points As New List(Of Double)()
 
         Dim Campo As String = "Ud" & Unidad
@@ -8165,13 +8165,13 @@ Public Class Frm_01_Asis_Compra_Resultados
             Chk_Quitar_Ventas_Calzadas.Checked = True
             Chk_Quitare_Sospechosos_Stock.Checked = True
 
-            'Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = True
+            Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = True
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = True
             Chk_Quitar_Comprados.Checked = True
             Chk_Mostrar_Solo_Productos_A_Comprar.Checked = True
             Chk_Mostrar_Solo_Stock_Critico.Checked = True
 
-            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
+            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, True)
 
             Consulta_sql = "Select Distinct CodProveedor As KOEN,CodSucProveedor As SUEN,
 (Select Top 1 NOKOEN From MAEEN Where KOEN = CodProveedor and SUEN = CodSucProveedor ) As RAZON,
@@ -8215,29 +8215,26 @@ Drop Table #Paso"
                                ",'" & Format(_Fl.Feemdo, "yyyyMMdd") & "','" & NuloPorNro(_Fl.MensajeError, "") & "'," & Convert.ToInt32(_Fl.ErrorGrabar) & ")"
                 _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Acp)
 
-                If String.IsNullOrEmpty(_Fl.Email) Then
+                If Not String.IsNullOrEmpty(Auto_Id_Correo) Then
 
-                    _Fl.Email = _Sql.Fx_Trae_Dato("MAEEN",
+                    If String.IsNullOrEmpty(_Fl.Email) Then
+
+                        _Fl.Email = _Sql.Fx_Trae_Dato("MAEEN",
                                                     "EMAILCOMER", "KOEN = '" & _Fl.Endo & "' And SUEN = '" & _Fl.Suendo & "'").Trim
 
-                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_AcpAuto Set Informacion = 'Falta correo de compras en ficha de la entidad' Where Id = " & _Id_Acp
-                    _Sql.Ej_consulta_IDU(Consulta_sql)
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_AcpAuto Set Informacion = 'Falta correo de compras en ficha de la entidad' Where Id = " & _Id_Acp
+                        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                    End If
+
+                    Dim _Error As String = _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, _Fl.Email, Auto_CorreoCc, Auto_Id_Correo, Auto_NombreFormato_PDF, _Id_Acp)
+
+                    If Not String.IsNullOrEmpty(_Error) Then
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_AcpAuto Set Informacion = Informacion+' -" & _Error.Trim & "' Where Id = " & _Id_Acp
+                        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+                    End If
 
                 End If
-
-                'Auto_Id_Correo = 37
-
-                Dim _Error As String = _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, _Fl.Email, Auto_CorreoCc, Auto_Id_Correo, Auto_NombreFormato_PDF, _Id_Acp)
-
-                If Not String.IsNullOrEmpty(_Error) Then
-                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_AcpAuto Set Informacion = Informacion+' -" & _Error.Trim & "' Where Id = " & _Id_Acp
-                    _Sql.Ej_consulta_IDU(Consulta_sql, False)
-                End If
-
-                ' 37
-                ' "Tam. Carta"
-                'MessageBoxEx.Show(Me, "Tido: " & _Fl.Tido & "-" & _Fl.Nudo & vbCrLf &
-                '                  "Email: " & _Fl.Email, "OCC Generada", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             Next
 
@@ -8255,7 +8252,7 @@ Drop Table #Paso"
             Chk_Mostrar_Solo_Stock_Critico.Checked = True
             Chk_Quitare_Sospechosos_Stock.Checked = True
 
-            'Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = True
+            Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = False
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = True
             Chk_Quitar_Comprados.Checked = True
             Chk_Mostrar_Solo_Productos_A_Comprar.Checked = True
@@ -8277,13 +8274,14 @@ Drop Table #Paso"
                                ",'" & Format(_Fl.Feemdo, "yyyyMMdd") & "','" & NuloPorNro(_Fl.MensajeError, "") & "'," & Convert.ToInt32(_Fl.ErrorGrabar) & ")"
                 _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Acp)
 
-                Auto_Id_Correo = 37
+                If Not String.IsNullOrEmpty(Auto_Id_Correo) Then
+                    Dim _Error As String = _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, Auto_CorreoCc, "", Auto_Id_Correo, Auto_NombreFormato_PDF, _Id_Acp)
 
-                _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, Auto_CorreoCc, "", Auto_Id_Correo, Auto_NombreFormato_PDF, _Id_Acp)
-                ' 37
-                ' "Tam. Carta"
-                'MessageBoxEx.Show(Me, "Tido: " & _Fl.Tido & "-" & _Fl.Nudo & vbCrLf &
-                '                  "Email: " & _Fl.Email, "OCC Generada", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    If Not String.IsNullOrEmpty(_Error) Then
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_AcpAuto Set Informacion = Informacion+' -" & _Error.Trim & "' Where Id = " & _Id_Acp
+                        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+                    End If
+                End If
 
             Next
 
@@ -8307,8 +8305,7 @@ Drop Table #Paso"
             Chk_Quitar_Ventas_Calzadas.Checked = True
             Chk_Quitare_Sospechosos_Stock.Checked = True
 
-
-            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
+            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, True)
 
             Dim _Generar_NVI As New GeneraOccAuto.Generar_Doc_Auto
 
@@ -8328,7 +8325,6 @@ Drop Table #Paso"
                 Catch ex As Exception
 
                 End Try
-
 
             Next
 
@@ -9478,7 +9474,7 @@ Namespace GeneraOccAuto
 
                     Dim _Fecha = "Getdate()"
                     Dim _Adjuntar_Documento As Boolean = Not String.IsNullOrEmpty(_NombreFormato_PDF)
-                    Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+                    Dim _NombreEquipo As String = String.Empty '_Global_Row_EstacionBk.Item("NombreEquipo")
 
                     _Para = _Para.Trim
 

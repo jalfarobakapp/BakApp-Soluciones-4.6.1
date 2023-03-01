@@ -1499,6 +1499,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_02_Mensual
     End Sub
 
     Private Sub Btn_Filtro_Entidades_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Entidades.Click
+
         Dim _Filtro_Extra_Entidad = "And KOEN In (Select ENDO From " & _Nombre_Tabla_Paso & ")"
         Dim _Filtro_Extra_Ciudad = "And KOCI In (Select CIEN From " & _Nombre_Tabla_Paso & ")"
         Dim _Filtro_Extra_Comuna = "And KOCM In (Select CMEN From " & _Nombre_Tabla_Paso & ")"
@@ -1547,6 +1548,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_02_Mensual
         End If
 
         Fm.Dispose()
+
     End Sub
 
     Private Sub Btn_Filtro_Funcionarios_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Funcionarios.Click

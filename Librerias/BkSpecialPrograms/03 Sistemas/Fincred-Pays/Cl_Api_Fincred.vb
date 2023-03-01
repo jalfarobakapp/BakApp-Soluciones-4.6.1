@@ -295,6 +295,7 @@ Namespace Cl_Fincred_Bakapp
                                      _Num_primer_doc As Integer,
                                      _Fec_primer_venc As String,
                                      _Num_telefono As String,
+                                     _Idmaeedo As Integer,
                                      _Tido As String,
                                      _Nudo As String) As Boolean
 
@@ -335,7 +336,7 @@ Namespace Cl_Fincred_Bakapp
                            "," & _trama.origen_transaccion & ",'" & _trama.rut_girador & "','" & _trama.rut_comprador & "'" &
                            "," & _trama.numero_transaccion_cliente & ",'" & _trama.numero_documento_transaccion & "'" &
                            "," & _trama.banco & "," & _trama.monto_total_venta & "," & _trama.cantidad_documentos_venta &
-                           ",0,'',1,0,'" & _Tido & "','" & _Nudo & "','" & _Json & "')"
+                           ",0,'',1," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "','" & _Json & "')"
             If Not _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_TramaRespuesta, False) Then
                 _Respuesta.EsCorrecto = False
                 _Respuesta.MensajeError = _Sql.Pro_Error
