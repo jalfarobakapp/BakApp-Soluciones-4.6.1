@@ -208,6 +208,7 @@ Public Class Frm_Configuracion_Gral
             Chk_AlertaRevNVVConVtasMismoDia.Checked = .Item("AlertaRevNVVConVtasMismoDia")
 
             Chk_LasNVVDebenSerHabilitadasParaFacturar.Checked = .Item("LasNVVDebenSerHabilitadasParaFacturar")
+            Chk_B4A_DespachoSimple.Checked = .Item("B4A_DespachoSimple")
 
         End With
 
