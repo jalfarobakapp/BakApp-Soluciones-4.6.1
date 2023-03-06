@@ -9,6 +9,10 @@ Public Class Frm_Facturacion_Masiva
     Dim _Tido = "FCV"
 
     Dim _Cl_Facturacion As New Clas_Facturacion_Masiva
+    Dim _Dv As New DataView
+
+    Dim _RowEntidadBuscar As DataRow
+
     Public Property Cl_Facturacion As Clas_Facturacion_Masiva
         Get
             Return _Cl_Facturacion
@@ -39,6 +43,16 @@ Public Class Frm_Facturacion_Masiva
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
+
+        Dim _Arr_Tipo_Entidad(,) As String = {{"", "Todas"},
+                                             {"Contado", "Contado"},
+                                             {"Credito", "Crédito"}}
+        Sb_Llenar_Combos(_Arr_Tipo_Entidad, ComboBoxEx1)
+        ComboBoxEx1.SelectedValue = ""
+
+        Dtp_BuscaXFechaEmision.Value = #1/1/0001 12:00:00 AM#
+        Dtp_BuscaXFechaVencimiento.Value = #1/1/0001 12:00:00 AM#
+
         Sb_Llenar_Grilla()
 
         Circular_Progres_Run.IsRunning = True
@@ -48,7 +62,7 @@ Public Class Frm_Facturacion_Masiva
         Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad" & vbCrLf &
-                           "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'"
+                       "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'"
         Dim _RowFormato_Mod As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Guardar_PDF_Auto As Boolean = _RowFormato_Mod.Item("Guardar_PDF_Auto")
@@ -76,9 +90,11 @@ Public Class Frm_Facturacion_Masiva
 
     Public Sub Sb_Llenar_Grilla()
 
+        _Dv.Table = _Cl_Facturacion.Ds_Doc_Facturar.Tables("Table")
+
         With Grilla
 
-            .DataSource = _Cl_Facturacion.Tbl_Doc_Facturar
+            .DataSource = _Dv
 
             OcultarEncabezadoGrilla(Grilla, True)
 
@@ -149,12 +165,18 @@ Public Class Frm_Facturacion_Masiva
             .Columns("VADP").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-
             .Columns("OBDO").HeaderText = "Observaciones"
             .Columns("OBDO").Width = 200
             .Columns("OBDO").Visible = True
             .Columns("OBDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
+
+            .Columns("TipoVenta").HeaderText = "T.Venta"
+            .Columns("TipoVenta").Width = 60
+            .Columns("TipoVenta").Visible = True
+            .Columns("TipoVenta").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             '.Columns("CRV").HeaderText = "Usar CRV"
             '.Columns("CRV").Width = 35
             '.Columns("CRV").Visible = True
@@ -249,7 +271,7 @@ Public Class Frm_Facturacion_Masiva
 
             Sb_Habilitar_Controles(False)
 
-            For Each _Fila As DataRow In _Cl_Facturacion.Tbl_Doc_Facturar.Rows
+            For Each _Fila As DataRow In _Cl_Facturacion.Ds_Doc_Facturar.Tables(0).Rows
 
                 Dim _Estado = _Fila.RowState
 
@@ -280,7 +302,7 @@ Public Class Frm_Facturacion_Masiva
 
             _Contador = 0
 
-            For Each _Fila As DataRow In _Cl_Facturacion.Tbl_Doc_Facturar.Rows
+            For Each _Fila As DataRow In _Cl_Facturacion.Ds_Doc_Facturar.Tables(0).Rows
 
                 Dim _Estado = _Fila.RowState
 
@@ -654,9 +676,16 @@ Public Class Frm_Facturacion_Masiva
 
     Private Sub Chk_Marcar_todo_Click(sender As Object, e As EventArgs) Handles Chk_Marcar_todo.Click
 
-        For Each _Fila As DataRow In _Cl_Facturacion.Tbl_Doc_Facturar.Rows
+        Lbl_Total_Facturar.Tag = 0
+
+        For Each _Fila As DataRow In _Cl_Facturacion.Ds_Doc_Facturar.Tables(0).Rows
             _Fila.Item("Chk") = Not Chk_Marcar_todo.Checked
+            If _Fila.Item("Chk") Then
+                Lbl_Total_Facturar.Tag += _Fila.Item("VABRDO")
+            End If
         Next
+
+        Lbl_Total_Facturar.Text = FormatCurrency(Lbl_Total_Facturar.Tag, 0)
 
     End Sub
 
@@ -664,7 +693,7 @@ Public Class Frm_Facturacion_Masiva
 
         Dim _Contador = 0
 
-        For Each _Fila As DataRow In _Cl_Facturacion.Tbl_Doc_Facturar.Rows
+        For Each _Fila As DataRow In _Cl_Facturacion.Ds_Doc_Facturar.Tables(0).Rows
 
             If _Fila.Item("Chk") Then
                 _Contador += 1
@@ -687,7 +716,7 @@ Public Class Frm_Facturacion_Masiva
         Circular_Progres_Porcentaje.Value = 0
         Circular_Progres_Contador.Value = 0
 
-        For Each _Fila As DataRow In _Cl_Facturacion.Tbl_Doc_Facturar.Rows
+        For Each _Fila As DataRow In _Cl_Facturacion.Ds_Doc_Facturar.Tables(0).Rows
 
             Dim _Idmaeedo_NVV As Integer = _Fila.Item("IDMAEEDO")
             Dim _Idmaeedo_Fcv As Integer = _Fila.Item("IDMAEEDO_FCV")
@@ -911,4 +940,96 @@ Public Class Frm_Facturacion_Masiva
     Private Sub Btn_Opciones_Especiales_Click(sender As Object, e As EventArgs) Handles Btn_Opciones_Especiales.Click
         ShowContextMenu(Menu_Contextual_Opciones_Especiales)
     End Sub
+
+    Private Sub Grilla_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellEndEdit
+
+        Lbl_Total_Facturar.Tag = 0
+
+        For Each _Fila As DataRow In _Cl_Facturacion.Ds_Doc_Facturar.Tables(0).Rows
+
+            If _Fila.Item("Chk") Then
+                Lbl_Total_Facturar.Tag += _Fila.Item("VABRDO")
+            End If
+
+        Next
+
+        Lbl_Total_Facturar.Text = FormatCurrency(Lbl_Total_Facturar.Tag, 0)
+
+    End Sub
+
+    Private Sub Btn_Buscar_Click(sender As Object, e As EventArgs) Handles Btn_Buscar.Click
+
+        Dim _Condicion_Campos, _Condicion_Valores As String
+        Dim _Fl As String
+
+        '        Dim _Buscquedas As New List(Of String)
+
+        'If Not String.IsNullOrEmpty(Txt_BuscaXNudoNVV.Text) Then
+        _Condicion_Campos = "NUDO Like '%{0}%'"
+        'End If
+
+        If Not String.IsNullOrEmpty(Txt_BuscaXEntidad.Text) Then
+            _Condicion_Campos += " And ENDO+SUENDO = '{1}'"
+        End If
+
+        Dim _Entidad = String.Empty
+
+        If Not IsNothing(_RowEntidadBuscar) Then
+            _Entidad = _RowEntidadBuscar.Item("KOEN") & _RowEntidadBuscar.Item("SUEN")
+        End If
+
+        If Dtp_BuscaXFechaEmision.Value <> #1/1/0001 12:00:00 AM# Then
+            _Condicion_Campos += " And FEEMDO = '{2}'"
+        End If
+
+        If Dtp_BuscaXFechaVencimiento.Value <> #1/1/0001 12:00:00 AM# Then
+            _Condicion_Campos += " And FEULVEDO = '{3}'"
+        End If
+
+        If Not String.IsNullOrEmpty(ComboBoxEx1.SelectedValue) Then
+            _Condicion_Campos += " And TipoVenta = '{4}'"
+        End If
+
+        _Dv.RowFilter = String.Format(_Condicion_Campos,
+                                      Txt_BuscaXNudoNVV.Text,
+                                      _Entidad,
+                                      Dtp_BuscaXFechaEmision.Value,
+                                      Dtp_BuscaXFechaVencimiento.Value,
+                                      ComboBoxEx1.SelectedValue)
+
+        MessageBoxEx.Show(Me, "Filtro aplicado", "Filtrar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+    End Sub
+
+    Private Sub Txt_BuscaXEntidad_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_BuscaXEntidad.ButtonCustom2Click
+        _RowEntidadBuscar = Nothing
+        Txt_BuscaXEntidad.Text = String.Empty
+    End Sub
+
+    Private Sub Txt_BuscaXEntidad_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_BuscaXEntidad.ButtonCustomClick
+
+        Dim _CodEntidad = Txt_BuscaXEntidad.Text.Trim
+
+        If String.IsNullOrEmpty(Txt_BuscaXEntidad.Text) Then
+            _RowEntidadBuscar = Nothing
+        End If
+
+        Dim Fm As New Frm_BuscarEntidad_Mt(False)
+        Fm.Rdb_Clientes.Checked = True
+        Fm.Txtdescripcion.Text = _CodEntidad
+        Fm.ShowDialog(Me)
+        _RowEntidadBuscar = Fm.Pro_RowEntidad
+
+        Fm.Dispose()
+
+        If Not IsNothing(_RowEntidadBuscar) Then
+            Txt_BuscaXEntidad.Text = _RowEntidadBuscar.Item("KOEN").ToString.Trim & "-" & _RowEntidadBuscar.Item("NOKOEN").ToString.Trim
+        End If
+
+    End Sub
+
+    Private Sub Txt_BuscaXNudoNVV_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_BuscaXNudoNVV.ButtonCustomClick
+        Txt_BuscaXNudoNVV.Text = String.Empty
+    End Sub
+
 End Class

@@ -800,6 +800,7 @@ Drop Table #Paso_Tabim"
                                      "' And KOBO = '" & _Kobo &
                                      "' And KOPR = '" & _kopr & "'" & vbCrLf & vbCrLf
                 End If
+
             Next
 
             'INGRESO DE MENSAJE A LA TABLA DE MENSAJES POR PRODUCTOS
@@ -810,7 +811,6 @@ Drop Table #Paso_Tabim"
 
             _SqlQuery += "INSERT INTO MAEPROBS (KOPR,EMPRESA,MENSAJE01,MENSAJE02,MENSAJE03) VALUES ('" & _kopr &
                          "','','" & _Mensaje01 & "','" & _Mensaje02 & "','" & _Mensaje03 & "')" & vbCrLf & vbCrLf
-
 
             _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery)
 

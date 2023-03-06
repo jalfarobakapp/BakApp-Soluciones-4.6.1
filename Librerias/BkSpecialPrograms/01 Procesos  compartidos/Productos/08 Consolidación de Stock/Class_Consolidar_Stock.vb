@@ -1,6 +1,4 @@
-﻿Imports DevComponents.DotNetBar
-
-Public Class Class_Consolidar_Stock
+﻿Public Class Class_Consolidar_Stock
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -464,31 +462,32 @@ Public Class Class_Consolidar_Stock
 
         End If
 
-
-
         _SqlQuery += "Insert Into MAEST (EMPRESA,KOSU,KOBO,KOPR)" & vbCrLf &
-                        "Values ('" & _Emp & "','" & _Suc & "','" & _Bod & "','" & _Codigo & "')" & vbCrLf & vbCrLf &
-                        "UPDATE MAEST SET" & vbCrLf &
-                        " STFI1 = " & _StockF_Ud1 & vbCrLf &
-                        ",STFI2 = " & _StockF_Ud2 & vbCrLf &
-                        ",STDV1 = " & _StockDev_Ud1 & vbCrLf &
-                        ",STDV2 = " & _StockDev_Ud2 & vbCrLf &
-                        ",DESPNOFAC1 = " & _StockDsf_Ud1 & vbCrLf &
-                        ",DESPNOFAC2 = " & _StockDsf_Ud2 & vbCrLf &
-                        ",STOCNV1 = " & _StockCom_Ud1 & vbCrLf &
-                        ",STOCNV2 = " & _StockCom_Ud2 & vbCrLf &
-                        ",STDV1C = " & _StockCnr_Ud1 & vbCrLf &
-                        ",STDV2C = " & _StockCnr_Ud2 & vbCrLf &
-                        ",RECENOFAC1 = " & _StockRsf_Ud1 & vbCrLf &
-                        ",RECENOFAC2 = " & _StockRsf_Ud2 & vbCrLf &
-                        ",STOCNV1C = " & _StockPed_Ud1 & vbCrLf &
-                        ",STOCNV2C = " & _StockPed_Ud2 & vbCrLf &
-                        ",STTR1 = " & _StockTrans_Ud1 & vbCrLf &
-                        ",STTR2 = " & _StockTrans_Ud2 & vbCrLf &
-                        "WHERE EMPRESA = '" & _Emp &
-                        "' AND KOSU = '" & _Suc &
-                        "' AND KOBO = '" & _Bod &
-                        "' AND KOPR = '" & _Codigo & "'" & vbCrLf & vbCrLf
+                     "Values ('" & _Emp & "','" & _Suc & "','" & _Bod & "','" & _Codigo & "')" & vbCrLf & vbCrLf &
+                     "Update MAEST Set" & vbCrLf &
+                     " STFI1 = " & _StockF_Ud1 & vbCrLf &
+                     ",STFI2 = " & _StockF_Ud2 & vbCrLf &
+                     ",STDV1 = " & _StockDev_Ud1 & vbCrLf &
+                     ",STDV2 = " & _StockDev_Ud2 & vbCrLf &
+                     ",DESPNOFAC1 = " & _StockDsf_Ud1 & vbCrLf &
+                     ",DESPNOFAC2 = " & _StockDsf_Ud2 & vbCrLf &
+                     ",STOCNV1 = " & _StockCom_Ud1 & vbCrLf &
+                     ",STOCNV2 = " & _StockCom_Ud2 & vbCrLf &
+                     ",STDV1C = " & _StockCnr_Ud1 & vbCrLf &
+                     ",STDV2C = " & _StockCnr_Ud2 & vbCrLf &
+                     ",RECENOFAC1 = " & _StockRsf_Ud1 & vbCrLf &
+                     ",RECENOFAC2 = " & _StockRsf_Ud2 & vbCrLf &
+                     ",STOCNV1C = " & _StockPed_Ud1 & vbCrLf &
+                     ",STOCNV2C = " & _StockPed_Ud2 & vbCrLf &
+                     ",STTR1 = " & _StockTrans_Ud1 & vbCrLf &
+                     ",STTR2 = " & _StockTrans_Ud2 & vbCrLf &
+                     "Where EMPRESA = '" & _Emp &
+                     "' And KOSU = '" & _Suc &
+                     "' And KOBO = '" & _Bod &
+                     "' And KOPR = '" & _Codigo & "'" & vbCrLf & vbCrLf
+
+        _SqlQuery += "Update MAEPMSUC Set STFI1 = " & _StockF_Ud1 & ", STFI2 = " & _StockF_Ud2 & vbCrLf &
+                     "Where EMPRESA = '" & _Emp & "' And KOSU = '" & _Suc & "' And KOPR = '" & _Codigo & "'" & vbCrLf & vbCrLf
 
         Consulta_sql = String.Empty
 

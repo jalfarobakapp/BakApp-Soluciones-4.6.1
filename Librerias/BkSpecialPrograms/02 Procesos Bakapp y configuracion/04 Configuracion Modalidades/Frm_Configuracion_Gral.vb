@@ -275,6 +275,7 @@ Public Class Frm_Configuracion_Gral
 
         Chk_AlertaRevNVVConVtasMismoDia.Enabled = Not _Modalidad_General
         Chk_LasNVVDebenSerHabilitadasParaFacturar.Enabled = _Modalidad_General
+        Chk_B4A_DespachoSimple.Enabled = Not _Modalidad_General
 
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
@@ -458,6 +459,7 @@ Public Class Frm_Configuracion_Gral
                        ",ListaDesdeSustentatorio = " & Convert.ToInt32(Chk_ListaDesdeSustentatorio.Checked) & vbCrLf &
                        ",AlertaRevNVVConVtasMismoDia = " & Convert.ToInt32(Chk_AlertaRevNVVConVtasMismoDia.Checked) & vbCrLf &
                        ",LasNVVDebenSerHabilitadasParaFacturar = " & Convert.ToInt32(Chk_LasNVVDebenSerHabilitadasParaFacturar.Checked) & vbCrLf &
+                       ",B4A_DespachoSimple = " & Convert.ToInt32(Chk_B4A_DespachoSimple.Checked) & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
