@@ -317,8 +317,8 @@ Public Class Cl_Correos
                 Dim _CodFuncionario = _Fila.Item("CodFuncionario")
                 Dim _Nombre_Funcionario = _Fila.Item("Nombre_Funcionario").ToString.Trim
                 Dim _Asunto = _Fila.Item("Asunto").ToString.Trim
-                Dim _Para = _Fila.Item("Para").ToString.Trim
-                Dim _Cc = _Fila.Item("Cc").ToString.Trim
+                Dim _Para As String = _Fila.Item("Para").ToString.Trim
+                Dim _Cc As String = _Fila.Item("Cc").ToString.Trim
                 Dim _IdMaeedo = _Fila.Item("Idmaeedo")
                 Dim _Tido = _Fila.Item("Tido").ToString.Trim
                 Dim _Nudo = _Fila.Item("Nudo").ToString.Trim
