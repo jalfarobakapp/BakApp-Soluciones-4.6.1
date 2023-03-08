@@ -79,7 +79,7 @@ Public Class Clas_Cerrar_Documento
             Dim _Campo_Mov_Stock_Ud1, _Campo_Mov_Stock_Ud2 As String
             Dim _Mueve_Stock = True
             Select Case _Tido
-                Case "NVV"
+                Case "NVV", "NVI"
                     _Campo_Mov_Stock_Ud1 = "STOCNV1"
                     _Campo_Mov_Stock_Ud2 = "STOCNV2"
 

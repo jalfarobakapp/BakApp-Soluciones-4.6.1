@@ -1635,10 +1635,7 @@ Public Class Frm_Formulario_Documento
 
         Lbl_Costo_Lista.Visible = False
 
-
-
-
-        If _Documento_Interno Then
+        If _Documento_Interno And Not _Cerrar_Al_Grabar Then
 
             Dim _SucEntidad As String = _RowEntidad.Item("SUEN")
 
@@ -17110,6 +17107,15 @@ Public Class Frm_Formulario_Documento
 
                         If _Tido = "GRD" Then _Total_Campo = _Caprco1 - _Caprex1
 
+                        If _Tidopa = "BLV" And _Tido = "NCV" Then
+
+                            _Total_Campo = _Fila.Item("VADTBRLI")
+                            Dim _ImpuestosLinea As Double = 1 + ((_Fila.Item("POIVLI") + _Fila.Item("POIMGLLI")) / 100)
+                            _Total_Campo = Math.Round(_Total_Campo / _ImpuestosLinea, 2)
+                            _DescuentoPorc = _Fila.Item("PODTGLLI")
+
+                        End If
+
                         _New_Fila.Cells(_Campo_Bk).Value = _Total_Campo
 
                         Sb_Procesar_Datos_De_Grilla(_New_Fila, _Campo_Bk, False, False)
@@ -17392,7 +17398,9 @@ Public Class Frm_Formulario_Documento
                 End If
             End If
 
-            Sb_Recalcular_Descuentos(_Filad, False, False)
+            If _Tido <> "NCV" Then
+                Sb_Recalcular_Descuentos(_Filad, False, False)
+            End If
 
             Sb_Marcar_Grilla()
             Sb_Revisar_Si_Hay_Archivos_Adjuntos()
