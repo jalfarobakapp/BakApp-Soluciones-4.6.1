@@ -1634,7 +1634,35 @@ Public Class Frm_Formulario_Documento
         End If
 
         Lbl_Costo_Lista.Visible = False
-        'Btn_Mini_Ver_Costo_Lista.Enabled = True
+
+
+
+
+        If _Documento_Interno Then
+
+            Dim _SucEntidad As String = _RowEntidad.Item("SUEN")
+
+            If String.IsNullOrEmpty(_SucEntidad) Then
+
+                Dim _Msg = String.Empty
+
+                'If _Tido = "GTI" Then _Msg = "Debe indicar sucursal de destino del traslado"
+                If _Tido = "NVI" Then _Msg = "1.- Debera indicar la bodega que recibira los productos." & vbCrLf &
+                                             "Bodega de destino."
+
+                If Not String.IsNullOrEmpty(_Msg) Then
+
+                    'MessageBoxEx.Show(Me, _Msg, "Asistente de cración de NVI",
+                    '                  MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, Me.TopMost)
+
+                    Grilla_Encabezado.CurrentCell = Grilla_Encabezado.Rows(0).Cells("CodSucEntidad")
+                    Call Grilla_Encabezado_CellDoubleClick(Nothing, Nothing)
+
+                End If
+
+            End If
+
+        End If
 
         Me.Refresh()
 
@@ -8223,13 +8251,18 @@ Public Class Frm_Formulario_Documento
                     End If
                 End If
 
-                If _Tido = "GTI" Then _Msg = "Debe indicar sucursal de destino del traslado"
-                If _Tido = "NVI" Then _Msg = "Debe indicar la bodega que recibira los productos"
+                If _Tido = "GTI" Then _Msg = "Debe indicar sucursal de destino del traslado."
+                If _Tido = "NVI" Then _Msg = "Debe indicar la bodega que recibira los productos."
 
                 If Not String.IsNullOrEmpty(_Msg) Then
 
                     MessageBoxEx.Show(Me, _Msg, "Validación",
                                       MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
+
+                    If _Tido = "NVI" Or _Tido = "GTI" Then
+                        Grilla_Encabezado.CurrentCell = Grilla_Encabezado.Rows(0).Cells("CodSucEntidad")
+                        Call Grilla_Encabezado_CellDoubleClick(Nothing, Nothing)
+                    End If
 
                     Return False
 
@@ -11850,10 +11883,12 @@ Public Class Frm_Formulario_Documento
 
                                 If _Tido = "NVI" Then
 
-                                    MessageBoxEx.Show(Me, "Ahora debe ingresar la bodega desde donde se enviaran los productos", "Validación",
-                                                  MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, Me.TopMost)
+                                    'MessageBoxEx.Show(Me, "2.- Ahora debe ingresar la bodega desde donde se enviaran los productos" & vbCrLf &
+                                    '                  "Bodega de origen", "Validación",
+                                    '              MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, Me.TopMost)
 
                                     Dim Fm_Bd As New Frm_Seleccionar_Bodega_Grilla("")
+                                    Fm_Bd.Text = "SELECCIONE LA BODGEA DE ORIGEN DE LOS PRODUCTOS (Bodega que despachara los productos)"
                                     Fm_Bd.Pro_Pedir_Permiso = False
                                     Fm_Bd.ShowDialog(Me)
                                     Dim _Row_Bodega_Destino As DataRow = Fm_Bd.Pro_Row_Bodega
@@ -12815,6 +12850,7 @@ Public Class Frm_Formulario_Documento
 
         Dim Fm_Bd As New Frm_Seleccionar_Bodega_Grilla("")
         Fm_Bd.Pro_Pedir_Permiso = False
+        Fm_Bd.Text = "SELECCIONE LA BODEGA DE DESTINO (Bodega que recibira los productos)"
         Fm_Bd.ShowDialog(Me)
         _Row_Bodega_Destino = Fm_Bd.Pro_Row_Bodega
         Fm_Bd.Dispose()

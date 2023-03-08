@@ -274,6 +274,7 @@ Namespace Bk_Migrar_Producto
                     For column = _IColum To _CantColumnas
                         Consulta &= _Ds_Producto.Tables(table).Columns(column).ColumnName & ","
                     Next
+
                     Consulta &= ")"
                     Consulta = Consulta.Replace(",)", ")")
 
@@ -289,6 +290,7 @@ Namespace Bk_Migrar_Producto
                         Consulta = Consulta.Replace(",)", ")")
                         Consulta &= ","
                     Next
+
                     Consulta &= ";" & vbCrLf
 
                     Consulta = Consulta.Replace("),;", ");")

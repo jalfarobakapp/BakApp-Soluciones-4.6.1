@@ -94,6 +94,7 @@ CREATE TABLE [dbo].[Zw_Configuracion](
 [ListaDesdeSustentatorio]                               [bit]           NOT NULL DEFAULT (0), 
 [AlertaRevNVVConVtasMismoDia]                           [bit]           NOT NULL DEFAULT (0), 
 [LasNVVDebenSerHabilitadasParaFacturar]                 [bit]           NOT NULL DEFAULT (0), 
+[B4A_DespachoSimple]                                    [bit]           NOT NULL DEFAULT (0), 
 CONSTRAINT [PK_Zw_Configuracion] PRIMARY KEY CLUSTERED 
 (
 	[Modalidad] ASC

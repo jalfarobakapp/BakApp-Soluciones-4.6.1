@@ -372,6 +372,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
 
         Dim _Cl_Facturacion As New Clas_Facturacion_Masiva
         _Cl_Facturacion.Fx_Cargar_Tabla_Facturacion(_Filtro_Doc)
+        _Cl_Facturacion.Fx_Cargar_Ds_Facturacion(_Filtro_Doc)
 
         Dim Fm As New Frm_Facturacion_Masiva
         Fm.Cl_Facturacion = _Cl_Facturacion

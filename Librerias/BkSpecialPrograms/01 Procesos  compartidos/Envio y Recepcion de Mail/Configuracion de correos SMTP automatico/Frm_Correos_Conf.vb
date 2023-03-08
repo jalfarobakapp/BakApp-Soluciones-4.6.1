@@ -242,6 +242,8 @@ Public Class Frm_Correos_Conf
             'DEFINE QUE ESTAMOS ENVIANDO UN MAIL EN FORMATO HTML
             Dim _VistaHTML As AlternateView = AlternateView.CreateAlternateViewFromString(_Cuerpo, Nothing, System.Net.Mime.MediaTypeNames.Text.Html)
 
+            If IsNothing(_CC) Then _CC = String.Empty
+
             _Para = _Para.Trim()
             _CC = _CC.Trim()
 

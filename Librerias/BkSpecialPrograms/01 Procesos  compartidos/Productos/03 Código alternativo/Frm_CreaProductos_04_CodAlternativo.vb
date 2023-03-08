@@ -460,6 +460,13 @@ Public Class Frm_CreaProductos_04_CodAlternativo
 
         End If
 
+        '-- HAY UN ERROR, EL SISTEMA NO DEBERIA GRABAR COIDGOS ALTERNATIVOS EN LA BASE EXTERNA SI ES QUE EL PRODUCTO AUN NO EXISTE EN LA MAEPR.
+
+        _SqlQueryExt = "IF EXISTS (SELECT * FROM MAEPR WHERE KOPR = '" & _Kopr & "')" & vbCrLf &
+                       "Begin" & vbCrLf &
+                       _SqlQueryExt & vbCrLf &
+                       "End"
+
         Sb_EjecConsultaBasesExternas(Me, _SqlQueryExt, True)
 
         Me.Close()

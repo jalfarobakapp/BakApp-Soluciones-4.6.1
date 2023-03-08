@@ -2299,17 +2299,34 @@ Public Module Modulo_Precios_Costos
 
         Dim _Cont = 0
 
+        Consulta_sql = "Select * From TABPP"
+        Dim _TblListas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
         For i = 0 To _Ecuaciones.Length - 1
 
             Dim _Lt = _Ecuaciones(i)
 
             If _Lt.Contains("<") Then
+
                 _Lt = Replace(_Lt, "<", "")
                 _Lt = Replace(_Lt, "(", "")
                 _Lt = Replace(_Lt, ")", "")
+
                 ReDim Preserve _Listas(_Cont)
-                _Listas(_Cont) = _Lt
+
+                For Each _Fl As DataRow In _TblListas.Rows
+
+                    Dim _Lista As String = _Fl.Item("KOLT")
+
+                    If _Lt.Contains(_Lista) Then
+                        _Listas(_Cont) = _Lista
+                        Exit For
+                    End If
+
+                Next
+
                 _Cont += 1
+
             End If
 
         Next
