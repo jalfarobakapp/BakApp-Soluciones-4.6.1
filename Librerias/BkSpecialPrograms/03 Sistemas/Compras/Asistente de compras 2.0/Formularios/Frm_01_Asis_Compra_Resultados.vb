@@ -8174,7 +8174,7 @@ Public Class Frm_01_Asis_Compra_Resultados
             Chk_Mostrar_Solo_Productos_A_Comprar.Checked = True
             Chk_Mostrar_Solo_Stock_Critico.Checked = True
 
-            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, True)
+            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
 
             Consulta_sql = "Select Distinct CodProveedor As KOEN,CodSucProveedor As SUEN,
 (Select Top 1 NOKOEN From MAEEN Where KOEN = CodProveedor and SUEN = CodSucProveedor ) As RAZON,
@@ -8308,7 +8308,7 @@ Drop Table #Paso"
             Chk_Quitar_Ventas_Calzadas.Checked = True
             Chk_Quitare_Sospechosos_Stock.Checked = True
 
-            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, True)
+            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
 
             Dim _Generar_NVI As New GeneraOccAuto.Generar_Doc_Auto
 

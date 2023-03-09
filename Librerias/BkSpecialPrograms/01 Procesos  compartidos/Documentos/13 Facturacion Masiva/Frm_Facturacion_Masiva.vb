@@ -86,6 +86,8 @@ Public Class Frm_Facturacion_Masiva
 
         End If
 
+        Me.ActiveControl = Txt_BuscaXNudoNVV
+
     End Sub
 
     Public Sub Sb_Llenar_Grilla()
@@ -678,12 +680,21 @@ Public Class Frm_Facturacion_Masiva
 
         Lbl_Total_Facturar.Tag = 0
 
-        For Each _Fila As DataRow In _Cl_Facturacion.Ds_Doc_Facturar.Tables(0).Rows
-            _Fila.Item("Chk") = Not Chk_Marcar_todo.Checked
-            If _Fila.Item("Chk") Then
-                Lbl_Total_Facturar.Tag += _Fila.Item("VABRDO")
+        Dim _Tbl As DataTable = _Dv.Table
+
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+            _Fila.Cells("Chk").Value = Not Chk_Marcar_todo.Checked
+            If _Fila.Cells("Chk").Value Then
+                Lbl_Total_Facturar.Tag += _Fila.Cells("VABRDO").Value
             End If
         Next
+
+        'For Each _Fila As DataRow In _Cl_Facturacion.Ds_Doc_Facturar.Tables(0).Rows
+        '    _Fila.Item("Chk") = Not Chk_Marcar_todo.Checked
+        '    If _Fila.Item("Chk") Then
+        '        Lbl_Total_Facturar.Tag += _Fila.Item("VABRDO")
+        '    End If
+        'Next
 
         Lbl_Total_Facturar.Text = FormatCurrency(Lbl_Total_Facturar.Tag, 0)
 
@@ -960,13 +971,8 @@ Public Class Frm_Facturacion_Masiva
     Private Sub Btn_Buscar_Click(sender As Object, e As EventArgs) Handles Btn_Buscar.Click
 
         Dim _Condicion_Campos, _Condicion_Valores As String
-        Dim _Fl As String
 
-        '        Dim _Buscquedas As New List(Of String)
-
-        'If Not String.IsNullOrEmpty(Txt_BuscaXNudoNVV.Text) Then
         _Condicion_Campos = "NUDO Like '%{0}%'"
-        'End If
 
         If Not String.IsNullOrEmpty(Txt_BuscaXEntidad.Text) Then
             _Condicion_Campos += " And ENDO+SUENDO = '{1}'"
@@ -997,13 +1003,12 @@ Public Class Frm_Facturacion_Masiva
                                       Dtp_BuscaXFechaVencimiento.Value,
                                       ComboBoxEx1.SelectedValue)
 
-        MessageBoxEx.Show(Me, "Filtro aplicado", "Filtrar", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
     End Sub
 
     Private Sub Txt_BuscaXEntidad_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_BuscaXEntidad.ButtonCustom2Click
         _RowEntidadBuscar = Nothing
         Txt_BuscaXEntidad.Text = String.Empty
+        Call Btn_Buscar_Click(Nothing, Nothing)
     End Sub
 
     Private Sub Txt_BuscaXEntidad_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_BuscaXEntidad.ButtonCustomClick
@@ -1024,12 +1029,20 @@ Public Class Frm_Facturacion_Masiva
 
         If Not IsNothing(_RowEntidadBuscar) Then
             Txt_BuscaXEntidad.Text = _RowEntidadBuscar.Item("KOEN").ToString.Trim & "-" & _RowEntidadBuscar.Item("NOKOEN").ToString.Trim
+            Call Btn_Buscar_Click(Nothing, Nothing)
         End If
 
     End Sub
 
     Private Sub Txt_BuscaXNudoNVV_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_BuscaXNudoNVV.ButtonCustomClick
         Txt_BuscaXNudoNVV.Text = String.Empty
+        Call Btn_Buscar_Click(Nothing, Nothing)
+    End Sub
+
+    Private Sub Txt_BuscaXNudoNVV_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_BuscaXNudoNVV.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            Call Btn_Buscar_Click(Nothing, Nothing)
+        End If
     End Sub
 
 End Class
