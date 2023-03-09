@@ -1496,7 +1496,7 @@ Public Class Clas_Pagar
                         _Tuvoprotes = 0
 
                         _Vadp = _Fila.Item("VADP")
-                        _Vaasdp = _Fila.Item("VAASDP")
+                        '_Vaasdp = _Fila.Item("VAASDP")
                         _Vavudp = _Fila.Item("VAVUDP")
                         _Esasdp = _Fila.Item("ESASDP")
                         _Vaabdp = _Fila.Item("VAABDP")

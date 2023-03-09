@@ -4207,7 +4207,10 @@ Public Class Frm_01_Asis_Compra_Resultados
         Fm.Dispose()
 
         If _Proceso_Automatico_Ejecutado Then
-            Call Btn_Actualizar_Informe_Click(Nothing, Nothing)
+            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
+            If Not String.IsNullOrEmpty(Trim(Fm_Hijo.Txt_Codigo.Text)) Then Sb_Buscar_X_Codigo()
+            If Not String.IsNullOrEmpty(Trim(Fm_Hijo.Txt_Descripcion.Text)) Then Sb_Buscar_X_Descripcion()
+            BtnProceso_Prov_Auto.Enabled = False
         End If
 
     End Sub
@@ -5874,7 +5877,7 @@ Public Class Frm_01_Asis_Compra_Resultados
     End Sub
 
     Private Sub Btn_Actualizar_Informe_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Actualizar_Informe.Click
-        Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, True)
+        Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, Not _Proceso_Automatico_Ejecutado, False)
         If Not String.IsNullOrEmpty(Trim(Fm_Hijo.Txt_Codigo.Text)) Then Sb_Buscar_X_Codigo()
         If Not String.IsNullOrEmpty(Trim(Fm_Hijo.Txt_Descripcion.Text)) Then Sb_Buscar_X_Descripcion()
     End Sub
@@ -8171,7 +8174,7 @@ Public Class Frm_01_Asis_Compra_Resultados
             Chk_Mostrar_Solo_Productos_A_Comprar.Checked = True
             Chk_Mostrar_Solo_Stock_Critico.Checked = True
 
-            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, True)
+            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
 
             Consulta_sql = "Select Distinct CodProveedor As KOEN,CodSucProveedor As SUEN,
 (Select Top 1 NOKOEN From MAEEN Where KOEN = CodProveedor and SUEN = CodSucProveedor ) As RAZON,
@@ -8305,7 +8308,7 @@ Drop Table #Paso"
             Chk_Quitar_Ventas_Calzadas.Checked = True
             Chk_Quitare_Sospechosos_Stock.Checked = True
 
-            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, True)
+            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
 
             Dim _Generar_NVI As New GeneraOccAuto.Generar_Doc_Auto
 

@@ -2450,6 +2450,20 @@ Public Class Frm_St_Documento
 
     Private Sub Btn_Anular_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Anular.Click
 
+
+        Dim _TblCotizaciones = _DsDocumento.Tables(6)
+
+        For Each _Fila As DataRow In _TblCotizaciones.Rows
+            Dim _Estado = _Fila.Item("Estado")
+
+            If _Estado = "E" Or _Estado = "A" Then
+                MessageBoxEx.Show(Me, "No puede anular la orden de trabajo, ya que hay una cotización abierta",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+        Next
+
         If Fx_Tiene_Permiso(Me, "Stec0004") Then
             If MessageBoxEx.Show(Me, "¿Esta seguro de anular el documento?", "Anular documento",
                                  MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then

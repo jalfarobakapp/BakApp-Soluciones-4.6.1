@@ -1,7 +1,5 @@
 ﻿Imports DevComponents.DotNetBar
 Imports BkSpecialPrograms
-Imports Bk_Produccion
-Imports System.IO
 
 Public Class Login
 
@@ -17,7 +15,9 @@ Public Class Login
 
     Dim _PWFU_Codificada As String
 
-    Public Sub New(ByVal Fm_Menu_Padre As Metro.MetroAppForm)
+    Public Property FormMenu As UserControl
+
+    Public Sub New(Fm_Menu_Padre As Metro.MetroAppForm)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -43,12 +43,12 @@ Public Class Login
 
     End Sub
 
-    Private Sub Login_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+    Private Sub Login_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         Lbl_Version.Text = "BakApp Versión: " & _Version_BakApp
         Txt_Pass.Focus()
     End Sub
 
-    Private Sub TxtxPassword_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Txt_Pass.TextChanged
+    Private Sub TxtxPassword_TextChanged(sender As System.Object, e As System.EventArgs) Handles Txt_Pass.TextChanged
 
         If Trim(Txt_Pass.Text) = "" Then Return
         Lbl_Usuario.Text = _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "PWFU = '" &
@@ -80,7 +80,7 @@ Public Class Login
 
 
 
-    Private Sub Btn_Teclado_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Teclado.Click
+    Private Sub Btn_Teclado_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Teclado.Click
         SendKeys.Send("{TAB}")
         If _Teclado Then
             Fx_Activar_Deactivar_Teclado(Me, False, TouchKeyboard1, Txt_Pass)
@@ -94,11 +94,11 @@ Public Class Login
         Txt_Pass.Focus()
     End Sub
 
-    Private Sub Btn_Cancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cancelar.Click
+    Private Sub Btn_Cancelar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cancelar.Click
         Sb_Cancelar()
     End Sub
 
-    Private Sub Txt_Pass_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Txt_Pass.KeyDown
+    Private Sub Txt_Pass_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles Txt_Pass.KeyDown
 
         Select Case e.KeyValue
             Case Keys.Enter
@@ -109,7 +109,7 @@ Public Class Login
 
     End Sub
 
-    Private Sub Btn_Ok_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ok.Click
+    Private Sub Btn_Ok_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ok.Click
         Sb_Acepta(True)
     End Sub
 
@@ -152,6 +152,7 @@ Public Class Login
 
                 Dim _Mod As New Clas_Modalidades
 
+                _Mod.FormMenu = FormMenu
                 _Mod.Sb_Actualiza_Formatos_X_Modalidad()
                 _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
 

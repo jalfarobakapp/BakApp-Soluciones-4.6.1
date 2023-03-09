@@ -336,7 +336,7 @@ Public Class Frm_St_Estado_02_Asignacion
                              _Nota_Etapa_02 As String) As Boolean
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Encabezado" & vbCrLf &
-                       "Where Nro_Ot = '" & _Nro_Ot & "' --And Pertenece = '" & _Pertenece & "'"
+                       "Where Nro_Ot = '" & _Nro_Ot & "' And CodEstado = 'I' --And Pertenece = '" & _Pertenece & "'"
         Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         Dim myTrans As SqlClient.SqlTransaction

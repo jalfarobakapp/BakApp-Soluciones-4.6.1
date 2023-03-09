@@ -587,7 +587,7 @@ Public Class Clas_Asistente_Compras
             If _Ud = 1 Then _DCS = 0
 
             'If _Chk_Restar_Stok_Bodega Then
-
+            '
             '    If _Proyeccion_Metodo_Abastecer = Enum_Proyeccion.Dias Then
             '        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
             '                       "CantSugeridaTot = Round(((RotCalculo*" & _Dias_Abastecer & ") * " & _Porc_Crecimiento & ") - StockUd" & _Ud & "," & _DCS & ")" & vbCrLf &
@@ -597,9 +597,9 @@ Public Class Clas_Asistente_Compras
             '                       "CantSugeridaTot = Round(((RotCalculo*" & _Meses_Abastecer & ") * " & _Porc_Crecimiento & ") - StockUd" & _Ud & "," & _DCS & ")" & vbCrLf &
             '                       "Where 1 > 0"
             '    End If
-
+            '
             'Else
-
+            '
             '    If _Proyeccion_Metodo_Abastecer = Enum_Proyeccion.Dias Then
             '        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
             '                       "CantSugeridaTot = Round((" & _Dias_Abastecer & " * RotCalculo) * " & _Porc_Crecimiento & "," & _DCS & ")" & vbCrLf &
@@ -609,7 +609,7 @@ Public Class Clas_Asistente_Compras
             '                       "CantSugeridaTot = Round((" & _Meses_Abastecer & " * (RotCalculo)) * " & _Porc_Crecimiento & "," & _DCS & ")" & vbCrLf &
             '                       "Where 1 > 0"
             '    End If
-
+            '
             'End If
 
             If _Proyeccion_Metodo_Abastecer = Enum_Proyeccion.Dias Then
