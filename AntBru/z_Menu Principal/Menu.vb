@@ -157,6 +157,7 @@ Public Class Menu
     Private Sub BtnCambiarDeUsuario_Click(sender As System.Object, e As System.EventArgs) Handles BtnCambiarDeUsuario.Click
         Dim NewPanel As Login = Nothing
         NewPanel = New Login(_Fm_Menu_Padre)
+        NewPanel.FormMenu = Me
         _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Right)
     End Sub
 
@@ -730,4 +731,13 @@ Public Class Menu
 
     End Sub
 
+    Private Sub Menu_Enter(sender As Object, e As EventArgs) Handles MyBase.Enter
+        Try
+            Lbl_Estatus.Text = "Fun: " & FUNCIONARIO & "-" & Nombre_funcionario_activo.Trim &
+                          ", Mod: " & Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & "..." & Space(4) &
+                          "(Base BakApp: " & _Global_BaseBk & "). Estación: " & _Global_Row_EstacionBk.Item("NombreEquipo")
+        Catch ex As Exception
+            Lbl_Estatus.Text = String.Empty
+        End Try
+    End Sub
 End Class

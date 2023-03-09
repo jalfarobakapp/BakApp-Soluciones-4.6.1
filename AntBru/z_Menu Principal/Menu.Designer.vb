@@ -1087,7 +1087,6 @@ Partial Class Menu
     Friend WithEvents Btn_Themas As DevComponents.DotNetBar.ButtonX
     Friend WithEvents ReflectionLabel1 As DevComponents.DotNetBar.Controls.ReflectionLabel
     Friend WithEvents Metro_Bar_Color As DevComponents.DotNetBar.Metro.MetroStatusBar
-    Friend WithEvents Lbl_Estatus As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Lbl_Thema_Oscuro_Ligth As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_Conf_ConfGeneral As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Conf_ConfEstacion As DevComponents.DotNetBar.ButtonItem
@@ -1095,4 +1094,5 @@ Partial Class Menu
     Friend WithEvents StyleManager1 As DevComponents.DotNetBar.StyleManager
     Private WithEvents Btn_Facturacion_Electronica As DevComponents.DotNetBar.Metro.MetroTileItem
     Friend WithEvents Btn_CambioDeEmpresa As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Lbl_Estatus As DevComponents.DotNetBar.LabelItem
 End Class

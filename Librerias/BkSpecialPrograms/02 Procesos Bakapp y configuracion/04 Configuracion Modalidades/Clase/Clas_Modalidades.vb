@@ -10,6 +10,8 @@ Public Class Clas_Modalidades
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
+    Public Property FormMenu As Object
+
     Public Function Fx_Sql_Trae_Modalidad(_Modal As Enum_Modalidad,
                                           _Modalidad As String) As DataRow
 
@@ -112,6 +114,16 @@ Public Class Clas_Modalidades
                           ", Modalidad: " & _Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & "..." & Space(4) &
                           "(Base BakApp: " & _Global_BaseBk & "). Estación: " & _Global_Row_EstacionBk.Item("NombreEquipo")
 
+        End If
+
+        If Not IsNothing(FormMenu) Then
+            Try
+                FormMenu.Lbl_Estatus.Text = "Fun: " & FUNCIONARIO & "-" & Nombre_funcionario_activo.Trim &
+                              ", Mod: " & Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & "..." & Space(4) &
+                              "(Base BakApp: " & _Global_BaseBk & "). Estación: " & _Global_Row_EstacionBk.Item("NombreEquipo")
+            Catch ex As Exception
+                FormMenu.Lbl_Estatus.Text = String.Empty
+            End Try
         End If
 
     End Sub
