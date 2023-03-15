@@ -370,14 +370,21 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
         _Filtro_Doc = Generar_Filtro_IN_Arreglo(_Lista_Idmaeedo, True)
         _Filtro_Doc = "Where IDMAEEDO In " & _Filtro_Doc
 
+        Me.Cursor = Cursors.WaitCursor
+
         Dim _Cl_Facturacion As New Clas_Facturacion_Masiva
         _Cl_Facturacion.Fx_Cargar_Tabla_Facturacion(_Filtro_Doc)
         _Cl_Facturacion.Fx_Cargar_Ds_Facturacion(_Filtro_Doc)
 
         Dim Fm As New Frm_Facturacion_Masiva
         Fm.Cl_Facturacion = _Cl_Facturacion
+
+        Me.Cursor = Cursors.Default
+
         Fm.ShowDialog(Me)
         Fm.Dispose()
+
+        Me.Cursor = Cursors.WaitCursor
 
         For Each _Fila As DataGridViewRow In Grilla_Documentos.Rows
             Dim _Idmaeedo = _Fila.Cells("IDMAEEDO").Value
@@ -385,6 +392,8 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
                 _Fila.DefaultCellStyle.BackColor = Color.LightGray
             End If
         Next
+
+        Me.Cursor = Cursors.Default
 
     End Sub
 

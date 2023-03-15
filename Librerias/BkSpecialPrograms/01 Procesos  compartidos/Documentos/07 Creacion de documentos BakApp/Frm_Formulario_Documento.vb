@@ -15625,7 +15625,7 @@ Public Class Frm_Formulario_Documento
             Dim _FechaEmi As DateTime = FormatDateTime(_TblEncabezado.Rows(0).Item("FechaEmision"), DateFormat.ShortDate)
             Dim _FechaHoy As DateTime = FormatDateTime(FechaDelServidor, DateFormat.ShortDate)
 
-            If _FechaEmi <> _FechaHoy Then
+            If _FechaEmi < _FechaHoy Then
                 For Each _Fila As DataRow In _TblDetalle.Rows
                     _Fila.Item("Consolidar_Stock") = True
                 Next

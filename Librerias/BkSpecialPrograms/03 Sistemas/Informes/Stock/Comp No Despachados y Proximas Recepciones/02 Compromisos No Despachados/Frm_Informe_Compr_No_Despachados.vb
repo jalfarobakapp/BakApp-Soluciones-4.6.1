@@ -88,9 +88,12 @@ Public Class Frm_Informe_Compr_No_Despachados
         Dtp_Fecha_Recepcion_Desde.Value = _Fecha_Hoy
         Dtp_Fecha_Recepcion_Hasta.Value = _Fecha_Hoy
 
-        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
-            Rdb_NVV.Text = "Notas de venta (NVV) Solo Habilitadas"
-        End If
+        Chk_NVVHabilitadasFacturar.Visible = _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar")
+        Chk_NVVHabilitadasFacturar.Checked = _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar")
+
+        'If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+        '    Rdb_NVV.Text = "Notas de venta (NVV) Solo Habilitadas"
+        'End If
 
     End Sub
 
@@ -255,8 +258,10 @@ Public Class Frm_Informe_Compr_No_Despachados
         ElseIf Rdb_NVV.Checked Then
             _Filtro_Documentos = "AND ED.TIDO='NVV'" & vbCrLf
 
-            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+            If Chk_NVVHabilitadasFacturar.Checked Then
                 _Filtro_Documentos += "AND ED.IDMAEEDO In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Docu_Ent Where HabilitadaFac = 1)" & vbCrLf
+                MessageBoxEx.Show(Me, "Se mostraran solo notas de venta habilitadas para facturar", "Información",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
 
         ElseIf Rdb_NVI.Checked Then

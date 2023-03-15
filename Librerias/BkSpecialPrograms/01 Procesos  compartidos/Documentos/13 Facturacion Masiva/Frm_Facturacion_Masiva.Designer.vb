@@ -23,9 +23,9 @@ Partial Class Frm_Facturacion_Masiva
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Facturacion_Masiva))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Chk_Marcar_todo = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Facturar = New DevComponents.DotNetBar.ButtonItem()
@@ -72,6 +72,8 @@ Partial Class Frm_Facturacion_Masiva
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Lbl_Total_Facturar = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_BuscaXObservaciones = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -91,10 +93,12 @@ Partial Class Frm_Facturacion_Masiva
         '
         '
         Me.Chk_Marcar_todo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Marcar_todo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Marcar_todo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Marcar_todo.FocusCuesEnabled = False
         Me.Chk_Marcar_todo.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Marcar_todo.Location = New System.Drawing.Point(9, 525)
+        Me.Chk_Marcar_todo.Location = New System.Drawing.Point(9, 531)
         Me.Chk_Marcar_todo.Name = "Chk_Marcar_todo"
-        Me.Chk_Marcar_todo.Size = New System.Drawing.Size(85, 23)
+        Me.Chk_Marcar_todo.Size = New System.Drawing.Size(85, 17)
         Me.Chk_Marcar_todo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Marcar_todo.TabIndex = 47
         Me.Chk_Marcar_todo.Text = "Marcar todo"
@@ -301,36 +305,36 @@ Partial Class Frm_Facturacion_Masiva
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle8
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
         Me.Grilla.RowHeadersVisible = False
         Me.Grilla.Size = New System.Drawing.Size(1157, 359)
         Me.Grilla.TabIndex = 3
@@ -342,6 +346,7 @@ Partial Class Frm_Facturacion_Masiva
         '
         '
         Me.Circular_Progres_Porcentaje.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Circular_Progres_Porcentaje.FocusCuesEnabled = False
         Me.Circular_Progres_Porcentaje.Location = New System.Drawing.Point(430, 531)
         Me.Circular_Progres_Porcentaje.Name = "Circular_Progres_Porcentaje"
         Me.Circular_Progres_Porcentaje.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
@@ -359,6 +364,7 @@ Partial Class Frm_Facturacion_Masiva
         '
         '
         Me.Circular_Progres_Contador.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Circular_Progres_Contador.FocusCuesEnabled = False
         Me.Circular_Progres_Contador.Location = New System.Drawing.Point(492, 531)
         Me.Circular_Progres_Contador.Name = "Circular_Progres_Contador"
         Me.Circular_Progres_Contador.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
@@ -377,6 +383,7 @@ Partial Class Frm_Facturacion_Masiva
         '
         '
         Me.Circular_Progres_Run.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Circular_Progres_Run.FocusCuesEnabled = False
         Me.Circular_Progres_Run.Location = New System.Drawing.Point(554, 531)
         Me.Circular_Progres_Run.Name = "Circular_Progres_Run"
         Me.Circular_Progres_Run.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Dot
@@ -421,10 +428,12 @@ Partial Class Frm_Facturacion_Masiva
         '
         '
         Me.Chk_Pagar_Saldos_CRV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Pagar_Saldos_CRV.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pagar_Saldos_CRV.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Pagar_Saldos_CRV.FocusCuesEnabled = False
         Me.Chk_Pagar_Saldos_CRV.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Pagar_Saldos_CRV.Location = New System.Drawing.Point(843, 524)
+        Me.Chk_Pagar_Saldos_CRV.Location = New System.Drawing.Point(843, 525)
         Me.Chk_Pagar_Saldos_CRV.Name = "Chk_Pagar_Saldos_CRV"
-        Me.Chk_Pagar_Saldos_CRV.Size = New System.Drawing.Size(254, 23)
+        Me.Chk_Pagar_Saldos_CRV.Size = New System.Drawing.Size(254, 22)
         Me.Chk_Pagar_Saldos_CRV.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Pagar_Saldos_CRV.TabIndex = 53
         Me.Chk_Pagar_Saldos_CRV.Text = "Pagar saldos con CRV. monto máximo CRV $ ->"
@@ -455,10 +464,12 @@ Partial Class Frm_Facturacion_Masiva
         '
         '
         Me.Chk_Pagar_Documentos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Pagar_Documentos.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pagar_Documentos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Pagar_Documentos.FocusCuesEnabled = False
         Me.Chk_Pagar_Documentos.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Pagar_Documentos.Location = New System.Drawing.Point(9, 543)
+        Me.Chk_Pagar_Documentos.Location = New System.Drawing.Point(9, 549)
         Me.Chk_Pagar_Documentos.Name = "Chk_Pagar_Documentos"
-        Me.Chk_Pagar_Documentos.Size = New System.Drawing.Size(415, 23)
+        Me.Chk_Pagar_Documentos.Size = New System.Drawing.Size(415, 17)
         Me.Chk_Pagar_Documentos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Pagar_Documentos.TabIndex = 55
         Me.Chk_Pagar_Documentos.Text = "Pagar documentos con pago asociado a la nota de venta en Cta. Cte. del cliente"
@@ -470,10 +481,12 @@ Partial Class Frm_Facturacion_Masiva
         '
         '
         Me.Chk_Imprimir.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Imprimir.CheckBoxImageChecked = CType(resources.GetObject("Chk_Imprimir.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Imprimir.FocusCuesEnabled = False
         Me.Chk_Imprimir.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Imprimir.Location = New System.Drawing.Point(9, 563)
+        Me.Chk_Imprimir.Location = New System.Drawing.Point(9, 569)
         Me.Chk_Imprimir.Name = "Chk_Imprimir"
-        Me.Chk_Imprimir.Size = New System.Drawing.Size(254, 23)
+        Me.Chk_Imprimir.Size = New System.Drawing.Size(254, 17)
         Me.Chk_Imprimir.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Imprimir.TabIndex = 56
         Me.Chk_Imprimir.Text = "Imprimir facturas"
@@ -565,13 +578,15 @@ Partial Class Frm_Facturacion_Masiva
         '
         Me.GroupPanel4.BackColor = System.Drawing.Color.White
         Me.GroupPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel4.Controls.Add(Me.Txt_BuscaXObservaciones)
+        Me.GroupPanel4.Controls.Add(Me.LabelX7)
+        Me.GroupPanel4.Controls.Add(Me.Btn_Buscar)
         Me.GroupPanel4.Controls.Add(Me.ComboBoxEx1)
         Me.GroupPanel4.Controls.Add(Me.LabelX6)
         Me.GroupPanel4.Controls.Add(Me.Dtp_BuscaXFechaVencimiento)
         Me.GroupPanel4.Controls.Add(Me.LabelX4)
         Me.GroupPanel4.Controls.Add(Me.Dtp_BuscaXFechaEmision)
         Me.GroupPanel4.Controls.Add(Me.LabelX3)
-        Me.GroupPanel4.Controls.Add(Me.Btn_Buscar)
         Me.GroupPanel4.Controls.Add(Me.Txt_BuscaXEntidad)
         Me.GroupPanel4.Controls.Add(Me.LabelX2)
         Me.GroupPanel4.Controls.Add(Me.Txt_BuscaXNudoNVV)
@@ -618,9 +633,9 @@ Partial Class Frm_Facturacion_Masiva
         Me.ComboBoxEx1.ForeColor = System.Drawing.Color.Black
         Me.ComboBoxEx1.FormattingEnabled = True
         Me.ComboBoxEx1.ItemHeight = 16
-        Me.ComboBoxEx1.Location = New System.Drawing.Point(775, 29)
+        Me.ComboBoxEx1.Location = New System.Drawing.Point(1030, 29)
         Me.ComboBoxEx1.Name = "ComboBoxEx1"
-        Me.ComboBoxEx1.Size = New System.Drawing.Size(85, 22)
+        Me.ComboBoxEx1.Size = New System.Drawing.Size(68, 22)
         Me.ComboBoxEx1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.ComboBoxEx1.TabIndex = 17
         Me.ComboBoxEx1.Text = "Todas..."
@@ -633,9 +648,9 @@ Partial Class Frm_Facturacion_Masiva
         '
         Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX6.ForeColor = System.Drawing.Color.Black
-        Me.LabelX6.Location = New System.Drawing.Point(775, 10)
+        Me.LabelX6.Location = New System.Drawing.Point(1030, 10)
         Me.LabelX6.Name = "LabelX6"
-        Me.LabelX6.Size = New System.Drawing.Size(93, 23)
+        Me.LabelX6.Size = New System.Drawing.Size(68, 23)
         Me.LabelX6.TabIndex = 18
         Me.LabelX6.Text = "Tipo de venta"
         '
@@ -652,7 +667,7 @@ Partial Class Frm_Facturacion_Masiva
         Me.Dtp_BuscaXFechaVencimiento.ButtonDropDown.Visible = True
         Me.Dtp_BuscaXFechaVencimiento.ForeColor = System.Drawing.Color.Black
         Me.Dtp_BuscaXFechaVencimiento.IsPopupCalendarOpen = False
-        Me.Dtp_BuscaXFechaVencimiento.Location = New System.Drawing.Point(666, 30)
+        Me.Dtp_BuscaXFechaVencimiento.Location = New System.Drawing.Point(923, 30)
         '
         '
         '
@@ -700,7 +715,7 @@ Partial Class Frm_Facturacion_Masiva
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(666, 10)
+        Me.LabelX4.Location = New System.Drawing.Point(923, 10)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(93, 23)
         Me.LabelX4.TabIndex = 15
@@ -719,7 +734,7 @@ Partial Class Frm_Facturacion_Masiva
         Me.Dtp_BuscaXFechaEmision.ButtonDropDown.Visible = True
         Me.Dtp_BuscaXFechaEmision.ForeColor = System.Drawing.Color.Black
         Me.Dtp_BuscaXFechaEmision.IsPopupCalendarOpen = False
-        Me.Dtp_BuscaXFechaEmision.Location = New System.Drawing.Point(559, 30)
+        Me.Dtp_BuscaXFechaEmision.Location = New System.Drawing.Point(816, 30)
         '
         '
         '
@@ -767,7 +782,7 @@ Partial Class Frm_Facturacion_Masiva
         '
         Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX3.ForeColor = System.Drawing.Color.Black
-        Me.LabelX3.Location = New System.Drawing.Point(559, 10)
+        Me.LabelX3.Location = New System.Drawing.Point(816, 10)
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(93, 23)
         Me.LabelX3.TabIndex = 13
@@ -777,9 +792,9 @@ Partial Class Frm_Facturacion_Masiva
         '
         Me.Btn_Buscar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Buscar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Buscar.Location = New System.Drawing.Point(1080, 29)
+        Me.Btn_Buscar.Location = New System.Drawing.Point(1104, 29)
         Me.Btn_Buscar.Name = "Btn_Buscar"
-        Me.Btn_Buscar.Size = New System.Drawing.Size(71, 23)
+        Me.Btn_Buscar.Size = New System.Drawing.Size(47, 23)
         Me.Btn_Buscar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_Buscar.TabIndex = 12
         Me.Btn_Buscar.Text = "Filtrar..."
@@ -803,7 +818,7 @@ Partial Class Frm_Facturacion_Masiva
         Me.Txt_BuscaXEntidad.Name = "Txt_BuscaXEntidad"
         Me.Txt_BuscaXEntidad.PreventEnterBeep = True
         Me.Txt_BuscaXEntidad.ReadOnly = True
-        Me.Txt_BuscaXEntidad.Size = New System.Drawing.Size(403, 22)
+        Me.Txt_BuscaXEntidad.Size = New System.Drawing.Size(341, 22)
         Me.Txt_BuscaXEntidad.TabIndex = 6
         '
         'LabelX2
@@ -909,6 +924,38 @@ Partial Class Frm_Facturacion_Masiva
         Me.Lbl_Total_Facturar.Text = "0"
         Me.Lbl_Total_Facturar.TextAlignment = System.Drawing.StringAlignment.Far
         '
+        'Txt_BuscaXObservaciones
+        '
+        Me.Txt_BuscaXObservaciones.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_BuscaXObservaciones.Border.Class = "TextBoxBorder"
+        Me.Txt_BuscaXObservaciones.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_BuscaXObservaciones.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_BuscaXObservaciones.ButtonCustom.Visible = True
+        Me.Txt_BuscaXObservaciones.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_BuscaXObservaciones.ForeColor = System.Drawing.Color.Black
+        Me.Txt_BuscaXObservaciones.Location = New System.Drawing.Point(497, 30)
+        Me.Txt_BuscaXObservaciones.Name = "Txt_BuscaXObservaciones"
+        Me.Txt_BuscaXObservaciones.PreventEnterBeep = True
+        Me.Txt_BuscaXObservaciones.Size = New System.Drawing.Size(313, 22)
+        Me.Txt_BuscaXObservaciones.TabIndex = 19
+        '
+        'LabelX7
+        '
+        Me.LabelX7.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX7.ForeColor = System.Drawing.Color.Black
+        Me.LabelX7.Location = New System.Drawing.Point(497, 10)
+        Me.LabelX7.Name = "LabelX7"
+        Me.LabelX7.Size = New System.Drawing.Size(141, 23)
+        Me.LabelX7.TabIndex = 20
+        Me.LabelX7.Text = "Observaciones"
+        '
         'Frm_Facturacion_Masiva
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -999,4 +1046,6 @@ Partial Class Frm_Facturacion_Masiva
     Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
     Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Lbl_Total_Facturar As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_BuscaXObservaciones As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
 End Class
