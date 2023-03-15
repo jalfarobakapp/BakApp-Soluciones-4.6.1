@@ -613,15 +613,15 @@ Namespace My.Resources
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
         '''CREATE TABLE [dbo].[Zw_DbExt_Conexion](
-        '''	[Id]				    [int]           IDENTITY(1,1) NOT NULL,
-        '''	[Nombre_Conexion]   	[varchar](100)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Servidor]			    [varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Puerto]			    [varchar](8)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Usuario]			    [varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Clave]				    [varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[BaseDeDatos]		    [varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Empresa]   		    [char](2)   	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[GrbPro [resto de la cadena truncado]&quot;;.
+        '''[Id]				    [int]           IDENTITY(1,1) NOT NULL,
+        '''[Nombre_Conexion]   	[varchar](100)	NOT NULL DEFAULT (&apos;&apos;),
+        '''[Servidor]			    [varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''[Puerto]			    [varchar](8)	NOT NULL DEFAULT (&apos;&apos;),
+        '''[Usuario]			    [varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''[Clave]				    [varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''[BaseDeDatos]		    [varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''[Empresa]   		    [char](2)   	NOT NULL DEFAULT (&apos;&apos;),
+        '''[GrbProd_Nuevos] [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_DbExt_Conexion() As String
             Get
@@ -855,6 +855,26 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Zw_Demonio_Wordpress() As String
             Get
                 Return ResourceManager.GetString("Zw_Demonio_Wordpress", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Despacho_Simple](
+        '''	[Id] [int] IDENTITY(1,1) NOT NULL,
+        '''	[Idmaeedo]				[int] NOT NULL DEFAULT (0),
+        '''	[CodTipoDespacho]		[int] NOT NULL DEFAULT (0),
+        '''	[TipoDespacho]			[varchar](50) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[TipoPagoDesp]			[varchar](50) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[DireccionDesp]			[varchar](50) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[TransporteDesp]		[varchar](50) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[ObservacionesDesp]		[varchar](50) NOT NULL DEFAULT (&apos;&apos;),
+        ''' CONSTRAINT [PK_Zw_Despacho_Simple] PR [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Despacho_Simple() As String
+            Get
+                Return ResourceManager.GetString("Zw_Despacho_Simple", resourceCulture)
             End Get
         End Property
         

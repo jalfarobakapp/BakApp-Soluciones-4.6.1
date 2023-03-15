@@ -146,12 +146,12 @@ Public Class Frm_Facturacion_Masiva
             _DisplayIndex += 1
 
             .Columns("NOKOEN").HeaderText = "Razón Social"
-            .Columns("NOKOEN").Width = 200
+            .Columns("NOKOEN").Width = 190
             .Columns("NOKOEN").Visible = True
             .Columns("NOKOEN").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("VABRDO").Width = 70
+            .Columns("VABRDO").Width = 80
             .Columns("VABRDO").HeaderText = "Monto"
             .Columns("VABRDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("VABRDO").DefaultCellStyle.Format = "$ ###,##0.##"
@@ -310,7 +310,7 @@ Public Class Frm_Facturacion_Masiva
 
                 If _Estado <> DataRowState.Deleted Then
 
-                    If _Fila.Item("Chk") Then
+                    If _Fila.Item("Chk") And Not _Fila.Item("Facturado") Then
 
                         Dim _Idmaeedo As Integer = _Fila.Item("IDMAEEDO")
                         Dim _Fecha_Emision As Date = _FechaEmision
@@ -683,18 +683,13 @@ Public Class Frm_Facturacion_Masiva
         Dim _Tbl As DataTable = _Dv.Table
 
         For Each _Fila As DataGridViewRow In Grilla.Rows
-            _Fila.Cells("Chk").Value = Not Chk_Marcar_todo.Checked
-            If _Fila.Cells("Chk").Value Then
-                Lbl_Total_Facturar.Tag += _Fila.Cells("VABRDO").Value
+            If Not _Fila.Cells("Facturado").Value Then
+                _Fila.Cells("Chk").Value = Not Chk_Marcar_todo.Checked
+                If _Fila.Cells("Chk").Value Then
+                    Lbl_Total_Facturar.Tag += _Fila.Cells("VABRDO").Value
+                End If
             End If
         Next
-
-        'For Each _Fila As DataRow In _Cl_Facturacion.Ds_Doc_Facturar.Tables(0).Rows
-        '    _Fila.Item("Chk") = Not Chk_Marcar_todo.Checked
-        '    If _Fila.Item("Chk") Then
-        '        Lbl_Total_Facturar.Tag += _Fila.Item("VABRDO")
-        '    End If
-        'Next
 
         Lbl_Total_Facturar.Text = FormatCurrency(Lbl_Total_Facturar.Tag, 0)
 
@@ -873,7 +868,7 @@ Public Class Frm_Facturacion_Masiva
 
         If e.KeyValue = Keys.Delete Then
 
-            Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+            Dim _Fila As DataGridViewRow = Grilla.CurrentRow
             Dim _IsNewRow As Boolean = _Fila.IsNewRow
 
             If Not _IsNewRow Then
@@ -954,12 +949,20 @@ Public Class Frm_Facturacion_Masiva
 
     Private Sub Grilla_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellEndEdit
 
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        If _Fila.Cells("Chk").Value And _Fila.Cells("Facturado").Value Then
+            _Fila.Cells("Chk").Value = False
+            MessageBoxEx.Show(Me, "Este documento ya esta facturado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         Lbl_Total_Facturar.Tag = 0
 
-        For Each _Fila As DataRow In _Cl_Facturacion.Ds_Doc_Facturar.Tables(0).Rows
+        For Each _Fl As DataRow In _Cl_Facturacion.Ds_Doc_Facturar.Tables(0).Rows
 
-            If _Fila.Item("Chk") Then
-                Lbl_Total_Facturar.Tag += _Fila.Item("VABRDO")
+            If _Fl.Item("Chk") Then
+                Lbl_Total_Facturar.Tag += _Fl.Item("VABRDO")
             End If
 
         Next
@@ -996,12 +999,17 @@ Public Class Frm_Facturacion_Masiva
             _Condicion_Campos += " And TipoVenta = '{4}'"
         End If
 
+        If Not String.IsNullOrEmpty(Txt_BuscaXObservaciones.Text.Trim) Then
+            _Condicion_Campos += " And OBDO Like '%{5}%'"
+        End If
+
         _Dv.RowFilter = String.Format(_Condicion_Campos,
                                       Txt_BuscaXNudoNVV.Text,
                                       _Entidad,
                                       Dtp_BuscaXFechaEmision.Value,
                                       Dtp_BuscaXFechaVencimiento.Value,
-                                      ComboBoxEx1.SelectedValue)
+                                      ComboBoxEx1.SelectedValue,
+                                      Txt_BuscaXObservaciones.Text)
 
     End Sub
 
@@ -1045,4 +1053,14 @@ Public Class Frm_Facturacion_Masiva
         End If
     End Sub
 
+    Private Sub Txt_BuscaXObservaciones_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_BuscaXObservaciones.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            Call Btn_Buscar_Click(Nothing, Nothing)
+        End If
+    End Sub
+
+    Private Sub Txt_BuscaXObservaciones_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_BuscaXObservaciones.ButtonCustomClick
+        Txt_BuscaXObservaciones.Text = String.Empty
+        Call Btn_Buscar_Click(Nothing, Nothing)
+    End Sub
 End Class

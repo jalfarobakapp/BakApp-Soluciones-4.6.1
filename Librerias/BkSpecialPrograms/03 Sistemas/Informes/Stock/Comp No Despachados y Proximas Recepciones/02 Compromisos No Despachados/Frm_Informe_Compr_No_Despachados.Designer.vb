@@ -61,6 +61,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Filtros_Bodega = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Clasificacion_Productos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Chk_NVVHabilitadasFacturar = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel5.SuspendLayout()
         Me.TableLayoutPanel6.SuspendLayout()
         CType(Me.Dtp_Fecha_Recepcion_Hasta, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -88,6 +89,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         '
         Me.Rdb_Todos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_Todos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Todos.FocusCuesEnabled = False
         Me.Rdb_Todos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Todos.Location = New System.Drawing.Point(3, 141)
         Me.Rdb_Todos.Name = "Rdb_Todos"
@@ -144,6 +146,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         '
         '
         Me.Chk_Fecha_Recepcion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Fecha_Recepcion.FocusCuesEnabled = False
         Me.Chk_Fecha_Recepcion.ForeColor = System.Drawing.Color.Black
         Me.Chk_Fecha_Recepcion.Location = New System.Drawing.Point(3, 6)
         Me.Chk_Fecha_Recepcion.Name = "Chk_Fecha_Recepcion"
@@ -322,6 +325,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         '
         Me.Rdb_COV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_COV.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_COV.FocusCuesEnabled = False
         Me.Rdb_COV.ForeColor = System.Drawing.Color.Black
         Me.Rdb_COV.Location = New System.Drawing.Point(3, 118)
         Me.Rdb_COV.Name = "Rdb_COV"
@@ -338,6 +342,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         '
         Me.Rdb_NCV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_NCV.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_NCV.FocusCuesEnabled = False
         Me.Rdb_NCV.ForeColor = System.Drawing.Color.Black
         Me.Rdb_NCV.Location = New System.Drawing.Point(3, 95)
         Me.Rdb_NCV.Name = "Rdb_NCV"
@@ -354,6 +359,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         '
         Me.Rdb_BLV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_BLV.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_BLV.FocusCuesEnabled = False
         Me.Rdb_BLV.ForeColor = System.Drawing.Color.Black
         Me.Rdb_BLV.Location = New System.Drawing.Point(3, 72)
         Me.Rdb_BLV.Name = "Rdb_BLV"
@@ -370,6 +376,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         '
         Me.Rdb_FCV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_FCV.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_FCV.FocusCuesEnabled = False
         Me.Rdb_FCV.ForeColor = System.Drawing.Color.Black
         Me.Rdb_FCV.Location = New System.Drawing.Point(3, 49)
         Me.Rdb_FCV.Name = "Rdb_FCV"
@@ -386,6 +393,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         '
         Me.Rdb_NVV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_NVV.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_NVV.FocusCuesEnabled = False
         Me.Rdb_NVV.ForeColor = System.Drawing.Color.Black
         Me.Rdb_NVV.Location = New System.Drawing.Point(3, 26)
         Me.Rdb_NVV.Name = "Rdb_NVV"
@@ -405,6 +413,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.Rdb_NVI.Checked = True
         Me.Rdb_NVI.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_NVI.CheckValue = "Y"
+        Me.Rdb_NVI.FocusCuesEnabled = False
         Me.Rdb_NVI.ForeColor = System.Drawing.Color.Black
         Me.Rdb_NVI.Location = New System.Drawing.Point(3, 3)
         Me.Rdb_NVI.Name = "Rdb_NVI"
@@ -542,6 +551,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.Rdb_Lineas_Pendientes.Checked = True
         Me.Rdb_Lineas_Pendientes.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Lineas_Pendientes.CheckValue = "Y"
+        Me.Rdb_Lineas_Pendientes.FocusCuesEnabled = False
         Me.Rdb_Lineas_Pendientes.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Lineas_Pendientes.Location = New System.Drawing.Point(3, 24)
         Me.Rdb_Lineas_Pendientes.Name = "Rdb_Lineas_Pendientes"
@@ -558,6 +568,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         '
         Me.Rdb_Lineas_Todas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_Lineas_Todas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Lineas_Todas.FocusCuesEnabled = False
         Me.Rdb_Lineas_Todas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Lineas_Todas.Location = New System.Drawing.Point(3, 3)
         Me.Rdb_Lineas_Todas.Name = "Rdb_Lineas_Todas"
@@ -727,6 +738,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         '
         '
         Me.Chk_Incluir_COV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Incluir_COV.FocusCuesEnabled = False
         Me.Chk_Incluir_COV.ForeColor = System.Drawing.Color.Black
         Me.Chk_Incluir_COV.Location = New System.Drawing.Point(19, 163)
         Me.Chk_Incluir_COV.Name = "Chk_Incluir_COV"
@@ -746,6 +758,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.Chk_Stock_Fisico.Checked = True
         Me.Chk_Stock_Fisico.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_Stock_Fisico.CheckValue = "Y"
+        Me.Chk_Stock_Fisico.FocusCuesEnabled = False
         Me.Chk_Stock_Fisico.ForeColor = System.Drawing.Color.Black
         Me.Chk_Stock_Fisico.Location = New System.Drawing.Point(3, 3)
         Me.Chk_Stock_Fisico.Name = "Chk_Stock_Fisico"
@@ -780,6 +793,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.Chk_Excluye_FLN.Checked = True
         Me.Chk_Excluye_FLN.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_Excluye_FLN.CheckValue = "Y"
+        Me.Chk_Excluye_FLN.FocusCuesEnabled = False
         Me.Chk_Excluye_FLN.ForeColor = System.Drawing.Color.Black
         Me.Chk_Excluye_FLN.Location = New System.Drawing.Point(3, 27)
         Me.Chk_Excluye_FLN.Name = "Chk_Excluye_FLN"
@@ -795,7 +809,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Ejecutar_Informe})
-        Me.Bar1.Location = New System.Drawing.Point(0, 401)
+        Me.Bar1.Location = New System.Drawing.Point(0, 422)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(422, 41)
         Me.Bar1.Stretch = True
@@ -877,6 +891,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         '
         Me.Rdb_Ud2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_Ud2.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Ud2.FocusCuesEnabled = False
         Me.Rdb_Ud2.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Ud2.Location = New System.Drawing.Point(3, 25)
         Me.Rdb_Ud2.Name = "Rdb_Ud2"
@@ -896,6 +911,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.Rdb_Ud1.Checked = True
         Me.Rdb_Ud1.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Ud1.CheckValue = "Y"
+        Me.Rdb_Ud1.FocusCuesEnabled = False
         Me.Rdb_Ud1.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Ud1.Location = New System.Drawing.Point(3, 3)
         Me.Rdb_Ud1.Name = "Rdb_Ud1"
@@ -941,11 +957,31 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.Btn_Clasificacion_Productos.Name = "Btn_Clasificacion_Productos"
         Me.Btn_Clasificacion_Productos.Text = "Filtros (Super familia, Marcas, Clasificación, Rubro, Zonas)"
         '
+        'Chk_NVVHabilitadasFacturar
+        '
+        Me.Chk_NVVHabilitadasFacturar.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_NVVHabilitadasFacturar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_NVVHabilitadasFacturar.Checked = True
+        Me.Chk_NVVHabilitadasFacturar.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_NVVHabilitadasFacturar.CheckValue = "Y"
+        Me.Chk_NVVHabilitadasFacturar.FocusCuesEnabled = False
+        Me.Chk_NVVHabilitadasFacturar.ForeColor = System.Drawing.Color.Black
+        Me.Chk_NVVHabilitadasFacturar.Location = New System.Drawing.Point(12, 401)
+        Me.Chk_NVVHabilitadasFacturar.Name = "Chk_NVVHabilitadasFacturar"
+        Me.Chk_NVVHabilitadasFacturar.Size = New System.Drawing.Size(272, 15)
+        Me.Chk_NVVHabilitadasFacturar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_NVVHabilitadasFacturar.TabIndex = 123
+        Me.Chk_NVVHabilitadasFacturar.Text = "Solo Notas de Venta Habilitadas para facturar"
+        '
         'Frm_Informe_Compr_No_Despachados
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(422, 442)
+        Me.ClientSize = New System.Drawing.Size(422, 463)
+        Me.Controls.Add(Me.Chk_NVVHabilitadasFacturar)
         Me.Controls.Add(Me.GroupPanel5)
         Me.Controls.Add(Me.GroupPanel3)
         Me.Controls.Add(Me.GroupPanel2)
@@ -1023,4 +1059,5 @@ Partial Class Frm_Informe_Compr_No_Despachados
     Friend WithEvents Btn_Clasificacion_Productos As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Rdb_COV As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_Incluir_COV As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_NVVHabilitadasFacturar As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

@@ -918,6 +918,9 @@ Public Class Clas_Estructura_Base_De_Datos
             Case "Zw_Despachos_MiniCompXProd"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Despachos_MiniCompXProd
 
+            Case "Zw_Despacho_Simple"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Despacho_Simple
+
             Case "Zw_Remotas"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Remotas
             Case "Zw_Remotas_En_Cadena_01_Enc"
