@@ -111,33 +111,33 @@ Public Class Modulo_Compras
     End Sub
 
     Private Sub Btn_OCCProveedores_Click(sender As Object, e As EventArgs) Handles Btn_OCCProveedores.Click
-        Dim Fm As New Frm_00_Asis_Compra_Menu(Modalidad)
-        Fm.Accion_Automatica = True
-        Fm.Auto_GenerarAutomaticamenteOCCProveedores = True
-        Fm.Modo_OCC = True
-        Fm.Tipo_Informe = "Asistente de compras"
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
+        Dim Fm1 As New Frm_00_Asis_Compra_Menu(Modalidad)
+        Fm1.Accion_Automatica = True
+        Fm1.Auto_GenerarAutomaticamenteOCCProveedores = True
+        Fm1.Modo_OCC = True
+        Fm1.Tipo_Informe = "Asistente de compras"
+        Fm1.ShowDialog()
+        Fm1.Dispose()
     End Sub
 
     Private Sub Btn_OCCStar_Click(sender As Object, e As EventArgs) Handles Btn_OCCStar.Click
-        Dim Fm As New Frm_00_Asis_Compra_Menu(Modalidad)
-        Fm.Accion_Automatica = True
-        Fm.Auto_GenerarAutomaticamenteOCCProveedorStar = True
-        Fm.Modo_OCC = True
-        Fm.Tipo_Informe = "Asistente de compras"
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
+        Dim Fm2 As New Frm_00_Asis_Compra_Menu(Modalidad)
+        Fm2.Accion_Automatica = True
+        Fm2.Auto_GenerarAutomaticamenteOCCProveedorStar = True
+        Fm2.Modo_OCC = True
+        Fm2.Tipo_Informe = "Asistente de compras"
+        Fm2.ShowDialog()
+        Fm2.Dispose()
     End Sub
 
     Private Sub Btn_NVI_Click(sender As Object, e As EventArgs) Handles Btn_NVI.Click
-        Dim Fm As New Frm_00_Asis_Compra_Menu(Modalidad)
-        Fm.Accion_Automatica = True
-        Fm.Auto_GenerarAutomaticamenteNVI = True
-        Fm.Modo_NVI = True
-        Fm.Tipo_Informe = "Asistente de compras"
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
+        Dim Fm3 As New Frm_00_Asis_Compra_Menu(Modalidad)
+        Fm3.Accion_Automatica = True
+        Fm3.Auto_GenerarAutomaticamenteNVI = True
+        Fm3.Modo_NVI = True
+        Fm3.Tipo_Informe = "Asistente de compras"
+        Fm3.ShowDialog()
+        Fm3.Dispose()
     End Sub
 
     Private Sub Btn_EjecutarTodas_Click(sender As Object, e As EventArgs) Handles Btn_EjecutarTodas.Click
