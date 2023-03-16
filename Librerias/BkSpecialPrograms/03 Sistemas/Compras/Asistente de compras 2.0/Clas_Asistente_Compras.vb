@@ -1102,12 +1102,17 @@ Public Class Clas_Asistente_Compras
                        "Update " & _Nombre_Tbl_Paso_Informe & " Set Sospecha_Baja_Rotacion = 1" & vbCrLf &
                        "Where CantSugeridaTot > 0.45" & Space(1) &
                        "And (FCV_Ult_Year+BLV_Ult_Year)-NCV_Ult_Year < 5 And Refleo = 0" &
-                       "And Fecha_Ult_Venta <= DATEADD(MONTH,-6,GETDATE())" &
+                       "--And Fecha_Ult_Venta <= DATEADD(MONTH,-3,GETDATE())" &
                        vbCrLf &
                        vbCrLf &
                        "Update " & _Nombre_Tbl_Paso_Informe & " Set Sospecha_Baja_Rotacion = 1" & vbCrLf &
                        "Where CantSugeridaTot < 0.45 And ((FCV_Ult_Year+BLV_Ult_Year)-NCV_Ult_Year between 2 And 5 OR RotMensualUd1 < 0.5)" & vbCrLf &
                        "--And Fecha_Ult_Venta <= DATEADD(MONTH,-6,GETDATE())"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        'Se deja sin sospecha de baja rotación aquellos productos vendidos en los ultimos 3 meses y que tenan mas de 3 ventas con boleta
+        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set Sospecha_Baja_Rotacion = 0" & vbCrLf &
+                       "Where (BLV_Ult_Year+FCV_Ult_Year)-NCV_Ult_Year >= 4 And Refleo = 0 And Fecha_Ult_Venta >= DATEADD(MONTH,-3,GETDATE())"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
 
@@ -1163,9 +1168,7 @@ Public Class Clas_Asistente_Compras
                "Where Sospecha_Baja_Rotacion = 0 And CantSugeridaTot > 0 And GDIodt_Ult_Year-GRIodt_Ult_Year > 5 And Comprar_Igual = 0"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
-
         End If
-
 
     End Sub
 

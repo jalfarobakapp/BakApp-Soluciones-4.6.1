@@ -420,7 +420,7 @@ Public Class Frm_01_Asis_Compra_Resultados
             BtnProceso_Prov_Auto_Especial.Enabled = False
         End If
 
-        Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, True, True)
+        Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, True, True) ', (Not Modo_NVI And Not Modo_OCC))
 
     End Sub
 
@@ -4207,7 +4207,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Fm.Dispose()
 
         If _Proceso_Automatico_Ejecutado Then
-            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
+            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False, (Not Modo_NVI And Not Modo_OCC))
             If Not String.IsNullOrEmpty(Trim(Fm_Hijo.Txt_Codigo.Text)) Then Sb_Buscar_X_Codigo()
             If Not String.IsNullOrEmpty(Trim(Fm_Hijo.Txt_Descripcion.Text)) Then Sb_Buscar_X_Descripcion()
             BtnProceso_Prov_Auto.Enabled = False
@@ -6048,6 +6048,10 @@ Public Class Frm_01_Asis_Compra_Resultados
     End Sub
 
     Sub Sb_Actualizar_Grilla_Mensual()
+
+        If _Accion_Automatica Then
+            Return
+        End If
 
         Try
 
@@ -8174,7 +8178,7 @@ Public Class Frm_01_Asis_Compra_Resultados
             Chk_Mostrar_Solo_Productos_A_Comprar.Checked = True
             Chk_Mostrar_Solo_Stock_Critico.Checked = True
 
-            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
+            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False, False)
 
             Consulta_sql = "Select Distinct CodProveedor As KOEN,CodSucProveedor As SUEN,
 (Select Top 1 NOKOEN From MAEEN Where KOEN = CodProveedor and SUEN = CodSucProveedor ) As RAZON,
@@ -8308,7 +8312,7 @@ Drop Table #Paso"
             Chk_Quitar_Ventas_Calzadas.Checked = True
             Chk_Quitare_Sospechosos_Stock.Checked = True
 
-            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False)
+            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False, False)
 
             Dim _Generar_NVI As New GeneraOccAuto.Generar_Doc_Auto
 
@@ -8819,6 +8823,10 @@ Drop Table #Paso"
 
         Dim _Bod_Solicita As String
         Dim _Tbl_Productos As DataTable
+
+        If Not CBool(_Tbl_Informe.Rows.Count) Then
+            Return
+        End If
 
         If _TblBodCompra.Rows.Count = 1 Then
 

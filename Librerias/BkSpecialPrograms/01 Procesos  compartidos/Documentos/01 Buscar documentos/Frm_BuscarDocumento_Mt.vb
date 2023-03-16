@@ -484,12 +484,11 @@ Public Class Frm_BuscarDocumento_Mt
             Fm.Dispose()
 
             If HabilitarNVVParaFacturar Then
-                _Actualizar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "HabilitadaFac", "Idmaeedo = " & _Idmaeedo)
+                _Actualizar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "HabilitadaFac", "Idmaeedo = " & _Idmaeedo,,,, True)
+                If _Estado = "Cerrado" Then _Actualizar = True
             End If
 
-            If _Actualizar Then
-                Sb_Actualizar()
-            End If
+            If _Actualizar Then Sb_Actualizar()
 
         Catch ex As Exception
             MessageBoxEx.Show(Me, ex.Message, "Error inesperado!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
