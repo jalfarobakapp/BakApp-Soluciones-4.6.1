@@ -1,7 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports DevComponents.DotNetBar
 
-Public Class Frm_St_Estado_03_Presupuesto
+Public Class Frm_St_Estado_03_Presupuesto2
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -14,6 +14,7 @@ Public Class Frm_St_Estado_03_Presupuesto
     Dim _Tbl_DetProd As DataTable
     Dim _Tbl_ChekIn As DataTable
     Dim _Row_Notas As DataRow
+    Dim _Tbl_OperacionesXServ As DataTable
 
     Dim _Editando_documento As Boolean
     Dim _Horas_Mano_de_Obra_Asignado As Double
@@ -29,12 +30,58 @@ Public Class Frm_St_Estado_03_Presupuesto
     Public Property CodTecnico_Presupuesta As String
     Public Property ObligaIngProdPresupuesto As Boolean
 
+#Region "PROPIEDADES"
+
+    Public Property Pro_DsDocumento() As DataSet
+        Get
+            Return _DsDocumento
+        End Get
+        Set(value As DataSet)
+            _DsDocumento = value
+            _Row_Encabezado = _DsDocumento.Tables(0).Rows(0)
+            _Tbl_DetProd = _DsDocumento.Tables(1)
+            _Tbl_ChekIn = _DsDocumento.Tables(2)
+            _Row_Notas = _DsDocumento.Tables(3).Rows(0)
+            _Tbl_OperacionesXServ = _DsDocumento.Tables(10)
+        End Set
+    End Property
+
+    Public Property Pro_Grabar() As Boolean
+        Get
+            Return _Grabar
+        End Get
+        Set(value As Boolean)
+
+        End Set
+    End Property
+
+    Public Property Pro_Editando_Documento() As Boolean
+        Get
+            Return _Editando_documento
+        End Get
+        Set(value As Boolean)
+            _Editando_documento = value
+        End Set
+    End Property
+
+    Public Property Pro_Imagenes_32x32() As ImageList
+        Get
+            Return Imagenes_32x32
+        End Get
+        Set(value As ImageList)
+            Imagenes_32x32 = value
+        End Set
+    End Property
+
+#End Region
+
     Public Sub New(Id_Ot As Integer, Accion As Accion)
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Esta llamada es exigida por el diseñador.
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+
         _Accion = Accion
         _Id_Ot = Id_Ot
 
@@ -46,7 +93,7 @@ Public Class Frm_St_Estado_03_Presupuesto
 
     End Sub
 
-    Private Sub Frm_St_Estado_03_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_St_Estado_03_Presupuesto2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Dim _CodFuncionario = _Row_Encabezado.Item("CodTecnico_Asignado")
 
@@ -59,7 +106,6 @@ Public Class Frm_St_Estado_03_Presupuesto
         Else
             _CodFuncionario = CodTecnico_Presupuesta
         End If
-
 
         Txt_Tecnico_Taller.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller", "NomFuncionario",
                                            "CodFuncionario = '" & _CodFuncionario & "'").ToString.Trim
@@ -77,10 +123,6 @@ Public Class Frm_St_Estado_03_Presupuesto
             AddHandler Grilla.KeyDown, AddressOf Grilla_KeyDown
             AddHandler Grilla.EditingControlShowing, AddressOf Grilla_EditingControlShowing
 
-            AddHandler Txt_Horas_Mano_de_Obra.Validating, AddressOf Txt_Horas_Mano_de_Obra_Validating
-            AddHandler Txt_Horas_Mano_de_Obra.Enter, AddressOf Txt_Horas_Mano_de_Obra_Enter
-            AddHandler Txt_Horas_Mano_de_Obra.KeyPress, AddressOf Txt_Horas_Mano_de_Obra_KeyPress
-
             AddHandler Btn_Fijar_Estado.Click, AddressOf Btn_Fijar_Estado_Click
 
             Btn_Editar.Visible = False
@@ -90,19 +132,6 @@ Public Class Frm_St_Estado_03_Presupuesto
             AddHandler Btn_Grabar.Click, AddressOf Btn_Fijar_Estado_Click
 
             _Horas_Mano_de_Obra_Asignado = _Row_Encabezado.Item("Horas_Mano_de_Obra_Asignado")
-            Txt_Horas_Mano_de_Obra.Text = FormatNumber(_Horas_Mano_de_Obra_Asignado, 2)
-            Txt_Defecto_encontrado.Text = _Row_Notas.Item("Defecto_encontrado")
-            Txt_Reparacion_a_realizar.Text = _Row_Notas.Item("Reparacion_a_realizar")
-
-            Txt_Defecto_encontrado.ReadOnly = True
-            Txt_Defecto_encontrado.BackColor = Color.LightGray
-            Txt_Defecto_encontrado.FocusHighlightEnabled = False
-
-            Txt_Reparacion_a_realizar.ReadOnly = True
-            Txt_Reparacion_a_realizar.BackColor = Color.LightGray
-            Txt_Reparacion_a_realizar.FocusHighlightEnabled = False
-
-            Txt_Horas_Mano_de_Obra.Enabled = False
 
             Btn_Fijar_Estado.Visible = False
             Btn_Editar.Visible = True
@@ -117,9 +146,11 @@ Public Class Frm_St_Estado_03_Presupuesto
         Btn_Grabar.Visible = False
 
         For Each _Row As DataGridViewRow In Grilla.Rows
-            Dim _Codigo = NuloPorNro(_Row.Cells("Codigo").Value, "")
 
-            If String.IsNullOrEmpty(_Codigo) Then
+            Dim _Codigo = NuloPorNro(_Row.Cells("Codigo").Value, "")
+            Dim _Nuevo_Item = NuloPorNro(_Row.Cells("Nuevo_Item").Value, False)
+
+            If Not _Nuevo_Item And String.IsNullOrEmpty(_Codigo) Then
                 Try
                     Grilla.Rows.RemoveAt(_Row.Index)
                     Grilla.Refresh()
@@ -144,40 +175,8 @@ Public Class Frm_St_Estado_03_Presupuesto
             Grilla.AllowUserToAddRows = True
         End If
 
-        Me.ActiveControl = Txt_Horas_Mano_de_Obra
+        'Me.ActiveControl = Txt_Horas_Mano_de_Obra
 
-    End Sub
-
-    Private Sub Frm_St_Estado_03_Presupuesto_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
-
-        'Dim _InT = Super_Tab.SelectedTabIndex
-        If e.KeyValue = Keys.Down Then
-            ' Return
-            Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
-            Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
-
-            Dim _Nuevo_Item As Boolean = _Fila.Cells("Nuevo_Item").Value
-
-            If Not _Nuevo_Item Then
-                With Grilla
-
-                    Dim Filas As Integer = .Rows.Count - 1
-                    Dim Columna As Integer = .CurrentCellAddress.X
-                    Dim Fila As Integer = .CurrentCellAddress.Y
-
-                    If Filas = Fila Then '.CurrentRow.Index Then
-                        Grilla.AllowUserToAddRows = True
-
-                        'Sb_New_OT_Agregar_Fila()
-                        '.CurrentCell = .Rows(Fila + 1).Cells("Codigo")
-                    End If
-                End With
-            End If
-
-        ElseIf e.KeyValue = Keys.Escape Then
-
-            Me.Close()
-        End If
     End Sub
 
 #Region "PROCEDIMIENTOS"
@@ -240,7 +239,46 @@ Public Class Frm_St_Estado_03_Presupuesto
             .Item("Neto_Linea") = 0
             .Item("Iva_Linea") = 0
             .Item("Total_Linea") = 0
+
             _Tbl_DetProd.Rows.Add(NewFila)
+
+        End With
+
+    End Sub
+
+    Sub Sb_New_OT_Agregar_Fila_Operacion(ByRef _Tbl As DataTable,
+                                          _Semilla As Integer,
+                                          _Codigo As String,
+                                          _CodReceta As String,
+                                          _Operacion As String,
+                                          _Descripcion As String,
+                                          _CantMayor1 As Boolean,
+                                          _Cantidad As Integer,
+                                          _CantidadRealizada As Integer,
+                                          _Precio As Double,
+                                          _Total As Double,
+                                          _Realizado As Boolean)
+
+        Dim NewFila As DataRow
+        NewFila = _Tbl.NewRow
+        With NewFila
+
+            .Item("Id_Ot") = _Id_Ot
+            .Item("Chk") = True
+            .Item("Semilla") = _Semilla
+            .Item("Codigo") = _Codigo
+            .Item("CodReceta") = _CodReceta
+            .Item("Operacion") = _Operacion
+            .Item("Descripcion") = _Descripcion
+            .Item("CantMayor1") = _CantMayor1
+            .Item("Cantidad") = _Cantidad
+            .Item("CantidadRealizada") = _CantidadRealizada
+            .Item("Precio") = _Precio
+            .Item("Total") = _Total
+            .Item("Orden") = 0
+            .Item("Realizado") = _Realizado
+
+            _Tbl.Rows.Add(NewFila)
 
         End With
 
@@ -249,9 +287,9 @@ Public Class Frm_St_Estado_03_Presupuesto
     Sub Sb_New_Ot_Grabar_Partes()
 
         If Fx_Fijar_Estado() Then
-            _Row_Encabezado.Item("_Horas_Mano_de_Obra_Asignado") = _Horas_Mano_de_Obra_Asignado
-            _Row_Notas.Item("Defecto_encontrado") = Txt_Defecto_encontrado.Text
-            _Row_Notas.Item("Reparacion_a_realizar") = Txt_Reparacion_a_realizar.Text
+            _Row_Encabezado.Item("_Horas_Mano_de_Obra_Asignado") = 1 '_Horas_Mano_de_Obra_Asignado
+            '_Row_Notas.Item("Defecto_encontrado") = Txt_Defecto_encontrado.Text
+            '_Row_Notas.Item("Reparacion_a_realizar") = Txt_Reparacion_a_realizar.Text
             _Grabar = True
             Me.Close()
         End If
@@ -358,8 +396,8 @@ Public Class Frm_St_Estado_03_Presupuesto
 
             ' --------------------------------------------------- NOTAS ---------------------------------------
 
-            Dim _Reparacion_a_realizar As String = Trim(Txt_Reparacion_a_realizar.Text)
-            Dim _Defecto_encontrado As String = Trim(Txt_Defecto_encontrado.Text)
+            Dim _Reparacion_a_realizar As String '= Trim(Txt_Reparacion_a_realizar.Text)
+            Dim _Defecto_encontrado As String '= Trim(Txt_Defecto_encontrado.Text)
             Dim _Chk_no_se_pudo_reparar As Integer = CInt(_Row_Notas.Item("Chk_no_se_pudo_reparar")) * -1
             Dim _Motivo_no_reparo As String = _Row_Notas.Item("Motivo_no_reparo")
 
@@ -418,11 +456,6 @@ Public Class Frm_St_Estado_03_Presupuesto
 
 #End Region
 
-    Private Sub Btn_Salir_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Salir.Click
-        Grilla.EndEdit()
-        Me.Close()
-    End Sub
-
 #Region "EVENTOS GRILLA"
 
     Private Sub Grilla_CellEnter(sender As Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
@@ -432,7 +465,7 @@ Public Class Frm_St_Estado_03_Presupuesto
 
         'Dim _Nuevo_Item As Boolean = _Fila.Cells("Nuevo_Item").Value
         If _Fila.IsNewRow Then
-            Dim _Descripcion As String = _Fila.Cells("Descripcion").Value
+            Dim _Descripcion As String = NuloPorNro(_Fila.Cells("Descripcion").Value, "")
             If _Cabeza = "Cantidad" Then
                 If String.IsNullOrEmpty(_Descripcion) Then
                     SendKeys.Send("{LEFT}")
@@ -460,7 +493,7 @@ Public Class Frm_St_Estado_03_Presupuesto
         Dim _Descripcion As String = _Fila.Cells("Descripcion").Value
 
         If _Cabeza = "Codigo" Then
-            If _Fila.IsNewRow Then
+            If _Fila.IsNewRow Or _Nuevo_Item Then
                 If Not String.IsNullOrEmpty(_Descripcion) Then
                     e.Cancel = True
                 End If
@@ -488,7 +521,8 @@ Public Class Frm_St_Estado_03_Presupuesto
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
-        Dim _Codigo As String
+        Dim _Codigo As String = _Fila.Cells("Codigo").Value
+        Dim _Semilla As Integer = _Fila.Cells("Semilla").Value
 
         Dim _RowProducto As DataRow
 
@@ -498,7 +532,6 @@ Public Class Frm_St_Estado_03_Presupuesto
                 _Fila.Cells("Codigo").Value = String.Empty
                 Grilla.EndEdit()
             End If
-            _Codigo = _Fila.Cells("Codigo").Value
 
             If _Codigo Is Nothing Then Return
 
@@ -506,31 +539,20 @@ Public Class Frm_St_Estado_03_Presupuesto
 
             If Not (_RowProducto Is Nothing) Then
 
+                If Not Fx_Buscar_Receta(_RowProducto.Item("KOPR"), _Semilla) Then
+                    _Fila.Cells("Codigo").Value = String.Empty
+                    Return
+                End If
+
                 _Fila.Cells("Id_Ot").Value = _Id_Ot
                 _Fila.Cells("Codigo").Value = _RowProducto.Item("KOPR")
                 _Fila.Cells("Descripcion").Value = _RowProducto.Item("NOKOPR")
                 _Fila.Cells("Ud").Value = _RowProducto.Item("UD01PR")
                 _Fila.Cells("Nuevo_Item").Value = False
+                _Fila.Cells("Cantidad").Value = 1
 
-                If Not _Fila.IsNewRow Then
-                    Grilla.AllowUserToAddRows = False
-                End If
+                Sb_New_OT_Agregar_Fila()
 
-                'SendKeys.Send("{TAB}")
-                'SendKeys.Send("{TAB}")
-                'SendKeys.Send("{TAB}")
-                SendKeys.Send("{LEFT}")
-                SendKeys.Send("{LEFT}")
-                SendKeys.Send("{LEFT}")
-
-                'Grilla.CurrentCell = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Cantidad")
-            Else
-                Try
-                    Grilla.Rows.RemoveAt(Grilla.CurrentRow.Index)
-                    Grilla.Refresh()
-                Catch ex As Exception
-
-                End Try
             End If
 
         ElseIf _Cabeza = "Cantidad" Then
@@ -550,17 +572,17 @@ Public Class Frm_St_Estado_03_Presupuesto
 
     Private Sub Grilla_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs)
         Try
-            Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+            Dim _Fila As DataGridViewRow = Grilla.CurrentRow
             Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
-            'Dim _Nuevo_Item As Boolean = _Fila.Cells("Nuevo_Item").Value
+            Dim _Nuevo_Item As Boolean = _Fila.Cells("Nuevo_Item").Value
             'Dim _Codigo As String = _Fila.Cells("Codigo").Value
             Dim _Key As Keys = e.KeyValue
 
             Select Case _Key
 
                 Case Keys.Enter
-                    If _Fila.IsNewRow Then
+                    If _Fila.IsNewRow Or _Nuevo_Item Then
                         If _Cabeza = "Codigo" Or _Cabeza = "Cantidad" Then
                             Grilla.Columns(_Cabeza).ReadOnly = False
                             SendKeys.Send("{F2}")
@@ -577,7 +599,7 @@ Public Class Frm_St_Estado_03_Presupuesto
                     End If
                 Case Keys.Delete
 
-                    If Not _Fila.IsNewRow Then
+                    If Not _Nuevo_Item Then '_Fila.IsNewRow Then
 
                         If (_Fila.Cells("Cantidad").Value Is DBNull.Value) Then
                             Grilla.Rows.RemoveAt(Grilla.CurrentRow.Index)
@@ -609,11 +631,10 @@ Public Class Frm_St_Estado_03_Presupuesto
             Bar2.Enabled = True
         End Try
 
-
-
     End Sub
 
     Private Sub Grilla_EditingControlShowing(sender As System.Object, e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs)
+
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
         Dim validar As TextBox = CType(e.Control, TextBox)
 
@@ -625,18 +646,19 @@ Public Class Frm_St_Estado_03_Presupuesto
 
     End Sub
 
+
     Function Fx_Buscar_Producto(_Codigo As String) As DataRow
 
         Dim _TblProducto As DataTable
 
-        'Dim _CodigoAlt = _Codigo
-        '_CodigoAlt = _Sql.Fx_Trae_Dato("TABCODAL", "KOPR", "KOEN = '' And KOPRAL = '" & _CodigoAlt & "'")
+        Dim _CodigoAlt = _Codigo
+        _CodigoAlt = _Sql.Fx_Trae_Dato("TABCODAL", "KOPR", "KOEN = '' And KOPRAL = '" & _CodigoAlt & "'")
 
-        'If Not String.IsNullOrEmpty(_CodigoAlt) Then
-        '    _Codigo = _CodigoAlt
-        'End If
+        If Not String.IsNullOrEmpty(_CodigoAlt) Then
+            _Codigo = _CodigoAlt
+        End If
 
-        Consulta_sql = "Select top 1 * From MAEPR Where KOPR = '" & _Codigo & "' And TIPR = 'SSN'"
+        Consulta_sql = "Select top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
         _TblProducto = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         If CBool(_TblProducto.Rows.Count) Then
@@ -647,7 +669,7 @@ Public Class Frm_St_Estado_03_Presupuesto
             Fm.Pro_CodEntidad = String.Empty
             Fm.Pro_CodSucEntidad = String.Empty
             Fm.Pro_Tipo_Lista = "P"
-            Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
+            'Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
             Fm.Pro_Sucursal_Busqueda = ModSucursal
             Fm.Pro_Bodega_Busqueda = ModBodega
             Fm.Txtdescripcion.Text = _Codigo
@@ -657,6 +679,8 @@ Public Class Frm_St_Estado_03_Presupuesto
             Codigo_abuscar = String.Empty
             Fm.Pro_Mostrar_Clasificaciones = True
             Fm.Pro_Mostrar_Imagenes = True
+
+            Fm.Pro_Filtro_Sql_Extra = "And TIPR = 'SSN'"
 
             Fm.ShowDialog(Me)
 
@@ -673,70 +697,10 @@ Public Class Frm_St_Estado_03_Presupuesto
 
 #End Region
 
-#Region "EVENTOS TXT MANO DE OBRA"
-
-    Private Sub Txt_Horas_Mano_de_Obra_Validating(sender As System.Object, e As System.ComponentModel.CancelEventArgs)
-        _Horas_Mano_de_Obra_Asignado = De_Txt_a_Num_01(Txt_Horas_Mano_de_Obra.Text, 2)
-        Txt_Horas_Mano_de_Obra.Text = FormatNumber(_Horas_Mano_de_Obra_Asignado, 2)
-    End Sub
-
-    Private Sub Txt_Horas_Mano_de_Obra_Enter(sender As System.Object, e As System.EventArgs)
-        If CBool(_Horas_Mano_de_Obra_Asignado) Then
-            Txt_Horas_Mano_de_Obra.Text = _Horas_Mano_de_Obra_Asignado
-        Else
-            Txt_Horas_Mano_de_Obra.Text = String.Empty
-        End If
-    End Sub
-
-    Private Sub Txt_Horas_Mano_de_Obra_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs)
-
-        Dim _Texto = CType(sender, TextBox)
-
-        If e.KeyChar = "."c Then
-            e.Handled = True
-            SendKeys.Send(",")
-        End If
-
-        Dim caracter As Char = e.KeyChar
-
-        ' comprobar si es un número con isNumber, si es el backspace, si el caracter  
-        ' es el separador decimal, y que no contiene ya el separador  
-        If (Char.IsNumber(caracter)) Or
-        (caracter = ChrW(Keys.Back)) Or
-        (caracter = ",") And
-        (_Texto.Text.Contains(",") = False) Then
-            e.Handled = False
-        Else
-            e.Handled = True
-        End If
-
-    End Sub
-
-#End Region
 
 #Region "EVENTOS BOTON GRABAR"
 
     Private Sub Btn_Fijar_Estado_Click(sender As System.Object, e As System.EventArgs)
-
-        If String.IsNullOrEmpty(Txt_Horas_Mano_de_Obra.Text) Then
-            MessageBoxEx.Show(Me, "FALTA MANO DE HOBRA (HORAS)", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Txt_Horas_Mano_de_Obra.Focus()
-            Return
-        End If
-
-        If String.IsNullOrWhiteSpace(Txt_Defecto_encontrado.Text) Then
-            MessageBoxEx.Show(Me, "FALTA DEFECTO ENCONTRADO", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Txt_Defecto_encontrado.Text = String.Empty
-            Txt_Defecto_encontrado.Focus()
-            Return
-        End If
-
-        If String.IsNullOrWhiteSpace(Txt_Reparacion_a_realizar.Text) Then
-            MessageBoxEx.Show(Me, "FALTA REPARACION A REALIZAR", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Txt_Reparacion_a_realizar.Text = String.Empty
-            Txt_Reparacion_a_realizar.Focus()
-            Return
-        End If
 
         If Not CBool(Grilla.Rows.Count) Or Grilla.Rows.Count = 1 Then
 
@@ -793,185 +757,166 @@ Public Class Frm_St_Estado_03_Presupuesto
 
 #End Region
 
-#Region "PROPIEDADES"
+    Function Fx_Buscar_Receta(_Codigo As String, _Semilla As Integer) As Boolean
 
-    Public Property Pro_DsDocumento() As DataSet
-        Get
-            Return _DsDocumento
-        End Get
-        Set(value As DataSet)
-            _DsDocumento = value
-            _Row_Encabezado = _DsDocumento.Tables(0).Rows(0)
-            _Tbl_DetProd = _DsDocumento.Tables(1)
-            _Tbl_ChekIn = _DsDocumento.Tables(2)
-            _Row_Notas = _DsDocumento.Tables(3).Rows(0)
-        End Set
-    End Property
+        Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_OT_Recetas_Enc",
+                                    "CodReceta In (Select CodReceta From " & _Global_BaseBk & "Zw_St_OT_Recetas_Prod Where Codigo = '" & _Codigo & "')"))
 
-    Public Property Pro_Grabar() As Boolean
-        Get
-            Return _Grabar
-        End Get
-        Set(value As Boolean)
-
-        End Set
-    End Property
-
-    Public Property Pro_Editando_Documento() As Boolean
-        Get
-            Return _Editando_documento
-        End Get
-        Set(value As Boolean)
-            _Editando_documento = value
-        End Set
-    End Property
-
-    Public Property Pro_Imagenes_32x32() As ImageList
-        Get
-            Return Imagenes_32x32
-        End Get
-        Set(value As ImageList)
-            Imagenes_32x32 = value
-        End Set
-    End Property
-
-#End Region
-
-    Private Sub Grilla_CellValidating(sender As System.Object, e As System.Windows.Forms.DataGridViewCellValidatingEventArgs) Handles Grilla.CellValidating
-        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
-    End Sub
-
-
-    Private Sub Grilla_RowValidating(sender As Object, e As System.Windows.Forms.DataGridViewCellCancelEventArgs) Handles Grilla.RowValidating
-        ' e.Cancel = True
-        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
-
-        Dim _Nuevo_Item As Boolean = NuloPorNro(_Fila.Cells("Nuevo_Item").Value, False)
-
-        If Not _Fila.IsNewRow Then
-            If (_Fila.Cells("Cantidad").Value Is DBNull.Value) Then
-                e.Cancel = True
-            End If
+        If Not _Reg Then
+            MessageBoxEx.Show(Me, "No existen receta asociada a este producto" & vbCrLf &
+                              "Informe a la administración", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return False
         End If
 
-    End Sub
+        Dim Fm As New Frm_Filtro_Especial_Informes(Frm_Filtro_Especial_Informes._Tabla_Fl._Otra)
+        Fm.Pro_Tabla = _Global_BaseBk & "Zw_St_OT_Recetas_Enc"
+        Fm.Pro_Campo = "CodReceta"
+        Fm.Pro_Descripcion = "Descripcion"
+        Fm.Text = "TIPO DE RECLAMO"
+        Fm.Pro_Sql_Filtro_Condicion_Extra = "And CodReceta In (Select CodReceta From " & _Global_BaseBk & "Zw_St_OT_Recetas_Prod Where Codigo = '" & _Codigo & "')" & vbCrLf
+        Fm.Pro_Seleccionar_Solo_Uno = True
+        Fm.ShowDialog(Me)
 
+        If Fm.Pro_Filtrar Then
 
-    Private Sub Grilla_DataError(sender As Object, e As System.Windows.Forms.DataGridViewDataErrorEventArgs) Handles Grilla.DataError
+            Dim _CodReceta As String = Fm.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
 
-        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
-        Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+            Consulta_sql = "Select Rece.*,Oper.Descripcion,Cast(0 As Bit) As Chk From " & _Global_BaseBk & "Zw_St_OT_Recetas_Ope Rece" & vbCrLf &
+                           "Left Join " & _Global_BaseBk & "Zw_St_OT_Operaciones Oper On Rece.Operacion = Oper.Operacion" & vbCrLf &
+                           "Where CodReceta = '" & _CodReceta & "'"
 
-        MessageBoxEx.Show(e.Exception.ToString)
-    End Sub
+            Dim _TblOperaciones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-    Private Sub Grilla_DefaultValuesNeeded(sender As System.Object, e As System.Windows.Forms.DataGridViewRowEventArgs) Handles Grilla.DefaultValuesNeeded
+            Dim _Grabar As Boolean
 
-        With e.Row
+            Dim Fm2 As New Frm_OperacionesXServicio(_CodReceta)
+            Fm2.TblOperaciones = _TblOperaciones
+            Fm2.ShowDialog(Me)
+            _Grabar = Fm2.Grabar
+            _TblOperaciones = Fm2.TblOperaciones
+            Fm2.Dispose()
 
-            .Cells("Nuevo_Item").Value = True
-            .Cells("Codigo").Value = String.Empty
-            .Cells("Cantidad").Value = 0
-            .Cells("Descripcion").Value = String.Empty
-            .Cells("Utilizado").Value = False
-
-            .Cells("Ud").Value = String.Empty
-            .Cells("Un").Value = 1
-
-            .Cells("CantUd1").Value = 0
-            .Cells("CantUd2").Value = 0
-            .Cells("Precio").Value = 0
-            .Cells("Neto_Linea").Value = 0
-            .Cells("Iva_Linea").Value = 0
-            .Cells("Total_Linea").Value = 0
-
-        End With
-
-    End Sub
-
-    Public Sub Fx_Validar_Keypress_Nros_Grilla(sender As Object, e As System.Windows.Forms.KeyPressEventArgs)
-        ' evento Keypress  
-
-        ' obtener indice de la columna  
-        With Grilla
-            Dim Cabeza = .Columns(.CurrentCell.ColumnIndex).Name
-            'Dim Codigo = .Rows(.CurrentRow.Index).Cells("Codigo").Value
-            'Dim Descripcion = .Rows(.CurrentRow.Index).Cells("Descripcion").Value
-            Dim caracter As Char = e.KeyChar
-
-            If e.KeyChar = "."c Then
-                ' si se pulsa la coma se convertirá en punto
-                'e.Handled = True
-                SendKeys.Send(",")
-                e.KeyChar = ","c
-                caracter = ","
+            If Not _Grabar Then
+                Return False
             End If
 
-            ' comprobar si la celda en edición corresponde a la columna 1 o 2
-            'If Cabeza = "CantComprar" Then
-            ' Obtener caracter  
+            For Each _Fl As DataRow In _TblOperaciones.Rows
 
-            ' referencia a la celda  
-            Dim txt As TextBox = CType(sender, TextBox)
+                Dim _Total As Double = _Fl.Item("Cantidad") * _Fl.Item("Precio")
 
-            ' comprobar si es un número con isNumber, si es el backspace, si el caracter  
-            ' es el separador decimal, y que no contiene ya el separador  
-            If (Char.IsNumber(caracter)) Or
-            (caracter = ChrW(Keys.Back)) Or
-            (caracter = ",") And
-            (txt.Text.Contains(",") = False) Then
-                e.Handled = False
-            Else
-                e.Handled = True
-            End If
-            'End If
-        End With
-    End Sub
+                If _Fl.Item("Chk") Then
+                    Sb_New_OT_Agregar_Fila_Operacion(_Tbl_OperacionesXServ,
+                                                     _Semilla,
+                                                     _Codigo,
+                                                     _Fl.Item("CodReceta"),
+                                                     _Fl.Item("Operacion"),
+                                                     _Fl.Item("Descripcion"),
+                                                     _Fl.Item("CantMayor1"),
+                                                     _Fl.Item("Cantidad"),
+                                                     False,
+                                                     _Fl.Item("Precio"),
+                                                     _Total,
+                                                     False)
+                End If
 
-    Private Sub Btn_Editar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Editar.Click
+            Next
 
-        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_OT_Estados", "Id_Ot = " & _Id_Ot & " And CodEstado = 'C'")
-
-        If CBool(_Reg) Then
-            MessageBoxEx.Show(Me, "No se puede modificar el estado, ya que existe un estado posterior", "Validación",
-                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
         Else
 
-            _Editando_documento = True
-            Beep()
-            ToastNotification.Show(Me, "AHORA ES POSIBLE ACTUALIZAR EL DOCUMENTO",
-                                   Btn_Editar.Image,
-                                   1 * 1000, eToastGlowColor.Green,
-                                   eToastPosition.MiddleCenter)
-
-            Btn_Grabar.Visible = True
-            Btn_Cancelar.Visible = True
-            Btn_Editar.Visible = False
-            Btn_Salir.Visible = False
-
-            Txt_Defecto_encontrado.ReadOnly = False
-            Txt_Defecto_encontrado.BackColor = Color.White
-            Txt_Defecto_encontrado.FocusHighlightEnabled = True
-
-            Txt_Reparacion_a_realizar.ReadOnly = False
-            Txt_Reparacion_a_realizar.BackColor = Color.White
-            Txt_Reparacion_a_realizar.FocusHighlightEnabled = True
-
-            Txt_Horas_Mano_de_Obra.Enabled = True
-
-            AddHandler Grilla.CellEnter, AddressOf Grilla_CellEnter
-            AddHandler Grilla.CellBeginEdit, AddressOf Grilla_CellBeginEdit
-            AddHandler Grilla.CellEndEdit, AddressOf Grilla_CellEndEdit
-            AddHandler Grilla.KeyDown, AddressOf Grilla_KeyDown
-            AddHandler Grilla.EditingControlShowing, AddressOf Grilla_EditingControlShowing
+            If MessageBoxEx.Show(Me, "Debe seleccionar una receta para generar el servicio", "Validación", MessageBoxButtons.OKCancel, MessageBoxIcon.Stop) = DialogResult.OK Then
+                Return Fx_Buscar_Receta(_Codigo, _Semilla)
+            Else
+                Return False
+            End If
 
         End If
 
-        Me.Refresh()
-    End Sub
+        Return True
 
-    Private Sub Btn_Cancelar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cancelar.Click
-        Me.Close()
+    End Function
+
+    Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+        Dim _Nuevo_Item As Boolean = _Fila.Cells("Nuevo_Item").Value
+        Dim _Codigo As String = _Fila.Cells("Codigo").Value
+        Dim _Semilla As Integer = _Fila.Cells("Semilla").Value
+
+        If Not _Nuevo_Item Then
+
+            Dim _Operaciones As New List(Of DataRow)
+            Dim _Tbl_OperacionesXServ2 As DataTable = _Tbl_OperacionesXServ.Clone
+
+            '_Tbl_OperacionesXServ2.Clear()
+
+            For Each _Fl As DataRow In _Tbl_OperacionesXServ.Rows
+
+                If _Fl.Item("Semilla") = _Semilla Then
+
+                    Dim _Total As Double = _Fl.Item("Cantidad") * _Fl.Item("Precio")
+
+                    Sb_New_OT_Agregar_Fila_Operacion(_Tbl_OperacionesXServ2,
+                                                     _Semilla,
+                                                     _Codigo,
+                                                     _Fl.Item("CodReceta"),
+                                                     _Fl.Item("Operacion"),
+                                                     _Fl.Item("Descripcion"),
+                                                     _Fl.Item("CantMayor1"),
+                                                     _Fl.Item("Cantidad"),
+                                                     False,
+                                                     _Fl.Item("Precio"),
+                                                     _Total,
+                                                     False)
+                    _Operaciones.Add(_Fl)
+                End If
+
+            Next
+
+            Dim _CodReceta As String = _Tbl_OperacionesXServ2.Rows(0).Item("CodReceta")
+
+            Dim _Grabar As Boolean
+
+            Dim Fm2 As New Frm_OperacionesXServicio(_CodReceta)
+            Fm2.TblOperaciones = _Tbl_OperacionesXServ2
+            Fm2.ShowDialog(Me)
+            _Grabar = Fm2.Grabar
+            _Tbl_OperacionesXServ2 = Fm2.TblOperaciones
+            Fm2.Dispose()
+
+            If _Grabar Then
+
+                For i = 0 To _Operaciones.Count - 1
+                    _Operaciones.Item(i).Delete()
+                Next
+
+                For Each _Fl As DataRow In _Tbl_OperacionesXServ2.Rows
+
+                    If _Fl.Item("Chk") Then
+
+                        Dim _Total As Double = _Fl.Item("Cantidad") * _Fl.Item("Precio")
+
+                        Sb_New_OT_Agregar_Fila_Operacion(_Tbl_OperacionesXServ,
+                                                         _Semilla,
+                                                         _Codigo,
+                                                         _Fl.Item("CodReceta"),
+                                                         _Fl.Item("Operacion"),
+                                                         _Fl.Item("Descripcion"),
+                                                         _Fl.Item("CantMayor1"),
+                                                         _Fl.Item("Cantidad"),
+                                                         False,
+                                                         _Fl.Item("Precio"),
+                                                         _Total,
+                                                         False)
+                    End If
+
+                Next
+
+            End If
+
+        End If
+
     End Sub
 
 End Class
+

@@ -1049,7 +1049,13 @@ Public Class Clase_Crear_Documento
 
                         Dim _ExisteProducto As Boolean
 
-                        Comando = New SqlCommand("SELECT * From MAEPR Where KOPR = '" & _Koprct & "'", cn2)
+                        If _Prct Then
+                            Consulta_sql = "Select * From TABCT Where KOCT = '" & _Koprct & "'"
+                        Else
+                            Consulta_sql = "SELECT * From MAEPR Where KOPR = '" & _Koprct & "'"
+                        End If
+
+                        Comando = New SqlCommand(Consulta_sql, cn2)
                         Comando.Transaction = myTrans
                         dfd1 = Comando.ExecuteReader()
 
@@ -1060,7 +1066,13 @@ Public Class Clase_Crear_Documento
                         dfd1.Close()
 
                         If Not _ExisteProducto Then
-                            Throw New System.Exception("No se encontro el producto: " & _Koprct.Trim & " - " & _Nokopr.Trim)
+                            If _Prct Then
+                                Throw New System.Exception("No se encontro el concepto: " & _Koprct.Trim & " - " & _Nokopr.Trim & vbCrLf &
+                                                           "En la tabla TABCT")
+                            Else
+                                Throw New System.Exception("No se encontro el producto: " & _Koprct.Trim & " - " & _Nokopr.Trim & vbCrLf &
+                                                           "En la tabla MAEPR")
+                            End If
                         End If
 
                         Consulta_sql =

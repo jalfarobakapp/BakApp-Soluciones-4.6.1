@@ -503,7 +503,9 @@ Error_Numero:
             Separador = "@"
         End If
 
-        If (_Lista Is Nothing) Then Return "()"
+        If (_Lista Is Nothing) Then
+            Return "()"
+        End If
 
         Dim i = 0
 
