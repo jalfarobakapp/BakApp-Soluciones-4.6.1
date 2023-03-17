@@ -1208,12 +1208,12 @@ Public Class Frm_BuscarDocumento_Mt
 
                 _Fila.Cells("FunAutoriza").Value = _FunAutorizaFac
 
-                If Not Fx_RevisarFincred(_Idmaeedo) Then
-                    If MessageBoxEx.Show(Me, "¿Desea habilitar de todas formas la nota de venta?", "Rechazado por FINCRED",
-                                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-                        _Fila.Cells("Chk").Value = False
-                    End If
-                End If
+                'If Not Fx_RevisarFincred(_Idmaeedo, True) Then
+                '    If MessageBoxEx.Show(Me, "¿Desea habilitar de todas formas la nota de venta?", "Rechazado por FINCRED",
+                '                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                '        _Fila.Cells("Chk").Value = False
+                '    End If
+                'End If
 
             End If
 
@@ -1479,6 +1479,8 @@ Public Class Frm_BuscarDocumento_Mt
 
         For Each _Fila As DataGridViewRow In Grilla.Rows
 
+            _Fila.Cells("Chk").Value = NuloPorNro(_Fila.Cells("Chk").Value, False)
+
             If _Fila.Cells("Chk").Value Then
                 _Registros_Marcados += 1
             End If
@@ -1510,7 +1512,7 @@ Public Class Frm_BuscarDocumento_Mt
 
                 Dim _Idmaeedo As Integer = _Fila.Item("IDMAEEDO")
 
-                If Not Fx_RevisarFincred(_Idmaeedo) Then
+                If Not Fx_RevisarFincred(_Idmaeedo, False) Then
                     If MessageBoxEx.Show(Me, "¿Desea habilitar de todas formas la nota de venta?", "Rechazado por FINCRED",
                                          MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
                         _Fila.Item("Chk") = False
@@ -1569,7 +1571,7 @@ Public Class Frm_BuscarDocumento_Mt
     End Sub
 
 
-    Function Fx_RevisarFincred(_Idmaeedo As Integer) As Boolean
+    Function Fx_RevisarFincred(_Idmaeedo As Integer, _MostrarMensaje As Boolean) As Boolean
 
         Dim _RowMaeedo As DataRow
         Dim _RowEntidad As DataRow
@@ -1601,22 +1603,32 @@ Public Class Frm_BuscarDocumento_Mt
                         "Where (Idmaeedo = " & _Idmaeedo & ")"
         Dim _RowFincred As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
-        Dim _Codigo_negacion_transaccion = _RowFincred.Item("Codigo_negacion_transaccion")
-        Dim _Descripcion_negacion = _RowFincred.Item("Descripcion_negacion")
-        Dim _CodAutorizacion = _RowFincred.Item("CodAutorizacion")
+        Dim _Codigo_negacion_transaccion = 0
+        Dim _Descripcion_negacion As String
+        Dim _CodAutorizacion As String
 
-        If _Codigo_negacion_transaccion = 0 Then
-            MessageBoxEx.Show(Me, "Revisión de parte de FINCRED autorizada" & vbCrLf & vbCrLf &
-                              "Código autorización: " & _CodAutorizacion & vbCrLf &
-                              "Respuesta Fincred: " & _Descripcion_negacion, "Información FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Return True
-        Else
-            MessageBoxEx.Show(Me, "Revisión de parte de FINCRED RECHAZADA" & vbCrLf & vbCrLf &
-                              "Respuesta Fincred: " & _Descripcion_negacion, "Información FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return False
+        If Not IsNothing(_RowFincred) Then
+
+            _Codigo_negacion_transaccion = _RowFincred.Item("Codigo_negacion_transaccion")
+            _Descripcion_negacion = _RowFincred.Item("Descripcion_negacion")
+            _CodAutorizacion = _RowFincred.Item("CodAutorizacion")
+
+            If _Codigo_negacion_transaccion = 0 Then
+                If _MostrarMensaje Then
+                    MessageBoxEx.Show(Me, "Revisión de parte de FINCRED autorizada" & vbCrLf & vbCrLf &
+                                      "Documento: " & _RowMaeedo.Item("NUDO") & "-" & _RowMaeedo.Item("NUDO") & vbCrLf & vbCrLf &
+                                      "Código autorización: " & _CodAutorizacion & vbCrLf &
+                                      "Respuesta Fincred: " & _Descripcion_negacion, "Información FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                End If
+                Return True
+            Else
+                MessageBoxEx.Show(Me, "Revisión de parte de FINCRED RECHAZADA" & vbCrLf & vbCrLf &
+                                  "Documento: " & _RowMaeedo.Item("NUDO") & "-" & _RowMaeedo.Item("NUDO") & vbCrLf & vbCrLf &
+                                  "Respuesta Fincred: " & _Descripcion_negacion, "Información FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return False
+            End If
+
         End If
-
-
 
         Dim _Fincred_Respuesta As New Fincred_API.Respuesta
 
@@ -1634,6 +1646,7 @@ Public Class Frm_BuscarDocumento_Mt
                                   "Código de autorización: " & _Fincred_Respuesta.TramaRespuesta.documentos(0).autorizacion,
                                   "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
+
             MessageBoxEx.Show(Me, "Código de autorización: RECHAZADO" & vbCrLf &
                               "Respuesta FINCRED: " & _Fincred_Respuesta.MensajeError & vbCrLf & vbCrLf &
                               "El documento debera seguir el conducto regular, se quitaran los plazos de vencimineto.",

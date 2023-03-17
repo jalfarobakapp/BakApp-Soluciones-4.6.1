@@ -6,6 +6,7 @@
     Dim _Tbl_OT As DataTable
     Dim _CodFuncionario_Activo As String
     Dim _Row_Funcionario As DataRow
+    Dim _DsDocumento As DataSet
 
 
     Public Sub New(_CodFuncionario As String)
@@ -222,7 +223,7 @@
 
             Case 0 ' Asignadas tecnico
 
-                Dim Fm0 As New Frm_St_Estado_03_Presupuesto(_Id_Ot, Frm_St_Estado_03_Presupuesto.Accion.Nuevo)
+                Dim Fm0 As New Frm_St_Estado_03_Presupuesto2(_Id_Ot, Frm_St_Estado_03_Presupuesto.Accion.Nuevo)
                 Fm0.Pro_DsDocumento = _DsDocumento
                 Fm0.CodTecnico_Presupuesta = _CodFuncionario_Activo
                 Fm0.ShowDialog(Me)

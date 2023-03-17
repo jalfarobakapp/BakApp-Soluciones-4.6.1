@@ -4673,48 +4673,54 @@ Public Class Frm_Ver_Documento
                              MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
 
-            If MessageBoxEx.Show(Me, "Esta Nota de venta NO esta habilitada para ser facturada." & vbCrLf &
-                             "¿Desea habilitar la NVV para que pueda ser facturada?", "Validación",
-                             MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = DialogResult.Yes Then
+            MessageBoxEx.Show(Me, "Esta Nota de venta NO esta habilitada para ser facturada." & vbCrLf &
+                              "Para habilitar esta nota de ventas debe ir al asistente de habilitación de notas de venta para facturar", "Validación",
+                             MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
-                Dim _Autorizado = False
+            Return
 
-                If FUNCIONARIO = _TblEncabezado.Rows(0).Item("KOFUDO") Then
-                    _Autorizado = True
-                Else
-                    For Each _Fila As DataRow In _TblDetalle.Rows
-                        If _Fila.Item("KOFULIDO") = FUNCIONARIO Then
-                            _Autorizado = True
-                            Exit For
-                        End If
-                    Next
-                End If
+            'If MessageBoxEx.Show(Me, "Esta Nota de venta NO esta habilitada para ser facturada." & vbCrLf &
+            '                 "¿Desea habilitar la NVV para que pueda ser facturada?", "Validación",
+            '                 MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = DialogResult.Yes Then
 
-                Dim _FunAutorizaFac = FUNCIONARIO
+            '    Dim _Autorizado = False
 
-                If Not _Autorizado Then
+            '    If FUNCIONARIO = _TblEncabezado.Rows(0).Item("KOFUDO") Then
+            '        _Autorizado = True
+            '    Else
+            '        For Each _Fila As DataRow In _TblDetalle.Rows
+            '            If _Fila.Item("KOFULIDO") = FUNCIONARIO Then
+            '                _Autorizado = True
+            '                Exit For
+            '            End If
+            '        Next
+            '    End If
 
-                    Dim _Rows_Usuario_Autoriza As DataRow
+            '    Dim _FunAutorizaFac = FUNCIONARIO
 
-                    _Autorizado = Fx_Tiene_Permiso(Me, "Doc00082",,,,,,,,, _Rows_Usuario_Autoriza)
+            '    If Not _Autorizado Then
 
-                    If Not _Autorizado Then
-                        Return
-                    End If
+            '        Dim _Rows_Usuario_Autoriza As DataRow
 
-                    _FunAutorizaFac = _Rows_Usuario_Autoriza.Item("KOFU")
+            '        _Autorizado = Fx_Tiene_Permiso(Me, "Doc00082",,,,,,,,, _Rows_Usuario_Autoriza)
 
-                End If
+            '        If Not _Autorizado Then
+            '            Return
+            '        End If
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Ent Set HabilitadaFac = 1, FunAutorizaFac = '" & _FunAutorizaFac & "'" & vbCrLf &
-                               "Where Idmaeedo = " & _Idmaeedo
-                If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                    MessageBoxEx.Show(Me, "Nota de venta autorizada para poder ser facturada", "Información",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    Me.Close()
-                End If
+            '        _FunAutorizaFac = _Rows_Usuario_Autoriza.Item("KOFU")
 
-            End If
+            '    End If
+
+            '    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Ent Set HabilitadaFac = 1, FunAutorizaFac = '" & _FunAutorizaFac & "'" & vbCrLf &
+            '                   "Where Idmaeedo = " & _Idmaeedo
+            '    If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            '        MessageBoxEx.Show(Me, "Nota de venta autorizada para poder ser facturada", "Información",
+            '                          MessageBoxButtons.OK, MessageBoxIcon.Information)
+            '        Me.Close()
+            '    End If
+
+            'End If
 
         End If
 
