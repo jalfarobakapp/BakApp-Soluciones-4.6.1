@@ -109,6 +109,10 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
         Txt_Tecnico_Taller.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller", "NomFuncionario",
                                            "CodFuncionario = '" & _CodFuncionario & "'").ToString.Trim
+
+        Txt_Defecto_segun_cliente.Text = _Row_Notas.Item("Defecto_segun_cliente")
+        Txt_Nota.Text = _Row_Notas.Item("Nota_Etapa_01")
+
         Sb_Actualizar_Grilla()
 
         If _Tbl_DetProd.Rows.Count = 0 Then Sb_New_OT_Agregar_Fila()
@@ -189,31 +193,39 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
             OcultarEncabezadoGrilla(Grilla, True)
 
+            Dim _DisplayIndex = 0
+
             .Columns("Codigo").Visible = True
             .Columns("Codigo").HeaderText = "Código"
             .Columns("Codigo").Width = 100
             .Columns("Codigo").DisplayIndex = 0
-            .Columns("Codigo").ReadOnly = True
+            .Columns("Codigo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").HeaderText = "Descripcion"
-            .Columns("Descripcion").Width = 320
-            .Columns("Descripcion").ReadOnly = True
-            .Columns("Descripcion").DisplayIndex = 1
+            .Columns("Descripcion").Width = 300
+            .Columns("Descripcion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Ud").Visible = True
             .Columns("Ud").HeaderText = "UM"
             .Columns("Ud").Width = 30
-            .Columns("Ud").ReadOnly = True
-            .Columns("Ud").DisplayIndex = 2
+            .Columns("Ud").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Cantidad").Visible = True
-            .Columns("Cantidad").HeaderText = "Cantidad"
-            .Columns("Cantidad").Width = 80
+            .Columns("Cantidad").HeaderText = "Cant."
+            .Columns("Cantidad").Width = 60
             .Columns("Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("Cantidad").DefaultCellStyle.Format = "###,##.##"
-            .Columns("Cantidad").ReadOnly = True
-            .Columns("Cantidad").DisplayIndex = 3
+            .Columns("Cantidad").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("TieneReceta").Visible = True
+            .Columns("TieneReceta").HeaderText = "RC"
+            .Columns("TieneReceta").Width = 30
+            .Columns("TieneReceta").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
         End With
 
@@ -230,15 +242,27 @@ Public Class Frm_St_Estado_03_Presupuesto2
             .Item("Utilizado") = False
             .Item("Codigo") = String.Empty
             .Item("Descripcion") = String.Empty
+
             .Item("Cantidad") = 0
-            .Item("Ud") = String.Empty
-            .Item("Un") = 0
+            .Item("Cantidad_Utilizada") = 0
+
+            .Item("Ud") = "SV"
+            .Item("Un") = 1
             .Item("CantUd1") = 0
             .Item("CantUd2") = 0
             .Item("Precio") = 0
             .Item("Neto_Linea") = 0
             .Item("Iva_Linea") = 0
             .Item("Total_Linea") = 0
+
+            .Item("Desde_COV") = False
+            .Item("Idmaeedo_Cov") = 0
+            .Item("Idmaeddo_Cov") = 0
+            .Item("TieneReceta") = False
+            .Item("EsServicio") = True
+            .Item("SemillaPadre") = 0
+            .Item("EsHijo") = False
+            .Item("PorcIva") = 0
 
             _Tbl_DetProd.Rows.Add(NewFila)
 
@@ -306,7 +330,6 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
         Try
 
-
             _Sql.Sb_Abrir_Conexion(_Cn)
             myTrans = _Cn.BeginTransaction()
 
@@ -315,7 +338,7 @@ Public Class Frm_St_Estado_03_Presupuesto2
             If _Accion = Accion.Nuevo Then
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set " &
-                               "CodEstado = 'P',CodTecnico_Presupuesta = '" & CodTecnico_Presupuesta & "'" & vbCrLf &
+                               "CodEstado = 'P',CodTecnico_Presupuesta = '" & CodTecnico_Presupuesta & "',NroSerie = '" & Txt_NroSerie.Text.Trim & "'" & vbCrLf &
                                "Where Id_Ot  = " & _Id_Ot
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
@@ -358,7 +381,9 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
                     If Estado <> DataRowState.Deleted Then
 
-                        Dim _Utilizado As Integer = CBool(_Fila.Item("Utilizado")) * -1
+                        Dim _NewSemilla As Integer
+                        Dim _Semilla As Integer = _Fila.Item("Semilla")
+                        Dim _Utilizado As Integer = Convert.ToInt32(_Fila.Item("Utilizado"))
                         Dim _Codigo As String = _Fila.Item("Codigo")
                         Dim _Descripcion As String = Trim(_Fila.Item("Descripcion"))
                         Dim _Cantidad As String = De_Txt_a_Num_01(_Fila.Item("Cantidad"), 5)
@@ -370,20 +395,54 @@ Public Class Frm_St_Estado_03_Presupuesto2
                         Dim _Neto_Linea As String = De_Txt_a_Num_01(_Fila.Item("Neto_Linea"), 5)
                         Dim _Iva_Linea As String = De_Txt_a_Num_01(_Fila.Item("Iva_Linea"), 5)
                         Dim _Total_Linea As String = De_Txt_a_Num_01(_Fila.Item("Total_Linea"), 5)
-
+                        Dim _TieneReceta As Integer = Convert.ToInt32(_Fila.Item("TieneReceta"))
+                        Dim _EsServicio As Integer = Convert.ToInt32(_Fila.Item("EsServicio"))
                         Dim _Nuevo_Item As Boolean = _Fila.Item("Nuevo_Item")
 
                         If Not _Nuevo_Item Then
 
                             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_DetProd (Id_Ot,Utilizado,Codigo,Descripcion,Cantidad,Ud,Un," &
-                                           "CantUd1,CantUd2,Precio,Neto_Linea,Iva_Linea,Total_Linea) Values " &
+                                           "CantUd1,CantUd2,Precio,Neto_Linea,Iva_Linea,Total_Linea,TieneReceta,EsServicio) Values " &
                                            "(" & _Id_Ot & "," & _Utilizado & ",'" & _Codigo & "','" & _Descripcion & "'," & _Cantidad &
                                            ",'" & _Ud & "'," & _Un & "," & _CantUd1 & "," & _CantUd2 & "," & _Precio &
-                                           "," & _Neto_Linea & "," & _Iva_Linea & "," & _Total_Linea & ")"
+                                           "," & _Neto_Linea & "," & _Iva_Linea & "," & _Total_Linea & "," & _TieneReceta & "," & _EsServicio & ")"
 
                             Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
                             Comando.Transaction = myTrans
                             Comando.ExecuteNonQuery()
+
+                            Comando = New SqlCommand("SELECT @@IDENTITY AS 'Identity'", _Cn)
+                            Comando.Transaction = myTrans
+                            Dim dfd1 As SqlDataReader = Comando.ExecuteReader()
+                            While dfd1.Read()
+                                _NewSemilla = dfd1("Identity")
+                            End While
+                            dfd1.Close()
+
+                            For Each _FlOp As DataRow In _Tbl_OperacionesXServ.Rows
+
+                                Dim _Op_Codigo As String = _FlOp.Item("Codigo")
+                                Dim _CodReceta As String = _FlOp.Item("CodReceta")
+                                Dim _Operacion As String = _FlOp.Item("Operacion")
+                                Dim _Orden As Integer = _FlOp.Item("Orden")
+                                Dim _CantMayor1 As Int32 = Convert.ToInt32(_FlOp.Item("CantMayor1"))
+                                Dim _Op_Cantidad As Integer = _FlOp.Item("Cantidad")
+                                Dim _Op_Precio As String = De_Txt_a_Num_01(_FlOp.Item("Precio"), 5)
+                                Dim _Op_Total As String = De_Txt_a_Num_01(_FlOp.Item("Total"), 5)
+
+                                If _Semilla = _FlOp.Item("Semilla") Then
+
+                                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_OpeXServ (Id_Ot,Semilla,Codigo,CodReceta,Operacion,Orden,CantMayor1,Cantidad,CantidadRealizada,Precio,Total,Realizado) Values " & vbCrLf &
+                                                   "(" & _Id_Ot & "," & _NewSemilla & ",'" & _Op_Codigo & "','" & _CodReceta & "','" & _Operacion & "'," & _Orden &
+                                                   "," & _CantMayor1 & "," & _Op_Cantidad & ",0," & _Op_Precio & "," & _Op_Total & ",0)"
+
+                                    Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
+                                    Comando.Transaction = myTrans
+                                    Comando.ExecuteNonQuery()
+
+                                End If
+
+                            Next
 
                         End If
 
@@ -539,7 +598,18 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
             If Not (_RowProducto Is Nothing) Then
 
-                If Not Fx_Buscar_Receta(_RowProducto.Item("KOPR"), _Semilla) Then
+                'For Each _FlSvr As DataRow In _Tbl_DetProd.Rows
+                '    If _FlSvr.Item("Codigo").ToString.Trim = _RowProducto.Item("KOPR").ToString.Trim Then
+                '        MessageBoxEx.Show(Me, "Este servicio ya esta en la lista" & vbCrLf &
+                '                          "No puede incluir el mismo servicio mas de una vez en el listado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                '        _Fila.Cells("Codigo").Value = String.Empty
+                '        Return
+                '    End If
+                'Next
+
+                Dim _TieneReceta As Boolean
+
+                If Not Fx_Buscar_Receta(_RowProducto.Item("KOPR"), _Semilla, _TieneReceta) Then
                     _Fila.Cells("Codigo").Value = String.Empty
                     Return
                 End If
@@ -549,7 +619,13 @@ Public Class Frm_St_Estado_03_Presupuesto2
                 _Fila.Cells("Descripcion").Value = _RowProducto.Item("NOKOPR")
                 _Fila.Cells("Ud").Value = _RowProducto.Item("UD01PR")
                 _Fila.Cells("Nuevo_Item").Value = False
-                _Fila.Cells("Cantidad").Value = 1
+                _Fila.Cells("Cantidad").Value = Convert.ToInt32(_TieneReceta)
+                _Fila.Cells("CantUd1").Value = Convert.ToInt32(_TieneReceta)
+                _Fila.Cells("CantUd2").Value = Convert.ToInt32(_TieneReceta)
+                _Fila.Cells("TieneReceta").Value = _TieneReceta
+                _Fila.Cells("PorcIva").Value = _RowProducto.Item("POIVPR")
+
+                Sb_Sumar_Totales()
 
                 Sb_New_OT_Agregar_Fila()
 
@@ -607,6 +683,22 @@ Public Class Frm_St_Estado_03_Presupuesto2
                         Else
                             If MessageBoxEx.Show(Me, "¿Esta seguro de eliminar la(s) fila(s) seleccionada(s)?",
                                                                      "Eliminar fila", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+
+                                Dim _Semilla As Integer = _Fila.Cells("Semilla").Value
+
+                                Dim _Operaciones As New List(Of DataRow)
+
+                                For Each _Fl As DataRow In _Tbl_OperacionesXServ.Rows
+
+                                    If _Fl.Item("Semilla") = _Semilla Then
+                                        _Operaciones.Add(_Fl)
+                                    End If
+
+                                Next
+
+                                For i = 0 To _Operaciones.Count - 1
+                                    _Operaciones.Item(i).Delete()
+                                Next
 
                                 Grilla.Rows.RemoveAt(Grilla.CurrentRow.Index)
                                 Grilla.Refresh()
@@ -702,46 +794,38 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
     Private Sub Btn_Fijar_Estado_Click(sender As System.Object, e As System.EventArgs)
 
-        If Not CBool(Grilla.Rows.Count) Or Grilla.Rows.Count = 1 Then
+        Dim _CantProd As Integer = 0
 
-            Dim _Fila As DataGridViewRow
+        For Each _FlSvr As DataRow In _Tbl_DetProd.Rows
 
-            If CBool(Grilla.Rows.Count) Then
-                _Fila = Grilla.Rows(0)
+            If Not _FlSvr.Item("Nuevo_Item") Then
 
-                If Not _Fila.IsNewRow Then
-                    If Not _Fila.Cells("Nuevo_Item").Value And _Fila.Cells("Cantidad").Value <= 0 Then
-                        MessageBoxEx.Show(Me, "No pueden haber productos con cantidad igual o menor a cero", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                        Return
-                    End If
-                End If
+                _CantProd += 1
 
-            End If
-
-            If ObligaIngProdPresupuesto Then
-                If Not CBool(Grilla.Rows.Count) Or _Fila.IsNewRow Then
-                    MessageBoxEx.Show(Me, "Falta agregar un producto en el presupuesto" & vbCrLf &
-                                         "Debe por lo menos ingresar algun servicio de reparación" & vbCrLf & vbCrLf &
-                                         "Para agregar un producto debe hacer lo siguiente:" & vbCrLf &
-                                         "Debe posicionarse sobre la celda del Coódigo y hacer doble [Enter] para buscar algún producto e ingresarlo al presupuesto",
-                                         "Validación", MessageBoxButtons.OK,
-                                         MessageBoxIcon.Stop)
-
-                    Grilla.Focus()
+                If _FlSvr.Item("Cantidad") = 0 Then
+                    MessageBoxEx.Show(Me, "No pueden haber productos con cantidad igual o menor a cero", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     Return
-
                 End If
-            Else
-                If Not CBool(Grilla.Rows.Count) Or _Fila.IsNewRow Then
-                    If MessageBoxEx.Show(Me, "¿Desea agregar productos a la reparación?",
-                                         "No incluyo productos al presupuesto", MessageBoxButtons.YesNo,
-                                         MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
-                        Return
-                    End If
-                End If
             End If
 
+        Next
+
+        If Not CBool(_CantProd) Then
+
+            MessageBoxEx.Show(Me, "Falta agregar servicios al presupuesto" & vbCrLf &
+                     "Debe por lo menos ingresar algun servicio de reparación" & vbCrLf & vbCrLf &
+                     "Para agregar un producto debe hacer lo siguiente:" & vbCrLf &
+                     "Debe posicionarse sobre la celda del Código y hacer doble [Enter] para buscar algún producto e ingresarlo al presupuesto",
+                     "Validación", MessageBoxButtons.OK,
+                     MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If String.IsNullOrEmpty(Txt_NroSerie.Text) Then
+            MessageBoxEx.Show(Me, "Falta el numero de serie del producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_NroSerie.Focus()
+            Return
         End If
 
         If Fx_Fijar_Estado() Then
@@ -757,22 +841,26 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
 #End Region
 
-    Function Fx_Buscar_Receta(_Codigo As String, _Semilla As Integer) As Boolean
+    Function Fx_Buscar_Receta(_Codigo As String, _Semilla As Integer, ByRef _TieneReceta As Boolean) As Boolean
 
-        Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_OT_Recetas_Enc",
+        _TieneReceta = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_OT_Recetas_Enc",
                                     "CodReceta In (Select CodReceta From " & _Global_BaseBk & "Zw_St_OT_Recetas_Prod Where Codigo = '" & _Codigo & "')"))
 
-        If Not _Reg Then
-            MessageBoxEx.Show(Me, "No existen receta asociada a este producto" & vbCrLf &
-                              "Informe a la administración", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return False
+        If Not _TieneReceta Then
+            If MessageBoxEx.Show(Me, "No existen receta asociada a este producto" & vbCrLf &
+                              "¿Desea igualmente incorporar el producto?" & vbCrLf &
+                              "Debera incorporar las operaciones de forma manual", "Validación", MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = DialogResult.Yes Then
+                Return True
+            Else
+                Return False
+            End If
         End If
 
         Dim Fm As New Frm_Filtro_Especial_Informes(Frm_Filtro_Especial_Informes._Tabla_Fl._Otra)
         Fm.Pro_Tabla = _Global_BaseBk & "Zw_St_OT_Recetas_Enc"
         Fm.Pro_Campo = "CodReceta"
         Fm.Pro_Descripcion = "Descripcion"
-        Fm.Text = "TIPO DE RECLAMO"
+        Fm.Text = "RECETAS ASOCIADAS AL SERVICIO DE REPARACION"
         Fm.Pro_Sql_Filtro_Condicion_Extra = "And CodReceta In (Select CodReceta From " & _Global_BaseBk & "Zw_St_OT_Recetas_Prod Where Codigo = '" & _Codigo & "')" & vbCrLf
         Fm.Pro_Seleccionar_Solo_Uno = True
         Fm.ShowDialog(Me)
@@ -824,7 +912,7 @@ Public Class Frm_St_Estado_03_Presupuesto2
         Else
 
             If MessageBoxEx.Show(Me, "Debe seleccionar una receta para generar el servicio", "Validación", MessageBoxButtons.OKCancel, MessageBoxIcon.Stop) = DialogResult.OK Then
-                Return Fx_Buscar_Receta(_Codigo, _Semilla)
+                Return Fx_Buscar_Receta(_Codigo, _Semilla, _TieneReceta)
             Else
                 Return False
             End If
@@ -842,8 +930,14 @@ Public Class Frm_St_Estado_03_Presupuesto2
         Dim _Nuevo_Item As Boolean = _Fila.Cells("Nuevo_Item").Value
         Dim _Codigo As String = _Fila.Cells("Codigo").Value
         Dim _Semilla As Integer = _Fila.Cells("Semilla").Value
+        Dim _TieneReceta As Boolean = _Fila.Cells("TieneReceta").Value
 
         If Not _Nuevo_Item Then
+
+            If Not _TieneReceta Then
+                MessageBoxEx.Show(Me, "No tiene receta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
 
             Dim _Operaciones As New List(Of DataRow)
             Dim _Tbl_OperacionesXServ2 As DataTable = _Tbl_OperacionesXServ.Clone
@@ -912,9 +1006,35 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
                 Next
 
+                Sb_Sumar_Totales()
+
             End If
 
         End If
+
+    End Sub
+
+    Sub Sb_Sumar_Totales()
+
+        For Each _FlServ As DataRow In _Tbl_DetProd.Rows
+
+            For Each _FlOpe As DataRow In _Tbl_OperacionesXServ.Rows
+
+                If _FlServ.Item("Semilla") = _FlOpe.Item("Semilla") Then
+
+                    _FlServ.Item("Precio") += _FlOpe.Item("Total")
+
+                End If
+
+            Next
+
+            Dim _Impuesto As Decimal = _FlServ.Item("PorcIva") / 100
+
+            _FlServ.Item("Neto_Linea") = _FlServ.Item("Cantidad") * _FlServ.Item("Precio")
+            _FlServ.Item("Iva_Linea") = Math.Round(_FlServ.Item("Neto_Linea") * _Impuesto, 0)
+            _FlServ.Item("Total_Linea") = _FlServ.Item("Neto_Linea") + _FlServ.Item("Iva_Linea")
+
+        Next
 
     End Sub
 

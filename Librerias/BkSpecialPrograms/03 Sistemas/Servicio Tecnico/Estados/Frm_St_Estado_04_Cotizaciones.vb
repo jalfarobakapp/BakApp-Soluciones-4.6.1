@@ -1123,12 +1123,14 @@ Public Class Frm_St_Estado_04_Cotizaciones
             Return
         End If
 
+        Dim _Aplicar_Precio_De_Listas As Boolean = False
+
         Dim Fm As New Frm_Formulario_Documento(_Tido,
                                                csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta,
                                                False, True, False, False, False)
 
         Fm.Pro_RowEntidad = _RowEntidad
-        Fm.Sb_Crear_Documento_Interno_Con_Tabla2(Me, _Tbl_Productos, _Fecha_Emision, "Codigo", "Cantidad", "Precio", "", False, True)
+        Fm.Sb_Crear_Documento_Interno_Con_Tabla2(Me, _Tbl_Productos, _Fecha_Emision, "Codigo", "Cantidad", "Precio", "", False, _Aplicar_Precio_De_Listas)
         Fm.ShowDialog(Me)
         Dim _New_Idmaeedo = Fm.Pro_Idmaeedo
         Fm.Dispose()

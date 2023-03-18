@@ -67,7 +67,9 @@ FROM    #Db_BakApp#Zw_St_OT_Encabezado
 Where Id_Ot = @Id_Ot
 
 -- DETALLE PRODUCTOS TABLA (1)
-SELECT  Id_Ot, Cast(0 as Bit) As Nuevo_Item,Semilla, Utilizado, Codigo, Descripcion, Cantidad, Ud, Un, CantUd1, CantUd2, Precio, Neto_Linea, Iva_Linea, Total_Linea
+SELECT  Cast(0 as Bit) As Nuevo_Item,*
+        --Id_Ot, ,Semilla, 
+        --Utilizado,Codigo,Descripcion, Cantidad, Ud, Un, CantUd1, CantUd2, Precio, Neto_Linea, Iva_Linea, Total_Linea
 FROM    #Db_BakApp#Zw_St_OT_DetProd
 Where Id_Ot = @Id_Ot And Desde_COV = 0
 Order by Semilla
