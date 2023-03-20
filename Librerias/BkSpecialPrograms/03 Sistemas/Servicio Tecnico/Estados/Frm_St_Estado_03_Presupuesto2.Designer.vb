@@ -94,7 +94,7 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         '
         'Grilla
         '
-        Me.Grilla.AllowUserToDeleteRows = False
+        Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control

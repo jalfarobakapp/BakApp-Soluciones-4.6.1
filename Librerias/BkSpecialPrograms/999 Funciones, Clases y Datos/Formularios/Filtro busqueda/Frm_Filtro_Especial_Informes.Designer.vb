@@ -367,7 +367,7 @@ Partial Class Frm_Filtro_Especial_Informes
         Me.Rdb_Mostrar_Todos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Mostrar_Todos.Location = New System.Drawing.Point(8, 491)
         Me.Rdb_Mostrar_Todos.Name = "Rdb_Mostrar_Todos"
-        Me.Rdb_Mostrar_Todos.Size = New System.Drawing.Size(100, 23)
+        Me.Rdb_Mostrar_Todos.Size = New System.Drawing.Size(90, 23)
         Me.Rdb_Mostrar_Todos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Mostrar_Todos.TabIndex = 11
         Me.Rdb_Mostrar_Todos.Text = "Mostrar todos"
@@ -445,9 +445,7 @@ Partial Class Frm_Filtro_Especial_Informes
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Public WithEvents Txt_Codigo As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
-    Friend WithEvents Rdb_Mostrar_Todos As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Rdb_Mostrar_Solo_Tickeados As DevComponents.DotNetBar.Controls.CheckBoxX
-    Friend WithEvents Chk_Seleccionar_Todos As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Cmb_Filtro_Codigo As DevComponents.DotNetBar.Controls.ComboBoxEx
     Friend WithEvents ContextMenuBar1 As DevComponents.DotNetBar.ContextMenuBar
     Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
@@ -458,4 +456,6 @@ Partial Class Frm_Filtro_Especial_Informes
     Friend WithEvents Btn_Crear As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Editar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Rdb_Mostrar_Todos As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Chk_Seleccionar_Todos As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

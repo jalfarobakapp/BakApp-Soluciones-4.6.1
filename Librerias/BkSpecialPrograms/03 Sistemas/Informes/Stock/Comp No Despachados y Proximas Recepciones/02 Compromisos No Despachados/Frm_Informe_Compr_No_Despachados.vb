@@ -258,10 +258,14 @@ Public Class Frm_Informe_Compr_No_Despachados
         ElseIf Rdb_NVV.Checked Then
             _Filtro_Documentos = "AND ED.TIDO='NVV'" & vbCrLf
 
-            If Chk_NVVHabilitadasFacturar.Checked Then
-                _Filtro_Documentos += "AND ED.IDMAEEDO In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Docu_Ent Where HabilitadaFac = 1)" & vbCrLf
-                MessageBoxEx.Show(Me, "Se mostraran solo notas de venta habilitadas para facturar", "Información",
+            If Chk_NVVHabilitadasFacturar.Visible Then
+
+                If Chk_NVVHabilitadasFacturar.Checked Then
+                    _Filtro_Documentos += "AND ED.IDMAEEDO In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Docu_Ent Where HabilitadaFac = 1)" & vbCrLf
+                    MessageBoxEx.Show(Me, "Se mostraran solo notas de venta habilitadas para facturar", "Información",
                                   MessageBoxButtons.OK, MessageBoxIcon.Information)
+                End If
+
             End If
 
         ElseIf Rdb_NVI.Checked Then

@@ -559,9 +559,6 @@ Public Class Frm_St_Estado_03_Presupuesto2
             Else
                 e.Cancel = True
             End If
-            'If Not _Nuevo_Item Then
-            'e.Cancel = True
-            'End If
         ElseIf _Cabeza = "Cantidad" Then
             If _Fila.IsNewRow Then
                 If String.IsNullOrEmpty(_Descripcion) Then
@@ -570,8 +567,6 @@ Public Class Frm_St_Estado_03_Presupuesto2
             End If
 
         End If
-
-        ' If Not _Fila.IsNewRow Then Grilla.AllowUserToAddRows = False
 
     End Sub
 

@@ -117,7 +117,8 @@
                    Optional _Incorporar_Campo_Vacias As Boolean = True,
                    Optional _Seleccionar_Solo_Uno As Boolean = False,
                    Optional _Requiere_Seleccion As Boolean = True,
-                   Optional _Activar_Crear_Editar_Eliminar As Boolean = False) As Boolean
+                   Optional _Activar_Crear_Editar_Eliminar As Boolean = False,
+                   Optional _Seleccionar_Todos_Visible As Boolean = True) As Boolean
 
         _Tbl_Filtro = Tbl_Filtro
         _Filtro_Todas = Filtro_Todas
@@ -135,6 +136,7 @@
         Fm.Text = _Nombre_Encabezado_Informe
         Fm.Pro_Requiere_Seleccion = _Requiere_Seleccion
         Fm.Ver_Codigo = Ver_Codigo
+        Fm.Chk_Seleccionar_Todos.Visible = _Seleccionar_Todos_Visible
         Fm.ShowDialog(_Formulario)
 
         If Fm.Pro_Filtrar Then

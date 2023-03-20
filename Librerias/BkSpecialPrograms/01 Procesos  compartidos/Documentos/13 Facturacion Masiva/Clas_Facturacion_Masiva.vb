@@ -72,18 +72,21 @@
 
         _Condicion = Replace(_Condicion, "IDMAEEDO", "Edo.IDMAEEDO")
 
+        'Select Idmaeedo From " & _Global_BaseBk & "Zw_Docu_Ent Where HabilitadaFac = 1
+
         Consulta_sql = "Select Cast(0 As Bit) As Chk,Edo.IDMAEEDO,TIDO,Edo.NUDO,Cast(ENDO As Varchar(10)) As ENDO,Cast(SUENDO As Varchar(10)) As SUENDO," &
                        "Cast('' As Varchar(15)) As Rut,NOKOEN,SUDO,FEEMDO,FEER,FE01VEDO,FEULVEDO,Case When FEEMDO < FE01VEDO Then 'Credito' Else 'Contado' End As TipoVenta," &
                        "CONVERT(NVARCHAR, CONVERT(datetime, (Edo.HORAGRAB*1.0/3600)/24), 108) AS HORA,VANEDO,VAIVDO,VAIMDO,VABRDO,VAABDO,KOFUDO,NOKOFU,
                         Cast(0 As Bit) As Facturado,Cast(0 As Int) As IDMAEEDO_FCV,Cast('' As Varchar(10)) As NUDO_FCV,FEEMDO AS Fecha_Emision,Edo.FEER AS Fecha_Despacho," &
                        "Cast(0 As Float) As VABRDO_FCV,Cast(0 As Float) As VAABDO_FCV,Cast(0 As Bit) As FCV_PAGADA,Cast(0 As Bit) As FCV_IMPRESA,
                         Cast(0 As Int) As IDMAEDPCE,Cast(0 As Float) As VADP,Cast(0 As Float) As VAASDP,Cast(0 As Float) As SALDO," &
-                       "Cast(0 As Bit) As CRV, Cast(0 as Float) SALDO_CRV,Isnull(OBDO,'') As OBDO
+                       "Cast(0 As Bit) As CRV, Cast(0 as Float) SALDO_CRV,Isnull(OBDO,'') As OBDO,Isnull(DocE.HabilitadaFac,1) As HabilitadaFac
                         Into #Paso
                         From MAEEDO Edo
                         Left Join MAEEDOOB Obs On Obs.IDMAEEDO = Edo.IDMAEEDO
                         Left Join MAEEN On KOEN = ENDO And SUENDO = SUEN
                         Left Join TABFU On KOFU = KOFUEN" & vbCrLf &
+                        "Left Join " & _Global_BaseBk & "Zw_Docu_Ent DocE On DocE.Idmaeedo = Edo.IDMAEEDO" & vbCrLf &
                         _Condicion & vbCrLf &
                        "Order By HORAGRAB
                         Update #Paso Set IDMAEDPCE = Isnull((Select Top 1 IDMAEDPCE From MAEDPCE Where IDRSD = IDMAEEDO),0)
