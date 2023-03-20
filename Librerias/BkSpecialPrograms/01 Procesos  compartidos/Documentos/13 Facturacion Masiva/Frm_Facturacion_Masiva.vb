@@ -259,6 +259,25 @@ Public Class Frm_Facturacion_Masiva
 
         Dim _FechaEmision As Date = Dtp_Fecha_Emision.Value
 
+        For Each _Fila As DataRow In _Cl_Facturacion.Ds_Doc_Facturar.Tables(0).Rows
+
+            Dim _Estado = _Fila.RowState
+
+            If _Estado <> DataRowState.Deleted Then
+
+                If _Fila.Item("Chk") Then
+                    _Contador += 1
+                End If
+
+            End If
+
+        Next
+
+        If _Contador = 0 Then
+            MessageBoxEx.Show(Me, "No hay registros seleccionados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         If Not Fx_Revisar_Taza_Cambio(Me, _FechaEmision) Then
             Return
         End If
@@ -272,25 +291,6 @@ Public Class Frm_Facturacion_Masiva
         Try
 
             Sb_Habilitar_Controles(False)
-
-            For Each _Fila As DataRow In _Cl_Facturacion.Ds_Doc_Facturar.Tables(0).Rows
-
-                Dim _Estado = _Fila.RowState
-
-                If _Estado <> DataRowState.Deleted Then
-
-                    If _Fila.Item("Chk") Then
-                        _Contador += 1
-                    End If
-
-                End If
-
-            Next
-
-            If _Contador = 0 Then
-                MessageBoxEx.Show(Me, "No hay registros seleccionados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return
-            End If
 
             Circular_Progres_Porcentaje.Visible = True
             Circular_Progres_Contador.Visible = True
@@ -678,20 +678,42 @@ Public Class Frm_Facturacion_Masiva
 
     Private Sub Chk_Marcar_todo_Click(sender As Object, e As EventArgs) Handles Chk_Marcar_todo.Click
 
+        Dim _Marcar As Boolean
+        Dim _SinHabilitar = 0
         Lbl_Total_Facturar.Tag = 0
 
         Dim _Tbl As DataTable = _Dv.Table
 
         For Each _Fila As DataGridViewRow In Grilla.Rows
             If Not _Fila.Cells("Facturado").Value Then
-                _Fila.Cells("Chk").Value = Not Chk_Marcar_todo.Checked
-                If _Fila.Cells("Chk").Value Then
-                    Lbl_Total_Facturar.Tag += _Fila.Cells("VABRDO").Value
+
+                _Marcar = True
+                If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+                    If Not _Fila.Cells("HabilitadaFac").Value Then
+                        _Fila.Cells("Chk").Value = False
+                        _Marcar = False
+                        _SinHabilitar += 1
+                    End If
+                End If
+
+                If _Marcar Then
+                    _Fila.Cells("Chk").Value = Not Chk_Marcar_todo.Checked
+                    If _Fila.Cells("Chk").Value Then
+                        Lbl_Total_Facturar.Tag += _Fila.Cells("VABRDO").Value
+                    End If
                 End If
             End If
         Next
 
         Lbl_Total_Facturar.Text = FormatCurrency(Lbl_Total_Facturar.Tag, 0)
+
+        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+            If Not Chk_Marcar_todo.Checked Then
+                If CBool(_SinHabilitar) Then
+                    MessageBoxEx.Show(Me, "Existente " & _SinHabilitar & " documento(s) sin habilitar para ser facturado(s)", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                End If
+            End If
+        End If
 
     End Sub
 
@@ -950,6 +972,17 @@ Public Class Frm_Facturacion_Masiva
     Private Sub Grilla_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellEndEdit
 
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+
+            If _Fila.Cells("Chk").Value And Not _Fila.Cells("HabilitadaFac").Value Then
+                _Fila.Cells("Chk").Value = False
+                MessageBoxEx.Show(Me, "Esta nota de venta no esta habilitada para ser facturada." & vbCrLf &
+                                  "El sistema esta configurado solo para que se facturen documentos habilitados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+        End If
 
         If _Fila.Cells("Chk").Value And _Fila.Cells("Facturado").Value Then
             _Fila.Cells("Chk").Value = False

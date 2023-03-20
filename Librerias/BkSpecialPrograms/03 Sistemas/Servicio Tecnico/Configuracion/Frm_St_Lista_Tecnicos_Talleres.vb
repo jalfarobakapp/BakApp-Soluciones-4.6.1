@@ -1,7 +1,4 @@
 ﻿Imports DevComponents.DotNetBar
-'Imports Lib_Bakapp_VarClassFunc
-'Imports BkSpecialPrograms
-
 
 Public Class Frm_St_Lista_Tecnicos_Talleres
 
@@ -76,7 +73,6 @@ Public Class Frm_St_Lista_Tecnicos_Talleres
             Dim _Chk_Habilitado = _Fila.Cells("Chk_Habilitado").Value
 
             If _Chk_Habilitado Then
-                '_Fila.DefaultCellStyle.ForeColor = Color.Black
                 _Fila.DefaultCellStyle.Font = New Font(Font.Name, Font.Size, FontStyle.Regular)
             Else
                 _Fila.DefaultCellStyle.ForeColor = Rojo

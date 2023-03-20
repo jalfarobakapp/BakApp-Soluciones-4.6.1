@@ -15909,10 +15909,11 @@ Public Class Frm_Formulario_Documento
 
                                 If _HabilitadaFac Then
 
-                                    MessageBoxEx.Show(Me, "Esta nota de venta no puede ser editada, ya que esta habilitada para ser facturada.",
-                                      "Validación NVV: " & _Row_Docu_Ent.Item("Nudo"), MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                                    Sb_Limpiar(Modalidad)
-                                    Return
+                                    If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00083", Nothing, "", "") Then  'Not Fx_Tiene_Permiso(Me, "Doc00083") Then
+                                        Sb_Limpiar(Modalidad)
+                                        Return
+                                    End If
+
                                 End If
 
                             End If

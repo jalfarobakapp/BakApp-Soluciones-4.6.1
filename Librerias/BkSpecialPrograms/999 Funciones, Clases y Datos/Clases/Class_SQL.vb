@@ -193,6 +193,8 @@ Public Class Class_SQL
 
             Sb_Abrir_Conexion(_Cn)
 
+            _Error = String.Empty
+
             Dim _SqlDa As New SqlDataAdapter
             Dim _DataSt As New DataSet
 
@@ -214,7 +216,7 @@ Public Class Class_SQL
             Return _DataSt
             ' errores
         Catch ex As Exception
-            _Error = String.Empty
+            _Error = ex.Message.ToString
             MsgBox(ex.Message.ToString)
         End Try
         Return Nothing

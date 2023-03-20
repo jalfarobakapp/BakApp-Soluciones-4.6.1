@@ -677,4 +677,12 @@ Public Class Frm_St_Ordenes_de_trabajo
         Sb_Crear_Nueva_OT_Varios_Productos()
     End Sub
 
+    Private Sub Btn_Recetas_Click(sender As Object, e As EventArgs) Handles Btn_Recetas.Click
+
+        Dim Fm As New Frm_St_Recetas
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
 End Class
