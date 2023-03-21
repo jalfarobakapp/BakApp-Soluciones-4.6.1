@@ -124,17 +124,25 @@ Public Class Frm_St_Recetas
         Dim _Id_Rec As Integer = _Fila.Cells("Id").Value
         Dim _CodReceta As String = _Fila.Cells("CodReceta").Value
 
-        Dim _Grabar As Boolean
+        Dim _Grabar, _Eliminar As Boolean
 
         Dim Fm As New Frm_St_RecetaCrear(_CodReceta)
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
+        _Eliminar = Fm.Eliminar
         _Row_Receta = Fm.Row_Receta
         Fm.Dispose()
 
         If _Grabar Then
             _Fila.Cells("Descripcion").Value = _Row_Receta.Item("Descripcion")
             BuscarDatoEnGrilla(_CodReceta, "CodReceta", Grilla_Recetas)
+        End If
+
+        If _Eliminar Then
+            Sb_Actualizar_Grilla()
+            'Grilla_Recetas.Rows.RemoveAt(Grilla_Recetas.CurrentRow.Index)
+            'Grilla_Recetas.Refresh()
+            'Sb_Actualizar_Grilla_Productos(0)
         End If
 
     End Sub
@@ -237,42 +245,6 @@ Public Class Frm_St_Recetas
             End If
 
         End If
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        'Dim _RowProducto As DataRow = Fx_Buscar_Producto("")
-
-        'If Not IsNothing(_RowProducto) Then
-
-        '    Dim _Codigo As String = _RowProducto.Item("KOPR")
-
-        '    Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_OT_Recetas_Prod", "Codigo = '" & _Codigo & "' And Id_Rec = " & _Id_Rec)
-
-        '    If CBool(_Reg) Then
-        '        MessageBoxEx.Show(Me, "Este producto ya esta asociado a esta receta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        '        Return
-        '    End If
-
-
-
-        'End If
 
     End Sub
 
