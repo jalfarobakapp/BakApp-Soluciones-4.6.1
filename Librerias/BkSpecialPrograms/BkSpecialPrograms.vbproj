@@ -1870,6 +1870,18 @@
     <Compile Include="03 Sistemas\Servicio Tecnico\Configuracion\Recetas\Frm_St_Recetas.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Configuracion\Recetas\Operaciones\Frm_St_Operaciones.Designer.vb">
+      <DependentUpon>Frm_St_Operaciones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Configuracion\Recetas\Operaciones\Frm_St_Operaciones.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Configuracion\Recetas\Operaciones\Frm_St_OperacionesCrear.Designer.vb">
+      <DependentUpon>Frm_St_OperacionesCrear.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Configuracion\Recetas\Operaciones\Frm_St_OperacionesCrear.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Servicio Tecnico\Estados\Frm_St_Estado_03_Presupuesto2.Designer.vb">
       <DependentUpon>Frm_St_Estado_03_Presupuesto2.vb</DependentUpon>
     </Compile>
@@ -4781,6 +4793,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Configuracion\Recetas\Frm_St_Recetas.resx">
       <DependentUpon>Frm_St_Recetas.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Configuracion\Recetas\Operaciones\Frm_St_Operaciones.resx">
+      <DependentUpon>Frm_St_Operaciones.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Configuracion\Recetas\Operaciones\Frm_St_OperacionesCrear.resx">
+      <DependentUpon>Frm_St_OperacionesCrear.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Estados\Frm_St_Estado_03_Presupuesto2.resx">
       <DependentUpon>Frm_St_Estado_03_Presupuesto2.vb</DependentUpon>

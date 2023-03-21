@@ -33,6 +33,7 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Btn_Exportar_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mantencion_Tecnicos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Conf_Info_Reportes = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Recetas = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Garantia = New DevComponents.DotNetBar.ButtonItem()
@@ -58,7 +59,7 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Tab_06_Aviso = New DevComponents.DotNetBar.SuperTabItem()
         Me.Tab_07_Entregadas = New DevComponents.DotNetBar.SuperTabItem()
         Me.Tab_08_Cerradas_Hoy = New DevComponents.DotNetBar.SuperTabItem()
-        Me.Btn_Recetas = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Operaciones = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -71,7 +72,7 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Top
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_OT, Me.Btn_Buscar_OT, Me.BtnActualizar, Me.Btn_Exportar_Excel, Me.Btn_Mantencion_Tecnicos, Me.Btn_Conf_Info_Reportes, Me.Btn_Recetas})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_OT, Me.Btn_Buscar_OT, Me.BtnActualizar, Me.Btn_Exportar_Excel, Me.Btn_Mantencion_Tecnicos, Me.Btn_Conf_Info_Reportes, Me.Btn_Recetas, Me.Btn_Operaciones})
         Me.Bar2.Location = New System.Drawing.Point(0, 0)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(1135, 41)
@@ -126,6 +127,13 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Btn_Conf_Info_Reportes.Image = CType(resources.GetObject("Btn_Conf_Info_Reportes.Image"), System.Drawing.Image)
         Me.Btn_Conf_Info_Reportes.Name = "Btn_Conf_Info_Reportes"
         Me.Btn_Conf_Info_Reportes.Tooltip = "Configuración información fija en reportes"
+        '
+        'Btn_Recetas
+        '
+        Me.Btn_Recetas.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Recetas.Image = CType(resources.GetObject("Btn_Recetas.Image"), System.Drawing.Image)
+        Me.Btn_Recetas.Name = "Btn_Recetas"
+        Me.Btn_Recetas.Tooltip = "Mantención de Recetas"
         '
         'GroupPanel1
         '
@@ -433,12 +441,12 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Tab_08_Cerradas_Hoy.Name = "Tab_08_Cerradas_Hoy"
         Me.Tab_08_Cerradas_Hoy.Text = "Cerradas hoy"
         '
-        'Btn_Recetas
+        'Btn_Operaciones
         '
-        Me.Btn_Recetas.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Recetas.Image = CType(resources.GetObject("Btn_Recetas.Image"), System.Drawing.Image)
-        Me.Btn_Recetas.Name = "Btn_Recetas"
-        Me.Btn_Recetas.Tooltip = "Mantención de Recetas"
+        Me.Btn_Operaciones.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Operaciones.Image = CType(resources.GetObject("Btn_Operaciones.Image"), System.Drawing.Image)
+        Me.Btn_Operaciones.Name = "Btn_Operaciones"
+        Me.Btn_Operaciones.Tooltip = "Mantención de Operaciones"
         '
         'Frm_St_Ordenes_de_trabajo
         '
@@ -502,4 +510,5 @@ Partial Class Frm_St_Ordenes_de_trabajo
     Friend WithEvents Btn_Crear_OT1Producto As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Crear_OTVariosProductos As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Recetas As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Operaciones As DevComponents.DotNetBar.ButtonItem
 End Class

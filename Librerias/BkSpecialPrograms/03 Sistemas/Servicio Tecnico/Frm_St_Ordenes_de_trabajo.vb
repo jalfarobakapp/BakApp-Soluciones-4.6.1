@@ -685,4 +685,12 @@ Public Class Frm_St_Ordenes_de_trabajo
 
     End Sub
 
+    Private Sub Btn_Operaciones_Click(sender As Object, e As EventArgs) Handles Btn_Operaciones.Click
+
+        Dim Fm As New Frm_St_Operaciones
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
 End Class

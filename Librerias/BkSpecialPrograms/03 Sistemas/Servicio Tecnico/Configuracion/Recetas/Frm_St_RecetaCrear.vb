@@ -16,6 +16,7 @@ Public Class Frm_St_RecetaCrear
     Dim _Editar As Boolean
 
     Public Property Grabar As Boolean
+    Public Property Eliminar As Boolean
 
     Public Property Row_Receta As DataRow
         Get
@@ -614,4 +615,30 @@ Public Class Frm_St_RecetaCrear
 
     End Sub
 
+    Private Sub Btn_Eliminar_Click(sender As Object, e As EventArgs) Handles Btn_Eliminar.Click
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & " Zw_St_OT_OpeXServ", "CodReceta  = '" & Txt_CodReceta.Text & "'")
+
+        If CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "Esta receta esta asociada a (" & _Reg & ") servicio(s)" & vbCrLf &
+                              "No es posible eliminarla, debe dejarla inactiva", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Esta seguro de eliminar esta receta?", "Eliminar receta",
+                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_St_OT_Recetas_Enc Where Id = " & _Id_Rec & vbCrLf &
+                           "Delete " & _Global_BaseBk & "Zw_St_OT_Recetas_Ope Where Id = " & _Id_Rec & vbCrLf &
+                           "Delete " & _Global_BaseBk & "Zw_St_OT_Recetas_Prod Where Id = " & _Id_Rec
+
+            If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+                Eliminar = True
+                Me.Close()
+            End If
+
+        End If
+
+    End Sub
 End Class

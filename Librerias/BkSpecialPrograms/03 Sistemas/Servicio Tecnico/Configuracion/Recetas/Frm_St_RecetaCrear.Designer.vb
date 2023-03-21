@@ -30,8 +30,8 @@ Partial Class Frm_St_RecetaCrear
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Agregar_Producto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo_Presupuesto = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_CodReceta = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Descripcion = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -122,7 +122,7 @@ Partial Class Frm_St_RecetaCrear
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.Grilla.Size = New System.Drawing.Size(697, 275)
-        Me.Grilla.TabIndex = 1
+        Me.Grilla.TabIndex = 2
         '
         'Bar2
         '
@@ -149,6 +149,14 @@ Partial Class Frm_St_RecetaCrear
         Me.Btn_Grabar.Name = "Btn_Grabar"
         Me.Btn_Grabar.Tooltip = "Grabar "
         '
+        'Btn_Agregar_Producto
+        '
+        Me.Btn_Agregar_Producto.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Agregar_Producto.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Agregar_Producto.Image = CType(resources.GetObject("Btn_Agregar_Producto.Image"), System.Drawing.Image)
+        Me.Btn_Agregar_Producto.Name = "Btn_Agregar_Producto"
+        Me.Btn_Agregar_Producto.Text = "Agregar operación"
+        '
         'Btn_Eliminar
         '
         Me.Btn_Eliminar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
@@ -159,14 +167,6 @@ Partial Class Frm_St_RecetaCrear
         Me.Btn_Eliminar.Name = "Btn_Eliminar"
         Me.Btn_Eliminar.Tooltip = "Eliminar"
         Me.Btn_Eliminar.Visible = False
-        '
-        'Btn_Agregar_Producto
-        '
-        Me.Btn_Agregar_Producto.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Agregar_Producto.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Agregar_Producto.Image = CType(resources.GetObject("Btn_Agregar_Producto.Image"), System.Drawing.Image)
-        Me.Btn_Agregar_Producto.Name = "Btn_Agregar_Producto"
-        Me.Btn_Agregar_Producto.Text = "Agregar operación"
         '
         'Grupo_Presupuesto
         '
@@ -229,7 +229,7 @@ Partial Class Frm_St_RecetaCrear
         Me.Txt_CodReceta.Name = "Txt_CodReceta"
         Me.Txt_CodReceta.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.Txt_CodReceta.Size = New System.Drawing.Size(161, 22)
-        Me.Txt_CodReceta.TabIndex = 71
+        Me.Txt_CodReceta.TabIndex = 0
         '
         'Txt_Descripcion
         '
@@ -249,7 +249,7 @@ Partial Class Frm_St_RecetaCrear
         Me.Txt_Descripcion.Name = "Txt_Descripcion"
         Me.Txt_Descripcion.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.Txt_Descripcion.Size = New System.Drawing.Size(524, 22)
-        Me.Txt_Descripcion.TabIndex = 0
+        Me.Txt_Descripcion.TabIndex = 1
         '
         'LabelX1
         '
@@ -297,7 +297,7 @@ Partial Class Frm_St_RecetaCrear
         Me.Sw_Activo.OnText = "Si"
         Me.Sw_Activo.Size = New System.Drawing.Size(66, 22)
         Me.Sw_Activo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Sw_Activo.TabIndex = 100
+        Me.Sw_Activo.TabIndex = 3
         '
         'LabelX3
         '
@@ -327,6 +327,7 @@ Partial Class Frm_St_RecetaCrear
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Frm_St_RecetaCrear"

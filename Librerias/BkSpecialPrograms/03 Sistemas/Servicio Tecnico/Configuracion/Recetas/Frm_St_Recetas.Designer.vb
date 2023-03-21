@@ -23,19 +23,19 @@ Partial Class Frm_St_Recetas
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_St_Recetas))
-        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Crear_Receta = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Asociar_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla_Recetas = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla_Productos = New DevComponents.DotNetBar.Controls.DataGridViewX()
-        Me.Btn_Asociar_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Txt_Buscador = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -71,6 +71,14 @@ Partial Class Frm_St_Recetas
         Me.Btn_Crear_Receta.Image = CType(resources.GetObject("Btn_Crear_Receta.Image"), System.Drawing.Image)
         Me.Btn_Crear_Receta.Name = "Btn_Crear_Receta"
         Me.Btn_Crear_Receta.Text = "Crear receta"
+        '
+        'Btn_Asociar_Producto
+        '
+        Me.Btn_Asociar_Producto.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Asociar_Producto.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Asociar_Producto.Image = CType(resources.GetObject("Btn_Asociar_Producto.Image"), System.Drawing.Image)
+        Me.Btn_Asociar_Producto.Name = "Btn_Asociar_Producto"
+        Me.Btn_Asociar_Producto.Tooltip = "Asociar producto a la receta"
         '
         'GroupPanel1
         '
@@ -117,23 +125,23 @@ Partial Class Frm_St_Recetas
         Me.Grilla_Recetas.AllowUserToAddRows = False
         Me.Grilla_Recetas.AllowUserToDeleteRows = False
         Me.Grilla_Recetas.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle19.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle19.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle19.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Recetas.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle19
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Recetas.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla_Recetas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle20.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle20.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle20.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle20.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Recetas.DefaultCellStyle = DataGridViewCellStyle20
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Recetas.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla_Recetas.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Recetas.EnableHeadersVisualStyles = False
         Me.Grilla_Recetas.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
@@ -141,14 +149,14 @@ Partial Class Frm_St_Recetas
         Me.Grilla_Recetas.MultiSelect = False
         Me.Grilla_Recetas.Name = "Grilla_Recetas"
         Me.Grilla_Recetas.ReadOnly = True
-        DataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle21.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle21.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle21.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle21.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Recetas.RowHeadersDefaultCellStyle = DataGridViewCellStyle21
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Recetas.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla_Recetas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.Grilla_Recetas.Size = New System.Drawing.Size(602, 271)
         Me.Grilla_Recetas.TabIndex = 1
@@ -198,23 +206,23 @@ Partial Class Frm_St_Recetas
         Me.Grilla_Productos.AllowUserToAddRows = False
         Me.Grilla_Productos.AllowUserToDeleteRows = False
         Me.Grilla_Productos.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle22.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle22.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle22.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Productos.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle22
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Productos.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla_Productos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle23.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle23.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle23.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle23.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Productos.DefaultCellStyle = DataGridViewCellStyle23
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Productos.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla_Productos.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Productos.EnableHeadersVisualStyles = False
         Me.Grilla_Productos.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
@@ -222,25 +230,17 @@ Partial Class Frm_St_Recetas
         Me.Grilla_Productos.MultiSelect = False
         Me.Grilla_Productos.Name = "Grilla_Productos"
         Me.Grilla_Productos.ReadOnly = True
-        DataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle24.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle24.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle24.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Productos.RowHeadersDefaultCellStyle = DataGridViewCellStyle24
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Productos.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla_Productos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.Grilla_Productos.Size = New System.Drawing.Size(602, 130)
         Me.Grilla_Productos.TabIndex = 1
-        '
-        'Btn_Asociar_Producto
-        '
-        Me.Btn_Asociar_Producto.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Asociar_Producto.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Asociar_Producto.Image = CType(resources.GetObject("Btn_Asociar_Producto.Image"), System.Drawing.Image)
-        Me.Btn_Asociar_Producto.Name = "Btn_Asociar_Producto"
-        Me.Btn_Asociar_Producto.Tooltip = "Asociar producto a la receta"
         '
         'Txt_Buscador
         '
@@ -250,7 +250,7 @@ Partial Class Frm_St_Recetas
         '
         Me.Txt_Buscador.Border.Class = "TextBoxBorder"
         Me.Txt_Buscador.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Buscador.ButtonCustom.Image = CType(resources.GetObject("Txt_BuscaXObservaciones.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Buscador.ButtonCustom.Image = CType(resources.GetObject("Txt_Buscador.ButtonCustom.Image"), System.Drawing.Image)
         Me.Txt_Buscador.ButtonCustom.Visible = True
         Me.Txt_Buscador.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Buscador.ForeColor = System.Drawing.Color.Black
@@ -258,7 +258,7 @@ Partial Class Frm_St_Recetas
         Me.Txt_Buscador.Name = "Txt_Buscador"
         Me.Txt_Buscador.PreventEnterBeep = True
         Me.Txt_Buscador.Size = New System.Drawing.Size(404, 22)
-        Me.Txt_Buscador.TabIndex = 98
+        Me.Txt_Buscador.TabIndex = 0
         '
         'LabelX7
         '
@@ -277,7 +277,6 @@ Partial Class Frm_St_Recetas
         'GroupPanel3
         '
         Me.GroupPanel3.BackColor = System.Drawing.Color.White
-        Me.GroupPanel3.CanvasColor = System.Drawing.SystemColors.Control
         Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel3.Controls.Add(Me.Txt_BuscaXProducto)
         Me.GroupPanel3.Controls.Add(Me.LabelX2)
@@ -326,9 +325,9 @@ Partial Class Frm_St_Recetas
         '
         Me.Txt_BuscaXProducto.Border.Class = "TextBoxBorder"
         Me.Txt_BuscaXProducto.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_BuscaXProducto.ButtonCustom.Image = CType(resources.GetObject("Txt_BuscaXEntidad.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_BuscaXProducto.ButtonCustom.Image = CType(resources.GetObject("Txt_BuscaXProducto.ButtonCustom.Image"), System.Drawing.Image)
         Me.Txt_BuscaXProducto.ButtonCustom.Visible = True
-        Me.Txt_BuscaXProducto.ButtonCustom2.Image = CType(resources.GetObject("Txt_BuscaXEntidad.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_BuscaXProducto.ButtonCustom2.Image = CType(resources.GetObject("Txt_BuscaXProducto.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_BuscaXProducto.ButtonCustom2.Visible = True
         Me.Txt_BuscaXProducto.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_BuscaXProducto.ForeColor = System.Drawing.Color.Black
@@ -337,7 +336,7 @@ Partial Class Frm_St_Recetas
         Me.Txt_BuscaXProducto.PreventEnterBeep = True
         Me.Txt_BuscaXProducto.ReadOnly = True
         Me.Txt_BuscaXProducto.Size = New System.Drawing.Size(189, 22)
-        Me.Txt_BuscaXProducto.TabIndex = 100
+        Me.Txt_BuscaXProducto.TabIndex = 1
         '
         'LabelX2
         '
@@ -364,12 +363,13 @@ Partial Class Frm_St_Recetas
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Frm_St_Recetas"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MetroForm"
+        Me.Text = "MANTENCION DE RECETAS PARA REPARACIONES"
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Grilla_Recetas, System.ComponentModel.ISupportInitialize).EndInit()
