@@ -48,6 +48,7 @@ Public Class Frm_St_OperacionesCrear
 
         AddHandler Txt_Precio.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros
         AddHandler Txt_Precio.Validated, AddressOf Sb_Txt_Nros_Validated
+        AddHandler Txt_Precio.Enter, AddressOf Sb_Txt_Nros_Enter
 
         Txt_Precio.Tag = 0
         Txt_Precio.Enabled = True
@@ -58,6 +59,7 @@ Public Class Frm_St_OperacionesCrear
             Txt_Descripcion.Text = _RowOperacion.Item("Descripcion")
             Txt_Precio.Tag = _RowOperacion.Item("Precio")
             Txt_Precio.Text = FormatNumber(Txt_Precio.Tag, 0)
+            Btn_Eliminar.Visible = True
             Rdb_CantMayor1.Checked = _RowOperacion.Item("CantMayor1")
             Rdb_Externa.Checked = _RowOperacion.Item("Externa")
             ActiveControl = Txt_Descripcion
@@ -109,11 +111,13 @@ Public Class Frm_St_OperacionesCrear
             Return
         End If
 
-        If Txt_Operacion.Text.Trim.Length < 5 Then
-            MessageBoxEx.Show(Me, "El código de la operación debe tener 5 caracteres", "Validación",
+        If _Nuevo Then
+            If Txt_Operacion.Text.Trim.Length < 5 Then
+                MessageBoxEx.Show(Me, "El código de la operación debe tener 5 caracteres", "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Txt_Operacion.Focus()
-            Return
+                Txt_Operacion.Focus()
+                Return
+            End If
         End If
 
         If String.IsNullOrEmpty(Txt_Descripcion.Text) Then
@@ -124,12 +128,11 @@ Public Class Frm_St_OperacionesCrear
 
         If Not CBool(Txt_Precio.Tag) Then
             MessageBoxEx.Show(Me, "Falta el precio de la operación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Txt_Descripcion.Focus()
+            Txt_Precio.Focus()
             Return
         End If
 
         If _Nuevo Then
-
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Operaciones (Operacion,Descripcion,Precio,Externa,CantMayor1) Values " &
                            "('" & _Operacion & "','" & _Descripcion & "'," & _Precio & "," & _Externa & "," & _CantMayor1 & ")"
             If Not _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Operacion) Then
@@ -139,10 +142,10 @@ Public Class Frm_St_OperacionesCrear
 
         If _Editar Then
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Operaciones Set " & vbCrLf &
-                           "Descripcion = ''" &
-                           ",Precio = 0" &
-                           ",Externa = 0" &
-                           ",CantMayor1 = 0" & vbCrLf &
+                           "Descripcion = '" & _Descripcion & "'" &
+                           ",Precio = " & _Precio &
+                           ",Externa = " & _Externa &
+                           ",CantMayor1 = " & _CantMayor1 & vbCrLf &
                            "Where Id = " & _Id_Operacion
             If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
                 Return
@@ -160,6 +163,10 @@ Public Class Frm_St_OperacionesCrear
     Private Sub Sb_Txt_Nros_Validated(sender As Object, e As EventArgs)
         CType(sender, Controls.TextBoxX).Tag = Val(CType(sender, Controls.TextBoxX).Text)
         CType(sender, Controls.TextBoxX).Text = FormatNumber(CType(sender, Controls.TextBoxX).Tag, 0)
+    End Sub
+
+    Private Sub Sb_Txt_Nros_Enter(sender As Object, e As EventArgs)
+        CType(sender, Controls.TextBoxX).Text = CType(sender, Controls.TextBoxX).Tag
     End Sub
 
 End Class

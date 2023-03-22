@@ -876,7 +876,6 @@ Public Class Frm_00_Asis_Compra_Menu
         _Sql.Sb_Parametro_Informe_Sql(Txt_CorreoCc_NVI, "Compras_Asistente",
                                       Txt_CorreoCc_NVI.Name, Class_SQLite.Enum_Type._String, Txt_CorreoCc_NVI.Text, _Actualizar)
 
-
         ' Sumar Stock Externo al Stock Fisico
         _Sql.Sb_Parametro_Informe_Sql(Chk_SumerStockExternoAlFisico, "Compras_Asistente",
                                       Chk_SumerStockExternoAlFisico.Name, Class_SQLite.Enum_Type._Boolean, Chk_SumerStockExternoAlFisico.Checked, _Actualizar)
@@ -884,6 +883,10 @@ Public Class Frm_00_Asis_Compra_Menu
         'Quitar productos excluidos
         _Sql.Sb_Parametro_Informe_Sql(Chk_QuitarProdExcluidos, "Compras_Asistente",
                                       Chk_QuitarProdExcluidos.Name, Class_SQLite.Enum_Type._Boolean, Chk_QuitarProdExcluidos.Checked, _Actualizar)
+
+        ' No enviar los correos a los proveedores, solo enviar las CC
+        _Sql.Sb_Parametro_Informe_Sql(Chk_NoEnviarCorreosAProveedores, "Compras_Asistente",
+                                      Chk_NoEnviarCorreosAProveedores.Name, Class_SQLite.Enum_Type._Boolean, Chk_NoEnviarCorreosAProveedores.Checked, _Actualizar)
 
 
     End Sub
@@ -2243,6 +2246,7 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Auto_GenerarAutomaticamenteOCCProveedores = Auto_GenerarAutomaticamenteOCCProveedores
         Fm.Auto_GenerarAutomaticamenteOCCProveedorStar = Auto_GenerarAutomaticamenteOCCProveedorStar
         Fm.Auto_GenerarAutomaticamenteNVI = Auto_GenerarAutomaticamenteNVI
+        Fm.Auto_NoEnviarCorreosAProveedores = Chk_NoEnviarCorreosAProveedores.Checked
 
         If Auto_GenerarAutomaticamenteNVI Then
             Fm.Auto_CorreoCc = Txt_CorreoCc_NVI.Text

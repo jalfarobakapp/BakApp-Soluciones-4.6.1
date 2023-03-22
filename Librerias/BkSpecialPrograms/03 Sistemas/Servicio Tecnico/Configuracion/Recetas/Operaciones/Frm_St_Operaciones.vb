@@ -1,10 +1,21 @@
-﻿Imports DevComponents.DotNetBar
-Public Class Frm_St_Operaciones
+﻿Public Class Frm_St_Operaciones
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
     Dim _Tbl_Operaciones As DataTable
+    Dim _Row_Operacion As DataRow
+
+    Public Property ModoSeleccion As Boolean
+
+    Public Property Row_Operacion As DataRow
+        Get
+            Return _Row_Operacion
+        End Get
+        Set(value As DataRow)
+            _Row_Operacion = value
+        End Set
+    End Property
 
     Public Sub New()
 
@@ -19,6 +30,9 @@ Public Class Frm_St_Operaciones
     End Sub
 
     Private Sub Frm_St_Operaciones_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
 
         Sb_Actualizar_Grilla()
 
@@ -39,15 +53,33 @@ Public Class Frm_St_Operaciones
 
             OcultarEncabezadoGrilla(Grilla, True)
 
+            Dim _DisplayIndex = 0
+
             .Columns("Operacion").Visible = True
             .Columns("Operacion").HeaderText = "Código"
-            .Columns("Operacion").Width = 100
-            .Columns("Operacion").DisplayIndex = 0
+            .Columns("Operacion").Width = 80
+            .Columns("Operacion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").HeaderText = "Descripción"
             .Columns("Descripcion").Width = 390
-            .Columns("Descripcion").DisplayIndex = 1
+            .Columns("Descripcion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("CantMayor1").Visible = True
+            .Columns("CantMayor1").HeaderText = "M1"
+            .Columns("CantMayor1").ToolTipText = "La Cantidad puede ser mayor que 1"
+            .Columns("CantMayor1").Width = 30
+            .Columns("CantMayor1").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Externa").Visible = True
+            .Columns("Externa").HeaderText = "Ext."
+            .Columns("Externa").ToolTipText = "Operación externa"
+            .Columns("Externa").Width = 40
+            .Columns("Externa").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             '.Columns("Activo").Visible = True
             '.Columns("Activo").HeaderText = "Activa"
@@ -77,6 +109,39 @@ Public Class Frm_St_Operaciones
     Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Id As Integer = _Fila.Cells("Id").Value
+        Dim _Operacion As String = _Fila.Cells("Operacion").Value
+
+        If ModoSeleccion Then
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Operaciones Where Operacion = '" & _Operacion & "'"
+            _Row_Operacion = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Me.Close()
+
+        Else
+
+            Call Btn_Mnu_Editar_Operacion_Click(Nothing, Nothing)
+
+        End If
+
+    End Sub
+
+    Private Sub Sb_Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+            With sender
+                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+                    ShowContextMenu(Menu_Contextual_01)
+                End If
+            End With
+        End If
+    End Sub
+
+    Private Sub Btn_Mnu_Editar_Operacion_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Editar_Operacion.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Id As Integer = _Fila.Cells("Id").Value
         Dim _Operacion As String = _Fila.Cells("Operacion").Value
         Dim _Grabar, _Eliminar As Boolean
 

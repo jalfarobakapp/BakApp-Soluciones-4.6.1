@@ -31,8 +31,13 @@ Partial Class Frm_St_Recetas
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Crear_Receta = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Asociar_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
+        Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Editar_Receta = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_AsociarProductos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_02 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_QuitarProducto = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla_Recetas = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla_Productos = New DevComponents.DotNetBar.Controls.DataGridViewX()
@@ -43,6 +48,7 @@ Partial Class Frm_St_Recetas
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla_Recetas, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.Grilla_Productos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -54,7 +60,7 @@ Partial Class Frm_St_Recetas
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Receta, Me.Btn_Asociar_Producto})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Receta})
         Me.Bar2.Location = New System.Drawing.Point(0, 535)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(624, 41)
@@ -72,18 +78,11 @@ Partial Class Frm_St_Recetas
         Me.Btn_Crear_Receta.Name = "Btn_Crear_Receta"
         Me.Btn_Crear_Receta.Text = "Crear receta"
         '
-        'Btn_Asociar_Producto
-        '
-        Me.Btn_Asociar_Producto.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Asociar_Producto.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Asociar_Producto.Image = CType(resources.GetObject("Btn_Asociar_Producto.Image"), System.Drawing.Image)
-        Me.Btn_Asociar_Producto.Name = "Btn_Asociar_Producto"
-        Me.Btn_Asociar_Producto.Tooltip = "Asociar producto a la receta"
-        '
         'GroupPanel1
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.ContextMenuBar1)
         Me.GroupPanel1.Controls.Add(Me.Grilla_Recetas)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(9, 76)
@@ -119,6 +118,55 @@ Partial Class Frm_St_Recetas
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 93
         Me.GroupPanel1.Text = "Recetas para reparaciones"
+        '
+        'ContextMenuBar1
+        '
+        Me.ContextMenuBar1.AntiAlias = True
+        Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01, Me.Menu_Contextual_02})
+        Me.ContextMenuBar1.Location = New System.Drawing.Point(77, 33)
+        Me.ContextMenuBar1.Name = "ContextMenuBar1"
+        Me.ContextMenuBar1.Size = New System.Drawing.Size(330, 25)
+        Me.ContextMenuBar1.Stretch = True
+        Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ContextMenuBar1.TabIndex = 55
+        Me.ContextMenuBar1.TabStop = False
+        Me.ContextMenuBar1.Text = "ContextMenuBar1"
+        '
+        'Menu_Contextual_01
+        '
+        Me.Menu_Contextual_01.AutoExpandOnClick = True
+        Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_Editar_Receta, Me.Btn_Mnu_AsociarProductos})
+        Me.Menu_Contextual_01.Text = "Opciones"
+        '
+        'Btn_Mnu_Editar_Receta
+        '
+        Me.Btn_Mnu_Editar_Receta.Image = CType(resources.GetObject("Btn_Mnu_Editar_Receta.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Editar_Receta.ImageAlt = CType(resources.GetObject("Btn_Mnu_Editar_Receta.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Editar_Receta.Name = "Btn_Mnu_Editar_Receta"
+        Me.Btn_Mnu_Editar_Receta.Text = "Editar receta"
+        '
+        'Btn_Mnu_AsociarProductos
+        '
+        Me.Btn_Mnu_AsociarProductos.Image = CType(resources.GetObject("Btn_Mnu_AsociarProductos.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_AsociarProductos.ImageAlt = CType(resources.GetObject("Btn_Mnu_AsociarProductos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_AsociarProductos.Name = "Btn_Mnu_AsociarProductos"
+        Me.Btn_Mnu_AsociarProductos.Text = "Asociar productos a la receta"
+        '
+        'Menu_Contextual_02
+        '
+        Me.Menu_Contextual_02.AutoExpandOnClick = True
+        Me.Menu_Contextual_02.Name = "Menu_Contextual_02"
+        Me.Menu_Contextual_02.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_QuitarProducto})
+        Me.Menu_Contextual_02.Text = "Opciones"
+        '
+        'Btn_Mnu_QuitarProducto
+        '
+        Me.Btn_Mnu_QuitarProducto.Image = CType(resources.GetObject("Btn_Mnu_QuitarProducto.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_QuitarProducto.ImageAlt = CType(resources.GetObject("Btn_Mnu_QuitarProducto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_QuitarProducto.Name = "Btn_Mnu_QuitarProducto"
+        Me.Btn_Mnu_QuitarProducto.Text = "Quitar producto de la receta"
         '
         'Grilla_Recetas
         '
@@ -372,6 +420,7 @@ Partial Class Frm_St_Recetas
         Me.Text = "MANTENCION DE RECETAS PARA REPARACIONES"
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla_Recetas, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel2.ResumeLayout(False)
         CType(Me.Grilla_Productos, System.ComponentModel.ISupportInitialize).EndInit()
@@ -385,10 +434,15 @@ Partial Class Frm_St_Recetas
     Friend WithEvents Grilla_Recetas As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Grilla_Productos As DevComponents.DotNetBar.Controls.DataGridViewX
-    Friend WithEvents Btn_Asociar_Producto As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Txt_Buscador As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
     Friend WithEvents GroupPanel3 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Txt_BuscaXProducto As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents ContextMenuBar1 As DevComponents.DotNetBar.ContextMenuBar
+    Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_Editar_Receta As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_AsociarProductos As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Menu_Contextual_02 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_QuitarProducto As DevComponents.DotNetBar.ButtonItem
 End Class

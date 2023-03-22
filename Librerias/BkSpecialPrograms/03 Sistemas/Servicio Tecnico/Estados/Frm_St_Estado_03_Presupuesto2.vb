@@ -281,7 +281,8 @@ Public Class Frm_St_Estado_03_Presupuesto2
                                           _CantidadRealizada As Integer,
                                           _Precio As Double,
                                           _Total As Double,
-                                          _Realizado As Boolean)
+                                          _Realizado As Boolean,
+                                          _Externa As Boolean)
 
         Dim NewFila As DataRow
         NewFila = _Tbl.NewRow
@@ -301,6 +302,7 @@ Public Class Frm_St_Estado_03_Presupuesto2
             .Item("Total") = _Total
             .Item("Orden") = 0
             .Item("Realizado") = _Realizado
+            .Item("Externa") = _Realizado
 
             _Tbl.Rows.Add(NewFila)
 
@@ -899,7 +901,8 @@ Public Class Frm_St_Estado_03_Presupuesto2
                                                      False,
                                                      _Fl.Item("Precio"),
                                                      _Total,
-                                                     False)
+                                                     False,
+                                                     _Fl.Item("Externa"))
                 End If
 
             Next
@@ -956,7 +959,8 @@ Public Class Frm_St_Estado_03_Presupuesto2
                                                      False,
                                                      _Fl.Item("Precio"),
                                                      _Total,
-                                                     False)
+                                                     False,
+                                                     _Fl.Item("Externa"))
                     _Operaciones.Add(_Fl)
                 End If
 
@@ -996,7 +1000,8 @@ Public Class Frm_St_Estado_03_Presupuesto2
                                                          False,
                                                          _Fl.Item("Precio"),
                                                          _Total,
-                                                         False)
+                                                         False,
+                                                         _Fl.Item("Externa"))
                     End If
 
                 Next

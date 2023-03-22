@@ -46,9 +46,10 @@ Public Class Frm_OperacionesXServicio
                        "Where Rec.CodReceta = '" & _CodReceta & "'"
         _RowReceta = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Consulta_sql = "SELECT Serv.Id,Serv.Id_Ot,Serv.Semilla,Serv.Codigo,Isnull(Oper.Descripcion,'') As Descripcion," & vbCrLf &
-               "Serv.CodReceta,Serv.Operacion,Serv.Orden,Serv.CantMayor1,Serv.Cantidad,Serv.CantidadRealizada,Serv.Precio,Serv.Total,Serv.Realizado,Cast(1 As Bit) As Chk" & vbCrLf &
-               "FROM   " & _Global_BaseBk & "Zw_St_OT_OpeXServ Serv" & vbCrLf &
+        Consulta_sql = "Select Serv.Id,Serv.Id_Ot,Serv.Semilla,Serv.Codigo,Isnull(Oper.Descripcion,'') As Descripcion," & vbCrLf &
+               "Serv.CodReceta,Serv.Operacion,Serv.Orden,Serv.CantMayor1,Serv.Cantidad,Serv.CantidadRealizada,Serv.Precio," &
+               "Serv.Total,Serv.Realizado,Serv.Externa,Cast(1 As Bit) As Chk" & vbCrLf &
+               "From " & _Global_BaseBk & "Zw_St_OT_OpeXServ Serv" & vbCrLf &
                "Left Join " & _Global_BaseBk & "Zw_St_OT_Operaciones Oper On Serv.Operacion = Oper.Operacion" & vbCrLf &
                "Where CodReceta = '" & _CodReceta & "'"
         _TblOperaciones = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -62,6 +63,8 @@ Public Class Frm_OperacionesXServicio
     End Sub
 
     Private Sub Frm_OperacionesXServicio_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         Txt_Receta.Text = _RowReceta.Item("CodReceta").ToString.Trim & "-" & _RowReceta.Item("Descripcion").ToString.Trim
 
@@ -88,13 +91,13 @@ Public Class Frm_OperacionesXServicio
 
             .Columns("Operacion").Visible = True
             .Columns("Operacion").HeaderText = "Código"
-            .Columns("Operacion").Width = 100
+            .Columns("Operacion").Width = 60
             .Columns("Operacion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").HeaderText = "Descripcion"
-            .Columns("Descripcion").Width = 320
+            .Columns("Descripcion").Width = 300
             .Columns("Descripcion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -104,7 +107,20 @@ Public Class Frm_OperacionesXServicio
             .Columns("Cantidad").DisplayIndex = _DisplayIndex
             '.Columns("Cantidad").ReadOnly = False
             .Columns("Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            _DisplayIndex += 1
 
+            .Columns("CantMayor1").Visible = True
+            .Columns("CantMayor1").HeaderText = "M1"
+            .Columns("CantMayor1").ToolTipText = "La Cantidad puede ser mayor que 1"
+            .Columns("CantMayor1").Width = 30
+            .Columns("CantMayor1").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Externa").Visible = True
+            .Columns("Externa").HeaderText = "Ext."
+            .Columns("Externa").ToolTipText = "Operación externa"
+            .Columns("Externa").Width = 40
+            .Columns("Externa").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
         End With
