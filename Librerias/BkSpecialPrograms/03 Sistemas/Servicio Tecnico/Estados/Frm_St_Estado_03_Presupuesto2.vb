@@ -578,9 +578,9 @@ Public Class Frm_St_Estado_03_Presupuesto2
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
         Dim _Codigo As String = _Fila.Cells("Codigo").Value
-        Dim _Semilla As Integer = _Fila.Cells("Semilla").Value
+        'Dim _Semilla As Integer = _Fila.Cells("Semilla").Value
 
-        Dim _RowProducto As DataRow
+        'Dim _RowProducto As DataRow
 
         If _Cabeza = "Codigo" Then
 
@@ -591,42 +591,43 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
             If _Codigo Is Nothing Then Return
 
-            _RowProducto = Fx_Buscar_Producto(_Codigo)
+            Sb_Agregar_Servicio(_Fila)
 
-            If Not (_RowProducto Is Nothing) Then
+            '_RowProducto = Fx_Buscar_Producto(_Codigo)
 
-                'For Each _FlSvr As DataRow In _Tbl_DetProd.Rows
-                '    If _FlSvr.Item("Codigo").ToString.Trim = _RowProducto.Item("KOPR").ToString.Trim Then
-                '        MessageBoxEx.Show(Me, "Este servicio ya esta en la lista" & vbCrLf &
-                '                          "No puede incluir el mismo servicio mas de una vez en el listado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                '        _Fila.Cells("Codigo").Value = String.Empty
-                '        Return
-                '    End If
-                'Next
+            'If Not (_RowProducto Is Nothing) Then
 
-                Dim _TieneReceta As Boolean
+            '    'For Each _FlSvr As DataRow In _Tbl_DetProd.Rows
+            '    '    If _FlSvr.Item("Codigo").ToString.Trim = _RowProducto.Item("KOPR").ToString.Trim Then
+            '    '        MessageBoxEx.Show(Me, "Este servicio ya esta en la lista" & vbCrLf &
+            '    '                          "No puede incluir el mismo servicio mas de una vez en el listado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            '    '        _Fila.Cells("Codigo").Value = String.Empty
+            '    '        Return
+            '    '    End If
+            '    'Next
 
-                If Not Fx_Buscar_Receta(_RowProducto.Item("KOPR"), _Semilla, _TieneReceta) Then
-                    _Fila.Cells("Codigo").Value = String.Empty
-                    Return
-                End If
+            '    Dim _TieneReceta As Boolean
 
-                _Fila.Cells("Id_Ot").Value = _Id_Ot
-                _Fila.Cells("Codigo").Value = _RowProducto.Item("KOPR")
-                _Fila.Cells("Descripcion").Value = _RowProducto.Item("NOKOPR")
-                _Fila.Cells("Ud").Value = _RowProducto.Item("UD01PR")
-                _Fila.Cells("Nuevo_Item").Value = False
-                _Fila.Cells("Cantidad").Value = Convert.ToInt32(_TieneReceta)
-                _Fila.Cells("CantUd1").Value = Convert.ToInt32(_TieneReceta)
-                _Fila.Cells("CantUd2").Value = Convert.ToInt32(_TieneReceta)
-                _Fila.Cells("TieneReceta").Value = _TieneReceta
-                _Fila.Cells("PorcIva").Value = _RowProducto.Item("POIVPR")
+            '    If Not Fx_Buscar_Receta(_RowProducto.Item("KOPR"), _Semilla, _TieneReceta) Then
+            '        _Fila.Cells("Codigo").Value = String.Empty
+            '        Return
+            '    End If
 
-                Sb_Sumar_Totales()
+            '    _Fila.Cells("Id_Ot").Value = _Id_Ot
+            '    _Fila.Cells("Codigo").Value = _RowProducto.Item("KOPR")
+            '    _Fila.Cells("Descripcion").Value = _RowProducto.Item("NOKOPR")
+            '    _Fila.Cells("Ud").Value = _RowProducto.Item("UD01PR")
+            '    _Fila.Cells("Nuevo_Item").Value = False
+            '    _Fila.Cells("Cantidad").Value = Convert.ToInt32(_TieneReceta)
+            '    _Fila.Cells("CantUd1").Value = Convert.ToInt32(_TieneReceta)
+            '    _Fila.Cells("CantUd2").Value = Convert.ToInt32(_TieneReceta)
+            '    _Fila.Cells("TieneReceta").Value = _TieneReceta
+            '    _Fila.Cells("PorcIva").Value = _RowProducto.Item("POIVPR")
 
-                Sb_New_OT_Agregar_Fila()
+            '    Sb_Sumar_Totales()
+            '    Sb_New_OT_Agregar_Fila()
 
-            End If
+            'End If
 
         ElseIf _Cabeza = "Cantidad" Then
 
@@ -872,6 +873,10 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
             Dim _TblOperaciones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
+            For Each _Fl As DataRow In _TblOperaciones.Rows
+                _Fl.Item("Cantidad") = 0
+            Next
+
             Dim _Grabar As Boolean
 
             Dim Fm2 As New Frm_OperacionesXServicio(_CodReceta)
@@ -1038,5 +1043,59 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
     End Sub
 
+    Sub Sb_Agregar_Servicio(_Fila As DataGridViewRow)
+
+        Dim _Semilla As Integer = _Fila.Cells("Semilla").Value
+        Dim _Codigo As String = _Fila.Cells("Codigo").Value
+
+        Dim _RowProducto As DataRow
+
+        'If _Codigo Is Nothing Then Return
+
+        _RowProducto = Fx_Buscar_Producto(_Codigo)
+
+        If Not (_RowProducto Is Nothing) Then
+
+            'For Each _FlSvr As DataRow In _Tbl_DetProd.Rows
+            '    If _FlSvr.Item("Codigo").ToString.Trim = _RowProducto.Item("KOPR").ToString.Trim Then
+            '        MessageBoxEx.Show(Me, "Este servicio ya esta en la lista" & vbCrLf &
+            '                          "No puede incluir el mismo servicio mas de una vez en el listado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            '        _Fila.Cells("Codigo").Value = String.Empty
+            '        Return
+            '    End If
+            'Next
+
+            Dim _TieneReceta As Boolean
+
+            If Not Fx_Buscar_Receta(_RowProducto.Item("KOPR"), _Semilla, _TieneReceta) Then
+                _Fila.Cells("Codigo").Value = String.Empty
+                Return
+            End If
+
+            _Fila.Cells("Id_Ot").Value = _Id_Ot
+            _Fila.Cells("Codigo").Value = _RowProducto.Item("KOPR")
+            _Fila.Cells("Descripcion").Value = _RowProducto.Item("NOKOPR")
+            _Fila.Cells("Ud").Value = _RowProducto.Item("UD01PR")
+            _Fila.Cells("Nuevo_Item").Value = False
+            _Fila.Cells("Cantidad").Value = Convert.ToInt32(_TieneReceta)
+            _Fila.Cells("CantUd1").Value = Convert.ToInt32(_TieneReceta)
+            _Fila.Cells("CantUd2").Value = Convert.ToInt32(_TieneReceta)
+            _Fila.Cells("TieneReceta").Value = _TieneReceta
+            _Fila.Cells("PorcIva").Value = _RowProducto.Item("POIVPR")
+
+            Sb_Sumar_Totales()
+            Sb_New_OT_Agregar_Fila()
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_Agregar_Producto_Click(sender As Object, e As EventArgs) Handles Btn_Agregar_Producto.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.Rows.Count - 1)
+
+        Sb_Agregar_Servicio(_Fila)
+
+    End Sub
 End Class
 

@@ -884,9 +884,18 @@ Public Class Frm_00_Asis_Compra_Menu
         _Sql.Sb_Parametro_Informe_Sql(Chk_QuitarProdExcluidos, "Compras_Asistente",
                                       Chk_QuitarProdExcluidos.Name, Class_SQLite.Enum_Type._Boolean, Chk_QuitarProdExcluidos.Checked, _Actualizar)
 
-        ' No enviar los correos a los proveedores, solo enviar las CC
-        _Sql.Sb_Parametro_Informe_Sql(Chk_NoEnviarCorreosAProveedores, "Compras_Asistente",
-                                      Chk_NoEnviarCorreosAProveedores.Name, Class_SQLite.Enum_Type._Boolean, Chk_NoEnviarCorreosAProveedores.Checked, _Actualizar)
+        ' Proceso compras automatico enviar correos a todos
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_OccProvEnviarCorreoTodos, "Compras_Asistente",
+                                      Rdb_OccProvEnviarCorreoTodos.Name, Class_SQLite.Enum_Type._Boolean, Rdb_OccProvEnviarCorreoTodos.Checked, _Actualizar)
+
+
+        ' Proceso compras automatico enviar correos solo a CC
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_OccProvEnviarCorreoSoloCc, "Compras_Asistente",
+                                      Rdb_OccProvEnviarCorreoSoloCc.Name, Class_SQLite.Enum_Type._Boolean, Rdb_OccProvEnviarCorreoSoloCc.Checked, _Actualizar)
+
+        ' Proceso compras automatico no enviar correos
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_OccProvEnviarCorreoNoEnviar, "Compras_Asistente",
+                                      Rdb_OccProvEnviarCorreoNoEnviar.Name, Class_SQLite.Enum_Type._Boolean, Rdb_OccProvEnviarCorreoNoEnviar.Checked, _Actualizar)
 
 
     End Sub
@@ -2246,7 +2255,9 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Auto_GenerarAutomaticamenteOCCProveedores = Auto_GenerarAutomaticamenteOCCProveedores
         Fm.Auto_GenerarAutomaticamenteOCCProveedorStar = Auto_GenerarAutomaticamenteOCCProveedorStar
         Fm.Auto_GenerarAutomaticamenteNVI = Auto_GenerarAutomaticamenteNVI
-        Fm.Auto_NoEnviarCorreosAProveedores = Chk_NoEnviarCorreosAProveedores.Checked
+        Fm.Auto_Correo_EnviarCorreosSoloCc = Rdb_OccProvEnviarCorreoSoloCc.Checked
+        Fm.Auto_Correo_EnviarCorreosATodos = Rdb_OccProvEnviarCorreoTodos.Checked
+        Fm.Auto_Correo_NoEnviarCorreos = Rdb_OccProvEnviarCorreoNoEnviar.Checked
 
         If Auto_GenerarAutomaticamenteNVI Then
             Fm.Auto_CorreoCc = Txt_CorreoCc_NVI.Text

@@ -7,14 +7,14 @@ Public Class Frm_OperacionesXServicio
 
     Dim _CodReceta As String
     Dim _RowReceta As DataRow
-    Dim _TblOperaciones As DataTable
+    Dim _Tbl_Operaciones As DataTable
     Public Property TblOperaciones As DataTable
         Get
-            Return _TblOperaciones
+            Return _Tbl_Operaciones
         End Get
         Set(value As DataTable)
-            _TblOperaciones = New DataTable
-            _TblOperaciones = value
+            _Tbl_Operaciones = New DataTable
+            _Tbl_Operaciones = value
         End Set
     End Property
 
@@ -47,12 +47,12 @@ Public Class Frm_OperacionesXServicio
         _RowReceta = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Consulta_sql = "Select Serv.Id,Serv.Id_Ot,Serv.Semilla,Serv.Codigo,Isnull(Oper.Descripcion,'') As Descripcion," & vbCrLf &
-               "Serv.CodReceta,Serv.Operacion,Serv.Orden,Serv.CantMayor1,Serv.Cantidad,Serv.CantidadRealizada,Serv.Precio," &
-               "Serv.Total,Serv.Realizado,Serv.Externa,Cast(1 As Bit) As Chk" & vbCrLf &
-               "From " & _Global_BaseBk & "Zw_St_OT_OpeXServ Serv" & vbCrLf &
-               "Left Join " & _Global_BaseBk & "Zw_St_OT_Operaciones Oper On Serv.Operacion = Oper.Operacion" & vbCrLf &
-               "Where CodReceta = '" & _CodReceta & "'"
-        _TblOperaciones = _Sql.Fx_Get_Tablas(Consulta_sql)
+                       "Serv.CodReceta,Serv.Operacion,Serv.Orden,Serv.CantMayor1,Serv.Cantidad,Serv.CantidadRealizada,Serv.Precio," &
+                       "Serv.Total,Serv.Realizado,Serv.Externa,Cast(1 As Bit) As Chk" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_St_OT_OpeXServ Serv" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_St_OT_Operaciones Oper On Serv.Operacion = Oper.Operacion" & vbCrLf &
+                       "Where CodReceta = '" & _CodReceta & "'"
+        _Tbl_Operaciones = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         'Consulta_sql = "SELECT CAST(0 As Bit) As Chk, ReOpe.Id, ReOpe.Id_Rec,ReOpe.CodReceta,ReOpe.Operacion,Oper.Descripcion,Orden,Oper.Valor" & vbCrLf &
         '               "From " & _Global_BaseBk & "Zw_St_OT_Recetas_Ope ReOpe" & vbCrLf &
@@ -76,7 +76,7 @@ Public Class Frm_OperacionesXServicio
 
         With Grilla
 
-            .DataSource = _TblOperaciones
+            .DataSource = _Tbl_Operaciones
 
             OcultarEncabezadoGrilla(Grilla, True)
 
@@ -105,7 +105,7 @@ Public Class Frm_OperacionesXServicio
             .Columns("Cantidad").HeaderText = "Cantidad"
             .Columns("Cantidad").Width = 80
             .Columns("Cantidad").DisplayIndex = _DisplayIndex
-            '.Columns("Cantidad").ReadOnly = False
+            .Columns("Cantidad").DefaultCellStyle.Format = "###,##.##"
             .Columns("Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             _DisplayIndex += 1
 
@@ -130,7 +130,7 @@ Public Class Frm_OperacionesXServicio
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
         Dim _Tickeados = False
-        For Each _Fila As DataRow In _TblOperaciones.Rows
+        For Each _Fila As DataRow In _Tbl_Operaciones.Rows
             If _Fila.Item("Chk") Then
                 _Tickeados = True
                 Exit For
@@ -217,6 +217,153 @@ Public Class Frm_OperacionesXServicio
             End If
 
         End If
+
+    End Sub
+
+    Private Sub Btn_Agregar_Producto_Click(sender As Object, e As EventArgs) Handles Btn_Agregar_Producto.Click
+        Fx_Agregar_Operacion(Nothing, "")
+        'ShowContextMenu(Menu_Contextual_01)
+    End Sub
+
+    Private Sub Btn_Mnu_AgregaOperacionMismaReceta_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_AgregaOperacionMismaReceta.Click
+
+    End Sub
+
+    Private Sub Btn_Mnu_AsociarProductos_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_AsociarProductos.Click
+
+        Fx_Agregar_Operacion(Nothing, "")
+
+    End Sub
+
+    Function Fx_Agregar_Operacion(_Fila As DataGridViewRow, _Operacion As String) As Boolean
+
+        Dim _Descripcion As String
+
+        If _Operacion Is Nothing Then Return False
+
+        Dim _RowOperacion As DataRow = Fx_Buscar_Operacion(_Operacion)
+
+        '_Fila.Cells("Operacion").Value = String.Empty
+
+        If Not (_RowOperacion Is Nothing) Then
+
+            For Each _Fl As DataRow In _Tbl_Operaciones.Rows
+
+                _Operacion = _RowOperacion.Item("Operacion").ToString.Trim
+                _Descripcion = _RowOperacion.Item("Descripcion").ToString.Trim
+
+                If _Fl.Item("Operacion").ToString.Trim = _Operacion Then
+                    If MessageBoxEx.Show(Me, "La Operación: " & _Fl.Item("Operacion").ToString.Trim & "-" & _Descripcion & vbCrLf &
+                                               "Ya esta en la lista" & vbCrLf & vbCrLf &
+                                               "¿Desea agregarla nuevamente?", "Validación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) <> DialogResult.Yes Then
+                        Return False
+                    End If
+                End If
+            Next
+
+            Dim _Id_Rec = _RowReceta.Item("Id")
+
+            Sb_Agregar_Operacion(_Tbl_Operaciones,
+                                 _Id_Rec, "",
+                                 _CodReceta,
+                                 _RowOperacion.Item("Operacion"),
+                                 _RowOperacion.Item("Descripcion"),
+                                 _RowOperacion.Item("CantMayor1"),
+                                 1,
+                                 _RowOperacion.Item("Precio"),
+                                 _RowOperacion.Item("Externa"))
+
+            _Fila = Grilla.Rows(Grilla.Rows.Count - 1)
+
+            If _RowOperacion.Item("CantMayor1") Then
+
+                Dim _Aceptar As Boolean
+                Dim _Cantidad As Integer
+
+                _Aceptar = InputBox_Bk(Me, "Debe indicar la cantidad a reparar", _RowOperacion.Item("Descripcion"), _Cantidad,
+                                           False, _Tipo_Mayus_Minus.Normal,, True, _Tipo_Imagen.Texto,,
+                                           _Tipo_Caracter.Solo_Numeros_Enteros, False)
+
+                If _Aceptar Then
+                    _Fila.Cells("Cantidad").Value = _Cantidad
+                Else
+                    _Fila.Cells("Chk").Value = False
+                    _Fila.Cells("Cantidad").Value = 0
+                End If
+
+            End If
+
+        End If
+
+        Return True
+
+    End Function
+
+    Function Fx_Buscar_Operacion(_CodReceta As String) As DataRow
+
+        Dim _Row_Operacion As DataRow
+
+        Dim _Condicion As String
+
+        If Not String.IsNullOrEmpty(_CodReceta) Then
+            _Condicion = "Where CodReceta = '" & _CodReceta & "'"
+        End If
+
+        Dim Fm As New Frm_St_Operaciones
+        Fm.ModoSeleccion = True
+        Fm.ShowDialog(Me)
+        _Row_Operacion = Fm.Row_Operacion
+        Fm.Dispose()
+
+        Return _Row_Operacion
+
+    End Function
+
+    Sub Sb_Agregar_Operacion(ByRef _Tbl As DataTable,
+                             _Id_Rec As Integer,
+                             _Codigo As String,
+                             _CodReceta As String,
+                             _Operacion As String,
+                             _Descripcion As String,
+                             _CantMayor1 As Boolean,
+                             _Cantidad As Integer,
+                             _Precio As Double,
+                             _Externa As Boolean)
+
+        Dim NewFila As DataRow
+        NewFila = _Tbl.NewRow
+        With NewFila
+
+            Try
+                .Item("Id_Rec") = _Id_Rec
+            Catch ex As Exception
+
+            End Try
+
+            Try
+                .Item("Semilla") = 0
+                .Item("Id_Ot") = 0
+                .Item("CantidadRealizada") = 0
+                .Item("Codigo") = String.Empty
+                .Item("Total") = _Precio
+                .Item("Realizado") = False
+            Catch ex As Exception
+
+            End Try
+
+            .Item("CodReceta") = _CodReceta
+            .Item("Operacion") = _Operacion
+            .Item("Descripcion") = _Descripcion
+            .Item("CantMayor1") = _CantMayor1
+            .Item("Cantidad") = _Cantidad
+            .Item("Precio") = _Precio
+            .Item("Orden") = 0
+            .Item("Externa") = _Externa
+            .Item("Chk") = True
+
+            _Tbl.Rows.Add(NewFila)
+
+        End With
 
     End Sub
 

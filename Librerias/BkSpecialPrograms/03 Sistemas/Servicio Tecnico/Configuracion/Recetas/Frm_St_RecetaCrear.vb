@@ -580,7 +580,6 @@ Public Class Frm_St_RecetaCrear
 
     Function Fx_Buscar_Operacion(_CodOperacion As String) As DataRow
 
-        'Dim _FiltroOperaciones As String
         Dim _Row_Operacion As DataRow
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Operaciones" & vbCrLf &
@@ -596,28 +595,6 @@ Public Class Frm_St_RecetaCrear
         Fm.ShowDialog(Me)
         _Row_Operacion = Fm.Row_Operacion
         Fm.Dispose()
-
-        '_FiltroOperaciones = Generar_Filtro_IN(_Tbl_Operaciones, "", "Operacion", False, False, "'")
-        '_FiltroOperaciones = Replace(_FiltroOperaciones, "''", "")
-
-        'Dim Fm As New Frm_Filtro_Especial_Informes(Frm_Filtro_Especial_Informes._Tabla_Fl._Otra)
-        'Fm.Pro_Tabla = _Global_BaseBk & " Zw_St_OT_Operaciones"
-        'Fm.Pro_Campo = "Operacion"
-        'Fm.Pro_Descripcion = "Descripcion"
-        'Fm.Text = "OPERACIONES PARA REPARACIO EN SERVICIO TECNICO"
-        ''If _FiltroOperaciones.Contains("'") Then
-        ''    Fm.Pro_Sql_Filtro_Condicion_Extra = "And Operacion Not In " & _FiltroOperaciones & vbCrLf
-        ''End If
-        'Fm.Pro_Seleccionar_Solo_Uno = True
-        'Fm.ShowDialog(Me)
-
-        'If Fm.Pro_Filtrar Then
-
-        '    Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Operaciones" & vbCrLf &
-        '                   "Where Operacion = '" & Fm.Pro_Tbl_Filtro.Rows(0).Item("Codigo") & "'"
-        '    _RowOperacion = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-        'End If
 
         Return _Row_Operacion
 
