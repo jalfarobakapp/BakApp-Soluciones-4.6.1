@@ -36,6 +36,8 @@
 
         Sb_Actualizar_Grilla()
 
+        Me.ActiveControl = Txt_Buscador
+
     End Sub
 
     Sub Sb_Actualizar_Grilla()
@@ -44,7 +46,7 @@
         Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "Operacion+Descripcion Like '%")
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Operaciones" & vbCrLf &
-                       "Where Operacion+Descripcion Like '%" & _Cadena & "%'"
+                       "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "' And Operacion+Descripcion Like '%" & _Cadena & "%'"
         _Tbl_Operaciones = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla
@@ -148,12 +150,19 @@
         Dim Fm As New Frm_St_OperacionesCrear(_Operacion)
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
+        _Eliminar = Fm.Eliminar
         Fm.Dispose()
 
         If _Grabar Or _Eliminar Then
             Sb_Actualizar_Grilla()
+            If _Grabar Then BuscarDatoEnGrilla(_Operacion, "Operacion", Grilla)
         End If
 
     End Sub
 
+    Private Sub Txt_Buscador_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Buscador.KeyDown
+        If e.KeyValue = Keys.Enter Or e.KeyValue = Keys.Space Then
+            Sb_Actualizar_Grilla()
+        End If
+    End Sub
 End Class

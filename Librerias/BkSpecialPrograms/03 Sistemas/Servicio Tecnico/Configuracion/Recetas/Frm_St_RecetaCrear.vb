@@ -37,7 +37,7 @@ Public Class Frm_St_RecetaCrear
         Me._CodReceta = _CodReceta
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Recetas_Enc" & vbCrLf &
-                       "Where CodReceta = '" & _CodReceta & "'"
+                       "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "' And CodReceta = '" & _CodReceta & "'"
         _Row_Receta = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
@@ -307,36 +307,6 @@ Public Class Frm_St_RecetaCrear
 
                 Fx_Agregar_Operacion(_Fila, _Operacion)
 
-                'If _Operacion Is Nothing Then Return
-
-                '_RowOperacion = Fx_Buscar_Operacion(_Operacion)
-
-                '_Fila.Cells("Operacion").Value = String.Empty
-
-                'If Not (_RowOperacion Is Nothing) Then
-
-                '    For Each _Fl As DataRow In _Tbl_Operaciones.Rows
-
-                '        _Operacion = _RowOperacion.Item("Operacion").ToString.Trim
-                '        _Descripcion = _RowOperacion.Item("Descripcion").ToString.Trim
-
-                '        If _Fl.Item("Operacion").ToString.Trim = _Operacion Then
-                '            Throw New System.Exception("La Operación: " & _Fl.Item("Operacion").ToString.Trim & "-" & _Descripcion & vbCrLf &
-                '                                       "Ya esta en la lista")
-                '        End If
-                '    Next
-
-                '    _Fila.Cells("Nuevo_Item").Value = False
-                '    _Fila.Cells("Operacion").Value = _RowOperacion.Item("Operacion")
-                '    _Fila.Cells("Descripcion").Value = _RowOperacion.Item("Descripcion")
-                '    _Fila.Cells("Cantidad").Value = 0
-                '    _Fila.Cells("CantMayor1").Value = _RowOperacion.Item("CantMayor1")
-                '    _Fila.Cells("Externa").Value = _RowOperacion.Item("Externa")
-
-                '    Sb_Agregar_Operacion(_Tbl_Operaciones, _Id_Rec, "", _CodReceta, "", "", False, 0, 0, False)
-
-                'End If
-
             ElseIf _Cabeza = "Cantidad" Then
 
                 If Grilla.Rows.Count - 1 = _Fila.Index Then
@@ -486,8 +456,8 @@ Public Class Frm_St_RecetaCrear
 
             If _Nuevo Then
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Recetas_Enc (Empresa,CodReceta,Descripcion,Activo) Values " &
-                               "('" & ModEmpresa & "','" & _CodReceta & "','" & _Descripcion & "'," & _Activo & ")"
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Recetas_Enc (Empresa,Sucursal,CodReceta,Descripcion,Activo) Values " &
+                               "('" & ModEmpresa & "','" & ModSucursal & "','" & _CodReceta & "','" & _Descripcion & "'," & _Activo & ")"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
                 Comando.Transaction = myTrans
@@ -537,8 +507,8 @@ Public Class Frm_St_RecetaCrear
 
                     If Not _Nuevo_Item Then
 
-                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Recetas_Ope (Id_Rec,CodReceta,Operacion,Orden,Cantidad,Precio,CantMayor1,Externa) Values " &
-                                   "(" & _Id_Rec & ",'" & _CodReceta & "','" & _Operacion & "'," & _Orden & "," & _Cantidad & "," & _Precio & "," & _CantMayor1 & "," & _Externa & ")"
+                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Recetas_Ope (Id_Rec,Empresa,Sucursal,CodReceta,Operacion,Orden,Cantidad,Precio,CantMayor1,Externa) Values " &
+                                   "(" & _Id_Rec & ",'" & ModEmpresa & "','" & ModSucursal & "','" & _CodReceta & "','" & _Operacion & "'," & _Orden & "," & _Cantidad & "," & _Precio & "," & _CantMayor1 & "," & _Externa & ")"
 
                         Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
                         Comando.Transaction = myTrans
@@ -583,7 +553,7 @@ Public Class Frm_St_RecetaCrear
         Dim _Row_Operacion As DataRow
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Operaciones" & vbCrLf &
-                       "Where Operacion = '" & _CodOperacion & "'"
+                       "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "' And Operacion = '" & _CodOperacion & "'"
         _Row_Operacion = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If Not IsNothing(_Row_Operacion) Then

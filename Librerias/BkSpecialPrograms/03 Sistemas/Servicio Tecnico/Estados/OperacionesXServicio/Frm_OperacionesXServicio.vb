@@ -66,9 +66,15 @@ Public Class Frm_OperacionesXServicio
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
-        Txt_Receta.Text = _RowReceta.Item("CodReceta").ToString.Trim & "-" & _RowReceta.Item("Descripcion").ToString.Trim
+        If IsNothing(_RowReceta) Then
+            Txt_Receta.Text = "SIN RECETA..."
+        Else
+            Txt_Receta.Text = _RowReceta.Item("CodReceta").ToString.Trim & "-" & _RowReceta.Item("Descripcion").ToString.Trim
+        End If
 
         Sb_Actualizar_Grilla()
+
+        Me.ActiveControl = Bar2
 
     End Sub
 
@@ -261,7 +267,9 @@ Public Class Frm_OperacionesXServicio
                 End If
             Next
 
-            Dim _Id_Rec = _RowReceta.Item("Id")
+            Dim _Id_Rec As Integer
+
+            If Not IsNothing(_RowReceta) Then _Id_Rec = _RowReceta.Item("Id")
 
             Sb_Agregar_Operacion(_Tbl_Operaciones,
                                  _Id_Rec, "",

@@ -197,14 +197,14 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
             .Columns("Codigo").Visible = True
             .Columns("Codigo").HeaderText = "Código"
-            .Columns("Codigo").Width = 100
+            .Columns("Codigo").Width = 80
             .Columns("Codigo").DisplayIndex = 0
             .Columns("Codigo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").HeaderText = "Descripcion"
-            .Columns("Descripcion").Width = 300
+            .Columns("Descripcion").Width = 280
             .Columns("Descripcion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -216,7 +216,7 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
             .Columns("Cantidad").Visible = True
             .Columns("Cantidad").HeaderText = "Cant."
-            .Columns("Cantidad").Width = 60
+            .Columns("Cantidad").Width = 40
             .Columns("Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Cantidad").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -226,6 +226,15 @@ Public Class Frm_St_Estado_03_Presupuesto2
             .Columns("TieneReceta").Width = 30
             .Columns("TieneReceta").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
+
+            .Columns("Neto_Linea").Visible = True
+            .Columns("Neto_Linea").HeaderText = "Tot.Neto"
+            .Columns("Neto_Linea").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Neto_Linea").DefaultCellStyle.Format = "$ ###,#0.##"
+            .Columns("Neto_Linea").Width = 70
+            .Columns("Neto_Linea").DisplayIndex = _DisplayIndex
+
+
 
         End With
 
@@ -938,8 +947,15 @@ Public Class Frm_St_Estado_03_Presupuesto2
         If Not _Nuevo_Item Then
 
             If Not _TieneReceta Then
-                MessageBoxEx.Show(Me, "No tiene receta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return
+
+                Dim _Rows() As DataRow = _Tbl_OperacionesXServ.Select("Semilla = " & _Semilla)
+
+                If _Rows.Count = 0 Then
+                    MessageBoxEx.Show(Me, "Debera crear una receta para este servicio" & vbCrLf &
+                                      "Receta solo para esta orden de servicio", "Producto sin receta",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                End If
+
             End If
 
             Dim _Operaciones As New List(Of DataRow)
@@ -967,11 +983,19 @@ Public Class Frm_St_Estado_03_Presupuesto2
                                                      False,
                                                      _Fl.Item("Externa"))
                     _Operaciones.Add(_Fl)
+
                 End If
 
             Next
 
-            Dim _CodReceta As String = _Tbl_OperacionesXServ2.Rows(0).Item("CodReceta")
+            Dim _CodReceta As String
+
+            If _TieneReceta Then
+                _CodReceta = _Tbl_OperacionesXServ2.Rows(0).Item("CodReceta")
+            Else
+                _CodReceta = "S/R"
+            End If
+
 
             Dim _Grabar As Boolean
 
@@ -1023,6 +1047,11 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
         For Each _FlServ As DataRow In _Tbl_DetProd.Rows
 
+            _FlServ.Item("Precio") = 0
+            _FlServ.Item("Cantidad") = 0
+            _FlServ.Item("CantUd1") = 0
+            _FlServ.Item("CantUd2") = 0
+
             For Each _FlOpe As DataRow In _Tbl_OperacionesXServ.Rows
 
                 If _FlServ.Item("Semilla") = _FlOpe.Item("Semilla") Then
@@ -1034,6 +1063,12 @@ Public Class Frm_St_Estado_03_Presupuesto2
             Next
 
             Dim _Impuesto As Decimal = _FlServ.Item("PorcIva") / 100
+
+            If CBool(_FlServ.Item("Precio")) Then
+                _FlServ.Item("Cantidad") = 1
+                _FlServ.Item("CantUd1") = 1
+                _FlServ.Item("CantUd2") = 1
+            End If
 
             _FlServ.Item("Neto_Linea") = _FlServ.Item("Cantidad") * _FlServ.Item("Precio")
             _FlServ.Item("Iva_Linea") = Math.Round(_FlServ.Item("Neto_Linea") * _Impuesto, 0)

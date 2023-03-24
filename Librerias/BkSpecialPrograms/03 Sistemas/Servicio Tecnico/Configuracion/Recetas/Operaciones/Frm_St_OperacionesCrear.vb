@@ -32,7 +32,8 @@ Public Class Frm_St_OperacionesCrear
         Me._Operacion = _Operacion
 
         If Not String.IsNullOrEmpty(_Operacion) Then
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Operaciones Where Operacion = '" & _Operacion & "'"
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Operaciones" & vbCrLf &
+                           "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "' And Operacion = '" & _Operacion & "'"
             _RowOperacion = _Sql.Fx_Get_DataRow(Consulta_sql)
         End If
 
@@ -62,6 +63,7 @@ Public Class Frm_St_OperacionesCrear
             Btn_Eliminar.Visible = True
             Rdb_CantMayor1.Checked = _RowOperacion.Item("CantMayor1")
             Rdb_Externa.Checked = _RowOperacion.Item("Externa")
+            Chk_TienePrecio.Checked = _RowOperacion.Item("TienePrecio")
             ActiveControl = Txt_Descripcion
         End If
 
@@ -86,7 +88,7 @@ Public Class Frm_St_OperacionesCrear
         If MessageBoxEx.Show(Me, "¿Esta seguro de eliminar esta operación?", "Eliminar operación",
                          MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
-            Consulta_sql = "Delete Update " & _Global_BaseBk & "Zw_St_OT_Operaciones" & vbCrLf &
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_St_OT_Operaciones" & vbCrLf &
                            "Where Id = " & _Id_Operacion
             If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
                 Eliminar = True
@@ -104,6 +106,7 @@ Public Class Frm_St_OperacionesCrear
         Dim _Precio As String = De_Num_a_Tx_01(Txt_Precio.Tag, False, 5)
         Dim _Externa As Integer = Convert.ToInt32(Rdb_Externa.Checked)
         Dim _CantMayor1 As Integer = Convert.ToInt32(Rdb_CantMayor1.Checked)
+        Dim _TienePrecio As Integer = Convert.ToInt32(Chk_TienePrecio.Checked)
 
         If String.IsNullOrEmpty(Txt_Operacion.Text) Then
             MessageBoxEx.Show(Me, "Falta el código de la operación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -126,15 +129,22 @@ Public Class Frm_St_OperacionesCrear
             Return
         End If
 
-        If Not CBool(Txt_Precio.Tag) Then
-            MessageBoxEx.Show(Me, "Falta el precio de la operación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Txt_Precio.Focus()
-            Return
+        If Chk_TienePrecio.Checked Then
+            If Not CBool(Txt_Precio.Tag) Then
+                MessageBoxEx.Show(Me, "Falta el precio de la operación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_Precio.Focus()
+                Return
+            End If
         End If
 
+        If Not Chk_TienePrecio.Checked Then
+            _Precio = 0
+        End If
+
+
         If _Nuevo Then
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Operaciones (Operacion,Descripcion,Precio,Externa,CantMayor1) Values " &
-                           "('" & _Operacion & "','" & _Descripcion & "'," & _Precio & "," & _Externa & "," & _CantMayor1 & ")"
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Operaciones (Empresa,Sucursal,Operacion,Descripcion,Precio,Externa,CantMayor1,TienePrecio) Values " &
+                           "('" & ModEmpresa & "','" & ModSucursal & "','" & _Operacion & "','" & _Descripcion & "'," & _Precio & "," & _Externa & "," & _CantMayor1 & "," & _TienePrecio & ")"
             If Not _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Operacion) Then
                 Return
             End If
@@ -146,6 +156,7 @@ Public Class Frm_St_OperacionesCrear
                            ",Precio = " & _Precio &
                            ",Externa = " & _Externa &
                            ",CantMayor1 = " & _CantMayor1 & vbCrLf &
+                           ",TienePrecio = " & _TienePrecio & vbCrLf &
                            "Where Id = " & _Id_Operacion
             If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
                 Return

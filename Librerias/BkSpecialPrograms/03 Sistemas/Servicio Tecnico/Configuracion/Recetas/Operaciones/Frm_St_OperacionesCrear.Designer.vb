@@ -41,6 +41,7 @@ Partial Class Frm_St_OperacionesCrear
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Chk_TienePrecio = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Grupo_Presupuesto.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TableLayoutPanel6.SuspendLayout()
@@ -51,6 +52,7 @@ Partial Class Frm_St_OperacionesCrear
         '
         Me.Grupo_Presupuesto.BackColor = System.Drawing.Color.White
         Me.Grupo_Presupuesto.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_Presupuesto.Controls.Add(Me.Chk_TienePrecio)
         Me.Grupo_Presupuesto.Controls.Add(Me.TableLayoutPanel1)
         Me.Grupo_Presupuesto.Controls.Add(Me.TableLayoutPanel6)
         Me.Grupo_Presupuesto.Controls.Add(Me.Txt_Precio)
@@ -282,11 +284,12 @@ Partial Class Frm_St_OperacionesCrear
         Me.Txt_Operacion.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Operacion.ForeColor = System.Drawing.Color.Black
         Me.Txt_Operacion.Location = New System.Drawing.Point(82, 3)
-        Me.Txt_Operacion.MaxLength = 20
+        Me.Txt_Operacion.MaxLength = 5
         Me.Txt_Operacion.Name = "Txt_Operacion"
         Me.Txt_Operacion.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.Txt_Operacion.Size = New System.Drawing.Size(51, 22)
         Me.Txt_Operacion.TabIndex = 0
+        Me.Txt_Operacion.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Txt_Descripcion
         '
@@ -376,6 +379,24 @@ Partial Class Frm_St_OperacionesCrear
         Me.Btn_Eliminar.Tooltip = "Eliminar"
         Me.Btn_Eliminar.Visible = False
         '
+        'Chk_TienePrecio
+        '
+        Me.Chk_TienePrecio.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_TienePrecio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_TienePrecio.CheckBoxImageChecked = CType(resources.GetObject("Chk_TienePrecio.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_TienePrecio.FocusCuesEnabled = False
+        Me.Chk_TienePrecio.ForeColor = System.Drawing.Color.Black
+        Me.Chk_TienePrecio.Location = New System.Drawing.Point(190, 61)
+        Me.Chk_TienePrecio.Name = "Chk_TienePrecio"
+        Me.Chk_TienePrecio.Size = New System.Drawing.Size(90, 22)
+        Me.Chk_TienePrecio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_TienePrecio.TabIndex = 77
+        Me.Chk_TienePrecio.TabStop = False
+        Me.Chk_TienePrecio.Text = "Tiene precio"
+        '
         'Frm_St_OperacionesCrear
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -418,4 +439,5 @@ Partial Class Frm_St_OperacionesCrear
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Rdb_CantMayor1 As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Rdb_CantUno As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_TienePrecio As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class
