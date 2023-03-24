@@ -23,9 +23,15 @@ Public Class Frm_St_Recetas
 
     Private Sub Frm_St_Recetas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Dim _NomSucursal As String = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", "EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "'").ToString.Replace("SUCURSAL", "")
+        _NomSucursal = _NomSucursal.Trim
+        Me.Text = "RECETAS PARA REPARACIONES SUCURSAL: (" & ModSucursal & ") - " & _NomSucursal
+
         Sb_Actualizar_Grilla()
         AddHandler Grilla_Recetas.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla_Productos.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        AddHandler Grilla_Recetas.MouseDown, AddressOf Sb_Grilla_Recetas_MouseDown
+        AddHandler Grilla_Productos.MouseDown, AddressOf Sb_Grilla_Productos_MouseDown
 
     End Sub
 
@@ -42,7 +48,7 @@ Public Class Frm_St_Recetas
 
         Consulta_sql = "Select Id,Empresa,CodReceta,Descripcion,Activo" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_St_OT_Recetas_Enc" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "'" & vbCrLf &
+                       "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'" & vbCrLf &
                        "And CodReceta+Descripcion Like '%" & _Cadena & "%'" & _CondicionProd
         _Tbl_Recetas = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -76,7 +82,7 @@ Public Class Frm_St_Recetas
 
     Sub Sb_Actualizar_Grilla_Productos(_Id_Rec As Integer)
 
-        Consulta_sql = "Select Id,Codigo,CodReceta,NOKOPR" & vbCrLf &
+        Consulta_sql = "Select Id,Id_Rec,Codigo,CodReceta,NOKOPR" & vbCrLf &
                "From " & _Global_BaseBk & "Zw_St_OT_Recetas_Prod" & vbCrLf &
                "Left Join MAEPR On KOPR = Codigo" & vbCrLf &
                "Where Id_Rec = " & _Id_Rec
@@ -135,6 +141,7 @@ Public Class Frm_St_Recetas
 
         If _Grabar Then
             _Fila.Cells("Descripcion").Value = _Row_Receta.Item("Descripcion")
+            _Fila.Cells("Activo").Value = _Row_Receta.Item("Activo")
             BuscarDatoEnGrilla(_CodReceta, "CodReceta", Grilla_Recetas)
         End If
 
@@ -181,69 +188,6 @@ Public Class Frm_St_Recetas
         If Not IsNothing(_RowProducto) Then
             Txt_BuscaXProducto.Text = _RowProducto.Item("KOPR")
             Sb_Actualizar_Grilla()
-        End If
-
-    End Sub
-
-    Private Sub Btn_Asociar_Producto_Click(sender As Object, e As EventArgs) Handles Btn_Asociar_Producto.Click
-
-        Dim _Fila As DataGridViewRow = Grilla_Recetas.CurrentRow
-
-        If IsNothing(_Fila) Then
-            Return
-        End If
-
-        Dim _Id_Rec As Integer = _Fila.Cells("Id").Value
-        Dim _CodReceta As String = _Fila.Cells("CodReceta").Value
-
-        Consulta_sql = "Select Cast(1 As Bit) As Chk,Codigo,NOKOPR As Descripcion" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_St_OT_Recetas_Prod" & vbCrLf &
-                       "Left Join MAEPR On KOPR = Codigo" & vbCrLf &
-                       "Where Id_Rec = " & _Id_Rec
-        Dim _TblProductos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        Dim _Sql_Filtro_Condicion_Extra = "And TIPR = 'SSN'"
-
-        Dim _Filtrar As New Clas_Filtros_Random(Me)
-
-        _Filtrar.Pro_Filtro_Todas = False
-
-        If _Filtrar.Fx_Filtrar(_TblProductos,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
-                               False, False,, False,, False) Then
-
-            Dim _Nodo_Raiz_Asociados As Integer = _Global_Row_Configuracion_General.Item("Nodo_Raiz_Asociados")
-
-            _TblProductos = _Filtrar.Pro_Tbl_Filtro
-
-            If Not _Filtrar.Pro_Filtro_Todas Then
-
-                Dim _FiltroProductos As String = Generar_Filtro_IN(_TblProductos, "Chk", "Codigo", False, True, "'")
-
-                Consulta_sql = "Delete " & _Global_BaseBk & "Zw_St_OT_Recetas_Prod Where Id_Rec = " & _Id_Rec & vbCrLf
-
-                If Not IsNothing(_TblProductos) Then
-
-                    For Each _Flprod As DataRow In _TblProductos.Rows
-
-                        Dim _Codigo As String = _Flprod.Item("Codigo")
-
-                        Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_OT_Recetas_Prod (Id_Rec,CodReceta,Codigo) Values " &
-                                        "(" & _Id_Rec & ",'" & _CodReceta & "','" & _Codigo & "')" & vbCrLf
-
-                    Next
-
-                End If
-
-                If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
-                    MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    Return
-                End If
-
-                Sb_Actualizar_Grilla_Productos(_Id_Rec)
-
-            End If
-
         End If
 
     End Sub
@@ -296,5 +240,110 @@ Public Class Frm_St_Recetas
 
     End Function
 
+    Private Sub Btn_Mnu_Editar_Receta_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Editar_Receta.Click
+        Call Grilla_Recetas_CellDoubleClick(Nothing, Nothing)
+    End Sub
+
+    Private Sub Sb_Grilla_Recetas_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+            With sender
+                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+                    ShowContextMenu(Menu_Contextual_01)
+                End If
+            End With
+        End If
+    End Sub
+
+    Private Sub Sb_Grilla_Productos_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+            With sender
+                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+                    ShowContextMenu(Menu_Contextual_02)
+                End If
+            End With
+        End If
+    End Sub
+
+    Private Sub Btn_Mnu_QuitarProducto_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_QuitarProducto.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Productos.CurrentRow
+        Dim _Id_Rec As Integer = _Fila.Cells("Id_Rec").Value
+        Dim _Codigo As String = _Fila.Cells("Codigo").Value
+
+        If MessageBoxEx.Show(Me, "¿Confirma quitar este producto de la receta?", "Quitar productos", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_St_OT_Recetas_Prod" & vbCrLf &
+                       "Where Id_Rec = " & _Id_Rec & " And Codigo = '" & _Codigo & "'"
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            Grilla_Productos.Rows.Remove(_Fila)
+        End If
+
+    End Sub
+
+    Private Sub Btn_Mnu_AsociarProductos_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_AsociarProductos.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Recetas.CurrentRow
+
+        Dim _Id_Rec As Integer = _Fila.Cells("Id").Value
+        Dim _CodReceta As String = _Fila.Cells("CodReceta").Value
+
+        Consulta_sql = "Select Cast(1 As Bit) As Chk,Codigo,NOKOPR As Descripcion" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_St_OT_Recetas_Prod" & vbCrLf &
+                       "Left Join MAEPR On KOPR = Codigo" & vbCrLf &
+                       "Where Id_Rec = " & _Id_Rec
+        Dim _TblProductos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        Dim _Sql_Filtro_Condicion_Extra = "And TIPR = 'SSN' And KOPR Not In " &
+                                          "(Select Codigo From " & _Global_BaseBk & "Zw_St_OT_Recetas_Prod Where Id_Rec = " & _Id_Rec & ")"
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Pro_Filtro_Todas = False
+
+        If _Filtrar.Fx_Filtrar(_TblProductos,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
+                               False, False,, False,, False) Then
+
+            Dim _Nodo_Raiz_Asociados As Integer = _Global_Row_Configuracion_General.Item("Nodo_Raiz_Asociados")
+
+            _TblProductos = _Filtrar.Pro_Tbl_Filtro
+
+            If Not _Filtrar.Pro_Filtro_Todas Then
+
+                Dim _FiltroProductos As String = Generar_Filtro_IN(_TblProductos, "Chk", "Codigo", False, True, "'")
+
+                'Consulta_sql = "Delete " & _Global_BaseBk & "Zw_St_OT_Recetas_Prod Where Id_Rec = " & _Id_Rec & vbCrLf
+
+                If Not IsNothing(_TblProductos) Then
+
+                    For Each _Flprod As DataRow In _TblProductos.Rows
+
+                        Dim _Codigo As String = _Flprod.Item("Codigo")
+
+                        Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_OT_Recetas_Prod (Id_Rec,CodReceta,Codigo) Values " &
+                                        "(" & _Id_Rec & ",'" & _CodReceta & "','" & _Codigo & "')" & vbCrLf
+
+                    Next
+
+                End If
+
+                If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+                    MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
+
+                Sb_Actualizar_Grilla_Productos(_Id_Rec)
+
+            End If
+
+        End If
+
+    End Sub
 
 End Class

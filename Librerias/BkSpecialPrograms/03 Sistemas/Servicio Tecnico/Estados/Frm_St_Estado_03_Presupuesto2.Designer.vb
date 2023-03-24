@@ -34,7 +34,6 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         Me.Btn_Editar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Cancelar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Agregar_Producto = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Salir = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo_Presupuesto = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Tecnico_Taller = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_NroSerie = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -136,7 +135,7 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Fijar_Estado, Me.Btn_Grabar, Me.Btn_Editar, Me.Btn_Cancelar, Me.Btn_Agregar_Producto, Me.Btn_Salir})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Fijar_Estado, Me.Btn_Grabar, Me.Btn_Editar, Me.Btn_Cancelar, Me.Btn_Agregar_Producto})
         Me.Bar2.Location = New System.Drawing.Point(0, 520)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(627, 41)
@@ -190,16 +189,6 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         Me.Btn_Agregar_Producto.Image = CType(resources.GetObject("Btn_Agregar_Producto.Image"), System.Drawing.Image)
         Me.Btn_Agregar_Producto.Name = "Btn_Agregar_Producto"
         Me.Btn_Agregar_Producto.Text = "Agregar servicio"
-        '
-        'Btn_Salir
-        '
-        Me.Btn_Salir.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Salir.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Salir.Image = CType(resources.GetObject("Btn_Salir.Image"), System.Drawing.Image)
-        Me.Btn_Salir.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Salir.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
-        Me.Btn_Salir.Name = "Btn_Salir"
-        Me.Btn_Salir.Tooltip = "Salir"
         '
         'Grupo_Presupuesto
         '
@@ -473,7 +462,6 @@ Partial Class Frm_St_Estado_03_Presupuesto2
     Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Editar As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Cancelar As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Salir As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grupo_Presupuesto As DevComponents.DotNetBar.Controls.GroupPanel
     Public WithEvents Txt_Tecnico_Taller As DevComponents.DotNetBar.Controls.TextBoxX
     Public WithEvents Txt_NroSerie As DevComponents.DotNetBar.Controls.TextBoxX

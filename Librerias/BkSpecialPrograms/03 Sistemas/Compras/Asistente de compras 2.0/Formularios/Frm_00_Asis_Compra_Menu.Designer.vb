@@ -198,6 +198,10 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.ButtonItem7 = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem8 = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem9 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Rdb_OccProvEnviarCorreoTodos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX29 = New DevComponents.DotNetBar.LabelX()
+        Me.Rdb_OccProvEnviarCorreoSoloCc = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_OccProvEnviarCorreoNoEnviar = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Bar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel6.SuspendLayout()
         Me.Layout_Producto.SuspendLayout()
@@ -267,7 +271,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Bar.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_GrabarConfiguracion, Me.BtnProcesarInf, Me.Chk_Procesar_Uno_A_Uno, Me.Btn_Imprimir_Maestra, Me.Btn_Cancelar, Me.Circular_Progress1})
         Me.Bar.Location = New System.Drawing.Point(0, 580)
         Me.Bar.Name = "Bar"
-        Me.Bar.Size = New System.Drawing.Size(564, 41)
+        Me.Bar.Size = New System.Drawing.Size(566, 41)
         Me.Bar.Stretch = True
         Me.Bar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar.TabIndex = 13
@@ -760,8 +764,8 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.STabConfiguracion.ControlBox.MenuBox.Name = ""
         Me.STabConfiguracion.ControlBox.Name = ""
         Me.STabConfiguracion.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.STabConfiguracion.ControlBox.MenuBox, Me.STabConfiguracion.ControlBox.CloseBox})
-        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel3)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel8)
+        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel3)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel2)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel5)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel7)
@@ -791,7 +795,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(539, 205)
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(1231, 205)
         Me.SuperTabControlPanel3.TabIndex = 1
         Me.SuperTabControlPanel3.TabItem = Me.Tab_Indicadores
         '
@@ -896,7 +900,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.TableLayoutPanel8.ColumnCount = 3
         Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.61538!))
         Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.38461!))
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 203.0!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 205.0!))
         Me.TableLayoutPanel8.Controls.Add(Me.LabelX9, 0, 0)
         Me.TableLayoutPanel8.Controls.Add(Me.Rdb_Ud1_Compra, 1, 0)
         Me.TableLayoutPanel8.Controls.Add(Me.Rdb_Ud2_Compra, 2, 0)
@@ -937,7 +941,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Rdb_Ud1_Compra.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Ud1_Compra.Location = New System.Drawing.Point(72, 3)
         Me.Rdb_Ud1_Compra.Name = "Rdb_Ud1_Compra"
-        Me.Rdb_Ud1_Compra.Size = New System.Drawing.Size(126, 20)
+        Me.Rdb_Ud1_Compra.Size = New System.Drawing.Size(124, 20)
         Me.Rdb_Ud1_Compra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Ud1_Compra.TabIndex = 57
         Me.Rdb_Ud1_Compra.Text = "[Ud. 1] Primera Unidad "
@@ -952,7 +956,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Rdb_Ud2_Compra.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Ud2_Compra.FocusCuesEnabled = False
         Me.Rdb_Ud2_Compra.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Ud2_Compra.Location = New System.Drawing.Point(204, 3)
+        Me.Rdb_Ud2_Compra.Location = New System.Drawing.Point(202, 3)
         Me.Rdb_Ud2_Compra.Name = "Rdb_Ud2_Compra"
         Me.Rdb_Ud2_Compra.Size = New System.Drawing.Size(143, 20)
         Me.Rdb_Ud2_Compra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1148,9 +1152,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         Me.SuperTabControlPanel8.Controls.Add(Me.SuperTabControl1)
         Me.SuperTabControlPanel8.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel8.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel8.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel8.Name = "SuperTabControlPanel8"
-        Me.SuperTabControlPanel8.Size = New System.Drawing.Size(539, 232)
+        Me.SuperTabControlPanel8.Size = New System.Drawing.Size(539, 205)
         Me.SuperTabControlPanel8.TabIndex = 0
         Me.SuperTabControlPanel8.TabItem = Me.Tab_Automatizacion
         '
@@ -1198,6 +1202,10 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Rdb_OccProvEnviarCorreoNoEnviar)
+        Me.GroupPanel1.Controls.Add(Me.Rdb_OccProvEnviarCorreoSoloCc)
+        Me.GroupPanel1.Controls.Add(Me.LabelX29)
+        Me.GroupPanel1.Controls.Add(Me.Rdb_OccProvEnviarCorreoTodos)
         Me.GroupPanel1.Controls.Add(Me.LabelX26)
         Me.GroupPanel1.Controls.Add(Me.Txt_NombreFormato_PDF_OCC)
         Me.GroupPanel1.Controls.Add(Me.Txt_CorreoCc_OCC)
@@ -1248,7 +1256,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         Me.LabelX26.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX26.ForeColor = System.Drawing.Color.Black
-        Me.LabelX26.Location = New System.Drawing.Point(1, 128)
+        Me.LabelX26.Location = New System.Drawing.Point(1, 132)
         Me.LabelX26.Name = "LabelX26"
         Me.LabelX26.SingleLineColor = System.Drawing.Color.Transparent
         Me.LabelX26.Size = New System.Drawing.Size(512, 23)
@@ -3064,7 +3072,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.MetroStatusBar1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.MetroStatusBar1.Location = New System.Drawing.Point(0, 621)
         Me.MetroStatusBar1.Name = "MetroStatusBar1"
-        Me.MetroStatusBar1.Size = New System.Drawing.Size(564, 22)
+        Me.MetroStatusBar1.Size = New System.Drawing.Size(566, 22)
         Me.MetroStatusBar1.TabIndex = 52
         Me.MetroStatusBar1.Text = "MetroStatusBar1"
         '
@@ -3153,11 +3161,84 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.ButtonItem9.Name = "ButtonItem9"
         Me.ButtonItem9.Text = "Entidades excluidas"
         '
+        'Rdb_OccProvEnviarCorreoTodos
+        '
+        Me.Rdb_OccProvEnviarCorreoTodos.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_OccProvEnviarCorreoTodos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_OccProvEnviarCorreoTodos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_OccProvEnviarCorreoTodos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_OccProvEnviarCorreoTodos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_OccProvEnviarCorreoTodos.Checked = True
+        Me.Rdb_OccProvEnviarCorreoTodos.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_OccProvEnviarCorreoTodos.CheckValue = "Y"
+        Me.Rdb_OccProvEnviarCorreoTodos.FocusCuesEnabled = False
+        Me.Rdb_OccProvEnviarCorreoTodos.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_OccProvEnviarCorreoTodos.Location = New System.Drawing.Point(106, 98)
+        Me.Rdb_OccProvEnviarCorreoTodos.Name = "Rdb_OccProvEnviarCorreoTodos"
+        Me.Rdb_OccProvEnviarCorreoTodos.Size = New System.Drawing.Size(48, 20)
+        Me.Rdb_OccProvEnviarCorreoTodos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_OccProvEnviarCorreoTodos.TabIndex = 10026
+        Me.Rdb_OccProvEnviarCorreoTodos.Text = "Todos"
+        '
+        'LabelX29
+        '
+        Me.LabelX29.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LabelX29.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX29.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX29.ForeColor = System.Drawing.Color.Black
+        Me.LabelX29.Location = New System.Drawing.Point(0, 95)
+        Me.LabelX29.Name = "LabelX29"
+        Me.LabelX29.SingleLineColor = System.Drawing.Color.Transparent
+        Me.LabelX29.Size = New System.Drawing.Size(87, 23)
+        Me.LabelX29.TabIndex = 10027
+        Me.LabelX29.Text = "Enviar correo a"
+        '
+        'Rdb_OccProvEnviarCorreoSoloCc
+        '
+        Me.Rdb_OccProvEnviarCorreoSoloCc.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_OccProvEnviarCorreoSoloCc.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_OccProvEnviarCorreoSoloCc.CheckBoxImageChecked = CType(resources.GetObject("Rdb_OccProvEnviarCorreoSoloCc.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_OccProvEnviarCorreoSoloCc.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_OccProvEnviarCorreoSoloCc.FocusCuesEnabled = False
+        Me.Rdb_OccProvEnviarCorreoSoloCc.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_OccProvEnviarCorreoSoloCc.Location = New System.Drawing.Point(160, 98)
+        Me.Rdb_OccProvEnviarCorreoSoloCc.Name = "Rdb_OccProvEnviarCorreoSoloCc"
+        Me.Rdb_OccProvEnviarCorreoSoloCc.Size = New System.Drawing.Size(92, 20)
+        Me.Rdb_OccProvEnviarCorreoSoloCc.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_OccProvEnviarCorreoSoloCc.TabIndex = 10028
+        Me.Rdb_OccProvEnviarCorreoSoloCc.Text = "Solo a mail Cc"
+        '
+        'Rdb_OccProvEnviarCorreoNoEnviar
+        '
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.CheckBoxImageChecked = CType(resources.GetObject("Rdb_OccProvEnviarCorreoNoEnviar.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.FocusCuesEnabled = False
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.Location = New System.Drawing.Point(258, 98)
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.Name = "Rdb_OccProvEnviarCorreoNoEnviar"
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.Size = New System.Drawing.Size(129, 20)
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.TabIndex = 10029
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.Text = "No enviar correos"
+        '
         'Frm_00_Asis_Compra_Menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(564, 643)
+        Me.ClientSize = New System.Drawing.Size(566, 643)
         Me.Controls.Add(Me.Chk_Sumar_Vta_Ult_Year)
         Me.Controls.Add(Me.TableLayoutPanel3)
         Me.Controls.Add(Me.Chk_Incluir_Servicios)
@@ -3402,4 +3483,8 @@ Partial Class Frm_00_Asis_Compra_Menu
     Friend WithEvents Chk_Restar_Stock_TransitoGti As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents LabelX26 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX24 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Rdb_OccProvEnviarCorreoNoEnviar As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Rdb_OccProvEnviarCorreoSoloCc As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents LabelX29 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Rdb_OccProvEnviarCorreoTodos As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

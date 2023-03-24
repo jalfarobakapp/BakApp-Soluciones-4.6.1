@@ -1,5 +1,4 @@
-﻿Imports System.ComponentModel
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_MantFacturasElectronicas
 
@@ -677,8 +676,25 @@ Public Class Frm_MantFacturasElectronicas
         End If
 
         If _Procesado Then
+            'If _Estado = "SOK" Then
+            '    If MessageBoxEx.Show(Me, "Este documento ya fue procesado por el DTEMonitor" & vbCrLf &
+            '                      "En breve tendremos la respuesta desde el SII" & vbCrLf & vbCrLf &
+            '                      "¿Desea volver a procesarlo de todas maneras nuevamente?", "Validación",
+            '                      MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
+
+            '        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Eliminado = 1 Where Id_Dte = " & _Id_Dte
+            '        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            '        _Fila.Cells("Id_Dte").Value = 0
+            '        _Fila.Cells("Estado").Value = "107"
+
+            '        Call Btn_Reenviar_SII_Click(Nothing, Nothing)
+            '    Else
             MessageBoxEx.Show(Me, "Este documento ya fue procesado por el DTEMonitor" & vbCrLf &
-                              "En breve tendremos la respuesta desde el SII", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                  "En breve tendremos la respuesta desde el SII", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information)
+            '    End If
+            'End If
             Return
         End If
 
@@ -817,7 +833,7 @@ Public Class Frm_MantFacturasElectronicas
         Dim _Estado As String = _Fila.Cells("Estado").Value
         Dim _Glosa As String = _Fila.Cells("Glosa").Value
 
-        Dim _Msg2 As String
+        'Dim _Msg2 As String
 
         Try
             Me.Enabled = False
@@ -842,15 +858,20 @@ Public Class Frm_MantFacturasElectronicas
             End If
 
             If _AceptadoSII Or (_InformadoSII Or _RechazadoSII) Then
-                MessageBoxEx.Show(Me, "Este documento ya fue enviado al SII" & vbCrLf &
+                If MessageBoxEx.Show(Me, "Este documento ya fue enviado al SII" & vbCrLf &
                                       "Respueta SII:" & vbCrLf &
-                                      "Estado: " & _Estado & "-" & _Glosa & _Msg2, "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Return
+                                      "Estado: " & _Estado & "-" & _Glosa & vbCrLf & vbCrLf &
+                                      "¿Desea volver a consultar igual el Trackid?", "Información",
+                                      MessageBoxButtons.YesNo, MessageBoxIcon.Information) <> DialogResult.Yes Then
+                    Return
+                End If
             End If
 
             If Not _AceptadoSII Then
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Procesar = 1, Procesado = 0,Estado = '' Where Trackid = '" & _Trackid & "' And Id_Dte = " & _Id_Dte
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set " &
+                               "Procesar = 1,Aceptado = 0,Rechazado = 0,Reparo = 0,Procesado = 0,Estado = '',Intentos = 0" & vbCrLf &
+                               "Where Trackid = '" & _Trackid & "' And Id_Dte = " & _Id_Dte
                 If _Sql.Ej_consulta_IDU(Consulta_sql) Then
 
                     Sb_Actualizar_Datos_Registro(_Fila)

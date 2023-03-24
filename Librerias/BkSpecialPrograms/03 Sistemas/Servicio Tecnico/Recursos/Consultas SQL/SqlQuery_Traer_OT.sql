@@ -162,7 +162,7 @@ Where Id_Ot = @Id_Ot And Garantia = 1
 -- OPERACIONES POR SERVICIO (10)
 
 SELECT Serv.Id,Serv.Id_Ot,Serv.Semilla,Serv.Codigo,Isnull(Oper.Descripcion,'') As Descripcion,
-       Serv.CodReceta,Serv.Operacion,Serv.Orden,Serv.CantMayor1,Serv.Cantidad,Serv.CantidadRealizada,Serv.Precio,Serv.Total,Serv.Realizado,Cast(1 As Bit) As Chk
+       Serv.CodReceta,Serv.Operacion,Serv.Orden,Serv.CantMayor1,Serv.Cantidad,Serv.CantidadRealizada,Serv.Precio,Serv.Total,Serv.Realizado,Serv.Externa,Cast(1 As Bit) As Chk
 FROM   #Db_BakApp#Zw_St_OT_OpeXServ Serv
 Left Join #Db_BakApp#Zw_St_OT_Operaciones Oper On Serv.Operacion = Oper.Operacion
 Where Id_Ot = @Id_Ot

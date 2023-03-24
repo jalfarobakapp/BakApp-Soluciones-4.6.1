@@ -1,5 +1,4 @@
 ﻿Imports System.Data.SqlClient
-Imports BkSpecialPrograms.GeneraOccAuto
 Imports DevComponents.DotNetBar
 
 Public Class Frm_01_Asis_Compra_Resultados
@@ -84,7 +83,9 @@ Public Class Frm_01_Asis_Compra_Resultados
     Public Property Auto_CorreoCc As String
     Public Property Auto_Id_Correo As String
     Public Property Auto_NombreFormato_PDF As String
-
+    Public Property Auto_Correo_EnviarCorreosATodos As Boolean
+    Public Property Auto_Correo_EnviarCorreosSoloCc As Boolean
+    Public Property Auto_Correo_NoEnviarCorreos As Boolean
     Public Property Pro_Tbl_Filtro_Super_Familias() As DataTable
         Get
             Return _Tbl_Filtro_Super_Familias
@@ -8224,17 +8225,30 @@ Drop Table #Paso"
 
                 If Not String.IsNullOrEmpty(Auto_Id_Correo) Then
 
-                    If String.IsNullOrEmpty(_Fl.Email) Then
+                    Dim _Email As String
+                    Dim _CorreoCc As String
 
-                        _Fl.Email = _Sql.Fx_Trae_Dato("MAEEN",
-                                                    "EMAILCOMER", "KOEN = '" & _Fl.Endo & "' And SUEN = '" & _Fl.Suendo & "'").Trim
+                    If Not Auto_Correo_NoEnviarCorreos Then
 
-                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_AcpAuto Set Informacion = 'Falta correo de compras en ficha de la entidad' Where Id = " & _Id_Acp
-                        _Sql.Ej_consulta_IDU(Consulta_sql)
+                        If Auto_Correo_EnviarCorreosATodos Then
+                            If String.IsNullOrEmpty(_Fl.Email) Then
+
+                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_AcpAuto Set Informacion = 'Falta correo de compras en ficha de la entidad' Where Id = " & _Id_Acp
+                                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                            End If
+                            _Email = _Fl.Email
+                            _CorreoCc = Auto_CorreoCc
+                        End If
+
+                        If Auto_Correo_EnviarCorreosSoloCc Then
+                            _Email = Auto_CorreoCc
+                            _CorreoCc = String.Empty
+                        End If
 
                     End If
 
-                    Dim _Error As String = _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, _Fl.Email, Auto_CorreoCc, Auto_Id_Correo, Auto_NombreFormato_PDF, _Id_Acp)
+                    Dim _Error As String = _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, _Email, _CorreoCc, Auto_Id_Correo, Auto_NombreFormato_PDF, _Id_Acp)
 
                     If Not String.IsNullOrEmpty(_Error) Then
                         Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_AcpAuto Set Informacion = Informacion+' -" & _Error.Trim & "' Where Id = " & _Id_Acp

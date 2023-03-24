@@ -1933,6 +1933,7 @@ Public Class Frm_Pagos_Documentos
 
         Consulta_sql = Replace(Consulta_sql, "#Otro_Filtro#", "And Edo.ESPGDO = 'P'")
         Consulta_sql = Replace(Consulta_sql, "#ValesTransitorios#", "")
+        Consulta_sql = Replace(Consulta_sql, "#Observaciones#", "")
 
         Dim _Tbl_Paso As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 

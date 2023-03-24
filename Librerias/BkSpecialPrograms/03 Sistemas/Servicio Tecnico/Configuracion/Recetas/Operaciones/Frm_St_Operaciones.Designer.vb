@@ -32,10 +32,14 @@ Partial Class Frm_St_Operaciones
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Crear_Operacion = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
+        Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Editar_Operacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GroupPanel3.SuspendLayout()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -133,12 +137,13 @@ Partial Class Frm_St_Operaciones
         Me.Btn_Crear_Operacion.ForeColor = System.Drawing.Color.Black
         Me.Btn_Crear_Operacion.Image = CType(resources.GetObject("Btn_Crear_Operacion.Image"), System.Drawing.Image)
         Me.Btn_Crear_Operacion.Name = "Btn_Crear_Operacion"
-        Me.Btn_Crear_Operacion.Text = "Crear receta"
+        Me.Btn_Crear_Operacion.Text = "Crear operación"
         '
         'GroupPanel1
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.ContextMenuBar1)
         Me.GroupPanel1.Controls.Add(Me.Grilla)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(9, 76)
@@ -174,6 +179,34 @@ Partial Class Frm_St_Operaciones
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 101
         Me.GroupPanel1.Text = "Operaciones"
+        '
+        'ContextMenuBar1
+        '
+        Me.ContextMenuBar1.AntiAlias = True
+        Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
+        Me.ContextMenuBar1.Location = New System.Drawing.Point(100, 63)
+        Me.ContextMenuBar1.Name = "ContextMenuBar1"
+        Me.ContextMenuBar1.Size = New System.Drawing.Size(330, 25)
+        Me.ContextMenuBar1.Stretch = True
+        Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ContextMenuBar1.TabIndex = 56
+        Me.ContextMenuBar1.TabStop = False
+        Me.ContextMenuBar1.Text = "ContextMenuBar1"
+        '
+        'Menu_Contextual_01
+        '
+        Me.Menu_Contextual_01.AutoExpandOnClick = True
+        Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_Editar_Operacion})
+        Me.Menu_Contextual_01.Text = "Opciones"
+        '
+        'Btn_Mnu_Editar_Operacion
+        '
+        Me.Btn_Mnu_Editar_Operacion.Image = CType(resources.GetObject("Btn_Mnu_Editar_Operacion.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Editar_Operacion.ImageAlt = CType(resources.GetObject("Btn_Mnu_Editar_Operacion.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Editar_Operacion.Name = "Btn_Mnu_Editar_Operacion"
+        Me.Btn_Mnu_Editar_Operacion.Text = "Editar operación"
         '
         'Grilla
         '
@@ -235,6 +268,7 @@ Partial Class Frm_St_Operaciones
         Me.GroupPanel3.ResumeLayout(False)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -247,4 +281,7 @@ Partial Class Frm_St_Operaciones
     Friend WithEvents Btn_Crear_Operacion As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
+    Friend WithEvents ContextMenuBar1 As DevComponents.DotNetBar.ContextMenuBar
+    Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_Editar_Operacion As DevComponents.DotNetBar.ButtonItem
 End Class

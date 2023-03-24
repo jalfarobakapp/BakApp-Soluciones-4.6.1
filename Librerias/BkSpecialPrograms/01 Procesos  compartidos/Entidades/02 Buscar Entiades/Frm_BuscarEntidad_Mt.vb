@@ -672,10 +672,6 @@ Public Class Frm_BuscarEntidad_Mt
         End If
     End Sub
 
-    'Private Sub Chk_Solo_Clientes_Del_Vendedor_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Solo_Clientes_Del_Vendedor.CheckedChanged
-    '    Sb_Bucar_Entidades()
-    'End Sub
-
     Private Sub Rdb_CheckedChanged(sender As Object, e As CheckBoxChangeEventArgs)
         If CType(sender, CheckBoxItem).Checked Then
             Sb_Bucar_Entidades()

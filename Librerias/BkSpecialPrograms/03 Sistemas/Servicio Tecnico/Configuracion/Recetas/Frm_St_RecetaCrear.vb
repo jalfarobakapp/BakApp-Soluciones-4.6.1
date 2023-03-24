@@ -37,7 +37,7 @@ Public Class Frm_St_RecetaCrear
         Me._CodReceta = _CodReceta
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Recetas_Enc" & vbCrLf &
-                       "Where CodReceta = '" & _CodReceta & "'"
+                       "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "' And CodReceta = '" & _CodReceta & "'"
         _Row_Receta = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
@@ -58,12 +58,14 @@ Public Class Frm_St_RecetaCrear
         If _Nuevo Then
             ActiveControl = Txt_CodReceta
             Sw_Activo.Value = True
+            Sw_Activo.Enabled = False
         End If
 
         If _Editar Then
             Sw_Activo.Value = _Row_Receta.Item("Activo")
             Txt_CodReceta.Text = _CodReceta
             Txt_CodReceta.Enabled = False
+            Btn_Eliminar.Visible = True
             Txt_Descripcion.Text = _Row_Receta.Item("Descripcion")
             ActiveControl = Txt_Descripcion
         End If
@@ -305,36 +307,6 @@ Public Class Frm_St_RecetaCrear
 
                 Fx_Agregar_Operacion(_Fila, _Operacion)
 
-                'If _Operacion Is Nothing Then Return
-
-                '_RowOperacion = Fx_Buscar_Operacion(_Operacion)
-
-                '_Fila.Cells("Operacion").Value = String.Empty
-
-                'If Not (_RowOperacion Is Nothing) Then
-
-                '    For Each _Fl As DataRow In _Tbl_Operaciones.Rows
-
-                '        _Operacion = _RowOperacion.Item("Operacion").ToString.Trim
-                '        _Descripcion = _RowOperacion.Item("Descripcion").ToString.Trim
-
-                '        If _Fl.Item("Operacion").ToString.Trim = _Operacion Then
-                '            Throw New System.Exception("La Operación: " & _Fl.Item("Operacion").ToString.Trim & "-" & _Descripcion & vbCrLf &
-                '                                       "Ya esta en la lista")
-                '        End If
-                '    Next
-
-                '    _Fila.Cells("Nuevo_Item").Value = False
-                '    _Fila.Cells("Operacion").Value = _RowOperacion.Item("Operacion")
-                '    _Fila.Cells("Descripcion").Value = _RowOperacion.Item("Descripcion")
-                '    _Fila.Cells("Cantidad").Value = 0
-                '    _Fila.Cells("CantMayor1").Value = _RowOperacion.Item("CantMayor1")
-                '    _Fila.Cells("Externa").Value = _RowOperacion.Item("Externa")
-
-                '    Sb_Agregar_Operacion(_Tbl_Operaciones, _Id_Rec, "", _CodReceta, "", "", False, 0, 0, False)
-
-                'End If
-
             ElseIf _Cabeza = "Cantidad" Then
 
                 If Grilla.Rows.Count - 1 = _Fila.Index Then
@@ -384,6 +356,7 @@ Public Class Frm_St_RecetaCrear
             _Fila.Cells("Operacion").Value = _RowOperacion.Item("Operacion")
             _Fila.Cells("Descripcion").Value = _RowOperacion.Item("Descripcion")
             _Fila.Cells("Cantidad").Value = 0
+            _Fila.Cells("Precio").Value = _RowOperacion.Item("Precio")
             _Fila.Cells("CantMayor1").Value = _RowOperacion.Item("CantMayor1")
             _Fila.Cells("Externa").Value = _RowOperacion.Item("Externa")
 
@@ -425,6 +398,13 @@ Public Class Frm_St_RecetaCrear
         If Grilla.RowCount = 1 And Grilla.Rows(0).Cells("Nuevo_Item").Value Then
             MessageBoxEx.Show(Me, "Debe agregar alguna operación a la receta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
+        End If
+
+        If Not Sw_Activo.Value Then
+            If MessageBoxEx.Show(Me, "¿Esta seguro de dejar esta receta inactiva?", "Dejar inactiva la receta",
+                                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) <> DialogResult.Yes Then
+                Return
+            End If
         End If
 
         For Each _Flop As DataRow In _Tbl_Operaciones.Rows
@@ -476,8 +456,8 @@ Public Class Frm_St_RecetaCrear
 
             If _Nuevo Then
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Recetas_Enc (Empresa,CodReceta,Descripcion,Activo) Values " &
-                               "('" & ModEmpresa & "','" & _CodReceta & "','" & _Descripcion & "'," & _Activo & ")"
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Recetas_Enc (Empresa,Sucursal,CodReceta,Descripcion,Activo) Values " &
+                               "('" & ModEmpresa & "','" & ModSucursal & "','" & _CodReceta & "','" & _Descripcion & "'," & _Activo & ")"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
                 Comando.Transaction = myTrans
@@ -527,8 +507,8 @@ Public Class Frm_St_RecetaCrear
 
                     If Not _Nuevo_Item Then
 
-                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Recetas_Ope (Id_Rec,CodReceta,Operacion,Orden,Cantidad,Precio,CantMayor1,Externa) Values " &
-                                   "(" & _Id_Rec & ",'" & _CodReceta & "','" & _Operacion & "'," & _Orden & "," & _Cantidad & "," & _Precio & "," & _CantMayor1 & "," & _Externa & ")"
+                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Recetas_Ope (Id_Rec,Empresa,Sucursal,CodReceta,Operacion,Orden,Cantidad,Precio,CantMayor1,Externa) Values " &
+                                   "(" & _Id_Rec & ",'" & ModEmpresa & "','" & ModSucursal & "','" & _CodReceta & "','" & _Operacion & "'," & _Orden & "," & _Cantidad & "," & _Precio & "," & _CantMayor1 & "," & _Externa & ")"
 
                         Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
                         Comando.Transaction = myTrans
@@ -570,46 +550,35 @@ Public Class Frm_St_RecetaCrear
 
     Function Fx_Buscar_Operacion(_CodOperacion As String) As DataRow
 
-        Dim _FiltroOperaciones As String
-        Dim _RowOperacion As DataRow
+        Dim _Row_Operacion As DataRow
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Operaciones" & vbCrLf &
-                       "Where Operacion = '" & _CodOperacion & "'"
-        _RowOperacion = _Sql.Fx_Get_DataRow(Consulta_sql)
+                       "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "' And Operacion = '" & _CodOperacion & "'"
+        _Row_Operacion = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        If Not IsNothing(_RowOperacion) Then
-            Return _RowOperacion
+        If Not IsNothing(_Row_Operacion) Then
+            Return _Row_Operacion
         End If
 
-        _FiltroOperaciones = Generar_Filtro_IN(_Tbl_Operaciones, "", "Operacion", False, False, "'")
-        _FiltroOperaciones = Replace(_FiltroOperaciones, "''", "")
-
-        Dim Fm As New Frm_Filtro_Especial_Informes(Frm_Filtro_Especial_Informes._Tabla_Fl._Otra)
-        Fm.Pro_Tabla = _Global_BaseBk & " Zw_St_OT_Operaciones"
-        Fm.Pro_Campo = "Operacion"
-        Fm.Pro_Descripcion = "Descripcion"
-        Fm.Text = "OPERACIONES PARA REPARACIO EN SERVICIO TECNICO"
-        'If _FiltroOperaciones.Contains("'") Then
-        '    Fm.Pro_Sql_Filtro_Condicion_Extra = "And Operacion Not In " & _FiltroOperaciones & vbCrLf
-        'End If
-        Fm.Pro_Seleccionar_Solo_Uno = True
+        Dim Fm As New Frm_St_Operaciones
+        Fm.ModoSeleccion = True
         Fm.ShowDialog(Me)
+        _Row_Operacion = Fm.Row_Operacion
+        Fm.Dispose()
 
-        If Fm.Pro_Filtrar Then
-
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Operaciones" & vbCrLf &
-                           "Where Operacion = '" & Fm.Pro_Tbl_Filtro.Rows(0).Item("Codigo") & "'"
-            _RowOperacion = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-        End If
-
-        Return _RowOperacion
+        Return _Row_Operacion
 
     End Function
 
     Private Sub Btn_Agregar_Producto_Click(sender As Object, e As EventArgs) Handles Btn_Agregar_Producto.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.Rows.Count - 1)
+
+        If Not Sw_Activo.Value Then
+            MessageBoxEx.Show(Me, "No se pueden agregar operaciones a una receta inactiva", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Fx_Agregar_Operacion(_Fila, "")
 
@@ -620,7 +589,7 @@ Public Class Frm_St_RecetaCrear
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & " Zw_St_OT_OpeXServ", "CodReceta  = '" & Txt_CodReceta.Text & "'")
 
         If CBool(_Reg) Then
-            MessageBoxEx.Show(Me, "Esta receta esta asociada a (" & _Reg & ") servicio(s)" & vbCrLf &
+            MessageBoxEx.Show(Me, "Esta receta esta asociada a ordenes de servicios" & vbCrLf &
                               "No es posible eliminarla, debe dejarla inactiva", "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
