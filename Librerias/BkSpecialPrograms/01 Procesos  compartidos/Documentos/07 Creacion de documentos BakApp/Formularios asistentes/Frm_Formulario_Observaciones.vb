@@ -289,6 +289,27 @@ Public Class Frm_Formulario_Observaciones
 
                         TxtOrdendecompra.Text = Trim(TxtOrdendecompra.Text)
 
+                        Consulta_sql = "Select Top 1 Edo.TIDO,Edo.NUDO,Edo.ENDO,Edo.FEEMDO,Edo.KOFUDO,Tf.NOKOFU" & vbCrLf &
+                                       "From MAEEDO Edo" & vbCrLf &
+                                       "Inner Join MAEEDOOB Obs On Edo.IDMAEEDO = Obs.IDMAEEDO" & vbCrLf &
+                                       "Left Join TABFU Tf On Tf.KOFU = Edo.KOFUDO" & vbCrLf &
+                                       "Where Edo.TIDO In ('NVV','FCV','GDV','BLV') And Edo.ENDO = '" & _Row_Entidad.Item("KOEN") & "' And Obs.OCDO = '" & TxtOrdendecompra.Text.Trim & "'" & vbCrLf &
+                                       "Order By Edo.IDMAEEDO"
+
+                        Dim _RowNVVConOCC As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                        If Not IsNothing(_RowNVVConOCC) Then
+                            If MessageBoxEx.Show(Me, "El número de orden de compra ya fue relacionado anteriormente a otro documento" & vbCrLf & vbCrLf &
+                                                 "Documento: " & _RowNVVConOCC.Item("TIDO") & "-" & _RowNVVConOCC.Item("NUDO") & " " &
+                                                 FormatDateTime(_RowNVVConOCC.Item("FEEMDO"), DateFormat.ShortDate) &
+                                                 ", Resp. " & _RowNVVConOCC.Item("KOFUDO") & " - " & _RowNVVConOCC.Item("NOKOFU") & vbCrLf & vbCrLf &
+                                                 "¿Desea continuar con la grabación?", "Validación",
+                                                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) <> DialogResult.Yes Then
+                                TxtOrdendecompra.Focus()
+                                Return False
+                            End If
+                        End If
+
                         If String.IsNullOrEmpty(TxtOrdendecompra.Text) Then
 
                             If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00024", _Ds_Matriz_Documentos, "", "") Then

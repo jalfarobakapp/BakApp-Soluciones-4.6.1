@@ -283,6 +283,15 @@ Public Class Frm_Documentos_Relacionados
                             _Condicion_Idmaeedo &
                             "ORDER BY EDO.FEEMDO DESC "
 
+            Case "FCC"
+
+                _SqlWhere = "AND EDO.EMPRESA='" & _Empresa & "'" & vbCrLf &
+                            "AND EDO.ENDO='" & _Koen & "'" & _Suendo & vbCrLf &
+                            "AND EDO.ESDO=''" & vbCrLf &
+                            "And EDO.TIDO In ('OCC','GRP','GRC') AND NUDONODEFI=0" & vbCrLf &
+                            _Condicion_Idmaeedo &
+                            "ORDER BY EDO.FEEMDO DESC "
+
             Case "GTI"
 
                 _SqlWhere = "AND EDO.EMPRESA='" & _Empresa & "'" & vbCrLf &

@@ -71,17 +71,17 @@ Public Class Modulo_Programas_Especiales
 
     End Sub
 
-    Private Sub BtnCreditoNegocios_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnCreditoNegocios.Click
+    'Private Sub BtnCreditoNegocios_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnCreditoNegocios.Click
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Scn00001") Then
+    '    If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Scn00001") Then
 
-            Dim NewPanel As CreditosNegociosMnu = Nothing
-            NewPanel = New CreditosNegociosMnu(_Fm_Menu_Padre)
-            _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+    '        Dim NewPanel As CreditosNegociosMnu = Nothing
+    '        NewPanel = New CreditosNegociosMnu(_Fm_Menu_Padre)
+    '        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
 
-        End If
+    '    End If
 
-    End Sub
+    'End Sub
 
     Private Sub BtnCorreos_SMTP_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnCorreos_SMTP.Click
 
@@ -168,17 +168,6 @@ Public Class Modulo_Programas_Especiales
 
     End Sub
 
-    Private Sub Btn_Revision_Compras_SII_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Revision_Compras_SII.Click
-
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "RSii00001") Then
-
-            Dim Fm As New Frm_Conf_Importar_Compras_SII
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-
-        End If
-
-    End Sub
 
     Private Sub Btn_Huella_Click(sender As Object, e As EventArgs) Handles Btn_Huella.Click
 
@@ -330,4 +319,9 @@ Public Class Modulo_Programas_Especiales
 
     End Sub
 
+    Private Sub Btn_ControlRutaVehiculos_Click(sender As Object, e As EventArgs)
+        Dim NewPanel As CRV_Control_Ruta_Vehiculos = Nothing
+        NewPanel = New CRV_Control_Ruta_Vehiculos(_Fm_Menu_Padre)
+        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Right)
+    End Sub
 End Class
