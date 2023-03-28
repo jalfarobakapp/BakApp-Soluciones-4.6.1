@@ -34,7 +34,7 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
         Get
             Return _Grabado
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
 
         End Set
     End Property
@@ -43,7 +43,7 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
         Get
             Return _Eliminado
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
 
         End Set
     End Property
@@ -52,7 +52,7 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
         Get
             Return _Row_Tecnico
         End Get
-        Set(ByVal value As DataRow)
+        Set(value As DataRow)
             _Row_Tecnico = value
         End Set
     End Property
@@ -113,7 +113,7 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
 
 #End Region
 
-    Public Sub New(ByVal Accion As Accion)
+    Public Sub New(Accion As Accion)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -125,7 +125,7 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
 
     End Sub
 
-    Private Sub Frm_St_Mant_Tecnicos_Talleres_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_St_Mant_Tecnicos_Talleres_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         AddHandler Rdb_Chk_Taller_Externo.CheckedChanged, AddressOf Chk_Taller_Externo_CheckedChanged
 
@@ -195,7 +195,7 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
 
     End Sub
 
-    Private Function Fx_Habilitar_Objetos(ByVal _Habilitar As Boolean)
+    Private Function Fx_Habilitar_Objetos(_Habilitar As Boolean)
 
         Dim _ReadOnly As Boolean
 
@@ -269,13 +269,13 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
     End Function
 
 
-    Private Sub Chk_CheckedChanging(ByVal sender As System.Object,
-                                                   ByVal e As DevComponents.DotNetBar.Controls.CheckBoxXChangeEventArgs)
+    Private Sub Chk_CheckedChanging(sender As System.Object,
+                                                   e As DevComponents.DotNetBar.Controls.CheckBoxXChangeEventArgs)
         e.Cancel = True
     End Sub
 
-    Private Sub Chk_Habilitar_CheckedChanging(ByVal sender As System.Object,
-                                                   ByVal e As DevComponents.DotNetBar.Controls.CheckBoxXChangeEventArgs)
+    Private Sub Chk_Habilitar_CheckedChanging(sender As System.Object,
+                                                   e As DevComponents.DotNetBar.Controls.CheckBoxXChangeEventArgs)
         If Not Fx_Tiene_Permiso(Me, "Stec0009") Then
             e.Cancel = True
         End If
@@ -312,7 +312,7 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
 #End Region
 
 
-    Private Sub Btn_Eliminar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Eliminar.Click
+    Private Sub Btn_Eliminar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Eliminar.Click
 
         If Fx_Tiene_Permiso(Me, "Stec0010") Then
 
@@ -337,7 +337,7 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
 
     End Sub
 
-    Private Sub Btn_Editar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Editar.Click
+    Private Sub Btn_Editar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Editar.Click
 
         If Fx_Tiene_Permiso(Me, "Stec0008") Then
             Fx_Habilitar_Objetos(True)
@@ -350,7 +350,7 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
 
     End Sub
 
-    Private Sub Btn_Cancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cancelar.Click
+    Private Sub Btn_Cancelar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cancelar.Click
 
         _CodFuncionario = _Row_Tecnico.Item("CodFuncionario")
 
@@ -385,7 +385,7 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
 
     End Sub
 
-    Private Sub Btn_Direccion_Servicio_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Direccion_Servicio.Click
+    Private Sub Btn_Direccion_Servicio_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Direccion_Servicio.Click
 
         If String.IsNullOrEmpty(_CodPais.Trim) Or
             String.IsNullOrEmpty(_CodCiudad.Trim) Or
@@ -402,7 +402,7 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
 
     End Sub
 
-    Private Sub Chk_Taller_Externo_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Chk_Taller_Externo_CheckedChanged(sender As System.Object, e As System.EventArgs)
         If Rdb_Chk_Taller_Externo.Checked Then
             Chk_Domicilio.Enabled = False
             Chk_Supervisor.Enabled = False

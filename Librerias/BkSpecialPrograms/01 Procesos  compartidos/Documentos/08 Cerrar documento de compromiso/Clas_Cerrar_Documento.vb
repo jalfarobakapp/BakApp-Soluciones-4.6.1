@@ -5,7 +5,7 @@ Public Class Clas_Cerrar_Documento
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Public ReadOnly Property Pro_Row_Maeedo(ByVal _Idmaeedo As Integer) As DataRow
+    Public ReadOnly Property Pro_Row_Maeedo(_Idmaeedo As Integer) As DataRow
         Get
             Dim _Row_Maeedo As DataRow
 
@@ -45,7 +45,7 @@ Public Class Clas_Cerrar_Documento
 
     End Function
 
-    Function Fx_Sql_Abrir_Linea(ByVal _Row_Maeddo As DataRow) As String
+    Function Fx_Sql_Abrir_Linea(_Row_Maeddo As DataRow) As String
 
         Dim _SqlQuery = String.Empty
 
@@ -118,7 +118,7 @@ Public Class Clas_Cerrar_Documento
 
     End Function
 
-    Function Fx_Sql_Cerrar_Linea(ByVal _Row_Maeddo As DataRow) As String
+    Function Fx_Sql_Cerrar_Linea(_Row_Maeddo As DataRow) As String
 
         Dim _SqlQuery = String.Empty
 
@@ -196,7 +196,7 @@ Public Class Clas_Cerrar_Documento
 
     End Function
 
-    Function Fx_Sql_Cerrar_o_Abrir_Encabezado(ByVal _Idmaeedo As Integer) As String
+    Function Fx_Sql_Cerrar_o_Abrir_Encabezado(_Idmaeedo As Integer) As String
 
         Dim _SqlQuery As String
 

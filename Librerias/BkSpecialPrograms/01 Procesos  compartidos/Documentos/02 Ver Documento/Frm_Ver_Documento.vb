@@ -1500,7 +1500,7 @@ Public Class Frm_Ver_Documento
             .Columns(_Campo).HeaderText = "Descripción"
             .Columns(_Campo).Visible = True
             .Columns(_Campo).Frozen = True
-            .Columns(_Campo).Width = 250
+            .Columns(_Campo).Width = 200
             .Columns(_Campo).DisplayIndex = _Displayindex
             _Displayindex += 1
 
@@ -1601,7 +1601,7 @@ Public Class Frm_Ver_Documento
                 _Campo = "FEERLI"
                 .Columns(_Campo).HeaderText = "F.Entrega"
                 .Columns(_Campo).Visible = True
-                .Columns(_Campo).Width = 80
+                .Columns(_Campo).Width = 70
                 '.Columns(_Campo).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
                 .Columns(_Campo).DisplayIndex = _Displayindex
                 _Displayindex += 1

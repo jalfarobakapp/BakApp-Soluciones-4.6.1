@@ -54,4 +54,5 @@ Public Class STConfiguracion
         Fm.ShowDialog(Me)
         Fm.Dispose()
     End Sub
+
 End Class
