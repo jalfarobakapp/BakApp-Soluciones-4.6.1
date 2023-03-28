@@ -10,12 +10,12 @@ Public Class Modulo_Servicio_Tecnico
         Get
             Return _Menu_Extra
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Menu_Extra = value
         End Set
     End Property
 
-    Public Sub New(ByVal Fm_Menu_Padre As Metro.MetroAppForm)
+    Public Sub New(Fm_Menu_Padre As Metro.MetroAppForm)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -41,10 +41,12 @@ Public Class Modulo_Servicio_Tecnico
     End Sub
 
 
-    Private Sub Btn_CRV_Control_Ruta_Vehiculos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_CRV_Control_Ruta_Vehiculos.Click
-        Dim NewPanel As CRV_Control_Ruta_Vehiculos = Nothing
-        NewPanel = New CRV_Control_Ruta_Vehiculos(_Fm_Menu_Padre)
-        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Right)
+    Private Sub Btn_CRV_Control_Ruta_Vehiculos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Configuraciones.Click
+        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Stec0019") Then
+            Dim NewPanel As STConfiguracion = Nothing
+            NewPanel = New STConfiguracion(_Fm_Menu_Padre)
+            _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Right)
+        End If
     End Sub
 
     Sub Sb_Actualizar_Estados_BD_Servicio_Tecnico()

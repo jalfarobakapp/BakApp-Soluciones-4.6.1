@@ -28,9 +28,9 @@ Partial Class Modulo_Servicio_Tecnico
         Me.MetroTilePanel1 = New DevComponents.DotNetBar.Metro.MetroTilePanel()
         Me.ConsultaPreciosContenedor = New DevComponents.DotNetBar.ItemContainer()
         Me.Btn_Sis_Serv_Tecnico = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.Btn_CRV_Control_Ruta_Vehiculos = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Btn_Configuraciones = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Sis_Serv_GestTaller = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -86,7 +86,7 @@ Partial Class Modulo_Servicio_Tecnico
         Me.ConsultaPreciosContenedor.FixedSize = New System.Drawing.Size(500, 400)
         Me.ConsultaPreciosContenedor.MultiLine = True
         Me.ConsultaPreciosContenedor.Name = "ConsultaPreciosContenedor"
-        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Sis_Serv_Tecnico, Me.Btn_CRV_Control_Ruta_Vehiculos, Me.Btn_Sis_Serv_GestTaller})
+        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Sis_Serv_Tecnico, Me.Btn_Configuraciones, Me.Btn_Sis_Serv_GestTaller})
         '
         '
         '
@@ -115,46 +115,32 @@ Partial Class Modulo_Servicio_Tecnico
         Me.Btn_Sis_Serv_Tecnico.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Sis_Serv_Tecnico.TitleText = "BakApp"
         '
-        'Btn_CRV_Control_Ruta_Vehiculos
+        'Btn_Configuraciones
         '
-        Me.Btn_CRV_Control_Ruta_Vehiculos.Image = CType(resources.GetObject("Btn_CRV_Control_Ruta_Vehiculos.Image"), System.Drawing.Image)
-        Me.Btn_CRV_Control_Ruta_Vehiculos.ImageIndent = New System.Drawing.Point(8, -6)
-        Me.Btn_CRV_Control_Ruta_Vehiculos.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_CRV_Control_Ruta_Vehiculos.Name = "Btn_CRV_Control_Ruta_Vehiculos"
-        Me.Btn_CRV_Control_Ruta_Vehiculos.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_CRV_Control_Ruta_Vehiculos.Text = "<font size=""+4""><b>C.R.V.</b></font><br/><font size=""-1"">Control de Rutas de Vehi" &
-    "culos</font>"
-        Me.Btn_CRV_Control_Ruta_Vehiculos.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Teal
-        Me.Btn_CRV_Control_Ruta_Vehiculos.TileSize = New System.Drawing.Size(200, 100)
-        '
-        '
-        '
-        Me.Btn_CRV_Control_Ruta_Vehiculos.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
-        Me.Btn_CRV_Control_Ruta_Vehiculos.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
-        Me.Btn_CRV_Control_Ruta_Vehiculos.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_CRV_Control_Ruta_Vehiculos.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
-        Me.Btn_CRV_Control_Ruta_Vehiculos.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
-        Me.Btn_CRV_Control_Ruta_Vehiculos.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_CRV_Control_Ruta_Vehiculos.TileStyle.PaddingBottom = 4
-        Me.Btn_CRV_Control_Ruta_Vehiculos.TileStyle.PaddingLeft = 4
-        Me.Btn_CRV_Control_Ruta_Vehiculos.TileStyle.PaddingRight = 4
-        Me.Btn_CRV_Control_Ruta_Vehiculos.TileStyle.PaddingTop = 4
-        Me.Btn_CRV_Control_Ruta_Vehiculos.TileStyle.TextColor = System.Drawing.Color.White
-        Me.Btn_CRV_Control_Ruta_Vehiculos.TitleText = "BakApp"
-        '
-        'LabelX1
+        Me.Btn_Configuraciones.Image = CType(resources.GetObject("Btn_Configuraciones.Image"), System.Drawing.Image)
+        Me.Btn_Configuraciones.ImageIndent = New System.Drawing.Point(8, -6)
+        Me.Btn_Configuraciones.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Configuraciones.Name = "Btn_Configuraciones"
+        Me.Btn_Configuraciones.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Configuraciones.Text = "<font size=""+4""><b>CONFIGURACION</b></font><br/><font size=""-1"">Mantención de tab" &
+    "las</font>"
+        Me.Btn_Configuraciones.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Teal
+        Me.Btn_Configuraciones.TileSize = New System.Drawing.Size(200, 100)
         '
         '
         '
-        '
-        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX1.Font = New System.Drawing.Font("Century Gothic", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
-        Me.LabelX1.Location = New System.Drawing.Point(3, 3)
-        Me.LabelX1.Name = "LabelX1"
-        Me.LabelX1.Size = New System.Drawing.Size(245, 49)
-        Me.LabelX1.TabIndex = 54
-        Me.LabelX1.Text = "<font color=""#349FCE""><b>SERVICIO TECNICO</b></font>"
+        Me.Btn_Configuraciones.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_Configuraciones.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_Configuraciones.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_Configuraciones.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_Configuraciones.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_Configuraciones.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Configuraciones.TileStyle.PaddingBottom = 4
+        Me.Btn_Configuraciones.TileStyle.PaddingLeft = 4
+        Me.Btn_Configuraciones.TileStyle.PaddingRight = 4
+        Me.Btn_Configuraciones.TileStyle.PaddingTop = 4
+        Me.Btn_Configuraciones.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Configuraciones.TitleText = "BakApp"
         '
         'Btn_Sis_Serv_GestTaller
         '
@@ -183,6 +169,20 @@ Partial Class Modulo_Servicio_Tecnico
         Me.Btn_Sis_Serv_GestTaller.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Sis_Serv_GestTaller.TitleText = "BakApp"
         '
+        'LabelX1
+        '
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.Font = New System.Drawing.Font("Century Gothic", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
+        Me.LabelX1.Location = New System.Drawing.Point(3, 3)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(245, 49)
+        Me.LabelX1.TabIndex = 54
+        Me.LabelX1.Text = "<font color=""#349FCE""><b>SERVICIO TECNICO</b></font>"
+        '
         'Modulo_Servicio_Tecnico
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -201,7 +201,7 @@ Partial Class Modulo_Servicio_Tecnico
     Friend WithEvents MetroTilePanel1 As DevComponents.DotNetBar.Metro.MetroTilePanel
     Friend WithEvents ConsultaPreciosContenedor As DevComponents.DotNetBar.ItemContainer
     Private WithEvents Btn_Sis_Serv_Tecnico As DevComponents.DotNetBar.Metro.MetroTileItem
-    Private WithEvents Btn_CRV_Control_Ruta_Vehiculos As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_Configuraciones As DevComponents.DotNetBar.Metro.MetroTileItem
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Private WithEvents Btn_Sis_Serv_GestTaller As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

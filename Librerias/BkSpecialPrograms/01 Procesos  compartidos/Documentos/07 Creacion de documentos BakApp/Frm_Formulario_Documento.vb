@@ -2401,7 +2401,7 @@ Public Class Frm_Formulario_Documento
                     If Chk_Ver_Dscto_Maximo.Checked Then
                         .Columns("Descripcion").Width = 200
                     Else
-                        .Columns("Descripcion").Width = 250
+                        .Columns("Descripcion").Width = 210
                     End If
 
                     .Columns("Descripcion").HeaderText = "Descripción"
@@ -2466,7 +2466,7 @@ Public Class Frm_Formulario_Documento
             .Columns("DescuentoValor").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns(Total).Width = 85 + _Mas
+            .Columns(Total).Width = 80 + _Mas
             .Columns(Total).HeaderText = "Total"
             .Columns(Total).DefaultCellStyle.Format = "###,##0.##"
             .Columns(Total).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -2513,7 +2513,7 @@ Public Class Frm_Formulario_Documento
 
             End If
 
-            .Columns("FechaRecepcion").Width = 80
+            .Columns("FechaRecepcion").Width = 70
             .Columns("FechaRecepcion").HeaderText = "F.Entrega"
             .Columns("FechaRecepcion").Visible = True
             .Columns("FechaRecepcion").DefaultCellStyle.Format = "dd/MM/yyyy"

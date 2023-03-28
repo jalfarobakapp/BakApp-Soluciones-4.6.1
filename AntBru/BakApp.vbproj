@@ -416,6 +416,12 @@
     <Compile Include="z_Menu Principal\SubMenus\Servicio Tecnico\Modulo_Servicio_Tecnico.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Servicio Tecnico\STConfiguracion.Designer.vb">
+      <DependentUpon>STConfiguracion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Servicio Tecnico\STConfiguracion.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Documentos\Documentos_GDD_GDP.Designer.vb">
       <DependentUpon>Documentos_GDD_GDP.vb</DependentUpon>
     </Compile>
@@ -646,6 +652,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Servicio Tecnico\Modulo_Servicio_Tecnico.resx">
       <DependentUpon>Modulo_Servicio_Tecnico.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Servicio Tecnico\STConfiguracion.resx">
+      <DependentUpon>STConfiguracion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Documentos\Documentos_GDD_GDP.resx">
       <DependentUpon>Documentos_GDD_GDP.vb</DependentUpon>

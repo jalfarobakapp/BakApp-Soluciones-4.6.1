@@ -28,14 +28,12 @@ Partial Class Modulo_Programas_Especiales
         Me.Btn_Demonio = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.BtnSQL2Excel = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.BtnDTE2PDF = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.BtnCreditoNegocios = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.BtnCorreos_SMTP = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_CRV_Control_Ruta_Vehiculos = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Etiquetas_De_Barra = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.BtnCrearFormatos = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_DTE_Respuestas_XML = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Precios_PrestaShop = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.Btn_Revision_Compras_SII = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Huella = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Pocket_PC = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Archivador = New DevComponents.DotNetBar.Metro.MetroTileItem()
@@ -63,7 +61,7 @@ Partial Class Modulo_Programas_Especiales
         Me.MetroTilePanel1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.MetroTilePanel1.Location = New System.Drawing.Point(3, 55)
         Me.MetroTilePanel1.Name = "MetroTilePanel1"
-        Me.MetroTilePanel1.Size = New System.Drawing.Size(846, 619)
+        Me.MetroTilePanel1.Size = New System.Drawing.Size(1108, 619)
         Me.MetroTilePanel1.TabIndex = 10
         Me.MetroTilePanel1.Text = "MetroTilePanel1"
         '
@@ -76,7 +74,7 @@ Partial Class Modulo_Programas_Especiales
         Me.MnuEspecialOtros.FixedSize = New System.Drawing.Size(1000, 550)
         Me.MnuEspecialOtros.MultiLine = True
         Me.MnuEspecialOtros.Name = "MnuEspecialOtros"
-        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Demonio, Me.BtnSQL2Excel, Me.BtnDTE2PDF, Me.BtnCreditoNegocios, Me.BtnCorreos_SMTP, Me.Btn_CRV_Control_Ruta_Vehiculos, Me.Btn_Etiquetas_De_Barra, Me.BtnCrearFormatos, Me.Btn_DTE_Respuestas_XML, Me.Btn_Precios_PrestaShop, Me.Btn_Revision_Compras_SII, Me.Btn_Huella, Me.Btn_Pocket_PC, Me.Btn_Archivador, Me.Btn_Cierre_Reactivacion_Documentos, Me.Btn_Habilitar_Nvv_Para_Facturar})
+        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Demonio, Me.BtnSQL2Excel, Me.BtnDTE2PDF, Me.BtnCorreos_SMTP, Me.Btn_CRV_Control_Ruta_Vehiculos, Me.Btn_Etiquetas_De_Barra, Me.BtnCrearFormatos, Me.Btn_DTE_Respuestas_XML, Me.Btn_Precios_PrestaShop, Me.Btn_Huella, Me.Btn_Pocket_PC, Me.Btn_Archivador, Me.Btn_Cierre_Reactivacion_Documentos, Me.Btn_Habilitar_Nvv_Para_Facturar})
         '
         '
         '
@@ -163,35 +161,6 @@ Partial Class Modulo_Programas_Especiales
         Me.BtnDTE2PDF.TileStyle.PaddingTop = 4
         Me.BtnDTE2PDF.TileStyle.TextColor = System.Drawing.Color.White
         Me.BtnDTE2PDF.TitleText = "BakApp"
-        '
-        'BtnCreditoNegocios
-        '
-        Me.BtnCreditoNegocios.Enabled = False
-        Me.BtnCreditoNegocios.Image = CType(resources.GetObject("BtnCreditoNegocios.Image"), System.Drawing.Image)
-        Me.BtnCreditoNegocios.ImageIndent = New System.Drawing.Point(8, -10)
-        Me.BtnCreditoNegocios.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.BtnCreditoNegocios.Name = "BtnCreditoNegocios"
-        Me.BtnCreditoNegocios.SymbolColor = System.Drawing.Color.Empty
-        Me.BtnCreditoNegocios.Text = "<font size=""+4""><b>CR. NEGOCIOS</b></font><br/><font size=""-1"">Créditos de negoci" &
-    "os<br/> </font>"
-        Me.BtnCreditoNegocios.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Yellow
-        Me.BtnCreditoNegocios.TileSize = New System.Drawing.Size(200, 100)
-        '
-        '
-        '
-        Me.BtnCreditoNegocios.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(181, Byte), Integer), CType(CType(69, Byte), Integer))
-        Me.BtnCreditoNegocios.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(181, Byte), Integer), CType(CType(69, Byte), Integer))
-        Me.BtnCreditoNegocios.TileStyle.BackColorGradientAngle = 45
-        Me.BtnCreditoNegocios.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(181, Byte), Integer), CType(CType(69, Byte), Integer))
-        Me.BtnCreditoNegocios.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(181, Byte), Integer), CType(CType(69, Byte), Integer))
-        Me.BtnCreditoNegocios.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.BtnCreditoNegocios.TileStyle.PaddingBottom = 4
-        Me.BtnCreditoNegocios.TileStyle.PaddingLeft = 4
-        Me.BtnCreditoNegocios.TileStyle.PaddingRight = 4
-        Me.BtnCreditoNegocios.TileStyle.PaddingTop = 4
-        Me.BtnCreditoNegocios.TileStyle.TextColor = System.Drawing.Color.White
-        Me.BtnCreditoNegocios.TitleText = "BakApp"
-        Me.BtnCreditoNegocios.Visible = False
         '
         'BtnCorreos_SMTP
         '
@@ -355,35 +324,6 @@ Partial Class Modulo_Programas_Especiales
         Me.Btn_Precios_PrestaShop.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Precios_PrestaShop.TitleText = "BakApp"
         '
-        'Btn_Revision_Compras_SII
-        '
-        Me.Btn_Revision_Compras_SII.Enabled = False
-        Me.Btn_Revision_Compras_SII.Image = CType(resources.GetObject("Btn_Revision_Compras_SII.Image"), System.Drawing.Image)
-        Me.Btn_Revision_Compras_SII.ImageIndent = New System.Drawing.Point(8, -6)
-        Me.Btn_Revision_Compras_SII.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_Revision_Compras_SII.Name = "Btn_Revision_Compras_SII"
-        Me.Btn_Revision_Compras_SII.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Revision_Compras_SII.Text = "<font size=""+4""><b>REVISION SII</b></font><br/><font size=""-1"">comparativo de com" &
-    "pras vs SII</font>"
-        Me.Btn_Revision_Compras_SII.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Yellow
-        Me.Btn_Revision_Compras_SII.TileSize = New System.Drawing.Size(200, 100)
-        '
-        '
-        '
-        Me.Btn_Revision_Compras_SII.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(203, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(57, Byte), Integer))
-        Me.Btn_Revision_Compras_SII.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(203, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(57, Byte), Integer))
-        Me.Btn_Revision_Compras_SII.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_Revision_Compras_SII.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(203, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(57, Byte), Integer))
-        Me.Btn_Revision_Compras_SII.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(203, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(57, Byte), Integer))
-        Me.Btn_Revision_Compras_SII.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_Revision_Compras_SII.TileStyle.PaddingBottom = 4
-        Me.Btn_Revision_Compras_SII.TileStyle.PaddingLeft = 4
-        Me.Btn_Revision_Compras_SII.TileStyle.PaddingRight = 4
-        Me.Btn_Revision_Compras_SII.TileStyle.PaddingTop = 4
-        Me.Btn_Revision_Compras_SII.TileStyle.TextColor = System.Drawing.Color.White
-        Me.Btn_Revision_Compras_SII.TitleText = "BakApp"
-        Me.Btn_Revision_Compras_SII.Visible = False
-        '
         'Btn_Huella
         '
         Me.Btn_Huella.Image = CType(resources.GetObject("Btn_Huella.Image"), System.Drawing.Image)
@@ -525,9 +465,9 @@ Partial Class Modulo_Programas_Especiales
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir, Me.BtnCambiarDeUsuario})
-        Me.Bar2.Location = New System.Drawing.Point(0, 515)
+        Me.Bar2.Location = New System.Drawing.Point(0, 527)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(842, 41)
+        Me.Bar2.Size = New System.Drawing.Size(1212, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 38
@@ -573,7 +513,7 @@ Partial Class Modulo_Programas_Especiales
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.MetroTilePanel1)
         Me.Name = "Modulo_Programas_Especiales"
-        Me.Size = New System.Drawing.Size(842, 556)
+        Me.Size = New System.Drawing.Size(1212, 568)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -585,7 +525,6 @@ Partial Class Modulo_Programas_Especiales
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
     Friend WithEvents BtnSalir As DevComponents.DotNetBar.ButtonItem
     Private WithEvents BtnDTE2PDF As DevComponents.DotNetBar.Metro.MetroTileItem
-    Private WithEvents BtnCreditoNegocios As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents BtnCorreos_SMTP As DevComponents.DotNetBar.Metro.MetroTileItem
     Friend WithEvents BtnCambiarDeUsuario As DevComponents.DotNetBar.ButtonItem
     Private WithEvents Btn_CRV_Control_Ruta_Vehiculos As DevComponents.DotNetBar.Metro.MetroTileItem
@@ -593,7 +532,6 @@ Partial Class Modulo_Programas_Especiales
     Private WithEvents BtnCrearFormatos As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_DTE_Respuestas_XML As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Precios_PrestaShop As DevComponents.DotNetBar.Metro.MetroTileItem
-    Private WithEvents Btn_Revision_Compras_SII As DevComponents.DotNetBar.Metro.MetroTileItem
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Private WithEvents Btn_Huella As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Pocket_PC As DevComponents.DotNetBar.Metro.MetroTileItem

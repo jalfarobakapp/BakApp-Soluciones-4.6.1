@@ -64,6 +64,15 @@ Public Class SolCompras_Documentos
     End Sub
 
     Private Sub Btn_Recomendacion_Compra_Click(sender As Object, e As EventArgs) Handles Btn_Recomendacion_Compra.Click
-        MessageBoxEx.Show(Me, "En construcción", "Bakapp", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        '    MessageBoxEx.Show(Me, "En construcción", "Bakapp", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+
+        If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre) Then
+
+            Dim Fm As New Frm_Formulario_Documento("FCC", csGlobales.Enum_Tipo_Documento.Compra, False, False, True)
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
+        End If
+
     End Sub
 End Class

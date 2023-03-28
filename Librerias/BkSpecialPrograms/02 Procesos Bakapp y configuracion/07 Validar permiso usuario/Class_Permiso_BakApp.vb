@@ -825,6 +825,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Stec0016", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Stec0017", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Stec0018", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Stec0019", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Scn00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Scn00002", _Objeto, _Formulario)
@@ -3615,6 +3616,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.SERVICIO_TECNICO.ToString
             Case "Stec0018"
                 _DescripcionPermiso = "EXPORTAR ORDENES DE TRABAJO A EXCEL"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SERVICIO_TECNICO, 6)
+                _NombreFamiliaPermiso = _Fml.SERVICIO_TECNICO.ToString
+            Case "Stec0019"
+                _DescripcionPermiso = "INGRESAR A CONFIGURACIONES DEL SIS. SERV. TECNICO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.SERVICIO_TECNICO, 6)
                 _NombreFamiliaPermiso = _Fml.SERVICIO_TECNICO.ToString
 
