@@ -19,10 +19,10 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
 
     Dim _Informe_Padre As Enum_Informe_Padre
 
-    Public Sub New(ByVal Informe_Padre As Enum_Informe_Padre,
-                   ByVal Nombre_Tabla_Paso As String,
-                   ByVal SqlFiltro As String,
-                   ByVal Unidad As Integer)
+    Public Sub New(Informe_Padre As Enum_Informe_Padre,
+                   Nombre_Tabla_Paso As String,
+                   SqlFiltro As String,
+                   Unidad As Integer)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -41,7 +41,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
 
     End Sub
 
-    Private Sub Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+    Private Sub Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
         If _Informe_Padre = Enum_Informe_Padre.Informe_Compromisos_No_Despachados Then
             Me.Text = "INFORME DE COMPROMISOS NO DESPACHADOS NIVEL DOCUMENTOS"
@@ -228,11 +228,11 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
 
     End Sub
 
-    Private Sub Btn_Excel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Excel.Click
+    Private Sub Btn_Excel_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Excel.Click
         ExportarTabla_JetExcel_Tabla(_Tbl_Detalle, Me, "Productos_Detalle")
     End Sub
 
-    Private Sub Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
 
         Dim _Nombre_Grilla = CType(sender, Control).Name
 
@@ -258,7 +258,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
 
     End Sub
 
-    Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Dim _Nombre_Grilla = CType(sender, Control).Name
         Dim _Fila As DataGridViewRow = sender.Rows(sender.CurrentRow.Index)
@@ -278,7 +278,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
 
     End Sub
 
-    Private Sub Btn_Estadisticas_Producto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Estadisticas_Producto.Click
+    Private Sub Btn_Estadisticas_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Estadisticas_Producto.Click
 
         Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
 
@@ -301,7 +301,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
 
     End Sub
 
-    Private Sub Btn_Ver_Documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ver_Documento.Click
+    Private Sub Btn_Ver_Documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_Documento.Click
 
         Dim _Fila As DataGridViewRow = Grilla_Documentos.Rows(Grilla_Documentos.CurrentRow.Index)
         Dim _New_Feer As Date

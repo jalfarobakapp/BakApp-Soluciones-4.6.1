@@ -20,7 +20,7 @@ Public Class Frm_St_Lista_Tecnicos_Talleres
 
     End Sub
 
-    Private Sub Frm_St_Lista_Tecnicos_Talleres_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_St_Lista_Tecnicos_Talleres_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Sb_Actualizar_Grilla()
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
@@ -86,7 +86,7 @@ Public Class Frm_St_Lista_Tecnicos_Talleres
 #End Region
 
 
-    Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _CodFuncionario = _Fila.Cells("CodFuncionario").Value
@@ -149,7 +149,7 @@ Public Class Frm_St_Lista_Tecnicos_Talleres
 
     End Sub
 
-    Private Sub Btn_Crear_Tecnico_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Crear_Tecnico.Click
+    Private Sub Btn_Crear_Tecnico_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Crear_Tecnico.Click
 
         If Fx_Tiene_Permiso(Me, "Stec0007") Then
             Dim Fm As New Frm_St_Mant_Tecnicos_Talleres(Frm_St_Mant_Tecnicos_Talleres.Accion.Nuevo)

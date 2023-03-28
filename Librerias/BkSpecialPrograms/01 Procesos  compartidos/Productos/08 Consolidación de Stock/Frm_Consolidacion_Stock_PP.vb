@@ -24,12 +24,12 @@ Public Class Frm_Consolidacion_Stock_PP
         Get
             Return _Ejecutar_Automaticamente
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Ejecutar_Automaticamente = value
         End Set
     End Property
 
-    Public Sub New(ByVal Filtro_In_Productos As String)
+    Public Sub New(Filtro_In_Productos As String)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -46,11 +46,11 @@ Public Class Frm_Consolidacion_Stock_PP
 
     End Sub
 
-    Private Sub Frm_Consolidacion_Stock_PP_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Consolidacion_Stock_PP_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Tiempo_Accion_Automatico.Enabled = _Ejecutar_Automaticamente
     End Sub
 
-    Sub Sb_Consolidar_Stock(ByVal Tabla_Producto As DataTable)
+    Sub Sb_Consolidar_Stock(Tabla_Producto As DataTable)
 
         Dim _SqlQuery As String
 
@@ -207,12 +207,12 @@ Public Class Frm_Consolidacion_Stock_PP
 
     End Sub
 
-    Private Function Stock_A_Una_Fecha_X_Producto(ByVal _Row_Producto As DataRow,
-                                                  ByVal _Empresa As String,
-                                                  ByVal _Sucursal As String,
-                                                  ByVal _Bodega As String,
-                                                  ByVal _Fecha As Date,
-                                                  ByVal _SQLquery As String) As Double()
+    Private Function Stock_A_Una_Fecha_X_Producto(_Row_Producto As DataRow,
+                                                  _Empresa As String,
+                                                  _Sucursal As String,
+                                                  _Bodega As String,
+                                                  _Fecha As Date,
+                                                  _SQLquery As String) As Double()
 
         Dim Stock_(1) As Double
 
@@ -262,11 +262,11 @@ Public Class Frm_Consolidacion_Stock_PP
 
     End Function
 
-    Private Sub BtnGenerar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnProcesar.Click
+    Private Sub BtnGenerar_Click(sender As System.Object, e As System.EventArgs) Handles BtnProcesar.Click
         Sb_Consolidar_Stock(_TblProductos)
     End Sub
 
-    Private Sub BtnCancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnCancelar.Click
+    Private Sub BtnCancelar_Click(sender As System.Object, e As System.EventArgs) Handles BtnCancelar.Click
         _Cancelar = True
     End Sub
 
@@ -274,8 +274,8 @@ Public Class Frm_Consolidacion_Stock_PP
         MyBase.Finalize()
     End Sub
 
-    Private Sub AddToLog(ByVal Accion As String,
-                         ByVal Descripcion As String)
+    Private Sub AddToLog(Accion As String,
+                         Descripcion As String)
 
         If String.IsNullOrEmpty(Accion) And String.IsNullOrEmpty(Descripcion) Then
             TxtLog.Text += "" & vbCrLf
@@ -289,7 +289,7 @@ Public Class Frm_Consolidacion_Stock_PP
 
     End Sub
 
-    Private Sub Tiempo_Accion_Automatico_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Tiempo_Accion_Automatico.Tick
+    Private Sub Tiempo_Accion_Automatico_Tick(sender As System.Object, e As System.EventArgs) Handles Tiempo_Accion_Automatico.Tick
         Tiempo_Accion_Automatico.Enabled = False
         If Not (_TblProductos Is Nothing) Then
             Sb_Consolidar_Stock(_TblProductos)

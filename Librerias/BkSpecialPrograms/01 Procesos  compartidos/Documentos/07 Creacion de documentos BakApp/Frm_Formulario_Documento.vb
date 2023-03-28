@@ -2507,7 +2507,7 @@ Public Class Frm_Formulario_Documento
                     .Columns("Precio").Visible = False
                     .Columns("DescuentoPorc").Visible = False
                     .Columns("DescuentoValor").Visible = False
-                    .Columns("Descripcion").Width += 80 + 50 + 70 + 90 '.Columns("Precio").Width + .Columns("DescuentoPorc").Width + .Columns("DescuentoValor").Width
+                    .Columns("Descripcion").Width += 80 + 50 + 70 + 90
                     .Columns(Total).Visible = False
                 End If
 
@@ -14054,10 +14054,10 @@ Public Class Frm_Formulario_Documento
 
                         ' Traspasamos los archivos adjuntos desde el documento Casi_Bakapp hacia el documento definitivo en Random
 
-                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Archivos (Idmaeedo, Nombre_Archivo, Archivo, Fecha, CodFuncionario) Then
-                            Select Case " & _Idmaeedo & ",Nombre_Archivo,Archivo,Fecha,CodFuncionario 
-                                        From " & _Global_BaseBk & "Zw_Casi_DocArc Where NombreEquipo = '" & _NombreEquipo & "' And En_Construccion = 1
-                                Delete " & _Global_BaseBk & "Zw_Casi_DocArc Where NombreEquipo = '" & _NombreEquipo & "' And En_Construccion = 1"
+                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Archivos (Idmaeedo, Nombre_Archivo, Archivo, Fecha, CodFuncionario)" & vbCrLf &
+                                       "Select " & _Idmaeedo & ",Nombre_Archivo,Archivo,Fecha,CodFuncionario " & vbCrLf &
+                                       "From " & _Global_BaseBk & "Zw_Casi_DocArc Where NombreEquipo = '" & _NombreEquipo & "' And En_Construccion = 1" & vbCrLf &
+                                       "Delete " & _Global_BaseBk & "Zw_Casi_DocArc Where NombreEquipo = '" & _NombreEquipo & "' And En_Construccion = 1"
                         _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
                     End If
@@ -21910,7 +21910,8 @@ Public Class Frm_Formulario_Documento
 
                     If _Aceptar Then
 
-                        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_PrestaShop_orders Where Codigo_Pagina = '" & _Codigo_Pagina & "' And Id_order = " & _Id_order & " And Reference <> ''"
+                        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_PrestaShop_orders" & vbCrLf &
+                                       "Where Codigo_Pagina = '" & _Codigo_Pagina & "' And Id_order = " & _Id_order & " And Reference <> ''"
                         Dim _Row_Orders As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                         If Not IsNothing(_Row_Orders) Then

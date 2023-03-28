@@ -128,7 +128,7 @@
 
     End Sub
 
-    Private Sub Sb_Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)

@@ -1510,7 +1510,7 @@ Public Class Frm_Demonio_DTEMonitor
         Txt_Log.Text = String.Empty
     End Sub
 
-    Private Sub MyWorker_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs)
+    Private Sub MyWorker_DoWork(sender As System.Object, e As System.ComponentModel.DoWorkEventArgs)
         'Add your codes here for the worker to execute
 
         If Not Chk_FirmarDocumentos.Checked Then
@@ -1558,7 +1558,7 @@ Public Class Frm_Demonio_DTEMonitor
 
     End Sub
 
-    Private Sub MyWorker_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs)
+    Private Sub MyWorker_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs)
         'Add your codes for the worker to execute after finishing the work.
         bgWorker.RunWorkerAsync()
     End Sub

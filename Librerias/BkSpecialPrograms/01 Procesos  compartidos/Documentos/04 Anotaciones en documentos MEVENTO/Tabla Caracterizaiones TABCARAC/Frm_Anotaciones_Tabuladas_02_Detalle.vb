@@ -1,5 +1,4 @@
-﻿'Imports Lib_Bakapp_VarClassFunc
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_Anotaciones_Tabuladas_02_Detalle
 
@@ -26,7 +25,7 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
 
     Public _TblDetalle As DataTable
 
-    Public Sub New(ByVal Kotabla As String, ByVal Apertura As Tipo_Apertura)
+    Public Sub New(Kotabla As String, Apertura As Tipo_Apertura)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -44,7 +43,7 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
 
     End Sub
 
-    Private Sub Frm_Anotaciones_Tabuladas_02_Detalle_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Anotaciones_Tabuladas_02_Detalle_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
@@ -61,7 +60,7 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
     End Sub
 
 
-    Private Sub Sb_Grilla_MouseDown_MenuEditar(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_MouseDown_MenuEditar(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
 
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
@@ -76,7 +75,7 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
         End If
     End Sub
 
-    Private Sub Sb_Grilla_MouseDown_EnlaceExterno(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_MouseDown_EnlaceExterno(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
 
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
@@ -99,7 +98,7 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
     End Sub
 
 
-    Private Sub Btn_Crear_Tabla_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Crear_Tabla.Click
+    Private Sub Btn_Crear_Tabla_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Crear_Tabla.Click
 
         Dim Fm As New Frm_Anotaciones_Tabuladas_03_Crear_Tabla_Enc_Det(
         Frm_Anotaciones_Tabuladas_03_Crear_Tabla_Enc_Det.Tipo_Tabla.Detalle,
@@ -117,7 +116,7 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
         Fm.Dispose()
     End Sub
 
-    Private Sub Btn_Editar_tabla_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Editar_tabla.Click
+    Private Sub Btn_Editar_tabla_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Editar_tabla.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
@@ -141,7 +140,7 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
 
     End Sub
 
-    Private Sub Btn_Eliminar_tabla_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Eliminar_tabla.Click
+    Private Sub Btn_Eliminar_tabla_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Eliminar_tabla.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Kotabla As String = _Fila.Cells("KOTABLA").Value
@@ -151,7 +150,7 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
                              MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = Windows.Forms.DialogResult.Yes Then
 
             Consulta_sql = "DELETE TABCARAC WHERE KOTABLA = '" & _Kotabla & "' And KOCARAC = '" & _Kocarac & "'"
-            If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
+            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
                 Beep()
                 ToastNotification.Show(Me, "CLAIFICACION ELIMINADA CORRECTAMENTE", My.Resources.ok_button,
                                        1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
@@ -172,7 +171,7 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
         End If
 
 
-        _TblDetalle = _SQL.Fx_Get_Tablas(Consulta_sql)
+        _TblDetalle = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla
 
@@ -215,13 +214,13 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
 
     End Sub
 
-    Private Sub Frm_Anotaciones_Tabuladas_02_Detalle_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Anotaciones_Tabuladas_02_Detalle_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Btn_Incorporar_Linea_Activa_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Incorporar_Linea_Activa.Click
+    Private Sub Btn_Incorporar_Linea_Activa_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Incorporar_Linea_Activa.Click
         Grilla.EndEdit()
         _Incorporacion = Incorporacion_clasificaciones.Linea_Activa
         _Incorporar = True
@@ -239,7 +238,7 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
         Me.Close()
     End Sub
 
-    Private Sub Btn_Incorporar_Solo_Tickeados_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Incorporar_Solo_Tickeados.Click
+    Private Sub Btn_Incorporar_Solo_Tickeados_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Incorporar_Solo_Tickeados.Click
         Grilla.EndEdit()
         Dim _Tickeados = 0
         For Each _Fila As DataGridViewRow In Grilla.Rows
@@ -258,7 +257,7 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
 
     End Sub
 
-    Private Sub Btn_Incorporar_todas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Incorporar_todas.Click
+    Private Sub Btn_Incorporar_todas_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Incorporar_todas.Click
         Grilla.EndEdit()
         _Incorporacion = Incorporacion_clasificaciones.Todas
         _Incorporar = True
@@ -268,24 +267,33 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
         Me.Close()
     End Sub
 
-    Private Sub Grilla_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEndEdit
+    Private Sub Grilla_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEndEdit
 
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
         If _Cabeza = "NOKOCARAC" Then
-            Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
-            _Fila.Cells("Chk").Value = True
-            _Fila.Cells("NOKOCARAC").Value = Mid(_Fila.Cells("NOKOCARAC").Value, 1, 50)
-        End If
 
+            Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+
+            Dim _Nokocarac As String = NuloPorNro(_Fila.Cells("NOKOCARAC").Value, "")
+
+            If String.IsNullOrEmpty(_Nokocarac) Then
+                _Fila.Cells("Chk").Value = False
+            Else
+                _Fila.Cells("Chk").Value = True
+            End If
+
+            _Fila.Cells("NOKOCARAC").Value = Mid(_Nokocarac, 1, 50)
+
+        End If
 
     End Sub
 
-    Private Sub Grilla_MouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Grilla.MouseUp
+    Private Sub Grilla_MouseUp(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles Grilla.MouseUp
         Grilla.EndEdit()
     End Sub
 
-    Private Sub Btn_Enlazar_documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Enlazar_documento.Click
+    Private Sub Btn_Enlazar_documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Enlazar_documento.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
@@ -310,7 +318,7 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
     End Sub
 
 
-    Private Sub Btn_Quitar_Link_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Quitar_Link.Click
+    Private Sub Btn_Quitar_Link_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Quitar_Link.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
@@ -320,7 +328,7 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
 
     End Sub
 
-    Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)

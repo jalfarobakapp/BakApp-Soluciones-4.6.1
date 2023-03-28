@@ -33,7 +33,7 @@ Public Class Frm_St_Estado_02_Asignacion
         Get
             Return _DsDocumento
         End Get
-        Set(ByVal value As DataSet)
+        Set(value As DataSet)
             _DsDocumento = value
 
             _Row_Encabezado = _DsDocumento.Tables(0).Rows(0)
@@ -48,7 +48,7 @@ Public Class Frm_St_Estado_02_Asignacion
         Get
             Return Imagenes_32x32
         End Get
-        Set(ByVal value As ImageList)
+        Set(value As ImageList)
             Imagenes_32x32 = value
         End Set
     End Property
@@ -57,7 +57,7 @@ Public Class Frm_St_Estado_02_Asignacion
         Get
             Return _Grabar
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
 
         End Set
     End Property
@@ -66,13 +66,13 @@ Public Class Frm_St_Estado_02_Asignacion
         Get
             Return _Editando_documento
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Editando_documento = value
         End Set
     End Property
 
 #End Region
-    Public Sub New(ByVal Id_Ot As Integer, ByVal Accion As Accion)
+    Public Sub New(Id_Ot As Integer, Accion As Accion)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -83,7 +83,7 @@ Public Class Frm_St_Estado_02_Asignacion
 
     End Sub
 
-    Private Sub Frm_St_Estado_02_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_St_Estado_02_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         If _Accion = Accion.Nuevo Then
             Sb_Cargar_Tecnicos("")
@@ -128,8 +128,8 @@ Public Class Frm_St_Estado_02_Asignacion
 
     End Sub
 
-    Sub Sb_Cargar_Tecnicos(ByVal _Tecnico As String,
-                           Optional ByVal _Solo_Este_Tecnico As Boolean = False)
+    Sub Sb_Cargar_Tecnicos(_Tecnico As String,
+                           Optional _Solo_Este_Tecnico As Boolean = False)
 
         Dim _Condicion = String.Empty
 
@@ -149,11 +149,11 @@ Public Class Frm_St_Estado_02_Asignacion
 
     End Sub
 
-    Private Sub Chk_Taller_Externo_CheckedChanging(ByVal sender As System.Object, ByVal e As DevComponents.DotNetBar.Controls.CheckBoxXChangeEventArgs)
+    Private Sub Chk_Taller_Externo_CheckedChanging(sender As System.Object, e As DevComponents.DotNetBar.Controls.CheckBoxXChangeEventArgs)
         e.Cancel = True
     End Sub
 
-    Private Sub Chk_Tec_Domicilio_CheckedChanging(ByVal sender As System.Object, ByVal e As DevComponents.DotNetBar.Controls.CheckBoxXChangeEventArgs)
+    Private Sub Chk_Tec_Domicilio_CheckedChanging(sender As System.Object, e As DevComponents.DotNetBar.Controls.CheckBoxXChangeEventArgs)
         e.Cancel = True
     End Sub
 
@@ -389,13 +389,13 @@ Public Class Frm_St_Estado_02_Asignacion
 
     End Function
 
-    Private Sub Frm_St_Estado_02_Asignacion_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_St_Estado_02_Asignacion_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Btn_Tecnicos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Tecnicos.Click
+    Private Sub Btn_Tecnicos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Tecnicos.Click
 
         If Fx_Tiene_Permiso(Me, "Stec0006") Then
             Dim Fm As New Frm_St_Lista_Tecnicos_Talleres 'Frm_St_Mant_Tecnicos_Talleres
@@ -417,7 +417,7 @@ Public Class Frm_St_Estado_02_Asignacion
 
     End Sub
 
-    Private Sub Btn_Editar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Editar.Click
+    Private Sub Btn_Editar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Editar.Click
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_OT_Estados", "Id_Ot = " & _Id_Ot & " And CodEstado = 'P'")
 
         If CBool(_Reg) Then
@@ -449,12 +449,12 @@ Public Class Frm_St_Estado_02_Asignacion
         Me.Refresh()
     End Sub
 
-    Private Sub Btn_Cancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cancelar.Click
+    Private Sub Btn_Cancelar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cancelar.Click
         Me.Close()
     End Sub
 
 
-    Private Sub Btn_Direccion_Servicio_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Direccion_Servicio.Click
+    Private Sub Btn_Direccion_Servicio_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Direccion_Servicio.Click
 
         Dim Fm As New Frm_St_Documento_Dir_Serv_Domicilio
         Fm.Pro_DsDocumento = _DsDocumento

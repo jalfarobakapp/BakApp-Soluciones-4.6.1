@@ -244,7 +244,7 @@ Public Class Frm_St_Recetas
         Call Grilla_Recetas_CellDoubleClick(Nothing, Nothing)
     End Sub
 
-    Private Sub Sb_Grilla_Recetas_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_Recetas_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
@@ -256,7 +256,7 @@ Public Class Frm_St_Recetas
         End If
     End Sub
 
-    Private Sub Sb_Grilla_Productos_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_Productos_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)

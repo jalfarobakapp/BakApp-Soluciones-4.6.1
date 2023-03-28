@@ -53,9 +53,9 @@ Public Class Clas_Estructura_Base_De_Datos
         End Set
     End Property
 
-    Sub Sb_Revisar_Tabla(ByVal _Formulario As Form,
-                         ByVal _Tabla As String,
-                         ByVal _Modificar As Boolean,
+    Sub Sb_Revisar_Tabla(_Formulario As Form,
+                         _Tabla As String,
+                         _Modificar As Boolean,
                          Optional ByRef _Label1 As Object = Nothing,
                          Optional ByRef _Label2 As Object = Nothing)
 
@@ -307,9 +307,9 @@ Public Class Clas_Estructura_Base_De_Datos
 
     End Sub
 
-    Sub Sb_Revisar_Tabla2(ByVal _Formulario As Form,
-                         ByVal _Tabla As String,
-                         ByVal _Modificar As Boolean,
+    Sub Sb_Revisar_Tabla2(_Formulario As Form,
+                         _Tabla As String,
+                         _Modificar As Boolean,
                          Optional ByRef _Label1 As Object = Nothing,
                          Optional ByRef _Label2 As Object = Nothing)
 

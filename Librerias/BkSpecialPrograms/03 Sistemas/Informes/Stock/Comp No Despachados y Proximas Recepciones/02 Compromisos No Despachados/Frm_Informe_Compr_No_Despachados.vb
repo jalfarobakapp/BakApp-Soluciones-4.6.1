@@ -42,7 +42,7 @@ Public Class Frm_Informe_Compr_No_Despachados
         Get
             Return _Informe_Analisis
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Informe_Analisis = value
         End Set
     End Property
@@ -79,7 +79,7 @@ Public Class Frm_Informe_Compr_No_Despachados
 
     End Sub
 
-    Private Sub Frm_Informe_Compr_No_Despachados_01_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Informe_Compr_No_Despachados_01_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Dim _Fecha_Hoy = FechaDelServidor()
 
@@ -159,7 +159,7 @@ Public Class Frm_Informe_Compr_No_Despachados
 
     End Function
 
-    Private Sub Btn_Filtros_Bodega_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Filtros_Bodega.Click
+    Private Sub Btn_Filtros_Bodega_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtros_Bodega.Click
         Dim Fm As New Frm_Filtro_Especial_Informes(Frm_Filtro_Especial_Informes._Tabla_Fl._Bodegas, False)
         Fm.Pro_Tbl_Filtro = _Tbl_Filtro_Bodegas
 
@@ -183,7 +183,7 @@ Public Class Frm_Informe_Compr_No_Despachados
         Fm.Dispose()
     End Sub
 
-    Private Sub Btn_Clasificacion_Productos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Clasificacion_Productos.Click
+    Private Sub Btn_Clasificacion_Productos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Clasificacion_Productos.Click
         Dim Fm As New Frm_Filtro_Especial_Productos
         Fm.Pro_Filtro_Clalibpr_Todas = _Filtro_Clalibpr_Todas
         Fm.Pro_Filtro_Marcas_Todas = _Filtro_Marcas_Todas
@@ -214,7 +214,7 @@ Public Class Frm_Informe_Compr_No_Despachados
         Fm.Dispose()
     End Sub
 
-    Private Sub Btn_Ejecutar_Informe_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ejecutar_Informe.Click
+    Private Sub Btn_Ejecutar_Informe_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ejecutar_Informe.Click
 
         Dim _Ud As Integer
 

@@ -18,7 +18,7 @@ Public Class Frm_Cerrar_Abrir_Documentos
         End Get
     End Property
 
-    Public Sub New(ByVal Idmaeedo As Integer)
+    Public Sub New(Idmaeedo As Integer)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -35,7 +35,7 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
     End Sub
 
-    Private Sub Frm_Cerrar_Documento_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Cerrar_Documento_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         InsertarBotonenGrilla(Grilla_Encabezado, "BtnImagen", "Est.", "Estado", 0, _Tipo_Boton.Imagen)
         InsertarBotonenGrilla(Grilla_Detalle, "BtnImagen", "Est.", "Estado", 0, _Tipo_Boton.Imagen)
@@ -261,13 +261,13 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
     End Sub
 
-    Private Sub Frm_Cerrar_Documento_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Cerrar_Documento_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Grilla_Detalle_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Detalle.CellDoubleClick
+    Private Sub Grilla_Detalle_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Detalle.CellDoubleClick
 
         Dim _Idmaeedo = _Row_Maeedo.Item("IDMAEEDO")
         Dim _Fila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.CurrentRow.Index)
@@ -352,7 +352,7 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
     End Sub
 
-    Private Sub Sb_Grilla_Detalle_CellEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Sb_Grilla_Detalle_CellEnter(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Dim _Fila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.CurrentRow.Index)
         Dim _Idmaeddo = _Fila.Cells("IDMAEDDO").Value
@@ -370,7 +370,7 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
     End Sub
 
-    Private Sub Btn_Cerrar_Documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cerrar_Documento.Click
+    Private Sub Btn_Cerrar_Documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cerrar_Documento.Click
 
         Dim _Idmaeedo = _Row_Maeedo.Item("IDMAEEDO")
 
@@ -402,7 +402,7 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
     End Sub
 
-    Private Sub Btn_Abrir_Documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Abrir_Documento.Click
+    Private Sub Btn_Abrir_Documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Abrir_Documento.Click
 
         Dim _Idmaeedo = _Row_Maeedo.Item("IDMAEEDO")
 
@@ -436,7 +436,7 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
     End Sub
 
-    Function Fx_Revisar_Linea_Cerrada(ByVal _Idmaeddo As Integer, ByVal _Abrir As Boolean) As Boolean
+    Function Fx_Revisar_Linea_Cerrada(_Idmaeddo As Integer, _Abrir As Boolean) As Boolean
 
         Consulta_sql = "Select Top 1 * From MAEDDO Where IDMAEDDO = " & _Idmaeddo
         Dim _Row = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -468,7 +468,7 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
     End Function
 
-    Function Fx_Revisar_Documento_Cerrado(ByVal _Idmaeedo As Integer, ByVal _Abrir As Boolean) As Boolean
+    Function Fx_Revisar_Documento_Cerrado(_Idmaeedo As Integer, _Abrir As Boolean) As Boolean
 
         Consulta_sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
         Dim _Row = _Sql.Fx_Get_DataRow(Consulta_sql)
