@@ -41,6 +41,7 @@ Partial Class Frm_ImpBarras_PorProducto
         Me.Grupo_Lista_Precios = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.CmbLista = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.Chk_Imprimir_Todas_Las_Ubicaciones = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_ImprimiPrecioFuturo = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo_Ubicaciones.SuspendLayout()
         Me.GroupPanel2.SuspendLayout()
@@ -55,9 +56,9 @@ Partial Class Frm_ImpBarras_PorProducto
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnImprimirEtiqueta, Me.Btn_imprimir_Archivo, Me.BtnLimpiar, Me.BtnBuscarProducto, Me.BtnSalir})
-        Me.Bar1.Location = New System.Drawing.Point(0, 480)
+        Me.Bar1.Location = New System.Drawing.Point(0, 491)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(603, 41)
+        Me.Bar1.Size = New System.Drawing.Size(600, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010
         Me.Bar1.TabIndex = 66
@@ -80,7 +81,7 @@ Partial Class Frm_ImpBarras_PorProducto
         Me.Btn_imprimir_Archivo.Image = CType(resources.GetObject("Btn_imprimir_Archivo.Image"), System.Drawing.Image)
         Me.Btn_imprimir_Archivo.ImageAlt = CType(resources.GetObject("Btn_imprimir_Archivo.ImageAlt"), System.Drawing.Image)
         Me.Btn_imprimir_Archivo.Name = "Btn_imprimir_Archivo"
-        Me.Btn_imprimir_Archivo.Text = "Imprimir a un archivo"
+        Me.Btn_imprimir_Archivo.Tooltip = "Imprimir a un archivo"
         '
         'BtnLimpiar
         '
@@ -246,7 +247,7 @@ Partial Class Frm_ImpBarras_PorProducto
         Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel3.Controls.Add(Me.Cmbetiquetas)
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel3.Location = New System.Drawing.Point(9, 407)
+        Me.GroupPanel3.Location = New System.Drawing.Point(9, 430)
         Me.GroupPanel3.Name = "GroupPanel3"
         Me.GroupPanel3.Size = New System.Drawing.Size(582, 50)
         '
@@ -301,7 +302,7 @@ Partial Class Frm_ImpBarras_PorProducto
         Me.Grupo_Lista_Precios.DisabledBackColor = System.Drawing.Color.Empty
         Me.Grupo_Lista_Precios.Location = New System.Drawing.Point(273, 343)
         Me.Grupo_Lista_Precios.Name = "Grupo_Lista_Precios"
-        Me.Grupo_Lista_Precios.Size = New System.Drawing.Size(135, 58)
+        Me.Grupo_Lista_Precios.Size = New System.Drawing.Size(318, 58)
         '
         '
         '
@@ -342,7 +343,7 @@ Partial Class Frm_ImpBarras_PorProducto
         Me.CmbLista.ItemHeight = 16
         Me.CmbLista.Location = New System.Drawing.Point(3, 9)
         Me.CmbLista.Name = "CmbLista"
-        Me.CmbLista.Size = New System.Drawing.Size(123, 22)
+        Me.CmbLista.Size = New System.Drawing.Size(306, 22)
         Me.CmbLista.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.CmbLista.TabIndex = 75
         '
@@ -354,19 +355,40 @@ Partial Class Frm_ImpBarras_PorProducto
         '
         '
         Me.Chk_Imprimir_Todas_Las_Ubicaciones.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Imprimir_Todas_Las_Ubicaciones.CheckBoxImageChecked = CType(resources.GetObject("Chk_Imprimir_Todas_Las_Ubicaciones.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Imprimir_Todas_Las_Ubicaciones.FocusCuesEnabled = False
         Me.Chk_Imprimir_Todas_Las_Ubicaciones.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Imprimir_Todas_Las_Ubicaciones.Location = New System.Drawing.Point(421, 343)
+        Me.Chk_Imprimir_Todas_Las_Ubicaciones.Location = New System.Drawing.Point(9, 407)
         Me.Chk_Imprimir_Todas_Las_Ubicaciones.Name = "Chk_Imprimir_Todas_Las_Ubicaciones"
-        Me.Chk_Imprimir_Todas_Las_Ubicaciones.Size = New System.Drawing.Size(170, 17)
+        Me.Chk_Imprimir_Todas_Las_Ubicaciones.Size = New System.Drawing.Size(169, 17)
         Me.Chk_Imprimir_Todas_Las_Ubicaciones.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Imprimir_Todas_Las_Ubicaciones.TabIndex = 73
         Me.Chk_Imprimir_Todas_Las_Ubicaciones.Text = "Imprimir todas las ubicaciones"
+        '
+        'Chk_ImprimiPrecioFuturo
+        '
+        Me.Chk_ImprimiPrecioFuturo.AutoSize = True
+        Me.Chk_ImprimiPrecioFuturo.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_ImprimiPrecioFuturo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_ImprimiPrecioFuturo.CheckBoxImageChecked = CType(resources.GetObject("Chk_ImprimiPrecioFuturo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_ImprimiPrecioFuturo.FocusCuesEnabled = False
+        Me.Chk_ImprimiPrecioFuturo.ForeColor = System.Drawing.Color.Black
+        Me.Chk_ImprimiPrecioFuturo.Location = New System.Drawing.Point(273, 407)
+        Me.Chk_ImprimiPrecioFuturo.Name = "Chk_ImprimiPrecioFuturo"
+        Me.Chk_ImprimiPrecioFuturo.Size = New System.Drawing.Size(145, 17)
+        Me.Chk_ImprimiPrecioFuturo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_ImprimiPrecioFuturo.TabIndex = 74
+        Me.Chk_ImprimiPrecioFuturo.Text = "Imprimir precios FUTURO"
         '
         'Frm_ImpBarras_PorProducto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(603, 521)
+        Me.ClientSize = New System.Drawing.Size(600, 532)
+        Me.Controls.Add(Me.Chk_ImprimiPrecioFuturo)
         Me.Controls.Add(Me.Chk_Imprimir_Todas_Las_Ubicaciones)
         Me.Controls.Add(Me.Grupo_Lista_Precios)
         Me.Controls.Add(Me.GroupPanel3)
@@ -409,4 +431,5 @@ Partial Class Frm_ImpBarras_PorProducto
     Friend WithEvents CmbBodega As DevComponents.DotNetBar.Controls.ComboBoxEx
     Friend WithEvents Cmbetiquetas As DevComponents.DotNetBar.Controls.ComboBoxEx
     Friend WithEvents CmbLista As DevComponents.DotNetBar.Controls.ComboBoxEx
+    Friend WithEvents Chk_ImprimiPrecioFuturo As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

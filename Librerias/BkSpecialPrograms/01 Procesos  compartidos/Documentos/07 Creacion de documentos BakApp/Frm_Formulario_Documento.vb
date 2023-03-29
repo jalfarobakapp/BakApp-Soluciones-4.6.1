@@ -11832,6 +11832,10 @@ Public Class Frm_Formulario_Documento
 
                             Dim _TipoMoneda = _TblEncabezado.Rows(0).Item("TipoMoneda")
 
+                            If Not Fx_Revisar_encabezado() Then
+                                Return
+                            End If
+
                             If Fx_Cambiar_ListaPrecios(_TipoMoneda) Then
 
                                 Dim _CodLista = _TblEncabezado.Rows(0).Item("ListaPrecios")
@@ -13145,7 +13149,7 @@ Public Class Frm_Formulario_Documento
 
             'If Fx_Tiene_Permiso(Me, "Bkp00009") Then
 
-            Dim Fm As Object
+            Dim Fm As Frm_SeleccionarListaPrecios 'Object
 
             Dim _Lista_Seleccionada As DataTable
 
@@ -13157,6 +13161,7 @@ Public Class Frm_Formulario_Documento
 
                     Fm = New Frm_SeleccionarListaPrecios(Frm_SeleccionarListaPrecios.Enum_Tipo_Lista.Costo, False, True)
 
+
                 Case csGlobales.Enum_Tipo_Documento.Venta,
                      csGlobales.Enum_Tipo_Documento.Guia_Despacho,
                      csGlobales.Enum_Tipo_Documento.Guia_Despacho_Devolucion
@@ -13165,6 +13170,8 @@ Public Class Frm_Formulario_Documento
 
             End Select
 
+            Fm.NoPedirPermiso = True
+
             Fm.ShowDialog(Me)
             _Lista_Seleccionada = Fm.Pro_Tbl_Listas_Seleccionadas
 
@@ -13172,6 +13179,12 @@ Public Class Frm_Formulario_Documento
 
                 Dim _Tipo_Moneda As String = _Lista_Seleccionada.Rows(0).Item("Timolt")
                 Dim _Kolt As String = _Lista_Seleccionada.Rows(0).Item("Lista")
+
+                Dim _PermisoLc As String = Fm.Permiso
+
+                If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, _PermisoLc, Nothing) Then
+                    Return False
+                End If
 
                 If _Timolt <> _Tipo_Moneda Then
                     If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00036", Nothing) Then

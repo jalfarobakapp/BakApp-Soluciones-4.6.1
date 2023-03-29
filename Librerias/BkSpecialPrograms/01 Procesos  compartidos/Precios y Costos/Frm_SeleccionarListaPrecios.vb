@@ -24,6 +24,9 @@ Public Class Frm_SeleccionarListaPrecios
         End Get
     End Property
 
+    Public Property NoPedirPermiso As Boolean
+    Public Property Permiso As String
+
     Public Sub New(Tipo_Listas As Enum_Tipo_Lista,
                    Multiseleccion As Boolean,
                    Ver_Mis_Listas As Boolean)
@@ -140,12 +143,16 @@ Public Class Frm_SeleccionarListaPrecios
             Dim _Permiso As String = _Fila.Cells("Permiso").Value
             Dim _Lista As String = _Fila.Cells("Lista").Value
 
-            If Not Fx_Tiene_Permiso(Me, _Permiso, , False) Then
+            If Not NoPedirPermiso Then
 
-                e.Cancel = True
+                If Not Fx_Tiene_Permiso(Me, _Permiso, , False) Then
 
-                ToastNotification.Show(Me, "NO TIENE PERMISOS PARA TRABAJAR CON LA LISTA " & _Lista, My.Resources.cross,
-                           2 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
+                    e.Cancel = True
+
+                    ToastNotification.Show(Me, "NO TIENE PERMISOS PARA TRABAJAR CON LA LISTA " & _Lista, My.Resources.cross,
+                               2 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
+
+                End If
 
             End If
 
@@ -159,22 +166,34 @@ Public Class Frm_SeleccionarListaPrecios
 
             Dim _Fila As DataGridViewRow = GrillaListas.Rows(GrillaListas.CurrentRow.Index)
 
-            Dim _Permiso As String = _Fila.Cells("Permiso").Value
+            Permiso = _Fila.Cells("Permiso").Value
 
-            If Fx_Tiene_Permiso(Me, _Permiso) Then
+            Dim _TienePermiso As Boolean
 
-                Dim _Lista = _Fila.Cells("Lista").Value
-
-                Consulta_sql = "Select Cast(1 as Bit) As Seleccionada,'Lp-'+KOLT As Permiso,TILT As Tipo,KOLT As Lista,NOKOLT As Nombre_Lista," &
-                                "Case When MELT = 'N' Then 'Netos' Else 'Brutos' End as Valores,MELT As Melt,MOLT as Molt,TIMOLT as Timolt" & vbCrLf &
-                                "From TABPP" & vbCrLf &
-                                "Where KOLT = '" & _Lista & "'"
-
-                _Tbl_Listas_Seleccionadas = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-                Me.Close()
-
+            If NoPedirPermiso Then
+                _TienePermiso = True
+            Else
+                _TienePermiso = Fx_Tiene_Permiso(Me, _Permiso)
             End If
+
+            If Not _TienePermiso Then
+                Return
+            End If
+
+            'If Fx_Tiene_Permiso(Me, _Permiso) Then
+
+            Dim _Lista = _Fila.Cells("Lista").Value
+
+            Consulta_sql = "Select Cast(1 as Bit) As Seleccionada,'Lp-'+KOLT As Permiso,TILT As Tipo,KOLT As Lista,NOKOLT As Nombre_Lista," &
+                            "Case When MELT = 'N' Then 'Netos' Else 'Brutos' End as Valores,MELT As Melt,MOLT as Molt,TIMOLT as Timolt" & vbCrLf &
+                            "From TABPP" & vbCrLf &
+                            "Where KOLT = '" & _Lista & "'"
+
+            _Tbl_Listas_Seleccionadas = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            Me.Close()
+
+            'End If
 
         End If
 
