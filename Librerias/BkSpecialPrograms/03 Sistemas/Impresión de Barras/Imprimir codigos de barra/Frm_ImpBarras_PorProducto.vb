@@ -45,6 +45,10 @@ Public Class Frm_ImpBarras_PorProducto
         End Set
     End Property
 
+    Public Property ImprimirDesdePrecioFuturo As Boolean
+    Public Property ListaPrecios As String
+    Public Property IdPrecioFuturo As Integer
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -73,6 +77,9 @@ Public Class Frm_ImpBarras_PorProducto
                        "Select 'UC' As Padre,'ULTIMA COMPRA' As Hijo Union" & vbCrLf &
                        "SELECT KOLT As Padre,KOLT+'-'+NOKOLT AS Hijo FROM TABPP"
         CmbLista.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        CmbLista.SelectedValue = ListaPrecios
+
+        Chk_ImprimiPrecioFuturo.Checked = ImprimirDesdePrecioFuturo
 
         caract_combo(Cmbetiquetas)
         Consulta_sql = "SELECT NombreEtiqueta AS Padre,NombreEtiqueta+', Cantidad de etiquetas '+RTRIM(LTRIM(STR(CantPorLinea))) AS Hijo" & vbCrLf &
@@ -286,7 +293,8 @@ Public Class Frm_ImpBarras_PorProducto
                                                   _Sucursal,
                                                   _Bodega,
                                                   _Codigo_Ubic,
-                                                  Chk_Imprimir_Todas_Las_Ubicaciones.Checked)
+                                                  Chk_Imprimir_Todas_Las_Ubicaciones.Checked,
+                                                  Chk_ImprimiPrecioFuturo.Checked)
 
 
                     Next

@@ -144,12 +144,17 @@ Public Class Frm_PrecioLCFuturoGrabar
         Dim _FechaProgramada As String = Format(Dtp_FechaProgramada.Value, "yyyyMMdd")
         Dim _FechaHoy As String = Format(_FechaServidor, "yyyyMMdd")
 
+
+        Dim _FP = Dtp_FechaProgramada.Value.CompareTo(_FechaServidor)
+        Dim _FS = _FechaServidor.CompareTo(Dtp_FechaProgramada.Value)
+        Dim _FSS = _FechaServidor.CompareTo(_FechaServidor)
+
         If _FechaHoy = _FechaProgramada Then
             MessageBoxEx.Show(Me, "La fecha de programación no puede ser igual a la fecha de hoy", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
-        If FormatDateTime(Dtp_FechaProgramada.Value, DateFormat.ShortDate) < FormatDateTime(_FechaServidor, DateFormat.ShortDate) Then
+        If _FP <= 0 Then
             MessageBoxEx.Show(Me, "La fecha de programación no puede ser menor a la fecha " & _FechaServidor.ToShortDateString, "Validación",
                                   MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return

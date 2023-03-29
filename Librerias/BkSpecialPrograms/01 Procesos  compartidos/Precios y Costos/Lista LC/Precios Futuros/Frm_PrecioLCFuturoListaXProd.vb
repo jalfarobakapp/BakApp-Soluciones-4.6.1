@@ -153,4 +153,19 @@ Public Class Frm_PrecioLCFuturoListaXProd
         End If
     End Sub
 
+    Private Sub Btn_ImprimirCodBarras_Click(sender As Object, e As EventArgs) Handles Btn_ImprimirCodBarras.Click
+
+        Consulta_sql = "Select Cast(1 As Bit) As Chk,'" & _RowProducto.Item("KOPR") & "' As Codigo,'" & _RowProducto.Item("KOPR") & "' As Descripcion"
+        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        Dim Fm As New Frm_ImpBarras_PorProducto
+        Fm.Pro_Tbl_Filtro_Productos = _Tbl
+        Fm.ImprimirDesdePrecioFuturo = True
+        Fm.ListaPrecios = "PB7"
+        Fm.Pro_Cantidad_Uno = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
 End Class
