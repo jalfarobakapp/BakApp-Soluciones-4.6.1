@@ -180,4 +180,5 @@ Public Class Sistema_CodBarras
     Private Sub BtnImpBarras_Ubicaciones_Click(sender As Object, e As EventArgs) Handles BtnImpBarras_Ubicaciones.Click
         Sb_ImpBarras_Ubicaciones(False, "")
     End Sub
+
 End Class

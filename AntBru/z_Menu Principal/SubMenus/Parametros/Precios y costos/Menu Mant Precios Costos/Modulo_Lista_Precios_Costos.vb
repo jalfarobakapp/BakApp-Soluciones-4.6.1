@@ -10,12 +10,12 @@ Public Class Modulo_Lista_Precios_Costos
         Get
             Return _Menu_Extra
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Menu_Extra = value
         End Set
     End Property
 
-    Public Sub New(ByVal Fm_Menu_Padre As Metro.MetroAppForm)
+    Public Sub New(Fm_Menu_Padre As Metro.MetroAppForm)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -27,11 +27,11 @@ Public Class Modulo_Lista_Precios_Costos
     Private Sub Modulo_Lista_Precios_Costos_Load(sender As Object, e As EventArgs) Handles Me.Load
 
         MetroTileItem1.Visible = (RutEmpresa = "77458040-9" Or RutEmpresa = "07251245-6" Or RutEmpresa = "77634877-5" Or RutEmpresa = "77634879-1")
-        MetroTileItem2.Visible = (RutEmpresa = "77458040-9" Or RutEmpresa = "07251245-6" Or RutEmpresa = "77634877-5" Or RutEmpresa = "77634879-1")
+        MetroTileItem2.Visible = False '(RutEmpresa = "77458040-9" Or RutEmpresa = "07251245-6" Or RutEmpresa = "77634877-5" Or RutEmpresa = "77634879-1")
 
     End Sub
 
-    Private Sub BtnConfListas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnConfListas.Click
+    Private Sub BtnConfListas_Click(sender As System.Object, e As System.EventArgs) Handles BtnConfListas.Click
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Pre0009") Then
             Dim Fm As New Frm_MantListas
             Fm.ShowDialog(Me)
@@ -39,7 +39,7 @@ Public Class Modulo_Lista_Precios_Costos
         End If
     End Sub
 
-    Private Sub BtnSalir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnSalir.Click
+    Private Sub BtnSalir_Click(sender As System.Object, e As System.EventArgs) Handles BtnSalir.Click
         _Fm_Menu_Padre.CloseModalPanel(Me, DevComponents.DotNetBar.Controls.eSlideSide.Left)
     End Sub
 
@@ -138,21 +138,25 @@ Public Class Modulo_Lista_Precios_Costos
 
     Private Sub MetroTileItem1_Click(sender As Object, e As EventArgs) Handles MetroTileItem1.Click
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Pre0002") Then
-            Dim Fm As New Frm_PreciosLC_Mt01
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-        End If
+        Dim NewPanel As ModListaLC = Nothing
+        NewPanel = New ModListaLC(_Fm_Menu_Padre)
+        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+
+        'If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Pre0002") Then
+        '    Dim Fm As New Frm_PreciosLC_Mt01
+        '    Fm.ShowDialog(Me)
+        '    Fm.Dispose()
+        'End If
 
     End Sub
 
     Private Sub MetroTileItem2_Click(sender As Object, e As EventArgs) Handles MetroTileItem2.Click
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Pre0002") Then
-            Dim Fm As New Frm_PreciosLC_InfUltCompras_Mt
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-        End If
+        'If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Pre0002") Then
+        '    Dim Fm As New Frm_PreciosLC_InfUltCompras_Mt
+        '    Fm.ShowDialog(Me)
+        '    Fm.Dispose()
+        'End If
 
     End Sub
 

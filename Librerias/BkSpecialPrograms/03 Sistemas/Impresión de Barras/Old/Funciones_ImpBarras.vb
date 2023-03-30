@@ -18,11 +18,16 @@
     Dim _Codigo_rapido
     Dim _Codigo_Alternativo = String.Empty
     Dim _Descripcion
+    Dim _Descripcion_Corta
     Dim _Desc0125
     Dim _Desc2650
     Dim _Ubicacion
     Dim _Precio_ud1
     Dim _Precio_ud2
+    Dim _PrecioNetoXRtu
+    Dim _PrecioBrutoXRtu
+    Dim _Rtu
+
     Dim _Marca_Pr
     Dim _Nodim1
     Dim _Nodim2
@@ -69,7 +74,8 @@
                              _Bodega As String,
                              _CodUbicacion As String,
                              _Imprimir_Todas_Las_Ubicaciones As Boolean,
-                             _ImprimirDesdePrecioFuturo As Boolean)
+                             _ImprimirDesdePrecioFuturo As Boolean,
+                             _Id_PrecioFuturo As Integer)
 
         If _Imprimir_Todas_Las_Ubicaciones Then
 
@@ -77,12 +83,13 @@
 
             For Each _RowProducto As DataRow In _TblProducto.Rows
 
-                Sb_Incorporar_Precios(_RowProducto, _CodLista, _ImprimirDesdePrecioFuturo)
+                Sb_Incorporar_Precios(_RowProducto, _CodLista, _ImprimirDesdePrecioFuturo, _Id_PrecioFuturo)
 
                 _Codigo_principal = _Codigo
                 _Codigo_tecnico = _RowProducto.Item("KOPRTE")
                 _Codigo_rapido = _RowProducto.Item("KOPRRA")
                 _Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
+                _Descripcion_Corta = _RowProducto.Item("NOKOPRRA").ToString.Trim
 
                 _Marca_Pr = _RowProducto.Item("Marca").ToString.Trim
 
@@ -123,12 +130,19 @@
 
         Else
 
-            Dim _RowProducto As DataRow = Fx_DatosProducto(_Codigo, _CodLista, _Empresa, _Sucursal, _Bodega,, _CodUbicacion, _ImprimirDesdePrecioFuturo)
+            Dim _RowProducto As DataRow = Fx_DatosProducto(_Codigo,
+                                                           _CodLista,
+                                                           _Empresa,
+                                                           _Sucursal,
+                                                           _Bodega,,
+                                                           _CodUbicacion,
+                                                           _ImprimirDesdePrecioFuturo, _Id_PrecioFuturo)
 
             _Codigo_principal = _Codigo
             _Codigo_tecnico = _RowProducto.Item("KOPRTE")
             _Codigo_rapido = _RowProducto.Item("KOPRRA")
             _Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
+            _Descripcion_Corta = _RowProducto.Item("NOKOPRRA").ToString.Trim
 
             _Marca_Pr = _RowProducto.Item("Marca").ToString.Trim
 
@@ -141,6 +155,10 @@
             _PU02_Neto = _RowProducto.Item("PU02_Neto")
             _PU01_Bruto = _RowProducto.Item("PU01_Bruto")
             _PU02_Bruto = _RowProducto.Item("PU02_Bruto")
+
+            _Rtu = _RowProducto.Item("RLUD")
+            _PrecioNetoXRtu = _RowProducto.Item("PrecioNetoXRtu")
+            _PrecioBrutoXRtu = _RowProducto.Item("PrecioBrutoXRtu")
 
             _Stock_Minimo_Ubic = _RowProducto.Item("Stock_Minimo_Ubic")
             _Stock_Maximo_Ubic = _RowProducto.Item("Stock_Maximo_Ubic")
@@ -565,12 +583,20 @@
 
         Dim _Fecha_impresion As Date = Now
 
+        _Error = String.Empty
+
+        'Try
+
         _Texto = Replace(_Texto, "<CODIGO_PR>", Trim(_Codigo_principal))
         _Texto = Replace(_Texto, "<CODIGO_TC>", Trim(_Codigo_tecnico))
         _Texto = Replace(_Texto, "<CODIGO_RA>", Trim(_Codigo_rapido))
         _Texto = Replace(_Texto, "<CODIGO_ALT>", Trim(_Codigo_Alternativo))
 
+        Dim _Descripcion_cortamr As String = _Descripcion_Corta.ToString.Replace(_Marca_Pr, "").Trim
+        _Texto = Replace(_Texto, "<DESCRIPCION_CORTASMR>", _Descripcion_cortamr)
+
         _Texto = Replace(_Texto, "<DESCRIPCION_PR>", _Descripcion)
+        _Texto = Replace(_Texto, "<DESCRIPCION_CORTA>", _Descripcion_Corta)
         _Texto = Replace(_Texto, "<DESCRIPCION_1-25>", _Desc0125)
         _Texto = Replace(_Texto, "<DESCRIPCION_26-50>", _Desc2650)
         _Texto = Replace(_Texto, "<UBICACION_PR>", _Ubicacion)
@@ -580,8 +606,7 @@
         _Texto = Replace(_Texto, "<NODIM2>", _Nodim2)
         _Texto = Replace(_Texto, "<NODIM3>", _Nodim3)
         _Texto = Replace(_Texto, "<FECHAPROGRFUTURO>", Format(_FechaProgramada_Futuro, "dd-MM-yyyy"))
-
-
+        _Texto = Replace(_Texto, "<RTU>", _Rtu)
 
         '_Texto = Replace(_Texto, "<UBIC_BAKAPP>", _Ubic_BakApp)
         _Texto = Replace(_Texto, "<WMS_UBIC_COLUMNA>", _Wms_Ubicacion_Columna)
@@ -599,6 +624,16 @@
 
         _Texto = Replace(_Texto, "<PRECIO_UD1>", _Precio_ud1)
         _Texto = Replace(_Texto, "<PRECIO_UD2>", _Precio_ud2)
+
+        Dim _vPrecioNetoXRtu As String = Fx_Formato_Numerico(_PrecioNetoXRtu, "9", False)
+        Dim _vPrecioBrutoXRtu As String = Fx_Formato_Numerico(_PrecioBrutoXRtu, "9", False)
+
+        If _Texto.Contains("PBRUTOUD1X6") Then
+            _PrecioBrutoXRtu = 6 * _PU01_Bruto
+            _vPrecioBrutoXRtu = Fx_Formato_Numerico(_PrecioBrutoXRtu, "9", False)
+            '_Texto = Replace(_Texto, "<PNETOXRTU_UD1>", _vPrecioNetoXRtu)
+            _Texto = Replace(_Texto, "<PBRUTOUD1X6>", _vPrecioBrutoXRtu)
+        End If
 
         Dim _St_PU01_Neto As String = Fx_Formato_Numerico(_PU01_Neto, "9", False)
         Dim _St_PU02_Neto As String = Fx_Formato_Numerico(_PU02_Neto, "9", False)
@@ -675,7 +710,14 @@
         sw.WriteLine(_Texto)
         sw.Close()
 
-        System.IO.File.Copy("Barra.prn", _Puerto)
+        'MsgBox("Aca" & vbCrLf & fic)
+
+        'System.IO.File.Copy("Barra.prn", _Puerto)
+        System.IO.File.Copy(fic, _Puerto)
+
+        'Catch ex As Exception
+        '    _Error = ex.Message
+        'End Try
 
     End Sub
 #End Region
@@ -691,7 +733,8 @@
                                       _Bodega As String,
                                       Optional _CodEntidad As String = "",
                                       Optional _Codigo_Ubic As String = "",
-                                      Optional _ImprimirDesdePrecioFuturo As Boolean = False) As DataRow
+                                      Optional _ImprimirDesdePrecioFuturo As Boolean = False,
+                                      Optional _Id_PrecioFuturo As Integer = 0) As DataRow
 
         If String.IsNullOrEmpty(_Codigo_Ubic) Then
 
@@ -727,6 +770,7 @@
                        "Cast(" & De_Num_a_Tx_01(_Stock_Maximo_Ubic, False, 5) & " As Float) As 'Stock_Maximo_Ubic'," & vbCrLf &
                        "Isnull((Select Top 1 PP01UD From TABPRE Where KOLT = '" & _CodLista & "' And KOPR = '" & _Codigo & "'),0) As Precio_ud1," & vbCrLf &
                        "Isnull((Select Top 1 PP02UD From TABPRE Where KOLT = '" & _CodLista & "' And KOPR = '" & _Codigo & "'),0) As Precio_ud2," & vbCrLf &
+                       "Cast(0 As Float) As 'PrecioNetoXRtu',Cast(0 As Float) As 'PrecioBrutoXRtu'," & vbCrLf &
                        "Isnull((Select top 1 PM From MAEPREM Where EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Codigo & "'),0) As 'PM'," & vbCrLf &
                        "Isnull((Select top 1 PPUL01 From MAEPREM Where EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Codigo & "'),0) As 'PU01'," & vbCrLf &
                        "Isnull((Select top 1 PPUL02 From MAEPREM Where EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Codigo & "'),0) As 'PU02'," & vbCrLf &
@@ -740,7 +784,8 @@
         If CBool(_Tbl.Rows.Count) Then
 
             Dim _RowProducto As DataRow = _Tbl.Rows(0)
-            Sb_Incorporar_Precios(_RowProducto, _CodLista, _ImprimirDesdePrecioFuturo)
+
+            Sb_Incorporar_Precios(_RowProducto, _CodLista, _ImprimirDesdePrecioFuturo, _Id_PrecioFuturo)
 
             Return _RowProducto
 
@@ -750,7 +795,10 @@
 
     End Function
 
-    Sub Sb_Incorporar_Precios(ByRef _RowProducto As DataRow, _CodLista As String, _ImprimirDesdePrecioFuturo As Boolean)
+    Sub Sb_Incorporar_Precios(ByRef _RowProducto As DataRow,
+                              _CodLista As String,
+                              _ImprimirDesdePrecioFuturo As Boolean,
+                              _Id_PrecioFuturo As Integer)
 
         'Dim _RowProducto As DataRow = _Tbl.Rows(0)
         Dim _Codigo As String = _RowProducto.Item("KOPR")
@@ -792,10 +840,19 @@
 
         If _ImprimirDesdePrecioFuturo Then
 
-            Consulta_sql = "Select Top 1 LEnc.Codigo, NombreProgramacion, FechaCreacion, FechaProgramada, Funcionario, Activo,LDet.*" & vbCrLf &
+            If CBool(_Id_PrecioFuturo) Then
+                Consulta_sql = "Select Top 1 LEnc.Codigo, NombreProgramacion, FechaCreacion, FechaProgramada, Funcionario, Activo,LDet.*" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_ListaLC_Programadas LEnc" & vbCrLf &
+                           "Inner Join " & _Global_BaseBk & "Zw_ListaLC_Programadas_Detalles LDet On LEnc.Id = LDet.Id_Enc" & vbCrLf &
+                           "Where LDet.Id = " & _Id_PrecioFuturo
+            Else
+                Consulta_sql = "Select Top 1 LEnc.Codigo, NombreProgramacion, FechaCreacion, FechaProgramada, Funcionario, Activo,LDet.*" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_ListaLC_Programadas LEnc" & vbCrLf &
                            "Inner Join " & _Global_BaseBk & "Zw_ListaLC_Programadas_Detalles LDet On LEnc.Id = LDet.Id_Enc" & vbCrLf &
                            "Where LEnc.Codigo = '" & _Codigo & "' And LDet.Lista = '" & _CodLista & "' Order by LEnc.Id"
+            End If
+
+
             Dim _Row_PrecioFuturo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If Not IsNothing(_Row_PrecioFuturo) Then
@@ -834,6 +891,9 @@
 
         _RowProducto.Item("PU01_Bruto") = _PU01_Bruto
         _RowProducto.Item("PU02_Bruto") = _PU02_Bruto
+
+        _RowProducto.Item("PrecioNetoXRtu") = _RowProducto.Item("RLUD") * _PU01_Neto
+        _RowProducto.Item("PrecioBrutoXRtu") = _RowProducto.Item("RLUD") * _PU01_Bruto
 
     End Sub
 

@@ -23,16 +23,16 @@ Partial Class Sistema_CodBarras
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Sistema_CodBarras))
-        Me.Bar2 = New DevComponents.DotNetBar.Bar
-        Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnConfiguracion = New DevComponents.DotNetBar.ButtonItem
-        Me.MetroTilePanel1 = New DevComponents.DotNetBar.Metro.MetroTilePanel
-        Me.ConsultaPreciosContenedor = New DevComponents.DotNetBar.ItemContainer
-        Me.BtnImpBarras_Producto = New DevComponents.DotNetBar.Metro.MetroTileItem
-        Me.BtnImpBarras_Documento = New DevComponents.DotNetBar.Metro.MetroTileItem
-        Me.BtnImpBarras_Ubicaciones = New DevComponents.DotNetBar.Metro.MetroTileItem
-        Me.BtnCrearCodigosBarra = New DevComponents.DotNetBar.Metro.MetroTileItem
-        Me.LabelX1 = New DevComponents.DotNetBar.LabelX
+        Me.Bar2 = New DevComponents.DotNetBar.Bar()
+        Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnConfiguracion = New DevComponents.DotNetBar.ButtonItem()
+        Me.MetroTilePanel1 = New DevComponents.DotNetBar.Metro.MetroTilePanel()
+        Me.ConsultaPreciosContenedor = New DevComponents.DotNetBar.ItemContainer()
+        Me.BtnImpBarras_Producto = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.BtnImpBarras_Documento = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.BtnImpBarras_Ubicaciones = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.BtnCrearCodigosBarra = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -111,8 +111,8 @@ Partial Class Sistema_CodBarras
         Me.BtnImpBarras_Producto.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.BtnImpBarras_Producto.Name = "BtnImpBarras_Producto"
         Me.BtnImpBarras_Producto.SymbolColor = System.Drawing.Color.Empty
-        Me.BtnImpBarras_Producto.Text = "<font size=""+4""><b>X PRODUCTO</b></font><br/><font size=""-1"">imprimir códigos de " & _
-            "barras según listado</font>"
+        Me.BtnImpBarras_Producto.Text = "<font size=""+4""><b>X PRODUCTO</b></font><br/><font size=""-1"">imprimir códigos de " &
+    "barras según listado</font>"
         Me.BtnImpBarras_Producto.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
         Me.BtnImpBarras_Producto.TileSize = New System.Drawing.Size(200, 100)
         '
@@ -133,8 +133,8 @@ Partial Class Sistema_CodBarras
         Me.BtnImpBarras_Documento.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.BtnImpBarras_Documento.Name = "BtnImpBarras_Documento"
         Me.BtnImpBarras_Documento.SymbolColor = System.Drawing.Color.Empty
-        Me.BtnImpBarras_Documento.Text = "<font size=""+4""><b>X DOCUMENTO</b></font><br/><font size=""-1"">Seleccionar un docu" & _
-            "mento</font>"
+        Me.BtnImpBarras_Documento.Text = "<font size=""+4""><b>X DOCUMENTO</b></font><br/><font size=""-1"">Seleccionar un docu" &
+    "mento</font>"
         Me.BtnImpBarras_Documento.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Teal
         Me.BtnImpBarras_Documento.TileSize = New System.Drawing.Size(200, 100)
         '
@@ -160,8 +160,8 @@ Partial Class Sistema_CodBarras
         Me.BtnImpBarras_Ubicaciones.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.BtnImpBarras_Ubicaciones.Name = "BtnImpBarras_Ubicaciones"
         Me.BtnImpBarras_Ubicaciones.SymbolColor = System.Drawing.Color.Empty
-        Me.BtnImpBarras_Ubicaciones.Text = "<font size=""+4""><b>X UBICACIONES</b></font><br/><font size=""-1"">Imprimir etiqueta" & _
-            "s para las ubicaciones</font>"
+        Me.BtnImpBarras_Ubicaciones.Text = "<font size=""+4""><b>X UBICACIONES</b></font><br/><font size=""-1"">Imprimir etiqueta" &
+    "s para las ubicaciones</font>"
         Me.BtnImpBarras_Ubicaciones.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Orange
         Me.BtnImpBarras_Ubicaciones.TileSize = New System.Drawing.Size(200, 100)
         '
@@ -187,8 +187,8 @@ Partial Class Sistema_CodBarras
         Me.BtnCrearCodigosBarra.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.BtnCrearCodigosBarra.Name = "BtnCrearCodigosBarra"
         Me.BtnCrearCodigosBarra.SymbolColor = System.Drawing.Color.Empty
-        Me.BtnCrearCodigosBarra.Text = "<font size=""+4""><b>DISEÑO DE BARRAS</b></font><br/><font size=""-1"">Mantencion de " & _
-            "códigos de barra</font>"
+        Me.BtnCrearCodigosBarra.Text = "<font size=""+4""><b>DISEÑO DE BARRAS</b></font><br/><font size=""-1"">Mantencion de " &
+    "códigos de barra</font>"
         Me.BtnCrearCodigosBarra.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Yellow
         Me.BtnCrearCodigosBarra.TileSize = New System.Drawing.Size(200, 100)
         '

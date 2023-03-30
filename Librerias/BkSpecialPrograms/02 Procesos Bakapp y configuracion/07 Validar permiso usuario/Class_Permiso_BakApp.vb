@@ -246,6 +246,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("7Brr0004", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("7Brr0005", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("7Brr0006", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("7Brr0007", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Comp0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Comp0002", _Objeto, _Formulario)
@@ -1110,6 +1111,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.BARRAS.ToString
             Case "7Brr0006"
                 _DescripcionPermiso = "CONFIGURACIÓN LOCAL"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.BARRAS, 6)
+                _NombreFamiliaPermiso = _Fml.BARRAS.ToString
+            Case "7Brr0007"
+                _DescripcionPermiso = "CERRAR FORMULARIO DE IMPRESION DE CODIGOS DE BARRA CUANDO ESTA POR DEFECTO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.BARRAS, 6)
                 _NombreFamiliaPermiso = _Fml.BARRAS.ToString
         End Select

@@ -96,7 +96,7 @@ Public Class Frm_PrecioLCFuturo
                                "Where Producto='" & Txtcodigo.Text & "' And Funcionario='" & FUNCIONARIO & "' And FechaProgramada > '" & Now.ToString("yyyy-MM-ddT00:00:00") & "';"
             Else
                 Consulta_sql = "Select * From " & _Global_BaseBk & "[Zw_ListaLC_Programadas]" & vbCrLf &
-                               "Where Funcionario='" & FUNCIONARIO & "' And FechaRegistro > '" & Now.ToString("yyyy-MM-ddT00:00:00") & "';;"
+                               "Where Funcionario='" & FUNCIONARIO & "' And FechaProgramada > '" & Now.ToString("yyyy-MM-ddT00:00:00") & "' And Activo = 1"
             End If
         Else
             Consulta_sql = "Select * From " & _Global_BaseBk & "[Zw_ListaLC_Programadas]" & vbCrLf &
@@ -115,20 +115,20 @@ Public Class Frm_PrecioLCFuturo
 
         With GrillaListasProgramadas
 
-            .Columns("Producto").Width = 100
-            .Columns("Producto").HeaderText = "Producto"
+            .Columns("Codigo").Width = 100
+            .Columns("Codigo").HeaderText = "Producto"
             '.Columns("Producto").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("Producto").DefaultCellStyle.Format = "###,##0.##"
-            .Columns("Producto").Visible = True
-            .Columns("Producto").DisplayIndex = _DisplayIndex
+            '.Columns("PrCodigooducto").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("Codigo").Visible = True
+            .Columns("Codigo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("FechaRegistro").Width = 80
-            .Columns("FechaRegistro").HeaderText = "Fecha. Reg."
-            .Columns("FechaRegistro").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("FechaRegistro").DefaultCellStyle.Format = "dd/MM/yyyy"
-            .Columns("FechaRegistro").Visible = True
-            .Columns("FechaRegistro").DisplayIndex = _DisplayIndex
+            .Columns("FechaCreacion").Width = 80
+            .Columns("FechaCreacion").HeaderText = "Fecha. Reg."
+            .Columns("FechaCreacion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("FechaCreacion").DefaultCellStyle.Format = "dd/MM/yyyy"
+            .Columns("FechaCreacion").Visible = True
+            .Columns("FechaCreacion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("FechaProgramada").Width = 80
@@ -350,7 +350,7 @@ Public Class Frm_PrecioLCFuturo
         Dim Fila As DataGridViewRow = GrillaListasProgramadas.CurrentRow
 
         IdListaProgramada = Fila.Cells("Id").Value.ToString
-        Txtcodigo.Text = Fila.Cells("Producto").Value.ToString
+        Txtcodigo.Text = Fila.Cells("Codigo").Value.ToString
         FechaProgramada.Value = DateTime.Parse(Fila.Cells("FechaProgramada").Value.ToString)
         LlenarListasPrecios()
 

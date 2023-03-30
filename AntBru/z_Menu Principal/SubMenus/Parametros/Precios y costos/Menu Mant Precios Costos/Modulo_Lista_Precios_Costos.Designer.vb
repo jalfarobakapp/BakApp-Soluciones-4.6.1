@@ -31,9 +31,9 @@ Partial Class Modulo_Lista_Precios_Costos
         Me.Btn_Listas_Proveedores = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.BtnConfListas = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Listas_de_costos = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.MetroTileItem1 = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.MetroTileItem2 = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -43,9 +43,9 @@ Partial Class Modulo_Lista_Precios_Costos
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir})
-        Me.Bar2.Location = New System.Drawing.Point(0, 294)
+        Me.Bar2.Location = New System.Drawing.Point(0, 297)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(648, 41)
+        Me.Bar2.Size = New System.Drawing.Size(646, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 34
@@ -75,7 +75,7 @@ Partial Class Modulo_Lista_Precios_Costos
         Me.MetroTilePanel1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.MetroTilePanel1.Location = New System.Drawing.Point(3, 58)
         Me.MetroTilePanel1.Name = "MetroTilePanel1"
-        Me.MetroTilePanel1.Size = New System.Drawing.Size(695, 342)
+        Me.MetroTilePanel1.Size = New System.Drawing.Size(885, 405)
         Me.MetroTilePanel1.TabIndex = 33
         Me.MetroTilePanel1.Text = "MetroTilePanel1"
         '
@@ -195,20 +195,6 @@ Partial Class Modulo_Lista_Precios_Costos
         Me.Btn_Listas_de_costos.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Listas_de_costos.TitleText = "Bakapp"
         '
-        'LabelX1
-        '
-        '
-        '
-        '
-        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX1.Font = New System.Drawing.Font("Arial", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
-        Me.LabelX1.Location = New System.Drawing.Point(3, 3)
-        Me.LabelX1.Name = "LabelX1"
-        Me.LabelX1.Size = New System.Drawing.Size(652, 49)
-        Me.LabelX1.TabIndex = 54
-        Me.LabelX1.Text = "<font color=""#349FCE""><b>MANTENCION DE LISTAS DE PRECIOS Y COSTOS</b></font>"
-        '
         'MetroTileItem1
         '
         Me.MetroTileItem1.Image = CType(resources.GetObject("MetroTileItem1.Image"), System.Drawing.Image)
@@ -263,6 +249,20 @@ Partial Class Modulo_Lista_Precios_Costos
         Me.MetroTileItem2.TileStyle.TextColor = System.Drawing.Color.White
         Me.MetroTileItem2.TitleText = "Bakapp"
         '
+        'LabelX1
+        '
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.Font = New System.Drawing.Font("Arial", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
+        Me.LabelX1.Location = New System.Drawing.Point(3, 3)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(596, 49)
+        Me.LabelX1.TabIndex = 54
+        Me.LabelX1.Text = "<font color=""#349FCE""><b>MANTENCION DE LISTAS DE PRECIOS Y COSTOS</b></font>"
+        '
         'Modulo_Lista_Precios_Costos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -271,7 +271,7 @@ Partial Class Modulo_Lista_Precios_Costos
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.MetroTilePanel1)
         Me.Name = "Modulo_Lista_Precios_Costos"
-        Me.Size = New System.Drawing.Size(648, 335)
+        Me.Size = New System.Drawing.Size(646, 338)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

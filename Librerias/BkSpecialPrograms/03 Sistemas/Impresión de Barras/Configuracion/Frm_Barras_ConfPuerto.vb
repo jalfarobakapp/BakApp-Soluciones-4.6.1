@@ -30,6 +30,9 @@ Public Class Frm_Barras_ConfPuerto
         End Set
     End Property
 
+    Public Property Puerto As String
+    Public Property Etiqueta As String
+
     Public Sub New(_Nombre_Archivo_Xml As String)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -137,8 +140,8 @@ Public Class Frm_Barras_ConfPuerto
         End With
 
 
-        Dim _Puerto = Ds_ConfBarras.Tables("Tbl_Configuracion").Rows(0).Item("Puerto")
-        Dim _Etiqueta = Ds_ConfBarras.Tables("Tbl_Configuracion").Rows(0).Item("Etiqueta")
+        Puerto = Ds_ConfBarras.Tables("Tbl_Configuracion").Rows(0).Item("Puerto")
+        Etiqueta = Ds_ConfBarras.Tables("Tbl_Configuracion").Rows(0).Item("Etiqueta")
 
         CmbPuerto.SelectedValue = _Puerto
         CmbEtiqueta.SelectedValue = _Etiqueta
@@ -162,12 +165,17 @@ Public Class Frm_Barras_ConfPuerto
                 .Item("Puerto") = CmbPuerto.SelectedValue
                 .Item("Etiqueta") = NuloPorNro(CmbEtiqueta.SelectedValue, "")
 
+                Puerto = .Item("Puerto")
+                Etiqueta = .Item("Etiqueta")
+
             End With
             .Tables("Tbl_Configuracion").Rows.Add(NewFila)
 
             .WriteXml(_Path)
             _Grabar = True
         End With
+
+
 
         Me.Close()
 

@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports System.Web.Services
+Imports DevComponents.DotNetBar
 
 Public Class Frm_ImpBarras_PorProducto
 
@@ -6,10 +7,12 @@ Public Class Frm_ImpBarras_PorProducto
     Dim Consulta_sql As String
 
     Dim _DsDocumento As DataSet
+    Dim _Tbl_Productos As DataTable
     Dim _Tbl_Filtro_Productos As DataTable
     Dim _Puerto, _Etiqueta As String
     Dim _Cantidad_Uno As Boolean
     Dim _Codigo_Ubic As String
+    Dim _CerrarPorConfigurar As Boolean
 
     Public Property Pro_Tbl_Filtro_Productos() As DataTable
         Get
@@ -47,7 +50,10 @@ Public Class Frm_ImpBarras_PorProducto
 
     Public Property ImprimirDesdePrecioFuturo As Boolean
     Public Property ListaPrecios As String
-    Public Property IdPrecioFuturo As Integer
+    Public Property Id_PrecioFuturo As Integer
+    Public Property LimpiarCantidadesDespuesDeImprimir As Boolean
+    Public Property EstacionBR1 As Boolean
+    Public Property LimpiarListadoDeCodigosDespuesDeImprimir As Boolean
 
     Public Sub New()
 
@@ -66,6 +72,68 @@ Public Class Frm_ImpBarras_PorProducto
     End Sub
     Private Sub Frm_ImpBarras_PorProducto_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
+        Sb_Llenar_Combos()
+
+        If Not IsNothing(ListaPrecios) Then CmbLista.SelectedValue = ListaPrecios
+
+        Chk_ImprimiPrecioFuturo.Checked = ImprimirDesdePrecioFuturo
+
+
+        'AddHandler BtnImprimirEtiqueta.Click, AddressOf Sb_Imprimir_Etiquetas
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
+        Sb_Actualizar_Grilla()
+
+        Txt_Codigo.ReadOnly = False
+        ActiveControl = Txt_Codigo
+
+    End Sub
+
+
+    Sub Sb_Llenar_Combos()
+
+        caract_combo(CmbPuerto)
+
+        Dim dt As New DataTable("Tabla1")
+        Dim dr As DataRow
+        Dim rs As New DataSet("Ds")
+
+        'creamos las mismas columnas que hay en el dataset
+        dt.Columns.Add("Padre", System.Type.[GetType]("System.String"))
+        dt.Columns.Add("Hijo", System.Type.[GetType]("System.String"))
+        ',,,,,,
+
+        dr = dt.NewRow() : dr("Padre") = "LPT1" : dr("Hijo") = "Puerto LPT1" : dt.Rows.Add(dr)
+        dr = dt.NewRow() : dr("Padre") = "LPT2" : dr("Hijo") = "Puerto LPT2" : dt.Rows.Add(dr)
+        dr = dt.NewRow() : dr("Padre") = "LPT3" : dr("Hijo") = "Puerto LPT3" : dt.Rows.Add(dr)
+        dr = dt.NewRow() : dr("Padre") = "LPT4" : dr("Hijo") = "Puerto LPT4" : dt.Rows.Add(dr)
+        'cerramos el datareader y la conexión
+        'añadimos la tabla al dataset
+        rs.Tables.Add(dt)
+
+        With CmbPuerto
+            .DataSource = Nothing
+            .DataSource = dt
+        End With
+
+        Consulta_sql = "Select NombreEtiqueta As Padre,NombreEtiqueta As Hijo from " & _Global_BaseBk & "Zw_Tbl_DisenoBarras"
+        Dim _TblEtiquetas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        caract_combo(Cmbetiquetas)
+        With Cmbetiquetas
+            .DataSource = Nothing
+            .DataSource = _TblEtiquetas
+        End With
+
+
+        Dim Fm As New Frm_Barras_ConfPuerto("Configuracion_local.xml")
+
+        _Puerto = Fm.Ds_ConfBarras.Tables("Tbl_Configuracion").Rows(0).Item("Puerto")
+        _Etiqueta = Fm.Ds_ConfBarras.Tables("Tbl_Configuracion").Rows(0).Item("Etiqueta")
+
+        CmbPuerto.SelectedValue = _Puerto
+        Cmbetiquetas.SelectedValue = _Etiqueta
+
         caract_combo(CmbBodega)
         Consulta_sql = "SELECT EMPRESA+';'+KOSU+';'+KOBO AS Padre,NOKOBO AS Hijo FROM TABBO" ' WHERE SEMILLA = " & Actividad
         CmbBodega.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -77,28 +145,10 @@ Public Class Frm_ImpBarras_PorProducto
                        "Select 'UC' As Padre,'ULTIMA COMPRA' As Hijo Union" & vbCrLf &
                        "SELECT KOLT As Padre,KOLT+'-'+NOKOLT AS Hijo FROM TABPP"
         CmbLista.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
-        CmbLista.SelectedValue = ListaPrecios
-
-        Chk_ImprimiPrecioFuturo.Checked = ImprimirDesdePrecioFuturo
-
-        caract_combo(Cmbetiquetas)
-        Consulta_sql = "SELECT NombreEtiqueta AS Padre,NombreEtiqueta+', Cantidad de etiquetas '+RTRIM(LTRIM(STR(CantPorLinea))) AS Hijo" & vbCrLf &
-                       "FROM " & _Global_BaseBk & "Zw_Tbl_DisenoBarras order by NombreEtiqueta"
-        Cmbetiquetas.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        Dim Fm As New Frm_Barras_ConfPuerto("Configuracion_local.xml")
-
-        _Puerto = Fm.Ds_ConfBarras.Tables("Tbl_Configuracion").Rows(0).Item("Puerto")
-        _Etiqueta = Fm.Ds_ConfBarras.Tables("Tbl_Configuracion").Rows(0).Item("Etiqueta")
-
-        Cmbetiquetas.SelectedValue = _Etiqueta
-
-        'AddHandler BtnImprimirEtiqueta.Click, AddressOf Sb_Imprimir_Etiquetas
-        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
-
-        Sb_Actualizar_Grilla()
 
     End Sub
+
+
 
     Private Sub BtnSalir_Click(sender As System.Object, e As System.EventArgs) Handles BtnSalir.Click
         Me.Close()
@@ -118,18 +168,18 @@ Public Class Frm_ImpBarras_PorProducto
         Consulta_sql = "Select KOPR AS 'Codigo',NOKOPR as 'Descripcion'," & Convert.ToInt32(_Cantidad_Uno) & " As Cantidad From MAEPR" & vbCrLf &
                        "Where 1 > 0" & vbCrLf & _Filtro_Productos
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla
 
-            Grilla.DataSource = _Tbl
+            Grilla.DataSource = _Tbl_Productos
 
-            .Columns("Codigo").Width = 100
+            .Columns("Codigo").Width = 110
             .Columns("Codigo").HeaderText = "Código"
             '.Columns("Codigo").DefaultCellStyle.Format = "###,##"
             .Columns("Codigo").ReadOnly = True
 
-            .Columns("Descripcion").Width = 340
+            .Columns("Descripcion").Width = 400
             .Columns("Descripcion").HeaderText = "Descripción"
             '.Columns("Descripcion").DefaultCellStyle.Format = "###,##"
             .Columns("Descripcion").ReadOnly = True
@@ -139,13 +189,13 @@ Public Class Frm_ImpBarras_PorProducto
             .Columns("Cantidad").DefaultCellStyle.Format = "###,##"
             .Columns("Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
 
-            If Not (_Tbl Is Nothing) Then
+            If Not (_Tbl_Productos Is Nothing) Then
 
                 For Each _Row As DataGridViewRow In .Rows
 
                     Dim _CodigoDg As String = _Row.Cells("Codigo").Value
 
-                    For Each _Fila As DataRow In _Tbl.Rows
+                    For Each _Fila As DataRow In _Tbl_Productos.Rows
 
                         Dim _CodigoTb As String = _Fila.Item("Codigo")
 
@@ -208,6 +258,7 @@ Public Class Frm_ImpBarras_PorProducto
 
         Try
 
+            _Puerto = CmbPuerto.SelectedValue
             Dim _CantPorLinea As Integer
 
             If IsNothing(Cmbetiquetas.SelectedValue) Then
@@ -294,20 +345,33 @@ Public Class Frm_ImpBarras_PorProducto
                                                   _Bodega,
                                                   _Codigo_Ubic,
                                                   Chk_Imprimir_Todas_Las_Ubicaciones.Checked,
-                                                  Chk_ImprimiPrecioFuturo.Checked)
+                                                  Chk_ImprimiPrecioFuturo.Checked,
+                                                  Id_PrecioFuturo)
 
+                        If Not String.IsNullOrEmpty(_Imp.Error) Then
+                            If MessageBoxEx.Show(Me, _Imp.Error, "Problema al imprimir", MessageBoxButtons.OKCancel, MessageBoxIcon.Stop) <> DialogResult.OK Then
+                                Return
+                            End If
+                        End If
 
                     Next
 
+                End If
+
+                If LimpiarCantidadesDespuesDeImprimir Then
+                    _Fila("Cantidad") = 0
                 End If
 
             Next
 
         Catch ex As Exception
             MessageBoxEx.Show(Me, ex.Message, "Problema al imprimir", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            'MsgBox("Error inesperado", MsgBoxStyle.Exclamation, "Barras")
-            'MsgBox(ex.Message)
+        Finally
+            If LimpiarListadoDeCodigosDespuesDeImprimir Then
+                Call BtnLimpiar_Click(Nothing, Nothing)
+            End If
         End Try
+
     End Sub
 
 #End Region
@@ -323,6 +387,7 @@ Public Class Frm_ImpBarras_PorProducto
     Private Sub BtnLimpiar_Click(sender As System.Object, e As System.EventArgs) Handles BtnLimpiar.Click
         _Tbl_Filtro_Productos = Nothing
         Sb_Actualizar_Grilla()
+        Txt_Codigo.Focus()
     End Sub
 
     Private Sub BtnBuscarProducto_Click(sender As Object, e As EventArgs) Handles BtnBuscarProducto.Click
@@ -345,6 +410,54 @@ Public Class Frm_ImpBarras_PorProducto
     Private Sub BtnImprimirEtiqueta_Click(sender As Object, e As EventArgs) Handles BtnImprimirEtiqueta.Click
         Sb_Imprimir_Etiquetas()
     End Sub
+
+
+
+    Function Fx_Buscar_Producto(_Codigo As String) As DataRow
+
+        Dim _TblProducto As DataTable
+
+        Dim _CodigoAlt = _Codigo
+        _CodigoAlt = _Sql.Fx_Trae_Dato("TABCODAL", "KOPR", "KOEN = '' And KOPRAL = '" & _CodigoAlt & "'")
+
+        If Not String.IsNullOrEmpty(_CodigoAlt) Then
+            _Codigo = _CodigoAlt
+        End If
+
+        Consulta_sql = "Select top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
+        _TblProducto = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        If CBool(_TblProducto.Rows.Count) Then
+            Return _TblProducto.Rows(0)
+        Else
+
+            Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
+            Fm.Pro_CodEntidad = String.Empty
+            Fm.Pro_CodSucEntidad = String.Empty
+            Fm.Pro_Tipo_Lista = "P"
+            Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
+            Fm.Pro_Sucursal_Busqueda = ModSucursal
+            Fm.Pro_Bodega_Busqueda = ModBodega
+            Fm.Txtdescripcion.Text = _Codigo
+            Fm.Pro_Mostrar_Info = True
+            Fm.Pro_Actualizar_Precios = True
+
+            Codigo_abuscar = String.Empty
+            Fm.Pro_Mostrar_Clasificaciones = True
+            Fm.Pro_Mostrar_Imagenes = True
+
+            Fm.ShowDialog(Me)
+
+            If Fm.Pro_Seleccionado Then
+                '_TblProducto = Fm.Pro_RowProducto
+                Return Fm.Pro_RowProducto '_TblProducto.Rows(0)
+            Else
+                Return Nothing
+            End If
+
+        End If
+
+    End Function
 
     Private Sub Btn_imprimir_Archivo_Click(sender As System.Object, e As System.EventArgs) Handles Btn_imprimir_Archivo.Click
 
@@ -397,5 +510,129 @@ Public Class Frm_ImpBarras_PorProducto
 
     End Sub
 
+    Private Sub Txt_Codigo_ButtonCustom2Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub Txtcodigo_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Codigo.ButtonCustomClick
+
+        Try
+
+            Txt_Codigo.Enabled = False
+
+            Dim _Codigo As String = Txt_Codigo.Text
+            Dim _Row_Producto As DataRow = Fx_Buscar_Producto(_Codigo)
+
+            If Not IsNothing(_Row_Producto) Then
+
+                Dim _Rows As DataRow() = _Tbl_Productos.Select("Codigo = '" & _Row_Producto.Item("KOPR") & "'")
+
+                If CBool(_Rows.Count) Then
+                    MessageBoxEx.Show(Me, "Este producto ya esta en el listado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    BuscarDatoEnGrilla(_Codigo, "Codigo", Grilla)
+                    Return
+                End If
+
+                Sb_Agregar_Producto(_Tbl_Productos, _Row_Producto.Item("KOPR"), _Row_Producto.Item("NOKOPR"), 0)
+
+            End If
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        Finally
+            Txt_Codigo.Text = String.Empty
+            Txt_Codigo.Enabled = True
+        End Try
+
+    End Sub
+
+    Private Sub Txtcodigo_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Codigo.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            Call Txtcodigo_ButtonCustomClick(Nothing, Nothing)
+        End If
+    End Sub
+
+    Private Sub Txt_Codigo_ButtonCustom2Click_1(sender As Object, e As EventArgs) Handles Txt_Codigo.ButtonCustom2Click
+        Txt_Codigo.Text = String.Empty
+    End Sub
+
+    Private Sub Btn_Conf_ConfEstacion_Click(sender As Object, e As EventArgs) Handles Btn_Conf_ConfEstacion.Click
+
+        Dim _Autorizado As Boolean
+
+        Dim Fm_Pass As New Frm_Clave_Administrador
+        Fm_Pass.ShowDialog(Me)
+        _Autorizado = Fm_Pass.Pro_Autorizado
+        Fm_Pass.Dispose()
+
+        If _Autorizado Then
+
+            Dim _Grabar As Boolean
+
+            Dim _Id = _Global_Row_EstacionBk.Item("Id")
+            Dim Fm As New Frm_RegistrarEquipo(Frm_RegistrarEquipo.Enum_Accion.Editar, _Id, False)
+            Fm.ShowDialog(Me)
+            _Grabar = Fm.Grabar
+            Fm.Dispose()
+
+            Dim _Mod As New Clas_Modalidades
+
+            _Mod.Sb_Actualiza_Formatos_X_Modalidad()
+            _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+
+            Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_EstacionesBkp Where NombreEquipo = '" & _NombreEquipo & "'"
+            _Global_Row_EstacionBk = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If _Grabar Then
+                _CerrarPorConfigurar = True
+                Me.Close()
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_Conf_PuertoEtiqueta_Click(sender As Object, e As EventArgs) Handles Btn_Conf_PuertoEtiqueta.Click
+        If Fx_Tiene_Permiso(Me, "7Brr0006") Then
+            Dim Fm As New Frm_Barras_ConfPuerto("Configuracion_local.xml")
+            Fm.ShowDialog(Me)
+            If Fm.Grabar Then
+                CmbPuerto.SelectedValue = Fm.Puerto
+                Cmbetiquetas.SelectedValue = Fm.Etiqueta
+            End If
+            Fm.Dispose()
+        End If
+    End Sub
+
+    Private Sub Frm_ImpBarras_PorProducto_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+
+        If EstacionBR1 And Not _CerrarPorConfigurar Then
+            If Not Fx_Tiene_Permiso(Me, "7Brr0007") Then
+                e.Cancel = True
+            End If
+        End If
+
+    End Sub
+
+    Sub Sb_Agregar_Producto(ByRef _Tbl As DataTable,
+                             _Codigo As String,
+                             _Descripcion As String,
+                             _Cantidad As Integer)
+
+        Dim NewFila As DataRow
+        NewFila = _Tbl.NewRow
+        With NewFila
+
+            .Item("Codigo") = _Codigo
+            .Item("Descripcion") = _Descripcion
+            .Item("Cantidad") = _Cantidad
+
+            _Tbl.Rows.Add(NewFila)
+
+        End With
+
+    End Sub
 
 End Class

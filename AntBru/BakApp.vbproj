@@ -260,6 +260,12 @@
     <Compile Include="z_Menu Principal\SubMenus\Parametros\Modulo_Parametros.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Precios y costos\Menu Mant Precios Costos\ModListaLC.Designer.vb">
+      <DependentUpon>ModListaLC.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Parametros\Precios y costos\Menu Mant Precios Costos\ModListaLC.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="z_Menu Principal\SubMenus\Parametros\Productos\Cambiar código de producto\Cambiar_Codigos_Mnu.Designer.vb">
       <DependentUpon>Cambiar_Codigos_Mnu.vb</DependentUpon>
     </Compile>
@@ -574,6 +580,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Parametros\Modulo_Parametros.resx">
       <DependentUpon>Modulo_Parametros.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Parametros\Precios y costos\Menu Mant Precios Costos\ModListaLC.resx">
+      <DependentUpon>ModListaLC.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Parametros\Productos\Cambiar código de producto\Cambiar_Codigos_Mnu.resx">
       <DependentUpon>Cambiar_Codigos_Mnu.vb</DependentUpon>

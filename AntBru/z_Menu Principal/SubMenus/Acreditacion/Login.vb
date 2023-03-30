@@ -217,6 +217,9 @@ Public Class Login
                         Sb_Produccion_Mesones_DFA(False)
                         End
 
+                    Case "BR1"
+                        Sb_Impresora_CodigosDeBarraXProductos()
+                        End
                     Case "N" ' Estación comun, Normal
 
                         If _Revisar_Demonio Then
