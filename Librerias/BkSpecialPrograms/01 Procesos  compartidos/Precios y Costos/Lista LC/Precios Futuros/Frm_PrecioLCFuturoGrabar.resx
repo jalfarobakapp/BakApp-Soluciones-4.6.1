@@ -215,36 +215,6 @@
         6iZ7Hh99DgJj/wOGHYkWko7WjwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="Btn_ImprimirFlejes.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAihJREFUWEft
-        ls9LAkEUxwf0f/Ce4P8gFHbxL1Cok3oQT0VbRkqQevFgHaQog05FP6AOKeZJBMWDB89erC6e1EO3PK2z
-        NN9xZ1vM3dRaiPDBlzc782beZ2ec9ZGFud1u4vP5uPx+v6USeTweD7HZbCOAWCy2zPQcj8eHTNRiDZEL
-        Ob1erwbw3Gq1hjBKqaWCIRdyBoNBDYAPTJpghWDIqQFga8aDrBZyhkKhyQAHByl4eS+2P4TQFn1mY2bx
-        wjPBmwNsbEp4luH17XE/bZ/eMy0AFgALgH8OsBPd272+vrEfH5+Qy6sroveP+TxpNpv2Xq8XtQxgS9qx
-        s+/8G1tTMdBbNpu1M28NwPZ2FOsp6JhkKgTP+fcBzP5cxNhgMKienuWc9/cP5PahQHbT598CRNM5cnF5
-        R1KpFK+ODAGmUbvdXkokEgV27uyR0tX9J2UaIRZzmApfAMRbvry8ysXiE4U3atfrdRQ0/M1Q06zEi8o0
-        QkIVgH4BmEXVapVvOSTLMl07rHwLsX5UoYgV4D8qyWq1mgbQaDSwMN7OVIhBrJj3o6K0VCppAPMKAHOX
-        5ZlMhgP0+/1Bt9t9R3tWEdTnqFAh3M1ZJEmS9iOE9G0jjcePPgZzGu4xWyTPFtMWLZfL7HQmG8Z0AGg/
-        qkvNZy6XiwQCAb574XAYx5FEkk6nQ9lVVfRCnwqQjEQi2q7/mjkcDuwGBzAyAeB0OtVZv2gqwJY4CiMh
-        5hOAkA8IVua7zS4cwAAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="Btn_ImprimirFlejes.ImageAlt" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAhhJREFUWEft
-        lj1PwkAYx28gfBCd+A7yksBqMLx8ATYSkg4YIAy44YKBWGOCSWMMJEyIyEZIDCHCoPABXByc2XSibbx/
-        6eEpLdRCHQyX/HJH77nnfj16vZJdSSQSpFwua1QqFUdh86RSKeJ2u+cC4/H4gPIymUxkiuIwMubCnNls
-        diHwkkwmZZ/P9ydgLsxZr9fnArAyCnQSzMkLKEZBToI5TQV6vZ7s9Xpng8FABmiza6v6VsWz2pIAfiMY
-        Nd/+WVu9xtc7gZ3ATuD/C4xGo+NqtepqNptEkiTC1zgF0+m0KxaLpRHriAA9ZFy0nlJUI2j/tNPpIMYx
-        AeRTaR7kXAJ9eoxjz8BaAT1mvcCqw4X1hUKhh0ajsS+KIjk9E8nlbX+twNX9I7mQ6qTVamnPhamAFejn
-        3N5wOLzDGL/fr4SvX1Ur6DL4y+6WBNhdRiKRmSAICmqzdj6f18ZTVAgc3bypVmACYEngNxQKBW3JQSAQ
-        UA7F57USh+dPCmJ1ARUJDJNbgRfI5XJIjJVYCWIQy8Zt9FFaKpUWAnbZ6LO82+1qAtFo9CMej7+j/VtI
-        JpMh2JN26Pe1bQcZlpBvm/Etfv4ysFmwj+nqtfikxWJxse9/gj4uFtvwVk9lrwSDQVKr1bTVwIFDk55g
-        knA4rNCtqvLgmi5w0m63tTEYu7Xi8XgWAkZ3D5gAfc/oo7ZYdAGBwv5fM4QvAUI+AVttQAhB2u0jAAAA
-        AElFTkSuQmCC
-</value>
-  </data>
   <data name="Btn_EliminarMarcados.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAwdJREFUSEu1

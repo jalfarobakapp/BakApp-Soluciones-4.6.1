@@ -1,5 +1,4 @@
-﻿Imports System.Web.Services
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_ImpBarras_PorProducto
 
@@ -71,6 +70,11 @@ Public Class Frm_ImpBarras_PorProducto
 
     End Sub
     Private Sub Frm_ImpBarras_PorProducto_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+
+        BtnConfiguracion.Visible = EstacionBR1
+        Chk_LimpiarListadoDeCodigosDespuesDeImprimir.Checked = LimpiarListadoDeCodigosDespuesDeImprimir
+
+        Txt_Codigo.ButtonCustom2.Visible = False
 
         Sb_Llenar_Combos()
 
@@ -145,6 +149,7 @@ Public Class Frm_ImpBarras_PorProducto
                        "Select 'UC' As Padre,'ULTIMA COMPRA' As Hijo Union" & vbCrLf &
                        "SELECT KOLT As Padre,KOLT+'-'+NOKOLT AS Hijo FROM TABPP"
         CmbLista.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        CmbLista.SelectedValue = ModListaPrecioVenta
 
     End Sub
 
@@ -367,7 +372,7 @@ Public Class Frm_ImpBarras_PorProducto
         Catch ex As Exception
             MessageBoxEx.Show(Me, ex.Message, "Problema al imprimir", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         Finally
-            If LimpiarListadoDeCodigosDespuesDeImprimir Then
+            If Chk_LimpiarListadoDeCodigosDespuesDeImprimir.Checked Then
                 Call BtnLimpiar_Click(Nothing, Nothing)
             End If
         End Try
@@ -418,7 +423,13 @@ Public Class Frm_ImpBarras_PorProducto
         Dim _TblProducto As DataTable
 
         Dim _CodigoAlt = _Codigo
+
         _CodigoAlt = _Sql.Fx_Trae_Dato("TABCODAL", "KOPR", "KOEN = '' And KOPRAL = '" & _CodigoAlt & "'")
+
+        If String.IsNullOrEmpty(_CodigoAlt) Then
+            _CodigoAlt = _Codigo
+            _CodigoAlt = _Sql.Fx_Trae_Dato("TABCODAL", "KOPR", "KOPRAL = '" & _CodigoAlt & "'")
+        End If
 
         If Not String.IsNullOrEmpty(_CodigoAlt) Then
             _Codigo = _CodigoAlt
@@ -510,10 +521,6 @@ Public Class Frm_ImpBarras_PorProducto
 
     End Sub
 
-    Private Sub Txt_Codigo_ButtonCustom2Click(sender As Object, e As EventArgs)
-
-    End Sub
-
     Private Sub Txtcodigo_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Codigo.ButtonCustomClick
 
         Try
@@ -523,25 +530,43 @@ Public Class Frm_ImpBarras_PorProducto
             Dim _Codigo As String = Txt_Codigo.Text
             Dim _Row_Producto As DataRow = Fx_Buscar_Producto(_Codigo)
 
-            If Not IsNothing(_Row_Producto) Then
-
-                Dim _Rows As DataRow() = _Tbl_Productos.Select("Codigo = '" & _Row_Producto.Item("KOPR") & "'")
-
-                If CBool(_Rows.Count) Then
-                    MessageBoxEx.Show(Me, "Este producto ya esta en el listado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                    BuscarDatoEnGrilla(_Codigo, "Codigo", Grilla)
-                    Return
-                End If
-
-                Sb_Agregar_Producto(_Tbl_Productos, _Row_Producto.Item("KOPR"), _Row_Producto.Item("NOKOPR"), 0)
-
+            If IsNothing(_Row_Producto) Then
+                Txt_Codigo.Text = String.Empty
+                Return
             End If
+
+            'If Not IsNothing(_Row_Producto) Then
+
+            Dim _Rows As DataRow() = _Tbl_Productos.Select("Codigo = '" & _Row_Producto.Item("KOPR") & "'")
+
+            If CBool(_Rows.Count) Then
+                MessageBoxEx.Show(Me, "Este producto ya esta en el listado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                BuscarDatoEnGrilla(_Codigo, "Codigo", Grilla)
+                Txt_Codigo.Text = String.Empty
+                Return
+            End If
+
+            Dim _Cantidad = 0
+            If _Cantidad_Uno Then _Cantidad = 1
+            Sb_Agregar_Producto(_Tbl_Productos, _Row_Producto.Item("KOPR"), _Row_Producto.Item("NOKOPR"), _Cantidad)
+
+            Txt_Codigo.Text = String.Empty
+            Txt_Codigo.ButtonCustom.Visible = False
+            Txt_Codigo.ButtonCustom2.Visible = True
+
+            'End If
 
         Catch ex As Exception
             MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         Finally
-            Txt_Codigo.Text = String.Empty
+
+            If String.IsNullOrEmpty(Txt_Codigo.Text) Then
+                Txt_Codigo.ButtonCustom.Visible = True
+                Txt_Codigo.ButtonCustom2.Visible = False
+            End If
+
             Txt_Codigo.Enabled = True
+            Txt_Codigo.Focus()
         End Try
 
     End Sub
@@ -554,6 +579,8 @@ Public Class Frm_ImpBarras_PorProducto
 
     Private Sub Txt_Codigo_ButtonCustom2Click_1(sender As Object, e As EventArgs) Handles Txt_Codigo.ButtonCustom2Click
         Txt_Codigo.Text = String.Empty
+        Txt_Codigo.ButtonCustom.Visible = True
+        Txt_Codigo.ButtonCustom2.Visible = False
     End Sub
 
     Private Sub Btn_Conf_ConfEstacion_Click(sender As Object, e As EventArgs) Handles Btn_Conf_ConfEstacion.Click

@@ -30,7 +30,6 @@ Partial Class Frm_PrecioLCFuturoGrabar
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_EditarFechaProgramacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar_Programa = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_ImprimirFlejes = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ButtonItem()
@@ -54,7 +53,7 @@ Partial Class Frm_PrecioLCFuturoGrabar
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_EditarFechaProgramacion, Me.Btn_Eliminar_Programa, Me.Btn_ImprimirFlejes})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_EditarFechaProgramacion, Me.Btn_Eliminar_Programa})
         Me.Bar1.Location = New System.Drawing.Point(0, 302)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(683, 41)
@@ -90,16 +89,6 @@ Partial Class Frm_PrecioLCFuturoGrabar
         Me.Btn_Eliminar_Programa.ImageAlt = CType(resources.GetObject("Btn_Eliminar_Programa.ImageAlt"), System.Drawing.Image)
         Me.Btn_Eliminar_Programa.Name = "Btn_Eliminar_Programa"
         Me.Btn_Eliminar_Programa.Tooltip = "Eliminar programación"
-        '
-        'Btn_ImprimirFlejes
-        '
-        Me.Btn_ImprimirFlejes.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_ImprimirFlejes.ForeColor = System.Drawing.Color.Black
-        Me.Btn_ImprimirFlejes.Image = CType(resources.GetObject("Btn_ImprimirFlejes.Image"), System.Drawing.Image)
-        Me.Btn_ImprimirFlejes.ImageAlt = CType(resources.GetObject("Btn_ImprimirFlejes.ImageAlt"), System.Drawing.Image)
-        Me.Btn_ImprimirFlejes.Name = "Btn_ImprimirFlejes"
-        Me.Btn_ImprimirFlejes.Text = "Imprimir flejes"
-        Me.Btn_ImprimirFlejes.Visible = False
         '
         'GroupPanel1
         '
@@ -161,7 +150,7 @@ Partial Class Frm_PrecioLCFuturoGrabar
         Me.Menu_Contextual.AutoExpandOnClick = True
         Me.Menu_Contextual.Name = "Menu_Contextual"
         Me.Menu_Contextual.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_EliminarMarcados, Me.Btn_EliminarTodo})
-        Me.Menu_Contextual.Text = "Menu Grabar"
+        Me.Menu_Contextual.Text = "Opciones eliminar"
         '
         'Btn_EliminarMarcados
         '
@@ -367,7 +356,6 @@ Partial Class Frm_PrecioLCFuturoGrabar
 
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_ImprimirFlejes As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Grilla_Precios As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Txtcodigo As DevComponents.DotNetBar.Controls.TextBoxX

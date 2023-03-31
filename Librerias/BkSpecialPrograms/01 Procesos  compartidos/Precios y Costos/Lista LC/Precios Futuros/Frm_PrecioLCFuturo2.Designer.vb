@@ -29,18 +29,24 @@ Partial Class Frm_PrecioLCFuturo2
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
-        Me.BtnGrabar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ListaLc = New DevComponents.DotNetBar.ButtonItem()
         Me.Btnimprimir = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.CmbEtiqueta = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.CmbPuerto = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.Chk_Marcar_todo = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Grupo_Lista_Precios = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.CmbLista = New DevComponents.DotNetBar.Controls.ComboBoxEx()
+        Me.BtnActualizarLista = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Grabar_Programacion = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel3.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
+        Me.Grupo_Lista_Precios.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupPanel2
@@ -127,7 +133,7 @@ Partial Class Frm_PrecioLCFuturo2
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnGrabar, Me.Btnimprimir})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_ListaLc, Me.Btnimprimir, Me.Btn_Eliminar, Me.BtnActualizarLista, Me.Btn_Grabar_Programacion})
         Me.Bar1.Location = New System.Drawing.Point(0, 518)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(1123, 41)
@@ -137,19 +143,21 @@ Partial Class Frm_PrecioLCFuturo2
         Me.Bar1.TabStop = False
         Me.Bar1.Text = "Bar1"
         '
-        'BtnGrabar
+        'Btn_ListaLc
         '
-        Me.BtnGrabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.BtnGrabar.ForeColor = System.Drawing.Color.Black
-        Me.BtnGrabar.Image = Global.BkSpecialPrograms.My.Resources.Resources.save
-        Me.BtnGrabar.Name = "BtnGrabar"
-        Me.BtnGrabar.Tooltip = "Grabar"
+        Me.Btn_ListaLc.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_ListaLc.ForeColor = System.Drawing.Color.Black
+        Me.Btn_ListaLc.Image = CType(resources.GetObject("Btn_ListaLc.Image"), System.Drawing.Image)
+        Me.Btn_ListaLc.ImageAlt = CType(resources.GetObject("Btn_ListaLc.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ListaLc.Name = "Btn_ListaLc"
+        Me.Btn_ListaLc.Tooltip = "Mantención de listas LC"
         '
         'Btnimprimir
         '
         Me.Btnimprimir.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btnimprimir.ForeColor = System.Drawing.Color.Black
-        Me.Btnimprimir.Image = Global.BkSpecialPrograms.My.Resources.Resources.print2
+        Me.Btnimprimir.Image = CType(resources.GetObject("Btnimprimir.Image"), System.Drawing.Image)
+        Me.Btnimprimir.ImageAlt = CType(resources.GetObject("Btnimprimir.ImageAlt"), System.Drawing.Image)
         Me.Btnimprimir.Name = "Btnimprimir"
         Me.Btnimprimir.Text = "Imprimir flejes"
         '
@@ -276,11 +284,95 @@ Partial Class Frm_PrecioLCFuturo2
         Me.Chk_Marcar_todo.TabIndex = 72
         Me.Chk_Marcar_todo.Text = "Marcar todo"
         '
+        'Btn_Eliminar
+        '
+        Me.Btn_Eliminar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Eliminar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Eliminar.Image = CType(resources.GetObject("Btn_Eliminar.Image"), System.Drawing.Image)
+        Me.Btn_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Eliminar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Eliminar.Name = "Btn_Eliminar"
+        Me.Btn_Eliminar.Tooltip = "Eliminar programación"
+        Me.Btn_Eliminar.Visible = False
+        '
+        'Grupo_Lista_Precios
+        '
+        Me.Grupo_Lista_Precios.BackColor = System.Drawing.Color.White
+        Me.Grupo_Lista_Precios.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_Lista_Precios.Controls.Add(Me.CmbLista)
+        Me.Grupo_Lista_Precios.DisabledBackColor = System.Drawing.Color.Empty
+        Me.Grupo_Lista_Precios.Location = New System.Drawing.Point(769, 452)
+        Me.Grupo_Lista_Precios.Name = "Grupo_Lista_Precios"
+        Me.Grupo_Lista_Precios.Size = New System.Drawing.Size(342, 50)
+        '
+        '
+        '
+        Me.Grupo_Lista_Precios.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Grupo_Lista_Precios.Style.BackColorGradientAngle = 90
+        Me.Grupo_Lista_Precios.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Grupo_Lista_Precios.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_Lista_Precios.Style.BorderBottomWidth = 1
+        Me.Grupo_Lista_Precios.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.Grupo_Lista_Precios.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_Lista_Precios.Style.BorderLeftWidth = 1
+        Me.Grupo_Lista_Precios.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_Lista_Precios.Style.BorderRightWidth = 1
+        Me.Grupo_Lista_Precios.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_Lista_Precios.Style.BorderTopWidth = 1
+        Me.Grupo_Lista_Precios.Style.CornerDiameter = 4
+        Me.Grupo_Lista_Precios.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Grupo_Lista_Precios.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.Grupo_Lista_Precios.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.Grupo_Lista_Precios.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.Grupo_Lista_Precios.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.Grupo_Lista_Precios.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Grupo_Lista_Precios.TabIndex = 73
+        Me.Grupo_Lista_Precios.Text = "Lista de precios"
+        '
+        'CmbLista
+        '
+        Me.CmbLista.DisplayMember = "Text"
+        Me.CmbLista.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.CmbLista.ForeColor = System.Drawing.Color.Black
+        Me.CmbLista.FormattingEnabled = True
+        Me.CmbLista.ItemHeight = 16
+        Me.CmbLista.Location = New System.Drawing.Point(3, 2)
+        Me.CmbLista.Name = "CmbLista"
+        Me.CmbLista.Size = New System.Drawing.Size(330, 22)
+        Me.CmbLista.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.CmbLista.TabIndex = 75
+        '
+        'BtnActualizarLista
+        '
+        Me.BtnActualizarLista.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.BtnActualizarLista.ForeColor = System.Drawing.Color.Black
+        Me.BtnActualizarLista.Image = CType(resources.GetObject("BtnActualizarLista.Image"), System.Drawing.Image)
+        Me.BtnActualizarLista.ImageAlt = CType(resources.GetObject("BtnActualizarLista.ImageAlt"), System.Drawing.Image)
+        Me.BtnActualizarLista.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.BtnActualizarLista.Name = "BtnActualizarLista"
+        Me.BtnActualizarLista.Tooltip = "Actualizar (F5)"
+        '
+        'Btn_Grabar_Programacion
+        '
+        Me.Btn_Grabar_Programacion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Grabar_Programacion.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Grabar_Programacion.Image = CType(resources.GetObject("Btn_Grabar_Programacion.Image"), System.Drawing.Image)
+        Me.Btn_Grabar_Programacion.ImageAlt = CType(resources.GetObject("Btn_Grabar_Programacion.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Grabar_Programacion.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Grabar_Programacion.Name = "Btn_Grabar_Programacion"
+        Me.Btn_Grabar_Programacion.Tooltip = "Actualizar precios según programación"
+        '
         'Frm_PrecioLCFuturo2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1123, 559)
+        Me.Controls.Add(Me.Grupo_Lista_Precios)
         Me.Controls.Add(Me.Chk_Marcar_todo)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.GroupPanel3)
@@ -300,6 +392,7 @@ Partial Class Frm_PrecioLCFuturo2
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel3.ResumeLayout(False)
         Me.GroupPanel1.ResumeLayout(False)
+        Me.Grupo_Lista_Precios.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -307,11 +400,16 @@ Partial Class Frm_PrecioLCFuturo2
     Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
-    Friend WithEvents BtnGrabar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ListaLc As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btnimprimir As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupPanel3 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents CmbEtiqueta As DevComponents.DotNetBar.Controls.ComboBoxEx
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents CmbPuerto As DevComponents.DotNetBar.Controls.ComboBoxEx
     Friend WithEvents Chk_Marcar_todo As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Grupo_Lista_Precios As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents CmbLista As DevComponents.DotNetBar.Controls.ComboBoxEx
+    Friend WithEvents BtnActualizarLista As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Grabar_Programacion As DevComponents.DotNetBar.ButtonItem
 End Class

@@ -753,11 +753,14 @@ Public Module Mod_Variables
 
         Dim Fm As New Frm_ImpBarras_PorProducto
         Fm.BtnConfiguracion.Visible = True
+        Fm.Btn_imprimir_Archivo.Visible = False
         Fm.ShowInTaskbar = True
         Fm.MinimizeBox = True
         Fm.EstacionBR1 = True
         Fm.LimpiarCantidadesDespuesDeImprimir = True
+        Fm.LimpiarListadoDeCodigosDespuesDeImprimir = True
         Fm.Grupo_Puerto.Enabled = False
+        Fm.Pro_Cantidad_Uno = True
         Fm.ShowDialog(Frm_Menu)
         Fm.Dispose()
 

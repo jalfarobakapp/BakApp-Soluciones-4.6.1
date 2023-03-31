@@ -31,6 +31,8 @@ Public Class Frm_PrecioLCFuturoListaXProd
         AddHandler Rdb_MostrarTodas.CheckedChanged, AddressOf Sb_Rdb_CheckedChanged
         AddHandler Rdb_MostrarSoloActivas.CheckedChanged, AddressOf Sb_Rdb_CheckedChanged
 
+        Btn_ImprimirCodBarras.Visible = False
+
     End Sub
 
     Sub Sb_Actualizar_Datos_Grilla()
