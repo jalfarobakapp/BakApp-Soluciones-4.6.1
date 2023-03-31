@@ -497,6 +497,12 @@
     <Compile Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Precios Futuros\Frm_PrecioLCFuturo.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Precios Futuros\Frm_PrecioLCFuturo2.Designer.vb">
+      <DependentUpon>Frm_PrecioLCFuturo2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Precios Futuros\Frm_PrecioLCFuturo2.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Precios Futuros\Frm_PrecioLCFuturoGrabar.Designer.vb">
       <DependentUpon>Frm_PrecioLCFuturoGrabar.vb</DependentUpon>
     </Compile>
@@ -4049,6 +4055,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Precios Futuros\Frm_PrecioLCFuturo.resx">
       <DependentUpon>Frm_PrecioLCFuturo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Precios Futuros\Frm_PrecioLCFuturo2.resx">
+      <DependentUpon>Frm_PrecioLCFuturo2.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Precios Futuros\Frm_PrecioLCFuturoGrabar.resx">
       <DependentUpon>Frm_PrecioLCFuturoGrabar.vb</DependentUpon>

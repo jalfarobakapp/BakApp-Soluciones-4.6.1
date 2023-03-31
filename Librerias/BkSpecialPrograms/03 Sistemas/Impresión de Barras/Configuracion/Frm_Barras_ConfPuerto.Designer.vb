@@ -95,7 +95,7 @@ Partial Class Frm_Barras_ConfPuerto
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnGrabar})
         Me.Bar1.Location = New System.Drawing.Point(0, 107)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(496, 41)
+        Me.Bar1.Size = New System.Drawing.Size(639, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 40
@@ -119,7 +119,7 @@ Partial Class Frm_Barras_ConfPuerto
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(181, 12)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(303, 87)
+        Me.GroupPanel2.Size = New System.Drawing.Size(446, 87)
         '
         '
         '
@@ -160,7 +160,7 @@ Partial Class Frm_Barras_ConfPuerto
         Me.CmbEtiqueta.ItemHeight = 16
         Me.CmbEtiqueta.Location = New System.Drawing.Point(3, 25)
         Me.CmbEtiqueta.Name = "CmbEtiqueta"
-        Me.CmbEtiqueta.Size = New System.Drawing.Size(291, 22)
+        Me.CmbEtiqueta.Size = New System.Drawing.Size(434, 22)
         Me.CmbEtiqueta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.CmbEtiqueta.TabIndex = 0
         '
@@ -168,7 +168,7 @@ Partial Class Frm_Barras_ConfPuerto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(496, 148)
+        Me.ClientSize = New System.Drawing.Size(639, 148)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.GroupPanel1)

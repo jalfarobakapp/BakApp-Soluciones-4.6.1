@@ -39,9 +39,9 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.ControlContainerItem6 = New DevComponents.DotNetBar.ControlContainerItem()
         Me.Ribon_Excluir_Incluir = New DevComponents.DotNetBar.RibbonBar()
         Me.ItemContainer8 = New DevComponents.DotNetBar.ItemContainer()
-        Me.Chk_Sacar_Productos_Sin_Rotacion = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Chk_Restar_Stok_Bodega = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Chk_Restar_Stock_PedidoNvi = New DevComponents.DotNetBar.CheckBoxItem()
+        Me.Chk_Restar_Stock_TransitoGti = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Chk_Restar_Stock_PedidoOcc = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Chk_Quitar_Bloqueados_Compra = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI = New DevComponents.DotNetBar.CheckBoxItem()
@@ -58,6 +58,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.Chk_Incluir_Salidas_GDI_OT = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Chk_SumerStockExternoAlFisico = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Chk_QuitarProdExcluidos = New DevComponents.DotNetBar.CheckBoxItem()
+        Me.Chk_Sacar_Productos_Sin_Rotacion = New DevComponents.DotNetBar.CheckBoxItem()
         Me.RibbonPanel1 = New DevComponents.DotNetBar.RibbonPanel()
         Me.RibbonPanel3 = New DevComponents.DotNetBar.RibbonPanel()
         Me.Ribon_Proyeccion = New DevComponents.DotNetBar.RibbonBar()
@@ -189,7 +190,6 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.Btn_Rotacion_Productos_Lista = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Rotacion_Productos_Con_Rot_Vencida = New DevComponents.DotNetBar.ButtonItem()
         Me.Timer_Ejecucion_Automatica = New System.Windows.Forms.Timer(Me.components)
-        Me.Chk_Restar_Stock_TransitoGti = New DevComponents.DotNetBar.CheckBoxItem()
         Me.RibbonControl1.SuspendLayout()
         Me.RibbonPanel2.SuspendLayout()
         Me.RibbonPanel4.SuspendLayout()
@@ -494,12 +494,6 @@ Partial Class Frm_01_Asis_Compra_Resultados
         '
         Me.ItemContainer8.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         '
-        'Chk_Sacar_Productos_Sin_Rotacion
-        '
-        Me.Chk_Sacar_Productos_Sin_Rotacion.Name = "Chk_Sacar_Productos_Sin_Rotacion"
-        Me.Chk_Sacar_Productos_Sin_Rotacion.Text = "Sacar productos sin rotación"
-        Me.Chk_Sacar_Productos_Sin_Rotacion.Tooltip = "Quitar productos que no han tenido rotación en los 3 ultimos periodos"
-        '
         'Chk_Restar_Stok_Bodega
         '
         Me.Chk_Restar_Stok_Bodega.Name = "Chk_Restar_Stok_Bodega"
@@ -509,6 +503,11 @@ Partial Class Frm_01_Asis_Compra_Resultados
         '
         Me.Chk_Restar_Stock_PedidoNvi.Name = "Chk_Restar_Stock_PedidoNvi"
         Me.Chk_Restar_Stock_PedidoNvi.Text = "Restar stock pedido (NVI)"
+        '
+        'Chk_Restar_Stock_TransitoGti
+        '
+        Me.Chk_Restar_Stock_TransitoGti.Name = "Chk_Restar_Stock_TransitoGti"
+        Me.Chk_Restar_Stock_TransitoGti.Text = "Restar stock en transito (GTI)"
         '
         'Chk_Restar_Stock_PedidoOcc
         '
@@ -595,6 +594,12 @@ Partial Class Frm_01_Asis_Compra_Resultados
         '
         Me.Chk_QuitarProdExcluidos.Name = "Chk_QuitarProdExcluidos"
         Me.Chk_QuitarProdExcluidos.Text = "Quitar productos excluidos"
+        '
+        'Chk_Sacar_Productos_Sin_Rotacion
+        '
+        Me.Chk_Sacar_Productos_Sin_Rotacion.Name = "Chk_Sacar_Productos_Sin_Rotacion"
+        Me.Chk_Sacar_Productos_Sin_Rotacion.Text = "Sacar productos sin rotación"
+        Me.Chk_Sacar_Productos_Sin_Rotacion.Tooltip = "Quitar productos que no han tenido rotación en los 3 ultimos periodos"
         '
         'RibbonPanel1
         '
@@ -2227,14 +2232,9 @@ Partial Class Frm_01_Asis_Compra_Resultados
         '
         Me.Timer_Ejecucion_Automatica.Interval = 2000
         '
-        'Chk_Restar_Stock_TransitoGti
-        '
-        Me.Chk_Restar_Stock_TransitoGti.Name = "Chk_Restar_Stock_TransitoGti"
-        Me.Chk_Restar_Stock_TransitoGti.Text = "Restar stock en transito (GTI)"
-        '
         'Frm_01_Asis_Compra_Resultados
         '
-        Me.ClientSize = New System.Drawing.Size(1449, 433)
+        Me.ClientSize = New System.Drawing.Size(1449, 431)
         Me.Controls.Add(Me.ContextMenuBar1)
         Me.Controls.Add(Me.RibbonControl1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)

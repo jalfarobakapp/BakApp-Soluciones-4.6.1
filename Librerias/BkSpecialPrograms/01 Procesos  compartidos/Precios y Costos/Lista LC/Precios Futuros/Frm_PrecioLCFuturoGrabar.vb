@@ -38,7 +38,6 @@ Public Class Frm_PrecioLCFuturoGrabar
         Btn_Grabar.Visible = Not Editar
         Dtp_FechaProgramada.Enabled = Not Editar
         Btn_Grabar.Visible = Not Editar
-        Btn_ImprimirFlejes.Visible = Editar
         Btn_EditarFechaProgramacion.Visible = Editar
         Btn_Eliminar_Programa.Visible = Editar
 
@@ -52,7 +51,6 @@ Public Class Frm_PrecioLCFuturoGrabar
             If Not CBool(_TblPrecios.Rows.Count) Then
                 Chk_Seleccionar_Todo.Enabled = False
                 Btn_EditarFechaProgramacion.Visible = False
-                Btn_ImprimirFlejes.Visible = False
             End If
         End If
 

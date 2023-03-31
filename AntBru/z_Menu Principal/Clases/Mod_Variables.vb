@@ -715,4 +715,55 @@ Public Module Mod_Variables
 
     End Sub
 
+    Sub Sb_Impresora_CodigosDeBarraXProductos()
+
+        Frm_Menu.Hide()
+
+        ''Frm_Menu.Tiempo_Espera_Notificacion.Stop()
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+        FUNCIONARIO = _Global_Row_EstacionBk.Item("Usuario_X_Defecto")
+        Modalidad = _Global_Row_EstacionBk.Item("Modalidad_X_Defecto")
+
+        Consulta_sql = "Select * From TABFU Where KOFU = '" & FUNCIONARIO & "'"
+        Dim _RowUsuario As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_RowUsuario) Then
+            MessageBoxEx.Show(Frm_Menu, "FALTA EL USUARIO POR DEFECTO EN LA CONFIGURACION DE LA ESTACION",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If String.IsNullOrEmpty(Modalidad) Then
+            MessageBoxEx.Show(Frm_Menu, "FALTA LA MODALIDAD POR DEFECTO EN LA CONFIGURACION DE LA ESTACION",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        FUNCIONARIO = _RowUsuario.Item("KOFU")
+        Nombre_funcionario_activo = Trim(_RowUsuario.Item("NOKOFU"))
+
+        Dim _Mod As New Clas_Modalidades
+        _Mod.Sb_Actualiza_Formatos_X_Modalidad()
+        _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
+        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
+        _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+
+        Dim Fm As New Frm_ImpBarras_PorProducto
+        Fm.BtnConfiguracion.Visible = True
+        Fm.Btn_imprimir_Archivo.Visible = False
+        Fm.ShowInTaskbar = True
+        Fm.MinimizeBox = True
+        Fm.EstacionBR1 = True
+        Fm.LimpiarCantidadesDespuesDeImprimir = True
+        Fm.LimpiarListadoDeCodigosDespuesDeImprimir = True
+        Fm.Grupo_Puerto.Enabled = False
+        Fm.Pro_Cantidad_Uno = True
+        Fm.ShowDialog(Frm_Menu)
+        Fm.Dispose()
+
+    End Sub
+
 End Module

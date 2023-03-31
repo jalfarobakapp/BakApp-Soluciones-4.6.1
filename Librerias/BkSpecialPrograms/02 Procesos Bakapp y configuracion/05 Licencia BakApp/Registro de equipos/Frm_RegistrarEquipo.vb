@@ -35,6 +35,8 @@ Public Class Frm_RegistrarEquipo
         End Get
     End Property
 
+    Public Property Grabar As Boolean
+
     Public Sub New(Accion As Enum_Accion, Id_Estacion As Integer, _EsB4A As Boolean)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -173,12 +175,15 @@ Public Class Frm_RegistrarEquipo
         '249360d48e636367b865e0bc8619065d
 
         'If Cmb_TipoEstacion.SelectedValue <> "B4A" Then
+        If _Accion = Enum_Accion.Nuevo Then
 
-        If Txt_KeyReg.Text <> _Key Then
+            If Txt_KeyReg.Text <> _Key Then
 
-            MessageBoxEx.Show(Me, "Llave de acceso no valida", "Key reg.",
-                              Windows.Forms.MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.Stop)
-            Return
+                MessageBoxEx.Show(Me, "Llave de acceso no valida", "Key reg.",
+                                  Windows.Forms.MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.Stop)
+                Return
+
+            End If
 
         End If
 
@@ -201,6 +206,7 @@ Public Class Frm_RegistrarEquipo
 
         End If
 
+
         If _Accion = Enum_Accion.Nuevo Then
 
             If String.IsNullOrEmpty(Txt_Alias.Text.Trim) Then
@@ -222,6 +228,8 @@ Public Class Frm_RegistrarEquipo
                              "Como estación de trabajo tipo: " & Cmb_TipoEstacion.Text, "Registrar estación",
                              Windows.Forms.MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.Asterisk)
             _Registrado = True
+
+            Grabar = True
             Me.Close()
 
         ElseIf _Accion = Enum_Accion.Editar Then
@@ -273,6 +281,8 @@ Public Class Frm_RegistrarEquipo
 
                 MessageBoxEx.Show(Me, "Actualización de estación guardada correctamente", "Tipo Estación",
                                       MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                Grabar = True
                 Me.Close()
 
             End If
@@ -478,14 +488,15 @@ Public Class Frm_RegistrarEquipo
                        {"Cd", "CAJA AUTOMATICA (CashDro-Transbank-Nota de crédito)"},
                        {"Dfa", "REGISTRO DE FABRICACION (DFA Producción)"},
                        {"Nvv", "SOLO NOTAS DE VENTA"},
-                       {"B4A", "DISPOSITIVO MOVIL (B4A)"}}
+                       {"B4A", "DISPOSITIVO MOVIL (B4A)"},
+                       {"BR1", "IMPRESOR DE CODIGOS DE BARRA POR PRODUCTOS"}}
             Sb_Llenar_Combos(_Arr_Filtro, Cmb_TipoEstacion)
             Cmb_TipoEstacion.SelectedValue = "N"
         End If
 
         caract_combo(Cmb_Modalidad_X_Defecto)
         Consulta_sql = "SELECT '' AS Padre,'' As Hijo Union" & vbCrLf &
-                       "SELECT MODALIDAD AS Padre,MODALIDAD AS Hijo FROM CONFIEST WHERE EMPRESA = '01'" & vbCrLf &
+                       "SELECT MODALIDAD AS Padre,MODALIDAD AS Hijo FROM CONFIEST WHERE EMPRESA = '" & ModEmpresa & "'" & vbCrLf &
                        "AND MODALIDAD <> '  '"
         Cmb_Modalidad_X_Defecto.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
         Cmb_Modalidad_X_Defecto.SelectedValue = ""
@@ -499,7 +510,7 @@ Public Class Frm_RegistrarEquipo
         caract_combo(Cmb_Empresa_X_Defecto)
         Consulta_sql = "SELECT EMPRESA AS Padre,RTRIM(LTRIM(RUT))+'-'+RAZON AS Hijo FROM CONFIGP"
         Cmb_Empresa_X_Defecto.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
-        Cmb_Empresa_X_Defecto.SelectedValue = "01"
+        Cmb_Empresa_X_Defecto.SelectedValue = ModEmpresa '"01"
 
 
         Dim _Arr_Filtro_Huellas(,) As String = {{"", ""},

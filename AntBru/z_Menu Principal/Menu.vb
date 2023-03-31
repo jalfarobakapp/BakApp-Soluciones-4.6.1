@@ -671,6 +671,7 @@ Public Class Menu
             _Global_Row_EstacionBk = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         End If
+
     End Sub
 
     Private Sub Btn_Conf_ConfImpDiablito_Click(sender As Object, e As EventArgs) Handles Btn_Conf_ConfImpDiablito.Click
