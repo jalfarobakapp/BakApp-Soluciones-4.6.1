@@ -568,6 +568,11 @@ Public Class Clas_Asistente_Compras
             End If
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
+            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & vbCrLf &
+                           "Set Stock_CriticoUd2_Rd = Stock_CriticoUd1_Rd" & vbCrLf &
+                           "Where Rtu = 1"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
 
             Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set" & Space(1) &
                            "Stock_ProyectadoUd1_Rd = Stock_Fisico_Ud1 - Stock_CriticoUd1_Rd," & vbCrLf &
@@ -626,11 +631,17 @@ Public Class Clas_Asistente_Compras
             If _Proyeccion_Metodo_Abastecer = Enum_Proyeccion.Dias Then
                 Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
                                "CantSugeridaTot = Round(((RotCalculo*" & _Dias_Abastecer & ") * " & _Porc_Crecimiento & ") - StockUd" & _Ud & "," & _DCS & ")" & vbCrLf &
-                               "Where 1 > 0"
+                               "Where 1 > 0 And Rtu <> 1" & vbCrLf &
+                               "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
+                               "CantSugeridaTot = Round(((RotCalculo*" & _Dias_Abastecer & ") * " & _Porc_Crecimiento & ") - StockUd" & _Ud & ",0)" & vbCrLf &
+                               "Where 1 > 0 And Rtu = 1"
             Else
                 Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
                                "CantSugeridaTot = Round(((RotCalculo*" & _Meses_Abastecer & ") * " & _Porc_Crecimiento & ") - StockUd" & _Ud & "," & _DCS & ")" & vbCrLf &
-                               "Where 1 > 0"
+                               "Where 1 > 0 And Rtu <> 1" & vbCrLf &
+                               "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
+                               "CantSugeridaTot = Round(((RotCalculo*" & _Meses_Abastecer & ") * " & _Porc_Crecimiento & ") - StockUd" & _Ud & ",0)" & vbCrLf &
+                               "Where 1 > 0 And Rtu = 1"
             End If
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
