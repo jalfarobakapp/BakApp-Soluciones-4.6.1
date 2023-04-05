@@ -32,6 +32,7 @@ Partial Class Frm_InpunBox_Bk
         Me.TouchKeyboard1 = New DevComponents.DotNetBar.Keyboard.TouchKeyboard()
         Me.Imagenes_48x48_Ligth = New System.Windows.Forms.ImageList(Me.components)
         Me.Imagenes_48x48_Dark = New System.Windows.Forms.ImageList(Me.components)
+        Me.Chk_1 = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.SuspendLayout()
         '
         'TxtDescripcion
@@ -44,7 +45,7 @@ Partial Class Frm_InpunBox_Bk
         Me.TxtDescripcion.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.TxtDescripcion.DisabledBackColor = System.Drawing.Color.White
         Me.TxtDescripcion.ForeColor = System.Drawing.Color.Black
-        Me.TxtDescripcion.Location = New System.Drawing.Point(8, 100)
+        Me.TxtDescripcion.Location = New System.Drawing.Point(7, 90)
         Me.TxtDescripcion.Multiline = True
         Me.TxtDescripcion.Name = "TxtDescripcion"
         Me.TxtDescripcion.PreventEnterBeep = True
@@ -71,7 +72,7 @@ Partial Class Frm_InpunBox_Bk
         Me.BtnAceptar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.BtnAceptar.Image = CType(resources.GetObject("BtnAceptar.Image"), System.Drawing.Image)
         Me.BtnAceptar.ImageAlt = CType(resources.GetObject("BtnAceptar.ImageAlt"), System.Drawing.Image)
-        Me.BtnAceptar.Location = New System.Drawing.Point(8, 175)
+        Me.BtnAceptar.Location = New System.Drawing.Point(8, 191)
         Me.BtnAceptar.Name = "BtnAceptar"
         Me.BtnAceptar.Size = New System.Drawing.Size(92, 38)
         Me.BtnAceptar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -87,7 +88,7 @@ Partial Class Frm_InpunBox_Bk
         Me.LblComentario_Centro.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblComentario_Centro.Location = New System.Drawing.Point(12, 12)
         Me.LblComentario_Centro.Name = "LblComentario_Centro"
-        Me.LblComentario_Centro.Size = New System.Drawing.Size(384, 82)
+        Me.LblComentario_Centro.Size = New System.Drawing.Size(384, 72)
         Me.LblComentario_Centro.TabIndex = 9
         Me.LblComentario_Centro.Text = "Comentario..." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "XXXXXXXXXXYYYYYYYYYYCCCCCCCCCCXXXXXXXXX" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "XZZXDSREFTE" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         Me.LblComentario_Centro.TextLineAlignment = System.Drawing.StringAlignment.Near
@@ -98,7 +99,7 @@ Partial Class Frm_InpunBox_Bk
         Me.BtnCancelar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.BtnCancelar.Image = CType(resources.GetObject("BtnCancelar.Image"), System.Drawing.Image)
         Me.BtnCancelar.ImageAlt = CType(resources.GetObject("BtnCancelar.ImageAlt"), System.Drawing.Image)
-        Me.BtnCancelar.Location = New System.Drawing.Point(106, 175)
+        Me.BtnCancelar.Location = New System.Drawing.Point(106, 191)
         Me.BtnCancelar.Name = "BtnCancelar"
         Me.BtnCancelar.Size = New System.Drawing.Size(92, 38)
         Me.BtnCancelar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -131,6 +132,10 @@ Partial Class Frm_InpunBox_Bk
         Me.Imagenes_48x48_Ligth.Images.SetKeyName(10, "Imagen1")
         Me.Imagenes_48x48_Ligth.Images.SetKeyName(11, "Imagen2")
         Me.Imagenes_48x48_Ligth.Images.SetKeyName(12, "Key")
+        Me.Imagenes_48x48_Ligth.Images.SetKeyName(13, "Money1")
+        Me.Imagenes_48x48_Ligth.Images.SetKeyName(14, "Money2")
+        Me.Imagenes_48x48_Ligth.Images.SetKeyName(15, "Storage")
+        Me.Imagenes_48x48_Ligth.Images.SetKeyName(16, "Product")
         '
         'Imagenes_48x48_Dark
         '
@@ -149,13 +154,40 @@ Partial Class Frm_InpunBox_Bk
         Me.Imagenes_48x48_Dark.Images.SetKeyName(10, "Imagen2")
         Me.Imagenes_48x48_Dark.Images.SetKeyName(11, "Imagen1")
         Me.Imagenes_48x48_Dark.Images.SetKeyName(12, "Key")
+        Me.Imagenes_48x48_Dark.Images.SetKeyName(13, "Money1")
+        Me.Imagenes_48x48_Dark.Images.SetKeyName(14, "Money2")
+        Me.Imagenes_48x48_Dark.Images.SetKeyName(15, "Storage")
+        Me.Imagenes_48x48_Dark.Images.SetKeyName(16, "Product")
+        '
+        'Chk_1
+        '
+        Me.Chk_1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Chk_1.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_1.CheckBoxImageChecked = CType(resources.GetObject("Chk_1.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_1.Checked = True
+        Me.Chk_1.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_1.CheckValue = "Y"
+        Me.Chk_1.FocusCuesEnabled = False
+        Me.Chk_1.ForeColor = System.Drawing.Color.Black
+        Me.Chk_1.Location = New System.Drawing.Point(8, 166)
+        Me.Chk_1.Name = "Chk_1"
+        Me.Chk_1.Size = New System.Drawing.Size(183, 19)
+        Me.Chk_1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_1.TabIndex = 36
+        Me.Chk_1.Text = "Mostrar vales transitorios"
+        Me.Chk_1.Visible = False
         '
         'Frm_InpunBox_Bk
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(495, 220)
+        Me.ClientSize = New System.Drawing.Size(491, 231)
         Me.ControlBox = False
+        Me.Controls.Add(Me.Chk_1)
         Me.Controls.Add(Me.BtnCancelar)
         Me.Controls.Add(Me.LblComentario_Centro)
         Me.Controls.Add(Me.BtnAceptar)
@@ -185,4 +217,5 @@ Partial Class Frm_InpunBox_Bk
     Friend WithEvents TouchKeyboard1 As DevComponents.DotNetBar.Keyboard.TouchKeyboard
     Friend WithEvents Imagenes_48x48_Ligth As ImageList
     Friend WithEvents Imagenes_48x48_Dark As ImageList
+    Public WithEvents Chk_1 As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

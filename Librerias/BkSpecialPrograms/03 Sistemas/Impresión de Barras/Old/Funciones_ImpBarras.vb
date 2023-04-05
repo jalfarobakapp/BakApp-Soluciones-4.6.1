@@ -597,8 +597,17 @@
 
         _Texto = Replace(_Texto, "<DESCRIPCION_PR>", _Descripcion)
         _Texto = Replace(_Texto, "<DESCRIPCION_CORTA>", _Descripcion_Corta)
+
+        Dim _Desc0125mr As String = _Desc0125.ToString.Replace(_Marca_Pr, "").Trim
+        Dim _Desc2650mr As String = _Desc2650.ToString.Replace(_Marca_Pr, "").Trim
+
+        _Texto = Replace(_Texto, "<DESCRIPCION_1-25MR>", _Desc0125mr)
+        _Texto = Replace(_Texto, "<DESCRIPCION_26-50MR>", _Desc2650mr)
+
         _Texto = Replace(_Texto, "<DESCRIPCION_1-25>", _Desc0125)
         _Texto = Replace(_Texto, "<DESCRIPCION_26-50>", _Desc2650)
+
+
         _Texto = Replace(_Texto, "<UBICACION_PR>", _Ubicacion)
         _Texto = Replace(_Texto, "<UBICACION>", _Ubicacion)
         _Texto = Replace(_Texto, "<MARCA_PR>", _Marca_Pr)

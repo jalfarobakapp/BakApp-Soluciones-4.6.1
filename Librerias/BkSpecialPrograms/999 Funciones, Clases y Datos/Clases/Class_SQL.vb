@@ -547,7 +547,8 @@ Public Class Class_SQL
                                  _Tipo As Enum_Type,
                                  ByRef _Valor_x_defecto As String,
                                  Optional _Actualizar As Boolean = False,
-                                 Optional _Grupo As String = "")
+                                 Optional _Grupo As String = "",
+                                 Optional _EsVarible As Boolean = False)
 
         Try
 
@@ -560,7 +561,7 @@ Public Class Class_SQL
             Dim _Insertar_dato = True
 
             Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Tmp_Prm_Informes" & vbCrLf &
-                       "Where Funcionario = '" & FUNCIONARIO & "' And Informe = '" & _Informe & "' And Campo = '" & _Campo & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
+                           "Where Funcionario = '" & FUNCIONARIO & "' And Informe = '" & _Informe & "' And Campo = '" & _Campo & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
             _Row_Fila = Fx_Get_DataRow(Consulta_sql)
 
             If (_Row_Fila Is Nothing) Then
@@ -593,18 +594,22 @@ Public Class Class_SQL
                         _Valor = _Valor_x_defecto
                     Else
 
-                        Select Case _Tipo
-                            Case Enum_Type._String
-                                _Valor = _Objeto.Text
-                            Case Enum_Type._Double
-                                _Valor = De_Txt_a_Num_01(_Objeto.Value)
-                            Case Enum_Type._Date
-                                _Valor = CDate(_Objeto.Value)
-                            Case Enum_Type._Boolean
-                                _Valor = _Objeto.Checked
-                            Case Enum_Type._ComboBox
-                                _Valor = _Objeto.SelectedValue
-                        End Select
+                        If _EsVarible Then
+                            _Valor = _Objeto
+                        Else
+                            Select Case _Tipo
+                                Case Enum_Type._String
+                                    _Valor = _Objeto.Text
+                                Case Enum_Type._Double
+                                    _Valor = De_Txt_a_Num_01(_Objeto.Value)
+                                Case Enum_Type._Date
+                                    _Valor = CDate(_Objeto.Value)
+                                Case Enum_Type._Boolean
+                                    _Valor = _Objeto.Checked
+                                Case Enum_Type._ComboBox
+                                    _Valor = _Objeto.SelectedValue
+                            End Select
+                        End If
 
                     End If
 
@@ -631,26 +636,155 @@ Public Class Class_SQL
 
 
             If Not (_Objeto Is Nothing) Then
-                Select Case _Tipo
-                    Case Enum_Type._String
-                        _Objeto.Text = _Valor
-                    Case Enum_Type._Double
-                        _Objeto.Value = De_Txt_a_Num_01(_Valor)
-                    Case Enum_Type._Date
-                        _Objeto.Value = CDate(_Valor)
-                    Case Enum_Type._Boolean
-                        _Objeto.Checked = _Valor
-                    Case Enum_Type._ComboBox
-                        _Objeto.SelectedValue = _Valor
-                End Select
+
+                If _EsVarible Then
+                    _Objeto = _Valor
+                Else
+                    Select Case _Tipo
+                        Case Enum_Type._String
+                            _Objeto.Text = _Valor
+                        Case Enum_Type._Double
+                            _Objeto.Value = De_Txt_a_Num_01(_Valor)
+                        Case Enum_Type._Date
+                            _Objeto.Value = CDate(_Valor)
+                        Case Enum_Type._Boolean
+                            _Objeto.Checked = _Valor
+                        Case Enum_Type._ComboBox
+                            _Objeto.SelectedValue = _Valor
+                    End Select
+                End If
+
             End If
+
+            _Valor_x_defecto = _Valor
+
+            If _EsVarible Then
+                _Objeto = _Valor
+            End If
+
+        Catch ex As Exception
+
+        End Try
+
+    End Sub
+
+    Sub Sb_Parametro_Informe_Sql_String(ByRef _Objeto As String,
+                                        _Informe As String,
+                                        _Campo As String,
+                                        ByRef _Valor_x_defecto As String,
+                                        _Actualizar As Boolean,
+                                        _Grupo As String)
+
+        Try
+
+            Dim Consulta_sql As String
+
+            Dim _Row_Fila As DataRow
+            Dim _Valor As String
+
+            Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+            Dim _Insertar_dato = True
+
+            Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Tmp_Prm_Informes" & vbCrLf &
+                           "Where Funcionario = '" & FUNCIONARIO & "' And Informe = '" & _Informe & "' And Campo = '" & _Campo & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
+            _Row_Fila = Fx_Get_DataRow(Consulta_sql)
+
+            If (_Row_Fila Is Nothing) Then
+
+                _Valor = _Valor_x_defecto
+
+                'Select Case _Tipo
+                '    Case Enum_Type._String, Enum_Type._ComboBox
+                '        _Valor = _Valor_x_defecto
+                '    Case Enum_Type._Double
+                '        _Valor = De_Txt_a_Num_01(_Valor_x_defecto)
+                '    Case Enum_Type._Boolean
+                '        _Valor = CBool(_Valor_x_defecto)
+                '    Case Enum_Type._Date
+                '        _Valor = CDate(_Valor_x_defecto)
+                'End Select
+
+                If _Insertar_dato Then
+
+                    Consulta_sql = "INSERT INTO " & _Global_BaseBk & "Zw_Tmp_Prm_Informes (Funcionario,Informe,Campo,Tipo,Valor,Grupo,NombreEquipo,Modalidad) VALUES" & Space(1) &
+                          "('" & FUNCIONARIO & "','" & _Informe & "','" & _Campo & "','vString'," & "'" & _Valor & "','" & _Grupo & "','" & _NombreEquipo & "','" & Modalidad & "')"
+                    Ej_consulta_IDU(Consulta_sql, False)
+
+                End If
+
+            Else
+
+                If _Actualizar Then
+
+                    _Valor = _Objeto
+
+                    If String.IsNullOrEmpty(_Objeto) Then
+                        _Valor = _Valor_x_defecto
+                    End If
+
+                    'If IsNothing(_Objeto) Then
+                    '    _Valor = _Valor_x_defecto
+                    'Else
+
+                    '    Select Case _Tipo
+                    '        Case Enum_Type._String
+                    '            _Valor = _Objeto.Text
+                    '        Case Enum_Type._Double
+                    '            _Valor = De_Txt_a_Num_01(_Objeto.Value)
+                    '        Case Enum_Type._Date
+                    '            _Valor = CDate(_Objeto.Value)
+                    '        Case Enum_Type._Boolean
+                    '            _Valor = _Objeto.Checked
+                    '        Case Enum_Type._ComboBox
+                    '            _Valor = _Objeto.SelectedValue
+                    '    End Select
+
+                    'End If
+
+                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Tmp_Prm_Informes Set Valor = '" & _Valor & "'" & vbCrLf &
+                                   "Where Funcionario = '" & FUNCIONARIO & "' And Informe = '" & _Informe & "' And Campo = '" & _Campo & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
+                    Ej_consulta_IDU(Consulta_sql, False)
+
+                Else
+
+                    'Select Case _Tipo
+                    '    Case Enum_Type._String, Enum_Type._ComboBox
+                    '        _Valor = _Row_Fila.Item("Valor")
+                    '    Case Enum_Type._Double
+                    '        _Valor = De_Txt_a_Num_01(_Row_Fila.Item("Valor"))
+                    '    Case Enum_Type._Boolean
+                    '        _Valor = CBool(_Row_Fila.Item("Valor"))
+                    '    Case Enum_Type._Date
+                    '        _Valor = CDate(_Row_Fila.Item("Valor"))
+                    'End Select
+
+                    _Valor = _Row_Fila.Item("Valor")
+
+                End If
+
+            End If
+
+
+            'If Not (_Objeto Is Nothing) Then
+            '    Select Case _Tipo
+            '        Case Enum_Type._String
+            '            _Objeto.Text = _Valor
+            '        Case Enum_Type._Double
+            '            _Objeto.Value = De_Txt_a_Num_01(_Valor)
+            '        Case Enum_Type._Date
+            '            _Objeto.Value = CDate(_Valor)
+            '        Case Enum_Type._Boolean
+            '            _Objeto.Checked = _Valor
+            '        Case Enum_Type._ComboBox
+            '            _Objeto.SelectedValue = _Valor
+            '    End Select
+            'End If
 
             _Valor_x_defecto = _Valor
         Catch ex As Exception
 
         End Try
-
-
 
     End Sub
 

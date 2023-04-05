@@ -1953,13 +1953,18 @@ Public Class Frm_01_Asis_Compra_Resultados
             '[Costo_Compra]             [float]       DEFAULT (0),
             '[Dscto_Compra]             [float]       DEFAULT (0),
 
+            Dim _Costo_Ult_Compra As String
+
+            If _Ud = 1 Then _Costo_Ult_Compra = "Costo_Ult_Compra"
+            If _Ud = 2 Then _Costo_Ult_Compra = "Costo_Ult_Compra*Rtu"
+
             Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER,'N' As MEARDO" &
                             vbCrLf &
                            "Select Distinct " & _Top & " '" & FUNCIONARIO & "' As KOFULIDO,Codigo As KOPRCT,
                             Descripcion,Descripcion As NOKOPR,CodAlternativo,'" & ModListaPrecioCosto & "' As KOLTPR,UD1,UD2,
-                            Costo_Ult_Compra as CostoUd1,Costo_Ult_Compra as CostoUd2,
-                            Costo_Ult_Compra As Precio,Rtu,CantComprar As Cantidad,Dscto_Ult_Compra as Desc1,
-                            0 as Desc2,0 as Desc3,0 as Desc4,0 as Desc5,0 As PRCT,'' As TICT,TIPR," & Ud & " as UDTRPR,0 as POTENCIA,'' As KOFUAULIDO,'' As KOOPLIDO,
+                            Costo_Ult_Compra as CostoUd1," & _Costo_Ult_Compra & " as CostoUd2,
+                            " & _Costo_Ult_Compra & " As Precio,Rtu,CantComprar As Cantidad,Dscto_Ult_Compra As Desc1,
+                            0 as Desc2,0 as Desc3,0 as Desc4,0 as Desc5,0 As PRCT,'' As TICT,TIPR," & Ud & " As UDTRPR,0 as POTENCIA,'' As KOFUAULIDO,'' As KOOPLIDO,
                             0 As IDMAEEDO,0 As IDMAEDDO,'" & ModEmpresa & "' As EMPRESA,'" & ModSucursal & "' As SULIDO,'" & ModBodega & "' As BOSULIDO,
                             '' As ENDO,'' As SUENDO,
                             GetDate() As FEEMLI,'' As TIDO,'' As NUDO,'' As NULIDO,0 As CantUd1_Dori,0 As CantUd2_Dori,'' As OBSERVA,

@@ -57,10 +57,22 @@ Public Class Frm_RecargosXProd
 
         'CircularProgress1.IsRunning = True
         Bar2.Enabled = True
+        CmbTipoDeDocumentos.Enabled = False
+        Chk_BuscarDocDeHoy.Enabled = False
 
     End Sub
 
     Private Sub Frm_RecargosXProd_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Consulta_Sql = "Select TIDO AS Padre,TIDO+' - '+NOTIDO AS Hijo" & vbCrLf &
+                       "From TABTIDO Where TIDO In ('BLV','BLX','FCC','FCV','GDP','GDV','GRC','GRD','GRI','GTI','OCC','GDD')" & vbCrLf &
+                       "ORDER BY TIDO"
+        caract_combo(CmbTipoDeDocumentos)
+        CmbTipoDeDocumentos.DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        CmbTipoDeDocumentos.SelectedValue = "FCV"
+
+        _Sql.Sb_Parametro_Informe_Sql(CmbTipoDeDocumentos, "TraerDocumentos", CmbTipoDeDocumentos.Name, Class_SQLite.Enum_Type._ComboBox, "FCV", False, "RecargosXProd")
+        _Sql.Sb_Parametro_Informe_Sql(Chk_BuscarDocDeHoy, "TraerDocumentos", Chk_BuscarDocDeHoy.Name, Class_SQLite.Enum_Type._Boolean, False, False, "RecargosXProd")
 
         _Decimales = 5
 
@@ -195,14 +207,28 @@ Public Class Frm_RecargosXProd
 
     Private Sub Btn_Traer_Documento_Click(sender As Object, e As EventArgs) Handles Btn_Traer_Documento.Click
 
-        Dim _Fecha_Inicio As Date = DateAdd(DateInterval.Month, -1, FechaDelServidor())
-        Dim _Fecha_Fin As Date = FechaDelServidor()
+        Dim _vTido As String = CmbTipoDeDocumentos.SelectedValue
+        Dim _vFechaHoy As Boolean = Chk_BuscarDocDeHoy.Checked
+
+        Dim _FechaServidor As Date = FechaDelServidor()
+        Dim _Fecha_Inicio As Date = DateAdd(DateInterval.Month, -1, _FechaServidor)
+        Dim _Fecha_Fin As Date = _FechaServidor
+
+        '_Sql.Sb_Parametro_Informe_Sql_String(_vTido, "TraerDocumentos", "vTido", "FCV", False, "RecargosXProd")
+
+        '_Sql.Sb_Parametro_Informe_Sql(_vTido, "TraerDocumentos", "vTido", Class_SQLite.Enum_Type._String, "FCV", False, "RecargosXProd", True)
+        '_Sql.Sb_Parametro_Informe_Sql(_vFechaHoy, "TraerDocumentos", "vFechahoy", Class_SQLite.Enum_Type._Boolean, False, False, "RecargosXProd", True)
+
+        If _vFechaHoy Then
+            _Fecha_Inicio = _FechaServidor
+            _Fecha_Fin = _FechaServidor
+        End If
 
         Dim _Recarcalcu As String = Me._Fila.Cells("Codigo").Value.ToString.Trim
 
         Dim _Fm As New Frm_BusquedaDocumento_Filtro(True)
 
-        _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "FCV",
+        _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, _vTido,
                                  "Where TIDO In ('BLV','BLX','FCC','FCV','GDP','GDV','GRC','GRD','GRI','GTI','OCC','GDD')")
         _Fm.Pro_TipoDoc_Seleccionado = Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado
         _Fm.Rdb_Fecha_Emision_Cualquiera.Enabled = False
@@ -214,8 +240,20 @@ Public Class Frm_RecargosXProd
         _Fm.Filtrar_Doc_No_Asociados_Recargo = True
         _Fm.Codigo_Recargo = _Recarcalcu
         _Fm.Rdb_Ver_Primeros.Checked = True
-        '_Fm.ShowInTaskbar = True
         _Fm.ShowDialog(Me)
+        _vTido = _Fm.CmbTipoDeDocumentos.SelectedValue
+        _Fecha_Inicio = _Fm.DtpFechaInicio.Value
+        _Fecha_Fin = _Fm.DtpFechaFin.Value
+
+        'If _FechaServidor.ToShortDateString = _Fecha_Inicio.ToShortDateString And _Fecha_Inicio.CompareTo(_Fecha_Fin) = 0 Then
+        '    _vFechaHoy = True
+        'Else
+        '    _vFechaHoy = False
+        'End If
+
+        '_Sql.Sb_Parametro_Informe_Sql(_vFechaHoy, "TraerDocumentos", "vFechahoy", Class_SQLite.Enum_Type._Boolean, False, True, "RecargosXProd", True)
+        '_Sql.Sb_Parametro_Informe_Sql(_vTido, "TraerDocumentos", "vTido", Class_SQLite.Enum_Type._String, "FCV", True, "RecargosXProd", True)
+
 
         Dim _Tbl_DocSeleccionados As DataTable = _Fm.Tbl_DocSeleccionados
 
@@ -664,6 +702,13 @@ Public Class Frm_RecargosXProd
         CircularProgress1.Visible = False
         CircularProgress1.IsRunning = True
         Bar2.Enabled = True
+        CmbTipoDeDocumentos.Enabled = True
+        Chk_BuscarDocDeHoy.Enabled = True
         Tiempo.Stop()
+    End Sub
+
+    Private Sub Frm_RecargosXProd_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        _Sql.Sb_Parametro_Informe_Sql(CmbTipoDeDocumentos, "TraerDocumentos", CmbTipoDeDocumentos.Name, Class_SQLite.Enum_Type._ComboBox, "FCV", True, "RecargosXProd")
+        _Sql.Sb_Parametro_Informe_Sql(Chk_BuscarDocDeHoy, "TraerDocumentos", Chk_BuscarDocDeHoy.Name, Class_SQLite.Enum_Type._Boolean, False, True, "RecargosXProd")
     End Sub
 End Class
