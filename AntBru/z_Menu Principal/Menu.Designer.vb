@@ -792,7 +792,6 @@ Partial Class Menu
         Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.ButtonX1.TabIndex = 15
         Me.ButtonX1.Text = "Boton de pruebas"
-        Me.ButtonX1.Visible = False
         '
         'Tiempo_Actualizar_BakApp
         '

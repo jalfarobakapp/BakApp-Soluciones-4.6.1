@@ -414,15 +414,26 @@ Public Class Menu
 
     Private Sub ButtonX1_Click(sender As Object, e As EventArgs) Handles ButtonX1.Click
 
-        Dim _Cl_Wordpress As New Cl_Wordpress
+        Dim Auto_CorreoCc = "jalfaro@bakapp.cl"
+        Dim Auto_Id_CorreoOCCMinCompra = 38
 
-        Dim Productos As JArray = _Cl_Wordpress.ObtenerProductos()
-        _Cl_Wordpress.ActualizarStock("14687", 0, 42088)
+        Dim _OrdenesBajoMinimo As New List(Of Integer)
 
-        Return
-        Dim Fm As New Frm_Migrar_Productos
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
+        _OrdenesBajoMinimo.Add(1120834)
+        _OrdenesBajoMinimo.Add(1120835)
+
+        Dim _Generar_OCC As New GeneraOccAuto.Generar_Doc_Auto
+        _Generar_OCC.Fx_Enviar_Notificacion_Correo_OCC_BajoMinCompra(Auto_CorreoCc, "", Auto_Id_CorreoOCCMinCompra, _OrdenesBajoMinimo)
+
+        'Dim _Cl_Wordpress As New Cl_Wordpress
+
+        'Dim Productos As JArray = _Cl_Wordpress.ObtenerProductos()
+        '_Cl_Wordpress.ActualizarStock("14687", 0, 42088)
+
+        'Return
+        'Dim Fm As New Frm_Migrar_Productos
+        'Fm.ShowDialog(Me)
+        'Fm.Dispose()
 
     End Sub
 

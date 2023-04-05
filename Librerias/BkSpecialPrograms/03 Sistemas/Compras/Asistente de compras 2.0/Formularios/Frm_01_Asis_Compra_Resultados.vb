@@ -86,6 +86,8 @@ Public Class Frm_01_Asis_Compra_Resultados
     Public Property Auto_Correo_EnviarCorreosATodos As Boolean
     Public Property Auto_Correo_EnviarCorreosSoloCc As Boolean
     Public Property Auto_Correo_NoEnviarCorreos As Boolean
+    Public Property Auto_Id_CorreoOCCMinCompra As String
+    Public Property Auto_EnviarListadoOCCConMinimoCompraXCorreo As Boolean
     Public Property Pro_Tbl_Filtro_Super_Familias() As DataTable
         Get
             Return _Tbl_Filtro_Super_Familias
@@ -8209,6 +8211,7 @@ Drop Table #Paso"
 
             Dim _Generar_OCC As New GeneraOccAuto.Generar_Doc_Auto
 
+
             For Each _Fila As DataRow In _Tbl_Proveedores.Rows
 
                 Dim _CodEntidad As String = _Fila.Item("KOEN")
@@ -8219,50 +8222,78 @@ Drop Table #Paso"
 
             Next
 
+            Dim _OrdenesBajoMinimo As New List(Of Integer)
+
             For Each _Fl As GeneraOccAuto.Doc_Auto In _Generar_OCC.Doc_Auto
 
-                Dim _Id_Acp As Integer
+                Dim _Enviar As Boolean = True
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_AcpAuto (NombreEquipo,Modalidad,Idmaeedo,Tido,Nudo,FechaEmision,Informacion,ErrorGrabar) Values " &
-                               "('" & _NombreEquipo & "','" & _Modalidad_Estudio & "'," & _Fl.Idmaeedo & ",'" & _Fl.Tido & "','" & _Fl.Nudo & "'" &
-                               ",'" & Format(_Fl.Feemdo, "yyyyMMdd") & "','" & NuloPorNro(_Fl.MensajeError, "") & "'," & Convert.ToInt32(_Fl.ErrorGrabar) & ")"
-                _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Acp)
+                If Auto_EnviarListadoOCCConMinimoCompraXCorreo Then
 
-                If Not String.IsNullOrEmpty(Auto_Id_Correo) Then
+                    Dim _MontoMinCompra As Double = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "MontoMinCompra",
+                                                                      "CodEntidad = '" & _Fl.Endo & "' And CodSucEntidad = '" & _Fl.Suendo & "'")
 
-                    Dim _Email As String
-                    Dim _CorreoCc As String
-
-                    If Not Auto_Correo_NoEnviarCorreos Then
-
-                        If Auto_Correo_EnviarCorreosATodos Then
-                            If String.IsNullOrEmpty(_Fl.Email) Then
-
-                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_AcpAuto Set Informacion = 'Falta correo de compras en ficha de la entidad' Where Id = " & _Id_Acp
-                                _Sql.Ej_consulta_IDU(Consulta_sql)
-
-                            End If
-                            _Email = _Fl.Email
-                            _CorreoCc = Auto_CorreoCc
+                    If CBool(_MontoMinCompra) Then
+                        If _Fl.Vanedo < _MontoMinCompra Then
+                            _Fl.EnviarMail = False
+                            _OrdenesBajoMinimo.Add(_Fl.Idmaeedo)
                         End If
-
-                        If Auto_Correo_EnviarCorreosSoloCc Then
-                            _Email = Auto_CorreoCc
-                            _CorreoCc = String.Empty
-                        End If
-
                     End If
 
-                    Dim _Error As String = _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, _Email, _CorreoCc, Auto_Id_Correo, Auto_NombreFormato_PDF, _Id_Acp)
+                End If
 
-                    If Not String.IsNullOrEmpty(_Error) Then
-                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_AcpAuto Set Informacion = Informacion+' -" & _Error.Trim & "' Where Id = " & _Id_Acp
-                        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+                If _Fl.EnviarMail Then
+
+                    Dim _Id_Acp As Integer
+
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_AcpAuto (NombreEquipo,Modalidad,Idmaeedo,Tido,Nudo,FechaEmision,Informacion,ErrorGrabar) Values " &
+                                   "('" & _NombreEquipo & "','" & _Modalidad_Estudio & "'," & _Fl.Idmaeedo & ",'" & _Fl.Tido & "','" & _Fl.Nudo & "'" &
+                                   ",'" & Format(_Fl.Feemdo, "yyyyMMdd") & "','" & NuloPorNro(_Fl.MensajeError, "") & "'," & Convert.ToInt32(_Fl.ErrorGrabar) & ")"
+                    _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Acp)
+
+                    If Not String.IsNullOrEmpty(Auto_Id_Correo) Then
+
+                        Dim _Email As String
+                        Dim _CorreoCc As String
+
+                        If Not Auto_Correo_NoEnviarCorreos Then
+
+                            If Auto_Correo_EnviarCorreosATodos Then
+                                If String.IsNullOrEmpty(_Fl.Email) Then
+
+                                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_AcpAuto Set Informacion = 'Falta correo de compras en ficha de la entidad' Where Id = " & _Id_Acp
+                                    _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                                End If
+                                _Email = _Fl.Email
+                                _CorreoCc = Auto_CorreoCc
+                            End If
+
+                            If Auto_Correo_EnviarCorreosSoloCc Then
+                                _Email = Auto_CorreoCc
+                                _CorreoCc = String.Empty
+                            End If
+
+                        End If
+
+                        Dim _Error As String = _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, _Email, _CorreoCc, Auto_Id_Correo, Auto_NombreFormato_PDF, _Id_Acp)
+
+                        If Not String.IsNullOrEmpty(_Error) Then
+                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_AcpAuto Set Informacion = Informacion+' -" & _Error.Trim & "' Where Id = " & _Id_Acp
+                            _Sql.Ej_consulta_IDU(Consulta_sql, False)
+                        End If
+
                     End If
 
                 End If
 
             Next
+
+            If CBool(_OrdenesBajoMinimo.Count) Then
+
+                _Generar_OCC.Fx_Enviar_Notificacion_Correo_OCC_BajoMinCompra(Auto_CorreoCc, "", Auto_Id_CorreoOCCMinCompra, _OrdenesBajoMinimo)
+
+            End If
 
             Me.Close()
 
@@ -8782,8 +8813,14 @@ Drop Table #Paso"
                                                     "EmailCompras", "CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'")
 
                 _Occ_Auto.Tido = "OCC"
-                _Occ_Auto.Nudo = _Sql.Fx_Trae_Dato("MAEEDO", "NUDO", "IDMAEEDO = " & _New_Idmaeedo)
-                _Occ_Auto.Feemdo = _Sql.Fx_Trae_Dato("MAEEDO", "FEEMDO", "IDMAEEDO = " & _New_Idmaeedo)
+
+                Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
+                Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                _Occ_Auto.Nudo = _Row_Maeedo.Item("NUDO")
+                _Occ_Auto.Feemdo = _Row_Maeedo.Item("FEEMDO")
+                _Occ_Auto.Vanedo = _Row_Maeedo.Item("VANEDO")
+                _Occ_Auto.EnviarMail = True
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_Log_Compras Set" & vbCrLf &
                                "Idmaeedo_Ult_occ = " & _New_Idmaeedo & "," &
@@ -9437,48 +9474,6 @@ Namespace GeneraOccAuto
                 Dim _Tido As String = _Row_Maeedo.Item("TIDO")
                 Dim _Nudo As String = _Row_Maeedo.Item("NUDO")
 
-                'If String.IsNullOrEmpty(_Para.Trim) Then
-                '    Throw New System.Exception("Falta el correo del cliente")
-                'End If
-
-                'If _Para.Contains(";") Then
-
-                '    Dim _Paras = _Para.Split(";")
-
-                '    For Each Pr As String In _Paras
-                '        If Not Fx_Validar_Email(Pr) Then
-                '            Throw New System.Exception("El correo para: [" & _Para & "] no es una cuenta de correos valida")
-                '        End If
-                '    Next
-                'Else
-                '    If Not Fx_Validar_Email(_Para) Then
-                '        Throw New System.Exception("El correo para: [" & _Para & "] no es una cuenta de correos valida")
-                '    End If
-                'End If
-
-                'If Not String.IsNullOrEmpty(_Cc) Then
-
-                '    If Not Fx_Validar_Email(_Cc) Then
-
-                '        If _Cc.Contains(";") Then
-
-                '            Dim _Ccs = _Cc.Split(";")
-
-                '            For Each _Correos In _Ccs
-                '                If Not Fx_Validar_Email(_Correos) Then
-                '                    Throw New System.Exception("El correo CC: [" & _Correos & "] no es una cuenta de correos valida")
-                '                End If
-                '            Next
-                '        Else
-                '            If Not Fx_Validar_Email(_Cc) Then
-                '                Throw New System.Exception("El correo CC: [" & _Cc & "] no es una cuenta de correos valida")
-                '            End If
-                '        End If
-
-                '    End If
-
-                'End If
-
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos Corr Where Id = " & _Id_Correo
                 Dim _Row_Correo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -9533,6 +9528,92 @@ Namespace GeneraOccAuto
 
         End Function
 
+        Function Fx_Enviar_Notificacion_Correo_OCC_BajoMinCompra(_Para As String,
+                                                                 _Cc As String,
+                                                                 _Id_Correo As Integer,
+                                                                 _ListaOcc As List(Of Integer)) As String
+
+            Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+            Dim Consulta_sql As String
+            Dim _Error = String.Empty
+
+            Try
+
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos Corr Where Id = " & _Id_Correo
+                Dim _Row_Correo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                If IsNothing(_Row_Correo) Then
+                    Throw New System.Exception("No existe configuración para el envio de correos")
+                End If
+
+                Dim _Nombre_Correo As String = _Row_Correo.Item("Nombre_Correo")
+                Dim _Asunto As String = _Row_Correo.Item("Asunto")
+                Dim _Mensaje As String = _Row_Correo.Item("CuerpoMensaje")
+
+                If String.IsNullOrEmpty(_Asunto) Then
+                    _Asunto = "Correo de notificación de pedido " & RazonEmpresa
+                End If
+
+                _Mensaje = Replace(_Mensaje, "&lt;", "<")
+                _Mensaje = Replace(_Mensaje, "&gt;", ">")
+                _Mensaje = Replace(_Mensaje, "&quot;", """")
+
+                _Mensaje = Replace(_Mensaje, "'", "''")
+
+                Dim _ListadoOcc As String
+
+                For Each _Idmaeedo As Integer In _ListaOcc
+
+                    Consulta_sql = "Select TIDO,NUDO,ENDO,SUENDO,NOKOEN,VANEDO" & vbCrLf &
+                                   "From MAEEDO" & vbCrLf &
+                                   "Left Join MAEEN On ENDO = KOEN And SUENDO = SUEN" & vbCrLf &
+                                   "Where IDMAEEDO = " & _Idmaeedo
+                    Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                    Dim _Tido As String = _Row_Maeedo.Item("TIDO")
+                    Dim _Nudo As String = _Row_Maeedo.Item("NUDO")
+                    Dim _Endo As String = _Row_Maeedo.Item("ENDO")
+                    Dim _Nokoen As String = _Row_Maeedo.Item("NOKOEN")
+                    Dim _Vanedo As String = FormatCurrency(_Row_Maeedo.Item("VANEDO"), 0)
+
+                    _ListadoOcc += "TD: " & _Tido & "-" & _Nudo & ", Entidad: " & _Endo & " - " & _Nokoen & ", Valor: " & _Vanedo & " <br>"
+
+                Next
+
+                _Mensaje = Replace(_Mensaje, "<HTML_OCCMINCOMPRAS>", _ListadoOcc)
+
+                If Not String.IsNullOrEmpty(_Nombre_Correo) Then
+
+                    Dim _Fecha = "Getdate()"
+                    Dim _NombreEquipo As String = String.Empty '_Global_Row_EstacionBk.Item("NombreEquipo")
+
+                    _Para = _Para.Trim
+
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo (NombreEquipo,Id_Correo,Nombre_Correo,CodFuncionario,Asunto," &
+                                    "Para,Cc,Idmaeedo,Tido,Nudo,NombreFormato,Enviar,Mensaje,Fecha,Adjuntar_Documento,Doc_Adjuntos,Id_Acp)" &
+                                    vbCrLf &
+                                    "Values ('" & _NombreEquipo & "'," & _Id_Correo & ",'" & _Nombre_Correo & "','','" & _Asunto & "','" & _Para & "','" & _Cc &
+                                    "',0,'','','',1,'" & _Mensaje & "'," & _Fecha &
+                                    ",0,'',0)"
+
+                    _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+                    _Error = _Sql.Pro_Error
+
+                    If Not String.IsNullOrEmpty(_Error) Then
+                        Throw New System.Exception(_Error)
+                    End If
+
+                End If
+
+            Catch ex As Exception
+                _Error = ex.Message
+            End Try
+
+            Return _Error
+
+        End Function
+
     End Class
 
     Public Class Doc_Auto
@@ -9546,6 +9627,8 @@ Namespace GeneraOccAuto
         Public Property Email As String
         Public Property ErrorGrabar As Boolean
         Public Property MensajeError As String
+        Public Property Vanedo As Double
+        Public Property EnviarMail As Boolean
 
     End Class
 

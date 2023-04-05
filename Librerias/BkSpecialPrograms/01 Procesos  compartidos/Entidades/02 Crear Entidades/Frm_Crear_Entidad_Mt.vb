@@ -206,6 +206,8 @@ Public Class Frm_Crear_Entidad_Mt
         AddHandler TxtxDiasEntreVenci.KeyPress, AddressOf PresionaEnter
         AddHandler TxtxMorosidadP.KeyPress, AddressOf PresionaEnter
 
+        AddHandler Txt_MontoMinCompra.KeyPress, AddressOf PresionaEnter
+
         AddHandler TxtxCtoSinDocumentar.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros
         AddHandler TxtxCtoEnCheques.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros
         AddHandler TxtxCtoEnLetra.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros
@@ -217,11 +219,15 @@ Public Class Frm_Crear_Entidad_Mt
         AddHandler TxtxMorosidadP.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler TxtxPorcAnticipo.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros
 
+        AddHandler Txt_MontoMinCompra.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros
+
         AddHandler TxtxCtoSinDocumentar.Validated, AddressOf Sb_Txt_Nros_Validated
         AddHandler TxtxCtoEnCheques.Validated, AddressOf Sb_Txt_Nros_Validated
         AddHandler TxtxCtoEnLetra.Validated, AddressOf Sb_Txt_Nros_Validated
         AddHandler TxtxCtoEnPagare.Validated, AddressOf Sb_Txt_Nros_Validated
         AddHandler TxtxCtoTotal.Validated, AddressOf Sb_Txt_Nros_Validated
+
+        AddHandler Txt_MontoMinCompra.Validated, AddressOf Sb_Txt_Nros_Validated
 
         AddHandler TxtxNroMaxVenci.Validated, AddressOf Sb_Txt_Nros_Validated
         AddHandler TxtxDias1erVenci.Validated, AddressOf Sb_Txt_Nros_Validated
@@ -234,6 +240,8 @@ Public Class Frm_Crear_Entidad_Mt
         AddHandler TxtxCtoEnLetra.Enter, AddressOf Sb_Txt_Nros_Enter
         AddHandler TxtxCtoEnPagare.Enter, AddressOf Sb_Txt_Nros_Enter
         AddHandler TxtxCtoTotal.Enter, AddressOf Sb_Txt_Nros_Enter
+
+        AddHandler Txt_MontoMinCompra.Enter, AddressOf Sb_Txt_Nros_Enter
 
         Sb_Color_Botones_Barra(Bar1)
 
@@ -969,6 +977,7 @@ Public Class Frm_Crear_Entidad_Mt
                                ",FacAuto = " & Convert.ToInt32(Chk_FacAuto.Checked) & vbCrLf &
                                ",RevFincred = " & Convert.ToInt32(Chk_RevCredFincred.Checked) & vbCrLf &
                                _EmailCompras &
+                               ",MontoMinCompra = " & Txt_MontoMinCompra.Tag & vbCrLf &
                                "Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
@@ -1518,6 +1527,9 @@ Public Class Frm_Crear_Entidad_Mt
                     Label31.Visible = False
                     Txt_EmailCompras.Visible = False
                 End If
+
+                Txt_MontoMinCompra.Tag = _Row_Entidades.Item("MontoMinCompra")
+                Txt_MontoMinCompra.Text = FormatNumber(Txt_MontoMinCompra.Tag, 0)
 
             End If
 

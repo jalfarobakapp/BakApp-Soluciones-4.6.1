@@ -100,6 +100,7 @@ Public Class Frm_00_Asis_Compra_Menu
         _Filtro_Bodegas_Todas = True
 
         STabConfiguracion.SelectedTabIndex = 0
+        SbTab_ConfAutomatizacion.SelectedTabIndex = 0
 
     End Sub
 
@@ -896,6 +897,16 @@ Public Class Frm_00_Asis_Compra_Menu
         ' Proceso compras automatico no enviar correos
         _Sql.Sb_Parametro_Informe_Sql(Rdb_OccProvEnviarCorreoNoEnviar, "Compras_Asistente",
                                       Rdb_OccProvEnviarCorreoNoEnviar.Name, Class_SQLite.Enum_Type._Boolean, Rdb_OccProvEnviarCorreoNoEnviar.Checked, _Actualizar)
+
+
+
+        ' Correo para envio de ordenes con bajo el minimo de compras
+        _Sql.Sb_Parametro_Informe_Sql(Txt_CtaCorreoAvisoOCCMinCompra, "Compras_Asistente",
+                                      Txt_CtaCorreoAvisoOCCMinCompra.Name, Class_SQLite.Enum_Type._String, Txt_CtaCorreoAvisoOCCMinCompra.Text, _Actualizar)
+
+        ' Check para envia listado minnimo de compra
+        _Sql.Sb_Parametro_Informe_Sql(Chk_EnviarListadoOCCConMinimoCompraXCorreo, "Compras_Asistente",
+                                      Chk_EnviarListadoOCCConMinimoCompraXCorreo.Name, Class_SQLite.Enum_Type._Boolean, Chk_EnviarListadoOCCConMinimoCompraXCorreo.Checked, _Actualizar)
 
 
     End Sub
@@ -2267,6 +2278,8 @@ Public Class Frm_00_Asis_Compra_Menu
             Fm.Auto_CorreoCc = Txt_CorreoCc_OCC.Text
             Fm.Auto_Id_Correo = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Id", "Nombre_Correo = '" & Txt_CtaCorreoEnvioAutomatizado_OCC.Text & "'")
             Fm.Auto_NombreFormato_PDF = Txt_NombreFormato_PDF_OCC.Text
+            Fm.Auto_Id_CorreoOCCMinCompra = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Id", "Nombre_Correo = '" & Txt_CtaCorreoAvisoOCCMinCompra.Text & "'")
+            Fm.Auto_EnviarListadoOCCConMinimoCompraXCorreo = Chk_EnviarListadoOCCConMinimoCompraXCorreo.Checked
         End If
 
         Fm.Modo_OCC = Modo_OCC
@@ -3496,4 +3509,27 @@ Public Class Frm_00_Asis_Compra_Menu
 
     End Sub
 
+    Private Sub Txt_CtaCorreoAvisoOCCMinCompra_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CtaCorreoAvisoOCCMinCompra.ButtonCustomClick
+
+        Dim _Row_Email As DataRow
+
+        Dim Fm As New Frm_Correos_SMTP
+        Fm.Pro_Seleccionar = True
+        Fm.ShowDialog(Me)
+        _Row_Email = Fm.Pro_Row_Fila_Seleccionada
+        Fm.Dispose()
+
+        If Not IsNothing(_Row_Email) Then
+            Txt_CtaCorreoAvisoOCCMinCompra.Tag = _Row_Email.Item("Id")
+            Txt_CtaCorreoAvisoOCCMinCompra.Text = _Row_Email.Item("Nombre_Correo").ToString.Trim
+        End If
+
+    End Sub
+
+    Private Sub Txt_CtaCorreoAvisoOCCMinCompra_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CtaCorreoAvisoOCCMinCompra.ButtonCustom2Click
+        If MessageBoxEx.Show(Me, "Confirma quitar el correo", "Quitar correo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Txt_CtaCorreoAvisoOCCMinCompra.Tag = 0
+            Txt_CtaCorreoAvisoOCCMinCompra.Text = String.Empty
+        End If
+    End Sub
 End Class
