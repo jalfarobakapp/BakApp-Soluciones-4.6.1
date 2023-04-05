@@ -625,7 +625,7 @@ Public Class Frm_MantFacturasElectronicas
 
         Dim _Msg2 As String
 
-        If _Estado = "RPT" Or _Estado = "RFR" Or _Estado = "RCT" Or _Estado = "RCH" Or _Estado = "007" Or _Estado = "-11" Or _Estado = "001" Or _Estado = "107" Or
+        If _Estado = "RPT" Or _Estado = "RFR" Or _Estado = "RCT" Or _Estado = "RCH" Or _Estado = "007" Or _Estado = "-11" Or _Estado = "001" Or _Estado = "107" Or _Estado = "REC" Or
                        (_Id_Dte <> 0 And Not _DocFirmado) Then
 
             Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)

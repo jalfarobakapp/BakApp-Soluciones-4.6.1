@@ -2338,11 +2338,11 @@ Public Class Frm_Formulario_Documento
             ' .Columns("STOCK_Ud1").DefaultCellStyle.Format = "##,###0.##"
             If ChkValores.Checked Then ' TipoNB = "B" Then
                 Total = "ValNetoLinea"
-                FormatoPrecio = "###,##0.##"
+                FormatoPrecio = "###,##0.###"
                 Precio_ = "Precio Neto"
             Else 'If TipoNB = "N" Then
                 Total = "ValBrutoLinea"
-                FormatoPrecio = "###,##0.##"
+                FormatoPrecio = "###,##0.###"
                 Precio_ = "Precio Bruto"
             End If
 
@@ -5332,9 +5332,11 @@ Public Class Frm_Formulario_Documento
 
             If _Moneda_Det.Trim <> _Moneda_Enc.Trim Then
                 If _Tipo_Moneda_Enc = "N" Then
-                    _Precio_Calculado = Math.Round(_Precio * _Tipo_Cambio_Ent, 2)
+                    '_Precio_Calculado = Math.Round(_Precio * _Tipo_Cambio_Ent, 2)
+                    _Precio_Calculado = Math.Round(_Precio * _Tipo_Cambio_Det, 5)
                 Else
-                    _Precio_Calculado = Math.Round(_Precio / _Tipo_Cambio_Ent, 5)
+                    '_Precio_Calculado = Math.Round(_Precio / _Tipo_Cambio_Ent, 5)
+                    _Precio_Calculado = Math.Round(_Precio / _Tipo_Cambio_Det, 5)
                     _Decimales = 2
                 End If
             Else
@@ -7285,6 +7287,59 @@ Public Class Frm_Formulario_Documento
 
                             Beep()
                             Return
+
+                        Case "Moneda"
+
+                            Dim _Moneda_Det As String = _Fila.Cells("Moneda").Value
+                            Dim _Tipo_Cambio As Double = _Fila.Cells("Tipo_Cambio").Value
+
+                            If _Moneda_Det = "" Then
+                                Return
+                            End If
+
+                            If String.IsNullOrEmpty(_Codigo) Then
+                                Beep()
+                                Return
+                            End If
+
+                            If Convert.ToBoolean(_Prct) Then
+                                Beep()
+                                Return
+                            End If
+
+                            If _Revision_Remota Then
+                                MessageBoxEx.Show(Me, "Solo puede editar los precios y descuentos", "Validación",
+                                                  MessageBoxButtons.OK,
+                                                  MessageBoxIcon.Warning,
+                                                  MessageBoxDefaultButton.Button1, Me.TopMost)
+                                Return
+                            End If
+
+                            Dim _Chk As New Controls.CheckBoxX
+                            _Chk.Name = "Chk"
+                            _Chk.Text = "Aplicar a todos los productos"
+                            _Chk.Checked = False
+                            _Chk.Visible = True
+
+                            Dim _Acep As Boolean = InputBox_Bk(Me, "Tasa de cambio", "Modificar tasa de cambio",
+                                                               _Tipo_Cambio, False, _Tipo_Mayus_Minus.Normal,, True,
+                                                               _Tipo_Imagen.Money1, , _Tipo_Caracter.Moneda, False,, _Chk)
+
+                            If Not _Acep Then
+                                Return
+                            End If
+
+                            If _Chk.Checked Then
+
+                                For Each _Fl As DataGridViewRow In Grilla_Detalle.Rows
+                                    _Fl.Cells("Tipo_Cambio").Value = _Tipo_Cambio
+                                    Sb_Procesar_Datos_De_Grilla(_Fl, "Cantidad", True, True)
+                                Next
+
+                            Else
+                                _Fila.Cells("Tipo_Cambio").Value = _Tipo_Cambio
+                                Sb_Procesar_Datos_De_Grilla(_Fila, "Cantidad", True, True)
+                            End If
 
                         Case "Cantidad"
 
@@ -13295,6 +13350,26 @@ Public Class Frm_Formulario_Documento
                 Return
             End If
 
+
+            If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Entidades", "MontoMinCompra") Then
+
+                Dim _MontoMinCompra As Double = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "MontoMinCompra",
+                                                                   "CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "'")
+
+                If CBool(_MontoMinCompra) Then
+
+                    If _MontoMinCompra > _TblEncabezado.Rows(0).Item("TotalNetoDoc") Then
+                        MessageBoxEx.Show(Me, "Total neto bajo el mínimo de compra para este proveedor." & vbCrLf &
+                                          "Total neto: " & FormatCurrency(_TblEncabezado.Rows(0).Item("TotalNetoDoc"), 0) &
+                                          ", Mínimo de compra: " & FormatCurrency(_MontoMinCompra, 0), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        Return
+                    End If
+
+                End If
+
+            End If
+
+
             If String.IsNullOrEmpty(_TblEncabezado.Rows(0).Item("NroDocumento").ToString.Trim) Then
                 MessageBoxEx.Show(Me, "Debe indicar un número de documento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
@@ -16802,6 +16877,18 @@ Public Class Frm_Formulario_Documento
                     _Idmaeedo_Dori = 0
                 End If
 
+
+                'TIMOPPPR,MOPPPR,TAMOPPPR
+                Dim _Moneda_Det As String
+                Dim _Tipo_Moneda_Det As String
+                Dim _Tipo_Cambio_Det As Double
+
+                If CBool(_Idmaeedo_Dori) Then
+                    _Moneda_Det = _Fila.Item("MOPPPR")
+                    _Tipo_Moneda_Det = _Fila.Item("TIMOPPPR")
+                    _Tipo_Cambio_Det = _Fila.Item("TAMOPPPR")
+                End If
+
                 If _Documento_Reciclado Then
 
                     _Idmaeddo_Dori = 0
@@ -16826,6 +16913,16 @@ Public Class Frm_Formulario_Documento
                 Catch ex As Exception
                     _DescuentoPorc = 0
                 End Try
+
+                If _DescuentoPorc = 0 Then
+
+                    Try
+                        _DescuentoPorc = _Fila.Item("Desc1")
+                    Catch ex As Exception
+                        _DescuentoPorc = 0
+                    End Try
+
+                End If
 
                 If _Tido = "NCV" And _Tido_Origen = "BLV" Then
                     If _Merardo_Ori = "B" And ChkValores.Checked Then
@@ -16990,11 +17087,17 @@ Public Class Frm_Formulario_Documento
                     _New_Fila.Cells("FechaEmision").Value = _FechaEmision
                     _New_Fila.Cells("FechaRecepcion").Value = _Fecha_Recepcion
 
-
                     Dim _Precio_Old As Double = _New_Fila.Cells("Precio").Value
 
                     If _Precio = 0 Then
                         _Precio = _Precio_Old
+                    End If
+
+                    If CBool(_Idmaeedo_Dori) Then
+                        ' Se ingresa el tipo de moneda del documento de origen
+                        _New_Fila.Cells("Moneda").Value = _Moneda_Det
+                        _New_Fila.Cells("Tipo_Moneda").Value = _Tipo_Moneda_Det
+                        _New_Fila.Cells("Tipo_Cambio").Value = _Tipo_Cambio_Det
                     End If
 
                     If _Vencida Then
@@ -17066,9 +17169,9 @@ Public Class Frm_Formulario_Documento
                         If _Cantidad_Reservada_WMS <> _Cantidad Then
 
                             MessageBoxEx.Show(Me, "Producto: " & _Codigo & " - " & _Descripcion & Environment.NewLine & Environment.NewLine &
-                                  "Las cantidades reservadas anteriomente con este documento fueron utilizadas por otra nota de venta" & Environment.NewLine &
-                                  "Devera reservar nuevamente los productos con sus cantidades desde WMS", "VALIDACION",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, Me.TopMost)
+                              "Las cantidades reservadas anteriomente con este documento fueron utilizadas por otra nota de venta" & Environment.NewLine &
+                              "Devera reservar nuevamente los productos con sus cantidades desde WMS", "VALIDACION",
+                              MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, Me.TopMost)
 
                             Dim _Aceptar As Boolean
 
@@ -17228,7 +17331,12 @@ Public Class Frm_Formulario_Documento
 
                                     Else
 
-                                        _Podt = NuloPorNro(_Fila.Item("PODTGLLI"), 0)
+                                        Try
+                                            _Podt = NuloPorNro(_Fila.Item("PODTGLLI"), 0)
+                                        Catch ex As Exception
+                                            _Podt = NuloPorNro(_Fila.Item("Desc1"), 0)
+                                        End Try
+
                                         _Vadt = 0
                                         _Kodt = "D_SIN_TIPO"
 

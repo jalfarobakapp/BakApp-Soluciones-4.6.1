@@ -9,6 +9,8 @@ Public Class Frm_InpunBox_Bk
     Dim _Permitir_Valor_Cero As Boolean
     Dim _Tipo_de_Caracter As _Tipo_Caracter
 
+    Public Property Chk As Controls.CheckBoxX
+
     Public Property Pro_Nueva_Descripcion As String
         Get
             Return _Nueva_Descripcion
@@ -62,6 +64,42 @@ Public Class Frm_InpunBox_Bk
             _Tipo_de_Caracter = value
         End Set
     End Property
+    Private Sub Frm_InpunBox_Bk_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+
+        If Global_Thema = Enum_Themas.Oscuro Then
+            Rf_Imagen.Image = Imagenes_48x48_Dark.Images.Item(_Imagen)
+        Else
+            Rf_Imagen.Image = Imagenes_48x48_Ligth.Images.Item(_Imagen)
+        End If
+
+        Dim _x = Me.Location.X
+        Dim _Y = Me.Location.Y
+        Dim _H = Me.Height
+        Dim _Ancho_Teclado = TouchKeyboard1.Size.Width
+        Dim _Top = (Screen.PrimaryScreen.WorkingArea.Height - Me.Height) / 2
+        Dim _Left = (Screen.PrimaryScreen.WorkingArea.Width - _Ancho_Teclado) / 2
+
+        Me.TouchKeyboard1.FloatingLocation = New System.Drawing.Point(_Left, _Y + _H)
+        If _Global_Es_Touch Then
+            TouchKeyboard1.SetShowTouchKeyboard(TxtDescripcion, DevComponents.DotNetBar.Keyboard.TouchKeyboardStyle.Floating)
+        End If
+
+        If _Tipo_de_Caracter = _Tipo_Caracter.Moneda Then
+            AddHandler TxtDescripcion.KeyPress, AddressOf Sb_Monedas
+        ElseIf _Tipo_de_Caracter = _Tipo_Caracter.Solo_Numeros_Enteros Then
+            AddHandler TxtDescripcion.KeyPress, AddressOf Sb_Solo_Numeros_Enteros
+        End If
+
+        If Not IsNothing(Chk) Then
+            Chk_1.Checked = Chk.Checked
+            Chk_1.Text = Chk.Text
+            Chk_1.Visible = Chk.Visible
+            If Not TxtDescripcion.Multiline Then
+                Chk_1.Top = 120
+            End If
+        End If
+
+    End Sub
 
     Private Sub BtnAceptar_Click(sender As System.Object, e As System.EventArgs) Handles BtnAceptar.Click
         Sb_Aceptar()
@@ -134,38 +172,18 @@ Public Class Frm_InpunBox_Bk
         End If
 
         If _Aceptado Then
+
+            If Not IsNothing(Chk) Then
+                Chk.Checked = Chk_1.Checked
+            End If
+
             Me.Close()
+
         End If
 
     End Sub
 
-    Private Sub Frm_InpunBox_Bk_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
-        If Global_Thema = Enum_Themas.Oscuro Then
-            Rf_Imagen.Image = Imagenes_48x48_Dark.Images.Item(_Imagen)
-        Else
-            Rf_Imagen.Image = Imagenes_48x48_Ligth.Images.Item(_Imagen)
-        End If
-
-        Dim _x = Me.Location.X
-        Dim _Y = Me.Location.Y
-        Dim _H = Me.Height
-        Dim _Ancho_Teclado = TouchKeyboard1.Size.Width
-        Dim _Top = (Screen.PrimaryScreen.WorkingArea.Height - Me.Height) / 2
-        Dim _Left = (Screen.PrimaryScreen.WorkingArea.Width - _Ancho_Teclado) / 2
-
-        Me.TouchKeyboard1.FloatingLocation = New System.Drawing.Point(_Left, _Y + _H)
-        If _Global_Es_Touch Then
-            TouchKeyboard1.SetShowTouchKeyboard(TxtDescripcion, DevComponents.DotNetBar.Keyboard.TouchKeyboardStyle.Floating)
-        End If
-
-        If _Tipo_de_Caracter = _Tipo_Caracter.Moneda Then
-            AddHandler TxtDescripcion.KeyPress, AddressOf Sb_Monedas
-        ElseIf _Tipo_de_Caracter = _Tipo_Caracter.Solo_Numeros_Enteros Then
-            AddHandler TxtDescripcion.KeyPress, AddressOf Sb_Solo_Numeros_Enteros
-        End If
-
-    End Sub
 
     Private Sub Frm_InpunBox_Bk_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then

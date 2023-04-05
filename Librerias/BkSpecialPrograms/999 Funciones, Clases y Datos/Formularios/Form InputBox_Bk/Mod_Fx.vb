@@ -1,4 +1,5 @@
 ﻿Imports System.Windows.Forms
+Imports DevComponents.DotNetBar
 Public Module Mod_Fx
 
     Enum _Tipo_Mayus_Minus
@@ -20,6 +21,10 @@ Public Module Mod_Fx
         Imagen1
         Imagen2
         Key
+        Money1
+        Money2
+        Product
+        Storage
     End Enum
 
     Enum _Tipo_Caracter
@@ -40,7 +45,8 @@ Public Module Mod_Fx
                                 Optional _Permitir_En_Blanco As Boolean = False,
                                 Optional _Tipo_de_caracter As _Tipo_Caracter = _Tipo_Caracter.Cualquier_caracter,
                                 Optional _Permitir_Valor_Cero As Boolean = True,
-                                Optional _PasswordChar As String = "") As Boolean
+                                Optional _PasswordChar As String = "",
+                                Optional ByRef _Chk As Controls.CheckBoxX = Nothing) As Boolean
 
         Dim _Aceptado As Boolean
 
@@ -56,6 +62,7 @@ Public Module Mod_Fx
         Fm.Pro_Permitir_Valor_Cero = _Permitir_Valor_Cero
         Fm.Pro_Tipo_de_Caracter = _Tipo_de_caracter
         Fm.Pro_Imagen = _Imagen.ToString
+        Fm.Chk = _Chk
 
         If CBool(_Max_Cant_Caracteres) Then
             Fm.TxtDescripcion.MaxLength = _Max_Cant_Caracteres
@@ -75,10 +82,20 @@ Public Module Mod_Fx
 
         Fm.TopMost = Frm_Origen.TopMost
         Fm.ShowDialog(Frm_Origen)
+
         _Aceptado = Fm.Pro_Aceptado
+
         Fm.Dispose()
 
-        If _Aceptado Then _TextoDescripcion = Fm.Pro_Nueva_Descripcion
+        If _Aceptado Then
+
+            _TextoDescripcion = Fm.Pro_Nueva_Descripcion
+
+            If _Tipo_de_caracter = _Tipo_Caracter.Moneda Then
+                _TextoDescripcion = De_Txt_a_Num_01(Fm.Pro_Nueva_Descripcion, 5)
+            End If
+
+        End If
 
         If IsNothing(_TextoDescripcion) Then
 

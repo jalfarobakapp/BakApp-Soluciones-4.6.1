@@ -357,23 +357,27 @@ Public Class Cl_Correos
 
                 End If
 
-                If IsNothing(_Row_Documento) Then
+                If _Adjuntar_Documento Then
 
-                    _Error += "No se encontro el documento " & _Tido & "-" & _Nudo & " (IDMAEEDO: " & _IdMaeedo & ")"
-                    _Intentos = 3
+                    If IsNothing(_Row_Documento) Then
 
-                Else
+                        _Error += "No se encontro el documento " & _Tido & "-" & _Nudo & " (IDMAEEDO: " & _IdMaeedo & ")"
+                        _Intentos = 3
 
-                    _Koen = _Row_Documento.Item("KOEN")
-                    _Suen = _Row_Documento.Item("SUEN")
-
-                    Dim _Esdo = _Row_Documento.Item("ESDO")
-                    If _Esdo = "N" Then
-                        _Error += "El documento " & _Tido & "-" & _Nudo & " esta NULO"
                     Else
-                        If _Row_Documento.Item("TIDO") <> _Tido Or _Row_Documento.Item("NUDO") <> _Nudo Then
-                            _Error += "El documento " & _Tido & "-" & _Nudo & " no pertenece al IDMAEEDO " & _IdMaeedo
+
+                        _Koen = _Row_Documento.Item("KOEN")
+                        _Suen = _Row_Documento.Item("SUEN")
+
+                        Dim _Esdo = _Row_Documento.Item("ESDO")
+                        If _Esdo = "N" Then
+                            _Error += "El documento " & _Tido & "-" & _Nudo & " esta NULO"
+                        Else
+                            If _Row_Documento.Item("TIDO") <> _Tido Or _Row_Documento.Item("NUDO") <> _Nudo Then
+                                _Error += "El documento " & _Tido & "-" & _Nudo & " no pertenece al IDMAEEDO " & _IdMaeedo
+                            End If
                         End If
+
                     End If
 
                 End If

@@ -407,7 +407,7 @@ Public Class Clas_Asistente_Compras
 
             'End If
 
-            'If _Rdb_RotMeses Then
+
 
             ' Debo poner un validador que permita preguntar si quiere redondear hacia arriba o no Sierralta lo usa, La Colchaguina No
             Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set " & vbCrLf &
@@ -415,14 +415,25 @@ Public Class Clas_Asistente_Compras
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
             Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set " & vbCrLf &
+                           "RotMensualUd2 = RotMensualUd1" & vbCrLf &
+                           "Where Rtu = 1"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+
+            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set " & vbCrLf &
                            "RotDiariaUd1 = Round(RotMensualUd1/" & _Dias_Prom_Mensual & ",3)," & vbCrLf &
                            "RotDiariaUd2 = Round(RotMensualUd2/" & _Dias_Prom_Mensual & ",3)"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
-            'End If
+
 
             Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set " & vbCrLf &
                            "RotMensualUd1_Prod = Ceiling(RotMensualUd1_Prod)"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set " & vbCrLf &
+                           "RotMensualUd2_Prod = RotMensualUd1_Prod" & vbCrLf &
+                           "Where Rtu = 1"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
             Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set " & vbCrLf &
@@ -557,6 +568,11 @@ Public Class Clas_Asistente_Compras
             End If
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
+            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & vbCrLf &
+                           "Set Stock_CriticoUd2_Rd = Stock_CriticoUd1_Rd" & vbCrLf &
+                           "Where Rtu = 1"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
 
             Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set" & Space(1) &
                            "Stock_ProyectadoUd1_Rd = Stock_Fisico_Ud1 - Stock_CriticoUd1_Rd," & vbCrLf &
@@ -615,11 +631,17 @@ Public Class Clas_Asistente_Compras
             If _Proyeccion_Metodo_Abastecer = Enum_Proyeccion.Dias Then
                 Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
                                "CantSugeridaTot = Round(((RotCalculo*" & _Dias_Abastecer & ") * " & _Porc_Crecimiento & ") - StockUd" & _Ud & "," & _DCS & ")" & vbCrLf &
-                               "Where 1 > 0"
+                               "Where 1 > 0 And Rtu <> 1" & vbCrLf &
+                               "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
+                               "CantSugeridaTot = Round(((RotCalculo*" & _Dias_Abastecer & ") * " & _Porc_Crecimiento & ") - StockUd" & _Ud & ",0)" & vbCrLf &
+                               "Where 1 > 0 And Rtu = 1"
             Else
                 Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
                                "CantSugeridaTot = Round(((RotCalculo*" & _Meses_Abastecer & ") * " & _Porc_Crecimiento & ") - StockUd" & _Ud & "," & _DCS & ")" & vbCrLf &
-                               "Where 1 > 0"
+                               "Where 1 > 0 And Rtu <> 1" & vbCrLf &
+                               "Update " & _Nombre_Tbl_Paso_Informe & " set" & vbCrLf &
+                               "CantSugeridaTot = Round(((RotCalculo*" & _Meses_Abastecer & ") * " & _Porc_Crecimiento & ") - StockUd" & _Ud & ",0)" & vbCrLf &
+                               "Where 1 > 0 And Rtu = 1"
             End If
             _Sql.Ej_consulta_IDU(Consulta_sql)
 

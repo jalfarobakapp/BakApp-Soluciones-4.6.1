@@ -120,42 +120,44 @@ Public Class Frm_Kardex_Informe_X_Producto
 
         Sb_CellEnter()
 
-        For Each _Fila As DataGridViewRow In GrillaKardex.Rows
+        If False Then
+            For Each _Fila As DataGridViewRow In GrillaKardex.Rows
 
-            Dim SUBTIDO As String = _Fila.Cells("SUBTIDO").Value
+                Dim SUBTIDO As String = _Fila.Cells("SUBTIDO").Value
 
-            If SUBTIDO = "AJU" Then
+                If SUBTIDO = "AJU" Then
 
-                _Fila.DefaultCellStyle.BackColor = Color.Yellow
+                    _Fila.DefaultCellStyle.BackColor = Color.Yellow
 
-                If Global_Thema = Enum_Themas.Oscuro Then
-                    _Fila.DefaultCellStyle.ForeColor = Color.Black
+                    If Global_Thema = Enum_Themas.Oscuro Then
+                        _Fila.DefaultCellStyle.ForeColor = Color.Black
+                    End If
+
                 End If
 
-            End If
+                _Fila.Cells("Sfisico").Style.ForeColor = Rojo
+                _Fila.Cells("Sfisico").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
 
-            _Fila.Cells("Sfisico").Style.ForeColor = Rojo
-            _Fila.Cells("Sfisico").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
+                _Fila.Cells("Sdevengado").Style.ForeColor = Rojo
+                _Fila.Cells("Sdevengado").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
 
-            _Fila.Cells("Sdevengado").Style.ForeColor = Rojo
-            _Fila.Cells("Sdevengado").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
+                _Fila.Cells("Sdespsfact").Style.ForeColor = Rojo
+                _Fila.Cells("Sdespsfact").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
 
-            _Fila.Cells("Sdespsfact").Style.ForeColor = Rojo
-            _Fila.Cells("Sdespsfact").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
+                _Fila.Cells("Scomprometido").Style.ForeColor = Rojo
+                _Fila.Cells("Scomprometido").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
 
-            _Fila.Cells("Scomprometido").Style.ForeColor = Rojo
-            _Fila.Cells("Scomprometido").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
+                _Fila.Cells("Scompranorecep").Style.ForeColor = Rojo
+                _Fila.Cells("Scompranorecep").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
 
-            _Fila.Cells("Scompranorecep").Style.ForeColor = Rojo
-            _Fila.Cells("Scompranorecep").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
+                _Fila.Cells("Srecesfact").Style.ForeColor = Rojo
+                _Fila.Cells("Srecesfact").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
 
-            _Fila.Cells("Srecesfact").Style.ForeColor = Rojo
-            _Fila.Cells("Srecesfact").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
+                _Fila.Cells("Spedido").Style.ForeColor = Rojo
+                _Fila.Cells("Spedido").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
 
-            _Fila.Cells("Spedido").Style.ForeColor = Rojo
-            _Fila.Cells("Spedido").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
-
-        Next
+            Next
+        End If
 
         If _Todas_Las_Bodegas Then
 
@@ -216,6 +218,8 @@ Public Class Frm_Kardex_Informe_X_Producto
             .Columns("Sfisico").Visible = True
             .Columns("Sfisico").DefaultCellStyle.ForeColor = Rojo
             '.Columns("Sfisico").DefaultCellStyle.Font = New Font("Tahoma", 7, FontStyle.Bold)
+
+            '_Fila.Cells("Sfisico").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
 
             .Columns("STFISICO").DisplayIndex = 6
             .Columns("STFISICO").HeaderText = "Stock Físico"
@@ -574,6 +578,25 @@ Public Class Frm_Kardex_Informe_X_Producto
         If CBool(GrillaKardex.RowCount) Then
             GrillaKardex.FirstDisplayedScrollingRowIndex = 0
             GrillaKardex.CurrentCell = GrillaKardex.Rows(0).Cells("NUDO")
+        End If
+
+    End Sub
+
+    Private Sub GrillaKardex_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles GrillaKardex.CellFormatting
+
+        Dim _Columname As String = GrillaKardex.Columns(e.ColumnIndex).Name
+        Dim _Fila As DataGridViewRow = GrillaKardex.Rows(e.RowIndex)
+
+        Dim _Subtido As String = _Fila.Cells("SUBTIDO").Value
+
+        If _Subtido = "AJU" Then
+
+            _Fila.DefaultCellStyle.BackColor = Color.Yellow
+
+            If Global_Thema = Enum_Themas.Oscuro Then
+                _Fila.DefaultCellStyle.ForeColor = Color.Black
+            End If
+
         End If
 
     End Sub

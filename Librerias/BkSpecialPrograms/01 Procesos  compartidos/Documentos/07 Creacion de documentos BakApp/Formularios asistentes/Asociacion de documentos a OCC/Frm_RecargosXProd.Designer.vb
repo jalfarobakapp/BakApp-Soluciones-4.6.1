@@ -23,9 +23,9 @@ Partial Class Frm_RecargosXProd
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_RecargosXProd))
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
@@ -39,6 +39,9 @@ Partial Class Frm_RecargosXProd
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Tiempo = New System.Windows.Forms.Timer(Me.components)
         Me.CircularProgress1 = New DevComponents.DotNetBar.Controls.CircularProgress()
+        Me.CmbTipoDeDocumentos = New DevComponents.DotNetBar.Controls.ComboBoxEx()
+        Me.Chk_BuscarDocDeHoy = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -88,36 +91,36 @@ Partial Class Frm_RecargosXProd
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle8
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
         Me.Grilla.Size = New System.Drawing.Size(861, 322)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 28
@@ -242,18 +245,70 @@ Partial Class Frm_RecargosXProd
         '
         '
         Me.CircularProgress1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.CircularProgress1.Location = New System.Drawing.Point(12, 380)
+        Me.CircularProgress1.Location = New System.Drawing.Point(664, 380)
         Me.CircularProgress1.Name = "CircularProgress1"
         Me.CircularProgress1.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Dot
         Me.CircularProgress1.Size = New System.Drawing.Size(38, 31)
         Me.CircularProgress1.Style = DevComponents.DotNetBar.eDotNetBarStyle.OfficeXP
         Me.CircularProgress1.TabIndex = 41
         '
+        'CmbTipoDeDocumentos
+        '
+        Me.CmbTipoDeDocumentos.DisplayMember = "Text"
+        Me.CmbTipoDeDocumentos.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.CmbTipoDeDocumentos.ForeColor = System.Drawing.Color.Black
+        Me.CmbTipoDeDocumentos.FormattingEnabled = True
+        Me.CmbTipoDeDocumentos.ItemHeight = 16
+        Me.CmbTipoDeDocumentos.Location = New System.Drawing.Point(161, 376)
+        Me.CmbTipoDeDocumentos.Name = "CmbTipoDeDocumentos"
+        Me.CmbTipoDeDocumentos.Size = New System.Drawing.Size(236, 22)
+        Me.CmbTipoDeDocumentos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.CmbTipoDeDocumentos.TabIndex = 42
+        '
+        'Chk_BuscarDocDeHoy
+        '
+        Me.Chk_BuscarDocDeHoy.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Chk_BuscarDocDeHoy.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_BuscarDocDeHoy.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_BuscarDocDeHoy.CheckBoxImageChecked = CType(resources.GetObject("Chk_BuscarDocDeHoy.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_BuscarDocDeHoy.Checked = True
+        Me.Chk_BuscarDocDeHoy.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_BuscarDocDeHoy.CheckValue = "Y"
+        Me.Chk_BuscarDocDeHoy.FocusCuesEnabled = False
+        Me.Chk_BuscarDocDeHoy.ForeColor = System.Drawing.Color.Black
+        Me.Chk_BuscarDocDeHoy.Location = New System.Drawing.Point(403, 378)
+        Me.Chk_BuscarDocDeHoy.Name = "Chk_BuscarDocDeHoy"
+        Me.Chk_BuscarDocDeHoy.Size = New System.Drawing.Size(155, 19)
+        Me.Chk_BuscarDocDeHoy.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_BuscarDocDeHoy.TabIndex = 43
+        Me.Chk_BuscarDocDeHoy.Text = "Buscar documentos de hoy"
+        '
+        'LabelX3
+        '
+        Me.LabelX3.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX3.ForeColor = System.Drawing.Color.Black
+        Me.LabelX3.Location = New System.Drawing.Point(12, 375)
+        Me.LabelX3.Name = "LabelX3"
+        Me.LabelX3.Size = New System.Drawing.Size(143, 23)
+        Me.LabelX3.TabIndex = 44
+        Me.LabelX3.Text = "Doc. por defecto para buscar"
+        Me.LabelX3.TextAlignment = System.Drawing.StringAlignment.Far
+        '
         'Frm_RecargosXProd
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(890, 452)
+        Me.Controls.Add(Me.LabelX3)
+        Me.Controls.Add(Me.CmbTipoDeDocumentos)
+        Me.Controls.Add(Me.Chk_BuscarDocDeHoy)
         Me.Controls.Add(Me.CircularProgress1)
         Me.Controls.Add(Me.Txt_Total_Cantidades)
         Me.Controls.Add(Me.LabelX2)
@@ -291,4 +346,7 @@ Partial Class Frm_RecargosXProd
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Tiempo As Timer
     Friend WithEvents CircularProgress1 As DevComponents.DotNetBar.Controls.CircularProgress
+    Public WithEvents CmbTipoDeDocumentos As DevComponents.DotNetBar.Controls.ComboBoxEx
+    Public WithEvents Chk_BuscarDocDeHoy As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
 End Class
