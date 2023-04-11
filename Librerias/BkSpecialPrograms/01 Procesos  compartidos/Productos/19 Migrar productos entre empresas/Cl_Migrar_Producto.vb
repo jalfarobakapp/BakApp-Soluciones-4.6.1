@@ -149,7 +149,7 @@ Namespace Bk_Migrar_Producto
 
             Dim BdBakappExt As String = _Sql2.Fx_Obtener_Valores("Select NOKOCARAC From TABCARAC Where KOTABLA = 'BAKAPP';", 1)(0) & ".dbo."
             'Busca el producto
-            _Ds_Producto_Ext = Fx_BuscarProducto(_Codigo, BdBakappExt, _Sql2)
+            _Ds_Producto_Ext = Fx_BuscarProducto(_Codigo, BdBakappExt, _Sql2, True)
             'Prueba de generacion de consulta migrar producto Dim ConsultaPR = GenerarConsultaMigracion(_Ds_Producto_Local, BdBakappExt)
             If _Ds_Producto_Ext.Tables(0).Rows.Count > 0 Or _Ds_Producto_Ext.Tables("TABCODAL2").Rows.Count > 0 Then
 
@@ -175,7 +175,7 @@ Namespace Bk_Migrar_Producto
 
                 Dim _Consulta_sql As String
 
-                _Ds_Producto_Local = Fx_BuscarProducto(_Codigo, _Global_BaseBk, _Sql)
+                _Ds_Producto_Local = Fx_BuscarProducto(_Codigo, _Global_BaseBk, _Sql, False)
 
                 _Consulta_sql = Fx_Insertar_Nuevo_Producto(_Ds_Producto_Local, BdBakappExt) & vbCrLf
                 _Consulta_sql += Fx_Insertar_Bodegas(_Codigo) & vbCrLf
@@ -196,7 +196,7 @@ Namespace Bk_Migrar_Producto
 
         End Function
 
-        Function Fx_BuscarProducto(codigo As String, BaseBk As String, Conn As Class_SQL) As DataSet
+        Function Fx_BuscarProducto(codigo As String, BaseBk As String, Conn As Class_SQL, _IncluyeTABCODAL2 As Boolean) As DataSet
 
             'incluir un select con los nombres de las tablas que se van a incluir
 
@@ -212,7 +212,7 @@ Namespace Bk_Migrar_Producto
             _TablasRandom.Add("TABIMPR;KOPR")
             _TablasRandom.Add("MPROENVA;KOPR")
             _TablasRandom.Add("TABCODAL;KOPR")
-            _TablasRandom.Add("TABCODAL2;KOPRAL")
+            If _IncluyeTABCODAL2 Then _TablasRandom.Add("TABCODAL2;KOPRAL")
 
             _TablasBakapp = New List(Of String)
             '_TablasBakapp.Add("Zw_ListaPreCosto;Codigo")
@@ -256,6 +256,10 @@ Namespace Bk_Migrar_Producto
                 If _Ds_Producto.Tables(table).Rows.Count > 0 Then
 
                     Dim _NombreTabla As String = _Ds_Producto.Tables(table).TableName
+
+                    'If _NombreTabla.Contains("TABCODAL") Then
+                    '    Dim _Aca = 0
+                    'End If
 
                     Consulta &= "INSERT INTO " & _NombreTabla & "("
 

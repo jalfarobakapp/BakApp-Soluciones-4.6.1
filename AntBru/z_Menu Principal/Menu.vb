@@ -414,16 +414,18 @@ Public Class Menu
 
     Private Sub ButtonX1_Click(sender As Object, e As EventArgs) Handles ButtonX1.Click
 
-        Dim Auto_CorreoCc = "jalfaro@bakapp.cl"
-        Dim Auto_Id_CorreoOCCMinCompra = 38
+        'Dim Auto_CorreoCc = "jalfaro@bakapp.cl"
+        'Dim Auto_Id_CorreoOCCMinCompra = 38
 
-        Dim _OrdenesBajoMinimo As New List(Of Integer)
+        'Dim _OrdenesBajoMinimo As New List(Of Integer)
 
-        _OrdenesBajoMinimo.Add(1120834)
-        _OrdenesBajoMinimo.Add(1120835)
+        '_OrdenesBajoMinimo.Add(1120834)
+        '_OrdenesBajoMinimo.Add(1120835)
 
-        Dim _Generar_OCC As New GeneraOccAuto.Generar_Doc_Auto
-        _Generar_OCC.Fx_Enviar_Notificacion_Correo_OCC_BajoMinCompra(Auto_CorreoCc, "", Auto_Id_CorreoOCCMinCompra, _OrdenesBajoMinimo)
+        'Dim _Generar_OCC As New GeneraOccAuto.Generar_Doc_Auto
+        '_Generar_OCC.Fx_Enviar_Notificacion_Correo_OCC_BajoMinCompra(Auto_CorreoCc, "", Auto_Id_CorreoOCCMinCompra, _OrdenesBajoMinimo)
+
+
 
         'Dim _Cl_Wordpress As New Cl_Wordpress
 

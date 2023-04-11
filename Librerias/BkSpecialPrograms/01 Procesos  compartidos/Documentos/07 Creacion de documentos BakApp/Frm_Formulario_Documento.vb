@@ -6019,6 +6019,9 @@ Public Class Frm_Formulario_Documento
                 _Total = _TotalNeto
 
                 _PrecioNeto = _Precio
+
+                If _Moneda_Det.Trim <> "$" Then _Decimales = 2
+
                 _PrecioBruto = Math.Round(_Precio * _Impuestos, _Decimales)
 
                 If _Tict = "D" Then
@@ -17098,6 +17101,8 @@ Public Class Frm_Formulario_Documento
                         _New_Fila.Cells("Moneda").Value = _Moneda_Det
                         _New_Fila.Cells("Tipo_Moneda").Value = _Tipo_Moneda_Det
                         _New_Fila.Cells("Tipo_Cambio").Value = _Tipo_Cambio_Det
+                        _New_Fila.Cells("Tasadorig").Value = _Tipo_Cambio_Det
+
                     End If
 
                     If _Vencida Then

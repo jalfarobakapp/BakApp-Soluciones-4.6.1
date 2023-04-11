@@ -1371,7 +1371,7 @@ Public Class Clase_Crear_Documento
             Dim _Despacho = 2
 
             Select Case _Tido
-                Case "GDV", "GTI", "GDD", "GRI", "GDI", "GDP", "NVI"
+                Case "GDV", "GTI", "GDD", "GRI", "GDI", "GDP", "NVI", "GRC"
                     _Despacho = 1
             End Select
 
@@ -1386,7 +1386,7 @@ Public Class Clase_Crear_Documento
                            "," & _Fecha_Tributaria & ",NUMOPERVEN = 0,FLIQUIFCV = '" & _Feemdo & "',SUBTIDO = '" & _Subtido &
                            "',MARCA = '" & _Marca & "',ESDO = '',NUDONODEFI = " & CInt(_Es_ValeTransitorio) &
                            ",TIDOELEC = " & CInt(_Es_Documento_Electronico) & ",LUVTDO = '" & _Luvtdo &
-                           "',LIBRO = '" & _Libro & "',BODESTI = '" & _Bodesti & "'" & vbCrLf &
+                           "',LIBRO = '" & _Libro & "',BODESTI = '" & _Bodesti & "',CUOGASDIF = 0" & vbCrLf &
                            "WHERE IDMAEEDO=" & _Idmaeedo
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)

@@ -98,7 +98,7 @@ Public Class Frm_Facturacion_Masiva
 
             .DataSource = _Dv
 
-            OcultarEncabezadoGrilla(Grilla, True)
+            OcultarEncabezadoGrilla(Grilla)
 
             Dim _DisplayIndex = 0
 
