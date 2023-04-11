@@ -223,6 +223,8 @@ Public Class Frm_BuscarDocumento_Mt
 
         End If
 
+        ' Return
+
         With Grilla
 
             .DataSource = _Tbl_Documentos

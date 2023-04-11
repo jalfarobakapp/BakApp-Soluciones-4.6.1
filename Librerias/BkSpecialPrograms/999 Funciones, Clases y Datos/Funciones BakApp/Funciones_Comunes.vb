@@ -953,7 +953,7 @@ Error_Numero:
     End Function
 
     Sub OcultarEncabezadoGrilla(Grilla As DataGridView,
-                                Optional Activar_Orden_Automatico As Boolean = False,
+                                Optional _Desactivar_Orden_Automatico As Boolean = False,
                                 Optional _Ancho1raColumna As Integer = 15,
                                 Optional _ReadOnly As Boolean = True)
 
@@ -984,7 +984,7 @@ Error_Numero:
                 .Columns(i).Visible = False
                 .Columns(i).ReadOnly = _ReadOnly
 
-                If Activar_Orden_Automatico Then
+                If _Desactivar_Orden_Automatico Then
                     .Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
                 Else
                     .Columns(i).SortMode = DataGridViewColumnSortMode.Automatic

@@ -16,6 +16,7 @@ CREATE TABLE [dbo].[Zw_Entidades](
     [FacAuto]       	            [bit]           NOT NULL DEFAULT(0),    
     [RevFincred]       	            [bit]           NOT NULL DEFAULT(0), 
     [EmailCompras]      		    [varchar](50)   NOT NULL DEFAULT(''),
+    [MontoMinCompra]   	            [float]         NOT NULL DEFAULT(0), 
  CONSTRAINT [PK_Zw_Entidades] PRIMARY KEY CLUSTERED 
 (
 	[CodEntidad] ASC,
