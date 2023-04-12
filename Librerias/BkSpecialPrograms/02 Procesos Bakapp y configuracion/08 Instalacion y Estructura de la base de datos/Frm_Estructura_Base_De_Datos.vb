@@ -277,6 +277,11 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_St_OT_Estados", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_St_OT_Notas", _Modificar, Lbl_Eventos)
 
+            .Sb_Revisar_Tabla2(Me, "Zw_St_OT_Operaciones", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_St_OT_OpeXServ", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_St_OT_Recetas_Enc", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_St_OT_Recetas_Ope", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_St_OT_Recetas_Prod", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_TablaDeCaracterizaciones", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Tablas_Equivalentes_Rd_Bk", _Modificar, Lbl_Eventos)
