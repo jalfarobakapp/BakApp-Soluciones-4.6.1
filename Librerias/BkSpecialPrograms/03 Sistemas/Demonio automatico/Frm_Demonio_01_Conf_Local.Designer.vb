@@ -106,22 +106,31 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Dtp_Cons_Stock_Hora_Ejecucion = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.Chk_Ejecutar_Automaticamente = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
+        Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Btn_ConfAsisCompra = New DevComponents.DotNetBar.ButtonX()
+        Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Txt_AsComModDomingo = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_AsComModSabado = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_AsComModViernes = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_AsComModJueves = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_AsComModMiercoles = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_AsComModMartes = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX22 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_AsisComEjecDomingo = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX23 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_AsisComEjecMartes = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_AsisComEjecSabado = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_AsisComEjecLunes = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_AsisComEjecViernes = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_AsisComEjecMiercoles = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_AsisComEjecJueves = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Txt_AsComModLunes = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX20 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_AsistenteDeCompras = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Dtp_AsisCompra_Hora_Ejecucion = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.SuperTabItem5 = New DevComponents.DotNetBar.SuperTabItem()
         Me.Panel_01 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.Panel_02 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.Chk_Prestashop_Ejecucion_Total = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
-        Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
-        Me.LabelX11 = New DevComponents.DotNetBar.LabelX()
-        Me.Chk_Prestashop_Domingo = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_Prestashop_Lunes = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_Prestashop_Martes = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_Prestashop_Miercoles = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_Prestashop_Sabado = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_Prestashop_Jueves = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_Prestashop_Viernes = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
-        Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Chk_OCCCerrar = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Input_DiasOCC = New DevComponents.Editors.IntegerInput()
@@ -146,6 +155,20 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Chk_CierreDoc_Jueves = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_CierreDoc_Viernes = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.SuperTabItem3 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.Panel_02 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Chk_Prestashop_Ejecucion_Total = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
+        Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
+        Me.LabelX11 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_Prestashop_Domingo = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Prestashop_Lunes = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Prestashop_Martes = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Prestashop_Miercoles = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Prestashop_Sabado = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Prestashop_Jueves = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Prestashop_Viernes = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Chk_Timer_FacAuto = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Txt_Modalidad_FacAuto = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -166,29 +189,6 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Chk_Fac_Viernes = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.LabelX18 = New DevComponents.DotNetBar.LabelX()
         Me.SuperTabItem4 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabItem5 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.LabelX20 = New DevComponents.DotNetBar.LabelX()
-        Me.Chk_AsistenteDeCompras = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Dtp_AsisCompra_Hora_Ejecucion = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
-        Me.Chk_AsisComEjecDomingo = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_AsisComEjecLunes = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_AsisComEjecMartes = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_AsisComEjecMiercoles = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_AsisComEjecSabado = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_AsisComEjecJueves = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_AsisComEjecViernes = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
-        Me.LabelX22 = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX23 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_AsComModLunes = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Txt_AsComModMartes = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Txt_AsComModMiercoles = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Txt_AsComModJueves = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Txt_AsComModViernes = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Txt_AsComModSabado = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Txt_AsComModDomingo = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Btn_ConfAsisCompra = New DevComponents.DotNetBar.ButtonX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.GroupPanel2.SuspendLayout()
@@ -223,10 +223,10 @@ Partial Class Frm_Demonio_01_Conf_Local
         CType(Me.Dtp_Cons_Stock_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
+        Me.SuperTabControlPanel3.SuspendLayout()
+        Me.TableLayoutPanel9.SuspendLayout()
+        CType(Me.Dtp_AsisCompra_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel_01.SuspendLayout()
-        Me.Panel_02.SuspendLayout()
-        Me.TableLayoutPanel4.SuspendLayout()
-        CType(Me.Dtp_Prestashop_Total_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel1.SuspendLayout()
         CType(Me.Input_DiasOCC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_CierreDoc_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -235,12 +235,12 @@ Partial Class Frm_Demonio_01_Conf_Local
         CType(Me.Input_DiasNVI, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Input_DiasCOV, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel5.SuspendLayout()
+        Me.Panel_02.SuspendLayout()
+        Me.TableLayoutPanel4.SuspendLayout()
+        CType(Me.Dtp_Prestashop_Total_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel2.SuspendLayout()
         Me.TableLayoutPanel7.SuspendLayout()
         Me.TableLayoutPanel6.SuspendLayout()
-        Me.SuperTabControlPanel3.SuspendLayout()
-        CType(Me.Dtp_AsisCompra_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TableLayoutPanel9.SuspendLayout()
         Me.SuspendLayout()
         '
         'Btn_RutaImagen
@@ -278,7 +278,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Impresora_Prod_Sol_Bodega.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Impresora_Prod_Sol_Bodega.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Impresora_Prod_Sol_Bodega.Image = CType(resources.GetObject("Btn_Impresora_Prod_Sol_Bodega.Image"), System.Drawing.Image)
-        Me.Btn_Impresora_Prod_Sol_Bodega.Location = New System.Drawing.Point(432, 78)
+        Me.Btn_Impresora_Prod_Sol_Bodega.Location = New System.Drawing.Point(431, 78)
         Me.Btn_Impresora_Prod_Sol_Bodega.Name = "Btn_Impresora_Prod_Sol_Bodega"
         Me.Btn_Impresora_Prod_Sol_Bodega.Size = New System.Drawing.Size(31, 19)
         Me.Btn_Impresora_Prod_Sol_Bodega.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -470,7 +470,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 49.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 58.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 67.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 68.0!))
         Me.TableLayoutPanel3.Controls.Add(Me.Input_CantMail, 5, 1)
         Me.TableLayoutPanel3.Controls.Add(Me.Btn_Filtro_Doc_Picking_X_Usuario, 5, 5)
         Me.TableLayoutPanel3.Controls.Add(Me.Btn_Filtro_Doc_Impresion_X_Usuario, 5, 2)
@@ -551,7 +551,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_CantMail.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_CantMail.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_CantMail.ForeColor = System.Drawing.Color.Black
-        Me.Input_CantMail.Location = New System.Drawing.Point(472, 28)
+        Me.Input_CantMail.Location = New System.Drawing.Point(471, 28)
         Me.Input_CantMail.MaxValue = 60
         Me.Input_CantMail.MinValue = 1
         Me.Input_CantMail.Name = "Input_CantMail"
@@ -565,7 +565,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Filtro_Doc_Picking_X_Usuario.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Filtro_Doc_Picking_X_Usuario.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Filtro_Doc_Picking_X_Usuario.Image = CType(resources.GetObject("Btn_Filtro_Doc_Picking_X_Usuario.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Doc_Picking_X_Usuario.Location = New System.Drawing.Point(472, 128)
+        Me.Btn_Filtro_Doc_Picking_X_Usuario.Location = New System.Drawing.Point(471, 128)
         Me.Btn_Filtro_Doc_Picking_X_Usuario.Name = "Btn_Filtro_Doc_Picking_X_Usuario"
         Me.Btn_Filtro_Doc_Picking_X_Usuario.Size = New System.Drawing.Size(30, 19)
         Me.Btn_Filtro_Doc_Picking_X_Usuario.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -577,7 +577,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Filtro_Doc_Impresion_X_Usuario.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Filtro_Doc_Impresion_X_Usuario.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Filtro_Doc_Impresion_X_Usuario.Image = CType(resources.GetObject("Btn_Filtro_Doc_Impresion_X_Usuario.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Doc_Impresion_X_Usuario.Location = New System.Drawing.Point(472, 53)
+        Me.Btn_Filtro_Doc_Impresion_X_Usuario.Location = New System.Drawing.Point(471, 53)
         Me.Btn_Filtro_Doc_Impresion_X_Usuario.Name = "Btn_Filtro_Doc_Impresion_X_Usuario"
         Me.Btn_Filtro_Doc_Impresion_X_Usuario.Size = New System.Drawing.Size(30, 19)
         Me.Btn_Filtro_Doc_Impresion_X_Usuario.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -592,7 +592,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX9.ForeColor = System.Drawing.Color.Black
-        Me.LabelX9.Location = New System.Drawing.Point(374, 153)
+        Me.LabelX9.Location = New System.Drawing.Point(373, 153)
         Me.LabelX9.Name = "LabelX9"
         Me.LabelX9.Size = New System.Drawing.Size(50, 19)
         Me.LabelX9.TabIndex = 124
@@ -608,7 +608,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_LibroDTESII.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_LibroDTESII.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_LibroDTESII.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_LibroDTESII.Location = New System.Drawing.Point(325, 153)
+        Me.Input_Tiempo_LibroDTESII.Location = New System.Drawing.Point(324, 153)
         Me.Input_Tiempo_LibroDTESII.MaxValue = 60
         Me.Input_Tiempo_LibroDTESII.MinValue = 1
         Me.Input_Tiempo_LibroDTESII.Name = "Input_Tiempo_LibroDTESII"
@@ -652,7 +652,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(374, 103)
+        Me.LabelX1.Location = New System.Drawing.Point(373, 103)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(50, 19)
         Me.LabelX1.TabIndex = 13
@@ -666,7 +666,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(374, 78)
+        Me.LabelX4.Location = New System.Drawing.Point(373, 78)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(50, 19)
         Me.LabelX4.TabIndex = 10
@@ -680,7 +680,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX3.ForeColor = System.Drawing.Color.Black
-        Me.LabelX3.Location = New System.Drawing.Point(374, 53)
+        Me.LabelX3.Location = New System.Drawing.Point(373, 53)
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(50, 19)
         Me.LabelX3.TabIndex = 9
@@ -694,7 +694,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(374, 28)
+        Me.LabelX2.Location = New System.Drawing.Point(373, 28)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(50, 19)
         Me.LabelX2.TabIndex = 8
@@ -725,7 +725,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Prestashop.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Prestashop.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Prestashop.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Prestashop.Location = New System.Drawing.Point(325, 103)
+        Me.Input_Tiempo_Prestashop.Location = New System.Drawing.Point(324, 103)
         Me.Input_Tiempo_Prestashop.MaxValue = 60
         Me.Input_Tiempo_Prestashop.MinValue = 1
         Me.Input_Tiempo_Prestashop.Name = "Input_Tiempo_Prestashop"
@@ -757,7 +757,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Correo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Correo.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Correo.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Correo.Location = New System.Drawing.Point(325, 28)
+        Me.Input_Tiempo_Correo.Location = New System.Drawing.Point(324, 28)
         Me.Input_Tiempo_Correo.MaxValue = 60
         Me.Input_Tiempo_Correo.MinValue = 1
         Me.Input_Tiempo_Correo.Name = "Input_Tiempo_Correo"
@@ -776,7 +776,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Sol_Bodega.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Sol_Bodega.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Sol_Bodega.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Sol_Bodega.Location = New System.Drawing.Point(325, 78)
+        Me.Input_Tiempo_Sol_Bodega.Location = New System.Drawing.Point(324, 78)
         Me.Input_Tiempo_Sol_Bodega.MaxValue = 15
         Me.Input_Tiempo_Sol_Bodega.MinValue = 1
         Me.Input_Tiempo_Sol_Bodega.Name = "Input_Tiempo_Sol_Bodega"
@@ -795,7 +795,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Impresion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Impresion.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Impresion.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Impresion.Location = New System.Drawing.Point(325, 53)
+        Me.Input_Tiempo_Impresion.Location = New System.Drawing.Point(324, 53)
         Me.Input_Tiempo_Impresion.MaxValue = 15
         Me.Input_Tiempo_Impresion.MinValue = 1
         Me.Input_Tiempo_Impresion.Name = "Input_Tiempo_Impresion"
@@ -918,7 +918,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Filtro_Doc_Prestashop.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Filtro_Doc_Prestashop.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Filtro_Doc_Prestashop.Image = CType(resources.GetObject("Btn_Filtro_Doc_Prestashop.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Doc_Prestashop.Location = New System.Drawing.Point(432, 103)
+        Me.Btn_Filtro_Doc_Prestashop.Location = New System.Drawing.Point(431, 103)
         Me.Btn_Filtro_Doc_Prestashop.Name = "Btn_Filtro_Doc_Prestashop"
         Me.Btn_Filtro_Doc_Prestashop.Size = New System.Drawing.Size(31, 19)
         Me.Btn_Filtro_Doc_Prestashop.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -930,7 +930,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Filtro_Doc_Impresion.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Filtro_Doc_Impresion.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Filtro_Doc_Impresion.Image = CType(resources.GetObject("Btn_Filtro_Doc_Impresion.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Doc_Impresion.Location = New System.Drawing.Point(432, 53)
+        Me.Btn_Filtro_Doc_Impresion.Location = New System.Drawing.Point(431, 53)
         Me.Btn_Filtro_Doc_Impresion.Name = "Btn_Filtro_Doc_Impresion"
         Me.Btn_Filtro_Doc_Impresion.Size = New System.Drawing.Size(31, 19)
         Me.Btn_Filtro_Doc_Impresion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -942,7 +942,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Filtro_Doc_Correo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Filtro_Doc_Correo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Filtro_Doc_Correo.Image = CType(resources.GetObject("Btn_Filtro_Doc_Correo.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Doc_Correo.Location = New System.Drawing.Point(432, 28)
+        Me.Btn_Filtro_Doc_Correo.Location = New System.Drawing.Point(431, 28)
         Me.Btn_Filtro_Doc_Correo.Name = "Btn_Filtro_Doc_Correo"
         Me.Btn_Filtro_Doc_Correo.Size = New System.Drawing.Size(31, 19)
         Me.Btn_Filtro_Doc_Correo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -955,7 +955,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Filtro_Doc_Traer_Automaticamente.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Filtro_Doc_Traer_Automaticamente.Enabled = False
         Me.Btn_Filtro_Doc_Traer_Automaticamente.Image = CType(resources.GetObject("Btn_Filtro_Doc_Traer_Automaticamente.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Doc_Traer_Automaticamente.Location = New System.Drawing.Point(432, 3)
+        Me.Btn_Filtro_Doc_Traer_Automaticamente.Location = New System.Drawing.Point(431, 3)
         Me.Btn_Filtro_Doc_Traer_Automaticamente.Name = "Btn_Filtro_Doc_Traer_Automaticamente"
         Me.Btn_Filtro_Doc_Traer_Automaticamente.Size = New System.Drawing.Size(31, 19)
         Me.Btn_Filtro_Doc_Traer_Automaticamente.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1000,7 +1000,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Picking.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Picking.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Picking.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Picking.Location = New System.Drawing.Point(325, 128)
+        Me.Input_Tiempo_Picking.Location = New System.Drawing.Point(324, 128)
         Me.Input_Tiempo_Picking.MaxValue = 15
         Me.Input_Tiempo_Picking.MinValue = 1
         Me.Input_Tiempo_Picking.Name = "Input_Tiempo_Picking"
@@ -1017,7 +1017,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX5.ForeColor = System.Drawing.Color.Black
-        Me.LabelX5.Location = New System.Drawing.Point(374, 128)
+        Me.LabelX5.Location = New System.Drawing.Point(373, 128)
         Me.LabelX5.Name = "LabelX5"
         Me.LabelX5.Size = New System.Drawing.Size(50, 19)
         Me.LabelX5.TabIndex = 126
@@ -1028,7 +1028,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Filtro_Doc_Picking.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Filtro_Doc_Picking.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Filtro_Doc_Picking.Image = CType(resources.GetObject("Btn_Filtro_Doc_Picking.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Doc_Picking.Location = New System.Drawing.Point(432, 128)
+        Me.Btn_Filtro_Doc_Picking.Location = New System.Drawing.Point(431, 128)
         Me.Btn_Filtro_Doc_Picking.Name = "Btn_Filtro_Doc_Picking"
         Me.Btn_Filtro_Doc_Picking.Size = New System.Drawing.Size(31, 19)
         Me.Btn_Filtro_Doc_Picking.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1043,7 +1043,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX15.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX15.ForeColor = System.Drawing.Color.Black
-        Me.LabelX15.Location = New System.Drawing.Point(472, 3)
+        Me.LabelX15.Location = New System.Drawing.Point(471, 3)
         Me.LabelX15.Name = "LabelX15"
         Me.LabelX15.Size = New System.Drawing.Size(50, 19)
         Me.LabelX15.TabIndex = 129
@@ -1086,7 +1086,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Archivador.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Archivador.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Archivador.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Archivador.Location = New System.Drawing.Point(325, 178)
+        Me.Input_Tiempo_Archivador.Location = New System.Drawing.Point(324, 178)
         Me.Input_Tiempo_Archivador.MaxValue = 60
         Me.Input_Tiempo_Archivador.MinValue = 1
         Me.Input_Tiempo_Archivador.Name = "Input_Tiempo_Archivador"
@@ -1103,7 +1103,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX12.ForeColor = System.Drawing.Color.Black
-        Me.LabelX12.Location = New System.Drawing.Point(374, 178)
+        Me.LabelX12.Location = New System.Drawing.Point(373, 178)
         Me.LabelX12.Name = "LabelX12"
         Me.LabelX12.Size = New System.Drawing.Size(50, 19)
         Me.LabelX12.TabIndex = 127
@@ -1114,7 +1114,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Carpeta_Archivador.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Carpeta_Archivador.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Carpeta_Archivador.Image = CType(resources.GetObject("Btn_Carpeta_Archivador.Image"), System.Drawing.Image)
-        Me.Btn_Carpeta_Archivador.Location = New System.Drawing.Point(432, 178)
+        Me.Btn_Carpeta_Archivador.Location = New System.Drawing.Point(431, 178)
         Me.Btn_Carpeta_Archivador.Name = "Btn_Carpeta_Archivador"
         Me.Btn_Carpeta_Archivador.Size = New System.Drawing.Size(31, 19)
         Me.Btn_Carpeta_Archivador.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1185,7 +1185,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Wordpress_Stock.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Wordpress_Stock.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Wordpress_Stock.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Wordpress_Stock.Location = New System.Drawing.Point(325, 228)
+        Me.Input_Tiempo_Wordpress_Stock.Location = New System.Drawing.Point(324, 228)
         Me.Input_Tiempo_Wordpress_Stock.MaxValue = 60
         Me.Input_Tiempo_Wordpress_Stock.MinValue = 1
         Me.Input_Tiempo_Wordpress_Stock.Name = "Input_Tiempo_Wordpress_Stock"
@@ -1204,7 +1204,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Wordpress_Productos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Wordpress_Productos.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Wordpress_Productos.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Wordpress_Productos.Location = New System.Drawing.Point(325, 253)
+        Me.Input_Tiempo_Wordpress_Productos.Location = New System.Drawing.Point(324, 253)
         Me.Input_Tiempo_Wordpress_Productos.MaxValue = 60
         Me.Input_Tiempo_Wordpress_Productos.MinValue = 1
         Me.Input_Tiempo_Wordpress_Productos.Name = "Input_Tiempo_Wordpress_Productos"
@@ -1664,6 +1664,440 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem2, Me.SuperTabItem3, Me.SuperTabItem4, Me.SuperTabItem5})
         Me.SuperTabControl1.Text = "SuperTabControl1"
         '
+        'SuperTabControlPanel3
+        '
+        Me.SuperTabControlPanel3.Controls.Add(Me.Btn_ConfAsisCompra)
+        Me.SuperTabControlPanel3.Controls.Add(Me.TableLayoutPanel9)
+        Me.SuperTabControlPanel3.Controls.Add(Me.LabelX20)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Chk_AsistenteDeCompras)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Dtp_AsisCompra_Hora_Ejecucion)
+        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(166, 0)
+        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(450, 239)
+        Me.SuperTabControlPanel3.TabIndex = 0
+        Me.SuperTabControlPanel3.TabItem = Me.SuperTabItem5
+        '
+        'Btn_ConfAsisCompra
+        '
+        Me.Btn_ConfAsisCompra.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_ConfAsisCompra.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_ConfAsisCompra.Location = New System.Drawing.Point(315, 207)
+        Me.Btn_ConfAsisCompra.Name = "Btn_ConfAsisCompra"
+        Me.Btn_ConfAsisCompra.Size = New System.Drawing.Size(132, 21)
+        Me.Btn_ConfAsisCompra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_ConfAsisCompra.TabIndex = 133
+        Me.Btn_ConfAsisCompra.Text = "Conf. asistente compra"
+        '
+        'TableLayoutPanel9
+        '
+        Me.TableLayoutPanel9.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel9.ColumnCount = 2
+        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.33333!))
+        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 74.66666!))
+        Me.TableLayoutPanel9.Controls.Add(Me.Txt_AsComModDomingo, 1, 7)
+        Me.TableLayoutPanel9.Controls.Add(Me.Txt_AsComModSabado, 1, 6)
+        Me.TableLayoutPanel9.Controls.Add(Me.Txt_AsComModViernes, 1, 5)
+        Me.TableLayoutPanel9.Controls.Add(Me.Txt_AsComModJueves, 1, 4)
+        Me.TableLayoutPanel9.Controls.Add(Me.Txt_AsComModMiercoles, 1, 3)
+        Me.TableLayoutPanel9.Controls.Add(Me.Txt_AsComModMartes, 1, 2)
+        Me.TableLayoutPanel9.Controls.Add(Me.LabelX22, 0, 0)
+        Me.TableLayoutPanel9.Controls.Add(Me.Chk_AsisComEjecDomingo, 0, 7)
+        Me.TableLayoutPanel9.Controls.Add(Me.LabelX23, 1, 0)
+        Me.TableLayoutPanel9.Controls.Add(Me.Chk_AsisComEjecMartes, 0, 2)
+        Me.TableLayoutPanel9.Controls.Add(Me.Chk_AsisComEjecSabado, 0, 6)
+        Me.TableLayoutPanel9.Controls.Add(Me.Chk_AsisComEjecLunes, 0, 1)
+        Me.TableLayoutPanel9.Controls.Add(Me.Chk_AsisComEjecViernes, 0, 5)
+        Me.TableLayoutPanel9.Controls.Add(Me.Chk_AsisComEjecMiercoles, 0, 3)
+        Me.TableLayoutPanel9.Controls.Add(Me.Chk_AsisComEjecJueves, 0, 4)
+        Me.TableLayoutPanel9.Controls.Add(Me.Txt_AsComModLunes, 1, 1)
+        Me.TableLayoutPanel9.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel9.Location = New System.Drawing.Point(6, 34)
+        Me.TableLayoutPanel9.Name = "TableLayoutPanel9"
+        Me.TableLayoutPanel9.RowCount = 8
+        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel9.Size = New System.Drawing.Size(300, 194)
+        Me.TableLayoutPanel9.TabIndex = 132
+        '
+        'Txt_AsComModDomingo
+        '
+        Me.Txt_AsComModDomingo.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_AsComModDomingo.Border.Class = "TextBoxBorder"
+        Me.Txt_AsComModDomingo.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_AsComModDomingo.ButtonCustom.Visible = True
+        Me.Txt_AsComModDomingo.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_AsComModDomingo.ForeColor = System.Drawing.Color.Black
+        Me.Txt_AsComModDomingo.Location = New System.Drawing.Point(79, 171)
+        Me.Txt_AsComModDomingo.Name = "Txt_AsComModDomingo"
+        Me.Txt_AsComModDomingo.PreventEnterBeep = True
+        Me.Txt_AsComModDomingo.ReadOnly = True
+        Me.Txt_AsComModDomingo.Size = New System.Drawing.Size(218, 22)
+        Me.Txt_AsComModDomingo.TabIndex = 135
+        Me.Txt_AsComModDomingo.TabStop = False
+        Me.Txt_AsComModDomingo.Tag = "Domingo"
+        '
+        'Txt_AsComModSabado
+        '
+        Me.Txt_AsComModSabado.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_AsComModSabado.Border.Class = "TextBoxBorder"
+        Me.Txt_AsComModSabado.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_AsComModSabado.ButtonCustom.Visible = True
+        Me.Txt_AsComModSabado.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_AsComModSabado.ForeColor = System.Drawing.Color.Black
+        Me.Txt_AsComModSabado.Location = New System.Drawing.Point(79, 147)
+        Me.Txt_AsComModSabado.Name = "Txt_AsComModSabado"
+        Me.Txt_AsComModSabado.PreventEnterBeep = True
+        Me.Txt_AsComModSabado.ReadOnly = True
+        Me.Txt_AsComModSabado.Size = New System.Drawing.Size(218, 22)
+        Me.Txt_AsComModSabado.TabIndex = 135
+        Me.Txt_AsComModSabado.TabStop = False
+        Me.Txt_AsComModSabado.Tag = "Sábado"
+        '
+        'Txt_AsComModViernes
+        '
+        Me.Txt_AsComModViernes.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_AsComModViernes.Border.Class = "TextBoxBorder"
+        Me.Txt_AsComModViernes.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_AsComModViernes.ButtonCustom.Visible = True
+        Me.Txt_AsComModViernes.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_AsComModViernes.ForeColor = System.Drawing.Color.Black
+        Me.Txt_AsComModViernes.Location = New System.Drawing.Point(79, 123)
+        Me.Txt_AsComModViernes.Name = "Txt_AsComModViernes"
+        Me.Txt_AsComModViernes.PreventEnterBeep = True
+        Me.Txt_AsComModViernes.ReadOnly = True
+        Me.Txt_AsComModViernes.Size = New System.Drawing.Size(218, 22)
+        Me.Txt_AsComModViernes.TabIndex = 135
+        Me.Txt_AsComModViernes.TabStop = False
+        Me.Txt_AsComModViernes.Tag = "Viernes"
+        '
+        'Txt_AsComModJueves
+        '
+        Me.Txt_AsComModJueves.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_AsComModJueves.Border.Class = "TextBoxBorder"
+        Me.Txt_AsComModJueves.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_AsComModJueves.ButtonCustom.Visible = True
+        Me.Txt_AsComModJueves.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_AsComModJueves.ForeColor = System.Drawing.Color.Black
+        Me.Txt_AsComModJueves.Location = New System.Drawing.Point(79, 99)
+        Me.Txt_AsComModJueves.Name = "Txt_AsComModJueves"
+        Me.Txt_AsComModJueves.PreventEnterBeep = True
+        Me.Txt_AsComModJueves.ReadOnly = True
+        Me.Txt_AsComModJueves.Size = New System.Drawing.Size(218, 22)
+        Me.Txt_AsComModJueves.TabIndex = 135
+        Me.Txt_AsComModJueves.TabStop = False
+        Me.Txt_AsComModJueves.Tag = "Jueves"
+        '
+        'Txt_AsComModMiercoles
+        '
+        Me.Txt_AsComModMiercoles.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_AsComModMiercoles.Border.Class = "TextBoxBorder"
+        Me.Txt_AsComModMiercoles.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_AsComModMiercoles.ButtonCustom.Visible = True
+        Me.Txt_AsComModMiercoles.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_AsComModMiercoles.ForeColor = System.Drawing.Color.Black
+        Me.Txt_AsComModMiercoles.Location = New System.Drawing.Point(79, 75)
+        Me.Txt_AsComModMiercoles.Name = "Txt_AsComModMiercoles"
+        Me.Txt_AsComModMiercoles.PreventEnterBeep = True
+        Me.Txt_AsComModMiercoles.ReadOnly = True
+        Me.Txt_AsComModMiercoles.Size = New System.Drawing.Size(218, 22)
+        Me.Txt_AsComModMiercoles.TabIndex = 134
+        Me.Txt_AsComModMiercoles.TabStop = False
+        Me.Txt_AsComModMiercoles.Tag = "Miercoles"
+        '
+        'Txt_AsComModMartes
+        '
+        Me.Txt_AsComModMartes.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_AsComModMartes.Border.Class = "TextBoxBorder"
+        Me.Txt_AsComModMartes.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_AsComModMartes.ButtonCustom.Visible = True
+        Me.Txt_AsComModMartes.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_AsComModMartes.ForeColor = System.Drawing.Color.Black
+        Me.Txt_AsComModMartes.Location = New System.Drawing.Point(79, 51)
+        Me.Txt_AsComModMartes.Name = "Txt_AsComModMartes"
+        Me.Txt_AsComModMartes.PreventEnterBeep = True
+        Me.Txt_AsComModMartes.ReadOnly = True
+        Me.Txt_AsComModMartes.Size = New System.Drawing.Size(218, 22)
+        Me.Txt_AsComModMartes.TabIndex = 134
+        Me.Txt_AsComModMartes.TabStop = False
+        Me.Txt_AsComModMartes.Tag = "Martes"
+        '
+        'LabelX22
+        '
+        Me.LabelX22.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX22.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX22.ForeColor = System.Drawing.Color.Black
+        Me.LabelX22.Location = New System.Drawing.Point(3, 3)
+        Me.LabelX22.Name = "LabelX22"
+        Me.LabelX22.Size = New System.Drawing.Size(70, 18)
+        Me.LabelX22.TabIndex = 34
+        Me.LabelX22.Text = "Días estudio"
+        '
+        'Chk_AsisComEjecDomingo
+        '
+        Me.Chk_AsisComEjecDomingo.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_AsisComEjecDomingo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_AsisComEjecDomingo.CheckBoxImageChecked = CType(resources.GetObject("Chk_AsisComEjecDomingo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_AsisComEjecDomingo.ForeColor = System.Drawing.Color.Black
+        Me.Chk_AsisComEjecDomingo.Location = New System.Drawing.Point(3, 171)
+        Me.Chk_AsisComEjecDomingo.Name = "Chk_AsisComEjecDomingo"
+        Me.Chk_AsisComEjecDomingo.Size = New System.Drawing.Size(51, 20)
+        Me.Chk_AsisComEjecDomingo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_AsisComEjecDomingo.TabIndex = 32
+        Me.Chk_AsisComEjecDomingo.Text = "Dom"
+        '
+        'LabelX23
+        '
+        Me.LabelX23.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX23.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX23.ForeColor = System.Drawing.Color.Black
+        Me.LabelX23.Location = New System.Drawing.Point(79, 3)
+        Me.LabelX23.Name = "LabelX23"
+        Me.LabelX23.Size = New System.Drawing.Size(73, 18)
+        Me.LabelX23.TabIndex = 133
+        Me.LabelX23.Text = "Modalidades"
+        '
+        'Chk_AsisComEjecMartes
+        '
+        Me.Chk_AsisComEjecMartes.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_AsisComEjecMartes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_AsisComEjecMartes.CheckBoxImageChecked = CType(resources.GetObject("Chk_AsisComEjecMartes.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_AsisComEjecMartes.ForeColor = System.Drawing.Color.Black
+        Me.Chk_AsisComEjecMartes.Location = New System.Drawing.Point(3, 51)
+        Me.Chk_AsisComEjecMartes.Name = "Chk_AsisComEjecMartes"
+        Me.Chk_AsisComEjecMartes.Size = New System.Drawing.Size(43, 18)
+        Me.Chk_AsisComEjecMartes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_AsisComEjecMartes.TabIndex = 27
+        Me.Chk_AsisComEjecMartes.Text = "Mar"
+        '
+        'Chk_AsisComEjecSabado
+        '
+        Me.Chk_AsisComEjecSabado.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_AsisComEjecSabado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_AsisComEjecSabado.CheckBoxImageChecked = CType(resources.GetObject("Chk_AsisComEjecSabado.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_AsisComEjecSabado.ForeColor = System.Drawing.Color.Black
+        Me.Chk_AsisComEjecSabado.Location = New System.Drawing.Point(3, 147)
+        Me.Chk_AsisComEjecSabado.Name = "Chk_AsisComEjecSabado"
+        Me.Chk_AsisComEjecSabado.Size = New System.Drawing.Size(42, 18)
+        Me.Chk_AsisComEjecSabado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_AsisComEjecSabado.TabIndex = 31
+        Me.Chk_AsisComEjecSabado.Text = "Sab"
+        '
+        'Chk_AsisComEjecLunes
+        '
+        Me.Chk_AsisComEjecLunes.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_AsisComEjecLunes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_AsisComEjecLunes.CheckBoxImageChecked = CType(resources.GetObject("Chk_AsisComEjecLunes.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_AsisComEjecLunes.ForeColor = System.Drawing.Color.Black
+        Me.Chk_AsisComEjecLunes.Location = New System.Drawing.Point(3, 27)
+        Me.Chk_AsisComEjecLunes.Name = "Chk_AsisComEjecLunes"
+        Me.Chk_AsisComEjecLunes.Size = New System.Drawing.Size(70, 14)
+        Me.Chk_AsisComEjecLunes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_AsisComEjecLunes.TabIndex = 26
+        Me.Chk_AsisComEjecLunes.Text = "Lun"
+        '
+        'Chk_AsisComEjecViernes
+        '
+        Me.Chk_AsisComEjecViernes.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_AsisComEjecViernes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_AsisComEjecViernes.CheckBoxImageChecked = CType(resources.GetObject("Chk_AsisComEjecViernes.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_AsisComEjecViernes.ForeColor = System.Drawing.Color.Black
+        Me.Chk_AsisComEjecViernes.Location = New System.Drawing.Point(3, 123)
+        Me.Chk_AsisComEjecViernes.Name = "Chk_AsisComEjecViernes"
+        Me.Chk_AsisComEjecViernes.Size = New System.Drawing.Size(39, 18)
+        Me.Chk_AsisComEjecViernes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_AsisComEjecViernes.TabIndex = 30
+        Me.Chk_AsisComEjecViernes.Text = "Vie"
+        '
+        'Chk_AsisComEjecMiercoles
+        '
+        Me.Chk_AsisComEjecMiercoles.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_AsisComEjecMiercoles.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_AsisComEjecMiercoles.CheckBoxImageChecked = CType(resources.GetObject("Chk_AsisComEjecMiercoles.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_AsisComEjecMiercoles.ForeColor = System.Drawing.Color.Black
+        Me.Chk_AsisComEjecMiercoles.Location = New System.Drawing.Point(3, 75)
+        Me.Chk_AsisComEjecMiercoles.Name = "Chk_AsisComEjecMiercoles"
+        Me.Chk_AsisComEjecMiercoles.Size = New System.Drawing.Size(43, 18)
+        Me.Chk_AsisComEjecMiercoles.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_AsisComEjecMiercoles.TabIndex = 28
+        Me.Chk_AsisComEjecMiercoles.Text = "Mie"
+        '
+        'Chk_AsisComEjecJueves
+        '
+        Me.Chk_AsisComEjecJueves.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_AsisComEjecJueves.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_AsisComEjecJueves.CheckBoxImageChecked = CType(resources.GetObject("Chk_AsisComEjecJueves.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_AsisComEjecJueves.ForeColor = System.Drawing.Color.Black
+        Me.Chk_AsisComEjecJueves.Location = New System.Drawing.Point(3, 99)
+        Me.Chk_AsisComEjecJueves.Name = "Chk_AsisComEjecJueves"
+        Me.Chk_AsisComEjecJueves.Size = New System.Drawing.Size(38, 18)
+        Me.Chk_AsisComEjecJueves.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_AsisComEjecJueves.TabIndex = 29
+        Me.Chk_AsisComEjecJueves.Text = "Jue"
+        '
+        'Txt_AsComModLunes
+        '
+        Me.Txt_AsComModLunes.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_AsComModLunes.Border.Class = "TextBoxBorder"
+        Me.Txt_AsComModLunes.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_AsComModLunes.ButtonCustom.Visible = True
+        Me.Txt_AsComModLunes.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_AsComModLunes.ForeColor = System.Drawing.Color.Black
+        Me.Txt_AsComModLunes.Location = New System.Drawing.Point(79, 27)
+        Me.Txt_AsComModLunes.Name = "Txt_AsComModLunes"
+        Me.Txt_AsComModLunes.PreventEnterBeep = True
+        Me.Txt_AsComModLunes.ReadOnly = True
+        Me.Txt_AsComModLunes.Size = New System.Drawing.Size(218, 22)
+        Me.Txt_AsComModLunes.TabIndex = 133
+        Me.Txt_AsComModLunes.TabStop = False
+        Me.Txt_AsComModLunes.Tag = "Lunes"
+        '
+        'LabelX20
+        '
+        Me.LabelX20.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX20.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX20.ForeColor = System.Drawing.Color.Black
+        Me.LabelX20.Location = New System.Drawing.Point(308, 7)
+        Me.LabelX20.Name = "LabelX20"
+        Me.LabelX20.Size = New System.Drawing.Size(79, 21)
+        Me.LabelX20.TabIndex = 130
+        Me.LabelX20.Text = "Hora ejecución"
+        '
+        'Chk_AsistenteDeCompras
+        '
+        Me.Chk_AsistenteDeCompras.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_AsistenteDeCompras.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_AsistenteDeCompras.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Chk_AsistenteDeCompras.ForeColor = System.Drawing.Color.Black
+        Me.Chk_AsistenteDeCompras.Location = New System.Drawing.Point(6, 3)
+        Me.Chk_AsistenteDeCompras.Name = "Chk_AsistenteDeCompras"
+        Me.Chk_AsistenteDeCompras.Size = New System.Drawing.Size(275, 25)
+        Me.Chk_AsistenteDeCompras.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_AsistenteDeCompras.TabIndex = 131
+        Me.Chk_AsistenteDeCompras.Text = "Activar asistente de compras"
+        '
+        'Dtp_AsisCompra_Hora_Ejecucion
+        '
+        Me.Dtp_AsisCompra_Hora_Ejecucion.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_AsisCompra_Hora_Ejecucion.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_AsisCompra_Hora_Ejecucion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_AsisCompra_Hora_Ejecucion.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_AsisCompra_Hora_Ejecucion.ButtonDropDown.Visible = True
+        Me.Dtp_AsisCompra_Hora_Ejecucion.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_AsisCompra_Hora_Ejecucion.Format = DevComponents.Editors.eDateTimePickerFormat.ShortTime
+        Me.Dtp_AsisCompra_Hora_Ejecucion.IsPopupCalendarOpen = False
+        Me.Dtp_AsisCompra_Hora_Ejecucion.Location = New System.Drawing.Point(393, 6)
+        '
+        '
+        '
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.DisplayMonth = New Date(2018, 11, 1, 0, 0, 0, 0)
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.Visible = False
+        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_AsisCompra_Hora_Ejecucion.Name = "Dtp_AsisCompra_Hora_Ejecucion"
+        Me.Dtp_AsisCompra_Hora_Ejecucion.Size = New System.Drawing.Size(54, 22)
+        Me.Dtp_AsisCompra_Hora_Ejecucion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_AsisCompra_Hora_Ejecucion.TabIndex = 128
+        Me.Dtp_AsisCompra_Hora_Ejecucion.TabStop = False
+        Me.Dtp_AsisCompra_Hora_Ejecucion.Value = New Date(2018, 11, 5, 16, 26, 11, 0)
+        '
+        'SuperTabItem5
+        '
+        Me.SuperTabItem5.AttachedControl = Me.SuperTabControlPanel3
+        Me.SuperTabItem5.GlobalItem = False
+        Me.SuperTabItem5.Name = "SuperTabItem5"
+        Me.SuperTabItem5.Text = "Asistente de compras"
+        '
         'Panel_01
         '
         Me.Panel_01.CanvasColor = System.Drawing.SystemColors.Control
@@ -1687,264 +2121,6 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabItem1.Name = "SuperTabItem1"
         Me.SuperTabItem1.Text = "Prog. consolidación de stock"
         '
-        'Panel_02
-        '
-        Me.Panel_02.Controls.Add(Me.Chk_Prestashop_Ejecucion_Total)
-        Me.Panel_02.Controls.Add(Me.LabelX10)
-        Me.Panel_02.Controls.Add(Me.TableLayoutPanel4)
-        Me.Panel_02.Controls.Add(Me.Dtp_Prestashop_Total_Hora_Ejecucion)
-        Me.Panel_02.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel_02.Location = New System.Drawing.Point(177, 0)
-        Me.Panel_02.Name = "Panel_02"
-        Me.Panel_02.Size = New System.Drawing.Size(439, 257)
-        Me.Panel_02.TabIndex = 0
-        Me.Panel_02.TabItem = Me.SuperTabItem2
-        '
-        'Chk_Prestashop_Ejecucion_Total
-        '
-        Me.Chk_Prestashop_Ejecucion_Total.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Prestashop_Ejecucion_Total.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Prestashop_Ejecucion_Total.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Prestashop_Ejecucion_Total.Location = New System.Drawing.Point(6, 9)
-        Me.Chk_Prestashop_Ejecucion_Total.Name = "Chk_Prestashop_Ejecucion_Total"
-        Me.Chk_Prestashop_Ejecucion_Total.Size = New System.Drawing.Size(262, 23)
-        Me.Chk_Prestashop_Ejecucion_Total.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Prestashop_Ejecucion_Total.TabIndex = 40
-        Me.Chk_Prestashop_Ejecucion_Total.Text = "Ejecutar actualización total"
-        '
-        'LabelX10
-        '
-        Me.LabelX10.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX10.ForeColor = System.Drawing.Color.Black
-        Me.LabelX10.Location = New System.Drawing.Point(6, 72)
-        Me.LabelX10.Name = "LabelX10"
-        Me.LabelX10.Size = New System.Drawing.Size(92, 21)
-        Me.LabelX10.TabIndex = 39
-        Me.LabelX10.Text = "Hora ejecución"
-        '
-        'TableLayoutPanel4
-        '
-        Me.TableLayoutPanel4.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel4.ColumnCount = 8
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.77778!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.41667!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.64815!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.87963!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.953704!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.490741!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.490741!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111!))
-        Me.TableLayoutPanel4.Controls.Add(Me.LabelX11, 0, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Prestashop_Domingo, 7, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Prestashop_Lunes, 1, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Prestashop_Martes, 2, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Prestashop_Miercoles, 3, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Prestashop_Sabado, 6, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Prestashop_Jueves, 4, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Prestashop_Viernes, 5, 0)
-        Me.TableLayoutPanel4.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel4.Location = New System.Drawing.Point(6, 35)
-        Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
-        Me.TableLayoutPanel4.RowCount = 1
-        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel4.Size = New System.Drawing.Size(432, 31)
-        Me.TableLayoutPanel4.TabIndex = 38
-        '
-        'LabelX11
-        '
-        Me.LabelX11.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX11.ForeColor = System.Drawing.Color.Black
-        Me.LabelX11.Location = New System.Drawing.Point(3, 3)
-        Me.LabelX11.Name = "LabelX11"
-        Me.LabelX11.Size = New System.Drawing.Size(114, 23)
-        Me.LabelX11.TabIndex = 34
-        Me.LabelX11.Text = "Repetir los días:"
-        '
-        'Chk_Prestashop_Domingo
-        '
-        Me.Chk_Prestashop_Domingo.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Prestashop_Domingo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Prestashop_Domingo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Prestashop_Domingo.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Prestashop_Domingo.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Prestashop_Domingo.Location = New System.Drawing.Point(386, 3)
-        Me.Chk_Prestashop_Domingo.Name = "Chk_Prestashop_Domingo"
-        Me.Chk_Prestashop_Domingo.Size = New System.Drawing.Size(43, 23)
-        Me.Chk_Prestashop_Domingo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Prestashop_Domingo.TabIndex = 32
-        Me.Chk_Prestashop_Domingo.Text = "Dom"
-        '
-        'Chk_Prestashop_Lunes
-        '
-        Me.Chk_Prestashop_Lunes.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Prestashop_Lunes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Prestashop_Lunes.CheckBoxImageChecked = CType(resources.GetObject("Chk_Prestashop_Lunes.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Prestashop_Lunes.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Prestashop_Lunes.Location = New System.Drawing.Point(123, 3)
-        Me.Chk_Prestashop_Lunes.Name = "Chk_Prestashop_Lunes"
-        Me.Chk_Prestashop_Lunes.Size = New System.Drawing.Size(37, 23)
-        Me.Chk_Prestashop_Lunes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Prestashop_Lunes.TabIndex = 26
-        Me.Chk_Prestashop_Lunes.Text = "Lun"
-        '
-        'Chk_Prestashop_Martes
-        '
-        Me.Chk_Prestashop_Martes.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Prestashop_Martes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Prestashop_Martes.CheckBoxImageChecked = CType(resources.GetObject("Chk_Prestashop_Martes.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Prestashop_Martes.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Prestashop_Martes.Location = New System.Drawing.Point(168, 3)
-        Me.Chk_Prestashop_Martes.Name = "Chk_Prestashop_Martes"
-        Me.Chk_Prestashop_Martes.Size = New System.Drawing.Size(37, 23)
-        Me.Chk_Prestashop_Martes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Prestashop_Martes.TabIndex = 27
-        Me.Chk_Prestashop_Martes.Text = "Mar"
-        '
-        'Chk_Prestashop_Miercoles
-        '
-        Me.Chk_Prestashop_Miercoles.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Prestashop_Miercoles.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Prestashop_Miercoles.CheckBoxImageChecked = CType(resources.GetObject("Chk_Prestashop_Miercoles.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Prestashop_Miercoles.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Prestashop_Miercoles.Location = New System.Drawing.Point(214, 3)
-        Me.Chk_Prestashop_Miercoles.Name = "Chk_Prestashop_Miercoles"
-        Me.Chk_Prestashop_Miercoles.Size = New System.Drawing.Size(37, 23)
-        Me.Chk_Prestashop_Miercoles.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Prestashop_Miercoles.TabIndex = 28
-        Me.Chk_Prestashop_Miercoles.Text = "Mie"
-        '
-        'Chk_Prestashop_Sabado
-        '
-        Me.Chk_Prestashop_Sabado.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Prestashop_Sabado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Prestashop_Sabado.CheckBoxImageChecked = CType(resources.GetObject("Chk_Prestashop_Sabado.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Prestashop_Sabado.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Prestashop_Sabado.Location = New System.Drawing.Point(345, 3)
-        Me.Chk_Prestashop_Sabado.Name = "Chk_Prestashop_Sabado"
-        Me.Chk_Prestashop_Sabado.Size = New System.Drawing.Size(35, 23)
-        Me.Chk_Prestashop_Sabado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Prestashop_Sabado.TabIndex = 31
-        Me.Chk_Prestashop_Sabado.Text = "Sab"
-        '
-        'Chk_Prestashop_Jueves
-        '
-        Me.Chk_Prestashop_Jueves.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Prestashop_Jueves.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Prestashop_Jueves.CheckBoxImageChecked = CType(resources.GetObject("Chk_Prestashop_Jueves.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Prestashop_Jueves.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Prestashop_Jueves.Location = New System.Drawing.Point(261, 3)
-        Me.Chk_Prestashop_Jueves.Name = "Chk_Prestashop_Jueves"
-        Me.Chk_Prestashop_Jueves.Size = New System.Drawing.Size(37, 23)
-        Me.Chk_Prestashop_Jueves.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Prestashop_Jueves.TabIndex = 29
-        Me.Chk_Prestashop_Jueves.Text = "Jue"
-        '
-        'Chk_Prestashop_Viernes
-        '
-        Me.Chk_Prestashop_Viernes.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Prestashop_Viernes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Prestashop_Viernes.CheckBoxImageChecked = CType(resources.GetObject("Chk_Prestashop_Viernes.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Prestashop_Viernes.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Prestashop_Viernes.Location = New System.Drawing.Point(304, 3)
-        Me.Chk_Prestashop_Viernes.Name = "Chk_Prestashop_Viernes"
-        Me.Chk_Prestashop_Viernes.Size = New System.Drawing.Size(35, 23)
-        Me.Chk_Prestashop_Viernes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Prestashop_Viernes.TabIndex = 30
-        Me.Chk_Prestashop_Viernes.Text = "Vie"
-        '
-        'Dtp_Prestashop_Total_Hora_Ejecucion
-        '
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.ButtonDropDown.Visible = True
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.ForeColor = System.Drawing.Color.Black
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.Format = DevComponents.Editors.eDateTimePickerFormat.ShortTime
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.IsPopupCalendarOpen = False
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.Location = New System.Drawing.Point(101, 72)
-        '
-        '
-        '
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
-        '
-        '
-        '
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.ClearButtonVisible = True
-        '
-        '
-        '
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.DisplayMonth = New Date(2018, 11, 1, 0, 0, 0, 0)
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.MarkedDates = New Date(-1) {}
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
-        '
-        '
-        '
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.TodayButtonVisible = True
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.Visible = False
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.Name = "Dtp_Prestashop_Total_Hora_Ejecucion"
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.Size = New System.Drawing.Size(62, 22)
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.TabIndex = 37
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.TabStop = False
-        Me.Dtp_Prestashop_Total_Hora_Ejecucion.Value = New Date(2018, 11, 5, 16, 26, 11, 0)
-        '
-        'SuperTabItem2
-        '
-        Me.SuperTabItem2.AttachedControl = Me.Panel_02
-        Me.SuperTabItem2.GlobalItem = False
-        Me.SuperTabItem2.Name = "SuperTabItem2"
-        Me.SuperTabItem2.Text = "Prestashop Actualización total"
-        '
         'SuperTabControlPanel1
         '
         Me.SuperTabControlPanel1.Controls.Add(Me.Chk_OCCCerrar)
@@ -1966,7 +2142,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel1.Location = New System.Drawing.Point(166, 0)
         Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(450, 257)
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(450, 239)
         Me.SuperTabControlPanel1.TabIndex = 0
         Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem3
         '
@@ -2390,6 +2566,264 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabItem3.Name = "SuperTabItem3"
         Me.SuperTabItem3.Text = "Cierre Documentos"
         '
+        'Panel_02
+        '
+        Me.Panel_02.Controls.Add(Me.Chk_Prestashop_Ejecucion_Total)
+        Me.Panel_02.Controls.Add(Me.LabelX10)
+        Me.Panel_02.Controls.Add(Me.TableLayoutPanel4)
+        Me.Panel_02.Controls.Add(Me.Dtp_Prestashop_Total_Hora_Ejecucion)
+        Me.Panel_02.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel_02.Location = New System.Drawing.Point(166, 0)
+        Me.Panel_02.Name = "Panel_02"
+        Me.Panel_02.Size = New System.Drawing.Size(450, 239)
+        Me.Panel_02.TabIndex = 0
+        Me.Panel_02.TabItem = Me.SuperTabItem2
+        '
+        'Chk_Prestashop_Ejecucion_Total
+        '
+        Me.Chk_Prestashop_Ejecucion_Total.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Prestashop_Ejecucion_Total.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Prestashop_Ejecucion_Total.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Prestashop_Ejecucion_Total.Location = New System.Drawing.Point(6, 9)
+        Me.Chk_Prestashop_Ejecucion_Total.Name = "Chk_Prestashop_Ejecucion_Total"
+        Me.Chk_Prestashop_Ejecucion_Total.Size = New System.Drawing.Size(262, 23)
+        Me.Chk_Prestashop_Ejecucion_Total.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Prestashop_Ejecucion_Total.TabIndex = 40
+        Me.Chk_Prestashop_Ejecucion_Total.Text = "Ejecutar actualización total"
+        '
+        'LabelX10
+        '
+        Me.LabelX10.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX10.ForeColor = System.Drawing.Color.Black
+        Me.LabelX10.Location = New System.Drawing.Point(6, 72)
+        Me.LabelX10.Name = "LabelX10"
+        Me.LabelX10.Size = New System.Drawing.Size(92, 21)
+        Me.LabelX10.TabIndex = 39
+        Me.LabelX10.Text = "Hora ejecución"
+        '
+        'TableLayoutPanel4
+        '
+        Me.TableLayoutPanel4.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel4.ColumnCount = 8
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.77778!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.41667!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.64815!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.87963!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.953704!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.490741!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.490741!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111!))
+        Me.TableLayoutPanel4.Controls.Add(Me.LabelX11, 0, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Prestashop_Domingo, 7, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Prestashop_Lunes, 1, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Prestashop_Martes, 2, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Prestashop_Miercoles, 3, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Prestashop_Sabado, 6, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Prestashop_Jueves, 4, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Prestashop_Viernes, 5, 0)
+        Me.TableLayoutPanel4.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel4.Location = New System.Drawing.Point(6, 35)
+        Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
+        Me.TableLayoutPanel4.RowCount = 1
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(432, 31)
+        Me.TableLayoutPanel4.TabIndex = 38
+        '
+        'LabelX11
+        '
+        Me.LabelX11.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX11.ForeColor = System.Drawing.Color.Black
+        Me.LabelX11.Location = New System.Drawing.Point(3, 3)
+        Me.LabelX11.Name = "LabelX11"
+        Me.LabelX11.Size = New System.Drawing.Size(114, 23)
+        Me.LabelX11.TabIndex = 34
+        Me.LabelX11.Text = "Repetir los días:"
+        '
+        'Chk_Prestashop_Domingo
+        '
+        Me.Chk_Prestashop_Domingo.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Prestashop_Domingo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Prestashop_Domingo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Prestashop_Domingo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Prestashop_Domingo.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Prestashop_Domingo.Location = New System.Drawing.Point(386, 3)
+        Me.Chk_Prestashop_Domingo.Name = "Chk_Prestashop_Domingo"
+        Me.Chk_Prestashop_Domingo.Size = New System.Drawing.Size(43, 23)
+        Me.Chk_Prestashop_Domingo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Prestashop_Domingo.TabIndex = 32
+        Me.Chk_Prestashop_Domingo.Text = "Dom"
+        '
+        'Chk_Prestashop_Lunes
+        '
+        Me.Chk_Prestashop_Lunes.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Prestashop_Lunes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Prestashop_Lunes.CheckBoxImageChecked = CType(resources.GetObject("Chk_Prestashop_Lunes.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Prestashop_Lunes.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Prestashop_Lunes.Location = New System.Drawing.Point(123, 3)
+        Me.Chk_Prestashop_Lunes.Name = "Chk_Prestashop_Lunes"
+        Me.Chk_Prestashop_Lunes.Size = New System.Drawing.Size(37, 23)
+        Me.Chk_Prestashop_Lunes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Prestashop_Lunes.TabIndex = 26
+        Me.Chk_Prestashop_Lunes.Text = "Lun"
+        '
+        'Chk_Prestashop_Martes
+        '
+        Me.Chk_Prestashop_Martes.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Prestashop_Martes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Prestashop_Martes.CheckBoxImageChecked = CType(resources.GetObject("Chk_Prestashop_Martes.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Prestashop_Martes.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Prestashop_Martes.Location = New System.Drawing.Point(168, 3)
+        Me.Chk_Prestashop_Martes.Name = "Chk_Prestashop_Martes"
+        Me.Chk_Prestashop_Martes.Size = New System.Drawing.Size(37, 23)
+        Me.Chk_Prestashop_Martes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Prestashop_Martes.TabIndex = 27
+        Me.Chk_Prestashop_Martes.Text = "Mar"
+        '
+        'Chk_Prestashop_Miercoles
+        '
+        Me.Chk_Prestashop_Miercoles.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Prestashop_Miercoles.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Prestashop_Miercoles.CheckBoxImageChecked = CType(resources.GetObject("Chk_Prestashop_Miercoles.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Prestashop_Miercoles.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Prestashop_Miercoles.Location = New System.Drawing.Point(214, 3)
+        Me.Chk_Prestashop_Miercoles.Name = "Chk_Prestashop_Miercoles"
+        Me.Chk_Prestashop_Miercoles.Size = New System.Drawing.Size(37, 23)
+        Me.Chk_Prestashop_Miercoles.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Prestashop_Miercoles.TabIndex = 28
+        Me.Chk_Prestashop_Miercoles.Text = "Mie"
+        '
+        'Chk_Prestashop_Sabado
+        '
+        Me.Chk_Prestashop_Sabado.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Prestashop_Sabado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Prestashop_Sabado.CheckBoxImageChecked = CType(resources.GetObject("Chk_Prestashop_Sabado.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Prestashop_Sabado.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Prestashop_Sabado.Location = New System.Drawing.Point(345, 3)
+        Me.Chk_Prestashop_Sabado.Name = "Chk_Prestashop_Sabado"
+        Me.Chk_Prestashop_Sabado.Size = New System.Drawing.Size(35, 23)
+        Me.Chk_Prestashop_Sabado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Prestashop_Sabado.TabIndex = 31
+        Me.Chk_Prestashop_Sabado.Text = "Sab"
+        '
+        'Chk_Prestashop_Jueves
+        '
+        Me.Chk_Prestashop_Jueves.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Prestashop_Jueves.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Prestashop_Jueves.CheckBoxImageChecked = CType(resources.GetObject("Chk_Prestashop_Jueves.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Prestashop_Jueves.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Prestashop_Jueves.Location = New System.Drawing.Point(261, 3)
+        Me.Chk_Prestashop_Jueves.Name = "Chk_Prestashop_Jueves"
+        Me.Chk_Prestashop_Jueves.Size = New System.Drawing.Size(37, 23)
+        Me.Chk_Prestashop_Jueves.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Prestashop_Jueves.TabIndex = 29
+        Me.Chk_Prestashop_Jueves.Text = "Jue"
+        '
+        'Chk_Prestashop_Viernes
+        '
+        Me.Chk_Prestashop_Viernes.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Prestashop_Viernes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Prestashop_Viernes.CheckBoxImageChecked = CType(resources.GetObject("Chk_Prestashop_Viernes.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Prestashop_Viernes.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Prestashop_Viernes.Location = New System.Drawing.Point(304, 3)
+        Me.Chk_Prestashop_Viernes.Name = "Chk_Prestashop_Viernes"
+        Me.Chk_Prestashop_Viernes.Size = New System.Drawing.Size(35, 23)
+        Me.Chk_Prestashop_Viernes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Prestashop_Viernes.TabIndex = 30
+        Me.Chk_Prestashop_Viernes.Text = "Vie"
+        '
+        'Dtp_Prestashop_Total_Hora_Ejecucion
+        '
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.ButtonDropDown.Visible = True
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.Format = DevComponents.Editors.eDateTimePickerFormat.ShortTime
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.IsPopupCalendarOpen = False
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.Location = New System.Drawing.Point(101, 72)
+        '
+        '
+        '
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.DisplayMonth = New Date(2018, 11, 1, 0, 0, 0, 0)
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.Visible = False
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.Name = "Dtp_Prestashop_Total_Hora_Ejecucion"
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.Size = New System.Drawing.Size(62, 22)
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.TabIndex = 37
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.TabStop = False
+        Me.Dtp_Prestashop_Total_Hora_Ejecucion.Value = New Date(2018, 11, 5, 16, 26, 11, 0)
+        '
+        'SuperTabItem2
+        '
+        Me.SuperTabItem2.AttachedControl = Me.Panel_02
+        Me.SuperTabItem2.GlobalItem = False
+        Me.SuperTabItem2.Name = "SuperTabItem2"
+        Me.SuperTabItem2.Text = "Prestashop Actualización total"
+        '
         'SuperTabControlPanel2
         '
         Me.SuperTabControlPanel2.Controls.Add(Me.Chk_Timer_FacAuto)
@@ -2401,7 +2835,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel2.Location = New System.Drawing.Point(166, 0)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(450, 257)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(450, 239)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem4
         '
@@ -2728,433 +3162,6 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabItem4.Name = "SuperTabItem4"
         Me.SuperTabItem4.Text = "Fac. Automática"
         '
-        'SuperTabItem5
-        '
-        Me.SuperTabItem5.AttachedControl = Me.SuperTabControlPanel3
-        Me.SuperTabItem5.GlobalItem = False
-        Me.SuperTabItem5.Name = "SuperTabItem5"
-        Me.SuperTabItem5.Text = "Asistente de compras"
-        '
-        'SuperTabControlPanel3
-        '
-        Me.SuperTabControlPanel3.Controls.Add(Me.Btn_ConfAsisCompra)
-        Me.SuperTabControlPanel3.Controls.Add(Me.TableLayoutPanel9)
-        Me.SuperTabControlPanel3.Controls.Add(Me.LabelX20)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Chk_AsistenteDeCompras)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Dtp_AsisCompra_Hora_Ejecucion)
-        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(166, 0)
-        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(450, 239)
-        Me.SuperTabControlPanel3.TabIndex = 0
-        Me.SuperTabControlPanel3.TabItem = Me.SuperTabItem5
-        '
-        'LabelX20
-        '
-        Me.LabelX20.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX20.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX20.ForeColor = System.Drawing.Color.Black
-        Me.LabelX20.Location = New System.Drawing.Point(308, 7)
-        Me.LabelX20.Name = "LabelX20"
-        Me.LabelX20.Size = New System.Drawing.Size(79, 21)
-        Me.LabelX20.TabIndex = 130
-        Me.LabelX20.Text = "Hora ejecución"
-        '
-        'Chk_AsistenteDeCompras
-        '
-        Me.Chk_AsistenteDeCompras.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_AsistenteDeCompras.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_AsistenteDeCompras.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Chk_AsistenteDeCompras.ForeColor = System.Drawing.Color.Black
-        Me.Chk_AsistenteDeCompras.Location = New System.Drawing.Point(6, 3)
-        Me.Chk_AsistenteDeCompras.Name = "Chk_AsistenteDeCompras"
-        Me.Chk_AsistenteDeCompras.Size = New System.Drawing.Size(275, 25)
-        Me.Chk_AsistenteDeCompras.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_AsistenteDeCompras.TabIndex = 131
-        Me.Chk_AsistenteDeCompras.Text = "Activar asistente de compras"
-        '
-        'Dtp_AsisCompra_Hora_Ejecucion
-        '
-        Me.Dtp_AsisCompra_Hora_Ejecucion.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Dtp_AsisCompra_Hora_Ejecucion.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Dtp_AsisCompra_Hora_Ejecucion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_AsisCompra_Hora_Ejecucion.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
-        Me.Dtp_AsisCompra_Hora_Ejecucion.ButtonDropDown.Visible = True
-        Me.Dtp_AsisCompra_Hora_Ejecucion.ForeColor = System.Drawing.Color.Black
-        Me.Dtp_AsisCompra_Hora_Ejecucion.Format = DevComponents.Editors.eDateTimePickerFormat.ShortTime
-        Me.Dtp_AsisCompra_Hora_Ejecucion.IsPopupCalendarOpen = False
-        Me.Dtp_AsisCompra_Hora_Ejecucion.Location = New System.Drawing.Point(393, 6)
-        '
-        '
-        '
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
-        '
-        '
-        '
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.ClearButtonVisible = True
-        '
-        '
-        '
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.DisplayMonth = New Date(2018, 11, 1, 0, 0, 0, 0)
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.MarkedDates = New Date(-1) {}
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
-        '
-        '
-        '
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.TodayButtonVisible = True
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.Visible = False
-        Me.Dtp_AsisCompra_Hora_Ejecucion.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
-        Me.Dtp_AsisCompra_Hora_Ejecucion.Name = "Dtp_AsisCompra_Hora_Ejecucion"
-        Me.Dtp_AsisCompra_Hora_Ejecucion.Size = New System.Drawing.Size(54, 22)
-        Me.Dtp_AsisCompra_Hora_Ejecucion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Dtp_AsisCompra_Hora_Ejecucion.TabIndex = 128
-        Me.Dtp_AsisCompra_Hora_Ejecucion.TabStop = False
-        Me.Dtp_AsisCompra_Hora_Ejecucion.Value = New Date(2018, 11, 5, 16, 26, 11, 0)
-        '
-        'Chk_AsisComEjecDomingo
-        '
-        Me.Chk_AsisComEjecDomingo.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_AsisComEjecDomingo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_AsisComEjecDomingo.CheckBoxImageChecked = CType(resources.GetObject("Chk_AsisComEjecDomingo.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_AsisComEjecDomingo.ForeColor = System.Drawing.Color.Black
-        Me.Chk_AsisComEjecDomingo.Location = New System.Drawing.Point(3, 171)
-        Me.Chk_AsisComEjecDomingo.Name = "Chk_AsisComEjecDomingo"
-        Me.Chk_AsisComEjecDomingo.Size = New System.Drawing.Size(51, 20)
-        Me.Chk_AsisComEjecDomingo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_AsisComEjecDomingo.TabIndex = 32
-        Me.Chk_AsisComEjecDomingo.Text = "Dom"
-        '
-        'Chk_AsisComEjecLunes
-        '
-        Me.Chk_AsisComEjecLunes.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_AsisComEjecLunes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_AsisComEjecLunes.CheckBoxImageChecked = CType(resources.GetObject("Chk_AsisComEjecLunes.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_AsisComEjecLunes.ForeColor = System.Drawing.Color.Black
-        Me.Chk_AsisComEjecLunes.Location = New System.Drawing.Point(3, 27)
-        Me.Chk_AsisComEjecLunes.Name = "Chk_AsisComEjecLunes"
-        Me.Chk_AsisComEjecLunes.Size = New System.Drawing.Size(70, 14)
-        Me.Chk_AsisComEjecLunes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_AsisComEjecLunes.TabIndex = 26
-        Me.Chk_AsisComEjecLunes.Text = "Lun"
-        '
-        'Chk_AsisComEjecMartes
-        '
-        Me.Chk_AsisComEjecMartes.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_AsisComEjecMartes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_AsisComEjecMartes.CheckBoxImageChecked = CType(resources.GetObject("Chk_AsisComEjecMartes.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_AsisComEjecMartes.ForeColor = System.Drawing.Color.Black
-        Me.Chk_AsisComEjecMartes.Location = New System.Drawing.Point(3, 51)
-        Me.Chk_AsisComEjecMartes.Name = "Chk_AsisComEjecMartes"
-        Me.Chk_AsisComEjecMartes.Size = New System.Drawing.Size(43, 18)
-        Me.Chk_AsisComEjecMartes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_AsisComEjecMartes.TabIndex = 27
-        Me.Chk_AsisComEjecMartes.Text = "Mar"
-        '
-        'Chk_AsisComEjecMiercoles
-        '
-        Me.Chk_AsisComEjecMiercoles.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_AsisComEjecMiercoles.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_AsisComEjecMiercoles.CheckBoxImageChecked = CType(resources.GetObject("Chk_AsisComEjecMiercoles.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_AsisComEjecMiercoles.ForeColor = System.Drawing.Color.Black
-        Me.Chk_AsisComEjecMiercoles.Location = New System.Drawing.Point(3, 75)
-        Me.Chk_AsisComEjecMiercoles.Name = "Chk_AsisComEjecMiercoles"
-        Me.Chk_AsisComEjecMiercoles.Size = New System.Drawing.Size(43, 18)
-        Me.Chk_AsisComEjecMiercoles.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_AsisComEjecMiercoles.TabIndex = 28
-        Me.Chk_AsisComEjecMiercoles.Text = "Mie"
-        '
-        'Chk_AsisComEjecSabado
-        '
-        Me.Chk_AsisComEjecSabado.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_AsisComEjecSabado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_AsisComEjecSabado.CheckBoxImageChecked = CType(resources.GetObject("Chk_AsisComEjecSabado.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_AsisComEjecSabado.ForeColor = System.Drawing.Color.Black
-        Me.Chk_AsisComEjecSabado.Location = New System.Drawing.Point(3, 147)
-        Me.Chk_AsisComEjecSabado.Name = "Chk_AsisComEjecSabado"
-        Me.Chk_AsisComEjecSabado.Size = New System.Drawing.Size(42, 18)
-        Me.Chk_AsisComEjecSabado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_AsisComEjecSabado.TabIndex = 31
-        Me.Chk_AsisComEjecSabado.Text = "Sab"
-        '
-        'Chk_AsisComEjecJueves
-        '
-        Me.Chk_AsisComEjecJueves.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_AsisComEjecJueves.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_AsisComEjecJueves.CheckBoxImageChecked = CType(resources.GetObject("Chk_AsisComEjecJueves.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_AsisComEjecJueves.ForeColor = System.Drawing.Color.Black
-        Me.Chk_AsisComEjecJueves.Location = New System.Drawing.Point(3, 99)
-        Me.Chk_AsisComEjecJueves.Name = "Chk_AsisComEjecJueves"
-        Me.Chk_AsisComEjecJueves.Size = New System.Drawing.Size(38, 18)
-        Me.Chk_AsisComEjecJueves.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_AsisComEjecJueves.TabIndex = 29
-        Me.Chk_AsisComEjecJueves.Text = "Jue"
-        '
-        'Chk_AsisComEjecViernes
-        '
-        Me.Chk_AsisComEjecViernes.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_AsisComEjecViernes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_AsisComEjecViernes.CheckBoxImageChecked = CType(resources.GetObject("Chk_AsisComEjecViernes.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_AsisComEjecViernes.ForeColor = System.Drawing.Color.Black
-        Me.Chk_AsisComEjecViernes.Location = New System.Drawing.Point(3, 123)
-        Me.Chk_AsisComEjecViernes.Name = "Chk_AsisComEjecViernes"
-        Me.Chk_AsisComEjecViernes.Size = New System.Drawing.Size(39, 18)
-        Me.Chk_AsisComEjecViernes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_AsisComEjecViernes.TabIndex = 30
-        Me.Chk_AsisComEjecViernes.Text = "Vie"
-        '
-        'TableLayoutPanel9
-        '
-        Me.TableLayoutPanel9.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel9.ColumnCount = 2
-        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.33333!))
-        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 74.66666!))
-        Me.TableLayoutPanel9.Controls.Add(Me.Txt_AsComModDomingo, 1, 7)
-        Me.TableLayoutPanel9.Controls.Add(Me.Txt_AsComModSabado, 1, 6)
-        Me.TableLayoutPanel9.Controls.Add(Me.Txt_AsComModViernes, 1, 5)
-        Me.TableLayoutPanel9.Controls.Add(Me.Txt_AsComModJueves, 1, 4)
-        Me.TableLayoutPanel9.Controls.Add(Me.Txt_AsComModMiercoles, 1, 3)
-        Me.TableLayoutPanel9.Controls.Add(Me.Txt_AsComModMartes, 1, 2)
-        Me.TableLayoutPanel9.Controls.Add(Me.LabelX22, 0, 0)
-        Me.TableLayoutPanel9.Controls.Add(Me.Chk_AsisComEjecDomingo, 0, 7)
-        Me.TableLayoutPanel9.Controls.Add(Me.LabelX23, 1, 0)
-        Me.TableLayoutPanel9.Controls.Add(Me.Chk_AsisComEjecMartes, 0, 2)
-        Me.TableLayoutPanel9.Controls.Add(Me.Chk_AsisComEjecSabado, 0, 6)
-        Me.TableLayoutPanel9.Controls.Add(Me.Chk_AsisComEjecLunes, 0, 1)
-        Me.TableLayoutPanel9.Controls.Add(Me.Chk_AsisComEjecViernes, 0, 5)
-        Me.TableLayoutPanel9.Controls.Add(Me.Chk_AsisComEjecMiercoles, 0, 3)
-        Me.TableLayoutPanel9.Controls.Add(Me.Chk_AsisComEjecJueves, 0, 4)
-        Me.TableLayoutPanel9.Controls.Add(Me.Txt_AsComModLunes, 1, 1)
-        Me.TableLayoutPanel9.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel9.Location = New System.Drawing.Point(6, 34)
-        Me.TableLayoutPanel9.Name = "TableLayoutPanel9"
-        Me.TableLayoutPanel9.RowCount = 8
-        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel9.Size = New System.Drawing.Size(300, 194)
-        Me.TableLayoutPanel9.TabIndex = 132
-        '
-        'LabelX22
-        '
-        Me.LabelX22.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX22.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX22.ForeColor = System.Drawing.Color.Black
-        Me.LabelX22.Location = New System.Drawing.Point(3, 3)
-        Me.LabelX22.Name = "LabelX22"
-        Me.LabelX22.Size = New System.Drawing.Size(70, 18)
-        Me.LabelX22.TabIndex = 34
-        Me.LabelX22.Text = "Días estudio"
-        '
-        'LabelX23
-        '
-        Me.LabelX23.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX23.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX23.ForeColor = System.Drawing.Color.Black
-        Me.LabelX23.Location = New System.Drawing.Point(79, 3)
-        Me.LabelX23.Name = "LabelX23"
-        Me.LabelX23.Size = New System.Drawing.Size(73, 18)
-        Me.LabelX23.TabIndex = 133
-        Me.LabelX23.Text = "Modalidades"
-        '
-        'Txt_AsComModLunes
-        '
-        Me.Txt_AsComModLunes.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_AsComModLunes.Border.Class = "TextBoxBorder"
-        Me.Txt_AsComModLunes.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_AsComModLunes.ButtonCustom.Visible = True
-        Me.Txt_AsComModLunes.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_AsComModLunes.ForeColor = System.Drawing.Color.Black
-        Me.Txt_AsComModLunes.Location = New System.Drawing.Point(79, 27)
-        Me.Txt_AsComModLunes.Name = "Txt_AsComModLunes"
-        Me.Txt_AsComModLunes.PreventEnterBeep = True
-        Me.Txt_AsComModLunes.ReadOnly = True
-        Me.Txt_AsComModLunes.Size = New System.Drawing.Size(218, 22)
-        Me.Txt_AsComModLunes.TabIndex = 133
-        Me.Txt_AsComModLunes.TabStop = False
-        '
-        'Txt_AsComModMartes
-        '
-        Me.Txt_AsComModMartes.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_AsComModMartes.Border.Class = "TextBoxBorder"
-        Me.Txt_AsComModMartes.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_AsComModMartes.ButtonCustom.Visible = True
-        Me.Txt_AsComModMartes.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_AsComModMartes.ForeColor = System.Drawing.Color.Black
-        Me.Txt_AsComModMartes.Location = New System.Drawing.Point(79, 51)
-        Me.Txt_AsComModMartes.Name = "Txt_AsComModMartes"
-        Me.Txt_AsComModMartes.PreventEnterBeep = True
-        Me.Txt_AsComModMartes.ReadOnly = True
-        Me.Txt_AsComModMartes.Size = New System.Drawing.Size(218, 22)
-        Me.Txt_AsComModMartes.TabIndex = 134
-        Me.Txt_AsComModMartes.TabStop = False
-        '
-        'Txt_AsComModMiercoles
-        '
-        Me.Txt_AsComModMiercoles.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_AsComModMiercoles.Border.Class = "TextBoxBorder"
-        Me.Txt_AsComModMiercoles.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_AsComModMiercoles.ButtonCustom.Visible = True
-        Me.Txt_AsComModMiercoles.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_AsComModMiercoles.ForeColor = System.Drawing.Color.Black
-        Me.Txt_AsComModMiercoles.Location = New System.Drawing.Point(79, 75)
-        Me.Txt_AsComModMiercoles.Name = "Txt_AsComModMiercoles"
-        Me.Txt_AsComModMiercoles.PreventEnterBeep = True
-        Me.Txt_AsComModMiercoles.ReadOnly = True
-        Me.Txt_AsComModMiercoles.Size = New System.Drawing.Size(218, 22)
-        Me.Txt_AsComModMiercoles.TabIndex = 134
-        Me.Txt_AsComModMiercoles.TabStop = False
-        '
-        'Txt_AsComModJueves
-        '
-        Me.Txt_AsComModJueves.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_AsComModJueves.Border.Class = "TextBoxBorder"
-        Me.Txt_AsComModJueves.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_AsComModJueves.ButtonCustom.Visible = True
-        Me.Txt_AsComModJueves.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_AsComModJueves.ForeColor = System.Drawing.Color.Black
-        Me.Txt_AsComModJueves.Location = New System.Drawing.Point(79, 99)
-        Me.Txt_AsComModJueves.Name = "Txt_AsComModJueves"
-        Me.Txt_AsComModJueves.PreventEnterBeep = True
-        Me.Txt_AsComModJueves.ReadOnly = True
-        Me.Txt_AsComModJueves.Size = New System.Drawing.Size(218, 22)
-        Me.Txt_AsComModJueves.TabIndex = 135
-        Me.Txt_AsComModJueves.TabStop = False
-        '
-        'Txt_AsComModViernes
-        '
-        Me.Txt_AsComModViernes.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_AsComModViernes.Border.Class = "TextBoxBorder"
-        Me.Txt_AsComModViernes.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_AsComModViernes.ButtonCustom.Visible = True
-        Me.Txt_AsComModViernes.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_AsComModViernes.ForeColor = System.Drawing.Color.Black
-        Me.Txt_AsComModViernes.Location = New System.Drawing.Point(79, 123)
-        Me.Txt_AsComModViernes.Name = "Txt_AsComModViernes"
-        Me.Txt_AsComModViernes.PreventEnterBeep = True
-        Me.Txt_AsComModViernes.ReadOnly = True
-        Me.Txt_AsComModViernes.Size = New System.Drawing.Size(218, 22)
-        Me.Txt_AsComModViernes.TabIndex = 135
-        Me.Txt_AsComModViernes.TabStop = False
-        '
-        'Txt_AsComModSabado
-        '
-        Me.Txt_AsComModSabado.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_AsComModSabado.Border.Class = "TextBoxBorder"
-        Me.Txt_AsComModSabado.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_AsComModSabado.ButtonCustom.Visible = True
-        Me.Txt_AsComModSabado.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_AsComModSabado.ForeColor = System.Drawing.Color.Black
-        Me.Txt_AsComModSabado.Location = New System.Drawing.Point(79, 147)
-        Me.Txt_AsComModSabado.Name = "Txt_AsComModSabado"
-        Me.Txt_AsComModSabado.PreventEnterBeep = True
-        Me.Txt_AsComModSabado.ReadOnly = True
-        Me.Txt_AsComModSabado.Size = New System.Drawing.Size(218, 22)
-        Me.Txt_AsComModSabado.TabIndex = 135
-        Me.Txt_AsComModSabado.TabStop = False
-        '
-        'Txt_AsComModDomingo
-        '
-        Me.Txt_AsComModDomingo.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_AsComModDomingo.Border.Class = "TextBoxBorder"
-        Me.Txt_AsComModDomingo.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_AsComModDomingo.ButtonCustom.Visible = True
-        Me.Txt_AsComModDomingo.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_AsComModDomingo.ForeColor = System.Drawing.Color.Black
-        Me.Txt_AsComModDomingo.Location = New System.Drawing.Point(79, 171)
-        Me.Txt_AsComModDomingo.Name = "Txt_AsComModDomingo"
-        Me.Txt_AsComModDomingo.PreventEnterBeep = True
-        Me.Txt_AsComModDomingo.ReadOnly = True
-        Me.Txt_AsComModDomingo.Size = New System.Drawing.Size(218, 22)
-        Me.Txt_AsComModDomingo.TabIndex = 135
-        Me.Txt_AsComModDomingo.TabStop = False
-        '
-        'Btn_ConfAsisCompra
-        '
-        Me.Btn_ConfAsisCompra.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_ConfAsisCompra.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_ConfAsisCompra.Location = New System.Drawing.Point(315, 207)
-        Me.Btn_ConfAsisCompra.Name = "Btn_ConfAsisCompra"
-        Me.Btn_ConfAsisCompra.Size = New System.Drawing.Size(132, 21)
-        Me.Btn_ConfAsisCompra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_ConfAsisCompra.TabIndex = 133
-        Me.Btn_ConfAsisCompra.Text = "Conf. asistente compra"
-        '
         'Frm_Demonio_01_Conf_Local
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -3168,6 +3175,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -3211,10 +3219,10 @@ Partial Class Frm_Demonio_01_Conf_Local
         CType(Me.Dtp_Cons_Stock_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
+        Me.SuperTabControlPanel3.ResumeLayout(False)
+        Me.TableLayoutPanel9.ResumeLayout(False)
+        CType(Me.Dtp_AsisCompra_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel_01.ResumeLayout(False)
-        Me.Panel_02.ResumeLayout(False)
-        Me.TableLayoutPanel4.ResumeLayout(False)
-        CType(Me.Dtp_Prestashop_Total_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel1.ResumeLayout(False)
         CType(Me.Input_DiasOCC, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Dtp_CierreDoc_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3223,12 +3231,12 @@ Partial Class Frm_Demonio_01_Conf_Local
         CType(Me.Input_DiasNVI, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Input_DiasCOV, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel5.ResumeLayout(False)
+        Me.Panel_02.ResumeLayout(False)
+        Me.TableLayoutPanel4.ResumeLayout(False)
+        CType(Me.Dtp_Prestashop_Total_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel2.ResumeLayout(False)
         Me.TableLayoutPanel7.ResumeLayout(False)
         Me.TableLayoutPanel6.ResumeLayout(False)
-        Me.SuperTabControlPanel3.ResumeLayout(False)
-        CType(Me.Dtp_AsisCompra_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TableLayoutPanel9.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub

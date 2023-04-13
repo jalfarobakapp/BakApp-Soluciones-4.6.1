@@ -17,6 +17,8 @@ Public Class Class_SQL
         _SQL_String_conexion = SQL_String_conexion
     End Sub
 
+    Public Property ModalidadAct As String
+
     Function Ej_consulta_IDU(ConsultaSql As String,
                             Optional MostrarError As Boolean = True) As Boolean
         Try
@@ -559,9 +561,17 @@ Public Class Class_SQL
             Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
             Dim _Insertar_dato = True
+            Dim _Modalidad As String
+
+            If String.IsNullOrEmpty(ModalidadAct) Then
+                _Modalidad = Modalidad
+            Else
+                _Modalidad = ModalidadAct
+            End If
 
             Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Tmp_Prm_Informes" & vbCrLf &
-                           "Where Funcionario = '" & FUNCIONARIO & "' And Informe = '" & _Informe & "' And Campo = '" & _Campo & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
+                           "Where Funcionario = '" & FUNCIONARIO & "' And Informe = '" & _Informe & "' " &
+                           "And Campo = '" & _Campo & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & _Modalidad & "'"
             _Row_Fila = Fx_Get_DataRow(Consulta_sql)
 
             If (_Row_Fila Is Nothing) Then
@@ -581,7 +591,7 @@ Public Class Class_SQL
 
                     Consulta_sql = "INSERT INTO " & _Global_BaseBk & "Zw_Tmp_Prm_Informes (Funcionario,Informe,Campo,Tipo,Valor,Grupo,NombreEquipo,Modalidad) VALUES" & Space(1) &
                           "('" & FUNCIONARIO & "','" & _Informe & "','" & _Campo & "','" & Replace(_Tipo.ToString, "_", "") & "'," &
-                          "'" & _Valor & "','" & _Grupo & "','" & _NombreEquipo & "','" & Modalidad & "')"
+                          "'" & _Valor & "','" & _Grupo & "','" & _NombreEquipo & "','" & _Modalidad & "')"
                     Ej_consulta_IDU(Consulta_sql, False)
 
                 End If
@@ -614,7 +624,8 @@ Public Class Class_SQL
                     End If
 
                     Consulta_sql = "Update " & _Global_BaseBk & "Zw_Tmp_Prm_Informes Set Valor = '" & _Valor & "'" & vbCrLf &
-                               "Where Funcionario = '" & FUNCIONARIO & "' And Informe = '" & _Informe & "' And Campo = '" & _Campo & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
+                               "Where Funcionario = '" & FUNCIONARIO & "' And Informe = '" & _Informe & "' " &
+                               "And Campo = '" & _Campo & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & _Modalidad & "'"
                     Ej_consulta_IDU(Consulta_sql, False)
 
                 Else
