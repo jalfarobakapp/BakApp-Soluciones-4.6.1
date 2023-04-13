@@ -90,6 +90,9 @@ Public Class Frm_00_Asis_Compra_Menu
 
         'Sb_Parametros_Informe_Conf_Local(True)
         _Modo_OCC = True
+
+        _Sql.ModalidadAct = Modalidad_Estudio
+
         Sb_Parametros_Informe_Sql(False)
 
         _Filtro_Marcas_Todas = True
@@ -129,7 +132,7 @@ Public Class Frm_00_Asis_Compra_Menu
         Tab_Automatizacion.Visible = False
 
         If _Modo_OCC Then
-            Me.Text += " MODO OCC"
+            Me.Text += " MODO OCC (Modalidad: " & Modalidad_Estudio & ")"
         End If
 
         If _Modo_NVI Then
@@ -140,7 +143,7 @@ Public Class Frm_00_Asis_Compra_Menu
             Cmb_Tipo_de_compra.SelectedValue = "Nacional"
             Cmb_Tipo_de_compra.Enabled = False
             Layaut_UlProdXProv.Visible = False
-            Me.Text += " MODO NVI"
+            Me.Text += " MODO NVI (Modalidad: " & Modalidad_Estudio & ")"
             Tab_ConexionExterna.Visible = False
             Tab_Automatizacion.Visible = True
         End If
@@ -436,7 +439,8 @@ Public Class Frm_00_Asis_Compra_Menu
 
                 _RowProveedor = Nothing
                 Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Tmp_Prm_Informes" & vbCrLf &
-                               "Where NombreEquipo = '" & _NombreEquipo & "' And Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente' And Campo In ('Koen','Suen') And Modalidad = '" & Modalidad_Estudio & "'"
+                               "Where NombreEquipo = '" & _NombreEquipo & "' And Funcionario = '" & FUNCIONARIO & "' " &
+                               "And Informe = 'Compras_Asistente' And Campo In ('Koen','Suen') And Modalidad = '" & Modalidad_Estudio & "'"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
             End If
@@ -449,12 +453,13 @@ Public Class Frm_00_Asis_Compra_Menu
         'SELECCIONAR PRODUCTOS
         '   Todos
         _Sql.Sb_Parametro_Informe_Sql(Rdb_Productos_Todos, "Compras_Asistente", Rdb_Productos_Todos.Name,
-                                                 Class_SQLite.Enum_Type._Boolean, Rdb_Productos_Todos.Checked, _Actualizar, "Seleccion_Productos")
+                                      Class_SQLite.Enum_Type._Boolean, Rdb_Productos_Todos.Checked, _Actualizar, "Seleccion_Productos")
 
         'Rdb_Productos_Todos.Checked = CBool(_Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", Rdb_Productos_Todos.Name, "Valor", True))
         '   Vendidos los ultimos, 7, 30 ,60 dias. etc
         _Sql.Sb_Parametro_Informe_Sql(Rdb_Productos_Vendidos_Los_Ultimos_Dias, "Compras_Asistente",
-                                             Rdb_Productos_Vendidos_Los_Ultimos_Dias.Name, Class_SQLite.Enum_Type._Boolean, Rdb_Productos_Vendidos_Los_Ultimos_Dias.Checked, _Actualizar, "Seleccion_Productos")
+                                      Rdb_Productos_Vendidos_Los_Ultimos_Dias.Name,
+                                      Class_SQLite.Enum_Type._Boolean, Rdb_Productos_Vendidos_Los_Ultimos_Dias.Checked, _Actualizar, "Seleccion_Productos")
         _Sql.Sb_Parametro_Informe_Sql(Cmb_Cantidad_Dias_Ultima_Venta, "Compras_Asistente",
                                              Cmb_Cantidad_Dias_Ultima_Venta.Name, Class_SQLite.Enum_Type._ComboBox, Cmb_Cantidad_Dias_Ultima_Venta.SelectedValue, _Actualizar, "Seleccion_Productos")
 
@@ -725,12 +730,12 @@ Public Class Frm_00_Asis_Compra_Menu
 
             Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                            "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
-                           "And Filtro = 'Bodegas_Reabastecen' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
+                           "And Filtro = 'Bodegas_Reabastecen' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad_Estudio & "'"
             _TblBodReabastecen = _Sql.Fx_Get_Tablas(Consulta_sql)
 
             Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
-               "And Filtro = 'Productos_Excluidos' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
+               "And Filtro = 'Productos_Excluidos' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad_Estudio & "'"
             _TblFiltroProductosExcluidos = _Sql.Fx_Get_Tablas(Consulta_sql)
             Btn_ProductosExcluidos.Text = "Productos excluidos (" & FormatNumber(_TblFiltroProductosExcluidos.Rows.Count, 0) & ")"
 
@@ -738,7 +743,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
                 Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                     "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
-                    "And Filtro = 'Productos_Seleccionados' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
+                    "And Filtro = 'Productos_Seleccionados' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad_Estudio & "'"
                 _TblFiltroProductos = _Sql.Fx_Get_Tablas(Consulta_sql)
 
             End If
@@ -823,6 +828,10 @@ Public Class Frm_00_Asis_Compra_Menu
 
             Txt_ProvEspecial.Text = String.Empty
             _RowProveedor_Especial = Fx_Traer_Datos_Entidad(_Koen_Especial, _Suen_Especial)
+
+            If Not IsNothing(_RowProveedor_Especial) Then
+                Txt_ProvEspecial.Text = _RowProveedor_Especial.Item("KOEN").ToString.Trim & " - " & _RowProveedor_Especial.Item("NOKOEN").ToString.Trim
+            End If
 
         End If
 
@@ -3356,16 +3365,6 @@ Public Class Frm_00_Asis_Compra_Menu
         If Fm.Pro_Filtrar Then
 
             _TblBodReabastecen = Fm.Pro_Tbl_Filtro
-
-            'If Fm.Pro_Filtrar_Todo Then
-            '    _Filtro_Bodegas_Est_Vta_Todas = True
-            'Else
-            '    If (_TblBodCompra Is Nothing) Then
-            '        _Filtro_Bodegas_Est_Vta_Todas = True
-            '    Else
-            '        _Filtro_Bodegas_Est_Vta_Todas = False
-            '    End If
-            'End If
 
         End If
 

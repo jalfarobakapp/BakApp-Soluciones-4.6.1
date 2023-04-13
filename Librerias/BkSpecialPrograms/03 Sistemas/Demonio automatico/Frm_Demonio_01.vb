@@ -175,6 +175,7 @@ Public Class Frm_Demonio_01
     Dim _Cl_Solicitud_Productos_Bodega As New Cl_Solicitud_Productos_Bodega
     Dim _Cl_Listas_Programadas As New Cl_Listas_Programadas
     Dim _Cl_FacAuto_NVV As New Cl_FacAuto_NVV
+    Dim _Cl_Asistente_Compras As New Cl_Asistente_Compras
 
     Dim _Ejecutar_PrestaShop_Ordenes As Boolean
     Dim _Nro_Impresiones_Cerrar As Integer = 20
@@ -331,6 +332,7 @@ Public Class Frm_Demonio_01
         Switch_Cierre_Documentos.Value = NuloPorNro(_Fila.Item("Chk_Timer_CierreDoc"), False)
         Switch_Listas_Programadas.Value = NuloPorNro(_Fila.Item("Timer_Listas_Programadas"), False)
         Switch_FacAuto.Value = NuloPorNro(_Fila.Item("Timer_FacAuto"), False)
+        Switch_AsisCompras.Value = NuloPorNro(_Fila.Item("Chk_AsistenteDeCompras"), False)
 
         _Cl_Archivador.Ruta_Archivador = NuloPorNro(_Fila.Item("Ruta_Archivador"), "")
 
@@ -479,6 +481,28 @@ Public Class Frm_Demonio_01
         AddHandler Switch_Wordpress_Prod.ValueChanged, AddressOf Sb_Switch_Wordpress_Prod
         AddHandler Switch_Wordpress_Stock.ValueChanged, AddressOf Sb_Switch_Wordpress_Prod
 
+        _Cl_Asistente_Compras.Chk_AsistenteDeCompras = NuloPorNro(_Fila.Item("Chk_AsistenteDeCompras"), False)
+        _Cl_Asistente_Compras.Dtp_AsisCompra_Hora_Ejecucion = NuloPorNro(_Fila.Item("Dtp_AsisCompra_Hora_Ejecucion"), Now.ToString("HH:mm:ss"))
+
+        _Cl_Asistente_Compras.Chk_AsisComEjecLunes = NuloPorNro(_Fila.Item("Chk_AsisComEjecLunes"), False)
+        _Cl_Asistente_Compras.Chk_AsisComEjecMartes = NuloPorNro(_Fila.Item("Chk_AsisComEjecMartes"), False)
+        _Cl_Asistente_Compras.Chk_AsisComEjecMiercoles = NuloPorNro(_Fila.Item("Chk_AsisComEjecMiercoles"), False)
+        _Cl_Asistente_Compras.Chk_AsisComEjecJueves = NuloPorNro(_Fila.Item("Chk_AsisComEjecJueves"), False)
+        _Cl_Asistente_Compras.Chk_AsisComEjecViernes = NuloPorNro(_Fila.Item("Chk_AsisComEjecViernes"), False)
+        _Cl_Asistente_Compras.Chk_AsisComEjecSabado = NuloPorNro(_Fila.Item("Chk_AsisComEjecSabado"), False)
+        _Cl_Asistente_Compras.Chk_AsisComEjecDomingo = NuloPorNro(_Fila.Item("Chk_AsisComEjecDomingo"), False)
+
+        _Cl_Asistente_Compras.Txt_AsComModLunes = NuloPorNro(_Fila.Item("Txt_AsComModLunes"), "")
+        _Cl_Asistente_Compras.Txt_AsComModMartes = NuloPorNro(_Fila.Item("Txt_AsComModMartes"), "")
+        _Cl_Asistente_Compras.Txt_AsComModMiercoles = NuloPorNro(_Fila.Item("Txt_AsComModMiercoles"), "")
+        _Cl_Asistente_Compras.Txt_AsComModJueves = NuloPorNro(_Fila.Item("Txt_AsComModJueves"), "")
+        _Cl_Asistente_Compras.Txt_AsComModViernes = NuloPorNro(_Fila.Item("Txt_AsComModViernes"), "")
+        _Cl_Asistente_Compras.Txt_AsComModSabado = NuloPorNro(_Fila.Item("Txt_AsComModSabado"), "")
+        _Cl_Asistente_Compras.Txt_AsComModDomingo = NuloPorNro(_Fila.Item("Txt_AsComModDomingo"), "")
+
+        _Hora_Cstock = _Cl_Asistente_Compras.Dtp_AsisCompra_Hora_Ejecucion
+        Lbl_Hora_AsisCompra.Text = Format(_Hora_Cstock, "HH:mm")
+
         Sb_Pausar(_Pausa.Play)
 
         Dim _Dir_Local As String = AppPath() & "\Data\"
@@ -508,6 +532,7 @@ Public Class Frm_Demonio_01
         CircularLibroDTESII.IsRunning = Switch_LibroDTESII.Value
         CircularListasProgramadas.IsRunning = Switch_Listas_Programadas.Value
         CircularFacAuto.IsRunning = Switch_FacAuto.Value
+        CircularAsisCompra.IsRunning = Switch_AsisCompras.Value
 
         PicBox_Archivador.Enabled = Switch_Archivador.Value
         PicBox_Cola_Impresion.Enabled = Switch_Cola_Impresion.Value
@@ -536,6 +561,7 @@ Public Class Frm_Demonio_01
         Lbl_Wordpress_productos.Enabled = Switch_Wordpress_Prod.Value
         Lbl_Wordpress_Stock_Precios.Enabled = Switch_Wordpress_Stock.Value
         Lbl_Cierre_Documentos.Enabled = Switch_Cierre_Documentos.Value
+        Lbl_AsisCompras.Enabled = Switch_AsisCompras.Value
 
     End Sub
 
@@ -1271,7 +1297,7 @@ Public Class Frm_Demonio_01
     Private Sub Timer_Segundos_Tick(sender As System.Object, e As System.EventArgs) Handles Timer_Segundos.Tick
 
         Dim _Hora = numero_(Date.Now.ToShortTimeString, 5)
-        Dim _Hoy As Date = Date.Now
+        Dim _Hoy As Date = DtpFecharevision.Value 'Date.Now
         Dim _Dia = _Hoy.DayOfWeek
 
         If Me.Visible Then
@@ -2055,6 +2081,90 @@ Public Class Frm_Demonio_01
         End If
 
 #End Region
+
+
+
+
+#Region "ASISTENTE DE COMPRAS"
+
+        If Switch_AsisCompras.Value Then
+
+            If (_Dia = DayOfWeek.Monday And _Cl_Asistente_Compras.Chk_AsisComEjecLunes) Or
+               (_Dia = DayOfWeek.Tuesday And _Cl_Asistente_Compras.Chk_AsisComEjecMartes) Or
+               (_Dia = DayOfWeek.Wednesday And _Cl_Asistente_Compras.Chk_AsisComEjecMiercoles) Or
+               (_Dia = DayOfWeek.Thursday And _Cl_Asistente_Compras.Chk_AsisComEjecJueves) Or
+               (_Dia = DayOfWeek.Friday And _Cl_Asistente_Compras.Chk_AsisComEjecViernes) Or
+               (_Dia = DayOfWeek.Saturday And _Cl_Asistente_Compras.Chk_AsisComEjecSabado) Or
+               (_Dia = DayOfWeek.Sunday And _Cl_Asistente_Compras.Chk_AsisComEjecDomingo) Then
+
+                If _Hora = Lbl_Hora_AsisCompra.Text Then
+
+                    Sb_Pausar(_Pausa.Pausa)
+
+                    Dim _TblModalidades As DataTable
+                    Dim _FiltroModalidades As String
+
+                    If _Dia = DayOfWeek.Monday Then
+                        _FiltroModalidades = _Cl_Asistente_Compras.Txt_AsComModLunes
+                        If _Cl_Asistente_Compras.Ejecutado_Lunes Then _FiltroModalidades = "('XXX')"
+                    End If
+                    If _Dia = DayOfWeek.Tuesday Then
+                        _FiltroModalidades = _Cl_Asistente_Compras.Txt_AsComModMartes
+                        If _Cl_Asistente_Compras.Ejecutado_Martes Then _FiltroModalidades = "('XXX')"
+                    End If
+                    If _Dia = DayOfWeek.Wednesday Then
+                        _FiltroModalidades = _Cl_Asistente_Compras.Txt_AsComModMiercoles
+                        If _Cl_Asistente_Compras.Ejecutado_Miercoles Then _FiltroModalidades = "('XXX')"
+                    End If
+                    If _Dia = DayOfWeek.Thursday Then
+                        _FiltroModalidades = _Cl_Asistente_Compras.Txt_AsComModJueves
+                        If _Cl_Asistente_Compras.Ejecutado_Jueves Then _FiltroModalidades = "('XXX')"
+                    End If
+                    If _Dia = DayOfWeek.Friday Then
+                        _FiltroModalidades = _Cl_Asistente_Compras.Txt_AsComModViernes
+                        If _Cl_Asistente_Compras.Ejecutado_Viernes Then _FiltroModalidades = "('XXX')"
+                    End If
+                    If _Dia = DayOfWeek.Saturday Then
+                        _FiltroModalidades = _Cl_Asistente_Compras.Txt_AsComModSabado
+                        If _Cl_Asistente_Compras.Ejecutado_Sabado Then _FiltroModalidades = "('XXX')"
+                    End If
+                    If _Dia = DayOfWeek.Sunday Then
+                        _FiltroModalidades = _Cl_Asistente_Compras.Txt_AsComModDomingo
+                        If _Cl_Asistente_Compras.Ejecutado_Domingo Then _FiltroModalidades = "('XXX')"
+                    End If
+
+                    Consulta_sql = "Select MODALIDAD From CONFIEST Where MODALIDAD In " & _FiltroModalidades
+                    _TblModalidades = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                    For Each _Fl As DataRow In _TblModalidades.Rows
+
+                        Dim _Modalidad As String = _Fl.Item("Modalidad")
+
+                        _Cl_Asistente_Compras.Sb_Ejecutar(_Modalidad, False, True, False, False, True)
+                        _Cl_Asistente_Compras.Sb_Ejecutar(_Modalidad, True, False, False, True, False)
+                        _Cl_Asistente_Compras.Sb_Ejecutar(_Modalidad, True, False, True, False, False)
+
+                    Next
+
+                    _Cl_Asistente_Compras.Ejecutado_Lunes = (_Dia = DayOfWeek.Monday)
+                    _Cl_Asistente_Compras.Ejecutado_Martes = (_Dia = DayOfWeek.Tuesday)
+                    _Cl_Asistente_Compras.Ejecutado_Miercoles = (_Dia = DayOfWeek.Wednesday)
+                    _Cl_Asistente_Compras.Ejecutado_Jueves = (_Dia = DayOfWeek.Thursday)
+                    _Cl_Asistente_Compras.Ejecutado_Viernes = (_Dia = DayOfWeek.Friday)
+                    _Cl_Asistente_Compras.Ejecutado_Sabado = (_Dia = DayOfWeek.Saturday)
+                    _Cl_Asistente_Compras.Ejecutado_Domingo = (_Dia = DayOfWeek.Sunday)
+
+                    Sb_Pausar(_Pausa.Play)
+
+                End If
+
+            End If
+
+        End If
+
+#End Region
+
+
 
     End Sub
 

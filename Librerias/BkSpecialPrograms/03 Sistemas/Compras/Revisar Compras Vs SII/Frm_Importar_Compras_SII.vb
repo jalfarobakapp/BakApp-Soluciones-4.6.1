@@ -396,10 +396,16 @@ Public Class Frm_Importar_Compras_SII
         Dim _RecuperarComprasReclamadas As HefRespuesta
 
         '_RecuperarResumenVentasRegistro = _Clas_Hefesto_Dte_Libro.Fx_RecuperarResumenVentasRegistro(_Periodo, _Mes)
-        'If _RecuperarResumenVentasRegistro.EsCorrecto Then Txt_Nombre_Archivo.Text = _RecuperarResumenVentasRegistro.Directorio
+        'If _RecuperarResumenVentasRegistro.EsCorrecto Then
+        '    Dim _Nombre_Archivo1 = _RecuperarResumenVentasRegistro.Directorio
+        'End If
 
         '_RecuperarVentasRegistro = _Clas_Hefesto_Dte_Libro.Fx_RecuperarVentasRegistro(_Periodo, _Mes)
-        'If _RecuperarVentasRegistro.EsCorrecto Then Txt_Nombre_Archivo.Text = _RecuperarVentasRegistro.Directorio
+        'If _RecuperarVentasRegistro.EsCorrecto Then
+        '    Dim _Nombre_Archivo2 = _RecuperarVentasRegistro.Directorio
+        'End If
+
+        'Return
 
         '_RecuperarResumenCompras = _Clas_Hefesto_Dte_Libro.Fx_RecuperarResumenCompras(_Periodo, _Mes)
         'If _RecuperarResumenCompras.EsCorrecto Then Txt_Nombre_Archivo.Text = _RecuperarResumenCompras.Directorio

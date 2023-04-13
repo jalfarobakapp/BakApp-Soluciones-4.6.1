@@ -114,6 +114,30 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Busca una cadena traducida similar a &apos;------------------------------------------------------------------------------
+        '''&apos; &lt;auto-generated&gt;
+        '''&apos;     Este código fue generado por una herramienta.
+        '''&apos;     Versión de runtime:4.0.30319.42000
+        '''&apos;
+        '''&apos;     Los cambios en este archivo podrían causar un comportamiento incorrecto y se perderán si
+        '''&apos;     se vuelve a generar el código.
+        '''&apos; &lt;/auto-generated&gt;
+        '''&apos;------------------------------------------------------------------------------
+        '''
+        '''Option Strict On
+        '''Option Explicit On
+        '''
+        '''Imports System
+        '''
+        '''Namespace My.Reso [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Recursos_Inst_Tablas_Designer1() As String
+            Get
+                Return ResourceManager.GetString("Recursos_Inst_Tablas_Designer1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Busca una cadena traducida similar a &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         '''&lt;root&gt;
         '''  &lt;!-- 
@@ -135,6 +159,31 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Recursos_Inst_Tablas1() As String
             Get
                 Return ResourceManager.GetString("Recursos_Inst_Tablas1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        '''&lt;root&gt;
+        '''  &lt;!-- 
+        '''    Microsoft ResX Schema 
+        '''    
+        '''    Version 2.0
+        '''    
+        '''    The primary goals of this format is to allow a simple XML format 
+        '''    that is mostly human readable. The generation and parsing of the 
+        '''    various data types are done through the TypeConverter classes 
+        '''    associated with the data types.
+        '''    
+        '''    Example:
+        '''    
+        '''    ... ado.net/XML headers &amp; schema ...
+        '''    &lt;resheader name=&quot;resmimetype&quot;&gt;text/microsoft-resx&lt;/resheader&gt;
+        '''    &lt;resheader n [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Recursos_Inst_Tablas2() As String
+            Get
+                Return ResourceManager.GetString("Recursos_Inst_Tablas2", resourceCulture)
             End Get
         End Property
         
@@ -3540,6 +3589,113 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Zw_St_OT_Notas() As String
             Get
                 Return ResourceManager.GetString("Zw_St_OT_Notas", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_St_OT_Operaciones](
+        '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
+        '''	[Empresa]		[char](2)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Operacion]		[varchar](5)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Descripcion]	[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Precio]		[float]			NOT NULL DEFAULT (0),
+        '''	[CantMayor1]	[bit]			NOT NULL DEFAULT (0),
+        '''	[Externa]		[bit]			NOT NULL DEFAULT (0),
+        '''	[TienePrecio]	[bit]			NOT NULL DEFAULT (0),
+        ''' CONSTRAINT [PK_Zw_St_OT_Operacion [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_St_OT_Operaciones() As String
+            Get
+                Return ResourceManager.GetString("Zw_St_OT_Operaciones", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_St_OT_OpeXServ](
+        '''	[Id]					[int] IDENTITY(1,1) NOT NULL,
+        '''	[Id_Ot]					[int]			NOT NULL DEFAULT (0),
+        '''	[Semilla]				[int]			NOT NULL DEFAULT (0),
+        '''	[Codigo]				[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodReceta]				[varchar](20)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Operacion]				[varchar](5)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Orden]					[int]			NOT NULL DEFAULT (0),
+        '''	[CantMayor1]			[bit]			NOT NULL DEFAULT (0),
+        '''	[Cantidad]				[int]			NOT NULL DEFAULT (0),
+        '''	[CantidadRealizada]		[int]			 [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_St_OT_OpeXServ() As String
+            Get
+                Return ResourceManager.GetString("Zw_St_OT_OpeXServ", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_St_OT_Recetas_Enc](
+        '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
+        '''	[Empresa]		[char](2)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodReceta]		[varchar](20)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Descripcion]	[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Activo]		[bit]			NOT NULL DEFAULT (0),
+        ''' CONSTRAINT [PK_Zw_St_OT_Recetas_Enc] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_St_OT_Recetas_Enc() As String
+            Get
+                Return ResourceManager.GetString("Zw_St_OT_Recetas_Enc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_St_OT_Recetas_Ope](
+        '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
+        '''	[Id_Rec]		[int]			NOT NULL DEFAULT (0),
+        '''	[Empresa]		[char](2)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodReceta]		[varchar](20)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Operacion]		[varchar](5)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Orden]			[int]			NOT NULL DEFAULT (0),
+        '''	[Cantidad]		[int]			NOT NULL DEFAULT (0),
+        '''	[Precio]		[float]			NOT NULL DEFAULT (0),
+        '''	[CantMayor1]	[bit]			NOT NULL DEFAULT (0 [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_St_OT_Recetas_Ope() As String
+            Get
+                Return ResourceManager.GetString("Zw_St_OT_Recetas_Ope", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_St_OT_Recetas_Prod](
+        '''	[Id]			[int]			IDENTITY(1,1) NOT NULL,
+        '''	[Id_Rec]		[int]			NOT NULL DEFAULT (0),
+        '''	[CodReceta]		[varchar](20)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo]		[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
+        ''' CONSTRAINT [PK_Zw_St_OT_Recetas_Prod] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+        ''') ON [PRIMARY]
+        '''
+        '''
+        '''.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_St_OT_Recetas_Prod() As String
+            Get
+                Return ResourceManager.GetString("Zw_St_OT_Recetas_Prod", resourceCulture)
             End Get
         End Property
         

@@ -124,7 +124,13 @@
   <data name="Recursos_Inst_Tablas1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>recursos_inst_tablas.resx;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="Recursos_Inst_Tablas2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>recursos_inst_tablas.resx;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="Recursos_Inst_Tablas_Designer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>recursos_inst_tablas.designer.vb;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Recursos_Inst_Tablas_Designer1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>recursos_inst_tablas.designer.vb;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="Zw_CashDro_Operaciones" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -609,6 +615,21 @@
   </data>
   <data name="Zw_St_OT_Notas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_st_ot_notas.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_St_OT_Operaciones" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_st_ot_operaciones.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_St_OT_OpeXServ" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_st_ot_opexserv.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_St_OT_Recetas_Enc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_st_ot_recetas_enc.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_St_OT_Recetas_Ope" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_st_ot_recetas_ope.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_St_OT_Recetas_Prod" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_st_ot_recetas_prod.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Zw_TablaDeCaracterizaciones" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_tabladecaracterizaciones.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>

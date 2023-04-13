@@ -13357,7 +13357,7 @@ Public Class Frm_Formulario_Documento
             If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Entidades", "MontoMinCompra") Then
 
                 Dim _MontoMinCompra As Double = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "MontoMinCompra",
-                                                                   "CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "'")
+                                                                   "CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "'", True)
 
                 If CBool(_MontoMinCompra) Then
 

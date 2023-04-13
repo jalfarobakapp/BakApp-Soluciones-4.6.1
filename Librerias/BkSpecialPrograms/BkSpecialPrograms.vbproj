@@ -1368,6 +1368,7 @@
     </Compile>
     <Compile Include="03 Sistemas\Compras\Revisar Compras Vs SII\Clas_Hefesto_Dte_Libro.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Archivador.vb" />
+    <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Asistente_Compras.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Cerrar_Documentos.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Consolidacion_Stock.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Correos.vb" />
@@ -1378,6 +1379,7 @@
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Listas_Programadas.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Prestashop_Orders.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Prestashop_Web.vb" />
+    <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Programacion.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Solicitud_Productos_Bodega.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Wordpress.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Frm_Demonio_05_FunConecExt.Designer.vb">
@@ -7354,6 +7356,11 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_OT_Encabezado.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_OT_Estados.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_OT_Notas.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_OT_Operaciones.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_OT_OpeXServ.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_OT_Recetas_Enc.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_OT_Recetas_Ope.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_OT_Recetas_Prod.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_TablaDeCaracterizaciones.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Tablas_Equivalentes_Rd_Bk.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_TblArbol_Asociaciones.sql" />

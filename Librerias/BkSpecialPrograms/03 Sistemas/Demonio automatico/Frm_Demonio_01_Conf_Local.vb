@@ -152,6 +152,25 @@ Public Class Frm_Demonio_01_Conf_Local
         Dtp_Prestashop_Total_Hora_Ejecucion.Value = NuloPorNro(_Fila.Item("Dtp_Prestashop_Total_Hora_Ejecucion"), _LaHora)
         Dtp_CierreDoc_Hora_Ejecucion.Value = NuloPorNro(_Fila.Item("Dtp_CierreDoc_Hora_Ejecucion"), _LaHora)
 
+        Chk_AsistenteDeCompras.Checked = NuloPorNro(_Fila.Item("Chk_AsistenteDeCompras"), False)
+        Dtp_AsisCompra_Hora_Ejecucion.Value = NuloPorNro(_Fila.Item("Dtp_AsisCompra_Hora_Ejecucion"), _LaHora)
+
+        Chk_AsisComEjecLunes.Checked = NuloPorNro(_Fila.Item("Chk_AsisComEjecLunes"), False)
+        Chk_AsisComEjecMartes.Checked = NuloPorNro(_Fila.Item("Chk_AsisComEjecMartes"), False)
+        Chk_AsisComEjecMiercoles.Checked = NuloPorNro(_Fila.Item("Chk_AsisComEjecMiercoles"), False)
+        Chk_AsisComEjecJueves.Checked = NuloPorNro(_Fila.Item("Chk_AsisComEjecJueves"), False)
+        Chk_AsisComEjecViernes.Checked = NuloPorNro(_Fila.Item("Chk_AsisComEjecViernes"), False)
+        Chk_AsisComEjecSabado.Checked = NuloPorNro(_Fila.Item("Chk_AsisComEjecSabado"), False)
+        Chk_AsisComEjecDomingo.Checked = NuloPorNro(_Fila.Item("Chk_AsisComEjecDomingo"), False)
+
+        Txt_AsComModLunes.Text = NuloPorNro(_Fila.Item("Txt_AsComModLunes"), "")
+        Txt_AsComModMartes.Text = NuloPorNro(_Fila.Item("Txt_AsComModMartes"), "")
+        Txt_AsComModMiercoles.Text = NuloPorNro(_Fila.Item("Txt_AsComModMiercoles"), "")
+        Txt_AsComModJueves.Text = NuloPorNro(_Fila.Item("Txt_AsComModJueves"), "")
+        Txt_AsComModViernes.Text = NuloPorNro(_Fila.Item("Txt_AsComModViernes"), "")
+        Txt_AsComModSabado.Text = NuloPorNro(_Fila.Item("Txt_AsComModSabado"), "")
+        Txt_AsComModDomingo.Text = NuloPorNro(_Fila.Item("Txt_AsComModDomingo"), "")
+
     End Sub
 
     Private Sub Btn_Impresora_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Impresora_Prod_Sol_Bodega.Click
@@ -318,6 +337,33 @@ Public Class Frm_Demonio_01_Conf_Local
                 .Item("Rdb_FA_1Todas") = Rdb_FA_1Todas.Checked
                 .Item("Txt_Modalidad_FacAuto") = Txt_Modalidad_FacAuto.Text
 
+                .Item("Chk_AsistenteDeCompras") = Chk_AsistenteDeCompras.Checked
+                .Item("Dtp_AsisCompra_Hora_Ejecucion") = Dtp_AsisCompra_Hora_Ejecucion.Value
+
+                If Not Fx_RevDiaModalidadAsistenteCompras(Chk_AsisComEjecLunes, Txt_AsComModLunes) Then Return
+                If Not Fx_RevDiaModalidadAsistenteCompras(Chk_AsisComEjecMartes, Txt_AsComModMartes) Then Return
+                If Not Fx_RevDiaModalidadAsistenteCompras(Chk_AsisComEjecMiercoles, Txt_AsComModMiercoles) Then Return
+                If Not Fx_RevDiaModalidadAsistenteCompras(Chk_AsisComEjecJueves, Txt_AsComModJueves) Then Return
+                If Not Fx_RevDiaModalidadAsistenteCompras(Chk_AsisComEjecViernes, Txt_AsComModViernes) Then Return
+                If Not Fx_RevDiaModalidadAsistenteCompras(Chk_AsisComEjecSabado, Txt_AsComModSabado) Then Return
+                If Not Fx_RevDiaModalidadAsistenteCompras(Chk_AsisComEjecDomingo, Txt_AsComModDomingo) Then Return
+
+                .Item("Chk_AsisComEjecLunes") = Chk_AsisComEjecLunes.Checked
+                .Item("Chk_AsisComEjecMartes") = Chk_AsisComEjecMartes.Checked
+                .Item("Chk_AsisComEjecMiercoles") = Chk_AsisComEjecMiercoles.Checked
+                .Item("Chk_AsisComEjecJueves") = Chk_AsisComEjecJueves.Checked
+                .Item("Chk_AsisComEjecViernes") = Chk_AsisComEjecViernes.Checked
+                .Item("Chk_AsisComEjecSabado") = Chk_AsisComEjecSabado.Checked
+                .Item("Chk_AsisComEjecDomingo") = Chk_AsisComEjecDomingo.Checked
+
+                .Item("Txt_AsComModLunes") = Txt_AsComModLunes.Text
+                .Item("Txt_AsComModMartes") = Txt_AsComModMartes.Text
+                .Item("Txt_AsComModMiercoles") = Txt_AsComModMiercoles.Text
+                .Item("Txt_AsComModJueves") = Txt_AsComModJueves.Text
+                .Item("Txt_AsComModViernes") = Txt_AsComModViernes.Text
+                .Item("Txt_AsComModSabado") = Txt_AsComModSabado.Text
+                .Item("Txt_AsComModDomingo") = Txt_AsComModDomingo.Text
+
             End With
 
             .Tables("Tbl_Configuracion").Rows.Add(NewFila)
@@ -339,6 +385,22 @@ Public Class Frm_Demonio_01_Conf_Local
         Me.Close()
 
     End Sub
+
+    Function Fx_RevDiaModalidadAsistenteCompras(_Chk As Controls.CheckBoxX, _Txt As Controls.TextBoxX) As Boolean
+
+        If Not _Chk.Checked Then
+            _Txt.Text = String.Empty
+        End If
+
+        If _Chk.Checked And String.IsNullOrEmpty(_Txt.Text) Then
+            SuperTabControl1.SelectedTabIndex = 4
+            MessageBoxEx.Show(Me, "Falta la modalidad para la ejecución del día " & _Txt.Tag,
+                                  "Validación [Asistente de compras]", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return False
+        End If
+
+        Return True
+    End Function
 
     Private Sub Chk_Timer_Consolidacion_Stock_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Timer_Consolidacion_Stock.CheckedChanged
         Panel_01.Enabled = Chk_Timer_Consolidacion_Stock.Checked
@@ -527,6 +589,113 @@ Public Class Frm_Demonio_01_Conf_Local
             Txt_Modalidad_FacAuto.Text = _Modalidad
 
         End If
+
+    End Sub
+
+    Private Sub Txt_AsComModLunes_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_AsComModLunes.ButtonCustomClick
+        SB_BuscarModalidadXDia(sender)
+    End Sub
+
+    Private Sub Txt_AsComModMartes_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_AsComModMartes.ButtonCustomClick
+        SB_BuscarModalidadXDia(sender)
+    End Sub
+
+    Private Sub Txt_AsComModMiercoles_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_AsComModMiercoles.ButtonCustomClick
+        SB_BuscarModalidadXDia(sender)
+    End Sub
+
+    Private Sub Txt_AsComModJueves_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_AsComModJueves.ButtonCustomClick
+        SB_BuscarModalidadXDia(sender)
+    End Sub
+
+    Private Sub Txt_AsComModViernes_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_AsComModViernes.ButtonCustomClick
+        SB_BuscarModalidadXDia(sender)
+    End Sub
+
+    Private Sub Txt_AsComModSabado_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_AsComModSabado.ButtonCustomClick
+        SB_BuscarModalidadXDia(sender)
+    End Sub
+
+    Private Sub Txt_AsComModDomingo_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_AsComModDomingo.ButtonCustomClick
+        SB_BuscarModalidadXDia(sender)
+    End Sub
+
+    Sub SB_BuscarModalidadXDia(_Txt As Controls.TextBoxX)
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Tabla = "CONFIEST"
+        _Filtrar.Campo = "MODALIDAD"
+        _Filtrar.Descripcion = "MODALIDAD"
+
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "MODALIDAD"
+
+        Dim _Tbl As DataTable
+
+        If Not String.IsNullOrEmpty(_Txt.Text) Then
+
+            Consulta_sql = "Select Distinct Cast(1 As Bit) As Chk,MODALIDAD As Codigo, MODALIDAD As Descripcion" & vbCrLf &
+                           "From CONFIEST" & vbCrLf &
+                           "Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD In " & _Txt.Text
+            _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        End If
+
+        If _Filtrar.Fx_Filtrar(_Tbl,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And EMPRESA = '" & ModEmpresa & "'",
+                               Nothing, False, False) Then
+
+            _Txt.Text = Generar_Filtro_IN(_Filtrar.Pro_Tbl_Filtro, "Chk", "Codigo", False, True, "'")
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_ConfAsisCompra_Click(sender As Object, e As EventArgs) Handles Btn_ConfAsisCompra.Click
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Tabla = "CONFIEST"
+        _Filtrar.Campo = "MODALIDAD"
+        _Filtrar.Descripcion = "MODALIDAD"
+
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "MODALIDAD"
+
+        'Dim _Caja_Habilitada As Boolean = _Global_Row_EstacionBk.Item("Caja_Habilitada")
+        'Dim _Modalidad_Caja As String = _Global_Row_EstacionBk.Item("Modalidad_Caja")
+
+        'Dim _Sql = "And MODALIDAD In (Select SUBSTRING(KOOP,4,5) As Modalidad From MAEUS Where KOUS = '" & _CodFuncionario & "' And KOOP Like 'MO-%')"
+
+        'If _Caja_Habilitada Then
+        '    _Sql += vbCrLf & "Or MODALIDAD = '" & _Modalidad_Caja & "'"
+        'End If
+
+        Dim _Modalidad As String
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And EMPRESA = '" & ModEmpresa & "'",
+                               Nothing, False, True) Then
+
+            Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
+
+            _Modalidad = _Row.Item("Codigo").ToString.Trim
+
+        End If
+
+        If String.IsNullOrEmpty(_Modalidad) Then
+            Return
+        End If
+
+        Me.Enabled = False
+
+        Dim Fm As New Frm_00_Asis_Compra_Menu(_Modalidad)
+        Fm.Tipo_Informe = "Asistente de compras Configuración de OCC automatizadas"
+        Fm.Modo_OCC = True
+        Fm.Modo_ConfAuto = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+        Me.Enabled = True
 
     End Sub
 
