@@ -91,6 +91,10 @@ Public Class Frm_ImpBarras_PorProducto
         Txt_Codigo.ReadOnly = False
         ActiveControl = Txt_Codigo
 
+        AddHandler Cmbetiquetas.SelectedIndexChanged, AddressOf Sb_Cmbetiquetas_SelectedIndexChanged
+
+        Call Sb_Cmbetiquetas_SelectedIndexChanged(Nothing, Nothing)
+
     End Sub
 
 
@@ -416,8 +420,6 @@ Public Class Frm_ImpBarras_PorProducto
         Sb_Imprimir_Etiquetas()
     End Sub
 
-
-
     Function Fx_Buscar_Producto(_Codigo As String) As DataRow
 
         Dim _TblProducto As DataTable
@@ -441,6 +443,10 @@ Public Class Frm_ImpBarras_PorProducto
         If CBool(_TblProducto.Rows.Count) Then
             Return _TblProducto.Rows(0)
         Else
+
+            If Not Fx_Tiene_Permiso(Me, "7Brr0009") Then
+                Return Nothing
+            End If
 
             Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
             Fm.Pro_CodEntidad = String.Empty
@@ -622,15 +628,17 @@ Public Class Frm_ImpBarras_PorProducto
     End Sub
 
     Private Sub Btn_Conf_PuertoEtiqueta_Click(sender As Object, e As EventArgs) Handles Btn_Conf_PuertoEtiqueta.Click
-        If Fx_Tiene_Permiso(Me, "7Brr0006") Then
-            Dim Fm As New Frm_Barras_ConfPuerto("Configuracion_local.xml")
-            Fm.ShowDialog(Me)
-            If Fm.Grabar Then
-                CmbPuerto.SelectedValue = Fm.Puerto
-                Cmbetiquetas.SelectedValue = Fm.Etiqueta
-            End If
-            Fm.Dispose()
+
+        If Not Fx_Tiene_Permiso(Me, "7Brr0006") Then Return
+
+        Dim Fm As New Frm_Barras_ConfPuerto("Configuracion_local.xml")
+        Fm.ShowDialog(Me)
+        If Fm.Grabar Then
+            CmbPuerto.SelectedValue = Fm.Puerto
+            Cmbetiquetas.SelectedValue = Fm.Etiqueta
         End If
+        Fm.Dispose()
+
     End Sub
 
     Private Sub Frm_ImpBarras_PorProducto_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
@@ -639,6 +647,38 @@ Public Class Frm_ImpBarras_PorProducto
             If Not Fx_Tiene_Permiso(Me, "7Brr0007") Then
                 e.Cancel = True
             End If
+        End If
+
+    End Sub
+
+    Private Sub Btn_ConfPuertoXEtiquetaXEquipo_Click(sender As Object, e As EventArgs) Handles Btn_ConfPuertoXEtiquetaXEquipo.Click
+
+        If Not Fx_Tiene_Permiso(Me, "7Brr0008") Then Return
+
+        Dim _Grabar As Boolean
+
+        Dim Fm As New Frm_PuertosXEtiquetaXEstacion
+        Fm.ShowDialog(Me)
+        _Grabar = Fm.Grabar
+        Fm.Dispose()
+
+        If _Grabar Then
+            Call Sb_Cmbetiquetas_SelectedIndexChanged(Nothing, Nothing)
+        End If
+
+    End Sub
+
+    Private Sub Sb_Cmbetiquetas_SelectedIndexChanged(sender As Object, e As EventArgs)
+
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+        Dim _Semilla As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tbl_DisenoBarras", "Semilla",
+                                                    "NombreEtiqueta = '" & Cmbetiquetas.SelectedValue & "'")
+        Dim _Puerto As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tbl_DisenoBarras_SalPtoxEstacion", "Puerto",
+                                                  "Semilla_Padre = " & _Semilla & " And NombreEquipo = '" & _NombreEquipo & "'")
+
+        If Not String.IsNullOrEmpty(_Puerto) Then
+            CmbPuerto.SelectedValue = _Puerto
         End If
 
     End Sub

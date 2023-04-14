@@ -22,25 +22,26 @@ Partial Class Frm_PrecioLCFuturo2
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_PrecioLCFuturo2))
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_ListaLc = New DevComponents.DotNetBar.ButtonItem()
         Me.Btnimprimir = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnActualizarLista = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Grabar_Programacion = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.CmbEtiqueta = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.CmbPuerto = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.Chk_Marcar_todo = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo_Lista_Precios = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.CmbLista = New DevComponents.DotNetBar.Controls.ComboBoxEx()
-        Me.BtnActualizarLista = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Grabar_Programacion = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_CambiarLista = New DevComponents.DotNetBar.ButtonX()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -57,7 +58,7 @@ Partial Class Frm_PrecioLCFuturo2
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(12, 12)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(1099, 409)
+        Me.GroupPanel2.Size = New System.Drawing.Size(867, 409)
         '
         '
         '
@@ -87,44 +88,44 @@ Partial Class Frm_PrecioLCFuturo2
         '
         Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel2.TabIndex = 65
-        Me.GroupPanel2.Text = "Listas Programadas"
+        Me.GroupPanel2.Text = "Productos programados para cambio de precios a futuro"
         '
         'Grilla
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
-        Me.Grilla.Size = New System.Drawing.Size(1093, 386)
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        Me.Grilla.Size = New System.Drawing.Size(861, 386)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 28
         '
@@ -136,7 +137,7 @@ Partial Class Frm_PrecioLCFuturo2
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_ListaLc, Me.Btnimprimir, Me.Btn_Eliminar, Me.BtnActualizarLista, Me.Btn_Grabar_Programacion})
         Me.Bar1.Location = New System.Drawing.Point(0, 518)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(1123, 41)
+        Me.Bar1.Size = New System.Drawing.Size(890, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 67
@@ -161,6 +162,36 @@ Partial Class Frm_PrecioLCFuturo2
         Me.Btnimprimir.Name = "Btnimprimir"
         Me.Btnimprimir.Text = "Imprimir flejes"
         '
+        'Btn_Eliminar
+        '
+        Me.Btn_Eliminar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Eliminar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Eliminar.Image = CType(resources.GetObject("Btn_Eliminar.Image"), System.Drawing.Image)
+        Me.Btn_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Eliminar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Eliminar.Name = "Btn_Eliminar"
+        Me.Btn_Eliminar.Tooltip = "Eliminar programación"
+        Me.Btn_Eliminar.Visible = False
+        '
+        'BtnActualizarLista
+        '
+        Me.BtnActualizarLista.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.BtnActualizarLista.ForeColor = System.Drawing.Color.Black
+        Me.BtnActualizarLista.Image = CType(resources.GetObject("BtnActualizarLista.Image"), System.Drawing.Image)
+        Me.BtnActualizarLista.ImageAlt = CType(resources.GetObject("BtnActualizarLista.ImageAlt"), System.Drawing.Image)
+        Me.BtnActualizarLista.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.BtnActualizarLista.Name = "BtnActualizarLista"
+        Me.BtnActualizarLista.Tooltip = "Actualizar (F5)"
+        '
+        'Btn_Grabar_Programacion
+        '
+        Me.Btn_Grabar_Programacion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Grabar_Programacion.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Grabar_Programacion.Image = CType(resources.GetObject("Btn_Grabar_Programacion.Image"), System.Drawing.Image)
+        Me.Btn_Grabar_Programacion.ImageAlt = CType(resources.GetObject("Btn_Grabar_Programacion.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Grabar_Programacion.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Grabar_Programacion.Name = "Btn_Grabar_Programacion"
+        Me.Btn_Grabar_Programacion.Tooltip = "Actualizar precios según programación"
+        '
         'GroupPanel3
         '
         Me.GroupPanel3.BackColor = System.Drawing.Color.White
@@ -169,7 +200,7 @@ Partial Class Frm_PrecioLCFuturo2
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel3.Location = New System.Drawing.Point(12, 452)
         Me.GroupPanel3.Name = "GroupPanel3"
-        Me.GroupPanel3.Size = New System.Drawing.Size(582, 50)
+        Me.GroupPanel3.Size = New System.Drawing.Size(468, 50)
         '
         '
         '
@@ -210,7 +241,7 @@ Partial Class Frm_PrecioLCFuturo2
         Me.CmbEtiqueta.ItemHeight = 16
         Me.CmbEtiqueta.Location = New System.Drawing.Point(3, 2)
         Me.CmbEtiqueta.Name = "CmbEtiqueta"
-        Me.CmbEtiqueta.Size = New System.Drawing.Size(570, 22)
+        Me.CmbEtiqueta.Size = New System.Drawing.Size(456, 22)
         Me.CmbEtiqueta.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.CmbEtiqueta.TabIndex = 74
         '
@@ -220,9 +251,9 @@ Partial Class Frm_PrecioLCFuturo2
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel1.Controls.Add(Me.CmbPuerto)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(600, 452)
+        Me.GroupPanel1.Location = New System.Drawing.Point(486, 452)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(163, 50)
+        Me.GroupPanel1.Size = New System.Drawing.Size(108, 50)
         '
         '
         '
@@ -252,7 +283,7 @@ Partial Class Frm_PrecioLCFuturo2
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 71
-        Me.GroupPanel1.Text = "Puerto por defecto"
+        Me.GroupPanel1.Text = "Puerto salida"
         '
         'CmbPuerto
         '
@@ -263,7 +294,7 @@ Partial Class Frm_PrecioLCFuturo2
         Me.CmbPuerto.ItemHeight = 16
         Me.CmbPuerto.Location = New System.Drawing.Point(3, 3)
         Me.CmbPuerto.Name = "CmbPuerto"
-        Me.CmbPuerto.Size = New System.Drawing.Size(151, 22)
+        Me.CmbPuerto.Size = New System.Drawing.Size(95, 22)
         Me.CmbPuerto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.CmbPuerto.TabIndex = 0
         '
@@ -284,25 +315,16 @@ Partial Class Frm_PrecioLCFuturo2
         Me.Chk_Marcar_todo.TabIndex = 72
         Me.Chk_Marcar_todo.Text = "Marcar todo"
         '
-        'Btn_Eliminar
-        '
-        Me.Btn_Eliminar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Eliminar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Eliminar.Image = CType(resources.GetObject("Btn_Eliminar.Image"), System.Drawing.Image)
-        Me.Btn_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Eliminar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Eliminar.Name = "Btn_Eliminar"
-        Me.Btn_Eliminar.Tooltip = "Eliminar programación"
-        Me.Btn_Eliminar.Visible = False
-        '
         'Grupo_Lista_Precios
         '
         Me.Grupo_Lista_Precios.BackColor = System.Drawing.Color.White
         Me.Grupo_Lista_Precios.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_Lista_Precios.Controls.Add(Me.Btn_CambiarLista)
         Me.Grupo_Lista_Precios.Controls.Add(Me.CmbLista)
         Me.Grupo_Lista_Precios.DisabledBackColor = System.Drawing.Color.Empty
-        Me.Grupo_Lista_Precios.Location = New System.Drawing.Point(769, 452)
+        Me.Grupo_Lista_Precios.Location = New System.Drawing.Point(600, 452)
         Me.Grupo_Lista_Precios.Name = "Grupo_Lista_Precios"
-        Me.Grupo_Lista_Precios.Size = New System.Drawing.Size(342, 50)
+        Me.Grupo_Lista_Precios.Size = New System.Drawing.Size(279, 50)
         '
         '
         '
@@ -343,35 +365,28 @@ Partial Class Frm_PrecioLCFuturo2
         Me.CmbLista.ItemHeight = 16
         Me.CmbLista.Location = New System.Drawing.Point(3, 2)
         Me.CmbLista.Name = "CmbLista"
-        Me.CmbLista.Size = New System.Drawing.Size(330, 22)
+        Me.CmbLista.Size = New System.Drawing.Size(238, 22)
         Me.CmbLista.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.CmbLista.TabIndex = 75
         '
-        'BtnActualizarLista
+        'Btn_CambiarLista
         '
-        Me.BtnActualizarLista.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.BtnActualizarLista.ForeColor = System.Drawing.Color.Black
-        Me.BtnActualizarLista.Image = CType(resources.GetObject("BtnActualizarLista.Image"), System.Drawing.Image)
-        Me.BtnActualizarLista.ImageAlt = CType(resources.GetObject("BtnActualizarLista.ImageAlt"), System.Drawing.Image)
-        Me.BtnActualizarLista.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.BtnActualizarLista.Name = "BtnActualizarLista"
-        Me.BtnActualizarLista.Tooltip = "Actualizar (F5)"
-        '
-        'Btn_Grabar_Programacion
-        '
-        Me.Btn_Grabar_Programacion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Grabar_Programacion.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Grabar_Programacion.Image = CType(resources.GetObject("Btn_Grabar_Programacion.Image"), System.Drawing.Image)
-        Me.Btn_Grabar_Programacion.ImageAlt = CType(resources.GetObject("Btn_Grabar_Programacion.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Grabar_Programacion.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Grabar_Programacion.Name = "Btn_Grabar_Programacion"
-        Me.Btn_Grabar_Programacion.Tooltip = "Actualizar precios según programación"
+        Me.Btn_CambiarLista.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_CambiarLista.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_CambiarLista.Image = CType(resources.GetObject("Btn_CambiarLista.Image"), System.Drawing.Image)
+        Me.Btn_CambiarLista.ImageAlt = CType(resources.GetObject("Btn_CambiarLista.ImageAlt"), System.Drawing.Image)
+        Me.Btn_CambiarLista.Location = New System.Drawing.Point(245, 2)
+        Me.Btn_CambiarLista.Name = "Btn_CambiarLista"
+        Me.Btn_CambiarLista.Size = New System.Drawing.Size(25, 22)
+        Me.Btn_CambiarLista.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_CambiarLista.TabIndex = 76
+        Me.Btn_CambiarLista.Tooltip = "Cambiar lista de precios"
         '
         'Frm_PrecioLCFuturo2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1123, 559)
+        Me.ClientSize = New System.Drawing.Size(890, 559)
         Me.Controls.Add(Me.Grupo_Lista_Precios)
         Me.Controls.Add(Me.Chk_Marcar_todo)
         Me.Controls.Add(Me.GroupPanel1)
@@ -412,4 +427,5 @@ Partial Class Frm_PrecioLCFuturo2
     Friend WithEvents CmbLista As DevComponents.DotNetBar.Controls.ComboBoxEx
     Friend WithEvents BtnActualizarLista As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Grabar_Programacion As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_CambiarLista As DevComponents.DotNetBar.ButtonX
 End Class

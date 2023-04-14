@@ -1,6 +1,4 @@
-﻿'Imports Lib_Bakapp_VarClassFunc
-Imports DevComponents.DotNetBar
-
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_ImpBarras_ListaEtiquetas
 
@@ -13,7 +11,7 @@ Public Class Frm_ImpBarras_ListaEtiquetas
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
-       Sb_Formato_Generico_Grilla(Grilla, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
+        Sb_Formato_Generico_Grilla(Grilla, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
 
         If Global_Thema = Enum_Themas.Oscuro Then
             BtnNuevaEtiqueta.ForeColor = Color.White
@@ -78,6 +76,7 @@ Public Class Frm_ImpBarras_ListaEtiquetas
         Sb_Actualizar_Grilla()
 
     End Sub
+
 
 #End Region
 
@@ -146,14 +145,15 @@ Public Class Frm_ImpBarras_ListaEtiquetas
 #Region "ACTUALIZAR GRILLA"
 
     Sub Sb_Actualizar_Grilla()
-        Consulta_sql = "SELECT * FROM " & _Global_BaseBk & "Zw_Tbl_DisenoBarras"
-        'ConsultaSQLGrilla = Consulta_sql
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Tbl_DisenoBarras"
+
         Try
 
 
             With Grilla
 
-                .DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+                .DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
 
                 OcultarEncabezadoGrilla(Grilla)
 

@@ -248,9 +248,12 @@ Public Module Funciones_Especiales_BakApp
         ' -- ACTUALIZAR TABLA DE COLORES PARA DOCUMENTOS
         Consulta_sql = My.Resources.Recursos_Funciones.Colores_Documentos
         Consulta_sql = Replace(Consulta_sql, "Zw_TablaDeCaracterizaciones", _Global_BaseBk & "Zw_TablaDeCaracterizaciones")
-
         _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
+        ' -- ACTUALIZA PUERTOS LPT PARA SALIDAS DE IMPRESION
+        Consulta_sql = My.Resources.Recursos_Funciones.Salidas_LPT
+        Consulta_sql = Replace(Consulta_sql, "Zw_TablaDeCaracterizaciones", _Global_BaseBk & "Zw_TablaDeCaracterizaciones")
+        _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
         If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Usuarios", "Password") Then
 
