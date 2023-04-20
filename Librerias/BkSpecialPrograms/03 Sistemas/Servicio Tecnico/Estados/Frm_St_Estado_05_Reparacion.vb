@@ -1,6 +1,4 @@
 ﻿Imports DevComponents.DotNetBar
-'Imports BkSpecialPrograms
-
 
 Public Class Frm_St_Estado_05_Reparacion
 
@@ -36,7 +34,7 @@ Public Class Frm_St_Estado_05_Reparacion
 
     Public Property CodTecnico_Repara As String
 
-    Public Sub New(ByVal Accion As Accion)
+    Public Sub New(Accion As Accion)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -49,7 +47,7 @@ Public Class Frm_St_Estado_05_Reparacion
 
     End Sub
 
-    Private Sub Frm_St_Estado_05_Reparacion_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_St_Estado_05_Reparacion_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         InsertarBotonenGrilla(Grilla, "BtnImagen", "Situación", "Solicitud", 0, _Tipo_Boton.Imagen)
 
@@ -128,14 +126,12 @@ Public Class Frm_St_Estado_05_Reparacion
         'AddHandler Chk_Taller_Externo.CheckedChanging, AddressOf Chk_Taller_Externo_CheckedChanging
         'AddHandler Chk_Tec_Domicilio.CheckedChanging, AddressOf Chk_Tec_Domicilio_CheckedChanging
 
-
-
         Sb_Actualizar_Grilla()
 
     End Sub
 
-    Sub Sb_Cargar_Tecnicos(ByVal _Tecnico As String,
-                           Optional ByVal _Solo_Este_Tecnico As Boolean = False)
+    Sub Sb_Cargar_Tecnicos(_Tecnico As String,
+                           Optional _Solo_Este_Tecnico As Boolean = False)
 
         Dim _Condicion = String.Empty
 
@@ -178,11 +174,11 @@ Public Class Frm_St_Estado_05_Reparacion
 
     End Sub
 
-    Private Sub Chk_Taller_Externo_CheckedChanging(ByVal sender As System.Object, ByVal e As DevComponents.DotNetBar.Controls.CheckBoxXChangeEventArgs)
+    Private Sub Chk_Taller_Externo_CheckedChanging(sender As System.Object, e As DevComponents.DotNetBar.Controls.CheckBoxXChangeEventArgs)
         e.Cancel = True
     End Sub
 
-    Private Sub Chk_Tec_Domicilio_CheckedChanging(ByVal sender As System.Object, ByVal e As DevComponents.DotNetBar.Controls.CheckBoxXChangeEventArgs)
+    Private Sub Chk_Tec_Domicilio_CheckedChanging(sender As System.Object, e As DevComponents.DotNetBar.Controls.CheckBoxXChangeEventArgs)
         e.Cancel = True
     End Sub
 
@@ -238,13 +234,12 @@ Public Class Frm_St_Estado_05_Reparacion
         Get
             Return _DsDocumento
         End Get
-        Set(ByVal value As DataSet)
+        Set(value As DataSet)
             _DsDocumento = value
             _Row_Encabezado = _DsDocumento.Tables(0).Rows(0)
             _Tbl_DetProd = _DsDocumento.Tables(1)
             _Row_Notas = _DsDocumento.Tables(3).Rows(0)
             _Tbl_DetProd_Cov = _DsDocumento.Tables(7)
-
         End Set
     End Property
 
@@ -252,7 +247,7 @@ Public Class Frm_St_Estado_05_Reparacion
         Get
             Return _RowEntidad
         End Get
-        Set(ByVal value As DataRow)
+        Set(value As DataRow)
             _RowEntidad = value
         End Set
     End Property
@@ -261,7 +256,7 @@ Public Class Frm_St_Estado_05_Reparacion
         Get
             Return _Id_Ot
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _Id_Ot = value
         End Set
     End Property
@@ -270,7 +265,7 @@ Public Class Frm_St_Estado_05_Reparacion
         Get
             Return _Editando_documento
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Editando_documento = value
         End Set
     End Property
@@ -279,7 +274,7 @@ Public Class Frm_St_Estado_05_Reparacion
         Get
             Return _Fijar_Estado
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Fijar_Estado = value
         End Set
     End Property
@@ -288,7 +283,7 @@ Public Class Frm_St_Estado_05_Reparacion
         Get
             Return Imagenes_32x32
         End Get
-        Set(ByVal value As ImageList)
+        Set(value As ImageList)
             Imagenes_32x32 = value
         End Set
     End Property
@@ -298,12 +293,12 @@ Public Class Frm_St_Estado_05_Reparacion
 
 #Region "EVENTOS TXT MANO DE OBRA"
 
-    Private Sub Txt_Horas_Mano_de_Obra_Validating(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs)
+    Private Sub Txt_Horas_Mano_de_Obra_Validating(sender As System.Object, e As System.ComponentModel.CancelEventArgs)
         _Horas_Mano_de_Obra_Repara = De_Txt_a_Num_01(Txt_Horas_Mano_de_Obra.Text, 2)
         Txt_Horas_Mano_de_Obra.Text = FormatNumber(_Horas_Mano_de_Obra_Repara, 2)
     End Sub
 
-    Private Sub Txt_Horas_Mano_de_Obra_Enter(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Txt_Horas_Mano_de_Obra_Enter(sender As System.Object, e As System.EventArgs)
         If CBool(_Horas_Mano_de_Obra_Repara) Then
             Txt_Horas_Mano_de_Obra.Text = _Horas_Mano_de_Obra_Repara
         Else
@@ -311,7 +306,7 @@ Public Class Frm_St_Estado_05_Reparacion
         End If
     End Sub
 
-    Private Sub Txt_Horas_Mano_de_Obra_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs)
+    Private Sub Txt_Horas_Mano_de_Obra_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs)
 
         Dim _Texto = CType(sender, TextBox)
 
@@ -337,7 +332,7 @@ Public Class Frm_St_Estado_05_Reparacion
 
 #End Region
 
-    Private Sub Btn_Fijar_Estado_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Fijar_Estado.Click
+    Private Sub Btn_Fijar_Estado_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Fijar_Estado.Click
 
         Dim _Fijar As Boolean
 
@@ -412,7 +407,7 @@ Public Class Frm_St_Estado_05_Reparacion
 
     End Function
 
-    Private Sub Grilla_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+    Private Sub Grilla_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs)
         Try
             Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
             Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -443,7 +438,7 @@ Public Class Frm_St_Estado_05_Reparacion
 
     End Sub
 
-    Private Sub Grilla_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Grilla_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -488,7 +483,7 @@ Public Class Frm_St_Estado_05_Reparacion
         'Grilla.AllowUserToAddRows = True
     End Sub
 
-    Private Sub Grilla_EditingControlShowing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs)
+    Private Sub Grilla_EditingControlShowing(sender As System.Object, e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs)
 
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
@@ -531,7 +526,7 @@ Public Class Frm_St_Estado_05_Reparacion
 
     End Sub
 
-    Private Sub Chk_No_se_pudo_reparar_el_equipo_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Chk_No_se_pudo_reparar_el_equipo_CheckedChanged(sender As System.Object, e As System.EventArgs)
 
         If Chk_No_se_pudo_reparar_el_equipo.Checked Then
 
@@ -727,14 +722,14 @@ Public Class Frm_St_Estado_05_Reparacion
 
     End Function
 
-    Private Sub Frm_St_Estado_05_Reparacion_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_St_Estado_05_Reparacion_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
 
-    Private Sub Btn_Editar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Editar.Click
+    Private Sub Btn_Editar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Editar.Click
 
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_OT_Estados", "Id_Ot = " & _Id_Ot & " And CodEstado = 'E'")
 
@@ -787,7 +782,7 @@ Public Class Frm_St_Estado_05_Reparacion
 
     End Sub
 
-    Private Sub Btn_Grabar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Grabar.Click
+    Private Sub Btn_Grabar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Grabar.Click
         If Fx_Se_Puede_Grabar() Then
             If Fx_Fijar_Estado() Then
 
@@ -800,7 +795,7 @@ Public Class Frm_St_Estado_05_Reparacion
         End If
     End Sub
 
-    Private Sub Btn_Cancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cancelar.Click
+    Private Sub Btn_Cancelar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cancelar.Click
         Me.Close()
     End Sub
 End Class

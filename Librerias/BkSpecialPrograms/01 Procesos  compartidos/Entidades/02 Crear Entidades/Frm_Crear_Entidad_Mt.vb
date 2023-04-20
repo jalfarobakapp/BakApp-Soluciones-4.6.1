@@ -607,8 +607,8 @@ Public Class Frm_Crear_Entidad_Mt
 
             If _Existe_Tbl_Entidades_Bakapp Then
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Entidades (CodEntidad,CodSucEntidad,Libera_NVV) Values ('" & _Koen & "','" & _Suen & "',0)" & vbCrLf &
-              _Sql.Ej_consulta_IDU(Consulta_sql)
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Entidades (CodEntidad,CodSucEntidad,Libera_NVV) Values ('" & _Koen & "','" & _Suen & "',0)"
+                _Sql.Ej_consulta_IDU(Consulta_sql)
 
             End If
 

@@ -91,6 +91,10 @@ Public Class Frm_Informe_Compr_No_Despachados
         Chk_NVVHabilitadasFacturar.Visible = _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar")
         Chk_NVVHabilitadasFacturar.Checked = _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar")
 
+        If Chk_NVVHabilitadasFacturar.Visible Then
+            AddHandler Chk_NVVHabilitadasFacturar.CheckedChanged, AddressOf Chk_NVVHabilitadasFacturar_CheckedChanged
+        End If
+
         'If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
         '    Rdb_NVV.Text = "Notas de venta (NVV) Solo Habilitadas"
         'End If
@@ -357,6 +361,14 @@ Public Class Frm_Informe_Compr_No_Despachados
         Chk_Incluir_COV.Visible = Rdb_Todos.Checked
         If Rdb_Todos.Checked Then
             Chk_Incluir_COV.Checked = False
+        End If
+    End Sub
+
+    Private Sub Chk_NVVHabilitadasFacturar_CheckedChanged(sender As Object, e As EventArgs)
+        If Not Chk_NVVHabilitadasFacturar.Checked Then
+            If Not Fx_Tiene_Permiso(Me, "Inf00046") Then
+                Chk_NVVHabilitadasFacturar.Checked = True
+            End If
         End If
     End Sub
 End Class

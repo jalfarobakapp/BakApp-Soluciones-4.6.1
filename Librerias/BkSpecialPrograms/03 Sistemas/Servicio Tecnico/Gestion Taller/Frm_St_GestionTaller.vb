@@ -72,7 +72,7 @@
 
         End Select
 
-        _Condicion += "And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'" & vbCrLf
+        _Condicion += "And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "' And CodTecnico_Asignado = '" & _CodFuncionario_Activo & "'" & vbCrLf
 
         Consulta_Sql = My.Resources.Recursos_Locales.SqlQuery_Lista_OT
         Consulta_Sql = Replace(Consulta_Sql, "#Db_BakApp#", _Global_BaseBk)
@@ -234,13 +234,13 @@
 
             Case 1 ' En Reparacion
 
-                Dim Fm1 As New Frm_St_Estado_05_Reparacion(Frm_St_Estado_05_Reparacion.Accion.Nuevo)
-                Fm1.Pro_RowEntidad = _RowEntidad
-                Fm1.Pro_Id_Ot = _Id_Ot
-                Fm1.Pro_DsDocumento = _DsDocumento
+                Dim Fm1 As New Frm_St_Estado_05_Reparacion2(Frm_St_Estado_05_Reparacion.Accion.Nuevo)
+                Fm1.RowEntidad = _RowEntidad
+                Fm1.Id_Ot = _Id_Ot
+                Fm1.DsDocumento = _DsDocumento
                 Fm1.CodTecnico_Repara = _CodFuncionario_Activo
                 Fm1.ShowDialog(Me)
-                If Fm1.Pro_Fijar_Estado Then
+                If Fm1.Fijar_Estado Then
                     Sb_Actualizar_Grilla()
                 End If
                 Fm1.Dispose()

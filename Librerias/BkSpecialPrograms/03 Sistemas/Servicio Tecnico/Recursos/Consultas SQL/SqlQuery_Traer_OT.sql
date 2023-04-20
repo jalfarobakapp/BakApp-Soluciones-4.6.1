@@ -71,7 +71,7 @@ SELECT  Cast(0 as Bit) As Nuevo_Item,*
         --Id_Ot, ,Semilla, 
         --Utilizado,Codigo,Descripcion, Cantidad, Ud, Un, CantUd1, CantUd2, Precio, Neto_Linea, Iva_Linea, Total_Linea
 FROM    #Db_BakApp#Zw_St_OT_DetProd
-Where Id_Ot = @Id_Ot And Desde_COV = 0
+Where Id_Ot = @Id_Ot And Desde_COV = 0 And EsServicio = 0
 Order by Semilla
 
 -- CHECK-IN TABLA (2)
@@ -160,10 +160,17 @@ FROM   #Db_BakApp#Zw_St_OT_Doc_Asociados Zw_Fv
 Where Id_Ot = @Id_Ot And Garantia = 1
 
 -- OPERACIONES POR SERVICIO (10)
-
 SELECT Serv.Id,Serv.Id_Ot,Serv.Semilla,Serv.Codigo,Isnull(Oper.Descripcion,'') As Descripcion,
        Serv.CodReceta,Serv.Operacion,Serv.Orden,Serv.CantMayor1,Serv.Cantidad,Serv.CantidadRealizada,Serv.Precio,Serv.Total,Serv.Realizado,Serv.Externa,Cast(1 As Bit) As Chk
 FROM   #Db_BakApp#Zw_St_OT_OpeXServ Serv
 Left Join #Db_BakApp#Zw_St_OT_Operaciones Oper On Serv.Operacion = Oper.Operacion
 Where Id_Ot = @Id_Ot
+
+-- DETALLE PRODUCTOS TIPO SERVICIO CON RECETA TABLA (11)
+SELECT  Cast(0 as Bit) As Nuevo_Item,Cast(0 As Bit) As Chk,*
+        --Id_Ot, ,Semilla, 
+        --Utilizado,Codigo,Descripcion, Cantidad, Ud, Un, CantUd1, CantUd2, Precio, Neto_Linea, Iva_Linea, Total_Linea
+FROM    INGETEC_PRB2.dbo.Zw_St_OT_DetProd
+Where Id_Ot = @Id_Ot And Desde_COV = 0 And EsServicio = 1
+Order by Semilla
 

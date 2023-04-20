@@ -458,8 +458,10 @@ Public Class Frm_MtCreacionDeProducto
             Return
         End If
 
-        If Not Fx_ValidarExistenciaDeCodigoAlternativo(Txt_Kopr.Text.Trim) Then
-            Return
+        If _Cl_Producto.Pro_Accion = Cl_Producto.Enum_Accion.Nuevo Then
+            If Not Fx_ValidarExistenciaDeCodigoAlternativo(Txt_Kopr.Text.Trim) Then
+                Return
+            End If
         End If
 
         If Len(Trim(Txt_Nokopr.Text)) > 50 Then

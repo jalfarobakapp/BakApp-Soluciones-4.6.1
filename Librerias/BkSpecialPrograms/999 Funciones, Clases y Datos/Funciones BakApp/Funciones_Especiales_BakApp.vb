@@ -3514,6 +3514,12 @@ Public Module Crear_Documentos_Desde_Otro
             'Dim _Hasta = _Row_Folios.Item("RNG_H")
             'Dim _Folios_Restantes = _Hasta - CInt(_Folio)
 
+            Dim _FolioActual As Integer = _Folio
+            Dim _Rng_d As Integer = _Row_Folios.Item("RNG_D")
+            Dim _Rng_h As Integer = _Row_Folios.Item("RNG_H")
+
+            Dim _DifFolios As Integer = _Rng_h - _FolioActual
+
             Dim _Fa As DateTime = FormatDateTime(CDate(_Row_Folios.Item("FA")), DateFormat.ShortDate)
             Dim _Fecha_Servisor As DateTime = FormatDateTime(FechaDelServidor(), DateFormat.ShortDate)
 

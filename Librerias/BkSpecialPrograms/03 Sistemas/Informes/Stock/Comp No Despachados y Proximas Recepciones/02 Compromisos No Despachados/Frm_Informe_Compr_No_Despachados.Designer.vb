@@ -146,11 +146,12 @@ Partial Class Frm_Informe_Compr_No_Despachados
         '
         '
         Me.Chk_Fecha_Recepcion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Fecha_Recepcion.CheckBoxImageChecked = CType(resources.GetObject("Chk_Fecha_Recepcion.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Fecha_Recepcion.FocusCuesEnabled = False
         Me.Chk_Fecha_Recepcion.ForeColor = System.Drawing.Color.Black
         Me.Chk_Fecha_Recepcion.Location = New System.Drawing.Point(3, 6)
         Me.Chk_Fecha_Recepcion.Name = "Chk_Fecha_Recepcion"
-        Me.Chk_Fecha_Recepcion.Size = New System.Drawing.Size(143, 23)
+        Me.Chk_Fecha_Recepcion.Size = New System.Drawing.Size(143, 22)
         Me.Chk_Fecha_Recepcion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Fecha_Recepcion.TabIndex = 115
         Me.Chk_Fecha_Recepcion.Text = "Incluir esta condición"
@@ -755,6 +756,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         '
         '
         Me.Chk_Stock_Fisico.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Stock_Fisico.CheckBoxImageChecked = CType(resources.GetObject("Chk_Stock_Fisico.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Stock_Fisico.Checked = True
         Me.Chk_Stock_Fisico.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_Stock_Fisico.CheckValue = "Y"
@@ -762,7 +764,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.Chk_Stock_Fisico.ForeColor = System.Drawing.Color.Black
         Me.Chk_Stock_Fisico.Location = New System.Drawing.Point(3, 3)
         Me.Chk_Stock_Fisico.Name = "Chk_Stock_Fisico"
-        Me.Chk_Stock_Fisico.Size = New System.Drawing.Size(155, 16)
+        Me.Chk_Stock_Fisico.Size = New System.Drawing.Size(155, 18)
         Me.Chk_Stock_Fisico.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Stock_Fisico.TabIndex = 94
         Me.Chk_Stock_Fisico.Text = "Traer Stock físico bodega"
@@ -790,6 +792,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         '
         '
         Me.Chk_Excluye_FLN.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Excluye_FLN.CheckBoxImageChecked = CType(resources.GetObject("Chk_Excluye_FLN.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Excluye_FLN.Checked = True
         Me.Chk_Excluye_FLN.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_Excluye_FLN.CheckValue = "Y"
@@ -797,7 +800,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.Chk_Excluye_FLN.ForeColor = System.Drawing.Color.Black
         Me.Chk_Excluye_FLN.Location = New System.Drawing.Point(3, 27)
         Me.Chk_Excluye_FLN.Name = "Chk_Excluye_FLN"
-        Me.Chk_Excluye_FLN.Size = New System.Drawing.Size(155, 16)
+        Me.Chk_Excluye_FLN.Size = New System.Drawing.Size(155, 18)
         Me.Chk_Excluye_FLN.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Excluye_FLN.TabIndex = 95
         Me.Chk_Excluye_FLN.Text = "Traer "
@@ -964,6 +967,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         '
         '
         Me.Chk_NVVHabilitadasFacturar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_NVVHabilitadasFacturar.CheckBoxImageChecked = CType(resources.GetObject("Chk_NVVHabilitadasFacturar.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_NVVHabilitadasFacturar.Checked = True
         Me.Chk_NVVHabilitadasFacturar.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_NVVHabilitadasFacturar.CheckValue = "Y"

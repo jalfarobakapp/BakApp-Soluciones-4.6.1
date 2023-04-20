@@ -173,6 +173,7 @@ Public Class Frm_St_RecetaCrear
             .Item("Precio") = _Precio
             .Item("Orden") = 0
             .Item("Externa") = _Externa
+            .Item("TienePrecio") = False
 
             _Tbl.Rows.Add(NewFila)
 
@@ -359,6 +360,7 @@ Public Class Frm_St_RecetaCrear
             _Fila.Cells("Precio").Value = _RowOperacion.Item("Precio")
             _Fila.Cells("CantMayor1").Value = _RowOperacion.Item("CantMayor1")
             _Fila.Cells("Externa").Value = _RowOperacion.Item("Externa")
+            _Fila.Cells("TienePrecio").Value = _RowOperacion.Item("TienePrecio")
 
             Sb_Agregar_Operacion(_Tbl_Operaciones, _Id_Rec, "", _CodReceta, "", "", False, 0, 0, False)
 
@@ -413,7 +415,8 @@ Public Class Frm_St_RecetaCrear
 
             If Not Estado = DataRowState.Deleted Then
 
-                If Not _Flop.Item("Nuevo_Item") And _Flop.Item("Precio") = 0 Then
+                If Not _Flop.Item("Nuevo_Item") And _Flop.Item("Precio") = 0 And _Flop.Item("TienePrecio") Then
+
                     MessageBoxEx.Show(Me, "No puede haber operaciones con precio igual a cero" & vbCrLf &
                                       "Operación: " & _Flop.Item("Operacion").ToString.Trim & "-" & _Flop.Item("Descripcion").ToString.Trim,
                                       "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -503,12 +506,13 @@ Public Class Frm_St_RecetaCrear
                     Dim _Precio As String = De_Txt_a_Num_01(_FlOp.Item("Precio"), 5)
                     Dim _CantMayor1 As Integer = Convert.ToInt32(_FlOp.Item("CantMayor1"))
                     Dim _Externa As Integer = Convert.ToInt32(_FlOp.Item("Externa"))
+                    Dim _TienePrecio As Integer = Convert.ToInt32(_FlOp.Item("TienePrecio"))
                     Dim _Nuevo_Item As Boolean = _FlOp.Item("Nuevo_Item")
 
                     If Not _Nuevo_Item Then
 
-                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Recetas_Ope (Id_Rec,Empresa,Sucursal,CodReceta,Operacion,Orden,Cantidad,Precio,CantMayor1,Externa) Values " &
-                                   "(" & _Id_Rec & ",'" & ModEmpresa & "','" & ModSucursal & "','" & _CodReceta & "','" & _Operacion & "'," & _Orden & "," & _Cantidad & "," & _Precio & "," & _CantMayor1 & "," & _Externa & ")"
+                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Recetas_Ope (Id_Rec,Empresa,Sucursal,CodReceta,Operacion,Orden,Cantidad,Precio,CantMayor1,Externa,TienePrecio) Values " &
+                                   "(" & _Id_Rec & ",'" & ModEmpresa & "','" & ModSucursal & "','" & _CodReceta & "','" & _Operacion & "'," & _Orden & "," & _Cantidad & "," & _Precio & "," & _CantMayor1 & "," & _Externa & "," & _TienePrecio & ")"
 
                         Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
                         Comando.Transaction = myTrans

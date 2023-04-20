@@ -382,7 +382,7 @@ Public Class Frm_Kardex_X_Producto_Lista
 
                 For Each Columna As DataGridViewColumn In _Grilla.Columns
                     Dim _Columna As String = Columna.Name
-                    If _Columna.Contains("1") Then
+                    If _Columna.Contains("1") Or _Columna.Contains("2") Then
 
                         Dim _Valor As Double = _Fila.Cells(_Columna).Value
 
