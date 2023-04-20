@@ -3767,7 +3767,7 @@ Public Class Clase_Crear_Documento
 
                 If _Tido = "GRC" Then
                     _Campos.Add("STDV1C")
-                    _Campos.Add("STDV1C")
+                    _Campos.Add("STDV2C")
                 End If
 
             Case "GTI", "GDI"

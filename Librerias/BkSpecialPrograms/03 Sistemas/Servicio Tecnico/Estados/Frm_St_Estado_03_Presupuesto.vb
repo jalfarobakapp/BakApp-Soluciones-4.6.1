@@ -232,6 +232,7 @@ Public Class Frm_St_Estado_03_Presupuesto
             .Item("Codigo") = String.Empty
             .Item("Descripcion") = String.Empty
             .Item("Cantidad") = 0
+            .Item("Cantidad_Utilizada") = 0
             .Item("Ud") = String.Empty
             .Item("Un") = 0
             .Item("CantUd1") = 0
@@ -240,6 +241,14 @@ Public Class Frm_St_Estado_03_Presupuesto
             .Item("Neto_Linea") = 0
             .Item("Iva_Linea") = 0
             .Item("Total_Linea") = 0
+            .Item("Desde_COV") = False
+            .Item("Idmaeedo_Cov") = 0
+            .Item("Idmaeddo_Cov") = 0
+            .Item("TieneReceta") = False
+            .Item("EsServicio") = False
+            .Item("SemillaPadre") = False
+            .Item("EsHijo") = False
+            .Item("PorcIva") = False
             _Tbl_DetProd.Rows.Add(NewFila)
 
         End With

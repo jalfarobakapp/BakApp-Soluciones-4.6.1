@@ -247,6 +247,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("7Brr0005", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("7Brr0006", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("7Brr0007", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("7Brr0008", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("7Brr0009", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Comp0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Comp0002", _Objeto, _Formulario)
@@ -631,6 +633,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Inf00043", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Inf00044", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Inf00045", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Inf00046", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Invp0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Invp0002", _Objeto, _Formulario)
@@ -673,6 +676,7 @@ Public Class Class_Permiso_BakApp
         '_SqlQuery += Fx_Insertar_Permiso("Pre0022", _Objeto, _Formulario)
         '_SqlQuery += Fx_Insertar_Permiso("Pre0023", _Objeto, _Formulario)
         '_SqlQuery += Fx_Insertar_Permiso("Pre0024", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Pre0025", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Not0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Not0002", _Objeto, _Formulario)
@@ -1117,6 +1121,15 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "CERRAR FORMULARIO DE IMPRESION DE CODIGOS DE BARRA CUANDO ESTA POR DEFECTO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.BARRAS, 6)
                 _NombreFamiliaPermiso = _Fml.BARRAS.ToString
+            Case "7Brr0008"
+                _DescripcionPermiso = "PERMITIR MODIFICAR PUERTOS DE SALIDA POR ETIQUETA POR EQUIPO DE IMPRESION"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.BARRAS, 6)
+                _NombreFamiliaPermiso = _Fml.BARRAS.ToString
+            Case "7Brr0009"
+                _DescripcionPermiso = "PERMITIR BUSCAR PRODUCTOS POR DESCRIPCION EN MODULO DE IMPRESION DE CODIGOS DE BARRA POR PRODUCTO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.BARRAS, 6)
+                _NombreFamiliaPermiso = _Fml.BARRAS.ToString
+
         End Select
 
 #End Region
@@ -2752,6 +2765,11 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_VENTA, 6)
                 _NombreFamiliaPermiso = _Fml.INFORMES_DE_VENTA.ToString
 
+            Case "Inf00046"
+                _DescripcionPermiso = "QUITAR EL TICKET VER SOLO NOTAS DE VENTA HABILITADAS PARA FACTURAR"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_VENTA, 6)
+                _NombreFamiliaPermiso = _Fml.INFORMES_DE_VENTA.ToString
+
         End Select
 
 #End Region
@@ -2952,6 +2970,11 @@ Public Class Class_Permiso_BakApp
                 '    _DescripcionPermiso = "TRAER PRODUCTOS BLOQUEADOS EN COMPRA, VENTA Y PRODUCCION AL TRATAMIENTO DE PRECIOS Y COSTOS"
                 '    _CodFamilia = Fx_Rellena_ceros(_Fml.LISTA_PRECIOS_Y_COSTOS, 6)
                 '    _NombreFamiliaPermiso = _Fml.LISTA_PRECIOS_Y_COSTOS.ToString
+
+            Case "Pre0025"
+                _DescripcionPermiso = "CAMBIAR LISTA DE PRECIOS EN FORMULARIO PARA IMPRIMIR ETIQUETAS DE PRECIO FUTURO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.LISTA_PRECIOS_Y_COSTOS, 6)
+                _NombreFamiliaPermiso = _Fml.LISTA_PRECIOS_Y_COSTOS.ToString
 
 
         End Select

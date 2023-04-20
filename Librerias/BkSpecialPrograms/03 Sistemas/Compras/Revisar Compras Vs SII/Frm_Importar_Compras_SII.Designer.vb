@@ -24,10 +24,10 @@ Partial Class Frm_Importar_Compras_SII
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Importar_Compras_SII))
         Me.Grupo_01 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Circular_Progres_Val = New DevComponents.DotNetBar.Controls.CircularProgress()
         Me.Txt_Log = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Chk_Primera_Fila_Es_encabezado = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Circular_Progres_Porc = New DevComponents.DotNetBar.Controls.CircularProgress()
-        Me.Circular_Progres_Val = New DevComponents.DotNetBar.Controls.CircularProgress()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Importar_Desde_XML = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Cancelar = New DevComponents.DotNetBar.ButtonItem()
@@ -79,6 +79,24 @@ Partial Class Frm_Importar_Compras_SII
         Me.Grupo_01.TabIndex = 80
         Me.Grupo_01.Text = "Log"
         '
+        'Circular_Progres_Val
+        '
+        Me.Circular_Progres_Val.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Circular_Progres_Val.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Circular_Progres_Val.FocusCuesEnabled = False
+        Me.Circular_Progres_Val.Location = New System.Drawing.Point(-1, 53)
+        Me.Circular_Progres_Val.Name = "Circular_Progres_Val"
+        Me.Circular_Progres_Val.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
+        Me.Circular_Progres_Val.ProgressColor = System.Drawing.Color.SteelBlue
+        Me.Circular_Progres_Val.ProgressTextFormat = "{0}"
+        Me.Circular_Progres_Val.ProgressTextVisible = True
+        Me.Circular_Progres_Val.Size = New System.Drawing.Size(54, 44)
+        Me.Circular_Progres_Val.Style = DevComponents.DotNetBar.eDotNetBarStyle.OfficeXP
+        Me.Circular_Progres_Val.TabIndex = 76
+        '
         'Txt_Log
         '
         Me.Txt_Log.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -108,6 +126,7 @@ Partial Class Frm_Importar_Compras_SII
         '
         '
         Me.Chk_Primera_Fila_Es_encabezado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Primera_Fila_Es_encabezado.CheckBoxImageChecked = CType(resources.GetObject("Chk_Primera_Fila_Es_encabezado.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Primera_Fila_Es_encabezado.Checked = True
         Me.Chk_Primera_Fila_Es_encabezado.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_Primera_Fila_Es_encabezado.CheckValue = "Y"
@@ -137,24 +156,6 @@ Partial Class Frm_Importar_Compras_SII
         Me.Circular_Progres_Porc.Size = New System.Drawing.Size(49, 44)
         Me.Circular_Progres_Porc.Style = DevComponents.DotNetBar.eDotNetBarStyle.OfficeXP
         Me.Circular_Progres_Porc.TabIndex = 77
-        '
-        'Circular_Progres_Val
-        '
-        Me.Circular_Progres_Val.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Circular_Progres_Val.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Circular_Progres_Val.FocusCuesEnabled = False
-        Me.Circular_Progres_Val.Location = New System.Drawing.Point(-1, 53)
-        Me.Circular_Progres_Val.Name = "Circular_Progres_Val"
-        Me.Circular_Progres_Val.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
-        Me.Circular_Progres_Val.ProgressColor = System.Drawing.Color.SteelBlue
-        Me.Circular_Progres_Val.ProgressTextFormat = "{0}"
-        Me.Circular_Progres_Val.ProgressTextVisible = True
-        Me.Circular_Progres_Val.Size = New System.Drawing.Size(54, 44)
-        Me.Circular_Progres_Val.Style = DevComponents.DotNetBar.eDotNetBarStyle.OfficeXP
-        Me.Circular_Progres_Val.TabIndex = 76
         '
         'Bar1
         '

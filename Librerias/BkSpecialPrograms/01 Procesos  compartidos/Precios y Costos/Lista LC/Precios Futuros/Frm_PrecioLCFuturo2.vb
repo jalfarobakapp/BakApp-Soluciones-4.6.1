@@ -13,7 +13,7 @@ Public Class Frm_PrecioLCFuturo2
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.None, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
     End Sub
 
@@ -24,10 +24,14 @@ Public Class Frm_PrecioLCFuturo2
         Sb_Llenar_Combos()
         Sb_ActualizarGrilla()
 
+        CmbLista.Enabled = False
+
     End Sub
 
 
     Sub Sb_ActualizarGrilla()
+
+        Dim _FechaServidor As String = Format(FechaDelServidor, "yyyyMMdd")
 
         Consulta_sql = "Select Cast(0 As Bit) As Chk,LcDet.Id,Id_Enc,Lista,NombreLista,LcDet.Codigo,NOKOPR,PrecioUd1,PrecioUd2,LcEnt.FechaCreacion,LcEnt.FechaProgramada," &
                        "LcEnt.FechaAplica,LcEnt.Funcionario,EcuacionUd1,EcuacionUd2,Rtu,MargenPorc,VarMcosto,VarPm,VarUc,VarFlete,VarIva,VarIla,VarNetoDigit," &
@@ -36,7 +40,8 @@ Public Class Frm_PrecioLCFuturo2
                        "Inner Join " & _Global_BaseBk & "Zw_ListaLC_Programadas LcEnt On LcEnt.Id = LcDet.Id_Enc" & vbCrLf &
                        "Left Join MAEPR On KOPR = LcDet.Codigo" & vbCrLf &
                        "Where LcEnt.Activo = 1 And LcDet.Eliminada = 0 And Lista = '" & CmbLista.SelectedValue & "'" & vbCrLf &
-                       "Order By Id_Enc,LcDet.Codigo,LcEnt.FechaProgramada"
+                       "And LcEnt.FechaProgramada > '" & _FechaServidor & "'" & vbCrLf &
+                       "Order By LcEnt.FechaProgramada,Id_Enc,LcDet.Codigo"
         _Tbl_PreciosFuturo = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla
@@ -66,17 +71,17 @@ Public Class Frm_PrecioLCFuturo2
             .Columns("NOKOPR").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Lista").Width = 30
-            .Columns("Lista").HeaderText = "LP"
-            .Columns("Lista").Visible = True
-            .Columns("Lista").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
+            '.Columns("Lista").Width = 30
+            '.Columns("Lista").HeaderText = "LP"
+            '.Columns("Lista").Visible = True
+            '.Columns("Lista").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
 
-            .Columns("NombreLista").Width = 150
-            .Columns("NombreLista").HeaderText = "Nombre Lista"
-            .Columns("NombreLista").Visible = True
-            .Columns("NombreLista").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
+            '.Columns("NombreLista").Width = 150
+            '.Columns("NombreLista").HeaderText = "Nombre Lista"
+            '.Columns("NombreLista").Visible = True
+            '.Columns("NombreLista").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
 
             .Columns("Funcionario").Width = 30
             .Columns("Funcionario").HeaderText = "Fun"
@@ -104,11 +109,11 @@ Public Class Frm_PrecioLCFuturo2
             .Columns("PrecioUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("PrecioUd1").Visible = True
 
-            .Columns("PrecioUd2").Width = 80
-            .Columns("PrecioUd2").HeaderText = "Precio Ud2"
-            .Columns("PrecioUd2").DefaultCellStyle.Format = "$ ###,##"
-            .Columns("PrecioUd2").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("PrecioUd2").Visible = True
+            '.Columns("PrecioUd2").Width = 80
+            '.Columns("PrecioUd2").HeaderText = "Precio Ud2"
+            '.Columns("PrecioUd2").DefaultCellStyle.Format = "$ ###,##"
+            '.Columns("PrecioUd2").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            '.Columns("PrecioUd2").Visible = True
 
             .Columns("Cantidad").Width = 60
             .Columns("Cantidad").HeaderText = "Cant.Imp"
@@ -586,6 +591,15 @@ Public Class Frm_PrecioLCFuturo2
         '_FechaServidor = DateAdd(DateInterval.Day, 1, _FechaServidor)
 
         Sb_Grabar_Listas_Programadas(_FechaServidor)
+
+    End Sub
+
+    Private Sub Btn_CambiarLista_Click(sender As Object, e As EventArgs) Handles Btn_CambiarLista.Click
+
+        If Fx_Tiene_Permiso(Me, "Pre0025") Then
+            Btn_CambiarLista.Enabled = False
+            CmbLista.Enabled = True
+        End If
 
     End Sub
 

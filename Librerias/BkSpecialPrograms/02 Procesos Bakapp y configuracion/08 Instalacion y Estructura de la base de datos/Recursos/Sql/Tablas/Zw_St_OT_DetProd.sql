@@ -20,6 +20,11 @@ CREATE TABLE [dbo].[Zw_St_OT_DetProd](
 	[Desde_COV]             [bit]           NOT NULL DEFAULT (0),
 	[Idmaeedo_Cov]          [int]           NOT NULL DEFAULT (0),
 	[Idmaeddo_Cov]          [int]           NOT NULL DEFAULT (0),
+    [TieneReceta]           [bit]           NOT NULL DEFAULT (0),
+    [EsServicio]            [bit]           NOT NULL DEFAULT (0),
+    [SemillaPadre]          [bit]           NOT NULL DEFAULT (0),
+    [EsHijo]                [bit]           NOT NULL DEFAULT (0),
+    [PorcIva]               [bit]           NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_St_OT_DetProd] PRIMARY KEY CLUSTERED 
 (
 	[Semilla] ASC

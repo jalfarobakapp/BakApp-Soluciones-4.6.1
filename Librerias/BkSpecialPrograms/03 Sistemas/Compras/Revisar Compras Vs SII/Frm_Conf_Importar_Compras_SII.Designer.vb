@@ -179,11 +179,13 @@ Partial Class Frm_Conf_Importar_Compras_SII
         '
         '
         Me.Rdb_12_Diciembre.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_12_Diciembre.CheckBoxImageChecked = CType(resources.GetObject("Rdb_12_Diciembre.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_12_Diciembre.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_12_Diciembre.FocusCuesEnabled = False
         Me.Rdb_12_Diciembre.ForeColor = System.Drawing.Color.Black
         Me.Rdb_12_Diciembre.Location = New System.Drawing.Point(103, 108)
         Me.Rdb_12_Diciembre.Name = "Rdb_12_Diciembre"
-        Me.Rdb_12_Diciembre.Size = New System.Drawing.Size(94, 19)
+        Me.Rdb_12_Diciembre.Size = New System.Drawing.Size(94, 20)
         Me.Rdb_12_Diciembre.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_12_Diciembre.TabIndex = 2
         Me.Rdb_12_Diciembre.Text = "Diciembre"
@@ -195,11 +197,13 @@ Partial Class Frm_Conf_Importar_Compras_SII
         '
         '
         Me.Rdb_06_Junio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_06_Junio.CheckBoxImageChecked = CType(resources.GetObject("Rdb_06_Junio.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_06_Junio.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_06_Junio.FocusCuesEnabled = False
         Me.Rdb_06_Junio.ForeColor = System.Drawing.Color.Black
         Me.Rdb_06_Junio.Location = New System.Drawing.Point(3, 108)
         Me.Rdb_06_Junio.Name = "Rdb_06_Junio"
-        Me.Rdb_06_Junio.Size = New System.Drawing.Size(94, 19)
+        Me.Rdb_06_Junio.Size = New System.Drawing.Size(94, 20)
         Me.Rdb_06_Junio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_06_Junio.TabIndex = 2
         Me.Rdb_06_Junio.Text = "Junio"
@@ -211,7 +215,9 @@ Partial Class Frm_Conf_Importar_Compras_SII
         '
         '
         Me.Rdb_11_Noviembre.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_11_Noviembre.CheckBoxImageChecked = CType(resources.GetObject("Rdb_11_Noviembre.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_11_Noviembre.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_11_Noviembre.FocusCuesEnabled = False
         Me.Rdb_11_Noviembre.ForeColor = System.Drawing.Color.Black
         Me.Rdb_11_Noviembre.Location = New System.Drawing.Point(103, 87)
         Me.Rdb_11_Noviembre.Name = "Rdb_11_Noviembre"
@@ -227,7 +233,9 @@ Partial Class Frm_Conf_Importar_Compras_SII
         '
         '
         Me.Rdb_05_Mayo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_05_Mayo.CheckBoxImageChecked = CType(resources.GetObject("Rdb_05_Mayo.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_05_Mayo.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_05_Mayo.FocusCuesEnabled = False
         Me.Rdb_05_Mayo.ForeColor = System.Drawing.Color.Black
         Me.Rdb_05_Mayo.Location = New System.Drawing.Point(3, 87)
         Me.Rdb_05_Mayo.Name = "Rdb_05_Mayo"
@@ -243,7 +251,9 @@ Partial Class Frm_Conf_Importar_Compras_SII
         '
         '
         Me.Rdb_10_Octubre.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_10_Octubre.CheckBoxImageChecked = CType(resources.GetObject("Rdb_10_Octubre.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_10_Octubre.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_10_Octubre.FocusCuesEnabled = False
         Me.Rdb_10_Octubre.ForeColor = System.Drawing.Color.Black
         Me.Rdb_10_Octubre.Location = New System.Drawing.Point(103, 66)
         Me.Rdb_10_Octubre.Name = "Rdb_10_Octubre"
@@ -259,7 +269,9 @@ Partial Class Frm_Conf_Importar_Compras_SII
         '
         '
         Me.Rdb_04_Abril.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_04_Abril.CheckBoxImageChecked = CType(resources.GetObject("Rdb_04_Abril.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_04_Abril.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_04_Abril.FocusCuesEnabled = False
         Me.Rdb_04_Abril.ForeColor = System.Drawing.Color.Black
         Me.Rdb_04_Abril.Location = New System.Drawing.Point(3, 66)
         Me.Rdb_04_Abril.Name = "Rdb_04_Abril"
@@ -275,7 +287,9 @@ Partial Class Frm_Conf_Importar_Compras_SII
         '
         '
         Me.Rdb_09_Septiembre.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_09_Septiembre.CheckBoxImageChecked = CType(resources.GetObject("Rdb_09_Septiembre.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_09_Septiembre.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_09_Septiembre.FocusCuesEnabled = False
         Me.Rdb_09_Septiembre.ForeColor = System.Drawing.Color.Black
         Me.Rdb_09_Septiembre.Location = New System.Drawing.Point(103, 45)
         Me.Rdb_09_Septiembre.Name = "Rdb_09_Septiembre"
@@ -291,7 +305,9 @@ Partial Class Frm_Conf_Importar_Compras_SII
         '
         '
         Me.Rdb_03_Marzo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_03_Marzo.CheckBoxImageChecked = CType(resources.GetObject("Rdb_03_Marzo.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_03_Marzo.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_03_Marzo.FocusCuesEnabled = False
         Me.Rdb_03_Marzo.ForeColor = System.Drawing.Color.Black
         Me.Rdb_03_Marzo.Location = New System.Drawing.Point(3, 45)
         Me.Rdb_03_Marzo.Name = "Rdb_03_Marzo"
@@ -307,7 +323,9 @@ Partial Class Frm_Conf_Importar_Compras_SII
         '
         '
         Me.Rdb_08_Agosto.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_08_Agosto.CheckBoxImageChecked = CType(resources.GetObject("Rdb_08_Agosto.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_08_Agosto.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_08_Agosto.FocusCuesEnabled = False
         Me.Rdb_08_Agosto.ForeColor = System.Drawing.Color.Black
         Me.Rdb_08_Agosto.Location = New System.Drawing.Point(103, 24)
         Me.Rdb_08_Agosto.Name = "Rdb_08_Agosto"
@@ -323,7 +341,9 @@ Partial Class Frm_Conf_Importar_Compras_SII
         '
         '
         Me.Rdb_02_Febrero.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_02_Febrero.CheckBoxImageChecked = CType(resources.GetObject("Rdb_02_Febrero.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_02_Febrero.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_02_Febrero.FocusCuesEnabled = False
         Me.Rdb_02_Febrero.ForeColor = System.Drawing.Color.Black
         Me.Rdb_02_Febrero.Location = New System.Drawing.Point(3, 24)
         Me.Rdb_02_Febrero.Name = "Rdb_02_Febrero"
@@ -339,7 +359,9 @@ Partial Class Frm_Conf_Importar_Compras_SII
         '
         '
         Me.Rdb_07_Julio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_07_Julio.CheckBoxImageChecked = CType(resources.GetObject("Rdb_07_Julio.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_07_Julio.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_07_Julio.FocusCuesEnabled = False
         Me.Rdb_07_Julio.ForeColor = System.Drawing.Color.Black
         Me.Rdb_07_Julio.Location = New System.Drawing.Point(103, 3)
         Me.Rdb_07_Julio.Name = "Rdb_07_Julio"
@@ -355,7 +377,9 @@ Partial Class Frm_Conf_Importar_Compras_SII
         '
         '
         Me.Rdb_01_Enero.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_01_Enero.CheckBoxImageChecked = CType(resources.GetObject("Rdb_01_Enero.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_01_Enero.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_01_Enero.FocusCuesEnabled = False
         Me.Rdb_01_Enero.ForeColor = System.Drawing.Color.Black
         Me.Rdb_01_Enero.Location = New System.Drawing.Point(3, 3)
         Me.Rdb_01_Enero.Name = "Rdb_01_Enero"

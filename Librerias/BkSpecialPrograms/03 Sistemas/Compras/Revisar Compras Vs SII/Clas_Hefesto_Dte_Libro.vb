@@ -767,7 +767,7 @@ Public Class Clas_Hefesto_Dte_Libro
                 _Razon_Social = Replace(_Fila.Item("RazonSocial"), "'", "")
                 _Folio = _Fila.Item("Folio")
 
-                If _Folio = 176723 Then
+                If _Folio = 24420213 Then
                     Dim a = 0
                 End If
                 'If _Compras_Pendientes Then
@@ -829,8 +829,17 @@ Public Class Clas_Hefesto_Dte_Libro
                     _Endo = Trim(_RowProveedor.Item("KOEN"))
                 End If
 
-                Consulta_sql = "Select Top 1 * From MAEEDO" & vbCrLf &
+                If _Tido = "DIN" Then
+                    _Endo = "60805000"
+                    Consulta_sql = "Select Top 1 * From MAEEDO" & vbCrLf &
+                               "Where EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "' And ENDO = '" & _Endo & "' And TIDOELEC = 0"
+                    _Monto_Neto = 0
+                    _Monto_Total = _Monto_Iva_Recuperable
+                Else
+                    Consulta_sql = "Select Top 1 * From MAEEDO" & vbCrLf &
                                "Where EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "' And ENDO = '" & _Endo & "' And TIDOELEC = 1"
+                End If
+
                 Dim _RowMaeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                 Dim _Idmaeedo As Integer = 0
@@ -946,8 +955,12 @@ Public Class Clas_Hefesto_Dte_Libro
                 Return "BLC"
             Case 52 '"GDV", "GDP"
                 Return "GRC"
+            Case 56
+                Return "FDC"
             Case 61
                 Return "NCC"
+            Case 914
+                Return "DIN"
             Case Else
                 Return "???"
         End Select

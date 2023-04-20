@@ -5398,6 +5398,8 @@ Public Class Frm_Formulario_Documento
 
             Dim _Total As Double
 
+            Dim _Idmaeddo_Dori As Integer = _Fila.Cells("Idmaeddo_Dori").Value
+
             Dim _Decimal = 2
 
             If _UnTrans = 1 Then
@@ -5446,7 +5448,7 @@ Public Class Frm_Formulario_Documento
 
                     If _Ecuacion.Contains("[") Then
 
-                        Dim _Idmaeddo_Dori As Integer = _Fila.Cells("Idmaeddo_Dori").Value
+                        'Dim _Idmaeddo_Dori As Integer = _Fila.Cells("Idmaeddo_Dori").Value
 
                         If Not CBool(_Idmaeddo_Dori) Then
 
@@ -5496,6 +5498,7 @@ Public Class Frm_Formulario_Documento
             Dim _DescuentoValor_Anterior As Double = .Cells("DescuentoValor_Anterior").Value
             Dim _Recargo As Double
 
+            'Dim _Idmaeddo_Dori As Integer = .Cells("Idmaeddo_Dori").Value
             Dim _Idmaeedo_Dori As Integer = .Cells("Idmaeedo_Dori").Value
 
             If Convert.ToBoolean(_Prct) Then
@@ -9181,7 +9184,7 @@ Public Class Frm_Formulario_Documento
 
                     If CBool(_Cantidad) And CBool(_Precio) Then
 
-                        If _Cabeza = "Cantidad" Then
+                        If _Cabeza = "Cantidad" And _Idmaeddo_Dori = 0 Then
 
                             If Not CBool(_TblMaedtli.Rows.Count) Then
                                 Sb_Traer_Descuentos_Seteados_Desde_Lista(_Fila)
@@ -17100,7 +17103,7 @@ Public Class Frm_Formulario_Documento
                         ' Se ingresa el tipo de moneda del documento de origen
                         _New_Fila.Cells("Moneda").Value = _Moneda_Det
                         _New_Fila.Cells("Tipo_Moneda").Value = _Tipo_Moneda_Det
-                        _New_Fila.Cells("Tipo_Cambio").Value = _Tipo_Cambio_Det
+                        _New_Fila.Cells("Tipo_Cambio").Value = _TblEncabezado.Rows(0).Item("Valor_Dolar")
                         _New_Fila.Cells("Tasadorig").Value = _Tipo_Cambio_Det
 
                     End If

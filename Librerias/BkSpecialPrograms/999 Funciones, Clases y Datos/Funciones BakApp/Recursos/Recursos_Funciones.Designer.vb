@@ -22,7 +22,7 @@ Namespace My.Resources
     '''<summary>
     '''  Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
     Friend Class Recursos_Funciones
@@ -79,6 +79,21 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Colores_Documentos() As String
             Get
                 Return ResourceManager.GetString("Colores_Documentos", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a Delete Zw_TablaDeCaracterizaciones Where Tabla = &apos;SALIDAS_LPT&apos;
+        '''
+        '''-- SALIDAS LPT
+        '''Insert Into Zw_TablaDeCaracterizaciones(Tabla,DescripcionTabla,CodigoTabla,NombreTabla) Values (&apos;SALIDAS_LPT&apos;,&apos;Salida Lpt1&apos;,&apos;LPT1&apos;,&apos;LPT1&apos;) 
+        '''Insert Into Zw_TablaDeCaracterizaciones(Tabla,DescripcionTabla,CodigoTabla,NombreTabla) Values (&apos;SALIDAS_LPT&apos;,&apos;Salida Lpt2&apos;,&apos;LPT2&apos;,&apos;LPT2&apos;) 
+        '''Insert Into Zw_TablaDeCaracterizaciones(Tabla,DescripcionTabla,CodigoTabla,NombreTabla) Values (&apos;SALIDAS_LPT&apos;,&apos;Salida Lpt3&apos;,&apos;LPT3&apos;,&apos;LPT3&apos;) 
+        '''Insert  [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Salidas_LPT() As String
+            Get
+                Return ResourceManager.GetString("Salidas_LPT", resourceCulture)
             End Get
         End Property
     End Class
