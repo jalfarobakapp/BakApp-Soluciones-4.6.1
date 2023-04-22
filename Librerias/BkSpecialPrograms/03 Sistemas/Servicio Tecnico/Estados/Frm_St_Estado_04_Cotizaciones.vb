@@ -1,7 +1,6 @@
 ﻿Imports DevComponents.DotNetBar
 'Imports Lib_Bakapp_VarClassFunc
 'Imports BkSpecialPrograms
-Imports System.Data.SqlClient
 
 
 Public Class Frm_St_Estado_04_Cotizaciones
@@ -56,6 +55,10 @@ Public Class Frm_St_Estado_04_Cotizaciones
         InsertarBotonenGrilla(Grilla, "Btn_Ver", "Ver", "Ver", 0, _Tipo_Boton.Boton)
         InsertarBotonenGrilla(Grilla, "Btn_Accion", "Cambiar estado", "", 1, _Tipo_Boton.Boton)
         Sb_Actualizar_Grilla()
+
+        If _Accion = Accion.Nuevo Then
+            Btn_EditarPresupuesto.Visible = True
+        End If
 
         If _Accion = Accion.Editar Then
 
@@ -285,7 +288,6 @@ Public Class Frm_St_Estado_04_Cotizaciones
 
                 ' ACTUALIZAR ENCABEZADO DE DOCUMENTO
 
-
                 Consulta_sql += "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set " &
                                  "CodEstado = 'R'" & vbCrLf &
                                  "Where Id_Ot  = " & _Id_Ot & vbCrLf & vbCrLf
@@ -295,7 +297,6 @@ Public Class Frm_St_Estado_04_Cotizaciones
                 Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_OT_Estados " &
                                "(Id_Ot,CodEstado,Fecha_Fijacion,CodFuncionario,NomFuncionario) Values " &
                                "(" & _Id_Ot & ",'C',GetDate(),'" & FUNCIONARIO & "','" & Nombre_funcionario_activo & "')" & vbCrLf & vbCrLf
-
 
                 If _Estado_Fijar = Estado_Fijar.Aceptado Then
 
@@ -321,19 +322,25 @@ Public Class Frm_St_Estado_04_Cotizaciones
                         Dim _Iva_Linea = _Fila_Cov.Item("VAIVLI")
                         Dim _Total_Linea = _Fila_Cov.Item("VABRLI")
 
-                        Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_OT_DetProd (Id_Ot,Utilizado,Codigo,Descripcion," &
-                                       "Cantidad,Cantidad_Utilizada,Ud,Un," &
-                                       "CantUd1,CantUd2,Precio,Neto_Linea,Iva_Linea,Total_Linea,Desde_COV,Idmaeedo_Cov,Idmaeddo_Cov) Values " &
-                                       "(" & _Id_Ot & ",0,'" & _Codigo & "','" & _Descripcion &
-                                       "'," & De_Num_a_Tx_01(_Cantidad, False, 5) &
-                                       "," & De_Num_a_Tx_01(_Cantidad, False, 5) &
-                                       ",'" & _Ud & "'," & _Un &
-                                       "," & De_Num_a_Tx_01(_CantUd1, False, 5) &
-                                       "," & De_Num_a_Tx_01(_CantUd2, False, 5) &
-                                       "," & De_Num_a_Tx_01(_Precio, False, 5) &
-                                       "," & De_Num_a_Tx_01(_Neto_Linea, False, 5) &
-                                       "," & De_Num_a_Tx_01(_Iva_Linea, False, 5) &
-                                       "," & De_Num_a_Tx_01(_Total_Linea, False, 5) & ",1," & _Idmaeedo & "," & _Idmaeddo & ")" & vbCrLf
+                        Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_OT_DetProd", "Idmaeddo_Cov = " & _Idmaeddo)
+
+                        If Not CBool(_Reg) Then
+
+                            Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_OT_DetProd (Id_Ot,Utilizado,Codigo,Descripcion," &
+                                               "Cantidad,Cantidad_Utilizada,Ud,Un," &
+                                               "CantUd1,CantUd2,Precio,Neto_Linea,Iva_Linea,Total_Linea,Desde_COV,Idmaeedo_Cov,Idmaeddo_Cov) Values " &
+                                               "(" & _Id_Ot & ",0,'" & _Codigo & "','" & _Descripcion &
+                                               "'," & De_Num_a_Tx_01(_Cantidad, False, 5) &
+                                               "," & De_Num_a_Tx_01(_Cantidad, False, 5) &
+                                               ",'" & _Ud & "'," & _Un &
+                                               "," & De_Num_a_Tx_01(_CantUd1, False, 5) &
+                                               "," & De_Num_a_Tx_01(_CantUd2, False, 5) &
+                                               "," & De_Num_a_Tx_01(_Precio, False, 5) &
+                                               "," & De_Num_a_Tx_01(_Neto_Linea, False, 5) &
+                                               "," & De_Num_a_Tx_01(_Iva_Linea, False, 5) &
+                                               "," & De_Num_a_Tx_01(_Total_Linea, False, 5) & ",1," & _Idmaeedo & "," & _Idmaeddo & ")" & vbCrLf
+
+                        End If
 
                     Next
 
@@ -654,13 +661,13 @@ Public Class Frm_St_Estado_04_Cotizaciones
             MessageBoxEx.Show(Me, "Presupuesto marcada como [ACEPTADO] correctamente", "Aceptar", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
 
-        If MessageBoxEx.Show(Me, "¿Desea Fijar el estado?", "Aceptar y fijar estado", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
-            Call Btn_Fijar_Estado_Click(Nothing, Nothing)
-        Else
-            Btn_Agregar_Cotizacion.Enabled = False
-            Sb_Marcar_Grilla()
-            Me.Refresh()
-        End If
+        'If MessageBoxEx.Show(Me, "¿Desea Fijar el estado?", "Aceptar y fijar estado", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
+        Call Btn_Fijar_Estado_Click(Nothing, Nothing)
+        'Else
+        'Btn_Agregar_Cotizacion.Enabled = False
+        'Sb_Marcar_Grilla()
+        'Me.Refresh()
+        'End If
 
     End Sub
 
@@ -691,12 +698,21 @@ Public Class Frm_St_Estado_04_Cotizaciones
 
         End If
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Doc_Asociados Set Estado = 'R' Where Idmaeedo = " & _Idmaeedo
-        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-            MessageBoxEx.Show(Me, "Presupuesto marcada como [RECHAZADO] correctamente", "Rechazar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        'If Fx_Revisar_Documento_Cerrado(_Idmaeedo, False) Then
+        Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo
+        Dim _Tbl_Maeddo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        Dim Cerrar_Doc As New Clas_Cerrar_Documento
+
+        If Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo, _Tbl_Maeddo) Then
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Doc_Asociados Set Estado = 'R' Where Idmaeedo = " & _Idmaeedo
+            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                MessageBoxEx.Show(Me, "Presupuesto marcada como [RECHAZADO] correctamente", "Rechazar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
         End If
 
         Btn_Agregar_Cotizacion.Enabled = True
+        Btn_EditarPresupuesto.Visible = True
         Sb_Marcar_Grilla()
         Me.Refresh()
 
@@ -1175,43 +1191,45 @@ Public Class Frm_St_Estado_04_Cotizaciones
 
             End If
 
-
-            'Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
-            'Dim _RowDocumento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-            'With _RowDocumento
-
-            '    Dim _Id_Ot = _Row_Encabezado.Item("Id_Ot")
-            '    Dim _Idmaeedo = .Item("IDMAEEDO")
-            '    'Dim _Tido = .Item("TIDO")
-            '    Dim _Nudo = .Item("NUDO")
-            '    Dim _Feemdo = .Item("FEEMDO")
-
-            '    Dim NewFila As DataRow
-            '    NewFila = _TblCotizaciones.NewRow
-            '    With NewFila
-
-            '        .Item("Id_Ot") = _Id_Ot
-            '        .Item("Idmaeedo") = _Idmaeedo
-            '        .Item("Tido") = _Tido
-            '        .Item("Nudo") = _Nudo
-            '        .Item("Estado") = "E"
-            '        .Item("Estado_D") = "En Evaluación..."
-            '        .Item("Fecha_Doc") = _Feemdo
-            '        .Item("Fecha_Asociacion") = FechaDelServidor()
-            '        .Item("Seleccionado") = True
-            '        .Item("Garantia") = False
-            '        .Item("Documento_Externo") = False
-
-            '        _TblCotizaciones.Rows.Add(NewFila)
-
-            '    End With
-
-            '    Sb_Marcar_Grilla()
-
-            'End With
-
         End If
+
+    End Sub
+
+    Private Sub Btn_EditarPresupuesto_Click(sender As Object, e As EventArgs) Handles Btn_EditarPresupuesto.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+
+        Dim _Id = _Fila.Cells("Idmaeedo").Value
+
+        For Each _Row As DataRow In _TblCotizaciones.Rows
+
+            Dim _Idmaeedo = _Row.Item("Idmaeedo")
+            Dim _Estado = _Row.Item("Estado")
+            Dim _Tido As String = _Row.Item("TIDO")
+            _Tido = _Sql.Fx_Trae_Dato("TABTIDO", "NOTIDO", "TIDO = '" & _Tido & "'")
+
+            If _Estado = "E" Then
+                MessageBoxEx.Show(Me, "HAY OTRA " & _Tido.ToUpper.Trim & " EN EVALUACION." & vbCrLf &
+                                  "NO PUEDE EDITAR EL PRESUPUESTO, DEBE RECHAZAR LA COTIZACION ANTERIOR PARA PODER HACER ESTA GESTION", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            ElseIf _Estado = "A" Then
+                MessageBoxEx.Show(Me, "Hay otra " & _Tido.ToUpper.Trim & " que ya esta aceptada." & vbCrLf &
+                          "NO PUEDE EDITAR EL PRESUPUESTO, DEBE RECHAZAR LA COTIZACION ANTERIOR PARA PODER HACER ESTA GESTION", "Validación",
+                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+        Next
+
+        Dim Fm0 As New Frm_St_Estado_03_Presupuesto2(_Id_Ot, Frm_St_Estado_03_Presupuesto.Accion.Editar)
+        Fm0.Pro_DsDocumento = _DsDocumento
+        Fm0.ShowDialog(Me)
+        If Fm0.Pro_Grabar Then
+            Sb_Actualizar_Grilla()
+        End If
+        Fm0.Dispose()
 
     End Sub
 

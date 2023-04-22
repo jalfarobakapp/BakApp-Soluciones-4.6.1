@@ -166,8 +166,8 @@
               <xs:element name="MinNetoDesp" msprop:Generator_ColumnPropNameInTable="MinNetoDespColumn" msprop:Generator_ColumnPropNameInRow="MinNetoDesp" msprop:Generator_UserColumnName="MinNetoDesp" msprop:Generator_ColumnVarNameInTable="columnMinNetoDesp" type="xs:double" minOccurs="0" />
               <xs:element name="RevFincred" msprop:Generator_ColumnPropNameInTable="RevFincredColumn" msprop:nullValue="_throw" msprop:Generator_ColumnPropNameInRow="RevFincred" msprop:Generator_UserColumnName="RevFincred" msprop:Generator_ColumnVarNameInTable="columnRevFincred" type="xs:boolean" default="false" minOccurs="0" />
               <xs:element name="IdFincred" msprop:Generator_ColumnPropNameInTable="IdFincredColumn" msprop:Generator_ColumnPropNameInRow="IdFincred" msprop:Generator_UserColumnName="IdFincred" msprop:Generator_ColumnVarNameInTable="columnIdFincred" type="xs:int" default="0" minOccurs="0" />
-              <xs:element name="MontoFincred" msprop:Generator_UserColumnName="MontoFincred" msprop:Generator_ColumnPropNameInTable="MontoFincredColumn" msprop:Generator_ColumnPropNameInRow="MontoFincred" msprop:Generator_ColumnVarNameInTable="columnMontoFincred" type="xs:double" default="0" minOccurs="0" />
-              <xs:element name="RevFincredEnt" msprop:Generator_ColumnPropNameInRow="RevFincredEnt" msprop:Generator_ColumnPropNameInTable="RevFincredEntColumn" msprop:Generator_ColumnVarNameInTable="columnRevFincredEnt" msprop:Generator_UserColumnName="RevFincredEnt" type="xs:boolean" default="false" minOccurs="0" />
+              <xs:element name="MontoFincred" msprop:Generator_ColumnPropNameInTable="MontoFincredColumn" msprop:Generator_ColumnPropNameInRow="MontoFincred" msprop:Generator_UserColumnName="MontoFincred" msprop:Generator_ColumnVarNameInTable="columnMontoFincred" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="RevFincredEnt" msprop:Generator_UserColumnName="RevFincredEnt" msprop:Generator_ColumnPropNameInTable="RevFincredEntColumn" msprop:Generator_ColumnPropNameInRow="RevFincredEnt" msprop:Generator_ColumnVarNameInTable="columnRevFincredEnt" type="xs:boolean" default="false" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -298,6 +298,8 @@
               <xs:element name="Pesoubic" msprop:Generator_ColumnPropNameInTable="PesoubicColumn" msprop:Generator_ColumnPropNameInRow="Pesoubic" msprop:Generator_UserColumnName="Pesoubic" msprop:Generator_ColumnVarNameInTable="columnPesoubic" type="xs:double" minOccurs="0" />
               <xs:element name="SumaKilos" msprop:Generator_ColumnPropNameInTable="SumaKilosColumn" msprop:Generator_ColumnPropNameInRow="SumaKilos" msprop:Generator_UserColumnName="SumaKilos" msprop:Generator_ColumnVarNameInTable="columnSumaKilos" type="xs:double" minOccurs="0" />
               <xs:element name="CostoLista" msprop:Generator_ColumnPropNameInTable="CostoListaColumn" msprop:Generator_ColumnPropNameInRow="CostoLista" msprop:Generator_UserColumnName="CostoLista" msprop:Generator_ColumnVarNameInTable="columnCostoLista" type="xs:double" minOccurs="0" />
+              <xs:element name="Id_OtSvr" msprop:Generator_ColumnPropNameInRow="Id_OtSvr" msprop:Generator_ColumnPropNameInTable="Id_OtSvrColumn" msprop:Generator_ColumnVarNameInTable="columnId_OtSvr" msprop:Generator_UserColumnName="Id_OtSvr" type="xs:int" default="0" minOccurs="0" />
+              <xs:element name="Semilla_Svr" msprop:Generator_ColumnPropNameInRow="Semilla_Svr" msprop:Generator_ColumnPropNameInTable="Semilla_SvrColumn" msprop:Generator_ColumnVarNameInTable="columnSemilla_Svr" msprop:Generator_UserColumnName="Semilla_Svr" type="xs:int" default="0" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

@@ -1199,12 +1199,29 @@ Public Class Clase_Crear_Documento
                             Comando.ExecuteNonQuery()
 
                         End If
+
                         '*************************************************************************************************
 
                         If _Sql.Fx_Exite_Campo("MAEDDO", "FEERLIMODI") Then
 
                             Consulta_sql = "UPDATE MAEDDO SET FEERLIMODI = '" & _Feerli & "'" & vbCrLf &
                                            "WHERE IDMAEDDO=" & _Idmaeddo
+
+                            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                            Comando.Transaction = myTrans
+                            Comando.ExecuteNonQuery()
+
+                        End If
+
+                        ' SERVICIO TECNICO BAKAPP *************************************************************************************************
+
+                        Dim _Id_OtSvr As Integer = .Item("Id_OtSvr")
+                        Dim _Semilla_Svr As Integer = .Item("Semilla_Svr")
+
+                        If CBool(_Id_OtSvr) And CBool(_Semilla_Svr) Then
+
+                            Consulta_sql = "Update  " & _Global_BaseBk & "Zw_St_OT_DetProd Set Idmaeedo_Cov = " & _Idmaeedo & ", Idmaeddo_Cov = " & _Idmaeddo & vbCrLf &
+                                           "Where Id_Ot = " & _Id_OtSvr & " And Semilla = " & _Semilla_Svr
 
                             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                             Comando.Transaction = myTrans

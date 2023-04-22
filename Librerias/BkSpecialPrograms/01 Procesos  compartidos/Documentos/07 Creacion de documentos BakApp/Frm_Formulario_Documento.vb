@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Threading
+Imports BkSpecialPrograms.Bk_Comporamiento_UdMedidas
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Formulario_Documento
@@ -1797,6 +1798,9 @@ Public Class Frm_Formulario_Documento
             .Item("PrecioListaUd2_Prov") = 0
             .Item("Pesoubic") = 0
             .Item("SumaKilos") = 0
+
+            .Item("Id_OtSvr") = 0
+            .Item("Semilla_Svr") = 0
 
             _TblDetalle.Rows.Add(NewFila)
 
@@ -4220,7 +4224,7 @@ Public Class Frm_Formulario_Documento
                 Return
             End If
 
-            Sb_Traer_Producto_Grilla(_Fila, _RowProducto, False)
+            Sb_Traer_Producto_Grilla(_Fila, _RowProducto, False,,,, True)
 
             Dim _Potencia As Double = _Fila.Cells("Potencia").Value
 
@@ -4264,9 +4268,10 @@ Public Class Frm_Formulario_Documento
                                  _RowProducto As DataRow,
                                  _Desde_Otro_Documento As Boolean,
                                  Optional _UnTrans As Integer = 1,
-                                 Optional _Mostrar_Oferta As Boolean = True)
+                                 Optional _Mostrar_Oferta As Boolean = True,
+                                 Optional _CodAlternativo As String = "",
+                                 Optional _RevisarNMarca As Boolean = False)
 
-        Dim _CodAlternativo As String = String.Empty
         Dim _Codigo As String = _RowProducto.Item("KOPR")
         Dim _Descripcion As String = _Fila.Cells("Descripcion").Value
         Dim _Descripcion_Ori As String = _RowProducto.Item("NOKOPR").ToString.Trim
@@ -4427,6 +4432,81 @@ Public Class Frm_Formulario_Documento
         Dim _UdTrans As String
         Dim _EcuacionCosto As String
 
+        Dim _Nmarca As String = NuloPorNro(_RowProducto.Item("NMARCA").ToString.Trim, "")
+
+        If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Compra Then
+
+            Dim _Reg As Boolean
+            Dim _Proveedor As String
+
+            If (_RowEntidad_Despacho Is Nothing) Then
+                _Proveedor = _CodEntidad
+            Else
+                _Proveedor = _RowEntidad_Despacho.Item("KOEN")
+            End If
+
+            If String.IsNullOrEmpty(_CodAlternativo) Then
+                _CodAlternativo = Trim(_Sql.Fx_Trae_Dato("TABCODAL", "KOPRAL", "KOPR = '" & _Codigo & "' And KOEN = '" & _Proveedor & "'"))
+            End If
+
+            If Not String.IsNullOrEmpty(_CodAlternativo) Then
+                Consulta_sql = "Select Top 1 * From TABCODAL Where KOEN = '" & _Proveedor & "' And KOPRAL = '" & _CodAlternativo & "'"
+                Dim _RowTabcodal As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                _Nmarca = NuloPorNro(_RowTabcodal.Item("NMARCA").ToString.Trim, "")
+            End If
+
+            _Reg = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_ListaPreCosto",
+                                           "Lista = '" & _ListaPrecios &
+                                           "' And Proveedor = '" & _Proveedor &
+                                           "' And Codigo = '" & _Codigo & "'"))
+
+            If Not _Reg Then
+
+                _Reg = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_ListaPreCosto", "
+                                                       Lista = '" & _ListaPrecios & "' And Proveedor = '" & _Proveedor & "' 
+                                                        And Codigo = '" & _Codigo & "' And CodAlternativo = '" & _CodAlternativo & "'"))
+
+                If Not _Reg Then
+
+                    Consulta_sql = "INSERT INTO " & _Global_BaseBk & "Zw_ListaPreCosto (Lista,Proveedor,CodAlternativo,Codigo,
+                                    CostoUd1,CostoUd2,Rtu,FechaVigencia,Desc1,Desc2,Desc3,Desc4,Desc5,Flete) Values 
+                                    ('" & _ListaPrecios & "','" & _Proveedor & "','" & _CodAlternativo & "',
+                                    '" & _Codigo & "',0,0," & De_Num_a_Tx_01(_Rtu, False, 5) & ",GetDate(),0,0,0,0,0,0)"
+
+                    _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                End If
+
+            End If
+
+        End If
+
+        If _RevisarNMarca Then
+
+            Dim _Cl_CompUdMedidas As New Bk_Comporamiento_UdMedidas.Cl_CompUdMedidas
+            Dim _NNmarca As New Bk_Comporamiento_UdMedidas.Nmarca
+
+            _NNmarca = _Cl_CompUdMedidas.Fx_Decifra_Nmarca(_Nmarca)
+
+            If _Tido = "OCC" Or _Tido = "GRC" Or _Tido = "FCC" Then
+                If _NNmarca.Tratamiento = Cl_CompUdMedidas.Enum_Tratamientos_RTU.c01_Caso_normal_respetar_RTU_definida And
+                   (_NNmarca.Comportamiento = Cl_CompUdMedidas.Enum_Comportamiento.c03_Comprar_en_2da_Udad_Vender_1ra_Udad Or
+                    _NNmarca.Comportamiento = Cl_CompUdMedidas.Enum_Comportamiento.c05_Comprar_en_2da_Udad_Vender_2da_Udad) Then
+                    _UnTrans = 2
+                End If
+            End If
+
+            If _Tido = "BLV" Or _Tido = "FCV" Or _Tido = "NVV" Or _Tido = "GDV" Then
+                If _NNmarca.Tratamiento = Cl_CompUdMedidas.Enum_Tratamientos_RTU.c01_Caso_normal_respetar_RTU_definida And
+                   (_NNmarca.Comportamiento = Cl_CompUdMedidas.Enum_Comportamiento.c04_Comprar_en_1ra_Udad_Vender_2da_Udad Or
+                    _NNmarca.Comportamiento = Cl_CompUdMedidas.Enum_Comportamiento.c05_Comprar_en_2da_Udad_Vender_2da_Udad) Then
+                    _UnTrans = 2
+                End If
+            End If
+
+        End If
+
+
         If _UnTrans = 1 Then
             _UdTrans = _Ud1Linea
             If Not IsNothing(_RowCostos) Then _EcuacionCosto = NuloPorNro(_RowCostos.Item("ECUACION").ToString.Trim, "")
@@ -4465,47 +4545,6 @@ Public Class Frm_Formulario_Documento
         ElseIf _UnTrans = 2 Then
             _PrecioLinea = _PrecioListaUd2
         End If
-
-
-        If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Compra Then
-
-            Dim _Reg As Boolean
-            Dim _Proveedor As String
-
-            If (_RowEntidad_Despacho Is Nothing) Then
-                _Proveedor = _CodEntidad
-            Else
-                _Proveedor = _RowEntidad_Despacho.Item("KOEN")
-            End If
-
-            _CodAlternativo = Trim(_Sql.Fx_Trae_Dato("TABCODAL", "KOPRAL", "KOPR = '" & _Codigo & "' and KOEN = '" & _Proveedor & "'"))
-
-            _Reg = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_ListaPreCosto",
-                                           "Lista = '" & _ListaPrecios &
-                                           "' And Proveedor = '" & _Proveedor &
-                                           "' And Codigo = '" & _Codigo & "'"))
-
-            If Not _Reg Then
-
-                _Reg = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_ListaPreCosto", "
-                                                       Lista = '" & _ListaPrecios & "' And Proveedor = '" & _Proveedor & "' 
-                                                        And Codigo = '" & _Codigo & "' And CodAlternativo = '" & _CodAlternativo & "'"))
-
-                If Not _Reg Then
-
-                    Consulta_sql = "INSERT INTO " & _Global_BaseBk & "Zw_ListaPreCosto (Lista,Proveedor,CodAlternativo,Codigo,
-                                    CostoUd1,CostoUd2,Rtu,FechaVigencia,Desc1,Desc2,Desc3,Desc4,Desc5,Flete) Values 
-                                    ('" & _ListaPrecios & "','" & _Proveedor & "','" & _CodAlternativo & "',
-                                    '" & _Codigo & "',0,0," & De_Num_a_Tx_01(_Rtu, False, 5) & ",GetDate(),0,0,0,0,0,0)"
-
-                    _Sql.Ej_consulta_IDU(Consulta_sql)
-
-                End If
-
-            End If
-
-        End If
-
 
         ' PREGUNTA SI EL VALOR QUE SE TRAE DESDE LA LISTA DE PRECIOS EN NETO O BRUTO
         Dim _PrecioNetoUd,
@@ -17996,6 +18035,21 @@ Public Class Frm_Formulario_Documento
             Dim _Bodega As String = Fila.Item("Bodega")
             Dim _Codigo As String = Fila.Item(_Campo_Codigo)
 
+            Dim _Id_OtSvr = 0
+            Dim _Semilla_Svr = 0
+
+            Try
+                _Id_OtSvr = Fila.Item("Id_Ot")
+            Catch ex As Exception
+                _Id_OtSvr = 0
+            End Try
+
+            Try
+                _Semilla_Svr = Fila.Item("Semilla")
+            Catch ex As Exception
+                _Semilla_Svr = 0
+            End Try
+
             Dim _Descripcion As String
 
             Try
@@ -18071,6 +18125,9 @@ Public Class Frm_Formulario_Documento
 
                 _New_Fila.Cells("Potencia").Value = 0
                 _New_Fila.Cells("Operacion").Value = String.Empty
+
+                _New_Fila.Cells("Id_OtSvr").Value = _Id_OtSvr
+                _New_Fila.Cells("Semilla_Svr").Value = _Semilla_Svr
 
                 If _New_Fila.Cells("Precio").Value > 0 Then
                     Sb_Procesar_Datos_De_Grilla(_New_Fila, "Cantidad", True, True)
@@ -25107,6 +25164,8 @@ Public Class Frm_Formulario_Documento
         Return True
 
     End Function
+
+
 
 
 End Class

@@ -104,6 +104,12 @@
 
             Dim _DisplayIndex = 0
 
+            .Columns("Id_Ot").Visible = True
+            .Columns("Id_Ot").HeaderText = "Id"
+            .Columns("Id_Ot").Width = 50
+            .Columns("Id_Ot").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             .Columns("Nro_Ot").Visible = True
             .Columns("Nro_Ot").HeaderText = "Número OT"
             .Columns("Nro_Ot").Width = 80

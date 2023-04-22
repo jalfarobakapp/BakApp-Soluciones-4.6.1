@@ -439,6 +439,7 @@ Public Class Frm_Demonio_01
         _Input_DiasNVV = NuloPorNro(_Fila.Item("Input_DiasNVV"), 1)
         _Input_DiasOCI = NuloPorNro(_Fila.Item("Input_DiasOCI"), 1)
         _Input_DiasOCI = NuloPorNro(_Fila.Item("Input_DiasOCI"), 1)
+        _Input_DiasOCC = NuloPorNro(_Fila.Item("Input_DiasOCC"), 1)
 
         _Cl_Correos.CantMmail = NuloPorNro(_Fila.Item("CantMail"), 30)
 
@@ -1357,11 +1358,15 @@ Public Class Frm_Demonio_01
 
                     If Not _CierreDoc_Ejecudato Then
 
+                        Sb_Pausar(_Pausa.Pausa)
+
                         Sb_Procedimientos_Cierre_Masivo_Documentos("COV", _Input_DiasCOV, _Chk_COVCerrar)
                         Sb_Procedimientos_Cierre_Masivo_Documentos("NVI", _Input_DiasNVI, _Chk_NVICerrar)
                         Sb_Procedimientos_Cierre_Masivo_Documentos("NVV", _Input_DiasNVV, _Chk_NVVCerrar)
                         Sb_Procedimientos_Cierre_Masivo_Documentos("OCI", _Input_DiasOCI, _Chk_OCICerrar)
                         Sb_Procedimientos_Cierre_Masivo_Documentos("OCC", _Input_DiasOCC, _Chk_OCCCerrar)
+
+                        Sb_Pausar(_Pausa.Play)
 
                         _CierreDoc_Ejecudato = True
 
@@ -2082,9 +2087,6 @@ Public Class Frm_Demonio_01
 
 #End Region
 
-
-
-
 #Region "ASISTENTE DE COMPRAS"
 
         If Switch_AsisCompras.Value Then
@@ -2163,7 +2165,6 @@ Public Class Frm_Demonio_01
         End If
 
 #End Region
-
 
 
     End Sub
@@ -3810,9 +3811,7 @@ Fin:
             Return
         End If
 
-        Sb_Pausar(_Pausa.Pausa)
-
-        Dim _Fecha As Date = FechaDelServidor()
+        Dim _Fecha As Date = DtpFecharevision.Value
 
         _Fecha = DateAdd(DateInterval.Day, -_Dias, _Fecha)
 
@@ -3848,8 +3847,6 @@ Fin:
             Fm.ShowDialog(Me)
 
         End If
-
-        Sb_Pausar(_Pausa.Play)
 
     End Sub
     Private Sub Btn_ConfImpresora_Click(sender As Object, e As EventArgs) Handles Btn_Configurar.Click

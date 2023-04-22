@@ -717,6 +717,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Pbk00008", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Pbk00009", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Pbk00010", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Pbk00011", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Pbk00040", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Pshop001", _Objeto, _Formulario)
@@ -3154,6 +3155,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.POCKET_PC_WCE.ToString
             Case "Pbk00010"
                 _DescripcionPermiso = "AUTORIZAR A MANTENER LOS PRECIOS CUANDO LOS DOCUMENTOS VENCEN"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.POCKET_PC_WCE, 6)
+                _NombreFamiliaPermiso = _Fml.POCKET_PC_WCE.ToString
+            Case "Pbk00011"
+                _DescripcionPermiso = "CAMBIAR TIPO DE DOCUMENTO EN DESPACHO SIMPLE"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.POCKET_PC_WCE, 6)
                 _NombreFamiliaPermiso = _Fml.POCKET_PC_WCE.ToString
             Case "Pbk00040"
