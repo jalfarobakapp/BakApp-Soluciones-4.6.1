@@ -1,4 +1,6 @@
-﻿Public Class Frm_St_Estado_05_Reparacion2
+﻿Imports BkSpecialPrograms.Modulo_Precios_Costos
+
+Public Class Frm_St_Estado_05_Reparacion2
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -139,7 +141,7 @@
 
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").HeaderText = "Descripcion"
-            .Columns("Descripcion").Width = 320
+            .Columns("Descripcion").Width = 420
             .Columns("Descripcion").ReadOnly = True
             .Columns("Descripcion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -205,7 +207,7 @@
 
         Consulta_sql = "Select Serv.Id,Serv.Id_Ot,Serv.Semilla,Serv.Codigo,Isnull(Oper.Descripcion,'') As Descripcion," & vbCrLf &
                        "Serv.CodReceta,Serv.Operacion,Serv.Orden,Serv.CantMayor1,Serv.Cantidad,Serv.CantidadRealizada,Serv.Precio," &
-                       "Serv.Total,Serv.Realizado,Serv.Externa,Cast(0 As Bit) As Chk" & vbCrLf &
+                       "Serv.Total,Serv.Realizado,Serv.Externa,Cast(1 As Bit) As Chk" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_St_OT_OpeXServ Serv" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_St_OT_Operaciones Oper On Serv.Operacion = Oper.Operacion" & vbCrLf &
                        "Where Id_Ot = " & _Id_Ot & " And Semilla = " & _Semilla
@@ -218,6 +220,233 @@
         '_Tbl_DetProd_Srv = Fm2.TblOperaciones
         Fm2.Dispose()
 
+        If _Grabar Then
+            _Fila.Cells("Utilizado").Value = True
+            _Fila.Cells("Chk").Value = True
+            Sb_Marcar_Grilla()
+        End If
+
+    End Sub
+
+    Function Fx_Fijar_Estado() As Boolean
+
+
+        If Not Chk_No_se_pudo_reparar_el_equipo.Checked Then
+            _Motivo_no_reparo = String.Empty
+        End If
+
+        ' --------------------------------------------------- NOTAS ---------------------------------------
+
+        Dim _Reparacion_Realizada = String.Empty 'Trim(Txt_Reparacion_Realizada.Text)
+
+        For _i = 0 To 31
+            _Reparacion_Realizada = Replace(_Reparacion_Realizada, Chr(_i), " ")
+        Next
+
+        Dim _Nota_Etapa_05 As String = Txt_Nota.Text
+        Dim _Chk_no_se_pudo_reparar = CInt(Chk_No_se_pudo_reparar_el_equipo.Checked) * -1
+
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Notas Set " & vbCrLf &
+                       "Nota_Etapa_05 = '" & _Nota_Etapa_05 &
+                       "',Chk_no_se_pudo_reparar = " & _Chk_no_se_pudo_reparar & vbCrLf &
+                       ",Reparacion_Realizada = '" & _Reparacion_Realizada & "'" & vbCrLf &
+                       ",Motivo_no_reparo = '" & _Motivo_no_reparo & "'" & vbCrLf &
+                       "Where Id_Ot = " & _Id_Ot & vbCrLf & vbCrLf
+
+        'Reparacion_Realizada, Chk_no_se_pudo_reparar, Motivo_no_reparo
+
+        '**********************************'**********************************
+        'CodTecnico_Repara
+
+        Dim _HH As String = De_Num_a_Tx_01(_Horas_Mano_de_Obra_Repara, False, 5)
+
+        Dim _CodFuncionario = _Row_Encabezado.Item("CodTecnico_Asignado")
+
+        ' ACTUALIZAR ENCABEZADO DE DOCUMENTO
+        Consulta_sql += "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set " &
+                       "CodTecnico_Repara = '" & _CodFuncionario & "'," & vbCrLf &
+                       "Horas_Mano_de_Obra_Repara = " & _HH & vbCrLf &
+                       "Where Id_Ot  = " & _Id_Ot & vbCrLf & vbCrLf
+
+
+        If _Accion = Accion.Nuevo Then
+
+            ' ACTUALIZAR ENCABEZADO DE DOCUMENTO
+            Consulta_sql += "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set " &
+                           "CodEstado = 'V'" & vbCrLf &
+                           "Where Id_Ot  = " & _Id_Ot & vbCrLf & vbCrLf
+
+
+            ' ACTUALIZAR ESTADO
+            Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_OT_Estados " &
+                           "(Id_Ot,CodEstado,Fecha_Fijacion,CodFuncionario,NomFuncionario) Values " &
+                           "(" & _Id_Ot & ",'R',GetDate(),'" & FUNCIONARIO & "','" & Nombre_funcionario_activo & "')" & vbCrLf & vbCrLf
+
+        End If
+
+
+        Consulta_sql += "Delete " & _Global_BaseBk & "Zw_St_OT_DetProd Where Desde_COV = 1 And Id_Ot = " & _Id_Ot & vbCrLf & vbCrLf
+
+
+        For Each _Fila_Cov As DataRow In _Tbl_DetProd_Cov.Rows
+
+
+            Dim _Utilizado = CInt(_Fila_Cov.Item("Utilizado")) * -1
+
+            Dim _Desde_COV = CInt(_Fila_Cov.Item("Desde_COV")) * -1
+            Dim _Idmaeedo_Cov = _Fila_Cov.Item("Idmaeedo_Cov")
+            Dim _Idmaeddo_Cov = _Fila_Cov.Item("Idmaeddo_Cov")
+
+            Dim _Codigo = _Fila_Cov.Item("Codigo")
+            Dim _Descripcion = _Fila_Cov.Item("Descripcion")
+
+            Dim _Un As Integer = _Fila_Cov.Item("Un")
+
+            Dim _Ud = _Fila_Cov.Item("Ud")
+
+            Dim _Cantidad = _Fila_Cov.Item("Cantidad")
+            Dim _Cantidad_Utilizada = _Fila_Cov.Item("Cantidad_Utilizada")
+
+            Dim _CantUd1 = _Fila_Cov.Item("CantUd1")
+            Dim _CantUd2 = _Fila_Cov.Item("CantUd2")
+            Dim _Precio = _Fila_Cov.Item("Precio")
+            Dim _Neto_Linea = _Fila_Cov.Item("Neto_Linea")
+            Dim _Iva_Linea = _Fila_Cov.Item("Iva_Linea")
+            Dim _Total_Linea = _Fila_Cov.Item("Total_Linea")
+
+            Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_OT_DetProd (Id_Ot,Utilizado,Codigo,Descripcion," &
+                           "Cantidad,Cantidad_Utilizada,Ud,Un," &
+                           "CantUd1,CantUd2,Precio,Neto_Linea,Iva_Linea,Total_Linea,Desde_COV,Idmaeedo_Cov,Idmaeddo_Cov) Values " &
+                           "(" & _Id_Ot & "," & _Utilizado & ",'" & _Codigo & "','" & _Descripcion &
+                           "'," & De_Num_a_Tx_01(_Cantidad, False, 5) &
+                           "," & De_Num_a_Tx_01(_Cantidad_Utilizada, False, 5) &
+                           ",'" & _Ud & "'," & _Un &
+                           "," & De_Num_a_Tx_01(_CantUd1, False, 5) &
+                           "," & De_Num_a_Tx_01(_CantUd2, False, 5) &
+                           "," & De_Num_a_Tx_01(_Precio, False, 5) &
+                           "," & De_Num_a_Tx_01(_Neto_Linea, False, 5) &
+                           "," & De_Num_a_Tx_01(_Iva_Linea, False, 5) &
+                           "," & De_Num_a_Tx_01(_Total_Linea, False, 5) &
+                           ",1," & _Idmaeedo_Cov & "," & _Idmaeddo_Cov & ")" & vbCrLf
+
+
+
+        Next
+
+
+        '**********************************'**********************************
+
+        If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+
+            Dim _CampoPrecio As String
+
+            If True Then
+                _CampoPrecio = "PPPRNE"
+            Else ' Bruto
+                _CampoPrecio = "PPPRBR"
+            End If
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Doc_Asociados Where Id_Ot = " & _Id_Ot
+            Dim _Doc_Asociados As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            For Each _FlDoc As DataRow In _Doc_Asociados.Rows
+
+                Dim _Idmaeedo_Origen As Integer = _FlDoc.Item("Idmaeedo")
+
+                Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & "
+                                Select *,CAse When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End As 'Cantidad',
+                                CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori',
+                                Case WHEN UDTRPR = 1 Then " & _CampoPrecio & " Else " & _CampoPrecio & "*RLUDPR End AS 'Precio',
+                                0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta
+                                From MAEDDO  With ( NOLOCK ) 
+                                Where IDMAEEDO = " & _Idmaeedo_Origen & "  AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''
+                                Order by IDMAEEDO,IDMAEDDO 
+                                Select * From MAEIMLI
+                                Where IDMAEEDO = " & _Idmaeedo_Origen & " 
+                                Select * From MAEDTLI
+                                Where IDMAEEDO = " & _Idmaeedo_Origen & " 
+                                Select TOP 1 * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo_Origen
+
+
+                Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+
+                'Modalidad = _Modalidad
+                Dim _Fecha_Emision = FechaDelServidor()
+
+                Dim Fm_Post As New Frm_Formulario_Documento("NVV", csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True)
+                Fm_Post.Sb_Limpiar(Modalidad)
+                Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(Me, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
+                Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento, True, False)
+                Dim _New_Idmaeedo = Fm_Post.Pro_Idmaeedo
+                Fm_Post.Dispose()
+
+                If CBool(_New_Idmaeedo) Then
+
+                    Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
+                    Dim _RowDocumento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                    Dim _Tido = _RowDocumento.Item("TIDO")
+                    Dim _Nudo = _RowDocumento.Item("NUDO")
+                    Dim _Fecha_Doc = _RowDocumento.Item("FEEMDO")
+
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Doc_Asociados (Id_Ot,Idmaeedo,Tido,Nudo,Estado,Fecha_Doc,Fecha_Asociacion," &
+                                   "Garantia,Seleccionado,Documento_Externo,MovTodasSubOT) Values " &
+                                   "(" & _Id_Ot & "," & _New_Idmaeedo & ",'" & _Tido & "','" & _Nudo & "','A','" & Format(_Fecha_Doc, "yyyyMMdd") & "'" &
+                                   ",'" & Format(_Fecha_Doc, "yyyyMMdd") & "',0,0,0,0)"
+                    _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                End If
+
+            Next
+
+            Return True
+
+        End If
+
+    End Function
+
+    Function Fx_Fijar_Estado_No_Se_Pudo_Reparar() As Boolean
+
+        ' --------------------------------------------------- NOTAS ---------------------------------------
+
+        Dim _Texto = "NO SE PUDO REPARAR EL EQUIPO"
+
+        Dim _Chk_no_se_pudo_reparar = 1
+
+        Dim _CodFuncionario = _Row_Encabezado.Item("CodTecnico_Asignado")
+
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set" & Space(1) &
+                       "CodEstado = 'V'," & vbCrLf &
+                       "CodTecnico_Repara = '" & _CodFuncionario & "'," & vbCrLf &
+                       "Horas_Mano_de_Obra_Repara = 0," & vbCrLf &
+                       "Fecha_Cierre = Getdate()" & vbCrLf &
+                       "Where Id_Ot = " & _Id_Ot & vbCrLf & vbCrLf
+
+        Consulta_sql += "Update " & _Global_BaseBk & "Zw_St_OT_Notas Set " & vbCrLf &
+                        "Nota_Etapa_05 = '" & _Texto & "'" & vbCrLf &
+                        ",Motivo_no_reparo = '" & _Motivo_no_reparo & "'" & vbCrLf &
+                        ",Chk_no_se_pudo_reparar = " & _Chk_no_se_pudo_reparar & vbCrLf &
+                        ",Nota_Etapa_06 = '" & _Texto & "'" & vbCrLf &
+                        ",Nota_Etapa_07 = '" & _Texto & "'" & vbCrLf &
+                        "Where Id_Ot = " & _Id_Ot & vbCrLf & vbCrLf
+
+        Consulta_sql += "Delete " & _Global_BaseBk & "Zw_St_OT_Estados Where Id_Ot = " & _Id_Ot & " And CodEstado in ('R','V','F')" & vbCrLf & vbCrLf
+
+        Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_OT_Estados " &
+                     "(Id_Ot,CodEstado,Fecha_Fijacion,CodFuncionario,NomFuncionario) Values " &
+                     "(" & _Id_Ot & ",'R',GetDate(),'" & FUNCIONARIO & "','" & Nombre_funcionario_activo & "')" & vbCrLf & vbCrLf
+
+        Fx_Fijar_Estado_No_Se_Pudo_Reparar = _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+
+    End Function
+
+    Private Sub Btn_Fijar_Estado_Click(sender As Object, e As EventArgs) Handles Btn_Fijar_Estado.Click
+        Fx_Fijar_Estado()
+    End Sub
+
+    Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
+        Fx_Fijar_Estado()
     End Sub
 
 End Class

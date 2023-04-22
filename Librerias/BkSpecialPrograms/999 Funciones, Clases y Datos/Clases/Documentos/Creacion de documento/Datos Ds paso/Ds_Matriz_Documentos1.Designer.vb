@@ -3959,6 +3959,10 @@ Partial Public Class Ds_Matriz_Documentos
         
         Private columnCostoLista As Global.System.Data.DataColumn
         
+        Private columnId_OtSvr As Global.System.Data.DataColumn
+        
+        Private columnSemilla_Svr As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub New()
@@ -4987,6 +4991,22 @@ Partial Public Class Ds_Matriz_Documentos
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property Id_OtSvrColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnId_OtSvr
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property Semilla_SvrColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnSemilla_Svr
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -5146,9 +5166,11 @@ Partial Public Class Ds_Matriz_Documentos
                     ByVal PrecioListaUd2_Prov As Double,  _
                     ByVal Pesoubic As Double,  _
                     ByVal SumaKilos As Double,  _
-                    ByVal CostoLista As Double) As Detalle_DocRow
+                    ByVal CostoLista As Double,  _
+                    ByVal Id_OtSvr As Integer,  _
+                    ByVal Semilla_Svr As Integer) As Detalle_DocRow
             Dim rowDetalle_DocRow As Detalle_DocRow = CType(Me.NewRow,Detalle_DocRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, Id_DocDet, Id_Det, Empresa, Sucursal, Bodega, CodFuncionario, UnTrans, Lincondest, Codigo, CodigoProv, UdTrans, Cantidad, TipoValor, Precio, DescuentoPorc, DescuentoValor, DescuentoValor_Anterior, RecargoValor, Descripcion, Descripcion_Ori, PrecioNetoUd, PrecioNetoUdLista, PrecioBrutoUd, PrecioBrutoUdLista, Rtu, Ud01PR, CantUd1, CodVendedor, Prct, Tipr, Tict, DsctoNeto, DsctoBruto, CDespUd1, Ud02PR, CantUd2, CDespUd2, ValVtaDescMax, ValVtaStockInf, CodLista, Melt, PrecioListaUd1, PrecioListaUd2, DescMaximo, NroDscto, NroImpuestos, PorIva, PorIla, ValIvaLinea, ValIlaLinea, ValSubNetoLinea, ValNetoLinea, ValBrutoLinea, PmLinea, PmSucLinea, PmIFRS, PrecioNetoRealUd1, PrecioNetoRealUd2, Idmaeedo_Dori, Idmaeddo_Dori, CantUd1_Dori, CantUd2_Dori, Estado, Emprepa, Tidopa, NudoPa, Endopa, Nulidopa, FechaEmision, FechaRecepcion, SubTotal, StockBodega, UbicacionBod, DsctoRealPorc, DsctoRealValor, DsctoGlobalSuperado, Tiene_Dscto, CantidadCalculo, Operacion, Potencia, PrecioCalculo, OCCGenerada, Bloqueapr, Observa, CodFunAutoriza, CodPermiso, Nuevo_Producto, Solicitado_bodega, Moneda, Tipo_Moneda, Tipo_Cambio, Ecuacion, Stock_desde_WMS, Total_Costo, Margen_Valor, Margen_Porc, Visado_Dscto, Visado_Stock, Crear_CPr, Id_CPr, Proyecto, Centro_Costo, Consolidar_Stock, No_Aplica_Redondeo, Id_Oferta, Es_Padre_Oferta, Oferta, Padre_Oferta, Aplica_Oferta, Hijo_Oferta, Cantidad_Oferta, Porcdesc_Oferta, Tasadorig, FunValida_Compra, Recargo_Campo, Recargo_Valor, Recargo_Distribuido, TieneOccPdte, PrecioListaUd1_Prov, PrecioListaUd2_Prov, Pesoubic, SumaKilos, CostoLista}
+            Dim columnValuesArray() As Object = New Object() {Nothing, Id_DocDet, Id_Det, Empresa, Sucursal, Bodega, CodFuncionario, UnTrans, Lincondest, Codigo, CodigoProv, UdTrans, Cantidad, TipoValor, Precio, DescuentoPorc, DescuentoValor, DescuentoValor_Anterior, RecargoValor, Descripcion, Descripcion_Ori, PrecioNetoUd, PrecioNetoUdLista, PrecioBrutoUd, PrecioBrutoUdLista, Rtu, Ud01PR, CantUd1, CodVendedor, Prct, Tipr, Tict, DsctoNeto, DsctoBruto, CDespUd1, Ud02PR, CantUd2, CDespUd2, ValVtaDescMax, ValVtaStockInf, CodLista, Melt, PrecioListaUd1, PrecioListaUd2, DescMaximo, NroDscto, NroImpuestos, PorIva, PorIla, ValIvaLinea, ValIlaLinea, ValSubNetoLinea, ValNetoLinea, ValBrutoLinea, PmLinea, PmSucLinea, PmIFRS, PrecioNetoRealUd1, PrecioNetoRealUd2, Idmaeedo_Dori, Idmaeddo_Dori, CantUd1_Dori, CantUd2_Dori, Estado, Emprepa, Tidopa, NudoPa, Endopa, Nulidopa, FechaEmision, FechaRecepcion, SubTotal, StockBodega, UbicacionBod, DsctoRealPorc, DsctoRealValor, DsctoGlobalSuperado, Tiene_Dscto, CantidadCalculo, Operacion, Potencia, PrecioCalculo, OCCGenerada, Bloqueapr, Observa, CodFunAutoriza, CodPermiso, Nuevo_Producto, Solicitado_bodega, Moneda, Tipo_Moneda, Tipo_Cambio, Ecuacion, Stock_desde_WMS, Total_Costo, Margen_Valor, Margen_Porc, Visado_Dscto, Visado_Stock, Crear_CPr, Id_CPr, Proyecto, Centro_Costo, Consolidar_Stock, No_Aplica_Redondeo, Id_Oferta, Es_Padre_Oferta, Oferta, Padre_Oferta, Aplica_Oferta, Hijo_Oferta, Cantidad_Oferta, Porcdesc_Oferta, Tasadorig, FunValida_Compra, Recargo_Campo, Recargo_Valor, Recargo_Distribuido, TieneOccPdte, PrecioListaUd1_Prov, PrecioListaUd2_Prov, Pesoubic, SumaKilos, CostoLista, Id_OtSvr, Semilla_Svr}
             rowDetalle_DocRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowDetalle_DocRow)
             Return rowDetalle_DocRow
@@ -5295,6 +5317,8 @@ Partial Public Class Ds_Matriz_Documentos
             Me.columnPesoubic = MyBase.Columns("Pesoubic")
             Me.columnSumaKilos = MyBase.Columns("SumaKilos")
             Me.columnCostoLista = MyBase.Columns("CostoLista")
+            Me.columnId_OtSvr = MyBase.Columns("Id_OtSvr")
+            Me.columnSemilla_Svr = MyBase.Columns("Semilla_Svr")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -5548,6 +5572,10 @@ Partial Public Class Ds_Matriz_Documentos
             MyBase.Columns.Add(Me.columnSumaKilos)
             Me.columnCostoLista = New Global.System.Data.DataColumn("CostoLista", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnCostoLista)
+            Me.columnId_OtSvr = New Global.System.Data.DataColumn("Id_OtSvr", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnId_OtSvr)
+            Me.columnSemilla_Svr = New Global.System.Data.DataColumn("Semilla_Svr", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnSemilla_Svr)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnId}, false))
             Me.columnId.AutoIncrement = true
             Me.columnId.AutoIncrementSeed = 1
@@ -5574,6 +5602,8 @@ Partial Public Class Ds_Matriz_Documentos
             Me.columnNuevo_Producto.DefaultValue = CType(1,Byte)
             Me.columnSolicitado_bodega.AllowDBNull = false
             Me.columnSolicitado_bodega.DefaultValue = CType(false,Boolean)
+            Me.columnId_OtSvr.DefaultValue = CType(0,Integer)
+            Me.columnSemilla_Svr.DefaultValue = CType(0,Integer)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -12418,6 +12448,36 @@ Partial Public Class Ds_Matriz_Documentos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property Id_OtSvr() As Integer
+            Get
+                Try 
+                    Return CType(Me(Me.tableDetalle_Doc.Id_OtSvrColumn),Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Id_OtSvr' de la tabla 'Detalle_Doc' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableDetalle_Doc.Id_OtSvrColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property Semilla_Svr() As Integer
+            Get
+                Try 
+                    Return CType(Me(Me.tableDetalle_Doc.Semilla_SvrColumn),Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Semilla_Svr' de la tabla 'Detalle_Doc' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableDetalle_Doc.Semilla_SvrColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Function IsIdNull() As Boolean
             Return Me.IsNull(Me.tableDetalle_Doc.IdColumn)
         End Function
@@ -13830,6 +13890,30 @@ Partial Public Class Ds_Matriz_Documentos
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub SetCostoListaNull()
             Me(Me.tableDetalle_Doc.CostoListaColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsId_OtSvrNull() As Boolean
+            Return Me.IsNull(Me.tableDetalle_Doc.Id_OtSvrColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetId_OtSvrNull()
+            Me(Me.tableDetalle_Doc.Id_OtSvrColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsSemilla_SvrNull() As Boolean
+            Return Me.IsNull(Me.tableDetalle_Doc.Semilla_SvrColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetSemilla_SvrNull()
+            Me(Me.tableDetalle_Doc.Semilla_SvrColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     

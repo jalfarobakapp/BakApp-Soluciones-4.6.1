@@ -3048,6 +3048,145 @@ Public Class Clas_Imprimir_Documento
 
 #End Region
 
+
+#Region "ORDENES DE SERVICIO, OPERACIONES Y OT"
+
+            Dim _Idmaeedo = _Tbl_Encabezado.Rows(0).Item("IDMAEEDO")
+
+            Consulta_sql = "Select Ot.Nro_Ot,Ot.Sub_Ot,Det.Codigo,Det.Descripcion,Det.Idmaeddo_Cov" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_St_OT_DetProd Det" & vbCrLf &
+                           "Left Join " & _Global_BaseBk & "Zw_St_OT_Encabezado Ot On Ot.Id_Ot = Det.Id_Ot" & vbCrLf &
+                           "Where Idmaeedo_Cov = " & _Idmaeedo
+
+            Dim _Tbl_Ot As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            For Each _FlOt As DataRow In _Tbl_Ot.Rows
+
+                Dim _DatosOT As String = "OT: " & _FlOt.Item("Nro_Ot")
+
+                If Not String.IsNullOrEmpty(_FlOt.Item("Sub_Ot")) Then
+                    _DatosOT += ", SubOt: " & _FlOt.Item("Sub_Ot")
+                End If
+
+                Dim _Idmaeddo_Cov As Integer = _FlOt.Item("Idmaeddo_Cov")
+
+                Consulta_sql = "Select OpxS.Id, OpxS.Id_Ot, OpxS.Semilla, OpxS.Codigo,OpxS.CodReceta,OpxS.Operacion,Oper.Descripcion," &
+               "OpxS.Orden,OpxS.CantMayor1,OpxS.Cantidad, CantidadRealizada, OpxS.Precio, Total, Realizado, OpxS.Externa" & vbCrLf &
+               "From " & _Global_BaseBk & "Zw_St_OT_OpeXServ OpxS" & vbCrLf &
+               "Inner Join " & _Global_BaseBk & "Zw_St_OT_DetProd Stdet On Stdet.Semilla = OpxS.Semilla" & vbCrLf &
+               "Left Join " & _Global_BaseBk & "Zw_St_OT_Operaciones Oper On Oper.Operacion = OpxS.Operacion" & vbCrLf &
+               "Where Idmaeddo_Cov = " & _Idmaeddo_Cov
+
+                Dim _Tbl_Operaciones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                Dim _EncImpreso As Boolean
+
+                Dim _DrawBrush As SolidBrush
+
+                For Each _Fila_D As DataRow In _Tbl_Operaciones.Rows
+
+                    Dim _Operacion = _Fila_D.Item("Operacion").ToString.Trim
+                    Dim _DescOperacion = _Fila_D.Item("Descripcion").ToString.Trim 'Rellenar(_Fila_D.Item("Descripcion").ToString.Trim, 50, " ")
+                    Dim _Cantidad = _Fila_D.Item("Cantidad")
+                    Dim _Precio = _Fila_D.Item("Precio")
+                    Dim _Total = _Fila_D.Item("Total")
+
+                    Dim _DetalleOperacion1 = Space(5) & " - " & _Operacion & ":" & _DescOperacion & " - Cant.: " & FormatNumber(_Cantidad, 0) & " X " & FormatCurrency(_Precio, 0) & " = " & FormatCurrency(_Total, 0)
+                    Dim _DetalleOperacion2 = Space(5) & " - " & _DescOperacion & " - Cant.: " & FormatNumber(_Cantidad, 0) & " X " & FormatCurrency(_Precio, 0) & " = " & FormatCurrency(_Total, 0)
+                    Dim _DetalleOperacion3 = Space(5) & " - " & _DescOperacion & " - Cant.: " & FormatNumber(_Cantidad, 0)
+
+                    Dim _Contador = 0
+
+                    For Each _Fila As DataRow In _Tbl_Fx_Detalle.Rows
+
+                        _NombreObjeto = _Fila.Item("NombreObjeto")
+                        _Funcion = _Fila.Item("Funcion")
+                        _TipoDato = _Fila.Item("TipoDato")
+                        _Seccion = _Fila.Item("Seccion")
+
+                        _Formato = _Fila.Item("Formato")
+                        _CantDecimales = _Fila.Item("CantDecimales")
+                        _Fuente = _Fila.Item("Fuente")
+                        _Tamano = _Fila.Item("Tamano")
+                        _Alto = _Fila.Item("Alto")
+                        _Ancho = _Fila.Item("Ancho")
+                        _Estilo = _Fila.Item("Estilo")
+                        _Color = _Fila.Item("Color")
+                        _Fila_Y = _Fila.Item("Fila_Y")
+                        _Columna_X = _Fila.Item("Columna_X")
+                        _Texto = _Fila.Item("Texto")
+                        _RutaImagen = _Fila.Item("RutaImagen")
+
+                        Select Case _Estilo
+                            Case 0
+                                _Style = FontStyle.Regular
+                            Case 1
+                                _Style = FontStyle.Bold
+                            Case 2
+                                _Style = FontStyle.Italic
+                            Case 4
+                                _Style = FontStyle.Underline
+                            Case 8
+                                _Style = FontStyle.Strikeout
+                            Case Else
+                                _Style = FontStyle.Regular
+                        End Select
+
+                        _Fte_Usar = New Font(_Fuente, _Tamano, _Style)
+
+                        _Funcion_Bk = _Fila.Item("Funcion_Bk")
+                        _Formato_Fx = _Fila.Item("Formato_Fx")
+                        _Campo = _Fila.Item("Campo")
+                        _Codigo_De_Barras = _Fila.Item("Codigo_De_Barras")
+                        _Es_Descuento = _Fila.Item("Es_Descuento")
+
+                        _Color = Color.FromArgb(_Color)
+                        _DrawBrush = New SolidBrush(_Color)
+
+                        If _NombreObjeto = "Funcion" Then
+
+                            If _Funcion_Bk Then
+
+                                If _Funcion.Contains("Orden de servicio") Then
+
+                                    Dim _DetalleOperacion As String
+
+                                    If _Funcion = "Orden de servicio1" Then _DetalleOperacion = _DetalleOperacion1
+                                    If _Funcion = "Orden de servicio2" Then _DetalleOperacion = _DetalleOperacion2
+                                    If _Funcion = "Orden de servicio3" Then _DetalleOperacion = _DetalleOperacion3
+
+                                    If Not _EncImpreso Then
+                                        e.Graphics.DrawString("* " & _DatosOT, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+                                        _Detalle_Y += _Salto_Linea
+                                        e.Graphics.DrawString("* DETALLE DE TRABAJOS:", _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+                                        _Detalle_Y += _Salto_Linea
+                                        _EncImpreso = True
+                                    End If
+
+                                    e.Graphics.DrawString(_DetalleOperacion, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+
+                                End If
+
+                            End If
+
+                        End If
+
+                    Next
+
+                    _Contador += 1
+                    _Detalle_Y += _Salto_Linea
+
+                Next
+
+                e.Graphics.DrawString("-------------------------------------------------------------------------------------------", _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+                _Detalle_Y += _Salto_Linea
+
+                _EncImpreso = False
+
+            Next
+
+#End Region
+
             _Documento_Impreso = True
 
         Catch ex As Exception

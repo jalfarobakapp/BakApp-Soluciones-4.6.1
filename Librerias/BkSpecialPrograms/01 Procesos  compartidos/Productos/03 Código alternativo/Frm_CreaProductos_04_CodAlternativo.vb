@@ -116,6 +116,10 @@ Public Class Frm_CreaProductos_04_CodAlternativo
         Sb_Llenar_Combos(_Arr_Tratamiento, Cmb_Nmarca_Tratamiento)
         Cmb_Nmarca_Tratamiento.SelectedValue = 1
 
+        Dim _Arr_Tipo_Entidad(,) As String = {{"1", _Ud01pr}, {"2", _Ud02pr}}
+        Sb_Llenar_Combos(_Arr_Tipo_Entidad, Cmb_Unimulti)
+        Cmb_Unimulti.SelectedValue = 1
+
         Txt_Kopral.ButtonCustom.Visible = False
 
         If Not String.IsNullOrEmpty(_Kopral) Then
@@ -140,6 +144,8 @@ Public Class Frm_CreaProductos_04_CodAlternativo
                 Txt_Multdecom.Text = NuloPorNro(_RowTabcodal.Item("MULTDECOM"), 0)
                 Txt_Multiplo.Text = NuloPorNro(_RowTabcodal.Item("MULTIPLO"), 0)
                 Txt_Txtmulti.Text = NuloPorNro(_RowTabcodal.Item("TXTMULTI"), "")
+
+                Cmb_Unimulti.SelectedValue = NuloPorNro(_RowTabcodal.Item("UNIMULTI"), 1)
 
                 Txt_Aux01.Text = _RowTabcodal.Item("AUX01").ToString.Trim
                 Txt_Aux02.Text = _RowTabcodal.Item("AUX02").ToString.Trim
@@ -184,10 +190,6 @@ Public Class Frm_CreaProductos_04_CodAlternativo
                 Grupo_Proveedor.Enabled = True
                 Txt_Koen.Enabled = True
         End Select
-
-        Dim _Arr_Tipo_Entidad(,) As String = {{"1", _Ud01pr}, {"2", _Ud02pr}}
-        Sb_Llenar_Combos(_Arr_Tipo_Entidad, Cmb_Unimulti)
-        Cmb_Unimulti.SelectedValue = 1
 
         Txt_CodigoQR.ReadOnly = True
         Me.Text = "Verificación de código alternativo, SKU: " & _Codigo

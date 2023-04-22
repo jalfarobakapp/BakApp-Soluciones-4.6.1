@@ -130,7 +130,7 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.TableLayoutPanel1.ColumnCount = 3
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.79381!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.20618!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 49.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.Btn_BuscarSMTPRecepXMLComp, 2, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX1, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Txt_Usuario, 1, 0)
@@ -153,7 +153,7 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.Btn_BuscarSMTPRecepXMLComp.AccessibleRole = System.Windows.Forms.AccessibleRole.StaticText
         Me.Btn_BuscarSMTPRecepXMLComp.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarSMTPRecepXMLComp.Image = CType(resources.GetObject("Btn_BuscarSMTPRecepXMLComp.Image"), System.Drawing.Image)
-        Me.Btn_BuscarSMTPRecepXMLComp.Location = New System.Drawing.Point(461, 3)
+        Me.Btn_BuscarSMTPRecepXMLComp.Location = New System.Drawing.Point(460, 3)
         Me.Btn_BuscarSMTPRecepXMLComp.Name = "Btn_BuscarSMTPRecepXMLComp"
         Me.Btn_BuscarSMTPRecepXMLComp.Size = New System.Drawing.Size(35, 20)
         Me.Btn_BuscarSMTPRecepXMLComp.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -188,7 +188,7 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.Txt_Usuario.Name = "Txt_Usuario"
         Me.Txt_Usuario.PreventEnterBeep = True
         Me.Txt_Usuario.ReadOnly = True
-        Me.Txt_Usuario.Size = New System.Drawing.Size(362, 22)
+        Me.Txt_Usuario.Size = New System.Drawing.Size(361, 22)
         Me.Txt_Usuario.TabIndex = 3
         '
         'LabelX4
@@ -219,7 +219,7 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.Txt_Directorio.Name = "Txt_Directorio"
         Me.Txt_Directorio.PreventEnterBeep = True
         Me.Txt_Directorio.ReadOnly = True
-        Me.Txt_Directorio.Size = New System.Drawing.Size(362, 22)
+        Me.Txt_Directorio.Size = New System.Drawing.Size(361, 22)
         Me.Txt_Directorio.TabIndex = 3
         '
         'Btn_Buscar_Directorio_Destino
@@ -228,7 +228,7 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.Btn_Buscar_Directorio_Destino.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Buscar_Directorio_Destino.Enabled = False
         Me.Btn_Buscar_Directorio_Destino.Image = CType(resources.GetObject("Btn_Buscar_Directorio_Destino.Image"), System.Drawing.Image)
-        Me.Btn_Buscar_Directorio_Destino.Location = New System.Drawing.Point(461, 29)
+        Me.Btn_Buscar_Directorio_Destino.Location = New System.Drawing.Point(460, 29)
         Me.Btn_Buscar_Directorio_Destino.Name = "Btn_Buscar_Directorio_Destino"
         Me.Btn_Buscar_Directorio_Destino.Size = New System.Drawing.Size(35, 20)
         Me.Btn_Buscar_Directorio_Destino.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled

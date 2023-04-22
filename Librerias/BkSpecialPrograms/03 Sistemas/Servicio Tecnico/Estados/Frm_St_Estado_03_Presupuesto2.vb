@@ -15,7 +15,8 @@ Public Class Frm_St_Estado_03_Presupuesto2
     Dim _Tbl_ChekIn As DataTable
     Dim _Row_Notas As DataRow
     Dim _Tbl_OperacionesXServ As DataTable
-
+    Dim _Tbl_DetProd_Cov As DataTable
+    Dim _Tbl_DetProd_Srv As DataTable
     Dim _Editando_documento As Boolean
     Dim _Horas_Mano_de_Obra_Asignado As Double
     Dim Imagenes_32x32 As ImageList
@@ -43,6 +44,8 @@ Public Class Frm_St_Estado_03_Presupuesto2
             _Tbl_ChekIn = _DsDocumento.Tables(2)
             _Row_Notas = _DsDocumento.Tables(3).Rows(0)
             _Tbl_OperacionesXServ = _DsDocumento.Tables(10)
+            _Tbl_DetProd_Cov = _DsDocumento.Tables(7)
+            _Tbl_DetProd_Srv = _DsDocumento.Tables(11)
         End Set
     End Property
 
@@ -99,6 +102,7 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
         If _Accion = Accion.Editar Then
             CodTecnico_Presupuesta = _Row_Encabezado.Item("CodTecnico_Presupuesta").ToString.Trim
+            Txt_NroSerie.Text = _Row_Encabezado.Item("NroSerie")
         End If
 
         If String.IsNullOrEmpty(CodTecnico_Presupuesta) Then
@@ -118,6 +122,7 @@ Public Class Frm_St_Estado_03_Presupuesto2
         If _Tbl_DetProd.Rows.Count = 0 Then Sb_New_OT_Agregar_Fila()
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        AddHandler Btn_Grabar.Click, AddressOf Btn_Fijar_Estado_Click
 
         If _Accion = Accion.Nuevo Then
 
@@ -133,21 +138,17 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
         ElseIf _Accion = Accion.Editar Then
 
-            AddHandler Btn_Grabar.Click, AddressOf Btn_Fijar_Estado_Click
-
             _Horas_Mano_de_Obra_Asignado = _Row_Encabezado.Item("Horas_Mano_de_Obra_Asignado")
 
             Btn_Fijar_Estado.Visible = False
-            Btn_Editar.Visible = True
-
-            If _Row_Encabezado.Item("CodEstado") = "CE" Then
-                Btn_Editar.Visible = False
-            End If
-
+            'Btn_Editar.Visible = True
 
         End If
 
-        Btn_Grabar.Visible = False
+        If _Row_Encabezado.Item("CodEstado") = "CE" Then
+            Btn_Editar.Visible = False
+            Btn_Grabar.Visible = False
+        End If
 
         For Each _Row As DataGridViewRow In Grilla.Rows
 
@@ -189,7 +190,8 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
         With Grilla
 
-            .DataSource = _Tbl_DetProd
+            If _Accion = Accion.Nuevo Then .DataSource = _Tbl_DetProd
+            If _Accion = Accion.Editar Then .DataSource = _Tbl_DetProd_Srv
 
             OcultarEncabezadoGrilla(Grilla, True)
 
@@ -382,11 +384,14 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
             End If
 
+            Dim _Tbl As DataTable
 
-            If _Tbl_DetProd.Rows.Count > 0 Then
+            If _Accion = Accion.Nuevo Then _Tbl = _Tbl_DetProd
+            If _Accion = Accion.Editar Then _Tbl = _Tbl_DetProd_Srv
 
-                'For i As Integer = 0 To TblDetalle.Rows.Count - 1
-                For Each _Fila As DataRow In _Tbl_DetProd.Rows
+            If _Tbl.Rows.Count > 0 Then
+
+                For Each _Fila As DataRow In _Tbl.Rows
 
                     Dim Estado As DataRowState = _Fila.RowState
 
@@ -432,24 +437,30 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
                             For Each _FlOp As DataRow In _Tbl_OperacionesXServ.Rows
 
-                                Dim _Op_Codigo As String = _FlOp.Item("Codigo")
-                                Dim _CodReceta As String = _FlOp.Item("CodReceta")
-                                Dim _Operacion As String = _FlOp.Item("Operacion")
-                                Dim _Orden As Integer = _FlOp.Item("Orden")
-                                Dim _CantMayor1 As Int32 = Convert.ToInt32(_FlOp.Item("CantMayor1"))
-                                Dim _Op_Cantidad As Integer = _FlOp.Item("Cantidad")
-                                Dim _Op_Precio As String = De_Txt_a_Num_01(_FlOp.Item("Precio"), 5)
-                                Dim _Op_Total As String = De_Txt_a_Num_01(_FlOp.Item("Total"), 5)
+                                Estado = _FlOp.RowState
 
-                                If _Semilla = _FlOp.Item("Semilla") Then
+                                If Estado <> DataRowState.Deleted Then
 
-                                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_OpeXServ (Id_Ot,Semilla,Codigo,CodReceta,Operacion,Orden,CantMayor1,Cantidad,CantidadRealizada,Precio,Total,Realizado) Values " & vbCrLf &
-                                                   "(" & _Id_Ot & "," & _NewSemilla & ",'" & _Op_Codigo & "','" & _CodReceta & "','" & _Operacion & "'," & _Orden &
-                                                   "," & _CantMayor1 & "," & _Op_Cantidad & ",0," & _Op_Precio & "," & _Op_Total & ",0)"
+                                    Dim _Op_Codigo As String = _FlOp.Item("Codigo")
+                                    Dim _CodReceta As String = _FlOp.Item("CodReceta")
+                                    Dim _Operacion As String = _FlOp.Item("Operacion")
+                                    Dim _Orden As Integer = _FlOp.Item("Orden")
+                                    Dim _CantMayor1 As Int32 = Convert.ToInt32(_FlOp.Item("CantMayor1"))
+                                    Dim _Op_Cantidad As Integer = _FlOp.Item("Cantidad")
+                                    Dim _Op_Precio As String = De_Txt_a_Num_01(_FlOp.Item("Precio"), 5)
+                                    Dim _Op_Total As String = De_Txt_a_Num_01(_FlOp.Item("Total"), 5)
 
-                                    Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
-                                    Comando.Transaction = myTrans
-                                    Comando.ExecuteNonQuery()
+                                    If _Semilla = _FlOp.Item("Semilla") Then
+
+                                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_OpeXServ (Id_Ot,Semilla,Codigo,CodReceta,Operacion,Orden,CantMayor1,Cantidad,CantidadRealizada,Precio,Total,Realizado) Values " & vbCrLf &
+                                                       "(" & _Id_Ot & "," & _NewSemilla & ",'" & _Op_Codigo & "','" & _CodReceta & "','" & _Operacion & "'," & _Orden &
+                                                       "," & _CantMayor1 & "," & _Op_Cantidad & ",0," & _Op_Precio & "," & _Op_Total & ",0)"
+
+                                        Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
+                                        Comando.Transaction = myTrans
+                                        Comando.ExecuteNonQuery()
+
+                                    End If
 
                                 End If
 
@@ -802,8 +813,12 @@ Public Class Frm_St_Estado_03_Presupuesto2
     Private Sub Btn_Fijar_Estado_Click(sender As System.Object, e As System.EventArgs)
 
         Dim _CantProd As Integer = 0
+        Dim _Tbl As DataTable
 
-        For Each _FlSvr As DataRow In _Tbl_DetProd.Rows
+        If _Accion = Accion.Nuevo Then _Tbl = _Tbl_DetProd
+        If _Accion = Accion.Editar Then _Tbl = _Tbl_DetProd_Srv
+
+        For Each _FlSvr As DataRow In _Tbl.Rows
 
             If Not _FlSvr.Item("Nuevo_Item") Then
 
@@ -965,24 +980,30 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
             For Each _Fl As DataRow In _Tbl_OperacionesXServ.Rows
 
-                If _Fl.Item("Semilla") = _Semilla Then
+                Dim Estado As DataRowState = _Fl.RowState
 
-                    Dim _Total As Double = _Fl.Item("Cantidad") * _Fl.Item("Precio")
+                If Not Estado = DataRowState.Deleted Then
 
-                    Sb_New_OT_Agregar_Fila_Operacion(_Tbl_OperacionesXServ2,
-                                                     _Semilla,
-                                                     _Codigo,
-                                                     _Fl.Item("CodReceta"),
-                                                     _Fl.Item("Operacion"),
-                                                     _Fl.Item("Descripcion"),
-                                                     _Fl.Item("CantMayor1"),
-                                                     _Fl.Item("Cantidad"),
-                                                     False,
-                                                     _Fl.Item("Precio"),
-                                                     _Total,
-                                                     False,
-                                                     _Fl.Item("Externa"))
-                    _Operaciones.Add(_Fl)
+                    If _Fl.Item("Semilla") = _Semilla Then
+
+                        Dim _Total As Double = _Fl.Item("Cantidad") * _Fl.Item("Precio")
+
+                        Sb_New_OT_Agregar_Fila_Operacion(_Tbl_OperacionesXServ2,
+                                                         _Semilla,
+                                                         _Codigo,
+                                                         _Fl.Item("CodReceta"),
+                                                         _Fl.Item("Operacion"),
+                                                         _Fl.Item("Descripcion"),
+                                                         _Fl.Item("CantMayor1"),
+                                                         _Fl.Item("Cantidad"),
+                                                         False,
+                                                         _Fl.Item("Precio"),
+                                                         _Total,
+                                                         False,
+                                                         _Fl.Item("Externa"))
+                        _Operaciones.Add(_Fl)
+
+                    End If
 
                 End If
 
@@ -1045,7 +1066,12 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
     Sub Sb_Sumar_Totales()
 
-        For Each _FlServ As DataRow In _Tbl_DetProd.Rows
+        Dim _Tbl As DataTable
+
+        If _Accion = Accion.Nuevo Then _Tbl = _Tbl_DetProd
+        If _Accion = Accion.Editar Then _Tbl = _Tbl_DetProd_Srv
+
+        For Each _FlServ As DataRow In _Tbl.Rows
 
             _FlServ.Item("Precio") = 0
             _FlServ.Item("Cantidad") = 0
@@ -1054,9 +1080,15 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
             For Each _FlOpe As DataRow In _Tbl_OperacionesXServ.Rows
 
-                If _FlServ.Item("Semilla") = _FlOpe.Item("Semilla") Then
+                Dim Estado As DataRowState = _FlOpe.RowState
 
-                    _FlServ.Item("Precio") += _FlOpe.Item("Total")
+                If Not Estado = DataRowState.Deleted Then
+
+                    If _FlServ.Item("Semilla") = _FlOpe.Item("Semilla") Then
+
+                        _FlServ.Item("Precio") += _FlOpe.Item("Total")
+
+                    End If
 
                 End If
 

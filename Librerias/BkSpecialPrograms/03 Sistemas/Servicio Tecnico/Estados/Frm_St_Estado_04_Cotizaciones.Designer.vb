@@ -36,6 +36,9 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         Me.Btn_Ver_documento = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Correo_Outlook = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Quitar_documento = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_COV = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_AgregarCOVExistente = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_CrearCOVdesdePresupuesto = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Fijar_Estado = New DevComponents.DotNetBar.ButtonItem()
@@ -44,9 +47,7 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Nota = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Chk_No_Existe_COV_Ni_NVV = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Menu_Contextual_COV = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_AgregarCOVExistente = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_CrearCOVdesdePresupuesto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_EditarPresupuesto = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -159,6 +160,23 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         Me.Btn_Quitar_documento.Name = "Btn_Quitar_documento"
         Me.Btn_Quitar_documento.Text = "Quitar documento de la lista"
         '
+        'Menu_Contextual_COV
+        '
+        Me.Menu_Contextual_COV.AutoExpandOnClick = True
+        Me.Menu_Contextual_COV.Name = "Menu_Contextual_COV"
+        Me.Menu_Contextual_COV.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_AgregarCOVExistente, Me.Btn_CrearCOVdesdePresupuesto})
+        Me.Menu_Contextual_COV.Text = "Opciones cotizacion"
+        '
+        'Btn_AgregarCOVExistente
+        '
+        Me.Btn_AgregarCOVExistente.Name = "Btn_AgregarCOVExistente"
+        Me.Btn_AgregarCOVExistente.Text = "Agregar cotizacion existente"
+        '
+        'Btn_CrearCOVdesdePresupuesto
+        '
+        Me.Btn_CrearCOVdesdePresupuesto.Name = "Btn_CrearCOVdesdePresupuesto"
+        Me.Btn_CrearCOVdesdePresupuesto.Text = "Crear cotizacion a partir del presupuesto"
+        '
         'Grilla
         '
         Me.Grilla.AllowUserToAddRows = False
@@ -205,7 +223,7 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Fijar_Estado, Me.Btn_Agregar_Cotizacion, Me.Btn_Editar})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Fijar_Estado, Me.Btn_EditarPresupuesto, Me.Btn_Agregar_Cotizacion, Me.Btn_Editar})
         Me.Bar2.Location = New System.Drawing.Point(0, 264)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(530, 41)
@@ -320,22 +338,14 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         Me.Chk_No_Existe_COV_Ni_NVV.TabIndex = 104
         Me.Chk_No_Existe_COV_Ni_NVV.Text = "NO EXISTE COTIZACION NI NOTA DE VENTA"
         '
-        'Menu_Contextual_COV
+        'Btn_EditarPresupuesto
         '
-        Me.Menu_Contextual_COV.AutoExpandOnClick = True
-        Me.Menu_Contextual_COV.Name = "Menu_Contextual_COV"
-        Me.Menu_Contextual_COV.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_AgregarCOVExistente, Me.Btn_CrearCOVdesdePresupuesto})
-        Me.Menu_Contextual_COV.Text = "Opciones cotizacion"
-        '
-        'Btn_AgregarCOVExistente
-        '
-        Me.Btn_AgregarCOVExistente.Name = "Btn_AgregarCOVExistente"
-        Me.Btn_AgregarCOVExistente.Text = "Agregar cotizacion existente"
-        '
-        'Btn_CrearCOVdesdePresupuesto
-        '
-        Me.Btn_CrearCOVdesdePresupuesto.Name = "Btn_CrearCOVdesdePresupuesto"
-        Me.Btn_CrearCOVdesdePresupuesto.Text = "Crear cotizacion a partir del presupuesto"
+        Me.Btn_EditarPresupuesto.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_EditarPresupuesto.ForeColor = System.Drawing.Color.Black
+        Me.Btn_EditarPresupuesto.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Center
+        Me.Btn_EditarPresupuesto.Name = "Btn_EditarPresupuesto"
+        Me.Btn_EditarPresupuesto.Text = "Editar presupuesto"
+        Me.Btn_EditarPresupuesto.Visible = False
         '
         'Frm_St_Estado_04_Cotizaciones
         '
@@ -386,4 +396,5 @@ Partial Class Frm_St_Estado_04_Cotizaciones
     Friend WithEvents Menu_Contextual_COV As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_AgregarCOVExistente As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_CrearCOVdesdePresupuesto As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_EditarPresupuesto As DevComponents.DotNetBar.ButtonItem
 End Class
