@@ -1,6 +1,5 @@
 ﻿Imports BkSpecialPrograms
 Imports DevComponents.DotNetBar
-Imports Newtonsoft.Json.Linq
 
 Public Class Menu
 
@@ -413,6 +412,10 @@ Public Class Menu
     End Sub
 
     Private Sub ButtonX1_Click(sender As Object, e As EventArgs) Handles ButtonX1.Click
+
+        Dim _IdmaeedoFCV = 1121028
+        Dim _Cl As New Cl_CambiarFechaVencimiento(_IdmaeedoFCV)
+        _Cl.Fx_CambioFechaConFincred()
 
         'Dim Auto_CorreoCc = "jalfaro@bakapp.cl"
         'Dim Auto_Id_CorreoOCCMinCompra = 38

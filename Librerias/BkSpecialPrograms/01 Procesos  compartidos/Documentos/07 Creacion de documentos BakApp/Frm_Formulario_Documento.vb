@@ -15326,48 +15326,7 @@ Public Class Frm_Formulario_Documento
 
         Dim _Origen_Modificado_Intertanto As Boolean
 
-        'Dim _Revisar_Fincred As Boolean
-        'Dim _Fincred_Respuesta As New Fincred_API.Respuesta
-
-
-        'If _Global_Row_Configuracion_General.Item("Fincred_Usar") And _Global_Row_Configuracion_Estacion.Item("Fincred_Usar") Then
-        '    _Revisar_Fincred = _TblEncabezado.Rows(0).Item("RevFincred")
-        'End If
-
         If _TipoGrab = _Tipo_de_Grabacion.Nuevo_documento Then
-
-            'If _Revisar_Fincred And _Tido = "NVV" Then
-
-            '    _Fincred_Respuesta = Fx_Vaidar_Fincred()
-
-            '    If _Fincred_Respuesta.EsCorrecto Then
-
-            '        _TblEncabezado.Rows(0).Item("IdFincred") = _Fincred_Respuesta.Id_TramaRespuesta
-
-            '        MessageBoxEx.Show(Me, _Fincred_Respuesta.TramaRespuesta.descripcion_negacion & vbCrLf &
-            '                              "Código de autorización: " & _Fincred_Respuesta.TramaRespuesta.documentos(0).autorizacion,
-            '                              "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            '    Else
-            '        MessageBoxEx.Show(Me, "Código de autorización: RECHAZADO" & vbCrLf &
-            '                          "Respuesta FINCRED: " & _Fincred_Respuesta.MensajeError & vbCrLf & vbCrLf &
-            '                          "El documento debera seguir el conducto regular, se quitaran los plazos de vencimineto" & vbCrLf &
-            '                          "Para continuar debera volver a GRABAR el documento",
-            '                          "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
-            '        _TblEncabezado.Rows(0).Item("IdFincred") = _Fincred_Respuesta.Id_TramaRespuesta
-            '        _TblEncabezado.Rows(0).Item("RevFincred") = False
-            '        _TblEncabezado.Rows(0).Item("FechaEmision") = _TblEncabezado.Rows(0).Item("FechaEmision")
-            '        _TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento") = _TblEncabezado.Rows(0).Item("FechaEmision")
-            '        _TblEncabezado.Rows(0).Item("FechaUltVencimiento") = _TblEncabezado.Rows(0).Item("FechaEmision")
-            '        _TblEncabezado.Rows(0).Item("Cuotas") = 0
-            '        _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento") = 0
-            '        _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = 0
-
-            '        Return 0
-
-            '    End If
-
-            'End If
 
             _Idmaeedo = _New_Doc.Fx_Crear_Documento(_Tido,
                                                     _Nudo,
@@ -15763,6 +15722,11 @@ Public Class Frm_Formulario_Documento
                     _Fila.Item("Consolidar_Stock") = True
                 Next
                 Sb_Consolidar_Stock_Marcados()
+            End If
+
+            If _Tido = "FCV" Then
+                Dim _Cl As New Cl_CambiarFechaVencimiento(_New_Idmaeedo)
+                _Cl.Fx_CambioFechaConFincred()
             End If
 
         Else
