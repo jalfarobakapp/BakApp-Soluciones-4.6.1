@@ -145,6 +145,8 @@ Public Class Frm_Formulario_Documento
 
     Dim _Facturacion_Automatica As Boolean
 
+    Dim _DecimalesGl As Integer
+
 #Region "PROPIEDADES"
 
     Public ReadOnly Property Pro_Idmaeedo() As Integer
@@ -399,6 +401,15 @@ Public Class Frm_Formulario_Documento
     Public Property MensajesError As String
     Public Property ErrorAlGrabar As Boolean
 
+    Public Property DecimalesGl As Integer
+        Get
+            Return _DecimalesGl
+        End Get
+        Set(value As Integer)
+            _DecimalesGl = value
+        End Set
+    End Property
+
 #End Region
 
     Public Sub New(Tido As String,
@@ -416,6 +427,8 @@ Public Class Frm_Formulario_Documento
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Me._Documento_Reciclado = Documento_Reciclado
+
+        _DecimalesGl = 2
 
         Consulta_sql = "Delete " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Lp'
                         Insert Into " & _Global_BaseBk & "ZW_Permisos 
@@ -1053,6 +1066,8 @@ Public Class Frm_Formulario_Documento
         _Nombre_Archivo_Txt_Especial_Saime = String.Empty
         _Desde_Prestahop = False
         _ListaCodQRUnicosLeidos = New List(Of String)
+
+        Lbl_NroDecimales.Text = FormatNumber(0, _DecimalesGl)
 
         Chk_Redondear_Cero.Enabled = False
 
@@ -2339,14 +2354,20 @@ Public Class Frm_Formulario_Documento
             Dim Precio_ As String
             Dim _DisplayIndex = 0
 
+            Dim _Nveces As String = New String("0", _DecimalesGl)
+
+            If Not String.IsNullOrEmpty(_Nveces) Then
+                _Nveces = "." & _Nveces
+            End If
+
             ' .Columns("STOCK_Ud1").DefaultCellStyle.Format = "##,###0.##"
             If ChkValores.Checked Then ' TipoNB = "B" Then
                 Total = "ValNetoLinea"
-                FormatoPrecio = "###,##0.###"
+                FormatoPrecio = "###,##0" & _Nveces
                 Precio_ = "Precio Neto"
             Else 'If TipoNB = "N" Then
                 Total = "ValBrutoLinea"
-                FormatoPrecio = "###,##0.###"
+                FormatoPrecio = "###,##0" & _Nveces
                 Precio_ = "Precio Bruto"
             End If
 
@@ -5376,11 +5397,11 @@ Public Class Frm_Formulario_Documento
                 Else
                     '_Precio_Calculado = Math.Round(_Precio / _Tipo_Cambio_Ent, 5)
                     _Precio_Calculado = Math.Round(_Precio / _Tipo_Cambio_Det, 5)
-                    _Decimales = 2
+                    _Decimales = _DecimalesGl ' 2
                 End If
             Else
                 If _Tipo_Moneda_Enc <> "N" Or _Tipo_Cambio_Det <> 1 Then
-                    _Decimales = 2
+                    _Decimales = _DecimalesGl ' 2
                 End If
                 _Precio_Calculado = _Precio
             End If
@@ -6062,7 +6083,7 @@ Public Class Frm_Formulario_Documento
 
                 _PrecioNeto = _Precio
 
-                If _Moneda_Det.Trim <> "$" Then _Decimales = 2
+                If _Moneda_Det.Trim <> "$" Then _Decimales = _DecimalesGl ' 2
 
                 _PrecioBruto = Math.Round(_Precio * _Impuestos, _Decimales)
 
@@ -15326,48 +15347,7 @@ Public Class Frm_Formulario_Documento
 
         Dim _Origen_Modificado_Intertanto As Boolean
 
-        'Dim _Revisar_Fincred As Boolean
-        'Dim _Fincred_Respuesta As New Fincred_API.Respuesta
-
-
-        'If _Global_Row_Configuracion_General.Item("Fincred_Usar") And _Global_Row_Configuracion_Estacion.Item("Fincred_Usar") Then
-        '    _Revisar_Fincred = _TblEncabezado.Rows(0).Item("RevFincred")
-        'End If
-
         If _TipoGrab = _Tipo_de_Grabacion.Nuevo_documento Then
-
-            'If _Revisar_Fincred And _Tido = "NVV" Then
-
-            '    _Fincred_Respuesta = Fx_Vaidar_Fincred()
-
-            '    If _Fincred_Respuesta.EsCorrecto Then
-
-            '        _TblEncabezado.Rows(0).Item("IdFincred") = _Fincred_Respuesta.Id_TramaRespuesta
-
-            '        MessageBoxEx.Show(Me, _Fincred_Respuesta.TramaRespuesta.descripcion_negacion & vbCrLf &
-            '                              "Código de autorización: " & _Fincred_Respuesta.TramaRespuesta.documentos(0).autorizacion,
-            '                              "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            '    Else
-            '        MessageBoxEx.Show(Me, "Código de autorización: RECHAZADO" & vbCrLf &
-            '                          "Respuesta FINCRED: " & _Fincred_Respuesta.MensajeError & vbCrLf & vbCrLf &
-            '                          "El documento debera seguir el conducto regular, se quitaran los plazos de vencimineto" & vbCrLf &
-            '                          "Para continuar debera volver a GRABAR el documento",
-            '                          "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
-            '        _TblEncabezado.Rows(0).Item("IdFincred") = _Fincred_Respuesta.Id_TramaRespuesta
-            '        _TblEncabezado.Rows(0).Item("RevFincred") = False
-            '        _TblEncabezado.Rows(0).Item("FechaEmision") = _TblEncabezado.Rows(0).Item("FechaEmision")
-            '        _TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento") = _TblEncabezado.Rows(0).Item("FechaEmision")
-            '        _TblEncabezado.Rows(0).Item("FechaUltVencimiento") = _TblEncabezado.Rows(0).Item("FechaEmision")
-            '        _TblEncabezado.Rows(0).Item("Cuotas") = 0
-            '        _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento") = 0
-            '        _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = 0
-
-            '        Return 0
-
-            '    End If
-
-            'End If
 
             _Idmaeedo = _New_Doc.Fx_Crear_Documento(_Tido,
                                                     _Nudo,
@@ -15763,6 +15743,11 @@ Public Class Frm_Formulario_Documento
                     _Fila.Item("Consolidar_Stock") = True
                 Next
                 Sb_Consolidar_Stock_Marcados()
+            End If
+
+            If _Tido = "FCV" Then
+                Dim _Cl As New Cl_CambiarFechaVencimiento(_New_Idmaeedo)
+                _Cl.Fx_CambioFechaConFincred()
             End If
 
         Else
@@ -21318,11 +21303,11 @@ Public Class Frm_Formulario_Documento
 
         If _Moneda_Det.Trim <> _Moneda_Enc.Trim Then
             If _Tipo_Moneda_Enc <> "N" Then
-                _Decimales = 2
+                _Decimales = _DecimalesGl ' 2
             End If
         Else
             If _Tipo_Moneda_Enc <> "N" Then
-                _Decimales = 2
+                _Decimales = _DecimalesGl ' 2
             End If
         End If
 
@@ -25084,6 +25069,25 @@ Public Class Frm_Formulario_Documento
 
     End Function
 
+    Private Sub Btn_DecimalAgregar_Click(sender As Object, e As EventArgs) Handles Btn_DecimalAgregar.Click
+
+        If _DecimalesGl < 5 Then _DecimalesGl += 1
+        Lbl_NroDecimales.Text = FormatNumber(0, _DecimalesGl)
+        Dim _Palabra = Letras(_DecimalesGl)
+        Lbl_NroDecimales.Tooltip = _Palabra & " decimal(es)"
+        Sb_Formato_Grilla_Detalle()
+
+    End Sub
+
+    Private Sub Btn_DecimalRestar_Click(sender As Object, e As EventArgs) Handles Btn_DecimalRestar.Click
+
+        If _DecimalesGl > 0 And _DecimalesGl <= 5 Then _DecimalesGl -= 1
+        Lbl_NroDecimales.Text = FormatNumber(0, _DecimalesGl)
+        Dim _Palabra = Letras(_DecimalesGl)
+        Lbl_NroDecimales.Tooltip = _Palabra & " decimal(es)"
+        Sb_Formato_Grilla_Detalle()
+
+    End Sub
 
     Function Fx_Revisar_Fincred() As Boolean
 

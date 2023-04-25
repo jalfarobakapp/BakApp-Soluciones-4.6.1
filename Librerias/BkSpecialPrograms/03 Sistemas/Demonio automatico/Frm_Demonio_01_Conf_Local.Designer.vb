@@ -106,6 +106,8 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Dtp_Cons_Stock_Hora_Ejecucion = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.Chk_Ejecutar_Automaticamente = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
+        Me.Panel_01 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Btn_ConfAsisCompra = New DevComponents.DotNetBar.ButtonX()
         Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
@@ -129,8 +131,6 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Chk_AsistenteDeCompras = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Dtp_AsisCompra_Hora_Ejecucion = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.SuperTabItem5 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.Panel_01 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Chk_OCCCerrar = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Input_DiasOCC = New DevComponents.Editors.IntegerInput()
@@ -223,10 +223,10 @@ Partial Class Frm_Demonio_01_Conf_Local
         CType(Me.Dtp_Cons_Stock_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
+        Me.Panel_01.SuspendLayout()
         Me.SuperTabControlPanel3.SuspendLayout()
         Me.TableLayoutPanel9.SuspendLayout()
         CType(Me.Dtp_AsisCompra_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.Panel_01.SuspendLayout()
         Me.SuperTabControlPanel1.SuspendLayout()
         CType(Me.Input_DiasOCC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_CierreDoc_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -278,7 +278,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Impresora_Prod_Sol_Bodega.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Impresora_Prod_Sol_Bodega.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Impresora_Prod_Sol_Bodega.Image = CType(resources.GetObject("Btn_Impresora_Prod_Sol_Bodega.Image"), System.Drawing.Image)
-        Me.Btn_Impresora_Prod_Sol_Bodega.Location = New System.Drawing.Point(429, 78)
+        Me.Btn_Impresora_Prod_Sol_Bodega.Location = New System.Drawing.Point(428, 78)
         Me.Btn_Impresora_Prod_Sol_Bodega.Name = "Btn_Impresora_Prod_Sol_Bodega"
         Me.Btn_Impresora_Prod_Sol_Bodega.Size = New System.Drawing.Size(31, 19)
         Me.Btn_Impresora_Prod_Sol_Bodega.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -470,7 +470,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 49.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 58.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 71.0!))
         Me.TableLayoutPanel3.Controls.Add(Me.Input_CantMail, 5, 1)
         Me.TableLayoutPanel3.Controls.Add(Me.Btn_Filtro_Doc_Picking_X_Usuario, 5, 5)
         Me.TableLayoutPanel3.Controls.Add(Me.Btn_Filtro_Doc_Impresion_X_Usuario, 5, 2)
@@ -551,7 +551,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_CantMail.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_CantMail.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_CantMail.ForeColor = System.Drawing.Color.Black
-        Me.Input_CantMail.Location = New System.Drawing.Point(469, 28)
+        Me.Input_CantMail.Location = New System.Drawing.Point(468, 28)
         Me.Input_CantMail.MaxValue = 60
         Me.Input_CantMail.MinValue = 1
         Me.Input_CantMail.Name = "Input_CantMail"
@@ -565,7 +565,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Filtro_Doc_Picking_X_Usuario.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Filtro_Doc_Picking_X_Usuario.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Filtro_Doc_Picking_X_Usuario.Image = CType(resources.GetObject("Btn_Filtro_Doc_Picking_X_Usuario.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Doc_Picking_X_Usuario.Location = New System.Drawing.Point(469, 128)
+        Me.Btn_Filtro_Doc_Picking_X_Usuario.Location = New System.Drawing.Point(468, 128)
         Me.Btn_Filtro_Doc_Picking_X_Usuario.Name = "Btn_Filtro_Doc_Picking_X_Usuario"
         Me.Btn_Filtro_Doc_Picking_X_Usuario.Size = New System.Drawing.Size(30, 19)
         Me.Btn_Filtro_Doc_Picking_X_Usuario.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -577,7 +577,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Filtro_Doc_Impresion_X_Usuario.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Filtro_Doc_Impresion_X_Usuario.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Filtro_Doc_Impresion_X_Usuario.Image = CType(resources.GetObject("Btn_Filtro_Doc_Impresion_X_Usuario.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Doc_Impresion_X_Usuario.Location = New System.Drawing.Point(469, 53)
+        Me.Btn_Filtro_Doc_Impresion_X_Usuario.Location = New System.Drawing.Point(468, 53)
         Me.Btn_Filtro_Doc_Impresion_X_Usuario.Name = "Btn_Filtro_Doc_Impresion_X_Usuario"
         Me.Btn_Filtro_Doc_Impresion_X_Usuario.Size = New System.Drawing.Size(30, 19)
         Me.Btn_Filtro_Doc_Impresion_X_Usuario.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -592,7 +592,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX9.ForeColor = System.Drawing.Color.Black
-        Me.LabelX9.Location = New System.Drawing.Point(371, 153)
+        Me.LabelX9.Location = New System.Drawing.Point(370, 153)
         Me.LabelX9.Name = "LabelX9"
         Me.LabelX9.Size = New System.Drawing.Size(50, 19)
         Me.LabelX9.TabIndex = 124
@@ -608,7 +608,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_LibroDTESII.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_LibroDTESII.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_LibroDTESII.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_LibroDTESII.Location = New System.Drawing.Point(322, 153)
+        Me.Input_Tiempo_LibroDTESII.Location = New System.Drawing.Point(321, 153)
         Me.Input_Tiempo_LibroDTESII.MaxValue = 60
         Me.Input_Tiempo_LibroDTESII.MinValue = 1
         Me.Input_Tiempo_LibroDTESII.Name = "Input_Tiempo_LibroDTESII"
@@ -652,7 +652,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(371, 103)
+        Me.LabelX1.Location = New System.Drawing.Point(370, 103)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(50, 19)
         Me.LabelX1.TabIndex = 13
@@ -666,7 +666,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(371, 78)
+        Me.LabelX4.Location = New System.Drawing.Point(370, 78)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(50, 19)
         Me.LabelX4.TabIndex = 10
@@ -680,7 +680,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX3.ForeColor = System.Drawing.Color.Black
-        Me.LabelX3.Location = New System.Drawing.Point(371, 53)
+        Me.LabelX3.Location = New System.Drawing.Point(370, 53)
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(50, 19)
         Me.LabelX3.TabIndex = 9
@@ -694,7 +694,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(371, 28)
+        Me.LabelX2.Location = New System.Drawing.Point(370, 28)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(50, 19)
         Me.LabelX2.TabIndex = 8
@@ -725,7 +725,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Prestashop.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Prestashop.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Prestashop.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Prestashop.Location = New System.Drawing.Point(322, 103)
+        Me.Input_Tiempo_Prestashop.Location = New System.Drawing.Point(321, 103)
         Me.Input_Tiempo_Prestashop.MaxValue = 60
         Me.Input_Tiempo_Prestashop.MinValue = 1
         Me.Input_Tiempo_Prestashop.Name = "Input_Tiempo_Prestashop"
@@ -757,7 +757,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Correo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Correo.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Correo.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Correo.Location = New System.Drawing.Point(322, 28)
+        Me.Input_Tiempo_Correo.Location = New System.Drawing.Point(321, 28)
         Me.Input_Tiempo_Correo.MaxValue = 60
         Me.Input_Tiempo_Correo.MinValue = 1
         Me.Input_Tiempo_Correo.Name = "Input_Tiempo_Correo"
@@ -776,7 +776,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Sol_Bodega.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Sol_Bodega.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Sol_Bodega.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Sol_Bodega.Location = New System.Drawing.Point(322, 78)
+        Me.Input_Tiempo_Sol_Bodega.Location = New System.Drawing.Point(321, 78)
         Me.Input_Tiempo_Sol_Bodega.MaxValue = 15
         Me.Input_Tiempo_Sol_Bodega.MinValue = 1
         Me.Input_Tiempo_Sol_Bodega.Name = "Input_Tiempo_Sol_Bodega"
@@ -795,7 +795,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Impresion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Impresion.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Impresion.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Impresion.Location = New System.Drawing.Point(322, 53)
+        Me.Input_Tiempo_Impresion.Location = New System.Drawing.Point(321, 53)
         Me.Input_Tiempo_Impresion.MaxValue = 15
         Me.Input_Tiempo_Impresion.MinValue = 1
         Me.Input_Tiempo_Impresion.Name = "Input_Tiempo_Impresion"
@@ -918,7 +918,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Filtro_Doc_Prestashop.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Filtro_Doc_Prestashop.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Filtro_Doc_Prestashop.Image = CType(resources.GetObject("Btn_Filtro_Doc_Prestashop.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Doc_Prestashop.Location = New System.Drawing.Point(429, 103)
+        Me.Btn_Filtro_Doc_Prestashop.Location = New System.Drawing.Point(428, 103)
         Me.Btn_Filtro_Doc_Prestashop.Name = "Btn_Filtro_Doc_Prestashop"
         Me.Btn_Filtro_Doc_Prestashop.Size = New System.Drawing.Size(31, 19)
         Me.Btn_Filtro_Doc_Prestashop.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -930,7 +930,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Filtro_Doc_Impresion.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Filtro_Doc_Impresion.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Filtro_Doc_Impresion.Image = CType(resources.GetObject("Btn_Filtro_Doc_Impresion.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Doc_Impresion.Location = New System.Drawing.Point(429, 53)
+        Me.Btn_Filtro_Doc_Impresion.Location = New System.Drawing.Point(428, 53)
         Me.Btn_Filtro_Doc_Impresion.Name = "Btn_Filtro_Doc_Impresion"
         Me.Btn_Filtro_Doc_Impresion.Size = New System.Drawing.Size(31, 19)
         Me.Btn_Filtro_Doc_Impresion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -942,7 +942,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Filtro_Doc_Correo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Filtro_Doc_Correo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Filtro_Doc_Correo.Image = CType(resources.GetObject("Btn_Filtro_Doc_Correo.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Doc_Correo.Location = New System.Drawing.Point(429, 28)
+        Me.Btn_Filtro_Doc_Correo.Location = New System.Drawing.Point(428, 28)
         Me.Btn_Filtro_Doc_Correo.Name = "Btn_Filtro_Doc_Correo"
         Me.Btn_Filtro_Doc_Correo.Size = New System.Drawing.Size(31, 19)
         Me.Btn_Filtro_Doc_Correo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -955,7 +955,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Filtro_Doc_Traer_Automaticamente.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Filtro_Doc_Traer_Automaticamente.Enabled = False
         Me.Btn_Filtro_Doc_Traer_Automaticamente.Image = CType(resources.GetObject("Btn_Filtro_Doc_Traer_Automaticamente.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Doc_Traer_Automaticamente.Location = New System.Drawing.Point(429, 3)
+        Me.Btn_Filtro_Doc_Traer_Automaticamente.Location = New System.Drawing.Point(428, 3)
         Me.Btn_Filtro_Doc_Traer_Automaticamente.Name = "Btn_Filtro_Doc_Traer_Automaticamente"
         Me.Btn_Filtro_Doc_Traer_Automaticamente.Size = New System.Drawing.Size(31, 19)
         Me.Btn_Filtro_Doc_Traer_Automaticamente.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1000,7 +1000,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Picking.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Picking.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Picking.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Picking.Location = New System.Drawing.Point(322, 128)
+        Me.Input_Tiempo_Picking.Location = New System.Drawing.Point(321, 128)
         Me.Input_Tiempo_Picking.MaxValue = 15
         Me.Input_Tiempo_Picking.MinValue = 1
         Me.Input_Tiempo_Picking.Name = "Input_Tiempo_Picking"
@@ -1017,7 +1017,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX5.ForeColor = System.Drawing.Color.Black
-        Me.LabelX5.Location = New System.Drawing.Point(371, 128)
+        Me.LabelX5.Location = New System.Drawing.Point(370, 128)
         Me.LabelX5.Name = "LabelX5"
         Me.LabelX5.Size = New System.Drawing.Size(50, 19)
         Me.LabelX5.TabIndex = 126
@@ -1028,7 +1028,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Filtro_Doc_Picking.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Filtro_Doc_Picking.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Filtro_Doc_Picking.Image = CType(resources.GetObject("Btn_Filtro_Doc_Picking.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Doc_Picking.Location = New System.Drawing.Point(429, 128)
+        Me.Btn_Filtro_Doc_Picking.Location = New System.Drawing.Point(428, 128)
         Me.Btn_Filtro_Doc_Picking.Name = "Btn_Filtro_Doc_Picking"
         Me.Btn_Filtro_Doc_Picking.Size = New System.Drawing.Size(31, 19)
         Me.Btn_Filtro_Doc_Picking.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1043,7 +1043,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX15.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX15.ForeColor = System.Drawing.Color.Black
-        Me.LabelX15.Location = New System.Drawing.Point(469, 3)
+        Me.LabelX15.Location = New System.Drawing.Point(468, 3)
         Me.LabelX15.Name = "LabelX15"
         Me.LabelX15.Size = New System.Drawing.Size(50, 19)
         Me.LabelX15.TabIndex = 129
@@ -1086,7 +1086,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Archivador.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Archivador.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Archivador.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Archivador.Location = New System.Drawing.Point(322, 178)
+        Me.Input_Tiempo_Archivador.Location = New System.Drawing.Point(321, 178)
         Me.Input_Tiempo_Archivador.MaxValue = 60
         Me.Input_Tiempo_Archivador.MinValue = 1
         Me.Input_Tiempo_Archivador.Name = "Input_Tiempo_Archivador"
@@ -1103,7 +1103,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX12.ForeColor = System.Drawing.Color.Black
-        Me.LabelX12.Location = New System.Drawing.Point(371, 178)
+        Me.LabelX12.Location = New System.Drawing.Point(370, 178)
         Me.LabelX12.Name = "LabelX12"
         Me.LabelX12.Size = New System.Drawing.Size(50, 19)
         Me.LabelX12.TabIndex = 127
@@ -1114,7 +1114,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Carpeta_Archivador.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Carpeta_Archivador.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Carpeta_Archivador.Image = CType(resources.GetObject("Btn_Carpeta_Archivador.Image"), System.Drawing.Image)
-        Me.Btn_Carpeta_Archivador.Location = New System.Drawing.Point(429, 178)
+        Me.Btn_Carpeta_Archivador.Location = New System.Drawing.Point(428, 178)
         Me.Btn_Carpeta_Archivador.Name = "Btn_Carpeta_Archivador"
         Me.Btn_Carpeta_Archivador.Size = New System.Drawing.Size(31, 19)
         Me.Btn_Carpeta_Archivador.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1185,7 +1185,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Wordpress_Stock.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Wordpress_Stock.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Wordpress_Stock.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Wordpress_Stock.Location = New System.Drawing.Point(322, 228)
+        Me.Input_Tiempo_Wordpress_Stock.Location = New System.Drawing.Point(321, 228)
         Me.Input_Tiempo_Wordpress_Stock.MaxValue = 60
         Me.Input_Tiempo_Wordpress_Stock.MinValue = 1
         Me.Input_Tiempo_Wordpress_Stock.Name = "Input_Tiempo_Wordpress_Stock"
@@ -1204,7 +1204,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Wordpress_Productos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Wordpress_Productos.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Wordpress_Productos.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Wordpress_Productos.Location = New System.Drawing.Point(322, 253)
+        Me.Input_Tiempo_Wordpress_Productos.Location = New System.Drawing.Point(321, 253)
         Me.Input_Tiempo_Wordpress_Productos.MaxValue = 60
         Me.Input_Tiempo_Wordpress_Productos.MinValue = 1
         Me.Input_Tiempo_Wordpress_Productos.Name = "Input_Tiempo_Wordpress_Productos"
@@ -1664,6 +1664,29 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem2, Me.SuperTabItem3, Me.SuperTabItem4, Me.SuperTabItem5})
         Me.SuperTabControl1.Text = "SuperTabControl1"
         '
+        'Panel_01
+        '
+        Me.Panel_01.CanvasColor = System.Drawing.SystemColors.Control
+        Me.Panel_01.Controls.Add(Me.LabelX8)
+        Me.Panel_01.Controls.Add(Me.TableLayoutPanel1)
+        Me.Panel_01.Controls.Add(Me.TableLayoutPanel2)
+        Me.Panel_01.Controls.Add(Me.Dtp_Cons_Stock_Hora_Ejecucion)
+        Me.Panel_01.Controls.Add(Me.Chk_Timer_Consolidacion_Stock)
+        Me.Panel_01.Controls.Add(Me.PictureBox6)
+        Me.Panel_01.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel_01.Location = New System.Drawing.Point(168, 0)
+        Me.Panel_01.Name = "Panel_01"
+        Me.Panel_01.Size = New System.Drawing.Size(448, 239)
+        Me.Panel_01.TabIndex = 1
+        Me.Panel_01.TabItem = Me.SuperTabItem1
+        '
+        'SuperTabItem1
+        '
+        Me.SuperTabItem1.AttachedControl = Me.Panel_01
+        Me.SuperTabItem1.GlobalItem = False
+        Me.SuperTabItem1.Name = "SuperTabItem1"
+        Me.SuperTabItem1.Text = "Prog. consolidación de stock"
+        '
         'SuperTabControlPanel3
         '
         Me.SuperTabControlPanel3.Controls.Add(Me.Btn_ConfAsisCompra)
@@ -2105,29 +2128,6 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabItem5.GlobalItem = False
         Me.SuperTabItem5.Name = "SuperTabItem5"
         Me.SuperTabItem5.Text = "Asistente de compras"
-        '
-        'Panel_01
-        '
-        Me.Panel_01.CanvasColor = System.Drawing.SystemColors.Control
-        Me.Panel_01.Controls.Add(Me.LabelX8)
-        Me.Panel_01.Controls.Add(Me.TableLayoutPanel1)
-        Me.Panel_01.Controls.Add(Me.TableLayoutPanel2)
-        Me.Panel_01.Controls.Add(Me.Dtp_Cons_Stock_Hora_Ejecucion)
-        Me.Panel_01.Controls.Add(Me.Chk_Timer_Consolidacion_Stock)
-        Me.Panel_01.Controls.Add(Me.PictureBox6)
-        Me.Panel_01.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel_01.Location = New System.Drawing.Point(168, 0)
-        Me.Panel_01.Name = "Panel_01"
-        Me.Panel_01.Size = New System.Drawing.Size(448, 239)
-        Me.Panel_01.TabIndex = 1
-        Me.Panel_01.TabItem = Me.SuperTabItem1
-        '
-        'SuperTabItem1
-        '
-        Me.SuperTabItem1.AttachedControl = Me.Panel_01
-        Me.SuperTabItem1.GlobalItem = False
-        Me.SuperTabItem1.Name = "SuperTabItem1"
-        Me.SuperTabItem1.Text = "Prog. consolidación de stock"
         '
         'SuperTabControlPanel1
         '
@@ -3226,10 +3226,10 @@ Partial Class Frm_Demonio_01_Conf_Local
         CType(Me.Dtp_Cons_Stock_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
+        Me.Panel_01.ResumeLayout(False)
         Me.SuperTabControlPanel3.ResumeLayout(False)
         Me.TableLayoutPanel9.ResumeLayout(False)
         CType(Me.Dtp_AsisCompra_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.Panel_01.ResumeLayout(False)
         Me.SuperTabControlPanel1.ResumeLayout(False)
         CType(Me.Input_DiasOCC, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Dtp_CierreDoc_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).EndInit()

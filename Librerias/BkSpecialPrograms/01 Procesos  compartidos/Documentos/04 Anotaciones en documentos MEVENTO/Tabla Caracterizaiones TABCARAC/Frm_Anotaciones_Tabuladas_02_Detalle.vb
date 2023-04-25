@@ -57,6 +57,7 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
         End If
 
         Sb_Actualizar_Grilla()
+
     End Sub
 
 
@@ -165,7 +166,7 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
         If _Tipo_Apertura = Tipo_Apertura.Mantencion_tabla Then
             Consulta_sql = "Select * From TABCARAC Where KOTABLA = '" & _Kotabla & "'"
         ElseIf _Tipo_Apertura = Tipo_Apertura.Seleccion_tabla Then
-            Consulta_sql = "Select CAST( 0 AS bit) AS Chk,*,CAST( '' AS Varchar(100)) AS Enlace_Externo," &
+            Consulta_sql = "Select CAST( 0 AS bit) AS Chk,*,CAST( '' AS Varchar(100)) AS Enlace_Externo,CAST(Null As datetime) As Fecharef," &
                            "CAST( '' AS Char(8)) AS ARCHIRSE,CAST( 0 AS Int) AS IDRSE" & vbCrLf &
                            "From TABCARAC Where KOTABLA = '" & _Kotabla & "'"
         End If
@@ -179,12 +180,15 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
 
             OcultarEncabezadoGrilla(Grilla, True)
 
+            Dim _DisplayIndex = 0
             Dim _Mas = 570
 
             If _Tipo_Apertura = Tipo_Apertura.Seleccion_tabla Then
                 .Columns("Chk").HeaderText = "Sel"
                 .Columns("Chk").Width = 30
                 .Columns("Chk").Visible = True
+                .Columns("Chk").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
                 _Mas = 350
             End If
 
@@ -192,16 +196,33 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
             .Columns("KOCARAC").Width = 100
             .Columns("KOCARAC").Visible = True
             .Columns("KOCARAC").ReadOnly = True
+            .Columns("KOCARAC").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("NOKOCARAC").HeaderText = "Descripción"
-            .Columns("NOKOCARAC").Width = _Mas
+            .Columns("NOKOCARAC").Width = _Mas - 20
             .Columns("NOKOCARAC").Visible = True
+            .Columns("NOKOCARAC").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             If _Tipo_Apertura = Tipo_Apertura.Seleccion_tabla Then
+
+                .Columns("Fecharef").HeaderText = "Fecha Rel."
+                .Columns("Fecharef").Width = 70
+                .Columns("Fecharef").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                .Columns("Fecharef").DefaultCellStyle.Format = "dd/MM/yyyy"
+                .Columns("Fecharef").Visible = True
+                .Columns("Fecharef").ReadOnly = False
+                .Columns("Fecharef").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+
                 .Columns("Enlace_Externo").HeaderText = "Enlace externo"
-                .Columns("Enlace_Externo").Width = 220
+                .Columns("Enlace_Externo").Width = 220 - 50
                 .Columns("Enlace_Externo").Visible = True
                 .Columns("Enlace_Externo").ReadOnly = True
+                .Columns("Enlace_Externo").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+
             End If
 
             If _Tipo_Apertura = Tipo_Apertura.Mantencion_tabla Then
@@ -239,8 +260,11 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
     End Sub
 
     Private Sub Btn_Incorporar_Solo_Tickeados_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Incorporar_Solo_Tickeados.Click
+
         Grilla.EndEdit()
+
         Dim _Tickeados = 0
+
         For Each _Fila As DataGridViewRow In Grilla.Rows
             If _Fila.Cells("Chk").Value Then
                 _Tickeados += 1
@@ -333,18 +357,18 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
-        If _Cabeza = "NOKOCARAC" Then
-
-            _Fila.Cells("NOKOCARAC").Value = _Fila.Cells("NOKOCARAC").Value.ToString.Trim
-            SendKeys.Send("{F2}")
-            Grilla.BeginEdit(True)
-
-        ElseIf _Cabeza = "Enlace_Externo" Then
-
-            Btn_Quitar_Link.Enabled = _Fila.Cells("IDRSE").Value
-            ShowContextMenu(Menu_Ligar_documentos)
-
-        End If
+        Select Case _Cabeza
+            Case "NOKOCARAC"
+                _Fila.Cells("NOKOCARAC").Value = _Fila.Cells("NOKOCARAC").Value.ToString.Trim
+                SendKeys.Send("{F2}")
+                Grilla.BeginEdit(True)
+            Case "Fecharef"
+                SendKeys.Send("{F2}")
+                Grilla.BeginEdit(True)
+            Case "Enlace_Externo"
+                Btn_Quitar_Link.Enabled = _Fila.Cells("IDRSE").Value
+                ShowContextMenu(Menu_Ligar_documentos)
+        End Select
 
     End Sub
 
@@ -359,5 +383,18 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
 
     End Sub
 
+    Private Sub Grilla_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles Grilla.DataError
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+
+        If _Cabeza = "Fecharef" Then
+            MessageBoxEx.Show(Me, e.Exception.Message & vbCrLf & vbCrLf &
+                              "El formato de la fecha debe ser dd-mm-aaaa o dd/mm/aaaa", "Validación de fecha",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+        End If
+
+    End Sub
 
 End Class

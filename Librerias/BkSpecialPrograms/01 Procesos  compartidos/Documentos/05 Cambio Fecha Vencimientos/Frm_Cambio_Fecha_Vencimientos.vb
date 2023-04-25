@@ -19,7 +19,7 @@ Public Class Frm_Cambio_Fecha_Vencimientos
         End Set
     End Property
 
-    Public Sub New(ByVal Idmaeedo As Integer)
+    Public Sub New(Idmaeedo As Integer)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -37,7 +37,7 @@ Public Class Frm_Cambio_Fecha_Vencimientos
 
     End Sub
 
-    Private Sub Frm_Cambio_Fecha_Vencimientos_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Cambio_Fecha_Vencimientos_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Sb_Ver_Vencimientos(False, False)
 
@@ -51,8 +51,8 @@ Public Class Frm_Cambio_Fecha_Vencimientos
     End Sub
 
 
-    Sub Sb_Ver_Vencimientos(ByVal _Solo_Encabezado As Boolean,
-                            ByVal _Trae_Datos_Entidad As Boolean)
+    Sub Sb_Ver_Vencimientos(_Solo_Encabezado As Boolean,
+                            _Trae_Datos_Entidad As Boolean)
 
         Dim _SE As String = String.Empty
 
@@ -152,13 +152,13 @@ Public Class Frm_Cambio_Fecha_Vencimientos
 
     End Sub
 
-    Private Sub Frm_Cambio_Fecha_Vencimientos_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Cambio_Fecha_Vencimientos_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Btn_Grabar_Vencimientos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Grabar_Vencimientos.Click
+    Private Sub Btn_Grabar_Vencimientos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Grabar_Vencimientos.Click
 
         If Fx_Grabar_Vencimientos(Me, _Idmaeedo, _TblVencimientos, _TblEncDocumento) Then
 
@@ -169,10 +169,10 @@ Public Class Frm_Cambio_Fecha_Vencimientos
 
     End Sub
 
-    Function Fx_Grabar_Vencimientos(ByVal _Formulario As Form,
-                                    ByVal _Idmaeedo As Integer,
-                                    ByVal _TblVencimientos As DataTable,
-                                    ByVal _TblEncDocumento As DataTable) As Boolean
+    Function Fx_Grabar_Vencimientos(_Formulario As Form,
+                                    _Idmaeedo As Integer,
+                                    _TblVencimientos As DataTable,
+                                    _TblEncDocumento As DataTable) As Boolean
 
         Dim _Valor_Bruto_Doc As Double = _TblEncDocumento.Rows(0).Item("VABRDO")
         Dim _Valor_Bruto_Ven As Double = _TblVencimientos.Compute("Sum(VAVE)", "1>0")
@@ -261,7 +261,7 @@ Public Class Frm_Cambio_Fecha_Vencimientos
 
     End Function
 
-    Private Sub Grilla_CellBeginEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellCancelEventArgs) Handles Grilla.CellBeginEdit
+    Private Sub Grilla_CellBeginEdit(sender As Object, e As System.Windows.Forms.DataGridViewCellCancelEventArgs) Handles Grilla.CellBeginEdit
 
         Try
 
@@ -298,7 +298,7 @@ Public Class Frm_Cambio_Fecha_Vencimientos
 
     End Sub
 
-    Private Sub Grilla_CellEndEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEndEdit
+    Private Sub Grilla_CellEndEdit(sender As Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEndEdit
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -371,7 +371,7 @@ Public Class Frm_Cambio_Fecha_Vencimientos
 
     End Sub
 
-    Private Sub Btn_AceptarVencimientos_Click(ByVal seder As System.Object, ByVal e As System.EventArgs) Handles Btn_AceptarVencimientos.Click
+    Private Sub Btn_AceptarVencimientos_Click(seder As System.Object, e As System.EventArgs) Handles Btn_AceptarVencimientos.Click
 
         Sb_Ver_Vencimientos(True, False)
         Actualizar_Vencimientos(True)
@@ -383,7 +383,7 @@ Public Class Frm_Cambio_Fecha_Vencimientos
     End Sub
 
 
-    Sub Sb_Procesar_Cond_Pago(ByVal _Fecha_Emision As Date)
+    Sub Sb_Procesar_Cond_Pago(_Fecha_Emision As Date)
 
         Sb_Ver_Vencimientos(True, False)
 
@@ -428,8 +428,8 @@ Public Class Frm_Cambio_Fecha_Vencimientos
     End Sub
 
 
-    Private Sub Nueva_Linea(ByVal _Feve As Date,
-                            ByVal _Vave As Double)
+    Private Sub Nueva_Linea(_Feve As Date,
+                            _Vave As Double)
 
         Dim NewFila As DataRow
         NewFila = _TblVencimientos.NewRow
@@ -448,7 +448,7 @@ Public Class Frm_Cambio_Fecha_Vencimientos
 
     End Sub
 
-    Sub Actualizar_Vencimientos(ByVal _Agregar_Fila As Boolean)
+    Sub Actualizar_Vencimientos(_Agregar_Fila As Boolean)
 
         Dim _Idmaeedo As Integer = _TblEncDocumento.Rows(0).Item("IDMAEEDO")
         Dim _TotalBrutoDoc As Double = _TblEncDocumento.Rows(0).Item("VABRDO")
@@ -518,7 +518,7 @@ Public Class Frm_Cambio_Fecha_Vencimientos
 
     End Sub
 
-    Private Sub Btn_Reestablecer_Vencimientos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Reestablecer_Vencimientos.Click
+    Private Sub Btn_Reestablecer_Vencimientos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Reestablecer_Vencimientos.Click
 
         Dim _Suma As Double = _TblVencimientos.Compute("SUM(VAABVE)", "1>0")
         Btn_Reestablecer_Vencimientos.Visible = False
@@ -542,13 +542,13 @@ Public Class Frm_Cambio_Fecha_Vencimientos
 
     End Sub
 
-    Private Sub Txt_Validated(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Txt_Validated(sender As System.Object, e As System.EventArgs)
         If String.IsNullOrEmpty(CType(sender, TextBox).Text) Then
             CType(sender, TextBox).Text = 0
         End If
     End Sub
 
-    Private Sub Txt_Dias_Entre_Vencimientos_Validated(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Txt_Dias_Entre_Vencimientos.Validated
+    Private Sub Txt_Dias_Entre_Vencimientos_Validated(sender As System.Object, e As System.EventArgs) Handles Txt_Dias_Entre_Vencimientos.Validated
 
         _Dias_Entre_Vencimientos = Txt_Dias_Entre_Vencimientos.Text
         Dtp_Fecha_1er_Vencimiento.Value = DateAdd(DateInterval.Day, _Dias_Entre_Vencimientos, Dtp_Fecha_Emision.Value)
@@ -703,7 +703,7 @@ Public Class Frm_Cambio_Fecha_Vencimientos
 
     End Sub
 
-    Private Sub Txt_Cuotas_Validated(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Txt_Cuotas.Validated
+    Private Sub Txt_Cuotas_Validated(sender As System.Object, e As System.EventArgs) Handles Txt_Cuotas.Validated
         _Dias_Entre_Vencimientos = Txt_Dias_Entre_Vencimientos.Text
         Dtp_Fecha_1er_Vencimiento.Value = DateAdd(DateInterval.Day, _Dias_Entre_Vencimientos, Dtp_Fecha_Emision.Value)
         Sb_Ver_Vencimientos(True, False)
@@ -711,7 +711,7 @@ Public Class Frm_Cambio_Fecha_Vencimientos
     End Sub
 
 
-    Private Sub Btn_Editar_Vencimientos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Editar_Vencimientos.Click
+    Private Sub Btn_Editar_Vencimientos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Editar_Vencimientos.Click
 
         If Fx_Tiene_Permiso(Me, "Doc00006") Then
 
