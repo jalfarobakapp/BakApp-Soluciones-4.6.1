@@ -54,7 +54,7 @@ Public Class Frm_SeleccionarListaPrecios
 
     End Sub
 
-    Private Sub Frm_SeleccionarListaPrecios_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+    Private Sub Frm_SeleccionarListaPrecios_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
         Sb_Parametro_Informe_Sql(False)
         Sb_Llenar_Grilla()
@@ -134,7 +134,7 @@ Public Class Frm_SeleccionarListaPrecios
 
     End Sub
 
-    Private Sub GrillaListas_CellBeginEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellCancelEventArgs)
+    Private Sub GrillaListas_CellBeginEdit(sender As Object, e As System.Windows.Forms.DataGridViewCellCancelEventArgs)
 
         If _MultiSeleccion Then
 
@@ -160,7 +160,7 @@ Public Class Frm_SeleccionarListaPrecios
 
     End Sub
 
-    Private Sub GrillaListas_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GrillaListas.CellDoubleClick
+    Private Sub GrillaListas_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GrillaListas.CellDoubleClick
 
         If Not _MultiSeleccion Then
 
@@ -199,7 +199,7 @@ Public Class Frm_SeleccionarListaPrecios
 
     End Sub
 
-    Private Sub Frm_SeleccionarListaPrecios_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_SeleccionarListaPrecios_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         ElseIf e.KeyValue = Keys.Enter Then
@@ -209,7 +209,7 @@ Public Class Frm_SeleccionarListaPrecios
         End If
     End Sub
 
-    Private Sub BtnAceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnAceptar.Click
+    Private Sub BtnAceptar_Click(sender As System.Object, e As System.EventArgs) Handles BtnAceptar.Click
 
         If Not _MultiSeleccion Then
             Call GrillaListas_CellDoubleClick(Nothing, Nothing)
@@ -229,7 +229,7 @@ Public Class Frm_SeleccionarListaPrecios
 
     End Sub
 
-    Private Sub GrillaListas_MouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles GrillaListas.MouseUp
+    Private Sub GrillaListas_MouseUp(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles GrillaListas.MouseUp
         GrillaListas.EndEdit()
     End Sub
 

@@ -1168,8 +1168,12 @@ Public Module Funciones_Especiales_BakApp
 
         Loop
 
-        _NvoNumero1 = CInt(_Cadena) + 1
-        _NvoNumero2 = _Prefijo & numero_(_NvoNumero1, Len(_Cadena))
+        Try
+            _NvoNumero1 = CInt(_Cadena) + 1
+            _NvoNumero2 = _Prefijo & numero_(_NvoNumero1, Len(_Cadena))
+        Catch ex As Exception
+            _NvoNumero2 = _NrNumeroDoco
+        End Try
 
         Return _NvoNumero2
 
@@ -4337,26 +4341,14 @@ Public Module Crear_Documentos_Desde_Otro
 
     Public Sub Sb_Color_Botones_Barra(_Barra As DevComponents.DotNetBar.Bar)
 
-        'Dim controlesForm As Control
-        'Dim valor
-
-        'For Each controlesForm In Controls
-        '    If (TypeOf controlesForm Is TextBox) And (Mid(controlesForm.Name, 1, 4) = "txtN") Then
-        '        valor = controlesForm
-        '    End If
-        'Next
-
         Dim _Color As Color = Color.Black
 
-        If Global_Thema = Enum_Themas.Oscuro Then
-            _Color = Color.White
-        End If
+        If Global_Thema = Enum_Themas.Oscuro Then _Color = Color.White
 
         For Each _Objeto As Object In _Barra.Items
             If (TypeOf _Objeto Is ButtonItem) Or (TypeOf _Objeto Is LabelItem) Then
                 Dim _Name = _Objeto.Name
                 Try
-                    'CType(_Objeto, ButtonItem).ForeColor = _Color
                     _Objeto.ForeColor = _Color
                 Catch ex As Exception
 

@@ -217,6 +217,7 @@ Public Class Frm_Anotaciones_Ver_Anotaciones
                 Dim _Idrse As Integer
                 Dim _Archirse As String
                 Dim _Kotabla, _Kocarac, _Nokocarac As String
+                Dim _Fecharef As Date
 
                 Dim _HoraGrab = Hora_Grab_fx(False)
                 Consulta_sql = String.Empty
@@ -230,6 +231,12 @@ Public Class Frm_Anotaciones_Ver_Anotaciones
                         _Nokocarac = _Fila.Item("NOKOCARAC")
                         _Idrse = _Fila.Item("IDRSE")
                         _Archirse = _Fila.Item("ARCHIRSE")
+
+                        Try
+                            _Fecharef = _Fila.Item("Fecharef")
+                        Catch ex As Exception
+                            _Fecharef = _Fevento
+                        End Try
 
                         If CBool(_Idrse) Then
                             _Archirse = "MAEEDO"
@@ -247,7 +254,7 @@ Public Class Frm_Anotaciones_Ver_Anotaciones
                         Else
 
                             Fx_Row_Nueva_Linea(0, _Archive, 0, FUNCIONARIO, _Fevento, _Kotabla, _Kocarac, _Nokocarac, _Archirse,
-                                               _Idrse, _Fevento, "", "", _HoraGrab)
+                                               _Idrse, _Fecharef, "", "", _HoraGrab)
                             Consulta_sql = String.Empty
 
                         End If

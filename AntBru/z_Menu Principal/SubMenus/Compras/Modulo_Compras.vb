@@ -23,6 +23,8 @@ Public Class Modulo_Compras
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         _Fm_Menu_Padre = Fm_Menu_Padre
 
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
 
     Private Sub ModuloCompras_Load(sender As Object, e As System.EventArgs) Handles Me.Load

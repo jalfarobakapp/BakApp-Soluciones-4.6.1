@@ -272,8 +272,6 @@ Public Class Frm_Demonio_01
 
         Sb_Actualizar_Fecha()
 
-        Sb_Color_Botones_Barra(Bar1)
-
         'Me.WindowState = FormWindowState.Minimized
 
         _Segundos_Minimiza_Automatico = 60 * 5
@@ -299,10 +297,11 @@ Public Class Frm_Demonio_01
         Lbl_Nombre_Equipo.Text = "Nombre equipo: " & _Nombre_Equipo
         Lbl_Modalidad.Text = "Modalidad: " & Modalidad & ", Sucursal: " & ModSucursal & ", Bodega: " & ModBodega
 
-
         _Minimiza_Automatico = True
 
         Lbl_Estatus.Text = "Empresa: " & ModEmpresa & ", Modalidad: " & Modalidad & ", Usuario: " & FUNCIONARIO & ", Equipo: " & _Nombre_Equipo
+
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 

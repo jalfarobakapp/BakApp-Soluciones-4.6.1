@@ -50,8 +50,6 @@ Public Class Cl_CambiarFechaVencimiento
 
     End Sub
 
-
-
     Sub Actualizar_Vencimientos(_Agregar_Fila As Boolean,
                                 _Fecha_1er_Vencimiento As Date,
                                 _Cuotas As Integer,

@@ -49,15 +49,19 @@ Partial Class Frm_Demonio_01
         Me.DtpFecharevision = New System.Windows.Forms.DateTimePicker()
         Me.BtnCambFecha = New DevComponents.DotNetBar.ButtonX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Switch_FacAuto = New DevComponents.DotNetBar.Controls.SwitchButton()
-        Me.CircularFacAuto = New DevComponents.DotNetBar.Controls.CircularProgress()
-        Me.Lbl_Segundos_FacAuto = New DevComponents.DotNetBar.LabelX()
-        Me.PictureBox7 = New System.Windows.Forms.PictureBox()
-        Me.Lbl_FacAuto = New DevComponents.DotNetBar.LabelX()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Lbl_Hora_AsisCompra = New DevComponents.DotNetBar.LabelX()
+        Me.Switch_AsisCompras = New DevComponents.DotNetBar.Controls.SwitchButton()
+        Me.CircularAsisCompra = New DevComponents.DotNetBar.Controls.CircularProgress()
+        Me.Lbl_AsisCompras = New DevComponents.DotNetBar.LabelX()
+        Me.Switch_FacAuto = New DevComponents.DotNetBar.Controls.SwitchButton()
         Me.Switch_Listas_Programadas = New DevComponents.DotNetBar.Controls.SwitchButton()
+        Me.CircularFacAuto = New DevComponents.DotNetBar.Controls.CircularProgress()
         Me.CircularListasProgramadas = New DevComponents.DotNetBar.Controls.CircularProgress()
+        Me.Lbl_Segundos_FacAuto = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Segundos_Listas_Programadas = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_FacAuto = New DevComponents.DotNetBar.LabelX()
+        Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
         Me.Lbl_Hora_Cierre_Documentos = New DevComponents.DotNetBar.LabelX()
@@ -132,18 +136,14 @@ Partial Class Frm_Demonio_01
         Me.Btn_Archivar_Documentos = New DevComponents.DotNetBar.ButtonX()
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
-        Me.Lbl_AsisCompras = New DevComponents.DotNetBar.LabelX()
-        Me.CircularAsisCompra = New DevComponents.DotNetBar.Controls.CircularProgress()
-        Me.Switch_AsisCompras = New DevComponents.DotNetBar.Controls.SwitchButton()
-        Me.Lbl_Hora_AsisCompra = New DevComponents.DotNetBar.LabelX()
         CType(Me.PicBox_Sol_Prod_Bodega, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PicBox_Cola_Impresion, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PicBox_Correo, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PicBox_Documentos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
-        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel1.SuspendLayout()
+        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -430,6 +430,7 @@ Partial Class Frm_Demonio_01
         Me.Btn_Configurar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Configurar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Configurar.Image = CType(resources.GetObject("Btn_Configurar.Image"), System.Drawing.Image)
+        Me.Btn_Configurar.ImageAlt = CType(resources.GetObject("Btn_Configurar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Configurar.Name = "Btn_Configurar"
         Me.Btn_Configurar.Text = "Configuración"
         '
@@ -438,6 +439,7 @@ Partial Class Frm_Demonio_01
         Me.Btn_On_Off.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_On_Off.ForeColor = System.Drawing.Color.Black
         Me.Btn_On_Off.Image = CType(resources.GetObject("Btn_On_Off.Image"), System.Drawing.Image)
+        Me.Btn_On_Off.ImageAlt = CType(resources.GetObject("Btn_On_Off.ImageAlt"), System.Drawing.Image)
         Me.Btn_On_Off.Name = "Btn_On_Off"
         Me.Btn_On_Off.Text = "Activar-Desactivar"
         Me.Btn_On_Off.Visible = False
@@ -510,79 +512,6 @@ Partial Class Frm_Demonio_01
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 6
-        '
-        'Switch_FacAuto
-        '
-        Me.Switch_FacAuto.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        '
-        '
-        '
-        Me.Switch_FacAuto.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Switch_FacAuto.Enabled = False
-        Me.Switch_FacAuto.ForeColor = System.Drawing.Color.Black
-        Me.Switch_FacAuto.Location = New System.Drawing.Point(520, 348)
-        Me.Switch_FacAuto.Name = "Switch_FacAuto"
-        Me.Switch_FacAuto.Size = New System.Drawing.Size(66, 17)
-        Me.Switch_FacAuto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Switch_FacAuto.TabIndex = 68
-        Me.Switch_FacAuto.Value = True
-        Me.Switch_FacAuto.ValueObject = "Y"
-        '
-        'CircularFacAuto
-        '
-        Me.CircularFacAuto.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.CircularFacAuto.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.CircularFacAuto.FocusCuesEnabled = False
-        Me.CircularFacAuto.Location = New System.Drawing.Point(482, 348)
-        Me.CircularFacAuto.Name = "CircularFacAuto"
-        Me.CircularFacAuto.ProgressColor = System.Drawing.Color.Green
-        Me.CircularFacAuto.Size = New System.Drawing.Size(32, 17)
-        Me.CircularFacAuto.Style = DevComponents.DotNetBar.eDotNetBarStyle.OfficeXP
-        Me.CircularFacAuto.TabIndex = 69
-        '
-        'Lbl_Segundos_FacAuto
-        '
-        Me.Lbl_Segundos_FacAuto.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Lbl_Segundos_FacAuto.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Lbl_Segundos_FacAuto.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Segundos_FacAuto.Location = New System.Drawing.Point(404, 348)
-        Me.Lbl_Segundos_FacAuto.Name = "Lbl_Segundos_FacAuto"
-        Me.Lbl_Segundos_FacAuto.Size = New System.Drawing.Size(72, 17)
-        Me.Lbl_Segundos_FacAuto.TabIndex = 70
-        Me.Lbl_Segundos_FacAuto.Text = "0"
-        Me.Lbl_Segundos_FacAuto.TextAlignment = System.Drawing.StringAlignment.Far
-        '
-        'PictureBox7
-        '
-        Me.PictureBox7.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox7.ForeColor = System.Drawing.Color.Black
-        Me.PictureBox7.Image = CType(resources.GetObject("PictureBox7.Image"), System.Drawing.Image)
-        Me.PictureBox7.Location = New System.Drawing.Point(3, 348)
-        Me.PictureBox7.Name = "PictureBox7"
-        Me.PictureBox7.Size = New System.Drawing.Size(20, 17)
-        Me.PictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox7.TabIndex = 71
-        Me.PictureBox7.TabStop = False
-        '
-        'Lbl_FacAuto
-        '
-        Me.Lbl_FacAuto.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Lbl_FacAuto.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Lbl_FacAuto.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_FacAuto.Location = New System.Drawing.Point(29, 348)
-        Me.Lbl_FacAuto.Name = "Lbl_FacAuto"
-        Me.Lbl_FacAuto.Size = New System.Drawing.Size(369, 17)
-        Me.Lbl_FacAuto.TabIndex = 72
-        Me.Lbl_FacAuto.Text = "Generar facturas automáticamente"
         '
         'TableLayoutPanel1
         '
@@ -710,6 +639,82 @@ Partial Class Frm_Demonio_01
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(606, 394)
         Me.TableLayoutPanel1.TabIndex = 55
         '
+        'Lbl_Hora_AsisCompra
+        '
+        Me.Lbl_Hora_AsisCompra.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_Hora_AsisCompra.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Hora_AsisCompra.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Hora_AsisCompra.Location = New System.Drawing.Point(404, 371)
+        Me.Lbl_Hora_AsisCompra.Name = "Lbl_Hora_AsisCompra"
+        Me.Lbl_Hora_AsisCompra.Size = New System.Drawing.Size(72, 17)
+        Me.Lbl_Hora_AsisCompra.TabIndex = 64
+        Me.Lbl_Hora_AsisCompra.Text = "20:00"
+        Me.Lbl_Hora_AsisCompra.TextAlignment = System.Drawing.StringAlignment.Far
+        '
+        'Switch_AsisCompras
+        '
+        Me.Switch_AsisCompras.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        '
+        '
+        '
+        Me.Switch_AsisCompras.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Switch_AsisCompras.Enabled = False
+        Me.Switch_AsisCompras.ForeColor = System.Drawing.Color.Black
+        Me.Switch_AsisCompras.Location = New System.Drawing.Point(520, 371)
+        Me.Switch_AsisCompras.Name = "Switch_AsisCompras"
+        Me.Switch_AsisCompras.Size = New System.Drawing.Size(66, 17)
+        Me.Switch_AsisCompras.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Switch_AsisCompras.TabIndex = 60
+        '
+        'CircularAsisCompra
+        '
+        Me.CircularAsisCompra.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.CircularAsisCompra.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.CircularAsisCompra.FocusCuesEnabled = False
+        Me.CircularAsisCompra.Location = New System.Drawing.Point(482, 371)
+        Me.CircularAsisCompra.Name = "CircularAsisCompra"
+        Me.CircularAsisCompra.ProgressColor = System.Drawing.Color.Green
+        Me.CircularAsisCompra.Size = New System.Drawing.Size(30, 17)
+        Me.CircularAsisCompra.Style = DevComponents.DotNetBar.eDotNetBarStyle.OfficeXP
+        Me.CircularAsisCompra.TabIndex = 67
+        '
+        'Lbl_AsisCompras
+        '
+        Me.Lbl_AsisCompras.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_AsisCompras.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_AsisCompras.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_AsisCompras.Location = New System.Drawing.Point(29, 371)
+        Me.Lbl_AsisCompras.Name = "Lbl_AsisCompras"
+        Me.Lbl_AsisCompras.Size = New System.Drawing.Size(369, 20)
+        Me.Lbl_AsisCompras.TabIndex = 73
+        Me.Lbl_AsisCompras.Text = "Asistente de compras"
+        '
+        'Switch_FacAuto
+        '
+        Me.Switch_FacAuto.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        '
+        '
+        '
+        Me.Switch_FacAuto.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Switch_FacAuto.Enabled = False
+        Me.Switch_FacAuto.ForeColor = System.Drawing.Color.Black
+        Me.Switch_FacAuto.Location = New System.Drawing.Point(520, 348)
+        Me.Switch_FacAuto.Name = "Switch_FacAuto"
+        Me.Switch_FacAuto.Size = New System.Drawing.Size(66, 17)
+        Me.Switch_FacAuto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Switch_FacAuto.TabIndex = 68
+        Me.Switch_FacAuto.Value = True
+        Me.Switch_FacAuto.ValueObject = "Y"
+        '
         'Switch_Listas_Programadas
         '
         Me.Switch_Listas_Programadas.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
@@ -724,6 +729,21 @@ Partial Class Frm_Demonio_01
         Me.Switch_Listas_Programadas.Size = New System.Drawing.Size(66, 17)
         Me.Switch_Listas_Programadas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Switch_Listas_Programadas.TabIndex = 59
+        '
+        'CircularFacAuto
+        '
+        Me.CircularFacAuto.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.CircularFacAuto.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.CircularFacAuto.FocusCuesEnabled = False
+        Me.CircularFacAuto.Location = New System.Drawing.Point(482, 348)
+        Me.CircularFacAuto.Name = "CircularFacAuto"
+        Me.CircularFacAuto.ProgressColor = System.Drawing.Color.Green
+        Me.CircularFacAuto.Size = New System.Drawing.Size(32, 17)
+        Me.CircularFacAuto.Style = DevComponents.DotNetBar.eDotNetBarStyle.OfficeXP
+        Me.CircularFacAuto.TabIndex = 69
         '
         'CircularListasProgramadas
         '
@@ -740,6 +760,21 @@ Partial Class Frm_Demonio_01
         Me.CircularListasProgramadas.Style = DevComponents.DotNetBar.eDotNetBarStyle.OfficeXP
         Me.CircularListasProgramadas.TabIndex = 66
         '
+        'Lbl_Segundos_FacAuto
+        '
+        Me.Lbl_Segundos_FacAuto.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_Segundos_FacAuto.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Segundos_FacAuto.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Segundos_FacAuto.Location = New System.Drawing.Point(404, 348)
+        Me.Lbl_Segundos_FacAuto.Name = "Lbl_Segundos_FacAuto"
+        Me.Lbl_Segundos_FacAuto.Size = New System.Drawing.Size(72, 17)
+        Me.Lbl_Segundos_FacAuto.TabIndex = 70
+        Me.Lbl_Segundos_FacAuto.Text = "0"
+        Me.Lbl_Segundos_FacAuto.TextAlignment = System.Drawing.StringAlignment.Far
+        '
         'Lbl_Segundos_Listas_Programadas
         '
         Me.Lbl_Segundos_Listas_Programadas.BackColor = System.Drawing.Color.Transparent
@@ -754,6 +789,32 @@ Partial Class Frm_Demonio_01
         Me.Lbl_Segundos_Listas_Programadas.TabIndex = 66
         Me.Lbl_Segundos_Listas_Programadas.Text = "0"
         Me.Lbl_Segundos_Listas_Programadas.TextAlignment = System.Drawing.StringAlignment.Far
+        '
+        'Lbl_FacAuto
+        '
+        Me.Lbl_FacAuto.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_FacAuto.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_FacAuto.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_FacAuto.Location = New System.Drawing.Point(29, 348)
+        Me.Lbl_FacAuto.Name = "Lbl_FacAuto"
+        Me.Lbl_FacAuto.Size = New System.Drawing.Size(369, 17)
+        Me.Lbl_FacAuto.TabIndex = 72
+        Me.Lbl_FacAuto.Text = "Generar facturas automáticamente"
+        '
+        'PictureBox7
+        '
+        Me.PictureBox7.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox7.ForeColor = System.Drawing.Color.Black
+        Me.PictureBox7.Image = CType(resources.GetObject("PictureBox7.Image"), System.Drawing.Image)
+        Me.PictureBox7.Location = New System.Drawing.Point(3, 348)
+        Me.PictureBox7.Name = "PictureBox7"
+        Me.PictureBox7.Size = New System.Drawing.Size(20, 17)
+        Me.PictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox7.TabIndex = 71
+        Me.PictureBox7.TabStop = False
         '
         'PictureBox6
         '
@@ -1763,65 +1824,6 @@ Partial Class Frm_Demonio_01
         Me.Lbl_Estatus.Name = "Lbl_Estatus"
         Me.Lbl_Estatus.Text = "LabelItem2"
         '
-        'Lbl_AsisCompras
-        '
-        Me.Lbl_AsisCompras.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Lbl_AsisCompras.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Lbl_AsisCompras.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_AsisCompras.Location = New System.Drawing.Point(29, 371)
-        Me.Lbl_AsisCompras.Name = "Lbl_AsisCompras"
-        Me.Lbl_AsisCompras.Size = New System.Drawing.Size(369, 20)
-        Me.Lbl_AsisCompras.TabIndex = 73
-        Me.Lbl_AsisCompras.Text = "Asistente de compras"
-        '
-        'CircularAsisCompra
-        '
-        Me.CircularAsisCompra.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.CircularAsisCompra.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.CircularAsisCompra.FocusCuesEnabled = False
-        Me.CircularAsisCompra.Location = New System.Drawing.Point(482, 371)
-        Me.CircularAsisCompra.Name = "CircularAsisCompra"
-        Me.CircularAsisCompra.ProgressColor = System.Drawing.Color.Green
-        Me.CircularAsisCompra.Size = New System.Drawing.Size(30, 17)
-        Me.CircularAsisCompra.Style = DevComponents.DotNetBar.eDotNetBarStyle.OfficeXP
-        Me.CircularAsisCompra.TabIndex = 67
-        '
-        'Switch_AsisCompras
-        '
-        Me.Switch_AsisCompras.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        '
-        '
-        '
-        Me.Switch_AsisCompras.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Switch_AsisCompras.Enabled = False
-        Me.Switch_AsisCompras.ForeColor = System.Drawing.Color.Black
-        Me.Switch_AsisCompras.Location = New System.Drawing.Point(520, 371)
-        Me.Switch_AsisCompras.Name = "Switch_AsisCompras"
-        Me.Switch_AsisCompras.Size = New System.Drawing.Size(66, 17)
-        Me.Switch_AsisCompras.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Switch_AsisCompras.TabIndex = 60
-        '
-        'Lbl_Hora_AsisCompra
-        '
-        Me.Lbl_Hora_AsisCompra.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Lbl_Hora_AsisCompra.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Lbl_Hora_AsisCompra.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Hora_AsisCompra.Location = New System.Drawing.Point(404, 371)
-        Me.Lbl_Hora_AsisCompra.Name = "Lbl_Hora_AsisCompra"
-        Me.Lbl_Hora_AsisCompra.Size = New System.Drawing.Size(72, 17)
-        Me.Lbl_Hora_AsisCompra.TabIndex = 64
-        Me.Lbl_Hora_AsisCompra.Text = "20:00"
-        Me.Lbl_Hora_AsisCompra.TextAlignment = System.Drawing.StringAlignment.Far
-        '
         'Frm_Demonio_01
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1854,9 +1856,9 @@ Partial Class Frm_Demonio_01
         CType(Me.PicBox_Documentos, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
-        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
+        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
