@@ -576,6 +576,52 @@ Partial Public Class Ds_Config_Picking
         
         Private columnTxt_AsComModDomingo As Global.System.Data.DataColumn
         
+        Private columnChk_EnvDocSinRecep_EjecLunes As Global.System.Data.DataColumn
+        
+        Private columnChk_EnvDocSinRecep_EjecMartes As Global.System.Data.DataColumn
+        
+        Private columnChk_EnvDocSinRecep_EjecMiercoles As Global.System.Data.DataColumn
+        
+        Private columnChk_EnvDocSinRecep_EjecJueves As Global.System.Data.DataColumn
+        
+        Private columnChk_EnvDocSinRecep_EjecViernes As Global.System.Data.DataColumn
+        
+        Private columnChk_EnvDocSinRecep_EjecSabado As Global.System.Data.DataColumn
+        
+        Private columnChk_EnvDocSinRecep_EjecDomingo As Global.System.Data.DataColumn
+        
+        Private columnChk_EnvDocSinRecep As Global.System.Data.DataColumn
+        
+        Private columnDtp_EnvDocSinRecep_Hora_Ejecucion As Global.System.Data.DataColumn
+        
+        Private columnEnvDocSinRecep_OCC As Global.System.Data.DataColumn
+        
+        Private columnEnvDocSinRecep_OCI As Global.System.Data.DataColumn
+        
+        Private columnEnvDocSinRecep_COV As Global.System.Data.DataColumn
+        
+        Private columnEnvDocSinRecep_NVV As Global.System.Data.DataColumn
+        
+        Private columnEnvDocSinRecep_NVI As Global.System.Data.DataColumn
+        
+        Private columnEnvDocSinRecep_GTI As Global.System.Data.DataColumn
+        
+        Private columnEnvDocSinRecep_GDI As Global.System.Data.DataColumn
+        
+        Private columnEnvDocSinRecep_DiasOCC As Global.System.Data.DataColumn
+        
+        Private columnEnvDocSinRecep_DiasOCI As Global.System.Data.DataColumn
+        
+        Private columnEnvDocSinRecep_DiasCOV As Global.System.Data.DataColumn
+        
+        Private columnEnvDocSinRecep_DiasNVV As Global.System.Data.DataColumn
+        
+        Private columnEnvDocSinRecep_DiasNVI As Global.System.Data.DataColumn
+        
+        Private columnEnvDocSinRecep_DiasGTI As Global.System.Data.DataColumn
+        
+        Private columnEnvDocSinRecep_DiasGDI As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub New()
@@ -1364,6 +1410,190 @@ Partial Public Class Ds_Config_Picking
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property Chk_EnvDocSinRecep_EjecLunesColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnChk_EnvDocSinRecep_EjecLunes
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property Chk_EnvDocSinRecep_EjecMartesColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnChk_EnvDocSinRecep_EjecMartes
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property Chk_EnvDocSinRecep_EjecMiercolesColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnChk_EnvDocSinRecep_EjecMiercoles
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property Chk_EnvDocSinRecep_EjecJuevesColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnChk_EnvDocSinRecep_EjecJueves
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property Chk_EnvDocSinRecep_EjecViernesColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnChk_EnvDocSinRecep_EjecViernes
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property Chk_EnvDocSinRecep_EjecSabadoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnChk_EnvDocSinRecep_EjecSabado
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property Chk_EnvDocSinRecep_EjecDomingoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnChk_EnvDocSinRecep_EjecDomingo
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property Chk_EnvDocSinRecepColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnChk_EnvDocSinRecep
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property Dtp_EnvDocSinRecep_Hora_EjecucionColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnDtp_EnvDocSinRecep_Hora_Ejecucion
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property EnvDocSinRecep_OCCColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnEnvDocSinRecep_OCC
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property EnvDocSinRecep_OCIColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnEnvDocSinRecep_OCI
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property EnvDocSinRecep_COVColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnEnvDocSinRecep_COV
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property EnvDocSinRecep_NVVColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnEnvDocSinRecep_NVV
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property EnvDocSinRecep_NVIColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnEnvDocSinRecep_NVI
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property EnvDocSinRecep_GTIColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnEnvDocSinRecep_GTI
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property EnvDocSinRecep_GDIColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnEnvDocSinRecep_GDI
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property EnvDocSinRecep_DiasOCCColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnEnvDocSinRecep_DiasOCC
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property EnvDocSinRecep_DiasOCIColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnEnvDocSinRecep_DiasOCI
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property EnvDocSinRecep_DiasCOVColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnEnvDocSinRecep_DiasCOV
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property EnvDocSinRecep_DiasNVVColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnEnvDocSinRecep_DiasNVV
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property EnvDocSinRecep_DiasNVIColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnEnvDocSinRecep_DiasNVI
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property EnvDocSinRecep_DiasGTIColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnEnvDocSinRecep_DiasGTI
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property EnvDocSinRecep_DiasGDIColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnEnvDocSinRecep_DiasGDI
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -1494,9 +1724,32 @@ Partial Public Class Ds_Config_Picking
                     ByVal Txt_AsComModJueves As String,  _
                     ByVal Txt_AsComModViernes As String,  _
                     ByVal Txt_AsComModSabado As String,  _
-                    ByVal Txt_AsComModDomingo As String) As Tbl_ConfiguracionRow
+                    ByVal Txt_AsComModDomingo As String,  _
+                    ByVal Chk_EnvDocSinRecep_EjecLunes As Boolean,  _
+                    ByVal Chk_EnvDocSinRecep_EjecMartes As Boolean,  _
+                    ByVal Chk_EnvDocSinRecep_EjecMiercoles As Boolean,  _
+                    ByVal Chk_EnvDocSinRecep_EjecJueves As Boolean,  _
+                    ByVal Chk_EnvDocSinRecep_EjecViernes As Boolean,  _
+                    ByVal Chk_EnvDocSinRecep_EjecSabado As Boolean,  _
+                    ByVal Chk_EnvDocSinRecep_EjecDomingo As Boolean,  _
+                    ByVal Chk_EnvDocSinRecep As Boolean,  _
+                    ByVal Dtp_EnvDocSinRecep_Hora_Ejecucion As Date,  _
+                    ByVal EnvDocSinRecep_OCC As Boolean,  _
+                    ByVal EnvDocSinRecep_OCI As Boolean,  _
+                    ByVal EnvDocSinRecep_COV As Boolean,  _
+                    ByVal EnvDocSinRecep_NVV As Boolean,  _
+                    ByVal EnvDocSinRecep_NVI As Boolean,  _
+                    ByVal EnvDocSinRecep_GTI As Boolean,  _
+                    ByVal EnvDocSinRecep_GDI As Boolean,  _
+                    ByVal EnvDocSinRecep_DiasOCC As Integer,  _
+                    ByVal EnvDocSinRecep_DiasOCI As Integer,  _
+                    ByVal EnvDocSinRecep_DiasCOV As Integer,  _
+                    ByVal EnvDocSinRecep_DiasNVV As Integer,  _
+                    ByVal EnvDocSinRecep_DiasNVI As Integer,  _
+                    ByVal EnvDocSinRecep_DiasGTI As Integer,  _
+                    ByVal EnvDocSinRecep_DiasGDI As Integer) As Tbl_ConfiguracionRow
             Dim rowTbl_ConfiguracionRow As Tbl_ConfiguracionRow = CType(Me.NewRow,Tbl_ConfiguracionRow)
-            Dim columnValuesArray() As Object = New Object() {Impresora, RutaImagen, Timer_Monitoreo_Doc, Timer_Monitoreo_Mail, Timer_Monitoreo_Impresion, Timer_Monitoreo_SolProdBod, Timer_Prestashop, Timer_Prestashop_Ordenes, Timer_Picking, Timer_LibroDTESII, Timer_Archivador, Timer_Wordpress_Stock, Timer_Listas_Programadas, Timer_Wordpress_Productos, Input_Tiempo_Correo, Input_Tiempo_Impresion, Input_Tiempo_Sol_Bodega, Input_Tiempo_Prestashop, Input_Tiempo_Picking, Input_Tiempo_LibroDTESII, Timer_Consolidacion_Stock, Input_Tiempo_Archivador, Input_Tiempo_Wordpress_Stock, Input_Tiempo_Wordpress_Productos, Rdb_Cons_Stock_Todos, Rdb_Cons_Stock_Mov_Hoy, Chk_Cons_Stock_Lunes, Chk_Cons_Stock_Martes, Chk_Cons_Stock_Miercoles, Chk_Cons_Stock_Jueves, Chk_Cons_Stock_Viernes, Chk_Cons_Stock_Sabado, Chk_Cons_Stock_Domingo, Dtp_Cons_Stock_Hora_Ejecuion, Ejecutar_Automaticamente, Chk_Prestashop_Ejecucion_Total, Chk_Prestashop_Lunes, Chk_Prestashop_Martes, Chk_Prestashop_Miercoles, Chk_Prestashop_Jueves, Chk_Prestashop_Viernes, Chk_Prestashop_Sabado, Chk_Prestashop_Domingo, Dtp_Prestashop_Total_Hora_Ejecucion, Ruta_Archivador, Chk_Timer_CierreDoc, Chk_CierreDoc_Lunes, Chk_CierreDoc_Martes, Chk_CierreDoc_Miercoles, Chk_CierreDoc_Jueves, Chk_CierreDoc_Viernes, Chk_CierreDoc_Sabado, Chk_CierreDoc_Domingo, Dtp_CierreDoc_Hora_Ejecucion, Chk_COVCerrar, Chk_NVICerrar, Chk_NVVCerrar, Chk_OCICerrar, Chk_OCCCerrar, Input_DiasCOV, Input_DiasNVI, Input_DiasNVV, Input_DiasOCI, Input_DiasOCC, CantMail, Chk_Fac_Lunes, Chk_Fac_Martes, Chk_Fac_Miercoles, Chk_Fac_Jueves, Chk_Fac_Viernes, Chk_Fac_Sabado, Chk_Fac_Domingo, Rdb_FA_1Dia, Rdb_FA_1Semana, Rdb_FA_1Mes, Rdb_FA_1Todas, Txt_Modalidad_FacAuto, Timer_FacAuto, Chk_AsistenteDeCompras, Chk_AsisComEjecLunes, Chk_AsisComEjecMartes, Chk_AsisComEjecMiercoles, Chk_AsisComEjecJueves, Chk_AsisComEjecViernes, Chk_AsisComEjecSabado, Chk_AsisComEjecDomingo, Dtp_AsisCompra_Hora_Ejecucion, Txt_AsComModLunes, Txt_AsComModMartes, Txt_AsComModMiercoles, Txt_AsComModJueves, Txt_AsComModViernes, Txt_AsComModSabado, Txt_AsComModDomingo}
+            Dim columnValuesArray() As Object = New Object() {Impresora, RutaImagen, Timer_Monitoreo_Doc, Timer_Monitoreo_Mail, Timer_Monitoreo_Impresion, Timer_Monitoreo_SolProdBod, Timer_Prestashop, Timer_Prestashop_Ordenes, Timer_Picking, Timer_LibroDTESII, Timer_Archivador, Timer_Wordpress_Stock, Timer_Listas_Programadas, Timer_Wordpress_Productos, Input_Tiempo_Correo, Input_Tiempo_Impresion, Input_Tiempo_Sol_Bodega, Input_Tiempo_Prestashop, Input_Tiempo_Picking, Input_Tiempo_LibroDTESII, Timer_Consolidacion_Stock, Input_Tiempo_Archivador, Input_Tiempo_Wordpress_Stock, Input_Tiempo_Wordpress_Productos, Rdb_Cons_Stock_Todos, Rdb_Cons_Stock_Mov_Hoy, Chk_Cons_Stock_Lunes, Chk_Cons_Stock_Martes, Chk_Cons_Stock_Miercoles, Chk_Cons_Stock_Jueves, Chk_Cons_Stock_Viernes, Chk_Cons_Stock_Sabado, Chk_Cons_Stock_Domingo, Dtp_Cons_Stock_Hora_Ejecuion, Ejecutar_Automaticamente, Chk_Prestashop_Ejecucion_Total, Chk_Prestashop_Lunes, Chk_Prestashop_Martes, Chk_Prestashop_Miercoles, Chk_Prestashop_Jueves, Chk_Prestashop_Viernes, Chk_Prestashop_Sabado, Chk_Prestashop_Domingo, Dtp_Prestashop_Total_Hora_Ejecucion, Ruta_Archivador, Chk_Timer_CierreDoc, Chk_CierreDoc_Lunes, Chk_CierreDoc_Martes, Chk_CierreDoc_Miercoles, Chk_CierreDoc_Jueves, Chk_CierreDoc_Viernes, Chk_CierreDoc_Sabado, Chk_CierreDoc_Domingo, Dtp_CierreDoc_Hora_Ejecucion, Chk_COVCerrar, Chk_NVICerrar, Chk_NVVCerrar, Chk_OCICerrar, Chk_OCCCerrar, Input_DiasCOV, Input_DiasNVI, Input_DiasNVV, Input_DiasOCI, Input_DiasOCC, CantMail, Chk_Fac_Lunes, Chk_Fac_Martes, Chk_Fac_Miercoles, Chk_Fac_Jueves, Chk_Fac_Viernes, Chk_Fac_Sabado, Chk_Fac_Domingo, Rdb_FA_1Dia, Rdb_FA_1Semana, Rdb_FA_1Mes, Rdb_FA_1Todas, Txt_Modalidad_FacAuto, Timer_FacAuto, Chk_AsistenteDeCompras, Chk_AsisComEjecLunes, Chk_AsisComEjecMartes, Chk_AsisComEjecMiercoles, Chk_AsisComEjecJueves, Chk_AsisComEjecViernes, Chk_AsisComEjecSabado, Chk_AsisComEjecDomingo, Dtp_AsisCompra_Hora_Ejecucion, Txt_AsComModLunes, Txt_AsComModMartes, Txt_AsComModMiercoles, Txt_AsComModJueves, Txt_AsComModViernes, Txt_AsComModSabado, Txt_AsComModDomingo, Chk_EnvDocSinRecep_EjecLunes, Chk_EnvDocSinRecep_EjecMartes, Chk_EnvDocSinRecep_EjecMiercoles, Chk_EnvDocSinRecep_EjecJueves, Chk_EnvDocSinRecep_EjecViernes, Chk_EnvDocSinRecep_EjecSabado, Chk_EnvDocSinRecep_EjecDomingo, Chk_EnvDocSinRecep, Dtp_EnvDocSinRecep_Hora_Ejecucion, EnvDocSinRecep_OCC, EnvDocSinRecep_OCI, EnvDocSinRecep_COV, EnvDocSinRecep_NVV, EnvDocSinRecep_NVI, EnvDocSinRecep_GTI, EnvDocSinRecep_GDI, EnvDocSinRecep_DiasOCC, EnvDocSinRecep_DiasOCI, EnvDocSinRecep_DiasCOV, EnvDocSinRecep_DiasNVV, EnvDocSinRecep_DiasNVI, EnvDocSinRecep_DiasGTI, EnvDocSinRecep_DiasGDI}
             rowTbl_ConfiguracionRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowTbl_ConfiguracionRow)
             Return rowTbl_ConfiguracionRow
@@ -1613,6 +1866,29 @@ Partial Public Class Ds_Config_Picking
             Me.columnTxt_AsComModViernes = MyBase.Columns("Txt_AsComModViernes")
             Me.columnTxt_AsComModSabado = MyBase.Columns("Txt_AsComModSabado")
             Me.columnTxt_AsComModDomingo = MyBase.Columns("Txt_AsComModDomingo")
+            Me.columnChk_EnvDocSinRecep_EjecLunes = MyBase.Columns("Chk_EnvDocSinRecep_EjecLunes")
+            Me.columnChk_EnvDocSinRecep_EjecMartes = MyBase.Columns("Chk_EnvDocSinRecep_EjecMartes")
+            Me.columnChk_EnvDocSinRecep_EjecMiercoles = MyBase.Columns("Chk_EnvDocSinRecep_EjecMiercoles")
+            Me.columnChk_EnvDocSinRecep_EjecJueves = MyBase.Columns("Chk_EnvDocSinRecep_EjecJueves")
+            Me.columnChk_EnvDocSinRecep_EjecViernes = MyBase.Columns("Chk_EnvDocSinRecep_EjecViernes")
+            Me.columnChk_EnvDocSinRecep_EjecSabado = MyBase.Columns("Chk_EnvDocSinRecep_EjecSabado")
+            Me.columnChk_EnvDocSinRecep_EjecDomingo = MyBase.Columns("Chk_EnvDocSinRecep_EjecDomingo")
+            Me.columnChk_EnvDocSinRecep = MyBase.Columns("Chk_EnvDocSinRecep")
+            Me.columnDtp_EnvDocSinRecep_Hora_Ejecucion = MyBase.Columns("Dtp_EnvDocSinRecep_Hora_Ejecucion")
+            Me.columnEnvDocSinRecep_OCC = MyBase.Columns("EnvDocSinRecep_OCC")
+            Me.columnEnvDocSinRecep_OCI = MyBase.Columns("EnvDocSinRecep_OCI")
+            Me.columnEnvDocSinRecep_COV = MyBase.Columns("EnvDocSinRecep_COV")
+            Me.columnEnvDocSinRecep_NVV = MyBase.Columns("EnvDocSinRecep_NVV")
+            Me.columnEnvDocSinRecep_NVI = MyBase.Columns("EnvDocSinRecep_NVI")
+            Me.columnEnvDocSinRecep_GTI = MyBase.Columns("EnvDocSinRecep_GTI")
+            Me.columnEnvDocSinRecep_GDI = MyBase.Columns("EnvDocSinRecep_GDI")
+            Me.columnEnvDocSinRecep_DiasOCC = MyBase.Columns("EnvDocSinRecep_DiasOCC")
+            Me.columnEnvDocSinRecep_DiasOCI = MyBase.Columns("EnvDocSinRecep_DiasOCI")
+            Me.columnEnvDocSinRecep_DiasCOV = MyBase.Columns("EnvDocSinRecep_DiasCOV")
+            Me.columnEnvDocSinRecep_DiasNVV = MyBase.Columns("EnvDocSinRecep_DiasNVV")
+            Me.columnEnvDocSinRecep_DiasNVI = MyBase.Columns("EnvDocSinRecep_DiasNVI")
+            Me.columnEnvDocSinRecep_DiasGTI = MyBase.Columns("EnvDocSinRecep_DiasGTI")
+            Me.columnEnvDocSinRecep_DiasGDI = MyBase.Columns("EnvDocSinRecep_DiasGDI")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1806,6 +2082,52 @@ Partial Public Class Ds_Config_Picking
             MyBase.Columns.Add(Me.columnTxt_AsComModSabado)
             Me.columnTxt_AsComModDomingo = New Global.System.Data.DataColumn("Txt_AsComModDomingo", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnTxt_AsComModDomingo)
+            Me.columnChk_EnvDocSinRecep_EjecLunes = New Global.System.Data.DataColumn("Chk_EnvDocSinRecep_EjecLunes", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnChk_EnvDocSinRecep_EjecLunes)
+            Me.columnChk_EnvDocSinRecep_EjecMartes = New Global.System.Data.DataColumn("Chk_EnvDocSinRecep_EjecMartes", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnChk_EnvDocSinRecep_EjecMartes)
+            Me.columnChk_EnvDocSinRecep_EjecMiercoles = New Global.System.Data.DataColumn("Chk_EnvDocSinRecep_EjecMiercoles", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnChk_EnvDocSinRecep_EjecMiercoles)
+            Me.columnChk_EnvDocSinRecep_EjecJueves = New Global.System.Data.DataColumn("Chk_EnvDocSinRecep_EjecJueves", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnChk_EnvDocSinRecep_EjecJueves)
+            Me.columnChk_EnvDocSinRecep_EjecViernes = New Global.System.Data.DataColumn("Chk_EnvDocSinRecep_EjecViernes", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnChk_EnvDocSinRecep_EjecViernes)
+            Me.columnChk_EnvDocSinRecep_EjecSabado = New Global.System.Data.DataColumn("Chk_EnvDocSinRecep_EjecSabado", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnChk_EnvDocSinRecep_EjecSabado)
+            Me.columnChk_EnvDocSinRecep_EjecDomingo = New Global.System.Data.DataColumn("Chk_EnvDocSinRecep_EjecDomingo", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnChk_EnvDocSinRecep_EjecDomingo)
+            Me.columnChk_EnvDocSinRecep = New Global.System.Data.DataColumn("Chk_EnvDocSinRecep", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnChk_EnvDocSinRecep)
+            Me.columnDtp_EnvDocSinRecep_Hora_Ejecucion = New Global.System.Data.DataColumn("Dtp_EnvDocSinRecep_Hora_Ejecucion", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnDtp_EnvDocSinRecep_Hora_Ejecucion)
+            Me.columnEnvDocSinRecep_OCC = New Global.System.Data.DataColumn("EnvDocSinRecep_OCC", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnEnvDocSinRecep_OCC)
+            Me.columnEnvDocSinRecep_OCI = New Global.System.Data.DataColumn("EnvDocSinRecep_OCI", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnEnvDocSinRecep_OCI)
+            Me.columnEnvDocSinRecep_COV = New Global.System.Data.DataColumn("EnvDocSinRecep_COV", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnEnvDocSinRecep_COV)
+            Me.columnEnvDocSinRecep_NVV = New Global.System.Data.DataColumn("EnvDocSinRecep_NVV", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnEnvDocSinRecep_NVV)
+            Me.columnEnvDocSinRecep_NVI = New Global.System.Data.DataColumn("EnvDocSinRecep_NVI", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnEnvDocSinRecep_NVI)
+            Me.columnEnvDocSinRecep_GTI = New Global.System.Data.DataColumn("EnvDocSinRecep_GTI", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnEnvDocSinRecep_GTI)
+            Me.columnEnvDocSinRecep_GDI = New Global.System.Data.DataColumn("EnvDocSinRecep_GDI", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnEnvDocSinRecep_GDI)
+            Me.columnEnvDocSinRecep_DiasOCC = New Global.System.Data.DataColumn("EnvDocSinRecep_DiasOCC", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnEnvDocSinRecep_DiasOCC)
+            Me.columnEnvDocSinRecep_DiasOCI = New Global.System.Data.DataColumn("EnvDocSinRecep_DiasOCI", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnEnvDocSinRecep_DiasOCI)
+            Me.columnEnvDocSinRecep_DiasCOV = New Global.System.Data.DataColumn("EnvDocSinRecep_DiasCOV", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnEnvDocSinRecep_DiasCOV)
+            Me.columnEnvDocSinRecep_DiasNVV = New Global.System.Data.DataColumn("EnvDocSinRecep_DiasNVV", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnEnvDocSinRecep_DiasNVV)
+            Me.columnEnvDocSinRecep_DiasNVI = New Global.System.Data.DataColumn("EnvDocSinRecep_DiasNVI", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnEnvDocSinRecep_DiasNVI)
+            Me.columnEnvDocSinRecep_DiasGTI = New Global.System.Data.DataColumn("EnvDocSinRecep_DiasGTI", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnEnvDocSinRecep_DiasGTI)
+            Me.columnEnvDocSinRecep_DiasGDI = New Global.System.Data.DataColumn("EnvDocSinRecep_DiasGDI", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnEnvDocSinRecep_DiasGDI)
             Me.columnTimer_Monitoreo_Doc.DefaultValue = CType(false,Boolean)
             Me.columnTimer_Monitoreo_Mail.DefaultValue = CType(false,Boolean)
             Me.columnTimer_Monitoreo_Impresion.DefaultValue = CType(false,Boolean)
@@ -4452,6 +4774,374 @@ Partial Public Class Ds_Config_Picking
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property Chk_EnvDocSinRecep_EjecLunes() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecLunesColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Chk_EnvDocSinRecep_EjecLunes' de la tabla 'Tbl_Configurac"& _ 
+                            "ion' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecLunesColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property Chk_EnvDocSinRecep_EjecMartes() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecMartesColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Chk_EnvDocSinRecep_EjecMartes' de la tabla 'Tbl_Configura"& _ 
+                            "cion' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecMartesColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property Chk_EnvDocSinRecep_EjecMiercoles() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecMiercolesColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Chk_EnvDocSinRecep_EjecMiercoles' de la tabla 'Tbl_Config"& _ 
+                            "uracion' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecMiercolesColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property Chk_EnvDocSinRecep_EjecJueves() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecJuevesColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Chk_EnvDocSinRecep_EjecJueves' de la tabla 'Tbl_Configura"& _ 
+                            "cion' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecJuevesColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property Chk_EnvDocSinRecep_EjecViernes() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecViernesColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Chk_EnvDocSinRecep_EjecViernes' de la tabla 'Tbl_Configur"& _ 
+                            "acion' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecViernesColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property Chk_EnvDocSinRecep_EjecSabado() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecSabadoColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Chk_EnvDocSinRecep_EjecSabado' de la tabla 'Tbl_Configura"& _ 
+                            "cion' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecSabadoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property Chk_EnvDocSinRecep_EjecDomingo() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecDomingoColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Chk_EnvDocSinRecep_EjecDomingo' de la tabla 'Tbl_Configur"& _ 
+                            "acion' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecDomingoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property Chk_EnvDocSinRecep() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecepColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Chk_EnvDocSinRecep' de la tabla 'Tbl_Configuracion' es DB"& _ 
+                            "Null.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecepColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property Dtp_EnvDocSinRecep_Hora_Ejecucion() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Dtp_EnvDocSinRecep_Hora_EjecucionColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Dtp_EnvDocSinRecep_Hora_Ejecucion' de la tabla 'Tbl_Confi"& _ 
+                            "guracion' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Dtp_EnvDocSinRecep_Hora_EjecucionColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property EnvDocSinRecep_OCC() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.EnvDocSinRecep_OCCColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'EnvDocSinRecep_OCC' de la tabla 'Tbl_Configuracion' es DB"& _ 
+                            "Null.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.EnvDocSinRecep_OCCColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property EnvDocSinRecep_OCI() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.EnvDocSinRecep_OCIColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'EnvDocSinRecep_OCI' de la tabla 'Tbl_Configuracion' es DB"& _ 
+                            "Null.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.EnvDocSinRecep_OCIColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property EnvDocSinRecep_COV() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.EnvDocSinRecep_COVColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'EnvDocSinRecep_COV' de la tabla 'Tbl_Configuracion' es DB"& _ 
+                            "Null.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.EnvDocSinRecep_COVColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property EnvDocSinRecep_NVV() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.EnvDocSinRecep_NVVColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'EnvDocSinRecep_NVV' de la tabla 'Tbl_Configuracion' es DB"& _ 
+                            "Null.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.EnvDocSinRecep_NVVColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property EnvDocSinRecep_NVI() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.EnvDocSinRecep_NVIColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'EnvDocSinRecep_NVI' de la tabla 'Tbl_Configuracion' es DB"& _ 
+                            "Null.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.EnvDocSinRecep_NVIColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property EnvDocSinRecep_GTI() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.EnvDocSinRecep_GTIColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'EnvDocSinRecep_GTI' de la tabla 'Tbl_Configuracion' es DB"& _ 
+                            "Null.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.EnvDocSinRecep_GTIColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property EnvDocSinRecep_GDI() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.EnvDocSinRecep_GDIColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'EnvDocSinRecep_GDI' de la tabla 'Tbl_Configuracion' es DB"& _ 
+                            "Null.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.EnvDocSinRecep_GDIColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property EnvDocSinRecep_DiasOCC() As Integer
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasOCCColumn),Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'EnvDocSinRecep_DiasOCC' de la tabla 'Tbl_Configuracion' e"& _ 
+                            "s DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasOCCColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property EnvDocSinRecep_DiasOCI() As Integer
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasOCIColumn),Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'EnvDocSinRecep_DiasOCI' de la tabla 'Tbl_Configuracion' e"& _ 
+                            "s DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasOCIColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property EnvDocSinRecep_DiasCOV() As Integer
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasCOVColumn),Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'EnvDocSinRecep_DiasCOV' de la tabla 'Tbl_Configuracion' e"& _ 
+                            "s DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasCOVColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property EnvDocSinRecep_DiasNVV() As Integer
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasNVVColumn),Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'EnvDocSinRecep_DiasNVV' de la tabla 'Tbl_Configuracion' e"& _ 
+                            "s DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasNVVColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property EnvDocSinRecep_DiasNVI() As Integer
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasNVIColumn),Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'EnvDocSinRecep_DiasNVI' de la tabla 'Tbl_Configuracion' e"& _ 
+                            "s DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasNVIColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property EnvDocSinRecep_DiasGTI() As Integer
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasGTIColumn),Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'EnvDocSinRecep_DiasGTI' de la tabla 'Tbl_Configuracion' e"& _ 
+                            "s DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasGTIColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property EnvDocSinRecep_DiasGDI() As Integer
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasGDIColumn),Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'EnvDocSinRecep_DiasGDI' de la tabla 'Tbl_Configuracion' e"& _ 
+                            "s DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasGDIColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Function IsImpresoraNull() As Boolean
             Return Me.IsNull(Me.tableTbl_Configuracion.ImpresoraColumn)
         End Function
@@ -5576,6 +6266,282 @@ Partial Public Class Ds_Config_Picking
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub SetTxt_AsComModDomingoNull()
             Me(Me.tableTbl_Configuracion.Txt_AsComModDomingoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsChk_EnvDocSinRecep_EjecLunesNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecLunesColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetChk_EnvDocSinRecep_EjecLunesNull()
+            Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecLunesColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsChk_EnvDocSinRecep_EjecMartesNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecMartesColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetChk_EnvDocSinRecep_EjecMartesNull()
+            Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecMartesColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsChk_EnvDocSinRecep_EjecMiercolesNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecMiercolesColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetChk_EnvDocSinRecep_EjecMiercolesNull()
+            Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecMiercolesColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsChk_EnvDocSinRecep_EjecJuevesNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecJuevesColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetChk_EnvDocSinRecep_EjecJuevesNull()
+            Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecJuevesColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsChk_EnvDocSinRecep_EjecViernesNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecViernesColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetChk_EnvDocSinRecep_EjecViernesNull()
+            Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecViernesColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsChk_EnvDocSinRecep_EjecSabadoNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecSabadoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetChk_EnvDocSinRecep_EjecSabadoNull()
+            Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecSabadoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsChk_EnvDocSinRecep_EjecDomingoNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecDomingoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetChk_EnvDocSinRecep_EjecDomingoNull()
+            Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecep_EjecDomingoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsChk_EnvDocSinRecepNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Chk_EnvDocSinRecepColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetChk_EnvDocSinRecepNull()
+            Me(Me.tableTbl_Configuracion.Chk_EnvDocSinRecepColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsDtp_EnvDocSinRecep_Hora_EjecucionNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Dtp_EnvDocSinRecep_Hora_EjecucionColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetDtp_EnvDocSinRecep_Hora_EjecucionNull()
+            Me(Me.tableTbl_Configuracion.Dtp_EnvDocSinRecep_Hora_EjecucionColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsEnvDocSinRecep_OCCNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.EnvDocSinRecep_OCCColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetEnvDocSinRecep_OCCNull()
+            Me(Me.tableTbl_Configuracion.EnvDocSinRecep_OCCColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsEnvDocSinRecep_OCINull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.EnvDocSinRecep_OCIColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetEnvDocSinRecep_OCINull()
+            Me(Me.tableTbl_Configuracion.EnvDocSinRecep_OCIColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsEnvDocSinRecep_COVNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.EnvDocSinRecep_COVColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetEnvDocSinRecep_COVNull()
+            Me(Me.tableTbl_Configuracion.EnvDocSinRecep_COVColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsEnvDocSinRecep_NVVNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.EnvDocSinRecep_NVVColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetEnvDocSinRecep_NVVNull()
+            Me(Me.tableTbl_Configuracion.EnvDocSinRecep_NVVColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsEnvDocSinRecep_NVINull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.EnvDocSinRecep_NVIColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetEnvDocSinRecep_NVINull()
+            Me(Me.tableTbl_Configuracion.EnvDocSinRecep_NVIColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsEnvDocSinRecep_GTINull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.EnvDocSinRecep_GTIColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetEnvDocSinRecep_GTINull()
+            Me(Me.tableTbl_Configuracion.EnvDocSinRecep_GTIColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsEnvDocSinRecep_GDINull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.EnvDocSinRecep_GDIColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetEnvDocSinRecep_GDINull()
+            Me(Me.tableTbl_Configuracion.EnvDocSinRecep_GDIColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsEnvDocSinRecep_DiasOCCNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasOCCColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetEnvDocSinRecep_DiasOCCNull()
+            Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasOCCColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsEnvDocSinRecep_DiasOCINull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasOCIColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetEnvDocSinRecep_DiasOCINull()
+            Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasOCIColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsEnvDocSinRecep_DiasCOVNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasCOVColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetEnvDocSinRecep_DiasCOVNull()
+            Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasCOVColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsEnvDocSinRecep_DiasNVVNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasNVVColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetEnvDocSinRecep_DiasNVVNull()
+            Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasNVVColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsEnvDocSinRecep_DiasNVINull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasNVIColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetEnvDocSinRecep_DiasNVINull()
+            Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasNVIColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsEnvDocSinRecep_DiasGTINull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasGTIColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetEnvDocSinRecep_DiasGTINull()
+            Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasGTIColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsEnvDocSinRecep_DiasGDINull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasGDIColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetEnvDocSinRecep_DiasGDINull()
+            Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasGDIColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     

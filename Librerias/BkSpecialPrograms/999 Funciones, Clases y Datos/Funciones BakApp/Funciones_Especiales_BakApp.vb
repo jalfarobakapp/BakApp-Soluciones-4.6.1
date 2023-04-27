@@ -4796,18 +4796,28 @@ Public Module Crear_Documentos_Desde_Otro
                     Return False
                 End If
 
-                Consulta_sql = "DELETE MAEEN WHERE KOEN='" & _CodEntidad & "' AND SUEN = '" & _SucEntidada & "'" & vbCrLf
+                Consulta_sql = "Delete MAEEN Where KOEN = '" & _CodEntidad & "' AND SUEN = '" & _SucEntidada & "'" & vbCrLf
 
                 If _CanEnt = 1 Then
-                    Consulta_sql += "DELETE MAEENCON WHERE KOEN='" & _CodEntidad & "'" & vbCrLf &
-                                    "DELETE MAEENPRO WHERE KOEN='" & _CodEntidad & "'" & vbCrLf &
-                                    "DELETE MAEENCTA WHERE KOEN='" & _CodEntidad & "'"
+                    Consulta_sql += "Delete MAEENCON Where KOEN = '" & _CodEntidad & "'" & vbCrLf &
+                                    "Delete MAEENPRO Where KOEN = '" & _CodEntidad & "'" & vbCrLf &
+                                    "Delete MAEENCTA Where KOEN = '" & _CodEntidad & "'" & vbCrLf
                 End If
 
-                If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Entidades") Then
+
+                    Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Entidades Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _SucEntidada & "'"
+
+                End If
+
+
+                If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
                     MessageBoxEx.Show(_Fmr, "Entidad eliminada correctamente",
                                       "Eliminar entidad", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     Return True
+                Else
+                    MessageBoxEx.Show(_Fmr, "Entidad no puede ser eliminada" & vbCrLf &
+                                    _Sql.Pro_Error, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 End If
 
             Else

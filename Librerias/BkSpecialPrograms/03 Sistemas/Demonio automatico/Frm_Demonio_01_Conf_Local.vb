@@ -171,6 +171,33 @@ Public Class Frm_Demonio_01_Conf_Local
         Txt_AsComModSabado.Text = NuloPorNro(_Fila.Item("Txt_AsComModSabado"), "")
         Txt_AsComModDomingo.Text = NuloPorNro(_Fila.Item("Txt_AsComModDomingo"), "")
 
+        Chk_EnvDocSinRecep_EjecLunes.Checked = NuloPorNro(_Fila.Item("Chk_EnvDocSinRecep_EjecLunes"), False)
+        Chk_EnvDocSinRecep_EjecMartes.Checked = NuloPorNro(_Fila.Item("Chk_EnvDocSinRecep_EjecMartes"), False)
+        Chk_EnvDocSinRecep_EjecMiercoles.Checked = NuloPorNro(_Fila.Item("Chk_EnvDocSinRecep_EjecMiercoles"), False)
+        Chk_EnvDocSinRecep_EjecJueves.Checked = NuloPorNro(_Fila.Item("Chk_EnvDocSinRecep_EjecJueves"), False)
+        Chk_EnvDocSinRecep_EjecViernes.Checked = NuloPorNro(_Fila.Item("Chk_EnvDocSinRecep_EjecViernes"), False)
+        Chk_EnvDocSinRecep_EjecSabado.Checked = NuloPorNro(_Fila.Item("Chk_EnvDocSinRecep_EjecSabado"), False)
+        Chk_EnvDocSinRecep_EjecDomingo.Checked = NuloPorNro(_Fila.Item("Chk_EnvDocSinRecep_EjecDomingo"), False)
+
+        Chk_EnvDocSinRecep.Checked = NuloPorNro(_Fila.Item("Chk_EnvDocSinRecep"), False)
+        Dtp_EnvDocSinRecep_Hora_Ejecucion.Value = NuloPorNro(_Fila.Item("Dtp_AsisCompra_Hora_Ejecucion"), _LaHora)
+
+        Chk_EnvDocSinRecep_COV.Checked = NuloPorNro(_Fila.Item("EnvDocSinRecep_COV"), False)
+        Chk_EnvDocSinRecep_NVI.Checked = NuloPorNro(_Fila.Item("EnvDocSinRecep_NVI"), False)
+        Chk_EnvDocSinRecep_NVV.Checked = NuloPorNro(_Fila.Item("EnvDocSinRecep_NVV"), False)
+        Chk_EnvDocSinRecep_OCI.Checked = NuloPorNro(_Fila.Item("EnvDocSinRecep_OCI"), False)
+        Chk_EnvDocSinRecep_OCC.Checked = NuloPorNro(_Fila.Item("EnvDocSinRecep_OCC"), False)
+        Chk_EnvDocSinRecep_GTI.Checked = NuloPorNro(_Fila.Item("EnvDocSinRecep_GTI"), False)
+        Chk_EnvDocSinRecep_GDI.Checked = NuloPorNro(_Fila.Item("EnvDocSinRecep_GDI"), False)
+
+        Input_EnvDocSinRecep_DiasCOV.Value = NuloPorNro(_Fila.Item("EnvDocSinRecep_DiasCOV"), 0)
+        Input_EnvDocSinRecep_DiasNVI.Value = NuloPorNro(_Fila.Item("EnvDocSinRecep_DiasNVI"), 0)
+        Input_EnvDocSinRecep_DiasNVV.Value = NuloPorNro(_Fila.Item("EnvDocSinRecep_DiasNVV"), 0)
+        Input_EnvDocSinRecep_DiasOCI.Value = NuloPorNro(_Fila.Item("EnvDocSinRecep_DiasOCI"), 0)
+        Input_EnvDocSinRecep_DiasOCC.Value = NuloPorNro(_Fila.Item("EnvDocSinRecep_DiasOCC"), 0)
+        Input_EnvDocSinRecep_DiasGTI.Value = NuloPorNro(_Fila.Item("EnvDocSinRecep_DiasGTI"), 0)
+        Input_EnvDocSinRecep_DiasGDI.Value = NuloPorNro(_Fila.Item("EnvDocSinRecep_DiasGDI"), 0)
+
     End Sub
 
     Private Sub Btn_Impresora_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Impresora_Prod_Sol_Bodega.Click
@@ -363,6 +390,35 @@ Public Class Frm_Demonio_01_Conf_Local
                 .Item("Txt_AsComModViernes") = Txt_AsComModViernes.Text
                 .Item("Txt_AsComModSabado") = Txt_AsComModSabado.Text
                 .Item("Txt_AsComModDomingo") = Txt_AsComModDomingo.Text
+
+
+
+                .Item("Chk_EnvDocSinRecep_EjecLunes") = Chk_EnvDocSinRecep_EjecLunes.Checked
+                .Item("Chk_EnvDocSinRecep_EjecMartes") = Chk_EnvDocSinRecep_EjecMartes.Checked
+                .Item("Chk_EnvDocSinRecep_EjecMiercoles") = Chk_EnvDocSinRecep_EjecMiercoles.Checked
+                .Item("Chk_EnvDocSinRecep_EjecJueves") = Chk_EnvDocSinRecep_EjecJueves.Checked
+                .Item("Chk_EnvDocSinRecep_EjecViernes") = Chk_EnvDocSinRecep_EjecViernes.Checked
+                .Item("Chk_EnvDocSinRecep_EjecSabado") = Chk_EnvDocSinRecep_EjecSabado.Checked
+                .Item("Chk_EnvDocSinRecep_EjecDomingo") = Chk_EnvDocSinRecep_EjecDomingo.Checked
+
+                .Item("Chk_EnvDocSinRecep") = Chk_EnvDocSinRecep.Checked
+                .Item("Dtp_AsisCompra_Hora_Ejecucion") = Dtp_EnvDocSinRecep_Hora_Ejecucion.Value
+
+                .Item("EnvDocSinRecep_COV") = Chk_EnvDocSinRecep_COV.Checked
+                .Item("EnvDocSinRecep_NVI") = Chk_EnvDocSinRecep_NVI.Checked
+                .Item("EnvDocSinRecep_NVV") = Chk_EnvDocSinRecep_NVV.Checked
+                .Item("EnvDocSinRecep_OCI") = Chk_EnvDocSinRecep_OCI.Checked
+                .Item("EnvDocSinRecep_OCC") = Chk_EnvDocSinRecep_OCC.Checked
+                .Item("EnvDocSinRecep_GTI") = Chk_EnvDocSinRecep_GTI.Checked
+                .Item("EnvDocSinRecep_GDI") = Chk_EnvDocSinRecep_GDI.Checked
+
+                .Item("EnvDocSinRecep_DiasCOV") = Input_EnvDocSinRecep_DiasCOV.Value
+                .Item("EnvDocSinRecep_DiasNVI") = Input_EnvDocSinRecep_DiasNVI.Value
+                .Item("EnvDocSinRecep_DiasNVV") = Input_EnvDocSinRecep_DiasNVV.Value
+                .Item("EnvDocSinRecep_DiasOCI") = Input_EnvDocSinRecep_DiasOCI.Value
+                .Item("EnvDocSinRecep_DiasOCC") = Input_EnvDocSinRecep_DiasOCC.Value
+                .Item("EnvDocSinRecep_DiasGTI") = Input_EnvDocSinRecep_DiasGTI.Value
+                .Item("EnvDocSinRecep_DiasGDI") = Input_EnvDocSinRecep_DiasGDI.Value
 
             End With
 

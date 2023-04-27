@@ -1373,6 +1373,7 @@
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Cerrar_Documentos.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Consolidacion_Stock.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Correos.vb" />
+    <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Enviar_Doc_SinRecepcion.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_FacAuto_NVV.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Imprimir_Documentos.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Imprimir_Picking.vb" />

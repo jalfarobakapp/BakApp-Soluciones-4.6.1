@@ -136,6 +136,12 @@ Partial Class Frm_Demonio_01
         Me.Btn_Archivar_Documentos = New DevComponents.DotNetBar.ButtonX()
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
+        Me.PictureBox8 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox9 = New System.Windows.Forms.PictureBox()
+        Me.Lbl_DocPendientes = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_Hora_EnvDocSinRecep = New DevComponents.DotNetBar.LabelX()
+        Me.CircularEnvDocSinRecep = New DevComponents.DotNetBar.Controls.CircularProgress()
+        Me.Switch_EnvDocSinRecep = New DevComponents.DotNetBar.Controls.SwitchButton()
         CType(Me.PicBox_Sol_Prod_Bodega, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PicBox_Cola_Impresion, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PicBox_Correo, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -155,6 +161,8 @@ Partial Class Frm_Demonio_01
         CType(Me.PicBox_LibroDTESII, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PicBox_Imprimir_Picking, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PicBox_Consolidacion_Stock, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PicBox_Sol_Prod_Bodega
@@ -305,7 +313,7 @@ Partial Class Frm_Demonio_01
         Me.Chk_Solo_Marcar_No_Imprimir.Enabled = False
         Me.Chk_Solo_Marcar_No_Imprimir.FocusCuesEnabled = False
         Me.Chk_Solo_Marcar_No_Imprimir.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Solo_Marcar_No_Imprimir.Location = New System.Drawing.Point(11, 496)
+        Me.Chk_Solo_Marcar_No_Imprimir.Location = New System.Drawing.Point(11, 528)
         Me.Chk_Solo_Marcar_No_Imprimir.Name = "Chk_Solo_Marcar_No_Imprimir"
         Me.Chk_Solo_Marcar_No_Imprimir.Size = New System.Drawing.Size(593, 18)
         Me.Chk_Solo_Marcar_No_Imprimir.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -416,7 +424,7 @@ Partial Class Frm_Demonio_01
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Configurar, Me.Btn_On_Off})
-        Me.Bar1.Location = New System.Drawing.Point(0, 523)
+        Me.Bar1.Location = New System.Drawing.Point(0, 563)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(647, 41)
         Me.Bar1.Stretch = True
@@ -482,7 +490,7 @@ Partial Class Frm_Demonio_01
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 80)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(627, 410)
+        Me.GroupPanel1.Size = New System.Drawing.Size(627, 442)
         '
         '
         '
@@ -524,6 +532,12 @@ Partial Class Frm_Demonio_01
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 73.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 8.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 8.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.Switch_EnvDocSinRecep, 4, 17)
+        Me.TableLayoutPanel1.Controls.Add(Me.CircularEnvDocSinRecep, 3, 17)
+        Me.TableLayoutPanel1.Controls.Add(Me.Lbl_Hora_EnvDocSinRecep, 2, 17)
+        Me.TableLayoutPanel1.Controls.Add(Me.Lbl_DocPendientes, 1, 17)
+        Me.TableLayoutPanel1.Controls.Add(Me.PictureBox9, 0, 17)
+        Me.TableLayoutPanel1.Controls.Add(Me.PictureBox8, 0, 16)
         Me.TableLayoutPanel1.Controls.Add(Me.Lbl_Hora_AsisCompra, 2, 16)
         Me.TableLayoutPanel1.Controls.Add(Me.Switch_AsisCompras, 4, 16)
         Me.TableLayoutPanel1.Controls.Add(Me.CircularAsisCompra, 3, 16)
@@ -618,7 +632,7 @@ Partial Class Frm_Demonio_01
         Me.TableLayoutPanel1.ForeColor = System.Drawing.Color.Black
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 3)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-        Me.TableLayoutPanel1.RowCount = 17
+        Me.TableLayoutPanel1.RowCount = 18
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.882353!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.882353!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.882353!))
@@ -636,7 +650,8 @@ Partial Class Frm_Demonio_01
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.882353!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.882353!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.882353!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(606, 394)
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(606, 414)
         Me.TableLayoutPanel1.TabIndex = 55
         '
         'Lbl_Hora_AsisCompra
@@ -694,7 +709,7 @@ Partial Class Frm_Demonio_01
         Me.Lbl_AsisCompras.ForeColor = System.Drawing.Color.Black
         Me.Lbl_AsisCompras.Location = New System.Drawing.Point(29, 371)
         Me.Lbl_AsisCompras.Name = "Lbl_AsisCompras"
-        Me.Lbl_AsisCompras.Size = New System.Drawing.Size(369, 20)
+        Me.Lbl_AsisCompras.Size = New System.Drawing.Size(369, 17)
         Me.Lbl_AsisCompras.TabIndex = 73
         Me.Lbl_AsisCompras.Text = "Asistente de compras"
         '
@@ -1812,7 +1827,7 @@ Partial Class Frm_Demonio_01
         Me.Metro_Bar_Color.Font = New System.Drawing.Font("Segoe UI", 10.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Metro_Bar_Color.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Estatus})
         Me.Metro_Bar_Color.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 564)
+        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 604)
         Me.Metro_Bar_Color.Name = "Metro_Bar_Color"
         Me.Metro_Bar_Color.Size = New System.Drawing.Size(647, 22)
         Me.Metro_Bar_Color.TabIndex = 63
@@ -1824,11 +1839,94 @@ Partial Class Frm_Demonio_01
         Me.Lbl_Estatus.Name = "Lbl_Estatus"
         Me.Lbl_Estatus.Text = "LabelItem2"
         '
+        'PictureBox8
+        '
+        Me.PictureBox8.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox8.ForeColor = System.Drawing.Color.Black
+        Me.PictureBox8.Image = CType(resources.GetObject("PictureBox8.Image"), System.Drawing.Image)
+        Me.PictureBox8.Location = New System.Drawing.Point(3, 371)
+        Me.PictureBox8.Name = "PictureBox8"
+        Me.PictureBox8.Size = New System.Drawing.Size(20, 17)
+        Me.PictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox8.TabIndex = 72
+        Me.PictureBox8.TabStop = False
+        '
+        'PictureBox9
+        '
+        Me.PictureBox9.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox9.ForeColor = System.Drawing.Color.Black
+        Me.PictureBox9.Image = CType(resources.GetObject("PictureBox9.Image"), System.Drawing.Image)
+        Me.PictureBox9.Location = New System.Drawing.Point(3, 394)
+        Me.PictureBox9.Name = "PictureBox9"
+        Me.PictureBox9.Size = New System.Drawing.Size(20, 17)
+        Me.PictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox9.TabIndex = 72
+        Me.PictureBox9.TabStop = False
+        '
+        'Lbl_DocPendientes
+        '
+        Me.Lbl_DocPendientes.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_DocPendientes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_DocPendientes.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_DocPendientes.Location = New System.Drawing.Point(29, 394)
+        Me.Lbl_DocPendientes.Name = "Lbl_DocPendientes"
+        Me.Lbl_DocPendientes.Size = New System.Drawing.Size(369, 17)
+        Me.Lbl_DocPendientes.TabIndex = 74
+        Me.Lbl_DocPendientes.Text = "Asistente de compras"
+        '
+        'Lbl_Hora_EnvDocSinRecep
+        '
+        Me.Lbl_Hora_EnvDocSinRecep.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_Hora_EnvDocSinRecep.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Hora_EnvDocSinRecep.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Hora_EnvDocSinRecep.Location = New System.Drawing.Point(404, 394)
+        Me.Lbl_Hora_EnvDocSinRecep.Name = "Lbl_Hora_EnvDocSinRecep"
+        Me.Lbl_Hora_EnvDocSinRecep.Size = New System.Drawing.Size(72, 17)
+        Me.Lbl_Hora_EnvDocSinRecep.TabIndex = 65
+        Me.Lbl_Hora_EnvDocSinRecep.Text = "20:00"
+        Me.Lbl_Hora_EnvDocSinRecep.TextAlignment = System.Drawing.StringAlignment.Far
+        '
+        'CircularEnvDocSinRecep
+        '
+        Me.CircularEnvDocSinRecep.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.CircularEnvDocSinRecep.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.CircularEnvDocSinRecep.FocusCuesEnabled = False
+        Me.CircularEnvDocSinRecep.Location = New System.Drawing.Point(482, 394)
+        Me.CircularEnvDocSinRecep.Name = "CircularEnvDocSinRecep"
+        Me.CircularEnvDocSinRecep.ProgressColor = System.Drawing.Color.Green
+        Me.CircularEnvDocSinRecep.Size = New System.Drawing.Size(30, 17)
+        Me.CircularEnvDocSinRecep.Style = DevComponents.DotNetBar.eDotNetBarStyle.OfficeXP
+        Me.CircularEnvDocSinRecep.TabIndex = 68
+        '
+        'Switch_EnvDocSinRecep
+        '
+        Me.Switch_EnvDocSinRecep.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        '
+        '
+        '
+        Me.Switch_EnvDocSinRecep.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Switch_EnvDocSinRecep.Enabled = False
+        Me.Switch_EnvDocSinRecep.ForeColor = System.Drawing.Color.Black
+        Me.Switch_EnvDocSinRecep.Location = New System.Drawing.Point(520, 394)
+        Me.Switch_EnvDocSinRecep.Name = "Switch_EnvDocSinRecep"
+        Me.Switch_EnvDocSinRecep.Size = New System.Drawing.Size(66, 17)
+        Me.Switch_EnvDocSinRecep.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Switch_EnvDocSinRecep.TabIndex = 61
+        '
         'Frm_Demonio_01
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(647, 586)
+        Me.ClientSize = New System.Drawing.Size(647, 626)
         Me.Controls.Add(Me.Btn_Archivar_Documentos)
         Me.Controls.Add(Me.Chk_Solo_Marcar_No_Imprimir)
         Me.Controls.Add(Me.LabelX5)
@@ -1870,6 +1968,8 @@ Partial Class Frm_Demonio_01
         CType(Me.PicBox_LibroDTESII, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PicBox_Imprimir_Picking, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PicBox_Consolidacion_Stock, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1985,4 +2085,10 @@ Partial Class Frm_Demonio_01
     Friend WithEvents CircularAsisCompra As DevComponents.DotNetBar.Controls.CircularProgress
     Friend WithEvents Lbl_AsisCompras As DevComponents.DotNetBar.LabelX
     Friend WithEvents Lbl_Hora_AsisCompra As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Switch_EnvDocSinRecep As DevComponents.DotNetBar.Controls.SwitchButton
+    Friend WithEvents CircularEnvDocSinRecep As DevComponents.DotNetBar.Controls.CircularProgress
+    Friend WithEvents Lbl_Hora_EnvDocSinRecep As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Lbl_DocPendientes As DevComponents.DotNetBar.LabelX
+    Friend WithEvents PictureBox9 As PictureBox
+    Friend WithEvents PictureBox8 As PictureBox
 End Class
