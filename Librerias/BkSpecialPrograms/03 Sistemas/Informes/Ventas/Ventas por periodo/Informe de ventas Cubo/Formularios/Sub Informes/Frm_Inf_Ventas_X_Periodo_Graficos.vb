@@ -2842,7 +2842,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
 
                 End Select
             Else
-                _Filtro = _SqlFiltro_Detalle & vbCrLf & "And " & _Cp_Codigo & " = '" & _Cod & "'"
+                _Filtro = _SqlFiltro_Detalle & vbCrLf & "--And " & _Cp_Codigo & " = '" & _Cod & "'"
             End If
 
 

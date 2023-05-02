@@ -120,44 +120,7 @@ Public Class Frm_Kardex_Informe_X_Producto
 
         Sb_CellEnter()
 
-        If False Then
-            For Each _Fila As DataGridViewRow In GrillaKardex.Rows
-
-                Dim SUBTIDO As String = _Fila.Cells("SUBTIDO").Value
-
-                If SUBTIDO = "AJU" Then
-
-                    _Fila.DefaultCellStyle.BackColor = Color.Yellow
-
-                    If Global_Thema = Enum_Themas.Oscuro Then
-                        _Fila.DefaultCellStyle.ForeColor = Color.Black
-                    End If
-
-                End If
-
-                _Fila.Cells("Sfisico").Style.ForeColor = Rojo
-                _Fila.Cells("Sfisico").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
-
-                _Fila.Cells("Sdevengado").Style.ForeColor = Rojo
-                _Fila.Cells("Sdevengado").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
-
-                _Fila.Cells("Sdespsfact").Style.ForeColor = Rojo
-                _Fila.Cells("Sdespsfact").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
-
-                _Fila.Cells("Scomprometido").Style.ForeColor = Rojo
-                _Fila.Cells("Scomprometido").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
-
-                _Fila.Cells("Scompranorecep").Style.ForeColor = Rojo
-                _Fila.Cells("Scompranorecep").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
-
-                _Fila.Cells("Srecesfact").Style.ForeColor = Rojo
-                _Fila.Cells("Srecesfact").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
-
-                _Fila.Cells("Spedido").Style.ForeColor = Rojo
-                _Fila.Cells("Spedido").Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
-
-            Next
-        End If
+        Sb_Llenar_Grilla(_TblKardex)
 
         If _Todas_Las_Bodegas Then
 
@@ -596,6 +559,19 @@ Public Class Frm_Kardex_Informe_X_Producto
             If Global_Thema = Enum_Themas.Oscuro Then
                 _Fila.DefaultCellStyle.ForeColor = Color.Black
             End If
+
+        End If
+
+        If _Columname = "Sfisico" Or
+           _Columname = "Sdevengado" Or
+           _Columname = "Sdespsfact" Or
+           _Columname = "Scomprometido" Or
+           _Columname = "Scompranorecep" Or
+           _Columname = "Srecesfact" Or
+           _Columname = "Spedido" Then
+
+            _Fila.Cells(_Columname).Style.ForeColor = Rojo
+            _Fila.Cells(_Columname).Style.Font = New Font("Tahoma", 7, FontStyle.Bold)
 
         End If
 

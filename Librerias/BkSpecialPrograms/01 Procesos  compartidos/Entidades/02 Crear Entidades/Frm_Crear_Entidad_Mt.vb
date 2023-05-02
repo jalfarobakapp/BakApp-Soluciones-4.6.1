@@ -605,13 +605,6 @@ Public Class Frm_Crear_Entidad_Mt
 
             If String.IsNullOrEmpty(_Pais.Trim) Or String.IsNullOrEmpty(_Ciudad) Or String.IsNullOrEmpty(_Comuna.Trim) Then Return
 
-            If _Existe_Tbl_Entidades_Bakapp Then
-
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Entidades (CodEntidad,CodSucEntidad,Libera_NVV) Values ('" & _Koen & "','" & _Suen & "',0)"
-                _Sql.Ej_consulta_IDU(Consulta_sql)
-
-            End If
-
         End If
 
         If Not String.IsNullOrEmpty(TxtxEmail1.Text) Then
@@ -967,6 +960,20 @@ Public Class Frm_Crear_Entidad_Mt
             If _Existe_Tbl_Entidades_Bakapp Then
 
                 Dim _EmailCompras = String.Empty
+
+                If _CreaNuevaEntidad Then
+
+                    Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Entidades Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
+                    Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                    Comando.Transaction = myTrans
+                    Comando.ExecuteNonQuery()
+
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Entidades (CodEntidad,CodSucEntidad,Libera_NVV) Values ('" & _Koen & "','" & _Suen & "',0)"
+                    Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                    Comando.Transaction = myTrans
+                    Comando.ExecuteNonQuery()
+
+                End If
 
                 If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Entidades", "EmailCompras") Then
                     _EmailCompras = ",EmailCompras = '" & Txt_EmailCompras.Text & "'" & vbCrLf

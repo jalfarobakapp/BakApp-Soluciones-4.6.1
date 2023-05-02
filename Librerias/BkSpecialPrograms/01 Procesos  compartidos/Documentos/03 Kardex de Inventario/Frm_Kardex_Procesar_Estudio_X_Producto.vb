@@ -104,7 +104,7 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
         Grupo_01.Enabled = False
         Grupo_02.Enabled = False
         Btn_Procesar.Enabled = False
-        
+
 
         Dim _TblKardex As DataTable = Fx_Generar_Kardex(_Empresa, _Sucursal, _Bodega, _Codigo, _Unidad, RdbBodega_todas.Checked)
 
@@ -113,8 +113,8 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
 
                 Dim _Marcar_dos As Boolean
 
-                If Rdb_Ult10.Checked Or _
-                   Rdb_Ult100.Checked Or _
+                If Rdb_Ult10.Checked Or
+                   Rdb_Ult100.Checked Or
                    RdbUltNmov.Checked Then
                     _Marcar_dos = True
                 End If
@@ -134,6 +134,8 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
                 Btn_Procesar.Enabled = True
                 Btn_Cancelar.Enabled = False
 
+                Fm.Pro_TblKardex = _TblKardex
+
                 If _Mostrar_Kardex Then Fm.ShowDialog(Me)
                 Fm.Dispose()
 
@@ -143,7 +145,7 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
                 Progreso_Kardex.Value = 0
 
             Else
-                MessageBoxEx.Show(Me, "No existen datos que mostrar", "Kardex", _
+                MessageBoxEx.Show(Me, "No existen datos que mostrar", "Kardex",
                                   MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
         End If
@@ -168,20 +170,20 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
                 Progreso_Porc.Maximum = 100
                 Progreso_Cont.Maximum = .Rows.Count
 
-                Dim STFISICO, _
-                    DEVENGADO, _
-                    DESPSFACTURAR, _
-                    COMPROMETIDO, _
-                    COMPRANREC, _
-                    RECEPSFAC, _
+                Dim STFISICO,
+                    DEVENGADO,
+                    DESPSFACTURAR,
+                    COMPROMETIDO,
+                    COMPRANREC,
+                    RECEPSFAC,
                     PEDIDO As Double
 
-                Dim STFISICO_, _
-                    DEVENGADO_, _
-                    DESPSFACTURAR_, _
-                    COMPROMETIDO_, _
-                    COMPRANREC_, _
-                    RECEPSFAC_, _
+                Dim STFISICO_,
+                    DEVENGADO_,
+                    DESPSFACTURAR_,
+                    COMPROMETIDO_,
+                    COMPRANREC_,
+                    RECEPSFAC_,
                     PEDIDO_ As Double
 
 
@@ -293,10 +295,10 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
 
                 If _Marcar_dos Then
 
-                    Consulta_sql = "Select * From MAEST" & vbCrLf & _
-                                   "Where EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal & _
+                    Consulta_sql = "Select * From MAEST" & vbCrLf &
+                                   "Where EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal &
                                    "'  And KOBO = '" & _Bodega & "' And KOPR = '" & _Codigo & "'"
-                    Dim _TblMaest As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+                    Dim _TblMaest As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
                     'MST.STFI#Ud#,        -- STOCK FISICO
                     'MST.STDV#Ud#,        -- STOCK DEVENGADO
@@ -306,27 +308,31 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
                     'MST.RECENOFAC#Ud#,   -- RECEPCIONADO SIN FACTURAR
                     'MST.STOCNV#Ud#C,     -- STOCK PEDIDO
 
-                    STFISICO = _TblMaest.Rows(0).Item("STFI" & _Unidad) + -STFISICO_
-                    DEVENGADO = _TblMaest.Rows(0).Item("STDV" & _Unidad) + -DEVENGADO_
-                    DESPSFACTURAR = _TblMaest.Rows(0).Item("DESPNOFAC" & _Unidad) + -DESPSFACTURAR_
-                    COMPROMETIDO = _TblMaest.Rows(0).Item("STOCNV" & _Unidad) + -COMPROMETIDO_
-                    COMPRANREC = _TblMaest.Rows(0).Item("STDV" & _Unidad) + -COMPRANREC_
-                    RECEPSFAC = _TblMaest.Rows(0).Item("RECENOFAC" & _Unidad) + -RECEPSFAC_
-                    PEDIDO = _TblMaest.Rows(0).Item("STOCNV" & _Unidad & "C") + -PEDIDO_
+                    If CBool(_TblMaest.Rows.Count) Then
 
-                    .Rows.Item(0).Cells("STFISICO").Value = STFISICO
-                    .Rows.Item(0).Cells("DEVENGADO").Value = DEVENGADO
-                    .Rows.Item(0).Cells("DESPSFACTURAR").Value = DESPSFACTURAR
-                    .Rows.Item(0).Cells("COMPROMETIDO").Value = COMPROMETIDO
-                    .Rows.Item(0).Cells("COMPRANREC").Value = COMPRANREC
-                    .Rows.Item(0).Cells("RECEPSFAC").Value = RECEPSFAC
-                    .Rows.Item(0).Cells("PEDIDO").Value = PEDIDO
+                        STFISICO = _TblMaest.Rows(0).Item("STFI" & _Unidad) + -STFISICO_
+                        DEVENGADO = _TblMaest.Rows(0).Item("STDV" & _Unidad) + -DEVENGADO_
+                        DESPSFACTURAR = _TblMaest.Rows(0).Item("DESPNOFAC" & _Unidad) + -DESPSFACTURAR_
+                        COMPROMETIDO = _TblMaest.Rows(0).Item("STOCNV" & _Unidad) + -COMPROMETIDO_
+                        COMPRANREC = _TblMaest.Rows(0).Item("STDV" & _Unidad) + -COMPRANREC_
+                        RECEPSFAC = _TblMaest.Rows(0).Item("RECENOFAC" & _Unidad) + -RECEPSFAC_
+                        PEDIDO = _TblMaest.Rows(0).Item("STOCNV" & _Unidad & "C") + -PEDIDO_
+
+                        .Rows.Item(0).Cells("STFISICO").Value = STFISICO
+                        .Rows.Item(0).Cells("DEVENGADO").Value = DEVENGADO
+                        .Rows.Item(0).Cells("DESPSFACTURAR").Value = DESPSFACTURAR
+                        .Rows.Item(0).Cells("COMPROMETIDO").Value = COMPROMETIDO
+                        .Rows.Item(0).Cells("COMPRANREC").Value = COMPRANREC
+                        .Rows.Item(0).Cells("RECEPSFAC").Value = RECEPSFAC
+                        .Rows.Item(0).Cells("PEDIDO").Value = PEDIDO
+
+                    End If
+
                     _Marcar_dos = False
                     _Pasada += 1
                     If Not Fx_Marcar_Grilla(Grilla, _Marcar_dos) Then
                         Return False
                     End If
-                    ' Sb_MarcarGrilla(Grilla)
 
                 End If
 

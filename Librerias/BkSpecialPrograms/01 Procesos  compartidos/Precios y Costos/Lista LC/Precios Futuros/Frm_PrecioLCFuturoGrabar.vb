@@ -7,11 +7,13 @@ Public Class Frm_PrecioLCFuturoGrabar
     Dim _RowProducto As DataRow
     Dim _TblPrecios As DataTable
 
+    Dim _PrecioDigitado As Double
+
     Public Property Grabar As Boolean
     Public Property Editar As Boolean
     Public Property Id_Enc As Integer
 
-    Public Sub New(_Codigo As String, _TblPrecios As DataTable)
+    Public Sub New(_Codigo As String, _TblPrecios As DataTable, _PrecioDigitado As Double)
 
         ' Esta llamada es exigida por el diseñador.
         InitializeComponent()
@@ -20,6 +22,8 @@ Public Class Frm_PrecioLCFuturoGrabar
 
         Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
         _RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Me._PrecioDigitado = _PrecioDigitado
 
         Me._TblPrecios = _TblPrecios
 
@@ -182,13 +186,13 @@ Public Class Frm_PrecioLCFuturoGrabar
            ,[NombreProgramacion]
            ,[FechaCreacion]
            ,[FechaProgramada]
-           ,[Aplicado],[Funcionario],[Activo])
+           ,[Aplicado],[Funcionario],[Activo],[ValDigitado])
      Values
            ('" & _RowProducto.Item("KOPR") & "'
            ,'" & _RowProducto.Item("KOPR").ToString.Trim & "-" & _RowProducto.Item("NOKOPR").ToString.Trim & " DesdeListaLC'
            ,Getdate()
            ,'" & _FechaProgramada & "'
-           ,0,'" & FUNCIONARIO & "','1');" &
+           ,0,'" & FUNCIONARIO & "','1','" & De_Num_a_Tx_01(_PrecioDigitado, False, 5) & "');" &
            vbCrLf &
            "Set @Id_Enc = (SELECT @@IDENTITY AS Id)" & vbCrLf & vbCrLf &
            "--;DECLARE @Id_Enc AS int;SET @Id_Enc = (SELECT SCOPE_IDENTITY());" & vbCrLf & vbCrLf

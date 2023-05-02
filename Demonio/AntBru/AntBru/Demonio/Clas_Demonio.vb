@@ -130,6 +130,31 @@ Public Module Clas_Demonio
 
             End If
 
+
+            Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & ModEmpresa & "'"
+            _Global_Row_Empresa = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+            If IsNothing(_Global_Row_Empresa) Then
+
+                Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Empresas (Empresa,Rut,Razon,Ncorto,Direccion,Pais,Ciudad,Giro)" & vbCrLf &
+                               "Select EMPRESA,RUT,RAZON,NCORTO,DIRECCION,PAIS,CIUDAD,GIRO From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+                _Sql.Ej_consulta_IDU(Consulta_Sql)
+
+                Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & ModEmpresa & "'"
+                _Global_Row_Empresa = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+            End If
+
+            RazonEmpresa = _Global_Row_Empresa.Item("Razon").ToString.Trim
+            DireccionEmpresa = _Global_Row_Empresa.Item("Direccion").ToString.Trim
+            RutEmpresaActiva = _Global_Row_Empresa.Item("Rut").ToString.Trim
+            RutEmpresa = RutEmpresaActiva
+            ModEmpresa = _Global_Row_Empresa.Item("Empresa").ToString.Trim
+
+
+
+
+
             Dim _Mod As New Clas_Modalidades
             _Mod.Sb_Actualiza_Formatos_X_Modalidad()
             _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")

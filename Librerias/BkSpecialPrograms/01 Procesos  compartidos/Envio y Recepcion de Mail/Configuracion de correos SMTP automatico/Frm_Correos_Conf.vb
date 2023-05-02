@@ -55,8 +55,10 @@ Public Class Frm_Correos_Conf
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         If Global_Thema = Enum_Themas.Oscuro Then
+
             Btn_Probar_Envio.ForeColor = Color.White
             Btn_Probar_GMAIL.ForeColor = Color.White
+
         End If
 
         If Not Directory.Exists(_Dir_Correo) Then
@@ -82,13 +84,18 @@ Public Class Frm_Correos_Conf
         Pict_Color_Fuente.BackColor = Color.Black
         Pict_Color_Resaltado.BackColor = Color.Yellow
 
+        If Global_Thema = Enum_Themas.Oscuro Then
+            Rtf_Cuerpo.BackColor = Color.White
+            Rtf_Cuerpo.ForeColor = Color.Black
+        End If
+
         If _Accion = Accion.Nuevo Then
             Btn_Eliminar.Visible = False
         ElseIf _Accion = Accion.Editar Then
+
             Txt_Nombre_Correo.Enabled = False
             Btn_Eliminar.Visible = True
             Txt_Nombre_Correo.Enabled = False
-
             ConvertHtmlUrlToRtfFile()
 
         End If
@@ -896,15 +903,17 @@ Public Class Frm_Correos_Conf
         'h.BaseURL = "http://www.sautinsoft.net/samples/utf-8.html"
 
         If h.OpenHtml(inputFile) Then
+
             Dim ok As Boolean = h.ToRtf(outputFile)
 
             Rtf_Cuerpo.LoadFile(AppPath() & "\ResultHtml2Rtf.rtf")
 
             ' Open the result for demonstration purposes.
             'If ok Then
-            '    System.Diagnostics.Process.Start(New System.Diagnostics.ProcessStartInfo(outputFile) With {.UseShellExecute = True})
+            'System.Diagnostics.Process.Start(New System.Diagnostics.ProcessStartInfo(outputFile) With {.UseShellExecute = True})
             'End If
         End If
+
     End Sub
 
     Private Sub Cmb_Fuente_DrawItem(sender As Object, e As DrawItemEventArgs) Handles Cmb_Fuente.DrawItem

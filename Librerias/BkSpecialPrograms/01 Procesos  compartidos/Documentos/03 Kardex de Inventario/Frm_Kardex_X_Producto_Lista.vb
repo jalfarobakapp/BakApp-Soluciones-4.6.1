@@ -220,6 +220,8 @@ Public Class Frm_Kardex_X_Producto_Lista
             _Unidad = Rdb_Ud2.Tag
         End If
 
+        _Codigo = _Codigo.Replace("'", "")
+
         Consulta_sql = My.Resources.Recursos_Kardex.Kardex_Stock_Productos_por_Suc_Bod
         Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
         Consulta_sql = Replace(Consulta_sql, "#Codigo#", _Codigo)

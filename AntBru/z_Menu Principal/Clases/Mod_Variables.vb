@@ -760,6 +760,8 @@ Public Module Mod_Variables
         Fm.LimpiarCantidadesDespuesDeImprimir = True
         Fm.LimpiarListadoDeCodigosDespuesDeImprimir = True
         Fm.Grupo_Puerto.Enabled = False
+        Fm.Grupo_Lista_Precios.Enabled = False
+        Fm.Grupo_Ubicaciones.Enabled = False
         Fm.Pro_Cantidad_Uno = True
         Fm.ShowDialog(Frm_Menu)
         Fm.Dispose()

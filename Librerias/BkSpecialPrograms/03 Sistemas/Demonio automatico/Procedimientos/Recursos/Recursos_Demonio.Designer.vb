@@ -22,7 +22,7 @@ Namespace My.Resources
     '''<summary>
     '''  Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
     Friend Class Recursos_Demonio
@@ -62,6 +62,29 @@ Namespace My.Resources
             Set
                 resourceCulture = value
             End Set
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a &lt;!doctype html&gt;
+        '''&lt;html lang=&quot;en&quot;&gt;
+        '''
+        '''&lt;head&gt;
+        '''
+        '''    &lt;meta charset=&quot;utf-8&quot;&gt;
+        '''    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+        '''    &lt;title&gt;Documento Comercial&lt;/title&gt;
+        '''
+        '''    &lt;link href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot; integrity=&quot;sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC&quot; crossorigin=&quot;anonymous&quot;&gt;
+        '''
+        '''    &lt;div&gt;
+        '''        &lt;img src=&quot;Imagenes/Logo Final.jpg&quot; class=&quot;style22&quot; alt=&quot;Logo Empresa&quot;&gt;
+        '''    &lt;/div&gt;
+        ''' [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Crear_Html_Documentos_Pendientes() As String
+            Get
+                Return ResourceManager.GetString("Crear_Html_Documentos_Pendientes", resourceCulture)
+            End Get
         End Property
         
         '''<summary>

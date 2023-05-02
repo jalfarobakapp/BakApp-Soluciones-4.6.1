@@ -118,7 +118,7 @@ Public Class Frm_PrecioLCFuturoListaXProd
                        "Where Id_Enc = " & _Id_Enc & " And Eliminada = 0"
         Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-        Dim Fm As New Frm_PrecioLCFuturoGrabar(_Codigo, _Tbl)
+        Dim Fm As New Frm_PrecioLCFuturoGrabar(_Codigo, _Tbl, 0)
         Fm.Id_Enc = _Id_Enc
         Fm.Editar = True
         Fm.Dtp_FechaProgramada.Value = _FechaProgramada

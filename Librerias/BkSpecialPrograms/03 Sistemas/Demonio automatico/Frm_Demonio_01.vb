@@ -176,6 +176,7 @@ Public Class Frm_Demonio_01
     Dim _Cl_Listas_Programadas As New Cl_Listas_Programadas
     Dim _Cl_FacAuto_NVV As New Cl_FacAuto_NVV
     Dim _Cl_Asistente_Compras As New Cl_Asistente_Compras
+    Dim _Cl_Enviar_Doc_SinRecepcion As New Cl_Enviar_Doc_SinRecepcion
 
     Dim _Ejecutar_PrestaShop_Ordenes As Boolean
     Dim _Nro_Impresiones_Cerrar As Integer = 20
@@ -332,6 +333,7 @@ Public Class Frm_Demonio_01
         Switch_Listas_Programadas.Value = NuloPorNro(_Fila.Item("Timer_Listas_Programadas"), False)
         Switch_FacAuto.Value = NuloPorNro(_Fila.Item("Timer_FacAuto"), False)
         Switch_AsisCompras.Value = NuloPorNro(_Fila.Item("Chk_AsistenteDeCompras"), False)
+        Switch_EnvDocSinRecep.Value = NuloPorNro(_Fila.Item("Chk_EnvDocSinRecep"), False)
 
         _Cl_Archivador.Ruta_Archivador = NuloPorNro(_Fila.Item("Ruta_Archivador"), "")
 
@@ -503,18 +505,52 @@ Public Class Frm_Demonio_01
         _Hora_Cstock = _Cl_Asistente_Compras.Dtp_AsisCompra_Hora_Ejecucion
         Lbl_Hora_AsisCompra.Text = Format(_Hora_Cstock, "HH:mm")
 
+        _Cl_Enviar_Doc_SinRecepcion.Id_Correo = NuloPorNro(_Fila.Item("Id_CtaCorreoEnvDocSinRecep"), 0)
+        _Cl_Enviar_Doc_SinRecepcion.Para = NuloPorNro(_Fila.Item("Txt_ParaEnvDocSinRecep"), "")
+
+        _Cl_Enviar_Doc_SinRecepcion.Chk_EnvDocSinRecep_EjecLunes = NuloPorNro(_Fila.Item("Chk_EnvDocSinRecep_EjecLunes"), False)
+        _Cl_Enviar_Doc_SinRecepcion.Chk_EnvDocSinRecep_EjecMartes = NuloPorNro(_Fila.Item("Chk_EnvDocSinRecep_EjecMartes"), False)
+        _Cl_Enviar_Doc_SinRecepcion.Chk_EnvDocSinRecep_EjecMiercoles = NuloPorNro(_Fila.Item("Chk_EnvDocSinRecep_EjecMiercoles"), False)
+        _Cl_Enviar_Doc_SinRecepcion.Chk_EnvDocSinRecep_EjecJueves = NuloPorNro(_Fila.Item("Chk_EnvDocSinRecep_EjecJueves"), False)
+        _Cl_Enviar_Doc_SinRecepcion.Chk_EnvDocSinRecep_EjecViernes = NuloPorNro(_Fila.Item("Chk_EnvDocSinRecep_EjecViernes"), False)
+        _Cl_Enviar_Doc_SinRecepcion.Chk_EnvDocSinRecep_EjecSabado = NuloPorNro(_Fila.Item("Chk_EnvDocSinRecep_EjecSabado"), False)
+        _Cl_Enviar_Doc_SinRecepcion.Chk_EnvDocSinRecep_EjecDomingo = NuloPorNro(_Fila.Item("Chk_EnvDocSinRecep_EjecDomingo"), False)
+
+        _Cl_Enviar_Doc_SinRecepcion.Chk_EnvDocSinRecep = NuloPorNro(_Fila.Item("Chk_EnvDocSinRecep"), False)
+        _Cl_Enviar_Doc_SinRecepcion.Dtp_EnvDocSinRecep_Hora_Ejecucion = NuloPorNro(_Fila.Item("Dtp_EnvDocSinRecep_Hora_Ejecucion"), Now.ToString("HH:mm:ss"))
+
+        _Cl_Enviar_Doc_SinRecepcion.COV = NuloPorNro(_Fila.Item("EnvDocSinRecep_COV"), False)
+        _Cl_Enviar_Doc_SinRecepcion.NVI = NuloPorNro(_Fila.Item("EnvDocSinRecep_NVI"), False)
+        _Cl_Enviar_Doc_SinRecepcion.NVV = NuloPorNro(_Fila.Item("EnvDocSinRecep_NVV"), False)
+        _Cl_Enviar_Doc_SinRecepcion.OCI = NuloPorNro(_Fila.Item("EnvDocSinRecep_OCI"), False)
+        _Cl_Enviar_Doc_SinRecepcion.OCC = NuloPorNro(_Fila.Item("EnvDocSinRecep_OCC"), False)
+        _Cl_Enviar_Doc_SinRecepcion.GTI = NuloPorNro(_Fila.Item("EnvDocSinRecep_GTI"), False)
+        _Cl_Enviar_Doc_SinRecepcion.GDI = NuloPorNro(_Fila.Item("EnvDocSinRecep_GDI"), False)
+
+        _Cl_Enviar_Doc_SinRecepcion.DiasCOV = NuloPorNro(_Fila.Item("EnvDocSinRecep_DiasCOV"), 0)
+        _Cl_Enviar_Doc_SinRecepcion.DiasNVI = NuloPorNro(_Fila.Item("EnvDocSinRecep_DiasNVI"), 0)
+        _Cl_Enviar_Doc_SinRecepcion.DiasNVV = NuloPorNro(_Fila.Item("EnvDocSinRecep_DiasNVV"), 0)
+        _Cl_Enviar_Doc_SinRecepcion.DiasOCI = NuloPorNro(_Fila.Item("EnvDocSinRecep_DiasOCI"), 0)
+        _Cl_Enviar_Doc_SinRecepcion.DiasOCC = NuloPorNro(_Fila.Item("EnvDocSinRecep_DiasOCC"), 0)
+        _Cl_Enviar_Doc_SinRecepcion.DiasGTI = NuloPorNro(_Fila.Item("EnvDocSinRecep_DiasGTI"), 0)
+        _Cl_Enviar_Doc_SinRecepcion.DiasGDI = NuloPorNro(_Fila.Item("EnvDocSinRecep_DiasGDI"), 0)
+
+        _Hora_Cstock = _Cl_Enviar_Doc_SinRecepcion.Dtp_EnvDocSinRecep_Hora_Ejecucion
+        Lbl_Hora_EnvDocSinRecep.Text = Format(_Hora_Cstock, "HH:mm")
+
         Sb_Pausar(_Pausa.Play)
 
         Dim _Dir_Local As String = AppPath() & "\Data\"
 
         _Nombre_Equipo = My.Computer.Name
 
-        Dim _Ds As New DatosBakApp
-        _Ds.Clear()
-        _Ds.ReadXml(_Dir_Local & RutEmpresa & "\Configuracion_Local\Nombre_Equipo.xml")
+        'Dim _Ds As New DatosBakApp
+        '_Ds.Clear()
+        '_Ds.ReadXml(_Dir_Local & RutEmpresa & "\Configuracion_Local\Nombre_Equipo.xml")
 
-        _Row_Nom_Equipo = _Ds.Tables("Tbl_Nombre_Equipo").Rows(0)
-        _Nombre_Equipo = _Row_Nom_Equipo.Item("Nombre_Equipo")
+        '_Row_Nom_Equipo = _Ds.Tables("Tbl_Nombre_Equipo").Rows(0)
+
+        _Nombre_Equipo = _Global_Row_EstacionBk.Item("NombreEquipo") '_Row_Nom_Equipo.Item("Nombre_Equipo")
 
     End Sub
 
@@ -657,7 +693,7 @@ Public Class Frm_Demonio_01
                 _Nombre_documento = _Tipo & "-" & _Numero
                 _Imprimir_Barras = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Picking_Doc", "Imprimir_Barras", "TipoDoc = '" & _Tipo & "'")
 
-            Else
+        Else
 
                 Consulta_sql = "SELECT Id,CodSolicitud,Estado,Funcionario," & vbCrLf &
                                "(Select top 1 NOKOFU From TABFU Where KOFU = Funcionario) As 'Vendedor'," & vbCrLf &
@@ -2137,15 +2173,31 @@ Public Class Frm_Demonio_01
                     Consulta_sql = "Select MODALIDAD From CONFIEST Where MODALIDAD In " & _FiltroModalidades
                     _TblModalidades = _Sql.Fx_Get_Tablas(Consulta_sql)
 
+                    Dim _ModalidadOld As String = Modalidad
+                    Dim _Mod As New Clas_Modalidades
+
                     For Each _Fl As DataRow In _TblModalidades.Rows
 
-                        Dim _Modalidad As String = _Fl.Item("Modalidad")
+                        Modalidad = _Fl.Item("MODALIDAD")
 
-                        _Cl_Asistente_Compras.Sb_Ejecutar(_Modalidad, False, True, False, False, True)
-                        _Cl_Asistente_Compras.Sb_Ejecutar(_Modalidad, True, False, False, True, False)
-                        _Cl_Asistente_Compras.Sb_Ejecutar(_Modalidad, True, False, True, False, False)
+                        _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
+                        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
+                        _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+                        _Mod.Sb_Actualiza_Formatos_X_Modalidad()
+
+                        _Cl_Asistente_Compras.Sb_Ejecutar(Modalidad, False, True, False, False, True)
+                        _Cl_Asistente_Compras.Sb_Ejecutar(Modalidad, True, False, False, True, False)
+                        _Cl_Asistente_Compras.Sb_Ejecutar(Modalidad, True, False, True, False, False)
 
                     Next
+
+                    Modalidad = _ModalidadOld
+
+                    _Mod = New Clas_Modalidades
+                    _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
+                    _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
+                    _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+                    _Mod.Sb_Actualiza_Formatos_X_Modalidad()
 
                     _Cl_Asistente_Compras.Ejecutado_Lunes = (_Dia = DayOfWeek.Monday)
                     _Cl_Asistente_Compras.Ejecutado_Martes = (_Dia = DayOfWeek.Tuesday)
@@ -2154,6 +2206,66 @@ Public Class Frm_Demonio_01
                     _Cl_Asistente_Compras.Ejecutado_Viernes = (_Dia = DayOfWeek.Friday)
                     _Cl_Asistente_Compras.Ejecutado_Sabado = (_Dia = DayOfWeek.Saturday)
                     _Cl_Asistente_Compras.Ejecutado_Domingo = (_Dia = DayOfWeek.Sunday)
+
+                    Sb_Pausar(_Pausa.Play)
+
+                End If
+
+            End If
+
+        End If
+
+#End Region
+
+#Region "INFORME DE DOCUMENTOS PENDIENTES"
+
+        If Switch_EnvDocSinRecep.Value Then
+
+            If (_Dia = DayOfWeek.Monday And _Cl_Enviar_Doc_SinRecepcion.Chk_EnvDocSinRecep_EjecLunes) Or
+               (_Dia = DayOfWeek.Tuesday And _Cl_Enviar_Doc_SinRecepcion.Chk_EnvDocSinRecep_EjecMartes) Or
+               (_Dia = DayOfWeek.Wednesday And _Cl_Enviar_Doc_SinRecepcion.Chk_EnvDocSinRecep_EjecMiercoles) Or
+               (_Dia = DayOfWeek.Thursday And _Cl_Enviar_Doc_SinRecepcion.Chk_EnvDocSinRecep_EjecJueves) Or
+               (_Dia = DayOfWeek.Friday And _Cl_Enviar_Doc_SinRecepcion.Chk_EnvDocSinRecep_EjecViernes) Or
+               (_Dia = DayOfWeek.Saturday And _Cl_Enviar_Doc_SinRecepcion.Chk_EnvDocSinRecep_EjecSabado) Or
+               (_Dia = DayOfWeek.Sunday And _Cl_Enviar_Doc_SinRecepcion.Chk_EnvDocSinRecep_EjecDomingo) Then
+
+                If _Hora = Lbl_Hora_EnvDocSinRecep.Text Then
+
+                    Sb_Pausar(_Pausa.Pausa)
+
+
+                    Dim _Ejecutar = True
+
+                    If _Dia = DayOfWeek.Monday Then If _Cl_Asistente_Compras.Ejecutado_Lunes Then _Ejecutar = False
+                    If _Dia = DayOfWeek.Tuesday Then If _Cl_Asistente_Compras.Ejecutado_Martes Then _Ejecutar = False
+                    If _Dia = DayOfWeek.Wednesday Then If _Cl_Asistente_Compras.Ejecutado_Miercoles Then _Ejecutar = False
+                    If _Dia = DayOfWeek.Thursday Then If _Cl_Asistente_Compras.Ejecutado_Jueves Then _Ejecutar = False
+                    If _Dia = DayOfWeek.Friday Then If _Cl_Asistente_Compras.Ejecutado_Viernes Then _Ejecutar = False
+                    If _Dia = DayOfWeek.Saturday Then If _Cl_Asistente_Compras.Ejecutado_Sabado Then _Ejecutar = False
+                    If _Dia = DayOfWeek.Sunday Then If _Cl_Asistente_Compras.Ejecutado_Domingo Then _Ejecutar = False
+
+                    If _Ejecutar Then
+
+                        _Cl_Enviar_Doc_SinRecepcion.Sb_Procesar_Informe(DtpFecharevision.Value)
+
+                        If _Cl_Enviar_Doc_SinRecepcion.Crear_Html.EsCorrecto Then
+
+                            Dim _Para = _Cl_Enviar_Doc_SinRecepcion.Para
+                            Dim _Id_Correo = _Cl_Enviar_Doc_SinRecepcion.Id_Correo
+                            Dim _RutaArchivo = _Cl_Enviar_Doc_SinRecepcion.Crear_Html.RutaArchivo
+                            _Cl_Enviar_Doc_SinRecepcion.Fx_EnviarNotificacionCorreoAlDiablito(_Para, "", _Id_Correo, _RutaArchivo)
+
+                            _Cl_Asistente_Compras.Ejecutado_Lunes = (_Dia = DayOfWeek.Monday)
+                            _Cl_Asistente_Compras.Ejecutado_Martes = (_Dia = DayOfWeek.Tuesday)
+                            _Cl_Asistente_Compras.Ejecutado_Miercoles = (_Dia = DayOfWeek.Wednesday)
+                            _Cl_Asistente_Compras.Ejecutado_Jueves = (_Dia = DayOfWeek.Thursday)
+                            _Cl_Asistente_Compras.Ejecutado_Viernes = (_Dia = DayOfWeek.Friday)
+                            _Cl_Asistente_Compras.Ejecutado_Sabado = (_Dia = DayOfWeek.Saturday)
+                            _Cl_Asistente_Compras.Ejecutado_Domingo = (_Dia = DayOfWeek.Sunday)
+
+                        End If
+
+                    End If
 
                     Sb_Pausar(_Pausa.Play)
 
