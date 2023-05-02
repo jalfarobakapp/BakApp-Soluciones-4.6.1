@@ -17,7 +17,7 @@ Public Class Frm_PreciosLC_Mt01
     Dim Mcosto_Old As Double
     Dim NetoPropuesto As Double
     Dim BrutoPropuesto As Double
-    Dim BrutoDigitado As Double
+    Dim PrecioDigitado As Double
     Dim MargenDigitado As Double
     Dim Flete As Double
 
@@ -107,16 +107,22 @@ Public Class Frm_PreciosLC_Mt01
 
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-        'Consulta_sql = "SELECT ISNULL(dbo.MAEPR.NOKOPR, 0) as NOKOPR,ISNULL(dbo.MAEPREM.PM, 0) as PM,ISNULL(dbo.MAEPREM.PPUL01, 0) as PUL," & vbCrLf &
-        '               "CASE WHEN ISNULL(dbo.MAEPREM.PPUL01, 0) > ISNULL(dbo.MAEPREM.PM, 0) THEN ISNULL(dbo.MAEPREM.PPUL01, 0) " & vbCrLf &
-        '               "ELSE ISNULL(dbo.MAEPREM.PM, 0) END as MCOSTO , ISNULL(dbo.MAEPR.RLUD,0) AS RLUD,ISNULL(dbo.MAEPR.UD01PR,0) AS UD01PR, " & vbCrLf &
-        '                  "ISNULL(dbo.MAEPR.UD02PR,0) AS UD02PR, ISNULL(dbo.PDIMEN.IVAFORM/100,0) AS IVAFORM" & vbCrLf &
-        '                  ",ISNULL(dbo.PDIMEN.ILAVALOR/100,0) AS ILAVALOR, " & vbCrLf &
-        '                  "ISNULL((dbo.PDIMEN.ILAVALOR + dbo.PDIMEN.IVAFORM)/100,0) AS TotalImpuestos " & vbCrLf &
-        '                  "FROM   dbo.MAEPR LEFT OUTER JOIN" & vbCrLf &
-        '                  "dbo.MAEPREM ON dbo.MAEPR.KOPR = dbo.MAEPREM.KOPR LEFT OUTER JOIN" & vbCrLf &
-        '                  "dbo.PDIMEN ON dbo.MAEPR.KOPR = dbo.PDIMEN.CODIGO" & vbCrLf &
-        '                  "WHERE dbo.MAEPR.KOPR = '" & Codigo & "'"
+        Dim _FechaHoy As DateTime = FechaDelServidor()
+
+        Consulta_sql = "Select Dres.CODIGO,Dres.NREG,Dres.ELEMENTO,NOKOPR,Eres.LISTAS" & vbCrLf &
+                       "From MAEDRES Dres" & vbCrLf &
+                       "Inner Join MAEERES Eres On Eres.CODIGO = Dres.CODIGO" & vbCrLf &
+                       "Left Join MAEPR On KOPR = Dres.ELEMENTO" & vbCrLf &
+                       "Where '" & Format(_FechaHoy, "yyyyMMdd") & "' Between Eres.FIOFERTA And Eres.FTOFERTA --And Eres.LISTAS Like '%PB7%'" & vbCrLf &
+                       "And Dres.ELEMENTO = '" & Codigo & "' "
+        Dim _TblOfertas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        If CBool(_TblOfertas.Rows.Count) Then
+
+            'Dim _Listas = _TblOfertas.Rows(0)
+            MessageBoxEx.Show(Me, "¡ *** El producto se encuentra en OFERTA *** !", "Producto en oferta", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+        End If
 
         Consulta_sql = "SELECT * FROM " & TblPaso
         GrillaProducto.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -150,10 +156,10 @@ Public Class Frm_PreciosLC_Mt01
 
         Mcosto_Old = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_ListaLC_ValPro", "Mcosto", "Codigo = '" & Codigo & "'")
         MargenDigitado = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_ListaLC_ValPro", "MgDigitado", "Codigo = '" & Codigo & "'")
-        BrutoDigitado = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_ListaLC_ValPro", "ValDigitado", "Codigo = '" & Codigo & "'")
+        PrecioDigitado = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_ListaLC_ValPro", "ValDigitado", "Codigo = '" & Codigo & "'")
 
         TxtMargenDigitado.Text = De_Num_a_Tx_01(MargenDigitado, False, 2)
-        TxtPrecioDigitado.Text = BrutoDigitado
+        TxtPrecioDigitado.Text = PrecioDigitado
         TxtMcostoOld.Text = FormatCurrency(Mcosto_Old, 0)
 
         FormatoGrillaProducto(GrillaProducto, 1)
@@ -174,7 +180,7 @@ Public Class Frm_PreciosLC_Mt01
         ActualizarGrillaPrecios(Codigo, Ila, Iva)
         CalcularPropuestos(MargenDigitado, Impuestos)
 
-        If BrutoDigitado < BrutoPropuesto Then
+        If PrecioDigitado < BrutoPropuesto Then
             TxtPrecioDigitado.ForeColor = Rojo
         Else
             If Global_Thema = Enum_Themas.Oscuro Then
@@ -264,7 +270,7 @@ Public Class Frm_PreciosLC_Mt01
             Consulta_sql = Replace(Consulta_sql, "#Ila", De_Num_a_Tx_01(Ila))
             Consulta_sql = Replace(Consulta_sql, "#Iva", De_Num_a_Tx_01(Iva))
             Consulta_sql = Replace(Consulta_sql, "#Impuestos", De_Num_a_Tx_01(Impuestos))
-            Consulta_sql = Replace(Consulta_sql, "#PrecioDigitado", De_Num_a_Tx_01(BrutoDigitado))
+            Consulta_sql = Replace(Consulta_sql, "#PrecioDigitado", De_Num_a_Tx_01(PrecioDigitado))
             Consulta_sql = Replace(Consulta_sql, "#MargenPropuesto", De_Num_a_Tx_01(MargenDigitado))
 
             Consulta_sql = Replace(Consulta_sql, "Zw_ListaLC_Listas_1", " Zz1")
@@ -512,14 +518,14 @@ Public Class Frm_PreciosLC_Mt01
     End Sub
 
     Private Sub TxtPrecioDigitado_Leave(sender As System.Object, e As System.EventArgs) Handles TxtPrecioDigitado.Leave
-        If BrutoDigitado < BrutoPropuesto Then
+        If PrecioDigitado < BrutoPropuesto Then
             MessageBoxEx.Show(Me, "El valor digitado es menor que el precio sugerido", "Precio", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End If
     End Sub
 
     Private Sub TxtPrecioDigitado_TextChanged(sender As System.Object, e As System.EventArgs) Handles TxtPrecioDigitado.TextChanged
-        BrutoDigitado = De_Txt_a_Num_01(TxtPrecioDigitado.Text, 3)
-        If BrutoDigitado < BrutoPropuesto Then
+        PrecioDigitado = De_Txt_a_Num_01(TxtPrecioDigitado.Text, 3)
+        If PrecioDigitado < BrutoPropuesto Then
             TxtPrecioDigitado.ForeColor = Rojo
         Else
             If Global_Thema = Enum_Themas.Oscuro Then
@@ -561,7 +567,7 @@ Public Class Frm_PreciosLC_Mt01
         Flete = De_Txt_a_Num_01(TxtFlete1.Text, 3)
 
         Consulta_sql = "Update " & TablaDePasoLista_LC & " Set VarFlete = " & De_Num_a_Tx_01(Flete, False, 5) & vbCrLf &
-                       ",VarValorDigit = " & De_Num_a_Tx_01(BrutoDigitado, False, 5) & vbCrLf &
+                       ",VarValorDigit = " & De_Num_a_Tx_01(PrecioDigitado, False, 5) & vbCrLf &
                        ",VarNetoDigit = 0"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
@@ -774,7 +780,6 @@ Public Class Frm_PreciosLC_Mt01
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_ListaLC_ValPro Where Codigo = '" & Txtcodigo.Text & "'"
-            'Consulta_sql = "Delete Zw_ListaLC_ValPro Where Codigo = '" & Txtcodigo.Text & "'"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_ListaLC_ValPro (Codigo,Mcosto,VproNeto,VproBruto,MgDigitado,ValDigitado,FechaModif,HoraModif) values" & vbCrLf &
@@ -782,14 +787,8 @@ Public Class Frm_PreciosLC_Mt01
                            "," & De_Num_a_Tx_01(NetoPropuesto, False, 5) &
                            "," & De_Num_a_Tx_01(BrutoPropuesto, False, 5) &
                            "," & TxtMargenDigitado.Text &
-                           "," & De_Num_a_Tx_01(BrutoDigitado, 5) & ",(SELECT replace(convert(varchar, getdate(), 111), '/','')),(SELECT convert(varchar, getdate(), 108)))"
-            'Consulta_sql = "Insert Into Zw_ListaLC_ValPro (Codigo,Mcosto,VproNeto,VproBruto,MgDigitado,ValDigitado,FechaModif,HoraModif) values" & vbCrLf &
-            '               "('" & Txtcodigo.Text & "'," & De_Num_a_Tx_01(Mcosto, False, 5) &
-            '               "," & De_Num_a_Tx_01(NetoPropuesto, False, 5) &
-            '               "," & De_Num_a_Tx_01(BrutoPropuesto, False, 5) &
-            '               "," & TxtMargenDigitado.Text &
-            '               "," & De_Num_a_Tx_01(BrutoDigitado, 5) & ",(SELECT replace(convert(varchar, getdate(), 111), '/','')),(SELECT convert(varchar, getdate(), 108)))"
-
+                           "," & De_Num_a_Tx_01(PrecioDigitado, 5) &
+                           ",(SELECT replace(convert(varchar, getdate(), 111), '/','')),(SELECT convert(varchar, getdate(), 108)))"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
             Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("PDIMEN", "CODIGO = '" & Txtcodigo.Text & "' And EMPRESA = '" & ModEmpresa & "'"))
@@ -932,7 +931,7 @@ Public Class Frm_PreciosLC_Mt01
 
         Dim _Grabar As Boolean
 
-        Dim Fm As New Frm_PrecioLCFuturoGrabar(Txtcodigo.Text, _Tbl)
+        Dim Fm As New Frm_PrecioLCFuturoGrabar(Txtcodigo.Text, _Tbl, PrecioDigitado)
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
         Fm.Dispose()

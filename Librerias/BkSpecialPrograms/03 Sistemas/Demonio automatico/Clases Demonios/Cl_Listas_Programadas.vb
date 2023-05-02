@@ -16,7 +16,7 @@
         Dim _Str_FechaProgramacion = Format(_FechaProgramacion, "yyyyMMdd")
 
         Consulta_sql = "Select Id,Codigo,NombreProgramacion,FechaCreacion,FechaProgramada,Aplicado,Funcionario," &
-                       "Activo,Id_Padre,Editada,Eliminada, FuncionarioElimina, FechaEliminacion" & vbCrLf &
+                       "Activo,Id_Padre,Editada,Eliminada, FuncionarioElimina, FechaEliminacion,ValDigitado" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_ListaLC_Programadas" & vbCrLf &
                        "Where FechaProgramada = '" & _Str_FechaProgramacion & "' And Activo = 1 And Aplicado = 0 And Eliminada = 0 "
 
@@ -35,7 +35,8 @@
 
             Dim _SqlQuery = String.Empty
 
-            Dim _Id_Enc = _Fila.Item("Id")
+            Dim _Id_Enc As Integer = _Fila.Item("Id")
+            Dim _ValDigitado As Double = _Fila.Item("ValDigitado")
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_ListaLC_Programadas_Detalles Where Id_Enc = " & _Id_Enc
             Dim _Tbl_ListasProgramadas_Detalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -43,6 +44,14 @@
             _SqlQuery += "Update " & _Global_BaseBk & "Zw_ListaLC_Programadas Set " &
                          "Aplicado = 1,FechaAplica = Getdate(),Informacion = 'Ok.',ErrorAlGrabar = 0" & vbCrLf &
                          "Where Id = " & _Id_Enc & vbCrLf & vbCrLf
+
+            If CBool(_ValDigitado) Then
+
+                Dim _Codigo As String = _Fila.Item("Codigo")
+                _SqlQuery += "Update " & _Global_BaseBk & "Zw_ListaLC_ValPro Set ValDigitado = " & De_Num_a_Tx_01(_ValDigitado, False, 5) & vbCrLf &
+                             "Where Codigo = '" & _Codigo & "'" & vbCrLf
+
+            End If
 
             For Each _FilaDet As DataRow In _Tbl_ListasProgramadas_Detalle.Rows
 

@@ -622,6 +622,10 @@ Partial Public Class Ds_Config_Picking
         
         Private columnEnvDocSinRecep_DiasGDI As Global.System.Data.DataColumn
         
+        Private columnId_CtaCorreoEnvDocSinRecep As Global.System.Data.DataColumn
+        
+        Private columnTxt_ParaEnvDocSinRecep As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub New()
@@ -1594,6 +1598,22 @@ Partial Public Class Ds_Config_Picking
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property Id_CtaCorreoEnvDocSinRecepColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnId_CtaCorreoEnvDocSinRecep
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property Txt_ParaEnvDocSinRecepColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnTxt_ParaEnvDocSinRecep
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -1747,9 +1767,11 @@ Partial Public Class Ds_Config_Picking
                     ByVal EnvDocSinRecep_DiasNVV As Integer,  _
                     ByVal EnvDocSinRecep_DiasNVI As Integer,  _
                     ByVal EnvDocSinRecep_DiasGTI As Integer,  _
-                    ByVal EnvDocSinRecep_DiasGDI As Integer) As Tbl_ConfiguracionRow
+                    ByVal EnvDocSinRecep_DiasGDI As Integer,  _
+                    ByVal Id_CtaCorreoEnvDocSinRecep As Integer,  _
+                    ByVal Txt_ParaEnvDocSinRecep As String) As Tbl_ConfiguracionRow
             Dim rowTbl_ConfiguracionRow As Tbl_ConfiguracionRow = CType(Me.NewRow,Tbl_ConfiguracionRow)
-            Dim columnValuesArray() As Object = New Object() {Impresora, RutaImagen, Timer_Monitoreo_Doc, Timer_Monitoreo_Mail, Timer_Monitoreo_Impresion, Timer_Monitoreo_SolProdBod, Timer_Prestashop, Timer_Prestashop_Ordenes, Timer_Picking, Timer_LibroDTESII, Timer_Archivador, Timer_Wordpress_Stock, Timer_Listas_Programadas, Timer_Wordpress_Productos, Input_Tiempo_Correo, Input_Tiempo_Impresion, Input_Tiempo_Sol_Bodega, Input_Tiempo_Prestashop, Input_Tiempo_Picking, Input_Tiempo_LibroDTESII, Timer_Consolidacion_Stock, Input_Tiempo_Archivador, Input_Tiempo_Wordpress_Stock, Input_Tiempo_Wordpress_Productos, Rdb_Cons_Stock_Todos, Rdb_Cons_Stock_Mov_Hoy, Chk_Cons_Stock_Lunes, Chk_Cons_Stock_Martes, Chk_Cons_Stock_Miercoles, Chk_Cons_Stock_Jueves, Chk_Cons_Stock_Viernes, Chk_Cons_Stock_Sabado, Chk_Cons_Stock_Domingo, Dtp_Cons_Stock_Hora_Ejecuion, Ejecutar_Automaticamente, Chk_Prestashop_Ejecucion_Total, Chk_Prestashop_Lunes, Chk_Prestashop_Martes, Chk_Prestashop_Miercoles, Chk_Prestashop_Jueves, Chk_Prestashop_Viernes, Chk_Prestashop_Sabado, Chk_Prestashop_Domingo, Dtp_Prestashop_Total_Hora_Ejecucion, Ruta_Archivador, Chk_Timer_CierreDoc, Chk_CierreDoc_Lunes, Chk_CierreDoc_Martes, Chk_CierreDoc_Miercoles, Chk_CierreDoc_Jueves, Chk_CierreDoc_Viernes, Chk_CierreDoc_Sabado, Chk_CierreDoc_Domingo, Dtp_CierreDoc_Hora_Ejecucion, Chk_COVCerrar, Chk_NVICerrar, Chk_NVVCerrar, Chk_OCICerrar, Chk_OCCCerrar, Input_DiasCOV, Input_DiasNVI, Input_DiasNVV, Input_DiasOCI, Input_DiasOCC, CantMail, Chk_Fac_Lunes, Chk_Fac_Martes, Chk_Fac_Miercoles, Chk_Fac_Jueves, Chk_Fac_Viernes, Chk_Fac_Sabado, Chk_Fac_Domingo, Rdb_FA_1Dia, Rdb_FA_1Semana, Rdb_FA_1Mes, Rdb_FA_1Todas, Txt_Modalidad_FacAuto, Timer_FacAuto, Chk_AsistenteDeCompras, Chk_AsisComEjecLunes, Chk_AsisComEjecMartes, Chk_AsisComEjecMiercoles, Chk_AsisComEjecJueves, Chk_AsisComEjecViernes, Chk_AsisComEjecSabado, Chk_AsisComEjecDomingo, Dtp_AsisCompra_Hora_Ejecucion, Txt_AsComModLunes, Txt_AsComModMartes, Txt_AsComModMiercoles, Txt_AsComModJueves, Txt_AsComModViernes, Txt_AsComModSabado, Txt_AsComModDomingo, Chk_EnvDocSinRecep_EjecLunes, Chk_EnvDocSinRecep_EjecMartes, Chk_EnvDocSinRecep_EjecMiercoles, Chk_EnvDocSinRecep_EjecJueves, Chk_EnvDocSinRecep_EjecViernes, Chk_EnvDocSinRecep_EjecSabado, Chk_EnvDocSinRecep_EjecDomingo, Chk_EnvDocSinRecep, Dtp_EnvDocSinRecep_Hora_Ejecucion, EnvDocSinRecep_OCC, EnvDocSinRecep_OCI, EnvDocSinRecep_COV, EnvDocSinRecep_NVV, EnvDocSinRecep_NVI, EnvDocSinRecep_GTI, EnvDocSinRecep_GDI, EnvDocSinRecep_DiasOCC, EnvDocSinRecep_DiasOCI, EnvDocSinRecep_DiasCOV, EnvDocSinRecep_DiasNVV, EnvDocSinRecep_DiasNVI, EnvDocSinRecep_DiasGTI, EnvDocSinRecep_DiasGDI}
+            Dim columnValuesArray() As Object = New Object() {Impresora, RutaImagen, Timer_Monitoreo_Doc, Timer_Monitoreo_Mail, Timer_Monitoreo_Impresion, Timer_Monitoreo_SolProdBod, Timer_Prestashop, Timer_Prestashop_Ordenes, Timer_Picking, Timer_LibroDTESII, Timer_Archivador, Timer_Wordpress_Stock, Timer_Listas_Programadas, Timer_Wordpress_Productos, Input_Tiempo_Correo, Input_Tiempo_Impresion, Input_Tiempo_Sol_Bodega, Input_Tiempo_Prestashop, Input_Tiempo_Picking, Input_Tiempo_LibroDTESII, Timer_Consolidacion_Stock, Input_Tiempo_Archivador, Input_Tiempo_Wordpress_Stock, Input_Tiempo_Wordpress_Productos, Rdb_Cons_Stock_Todos, Rdb_Cons_Stock_Mov_Hoy, Chk_Cons_Stock_Lunes, Chk_Cons_Stock_Martes, Chk_Cons_Stock_Miercoles, Chk_Cons_Stock_Jueves, Chk_Cons_Stock_Viernes, Chk_Cons_Stock_Sabado, Chk_Cons_Stock_Domingo, Dtp_Cons_Stock_Hora_Ejecuion, Ejecutar_Automaticamente, Chk_Prestashop_Ejecucion_Total, Chk_Prestashop_Lunes, Chk_Prestashop_Martes, Chk_Prestashop_Miercoles, Chk_Prestashop_Jueves, Chk_Prestashop_Viernes, Chk_Prestashop_Sabado, Chk_Prestashop_Domingo, Dtp_Prestashop_Total_Hora_Ejecucion, Ruta_Archivador, Chk_Timer_CierreDoc, Chk_CierreDoc_Lunes, Chk_CierreDoc_Martes, Chk_CierreDoc_Miercoles, Chk_CierreDoc_Jueves, Chk_CierreDoc_Viernes, Chk_CierreDoc_Sabado, Chk_CierreDoc_Domingo, Dtp_CierreDoc_Hora_Ejecucion, Chk_COVCerrar, Chk_NVICerrar, Chk_NVVCerrar, Chk_OCICerrar, Chk_OCCCerrar, Input_DiasCOV, Input_DiasNVI, Input_DiasNVV, Input_DiasOCI, Input_DiasOCC, CantMail, Chk_Fac_Lunes, Chk_Fac_Martes, Chk_Fac_Miercoles, Chk_Fac_Jueves, Chk_Fac_Viernes, Chk_Fac_Sabado, Chk_Fac_Domingo, Rdb_FA_1Dia, Rdb_FA_1Semana, Rdb_FA_1Mes, Rdb_FA_1Todas, Txt_Modalidad_FacAuto, Timer_FacAuto, Chk_AsistenteDeCompras, Chk_AsisComEjecLunes, Chk_AsisComEjecMartes, Chk_AsisComEjecMiercoles, Chk_AsisComEjecJueves, Chk_AsisComEjecViernes, Chk_AsisComEjecSabado, Chk_AsisComEjecDomingo, Dtp_AsisCompra_Hora_Ejecucion, Txt_AsComModLunes, Txt_AsComModMartes, Txt_AsComModMiercoles, Txt_AsComModJueves, Txt_AsComModViernes, Txt_AsComModSabado, Txt_AsComModDomingo, Chk_EnvDocSinRecep_EjecLunes, Chk_EnvDocSinRecep_EjecMartes, Chk_EnvDocSinRecep_EjecMiercoles, Chk_EnvDocSinRecep_EjecJueves, Chk_EnvDocSinRecep_EjecViernes, Chk_EnvDocSinRecep_EjecSabado, Chk_EnvDocSinRecep_EjecDomingo, Chk_EnvDocSinRecep, Dtp_EnvDocSinRecep_Hora_Ejecucion, EnvDocSinRecep_OCC, EnvDocSinRecep_OCI, EnvDocSinRecep_COV, EnvDocSinRecep_NVV, EnvDocSinRecep_NVI, EnvDocSinRecep_GTI, EnvDocSinRecep_GDI, EnvDocSinRecep_DiasOCC, EnvDocSinRecep_DiasOCI, EnvDocSinRecep_DiasCOV, EnvDocSinRecep_DiasNVV, EnvDocSinRecep_DiasNVI, EnvDocSinRecep_DiasGTI, EnvDocSinRecep_DiasGDI, Id_CtaCorreoEnvDocSinRecep, Txt_ParaEnvDocSinRecep}
             rowTbl_ConfiguracionRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowTbl_ConfiguracionRow)
             Return rowTbl_ConfiguracionRow
@@ -1889,6 +1911,8 @@ Partial Public Class Ds_Config_Picking
             Me.columnEnvDocSinRecep_DiasNVI = MyBase.Columns("EnvDocSinRecep_DiasNVI")
             Me.columnEnvDocSinRecep_DiasGTI = MyBase.Columns("EnvDocSinRecep_DiasGTI")
             Me.columnEnvDocSinRecep_DiasGDI = MyBase.Columns("EnvDocSinRecep_DiasGDI")
+            Me.columnId_CtaCorreoEnvDocSinRecep = MyBase.Columns("Id_CtaCorreoEnvDocSinRecep")
+            Me.columnTxt_ParaEnvDocSinRecep = MyBase.Columns("Txt_ParaEnvDocSinRecep")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -2128,6 +2152,10 @@ Partial Public Class Ds_Config_Picking
             MyBase.Columns.Add(Me.columnEnvDocSinRecep_DiasGTI)
             Me.columnEnvDocSinRecep_DiasGDI = New Global.System.Data.DataColumn("EnvDocSinRecep_DiasGDI", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnEnvDocSinRecep_DiasGDI)
+            Me.columnId_CtaCorreoEnvDocSinRecep = New Global.System.Data.DataColumn("Id_CtaCorreoEnvDocSinRecep", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnId_CtaCorreoEnvDocSinRecep)
+            Me.columnTxt_ParaEnvDocSinRecep = New Global.System.Data.DataColumn("Txt_ParaEnvDocSinRecep", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnTxt_ParaEnvDocSinRecep)
             Me.columnTimer_Monitoreo_Doc.DefaultValue = CType(false,Boolean)
             Me.columnTimer_Monitoreo_Mail.DefaultValue = CType(false,Boolean)
             Me.columnTimer_Monitoreo_Impresion.DefaultValue = CType(false,Boolean)
@@ -5142,6 +5170,38 @@ Partial Public Class Ds_Config_Picking
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property Id_CtaCorreoEnvDocSinRecep() As Integer
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Id_CtaCorreoEnvDocSinRecepColumn),Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Id_CtaCorreoEnvDocSinRecep' de la tabla 'Tbl_Configuracio"& _ 
+                            "n' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Id_CtaCorreoEnvDocSinRecepColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property Txt_ParaEnvDocSinRecep() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Configuracion.Txt_ParaEnvDocSinRecepColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Txt_ParaEnvDocSinRecep' de la tabla 'Tbl_Configuracion' e"& _ 
+                            "s DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Configuracion.Txt_ParaEnvDocSinRecepColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Function IsImpresoraNull() As Boolean
             Return Me.IsNull(Me.tableTbl_Configuracion.ImpresoraColumn)
         End Function
@@ -6542,6 +6602,30 @@ Partial Public Class Ds_Config_Picking
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub SetEnvDocSinRecep_DiasGDINull()
             Me(Me.tableTbl_Configuracion.EnvDocSinRecep_DiasGDIColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsId_CtaCorreoEnvDocSinRecepNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Id_CtaCorreoEnvDocSinRecepColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetId_CtaCorreoEnvDocSinRecepNull()
+            Me(Me.tableTbl_Configuracion.Id_CtaCorreoEnvDocSinRecepColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsTxt_ParaEnvDocSinRecepNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Configuracion.Txt_ParaEnvDocSinRecepColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetTxt_ParaEnvDocSinRecepNull()
+            Me(Me.tableTbl_Configuracion.Txt_ParaEnvDocSinRecepColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     

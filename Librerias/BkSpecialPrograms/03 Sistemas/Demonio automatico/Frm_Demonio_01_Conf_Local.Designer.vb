@@ -106,31 +106,41 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Dtp_Cons_Stock_Hora_Ejecucion = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.Chk_Ejecutar_Automaticamente = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
+        Me.SuperTabControlPanel4 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Txt_ParaEnvDocSinRecep = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX27 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_CtaCorreoEnvDocSinRecep = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX26 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_EnvDocSinRecep_GDI = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Input_EnvDocSinRecep_DiasGDI = New DevComponents.Editors.IntegerInput()
+        Me.Chk_EnvDocSinRecep_GTI = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Input_EnvDocSinRecep_DiasGTI = New DevComponents.Editors.IntegerInput()
+        Me.Chk_EnvDocSinRecep_OCC = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Input_EnvDocSinRecep_DiasOCC = New DevComponents.Editors.IntegerInput()
+        Me.LabelX21 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_EnvDocSinRecep = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.Chk_EnvDocSinRecep_OCI = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Input_EnvDocSinRecep_DiasOCI = New DevComponents.Editors.IntegerInput()
+        Me.Chk_EnvDocSinRecep_NVV = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Input_EnvDocSinRecep_DiasNVV = New DevComponents.Editors.IntegerInput()
+        Me.Chk_EnvDocSinRecep_NVI = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Input_EnvDocSinRecep_DiasNVI = New DevComponents.Editors.IntegerInput()
+        Me.Chk_EnvDocSinRecep_COV = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX24 = New DevComponents.DotNetBar.LabelX()
+        Me.Input_EnvDocSinRecep_DiasCOV = New DevComponents.Editors.IntegerInput()
+        Me.TableLayoutPanel8 = New System.Windows.Forms.TableLayoutPanel()
+        Me.LabelX25 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_EnvDocSinRecep_EjecDomingo = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_EnvDocSinRecep_EjecLunes = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_EnvDocSinRecep_EjecMartes = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_EnvDocSinRecep_EjecMiercoles = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_EnvDocSinRecep_EjecSabado = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_EnvDocSinRecep_EjecJueves = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_EnvDocSinRecep_EjecViernes = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.SuperTabItem6 = New DevComponents.DotNetBar.SuperTabItem()
         Me.Panel_01 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.Btn_ConfAsisCompra = New DevComponents.DotNetBar.ButtonX()
-        Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Txt_AsComModDomingo = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Txt_AsComModSabado = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Txt_AsComModViernes = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Txt_AsComModJueves = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Txt_AsComModMiercoles = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Txt_AsComModMartes = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX22 = New DevComponents.DotNetBar.LabelX()
-        Me.Chk_AsisComEjecDomingo = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.LabelX23 = New DevComponents.DotNetBar.LabelX()
-        Me.Chk_AsisComEjecMartes = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_AsisComEjecSabado = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_AsisComEjecLunes = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_AsisComEjecViernes = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_AsisComEjecMiercoles = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_AsisComEjecJueves = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Txt_AsComModLunes = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX20 = New DevComponents.DotNetBar.LabelX()
-        Me.Chk_AsistenteDeCompras = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Dtp_AsisCompra_Hora_Ejecucion = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
-        Me.SuperTabItem5 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Chk_OCCCerrar = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Input_DiasOCC = New DevComponents.Editors.IntegerInput()
@@ -155,6 +165,29 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Chk_CierreDoc_Jueves = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_CierreDoc_Viernes = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.SuperTabItem3 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Btn_ConfAsisCompra = New DevComponents.DotNetBar.ButtonX()
+        Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Txt_AsComModDomingo = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_AsComModSabado = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_AsComModViernes = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_AsComModJueves = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_AsComModMiercoles = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_AsComModMartes = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX22 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_AsisComEjecDomingo = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX23 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_AsisComEjecMartes = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_AsisComEjecSabado = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_AsisComEjecLunes = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_AsisComEjecViernes = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_AsisComEjecMiercoles = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_AsisComEjecJueves = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Txt_AsComModLunes = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX20 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_AsistenteDeCompras = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Dtp_AsisCompra_Hora_Ejecucion = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.SuperTabItem5 = New DevComponents.DotNetBar.SuperTabItem()
         Me.Panel_02 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Chk_Prestashop_Ejecucion_Total = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
@@ -189,35 +222,6 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Chk_Fac_Viernes = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.LabelX18 = New DevComponents.DotNetBar.LabelX()
         Me.SuperTabItem4 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabItem6 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel4 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.Chk_EnvDocSinRecep_OCC = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Input_EnvDocSinRecep_DiasOCC = New DevComponents.Editors.IntegerInput()
-        Me.LabelX21 = New DevComponents.DotNetBar.LabelX()
-        Me.Chk_EnvDocSinRecep = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
-        Me.Chk_EnvDocSinRecep_OCI = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Input_EnvDocSinRecep_DiasOCI = New DevComponents.Editors.IntegerInput()
-        Me.Chk_EnvDocSinRecep_NVV = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Input_EnvDocSinRecep_DiasNVV = New DevComponents.Editors.IntegerInput()
-        Me.Chk_EnvDocSinRecep_NVI = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Input_EnvDocSinRecep_DiasNVI = New DevComponents.Editors.IntegerInput()
-        Me.Chk_EnvDocSinRecep_COV = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.LabelX24 = New DevComponents.DotNetBar.LabelX()
-        Me.Input_EnvDocSinRecep_DiasCOV = New DevComponents.Editors.IntegerInput()
-        Me.TableLayoutPanel8 = New System.Windows.Forms.TableLayoutPanel()
-        Me.LabelX25 = New DevComponents.DotNetBar.LabelX()
-        Me.Chk_EnvDocSinRecep_EjecDomingo = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_EnvDocSinRecep_EjecLunes = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_EnvDocSinRecep_EjecMartes = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_EnvDocSinRecep_EjecMiercoles = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_EnvDocSinRecep_EjecSabado = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_EnvDocSinRecep_EjecJueves = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_EnvDocSinRecep_EjecViernes = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_EnvDocSinRecep_GTI = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Input_EnvDocSinRecep_DiasGTI = New DevComponents.Editors.IntegerInput()
-        Me.Chk_EnvDocSinRecep_GDI = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Input_EnvDocSinRecep_DiasGDI = New DevComponents.Editors.IntegerInput()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.GroupPanel2.SuspendLayout()
@@ -252,10 +256,17 @@ Partial Class Frm_Demonio_01_Conf_Local
         CType(Me.Dtp_Cons_Stock_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
+        Me.SuperTabControlPanel4.SuspendLayout()
+        CType(Me.Input_EnvDocSinRecep_DiasGDI, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Input_EnvDocSinRecep_DiasGTI, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Input_EnvDocSinRecep_DiasOCC, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Dtp_EnvDocSinRecep_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Input_EnvDocSinRecep_DiasOCI, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Input_EnvDocSinRecep_DiasNVV, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Input_EnvDocSinRecep_DiasNVI, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Input_EnvDocSinRecep_DiasCOV, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TableLayoutPanel8.SuspendLayout()
         Me.Panel_01.SuspendLayout()
-        Me.SuperTabControlPanel3.SuspendLayout()
-        Me.TableLayoutPanel9.SuspendLayout()
-        CType(Me.Dtp_AsisCompra_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel1.SuspendLayout()
         CType(Me.Input_DiasOCC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_CierreDoc_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -264,22 +275,15 @@ Partial Class Frm_Demonio_01_Conf_Local
         CType(Me.Input_DiasNVI, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Input_DiasCOV, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel5.SuspendLayout()
+        Me.SuperTabControlPanel3.SuspendLayout()
+        Me.TableLayoutPanel9.SuspendLayout()
+        CType(Me.Dtp_AsisCompra_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel_02.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
         CType(Me.Dtp_Prestashop_Total_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel2.SuspendLayout()
         Me.TableLayoutPanel7.SuspendLayout()
         Me.TableLayoutPanel6.SuspendLayout()
-        Me.SuperTabControlPanel4.SuspendLayout()
-        CType(Me.Input_EnvDocSinRecep_DiasOCC, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Dtp_EnvDocSinRecep_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Input_EnvDocSinRecep_DiasOCI, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Input_EnvDocSinRecep_DiasNVV, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Input_EnvDocSinRecep_DiasNVI, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Input_EnvDocSinRecep_DiasCOV, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TableLayoutPanel8.SuspendLayout()
-        CType(Me.Input_EnvDocSinRecep_DiasGTI, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Input_EnvDocSinRecep_DiasGDI, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Btn_RutaImagen
@@ -317,7 +321,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Impresora_Prod_Sol_Bodega.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Impresora_Prod_Sol_Bodega.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Impresora_Prod_Sol_Bodega.Image = CType(resources.GetObject("Btn_Impresora_Prod_Sol_Bodega.Image"), System.Drawing.Image)
-        Me.Btn_Impresora_Prod_Sol_Bodega.Location = New System.Drawing.Point(427, 78)
+        Me.Btn_Impresora_Prod_Sol_Bodega.Location = New System.Drawing.Point(425, 78)
         Me.Btn_Impresora_Prod_Sol_Bodega.Name = "Btn_Impresora_Prod_Sol_Bodega"
         Me.Btn_Impresora_Prod_Sol_Bodega.Size = New System.Drawing.Size(31, 19)
         Me.Btn_Impresora_Prod_Sol_Bodega.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -509,7 +513,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 49.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 58.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 72.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 74.0!))
         Me.TableLayoutPanel3.Controls.Add(Me.Input_CantMail, 5, 1)
         Me.TableLayoutPanel3.Controls.Add(Me.Btn_Filtro_Doc_Picking_X_Usuario, 5, 5)
         Me.TableLayoutPanel3.Controls.Add(Me.Btn_Filtro_Doc_Impresion_X_Usuario, 5, 2)
@@ -590,7 +594,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_CantMail.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_CantMail.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_CantMail.ForeColor = System.Drawing.Color.Black
-        Me.Input_CantMail.Location = New System.Drawing.Point(467, 28)
+        Me.Input_CantMail.Location = New System.Drawing.Point(465, 28)
         Me.Input_CantMail.MaxValue = 60
         Me.Input_CantMail.MinValue = 1
         Me.Input_CantMail.Name = "Input_CantMail"
@@ -604,7 +608,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Filtro_Doc_Picking_X_Usuario.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Filtro_Doc_Picking_X_Usuario.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Filtro_Doc_Picking_X_Usuario.Image = CType(resources.GetObject("Btn_Filtro_Doc_Picking_X_Usuario.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Doc_Picking_X_Usuario.Location = New System.Drawing.Point(467, 128)
+        Me.Btn_Filtro_Doc_Picking_X_Usuario.Location = New System.Drawing.Point(465, 128)
         Me.Btn_Filtro_Doc_Picking_X_Usuario.Name = "Btn_Filtro_Doc_Picking_X_Usuario"
         Me.Btn_Filtro_Doc_Picking_X_Usuario.Size = New System.Drawing.Size(30, 19)
         Me.Btn_Filtro_Doc_Picking_X_Usuario.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -616,7 +620,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Filtro_Doc_Impresion_X_Usuario.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Filtro_Doc_Impresion_X_Usuario.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Filtro_Doc_Impresion_X_Usuario.Image = CType(resources.GetObject("Btn_Filtro_Doc_Impresion_X_Usuario.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Doc_Impresion_X_Usuario.Location = New System.Drawing.Point(467, 53)
+        Me.Btn_Filtro_Doc_Impresion_X_Usuario.Location = New System.Drawing.Point(465, 53)
         Me.Btn_Filtro_Doc_Impresion_X_Usuario.Name = "Btn_Filtro_Doc_Impresion_X_Usuario"
         Me.Btn_Filtro_Doc_Impresion_X_Usuario.Size = New System.Drawing.Size(30, 19)
         Me.Btn_Filtro_Doc_Impresion_X_Usuario.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -631,7 +635,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX9.ForeColor = System.Drawing.Color.Black
-        Me.LabelX9.Location = New System.Drawing.Point(369, 153)
+        Me.LabelX9.Location = New System.Drawing.Point(367, 153)
         Me.LabelX9.Name = "LabelX9"
         Me.LabelX9.Size = New System.Drawing.Size(50, 19)
         Me.LabelX9.TabIndex = 124
@@ -647,7 +651,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_LibroDTESII.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_LibroDTESII.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_LibroDTESII.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_LibroDTESII.Location = New System.Drawing.Point(320, 153)
+        Me.Input_Tiempo_LibroDTESII.Location = New System.Drawing.Point(318, 153)
         Me.Input_Tiempo_LibroDTESII.MaxValue = 60
         Me.Input_Tiempo_LibroDTESII.MinValue = 1
         Me.Input_Tiempo_LibroDTESII.Name = "Input_Tiempo_LibroDTESII"
@@ -691,7 +695,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(369, 103)
+        Me.LabelX1.Location = New System.Drawing.Point(367, 103)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(50, 19)
         Me.LabelX1.TabIndex = 13
@@ -705,7 +709,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(369, 78)
+        Me.LabelX4.Location = New System.Drawing.Point(367, 78)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(50, 19)
         Me.LabelX4.TabIndex = 10
@@ -719,7 +723,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX3.ForeColor = System.Drawing.Color.Black
-        Me.LabelX3.Location = New System.Drawing.Point(369, 53)
+        Me.LabelX3.Location = New System.Drawing.Point(367, 53)
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(50, 19)
         Me.LabelX3.TabIndex = 9
@@ -733,7 +737,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(369, 28)
+        Me.LabelX2.Location = New System.Drawing.Point(367, 28)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(50, 19)
         Me.LabelX2.TabIndex = 8
@@ -764,7 +768,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Prestashop.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Prestashop.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Prestashop.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Prestashop.Location = New System.Drawing.Point(320, 103)
+        Me.Input_Tiempo_Prestashop.Location = New System.Drawing.Point(318, 103)
         Me.Input_Tiempo_Prestashop.MaxValue = 60
         Me.Input_Tiempo_Prestashop.MinValue = 1
         Me.Input_Tiempo_Prestashop.Name = "Input_Tiempo_Prestashop"
@@ -796,7 +800,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Correo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Correo.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Correo.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Correo.Location = New System.Drawing.Point(320, 28)
+        Me.Input_Tiempo_Correo.Location = New System.Drawing.Point(318, 28)
         Me.Input_Tiempo_Correo.MaxValue = 60
         Me.Input_Tiempo_Correo.MinValue = 1
         Me.Input_Tiempo_Correo.Name = "Input_Tiempo_Correo"
@@ -815,7 +819,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Sol_Bodega.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Sol_Bodega.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Sol_Bodega.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Sol_Bodega.Location = New System.Drawing.Point(320, 78)
+        Me.Input_Tiempo_Sol_Bodega.Location = New System.Drawing.Point(318, 78)
         Me.Input_Tiempo_Sol_Bodega.MaxValue = 15
         Me.Input_Tiempo_Sol_Bodega.MinValue = 1
         Me.Input_Tiempo_Sol_Bodega.Name = "Input_Tiempo_Sol_Bodega"
@@ -834,7 +838,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Impresion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Impresion.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Impresion.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Impresion.Location = New System.Drawing.Point(320, 53)
+        Me.Input_Tiempo_Impresion.Location = New System.Drawing.Point(318, 53)
         Me.Input_Tiempo_Impresion.MaxValue = 15
         Me.Input_Tiempo_Impresion.MinValue = 1
         Me.Input_Tiempo_Impresion.Name = "Input_Tiempo_Impresion"
@@ -957,7 +961,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Filtro_Doc_Prestashop.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Filtro_Doc_Prestashop.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Filtro_Doc_Prestashop.Image = CType(resources.GetObject("Btn_Filtro_Doc_Prestashop.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Doc_Prestashop.Location = New System.Drawing.Point(427, 103)
+        Me.Btn_Filtro_Doc_Prestashop.Location = New System.Drawing.Point(425, 103)
         Me.Btn_Filtro_Doc_Prestashop.Name = "Btn_Filtro_Doc_Prestashop"
         Me.Btn_Filtro_Doc_Prestashop.Size = New System.Drawing.Size(31, 19)
         Me.Btn_Filtro_Doc_Prestashop.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -969,7 +973,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Filtro_Doc_Impresion.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Filtro_Doc_Impresion.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Filtro_Doc_Impresion.Image = CType(resources.GetObject("Btn_Filtro_Doc_Impresion.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Doc_Impresion.Location = New System.Drawing.Point(427, 53)
+        Me.Btn_Filtro_Doc_Impresion.Location = New System.Drawing.Point(425, 53)
         Me.Btn_Filtro_Doc_Impresion.Name = "Btn_Filtro_Doc_Impresion"
         Me.Btn_Filtro_Doc_Impresion.Size = New System.Drawing.Size(31, 19)
         Me.Btn_Filtro_Doc_Impresion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -981,7 +985,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Filtro_Doc_Correo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Filtro_Doc_Correo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Filtro_Doc_Correo.Image = CType(resources.GetObject("Btn_Filtro_Doc_Correo.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Doc_Correo.Location = New System.Drawing.Point(427, 28)
+        Me.Btn_Filtro_Doc_Correo.Location = New System.Drawing.Point(425, 28)
         Me.Btn_Filtro_Doc_Correo.Name = "Btn_Filtro_Doc_Correo"
         Me.Btn_Filtro_Doc_Correo.Size = New System.Drawing.Size(31, 19)
         Me.Btn_Filtro_Doc_Correo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -994,7 +998,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Filtro_Doc_Traer_Automaticamente.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Filtro_Doc_Traer_Automaticamente.Enabled = False
         Me.Btn_Filtro_Doc_Traer_Automaticamente.Image = CType(resources.GetObject("Btn_Filtro_Doc_Traer_Automaticamente.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Doc_Traer_Automaticamente.Location = New System.Drawing.Point(427, 3)
+        Me.Btn_Filtro_Doc_Traer_Automaticamente.Location = New System.Drawing.Point(425, 3)
         Me.Btn_Filtro_Doc_Traer_Automaticamente.Name = "Btn_Filtro_Doc_Traer_Automaticamente"
         Me.Btn_Filtro_Doc_Traer_Automaticamente.Size = New System.Drawing.Size(31, 19)
         Me.Btn_Filtro_Doc_Traer_Automaticamente.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1039,7 +1043,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Picking.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Picking.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Picking.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Picking.Location = New System.Drawing.Point(320, 128)
+        Me.Input_Tiempo_Picking.Location = New System.Drawing.Point(318, 128)
         Me.Input_Tiempo_Picking.MaxValue = 15
         Me.Input_Tiempo_Picking.MinValue = 1
         Me.Input_Tiempo_Picking.Name = "Input_Tiempo_Picking"
@@ -1056,7 +1060,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX5.ForeColor = System.Drawing.Color.Black
-        Me.LabelX5.Location = New System.Drawing.Point(369, 128)
+        Me.LabelX5.Location = New System.Drawing.Point(367, 128)
         Me.LabelX5.Name = "LabelX5"
         Me.LabelX5.Size = New System.Drawing.Size(50, 19)
         Me.LabelX5.TabIndex = 126
@@ -1067,7 +1071,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Filtro_Doc_Picking.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Filtro_Doc_Picking.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Filtro_Doc_Picking.Image = CType(resources.GetObject("Btn_Filtro_Doc_Picking.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Doc_Picking.Location = New System.Drawing.Point(427, 128)
+        Me.Btn_Filtro_Doc_Picking.Location = New System.Drawing.Point(425, 128)
         Me.Btn_Filtro_Doc_Picking.Name = "Btn_Filtro_Doc_Picking"
         Me.Btn_Filtro_Doc_Picking.Size = New System.Drawing.Size(31, 19)
         Me.Btn_Filtro_Doc_Picking.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1082,7 +1086,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX15.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX15.ForeColor = System.Drawing.Color.Black
-        Me.LabelX15.Location = New System.Drawing.Point(467, 3)
+        Me.LabelX15.Location = New System.Drawing.Point(465, 3)
         Me.LabelX15.Name = "LabelX15"
         Me.LabelX15.Size = New System.Drawing.Size(50, 19)
         Me.LabelX15.TabIndex = 129
@@ -1125,7 +1129,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Archivador.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Archivador.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Archivador.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Archivador.Location = New System.Drawing.Point(320, 178)
+        Me.Input_Tiempo_Archivador.Location = New System.Drawing.Point(318, 178)
         Me.Input_Tiempo_Archivador.MaxValue = 60
         Me.Input_Tiempo_Archivador.MinValue = 1
         Me.Input_Tiempo_Archivador.Name = "Input_Tiempo_Archivador"
@@ -1142,7 +1146,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX12.ForeColor = System.Drawing.Color.Black
-        Me.LabelX12.Location = New System.Drawing.Point(369, 178)
+        Me.LabelX12.Location = New System.Drawing.Point(367, 178)
         Me.LabelX12.Name = "LabelX12"
         Me.LabelX12.Size = New System.Drawing.Size(50, 19)
         Me.LabelX12.TabIndex = 127
@@ -1153,7 +1157,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Btn_Carpeta_Archivador.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Carpeta_Archivador.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Carpeta_Archivador.Image = CType(resources.GetObject("Btn_Carpeta_Archivador.Image"), System.Drawing.Image)
-        Me.Btn_Carpeta_Archivador.Location = New System.Drawing.Point(427, 178)
+        Me.Btn_Carpeta_Archivador.Location = New System.Drawing.Point(425, 178)
         Me.Btn_Carpeta_Archivador.Name = "Btn_Carpeta_Archivador"
         Me.Btn_Carpeta_Archivador.Size = New System.Drawing.Size(31, 19)
         Me.Btn_Carpeta_Archivador.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1224,7 +1228,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Wordpress_Stock.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Wordpress_Stock.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Wordpress_Stock.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Wordpress_Stock.Location = New System.Drawing.Point(320, 228)
+        Me.Input_Tiempo_Wordpress_Stock.Location = New System.Drawing.Point(318, 228)
         Me.Input_Tiempo_Wordpress_Stock.MaxValue = 60
         Me.Input_Tiempo_Wordpress_Stock.MinValue = 1
         Me.Input_Tiempo_Wordpress_Stock.Name = "Input_Tiempo_Wordpress_Stock"
@@ -1243,7 +1247,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Input_Tiempo_Wordpress_Productos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Tiempo_Wordpress_Productos.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Tiempo_Wordpress_Productos.ForeColor = System.Drawing.Color.Black
-        Me.Input_Tiempo_Wordpress_Productos.Location = New System.Drawing.Point(320, 253)
+        Me.Input_Tiempo_Wordpress_Productos.Location = New System.Drawing.Point(318, 253)
         Me.Input_Tiempo_Wordpress_Productos.MaxValue = 60
         Me.Input_Tiempo_Wordpress_Productos.MinValue = 1
         Me.Input_Tiempo_Wordpress_Productos.Name = "Input_Tiempo_Wordpress_Productos"
@@ -1685,9 +1689,9 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
+        Me.SuperTabControl1.Controls.Add(Me.Panel_01)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel4)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
-        Me.SuperTabControl1.Controls.Add(Me.Panel_01)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTabControl1.Controls.Add(Me.Panel_02)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
@@ -1704,6 +1708,615 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem2, Me.SuperTabItem3, Me.SuperTabItem4, Me.SuperTabItem5, Me.SuperTabItem6})
         Me.SuperTabControl1.Text = "SuperTabControl1"
         '
+        'SuperTabControlPanel4
+        '
+        Me.SuperTabControlPanel4.Controls.Add(Me.Txt_ParaEnvDocSinRecep)
+        Me.SuperTabControlPanel4.Controls.Add(Me.LabelX27)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Txt_CtaCorreoEnvDocSinRecep)
+        Me.SuperTabControlPanel4.Controls.Add(Me.LabelX26)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_EnvDocSinRecep_GDI)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Input_EnvDocSinRecep_DiasGDI)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_EnvDocSinRecep_GTI)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Input_EnvDocSinRecep_DiasGTI)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_EnvDocSinRecep_OCC)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Input_EnvDocSinRecep_DiasOCC)
+        Me.SuperTabControlPanel4.Controls.Add(Me.LabelX21)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_EnvDocSinRecep)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Dtp_EnvDocSinRecep_Hora_Ejecucion)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_EnvDocSinRecep_OCI)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Input_EnvDocSinRecep_DiasOCI)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_EnvDocSinRecep_NVV)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Input_EnvDocSinRecep_DiasNVV)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_EnvDocSinRecep_NVI)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Input_EnvDocSinRecep_DiasNVI)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_EnvDocSinRecep_COV)
+        Me.SuperTabControlPanel4.Controls.Add(Me.LabelX24)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Input_EnvDocSinRecep_DiasCOV)
+        Me.SuperTabControlPanel4.Controls.Add(Me.TableLayoutPanel8)
+        Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(177, 0)
+        Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
+        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(439, 239)
+        Me.SuperTabControlPanel4.TabIndex = 0
+        Me.SuperTabControlPanel4.TabItem = Me.SuperTabItem6
+        '
+        'Txt_ParaEnvDocSinRecep
+        '
+        Me.Txt_ParaEnvDocSinRecep.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_ParaEnvDocSinRecep.Border.Class = "TextBoxBorder"
+        Me.Txt_ParaEnvDocSinRecep.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_ParaEnvDocSinRecep.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_ParaEnvDocSinRecep.ForeColor = System.Drawing.Color.Black
+        Me.Txt_ParaEnvDocSinRecep.Location = New System.Drawing.Point(91, 186)
+        Me.Txt_ParaEnvDocSinRecep.Name = "Txt_ParaEnvDocSinRecep"
+        Me.Txt_ParaEnvDocSinRecep.PreventEnterBeep = True
+        Me.Txt_ParaEnvDocSinRecep.Size = New System.Drawing.Size(325, 22)
+        Me.Txt_ParaEnvDocSinRecep.TabIndex = 10016
+        '
+        'LabelX27
+        '
+        Me.LabelX27.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LabelX27.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX27.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX27.ForeColor = System.Drawing.Color.Black
+        Me.LabelX27.Location = New System.Drawing.Point(13, 185)
+        Me.LabelX27.Name = "LabelX27"
+        Me.LabelX27.SingleLineColor = System.Drawing.Color.Transparent
+        Me.LabelX27.Size = New System.Drawing.Size(87, 23)
+        Me.LabelX27.TabIndex = 10015
+        Me.LabelX27.Text = "Enviar a "
+        '
+        'Txt_CtaCorreoEnvDocSinRecep
+        '
+        Me.Txt_CtaCorreoEnvDocSinRecep.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CtaCorreoEnvDocSinRecep.Border.Class = "TextBoxBorder"
+        Me.Txt_CtaCorreoEnvDocSinRecep.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CtaCorreoEnvDocSinRecep.ButtonCustom.Image = CType(resources.GetObject("Txt_CtaCorreoEnvDocSinRecep.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_CtaCorreoEnvDocSinRecep.ButtonCustom.Visible = True
+        Me.Txt_CtaCorreoEnvDocSinRecep.ButtonCustom2.Image = CType(resources.GetObject("Txt_CtaCorreoEnvDocSinRecep.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_CtaCorreoEnvDocSinRecep.ButtonCustom2.Visible = True
+        Me.Txt_CtaCorreoEnvDocSinRecep.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CtaCorreoEnvDocSinRecep.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CtaCorreoEnvDocSinRecep.Location = New System.Drawing.Point(91, 214)
+        Me.Txt_CtaCorreoEnvDocSinRecep.Name = "Txt_CtaCorreoEnvDocSinRecep"
+        Me.Txt_CtaCorreoEnvDocSinRecep.PreventEnterBeep = True
+        Me.Txt_CtaCorreoEnvDocSinRecep.ReadOnly = True
+        Me.Txt_CtaCorreoEnvDocSinRecep.Size = New System.Drawing.Size(325, 22)
+        Me.Txt_CtaCorreoEnvDocSinRecep.TabIndex = 10013
+        Me.Txt_CtaCorreoEnvDocSinRecep.Tag = "9999"
+        Me.Txt_CtaCorreoEnvDocSinRecep.WatermarkText = "Sino hay correo en esta casilla no se enviaran correos..."
+        '
+        'LabelX26
+        '
+        Me.LabelX26.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LabelX26.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX26.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX26.ForeColor = System.Drawing.Color.Black
+        Me.LabelX26.Location = New System.Drawing.Point(13, 213)
+        Me.LabelX26.Name = "LabelX26"
+        Me.LabelX26.SingleLineColor = System.Drawing.Color.Transparent
+        Me.LabelX26.Size = New System.Drawing.Size(87, 23)
+        Me.LabelX26.TabIndex = 10014
+        Me.LabelX26.Text = "Correo de envío"
+        '
+        'Chk_EnvDocSinRecep_GDI
+        '
+        Me.Chk_EnvDocSinRecep_GDI.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EnvDocSinRecep_GDI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EnvDocSinRecep_GDI.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_GDI.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EnvDocSinRecep_GDI.ForeColor = System.Drawing.Color.Black
+        Me.Chk_EnvDocSinRecep_GDI.Location = New System.Drawing.Point(307, 156)
+        Me.Chk_EnvDocSinRecep_GDI.Name = "Chk_EnvDocSinRecep_GDI"
+        Me.Chk_EnvDocSinRecep_GDI.Size = New System.Drawing.Size(43, 23)
+        Me.Chk_EnvDocSinRecep_GDI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EnvDocSinRecep_GDI.TabIndex = 146
+        Me.Chk_EnvDocSinRecep_GDI.Text = "GDI"
+        '
+        'Input_EnvDocSinRecep_DiasGDI
+        '
+        Me.Input_EnvDocSinRecep_DiasGDI.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_EnvDocSinRecep_DiasGDI.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_EnvDocSinRecep_DiasGDI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_EnvDocSinRecep_DiasGDI.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_EnvDocSinRecep_DiasGDI.ForeColor = System.Drawing.Color.Black
+        Me.Input_EnvDocSinRecep_DiasGDI.Location = New System.Drawing.Point(356, 157)
+        Me.Input_EnvDocSinRecep_DiasGDI.MaxValue = 30
+        Me.Input_EnvDocSinRecep_DiasGDI.MinValue = 1
+        Me.Input_EnvDocSinRecep_DiasGDI.Name = "Input_EnvDocSinRecep_DiasGDI"
+        Me.Input_EnvDocSinRecep_DiasGDI.ShowUpDown = True
+        Me.Input_EnvDocSinRecep_DiasGDI.Size = New System.Drawing.Size(36, 22)
+        Me.Input_EnvDocSinRecep_DiasGDI.TabIndex = 145
+        Me.Input_EnvDocSinRecep_DiasGDI.Value = 1
+        '
+        'Chk_EnvDocSinRecep_GTI
+        '
+        Me.Chk_EnvDocSinRecep_GTI.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EnvDocSinRecep_GTI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EnvDocSinRecep_GTI.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_GTI.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EnvDocSinRecep_GTI.ForeColor = System.Drawing.Color.Black
+        Me.Chk_EnvDocSinRecep_GTI.Location = New System.Drawing.Point(202, 155)
+        Me.Chk_EnvDocSinRecep_GTI.Name = "Chk_EnvDocSinRecep_GTI"
+        Me.Chk_EnvDocSinRecep_GTI.Size = New System.Drawing.Size(43, 23)
+        Me.Chk_EnvDocSinRecep_GTI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EnvDocSinRecep_GTI.TabIndex = 144
+        Me.Chk_EnvDocSinRecep_GTI.Text = "GTI"
+        '
+        'Input_EnvDocSinRecep_DiasGTI
+        '
+        Me.Input_EnvDocSinRecep_DiasGTI.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_EnvDocSinRecep_DiasGTI.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_EnvDocSinRecep_DiasGTI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_EnvDocSinRecep_DiasGTI.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_EnvDocSinRecep_DiasGTI.ForeColor = System.Drawing.Color.Black
+        Me.Input_EnvDocSinRecep_DiasGTI.Location = New System.Drawing.Point(251, 156)
+        Me.Input_EnvDocSinRecep_DiasGTI.MaxValue = 30
+        Me.Input_EnvDocSinRecep_DiasGTI.MinValue = 1
+        Me.Input_EnvDocSinRecep_DiasGTI.Name = "Input_EnvDocSinRecep_DiasGTI"
+        Me.Input_EnvDocSinRecep_DiasGTI.ShowUpDown = True
+        Me.Input_EnvDocSinRecep_DiasGTI.Size = New System.Drawing.Size(36, 22)
+        Me.Input_EnvDocSinRecep_DiasGTI.TabIndex = 143
+        Me.Input_EnvDocSinRecep_DiasGTI.Value = 1
+        '
+        'Chk_EnvDocSinRecep_OCC
+        '
+        Me.Chk_EnvDocSinRecep_OCC.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EnvDocSinRecep_OCC.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EnvDocSinRecep_OCC.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_OCC.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EnvDocSinRecep_OCC.ForeColor = System.Drawing.Color.Black
+        Me.Chk_EnvDocSinRecep_OCC.Location = New System.Drawing.Point(104, 156)
+        Me.Chk_EnvDocSinRecep_OCC.Name = "Chk_EnvDocSinRecep_OCC"
+        Me.Chk_EnvDocSinRecep_OCC.Size = New System.Drawing.Size(43, 22)
+        Me.Chk_EnvDocSinRecep_OCC.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EnvDocSinRecep_OCC.TabIndex = 141
+        Me.Chk_EnvDocSinRecep_OCC.Text = "OCC"
+        '
+        'Input_EnvDocSinRecep_DiasOCC
+        '
+        Me.Input_EnvDocSinRecep_DiasOCC.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_EnvDocSinRecep_DiasOCC.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_EnvDocSinRecep_DiasOCC.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_EnvDocSinRecep_DiasOCC.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_EnvDocSinRecep_DiasOCC.ForeColor = System.Drawing.Color.Black
+        Me.Input_EnvDocSinRecep_DiasOCC.Location = New System.Drawing.Point(153, 156)
+        Me.Input_EnvDocSinRecep_DiasOCC.MaxValue = 30
+        Me.Input_EnvDocSinRecep_DiasOCC.MinValue = 1
+        Me.Input_EnvDocSinRecep_DiasOCC.Name = "Input_EnvDocSinRecep_DiasOCC"
+        Me.Input_EnvDocSinRecep_DiasOCC.ShowUpDown = True
+        Me.Input_EnvDocSinRecep_DiasOCC.Size = New System.Drawing.Size(36, 22)
+        Me.Input_EnvDocSinRecep_DiasOCC.TabIndex = 140
+        Me.Input_EnvDocSinRecep_DiasOCC.Value = 1
+        '
+        'LabelX21
+        '
+        Me.LabelX21.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX21.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX21.ForeColor = System.Drawing.Color.Black
+        Me.LabelX21.Location = New System.Drawing.Point(6, 67)
+        Me.LabelX21.Name = "LabelX21"
+        Me.LabelX21.Size = New System.Drawing.Size(79, 21)
+        Me.LabelX21.TabIndex = 130
+        Me.LabelX21.Text = "Hora ejecución"
+        '
+        'Chk_EnvDocSinRecep
+        '
+        Me.Chk_EnvDocSinRecep.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EnvDocSinRecep.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EnvDocSinRecep.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Chk_EnvDocSinRecep.ForeColor = System.Drawing.Color.Black
+        Me.Chk_EnvDocSinRecep.Location = New System.Drawing.Point(3, 7)
+        Me.Chk_EnvDocSinRecep.Name = "Chk_EnvDocSinRecep"
+        Me.Chk_EnvDocSinRecep.Size = New System.Drawing.Size(442, 25)
+        Me.Chk_EnvDocSinRecep.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EnvDocSinRecep.TabIndex = 142
+        Me.Chk_EnvDocSinRecep.Text = "Enviar reporte de documentos sin recepción."
+        '
+        'Dtp_EnvDocSinRecep_Hora_Ejecucion
+        '
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.ButtonDropDown.Visible = True
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.Format = DevComponents.Editors.eDateTimePickerFormat.ShortTime
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.IsPopupCalendarOpen = False
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.Location = New System.Drawing.Point(91, 66)
+        '
+        '
+        '
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.DisplayMonth = New Date(2018, 11, 1, 0, 0, 0, 0)
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.Visible = False
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.Name = "Dtp_EnvDocSinRecep_Hora_Ejecucion"
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.Size = New System.Drawing.Size(54, 22)
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.TabIndex = 128
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.TabStop = False
+        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.Value = New Date(2018, 11, 5, 16, 26, 11, 0)
+        '
+        'Chk_EnvDocSinRecep_OCI
+        '
+        Me.Chk_EnvDocSinRecep_OCI.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EnvDocSinRecep_OCI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EnvDocSinRecep_OCI.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_OCI.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EnvDocSinRecep_OCI.ForeColor = System.Drawing.Color.Black
+        Me.Chk_EnvDocSinRecep_OCI.Location = New System.Drawing.Point(6, 156)
+        Me.Chk_EnvDocSinRecep_OCI.Name = "Chk_EnvDocSinRecep_OCI"
+        Me.Chk_EnvDocSinRecep_OCI.Size = New System.Drawing.Size(43, 22)
+        Me.Chk_EnvDocSinRecep_OCI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EnvDocSinRecep_OCI.TabIndex = 139
+        Me.Chk_EnvDocSinRecep_OCI.Text = "OCI"
+        '
+        'Input_EnvDocSinRecep_DiasOCI
+        '
+        Me.Input_EnvDocSinRecep_DiasOCI.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_EnvDocSinRecep_DiasOCI.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_EnvDocSinRecep_DiasOCI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_EnvDocSinRecep_DiasOCI.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_EnvDocSinRecep_DiasOCI.ForeColor = System.Drawing.Color.Black
+        Me.Input_EnvDocSinRecep_DiasOCI.Location = New System.Drawing.Point(55, 156)
+        Me.Input_EnvDocSinRecep_DiasOCI.MaxValue = 30
+        Me.Input_EnvDocSinRecep_DiasOCI.MinValue = 1
+        Me.Input_EnvDocSinRecep_DiasOCI.Name = "Input_EnvDocSinRecep_DiasOCI"
+        Me.Input_EnvDocSinRecep_DiasOCI.ShowUpDown = True
+        Me.Input_EnvDocSinRecep_DiasOCI.Size = New System.Drawing.Size(36, 22)
+        Me.Input_EnvDocSinRecep_DiasOCI.TabIndex = 138
+        Me.Input_EnvDocSinRecep_DiasOCI.Value = 1
+        '
+        'Chk_EnvDocSinRecep_NVV
+        '
+        Me.Chk_EnvDocSinRecep_NVV.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EnvDocSinRecep_NVV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EnvDocSinRecep_NVV.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_NVV.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EnvDocSinRecep_NVV.ForeColor = System.Drawing.Color.Black
+        Me.Chk_EnvDocSinRecep_NVV.Location = New System.Drawing.Point(202, 123)
+        Me.Chk_EnvDocSinRecep_NVV.Name = "Chk_EnvDocSinRecep_NVV"
+        Me.Chk_EnvDocSinRecep_NVV.Size = New System.Drawing.Size(43, 23)
+        Me.Chk_EnvDocSinRecep_NVV.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EnvDocSinRecep_NVV.TabIndex = 137
+        Me.Chk_EnvDocSinRecep_NVV.Text = "NVV"
+        '
+        'Input_EnvDocSinRecep_DiasNVV
+        '
+        Me.Input_EnvDocSinRecep_DiasNVV.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_EnvDocSinRecep_DiasNVV.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_EnvDocSinRecep_DiasNVV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_EnvDocSinRecep_DiasNVV.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_EnvDocSinRecep_DiasNVV.ForeColor = System.Drawing.Color.Black
+        Me.Input_EnvDocSinRecep_DiasNVV.Location = New System.Drawing.Point(251, 124)
+        Me.Input_EnvDocSinRecep_DiasNVV.MaxValue = 30
+        Me.Input_EnvDocSinRecep_DiasNVV.MinValue = 1
+        Me.Input_EnvDocSinRecep_DiasNVV.Name = "Input_EnvDocSinRecep_DiasNVV"
+        Me.Input_EnvDocSinRecep_DiasNVV.ShowUpDown = True
+        Me.Input_EnvDocSinRecep_DiasNVV.Size = New System.Drawing.Size(36, 22)
+        Me.Input_EnvDocSinRecep_DiasNVV.TabIndex = 136
+        Me.Input_EnvDocSinRecep_DiasNVV.Value = 1
+        '
+        'Chk_EnvDocSinRecep_NVI
+        '
+        Me.Chk_EnvDocSinRecep_NVI.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EnvDocSinRecep_NVI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EnvDocSinRecep_NVI.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_NVI.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EnvDocSinRecep_NVI.ForeColor = System.Drawing.Color.Black
+        Me.Chk_EnvDocSinRecep_NVI.Location = New System.Drawing.Point(104, 123)
+        Me.Chk_EnvDocSinRecep_NVI.Name = "Chk_EnvDocSinRecep_NVI"
+        Me.Chk_EnvDocSinRecep_NVI.Size = New System.Drawing.Size(43, 23)
+        Me.Chk_EnvDocSinRecep_NVI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EnvDocSinRecep_NVI.TabIndex = 135
+        Me.Chk_EnvDocSinRecep_NVI.Text = "NVI"
+        '
+        'Input_EnvDocSinRecep_DiasNVI
+        '
+        Me.Input_EnvDocSinRecep_DiasNVI.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_EnvDocSinRecep_DiasNVI.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_EnvDocSinRecep_DiasNVI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_EnvDocSinRecep_DiasNVI.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_EnvDocSinRecep_DiasNVI.ForeColor = System.Drawing.Color.Black
+        Me.Input_EnvDocSinRecep_DiasNVI.Location = New System.Drawing.Point(153, 124)
+        Me.Input_EnvDocSinRecep_DiasNVI.MaxValue = 30
+        Me.Input_EnvDocSinRecep_DiasNVI.MinValue = 1
+        Me.Input_EnvDocSinRecep_DiasNVI.Name = "Input_EnvDocSinRecep_DiasNVI"
+        Me.Input_EnvDocSinRecep_DiasNVI.ShowUpDown = True
+        Me.Input_EnvDocSinRecep_DiasNVI.Size = New System.Drawing.Size(36, 22)
+        Me.Input_EnvDocSinRecep_DiasNVI.TabIndex = 134
+        Me.Input_EnvDocSinRecep_DiasNVI.Value = 1
+        '
+        'Chk_EnvDocSinRecep_COV
+        '
+        Me.Chk_EnvDocSinRecep_COV.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EnvDocSinRecep_COV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EnvDocSinRecep_COV.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_COV.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EnvDocSinRecep_COV.ForeColor = System.Drawing.Color.Black
+        Me.Chk_EnvDocSinRecep_COV.Location = New System.Drawing.Point(6, 123)
+        Me.Chk_EnvDocSinRecep_COV.Name = "Chk_EnvDocSinRecep_COV"
+        Me.Chk_EnvDocSinRecep_COV.Size = New System.Drawing.Size(43, 23)
+        Me.Chk_EnvDocSinRecep_COV.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EnvDocSinRecep_COV.TabIndex = 133
+        Me.Chk_EnvDocSinRecep_COV.Text = "COV"
+        '
+        'LabelX24
+        '
+        Me.LabelX24.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX24.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX24.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX24.ForeColor = System.Drawing.Color.Black
+        Me.LabelX24.Location = New System.Drawing.Point(3, 94)
+        Me.LabelX24.Name = "LabelX24"
+        Me.LabelX24.Size = New System.Drawing.Size(284, 23)
+        Me.LabelX24.TabIndex = 132
+        Me.LabelX24.Text = "Días a restar a la fecha de envío de cada documento"
+        '
+        'Input_EnvDocSinRecep_DiasCOV
+        '
+        Me.Input_EnvDocSinRecep_DiasCOV.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_EnvDocSinRecep_DiasCOV.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_EnvDocSinRecep_DiasCOV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_EnvDocSinRecep_DiasCOV.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_EnvDocSinRecep_DiasCOV.ForeColor = System.Drawing.Color.Black
+        Me.Input_EnvDocSinRecep_DiasCOV.Location = New System.Drawing.Point(55, 124)
+        Me.Input_EnvDocSinRecep_DiasCOV.MaxValue = 30
+        Me.Input_EnvDocSinRecep_DiasCOV.MinValue = 1
+        Me.Input_EnvDocSinRecep_DiasCOV.Name = "Input_EnvDocSinRecep_DiasCOV"
+        Me.Input_EnvDocSinRecep_DiasCOV.ShowUpDown = True
+        Me.Input_EnvDocSinRecep_DiasCOV.Size = New System.Drawing.Size(36, 22)
+        Me.Input_EnvDocSinRecep_DiasCOV.TabIndex = 131
+        Me.Input_EnvDocSinRecep_DiasCOV.Value = 1
+        '
+        'TableLayoutPanel8
+        '
+        Me.TableLayoutPanel8.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel8.ColumnCount = 8
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.04762!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.64356!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.88119!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.88119!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.64356!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.13861!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.63366!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.11881!))
+        Me.TableLayoutPanel8.Controls.Add(Me.LabelX25, 0, 0)
+        Me.TableLayoutPanel8.Controls.Add(Me.Chk_EnvDocSinRecep_EjecDomingo, 7, 0)
+        Me.TableLayoutPanel8.Controls.Add(Me.Chk_EnvDocSinRecep_EjecLunes, 1, 0)
+        Me.TableLayoutPanel8.Controls.Add(Me.Chk_EnvDocSinRecep_EjecMartes, 2, 0)
+        Me.TableLayoutPanel8.Controls.Add(Me.Chk_EnvDocSinRecep_EjecMiercoles, 3, 0)
+        Me.TableLayoutPanel8.Controls.Add(Me.Chk_EnvDocSinRecep_EjecSabado, 6, 0)
+        Me.TableLayoutPanel8.Controls.Add(Me.Chk_EnvDocSinRecep_EjecJueves, 4, 0)
+        Me.TableLayoutPanel8.Controls.Add(Me.Chk_EnvDocSinRecep_EjecViernes, 5, 0)
+        Me.TableLayoutPanel8.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel8.Location = New System.Drawing.Point(3, 32)
+        Me.TableLayoutPanel8.Name = "TableLayoutPanel8"
+        Me.TableLayoutPanel8.RowCount = 1
+        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel8.Size = New System.Drawing.Size(416, 29)
+        Me.TableLayoutPanel8.TabIndex = 129
+        '
+        'LabelX25
+        '
+        Me.LabelX25.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX25.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX25.ForeColor = System.Drawing.Color.Black
+        Me.LabelX25.Location = New System.Drawing.Point(3, 3)
+        Me.LabelX25.Name = "LabelX25"
+        Me.LabelX25.Size = New System.Drawing.Size(73, 23)
+        Me.LabelX25.TabIndex = 34
+        Me.LabelX25.Text = "Días de envío"
+        '
+        'Chk_EnvDocSinRecep_EjecDomingo
+        '
+        Me.Chk_EnvDocSinRecep_EjecDomingo.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EnvDocSinRecep_EjecDomingo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EnvDocSinRecep_EjecDomingo.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_EjecDomingo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EnvDocSinRecep_EjecDomingo.ForeColor = System.Drawing.Color.Black
+        Me.Chk_EnvDocSinRecep_EjecDomingo.Location = New System.Drawing.Point(362, 3)
+        Me.Chk_EnvDocSinRecep_EjecDomingo.Name = "Chk_EnvDocSinRecep_EjecDomingo"
+        Me.Chk_EnvDocSinRecep_EjecDomingo.Size = New System.Drawing.Size(51, 23)
+        Me.Chk_EnvDocSinRecep_EjecDomingo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EnvDocSinRecep_EjecDomingo.TabIndex = 32
+        Me.Chk_EnvDocSinRecep_EjecDomingo.Text = "Dom"
+        '
+        'Chk_EnvDocSinRecep_EjecLunes
+        '
+        Me.Chk_EnvDocSinRecep_EjecLunes.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EnvDocSinRecep_EjecLunes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EnvDocSinRecep_EjecLunes.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_EjecLunes.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EnvDocSinRecep_EjecLunes.ForeColor = System.Drawing.Color.Black
+        Me.Chk_EnvDocSinRecep_EjecLunes.Location = New System.Drawing.Point(82, 3)
+        Me.Chk_EnvDocSinRecep_EjecLunes.Name = "Chk_EnvDocSinRecep_EjecLunes"
+        Me.Chk_EnvDocSinRecep_EjecLunes.Size = New System.Drawing.Size(38, 23)
+        Me.Chk_EnvDocSinRecep_EjecLunes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EnvDocSinRecep_EjecLunes.TabIndex = 26
+        Me.Chk_EnvDocSinRecep_EjecLunes.Text = "Lun"
+        '
+        'Chk_EnvDocSinRecep_EjecMartes
+        '
+        Me.Chk_EnvDocSinRecep_EjecMartes.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EnvDocSinRecep_EjecMartes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EnvDocSinRecep_EjecMartes.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_EjecMartes.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EnvDocSinRecep_EjecMartes.ForeColor = System.Drawing.Color.Black
+        Me.Chk_EnvDocSinRecep_EjecMartes.Location = New System.Drawing.Point(126, 3)
+        Me.Chk_EnvDocSinRecep_EjecMartes.Name = "Chk_EnvDocSinRecep_EjecMartes"
+        Me.Chk_EnvDocSinRecep_EjecMartes.Size = New System.Drawing.Size(43, 23)
+        Me.Chk_EnvDocSinRecep_EjecMartes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EnvDocSinRecep_EjecMartes.TabIndex = 27
+        Me.Chk_EnvDocSinRecep_EjecMartes.Text = "Mar"
+        '
+        'Chk_EnvDocSinRecep_EjecMiercoles
+        '
+        Me.Chk_EnvDocSinRecep_EjecMiercoles.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EnvDocSinRecep_EjecMiercoles.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EnvDocSinRecep_EjecMiercoles.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_EjecMiercoles.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EnvDocSinRecep_EjecMiercoles.ForeColor = System.Drawing.Color.Black
+        Me.Chk_EnvDocSinRecep_EjecMiercoles.Location = New System.Drawing.Point(175, 3)
+        Me.Chk_EnvDocSinRecep_EjecMiercoles.Name = "Chk_EnvDocSinRecep_EjecMiercoles"
+        Me.Chk_EnvDocSinRecep_EjecMiercoles.Size = New System.Drawing.Size(43, 23)
+        Me.Chk_EnvDocSinRecep_EjecMiercoles.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EnvDocSinRecep_EjecMiercoles.TabIndex = 28
+        Me.Chk_EnvDocSinRecep_EjecMiercoles.Text = "Mie"
+        '
+        'Chk_EnvDocSinRecep_EjecSabado
+        '
+        Me.Chk_EnvDocSinRecep_EjecSabado.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EnvDocSinRecep_EjecSabado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EnvDocSinRecep_EjecSabado.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_EjecSabado.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EnvDocSinRecep_EjecSabado.ForeColor = System.Drawing.Color.Black
+        Me.Chk_EnvDocSinRecep_EjecSabado.Location = New System.Drawing.Point(314, 3)
+        Me.Chk_EnvDocSinRecep_EjecSabado.Name = "Chk_EnvDocSinRecep_EjecSabado"
+        Me.Chk_EnvDocSinRecep_EjecSabado.Size = New System.Drawing.Size(42, 23)
+        Me.Chk_EnvDocSinRecep_EjecSabado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EnvDocSinRecep_EjecSabado.TabIndex = 31
+        Me.Chk_EnvDocSinRecep_EjecSabado.Text = "Sab"
+        '
+        'Chk_EnvDocSinRecep_EjecJueves
+        '
+        Me.Chk_EnvDocSinRecep_EjecJueves.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EnvDocSinRecep_EjecJueves.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EnvDocSinRecep_EjecJueves.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_EjecJueves.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EnvDocSinRecep_EjecJueves.ForeColor = System.Drawing.Color.Black
+        Me.Chk_EnvDocSinRecep_EjecJueves.Location = New System.Drawing.Point(224, 3)
+        Me.Chk_EnvDocSinRecep_EjecJueves.Name = "Chk_EnvDocSinRecep_EjecJueves"
+        Me.Chk_EnvDocSinRecep_EjecJueves.Size = New System.Drawing.Size(38, 23)
+        Me.Chk_EnvDocSinRecep_EjecJueves.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EnvDocSinRecep_EjecJueves.TabIndex = 29
+        Me.Chk_EnvDocSinRecep_EjecJueves.Text = "Jue"
+        '
+        'Chk_EnvDocSinRecep_EjecViernes
+        '
+        Me.Chk_EnvDocSinRecep_EjecViernes.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EnvDocSinRecep_EjecViernes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EnvDocSinRecep_EjecViernes.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_EjecViernes.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EnvDocSinRecep_EjecViernes.ForeColor = System.Drawing.Color.Black
+        Me.Chk_EnvDocSinRecep_EjecViernes.Location = New System.Drawing.Point(268, 3)
+        Me.Chk_EnvDocSinRecep_EjecViernes.Name = "Chk_EnvDocSinRecep_EjecViernes"
+        Me.Chk_EnvDocSinRecep_EjecViernes.Size = New System.Drawing.Size(39, 23)
+        Me.Chk_EnvDocSinRecep_EjecViernes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EnvDocSinRecep_EjecViernes.TabIndex = 30
+        Me.Chk_EnvDocSinRecep_EjecViernes.Text = "Vie"
+        '
+        'SuperTabItem6
+        '
+        Me.SuperTabItem6.AttachedControl = Me.SuperTabControlPanel4
+        Me.SuperTabItem6.GlobalItem = False
+        Me.SuperTabItem6.Name = "SuperTabItem6"
+        Me.SuperTabItem6.Text = "Aviso documentos sin recepción"
+        '
         'Panel_01
         '
         Me.Panel_01.CanvasColor = System.Drawing.SystemColors.Control
@@ -1714,9 +2327,9 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Panel_01.Controls.Add(Me.Chk_Timer_Consolidacion_Stock)
         Me.Panel_01.Controls.Add(Me.PictureBox6)
         Me.Panel_01.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel_01.Location = New System.Drawing.Point(168, 0)
+        Me.Panel_01.Location = New System.Drawing.Point(177, 0)
         Me.Panel_01.Name = "Panel_01"
-        Me.Panel_01.Size = New System.Drawing.Size(448, 239)
+        Me.Panel_01.Size = New System.Drawing.Size(439, 239)
         Me.Panel_01.TabIndex = 1
         Me.Panel_01.TabItem = Me.SuperTabItem1
         '
@@ -1727,6 +2340,451 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabItem1.Name = "SuperTabItem1"
         Me.SuperTabItem1.Text = "Prog. consolidación de stock"
         '
+        'SuperTabControlPanel1
+        '
+        Me.SuperTabControlPanel1.Controls.Add(Me.Chk_OCCCerrar)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Input_DiasOCC)
+        Me.SuperTabControlPanel1.Controls.Add(Me.PictureBox12)
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX13)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Chk_Timer_CierreDoc)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Dtp_CierreDoc_Hora_Ejecucion)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Chk_OCICerrar)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Input_DiasOCI)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Chk_NVVCerrar)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Input_DiasNVV)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Chk_NVICerrar)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Input_DiasNVI)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Chk_COVCerrar)
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX16)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Input_DiasCOV)
+        Me.SuperTabControlPanel1.Controls.Add(Me.TableLayoutPanel5)
+        Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(177, 0)
+        Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(439, 239)
+        Me.SuperTabControlPanel1.TabIndex = 0
+        Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem3
+        '
+        'Chk_OCCCerrar
+        '
+        Me.Chk_OCCCerrar.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_OCCCerrar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_OCCCerrar.CheckBoxImageChecked = CType(resources.GetObject("Chk_OCCCerrar.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_OCCCerrar.ForeColor = System.Drawing.Color.Black
+        Me.Chk_OCCCerrar.Location = New System.Drawing.Point(104, 155)
+        Me.Chk_OCCCerrar.Name = "Chk_OCCCerrar"
+        Me.Chk_OCCCerrar.Size = New System.Drawing.Size(43, 22)
+        Me.Chk_OCCCerrar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_OCCCerrar.TabIndex = 59
+        Me.Chk_OCCCerrar.Text = "OCC"
+        '
+        'Input_DiasOCC
+        '
+        Me.Input_DiasOCC.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_DiasOCC.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_DiasOCC.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_DiasOCC.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_DiasOCC.ForeColor = System.Drawing.Color.Black
+        Me.Input_DiasOCC.Location = New System.Drawing.Point(153, 155)
+        Me.Input_DiasOCC.MaxValue = 30
+        Me.Input_DiasOCC.MinValue = 1
+        Me.Input_DiasOCC.Name = "Input_DiasOCC"
+        Me.Input_DiasOCC.ShowUpDown = True
+        Me.Input_DiasOCC.Size = New System.Drawing.Size(36, 22)
+        Me.Input_DiasOCC.TabIndex = 58
+        Me.Input_DiasOCC.Value = 1
+        '
+        'LabelX13
+        '
+        Me.LabelX13.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX13.ForeColor = System.Drawing.Color.Black
+        Me.LabelX13.Location = New System.Drawing.Point(6, 66)
+        Me.LabelX13.Name = "LabelX13"
+        Me.LabelX13.Size = New System.Drawing.Size(79, 21)
+        Me.LabelX13.TabIndex = 42
+        Me.LabelX13.Text = "Hora ejecución"
+        '
+        'Dtp_CierreDoc_Hora_Ejecucion
+        '
+        Me.Dtp_CierreDoc_Hora_Ejecucion.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_CierreDoc_Hora_Ejecucion.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_CierreDoc_Hora_Ejecucion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_CierreDoc_Hora_Ejecucion.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_CierreDoc_Hora_Ejecucion.ButtonDropDown.Visible = True
+        Me.Dtp_CierreDoc_Hora_Ejecucion.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_CierreDoc_Hora_Ejecucion.Format = DevComponents.Editors.eDateTimePickerFormat.ShortTime
+        Me.Dtp_CierreDoc_Hora_Ejecucion.IsPopupCalendarOpen = False
+        Me.Dtp_CierreDoc_Hora_Ejecucion.Location = New System.Drawing.Point(91, 65)
+        '
+        '
+        '
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.DisplayMonth = New Date(2018, 11, 1, 0, 0, 0, 0)
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.Visible = False
+        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_CierreDoc_Hora_Ejecucion.Name = "Dtp_CierreDoc_Hora_Ejecucion"
+        Me.Dtp_CierreDoc_Hora_Ejecucion.Size = New System.Drawing.Size(54, 22)
+        Me.Dtp_CierreDoc_Hora_Ejecucion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_CierreDoc_Hora_Ejecucion.TabIndex = 40
+        Me.Dtp_CierreDoc_Hora_Ejecucion.TabStop = False
+        Me.Dtp_CierreDoc_Hora_Ejecucion.Value = New Date(2018, 11, 5, 16, 26, 11, 0)
+        '
+        'Chk_OCICerrar
+        '
+        Me.Chk_OCICerrar.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_OCICerrar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_OCICerrar.CheckBoxImageChecked = CType(resources.GetObject("Chk_OCICerrar.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_OCICerrar.ForeColor = System.Drawing.Color.Black
+        Me.Chk_OCICerrar.Location = New System.Drawing.Point(6, 155)
+        Me.Chk_OCICerrar.Name = "Chk_OCICerrar"
+        Me.Chk_OCICerrar.Size = New System.Drawing.Size(43, 22)
+        Me.Chk_OCICerrar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_OCICerrar.TabIndex = 57
+        Me.Chk_OCICerrar.Text = "OCI"
+        '
+        'Input_DiasOCI
+        '
+        Me.Input_DiasOCI.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_DiasOCI.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_DiasOCI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_DiasOCI.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_DiasOCI.ForeColor = System.Drawing.Color.Black
+        Me.Input_DiasOCI.Location = New System.Drawing.Point(55, 155)
+        Me.Input_DiasOCI.MaxValue = 30
+        Me.Input_DiasOCI.MinValue = 1
+        Me.Input_DiasOCI.Name = "Input_DiasOCI"
+        Me.Input_DiasOCI.ShowUpDown = True
+        Me.Input_DiasOCI.Size = New System.Drawing.Size(36, 22)
+        Me.Input_DiasOCI.TabIndex = 56
+        Me.Input_DiasOCI.Value = 1
+        '
+        'Chk_NVVCerrar
+        '
+        Me.Chk_NVVCerrar.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_NVVCerrar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_NVVCerrar.CheckBoxImageChecked = CType(resources.GetObject("Chk_NVVCerrar.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_NVVCerrar.ForeColor = System.Drawing.Color.Black
+        Me.Chk_NVVCerrar.Location = New System.Drawing.Point(202, 122)
+        Me.Chk_NVVCerrar.Name = "Chk_NVVCerrar"
+        Me.Chk_NVVCerrar.Size = New System.Drawing.Size(43, 23)
+        Me.Chk_NVVCerrar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_NVVCerrar.TabIndex = 55
+        Me.Chk_NVVCerrar.Text = "NVV"
+        '
+        'Input_DiasNVV
+        '
+        Me.Input_DiasNVV.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_DiasNVV.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_DiasNVV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_DiasNVV.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_DiasNVV.ForeColor = System.Drawing.Color.Black
+        Me.Input_DiasNVV.Location = New System.Drawing.Point(251, 123)
+        Me.Input_DiasNVV.MaxValue = 30
+        Me.Input_DiasNVV.MinValue = 1
+        Me.Input_DiasNVV.Name = "Input_DiasNVV"
+        Me.Input_DiasNVV.ShowUpDown = True
+        Me.Input_DiasNVV.Size = New System.Drawing.Size(36, 22)
+        Me.Input_DiasNVV.TabIndex = 54
+        Me.Input_DiasNVV.Value = 1
+        '
+        'Chk_NVICerrar
+        '
+        Me.Chk_NVICerrar.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_NVICerrar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_NVICerrar.CheckBoxImageChecked = CType(resources.GetObject("Chk_NVICerrar.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_NVICerrar.ForeColor = System.Drawing.Color.Black
+        Me.Chk_NVICerrar.Location = New System.Drawing.Point(104, 122)
+        Me.Chk_NVICerrar.Name = "Chk_NVICerrar"
+        Me.Chk_NVICerrar.Size = New System.Drawing.Size(43, 23)
+        Me.Chk_NVICerrar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_NVICerrar.TabIndex = 53
+        Me.Chk_NVICerrar.Text = "NVI"
+        '
+        'Input_DiasNVI
+        '
+        Me.Input_DiasNVI.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_DiasNVI.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_DiasNVI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_DiasNVI.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_DiasNVI.ForeColor = System.Drawing.Color.Black
+        Me.Input_DiasNVI.Location = New System.Drawing.Point(153, 123)
+        Me.Input_DiasNVI.MaxValue = 30
+        Me.Input_DiasNVI.MinValue = 1
+        Me.Input_DiasNVI.Name = "Input_DiasNVI"
+        Me.Input_DiasNVI.ShowUpDown = True
+        Me.Input_DiasNVI.Size = New System.Drawing.Size(36, 22)
+        Me.Input_DiasNVI.TabIndex = 52
+        Me.Input_DiasNVI.Value = 1
+        '
+        'Chk_COVCerrar
+        '
+        Me.Chk_COVCerrar.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_COVCerrar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_COVCerrar.CheckBoxImageChecked = CType(resources.GetObject("Chk_COVCerrar.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_COVCerrar.ForeColor = System.Drawing.Color.Black
+        Me.Chk_COVCerrar.Location = New System.Drawing.Point(6, 122)
+        Me.Chk_COVCerrar.Name = "Chk_COVCerrar"
+        Me.Chk_COVCerrar.Size = New System.Drawing.Size(43, 23)
+        Me.Chk_COVCerrar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_COVCerrar.TabIndex = 51
+        Me.Chk_COVCerrar.Text = "COV"
+        '
+        'LabelX16
+        '
+        Me.LabelX16.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX16.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX16.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX16.ForeColor = System.Drawing.Color.Black
+        Me.LabelX16.Location = New System.Drawing.Point(3, 93)
+        Me.LabelX16.Name = "LabelX16"
+        Me.LabelX16.Size = New System.Drawing.Size(284, 23)
+        Me.LabelX16.TabIndex = 44
+        Me.LabelX16.Text = "Días a restar a la fecha de cierre de cada documento"
+        '
+        'Input_DiasCOV
+        '
+        Me.Input_DiasCOV.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_DiasCOV.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_DiasCOV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_DiasCOV.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_DiasCOV.ForeColor = System.Drawing.Color.Black
+        Me.Input_DiasCOV.Location = New System.Drawing.Point(55, 123)
+        Me.Input_DiasCOV.MaxValue = 30
+        Me.Input_DiasCOV.MinValue = 1
+        Me.Input_DiasCOV.Name = "Input_DiasCOV"
+        Me.Input_DiasCOV.ShowUpDown = True
+        Me.Input_DiasCOV.Size = New System.Drawing.Size(36, 22)
+        Me.Input_DiasCOV.TabIndex = 43
+        Me.Input_DiasCOV.Value = 1
+        '
+        'TableLayoutPanel5
+        '
+        Me.TableLayoutPanel5.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel5.ColumnCount = 8
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.04762!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.64356!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.88119!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.88119!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.64356!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.13861!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.63366!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.11881!))
+        Me.TableLayoutPanel5.Controls.Add(Me.LabelX14, 0, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.Chk_CierreDoc_Domingo, 7, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.Chk_CierreDoc_Lunes, 1, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.Chk_CierreDoc_Martes, 2, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.Chk_CierreDoc_Miercoles, 3, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.Chk_CierreDoc_Sabado, 6, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.Chk_CierreDoc_Jueves, 4, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.Chk_CierreDoc_Viernes, 5, 0)
+        Me.TableLayoutPanel5.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel5.Location = New System.Drawing.Point(3, 31)
+        Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
+        Me.TableLayoutPanel5.RowCount = 1
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel5.Size = New System.Drawing.Size(416, 29)
+        Me.TableLayoutPanel5.TabIndex = 41
+        '
+        'LabelX14
+        '
+        Me.LabelX14.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX14.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX14.ForeColor = System.Drawing.Color.Black
+        Me.LabelX14.Location = New System.Drawing.Point(3, 3)
+        Me.LabelX14.Name = "LabelX14"
+        Me.LabelX14.Size = New System.Drawing.Size(73, 23)
+        Me.LabelX14.TabIndex = 34
+        Me.LabelX14.Text = "Días de cierre"
+        '
+        'Chk_CierreDoc_Domingo
+        '
+        Me.Chk_CierreDoc_Domingo.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_CierreDoc_Domingo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_CierreDoc_Domingo.CheckBoxImageChecked = CType(resources.GetObject("Chk_CierreDoc_Domingo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_CierreDoc_Domingo.ForeColor = System.Drawing.Color.Black
+        Me.Chk_CierreDoc_Domingo.Location = New System.Drawing.Point(362, 3)
+        Me.Chk_CierreDoc_Domingo.Name = "Chk_CierreDoc_Domingo"
+        Me.Chk_CierreDoc_Domingo.Size = New System.Drawing.Size(51, 23)
+        Me.Chk_CierreDoc_Domingo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_CierreDoc_Domingo.TabIndex = 32
+        Me.Chk_CierreDoc_Domingo.Text = "Dom"
+        '
+        'Chk_CierreDoc_Lunes
+        '
+        Me.Chk_CierreDoc_Lunes.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_CierreDoc_Lunes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_CierreDoc_Lunes.CheckBoxImageChecked = CType(resources.GetObject("Chk_CierreDoc_Lunes.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_CierreDoc_Lunes.ForeColor = System.Drawing.Color.Black
+        Me.Chk_CierreDoc_Lunes.Location = New System.Drawing.Point(82, 3)
+        Me.Chk_CierreDoc_Lunes.Name = "Chk_CierreDoc_Lunes"
+        Me.Chk_CierreDoc_Lunes.Size = New System.Drawing.Size(38, 23)
+        Me.Chk_CierreDoc_Lunes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_CierreDoc_Lunes.TabIndex = 26
+        Me.Chk_CierreDoc_Lunes.Text = "Lun"
+        '
+        'Chk_CierreDoc_Martes
+        '
+        Me.Chk_CierreDoc_Martes.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_CierreDoc_Martes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_CierreDoc_Martes.CheckBoxImageChecked = CType(resources.GetObject("Chk_CierreDoc_Martes.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_CierreDoc_Martes.ForeColor = System.Drawing.Color.Black
+        Me.Chk_CierreDoc_Martes.Location = New System.Drawing.Point(126, 3)
+        Me.Chk_CierreDoc_Martes.Name = "Chk_CierreDoc_Martes"
+        Me.Chk_CierreDoc_Martes.Size = New System.Drawing.Size(43, 23)
+        Me.Chk_CierreDoc_Martes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_CierreDoc_Martes.TabIndex = 27
+        Me.Chk_CierreDoc_Martes.Text = "Mar"
+        '
+        'Chk_CierreDoc_Miercoles
+        '
+        Me.Chk_CierreDoc_Miercoles.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_CierreDoc_Miercoles.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_CierreDoc_Miercoles.CheckBoxImageChecked = CType(resources.GetObject("Chk_CierreDoc_Miercoles.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_CierreDoc_Miercoles.ForeColor = System.Drawing.Color.Black
+        Me.Chk_CierreDoc_Miercoles.Location = New System.Drawing.Point(175, 3)
+        Me.Chk_CierreDoc_Miercoles.Name = "Chk_CierreDoc_Miercoles"
+        Me.Chk_CierreDoc_Miercoles.Size = New System.Drawing.Size(43, 23)
+        Me.Chk_CierreDoc_Miercoles.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_CierreDoc_Miercoles.TabIndex = 28
+        Me.Chk_CierreDoc_Miercoles.Text = "Mie"
+        '
+        'Chk_CierreDoc_Sabado
+        '
+        Me.Chk_CierreDoc_Sabado.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_CierreDoc_Sabado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_CierreDoc_Sabado.CheckBoxImageChecked = CType(resources.GetObject("Chk_CierreDoc_Sabado.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_CierreDoc_Sabado.ForeColor = System.Drawing.Color.Black
+        Me.Chk_CierreDoc_Sabado.Location = New System.Drawing.Point(314, 3)
+        Me.Chk_CierreDoc_Sabado.Name = "Chk_CierreDoc_Sabado"
+        Me.Chk_CierreDoc_Sabado.Size = New System.Drawing.Size(42, 23)
+        Me.Chk_CierreDoc_Sabado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_CierreDoc_Sabado.TabIndex = 31
+        Me.Chk_CierreDoc_Sabado.Text = "Sab"
+        '
+        'Chk_CierreDoc_Jueves
+        '
+        Me.Chk_CierreDoc_Jueves.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_CierreDoc_Jueves.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_CierreDoc_Jueves.CheckBoxImageChecked = CType(resources.GetObject("Chk_CierreDoc_Jueves.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_CierreDoc_Jueves.ForeColor = System.Drawing.Color.Black
+        Me.Chk_CierreDoc_Jueves.Location = New System.Drawing.Point(224, 3)
+        Me.Chk_CierreDoc_Jueves.Name = "Chk_CierreDoc_Jueves"
+        Me.Chk_CierreDoc_Jueves.Size = New System.Drawing.Size(38, 23)
+        Me.Chk_CierreDoc_Jueves.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_CierreDoc_Jueves.TabIndex = 29
+        Me.Chk_CierreDoc_Jueves.Text = "Jue"
+        '
+        'Chk_CierreDoc_Viernes
+        '
+        Me.Chk_CierreDoc_Viernes.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_CierreDoc_Viernes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_CierreDoc_Viernes.CheckBoxImageChecked = CType(resources.GetObject("Chk_CierreDoc_Viernes.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_CierreDoc_Viernes.ForeColor = System.Drawing.Color.Black
+        Me.Chk_CierreDoc_Viernes.Location = New System.Drawing.Point(268, 3)
+        Me.Chk_CierreDoc_Viernes.Name = "Chk_CierreDoc_Viernes"
+        Me.Chk_CierreDoc_Viernes.Size = New System.Drawing.Size(39, 23)
+        Me.Chk_CierreDoc_Viernes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_CierreDoc_Viernes.TabIndex = 30
+        Me.Chk_CierreDoc_Viernes.Text = "Vie"
+        '
+        'SuperTabItem3
+        '
+        Me.SuperTabItem3.AttachedControl = Me.SuperTabControlPanel1
+        Me.SuperTabItem3.GlobalItem = False
+        Me.SuperTabItem3.Name = "SuperTabItem3"
+        Me.SuperTabItem3.Text = "Cierre Documentos"
+        '
         'SuperTabControlPanel3
         '
         Me.SuperTabControlPanel3.Controls.Add(Me.Btn_ConfAsisCompra)
@@ -1735,9 +2793,9 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabControlPanel3.Controls.Add(Me.Chk_AsistenteDeCompras)
         Me.SuperTabControlPanel3.Controls.Add(Me.Dtp_AsisCompra_Hora_Ejecucion)
         Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(187, 0)
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(177, 0)
         Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(429, 239)
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(439, 239)
         Me.SuperTabControlPanel3.TabIndex = 0
         Me.SuperTabControlPanel3.TabItem = Me.SuperTabItem5
         '
@@ -2169,451 +3227,6 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabItem5.Name = "SuperTabItem5"
         Me.SuperTabItem5.Text = "Asistente de compras"
         '
-        'SuperTabControlPanel1
-        '
-        Me.SuperTabControlPanel1.Controls.Add(Me.Chk_OCCCerrar)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Input_DiasOCC)
-        Me.SuperTabControlPanel1.Controls.Add(Me.PictureBox12)
-        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX13)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Chk_Timer_CierreDoc)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Dtp_CierreDoc_Hora_Ejecucion)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Chk_OCICerrar)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Input_DiasOCI)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Chk_NVVCerrar)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Input_DiasNVV)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Chk_NVICerrar)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Input_DiasNVI)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Chk_COVCerrar)
-        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX16)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Input_DiasCOV)
-        Me.SuperTabControlPanel1.Controls.Add(Me.TableLayoutPanel5)
-        Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(166, 0)
-        Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(450, 239)
-        Me.SuperTabControlPanel1.TabIndex = 0
-        Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem3
-        '
-        'Chk_OCCCerrar
-        '
-        Me.Chk_OCCCerrar.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_OCCCerrar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_OCCCerrar.CheckBoxImageChecked = CType(resources.GetObject("Chk_OCCCerrar.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_OCCCerrar.ForeColor = System.Drawing.Color.Black
-        Me.Chk_OCCCerrar.Location = New System.Drawing.Point(104, 155)
-        Me.Chk_OCCCerrar.Name = "Chk_OCCCerrar"
-        Me.Chk_OCCCerrar.Size = New System.Drawing.Size(43, 22)
-        Me.Chk_OCCCerrar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_OCCCerrar.TabIndex = 59
-        Me.Chk_OCCCerrar.Text = "OCC"
-        '
-        'Input_DiasOCC
-        '
-        Me.Input_DiasOCC.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Input_DiasOCC.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Input_DiasOCC.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Input_DiasOCC.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.Input_DiasOCC.ForeColor = System.Drawing.Color.Black
-        Me.Input_DiasOCC.Location = New System.Drawing.Point(153, 155)
-        Me.Input_DiasOCC.MaxValue = 30
-        Me.Input_DiasOCC.MinValue = 1
-        Me.Input_DiasOCC.Name = "Input_DiasOCC"
-        Me.Input_DiasOCC.ShowUpDown = True
-        Me.Input_DiasOCC.Size = New System.Drawing.Size(36, 22)
-        Me.Input_DiasOCC.TabIndex = 58
-        Me.Input_DiasOCC.Value = 1
-        '
-        'LabelX13
-        '
-        Me.LabelX13.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX13.ForeColor = System.Drawing.Color.Black
-        Me.LabelX13.Location = New System.Drawing.Point(6, 66)
-        Me.LabelX13.Name = "LabelX13"
-        Me.LabelX13.Size = New System.Drawing.Size(79, 21)
-        Me.LabelX13.TabIndex = 42
-        Me.LabelX13.Text = "Hora ejecución"
-        '
-        'Dtp_CierreDoc_Hora_Ejecucion
-        '
-        Me.Dtp_CierreDoc_Hora_Ejecucion.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Dtp_CierreDoc_Hora_Ejecucion.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Dtp_CierreDoc_Hora_Ejecucion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_CierreDoc_Hora_Ejecucion.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
-        Me.Dtp_CierreDoc_Hora_Ejecucion.ButtonDropDown.Visible = True
-        Me.Dtp_CierreDoc_Hora_Ejecucion.ForeColor = System.Drawing.Color.Black
-        Me.Dtp_CierreDoc_Hora_Ejecucion.Format = DevComponents.Editors.eDateTimePickerFormat.ShortTime
-        Me.Dtp_CierreDoc_Hora_Ejecucion.IsPopupCalendarOpen = False
-        Me.Dtp_CierreDoc_Hora_Ejecucion.Location = New System.Drawing.Point(91, 65)
-        '
-        '
-        '
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
-        '
-        '
-        '
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.ClearButtonVisible = True
-        '
-        '
-        '
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.DisplayMonth = New Date(2018, 11, 1, 0, 0, 0, 0)
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.MarkedDates = New Date(-1) {}
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
-        '
-        '
-        '
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.TodayButtonVisible = True
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.Visible = False
-        Me.Dtp_CierreDoc_Hora_Ejecucion.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
-        Me.Dtp_CierreDoc_Hora_Ejecucion.Name = "Dtp_CierreDoc_Hora_Ejecucion"
-        Me.Dtp_CierreDoc_Hora_Ejecucion.Size = New System.Drawing.Size(54, 22)
-        Me.Dtp_CierreDoc_Hora_Ejecucion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Dtp_CierreDoc_Hora_Ejecucion.TabIndex = 40
-        Me.Dtp_CierreDoc_Hora_Ejecucion.TabStop = False
-        Me.Dtp_CierreDoc_Hora_Ejecucion.Value = New Date(2018, 11, 5, 16, 26, 11, 0)
-        '
-        'Chk_OCICerrar
-        '
-        Me.Chk_OCICerrar.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_OCICerrar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_OCICerrar.CheckBoxImageChecked = CType(resources.GetObject("Chk_OCICerrar.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_OCICerrar.ForeColor = System.Drawing.Color.Black
-        Me.Chk_OCICerrar.Location = New System.Drawing.Point(6, 155)
-        Me.Chk_OCICerrar.Name = "Chk_OCICerrar"
-        Me.Chk_OCICerrar.Size = New System.Drawing.Size(43, 22)
-        Me.Chk_OCICerrar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_OCICerrar.TabIndex = 57
-        Me.Chk_OCICerrar.Text = "OCI"
-        '
-        'Input_DiasOCI
-        '
-        Me.Input_DiasOCI.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Input_DiasOCI.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Input_DiasOCI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Input_DiasOCI.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.Input_DiasOCI.ForeColor = System.Drawing.Color.Black
-        Me.Input_DiasOCI.Location = New System.Drawing.Point(55, 155)
-        Me.Input_DiasOCI.MaxValue = 30
-        Me.Input_DiasOCI.MinValue = 1
-        Me.Input_DiasOCI.Name = "Input_DiasOCI"
-        Me.Input_DiasOCI.ShowUpDown = True
-        Me.Input_DiasOCI.Size = New System.Drawing.Size(36, 22)
-        Me.Input_DiasOCI.TabIndex = 56
-        Me.Input_DiasOCI.Value = 1
-        '
-        'Chk_NVVCerrar
-        '
-        Me.Chk_NVVCerrar.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_NVVCerrar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_NVVCerrar.CheckBoxImageChecked = CType(resources.GetObject("Chk_NVVCerrar.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_NVVCerrar.ForeColor = System.Drawing.Color.Black
-        Me.Chk_NVVCerrar.Location = New System.Drawing.Point(202, 122)
-        Me.Chk_NVVCerrar.Name = "Chk_NVVCerrar"
-        Me.Chk_NVVCerrar.Size = New System.Drawing.Size(43, 23)
-        Me.Chk_NVVCerrar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_NVVCerrar.TabIndex = 55
-        Me.Chk_NVVCerrar.Text = "NVV"
-        '
-        'Input_DiasNVV
-        '
-        Me.Input_DiasNVV.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Input_DiasNVV.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Input_DiasNVV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Input_DiasNVV.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.Input_DiasNVV.ForeColor = System.Drawing.Color.Black
-        Me.Input_DiasNVV.Location = New System.Drawing.Point(251, 123)
-        Me.Input_DiasNVV.MaxValue = 30
-        Me.Input_DiasNVV.MinValue = 1
-        Me.Input_DiasNVV.Name = "Input_DiasNVV"
-        Me.Input_DiasNVV.ShowUpDown = True
-        Me.Input_DiasNVV.Size = New System.Drawing.Size(36, 22)
-        Me.Input_DiasNVV.TabIndex = 54
-        Me.Input_DiasNVV.Value = 1
-        '
-        'Chk_NVICerrar
-        '
-        Me.Chk_NVICerrar.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_NVICerrar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_NVICerrar.CheckBoxImageChecked = CType(resources.GetObject("Chk_NVICerrar.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_NVICerrar.ForeColor = System.Drawing.Color.Black
-        Me.Chk_NVICerrar.Location = New System.Drawing.Point(104, 122)
-        Me.Chk_NVICerrar.Name = "Chk_NVICerrar"
-        Me.Chk_NVICerrar.Size = New System.Drawing.Size(43, 23)
-        Me.Chk_NVICerrar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_NVICerrar.TabIndex = 53
-        Me.Chk_NVICerrar.Text = "NVI"
-        '
-        'Input_DiasNVI
-        '
-        Me.Input_DiasNVI.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Input_DiasNVI.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Input_DiasNVI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Input_DiasNVI.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.Input_DiasNVI.ForeColor = System.Drawing.Color.Black
-        Me.Input_DiasNVI.Location = New System.Drawing.Point(153, 123)
-        Me.Input_DiasNVI.MaxValue = 30
-        Me.Input_DiasNVI.MinValue = 1
-        Me.Input_DiasNVI.Name = "Input_DiasNVI"
-        Me.Input_DiasNVI.ShowUpDown = True
-        Me.Input_DiasNVI.Size = New System.Drawing.Size(36, 22)
-        Me.Input_DiasNVI.TabIndex = 52
-        Me.Input_DiasNVI.Value = 1
-        '
-        'Chk_COVCerrar
-        '
-        Me.Chk_COVCerrar.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_COVCerrar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_COVCerrar.CheckBoxImageChecked = CType(resources.GetObject("Chk_COVCerrar.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_COVCerrar.ForeColor = System.Drawing.Color.Black
-        Me.Chk_COVCerrar.Location = New System.Drawing.Point(6, 122)
-        Me.Chk_COVCerrar.Name = "Chk_COVCerrar"
-        Me.Chk_COVCerrar.Size = New System.Drawing.Size(43, 23)
-        Me.Chk_COVCerrar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_COVCerrar.TabIndex = 51
-        Me.Chk_COVCerrar.Text = "COV"
-        '
-        'LabelX16
-        '
-        Me.LabelX16.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX16.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX16.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX16.ForeColor = System.Drawing.Color.Black
-        Me.LabelX16.Location = New System.Drawing.Point(3, 93)
-        Me.LabelX16.Name = "LabelX16"
-        Me.LabelX16.Size = New System.Drawing.Size(284, 23)
-        Me.LabelX16.TabIndex = 44
-        Me.LabelX16.Text = "Días a restar a la fecha de cierre de cada documento"
-        '
-        'Input_DiasCOV
-        '
-        Me.Input_DiasCOV.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Input_DiasCOV.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Input_DiasCOV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Input_DiasCOV.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.Input_DiasCOV.ForeColor = System.Drawing.Color.Black
-        Me.Input_DiasCOV.Location = New System.Drawing.Point(55, 123)
-        Me.Input_DiasCOV.MaxValue = 30
-        Me.Input_DiasCOV.MinValue = 1
-        Me.Input_DiasCOV.Name = "Input_DiasCOV"
-        Me.Input_DiasCOV.ShowUpDown = True
-        Me.Input_DiasCOV.Size = New System.Drawing.Size(36, 22)
-        Me.Input_DiasCOV.TabIndex = 43
-        Me.Input_DiasCOV.Value = 1
-        '
-        'TableLayoutPanel5
-        '
-        Me.TableLayoutPanel5.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel5.ColumnCount = 8
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.04762!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.64356!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.88119!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.88119!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.64356!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.13861!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.63366!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.11881!))
-        Me.TableLayoutPanel5.Controls.Add(Me.LabelX14, 0, 0)
-        Me.TableLayoutPanel5.Controls.Add(Me.Chk_CierreDoc_Domingo, 7, 0)
-        Me.TableLayoutPanel5.Controls.Add(Me.Chk_CierreDoc_Lunes, 1, 0)
-        Me.TableLayoutPanel5.Controls.Add(Me.Chk_CierreDoc_Martes, 2, 0)
-        Me.TableLayoutPanel5.Controls.Add(Me.Chk_CierreDoc_Miercoles, 3, 0)
-        Me.TableLayoutPanel5.Controls.Add(Me.Chk_CierreDoc_Sabado, 6, 0)
-        Me.TableLayoutPanel5.Controls.Add(Me.Chk_CierreDoc_Jueves, 4, 0)
-        Me.TableLayoutPanel5.Controls.Add(Me.Chk_CierreDoc_Viernes, 5, 0)
-        Me.TableLayoutPanel5.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel5.Location = New System.Drawing.Point(3, 31)
-        Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
-        Me.TableLayoutPanel5.RowCount = 1
-        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel5.Size = New System.Drawing.Size(416, 29)
-        Me.TableLayoutPanel5.TabIndex = 41
-        '
-        'LabelX14
-        '
-        Me.LabelX14.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX14.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX14.ForeColor = System.Drawing.Color.Black
-        Me.LabelX14.Location = New System.Drawing.Point(3, 3)
-        Me.LabelX14.Name = "LabelX14"
-        Me.LabelX14.Size = New System.Drawing.Size(73, 23)
-        Me.LabelX14.TabIndex = 34
-        Me.LabelX14.Text = "Días de cierre"
-        '
-        'Chk_CierreDoc_Domingo
-        '
-        Me.Chk_CierreDoc_Domingo.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_CierreDoc_Domingo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_CierreDoc_Domingo.CheckBoxImageChecked = CType(resources.GetObject("Chk_CierreDoc_Domingo.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_CierreDoc_Domingo.ForeColor = System.Drawing.Color.Black
-        Me.Chk_CierreDoc_Domingo.Location = New System.Drawing.Point(362, 3)
-        Me.Chk_CierreDoc_Domingo.Name = "Chk_CierreDoc_Domingo"
-        Me.Chk_CierreDoc_Domingo.Size = New System.Drawing.Size(51, 23)
-        Me.Chk_CierreDoc_Domingo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_CierreDoc_Domingo.TabIndex = 32
-        Me.Chk_CierreDoc_Domingo.Text = "Dom"
-        '
-        'Chk_CierreDoc_Lunes
-        '
-        Me.Chk_CierreDoc_Lunes.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_CierreDoc_Lunes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_CierreDoc_Lunes.CheckBoxImageChecked = CType(resources.GetObject("Chk_CierreDoc_Lunes.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_CierreDoc_Lunes.ForeColor = System.Drawing.Color.Black
-        Me.Chk_CierreDoc_Lunes.Location = New System.Drawing.Point(82, 3)
-        Me.Chk_CierreDoc_Lunes.Name = "Chk_CierreDoc_Lunes"
-        Me.Chk_CierreDoc_Lunes.Size = New System.Drawing.Size(38, 23)
-        Me.Chk_CierreDoc_Lunes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_CierreDoc_Lunes.TabIndex = 26
-        Me.Chk_CierreDoc_Lunes.Text = "Lun"
-        '
-        'Chk_CierreDoc_Martes
-        '
-        Me.Chk_CierreDoc_Martes.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_CierreDoc_Martes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_CierreDoc_Martes.CheckBoxImageChecked = CType(resources.GetObject("Chk_CierreDoc_Martes.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_CierreDoc_Martes.ForeColor = System.Drawing.Color.Black
-        Me.Chk_CierreDoc_Martes.Location = New System.Drawing.Point(126, 3)
-        Me.Chk_CierreDoc_Martes.Name = "Chk_CierreDoc_Martes"
-        Me.Chk_CierreDoc_Martes.Size = New System.Drawing.Size(43, 23)
-        Me.Chk_CierreDoc_Martes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_CierreDoc_Martes.TabIndex = 27
-        Me.Chk_CierreDoc_Martes.Text = "Mar"
-        '
-        'Chk_CierreDoc_Miercoles
-        '
-        Me.Chk_CierreDoc_Miercoles.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_CierreDoc_Miercoles.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_CierreDoc_Miercoles.CheckBoxImageChecked = CType(resources.GetObject("Chk_CierreDoc_Miercoles.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_CierreDoc_Miercoles.ForeColor = System.Drawing.Color.Black
-        Me.Chk_CierreDoc_Miercoles.Location = New System.Drawing.Point(175, 3)
-        Me.Chk_CierreDoc_Miercoles.Name = "Chk_CierreDoc_Miercoles"
-        Me.Chk_CierreDoc_Miercoles.Size = New System.Drawing.Size(43, 23)
-        Me.Chk_CierreDoc_Miercoles.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_CierreDoc_Miercoles.TabIndex = 28
-        Me.Chk_CierreDoc_Miercoles.Text = "Mie"
-        '
-        'Chk_CierreDoc_Sabado
-        '
-        Me.Chk_CierreDoc_Sabado.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_CierreDoc_Sabado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_CierreDoc_Sabado.CheckBoxImageChecked = CType(resources.GetObject("Chk_CierreDoc_Sabado.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_CierreDoc_Sabado.ForeColor = System.Drawing.Color.Black
-        Me.Chk_CierreDoc_Sabado.Location = New System.Drawing.Point(314, 3)
-        Me.Chk_CierreDoc_Sabado.Name = "Chk_CierreDoc_Sabado"
-        Me.Chk_CierreDoc_Sabado.Size = New System.Drawing.Size(42, 23)
-        Me.Chk_CierreDoc_Sabado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_CierreDoc_Sabado.TabIndex = 31
-        Me.Chk_CierreDoc_Sabado.Text = "Sab"
-        '
-        'Chk_CierreDoc_Jueves
-        '
-        Me.Chk_CierreDoc_Jueves.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_CierreDoc_Jueves.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_CierreDoc_Jueves.CheckBoxImageChecked = CType(resources.GetObject("Chk_CierreDoc_Jueves.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_CierreDoc_Jueves.ForeColor = System.Drawing.Color.Black
-        Me.Chk_CierreDoc_Jueves.Location = New System.Drawing.Point(224, 3)
-        Me.Chk_CierreDoc_Jueves.Name = "Chk_CierreDoc_Jueves"
-        Me.Chk_CierreDoc_Jueves.Size = New System.Drawing.Size(38, 23)
-        Me.Chk_CierreDoc_Jueves.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_CierreDoc_Jueves.TabIndex = 29
-        Me.Chk_CierreDoc_Jueves.Text = "Jue"
-        '
-        'Chk_CierreDoc_Viernes
-        '
-        Me.Chk_CierreDoc_Viernes.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_CierreDoc_Viernes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_CierreDoc_Viernes.CheckBoxImageChecked = CType(resources.GetObject("Chk_CierreDoc_Viernes.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_CierreDoc_Viernes.ForeColor = System.Drawing.Color.Black
-        Me.Chk_CierreDoc_Viernes.Location = New System.Drawing.Point(268, 3)
-        Me.Chk_CierreDoc_Viernes.Name = "Chk_CierreDoc_Viernes"
-        Me.Chk_CierreDoc_Viernes.Size = New System.Drawing.Size(39, 23)
-        Me.Chk_CierreDoc_Viernes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_CierreDoc_Viernes.TabIndex = 30
-        Me.Chk_CierreDoc_Viernes.Text = "Vie"
-        '
-        'SuperTabItem3
-        '
-        Me.SuperTabItem3.AttachedControl = Me.SuperTabControlPanel1
-        Me.SuperTabItem3.GlobalItem = False
-        Me.SuperTabItem3.Name = "SuperTabItem3"
-        Me.SuperTabItem3.Text = "Cierre Documentos"
-        '
         'Panel_02
         '
         Me.Panel_02.Controls.Add(Me.Chk_Prestashop_Ejecucion_Total)
@@ -2621,9 +3234,9 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Panel_02.Controls.Add(Me.TableLayoutPanel4)
         Me.Panel_02.Controls.Add(Me.Dtp_Prestashop_Total_Hora_Ejecucion)
         Me.Panel_02.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel_02.Location = New System.Drawing.Point(187, 0)
+        Me.Panel_02.Location = New System.Drawing.Point(177, 0)
         Me.Panel_02.Name = "Panel_02"
-        Me.Panel_02.Size = New System.Drawing.Size(429, 239)
+        Me.Panel_02.Size = New System.Drawing.Size(439, 239)
         Me.Panel_02.TabIndex = 0
         Me.Panel_02.TabItem = Me.SuperTabItem2
         '
@@ -2881,9 +3494,9 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabControlPanel2.Controls.Add(Me.TableLayoutPanel6)
         Me.SuperTabControlPanel2.Controls.Add(Me.LabelX18)
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(187, 0)
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(177, 0)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(429, 239)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(439, 239)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem4
         '
@@ -3210,540 +3823,6 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabItem4.Name = "SuperTabItem4"
         Me.SuperTabItem4.Text = "Fac. Automática"
         '
-        'SuperTabItem6
-        '
-        Me.SuperTabItem6.AttachedControl = Me.SuperTabControlPanel4
-        Me.SuperTabItem6.GlobalItem = False
-        Me.SuperTabItem6.Name = "SuperTabItem6"
-        Me.SuperTabItem6.Text = "Aviso documentos sin recepción"
-        '
-        'SuperTabControlPanel4
-        '
-        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_EnvDocSinRecep_GDI)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Input_EnvDocSinRecep_DiasGDI)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_EnvDocSinRecep_GTI)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Input_EnvDocSinRecep_DiasGTI)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_EnvDocSinRecep_OCC)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Input_EnvDocSinRecep_DiasOCC)
-        Me.SuperTabControlPanel4.Controls.Add(Me.LabelX21)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_EnvDocSinRecep)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Dtp_EnvDocSinRecep_Hora_Ejecucion)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_EnvDocSinRecep_OCI)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Input_EnvDocSinRecep_DiasOCI)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_EnvDocSinRecep_NVV)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Input_EnvDocSinRecep_DiasNVV)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_EnvDocSinRecep_NVI)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Input_EnvDocSinRecep_DiasNVI)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_EnvDocSinRecep_COV)
-        Me.SuperTabControlPanel4.Controls.Add(Me.LabelX24)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Input_EnvDocSinRecep_DiasCOV)
-        Me.SuperTabControlPanel4.Controls.Add(Me.TableLayoutPanel8)
-        Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(187, 0)
-        Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
-        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(429, 239)
-        Me.SuperTabControlPanel4.TabIndex = 0
-        Me.SuperTabControlPanel4.TabItem = Me.SuperTabItem6
-        '
-        'Chk_EnvDocSinRecep_OCC
-        '
-        Me.Chk_EnvDocSinRecep_OCC.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_EnvDocSinRecep_OCC.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_EnvDocSinRecep_OCC.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_OCC.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_EnvDocSinRecep_OCC.ForeColor = System.Drawing.Color.Black
-        Me.Chk_EnvDocSinRecep_OCC.Location = New System.Drawing.Point(104, 156)
-        Me.Chk_EnvDocSinRecep_OCC.Name = "Chk_EnvDocSinRecep_OCC"
-        Me.Chk_EnvDocSinRecep_OCC.Size = New System.Drawing.Size(43, 22)
-        Me.Chk_EnvDocSinRecep_OCC.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_EnvDocSinRecep_OCC.TabIndex = 141
-        Me.Chk_EnvDocSinRecep_OCC.Text = "OCC"
-        '
-        'Input_EnvDocSinRecep_DiasOCC
-        '
-        Me.Input_EnvDocSinRecep_DiasOCC.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Input_EnvDocSinRecep_DiasOCC.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Input_EnvDocSinRecep_DiasOCC.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Input_EnvDocSinRecep_DiasOCC.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.Input_EnvDocSinRecep_DiasOCC.ForeColor = System.Drawing.Color.Black
-        Me.Input_EnvDocSinRecep_DiasOCC.Location = New System.Drawing.Point(153, 156)
-        Me.Input_EnvDocSinRecep_DiasOCC.MaxValue = 30
-        Me.Input_EnvDocSinRecep_DiasOCC.MinValue = 1
-        Me.Input_EnvDocSinRecep_DiasOCC.Name = "Input_EnvDocSinRecep_DiasOCC"
-        Me.Input_EnvDocSinRecep_DiasOCC.ShowUpDown = True
-        Me.Input_EnvDocSinRecep_DiasOCC.Size = New System.Drawing.Size(36, 22)
-        Me.Input_EnvDocSinRecep_DiasOCC.TabIndex = 140
-        Me.Input_EnvDocSinRecep_DiasOCC.Value = 1
-        '
-        'LabelX21
-        '
-        Me.LabelX21.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX21.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX21.ForeColor = System.Drawing.Color.Black
-        Me.LabelX21.Location = New System.Drawing.Point(6, 67)
-        Me.LabelX21.Name = "LabelX21"
-        Me.LabelX21.Size = New System.Drawing.Size(79, 21)
-        Me.LabelX21.TabIndex = 130
-        Me.LabelX21.Text = "Hora ejecución"
-        '
-        'Chk_EnvDocSinRecep
-        '
-        Me.Chk_EnvDocSinRecep.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_EnvDocSinRecep.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_EnvDocSinRecep.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Chk_EnvDocSinRecep.ForeColor = System.Drawing.Color.Black
-        Me.Chk_EnvDocSinRecep.Location = New System.Drawing.Point(3, 7)
-        Me.Chk_EnvDocSinRecep.Name = "Chk_EnvDocSinRecep"
-        Me.Chk_EnvDocSinRecep.Size = New System.Drawing.Size(442, 25)
-        Me.Chk_EnvDocSinRecep.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_EnvDocSinRecep.TabIndex = 142
-        Me.Chk_EnvDocSinRecep.Text = "Enviar reporte de documentos sin recepción."
-        '
-        'Dtp_EnvDocSinRecep_Hora_Ejecucion
-        '
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.ButtonDropDown.Visible = True
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.ForeColor = System.Drawing.Color.Black
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.Format = DevComponents.Editors.eDateTimePickerFormat.ShortTime
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.IsPopupCalendarOpen = False
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.Location = New System.Drawing.Point(91, 66)
-        '
-        '
-        '
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
-        '
-        '
-        '
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.ClearButtonVisible = True
-        '
-        '
-        '
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.DisplayMonth = New Date(2018, 11, 1, 0, 0, 0, 0)
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.MarkedDates = New Date(-1) {}
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
-        '
-        '
-        '
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.TodayButtonVisible = True
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.Visible = False
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.Name = "Dtp_EnvDocSinRecep_Hora_Ejecucion"
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.Size = New System.Drawing.Size(54, 22)
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.TabIndex = 128
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.TabStop = False
-        Me.Dtp_EnvDocSinRecep_Hora_Ejecucion.Value = New Date(2018, 11, 5, 16, 26, 11, 0)
-        '
-        'Chk_EnvDocSinRecep_OCI
-        '
-        Me.Chk_EnvDocSinRecep_OCI.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_EnvDocSinRecep_OCI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_EnvDocSinRecep_OCI.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_OCI.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_EnvDocSinRecep_OCI.ForeColor = System.Drawing.Color.Black
-        Me.Chk_EnvDocSinRecep_OCI.Location = New System.Drawing.Point(6, 156)
-        Me.Chk_EnvDocSinRecep_OCI.Name = "Chk_EnvDocSinRecep_OCI"
-        Me.Chk_EnvDocSinRecep_OCI.Size = New System.Drawing.Size(43, 22)
-        Me.Chk_EnvDocSinRecep_OCI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_EnvDocSinRecep_OCI.TabIndex = 139
-        Me.Chk_EnvDocSinRecep_OCI.Text = "OCI"
-        '
-        'Input_EnvDocSinRecep_DiasOCI
-        '
-        Me.Input_EnvDocSinRecep_DiasOCI.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Input_EnvDocSinRecep_DiasOCI.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Input_EnvDocSinRecep_DiasOCI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Input_EnvDocSinRecep_DiasOCI.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.Input_EnvDocSinRecep_DiasOCI.ForeColor = System.Drawing.Color.Black
-        Me.Input_EnvDocSinRecep_DiasOCI.Location = New System.Drawing.Point(55, 156)
-        Me.Input_EnvDocSinRecep_DiasOCI.MaxValue = 30
-        Me.Input_EnvDocSinRecep_DiasOCI.MinValue = 1
-        Me.Input_EnvDocSinRecep_DiasOCI.Name = "Input_EnvDocSinRecep_DiasOCI"
-        Me.Input_EnvDocSinRecep_DiasOCI.ShowUpDown = True
-        Me.Input_EnvDocSinRecep_DiasOCI.Size = New System.Drawing.Size(36, 22)
-        Me.Input_EnvDocSinRecep_DiasOCI.TabIndex = 138
-        Me.Input_EnvDocSinRecep_DiasOCI.Value = 1
-        '
-        'Chk_EnvDocSinRecep_NVV
-        '
-        Me.Chk_EnvDocSinRecep_NVV.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_EnvDocSinRecep_NVV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_EnvDocSinRecep_NVV.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_NVV.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_EnvDocSinRecep_NVV.ForeColor = System.Drawing.Color.Black
-        Me.Chk_EnvDocSinRecep_NVV.Location = New System.Drawing.Point(202, 123)
-        Me.Chk_EnvDocSinRecep_NVV.Name = "Chk_EnvDocSinRecep_NVV"
-        Me.Chk_EnvDocSinRecep_NVV.Size = New System.Drawing.Size(43, 23)
-        Me.Chk_EnvDocSinRecep_NVV.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_EnvDocSinRecep_NVV.TabIndex = 137
-        Me.Chk_EnvDocSinRecep_NVV.Text = "NVV"
-        '
-        'Input_EnvDocSinRecep_DiasNVV
-        '
-        Me.Input_EnvDocSinRecep_DiasNVV.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Input_EnvDocSinRecep_DiasNVV.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Input_EnvDocSinRecep_DiasNVV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Input_EnvDocSinRecep_DiasNVV.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.Input_EnvDocSinRecep_DiasNVV.ForeColor = System.Drawing.Color.Black
-        Me.Input_EnvDocSinRecep_DiasNVV.Location = New System.Drawing.Point(251, 124)
-        Me.Input_EnvDocSinRecep_DiasNVV.MaxValue = 30
-        Me.Input_EnvDocSinRecep_DiasNVV.MinValue = 1
-        Me.Input_EnvDocSinRecep_DiasNVV.Name = "Input_EnvDocSinRecep_DiasNVV"
-        Me.Input_EnvDocSinRecep_DiasNVV.ShowUpDown = True
-        Me.Input_EnvDocSinRecep_DiasNVV.Size = New System.Drawing.Size(36, 22)
-        Me.Input_EnvDocSinRecep_DiasNVV.TabIndex = 136
-        Me.Input_EnvDocSinRecep_DiasNVV.Value = 1
-        '
-        'Chk_EnvDocSinRecep_NVI
-        '
-        Me.Chk_EnvDocSinRecep_NVI.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_EnvDocSinRecep_NVI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_EnvDocSinRecep_NVI.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_NVI.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_EnvDocSinRecep_NVI.ForeColor = System.Drawing.Color.Black
-        Me.Chk_EnvDocSinRecep_NVI.Location = New System.Drawing.Point(104, 123)
-        Me.Chk_EnvDocSinRecep_NVI.Name = "Chk_EnvDocSinRecep_NVI"
-        Me.Chk_EnvDocSinRecep_NVI.Size = New System.Drawing.Size(43, 23)
-        Me.Chk_EnvDocSinRecep_NVI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_EnvDocSinRecep_NVI.TabIndex = 135
-        Me.Chk_EnvDocSinRecep_NVI.Text = "NVI"
-        '
-        'Input_EnvDocSinRecep_DiasNVI
-        '
-        Me.Input_EnvDocSinRecep_DiasNVI.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Input_EnvDocSinRecep_DiasNVI.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Input_EnvDocSinRecep_DiasNVI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Input_EnvDocSinRecep_DiasNVI.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.Input_EnvDocSinRecep_DiasNVI.ForeColor = System.Drawing.Color.Black
-        Me.Input_EnvDocSinRecep_DiasNVI.Location = New System.Drawing.Point(153, 124)
-        Me.Input_EnvDocSinRecep_DiasNVI.MaxValue = 30
-        Me.Input_EnvDocSinRecep_DiasNVI.MinValue = 1
-        Me.Input_EnvDocSinRecep_DiasNVI.Name = "Input_EnvDocSinRecep_DiasNVI"
-        Me.Input_EnvDocSinRecep_DiasNVI.ShowUpDown = True
-        Me.Input_EnvDocSinRecep_DiasNVI.Size = New System.Drawing.Size(36, 22)
-        Me.Input_EnvDocSinRecep_DiasNVI.TabIndex = 134
-        Me.Input_EnvDocSinRecep_DiasNVI.Value = 1
-        '
-        'Chk_EnvDocSinRecep_COV
-        '
-        Me.Chk_EnvDocSinRecep_COV.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_EnvDocSinRecep_COV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_EnvDocSinRecep_COV.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_COV.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_EnvDocSinRecep_COV.ForeColor = System.Drawing.Color.Black
-        Me.Chk_EnvDocSinRecep_COV.Location = New System.Drawing.Point(6, 123)
-        Me.Chk_EnvDocSinRecep_COV.Name = "Chk_EnvDocSinRecep_COV"
-        Me.Chk_EnvDocSinRecep_COV.Size = New System.Drawing.Size(43, 23)
-        Me.Chk_EnvDocSinRecep_COV.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_EnvDocSinRecep_COV.TabIndex = 133
-        Me.Chk_EnvDocSinRecep_COV.Text = "COV"
-        '
-        'LabelX24
-        '
-        Me.LabelX24.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX24.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX24.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX24.ForeColor = System.Drawing.Color.Black
-        Me.LabelX24.Location = New System.Drawing.Point(3, 94)
-        Me.LabelX24.Name = "LabelX24"
-        Me.LabelX24.Size = New System.Drawing.Size(284, 23)
-        Me.LabelX24.TabIndex = 132
-        Me.LabelX24.Text = "Días a restar a la fecha de envío de cada documento"
-        '
-        'Input_EnvDocSinRecep_DiasCOV
-        '
-        Me.Input_EnvDocSinRecep_DiasCOV.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Input_EnvDocSinRecep_DiasCOV.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Input_EnvDocSinRecep_DiasCOV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Input_EnvDocSinRecep_DiasCOV.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.Input_EnvDocSinRecep_DiasCOV.ForeColor = System.Drawing.Color.Black
-        Me.Input_EnvDocSinRecep_DiasCOV.Location = New System.Drawing.Point(55, 124)
-        Me.Input_EnvDocSinRecep_DiasCOV.MaxValue = 30
-        Me.Input_EnvDocSinRecep_DiasCOV.MinValue = 1
-        Me.Input_EnvDocSinRecep_DiasCOV.Name = "Input_EnvDocSinRecep_DiasCOV"
-        Me.Input_EnvDocSinRecep_DiasCOV.ShowUpDown = True
-        Me.Input_EnvDocSinRecep_DiasCOV.Size = New System.Drawing.Size(36, 22)
-        Me.Input_EnvDocSinRecep_DiasCOV.TabIndex = 131
-        Me.Input_EnvDocSinRecep_DiasCOV.Value = 1
-        '
-        'TableLayoutPanel8
-        '
-        Me.TableLayoutPanel8.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel8.ColumnCount = 8
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.04762!))
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.64356!))
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.88119!))
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.88119!))
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.64356!))
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.13861!))
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.63366!))
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.11881!))
-        Me.TableLayoutPanel8.Controls.Add(Me.LabelX25, 0, 0)
-        Me.TableLayoutPanel8.Controls.Add(Me.Chk_EnvDocSinRecep_EjecDomingo, 7, 0)
-        Me.TableLayoutPanel8.Controls.Add(Me.Chk_EnvDocSinRecep_EjecLunes, 1, 0)
-        Me.TableLayoutPanel8.Controls.Add(Me.Chk_EnvDocSinRecep_EjecMartes, 2, 0)
-        Me.TableLayoutPanel8.Controls.Add(Me.Chk_EnvDocSinRecep_EjecMiercoles, 3, 0)
-        Me.TableLayoutPanel8.Controls.Add(Me.Chk_EnvDocSinRecep_EjecSabado, 6, 0)
-        Me.TableLayoutPanel8.Controls.Add(Me.Chk_EnvDocSinRecep_EjecJueves, 4, 0)
-        Me.TableLayoutPanel8.Controls.Add(Me.Chk_EnvDocSinRecep_EjecViernes, 5, 0)
-        Me.TableLayoutPanel8.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel8.Location = New System.Drawing.Point(3, 32)
-        Me.TableLayoutPanel8.Name = "TableLayoutPanel8"
-        Me.TableLayoutPanel8.RowCount = 1
-        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel8.Size = New System.Drawing.Size(416, 29)
-        Me.TableLayoutPanel8.TabIndex = 129
-        '
-        'LabelX25
-        '
-        Me.LabelX25.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX25.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX25.ForeColor = System.Drawing.Color.Black
-        Me.LabelX25.Location = New System.Drawing.Point(3, 3)
-        Me.LabelX25.Name = "LabelX25"
-        Me.LabelX25.Size = New System.Drawing.Size(73, 23)
-        Me.LabelX25.TabIndex = 34
-        Me.LabelX25.Text = "Días de envío"
-        '
-        'Chk_EnvDocSinRecep_EjecDomingo
-        '
-        Me.Chk_EnvDocSinRecep_EjecDomingo.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_EnvDocSinRecep_EjecDomingo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_EnvDocSinRecep_EjecDomingo.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_EjecDomingo.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_EnvDocSinRecep_EjecDomingo.ForeColor = System.Drawing.Color.Black
-        Me.Chk_EnvDocSinRecep_EjecDomingo.Location = New System.Drawing.Point(362, 3)
-        Me.Chk_EnvDocSinRecep_EjecDomingo.Name = "Chk_EnvDocSinRecep_EjecDomingo"
-        Me.Chk_EnvDocSinRecep_EjecDomingo.Size = New System.Drawing.Size(51, 23)
-        Me.Chk_EnvDocSinRecep_EjecDomingo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_EnvDocSinRecep_EjecDomingo.TabIndex = 32
-        Me.Chk_EnvDocSinRecep_EjecDomingo.Text = "Dom"
-        '
-        'Chk_EnvDocSinRecep_EjecLunes
-        '
-        Me.Chk_EnvDocSinRecep_EjecLunes.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_EnvDocSinRecep_EjecLunes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_EnvDocSinRecep_EjecLunes.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_EjecLunes.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_EnvDocSinRecep_EjecLunes.ForeColor = System.Drawing.Color.Black
-        Me.Chk_EnvDocSinRecep_EjecLunes.Location = New System.Drawing.Point(82, 3)
-        Me.Chk_EnvDocSinRecep_EjecLunes.Name = "Chk_EnvDocSinRecep_EjecLunes"
-        Me.Chk_EnvDocSinRecep_EjecLunes.Size = New System.Drawing.Size(38, 23)
-        Me.Chk_EnvDocSinRecep_EjecLunes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_EnvDocSinRecep_EjecLunes.TabIndex = 26
-        Me.Chk_EnvDocSinRecep_EjecLunes.Text = "Lun"
-        '
-        'Chk_EnvDocSinRecep_EjecMartes
-        '
-        Me.Chk_EnvDocSinRecep_EjecMartes.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_EnvDocSinRecep_EjecMartes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_EnvDocSinRecep_EjecMartes.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_EjecMartes.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_EnvDocSinRecep_EjecMartes.ForeColor = System.Drawing.Color.Black
-        Me.Chk_EnvDocSinRecep_EjecMartes.Location = New System.Drawing.Point(126, 3)
-        Me.Chk_EnvDocSinRecep_EjecMartes.Name = "Chk_EnvDocSinRecep_EjecMartes"
-        Me.Chk_EnvDocSinRecep_EjecMartes.Size = New System.Drawing.Size(43, 23)
-        Me.Chk_EnvDocSinRecep_EjecMartes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_EnvDocSinRecep_EjecMartes.TabIndex = 27
-        Me.Chk_EnvDocSinRecep_EjecMartes.Text = "Mar"
-        '
-        'Chk_EnvDocSinRecep_EjecMiercoles
-        '
-        Me.Chk_EnvDocSinRecep_EjecMiercoles.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_EnvDocSinRecep_EjecMiercoles.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_EnvDocSinRecep_EjecMiercoles.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_EjecMiercoles.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_EnvDocSinRecep_EjecMiercoles.ForeColor = System.Drawing.Color.Black
-        Me.Chk_EnvDocSinRecep_EjecMiercoles.Location = New System.Drawing.Point(175, 3)
-        Me.Chk_EnvDocSinRecep_EjecMiercoles.Name = "Chk_EnvDocSinRecep_EjecMiercoles"
-        Me.Chk_EnvDocSinRecep_EjecMiercoles.Size = New System.Drawing.Size(43, 23)
-        Me.Chk_EnvDocSinRecep_EjecMiercoles.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_EnvDocSinRecep_EjecMiercoles.TabIndex = 28
-        Me.Chk_EnvDocSinRecep_EjecMiercoles.Text = "Mie"
-        '
-        'Chk_EnvDocSinRecep_EjecSabado
-        '
-        Me.Chk_EnvDocSinRecep_EjecSabado.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_EnvDocSinRecep_EjecSabado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_EnvDocSinRecep_EjecSabado.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_EjecSabado.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_EnvDocSinRecep_EjecSabado.ForeColor = System.Drawing.Color.Black
-        Me.Chk_EnvDocSinRecep_EjecSabado.Location = New System.Drawing.Point(314, 3)
-        Me.Chk_EnvDocSinRecep_EjecSabado.Name = "Chk_EnvDocSinRecep_EjecSabado"
-        Me.Chk_EnvDocSinRecep_EjecSabado.Size = New System.Drawing.Size(42, 23)
-        Me.Chk_EnvDocSinRecep_EjecSabado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_EnvDocSinRecep_EjecSabado.TabIndex = 31
-        Me.Chk_EnvDocSinRecep_EjecSabado.Text = "Sab"
-        '
-        'Chk_EnvDocSinRecep_EjecJueves
-        '
-        Me.Chk_EnvDocSinRecep_EjecJueves.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_EnvDocSinRecep_EjecJueves.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_EnvDocSinRecep_EjecJueves.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_EjecJueves.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_EnvDocSinRecep_EjecJueves.ForeColor = System.Drawing.Color.Black
-        Me.Chk_EnvDocSinRecep_EjecJueves.Location = New System.Drawing.Point(224, 3)
-        Me.Chk_EnvDocSinRecep_EjecJueves.Name = "Chk_EnvDocSinRecep_EjecJueves"
-        Me.Chk_EnvDocSinRecep_EjecJueves.Size = New System.Drawing.Size(38, 23)
-        Me.Chk_EnvDocSinRecep_EjecJueves.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_EnvDocSinRecep_EjecJueves.TabIndex = 29
-        Me.Chk_EnvDocSinRecep_EjecJueves.Text = "Jue"
-        '
-        'Chk_EnvDocSinRecep_EjecViernes
-        '
-        Me.Chk_EnvDocSinRecep_EjecViernes.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_EnvDocSinRecep_EjecViernes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_EnvDocSinRecep_EjecViernes.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_EjecViernes.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_EnvDocSinRecep_EjecViernes.ForeColor = System.Drawing.Color.Black
-        Me.Chk_EnvDocSinRecep_EjecViernes.Location = New System.Drawing.Point(268, 3)
-        Me.Chk_EnvDocSinRecep_EjecViernes.Name = "Chk_EnvDocSinRecep_EjecViernes"
-        Me.Chk_EnvDocSinRecep_EjecViernes.Size = New System.Drawing.Size(39, 23)
-        Me.Chk_EnvDocSinRecep_EjecViernes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_EnvDocSinRecep_EjecViernes.TabIndex = 30
-        Me.Chk_EnvDocSinRecep_EjecViernes.Text = "Vie"
-        '
-        'Chk_EnvDocSinRecep_GTI
-        '
-        Me.Chk_EnvDocSinRecep_GTI.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_EnvDocSinRecep_GTI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_EnvDocSinRecep_GTI.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_GTI.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_EnvDocSinRecep_GTI.ForeColor = System.Drawing.Color.Black
-        Me.Chk_EnvDocSinRecep_GTI.Location = New System.Drawing.Point(202, 155)
-        Me.Chk_EnvDocSinRecep_GTI.Name = "Chk_EnvDocSinRecep_GTI"
-        Me.Chk_EnvDocSinRecep_GTI.Size = New System.Drawing.Size(43, 23)
-        Me.Chk_EnvDocSinRecep_GTI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_EnvDocSinRecep_GTI.TabIndex = 144
-        Me.Chk_EnvDocSinRecep_GTI.Text = "GTI"
-        '
-        'Input_EnvDocSinRecep_DiasGTI
-        '
-        Me.Input_EnvDocSinRecep_DiasGTI.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Input_EnvDocSinRecep_DiasGTI.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Input_EnvDocSinRecep_DiasGTI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Input_EnvDocSinRecep_DiasGTI.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.Input_EnvDocSinRecep_DiasGTI.ForeColor = System.Drawing.Color.Black
-        Me.Input_EnvDocSinRecep_DiasGTI.Location = New System.Drawing.Point(251, 156)
-        Me.Input_EnvDocSinRecep_DiasGTI.MaxValue = 30
-        Me.Input_EnvDocSinRecep_DiasGTI.MinValue = 1
-        Me.Input_EnvDocSinRecep_DiasGTI.Name = "Input_EnvDocSinRecep_DiasGTI"
-        Me.Input_EnvDocSinRecep_DiasGTI.ShowUpDown = True
-        Me.Input_EnvDocSinRecep_DiasGTI.Size = New System.Drawing.Size(36, 22)
-        Me.Input_EnvDocSinRecep_DiasGTI.TabIndex = 143
-        Me.Input_EnvDocSinRecep_DiasGTI.Value = 1
-        '
-        'Chk_EnvDocSinRecep_GDI
-        '
-        Me.Chk_EnvDocSinRecep_GDI.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_EnvDocSinRecep_GDI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_EnvDocSinRecep_GDI.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvDocSinRecep_GDI.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_EnvDocSinRecep_GDI.ForeColor = System.Drawing.Color.Black
-        Me.Chk_EnvDocSinRecep_GDI.Location = New System.Drawing.Point(307, 156)
-        Me.Chk_EnvDocSinRecep_GDI.Name = "Chk_EnvDocSinRecep_GDI"
-        Me.Chk_EnvDocSinRecep_GDI.Size = New System.Drawing.Size(43, 23)
-        Me.Chk_EnvDocSinRecep_GDI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_EnvDocSinRecep_GDI.TabIndex = 146
-        Me.Chk_EnvDocSinRecep_GDI.Text = "GDI"
-        '
-        'Input_EnvDocSinRecep_DiasGDI
-        '
-        Me.Input_EnvDocSinRecep_DiasGDI.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Input_EnvDocSinRecep_DiasGDI.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Input_EnvDocSinRecep_DiasGDI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Input_EnvDocSinRecep_DiasGDI.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.Input_EnvDocSinRecep_DiasGDI.ForeColor = System.Drawing.Color.Black
-        Me.Input_EnvDocSinRecep_DiasGDI.Location = New System.Drawing.Point(356, 157)
-        Me.Input_EnvDocSinRecep_DiasGDI.MaxValue = 30
-        Me.Input_EnvDocSinRecep_DiasGDI.MinValue = 1
-        Me.Input_EnvDocSinRecep_DiasGDI.Name = "Input_EnvDocSinRecep_DiasGDI"
-        Me.Input_EnvDocSinRecep_DiasGDI.ShowUpDown = True
-        Me.Input_EnvDocSinRecep_DiasGDI.Size = New System.Drawing.Size(36, 22)
-        Me.Input_EnvDocSinRecep_DiasGDI.TabIndex = 145
-        Me.Input_EnvDocSinRecep_DiasGDI.Value = 1
-        '
         'Frm_Demonio_01_Conf_Local
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -3800,10 +3879,17 @@ Partial Class Frm_Demonio_01_Conf_Local
         CType(Me.Dtp_Cons_Stock_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
+        Me.SuperTabControlPanel4.ResumeLayout(False)
+        CType(Me.Input_EnvDocSinRecep_DiasGDI, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Input_EnvDocSinRecep_DiasGTI, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Input_EnvDocSinRecep_DiasOCC, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Dtp_EnvDocSinRecep_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Input_EnvDocSinRecep_DiasOCI, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Input_EnvDocSinRecep_DiasNVV, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Input_EnvDocSinRecep_DiasNVI, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Input_EnvDocSinRecep_DiasCOV, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel8.ResumeLayout(False)
         Me.Panel_01.ResumeLayout(False)
-        Me.SuperTabControlPanel3.ResumeLayout(False)
-        Me.TableLayoutPanel9.ResumeLayout(False)
-        CType(Me.Dtp_AsisCompra_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel1.ResumeLayout(False)
         CType(Me.Input_DiasOCC, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Dtp_CierreDoc_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3812,22 +3898,15 @@ Partial Class Frm_Demonio_01_Conf_Local
         CType(Me.Input_DiasNVI, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Input_DiasCOV, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel5.ResumeLayout(False)
+        Me.SuperTabControlPanel3.ResumeLayout(False)
+        Me.TableLayoutPanel9.ResumeLayout(False)
+        CType(Me.Dtp_AsisCompra_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel_02.ResumeLayout(False)
         Me.TableLayoutPanel4.ResumeLayout(False)
         CType(Me.Dtp_Prestashop_Total_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel2.ResumeLayout(False)
         Me.TableLayoutPanel7.ResumeLayout(False)
         Me.TableLayoutPanel6.ResumeLayout(False)
-        Me.SuperTabControlPanel4.ResumeLayout(False)
-        CType(Me.Input_EnvDocSinRecep_DiasOCC, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Dtp_EnvDocSinRecep_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Input_EnvDocSinRecep_DiasOCI, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Input_EnvDocSinRecep_DiasNVV, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Input_EnvDocSinRecep_DiasNVI, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Input_EnvDocSinRecep_DiasCOV, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TableLayoutPanel8.ResumeLayout(False)
-        CType(Me.Input_EnvDocSinRecep_DiasGTI, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Input_EnvDocSinRecep_DiasGDI, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -4026,4 +4105,8 @@ Partial Class Frm_Demonio_01_Conf_Local
     Friend WithEvents Input_EnvDocSinRecep_DiasGDI As DevComponents.Editors.IntegerInput
     Friend WithEvents Chk_EnvDocSinRecep_GTI As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Input_EnvDocSinRecep_DiasGTI As DevComponents.Editors.IntegerInput
+    Friend WithEvents Txt_CtaCorreoEnvDocSinRecep As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX26 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_ParaEnvDocSinRecep As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX27 As DevComponents.DotNetBar.LabelX
 End Class

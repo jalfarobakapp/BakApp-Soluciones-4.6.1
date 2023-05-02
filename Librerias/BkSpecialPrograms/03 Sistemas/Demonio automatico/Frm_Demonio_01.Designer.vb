@@ -50,6 +50,12 @@ Partial Class Frm_Demonio_01
         Me.BtnCambFecha = New DevComponents.DotNetBar.ButtonX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Switch_EnvDocSinRecep = New DevComponents.DotNetBar.Controls.SwitchButton()
+        Me.CircularEnvDocSinRecep = New DevComponents.DotNetBar.Controls.CircularProgress()
+        Me.Lbl_Hora_EnvDocSinRecep = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_DocPendientes = New DevComponents.DotNetBar.LabelX()
+        Me.PictureBox9 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox8 = New System.Windows.Forms.PictureBox()
         Me.Lbl_Hora_AsisCompra = New DevComponents.DotNetBar.LabelX()
         Me.Switch_AsisCompras = New DevComponents.DotNetBar.Controls.SwitchButton()
         Me.CircularAsisCompra = New DevComponents.DotNetBar.Controls.CircularProgress()
@@ -136,12 +142,6 @@ Partial Class Frm_Demonio_01
         Me.Btn_Archivar_Documentos = New DevComponents.DotNetBar.ButtonX()
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
-        Me.PictureBox8 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox9 = New System.Windows.Forms.PictureBox()
-        Me.Lbl_DocPendientes = New DevComponents.DotNetBar.LabelX()
-        Me.Lbl_Hora_EnvDocSinRecep = New DevComponents.DotNetBar.LabelX()
-        Me.CircularEnvDocSinRecep = New DevComponents.DotNetBar.Controls.CircularProgress()
-        Me.Switch_EnvDocSinRecep = New DevComponents.DotNetBar.Controls.SwitchButton()
         CType(Me.PicBox_Sol_Prod_Bodega, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PicBox_Cola_Impresion, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PicBox_Correo, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -149,6 +149,8 @@ Partial Class Frm_Demonio_01
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
+        CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -161,8 +163,6 @@ Partial Class Frm_Demonio_01
         CType(Me.PicBox_LibroDTESII, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PicBox_Imprimir_Picking, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PicBox_Consolidacion_Stock, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PicBox_Sol_Prod_Bodega
@@ -653,6 +653,89 @@ Partial Class Frm_Demonio_01
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(606, 414)
         Me.TableLayoutPanel1.TabIndex = 55
+        '
+        'Switch_EnvDocSinRecep
+        '
+        Me.Switch_EnvDocSinRecep.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        '
+        '
+        '
+        Me.Switch_EnvDocSinRecep.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Switch_EnvDocSinRecep.Enabled = False
+        Me.Switch_EnvDocSinRecep.ForeColor = System.Drawing.Color.Black
+        Me.Switch_EnvDocSinRecep.Location = New System.Drawing.Point(520, 394)
+        Me.Switch_EnvDocSinRecep.Name = "Switch_EnvDocSinRecep"
+        Me.Switch_EnvDocSinRecep.Size = New System.Drawing.Size(66, 17)
+        Me.Switch_EnvDocSinRecep.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Switch_EnvDocSinRecep.TabIndex = 61
+        '
+        'CircularEnvDocSinRecep
+        '
+        Me.CircularEnvDocSinRecep.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.CircularEnvDocSinRecep.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.CircularEnvDocSinRecep.FocusCuesEnabled = False
+        Me.CircularEnvDocSinRecep.Location = New System.Drawing.Point(482, 394)
+        Me.CircularEnvDocSinRecep.Name = "CircularEnvDocSinRecep"
+        Me.CircularEnvDocSinRecep.ProgressColor = System.Drawing.Color.Green
+        Me.CircularEnvDocSinRecep.Size = New System.Drawing.Size(30, 17)
+        Me.CircularEnvDocSinRecep.Style = DevComponents.DotNetBar.eDotNetBarStyle.OfficeXP
+        Me.CircularEnvDocSinRecep.TabIndex = 68
+        '
+        'Lbl_Hora_EnvDocSinRecep
+        '
+        Me.Lbl_Hora_EnvDocSinRecep.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_Hora_EnvDocSinRecep.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Hora_EnvDocSinRecep.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Hora_EnvDocSinRecep.Location = New System.Drawing.Point(404, 394)
+        Me.Lbl_Hora_EnvDocSinRecep.Name = "Lbl_Hora_EnvDocSinRecep"
+        Me.Lbl_Hora_EnvDocSinRecep.Size = New System.Drawing.Size(72, 17)
+        Me.Lbl_Hora_EnvDocSinRecep.TabIndex = 65
+        Me.Lbl_Hora_EnvDocSinRecep.Text = "20:00"
+        Me.Lbl_Hora_EnvDocSinRecep.TextAlignment = System.Drawing.StringAlignment.Far
+        '
+        'Lbl_DocPendientes
+        '
+        Me.Lbl_DocPendientes.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_DocPendientes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_DocPendientes.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_DocPendientes.Location = New System.Drawing.Point(29, 394)
+        Me.Lbl_DocPendientes.Name = "Lbl_DocPendientes"
+        Me.Lbl_DocPendientes.Size = New System.Drawing.Size(369, 17)
+        Me.Lbl_DocPendientes.TabIndex = 74
+        Me.Lbl_DocPendientes.Text = "Asistente de compras"
+        '
+        'PictureBox9
+        '
+        Me.PictureBox9.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox9.ForeColor = System.Drawing.Color.Black
+        Me.PictureBox9.Image = CType(resources.GetObject("PictureBox9.Image"), System.Drawing.Image)
+        Me.PictureBox9.Location = New System.Drawing.Point(3, 394)
+        Me.PictureBox9.Name = "PictureBox9"
+        Me.PictureBox9.Size = New System.Drawing.Size(20, 17)
+        Me.PictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox9.TabIndex = 72
+        Me.PictureBox9.TabStop = False
+        '
+        'PictureBox8
+        '
+        Me.PictureBox8.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox8.ForeColor = System.Drawing.Color.Black
+        Me.PictureBox8.Image = CType(resources.GetObject("PictureBox8.Image"), System.Drawing.Image)
+        Me.PictureBox8.Location = New System.Drawing.Point(3, 371)
+        Me.PictureBox8.Name = "PictureBox8"
+        Me.PictureBox8.Size = New System.Drawing.Size(20, 17)
+        Me.PictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox8.TabIndex = 72
+        Me.PictureBox8.TabStop = False
         '
         'Lbl_Hora_AsisCompra
         '
@@ -1839,89 +1922,6 @@ Partial Class Frm_Demonio_01
         Me.Lbl_Estatus.Name = "Lbl_Estatus"
         Me.Lbl_Estatus.Text = "LabelItem2"
         '
-        'PictureBox8
-        '
-        Me.PictureBox8.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox8.ForeColor = System.Drawing.Color.Black
-        Me.PictureBox8.Image = CType(resources.GetObject("PictureBox8.Image"), System.Drawing.Image)
-        Me.PictureBox8.Location = New System.Drawing.Point(3, 371)
-        Me.PictureBox8.Name = "PictureBox8"
-        Me.PictureBox8.Size = New System.Drawing.Size(20, 17)
-        Me.PictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox8.TabIndex = 72
-        Me.PictureBox8.TabStop = False
-        '
-        'PictureBox9
-        '
-        Me.PictureBox9.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox9.ForeColor = System.Drawing.Color.Black
-        Me.PictureBox9.Image = CType(resources.GetObject("PictureBox9.Image"), System.Drawing.Image)
-        Me.PictureBox9.Location = New System.Drawing.Point(3, 394)
-        Me.PictureBox9.Name = "PictureBox9"
-        Me.PictureBox9.Size = New System.Drawing.Size(20, 17)
-        Me.PictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox9.TabIndex = 72
-        Me.PictureBox9.TabStop = False
-        '
-        'Lbl_DocPendientes
-        '
-        Me.Lbl_DocPendientes.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Lbl_DocPendientes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Lbl_DocPendientes.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_DocPendientes.Location = New System.Drawing.Point(29, 394)
-        Me.Lbl_DocPendientes.Name = "Lbl_DocPendientes"
-        Me.Lbl_DocPendientes.Size = New System.Drawing.Size(369, 17)
-        Me.Lbl_DocPendientes.TabIndex = 74
-        Me.Lbl_DocPendientes.Text = "Asistente de compras"
-        '
-        'Lbl_Hora_EnvDocSinRecep
-        '
-        Me.Lbl_Hora_EnvDocSinRecep.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Lbl_Hora_EnvDocSinRecep.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Lbl_Hora_EnvDocSinRecep.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Hora_EnvDocSinRecep.Location = New System.Drawing.Point(404, 394)
-        Me.Lbl_Hora_EnvDocSinRecep.Name = "Lbl_Hora_EnvDocSinRecep"
-        Me.Lbl_Hora_EnvDocSinRecep.Size = New System.Drawing.Size(72, 17)
-        Me.Lbl_Hora_EnvDocSinRecep.TabIndex = 65
-        Me.Lbl_Hora_EnvDocSinRecep.Text = "20:00"
-        Me.Lbl_Hora_EnvDocSinRecep.TextAlignment = System.Drawing.StringAlignment.Far
-        '
-        'CircularEnvDocSinRecep
-        '
-        Me.CircularEnvDocSinRecep.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.CircularEnvDocSinRecep.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.CircularEnvDocSinRecep.FocusCuesEnabled = False
-        Me.CircularEnvDocSinRecep.Location = New System.Drawing.Point(482, 394)
-        Me.CircularEnvDocSinRecep.Name = "CircularEnvDocSinRecep"
-        Me.CircularEnvDocSinRecep.ProgressColor = System.Drawing.Color.Green
-        Me.CircularEnvDocSinRecep.Size = New System.Drawing.Size(30, 17)
-        Me.CircularEnvDocSinRecep.Style = DevComponents.DotNetBar.eDotNetBarStyle.OfficeXP
-        Me.CircularEnvDocSinRecep.TabIndex = 68
-        '
-        'Switch_EnvDocSinRecep
-        '
-        Me.Switch_EnvDocSinRecep.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        '
-        '
-        '
-        Me.Switch_EnvDocSinRecep.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Switch_EnvDocSinRecep.Enabled = False
-        Me.Switch_EnvDocSinRecep.ForeColor = System.Drawing.Color.Black
-        Me.Switch_EnvDocSinRecep.Location = New System.Drawing.Point(520, 394)
-        Me.Switch_EnvDocSinRecep.Name = "Switch_EnvDocSinRecep"
-        Me.Switch_EnvDocSinRecep.Size = New System.Drawing.Size(66, 17)
-        Me.Switch_EnvDocSinRecep.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Switch_EnvDocSinRecep.TabIndex = 61
-        '
         'Frm_Demonio_01
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1956,6 +1956,8 @@ Partial Class Frm_Demonio_01
         Me.GroupPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
+        CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1968,8 +1970,6 @@ Partial Class Frm_Demonio_01
         CType(Me.PicBox_LibroDTESII, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PicBox_Imprimir_Picking, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PicBox_Consolidacion_Stock, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

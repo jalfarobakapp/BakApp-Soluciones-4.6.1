@@ -579,8 +579,11 @@ Public Class Frm_ImpBarras_PorProducto
 
     Private Sub Txtcodigo_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Codigo.KeyDown
         If e.KeyValue = Keys.Enter Then
+            If String.IsNullOrEmpty(Txt_Codigo.Text) Then
+                Return
+            End If
             Call Txtcodigo_ButtonCustomClick(Nothing, Nothing)
-        End If
+            End If
     End Sub
 
     Private Sub Txt_Codigo_ButtonCustom2Click_1(sender As Object, e As EventArgs) Handles Txt_Codigo.ButtonCustom2Click

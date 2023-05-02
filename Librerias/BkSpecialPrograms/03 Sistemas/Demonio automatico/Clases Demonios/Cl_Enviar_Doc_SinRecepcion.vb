@@ -6,6 +6,8 @@ Public Class Cl_Enviar_Doc_SinRecepcion
 
 #Region "PROPIEDADES"
 
+    Public Property Id_Correo As Integer
+    Public Property Para As String
     Public Property Chk_EnvDocSinRecep_EjecLunes As Boolean
     Public Property Chk_EnvDocSinRecep_EjecMartes As Boolean
     Public Property Chk_EnvDocSinRecep_EjecMiercoles As Boolean
@@ -44,12 +46,15 @@ Public Class Cl_Enviar_Doc_SinRecepcion
     Sub Sb_Procesar_Informe(_FechaActual As DateTime)
 
         Dim _TblDetalle As DataTable = Fx_Tbl_Informe(_FechaActual)
+        Crear_Html = New Crear_Html
 
         If IsNothing(_TblDetalle) Then
+            Crear_Html.EsCorrecto = False
+            Crear_Html.RutaArchivo = String.Empty
+            Crear_Html.Cuerpo_Html = String.Empty
             Return
         End If
 
-        Crear_Html = New Crear_Html
         Crear_Html = Fx_CrearInformeHtmlDocumentosPendientes(_TblDetalle)
 
         'Crear_Html = _Crear_Html
@@ -147,11 +152,11 @@ Drop table #INFDet"
 
             Dim _Ruta_Archivo As String = AppPath() & "\Data\" & RutEmpresa & "\Tmp"
 
-            Consulta_Sql = My.Resources.Recursos_Inf_Compras_Vencimiento.Crear_Html_Facturas_Cobranza
-
-            Dim _Documento_Html As String = My.Resources.Recursos_Inf_Compras_Vencimiento.Crear_Html_Facturas_Cobranza
+            Dim _Documento_Html As String = My.Resources.Recursos_Demonio.Crear_Html_Documentos_Pendientes
             Dim _Detalle_Doc As String
             Dim _Suma_saldo As Double
+
+            Dim _Alter As Boolean
 
             For Each _Detalle As DataRow In _TblDetalle.Rows
 
@@ -161,22 +166,33 @@ Drop table #INFDet"
                 Dim _Notido As String = UCase(_Detalle.Item("TIDO"))
                 Dim _Nudo As String = _Detalle.Item("NUDO")
                 Dim _Feemdo As String = FormatDateTime(_Detalle.Item("FEEMDO"), DateFormat.ShortDate)
-                Dim _DiasDif As Long = _Detalle.Item("DiasDif")
+                Dim _DiasDif As Integer = _Detalle.Item("DiasDif")
 
                 Dim _Sudo As String = _Detalle.Item("SUDO")
                 Dim _Bosulido As String = _Detalle.Item("BOSULIDO")
                 Dim _Bodesti As String = _Detalle.Item("BODESTI")
+                Dim _Obdo As String = _Detalle.Item("OBDO")
+
+                Dim _BColor As String
+
+                If _Alter Then
+                    _BColor = " bgcolor=" & Chr(34) & "DCDCDC" & Chr(34) : _Alter = False
+                Else
+                    _BColor = " bgcolor=" & Chr(34) & "FFFFFF" & Chr(34) : _Alter = True
+                End If
 
                 _Detalle_Doc +=
-                    "<tr bgcolor=" & Chr(34) & "PaleGoldenrod" & Chr(34) & ">" & vbCrLf &
-                    "<td align=right class=" & Chr(34) & "style20" & Chr(34) &
+                    "<tr" & _BColor & ">" & vbCrLf &
+                    "<td align=left class=" & Chr(34) & "style20" & Chr(34) &
                     " align=" & Chr(34) & "center" & Chr(34) & ">" & _Tido & "</td>" & vbCrLf &
-                    "<td align=right class=" & Chr(34) & "style17" & Chr(34) & ">" & _Nudo & "</td>" & vbCrLf &
-                    "<td align=right class=" & Chr(34) & "style18" & Chr(34) & ">" & _Feemdo & "</td>" & vbCrLf &
-                    "<td align=right class=" & Chr(34) & "style19" & Chr(34) & ">" & _DiasDif & "</td>" & vbCrLf &
-                    "<td align=right class=" & Chr(34) & "style19" & Chr(34) & ">" & _Sudo & "</td>" & vbCrLf &
-                    "<td align=right class=" & Chr(34) & "style14" & Chr(34) & ">" & _Bosulido & "</td>" & vbCrLf &
-                    "<td align=right class=" & Chr(34) & "style22" & Chr(34) & ">" & _Bodesti & "</td></tr>" & vbCrLf
+                    "<td align=left class=" & Chr(34) & "style17" & Chr(34) & ">" & _Nudo & "</td>" & vbCrLf &
+                    "<td align=left class=" & Chr(34) & "style18" & Chr(34) & ">" & _Feemdo & "</td>" & vbCrLf &
+                    "<td align=right class=" & Chr(34) & "style19" & Chr(34) & ">" & FormatNumber(_DiasDif, 0) & "</td>" & vbCrLf &
+                    "<td align=left class=" & Chr(34) & "style19" & Chr(34) & ">" & _Sudo & "</td>" & vbCrLf &
+                    "<td align=left class=" & Chr(34) & "style14" & Chr(34) & ">" & _Bosulido & "</td>" & vbCrLf &
+                    "<td align=left class=" & Chr(34) & "style14" & Chr(34) & ">" & _Bodesti & "</td>" & vbCrLf &
+                    "<td align=left class=" & Chr(34) & "style23" & Chr(34) & ">" & _Obdo & "</td>" &
+                    "</tr>" & vbCrLf
 
             Next
 
@@ -255,7 +271,7 @@ Drop table #INFDet"
 
             _Cuerpo_Html = _Cuerpo_Html.Replace("'", "''")
 
-            _Mensaje = Replace(_Mensaje, "<HTML>", _Cuerpo_Html)
+            _Mensaje = Replace(_Mensaje, "<HTML_DOCPENDIENTES>", _Cuerpo_Html)
 
             If Not String.IsNullOrEmpty(_Nombre_Correo) Then
 

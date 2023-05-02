@@ -8231,7 +8231,7 @@ Drop Table #Paso"
                 If Auto_EnviarListadoOCCConMinimoCompraXCorreo Then
 
                     Dim _MontoMinCompra As Double = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "MontoMinCompra",
-                                                                      "CodEntidad = '" & _Fl.Endo & "' And CodSucEntidad = '" & _Fl.Suendo & "'")
+                                                                      "CodEntidad = '" & _Fl.Endo & "' And CodSucEntidad = '" & _Fl.Suendo & "'", True)
 
                     If CBool(_MontoMinCompra) Then
                         If _Fl.Vanedo < _MontoMinCompra Then
@@ -8711,6 +8711,10 @@ Drop Table #Paso"
             _Orden_Codigo = "Codigo"
         End If
 
+        Dim _Empresa = _Sql.Fx_Trae_Dato("CONFIEST", "EMPRESA", "MODALIDAD = '" & _Modalidad_Estudio & "'")
+        Dim _Sucursal = _Sql.Fx_Trae_Dato("CONFIEST", "ESUCURSAL", "MODALIDAD = '" & _Modalidad_Estudio & "'")
+        Dim _Bodega = _Sql.Fx_Trae_Dato("CONFIEST", "EBODEGA", "MODALIDAD = '" & _Modalidad_Estudio & "'")
+
         If Rd_Costo_Lista_Proveedor.Checked Then
 
             Dim _Lista As String = Cmb_Lista_Costos.SelectedItem.Value
@@ -8722,7 +8726,7 @@ Drop Table #Paso"
                             0 As CostoUd1,0 As CostoUd2,0 As Precio, Tb.Rtu,CantComprar As Cantidad,
                             0 As Desc1,0 As Desc2,0 As Desc3,0 As Desc4,0 As Desc5,0 As DescSuma,0 As PRCT,'' As TICT,TIPR,0 As PODTGLLI," & Ud & " as UDTRPR,
                             Isnull(Trc.RECARGO,0) As POTENCIA,'' As KOFUAULIDO,'' As KOOPLIDO,
-                            0 As IDMAEEDO,0 As IDMAEDDO,'" & ModEmpresa & "' As EMPRESA,'" & ModSucursal & "' As SULIDO,'" & ModBodega & "' As BOSULIDO,'' As ENDO,'' As SUENDO,GetDate() As FEEMLI,
+                            0 As IDMAEEDO,0 As IDMAEDDO,'" & _Empresa & "' As EMPRESA,'" & _Sucursal & "' As SULIDO,'" & _Bodega & "' As BOSULIDO,'' As ENDO,'' As SUENDO,GetDate() As FEEMLI,
                             '' As TIDO,'' As NUDO,'' As NULIDO,0 As CantUd1_Dori,0 As CantUd2_Dori,'' As OBSERVA,
                             0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,
 							0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta
@@ -8754,7 +8758,7 @@ Drop Table #Paso"
                             Costo_Ult_Compra as CostoUd1,Costo_Ult_Compra as CostoUd2,
                             Costo_Ult_Compra As Precio,Rtu,CantComprar As Cantidad,Dscto_Ult_Compra as Desc1,
                             0 as Desc2,0 as Desc3,0 as Desc4,0 as Desc5,0 As PRCT,'' As TICT,TIPR," & Ud & " as UDTRPR,0 as POTENCIA,'' As KOFUAULIDO,'' As KOOPLIDO,
-                            0 As IDMAEEDO,0 As IDMAEDDO,'" & ModEmpresa & "' As EMPRESA,'" & ModSucursal & "' As SULIDO,'" & ModBodega & "' As BOSULIDO,
+                            0 As IDMAEEDO,0 As IDMAEDDO,'" & _Empresa & "' As EMPRESA,'" & _Sucursal & "' As SULIDO,'" & _Bodega & "' As BOSULIDO,
                             '' As ENDO,'' As SUENDO,
                             GetDate() As FEEMLI,'' As TIDO,'' As NUDO,'' As NULIDO,0 As CantUd1_Dori,0 As CantUd2_Dori,'' As OBSERVA,
                             0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,
@@ -9293,7 +9297,7 @@ Drop Table #Paso"
 
                         Next
 
-                        MessageBoxEx.Show(Me, "No hay productos que pedir a otras bodegas", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        'MessageBoxEx.Show(Me, "No hay productos que pedir a otras bodegas", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                         Return
 

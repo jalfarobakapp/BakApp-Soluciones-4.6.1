@@ -7427,6 +7427,7 @@
     <Content Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Sql\SQLQuery SumTotalQty Venta X Periodo.sql" />
     <Content Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Sql\SQLQuery Ult 3 compras X producto.sql" />
     <None Include="03 Sistemas\Demonio automatico\Procedimientos\Recursos\Sql\SQLQuery Cierrer Docmuento.sql" />
+    <Content Include="03 Sistemas\Demonio automatico\Procedimientos\Recursos\Html\Crear Html Documentos Pendientes.htm" />
     <Content Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Recursos\Sql\SQLQuery Crear Tabla Paso InfStockProyecVnta.sql" />
     <Content Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Recursos\Sql\SQLQuery Actualiza datos InfStockProyecVnta.sql" />
     <Content Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Recursos\Sql\SQLQuery Informe de Stock segun proyeccion de venta con detalle.sql" />
