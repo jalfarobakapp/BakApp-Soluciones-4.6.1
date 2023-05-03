@@ -188,12 +188,12 @@ Drop table #INFDet"
                     "<td align=left class=" & Chr(34) & "style17" & Chr(34) & ">" & _Nudo & "</td>" & vbCrLf &
                     "<td align=left class=" & Chr(34) & "style18" & Chr(34) & ">" & _Feemdo & "</td>" & vbCrLf &
                     "<td align=right class=" & Chr(34) & "style19" & Chr(34) & ">" & FormatNumber(_DiasDif, 0) & "</td>" & vbCrLf &
-                    "<td align=left class=" & Chr(34) & "style19" & Chr(34) & ">" & _Sudo & "</td>" & vbCrLf &
+                    "<!--<td align=left class=" & Chr(34) & "style19" & Chr(34) & ">" & _Sudo & "</td>" & vbCrLf &
                     "<td align=left class=" & Chr(34) & "style14" & Chr(34) & ">" & _Bosulido & "</td>" & vbCrLf &
-                    "<td align=left class=" & Chr(34) & "style14" & Chr(34) & ">" & _Bodesti & "</td>" & vbCrLf &
+                    "<td align=left class=" & Chr(34) & "style14" & Chr(34) & ">" & _Bodesti & "</td>-->" & vbCrLf &
                     "<td align=left class=" & Chr(34) & "style23" & Chr(34) & ">" & _Obdo & "</td>" &
                     "</tr>" & vbCrLf
-
+                ' 
             Next
 
             Dim _Total_Deuda As String = FormatCurrency(_Suma_saldo, 0)

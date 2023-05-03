@@ -66,6 +66,8 @@ Public Class Frm_St_Documento
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
         Lbl_GRP.Text = String.Empty
 
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
 
     Private Sub Sb_Frm_St_Documento_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs)

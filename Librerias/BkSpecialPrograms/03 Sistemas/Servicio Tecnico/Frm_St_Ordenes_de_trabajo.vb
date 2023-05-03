@@ -582,6 +582,9 @@ Public Class Frm_St_Ordenes_de_trabajo
             .Text = _Leyenda
             .Value = _Valor
             .TextColor = Color.Black
+            If _Valor = 0 Then
+                If Global_Thema = Enum_Themas.Oscuro Then .TextColor = Color.White
+            End If
             .ProgressColors = New System.Drawing.Color() {_Color_Arriba, _Color_Abajo} '{Color.GreenYellow, Color.GreenYellow}
             .HotTracking = True
         End With

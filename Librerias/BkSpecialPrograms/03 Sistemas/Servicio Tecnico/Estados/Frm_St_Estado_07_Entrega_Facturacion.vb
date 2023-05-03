@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+ï»¿Imports DevComponents.DotNetBar
 'Imports Lib_Bakapp_VarClassFunc
 'Imports BkSpecialPrograms
 
@@ -40,12 +40,16 @@ Public Class Frm_St_Estado_07_Entrega_Facturacion
 
     Public Sub New(ByVal Accion As Accion)
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
         _Accion = Accion
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
+
+        Sb_Color_Botones_Barra(Bar2)
+        Txt_Nota.FocusHighlightEnabled = False
+        Cmb_Estado_Entrega.FocusHighlightEnabled = False
 
     End Sub
 
@@ -58,11 +62,11 @@ Public Class Frm_St_Estado_07_Entrega_Facturacion
         Sb_Actualizar_Grilla()
 
         If _Es_Garantia Then
-            Btn_Agregar_Factura.Tooltip = "Agregar Guía interna"
-            Grupo_Documentos.Text = "Guías internas asociadas"
+            Btn_Agregar_Factura.Tooltip = "Agregar GuÃ­a interna"
+            Grupo_Documentos.Text = "GuÃ­as internas asociadas"
         Else
             Btn_Agregar_Factura.Tooltip = "Agregar Factura"
-            Grupo_Documentos.Text = "Facturas/Guías asociadas"
+            Grupo_Documentos.Text = "Facturas/GuÃ­as asociadas"
         End If
 
         If _Accion = Accion.Nuevo Then
@@ -119,7 +123,7 @@ Public Class Frm_St_Estado_07_Entrega_Facturacion
                Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Estado_Entrega_ST,
                Frm_Tabla_Caracterizaciones_01_Listado.Accion.Mantencion_Tabla)
 
-            Fm.Text = "Mantención de Estados de entrega Serv. Técnico"
+            Fm.Text = "MantenciÃ³n de Estados de entrega Serv. TÃ©cnico"
             Fm.Pro_Cerrar_al_grabar = True
             Fm.ShowDialog(Me)
 
@@ -150,7 +154,7 @@ Public Class Frm_St_Estado_07_Entrega_Facturacion
             .Columns("Tido").ReadOnly = True
 
             .Columns("Nudo").Visible = True
-            .Columns("Nudo").HeaderText = "Número"
+            .Columns("Nudo").HeaderText = "NÃºmero"
             .Columns("Nudo").Width = 70
             .Columns("Nudo").ReadOnly = True
             .Columns("Nudo").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
@@ -371,7 +375,7 @@ Public Class Frm_St_Estado_07_Entrega_Facturacion
 
                 _Row_Encabezado.Item("Estado_Entrega") = Trim(Cmb_Estado_Entrega.Text)
 
-                MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado", _
+                MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado",
                                   MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                 _Fijar_Estado = True
@@ -386,9 +390,9 @@ Public Class Frm_St_Estado_07_Entrega_Facturacion
 
         If String.IsNullOrEmpty(Txt_Nota.Text) Then
             Beep()
-            ToastNotification.Show(Me, "FALTA INFORMACION DE LA ENTREGA", _
-                                   Imagenes_32x32.Images.Item("warning.png"), _
-                                   2 * 1000, eToastGlowColor.Red, _
+            ToastNotification.Show(Me, "FALTA INFORMACION DE LA ENTREGA",
+                                   Imagenes_32x32.Images.Item("warning.png"),
+                                   2 * 1000, eToastGlowColor.Red,
                                    eToastPosition.MiddleCenter)
             'Super_Tab.SelectedTabIndex = 1
             Txt_Nota.Focus()
@@ -399,9 +403,9 @@ Public Class Frm_St_Estado_07_Entrega_Facturacion
 
         If String.IsNullOrEmpty(_Estado) Then
             Beep()
-            ToastNotification.Show(Me, "FALTA ESTADO DE LA ENTREGA", _
-                                   Imagenes_32x32.Images.Item("warning.png"), _
-                                   2 * 1000, eToastGlowColor.Red, _
+            ToastNotification.Show(Me, "FALTA ESTADO DE LA ENTREGA",
+                                   Imagenes_32x32.Images.Item("warning.png"),
+                                   2 * 1000, eToastGlowColor.Red,
                                    eToastPosition.MiddleCenter)
             'Super_Tab.SelectedTabIndex = 1
             Cmb_Estado_Entrega.Focus()
@@ -410,9 +414,9 @@ Public Class Frm_St_Estado_07_Entrega_Facturacion
 
         If Not CBool(_TblFacturas.Rows.Count) Then
 
-            If MessageBoxEx.Show(Me, "No ingreso ninguna factura asociada a la reparación." & vbCrLf & _
-                                 "Desea agregar facturas asociadas al servicio", _
-                                             "Asociación de facturas", MessageBoxButtons.YesNoCancel, _
+            If MessageBoxEx.Show(Me, "No ingreso ninguna factura asociada a la reparaciÃ³n." & vbCrLf &
+                                 "Desea agregar facturas asociadas al servicio",
+                                             "AsociaciÃ³n de facturas", MessageBoxButtons.YesNoCancel,
                                              MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
                 Return False
@@ -430,10 +434,10 @@ Public Class Frm_St_Estado_07_Entrega_Facturacion
 
         Dim _Abandonado As Integer = CInt(Chk_Equipo_Abandonado_Por_El_Cliente.Checked) * -1
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set" & Space(1) & _
-                       "Fecha_Entrega = Getdate()," & vbCrLf & _
-                       "Chk_Equipo_Abandonado_Por_El_Cliente = " & _Abandonado & _
-                       ",Cod_Estado_Entrega = '" & Cmb_Estado_Entrega.SelectedValue & "'" & vbCrLf & _
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set" & Space(1) &
+                       "Fecha_Entrega = Getdate()," & vbCrLf &
+                       "Chk_Equipo_Abandonado_Por_El_Cliente = " & _Abandonado &
+                       ",Cod_Estado_Entrega = '" & Cmb_Estado_Entrega.SelectedValue & "'" & vbCrLf &
                        "Where Id_Ot  = " & _Id_Ot & vbCrLf & vbCrLf
 
 
@@ -441,19 +445,19 @@ Public Class Frm_St_Estado_07_Entrega_Facturacion
         If _Accion = Accion.Nuevo Then
             ' ACTUALIZAR ENCABEZADO DE DOCUMENTO
 
-            Consulta_sql += "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set " & _
-                           "CodEstado = 'E'" & vbCrLf & _
+            Consulta_sql += "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set " &
+                           "CodEstado = 'E'" & vbCrLf &
                            "Where Id_Ot  = " & _Id_Ot & vbCrLf & vbCrLf
 
 
             ' ACTUALIZAR ESTADO
 
-            Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_OT_Estados " & _
-                           "(Id_Ot,CodEstado,Fecha_Fijacion,CodFuncionario,NomFuncionario) Values " & _
+            Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_OT_Estados " &
+                           "(Id_Ot,CodEstado,Fecha_Fijacion,CodFuncionario,NomFuncionario) Values " &
                            "(" & _Id_Ot & ",'F',GetDate(),'" & FUNCIONARIO & "','" & Nombre_funcionario_activo & "')" & vbCrLf & vbCrLf
 
-            Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_OT_Estados " & _
-                          "(Id_Ot,CodEstado,Fecha_Fijacion,CodFuncionario,NomFuncionario) Values " & _
+            Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_OT_Estados " &
+                          "(Id_Ot,CodEstado,Fecha_Fijacion,CodFuncionario,NomFuncionario) Values " &
                           "(" & _Id_Ot & ",'E',GetDate(),'" & FUNCIONARIO & "','" & Nombre_funcionario_activo & "')" & vbCrLf & vbCrLf
 
 
@@ -478,9 +482,9 @@ Public Class Frm_St_Estado_07_Entrega_Facturacion
                 Dim _Estado = ""
                 Dim _Fecha_Doc = Format(_Fila.Item("Fecha_Doc"), "yyyyMMdd")
 
-                Consulta_sql += "Insert Into " & _Global_BaseBk & _
-                               "Zw_St_OT_Doc_Asociados (Id_Ot,Idmaeedo,Tido,Nudo,Estado,Fecha_Asociacion,Fecha_Doc) Values " & _
-                               "(" & _Id_Ot & "," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "','" & _Estado & _
+                Consulta_sql += "Insert Into " & _Global_BaseBk &
+                               "Zw_St_OT_Doc_Asociados (Id_Ot,Idmaeedo,Tido,Nudo,Estado,Fecha_Asociacion,Fecha_Doc) Values " &
+                               "(" & _Id_Ot & "," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "','" & _Estado &
                                "',GetDate(),'" & _Fecha_Doc & "')" & vbCrLf & vbCrLf
 
 
@@ -498,16 +502,16 @@ Public Class Frm_St_Estado_07_Entrega_Facturacion
             _Nota_Etapa_07 = Replace(_Nota_Etapa_07, Chr(_i), " ")
         Next
 
-        Consulta_sql += "Update " & _Global_BaseBk & "Zw_St_OT_Notas Set " & vbCrLf & _
-                       "Nota_Etapa_07 = '" & _Nota_Etapa_07 & "'" & vbCrLf & _
+        Consulta_sql += "Update " & _Global_BaseBk & "Zw_St_OT_Notas Set " & vbCrLf &
+                       "Nota_Etapa_07 = '" & _Nota_Etapa_07 & "'" & vbCrLf &
                        "Where Id_Ot = " & _Id_Ot & vbCrLf & vbCrLf
 
 
         '**********************************'**********************************
 
-       
 
-         Fx_Fijar_Estado = _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+        Fx_Fijar_Estado = _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
     End Function
 
@@ -518,11 +522,11 @@ Public Class Frm_St_Estado_07_Entrega_Facturacion
     Private Sub Btn_Editar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Editar.Click
 
         _Editando_documento = True
-        
+
         Beep()
-        ToastNotification.Show(Me, "AHORA ES POSIBLE ACTUALIZAR EL DOCUMENTO", _
-                               Btn_Editar.Image, _
-                               1 * 1000, eToastGlowColor.Green, _
+        ToastNotification.Show(Me, "AHORA ES POSIBLE ACTUALIZAR EL DOCUMENTO",
+                               Btn_Editar.Image,
+                               1 * 1000, eToastGlowColor.Green,
                                eToastPosition.MiddleCenter)
 
         Chk_Equipo_Abandonado_Por_El_Cliente.Enabled = True
@@ -550,7 +554,7 @@ Public Class Frm_St_Estado_07_Entrega_Facturacion
 
             If Fx_Fijar_Estado() Then
 
-                MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado", _
+                MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado",
                                   MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                 Me.Close()

@@ -69,6 +69,11 @@ Public Class Frm_SQL2Excel_Diseno
 
         Txt_Query_SQL.SelectionColor = _Color_Selection
 
+        'If Global_Thema = Enum_Themas.Oscuro Then
+        '    Txt_Query_SQL.BackColor = Color.White
+        '    Txt_Query_SQL.ForeColor = Color.Black
+        'End If
+
         AddHandler Txt_Query_SQL.KeyUp, AddressOf Sb_Txt_Query_SQL_KeyUp
         AddHandler Rdb_Consulta_Global.CheckedChanged, AddressOf Sb_Rdb_Consulta_Global_CheckedChanged
 

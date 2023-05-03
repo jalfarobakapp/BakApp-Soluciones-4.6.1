@@ -6765,6 +6765,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         _Sql_DReader.Close()
 
         Return data
+
     End Function
 
     Private Sub Btn_Reabastecer_Bodega_01_Click(sender As Object, e As EventArgs) Handles Btn_Reabastecer_Bodega_01.Click
