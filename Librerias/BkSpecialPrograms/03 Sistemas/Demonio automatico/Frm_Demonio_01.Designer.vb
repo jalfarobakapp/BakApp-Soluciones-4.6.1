@@ -711,7 +711,7 @@ Partial Class Frm_Demonio_01
         Me.Lbl_DocPendientes.Name = "Lbl_DocPendientes"
         Me.Lbl_DocPendientes.Size = New System.Drawing.Size(369, 17)
         Me.Lbl_DocPendientes.TabIndex = 74
-        Me.Lbl_DocPendientes.Text = "Asistente de compras"
+        Me.Lbl_DocPendientes.Text = "Docuemntos pendientes..."
         '
         'PictureBox9
         '
@@ -1939,7 +1939,6 @@ Partial Class Frm_Demonio_01
         Me.Controls.Add(Me.Metro_Bar_Color)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True

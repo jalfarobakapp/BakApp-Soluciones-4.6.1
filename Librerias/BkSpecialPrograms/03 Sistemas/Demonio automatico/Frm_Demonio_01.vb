@@ -2233,7 +2233,6 @@ Public Class Frm_Demonio_01
 
                     Sb_Pausar(_Pausa.Pausa)
 
-
                     Dim _Ejecutar = True
 
                     If _Dia = DayOfWeek.Monday Then If _Cl_Asistente_Compras.Ejecutado_Lunes Then _Ejecutar = False
