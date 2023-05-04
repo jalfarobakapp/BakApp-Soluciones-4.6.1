@@ -845,6 +845,9 @@
             _PrecioListaUd1 = Fx_Funcion_Ecuacion_Random(Nothing, _CodEntidad, _Ecuacion, _Codigo, 1, _RowPrecios, 0, 0, 0)
             _PrecioListaUd2 = Fx_Funcion_Ecuacion_Random(Nothing, _CodEntidad, _Ecuacionu2, _Codigo, 2, _RowPrecios, 0, 0, 0)
 
+            If _PrecioListaUd1 = 0 Then _PrecioListaUd1 = _RowPrecios.Item("PP01UD")
+            If _PrecioListaUd2 = 0 Then _PrecioListaUd1 = _RowPrecios.Item("PP02UD")
+
         End If
 
         If _ImprimirDesdePrecioFuturo Then
