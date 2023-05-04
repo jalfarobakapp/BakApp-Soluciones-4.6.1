@@ -395,9 +395,7 @@ Public Class Clase_Crear_Documento
 
             End If
 
-
             myTrans = cn2.BeginTransaction()
-
 
             Consulta_sql = "INSERT INTO MAEEDO ( EMPRESA,TIDO,NUDO,ENDO,SUENDO )" & vbCrLf &
                            "VALUES ( '" & _Empresa & "','" & _Tido & "','" & _Nudo &
@@ -1801,6 +1799,33 @@ Public Class Clase_Crear_Documento
 
             End If
 
+            If _Tido = "BLV" Or _Tido = "FCV" Or _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "NCV" Then
+
+                Consulta_sql = "Select * From MAEEDO Where TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
+                Comando = New SqlCommand(Consulta_sql, cn2)
+                Comando.Transaction = myTrans
+                dfd1 = Comando.ExecuteReader()
+
+                Dim _IdmaeedoExiste As Integer
+                Dim _ExisteOtraNumeracion As Boolean
+
+                While dfd1.Read()
+
+                    _IdmaeedoExiste = dfd1("IDMAEEDO")
+                    If _Idmaeedo <> _IdmaeedoExiste Then
+                        _ExisteOtraNumeracion = True
+                    End If
+
+                End While
+                dfd1.Close()
+
+                If _ExisteOtraNumeracion Then
+                    Throw New System.Exception("Ya existe un documento con la misma numeración (" & _Tido & "-" & _Nudo & ")" & vbCrLf &
+                                           "Favor intentar nuevamente la grabación")
+                End If
+
+            End If
+
             If False Then
                 Throw New System.Exception("An exception has occurred.")
             End If
@@ -1809,7 +1834,6 @@ Public Class Clase_Crear_Documento
             SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
 
             Return _Idmaeedo
-
 
         Catch ex As Exception
 

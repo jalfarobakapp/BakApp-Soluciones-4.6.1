@@ -703,16 +703,48 @@ Public Class Frm_Crear_Entidad_Mt
 
             If _Crear_Entidad Then
 
+                If _Sql.Fx_Cuenta_Registros("MAEEN", "KOEN = '" & TxtxCodEntidad.Text & "'") > 1 Then TipoSuc = "S"
+
                 Consulta_sql = BkSpecialPrograms.RecursosEnt.Insertar_Entidad_MAEEN.ToString
                 Consulta_sql = Replace(Consulta_sql, "#KOEN#", TxtxCodEntidad.Text)
                 Consulta_sql = Replace(Consulta_sql, "#TIEN#", CmbxTipoEntidad.SelectedValue)
                 Consulta_sql = Replace(Consulta_sql, "#RTEN#", Trim(numero_(Rut(0), 8)))
-                Consulta_sql = Replace(Consulta_sql, "#SUEN#", TxtxSucursal.Text)
+                Consulta_sql = Replace(Consulta_sql, "#SUEN#", _Suen)
 
-                If _Sql.Fx_Cuenta_Registros("MAEEN", "KOEN = '" & TxtxCodEntidad.Text & "'") > 1 Then TipoSuc = "S"
                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                 Comando.Transaction = myTrans
                 Comando.ExecuteNonQuery()
+
+                Dim _Idmaeen
+
+                Comando = New SqlCommand("SELECT @@IDENTITY AS 'Identity'", cn2)
+                Comando.Transaction = myTrans
+                Dim dfd1 As SqlDataReader = Comando.ExecuteReader()
+                While dfd1.Read()
+                    _Idmaeen = dfd1("Identity")
+                End While
+                dfd1.Close()
+
+                Comando = New SqlCommand("SELECT * From MAEEN Where IDMAEEN = " & _Idmaeen, cn2)
+                Comando.Transaction = myTrans
+                dfd1 = Comando.ExecuteReader()
+                While dfd1.Read()
+                    If TxtxSucursal.Text <> dfd1("SUEN") Then
+                        _Suen = dfd1("SUEN")
+                        Exit While
+                    End If
+                End While
+                dfd1.Close()
+
+
+                Consulta_sql = "DELETE FROM MAEENCON WHERE KOEN=''-- tabla de contactos por empresa" & vbCrLf &
+                               "DELETE FROM MAEENPRO WHERE KOEN='" & _Koen & "' AND SUEN='" & _Suen & "' -- Tabla de proyectos por empresa" & vbCrLf &
+                               "INSERT INTO MAEENPRO (KOEN,SUEN,PROYECTO) VALUES ('" & _Koen & "','" & _Suen & "','') " & vbCrLf &
+                               "DELETE FROM MAEENCTA WHERE KOEN='" & _Koen & "' --  Tabla de cuentas corrientes asociadas a la entidad"
+                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
 
             End If
 
@@ -723,7 +755,7 @@ Public Class Frm_Crear_Entidad_Mt
             Consulta_sql = Replace(Consulta_sql, "#KOEN#", TxtxCodEntidad.Text)
             Consulta_sql = Replace(Consulta_sql, "#TIEN#", UCase(Trim(CmbxTipoEntidad.SelectedValue)))
             Consulta_sql = Replace(Consulta_sql, "#RTEN#", UCase(Trim(numero_(Rut(0), 8))))
-            Consulta_sql = Replace(Consulta_sql, "#SUEN#", TxtxSucursal.Text)
+            Consulta_sql = Replace(Consulta_sql, "#SUEN#", _Suen)
             Consulta_sql = Replace(Consulta_sql, "#TIPOSUC#", TipoSuc)
             Consulta_sql = Replace(Consulta_sql, "#NOKOEN#", UCase(Trim(TxtxRazonSocial.Text)))
             Consulta_sql = Replace(Consulta_sql, "#SIEN#", UCase(Trim(TxtxSigla.Text)))
@@ -1402,11 +1434,17 @@ Public Class Frm_Crear_Entidad_Mt
 
             Dim _Row_Localidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-            Dim _NPais = _Row_Localidad.Item("NOKOPA")
-            Dim _NCiudad = _Row_Localidad.Item("NOKOCI")
-            Dim _NComuna = _Row_Localidad.Item("NOKOCM")
+            Dim _NPais As String
+            Dim _NCiudad As String
+            Dim _NComuna As String
 
-            Txt_Comuna.Text = _NComuna.Trim & ", " & _NCiudad.Trim & " - " & _NPais
+            If Not IsNothing(_Row_Localidad) Then
+                _NPais = _Row_Localidad.Item("NOKOPA").ToString.Trim
+                _NCiudad = _Row_Localidad.Item("NOKOCI").ToString.Trim
+                _NComuna = _Row_Localidad.Item("NOKOCM").ToString.Trim
+            End If
+
+            Txt_Comuna.Text = _NComuna & ", " & _NCiudad & " - " & _NPais
 
             Btn_Buscar_Comuna.Text = "Cambiar comuna..."
 
