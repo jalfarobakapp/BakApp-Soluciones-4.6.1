@@ -93,7 +93,11 @@ Public Module Clas_Demonio
             Modalidad = _Global_Row_EstacionBk.Item("Modalidad_X_Defecto")
             ModEmpresa = _Global_Row_EstacionBk.Item("Empresa_X_Defecto")
 
-            If String.IsNullOrEmpty(Trim(FUNCIONARIO)) Then
+            If String.IsNullOrWhiteSpace(ModEmpresa) Then
+                FUNCIONARIO = String.Empty
+            End If
+
+            If String.IsNullOrWhiteSpace(FUNCIONARIO.Trim) Then
 
                 FUNCIONARIO = String.Empty
 
@@ -105,7 +109,7 @@ Public Module Clas_Demonio
                 Fml.ShowDialog()
                 Fml.Dispose()
 
-                If Not String.IsNullOrEmpty(Trim(FUNCIONARIO)) Then
+                If Not String.IsNullOrWhiteSpace(FUNCIONARIO.Trim) Then
 
                     Dim Frm_Modalidad As New Frm_Modalidades(False)
                     Frm_Modalidad.ShowDialog()

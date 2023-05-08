@@ -693,7 +693,7 @@ Public Class Frm_Demonio_01
                 _Nombre_documento = _Tipo & "-" & _Numero
                 _Imprimir_Barras = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Picking_Doc", "Imprimir_Barras", "TipoDoc = '" & _Tipo & "'")
 
-        Else
+            Else
 
                 Consulta_sql = "SELECT Id,CodSolicitud,Estado,Funcionario," & vbCrLf &
                                "(Select top 1 NOKOFU From TABFU Where KOFU = Funcionario) As 'Vendedor'," & vbCrLf &
@@ -1846,6 +1846,8 @@ Public Class Frm_Demonio_01
 
             If _Minutos_Wordpress_Prod = 0 And _Segundos_Wordpress_Prod = 0 Then
 
+                _Cl_Wordpress = New Cl_Wordpress
+
                 If Not IsNothing(_Cl_Wordpress.Row_Wordpress_Keys) Then
 
                     Sb_Pausar(_Pausa.Pausa)
@@ -2043,15 +2045,6 @@ Public Class Frm_Demonio_01
         End If
 
         Lbl_Segundos_Poswii.Text = _Segundos_Poswii
-
-        Application.DoEvents()
-
-        _Segundos_Minimiza_Automatico -= 1
-
-        If _Segundos_Minimiza_Automatico < 0 Then
-            _Segundos_Minimiza_Automatico = 60 * 5
-            Me.WindowState = FormWindowState.Minimized
-        End If
 
 #End Region
 
@@ -2276,6 +2269,18 @@ Public Class Frm_Demonio_01
 
 #End Region
 
+#Region "MINIMIZAR"
+
+        Application.DoEvents()
+
+        _Segundos_Minimiza_Automatico -= 1
+
+        If _Segundos_Minimiza_Automatico < 0 Then
+            _Segundos_Minimiza_Automatico = 60 * 5
+            Me.WindowState = FormWindowState.Minimized
+        End If
+
+#End Region
 
     End Sub
 
