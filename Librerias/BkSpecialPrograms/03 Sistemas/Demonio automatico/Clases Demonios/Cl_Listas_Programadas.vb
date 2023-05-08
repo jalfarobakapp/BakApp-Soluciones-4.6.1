@@ -16,7 +16,7 @@
         Dim _Str_FechaProgramacion = Format(_FechaProgramacion, "yyyyMMdd")
 
         Consulta_sql = "Select Id,Codigo,NombreProgramacion,FechaCreacion,FechaProgramada,Aplicado,Funcionario," &
-                       "Activo,Id_Padre,Editada,Eliminada, FuncionarioElimina, FechaEliminacion,ValDigitado" & vbCrLf &
+                       "Activo,Id_Padre,Editada,Eliminada,FuncionarioElimina,FechaEliminacion,ValDigitado" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_ListaLC_Programadas" & vbCrLf &
                        "Where FechaProgramada = '" & _Str_FechaProgramacion & "' And Activo = 1 And Aplicado = 0 And Eliminada = 0 "
 
