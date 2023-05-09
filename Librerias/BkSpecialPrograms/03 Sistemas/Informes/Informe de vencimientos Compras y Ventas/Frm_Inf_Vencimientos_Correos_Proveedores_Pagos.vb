@@ -293,6 +293,9 @@ Public Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
                         Dim _Puerto = _TblCorreo.Rows(0).Item("Puerto")
                         Dim _Contrasena = _TblCorreo.Rows(0).Item("Contrasena")
 
+                        _CuerpoMensaje = Replace(_CuerpoMensaje, "&lt;", "<")
+                        _CuerpoMensaje = Replace(_CuerpoMensaje, "&gt;", ">")
+
                         _Asunto = _TblCorreo.Rows(0).Item("Asunto") & " (" & Trim(_Razon_Social) & ")"
                         _CuerpoMensaje = Replace(_CuerpoMensaje, "<HTML>", _Cuerpo_Html)
 
@@ -449,10 +452,10 @@ Public Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
                      "<tr bgcolor=" & Chr(34) & "PaleGoldenrod" & Chr(34) & ">" & vbCrLf &
                      "<td align=right class=" & Chr(34) & "style20" & Chr(34) &
                      " align=" & Chr(34) & "center" & Chr(34) & ">" & _Tido & "</td>" & vbCrLf &
-                     "<td align=right class=" & Chr(34) & "style17" & Chr(34) & ">" & _Nudo & "</td>" & vbCrLf &
-                     "<td align=right class=" & Chr(34) & "style17" & Chr(34) & ">" & _Libro & "</td>" & vbCrLf &
-                     "<td align=right class=" & Chr(34) & "style18" & Chr(34) & ">" & _Feemdo & "</td>" & vbCrLf &
-                     "<td align=right class=" & Chr(34) & "style21" & Chr(34) & ">" & _Feve & "</td>" & vbCrLf &
+                     "<td align=center class=" & Chr(34) & "style17" & Chr(34) & ">" & _Nudo & "</td>" & vbCrLf &
+                     "<!--<td align=right class=" & Chr(34) & "style17" & Chr(34) & ">" & _Libro & "</td>-->" & vbCrLf &
+                     "<td align=center class=" & Chr(34) & "style18" & Chr(34) & ">" & _Feemdo & "</td>" & vbCrLf &
+                     "<!--<td align=right class=" & Chr(34) & "style21" & Chr(34) & ">" & _Feve & "</td>-->" & vbCrLf &
                      "<td align=right class=" & Chr(34) & "style14" & Chr(34) & ">" & _Vaabve & "</td>" & vbCrLf
 
                     _Suma_saldo += _Detalle.Item("SALDO")

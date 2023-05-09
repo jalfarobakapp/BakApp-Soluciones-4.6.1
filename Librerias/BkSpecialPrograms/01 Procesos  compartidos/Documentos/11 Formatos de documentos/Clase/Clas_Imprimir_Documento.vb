@@ -1899,14 +1899,23 @@ Public Class Clas_Imprimir_Documento
                                                                        _Fte_Usar,
                                                                        _DrawBrush, True, True)
 
-            Case "Imprimir Detalle Picking 01"
+            Case "Imprimir Detalle Picking 01" ' - CON STOCK FISICO"
 
                 Sb_Funcion_Imprimir_Detalle_Picking_Tipo_Vale(_Tbl_Detalle,
                                                                        e,
                                                                        _Fila_Y,
                                                                        _Columna_X,
                                                                        _Fte_Usar,
-                                                                       _DrawBrush, False, False, True)
+                                                                       _DrawBrush, False, False, True, False)
+
+            Case "Imprimir Detalle Picking 02" ' - CON STOCK TEORICO"
+
+                Sb_Funcion_Imprimir_Detalle_Picking_Tipo_Vale(_Tbl_Detalle,
+                                                                       e,
+                                                                       _Fila_Y,
+                                                                       _Columna_X,
+                                                                       _Fte_Usar,
+                                                                       _DrawBrush, False, False, True, True)
 
             Case "Texto Libre En Detalle"
 
@@ -4128,7 +4137,7 @@ Public Class Clas_Imprimir_Documento
                     e.Graphics.DrawString("Código  : ", _Fte_Campo, _DrawBrush, _xPos, _yPos)
                     e.Graphics.DrawString(_Codigo, _Fuente, _DrawBrush, _xPos + 100, _yPos)
                     _yPos += _Size + 3
-                    e.Graphics.DrawString("Ítems   : ", _Fte_Campo, _DrawBrush, _xPos, _yPos)
+                    e.Graphics.DrawString("Ítems   : " & numero_(Contador, 2), _Fte_Campo, _DrawBrush, _xPos, _yPos)
                     _yPos += _Size + 3
                     e.Graphics.DrawString(Mid(_Descripcion, 1, 40), _Fuente, _DrawBrush, _xPos, _yPos)
                     _yPos += _Size + 3
@@ -4197,20 +4206,9 @@ Public Class Clas_Imprimir_Documento
                                                        _DrawBrush As Brush,
                                                        _Neto As Boolean,
                                                        _Incluye_Linea As Boolean,
-                                                       _Solo_Descripcion As Boolean)
+                                                       _Solo_Descripcion As Boolean,
+                                                       _MostrarStockTeorico As Boolean)
 
-
-        'If IsNothing(_Tbl_Detalle) Then
-
-        '    Consulta_sql = My.Resources.Recursos_Demonio.Picking
-        '    Consulta_sql = Replace(Consulta_sql, "#Idmaeedo#", _IdDoc)
-        '    Consulta_sql = Replace(Consulta_sql, "#Orden_Detalle#", "ORDER BY UBICACION")
-
-        '    Dim _DsDatos = _Sql.Fx_Get_DataSet(Consulta_sql)
-
-        '    _Tbl_Detalle = _DsDatos.Tables(1)
-
-        'End If
 
         Dim _Codigo As String
         Dim _Descripcion As String
@@ -4245,7 +4243,21 @@ Public Class Clas_Imprimir_Documento
                 _Cantidad = Mid(Fila.Item("Bk_Cant_Trans").ToString, 1, 40)
                 _Ud = Mid(Fila.Item("Bk_Un_Trans").ToString, 1, 40)
                 _Ubicacion = Trim(Mid(Fila.Item("UBICACION").ToString, 1, 40))
-                _Stock = Mid(Fila.Item("STOCK").ToString, 1, 40)
+
+                _Udtrpr = Fila.Item("UDTRPR")
+
+                Dim _StockFisico As Double = Fila.Item("STFI" & _Udtrpr)
+                Dim _StockDevengado As Double = Fila.Item("STDV" & _Udtrpr)
+                Dim _StockComprometido As Double = Fila.Item("STOCNV" & _Udtrpr)
+
+                Dim _StockTeorico As Double = _StockFisico
+
+                If _MostrarStockTeorico Then
+                    _StockTeorico = _StockFisico - (_StockDevengado + _StockComprometido)
+                End If
+
+                _Stock = FormatNumber(_StockTeorico, 0)
+                '_Stock = Mid(Fila.Item("STOCK").ToString, 1, 40)
 
                 e.Graphics.DrawString(_Codigo, _Fuente, _DrawBrush, _xPos, _yPos)
                 _yPos += _Size + 2

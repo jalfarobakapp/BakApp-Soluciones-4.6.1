@@ -4579,6 +4579,7 @@ Public Module Crear_Documentos_Desde_Otro
         Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
 
         Dim _FolderBrowserDialog As New FolderBrowserDialog
+
         Dim _Ruta_PDF = String.Empty
 
         Consulta_sql = "Select *
@@ -4632,44 +4633,39 @@ Public Module Crear_Documentos_Desde_Otro
             Return
         End If
 
-        _FolderBrowserDialog.Reset()
 
-        ' leyenda  
-        _FolderBrowserDialog.Description = "Seleccionar una carpeta "
-        ' Path " Mis documentos "  
-        _FolderBrowserDialog.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+        Dim _Aceptar As Boolean = InputBox_Bk(_Formulario, "Ingrese la Ruta de destino" & vbCrLf &
+                                              "Escriba directamente la ruta de destino o bien puede buscar la carpta...", "Guardar PDF",
+                                              _Ruta_PDF, False,,, True, _Tipo_Imagen.Folder,,,,,, True)
 
-        'Habilita el botón " crear nueva carpeta "  
-        _FolderBrowserDialog.ShowNewFolderButton = True
-
-        Dim ret As DialogResult = _FolderBrowserDialog.ShowDialog
-
-        ' si se presionó el botón aceptar ...  
-        If ret = Windows.Forms.DialogResult.OK Then
-
-            Dim nFiles As ObjectModel.ReadOnlyCollection(Of String)
-
-            nFiles = My.Computer.FileSystem.GetFiles(_FolderBrowserDialog.SelectedPath)
-            _Ruta_PDF = _FolderBrowserDialog.SelectedPath
-
-        Else
-
-            If _Guardar_PDF_Auto Then _Ruta_PDF = String.Empty
-            MessageBoxEx.Show(_Formulario, "No se selección o ninguna carpeta de salida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        If Not _Aceptar Then
             Return
+        End If
+
+        If String.IsNullOrEmpty(_Ruta_PDF) Then
+            MessageBoxEx.Show(_Formulario, "No se selección o ninguna carpeta de salida" & vbCrLf & "¿Desea agregar la Ruta Manualmente?",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            If Directory.Exists(_Ruta_PDF) Then
+                MessageBoxEx.Show(_Formulario, "La Ruta: " & _Ruta_PDF, "Ruta no encontrada", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                _Ruta_PDF = String.Empty
+            End If
 
         End If
 
-        _FolderBrowserDialog.Dispose()
+
+        If String.IsNullOrEmpty(_Ruta_PDF) Then
+            Return
+        End If
 
         Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Estaciones_Ruta_PDF" & vbCrLf &
-                       "Where NombreEquipo = '" & _NombreEquipo & "' And Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And Tido = '" & _Tido & "' And Tipo_Ruta = 'PDF'" & vbCrLf &
-                       "Insert Into " & _Global_BaseBk & "Zw_Estaciones_Ruta_PDF (NombreEquipo,Modalidad,Tido,Ruta_PDF,Empresa,Tipo_Ruta) " &
-                        "Values ('" & _NombreEquipo & "','" & Modalidad & "','" & _Tido & "','" & _Ruta_PDF & "','" & ModEmpresa & "','PDF')"
+                           "Where NombreEquipo = '" & _NombreEquipo & "' And Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And Tido = '" & _Tido & "' And Tipo_Ruta = 'PDF'" & vbCrLf &
+                           "Insert Into " & _Global_BaseBk & "Zw_Estaciones_Ruta_PDF (NombreEquipo,Modalidad,Tido,Ruta_PDF,Empresa,Tipo_Ruta) " &
+                            "Values ('" & _NombreEquipo & "','" & Modalidad & "','" & _Tido & "','" & _Ruta_PDF & "','" & ModEmpresa & "','PDF')"
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
 
             MessageBoxEx.Show(_Formulario, "La carpeta de salida quedo guardada exitosamente", "Validación",
-                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         End If
 

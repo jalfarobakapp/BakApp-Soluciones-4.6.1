@@ -33,6 +33,7 @@ Partial Class Frm_InpunBox_Bk
         Me.Imagenes_48x48_Ligth = New System.Windows.Forms.ImageList(Me.components)
         Me.Imagenes_48x48_Dark = New System.Windows.Forms.ImageList(Me.components)
         Me.Chk_1 = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Btn_BuscarCarpeta = New DevComponents.DotNetBar.ButtonX()
         Me.SuspendLayout()
         '
         'TxtDescripcion
@@ -49,7 +50,7 @@ Partial Class Frm_InpunBox_Bk
         Me.TxtDescripcion.Multiline = True
         Me.TxtDescripcion.Name = "TxtDescripcion"
         Me.TxtDescripcion.PreventEnterBeep = True
-        Me.TxtDescripcion.Size = New System.Drawing.Size(476, 69)
+        Me.TxtDescripcion.Size = New System.Drawing.Size(593, 69)
         Me.TxtDescripcion.TabIndex = 0
         Me.TxtDescripcion.Text = "" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
@@ -61,7 +62,7 @@ Partial Class Frm_InpunBox_Bk
         Me.Rf_Imagen.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rf_Imagen.BackgroundStyle.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
         Me.Rf_Imagen.Image = CType(resources.GetObject("Rf_Imagen.Image"), System.Drawing.Image)
-        Me.Rf_Imagen.Location = New System.Drawing.Point(402, -7)
+        Me.Rf_Imagen.Location = New System.Drawing.Point(530, -7)
         Me.Rf_Imagen.Name = "Rf_Imagen"
         Me.Rf_Imagen.Size = New System.Drawing.Size(70, 91)
         Me.Rf_Imagen.TabIndex = 6
@@ -88,7 +89,7 @@ Partial Class Frm_InpunBox_Bk
         Me.LblComentario_Centro.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblComentario_Centro.Location = New System.Drawing.Point(12, 12)
         Me.LblComentario_Centro.Name = "LblComentario_Centro"
-        Me.LblComentario_Centro.Size = New System.Drawing.Size(384, 72)
+        Me.LblComentario_Centro.Size = New System.Drawing.Size(512, 72)
         Me.LblComentario_Centro.TabIndex = 9
         Me.LblComentario_Centro.Text = "Comentario..." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "XXXXXXXXXXYYYYYYYYYYCCCCCCCCCCXXXXXXXXX" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "XZZXDSREFTE" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         Me.LblComentario_Centro.TextLineAlignment = System.Drawing.StringAlignment.Near
@@ -136,6 +137,7 @@ Partial Class Frm_InpunBox_Bk
         Me.Imagenes_48x48_Ligth.Images.SetKeyName(14, "Money2")
         Me.Imagenes_48x48_Ligth.Images.SetKeyName(15, "Storage")
         Me.Imagenes_48x48_Ligth.Images.SetKeyName(16, "Product")
+        Me.Imagenes_48x48_Ligth.Images.SetKeyName(17, "Folder")
         '
         'Imagenes_48x48_Dark
         '
@@ -158,6 +160,7 @@ Partial Class Frm_InpunBox_Bk
         Me.Imagenes_48x48_Dark.Images.SetKeyName(14, "Money2")
         Me.Imagenes_48x48_Dark.Images.SetKeyName(15, "Storage")
         Me.Imagenes_48x48_Dark.Images.SetKeyName(16, "Product")
+        Me.Imagenes_48x48_Dark.Images.SetKeyName(17, "Folder")
         '
         'Chk_1
         '
@@ -181,12 +184,26 @@ Partial Class Frm_InpunBox_Bk
         Me.Chk_1.Text = "Mostrar vales transitorios"
         Me.Chk_1.Visible = False
         '
+        'Btn_BuscarCarpeta
+        '
+        Me.Btn_BuscarCarpeta.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_BuscarCarpeta.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_BuscarCarpeta.Image = CType(resources.GetObject("Btn_BuscarCarpeta.Image"), System.Drawing.Image)
+        Me.Btn_BuscarCarpeta.ImageAlt = CType(resources.GetObject("Btn_BuscarCarpeta.ImageAlt"), System.Drawing.Image)
+        Me.Btn_BuscarCarpeta.Location = New System.Drawing.Point(468, 191)
+        Me.Btn_BuscarCarpeta.Name = "Btn_BuscarCarpeta"
+        Me.Btn_BuscarCarpeta.Size = New System.Drawing.Size(132, 38)
+        Me.Btn_BuscarCarpeta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_BuscarCarpeta.TabIndex = 37
+        Me.Btn_BuscarCarpeta.Text = "Buscar carpeta..."
+        '
         'Frm_InpunBox_Bk
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(491, 231)
+        Me.ClientSize = New System.Drawing.Size(602, 231)
         Me.ControlBox = False
+        Me.Controls.Add(Me.Btn_BuscarCarpeta)
         Me.Controls.Add(Me.Chk_1)
         Me.Controls.Add(Me.BtnCancelar)
         Me.Controls.Add(Me.LblComentario_Centro)
@@ -218,4 +235,5 @@ Partial Class Frm_InpunBox_Bk
     Friend WithEvents Imagenes_48x48_Ligth As ImageList
     Friend WithEvents Imagenes_48x48_Dark As ImageList
     Public WithEvents Chk_1 As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Btn_BuscarCarpeta As DevComponents.DotNetBar.ButtonX
 End Class
