@@ -22,16 +22,14 @@ Partial Class Frm_St_Estado_03_Presupuesto2
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_St_Estado_03_Presupuesto2))
         Me.Grupo_Grilla = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Fijar_Estado = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Editar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Cancelar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Agregar_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo_Presupuesto = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Tecnico_Taller = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -43,6 +41,7 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         Me.Txt_Defecto_segun_cliente = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX8 = New DevComponents.DotNetBar.LabelX()
+        Me.Highlighter1 = New DevComponents.DotNetBar.Validator.Highlighter()
         Me.Grupo_Grilla.SuspendLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -94,37 +93,37 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle10.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle11.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle11.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle11
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.MultiSelect = False
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle12.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.Grilla.Size = New System.Drawing.Size(602, 260)
         Me.Grilla.TabIndex = 2
@@ -134,7 +133,7 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Fijar_Estado, Me.Btn_Editar, Me.Btn_Cancelar, Me.Btn_Agregar_Producto})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Fijar_Estado, Me.Btn_Agregar_Producto})
         Me.Bar2.Location = New System.Drawing.Point(0, 520)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(627, 41)
@@ -151,26 +150,6 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         Me.Btn_Fijar_Estado.Image = CType(resources.GetObject("Btn_Fijar_Estado.Image"), System.Drawing.Image)
         Me.Btn_Fijar_Estado.Name = "Btn_Fijar_Estado"
         Me.Btn_Fijar_Estado.Text = "Fijar Estado"
-        '
-        'Btn_Editar
-        '
-        Me.Btn_Editar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Editar.FontBold = True
-        Me.Btn_Editar.ForeColor = System.Drawing.Color.Red
-        Me.Btn_Editar.Image = CType(resources.GetObject("Btn_Editar.Image"), System.Drawing.Image)
-        Me.Btn_Editar.Name = "Btn_Editar"
-        Me.Btn_Editar.Tooltip = "Editar"
-        Me.Btn_Editar.Visible = False
-        '
-        'Btn_Cancelar
-        '
-        Me.Btn_Cancelar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Cancelar.FontBold = True
-        Me.Btn_Cancelar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Cancelar.Image = CType(resources.GetObject("Btn_Cancelar.Image"), System.Drawing.Image)
-        Me.Btn_Cancelar.Name = "Btn_Cancelar"
-        Me.Btn_Cancelar.Text = "Cancelar edición"
-        Me.Btn_Cancelar.Visible = False
         '
         'Btn_Agregar_Producto
         '
@@ -237,6 +216,7 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         Me.Txt_Tecnico_Taller.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Tecnico_Taller.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Tecnico_Taller.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Tecnico_Taller, True)
         Me.Txt_Tecnico_Taller.Location = New System.Drawing.Point(51, 17)
         Me.Txt_Tecnico_Taller.MaxLength = 300
         Me.Txt_Tecnico_Taller.Name = "Txt_Tecnico_Taller"
@@ -258,6 +238,7 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         Me.Txt_NroSerie.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_NroSerie.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_NroSerie.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_NroSerie, True)
         Me.Txt_NroSerie.Location = New System.Drawing.Point(454, 17)
         Me.Txt_NroSerie.MaxLength = 300
         Me.Txt_NroSerie.Name = "Txt_NroSerie"
@@ -350,9 +331,9 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         Me.Txt_Nota.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Nota.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Nota.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Nota.FocusHighlightEnabled = True
         Me.Txt_Nota.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Nota.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Nota, True)
         Me.Txt_Nota.Location = New System.Drawing.Point(39, 98)
         Me.Txt_Nota.MaxLength = 1000
         Me.Txt_Nota.Name = "Txt_Nota"
@@ -363,7 +344,6 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         '
         'Txt_Defecto_segun_cliente
         '
-        Me.Txt_Defecto_segun_cliente.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -372,9 +352,9 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         Me.Txt_Defecto_segun_cliente.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Defecto_segun_cliente.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Defecto_segun_cliente.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Defecto_segun_cliente.FocusHighlightEnabled = True
         Me.Txt_Defecto_segun_cliente.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Defecto_segun_cliente.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Defecto_segun_cliente, True)
         Me.Txt_Defecto_segun_cliente.Location = New System.Drawing.Point(0, 29)
         Me.Txt_Defecto_segun_cliente.MaxLength = 1000
         Me.Txt_Defecto_segun_cliente.Multiline = True
@@ -417,6 +397,12 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         Me.LabelX8.TabIndex = 71
         Me.LabelX8.Text = "Nota :"
         '
+        'Highlighter1
+        '
+        Me.Highlighter1.ContainerControl = Me
+        Me.Highlighter1.FocusHighlightColor = DevComponents.DotNetBar.Validator.eHighlightColor.Red
+        Me.Highlighter1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        '
         'Frm_St_Estado_03_Presupuesto2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -429,6 +415,7 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Frm_St_Estado_03_Presupuesto2"
@@ -448,8 +435,6 @@ Partial Class Frm_St_Estado_03_Presupuesto2
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Fijar_Estado As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Editar As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Cancelar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grupo_Presupuesto As DevComponents.DotNetBar.Controls.GroupPanel
     Public WithEvents Txt_Tecnico_Taller As DevComponents.DotNetBar.Controls.TextBoxX
     Public WithEvents Txt_NroSerie As DevComponents.DotNetBar.Controls.TextBoxX
@@ -461,4 +446,5 @@ Partial Class Frm_St_Estado_03_Presupuesto2
     Friend WithEvents LabelX10 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX8 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Btn_Agregar_Producto As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Highlighter1 As DevComponents.DotNetBar.Validator.Highlighter
 End Class

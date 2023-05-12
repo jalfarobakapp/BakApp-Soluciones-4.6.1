@@ -523,6 +523,19 @@ Public Class Frm_St_Estado_04_Cotizaciones
 
         Dim _Nro_Ot = _Row_Encabezado.Item("Nro_Ot")
 
+
+
+        If Fx_Fijar_Estado() Then
+
+            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            _Fijar_Estado = True
+            Me.Close()
+
+        End If
+
+        Return
+
         Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_OT_Doc_Asociados",
                                             "Id_Ot In (Select Id_Ot From " & _Global_BaseBk & "Zw_St_OT_Encabezado Where Nro_Ot = '" & _Nro_Ot & "') " &
                                             "And Idmaeedo = " & _Idmaeedo & " And MovTodasSubOT = 1")
@@ -645,16 +658,16 @@ Public Class Frm_St_Estado_04_Cotizaciones
 
         Dim _Idmaeedo = _Fila.Cells("Idmaeedo").Value
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Doc_Asociados Where Idmaeedo = " & _Idmaeedo
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Doc_Asociados Where Idmaeedo = " & _Idmaeedo
+        'Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-        If _Tbl.Rows.Count > 1 Then
+        'If _Tbl.Rows.Count > 1 Then
 
-            MessageBoxEx.Show(Me, "Existen mas Sub-OT asociadas a esta cotización" & vbCrLf &
-                              "Se [ACEPTARA] el presupuesto para todas", "Sub-OT asociadas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        '    MessageBoxEx.Show(Me, "Existen mas Sub-OT asociadas a esta cotización" & vbCrLf &
+        '                      "Se [ACEPTARA] el presupuesto para todas", "Sub-OT asociadas", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
 
-        End If
+        'End If
 
         Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Doc_Asociados Set Estado = 'A' Where Idmaeedo = " & _Idmaeedo
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
@@ -1143,6 +1156,8 @@ Public Class Frm_St_Estado_04_Cotizaciones
 
         Dim _Aplicar_Precio_De_Listas As Boolean = False
 
+        Me.Enabled = False
+
         Dim Fm As New Frm_Formulario_Documento(_Tido,
                                                csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta,
                                                False, True, False, False, False)
@@ -1152,6 +1167,8 @@ Public Class Frm_St_Estado_04_Cotizaciones
         Fm.ShowDialog(Me)
         Dim _New_Idmaeedo = Fm.Pro_Idmaeedo
         Fm.Dispose()
+
+        Me.Enabled = True
 
         '_New_Idmaeedo = 339727
 

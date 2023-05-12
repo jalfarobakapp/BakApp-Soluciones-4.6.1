@@ -99,4 +99,10 @@ Public Class Frm_St_Mant_ProdServTecnico
 
     End Sub
 
+    Private Sub Frm_St_Mant_ProdServTecnico_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        If e.KeyValue = Keys.Escape Then
+            Me.Close()
+        End If
+    End Sub
+
 End Class

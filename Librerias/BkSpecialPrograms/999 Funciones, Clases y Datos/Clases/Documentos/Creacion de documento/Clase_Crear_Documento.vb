@@ -524,7 +524,7 @@ Public Class Clase_Crear_Documento
                             If String.IsNullOrEmpty(_Eslido) Then
 
                                 Select Case _Tido
-                                    Case "BLV", "FCV", "FCC"
+                                    Case "BLV", "FCV", "FCC", "GRI"
                                         If _Caprad1 = _Caprco1 Then
                                             _Eslido = "C"
                                         End If
@@ -1059,7 +1059,7 @@ Public Class Clase_Crear_Documento
 
                         Dim _Ppoppr As String = "0"
 
-                        If _Tido = "NVI" Then
+                        If _Tido = "NVI" Or _Tido = "GRI" Then
                             _Ppoppr = _Ppprpm
                         End If
 

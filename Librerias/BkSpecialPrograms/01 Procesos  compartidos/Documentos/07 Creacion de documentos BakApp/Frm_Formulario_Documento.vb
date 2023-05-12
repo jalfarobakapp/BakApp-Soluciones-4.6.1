@@ -955,7 +955,7 @@ Public Class Frm_Formulario_Documento
 
                     Btn_Opciones_Especiales.Visible = True
 
-                Case "GRC", "FCC", "GTI", "GDD", "GDP", "GRI"
+                Case "GRC", "FCC", "GTI", "GDD", "GDP", "GRI", "GDI"
 
                     BtnGrabar.Visible = True
                     Btn_Limpiar.Visible = True

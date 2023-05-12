@@ -105,6 +105,8 @@ Partial Class Frm_St_Mant_ProdServTecnico
         '
         'Line1
         '
+        Me.Line1.BackColor = System.Drawing.Color.White
+        Me.Line1.ForeColor = System.Drawing.Color.Black
         Me.Line1.Location = New System.Drawing.Point(12, 93)
         Me.Line1.Name = "Line1"
         Me.Line1.Size = New System.Drawing.Size(521, 23)
@@ -150,7 +152,9 @@ Partial Class Frm_St_Mant_ProdServTecnico
         Me.Controls.Add(Me.Line1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.KeyPreview = True
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Frm_St_Mant_ProdServTecnico"
