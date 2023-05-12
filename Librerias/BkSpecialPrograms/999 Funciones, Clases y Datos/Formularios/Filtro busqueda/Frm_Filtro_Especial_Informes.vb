@@ -734,7 +734,29 @@ Public Class Frm_Filtro_Especial_Informes
     End Sub
 
     Private Sub Btn_Exportar_Excel_Click(sender As Object, e As EventArgs) Handles Btn_Exportar_Excel.Click
-        ExportarTabla_JetExcel_Tabla(_Dv.Table, Me, "Informe")
+
+        Dim _Tbl1 As DataTable = _Dv.Table
+        Dim _Tbl2 As DataTable = Grilla.DataSource.totable
+
+        Dim _Consulta As New DialogResult
+
+        If _Tbl1.Rows.Count <> _Tbl2.Rows.Count Then
+
+            _Consulta = MessageBoxEx.Show(Me, "¿Desea exportar solo la vista actual (Si) o Exportar todo (No)?",
+                                 "Exportar a Excel", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+
+            If _Consulta = DialogResult.Cancel Then
+                Return
+            End If
+
+            If _Consulta = DialogResult.Yes Then
+                _Tbl1 = Grilla.DataSource.totable
+            End If
+
+        End If
+
+        ExportarTabla_JetExcel_Tabla(_Tbl1, Me, "Informe")
+
     End Sub
 
     Private Sub Btn_Crear_Click(sender As Object, e As EventArgs) Handles Btn_Crear.Click

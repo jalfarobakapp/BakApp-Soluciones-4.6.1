@@ -34,7 +34,8 @@
 
     End Sub
 
-    Sub Sb_Ejecutar(_Modalidad As String,
+    Sub Sb_Ejecutar(_Formulario As Form,
+                    _Modalidad As String,
                     _Modo_OCC As Boolean,
                     _Modo_NVI As Boolean,
                     _Auto_GenerarAutomaticamenteOCCProveedores As Boolean,
@@ -49,7 +50,7 @@
         Fm.Modo_OCC = _Modo_OCC
         Fm.Modo_NVI = _Modo_NVI
         Fm.Tipo_Informe = "Asistente de compras"
-        Fm.ShowDialog()
+        Fm.ShowDialog(_Formulario)
         Fm.Dispose()
 
     End Sub

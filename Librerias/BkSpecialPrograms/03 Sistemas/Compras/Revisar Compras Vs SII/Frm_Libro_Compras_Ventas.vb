@@ -550,6 +550,7 @@ Public Class Frm_Libro_Compras_Ventas
         For Each _Fila As DataGridViewRow In Grilla_02.Rows
 
             Dim _Libro_Sugerido As String = NuloPorNro(_Fila.Cells("Libro_Sugerido").Value, "")
+            Dim _Folio = _Fila.Cells("Folio").Value
             Dim _Idmaeedo = _Fila.Cells("Idmaeedo").Value
             Dim _Idmaeedo_GRC = _Fila.Cells("Idmaeedo_GRC").Value
 
@@ -559,6 +560,10 @@ Public Class Frm_Libro_Compras_Ventas
                 Else
                     _Fila.Cells("Libro_Sugerido").Style.ForeColor = Rojo
                 End If
+            End If
+
+            If _Folio = "155" Then
+                Dim a = 1
             End If
 
             If Not Convert.ToBoolean(_Idmaeedo) And Convert.ToBoolean(_Idmaeedo_GRC) Then
@@ -575,7 +580,9 @@ Public Class Frm_Libro_Compras_Ventas
 
             If _TipoDoc = 61 Then
                 If Global_Thema = Enum_Themas.Oscuro Then
-                    _Fila.DefaultCellStyle.ForeColor = Amarillo
+                    If _Fila.DefaultCellStyle.BackColor <> Color.GreenYellow Then
+                        _Fila.DefaultCellStyle.ForeColor = Amarillo
+                    End If
                 Else
                     _Fila.DefaultCellStyle.BackColor = Color.LightYellow
                 End If
@@ -1171,12 +1178,12 @@ Public Class Frm_Libro_Compras_Ventas
 
                 'If Convert.ToBoolean(_Idmaeedo_GRC) Then
 
-                Btn_Ver_GRC_Sugerida.Enabled = (Convert.ToBoolean(_Idmaeedo_GRC))
-                Btn_Crear_FCC_desde_GRC.Enabled = (Convert.ToBoolean(_Idmaeedo_GRC))
-
                 Dim _Folio = _Fila.Cells("Folio").Value
                 Dim _TipoDoc = _Fila.Cells("TipoDoc").Value
                 Dim _Rut_Proveedor = _Fila.Cells("Rut_Proveedor").Value
+
+                Btn_Ver_GRC_Sugerida.Enabled = (Convert.ToBoolean(_Idmaeedo_GRC) And _TipoDoc <> 61)
+                Btn_Crear_FCC_desde_GRC.Enabled = (Convert.ToBoolean(_Idmaeedo_GRC) And _TipoDoc <> 61)
 
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_ReccDet" & vbCrLf &
                                "Where TipoDTE = " & _TipoDoc & " And Folio = " & _Folio & " And RutEmisor = '" & _Rut_Proveedor & "'"

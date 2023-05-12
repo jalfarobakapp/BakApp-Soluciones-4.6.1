@@ -25,6 +25,7 @@ Public Module Mod_Fx
         Money2
         Product
         Storage
+        Folder
     End Enum
 
     Enum _Tipo_Caracter
@@ -46,7 +47,8 @@ Public Module Mod_Fx
                                 Optional _Tipo_de_caracter As _Tipo_Caracter = _Tipo_Caracter.Cualquier_caracter,
                                 Optional _Permitir_Valor_Cero As Boolean = True,
                                 Optional _PasswordChar As String = "",
-                                Optional ByRef _Chk As Controls.CheckBoxX = Nothing) As Boolean
+                                Optional ByRef _Chk As Controls.CheckBoxX = Nothing,
+                                Optional _BuscarCarpeta As Boolean = False) As Boolean
 
         Dim _Aceptado As Boolean
 
@@ -63,6 +65,7 @@ Public Module Mod_Fx
         Fm.Pro_Tipo_de_Caracter = _Tipo_de_caracter
         Fm.Pro_Imagen = _Imagen.ToString
         Fm.Chk = _Chk
+        Fm.BuscarCarpeta = _BuscarCarpeta
 
         If CBool(_Max_Cant_Caracteres) Then
             Fm.TxtDescripcion.MaxLength = _Max_Cant_Caracteres

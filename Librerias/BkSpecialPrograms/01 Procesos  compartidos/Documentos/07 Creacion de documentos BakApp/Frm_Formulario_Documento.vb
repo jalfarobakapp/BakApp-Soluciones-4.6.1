@@ -1146,6 +1146,12 @@ Public Class Frm_Formulario_Documento
             Me.Text = _Sql.Fx_Trae_Dato("TABTIDO", "NOTIDO", "TIDO = '" & _Tido & "'").ToString.Trim
             Lbl_Tido.Text = Me.Text
 
+            If _Es_Ajuste Then
+                Me.Text += Space(1) & "(AJUSTE)"
+                Lbl_Tido.Text += Space(1) & "(AJUSTE)"
+                Lbl_Tido.ForeColor = Color.Yellow
+            End If
+
         Else
 
             Lbl_Tido.Text = "Post-Venta"

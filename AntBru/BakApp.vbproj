@@ -434,6 +434,12 @@
     <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Documentos\Documentos_GDD_GDP.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Documentos\Documentos_GDI_GRI.Designer.vb">
+      <DependentUpon>Documentos_GDI_GRI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Documentos\Documentos_GDI_GRI.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Documentos\Modulo_Documentos_Stock.Designer.vb">
       <DependentUpon>Modulo_Documentos_Stock.vb</DependentUpon>
     </Compile>
@@ -667,6 +673,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Documentos\Documentos_GDD_GDP.resx">
       <DependentUpon>Documentos_GDD_GDP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Documentos\Documentos_GDI_GRI.resx">
+      <DependentUpon>Documentos_GDI_GRI.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Documentos\Modulo_Documentos_Stock.resx">
       <DependentUpon>Modulo_Documentos_Stock.vb</DependentUpon>

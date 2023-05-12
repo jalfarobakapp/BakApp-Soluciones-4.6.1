@@ -23,9 +23,9 @@ Partial Class Frm_St_Documento
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_St_Documento))
         Me.GroupPanel13 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
@@ -135,6 +135,7 @@ Partial Class Frm_St_Documento
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Tab_Maquina = New DevComponents.DotNetBar.SuperTabItem()
+        Me.Highlighter1 = New DevComponents.DotNetBar.Validator.Highlighter()
         Me.GroupPanel13.SuspendLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -198,36 +199,36 @@ Partial Class Frm_St_Documento
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle19.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        DataGridViewCellStyle19.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle19.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle19
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle20.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle20.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        DataGridViewCellStyle20.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle20.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle20
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(3, 3)
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle21.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle21.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        DataGridViewCellStyle21.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle21.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle21
         Me.Grilla.RowHeadersVisible = False
         Me.Grilla.RowTemplate.Height = 25
         Me.Grilla.Size = New System.Drawing.Size(762, 39)
@@ -481,7 +482,6 @@ Partial Class Frm_St_Documento
         '
         'Txt_Nro_Serie
         '
-        Me.Txt_Nro_Serie.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -490,11 +490,11 @@ Partial Class Frm_St_Documento
         Me.Txt_Nro_Serie.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Nro_Serie.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Nro_Serie.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Nro_Serie.FocusHighlightEnabled = True
         Me.Txt_Nro_Serie.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Nro_Serie.Location = New System.Drawing.Point(172, 246)
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Nro_Serie, True)
+        Me.Txt_Nro_Serie.Location = New System.Drawing.Point(183, 246)
         Me.Txt_Nro_Serie.Name = "Txt_Nro_Serie"
-        Me.Txt_Nro_Serie.Size = New System.Drawing.Size(370, 22)
+        Me.Txt_Nro_Serie.Size = New System.Drawing.Size(359, 22)
         Me.Txt_Nro_Serie.TabIndex = 9
         '
         'LabelX17
@@ -508,10 +508,10 @@ Partial Class Frm_St_Documento
         Me.LabelX17.ForeColor = System.Drawing.Color.Black
         Me.LabelX17.Location = New System.Drawing.Point(12, 246)
         Me.LabelX17.Name = "LabelX17"
-        Me.LabelX17.Size = New System.Drawing.Size(154, 18)
+        Me.LabelX17.Size = New System.Drawing.Size(174, 18)
         Me.LabelX17.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.LabelX17.TabIndex = 48
-        Me.LabelX17.Text = "Número de serie (Chasis)"
+        Me.LabelX17.Text = "Número (Serie/Chasis/Placa)"
         '
         'Txt_Producto
         '
@@ -627,7 +627,7 @@ Partial Class Frm_St_Documento
         Me.Chk_Serv_Demostracion_Maquina.ForeColor = System.Drawing.Color.Black
         Me.Chk_Serv_Demostracion_Maquina.Location = New System.Drawing.Point(3, 157)
         Me.Chk_Serv_Demostracion_Maquina.Name = "Chk_Serv_Demostracion_Maquina"
-        Me.Chk_Serv_Demostracion_Maquina.Size = New System.Drawing.Size(167, 18)
+        Me.Chk_Serv_Demostracion_Maquina.Size = New System.Drawing.Size(167, 20)
         Me.Chk_Serv_Demostracion_Maquina.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Serv_Demostracion_Maquina.TabIndex = 88
         Me.Chk_Serv_Demostracion_Maquina.Text = "Demostración de maquina"
@@ -812,7 +812,6 @@ Partial Class Frm_St_Documento
         '
         'Txt_Defecto_segun_cliente
         '
-        Me.Txt_Defecto_segun_cliente.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -821,9 +820,9 @@ Partial Class Frm_St_Documento
         Me.Txt_Defecto_segun_cliente.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Defecto_segun_cliente.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Defecto_segun_cliente.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Defecto_segun_cliente.FocusHighlightEnabled = True
         Me.Txt_Defecto_segun_cliente.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Defecto_segun_cliente.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Defecto_segun_cliente, True)
         Me.Txt_Defecto_segun_cliente.Location = New System.Drawing.Point(152, 3)
         Me.Txt_Defecto_segun_cliente.MaxLength = 1000
         Me.Txt_Defecto_segun_cliente.Multiline = True
@@ -867,7 +866,6 @@ Partial Class Frm_St_Documento
         '
         'Txt_Nota
         '
-        Me.Txt_Nota.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -876,9 +874,9 @@ Partial Class Frm_St_Documento
         Me.Txt_Nota.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Nota.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Nota.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Nota.FocusHighlightEnabled = True
         Me.Txt_Nota.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Nota.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Nota, True)
         Me.Txt_Nota.Location = New System.Drawing.Point(152, 62)
         Me.Txt_Nota.MaxLength = 1000
         Me.Txt_Nota.Name = "Txt_Nota"
@@ -1134,7 +1132,6 @@ Partial Class Frm_St_Documento
         '
         'Txt_Nombre_Contacto
         '
-        Me.Txt_Nombre_Contacto.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -1143,8 +1140,8 @@ Partial Class Frm_St_Documento
         Me.Txt_Nombre_Contacto.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Nombre_Contacto.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Nombre_Contacto.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Nombre_Contacto.FocusHighlightEnabled = True
         Me.Txt_Nombre_Contacto.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Nombre_Contacto, True)
         Me.Txt_Nombre_Contacto.Location = New System.Drawing.Point(152, 6)
         Me.Txt_Nombre_Contacto.MaxLength = 50
         Me.Txt_Nombre_Contacto.Name = "Txt_Nombre_Contacto"
@@ -1169,7 +1166,6 @@ Partial Class Frm_St_Documento
         '
         'Txt_Email_Contacto
         '
-        Me.Txt_Email_Contacto.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -1178,8 +1174,8 @@ Partial Class Frm_St_Documento
         Me.Txt_Email_Contacto.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower
         Me.Txt_Email_Contacto.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Email_Contacto.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Email_Contacto.FocusHighlightEnabled = True
         Me.Txt_Email_Contacto.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Email_Contacto, True)
         Me.Txt_Email_Contacto.Location = New System.Drawing.Point(451, 33)
         Me.Txt_Email_Contacto.MaxLength = 50
         Me.Txt_Email_Contacto.Name = "Txt_Email_Contacto"
@@ -1204,7 +1200,6 @@ Partial Class Frm_St_Documento
         '
         'Txt_Telefono_Contacto
         '
-        Me.Txt_Telefono_Contacto.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -1213,8 +1208,8 @@ Partial Class Frm_St_Documento
         Me.Txt_Telefono_Contacto.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Telefono_Contacto.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Telefono_Contacto.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Telefono_Contacto.FocusHighlightEnabled = True
         Me.Txt_Telefono_Contacto.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Telefono_Contacto, True)
         Me.Txt_Telefono_Contacto.Location = New System.Drawing.Point(152, 32)
         Me.Txt_Telefono_Contacto.MaxLength = 20
         Me.Txt_Telefono_Contacto.Name = "Txt_Telefono_Contacto"
@@ -1514,7 +1509,7 @@ Partial Class Frm_St_Documento
         Me.ButtonX2.Image = CType(resources.GetObject("ButtonX2.Image"), System.Drawing.Image)
         Me.ButtonX2.Location = New System.Drawing.Point(346, 83)
         Me.ButtonX2.Name = "ButtonX2"
-        Me.ButtonX2.Size = New System.Drawing.Size(102, 19)
+        Me.ButtonX2.Size = New System.Drawing.Size(102, 22)
         Me.ButtonX2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.ButtonX2.TabIndex = 96
         Me.ButtonX2.Text = "Crear GRP_PRE"
@@ -1709,7 +1704,7 @@ Partial Class Frm_St_Documento
         Me.Btn_Ver_GRP_PRE.Image = CType(resources.GetObject("Btn_Ver_GRP_PRE.Image"), System.Drawing.Image)
         Me.Btn_Ver_GRP_PRE.Location = New System.Drawing.Point(276, 83)
         Me.Btn_Ver_GRP_PRE.Name = "Btn_Ver_GRP_PRE"
-        Me.Btn_Ver_GRP_PRE.Size = New System.Drawing.Size(62, 19)
+        Me.Btn_Ver_GRP_PRE.Size = New System.Drawing.Size(62, 22)
         Me.Btn_Ver_GRP_PRE.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_Ver_GRP_PRE.TabIndex = 95
         Me.Btn_Ver_GRP_PRE.Text = "GRP"
@@ -1778,6 +1773,11 @@ Partial Class Frm_St_Documento
         Me.Tab_Maquina.GlobalItem = False
         Me.Tab_Maquina.Name = "Tab_Maquina"
         Me.Tab_Maquina.Text = "Maquina externa"
+        '
+        'Highlighter1
+        '
+        Me.Highlighter1.FocusHighlightColor = DevComponents.DotNetBar.Validator.eHighlightColor.Red
+        Me.Highlighter1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         '
         'Frm_St_Documento
         '
@@ -1937,4 +1937,5 @@ Partial Class Frm_St_Documento
     Friend WithEvents Btn_GRP_Asociar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_GRP_Quitar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Contacto As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Highlighter1 As DevComponents.DotNetBar.Validator.Highlighter
 End Class

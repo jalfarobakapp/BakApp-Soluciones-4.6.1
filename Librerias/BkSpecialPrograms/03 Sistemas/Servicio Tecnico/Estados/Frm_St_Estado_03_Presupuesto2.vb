@@ -122,7 +122,7 @@ Public Class Frm_St_Estado_03_Presupuesto2
         If _Tbl_DetProd.Rows.Count = 0 Then Sb_New_OT_Agregar_Fila()
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
-        AddHandler Btn_Grabar.Click, AddressOf Btn_Fijar_Estado_Click
+        'AddHandler Btn_Grabar.Click, AddressOf Btn_Fijar_Estado_Click
 
         If _Accion = Accion.Nuevo Then
 
@@ -147,7 +147,6 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
         If _Row_Encabezado.Item("CodEstado") = "CE" Then
             Btn_Editar.Visible = False
-            Btn_Grabar.Visible = False
         End If
 
         For Each _Row As DataGridViewRow In Grilla.Rows
@@ -791,6 +790,7 @@ Public Class Frm_St_Estado_03_Presupuesto2
             Fm.Pro_Mostrar_Imagenes = True
 
             Fm.Pro_Filtro_Sql_Extra = "And TIPR = 'SSN'"
+            Fm.MostrarSoloServTecnico_ProServicio = True
 
             Fm.ShowDialog(Me)
 
@@ -1160,6 +1160,11 @@ Public Class Frm_St_Estado_03_Presupuesto2
     Private Sub Btn_Agregar_Producto_Click(sender As Object, e As EventArgs) Handles Btn_Agregar_Producto.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.Rows.Count - 1)
+
+        If Not _Fila.Cells("Nuevo_Item").Value Then
+            Sb_New_OT_Agregar_Fila()
+            _Fila = Grilla.Rows(Grilla.Rows.Count - 1)
+        End If
 
         Sb_Agregar_Servicio(_Fila)
 

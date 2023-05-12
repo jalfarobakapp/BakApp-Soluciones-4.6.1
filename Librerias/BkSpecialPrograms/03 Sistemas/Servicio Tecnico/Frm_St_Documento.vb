@@ -129,7 +129,6 @@ Public Class Frm_St_Documento
 
             Me.Text = "GESTION DE ORDEN DE TRABAJO"
 
-
             If Trim(_Row_Encabezado.Item("CodEstado")) = "E" Then
                 Btn_Cerrar_OT.Visible = True
             End If
@@ -162,8 +161,7 @@ Public Class Frm_St_Documento
 
         End If
 
-
-            If Trim(_Row_Encabezado.Item("CodEstado")) = "CE" Or Trim(_Row_Encabezado.Item("CodEstado")) = "N" Then
+        If Trim(_Row_Encabezado.Item("CodEstado")) = "CE" Or Trim(_Row_Encabezado.Item("CodEstado")) = "N" Then
             Btn_Editar.Visible = False
         End If
 
@@ -216,36 +214,36 @@ Public Class Frm_St_Documento
         Txt_Defecto_segun_cliente.ReadOnly = _Read_Only
         Txt_Nota.ReadOnly = _Read_Only
 
-        Txt_Maquina.BackColor = _Color
+        'Txt_Maquina.BackColor = _Color
         Txt_Maquina.FocusHighlightEnabled = _Activar
 
-        Txt_Marca.BackColor = _Color
+        'Txt_Marca.BackColor = _Color
         Txt_Marca.FocusHighlightEnabled = _Activar
 
-        Txt_Modelo.BackColor = _Color
+        'Txt_Modelo.BackColor = _Color
         Txt_Modelo.FocusHighlightEnabled = _Activar
 
-        Txt_Categoria.BackColor = _Color
+        'Txt_Categoria.BackColor = _Color
         Txt_Categoria.FocusHighlightEnabled = _Activar
 
-        Txt_Nro_Serie.BackColor = _Color
+        'Txt_Nro_Serie.BackColor = _Color
         Txt_Nro_Serie.FocusHighlightEnabled = _Activar
 
-        Txt_Nota.BackColor = _Color
+        'Txt_Nota.BackColor = _Color
         Txt_Nota.FocusHighlightEnabled = _Activar
 
-        Txt_Defecto_segun_cliente.BackColor = _Color
+        'Txt_Defecto_segun_cliente.BackColor = _Color
         Txt_Defecto_segun_cliente.FocusHighlightEnabled = _Activar
 
-        Txt_Nombre_Contacto.BackColor = _Color
+        'Txt_Nombre_Contacto.BackColor = _Color
         Txt_Nombre_Contacto.FocusHighlightEnabled = _Activar
         Txt_Nombre_Contacto.ReadOnly = _Read_Only
 
-        Txt_Email_Contacto.BackColor = _Color
+        'Txt_Email_Contacto.BackColor = _Color
         Txt_Email_Contacto.FocusHighlightEnabled = _Activar
         Txt_Email_Contacto.ReadOnly = _Read_Only
 
-        Txt_Telefono_Contacto.BackColor = _Color
+        'Txt_Telefono_Contacto.BackColor = _Color
         Txt_Telefono_Contacto.FocusHighlightEnabled = _Activar
         Txt_Telefono_Contacto.ReadOnly = _Read_Only
 
@@ -2005,19 +2003,27 @@ Public Class Frm_St_Documento
             End If
         Next
 
-        Dim Fm As New Frm_St_Estado_03_Presupuesto(_Id_Ot, Frm_St_Estado_03_Presupuesto.Accion.Editar)
-        Fm.Pro_DsDocumento = _DsDocumento
-        Fm.Pro_Imagenes_32x32 = Imagenes_32x32
-        Fm.Btn_Editar.Enabled = _Editar
-        Fm.ShowDialog(Me)
-        Dim _Editando_Documento As Boolean = Fm.Pro_Editando_Documento
-        Dim _Grabar As Boolean = Fm.Pro_Grabar
-        Fm.Dispose()
+        Dim Fm0 As New Frm_St_Estado_03_Presupuesto2(_Id_Ot, Frm_St_Estado_03_Presupuesto.Accion.Editar)
+        Fm0.Pro_DsDocumento = _DsDocumento
+        Fm0.ShowDialog(Me)
+        'If Fm0.Pro_Grabar Then
+        '    Sb_Actualizar_Grilla()
+        'End If
+        Fm0.Dispose()
 
-        If _Editando_Documento Then
-            _Abrir_Documento = True
-            Me.Close()
-        End If
+        'Dim Fm As New Frm_St_Estado_03_Presupuesto(_Id_Ot, Frm_St_Estado_03_Presupuesto.Accion.Editar)
+        'Fm.Pro_DsDocumento = _DsDocumento
+        'Fm.Pro_Imagenes_32x32 = Imagenes_32x32
+        'Fm.Btn_Editar.Enabled = _Editar
+        'Fm.ShowDialog(Me)
+        'Dim _Editando_Documento As Boolean = Fm.Pro_Editando_Documento
+        'Dim _Grabar As Boolean = Fm.Pro_Grabar
+        'Fm.Dispose()
+
+        'If _Editando_Documento Then
+        '    _Abrir_Documento = True
+        '    Me.Close()
+        'End If
 
     End Sub
 

@@ -47,8 +47,11 @@ Public Class Modulo_Documentos_Stock
     End Sub
 
     Private Sub Btn_GRI_Click(sender As Object, e As EventArgs) Handles Btn_GRI.Click
-        Dim _Tido = "GRI"
-        Sb_Generar_Documento(_Fm_Menu_Padre, _Tido, True, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna, "")
+        If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre) Then
+            Dim NewPanel As Documentos_GDI_GRI = Nothing
+            NewPanel = New Documentos_GDI_GRI(_Fm_Menu_Padre)
+            _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+        End If
     End Sub
 
     Private Sub Btn_GDP_GDD_Click(sender As Object, e As EventArgs) Handles Btn_GDP_GDD.Click

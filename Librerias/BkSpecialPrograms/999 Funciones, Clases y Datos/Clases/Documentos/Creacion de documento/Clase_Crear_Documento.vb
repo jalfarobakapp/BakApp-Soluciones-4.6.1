@@ -643,11 +643,27 @@ Public Class Clase_Crear_Documento
 
                             ' *** RECALCULO DEL PPP
 
-                            If _Tido = "GRC" Or
-                               (_Tido = "GRI" And _Tidopa <> "GTI") Or
-                               (_Tido = "FCC" And _Lincondesp) Or
-                               (_Tido = "BLC" And _Lincondesp) Or
-                               (_Tido = "GDD" And _Subtido = String.Empty) Then
+                            '-- DOCINTPPP -  Doc.recep.int afecta PPP
+                            '-- EXCLUGRI  -  Excluir GRI por traslado
+                            '-- GRPAFEPPP -  GRP se considera para calculo
+                            '-- TRANAFEPPP - St en transito interno suma para ppp
+
+                            Dim _RecalcularPPP As Boolean = False
+
+                            Dim _Docintppp As Boolean = _Global_Row_Configp.Item("DOCINTPPP")
+                            Dim _Excluri As Boolean = _Global_Row_Configp.Item("EXCLUGRI")
+                            Dim _Grpafeppp As Boolean = _Global_Row_Configp.Item("GRPAFEPPP")
+                            Dim _Tranafeppp As Boolean = _Global_Row_Configp.Item("TRANAFEPPP")
+
+                            If (_Tido = "GRC") Then _RecalcularPPP = True
+                            If (_Docintppp And _Tido = "GRI" And _Tidopa <> "GTI" And _Excluri) Then _RecalcularPPP = True
+                            If (_Docintppp And _Tido = "GRI" And _Tidopa = "GTI" And Not _Excluri) Then _RecalcularPPP = True
+                            If (_Tido = "FCC" And _Lincondesp) Then _RecalcularPPP = True
+                            If (_Tido = "BLC" And _Lincondesp) Then _RecalcularPPP = True
+                            If (_Tido = "GDD" And _Subtido = String.Empty) Then _RecalcularPPP = True
+                            If (_Tido = "GRP" And _Grpafeppp) Then _RecalcularPPP = True
+
+                            If _RecalcularPPP Then
 
                                 Consulta_sql = "Insert Into MAEPMSUC (EMPRESA,KOSU,KOPR,STFI1,STFI2,PMSUC,FEPMSUC) 
                                                 Select '" & _Empresa & "','" & _Sulido & "','" & _Koprct & "',0,0,0,Getdate() 
@@ -690,6 +706,8 @@ Public Class Clase_Crear_Documento
                                     _Stfi1_Suc = dfd1("STFI1_Suc")
                                 End While
                                 dfd1.Close()
+
+                                If Not _Tranafeppp Then _Sttr1 = 0
 
                                 _Total_Stfi_x_Pm = _Pm * (_Stfi1 + _Sttr1)
                                 _Total_Stfi_x_Pmifrs = _Pmifrs * (_Stfi1 + _Sttr1)
@@ -736,17 +754,17 @@ Public Class Clase_Crear_Documento
 
                             If _Lincondesp And Not _Tidopa.Contains("G") Or _Tido = "GRI" Then
 
-                                Consulta_sql = "Insert Into MAEST (EMPRESA,KOSU,KOBO,KOPR)" & vbCrLf &
+                                    Consulta_sql = "Insert Into MAEST (EMPRESA,KOSU,KOBO,KOPR)" & vbCrLf &
                                                "Select '" & _Empresa & "','" & _Sulido & "','" & _Bosulido & "','" & _Koprct & "'" & vbCrLf &
                                                "From MAEPR" & vbCrLf &
                                                "Where KOPR Not In (Select KOPR From MAEST" & Space(1) &
                                                "Where EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sulido & "' And KOBO = '" & _Bosulido & "' And" & Space(1) &
                                                "KOPR = '" & _Koprct & "') And KOPR = '" & _Koprct & "'"
-                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                                Comando.Transaction = myTrans
-                                Comando.ExecuteNonQuery()
+                                    Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                    Comando.Transaction = myTrans
+                                    Comando.ExecuteNonQuery()
 
-                                Consulta_sql = "UPDATE MAEPREM SET" & vbCrLf &
+                                    Consulta_sql = "UPDATE MAEPREM SET" & vbCrLf &
                                                "STFI1 = STFI1 " & _Signo & " " & _Caprco1 & ",STFI2 = STFI2 " & _Signo & " " & _Caprco2 & vbCrLf &
                                                "WHERE EMPRESA = '" & _Empresa & "' AND KOPR = '" & _Koprct & "'" &
                                                vbCrLf &
@@ -763,26 +781,26 @@ Public Class Clase_Crear_Documento
                                                "UPDATE MAEPMSUC SET STFI1 = STFI1 " & _Signo & " 1,STFI2 = STFI2 " & _Signo & " 1" & vbCrLf &
                                                "WHERE EMPRESA = '" & _Empresa & "' AND KOSU = '" & _Sulido & "' AND KOPR = '" & _Koprct & "'"
 
-                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                                Comando.Transaction = myTrans
-                                Comando.ExecuteNonQuery()
+                                    Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                    Comando.Transaction = myTrans
+                                    Comando.ExecuteNonQuery()
 
-                            Else
+                                Else
 
-                                If _Tipr <> "SSN" Then
+                                    If _Tipr <> "SSN" Then
 
-                                    _Caprad1 = 0
-                                    _Caprad2 = 0
+                                        _Caprad1 = 0
+                                        _Caprad2 = 0
+
+                                    End If
 
                                 End If
 
                             End If
 
-                        End If
+                            'EMPREPA,TIDOPA,NUDOPA,ENDOPA,NULIDOPA
 
-                        'EMPREPA,TIDOPA,NUDOPA,ENDOPA,NULIDOPA
-
-                        Dim _CantStockAdUd1 = _Caprco1
+                            Dim _CantStockAdUd1 = _Caprco1
                         Dim _CantStockAdUd2 = _Caprco2
 
                         _Emprepa = String.Empty

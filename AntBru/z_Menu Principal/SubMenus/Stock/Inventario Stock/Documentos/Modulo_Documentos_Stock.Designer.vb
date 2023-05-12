@@ -225,7 +225,7 @@ Partial Class Modulo_Documentos_Stock
         Me.Btn_GRI.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.Btn_GRI.Name = "Btn_GRI"
         Me.Btn_GRI.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_GRI.Text = "<font size=""+4""><b>GRI - GUIA</b><br/></font>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Guía de recepción interna"
+        Me.Btn_GRI.Text = "<font size=""+4""><b>GDI - GRI</b><br/></font>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Guía de movimientos internos"
         Me.Btn_GRI.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
         Me.Btn_GRI.TileSize = New System.Drawing.Size(200, 100)
         '

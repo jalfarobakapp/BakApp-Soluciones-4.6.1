@@ -170,6 +170,22 @@ Public Class Frm_St_EncIngreso
         Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
 
         With Fm
+
+            '.Pro_Actualizar_Precios = False
+            '.Pro_Mostrar_Info = False
+            '.BtnBuscarAlternativos.Visible = True
+            '.Pro_Mostrar_Imagenes = True
+            '.BtnCrearProductos.Visible = True
+            '.Pro_Mostrar_Editar = True
+            '.Pro_Mostrar_Eliminar = True
+            '.BtnExportaExcel.Visible = True
+            '.Pro_Tipo_Lista = "C"
+            '.Pro_Maestro_Productos = False
+            '.Pro_Sucursal_Busqueda = ModSucursal
+            '.Pro_Bodega_Busqueda = ModBodega
+            '.Pro_Lista_Busqueda = ModListaPrecioVenta
+            '.Pro_Mostrar_Info = True
+
             .Pro_Actualizar_Precios = False
             .Pro_Mostrar_Info = False
             .BtnBuscarAlternativos.Visible = True
@@ -178,12 +194,12 @@ Public Class Frm_St_EncIngreso
             .Pro_Mostrar_Editar = True
             .Pro_Mostrar_Eliminar = True
             .BtnExportaExcel.Visible = True
-            .Pro_Tipo_Lista = "C"
-            .Pro_Maestro_Productos = False
+            .Pro_Tipo_Lista = "P"
             .Pro_Sucursal_Busqueda = ModSucursal
             .Pro_Bodega_Busqueda = ModBodega
             .Pro_Lista_Busqueda = ModListaPrecioVenta
-            .Pro_Mostrar_Info = True
+            .Mnu_Btn_Cambiar_Codigo_Producto.Visible = True
+            .MostrarSoloServTecnico_ProIngreso = True
             .ShowDialog(Me)
             _RowProducto = .Pro_RowProducto
             Dim _Seleccionado = .Pro_Seleccionado

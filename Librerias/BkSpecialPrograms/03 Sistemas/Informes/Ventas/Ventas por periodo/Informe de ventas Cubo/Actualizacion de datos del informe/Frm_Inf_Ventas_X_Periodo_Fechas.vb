@@ -162,6 +162,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
 
         Tiempo.Enabled = False
 
+        'Return
+
         If _Accion = Enum_Acciones.Actualizar_Informe_Automatico Then
             Sb_Actualizar_Informe(Dtp_Fecha_Desde.Value, Dtp_Fecha_Hasta.Value)
             'ElseIf _Accion = Enum_Acciones.Actualizar_Filtro Then

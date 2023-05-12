@@ -10,12 +10,12 @@ Public Class Documentos_GDD_GDP
         Get
             Return _Menu_Extra
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Menu_Extra = value
         End Set
     End Property
 
-    Public Sub New(ByVal Fm_Menu_Padre As Metro.MetroAppForm)
+    Public Sub New(Fm_Menu_Padre As Metro.MetroAppForm)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -47,5 +47,9 @@ Public Class Documentos_GDD_GDP
     Private Sub Btn_GDP_CON_Click(sender As Object, e As EventArgs) Handles Btn_GDP_CON.Click
         Dim _Tido = "GDP"
         Sb_Generar_Documento(_Fm_Menu_Padre, _Tido, True, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Devolucion, "CON")
+    End Sub
+
+    Private Sub Documentos_GDD_GDP_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
     End Sub
 End Class

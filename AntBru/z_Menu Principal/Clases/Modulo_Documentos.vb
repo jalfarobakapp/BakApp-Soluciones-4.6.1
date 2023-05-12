@@ -58,7 +58,11 @@ Module Modulo_Documentos
 
                     If Fx_Tiene_Permiso_Generar_Documento(_Fm_Menu_Padre, _Tido) Then
 
-                        Dim Fm_Post As New Frm_Formulario_Documento(_Tido, _Tipo_Documento, False)
+                        Dim _Es_Ajuste As Boolean
+
+                        If _SubTido = "AJU" Then _Es_Ajuste = True
+
+                        Dim Fm_Post As New Frm_Formulario_Documento(_Tido, _Tipo_Documento, False,,, _Es_Ajuste)
                         If _Fm_Menu_Padre.Name <> "Frm_Menu_Extra" Then Fm_Post.MinimizeBox = True
                         Fm_Post.MinimizeBox = _Minimizar
                         Fm_Post.Pro_SubTido = _SubTido

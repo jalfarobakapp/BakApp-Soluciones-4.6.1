@@ -65,21 +65,34 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Busca una cadena traducida similar a &lt;!doctype html&gt;
-        '''&lt;html lang=&quot;en&quot;&gt;
-        '''
+        '''  Busca una cadena traducida similar a 
+        '''&lt;html&gt;
         '''&lt;head&gt;
+        '''    &lt;title&gt;Documentos Pendientes&lt;/title&gt;
+        '''    &lt;meta http-equiv=&apos;Content-Type&apos; content=&apos;text/html; charset=iso-8859-1&apos; /&gt;
+        '''    &lt;style type=&quot;text/css&quot;&gt;
+        '''        .style17 {
+        '''            width: 109px;
+        '''        }
         '''
-        '''    &lt;meta charset=&quot;utf-8&quot;&gt;
-        '''    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
-        '''    &lt;title&gt;Documento Comercial&lt;/title&gt;
+        '''        .style20 {
+        '''            width: 87px;
+        '''        }
         '''
-        '''    &lt;link href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot; integrity=&quot;sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC&quot; crossorigin=&quot;anonymous&quot;&gt;
+        '''        .style21 {
+        '''            width: 144px;
+        '''        }
         '''
-        '''    &lt;div&gt;
-        '''        &lt;img src=&quot;Imagenes/Logo Final.jpg&quot; class=&quot;style22&quot; alt=&quot;Logo Empresa&quot;&gt;
-        '''    &lt;/div&gt;
-        ''' [resto de la cadena truncado]&quot;;.
+        '''        .style22 {
+        '''            width: 174px;
+        '''        }
+        '''
+        '''        .style23 {
+        '''            width: 320px;
+        '''        }
+        '''
+        '''        .style25 {
+        '''            width: 149px [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Crear_Html_Documentos_Pendientes() As String
             Get

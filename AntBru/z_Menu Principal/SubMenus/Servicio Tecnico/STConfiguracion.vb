@@ -30,7 +30,7 @@ Public Class STConfiguracion
     Private Sub Btn_Mantencion_Tecnicos_Click(sender As Object, e As EventArgs) Handles Btn_Mantencion_Tecnicos.Click
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Stec0006") Then
             Dim Fm As New Frm_St_Lista_Tecnicos_Talleres
-            Fm.ShowDialog(Me)
+            Fm.ShowDialog(_Fm_Menu_Padre)
             Fm.Dispose()
         End If
     End Sub
@@ -38,21 +38,31 @@ Public Class STConfiguracion
     Private Sub Btn_Conf_Info_Reportes_Click(sender As Object, e As EventArgs) Handles Btn_Conf_Info_Reportes.Click
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Stec0015") Then
             Dim Fm As New Frm_St_Notas_Reportes
-            Fm.ShowDialog(Me)
+            Fm.ShowDialog(_Fm_Menu_Padre)
             Fm.Dispose()
         End If
     End Sub
 
     Private Sub Btn_Recetas_Click(sender As Object, e As EventArgs) Handles Btn_Recetas.Click
         Dim Fm As New Frm_St_Recetas
-        Fm.ShowDialog(Me)
+        Fm.ShowDialog(_Fm_Menu_Padre)
         Fm.Dispose()
     End Sub
 
     Private Sub Btn_Operaciones_Click(sender As Object, e As EventArgs) Handles Btn_Operaciones.Click
+
         Dim Fm As New Frm_St_Operaciones
-        Fm.ShowDialog(Me)
+        Fm.ShowDialog(_Fm_Menu_Padre)
         Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_FiltroProductos_Click(sender As Object, e As EventArgs) Handles Btn_FiltroProductos.Click
+
+        Dim Fm As New Frm_St_Mant_ProdServTecnico
+        Fm.ShowDialog(_Fm_Menu_Padre)
+        Fm.Dispose()
+
     End Sub
 
 End Class

@@ -1071,6 +1071,8 @@ Public Class Frm_St_Estado_04_Cotizaciones
             Return
         End If
 
+        _Reg = 1
+
         Dim _COV_Solo_Esta_SubOT As Boolean
         Dim _Id_Ot_Padre As Integer = _Row_Encabezado.Item("Id_Ot_Padre")
 
@@ -1197,10 +1199,10 @@ Public Class Frm_St_Estado_04_Cotizaciones
 
     Private Sub Btn_EditarPresupuesto_Click(sender As Object, e As EventArgs) Handles Btn_EditarPresupuesto.Click
 
-        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
-        Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+        'Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        'Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
-        Dim _Id = _Fila.Cells("Idmaeedo").Value
+        'Dim _Id = _Fila.Cells("Idmaeedo").Value
 
         For Each _Row As DataRow In _TblCotizaciones.Rows
 

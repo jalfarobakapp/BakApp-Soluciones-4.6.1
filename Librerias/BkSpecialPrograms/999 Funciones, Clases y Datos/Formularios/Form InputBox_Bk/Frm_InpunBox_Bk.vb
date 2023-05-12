@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports System.IO
+Imports DevComponents.DotNetBar
 
 Public Class Frm_InpunBox_Bk
 
@@ -64,6 +65,10 @@ Public Class Frm_InpunBox_Bk
             _Tipo_de_Caracter = value
         End Set
     End Property
+
+    Public Property BuscarCarpeta As Boolean
+
+
     Private Sub Frm_InpunBox_Bk_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         If Global_Thema = Enum_Themas.Oscuro Then
@@ -99,6 +104,8 @@ Public Class Frm_InpunBox_Bk
             End If
         End If
 
+        Btn_BuscarCarpeta.Visible = BuscarCarpeta
+
     End Sub
 
     Private Sub BtnAceptar_Click(sender As System.Object, e As System.EventArgs) Handles BtnAceptar.Click
@@ -120,6 +127,16 @@ Public Class Frm_InpunBox_Bk
     Sub Sb_Aceptar()
 
         _Nueva_Descripcion = TxtDescripcion.Text
+
+        If BuscarCarpeta Then
+
+            If Not Directory.Exists(TxtDescripcion.Text) Then
+                MessageBoxEx.Show(Me, "No existe la carpeta de destino", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                TxtDescripcion.Focus()
+                Return
+            End If
+
+        End If
 
         If _Nueva_Descripcion.Contains("'") Then
             MessageBoxEx.Show(Me, "Carácter no autorizado -> '" & vbCrLf &
@@ -222,6 +239,33 @@ Public Class Frm_InpunBox_Bk
         KeyAscii = CShort(SoloNumerosSinPuntosNiComas(KeyAscii))
         If KeyAscii = 0 Then
             e.Handled = True
+        End If
+
+    End Sub
+
+    Private Sub Btn_BuscarCarpeta_Click(sender As Object, e As EventArgs) Handles Btn_BuscarCarpeta.Click
+
+        Dim _FolderBrowserDialog As New FolderBrowserDialog
+
+        _FolderBrowserDialog.Reset()
+
+        ' leyenda  
+        _FolderBrowserDialog.Description = "Seleccionar una carpeta "
+        ' Path " Mis documentos "  
+        _FolderBrowserDialog.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+
+        'Habilita el botón " crear nueva carpeta "  
+        _FolderBrowserDialog.ShowNewFolderButton = True
+
+        Dim ret As DialogResult = _FolderBrowserDialog.ShowDialog
+
+        If ret = Windows.Forms.DialogResult.OK Then
+
+            Dim nFiles As ObjectModel.ReadOnlyCollection(Of String)
+
+            nFiles = My.Computer.FileSystem.GetFiles(_FolderBrowserDialog.SelectedPath)
+            TxtDescripcion.Text = _FolderBrowserDialog.SelectedPath
+
         End If
 
     End Sub

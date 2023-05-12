@@ -32,6 +32,7 @@ Partial Class STConfiguracion
         Me.Btn_Conf_Info_Reportes = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Recetas = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Operaciones = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_FiltroProductos = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -45,7 +46,7 @@ Partial Class STConfiguracion
         Me.LabelX1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
         Me.LabelX1.Location = New System.Drawing.Point(3, 1)
         Me.LabelX1.Name = "LabelX1"
-        Me.LabelX1.Size = New System.Drawing.Size(572, 49)
+        Me.LabelX1.Size = New System.Drawing.Size(462, 49)
         Me.LabelX1.TabIndex = 57
         Me.LabelX1.Text = "<font color=""#349FCE""><b>CONFIGURACION SERVICIO TECNICO</b></font>"
         '
@@ -101,7 +102,7 @@ Partial Class STConfiguracion
         Me.ConsultaPreciosContenedor.FixedSize = New System.Drawing.Size(700, 400)
         Me.ConsultaPreciosContenedor.MultiLine = True
         Me.ConsultaPreciosContenedor.Name = "ConsultaPreciosContenedor"
-        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mantencion_Tecnicos, Me.Btn_Conf_Info_Reportes, Me.Btn_Recetas, Me.Btn_Operaciones})
+        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mantencion_Tecnicos, Me.Btn_Conf_Info_Reportes, Me.Btn_Recetas, Me.Btn_Operaciones, Me.Btn_FiltroProductos})
         '
         '
         '
@@ -206,6 +207,33 @@ Partial Class STConfiguracion
         Me.Btn_Operaciones.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Operaciones.TitleText = "BakApp"
         '
+        'Btn_FiltroProductos
+        '
+        Me.Btn_FiltroProductos.Image = CType(resources.GetObject("Btn_FiltroProductos.Image"), System.Drawing.Image)
+        Me.Btn_FiltroProductos.ImageIndent = New System.Drawing.Point(8, -6)
+        Me.Btn_FiltroProductos.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_FiltroProductos.Name = "Btn_FiltroProductos"
+        Me.Btn_FiltroProductos.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_FiltroProductos.Text = "<font size=""+4""><b>FILTRO PRODUCTOS</b></font><br/><font size=""-1"">Filtros para b" &
+    "usqueda en maestro de productos.</font>"
+        Me.Btn_FiltroProductos.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Teal
+        Me.Btn_FiltroProductos.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_FiltroProductos.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_FiltroProductos.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_FiltroProductos.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_FiltroProductos.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_FiltroProductos.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_FiltroProductos.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_FiltroProductos.TileStyle.PaddingBottom = 4
+        Me.Btn_FiltroProductos.TileStyle.PaddingLeft = 4
+        Me.Btn_FiltroProductos.TileStyle.PaddingRight = 4
+        Me.Btn_FiltroProductos.TileStyle.PaddingTop = 4
+        Me.Btn_FiltroProductos.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_FiltroProductos.TitleText = "BakApp"
+        '
         'STConfiguracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -229,4 +257,5 @@ Partial Class STConfiguracion
     Private WithEvents Btn_Conf_Info_Reportes As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Recetas As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Operaciones As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_FiltroProductos As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class
