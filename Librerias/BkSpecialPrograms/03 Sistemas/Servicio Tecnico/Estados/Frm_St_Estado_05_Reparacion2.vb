@@ -445,8 +445,5 @@ Public Class Frm_St_Estado_05_Reparacion2
         Fx_Fijar_Estado()
     End Sub
 
-    Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
-        Fx_Fijar_Estado()
-    End Sub
 
 End Class

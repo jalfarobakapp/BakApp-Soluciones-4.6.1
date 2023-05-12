@@ -2169,6 +2169,8 @@ Public Class Frm_Demonio_01
                     Dim _ModalidadOld As String = Modalidad
                     Dim _Mod As New Clas_Modalidades
 
+                    Me.WindowState = FormWindowState.Normal
+
                     For Each _Fl As DataRow In _TblModalidades.Rows
 
                         Modalidad = _Fl.Item("MODALIDAD")
@@ -2178,11 +2180,13 @@ Public Class Frm_Demonio_01
                         _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
                         _Mod.Sb_Actualiza_Formatos_X_Modalidad()
 
-                        _Cl_Asistente_Compras.Sb_Ejecutar(Modalidad, False, True, False, False, True)
-                        _Cl_Asistente_Compras.Sb_Ejecutar(Modalidad, True, False, False, True, False)
-                        _Cl_Asistente_Compras.Sb_Ejecutar(Modalidad, True, False, True, False, False)
+                        _Cl_Asistente_Compras.Sb_Ejecutar(Me, Modalidad, False, True, False, False, True)
+                        _Cl_Asistente_Compras.Sb_Ejecutar(Me, Modalidad, True, False, False, True, False)
+                        _Cl_Asistente_Compras.Sb_Ejecutar(Me, Modalidad, True, False, True, False, False)
 
                     Next
+
+                    Me.WindowState = FormWindowState.Minimized
 
                     Modalidad = _ModalidadOld
 

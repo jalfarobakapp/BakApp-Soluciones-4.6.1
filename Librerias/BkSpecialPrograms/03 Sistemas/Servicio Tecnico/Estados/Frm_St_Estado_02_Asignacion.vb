@@ -81,6 +81,8 @@ Public Class Frm_St_Estado_02_Asignacion
         _Accion = Accion
         _Id_Ot = Id_Ot
 
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
 
     Private Sub Frm_St_Estado_02_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
@@ -120,6 +122,7 @@ Public Class Frm_St_Estado_02_Asignacion
 
         Txt_Informacion.BackColor = Color.LightGray
         Txt_Informacion.FocusHighlightEnabled = False
+        Cmb_Tecnico.FocusHighlightEnabled = False
 
         AddHandler Chk_Taller_Externo.CheckedChanging, AddressOf Chk_Taller_Externo_CheckedChanging
         AddHandler Chk_Tec_Domicilio.CheckedChanging, AddressOf Chk_Tec_Domicilio_CheckedChanging
@@ -439,8 +442,8 @@ Public Class Frm_St_Estado_02_Asignacion
 
             Txt_Nota.ReadOnly = False
 
-            Txt_Nota.BackColor = Color.White
-            Txt_Nota.FocusHighlightEnabled = True
+            'Txt_Nota.BackColor = Color.White
+            'Txt_Nota.FocusHighlightEnabled = True
 
             Sb_Cargar_Tecnicos(NuloPorNro(Cmb_Tecnico.SelectedValue, ""), False)
 

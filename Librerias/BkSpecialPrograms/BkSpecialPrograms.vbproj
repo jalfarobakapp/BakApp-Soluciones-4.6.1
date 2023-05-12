@@ -1874,6 +1874,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Recursos_Produccion.resx</DependentUpon>
     </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Configuracion\Frm_St_Mant_ProdServTecnico.Designer.vb">
+      <DependentUpon>Frm_St_Mant_ProdServTecnico.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Configuracion\Frm_St_Mant_ProdServTecnico.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Servicio Tecnico\Configuracion\Recetas\Frm_St_RecetaCrear.Designer.vb">
       <DependentUpon>Frm_St_RecetaCrear.vb</DependentUpon>
     </Compile>
@@ -4815,6 +4821,9 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Recursos_Produccion.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Configuracion\Frm_St_Mant_ProdServTecnico.resx">
+      <DependentUpon>Frm_St_Mant_ProdServTecnico.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Configuracion\Recetas\Frm_St_RecetaCrear.resx">
       <DependentUpon>Frm_St_RecetaCrear.vb</DependentUpon>

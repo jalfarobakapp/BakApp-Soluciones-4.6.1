@@ -787,6 +787,13 @@ Public Class Frm_Ver_Documento
             End If
         End If
 
+        Dim _Ruta_PDF = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Estaciones_Ruta_PDF", "Ruta_PDF",
+                                              "NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "' And Tido = '" & _Tido & "'")
+
+        If Not String.IsNullOrEmpty(_Ruta_PDF) Then
+            Btn_GuardarRutaPDFAutomatica.Tooltip = _Ruta_PDF
+        End If
+
         Me.Refresh()
 
     End Sub

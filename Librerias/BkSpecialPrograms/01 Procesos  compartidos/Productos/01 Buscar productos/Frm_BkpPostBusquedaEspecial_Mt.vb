@@ -451,6 +451,9 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         End Set
     End Property
 
+    Public Property MostrarSoloServTecnico_ProIngreso As Boolean
+    Public Property MostrarSoloServTecnico_ProServicio As Boolean
+
 #End Region
 
     Enum _Opcion_Buscar
@@ -982,6 +985,26 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
             _Filtro_Productos += vbCrLf & _Filtro_Sql_Extra
 
+            If MostrarSoloServTecnico_ProIngreso Then
+
+                Dim _Reg_ProdIngreso = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Tmp_Filtros_Busqueda", "Informe = 'ServicioTecnico' And Filtro = 'ProdIngreso'")
+
+                If CBool(_Reg_ProdIngreso) Then
+                    _Filtro_Productos = vbCrLf & "And Mp.KOPR In (Select Codigo From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
+                                                        "Where (Informe = 'ServicioTecnico') AND (Filtro = 'ProdIngreso'))"
+                End If
+
+            End If
+
+            If MostrarSoloServTecnico_ProServicio Then
+
+                Dim _Reg_ProdServicio = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Tmp_Filtros_Busqueda", "Informe = 'ServicioTecnico' And Filtro = 'ProdServicio'")
+
+                _Filtro_Productos = vbCrLf & "And Mp.KOPR In (Select Codigo From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
+                                    "Where (Informe = 'ServicioTecnico') AND (Filtro = 'ProdServicio'))"
+
+            End If
+
             Consulta_sql = Replace(Consulta_sql, "#Filtro_Productos#", _Filtro_Productos)
 
             If TraerTodosLosProductos Then
@@ -1325,8 +1348,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
         Dim _Codigo = _RowProducto.Item("KOPR")
 
-        'If Fx_Tiene_Permiso(Me, "Prod014") Then
-
         Dim Fm As New Frm_MtCreacionDeProducto(Cl_Producto.Enum_Accion.Editar, _Codigo, False, False)
         Fm.BtnCodAlternativosProducto.Visible = True
         Fm.ShowDialog(Me)
@@ -1355,8 +1376,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         End If
 
         Fm.Dispose()
-
-        'End If
 
     End Sub
 

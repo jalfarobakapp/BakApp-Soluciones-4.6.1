@@ -45,7 +45,7 @@ Partial Class Documentos_GDD_GDP
         Me.LabelX1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
         Me.LabelX1.Location = New System.Drawing.Point(3, 1)
         Me.LabelX1.Name = "LabelX1"
-        Me.LabelX1.Size = New System.Drawing.Size(433, 49)
+        Me.LabelX1.Size = New System.Drawing.Size(407, 49)
         Me.LabelX1.TabIndex = 50
         Me.LabelX1.Text = "<font color=""#349FCE""><b>PRESTAMOS Y CONSIGNACIONES</b></font>"
         '

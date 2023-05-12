@@ -60,6 +60,8 @@ Public Class Frm_OperacionesXServicio
         '               "Where CodReceta = '" & _CodReceta & "'"
         '_TblOperaciones = _Sql.Fx_Get_Tablas(Consulta_sql)
 
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
 
     Private Sub Frm_OperacionesXServicio_Load(sender As Object, e As EventArgs) Handles MyBase.Load

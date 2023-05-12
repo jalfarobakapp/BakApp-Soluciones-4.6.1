@@ -30,7 +30,6 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Fijar_Estado = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Editar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Cancelar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Agregar_Producto = New DevComponents.DotNetBar.ButtonItem()
@@ -135,7 +134,7 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Fijar_Estado, Me.Btn_Grabar, Me.Btn_Editar, Me.Btn_Cancelar, Me.Btn_Agregar_Producto})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Fijar_Estado, Me.Btn_Editar, Me.Btn_Cancelar, Me.Btn_Agregar_Producto})
         Me.Bar2.Location = New System.Drawing.Point(0, 520)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(627, 41)
@@ -152,15 +151,6 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         Me.Btn_Fijar_Estado.Image = CType(resources.GetObject("Btn_Fijar_Estado.Image"), System.Drawing.Image)
         Me.Btn_Fijar_Estado.Name = "Btn_Fijar_Estado"
         Me.Btn_Fijar_Estado.Text = "Fijar Estado"
-        '
-        'Btn_Grabar
-        '
-        Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
-        Me.Btn_Grabar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Grabar.Name = "Btn_Grabar"
-        Me.Btn_Grabar.Tooltip = "Grabar [F4]"
         '
         'Btn_Editar
         '
@@ -458,7 +448,6 @@ Partial Class Frm_St_Estado_03_Presupuesto2
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Fijar_Estado As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Editar As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Cancelar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grupo_Presupuesto As DevComponents.DotNetBar.Controls.GroupPanel

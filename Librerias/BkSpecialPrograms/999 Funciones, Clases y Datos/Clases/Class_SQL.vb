@@ -799,7 +799,10 @@ Public Class Class_SQL
 
     End Sub
 
-    Sub Sb_Actualizar_Filtro_Tmp(_Tbl As DataTable, _Informe As String, _Filtro As String, _Modalidad As String)
+    Sub Sb_Actualizar_Filtro_Tmp(_Tbl As DataTable,
+                                 _Informe As String,
+                                 _Filtro As String,
+                                 _Modalidad As String)
 
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
         Dim Consulta_sql As String
@@ -820,6 +823,43 @@ Public Class Class_SQL
 
                     Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda (Funcionario,Informe,Filtro,Chk,Codigo,Descripcion,NombreEquipo,Modalidad) VALUES" & Space(1) &
                                     "('" & FUNCIONARIO & "','" & _Informe & "','" & _Filtro & "'," & _Chk & ",'" & _Codigo & "','" & _Descripcion & "','" & _NombreEquipo & "','" & _Modalidad & "')" & vbCrLf
+
+                Next
+
+                Ej_consulta_IDU(Consulta_sql)
+
+            End If
+
+        End If
+
+    End Sub
+
+    Sub Sb_Actualizar_Filtro_Tmp(_Tbl As DataTable,
+                                 _Informe As String,
+                                 _Filtro As String,
+                                 _Modalidad As String,
+                                 _Funcionario As String,
+                                 _NombreEquipo As String)
+
+        'Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+        Dim Consulta_sql As String
+
+        If Not _Tbl Is Nothing Then
+
+            If _Tbl.Rows.Count Then
+
+                Consulta_sql = "Delete From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
+                               "Where Funcionario = '" & _Funcionario & "' And Informe = '" & _Informe & "'" & Space(1) &
+                               "And Filtro = '" & _Filtro & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad In ('','" & _Modalidad & "')" & vbCrLf
+
+                For Each _Fila As DataRow In _Tbl.Rows
+
+                    Dim _Chk = CInt(_Fila.Item("Chk")) * -1
+                    Dim _Codigo = _Fila.Item("Codigo")
+                    Dim _Descripcion = _Fila.Item("Descripcion")
+
+                    Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda (Funcionario,Informe,Filtro,Chk,Codigo,Descripcion,NombreEquipo,Modalidad) VALUES" & Space(1) &
+                                    "('" & _Funcionario & "','" & _Informe & "','" & _Filtro & "'," & _Chk & ",'" & _Codigo & "','" & _Descripcion & "','" & _NombreEquipo & "','" & _Modalidad & "')" & vbCrLf
 
                 Next
 
