@@ -52,22 +52,23 @@ Partial Class Frm_Formulario_Observaciones
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Nombre_Retirador_Mercaderia = New DevComponents.DotNetBar.LabelX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
+        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Grilla_Obs_Adicionales = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.Warning_Visado = New DevComponents.DotNetBar.Controls.WarningBox()
         Me.Imagenes_32x32 = New System.Windows.Forms.ImageList(Me.components)
+        Me.Btn_GDI_GTI = New DevComponents.DotNetBar.ButtonX()
         CType(Me.DtpFechaEntrega, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
+        Me.SuperTabControlPanel1.SuspendLayout()
         Me.SuperTabControlPanel2.SuspendLayout()
         CType(Me.Grilla_Obs_Adicionales, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SuperTabControlPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'TxtOrdendecompra
@@ -533,6 +534,25 @@ Partial Class Frm_Formulario_Observaciones
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem2})
         Me.SuperTabControl1.Text = "SuperTabControl1"
         '
+        'SuperTabControlPanel1
+        '
+        Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel1)
+        Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel2)
+        Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 34)
+        Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(668, 220)
+        Me.SuperTabControlPanel1.TabIndex = 1
+        Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
+        '
+        'SuperTabItem1
+        '
+        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel1
+        Me.SuperTabItem1.GlobalItem = False
+        Me.SuperTabItem1.Image = CType(resources.GetObject("SuperTabItem1.Image"), System.Drawing.Image)
+        Me.SuperTabItem1.Name = "SuperTabItem1"
+        Me.SuperTabItem1.Text = "Observaciones"
+        '
         'SuperTabControlPanel2
         '
         Me.SuperTabControlPanel2.Controls.Add(Me.Grilla_Obs_Adicionales)
@@ -590,32 +610,13 @@ Partial Class Frm_Formulario_Observaciones
         Me.SuperTabItem2.Name = "SuperTabItem2"
         Me.SuperTabItem2.Text = "Observaciones adicionales"
         '
-        'SuperTabControlPanel1
-        '
-        Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel1)
-        Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel2)
-        Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 34)
-        Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(668, 220)
-        Me.SuperTabControlPanel1.TabIndex = 1
-        Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
-        '
-        'SuperTabItem1
-        '
-        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel1
-        Me.SuperTabItem1.GlobalItem = False
-        Me.SuperTabItem1.Image = CType(resources.GetObject("SuperTabItem1.Image"), System.Drawing.Image)
-        Me.SuperTabItem1.Name = "SuperTabItem1"
-        Me.SuperTabItem1.Text = "Observaciones"
-        '
         'Warning_Visado
         '
         Me.Warning_Visado.BackColor = System.Drawing.Color.White
         Me.Warning_Visado.CloseButtonVisible = False
         Me.Warning_Visado.ForeColor = System.Drawing.Color.Black
         Me.Warning_Visado.Image = CType(resources.GetObject("Warning_Visado.Image"), System.Drawing.Image)
-        Me.Warning_Visado.Location = New System.Drawing.Point(10, 295)
+        Me.Warning_Visado.Location = New System.Drawing.Point(12, 295)
         Me.Warning_Visado.Name = "Warning_Visado"
         Me.Warning_Visado.OptionsText = "Ver permisos"
         Me.Warning_Visado.Size = New System.Drawing.Size(443, 33)
@@ -636,11 +637,23 @@ Partial Class Frm_Formulario_Observaciones
         Me.Imagenes_32x32.Images.SetKeyName(6, "save-printer - copia.png")
         Me.Imagenes_32x32.Images.SetKeyName(7, "save-warning - copia.png")
         '
+        'Btn_GDI_GTI
+        '
+        Me.Btn_GDI_GTI.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_GDI_GTI.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_GDI_GTI.Location = New System.Drawing.Point(461, 295)
+        Me.Btn_GDI_GTI.Name = "Btn_GDI_GTI"
+        Me.Btn_GDI_GTI.Size = New System.Drawing.Size(219, 32)
+        Me.Btn_GDI_GTI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_GDI_GTI.TabIndex = 136
+        Me.Btn_GDI_GTI.Text = "Se grabara GDI modo traspaso interno" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
         'Frm_Formulario_Observaciones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(684, 374)
+        Me.Controls.Add(Me.Btn_GDI_GTI)
         Me.Controls.Add(Me.Warning_Visado)
         Me.Controls.Add(Me.SuperTabControl1)
         Me.Controls.Add(Me.LabelX1)
@@ -663,9 +676,9 @@ Partial Class Frm_Formulario_Observaciones
         Me.GroupPanel2.ResumeLayout(False)
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
+        Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.SuperTabControlPanel2.ResumeLayout(False)
         CType(Me.Grilla_Obs_Adicionales, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -701,4 +714,5 @@ Partial Class Frm_Formulario_Observaciones
     Public WithEvents Btn_Solo_Grabar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Crear_Retirador As DevComponents.DotNetBar.ButtonX
     Public WithEvents Btn_Grabar_Pagar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_GDI_GTI As DevComponents.DotNetBar.ButtonX
 End Class

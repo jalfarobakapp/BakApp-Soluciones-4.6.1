@@ -212,6 +212,20 @@ Public Class Frm_Formulario_Observaciones
 
         End If
 
+        Btn_GDI_GTI.Visible = False
+
+        If _Row_Encabezado.Item("TipoDoc") = "GDI" Then
+
+            Btn_GDI_GTI.Visible = True
+
+            If _Row_Encabezado.Item("Subtido") = "GTI" Then
+                Btn_GDI_GTI.Text = "Se grabara GDI modo traspaso interno"
+            Else
+                Btn_GDI_GTI.Text = "Grabar GDI modo traspaso interno"
+            End If
+
+        End If
+
     End Sub
 
 
@@ -792,4 +806,55 @@ Public Class Frm_Formulario_Observaciones
             e.Cancel = True
         End If
     End Sub
+
+    Private Sub Btn_GDI_GTI_Click(sender As Object, e As EventArgs) Handles Btn_GDI_GTI.Click
+
+        Dim _Row_Bodega_Destino As DataRow
+        Dim _SeleccionarBodega As Boolean
+
+        Dim _Respuesta As New DialogResult
+
+        _Respuesta = MessageBoxEx.Show(Me, "Se solicitara bodega de destino para traspaso interno [Si]." & vbCrLf & vbCrLf &
+                             "Usted puede omitir esta opción [No]." & vbCrLf &
+                             "Lo que indicaria que esta guía pueda ser recibida en" & vbCrLf &
+                             "cualquier bodega sin restricciones", "Validación",
+                             MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information)
+
+        If _Respuesta = DialogResult.Yes Then
+            _SeleccionarBodega = True
+        ElseIf _Respuesta = DialogResult.No Then
+            ' poner un permiso
+        Else
+            Return
+        End If
+
+        If _SeleccionarBodega Then
+
+            Dim Fm_Bd As New Frm_Seleccionar_Bodega_Grilla("")
+            Fm_Bd.Pro_Pedir_Permiso = False
+            Fm_Bd.Text = "SELECCIONE LA BODEGA DE DESTINO (Bodega que recibira los productos)"
+            Fm_Bd.ShowDialog(Me)
+            _Row_Bodega_Destino = Fm_Bd.Pro_Row_Bodega
+            Fm_Bd.Dispose()
+
+            If Not _Row_Bodega_Destino Is Nothing Then
+                _Row_Encabezado.Item("Bodega_Destino") = _Row_Bodega_Destino.Item("KOBO")
+            End If
+
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Confirma grabar GDI modo Traspaso Interno?" & vbCrLf &
+                             "(la confirmación dejara en espera la recepción de este documento)",
+                             "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            _Row_Encabezado.Item("Subtido") = "GTI"
+            Btn_GDI_GTI.Text = "Se grabara GDI modo traspaso interno"
+        Else
+            _Row_Encabezado.Item("Subtido") = String.Empty
+            _Row_Encabezado.Item("Bodega_Destino") = String.Empty
+            Btn_GDI_GTI.Text = "Grabar GDI modo traspaso interno"
+        End If
+
+
+    End Sub
+
 End Class

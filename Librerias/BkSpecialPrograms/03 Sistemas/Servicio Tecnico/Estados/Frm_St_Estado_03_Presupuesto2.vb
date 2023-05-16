@@ -30,6 +30,7 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
     Public Property CodTecnico_Presupuesta As String
     Public Property ObligaIngProdPresupuesto As Boolean
+    Public Property SoloLectura As Boolean
 
 #Region "PROPIEDADES"
 
@@ -100,7 +101,7 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
         Dim _CodFuncionario = _Row_Encabezado.Item("CodTecnico_Asignado")
 
-        If _Accion = Accion.Editar Then
+        If _Accion = Accion.Editar Or SoloLectura Then
             CodTecnico_Presupuesta = _Row_Encabezado.Item("CodTecnico_Presupuesta").ToString.Trim
             Txt_NroSerie.Text = _Row_Encabezado.Item("NroSerie")
         End If
@@ -115,14 +116,15 @@ Public Class Frm_St_Estado_03_Presupuesto2
                                            "CodFuncionario = '" & _CodFuncionario & "'").ToString.Trim
 
         Txt_Defecto_segun_cliente.Text = _Row_Notas.Item("Defecto_segun_cliente")
-        Txt_Nota.Text = _Row_Notas.Item("Nota_Etapa_01")
+        Txt_Nota.Text = _Row_Notas.Item("Nota_Etapa_03")
 
         Sb_Actualizar_Grilla()
 
-        If _Tbl_DetProd.Rows.Count = 0 Then Sb_New_OT_Agregar_Fila()
+        If _Accion = Accion.Nuevo Then If _Tbl_DetProd.Rows.Count = 0 Then Sb_New_OT_Agregar_Fila()
+        'If _Accion = Accion.Editar Then If _Tbl_DetProd_Srv.Rows.Count = 0 Then Sb_New_OT_Agregar_Fila()
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
-        'AddHandler Btn_Grabar.Click, AddressOf Btn_Fijar_Estado_Click
+        AddHandler Btn_Fijar_Estado.Click, AddressOf Btn_Fijar_Estado_Click
 
         If _Accion = Accion.Nuevo Then
 
@@ -132,21 +134,11 @@ Public Class Frm_St_Estado_03_Presupuesto2
             AddHandler Grilla.KeyDown, AddressOf Grilla_KeyDown
             AddHandler Grilla.EditingControlShowing, AddressOf Grilla_EditingControlShowing
 
-            AddHandler Btn_Fijar_Estado.Click, AddressOf Btn_Fijar_Estado_Click
-
-            Btn_Editar.Visible = False
-
-        ElseIf _Accion = Accion.Editar Then
+        Else ' _Accion = Accion.Editar Then
 
             _Horas_Mano_de_Obra_Asignado = _Row_Encabezado.Item("Horas_Mano_de_Obra_Asignado")
+            Btn_Fijar_Estado.Visible = Not SoloLectura
 
-            Btn_Fijar_Estado.Visible = False
-            'Btn_Editar.Visible = True
-
-        End If
-
-        If _Row_Encabezado.Item("CodEstado") = "CE" Then
-            Btn_Editar.Visible = False
         End If
 
         For Each _Row As DataGridViewRow In Grilla.Rows
@@ -154,7 +146,7 @@ Public Class Frm_St_Estado_03_Presupuesto2
             Dim _Codigo = NuloPorNro(_Row.Cells("Codigo").Value, "")
             Dim _Nuevo_Item = NuloPorNro(_Row.Cells("Nuevo_Item").Value, False)
 
-            If Not _Nuevo_Item And String.IsNullOrEmpty(_Codigo) Then
+            If (Not _Nuevo_Item And String.IsNullOrEmpty(_Codigo)) Or (SoloLectura And _Nuevo_Item) Then
                 Try
                     Grilla.Rows.RemoveAt(_Row.Index)
                     Grilla.Refresh()
@@ -173,13 +165,25 @@ Public Class Frm_St_Estado_03_Presupuesto2
             End If
         Next
 
-        If _Registros Then
-            Grilla.AllowUserToAddRows = False
-        Else
-            Grilla.AllowUserToAddRows = True
+        'If _Registros Or SoloLectura Then
+        '    Grilla.AllowUserToAddRows = False
+        'Else
+        '    Grilla.AllowUserToAddRows = True
+        'End If
+
+        Me.Text = "PRESUPUESTO OT: " & _Row_Encabezado.Item("Nro_Ot")
+
+        If Not String.IsNullOrEmpty(_Row_Encabezado.Item("Sub_Ot").ToString.Trim) Then
+            Me.Text += " (Sub OT: " & _Row_Encabezado.Item("Sub_Ot") & ")"
         End If
 
-        'Me.ActiveControl = Txt_Horas_Mano_de_Obra
+        If SoloLectura Then
+            Txt_Defecto_segun_cliente.ReadOnly = True
+            Txt_Nota.ReadOnly = True
+            Txt_NroSerie.ReadOnly = True
+            Txt_Tecnico_Taller.ReadOnly = True
+            Me.Text += " (Documento solo de lectura)"
+        End If
 
     End Sub
 
@@ -190,7 +194,7 @@ Public Class Frm_St_Estado_03_Presupuesto2
         With Grilla
 
             If _Accion = Accion.Nuevo Then .DataSource = _Tbl_DetProd
-            If _Accion = Accion.Editar Then .DataSource = _Tbl_DetProd_Srv
+            If _Accion = Accion.Editar Or SoloLectura Then .DataSource = _Tbl_DetProd_Srv
 
             OcultarEncabezadoGrilla(Grilla, True)
 
@@ -244,7 +248,10 @@ Public Class Frm_St_Estado_03_Presupuesto2
     Sub Sb_New_OT_Agregar_Fila()
 
         Dim NewFila As DataRow
-        NewFila = _Tbl_DetProd.NewRow
+
+        If _Accion = Accion.Nuevo Then NewFila = _Tbl_DetProd.NewRow
+        If _Accion = Accion.Editar Then NewFila = _Tbl_DetProd_Srv.NewRow
+
         With NewFila
 
             .Item("Id_Ot") = _Id_Ot
@@ -274,7 +281,8 @@ Public Class Frm_St_Estado_03_Presupuesto2
             .Item("EsHijo") = False
             .Item("PorcIva") = 0
 
-            _Tbl_DetProd.Rows.Add(NewFila)
+            If _Accion = Accion.Nuevo Then _Tbl_DetProd.Rows.Add(NewFila)
+            If _Accion = Accion.Editar Then _Tbl_DetProd_Srv.Rows.Add(NewFila)
 
         End With
 
@@ -414,7 +422,7 @@ Public Class Frm_St_Estado_03_Presupuesto2
                         Dim _EsServicio As Integer = Convert.ToInt32(_Fila.Item("EsServicio"))
                         Dim _Nuevo_Item As Boolean = _Fila.Item("Nuevo_Item")
 
-                        If Not _Nuevo_Item Then
+                        If Not String.IsNullOrWhiteSpace(_Codigo) Then 'Not _Nuevo_Item Then
 
                             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_DetProd (Id_Ot,Utilizado,Codigo,Descripcion,Cantidad,Ud,Un," &
                                            "CantUd1,CantUd2,Precio,Neto_Linea,Iva_Linea,Total_Linea,TieneReceta,EsServicio) Values " &
@@ -488,13 +496,13 @@ Public Class Frm_St_Estado_03_Presupuesto2
             Next
 
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Notas Set " & vbCrLf &
-                           "Defecto_encontrado = '" & _Defecto_encontrado & "',Reparacion_a_realizar = '" & _Reparacion_a_realizar & "'" & vbCrLf &
+                           "Defecto_encontrado = '" & _Defecto_encontrado & "',Reparacion_a_realizar = '" & _Reparacion_a_realizar & "',Nota_Etapa_03 = '" & Txt_Nota.Text & "'" & vbCrLf &
                            "Where Id_Ot = " & _Id_Ot
-
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
+
             '**********************************'**********************************
 
             ' CAMBIO DE ESTADO
@@ -959,7 +967,7 @@ Public Class Frm_St_Estado_03_Presupuesto2
         Dim _Semilla As Integer = _Fila.Cells("Semilla").Value
         Dim _TieneReceta As Boolean = _Fila.Cells("TieneReceta").Value
 
-        If Not _Nuevo_Item Then
+        If Not String.IsNullOrWhiteSpace(_Codigo) Then '_Nuevo_Item Then
 
             If Not _TieneReceta Then
 
@@ -1022,6 +1030,7 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
             Dim Fm2 As New Frm_OperacionesXServicio(_CodReceta)
             Fm2.TblOperaciones = _Tbl_OperacionesXServ2
+            Fm2.SoloLectura = SoloLectura
             Fm2.ShowDialog(Me)
             _Grabar = Fm2.Grabar
             _Tbl_OperacionesXServ2 = Fm2.TblOperaciones
@@ -1143,7 +1152,7 @@ Public Class Frm_St_Estado_03_Presupuesto2
             _Fila.Cells("Codigo").Value = _RowProducto.Item("KOPR")
             _Fila.Cells("Descripcion").Value = _RowProducto.Item("NOKOPR")
             _Fila.Cells("Ud").Value = _RowProducto.Item("UD01PR")
-            _Fila.Cells("Nuevo_Item").Value = False
+            '_Fila.Cells("Nuevo_Item").Value = False
             _Fila.Cells("Cantidad").Value = Convert.ToInt32(_TieneReceta)
             _Fila.Cells("CantUd1").Value = Convert.ToInt32(_TieneReceta)
             _Fila.Cells("CantUd2").Value = Convert.ToInt32(_TieneReceta)
@@ -1159,6 +1168,11 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
     Private Sub Btn_Agregar_Producto_Click(sender As Object, e As EventArgs) Handles Btn_Agregar_Producto.Click
 
+        If SoloLectura Then
+            MessageBoxEx.Show(Me, "Documento de solo lectura", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.Rows.Count - 1)
 
         If Not _Fila.Cells("Nuevo_Item").Value Then
@@ -1169,5 +1183,65 @@ Public Class Frm_St_Estado_03_Presupuesto2
         Sb_Agregar_Servicio(_Fila)
 
     End Sub
+
+    Private Sub Frm_St_Estado_03_Presupuesto2_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+
+        If _Accion = Accion.Editar And Not SoloLectura And Not _Grabar Then
+            If MessageBoxEx.Show(Me, "Existen nuevas filas en el detalle" & vbCrLf &
+                                     "¿Confirma salir sin Fijar el Estado?", "Datos sin grabar",
+                                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.Yes Then
+
+                For Each _Row As DataGridViewRow In Grilla.Rows
+
+                    Dim _Codigo = NuloPorNro(_Row.Cells("Codigo").Value, "")
+                    Dim _Nuevo_Item = NuloPorNro(_Row.Cells("Nuevo_Item").Value, False)
+
+                    If _Nuevo_Item Then
+                        Try
+                            Grilla.Rows.RemoveAt(_Row.Index)
+                            Grilla.Refresh()
+                        Catch ex As Exception
+
+                        End Try
+                    End If
+                Next
+            Else
+                e.Cancel = True
+                Return
+            End If
+        End If
+
+        'For Each _Fila As DataRow In _Tbl_DetProd_Srv.Rows
+        '    If _Fila.Item("Nuevo_Item") Then
+        '        If MessageBoxEx.Show(Me, "Existen nuevas filas en el detalle" & vbCrLf &
+        '                             "¿Confirma salir sin Fijar el Estado?", "Datos sin grabar",
+        '                             MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.Yes Then
+
+        '            For Each _Row As DataGridViewRow In Grilla.Rows
+
+        '                Dim _Codigo = NuloPorNro(_Row.Cells("Codigo").Value, "")
+        '                Dim _Nuevo_Item = NuloPorNro(_Row.Cells("Nuevo_Item").Value, False)
+
+        '                If _Nuevo_Item Then
+        '                    Try
+        '                        Grilla.Rows.RemoveAt(_Row.Index)
+        '                        Grilla.Refresh()
+        '                    Catch ex As Exception
+
+        '                    End Try
+        '                End If
+        '            Next
+
+        '            Exit For
+
+        '        Else
+        '            e.Cancel = True
+        '            Return
+        '        End If
+        '    End If
+        'Next
+
+    End Sub
+
 End Class
 

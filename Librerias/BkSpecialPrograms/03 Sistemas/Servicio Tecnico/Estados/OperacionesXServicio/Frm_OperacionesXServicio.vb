@@ -27,6 +27,7 @@ Public Class Frm_OperacionesXServicio
         End Set
     End Property
 
+    Public Property SoloLectura As Boolean
     Public Property Grabar As Boolean
 
     Public Sub New(_CodReceta As String)
@@ -78,6 +79,9 @@ Public Class Frm_OperacionesXServicio
 
         Me.ActiveControl = Bar2
 
+        Btn_Grabar.Enabled = Not SoloLectura
+        Btn_Agregar_Producto.Enabled = Not SoloLectura
+
     End Sub
 
     Sub Sb_Actualizar_Grilla()
@@ -94,7 +98,7 @@ Public Class Frm_OperacionesXServicio
             .Columns("Chk").HeaderText = "Sel"
             .Columns("Chk").Width = 30
             .Columns("Chk").DisplayIndex = _DisplayIndex
-            .Columns("Chk").ReadOnly = False
+            .Columns("Chk").ReadOnly = SoloLectura ' False
             _DisplayIndex += 1
 
             .Columns("Operacion").Visible = True
@@ -213,6 +217,11 @@ Public Class Frm_OperacionesXServicio
 
             If _CantMayor1 Then
 
+                If SoloLectura Then
+                    MessageBoxEx.Show(Me, "Documento de solo lectura", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
+
                 Dim _Aceptar As Boolean
 
                 _Aceptar = InputBox_Bk(Me, "Debe indicar la cantidad a reparar", _Descripcion, _Cantidad,
@@ -230,20 +239,18 @@ Public Class Frm_OperacionesXServicio
 
     Private Sub Btn_Agregar_Producto_Click(sender As Object, e As EventArgs) Handles Btn_Agregar_Producto.Click
         Fx_Agregar_Operacion(Nothing, "")
-        'ShowContextMenu(Menu_Contextual_01)
-    End Sub
-
-    Private Sub Btn_Mnu_AgregaOperacionMismaReceta_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_AgregaOperacionMismaReceta.Click
-
     End Sub
 
     Private Sub Btn_Mnu_AsociarProductos_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_AsociarProductos.Click
-
         Fx_Agregar_Operacion(Nothing, "")
-
     End Sub
 
     Function Fx_Agregar_Operacion(_Fila As DataGridViewRow, _Operacion As String) As Boolean
+
+        If SoloLectura Then
+            MessageBoxEx.Show(Me, "Documento de solo lectura", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return False
+        End If
 
         Dim _Descripcion As String
 

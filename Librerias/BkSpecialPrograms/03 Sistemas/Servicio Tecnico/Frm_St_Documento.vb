@@ -127,7 +127,7 @@ Public Class Frm_St_Documento
 
             AddHandler Btn_Grabar.Click, AddressOf Sb_Editar_OT
 
-            Me.Text = "GESTION DE ORDEN DE TRABAJO"
+            Me.Text = "GESTION DE ORDEN DE TRABAJO (" & _Id_Ot & ")"
 
             If Trim(_Row_Encabezado.Item("CodEstado")) = "E" Then
                 Btn_Cerrar_OT.Visible = True
@@ -1971,24 +1971,71 @@ Public Class Frm_St_Documento
 
     Sub Sb_Estado_03_Presupuesto_Nuevo()
 
-        Dim Fm As New Frm_St_Estado_03_Presupuesto(_Id_Ot, Frm_St_Estado_03_Presupuesto.Accion.Nuevo)
-        Fm.Pro_DsDocumento = _DsDocumento
-        Fm.Pro_Imagenes_32x32 = Imagenes_32x32
-        Fm.ShowDialog(Me)
-        If Fm.Pro_Grabar Then
-            _Abrir_Documento = True
-            Me.Close()
-            'RemoveHandler Estado_03_Presupuesto.DoubleClick, AddressOf Sb_Estado_03_Presupuesto_Nuevo
-            'Sb_Actualizar_WockFlow()
+        Dim _Aceptar As Boolean
+        Dim _PwTecnico As String
+
+        Dim _CodTecnico_Asignado = _Row_Encabezado.Item("CodTecnico_Asignado")
+        Dim _Tecnico_Asignado = _Row_Encabezado.Item("Tecnico_Asignado")
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller Where CodFuncionario = '" & _CodTecnico_Asignado & "'"
+        Dim _Row_Tecnico_Asignado As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Msg As String
+
+        If _Row_Tecnico_Asignado.Item("EsTecnico") Then _Msg = "TECNICO"
+        If _Row_Tecnico_Asignado.Item("EsTaller") Then _Msg = "TALLER"
+
+        _Aceptar = InputBox_Bk(Me, "INGRESE LA CLAVE DEL " & _Msg & " ASIGNADO" & vbCrLf &
+                               _Msg & " ASIGNADO: " & _CodTecnico_Asignado & "-" & _Tecnico_Asignado, "INGRESAR A GESTION DEL TALLER",
+                               _PwTecnico, False, _Tipo_Mayus_Minus.Normal, 5, True, _Tipo_Imagen.Key,, _Tipo_Caracter.Solo_Numeros_Enteros, False, "*")
+
+        If Not _Aceptar Then
+            Return
         End If
 
-        'For Each _Fila As DataRow In _Tbl_DetProd.Rows
-        'If _Fila.RowState <> DataRowState.Deleted Then
-        'Dim _Codigo = _Fila.Item("Codigo")
-        'End If
-        'Next
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller Where PwTecnico = '" & _PwTecnico & "'"
+        Dim _Row_Funcionario As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Fm.Dispose()
+        If IsNothing(_Row_Funcionario) Then
+            MessageBoxEx.Show(Me, "Clave desconocida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Sb_Estado_03_Presupuesto_Nuevo()
+            Return
+        End If
+
+        If _Row_Funcionario.Item("CodFuncionario") <> _CodTecnico_Asignado Then
+
+            If _Row_Tecnico_Asignado.Item("EsTecnico") Then _Msg = "técnico"
+            If _Row_Tecnico_Asignado.Item("EsTaller") Then _Msg = "taller"
+
+            MessageBoxEx.Show(Me, "El " & _Msg & ": " & _Row_Funcionario.Item("CodFuncionario") & "-" & _Row_Funcionario.Item("NomFuncionario").ToString.Trim &
+                              " no esta asignado para realizar este presupuesto" & vbCrLf & vbCrLf &
+                              "Debe ingresar la clave de " & _Tecnico_Asignado, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Sb_Estado_03_Presupuesto_Nuevo()
+            Return
+        End If
+
+        Dim Fm0 As New Frm_St_Estado_03_Presupuesto2(_Id_Ot, Frm_St_Estado_03_Presupuesto.Accion.Nuevo)
+        Fm0.Pro_DsDocumento = _DsDocumento
+        Fm0.CodTecnico_Presupuesta = _CodTecnico_Asignado
+        Fm0.ShowDialog(Me)
+        If Fm0.Pro_Grabar Then
+            _Abrir_Documento = True
+            Me.Close()
+        End If
+        Fm0.Dispose()
+
+        'Return
+
+        'Dim Fm As New Frm_St_Estado_03_Presupuesto(_Id_Ot, Frm_St_Estado_03_Presupuesto.Accion.Nuevo)
+        'Fm.Pro_DsDocumento = _DsDocumento
+        'Fm.Pro_Imagenes_32x32 = Imagenes_32x32
+        'Fm.ShowDialog(Me)
+        'If Fm.Pro_Grabar Then
+        '    _Abrir_Documento = True
+        '    Me.Close()
+        'End If
+
+        'Fm.Dispose()
 
     End Sub
 
@@ -2003,13 +2050,14 @@ Public Class Frm_St_Documento
             End If
         Next
 
-        Dim Fm0 As New Frm_St_Estado_03_Presupuesto2(_Id_Ot, Frm_St_Estado_03_Presupuesto.Accion.Editar)
-        Fm0.Pro_DsDocumento = _DsDocumento
-        Fm0.ShowDialog(Me)
+        Dim Fm As New Frm_St_Estado_03_Presupuesto2(_Id_Ot, Frm_St_Estado_03_Presupuesto2.Accion.Editar)
+        Fm.Pro_DsDocumento = _DsDocumento
+        Fm.SoloLectura = True
+        Fm.ShowDialog(Me)
         'If Fm0.Pro_Grabar Then
         '    Sb_Actualizar_Grilla()
         'End If
-        Fm0.Dispose()
+        Fm.Dispose()
 
         'Dim Fm As New Frm_St_Estado_03_Presupuesto(_Id_Ot, Frm_St_Estado_03_Presupuesto.Accion.Editar)
         'Fm.Pro_DsDocumento = _DsDocumento
@@ -2079,17 +2127,73 @@ Public Class Frm_St_Documento
 
     Sub Sb_Estado_05_Reparacion_Nuevo()
 
-        Dim Fm As New Frm_St_Estado_05_Reparacion(Frm_St_Estado_05_Reparacion.Accion.Nuevo)
-        Fm.Pro_RowEntidad = _RowEntidad
-        Fm.Pro_Imagenes_32x32 = Imagenes_32x32
-        Fm.Pro_Id_Ot = _Id_Ot
-        Fm.Pro_DsDocumento = _DsDocumento
+        Dim _Aceptar As Boolean
+        Dim _PwTecnico As String
+
+        Dim _CodTecnico_Asignado = _Row_Encabezado.Item("CodTecnico_Asignado")
+        Dim _Tecnico_Asignado = _Row_Encabezado.Item("Tecnico_Asignado")
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller Where CodFuncionario = '" & _CodTecnico_Asignado & "'"
+        Dim _Row_Tecnico_Asignado As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Msg As String
+
+        If _Row_Tecnico_Asignado.Item("EsTecnico") Then _Msg = "TECNICO"
+        If _Row_Tecnico_Asignado.Item("EsTaller") Then _Msg = "TALLER"
+
+        _Aceptar = InputBox_Bk(Me, "INGRESE LA CLAVE DEL " & _Msg & " ASIGNADO" & vbCrLf &
+                               _Msg & " ASIGNADO: " & _CodTecnico_Asignado & "-" & _Tecnico_Asignado, "INGRESAR A GESTION DEL TALLER",
+                               _PwTecnico, False, _Tipo_Mayus_Minus.Normal, 5, True, _Tipo_Imagen.Key,, _Tipo_Caracter.Solo_Numeros_Enteros, False, "*")
+
+        If Not _Aceptar Then
+            Return
+        End If
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller Where PwTecnico = '" & _PwTecnico & "'"
+        Dim _Row_Funcionario As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row_Funcionario) Then
+            MessageBoxEx.Show(Me, "Clave desconocida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Sb_Estado_05_Reparacion_Nuevo()
+            Return
+        End If
+
+        If _Row_Funcionario.Item("CodFuncionario") <> _CodTecnico_Asignado Then
+
+            If _Row_Tecnico_Asignado.Item("EsTecnico") Then _Msg = "técnico"
+            If _Row_Tecnico_Asignado.Item("EsTaller") Then _Msg = "taller"
+
+            MessageBoxEx.Show(Me, "El " & _Msg & ": " & _Row_Funcionario.Item("CodFuncionario") & "-" & _Row_Funcionario.Item("NomFuncionario").ToString.Trim &
+                              " no esta asignado para realizar este presupuesto" & vbCrLf & vbCrLf &
+                              "Debe ingresar la clave de " & _Tecnico_Asignado, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Sb_Estado_05_Reparacion_Nuevo()
+            Return
+        End If
+
+        Dim Fm As New Frm_St_Estado_05_Reparacion2(Frm_St_Estado_05_Reparacion.Accion.Nuevo)
+        Fm.RowEntidad = _RowEntidad
+        Fm.Id_Ot = _Id_Ot
+        Fm.DsDocumento = _DsDocumento
+        Fm.CodTecnico_Repara = _CodTecnico_Asignado
         Fm.ShowDialog(Me)
-        If Fm.Pro_Fijar_Estado Then
+        If Fm.Fijar_Estado Then
             _Abrir_Documento = True
             Me.Close()
         End If
         Fm.Dispose()
+
+
+        'Dim Fm As New Frm_St_Estado_05_Reparacion(Frm_St_Estado_05_Reparacion.Accion.Nuevo)
+        'Fm.Pro_RowEntidad = _RowEntidad
+        'Fm.Pro_Imagenes_32x32 = Imagenes_32x32
+        'Fm.Pro_Id_Ot = _Id_Ot
+        'Fm.Pro_DsDocumento = _DsDocumento
+        'Fm.ShowDialog(Me)
+        'If Fm.Pro_Fijar_Estado Then
+        '    _Abrir_Documento = True
+        '    Me.Close()
+        'End If
+        'Fm.Dispose()
 
     End Sub
 
@@ -2104,20 +2208,30 @@ Public Class Frm_St_Documento
             End If
         Next
 
-        Dim Fm As New Frm_St_Estado_05_Reparacion(Frm_St_Estado_05_Reparacion.Accion.Editar)
-        Fm.Pro_RowEntidad = _RowEntidad
-        Fm.Pro_Imagenes_32x32 = Imagenes_32x32
-        Fm.Pro_Id_Ot = _Id_Ot
-        Fm.Pro_DsDocumento = _DsDocumento
-        Fm.Btn_Editar.Enabled = _Editar
+        Dim Fm As New Frm_St_Estado_05_Reparacion2(Frm_St_Estado_05_Reparacion.Accion.Editar)
+        Fm.RowEntidad = _RowEntidad
+        Fm.Id_Ot = _Id_Ot
+        Fm.DsDocumento = _DsDocumento
+        Fm.CodTecnico_Repara = _Row_Encabezado.Item("CodTecnico_Repara")
+        Fm.SoloLectura = True
         Fm.ShowDialog(Me)
-        Dim _Editando_Documento As Boolean = Fm.Pro_Editando_Documento
         Fm.Dispose()
 
-        If _Editando_Documento Then
-            _Abrir_Documento = True
-            Me.Close()
-        End If
+
+        'Dim Fm As New Frm_St_Estado_05_Reparacion(Frm_St_Estado_05_Reparacion.Accion.Editar)
+        'Fm.Pro_RowEntidad = _RowEntidad
+        'Fm.Pro_Imagenes_32x32 = Imagenes_32x32
+        'Fm.Pro_Id_Ot = _Id_Ot
+        'Fm.Pro_DsDocumento = _DsDocumento
+        'Fm.Btn_Editar.Enabled = _Editar
+        'Fm.ShowDialog(Me)
+        'Dim _Editando_Documento As Boolean = Fm.Pro_Editando_Documento
+        'Fm.Dispose()
+
+        'If _Editando_Documento Then
+        '    _Abrir_Documento = True
+        '    Me.Close()
+        'End If
 
     End Sub
 

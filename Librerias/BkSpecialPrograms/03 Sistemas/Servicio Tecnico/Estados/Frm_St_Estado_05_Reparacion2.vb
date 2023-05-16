@@ -1,4 +1,4 @@
-﻿Imports BkSpecialPrograms.Modulo_Precios_Costos
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_St_Estado_05_Reparacion2
 
@@ -43,6 +43,7 @@ Public Class Frm_St_Estado_05_Reparacion2
     End Enum
 
     Public Property CodTecnico_Repara As String
+    Public Property SoloLectura As Boolean
 
     Public Property DsDocumento() As DataSet
         Get
@@ -96,16 +97,6 @@ Public Class Frm_St_Estado_05_Reparacion2
 
         Dim _CodFuncionario = _Row_Encabezado.Item("CodTecnico_Asignado")
 
-        'If _Accion = Accion.Editar Then
-        '    CodTecnico_Presupuesta = _Row_Encabezado.Item("CodTecnico_Presupuesta").ToString.Trim
-        'End If
-
-        'If String.IsNullOrEmpty(CodTecnico_Presupuesta) Then
-        '    CodTecnico_Presupuesta = _CodFuncionario
-        'Else
-        '    _CodFuncionario = CodTecnico_Presupuesta
-        'End If
-
         Txt_Tecnico_Taller.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller", "NomFuncionario",
                                            "CodFuncionario = '" & _CodFuncionario & "'").ToString.Trim
 
@@ -113,6 +104,14 @@ Public Class Frm_St_Estado_05_Reparacion2
 
         Sb_Actualizar_Grilla()
         Sb_Marcar_Grilla()
+
+        If SoloLectura Then
+            Btn_Fijar_Estado.Enabled = False
+            Txt_Nota.ReadOnly = True
+            Txt_NroSerie.ReadOnly = True
+            Txt_Tecnico_Taller.ReadOnly = True
+            Me.Text += " (Documento solo de lectura)"
+        End If
 
     End Sub
 
@@ -173,10 +172,6 @@ Public Class Frm_St_Estado_05_Reparacion2
             Dim _Chk_Validado As Boolean = _Fila.Cells("Chk").Value
             Dim _Utilizado As Boolean = _Fila.Cells("Utilizado").Value
 
-            'If Not _Editando_documento Then
-            '    If _Accion = Accion.Editar Then _Chk_Validado = True
-            'End If
-
             _Fila.DefaultCellStyle.Font = New Font(Font.Name, Font.Size, FontStyle.Regular)
 
             If _Chk_Validado Then
@@ -199,6 +194,11 @@ Public Class Frm_St_Estado_05_Reparacion2
 
     Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
+        'If SoloLectura Then
+        '    MessageBoxEx.Show(Me, "Documento de solo lectura", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    Return
+        'End If
+
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
 
         Dim _Semilla As Integer = _Fila.Cells("Semilla").Value
@@ -215,9 +215,9 @@ Public Class Frm_St_Estado_05_Reparacion2
 
         Dim Fm2 As New Frm_OperacionesXServicio("")
         Fm2.TblOperaciones = _Tbl_Operaciones
+        Fm2.SoloLectura = SoloLectura
         Fm2.ShowDialog(Me)
         _Grabar = Fm2.Grabar
-        '_Tbl_DetProd_Srv = Fm2.TblOperaciones
         Fm2.Dispose()
 
         If _Grabar Then
@@ -237,7 +237,7 @@ Public Class Frm_St_Estado_05_Reparacion2
 
         ' --------------------------------------------------- NOTAS ---------------------------------------
 
-        Dim _Reparacion_Realizada = String.Empty 'Trim(Txt_Reparacion_Realizada.Text)
+        Dim _Reparacion_Realizada = String.Empty
 
         For _i = 0 To 31
             _Reparacion_Realizada = Replace(_Reparacion_Realizada, Chr(_i), " ")
@@ -253,10 +253,7 @@ Public Class Frm_St_Estado_05_Reparacion2
                        ",Motivo_no_reparo = '" & _Motivo_no_reparo & "'" & vbCrLf &
                        "Where Id_Ot = " & _Id_Ot & vbCrLf & vbCrLf
 
-        'Reparacion_Realizada, Chk_no_se_pudo_reparar, Motivo_no_reparo
-
         '**********************************'**********************************
-        'CodTecnico_Repara
 
         Dim _HH As String = De_Num_a_Tx_01(_Horas_Mano_de_Obra_Repara, False, 5)
 
@@ -329,8 +326,6 @@ Public Class Frm_St_Estado_05_Reparacion2
                            "," & De_Num_a_Tx_01(_Total_Linea, False, 5) &
                            ",1," & _Idmaeedo_Cov & "," & _Idmaeddo_Cov & ")" & vbCrLf
 
-
-
         Next
 
 
@@ -370,7 +365,6 @@ Public Class Frm_St_Estado_05_Reparacion2
 
                 Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
 
-                'Modalidad = _Modalidad
                 Dim _Fecha_Emision = FechaDelServidor()
 
                 Dim Fm_Post As New Frm_Formulario_Documento("NVV", csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True)
@@ -415,6 +409,15 @@ Public Class Frm_St_Estado_05_Reparacion2
 
         Dim _CodFuncionario = _Row_Encabezado.Item("CodTecnico_Asignado")
 
+        Dim _Aceptar As Boolean
+
+        _Aceptar = InputBox_Bk(Me, "INDIQUE EL MOTIVO DEL PORQUE NO FUE POSIBLE REPARAR", "INFORMACION",
+                               _Motivo_no_reparo,,, 300, True, _Tipo_Imagen.Texto)
+
+        If Not _Aceptar Then
+            Return False
+        End If
+
         Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set" & Space(1) &
                        "CodEstado = 'V'," & vbCrLf &
                        "CodTecnico_Repara = '" & _CodFuncionario & "'," & vbCrLf &
@@ -430,20 +433,49 @@ Public Class Frm_St_Estado_05_Reparacion2
                         ",Nota_Etapa_07 = '" & _Texto & "'" & vbCrLf &
                         "Where Id_Ot = " & _Id_Ot & vbCrLf & vbCrLf
 
-        Consulta_sql += "Delete " & _Global_BaseBk & "Zw_St_OT_Estados Where Id_Ot = " & _Id_Ot & " And CodEstado in ('R','V','F')" & vbCrLf & vbCrLf
+        Consulta_sql += "Delete " & _Global_BaseBk & "Zw_St_OT_Estados Where Id_Ot = " & _Id_Ot & " And CodEstado In ('R','V','F')" & vbCrLf & vbCrLf
 
         Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_OT_Estados " &
                      "(Id_Ot,CodEstado,Fecha_Fijacion,CodFuncionario,NomFuncionario) Values " &
                      "(" & _Id_Ot & ",'R',GetDate(),'" & FUNCIONARIO & "','" & Nombre_funcionario_activo & "')" & vbCrLf & vbCrLf
 
-        Fx_Fijar_Estado_No_Se_Pudo_Reparar = _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
-
+        If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+            Return True
+        End If
 
     End Function
 
     Private Sub Btn_Fijar_Estado_Click(sender As Object, e As EventArgs) Handles Btn_Fijar_Estado.Click
-        Fx_Fijar_Estado()
+
+        If Fx_Fijar_Estado() Then
+
+            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado",
+                  MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            _Fijar_Estado = True
+            Me.Close()
+
+        End If
+
     End Sub
 
+    Private Sub Chk_No_se_pudo_reparar_el_equipo_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_No_se_pudo_reparar_el_equipo.CheckedChanged
 
+        If Chk_No_se_pudo_reparar_el_equipo.Checked Then
+
+            If Fx_Fijar_Estado_No_Se_Pudo_Reparar() Then
+
+                If MessageBoxEx.Show(Me, "¿Confirma Fijar el estado como NO REPARADO?", "Confirmación",
+                                     MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) = DialogResult.Yes Then
+
+                    _Fijar_Estado = True
+                    Me.Close()
+
+                End If
+
+            End If
+
+        End If
+
+    End Sub
 End Class

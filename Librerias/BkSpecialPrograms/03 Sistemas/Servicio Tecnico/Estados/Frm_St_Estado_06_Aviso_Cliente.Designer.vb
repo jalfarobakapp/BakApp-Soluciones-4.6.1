@@ -76,7 +76,6 @@ Partial Class Frm_St_Estado_06_Aviso_Cliente
         '
         'Txt_Nota
         '
-        Me.Txt_Nota.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -85,7 +84,6 @@ Partial Class Frm_St_Estado_06_Aviso_Cliente
         Me.Txt_Nota.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Nota.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Nota.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Nota.FocusHighlightEnabled = True
         Me.Txt_Nota.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Nota.ForeColor = System.Drawing.Color.Black
         Me.Txt_Nota.Location = New System.Drawing.Point(6, 3)
