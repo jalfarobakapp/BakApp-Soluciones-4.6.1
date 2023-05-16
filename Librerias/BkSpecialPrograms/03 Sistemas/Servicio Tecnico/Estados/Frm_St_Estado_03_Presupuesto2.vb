@@ -30,7 +30,6 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
     Public Property CodTecnico_Presupuesta As String
     Public Property ObligaIngProdPresupuesto As Boolean
-
     Public Property SoloLectura As Boolean
 
 #Region "PROPIEDADES"

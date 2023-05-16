@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+ï»¿Imports DevComponents.DotNetBar
 'Imports Lib_Bakapp_VarClassFunc
 'Imports BkSpecialPrograms
 Imports System.Data.SqlClient
@@ -37,17 +37,20 @@ Public Class Frm_St_Estado_06_Aviso_Cliente
 
     Public Sub New(ByVal Accion As Accion)
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
         _Accion = Accion
+
+        Sb_Color_Botones_Barra(Bar2)
 
     End Sub
 
     Private Sub Frm_St_Estado_06_Aviso_Cliente_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         If _Accion = Accion.Editar Then
+
             Txt_Nota.ReadOnly = True
             Txt_Nota.BackColor = Color.LightGray
             Txt_Nota.FocusHighlightEnabled = False
@@ -58,8 +61,9 @@ Public Class Frm_St_Estado_06_Aviso_Cliente
                 Btn_Editar.Visible = False
             End If
 
-        ElseIf _Accion = Accion.Nuevo Then
-            Txt_Nota.FocusHighlightEnabled = True
+            'ElseIf _Accion = Accion.Nuevo Then
+            '    Txt_Nota.FocusHighlightEnabled = True
+
         End If
 
         Btn_Informacion_Entidad.Visible = True
@@ -84,9 +88,9 @@ Public Class Frm_St_Estado_06_Aviso_Cliente
 
         If String.IsNullOrEmpty(Txt_Nota.Text) Then
             Beep()
-            ToastNotification.Show(Me, "FALTA INGRESAR ALGUN COMENTARIO", _
-                                   Imagenes_32x32.Images.Item("warning.png"), _
-                                   2 * 1000, eToastGlowColor.Red, _
+            ToastNotification.Show(Me, "FALTA INGRESAR ALGUN COMENTARIO",
+                                   Imagenes_32x32.Images.Item("warning.png"),
+                                   2 * 1000, eToastGlowColor.Red,
                                    eToastPosition.MiddleCenter)
             Txt_Nota.Focus()
             Return
@@ -94,7 +98,7 @@ Public Class Frm_St_Estado_06_Aviso_Cliente
 
         If Fx_Fijar_Estado() Then
 
-            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado", _
+            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado",
                               MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             _Fijar_Estado = True
@@ -112,24 +116,24 @@ Public Class Frm_St_Estado_06_Aviso_Cliente
 
         Dim _Nota_Etapa_06 As String = Txt_Nota.Text
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Notas Set " & vbCrLf & _
-                       "Nota_Etapa_06 = '" & _Nota_Etapa_06 & "'" & vbCrLf & _
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Notas Set " & vbCrLf &
+                       "Nota_Etapa_06 = '" & _Nota_Etapa_06 & "'" & vbCrLf &
                        "Where Id_Ot = " & _Id_Ot & vbCrLf & vbCrLf
-        
+
         '**********************************'**********************************
 
 
         ' ACTUALIZAR ENCABEZADO DE DOCUMENTO
 
         If _Accion = Accion.Nuevo Then
-            Consulta_sql += "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set " & _
-                           "CodEstado = 'F'" & vbCrLf & _
+            Consulta_sql += "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set " &
+                           "CodEstado = 'F'" & vbCrLf &
                            "Where Id_Ot  = " & _Id_Ot & vbCrLf & vbCrLf
 
             ' ACTUALIZAR ESTADO
 
-            Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_OT_Estados " & _
-                           "(Id_Ot,CodEstado,Fecha_Fijacion,CodFuncionario,NomFuncionario) Values " & _
+            Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_OT_Estados " &
+                           "(Id_Ot,CodEstado,Fecha_Fijacion,CodFuncionario,NomFuncionario) Values " &
                            "(" & _Id_Ot & ",'V',GetDate(),'" & FUNCIONARIO & "','" & Nombre_funcionario_activo & "')" & vbCrLf & vbCrLf
 
 
@@ -137,7 +141,7 @@ Public Class Frm_St_Estado_06_Aviso_Cliente
         '**********************************'**********************************
 
 
-         Fx_Fijar_Estado = _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+        Fx_Fijar_Estado = _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
 
     End Function
@@ -217,9 +221,9 @@ Public Class Frm_St_Estado_06_Aviso_Cliente
 
         Dim _Nro_Ot = _Row_Encabezado.Item("Nro_Ot")
 
-        Dim _Asunto = "Aviso por reparación OT Nro: " & _Nro_Ot
+        Dim _Asunto = "Aviso por reparaciÃ³n OT Nro: " & _Nro_Ot
         Dim _Adjunto As String
-        
+
         Dim Envio_Occ_Mail As New Class_Outlook
         Dim _Para As String = _Row_Encabezado.Item("Email_Contacto")
         Dim _Cuerpo As String = Txt_Nota.Text
@@ -230,9 +234,9 @@ Public Class Frm_St_Estado_06_Aviso_Cliente
 
         If _CodEstado = "V" Then
 
-            If MessageBoxEx.Show(Me, "¿Se envío el correo de aviso?", _
-                                 "Aviso al cliente", _
-                                 MessageBoxButtons.YesNo, _
+            If MessageBoxEx.Show(Me, "Â¿Se envÃ­o el correo de aviso?",
+                                 "Aviso al cliente",
+                                 MessageBoxButtons.YesNo,
                                  MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
                 Sb_Fijar_Estado()

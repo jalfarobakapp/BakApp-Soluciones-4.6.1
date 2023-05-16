@@ -127,7 +127,7 @@ Public Class Frm_St_Documento
 
             AddHandler Btn_Grabar.Click, AddressOf Sb_Editar_OT
 
-            Me.Text = "GESTION DE ORDEN DE TRABAJO"
+            Me.Text = "GESTION DE ORDEN DE TRABAJO (" & _Id_Ot & ")"
 
             If Trim(_Row_Encabezado.Item("CodEstado")) = "E" Then
                 Btn_Cerrar_OT.Visible = True
@@ -2170,23 +2170,30 @@ Public Class Frm_St_Documento
             Return
         End If
 
-
-
-
-
-
-
-        Dim Fm As New Frm_St_Estado_05_Reparacion(Frm_St_Estado_05_Reparacion.Accion.Nuevo)
-        Fm.Pro_RowEntidad = _RowEntidad
-        Fm.Pro_Imagenes_32x32 = Imagenes_32x32
-        Fm.Pro_Id_Ot = _Id_Ot
-        Fm.Pro_DsDocumento = _DsDocumento
+        Dim Fm As New Frm_St_Estado_05_Reparacion2(Frm_St_Estado_05_Reparacion.Accion.Nuevo)
+        Fm.RowEntidad = _RowEntidad
+        Fm.Id_Ot = _Id_Ot
+        Fm.DsDocumento = _DsDocumento
+        Fm.CodTecnico_Repara = _CodTecnico_Asignado
         Fm.ShowDialog(Me)
-        If Fm.Pro_Fijar_Estado Then
+        If Fm.Fijar_Estado Then
             _Abrir_Documento = True
             Me.Close()
         End If
         Fm.Dispose()
+
+
+        'Dim Fm As New Frm_St_Estado_05_Reparacion(Frm_St_Estado_05_Reparacion.Accion.Nuevo)
+        'Fm.Pro_RowEntidad = _RowEntidad
+        'Fm.Pro_Imagenes_32x32 = Imagenes_32x32
+        'Fm.Pro_Id_Ot = _Id_Ot
+        'Fm.Pro_DsDocumento = _DsDocumento
+        'Fm.ShowDialog(Me)
+        'If Fm.Pro_Fijar_Estado Then
+        '    _Abrir_Documento = True
+        '    Me.Close()
+        'End If
+        'Fm.Dispose()
 
     End Sub
 
@@ -2201,20 +2208,30 @@ Public Class Frm_St_Documento
             End If
         Next
 
-        Dim Fm As New Frm_St_Estado_05_Reparacion(Frm_St_Estado_05_Reparacion.Accion.Editar)
-        Fm.Pro_RowEntidad = _RowEntidad
-        Fm.Pro_Imagenes_32x32 = Imagenes_32x32
-        Fm.Pro_Id_Ot = _Id_Ot
-        Fm.Pro_DsDocumento = _DsDocumento
-        Fm.Btn_Editar.Enabled = _Editar
+        Dim Fm As New Frm_St_Estado_05_Reparacion2(Frm_St_Estado_05_Reparacion.Accion.Editar)
+        Fm.RowEntidad = _RowEntidad
+        Fm.Id_Ot = _Id_Ot
+        Fm.DsDocumento = _DsDocumento
+        Fm.CodTecnico_Repara = _Row_Encabezado.Item("CodTecnico_Repara")
+        Fm.SoloLectura = True
         Fm.ShowDialog(Me)
-        Dim _Editando_Documento As Boolean = Fm.Pro_Editando_Documento
         Fm.Dispose()
 
-        If _Editando_Documento Then
-            _Abrir_Documento = True
-            Me.Close()
-        End If
+
+        'Dim Fm As New Frm_St_Estado_05_Reparacion(Frm_St_Estado_05_Reparacion.Accion.Editar)
+        'Fm.Pro_RowEntidad = _RowEntidad
+        'Fm.Pro_Imagenes_32x32 = Imagenes_32x32
+        'Fm.Pro_Id_Ot = _Id_Ot
+        'Fm.Pro_DsDocumento = _DsDocumento
+        'Fm.Btn_Editar.Enabled = _Editar
+        'Fm.ShowDialog(Me)
+        'Dim _Editando_Documento As Boolean = Fm.Pro_Editando_Documento
+        'Fm.Dispose()
+
+        'If _Editando_Documento Then
+        '    _Abrir_Documento = True
+        '    Me.Close()
+        'End If
 
     End Sub
 

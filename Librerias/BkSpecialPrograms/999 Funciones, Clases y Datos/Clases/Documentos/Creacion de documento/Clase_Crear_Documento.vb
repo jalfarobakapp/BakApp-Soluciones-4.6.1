@@ -470,7 +470,7 @@ Public Class Clase_Crear_Documento
 
                         If _Lincondesp And Not _Tidopa.Contains("G") Then
 
-                            If _Tido = "GRI" Or _Tido = "GDI" Then
+                            If _Tido = "GRI" Or (_Tido = "GDI" And _Subtido = "") Then
 
                                 _Caprad1 = _Caprco1 ' Cantidad que mueve Stock Fisico, según el producto.
                                 _Caprad2 = _Caprco2 ' Cantidad que mueve Stock Fisico, según el producto.
@@ -524,7 +524,7 @@ Public Class Clase_Crear_Documento
                             If String.IsNullOrEmpty(_Eslido) Then
 
                                 Select Case _Tido
-                                    Case "BLV", "FCV", "FCC", "GRI"
+                                    Case "BLV", "FCV", "FCC", "GRI", "GDI"
                                         If _Caprad1 = _Caprco1 Then
                                             _Eslido = "C"
                                         End If
@@ -1020,8 +1020,6 @@ Public Class Clase_Crear_Documento
 
                             If _Tidopa = "COV" Or _Tidopa = "NVV" Or _Tidopa = "OCC" Or _Tidopa = "OCI" Or _Tidopa = "NVI" Or _Tido = "GTI" Then
 
-                                'Or (_Tido = "OCC" And _Tidopa = "OCC") Then
-
                                 _Caprex1 = 0
                                 _Caprex2 = 0
 
@@ -1059,7 +1057,7 @@ Public Class Clase_Crear_Documento
 
                         Dim _Ppoppr As String = "0"
 
-                        If _Tido = "NVI" Or _Tido = "GRI" Then
+                        If _Tido = "NVI" Or _Tido = "GRI" Or _Tido = "GDI" Then
                             _Ppoppr = _Ppprpm
                         End If
 
@@ -1629,42 +1627,6 @@ Public Class Clase_Crear_Documento
                             Comando.Transaction = myTrans
                             Comando.ExecuteNonQuery()
 
-
-                            'Comando = New SqlCommand("SELECT ESDO From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen, cn2)
-                            'Comando.Transaction = myTrans
-                            'dfd1 = Comando.ExecuteReader()
-
-                            'While dfd1.Read()
-                            '    _Esdo = dfd1("ESDO").ToString.Trim
-                            'End While
-                            'dfd1.Close()
-
-                            'If String.IsNullOrEmpty(_Esdo) Then
-
-                            '    Comando = New SqlCommand("SELECT ESLIDO,CAPRCO1,CAPREX1,CAPRAD1 FROM MAEDDO Where IDMAEEDO = " & _Idmaeedo_Origen, cn2)
-                            '    Comando.Transaction = myTrans
-                            '    dfd1 = Comando.ExecuteReader()
-
-                            '    Dim _Cuenta_Eslido = 0
-
-                            '    While dfd1.Read()
-                            '        _Eslido = dfd1("ESLIDO")
-                            '        If _Eslido = "C" Then _Cuenta_Eslido += 1
-                            '    End While
-                            '    dfd1.Close()
-
-                            '    If _Cuenta_Eslido = _Tbl_Detalle.Rows.Count Then
-
-                            '        Consulta_sql = "UPDATE MAEEDO SET ESDO = 'C' WHERE IDMAEEDO = " & _Idmaeedo_Origen
-
-                            '        Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                            '        Comando.Transaction = myTrans
-                            '        Comando.ExecuteNonQuery()
-
-                            '    End If
-
-                            'End If
-
                         End If
 
                     Next
@@ -1817,7 +1779,7 @@ Public Class Clase_Crear_Documento
 
             End If
 
-            If _Tido = "BLV" Or _Tido = "FCV" Or _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "NCV" Then
+            If _Tido = "BLV" Or _Tido = "FCV" Or _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "NCV" Or _Tido = "GRI" Or _Tido = "GDI" Then
 
                 Consulta_sql = "Select * From MAEEDO Where TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
                 Comando = New SqlCommand(Consulta_sql, cn2)
@@ -3746,6 +3708,13 @@ Public Class Clase_Crear_Documento
                 _Campos.Add("STTR1")
                 _Campos.Add("STTR2")
 
+            Case "GDI"
+
+                If _Subtido = "GTI" Then
+                    _Campos.Add("STTR1")
+                    _Campos.Add("STTR2")
+                End If
+
             Case "GDD"
 
                 If _Subtido = String.Empty Then
@@ -3828,6 +3797,11 @@ Public Class Clase_Crear_Documento
                     _Campos.Add("STDV1C")
                     _Campos.Add("STDV2C")
                 End If
+
+            Case "GTI"
+
+                _Campos.Add("STTR1")
+                _Campos.Add("STTR2")
 
             Case "GTI", "GDI"
 

@@ -1209,6 +1209,10 @@ Public Class Frm_Formulario_Documento
                     _RowEntidad.Item("SUEN") = String.Empty
                 End If
 
+                If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna Then
+                    _RowEntidad.Item("SUEN") = ModSucursal
+                End If
+
                 _Aplicar_Venciminetos = False
 
             Else
@@ -9284,7 +9288,8 @@ Public Class Frm_Formulario_Documento
                     If _Cabeza = "Cantidad" And
                         (_Tipo_Documento = csGlobales.Enum_Tipo_Documento.Venta Or
                          _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Traslado_Interno Or
-                         _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Nota_Venta_Interna) Then
+                         _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Nota_Venta_Interna Or
+                         _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna) Then
 
                         Dim _Tipr = _Fila.Cells("Tipr").Value
                         Dim _Sucursal = _Fila.Cells("Sucursal").Value
@@ -13591,7 +13596,8 @@ Public Class Frm_Formulario_Documento
             If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Venta Or
                 (_Tipo_Documento = csGlobales.Enum_Tipo_Documento.Compra And _Solicitar_Permiso_OCC_SOC) Or
                 _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Traslado_Interno Or
-                _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Nota_Venta_Interna Then
+                _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Nota_Venta_Interna Or
+                _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna Then
 
                 If _Tido = "OCC" Then
 
