@@ -3687,7 +3687,7 @@ Namespace My.Resources
         ''' CONSTRAINT [PK_Zw_St_OT_Recetas_Prod] PRIMARY KEY CLUSTERED 
         '''(
         '''	[Id] ASC
-        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON) ON [PRIMARY]
         ''') ON [PRIMARY]
         '''
         '''
@@ -3746,20 +3746,43 @@ Namespace My.Resources
         '''
         '''
         '''CREATE TABLE [dbo].[Zw_Tbl_DisenoBarras](
-        '''	[Semilla] [int] IDENTITY(1,1) NOT NULL,
-        '''	[NombreEtiqueta] [varchar](80) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[TIPO] [char](1) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[CAMPO] [char](15) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[FUNCION] [text] NOT NULL DEFAULT (&apos;&apos;),
-        '''	[CantPorLinea] [float] NOT NULL DEFAULT (0),
+        '''	[Semilla]           [int] IDENTITY(1,1) NOT NULL,
+        '''	[NombreEtiqueta]    [varchar](80)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[TIPO]              [char](1)           NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CAMPO]             [char](15)          NOT NULL DEFAULT (&apos;&apos;),
+        '''	[FUNCION]           [text]              NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CantPorLinea]      [float]             NOT NULL DEFAULT (0),
         ''' CONSTRAINT [PK_Zw_Tbl_DisenoBarras] PRIMARY KEY CLUSTERED 
         '''(
-        '''	[Semilla] ASC
-        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON,  [resto de la cadena truncado]&quot;;.
+        '''	[Semilla]  [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Tbl_DisenoBarras() As String
             Get
                 Return ResourceManager.GetString("Zw_Tbl_DisenoBarras", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''
+        '''CREATE TABLE [dbo].[Zw_Tbl_DisenoBarras_SalPtoxEstacion](
+        '''	[Id]				[int] IDENTITY(1,1) NOT NULL,
+        '''	[Semilla_Padre]		[int]				NOT NULL,
+        '''	[NombreEquipo]		[varchar](20)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Puerto]			[varchar](5)		NOT NULL DEFAULT (&apos;&apos;),
+        ''' CONSTRAINT [PK_Zw_Tbl_DisenoBarras_SalPtoxEstacion] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+        ''') ON [PRIMARY]
+        '''
+        '''
+        '''.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Tbl_DisenoBarras_SalPtoxEstacion() As String
+            Get
+                Return ResourceManager.GetString("Zw_Tbl_DisenoBarras_SalPtoxEstacion", resourceCulture)
             End Get
         End Property
         

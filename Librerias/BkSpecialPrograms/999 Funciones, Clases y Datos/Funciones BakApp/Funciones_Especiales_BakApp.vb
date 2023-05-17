@@ -2129,7 +2129,7 @@ Public Module Modulo_Precios_Costos
             _New_Precio = _Precio
         End If
 
-        _New_Precio = Math.Round(_New_Precio, 2)
+        _New_Precio = Math.Round(_New_Precio, 5)
 
         Return _New_Precio
 

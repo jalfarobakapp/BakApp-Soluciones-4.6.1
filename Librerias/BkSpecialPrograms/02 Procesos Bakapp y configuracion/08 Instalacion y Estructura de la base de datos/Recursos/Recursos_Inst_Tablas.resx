@@ -661,6 +661,9 @@
   <data name="Zw_Tbl_DisenoBarras" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_tbl_disenobarras.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="Zw_Tbl_DisenoBarras_SalPtoxEstacion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sql\tablas\zw_tbl_disenobarras_salptoxestacion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="Zw_Tbl_Reemplazos" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_tbl_reemplazos.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

@@ -67,8 +67,8 @@ Public Class Frm_InpunBox_Bk
     End Property
 
     Public Property BuscarCarpeta As Boolean
-
-
+    Public Property ConFechaMinima As Boolean
+    Public Property FechaMinima As DateTime
     Private Sub Frm_InpunBox_Bk_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         If Global_Thema = Enum_Themas.Oscuro Then
@@ -127,6 +127,28 @@ Public Class Frm_InpunBox_Bk
     Sub Sb_Aceptar()
 
         _Nueva_Descripcion = TxtDescripcion.Text
+
+        If _Tipo_de_Caracter = _Tipo_Caracter.Fecha Then
+
+            Dim _IsValidDate As Boolean = IsDate(_Nueva_Descripcion)
+
+            If Not _IsValidDate Then
+                MessageBoxEx.Show(Me, "El valor ingresado no es una fecha valida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                TxtDescripcion.Focus()
+                Return
+            End If
+
+            Dim _Fecha As Date = Convert.ToDateTime(_Nueva_Descripcion)
+
+            If ConFechaMinima Then
+                If FormatDateTime(_Fecha, DateFormat.ShortDate) < FormatDateTime(FechaMinima, DateFormat.ShortDate) Then
+                    MessageBoxEx.Show(Me, "La fecha no puede ser menor a " & FechaMinima.ToShortDateString, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    TxtDescripcion.Focus()
+                    Return
+                End If
+            End If
+
+        End If
 
         If BuscarCarpeta Then
 
