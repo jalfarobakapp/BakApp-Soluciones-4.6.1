@@ -4210,6 +4210,11 @@ Public Class Frm_01_Asis_Compra_Resultados
         Fm.Accion_Automatica = _Accion_Automatica
         Fm.Chk_Incluir_Ent_Excluidas.Checked = Modo_NVI
         Fm.Chk_Incluir_Ent_Excluidas.Enabled = False
+
+        Fm.MarcarProvQueNoTiene = True
+
+        If Modo_NVI Then Fm.MarcarProvQueNoTiene = False
+
         Fm.ShowDialog(Me)
         _Proceso_Automatico_Ejecutado = Fm.Pro_Proceso_Generado
         Fm.Dispose()

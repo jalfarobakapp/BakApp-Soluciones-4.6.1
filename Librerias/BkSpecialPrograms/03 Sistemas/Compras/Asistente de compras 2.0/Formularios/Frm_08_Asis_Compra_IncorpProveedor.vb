@@ -27,6 +27,8 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
         End Get
     End Property
 
+    Public Property MarcarProvQueNoTiene As Boolean
+
     Public Sub New(RowParametros As DataRow)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -222,10 +224,22 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
                     If _Tbl_Detalle.Rows.Count = 1 Then
 
                         Dim _Codigo = _Tbl_Detalle.Rows(0).Item("Codigo")
+                        Dim _Endo = _Tbl_Detalle.Rows(0).Item("Endo_Utl_Compra")
 
-                        _SqlQuery_2 += "Update " & _Tabla_Paso & Space(1) &
-                                       "Set CantComprar = " & De_Num_a_Tx_01(_CantComprar, False, 5) & Space(1) &
-                                       "Where Codigo = '" & _Codigo & "'" & vbCrLf
+                        If Fx_RevisarComprarSinEnvioXProveedor(_Codigo, _Endo, 14, FechaDelServidor) Then
+
+                            _SqlQuery_2 += "Update " & _Tabla_Paso & Space(1) &
+                                           "Set CantComprar = " & De_Num_a_Tx_01(_CantComprar, False, 5) & Space(1) &
+                                           "Where Codigo = '" & _Codigo & "'" & vbCrLf
+
+                        Else
+
+                            _SqlQuery_2 += "Update " & _Tabla_Paso & Space(1) &
+                                           "Set CantComprar = " & De_Num_a_Tx_01(_CantComprar, False, 5) & Space(1) &
+                                           ",Comprar = 0,NoComprarProvNoTiene = 1" & vbCrLf &
+                                           "Where Codigo = '" & _Codigo & "'" & vbCrLf
+
+                        End If
 
                     ElseIf _Tbl_Detalle.Rows.Count > 1 Then
 
@@ -252,18 +266,28 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
 
                                 If _Codigo = _Codigo_Comprar Then
 
-                                    _SqlQuery_2 += "Update " & _Tabla_Paso & Space(1) &
-                                                   "Set CantComprar = " & De_Num_a_Tx_01(_CantComprar, False, 5) & Space(1) &
-                                                   "Where Codigo = '" & _Codigo & "'" & vbCrLf
+                                    Dim _Endo = _Fila.Item("Endo_Utl_Compra")
+
+                                    If Fx_RevisarComprarSinEnvioXProveedor(_Codigo, _Endo, 14, FechaDelServidor) Then
+
+                                        _SqlQuery_2 += "Update " & _Tabla_Paso & Space(1) &
+                                                       "Set CantComprar = " & De_Num_a_Tx_01(_CantComprar, False, 5) & Space(1) &
+                                                       "Where Codigo = '" & _Codigo & "'" & vbCrLf
+
+                                    Else
+
+                                        _SqlQuery_2 += "Update " & _Tabla_Paso & Space(1) &
+                                                       "Set CantComprar = " & De_Num_a_Tx_01(_CantComprar, False, 5) & Space(1) &
+                                                       ",Comprar = 0,NoComprarProvNoTiene = 1" & vbCrLf &
+                                                       "Where Codigo = '" & _Codigo & "'" & vbCrLf
+
+                                    End If
 
                                     _SqlQuery_2 += "Delete " & _Tabla_Paso & Space(1) &
-                                                   "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "' And Codigo <> '" & _Codigo_Comprar & "'" & vbCrLf
+                                               "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "' And Codigo <> '" & _Codigo_Comprar & "'" & vbCrLf
 
-                                    'Else
-
-                                    '    _SqlQuery_2 += "Delete " & _Tabla_Paso & Space(1) &
-                                    '                   "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "' And Codigo <> '" & _Codigo_Comprar & "'" & vbCrLf
                                     Exit For
+
                                 End If
 
                             Next
@@ -278,18 +302,27 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
 
                                 If _Codigo = _Codigo_Comprar Then
 
-                                    _SqlQuery_2 += "Update " & _Tabla_Paso & Space(1) &
-                                                   "Set CantComprar = " & De_Num_a_Tx_01(_CantComprar, False, 5) & Space(1) &
-                                                   "Where Codigo = '" & _Codigo & "'" & vbCrLf
+                                    Dim _Endo = _Fila.Item("Endo_Utl_Compra")
+
+                                    If Fx_RevisarComprarSinEnvioXProveedor(_Codigo, _Endo, 14, FechaDelServidor) Then
+
+                                        _SqlQuery_2 += "Update " & _Tabla_Paso & Space(1) &
+                                                       "Set CantComprar = " & De_Num_a_Tx_01(_CantComprar, False, 5) & Space(1) &
+                                                       "Where Codigo = '" & _Codigo & "'" & vbCrLf
+
+                                    Else
+
+                                        _SqlQuery_2 += "Update " & _Tabla_Paso & Space(1) &
+                                                       "Set CantComprar = " & De_Num_a_Tx_01(_CantComprar, False, 5) & Space(1) &
+                                                       ",Comprar = 0,NoComprarProvNoTiene = 1" & vbCrLf &
+                                                       "Where Codigo = '" & _Codigo & "'" & vbCrLf
+
+                                    End If
 
                                     _SqlQuery_2 += "Delete " & _Tabla_Paso & Space(1) &
                                                    "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "' And Codigo <> '" & _Codigo_Comprar & "'" & vbCrLf
 
                                     Exit For
-                                    'Else
-
-                                    '    _SqlQuery_2 += "Delete " & _Tabla_Paso & Space(1) &
-                                    '                   "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "' And Codigo <> '" & _Codigo_Comprar & "'" & vbCrLf
 
                                 End If
 
@@ -307,7 +340,7 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
             End If
 
             _SqlQuery_2 += vbCrLf & "Delete " & _Tabla_Paso & vbCrLf &
-                           "Where Comprar = 0" & vbCrLf
+                           "Where Comprar = 0 And NoComprarProvNoTiene = 0" & vbCrLf
 
             _SqlQuery_2 += vbCrLf & "Update " & _Tabla_Paso & vbCrLf &
                            "Set CodProveedor = Endo_Utl_Compra,CodSucProveedor = Suendo_Utl_Compra" & vbCrLf &
@@ -331,6 +364,20 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
         Finally
             Me.Enabled = True
         End Try
+
+    End Function
+
+    Function Fx_RevisarComprarSinEnvioXProveedor(_Codigo As String, _Endo As String, _DiasDif As Integer, _FechaServidor As DateTime) As Boolean
+
+        If Not MarcarProvQueNoTiene Then Return True
+
+        Dim _FechaMinima As DateTime = DateAdd(DateInterval.Day, -_DiasDif, _FechaServidor)
+
+        Consulta_sql = "Select * From MAEDDO Where IDRST In" & vbCrLf &
+                       "(Select IDMAEDDO From MAEDDO Where TIDO = 'OCC' And ENDO = '" & _Endo & "' And KOPRCT = '" & _Codigo & "' And FEEMLI > '" & Format(_FechaMinima, "yyyyMMdd") & "')"
+        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        Return CBool(_Tbl.Rows.Count)
 
     End Function
 

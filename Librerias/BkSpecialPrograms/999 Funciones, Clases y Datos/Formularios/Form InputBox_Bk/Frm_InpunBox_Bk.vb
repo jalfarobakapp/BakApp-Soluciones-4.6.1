@@ -105,6 +105,7 @@ Public Class Frm_InpunBox_Bk
         End If
 
         Btn_BuscarCarpeta.Visible = BuscarCarpeta
+        Btn_Calendario.Visible = (_Tipo_de_Caracter = _Tipo_Caracter.Fecha)
 
     End Sub
 

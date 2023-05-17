@@ -187,6 +187,7 @@ CREATE TABLE [dbo].[#TablaPaso#](
     [StockUd1BodStar]           [Float]        DEFAULT (0),
     [StockUd2BodStar]           [Float]        DEFAULT (0),
     [ProductoExcluido]          [Bit]          DEFAULT (0),
+    [NoComprarProvNoTiene]      [Bit]          DEFAULT (0),
 
 	CONSTRAInt [PK_Zw_#TablaPaso#_Codigo] PRIMARY KEY CLUSTERED 
 (
