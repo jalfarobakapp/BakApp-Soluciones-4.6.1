@@ -46,6 +46,12 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Xml_Descargados = New DevComponents.DotNetBar.LabelX()
         Me.Timer_Segundos = New System.Windows.Forms.Timer(Me.components)
+        Me.Rdb_POP3 = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_IMAP = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_CarpetaLectura = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_CarpetaDestino = New DevComponents.DotNetBar.Controls.TextBoxX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -58,9 +64,9 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Descargar_Archivos, Me.Btn_Cancelar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 245)
+        Me.Bar1.Location = New System.Drawing.Point(0, 273)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(544, 41)
+        Me.Bar1.Size = New System.Drawing.Size(584, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 5
@@ -90,9 +96,9 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.Grupo.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.Grupo.Controls.Add(Me.TableLayoutPanel1)
         Me.Grupo.DisabledBackColor = System.Drawing.Color.Empty
-        Me.Grupo.Location = New System.Drawing.Point(12, 12)
+        Me.Grupo.Location = New System.Drawing.Point(8, 12)
         Me.Grupo.Name = "Grupo"
-        Me.Grupo.Size = New System.Drawing.Size(520, 110)
+        Me.Grupo.Size = New System.Drawing.Size(564, 110)
         '
         '
         '
@@ -130,7 +136,7 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.TableLayoutPanel1.ColumnCount = 3
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.79381!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.20618!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 51.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.Btn_BuscarSMTPRecepXMLComp, 2, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX1, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Txt_Usuario, 1, 0)
@@ -153,7 +159,7 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.Btn_BuscarSMTPRecepXMLComp.AccessibleRole = System.Windows.Forms.AccessibleRole.StaticText
         Me.Btn_BuscarSMTPRecepXMLComp.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarSMTPRecepXMLComp.Image = CType(resources.GetObject("Btn_BuscarSMTPRecepXMLComp.Image"), System.Drawing.Image)
-        Me.Btn_BuscarSMTPRecepXMLComp.Location = New System.Drawing.Point(460, 3)
+        Me.Btn_BuscarSMTPRecepXMLComp.Location = New System.Drawing.Point(459, 3)
         Me.Btn_BuscarSMTPRecepXMLComp.Name = "Btn_BuscarSMTPRecepXMLComp"
         Me.Btn_BuscarSMTPRecepXMLComp.Size = New System.Drawing.Size(35, 20)
         Me.Btn_BuscarSMTPRecepXMLComp.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -188,7 +194,7 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.Txt_Usuario.Name = "Txt_Usuario"
         Me.Txt_Usuario.PreventEnterBeep = True
         Me.Txt_Usuario.ReadOnly = True
-        Me.Txt_Usuario.Size = New System.Drawing.Size(361, 22)
+        Me.Txt_Usuario.Size = New System.Drawing.Size(360, 22)
         Me.Txt_Usuario.TabIndex = 3
         '
         'LabelX4
@@ -219,7 +225,7 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.Txt_Directorio.Name = "Txt_Directorio"
         Me.Txt_Directorio.PreventEnterBeep = True
         Me.Txt_Directorio.ReadOnly = True
-        Me.Txt_Directorio.Size = New System.Drawing.Size(361, 22)
+        Me.Txt_Directorio.Size = New System.Drawing.Size(360, 22)
         Me.Txt_Directorio.TabIndex = 3
         '
         'Btn_Buscar_Directorio_Destino
@@ -228,7 +234,7 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.Btn_Buscar_Directorio_Destino.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Buscar_Directorio_Destino.Enabled = False
         Me.Btn_Buscar_Directorio_Destino.Image = CType(resources.GetObject("Btn_Buscar_Directorio_Destino.Image"), System.Drawing.Image)
-        Me.Btn_Buscar_Directorio_Destino.Location = New System.Drawing.Point(460, 29)
+        Me.Btn_Buscar_Directorio_Destino.Location = New System.Drawing.Point(459, 29)
         Me.Btn_Buscar_Directorio_Destino.Name = "Btn_Buscar_Directorio_Destino"
         Me.Btn_Buscar_Directorio_Destino.Size = New System.Drawing.Size(35, 20)
         Me.Btn_Buscar_Directorio_Destino.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -244,7 +250,7 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.Chk_Borrar_Todos_Los_Correos.ForeColor = System.Drawing.Color.Black
         Me.Chk_Borrar_Todos_Los_Correos.Location = New System.Drawing.Point(93, 55)
         Me.Chk_Borrar_Todos_Los_Correos.Name = "Chk_Borrar_Todos_Los_Correos"
-        Me.Chk_Borrar_Todos_Los_Correos.Size = New System.Drawing.Size(287, 14)
+        Me.Chk_Borrar_Todos_Los_Correos.Size = New System.Drawing.Size(287, 22)
         Me.Chk_Borrar_Todos_Los_Correos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Borrar_Todos_Los_Correos.TabIndex = 1
         Me.Chk_Borrar_Todos_Los_Correos.Text = "Eliminar los correos con DTE"
@@ -296,7 +302,7 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.TableLayoutPanel2.Controls.Add(Me.LabelX6, 0, 1)
         Me.TableLayoutPanel2.Controls.Add(Me.Lbl_Xml_Descargados, 1, 1)
         Me.TableLayoutPanel2.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(321, 128)
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(361, 128)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 3
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
@@ -396,11 +402,112 @@ Partial Class Frm_Recibir_Correos_DTE
         '
         Me.Timer_Segundos.Interval = 1000
         '
+        'Rdb_POP3
+        '
+        '
+        '
+        '
+        Me.Rdb_POP3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_POP3.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_POP3.Checked = True
+        Me.Rdb_POP3.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_POP3.CheckValue = "Y"
+        Me.Rdb_POP3.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_POP3.Location = New System.Drawing.Point(10, 245)
+        Me.Rdb_POP3.Name = "Rdb_POP3"
+        Me.Rdb_POP3.Size = New System.Drawing.Size(56, 22)
+        Me.Rdb_POP3.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_POP3.TabIndex = 34
+        Me.Rdb_POP3.Text = "POP3"
+        '
+        'Rdb_IMAP
+        '
+        '
+        '
+        '
+        Me.Rdb_IMAP.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_IMAP.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_IMAP.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_IMAP.Location = New System.Drawing.Point(72, 245)
+        Me.Rdb_IMAP.Name = "Rdb_IMAP"
+        Me.Rdb_IMAP.Size = New System.Drawing.Size(56, 22)
+        Me.Rdb_IMAP.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_IMAP.TabIndex = 35
+        Me.Rdb_IMAP.Text = "IMAP"
+        '
+        'LabelX2
+        '
+        Me.LabelX2.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX2.ForeColor = System.Drawing.Color.Black
+        Me.LabelX2.Location = New System.Drawing.Point(10, 194)
+        Me.LabelX2.Name = "LabelX2"
+        Me.LabelX2.Size = New System.Drawing.Size(75, 20)
+        Me.LabelX2.TabIndex = 36
+        Me.LabelX2.Text = "Carpeta lectura"
+        '
+        'Txt_CarpetaLectura
+        '
+        Me.Txt_CarpetaLectura.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CarpetaLectura.Border.Class = "TextBoxBorder"
+        Me.Txt_CarpetaLectura.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CarpetaLectura.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CarpetaLectura.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CarpetaLectura.Location = New System.Drawing.Point(107, 194)
+        Me.Txt_CarpetaLectura.Name = "Txt_CarpetaLectura"
+        Me.Txt_CarpetaLectura.PreventEnterBeep = True
+        Me.Txt_CarpetaLectura.ReadOnly = True
+        Me.Txt_CarpetaLectura.Size = New System.Drawing.Size(465, 22)
+        Me.Txt_CarpetaLectura.TabIndex = 37
+        '
+        'LabelX3
+        '
+        Me.LabelX3.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX3.ForeColor = System.Drawing.Color.Black
+        Me.LabelX3.Location = New System.Drawing.Point(10, 222)
+        Me.LabelX3.Name = "LabelX3"
+        Me.LabelX3.Size = New System.Drawing.Size(91, 20)
+        Me.LabelX3.TabIndex = 38
+        Me.LabelX3.Text = "Carpeta destino"
+        '
+        'Txt_CarpetaDestino
+        '
+        Me.Txt_CarpetaDestino.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CarpetaDestino.Border.Class = "TextBoxBorder"
+        Me.Txt_CarpetaDestino.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CarpetaDestino.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CarpetaDestino.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CarpetaDestino.Location = New System.Drawing.Point(107, 222)
+        Me.Txt_CarpetaDestino.Name = "Txt_CarpetaDestino"
+        Me.Txt_CarpetaDestino.PreventEnterBeep = True
+        Me.Txt_CarpetaDestino.ReadOnly = True
+        Me.Txt_CarpetaDestino.Size = New System.Drawing.Size(465, 22)
+        Me.Txt_CarpetaDestino.TabIndex = 39
+        '
         'Frm_Recibir_Correos_DTE
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(544, 286)
+        Me.ClientSize = New System.Drawing.Size(584, 314)
+        Me.Controls.Add(Me.LabelX3)
+        Me.Controls.Add(Me.Txt_CarpetaDestino)
+        Me.Controls.Add(Me.LabelX2)
+        Me.Controls.Add(Me.Txt_CarpetaLectura)
+        Me.Controls.Add(Me.Rdb_IMAP)
+        Me.Controls.Add(Me.Rdb_POP3)
         Me.Controls.Add(Me.TableLayoutPanel2)
         Me.Controls.Add(Me.Progreso_Porc)
         Me.Controls.Add(Me.Progreso_Cont)
@@ -446,4 +553,10 @@ Partial Class Frm_Recibir_Correos_DTE
     Public WithEvents Lbl_Xml_Descargados As DevComponents.DotNetBar.LabelX
     Public WithEvents Lbl_Total_Correos As DevComponents.DotNetBar.LabelX
     Friend WithEvents Btn_BuscarSMTPRecepXMLComp As DevComponents.DotNetBar.ButtonX
+    Public WithEvents Rdb_POP3 As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Rdb_IMAP As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_CarpetaLectura As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_CarpetaDestino As DevComponents.DotNetBar.Controls.TextBoxX
 End Class

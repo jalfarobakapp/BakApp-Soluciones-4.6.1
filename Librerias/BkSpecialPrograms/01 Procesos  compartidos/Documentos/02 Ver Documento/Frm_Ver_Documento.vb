@@ -2618,6 +2618,8 @@ Public Class Frm_Ver_Documento
 
     Private Sub Btn_Revisar_Situacion_Comercial_Click(sender As Object, e As EventArgs) Handles Btn_Revisar_Situacion_Comercial.Click
 
+        If Not Fx_Tiene_Permiso(Me, "Doc00084") Then Return
+
         Dim _Idmaeedo = _TblEncabezado.Rows(0).Item("IDMAEEDO")
         Dim Fm As New Frm_Remotas_Analisi_Dscto_X_Documento_Rd(Cadena_ConexionSQL_Server, Nothing, Nothing,
                                                                Frm_Remotas_Analisi_Dscto_X_Documento_Rd.Enum_Tabla.Maeedo, _Idmaeedo)

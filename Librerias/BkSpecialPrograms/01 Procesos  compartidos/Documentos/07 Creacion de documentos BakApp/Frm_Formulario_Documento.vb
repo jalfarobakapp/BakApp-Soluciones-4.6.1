@@ -11024,11 +11024,13 @@ Public Class Frm_Formulario_Documento
 
             Else
 
-                Chk_Ver_Dscto_Maximo.Visible = False
                 _Mostrar_Costos = Fx_Tiene_Permiso(Me, "Bkp00037", FUNCIONARIO, False)
                 _Mostrar_Margen = Fx_Tiene_Permiso(Me, "Bkp00038", FUNCIONARIO, False)
 
-                Sb_Revisando_Situacion_Comercial(True)
+                If Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00084", Nothing, "", "") Then
+                    Chk_Ver_Dscto_Maximo.Visible = False
+                    Sb_Revisando_Situacion_Comercial(True)
+                End If
 
             End If
 

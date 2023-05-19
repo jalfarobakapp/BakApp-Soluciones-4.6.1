@@ -128,6 +128,8 @@ Public Class Frm_MantLista_Precios_Random
         If Rdb_Traer_No_Bloqueados.Checked Then Btn_ProdBloqueados.Text = Rdb_Traer_No_Bloqueados.Text
         If Rdb_Traer_Todos.Checked Then Btn_ProdBloqueados.Text = Rdb_Traer_Todos.Text
 
+        Chk_GrabarPreciosHistoricos.Checked = _Global_Row_Configuracion_General.Item("GrabarPreciosHistoricos")
+
     End Sub
 
     Sub Sb_Crear_Tabla_De_Paso()

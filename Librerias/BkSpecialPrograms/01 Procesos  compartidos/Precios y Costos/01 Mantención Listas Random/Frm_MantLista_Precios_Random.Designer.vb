@@ -1131,6 +1131,7 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Chk_GrabarPreciosHistoricos.Checked = True
         Me.Chk_GrabarPreciosHistoricos.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_GrabarPreciosHistoricos.CheckValue = "Y"
+        Me.Chk_GrabarPreciosHistoricos.Enabled = False
         Me.Chk_GrabarPreciosHistoricos.FocusCuesEnabled = False
         Me.Chk_GrabarPreciosHistoricos.ForeColor = System.Drawing.Color.Black
         Me.Chk_GrabarPreciosHistoricos.Location = New System.Drawing.Point(633, 431)

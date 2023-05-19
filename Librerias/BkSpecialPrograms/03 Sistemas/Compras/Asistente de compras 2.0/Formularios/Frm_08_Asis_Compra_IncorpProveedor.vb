@@ -373,11 +373,18 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
 
         Dim _FechaMinima As DateTime = DateAdd(DateInterval.Day, -_DiasDif, _FechaServidor)
 
-        Consulta_sql = "Select * From MAEDDO Where IDRST In" & vbCrLf &
-                       "(Select IDMAEDDO From MAEDDO Where TIDO = 'OCC' And ENDO = '" & _Endo & "' And KOPRCT = '" & _Codigo & "' And FEEMLI > '" & Format(_FechaMinima, "yyyyMMdd") & "')"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("MAEDDO", "TIDO = 'OCC' And ENDO = '" & _Endo & "' And KOPRCT = '" & _Codigo & "' And FEEMLI > '" & _FechaMinima & "'")
 
-        Return CBool(_Tbl.Rows.Count)
+        If Not CBool(_Reg) Then Return True
+
+        _Reg = _Sql.Fx_Cuenta_Registros("MAEDDO",
+                                        "IDRST In (Select IDMAEDDO From MAEDDO " &
+                                        "Where TIDO = 'OCC' And ENDO = '" & _Endo & "' And KOPRCT = '" & _Codigo & "' And FEEMLI > '" & Format(_FechaMinima, "yyyyMMdd") & "')")
+
+        '        Consulta_sql = "Select * From MAEDDO Where IDRST In (Select IDMAEDDO From MAEDDO Where TIDO = 'OCC' And ENDO = '" & _Endo & "' And KOPRCT = '" & _Codigo & "' And FEEMLI > '" & Format(_FechaMinima, "yyyyMMdd") & "')"
+        '       Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        Return CBool(_Reg) 'CBool(_Tbl.Rows.Count)
 
     End Function
 
