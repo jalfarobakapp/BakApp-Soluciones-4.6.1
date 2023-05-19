@@ -4,6 +4,7 @@ Imports System.Security.Authentication
 Imports System.Text
 Imports BkSpecialPrograms.Class_FTP
 Imports DevComponents.DotNetBar
+Imports Limilabs.Client
 Imports Limilabs.Client.IMAP
 Imports Limilabs.Client.POP3
 Imports Limilabs.Mail
@@ -583,6 +584,18 @@ Public Class Frm_Recibir_Correos_DTE
 
                 Dim uids As List(Of Long) = _Imap.Search(Flag.Unseen)
 
+                Dim _FechaDesde As Date = Primerdiadelmes(FechaDelServidor())
+                Dim _FechaHasta As Date = FechaDelServidor()
+
+                _FechaHasta = New DateTime(_FechaHasta.Year, _FechaHasta.Month, _FechaHasta.Day, 23, 59, 0)
+                _FechaDesde = DateAdd(DateInterval.Day, -2, _FechaHasta)
+                _FechaDesde = New DateTime(_FechaDesde.Year, _FechaDesde.Month, _FechaDesde.Day, 0, 0, 0)
+
+                ' Esto de aca busca por fecha al parecer...
+                uids = _Imap.Search((Expression.[And](Expression.Before(_FechaHasta), Expression.Since(_FechaDesde))))
+
+
+
                 Progreso_Porc.Maximum = 100
 
                 'If uids.Count > 2000 Then
@@ -665,7 +678,7 @@ Public Class Frm_Recibir_Correos_DTE
                                                 End If
 
                                             Else
-                                                File.Delete(Txt_Directorio.Text & "\" & _Nombre_Archivo)
+                                                'File.Delete(Txt_Directorio.Text & "\" & _Nombre_Archivo)
                                             End If
 
                                         End If

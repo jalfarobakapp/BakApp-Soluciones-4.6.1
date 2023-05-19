@@ -24864,6 +24864,8 @@ Public Class Frm_Formulario_Documento
                 Dim _Descripcion = _Fila.Descripcion.Trim
                 Dim _Cantidad = _Fila.Cantidad
                 Dim _Precio = _Fila.Precio
+                Dim _Monto = _Fila.Monto
+                Dim _DescuentoMonto = _Fila.DescuentoMonto
 
                 Consulta_sql = "Select * From TABCODAL Where KOEN = '" & _Koen & "' And KOPRAL = '" & _Kopral & "'"
                 Dim _Tbl_Tcb As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -24970,7 +24972,15 @@ Public Class Frm_Formulario_Documento
                             _DescuentoPorc = Math.Round(_DescuentoPorc, 2)
 
                         Else
+
                             _DescuentoPorc = 0
+
+                            Dim _Total As Double = _Precio * _Cantidad
+
+                            If Math.Round(_Total, 0) <> Math.Round(_Monto, 0) Then
+                                _Precio = _Monto / _Cantidad
+                            End If
+
                         End If
 
                         Dim _New_Fila As DataGridViewRow = Grilla_Detalle.Rows(_Contador)
