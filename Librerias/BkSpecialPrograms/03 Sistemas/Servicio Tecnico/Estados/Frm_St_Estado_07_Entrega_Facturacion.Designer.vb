@@ -23,15 +23,15 @@ Partial Class Frm_St_Estado_07_Entrega_Facturacion
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_St_Estado_07_Entrega_Facturacion))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Nota = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Fijar_Estado = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Agregar_Factura = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Agregar_Factura = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Editar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Cancelar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo_Documentos = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -133,27 +133,30 @@ Partial Class Frm_St_Estado_07_Entrega_Facturacion
         Me.Btn_Fijar_Estado.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Fijar_Estado.ForeColor = System.Drawing.Color.Black
         Me.Btn_Fijar_Estado.Image = CType(resources.GetObject("Btn_Fijar_Estado.Image"), System.Drawing.Image)
+        Me.Btn_Fijar_Estado.ImageAlt = CType(resources.GetObject("Btn_Fijar_Estado.ImageAlt"), System.Drawing.Image)
         Me.Btn_Fijar_Estado.Name = "Btn_Fijar_Estado"
         Me.Btn_Fijar_Estado.Text = "Fijar Estado"
-        '
-        'Btn_Agregar_Factura
-        '
-        Me.Btn_Agregar_Factura.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Agregar_Factura.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Agregar_Factura.Image = CType(resources.GetObject("Btn_Agregar_Factura.Image"), System.Drawing.Image)
-        Me.Btn_Agregar_Factura.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Agregar_Factura.Name = "Btn_Agregar_Factura"
-        Me.Btn_Agregar_Factura.Tooltip = "Agregar"
         '
         'Btn_Grabar
         '
         Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
+        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Grabar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_Grabar.Name = "Btn_Grabar"
         Me.Btn_Grabar.Tooltip = "Grabar [F4]"
         Me.Btn_Grabar.Visible = False
+        '
+        'Btn_Agregar_Factura
+        '
+        Me.Btn_Agregar_Factura.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Agregar_Factura.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Agregar_Factura.Image = CType(resources.GetObject("Btn_Agregar_Factura.Image"), System.Drawing.Image)
+        Me.Btn_Agregar_Factura.ImageAlt = CType(resources.GetObject("Btn_Agregar_Factura.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Agregar_Factura.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Agregar_Factura.Name = "Btn_Agregar_Factura"
+        Me.Btn_Agregar_Factura.Tooltip = "Agregar"
         '
         'Btn_Editar
         '
@@ -161,6 +164,7 @@ Partial Class Frm_St_Estado_07_Entrega_Facturacion
         Me.Btn_Editar.FontBold = True
         Me.Btn_Editar.ForeColor = System.Drawing.Color.Red
         Me.Btn_Editar.Image = CType(resources.GetObject("Btn_Editar.Image"), System.Drawing.Image)
+        Me.Btn_Editar.ImageAlt = CType(resources.GetObject("Btn_Editar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Editar.Name = "Btn_Editar"
         Me.Btn_Editar.Tooltip = "Editar"
         Me.Btn_Editar.Visible = False
@@ -171,6 +175,7 @@ Partial Class Frm_St_Estado_07_Entrega_Facturacion
         Me.Btn_Cancelar.FontBold = True
         Me.Btn_Cancelar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Cancelar.Image = CType(resources.GetObject("Btn_Cancelar.Image"), System.Drawing.Image)
+        Me.Btn_Cancelar.ImageAlt = CType(resources.GetObject("Btn_Cancelar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Cancelar.Name = "Btn_Cancelar"
         Me.Btn_Cancelar.Text = "Cancelar edición"
         Me.Btn_Cancelar.Visible = False
@@ -240,12 +245,14 @@ Partial Class Frm_St_Estado_07_Entrega_Facturacion
         'Btn_Ver_documento
         '
         Me.Btn_Ver_documento.Image = CType(resources.GetObject("Btn_Ver_documento.Image"), System.Drawing.Image)
+        Me.Btn_Ver_documento.ImageAlt = CType(resources.GetObject("Btn_Ver_documento.ImageAlt"), System.Drawing.Image)
         Me.Btn_Ver_documento.Name = "Btn_Ver_documento"
         Me.Btn_Ver_documento.Text = "Ver documento"
         '
         'Btn_Quitar_documento
         '
         Me.Btn_Quitar_documento.Image = CType(resources.GetObject("Btn_Quitar_documento.Image"), System.Drawing.Image)
+        Me.Btn_Quitar_documento.ImageAlt = CType(resources.GetObject("Btn_Quitar_documento.ImageAlt"), System.Drawing.Image)
         Me.Btn_Quitar_documento.Name = "Btn_Quitar_documento"
         Me.Btn_Quitar_documento.Text = "Quitar documento de la lista"
         '
@@ -254,23 +261,23 @@ Partial Class Frm_St_Estado_07_Entrega_Facturacion
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle8
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
@@ -278,14 +285,14 @@ Partial Class Frm_St_Estado_07_Entrega_Facturacion
         Me.Grilla.MultiSelect = False
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.Grilla.Size = New System.Drawing.Size(500, 134)
         Me.Grilla.TabIndex = 1

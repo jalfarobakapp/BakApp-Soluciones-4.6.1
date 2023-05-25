@@ -1144,11 +1144,13 @@ Public Class Frm_MantLista_Precios_Random
 
                     If Not _Error_Fx Then
 
-                        _Ecuacion_3(3) = Replace(_Ecuacion_3(3), "caprco", "")
-                        Consulta_sql = "Select " & _Ecuacion_3(3) & " As Valor"
-                        Dim _Row_Valor As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                        _Valor = Fx_Precio_Formula_Random(_RowPrecio, _Campo_Precio, _Campo_Formula, _RowPrecio, False, "", 1, 1)
 
-                        _Valor = _Row_Valor.Item("Valor")
+                        '_Ecuacion_3(3) = Replace(_Ecuacion_3(3), "caprco", "")
+                        'Consulta_sql = "Select " & _Ecuacion_3(3) & " As Valor"
+                        'Dim _Row_Valor As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                        '_Valor = _Row_Valor.Item("Valor")
 
                     End If
 

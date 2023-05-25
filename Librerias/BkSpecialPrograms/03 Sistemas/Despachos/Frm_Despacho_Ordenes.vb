@@ -21,8 +21,6 @@ Public Class Frm_Despacho_Ordenes
         End Set
     End Property
 
-    'Dim _Rojo, _Azul, _Verde As Color
-
     Public Property _Correr_a_la_derecha As Boolean
 
     Enum Enum_Ver

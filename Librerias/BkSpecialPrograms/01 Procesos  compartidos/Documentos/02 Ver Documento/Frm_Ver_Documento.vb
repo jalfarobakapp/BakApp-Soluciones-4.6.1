@@ -4681,7 +4681,7 @@ Public Class Frm_Ver_Documento
             Dim _FechaHoraAutoriza As String
 
             If Not IsDBNull(_Row_Docu_Ent.Item("FechaHoraAutoriza")) Then
-                _FechaHoraAutoriza = vbCrLf & vbCrLf & "Fecha y hora de autorización: " & FormatDateTime(_Row_Docu_Ent.Item("FechaHoraAutoriza"), DateFormat.ShortDate) & " - " & FormatDateTime(_Row_Docu_Ent.Item("FechaHoraAutoriza"), DateFormat.ShortTime)
+                _FechaHoraAutoriza = vbCrLf & vbCrLf & "Fecha y hora de habilitación: " & FormatDateTime(_Row_Docu_Ent.Item("FechaHoraAutoriza"), DateFormat.ShortDate) & " - " & FormatDateTime(_Row_Docu_Ent.Item("FechaHoraAutoriza"), DateFormat.ShortTime)
             End If
 
             MessageBoxEx.Show(Me, "Habilitada por: " & _Row_Docu_Ent.Item("NomFunHabilita").ToString.Trim & _FechaHoraAutoriza, "Nota de venta habilitada para ser facturada.",

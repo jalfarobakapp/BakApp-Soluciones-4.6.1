@@ -57,8 +57,6 @@ Public Class Cl_Enviar_Doc_SinRecepcion
 
         Crear_Html = Fx_CrearInformeHtmlDocumentosPendientes(_TblDetalle)
 
-        'Crear_Html = _Crear_Html
-
     End Sub
 
     Function Fx_Tbl_Informe(_FechaActual As DateTime) As DataTable
@@ -309,12 +307,4 @@ Drop table #INFDet"
 End Class
 
 
-Public Class Crear_Html
 
-    Public Property EsCorrecto As Boolean
-    Public Property RutaArchivo As String
-    Public Property Cuerpo_Html As String
-    Public Property Errores As String
-
-
-End Class

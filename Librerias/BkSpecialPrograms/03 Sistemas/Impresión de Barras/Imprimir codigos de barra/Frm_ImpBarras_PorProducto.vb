@@ -699,7 +699,7 @@ Public Class Frm_ImpBarras_PorProducto
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
         Dim _Semilla As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tbl_DisenoBarras", "Semilla",
-                                                    "NombreEtiqueta = '" & Cmbetiquetas.SelectedValue & "'")
+                                                    "NombreEtiqueta = '" & Cmbetiquetas.SelectedValue & "'", True)
         Dim _Puerto As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tbl_DisenoBarras_SalPtoxEstacion", "Puerto",
                                                   "Semilla_Padre = " & _Semilla & " And NombreEquipo = '" & _NombreEquipo & "'")
 

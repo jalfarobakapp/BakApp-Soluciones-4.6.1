@@ -63,6 +63,9 @@ Partial Class Frm_08_Asis_Compra_IncorpProveedor
         Me.Chk_Sabado = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Incluir_Ent_Excluidas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Timer_Ejecucion_Automatica = New System.Windows.Forms.Timer(Me.components)
+        Me.Chk_MarcarProvQueNoTiene = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Input_DiasMarcarProvQueNoTiene = New DevComponents.Editors.IntegerInput()
+        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.GroupPanel2.SuspendLayout()
@@ -74,6 +77,7 @@ Partial Class Frm_08_Asis_Compra_IncorpProveedor
         CType(Me.Input_Tiempo_Reposicion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel5.SuspendLayout()
         Me.GroupPanel8.SuspendLayout()
+        CType(Me.Input_DiasMarcarProvQueNoTiene, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Chk_Ent_Fisica
@@ -97,7 +101,7 @@ Partial Class Frm_08_Asis_Compra_IncorpProveedor
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnProcesarInf, Me.BtnEntidadesExcluidas})
-        Me.Bar1.Location = New System.Drawing.Point(0, 167)
+        Me.Bar1.Location = New System.Drawing.Point(0, 188)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(757, 41)
         Me.Bar1.Stretch = True
@@ -824,7 +828,7 @@ Partial Class Frm_08_Asis_Compra_IncorpProveedor
         Me.Chk_Incluir_Ent_Excluidas.ForeColor = System.Drawing.Color.Black
         Me.Chk_Incluir_Ent_Excluidas.Location = New System.Drawing.Point(12, 141)
         Me.Chk_Incluir_Ent_Excluidas.Name = "Chk_Incluir_Ent_Excluidas"
-        Me.Chk_Incluir_Ent_Excluidas.Size = New System.Drawing.Size(732, 23)
+        Me.Chk_Incluir_Ent_Excluidas.Size = New System.Drawing.Size(481, 23)
         Me.Chk_Incluir_Ent_Excluidas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Incluir_Ent_Excluidas.TabIndex = 112
         Me.Chk_Incluir_Ent_Excluidas.Text = "Incluir los proveedores que estan en entidades excluidas (Uso recomendado para ge" &
@@ -834,11 +838,58 @@ Partial Class Frm_08_Asis_Compra_IncorpProveedor
         '
         Me.Timer_Ejecucion_Automatica.Interval = 2000
         '
+        'Chk_MarcarProvQueNoTiene
+        '
+        Me.Chk_MarcarProvQueNoTiene.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_MarcarProvQueNoTiene.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_MarcarProvQueNoTiene.ForeColor = System.Drawing.Color.Black
+        Me.Chk_MarcarProvQueNoTiene.Location = New System.Drawing.Point(12, 163)
+        Me.Chk_MarcarProvQueNoTiene.Name = "Chk_MarcarProvQueNoTiene"
+        Me.Chk_MarcarProvQueNoTiene.Size = New System.Drawing.Size(491, 23)
+        Me.Chk_MarcarProvQueNoTiene.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_MarcarProvQueNoTiene.TabIndex = 113
+        Me.Chk_MarcarProvQueNoTiene.Text = "No generar compras a proveedores sin stock (ordenes de compra no recepcionadas lo" &
+    "s ultimos)"
+        '
+        'Input_DiasMarcarProvQueNoTiene
+        '
+        '
+        '
+        '
+        Me.Input_DiasMarcarProvQueNoTiene.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_DiasMarcarProvQueNoTiene.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_DiasMarcarProvQueNoTiene.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_DiasMarcarProvQueNoTiene.Location = New System.Drawing.Point(499, 163)
+        Me.Input_DiasMarcarProvQueNoTiene.MaxValue = 90
+        Me.Input_DiasMarcarProvQueNoTiene.MinValue = 0
+        Me.Input_DiasMarcarProvQueNoTiene.Name = "Input_DiasMarcarProvQueNoTiene"
+        Me.Input_DiasMarcarProvQueNoTiene.ShowUpDown = True
+        Me.Input_DiasMarcarProvQueNoTiene.Size = New System.Drawing.Size(49, 22)
+        Me.Input_DiasMarcarProvQueNoTiene.TabIndex = 114
+        '
+        'LabelX4
+        '
+        '
+        '
+        '
+        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.Location = New System.Drawing.Point(554, 163)
+        Me.LabelX4.Name = "LabelX4"
+        Me.LabelX4.Size = New System.Drawing.Size(75, 23)
+        Me.LabelX4.TabIndex = 115
+        Me.LabelX4.Text = "días"
+        '
         'Frm_08_Asis_Compra_IncorpProveedor
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(757, 208)
+        Me.ClientSize = New System.Drawing.Size(757, 229)
+        Me.Controls.Add(Me.LabelX4)
+        Me.Controls.Add(Me.Input_DiasMarcarProvQueNoTiene)
+        Me.Controls.Add(Me.Chk_MarcarProvQueNoTiene)
         Me.Controls.Add(Me.Chk_Incluir_Ent_Excluidas)
         Me.Controls.Add(Me.GroupPanel8)
         Me.Controls.Add(Me.Chk_Agrupar_Productos_De_Reemplazo)
@@ -876,6 +927,7 @@ Partial Class Frm_08_Asis_Compra_IncorpProveedor
         Me.GroupPanel5.ResumeLayout(False)
         Me.GroupPanel5.PerformLayout()
         Me.GroupPanel8.ResumeLayout(False)
+        CType(Me.Input_DiasMarcarProvQueNoTiene, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -918,4 +970,7 @@ Partial Class Frm_08_Asis_Compra_IncorpProveedor
     Friend WithEvents Cmb_Proyeccion_Metodo_Abastecer_ As DevComponents.DotNetBar.Controls.ComboBoxEx
     Friend WithEvents Timer_Ejecucion_Automatica As Timer
     Public WithEvents Chk_Incluir_Ent_Excluidas As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Chk_MarcarProvQueNoTiene As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Input_DiasMarcarProvQueNoTiene As DevComponents.Editors.IntegerInput
+    Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
 End Class

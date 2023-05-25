@@ -22,7 +22,7 @@ Namespace My.Resources
     '''<summary>
     '''  Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
     Friend Class Recursos_Asis_Compras
@@ -62,6 +62,42 @@ Namespace My.Resources
             Set
                 resourceCulture = value
             End Set
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a 
+        '''&lt;html&gt;
+        '''&lt;head&gt;
+        '''    &lt;title&gt;Documentos Pendientes&lt;/title&gt;
+        '''    &lt;meta http-equiv=&apos;Content-Type&apos; content=&apos;text/html; charset=iso-8859-1&apos; /&gt;
+        '''    &lt;style type=&quot;text/css&quot;&gt;
+        '''        .style17 {
+        '''            width: 109px;
+        '''        }
+        '''
+        '''        .style20 {
+        '''            width: 87px;
+        '''        }
+        '''
+        '''        .style21 {
+        '''            width: 144px;
+        '''        }
+        '''
+        '''        .style22 {
+        '''            width: 174px;
+        '''        }
+        '''
+        '''        .style23 {
+        '''            width: 320px;
+        '''        }
+        '''
+        '''        .style25 {
+        '''            width: 149px [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Crear_Html_Proveedores_Con_Productos_Sin_Stock() As String
+            Get
+                Return ResourceManager.GetString("Crear_Html_Proveedores_Con_Productos_Sin_Stock", resourceCulture)
+            End Get
         End Property
         
         '''<summary>
@@ -263,15 +299,19 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a 
         '''
-        '''Select KOPR,Cast(&apos;&apos; As Varchar(30)) As Codigo_Nodo_Madre,Sum(STFI1) As STFI1,Sum(STFI2) As STFI2,Sum(STOCNV1C) As STOCNV1C,Sum(STOCNV2C) As STOCNV2C,Sum(STDV1C) As STDV1C,Sum(STDV2C) As STDV2C 
+        '''Select KOPR,Cast(&apos;&apos; As Varchar(30)) As Codigo_Nodo_Madre,
+        '''       Sum(STFI1) As STFI1,
+        '''       CAST(0 As Float) As StfiBodExt1,
+        '''       Sum(STFI2) As STFI2,
+        '''       CAST(0 As Float) As StfiBodExt2,
+        '''       Sum(STOCNV1C) As STOCNV1C,Sum(STOCNV2C) As STOCNV2C,Sum(STDV1C) As STDV1C,Sum(STDV2C) As STDV2C,
+        '''       CAST(0 As Float) As StPedNVIUd1,
+        '''	   CAST(0 As Float) As StPedNVIUd2,
+        '''       CAST(0 As Float) As StTransitoUd1,
+        '''	   CAST(0 As Float) As StTransitoUd2
         '''Into #Paso
         '''From MAEST
-        '''Where KOPR In (Select Codigo From #TablaPaso#) #Filtro_Bodega#--And EMPRESA+KOSU+KOBO In (&apos;01CM PR&apos;,&apos;01WCMWCM&apos;)
-        '''Group By KOPR
-        '''
-        '''Update #Paso Set Codigo_Nodo_Madre = (Select Top 1 Codigo_Nodo_Madre From #TablaPaso# Where KOPR = Codigo)
-        '''
-        '''Select Codigo_Nodo_Madre,Sum(STFI1) As STFI1,Sum( [resto de la cadena truncado]&quot;;.
+        '''Where KOPR In (Sele [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property SQLQuery_Inserta_stock_por_producto() As String
             Get

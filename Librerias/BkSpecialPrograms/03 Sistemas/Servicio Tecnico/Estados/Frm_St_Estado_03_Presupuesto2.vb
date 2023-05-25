@@ -103,7 +103,6 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
         If _Accion = Accion.Editar Or SoloLectura Then
             CodTecnico_Presupuesta = _Row_Encabezado.Item("CodTecnico_Presupuesta").ToString.Trim
-            Txt_NroSerie.Text = _Row_Encabezado.Item("NroSerie")
         End If
 
         If String.IsNullOrEmpty(CodTecnico_Presupuesta) Then
@@ -117,6 +116,7 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
         Txt_Defecto_segun_cliente.Text = _Row_Notas.Item("Defecto_segun_cliente")
         Txt_Nota.Text = _Row_Notas.Item("Nota_Etapa_03")
+        Txt_NroSerie.Text = _Row_Encabezado.Item("NroSerie")
 
         Sb_Actualizar_Grilla()
 
@@ -828,11 +828,11 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
         For Each _FlSvr As DataRow In _Tbl.Rows
 
-            If Not _FlSvr.Item("Nuevo_Item") Then
+            If Not String.IsNullOrEmpty(_FlSvr.Item("Codigo")) Then 'If Not _FlSvr.Item("Nuevo_Item") Then
 
                 _CantProd += 1
 
-                If _FlSvr.Item("Cantidad") = 0 Then
+                If Not String.IsNullOrEmpty(_FlSvr.Item("Codigo")) And _FlSvr.Item("Cantidad") = 0 Then
                     MessageBoxEx.Show(Me, "No pueden haber productos con cantidad igual o menor a cero", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     Return
                 End If

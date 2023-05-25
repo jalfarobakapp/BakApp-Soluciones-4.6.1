@@ -326,7 +326,7 @@ Public Class Clas_Imprimir_Documento
 
             Consulta_sql = "Declare @Id_Ot Int 
 
-                            Set @Id_Ot = (Select Id_Ot From " & _Global_BaseBk & "Zw_St_OT_Encabezado Where Idmaeedo_" & _TipoDoc & "_PRE = " & _IdDoc & ")
+                            Set @Id_Ot = (Select Distinct Id_Ot_Padre From " & _Global_BaseBk & "Zw_St_OT_Encabezado Where Idmaeedo_" & _TipoDoc & "_PRE = " & _IdDoc & ")
 
                             Select ZEnc.Id_Ot, ZEnc.Nro_Ot,Empresa,ZEnc.Sucursal,ZEnc.Bodega,ZEnc.CodEntidad,ZEnc.SucEntidad,ZEnc.Rten,ZEnc.Rut, 
                             NOKOEN As Cliente,ZEnc.Fecha_Ingreso,ZEnc.Fecha_Compromiso,ZEnc.Fecha_Entrega,ZEnc.Fecha_Cierre,ZEnc.CodEstado, 
@@ -4246,9 +4246,9 @@ Public Class Clas_Imprimir_Documento
 
                 _Udtrpr = Fila.Item("UDTRPR")
 
-                Dim _StockFisico As Double = Fila.Item("STFI" & _Udtrpr)
-                Dim _StockDevengado As Double = Fila.Item("STDV" & _Udtrpr)
-                Dim _StockComprometido As Double = Fila.Item("STOCNV" & _Udtrpr)
+                Dim _StockFisico As Double = Fila.Item("StockUd" & _Udtrpr)
+                Dim _StockDevengado As Double = Fila.Item("StockdvUd" & _Udtrpr)
+                Dim _StockComprometido As Double = Fila.Item("StockncUd" & _Udtrpr)
 
                 Dim _StockTeorico As Double = _StockFisico
 

@@ -214,37 +214,37 @@ Public Class Frm_St_Documento
         Txt_Defecto_segun_cliente.ReadOnly = _Read_Only
         Txt_Nota.ReadOnly = _Read_Only
 
-        'Txt_Maquina.BackColor = _Color
-        Txt_Maquina.FocusHighlightEnabled = _Activar
+        ''Txt_Maquina.BackColor = _Color
+        'Txt_Maquina.FocusHighlightEnabled = _Activar
 
-        'Txt_Marca.BackColor = _Color
-        Txt_Marca.FocusHighlightEnabled = _Activar
+        ''Txt_Marca.BackColor = _Color
+        'Txt_Marca.FocusHighlightEnabled = _Activar
 
-        'Txt_Modelo.BackColor = _Color
-        Txt_Modelo.FocusHighlightEnabled = _Activar
+        ''Txt_Modelo.BackColor = _Color
+        'Txt_Modelo.FocusHighlightEnabled = _Activar
 
-        'Txt_Categoria.BackColor = _Color
-        Txt_Categoria.FocusHighlightEnabled = _Activar
+        ''Txt_Categoria.BackColor = _Color
+        'Txt_Categoria.FocusHighlightEnabled = _Activar
 
-        'Txt_Nro_Serie.BackColor = _Color
-        Txt_Nro_Serie.FocusHighlightEnabled = _Activar
+        ''Txt_Nro_Serie.BackColor = _Color
+        'Txt_Nro_Serie.FocusHighlightEnabled = _Activar
 
-        'Txt_Nota.BackColor = _Color
-        Txt_Nota.FocusHighlightEnabled = _Activar
+        ''Txt_Nota.BackColor = _Color
+        'Txt_Nota.FocusHighlightEnabled = _Activar
 
         'Txt_Defecto_segun_cliente.BackColor = _Color
-        Txt_Defecto_segun_cliente.FocusHighlightEnabled = _Activar
+        'Txt_Defecto_segun_cliente.FocusHighlightEnabled = _Activar
 
         'Txt_Nombre_Contacto.BackColor = _Color
-        Txt_Nombre_Contacto.FocusHighlightEnabled = _Activar
+        'Txt_Nombre_Contacto.FocusHighlightEnabled = _Activar
         Txt_Nombre_Contacto.ReadOnly = _Read_Only
 
         'Txt_Email_Contacto.BackColor = _Color
-        Txt_Email_Contacto.FocusHighlightEnabled = _Activar
+        'Txt_Email_Contacto.FocusHighlightEnabled = _Activar
         Txt_Email_Contacto.ReadOnly = _Read_Only
 
         'Txt_Telefono_Contacto.BackColor = _Color
-        Txt_Telefono_Contacto.FocusHighlightEnabled = _Activar
+        'Txt_Telefono_Contacto.FocusHighlightEnabled = _Activar
         Txt_Telefono_Contacto.ReadOnly = _Read_Only
 
         Me.Refresh()
@@ -990,8 +990,6 @@ Public Class Frm_St_Documento
                 Me.Close()
             End If
         End If
-
-
     End Sub
 
     Function Fx_Editar_OT(_DsDocumento As DataSet,

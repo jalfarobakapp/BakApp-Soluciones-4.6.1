@@ -12958,9 +12958,30 @@ Public Class Frm_Formulario_Documento
                     _Fila.Cells("FechaEmision").Value = _FechaEmision
                     _Fila.Cells("Fecha_1er_Vencimiento").Value = _Fecha_1er_Vencimiento
                     _Fila.Cells("FechaUltVencimiento").Value = _FechaUltVencimiento
-                    '_Fila.Cells("Cuotas").Value = _Cuotas
-                    '_Fila.Cells("Dias_1er_Vencimiento").Value = _Dias_1er_Vencimiento
-                    '_Fila.Cells("Dias_Vencimiento").Value = _Dias_Vencimiento
+
+                    Consulta_sql = "Select TOP 1 * From MAEMO Where KOMO = 'US$' AND FEMO = '" & Format(_FechaEmision, "yyyyMMdd") & "' Order by IDMAEMO DESC"
+                    Dim _RowMoneda_USdolar = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                    Dim _Vamo As Double = _RowMoneda_USdolar.Item("VAMO")
+
+                    If Not IsNothing(_RowMoneda_USdolar) Then
+
+                        _Fila.Cells("Valor_Dolar").Value = _Vamo
+
+                        If Fx_Revisar_si_tiene_registros() Then
+
+                            For Each _Fl As DataGridViewRow In Grilla_Detalle.Rows
+                                _Fl.Cells("Tipo_Cambio").Value = _Vamo
+                                Sb_Procesar_Datos_De_Grilla(_Fl, "Cantidad", True, True)
+                            Next
+
+                            MessageBoxEx.Show(Me, "Existían tasas de cambio en el detalle del documento" & vbCrLf &
+                                              "Que fueron cambiadas debido al cambio de fecha y su tasa respectiva.", "Información",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                        End If
+
+                    End If
 
                 End If
 

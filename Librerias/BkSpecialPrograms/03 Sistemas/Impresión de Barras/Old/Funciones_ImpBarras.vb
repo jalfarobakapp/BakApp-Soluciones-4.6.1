@@ -283,8 +283,6 @@
 
         Next
 
-
-
         _Tido = _TblEncabezado.Rows(0).Item("TIDO")
         _Nudo = _TblEncabezado.Rows(0).Item("NUDO")
 
@@ -304,6 +302,47 @@
 
         _Stock_Minimo_Ubic = _RowProducto.Item("Stock_Minimo_Ubic")
         _Stock_Maximo_Ubic = _RowProducto.Item("Stock_Maximo_Ubic")
+
+        _Marca_Pr = _RowProducto.Item("Marca").ToString.Trim
+
+
+
+        _Codigo_tecnico = _RowProducto.Item("KOPRTE")
+        _Codigo_rapido = _RowProducto.Item("KOPRRA")
+        _Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
+        _Descripcion_Corta = _RowProducto.Item("NOKOPRRA").ToString.Trim
+
+        _Marca_Pr = _RowProducto.Item("Marca").ToString.Trim
+
+        _Ubicacion = _RowProducto.Item("Ubic_Random")
+
+        _Precio_ud1 = _RowProducto.Item("Precio_ud1")
+        _Precio_ud2 = _RowProducto.Item("Precio_ud2")
+
+        _PU01_Neto = _RowProducto.Item("PU01_Neto")
+        _PU02_Neto = _RowProducto.Item("PU02_Neto")
+        _PU01_Bruto = _RowProducto.Item("PU01_Bruto")
+        _PU02_Bruto = _RowProducto.Item("PU02_Bruto")
+
+        _Rtu = _RowProducto.Item("RLUD")
+        _PrecioNetoXRtu = _RowProducto.Item("PrecioNetoXRtu")
+        _PrecioBrutoXRtu = _RowProducto.Item("PrecioBrutoXRtu")
+
+        _Stock_Minimo_Ubic = _RowProducto.Item("Stock_Minimo_Ubic")
+        _Stock_Maximo_Ubic = _RowProducto.Item("Stock_Maximo_Ubic")
+
+        _Descripcion = Replace(_Descripcion, Chr(34), "")
+        _Desc0125 = Mid(_Descripcion, 1, 25)
+        _Desc2650 = Mid(_Descripcion, 26, 50)
+
+        _Nodim1 = _RowProducto.Item("NODIM1").ToString.Trim
+        _Nodim2 = _RowProducto.Item("NODIM2").ToString.Trim
+        _Nodim3 = _RowProducto.Item("NODIM3").ToString.Trim
+
+
+        _PrecioLc1 = 0
+
+
 
 
 
@@ -592,14 +631,24 @@
         _Texto = Replace(_Texto, "<CODIGO_RA>", Trim(_Codigo_rapido))
         _Texto = Replace(_Texto, "<CODIGO_ALT>", Trim(_Codigo_Alternativo))
 
-        Dim _Descripcion_cortamr As String = _Descripcion_Corta.ToString.Replace(_Marca_Pr, "").Trim
+        Dim _Descripcion_cortamr As String
+
+        If Not String.IsNullOrEmpty(_Marca_Pr) Then
+            _Descripcion_cortamr = _Descripcion_Corta.ToString.Replace(_Marca_Pr, "").Trim
+        End If
+
         _Texto = Replace(_Texto, "<DESCRIPCION_CORTASMR>", _Descripcion_cortamr)
 
         _Texto = Replace(_Texto, "<DESCRIPCION_PR>", _Descripcion)
         _Texto = Replace(_Texto, "<DESCRIPCION_CORTA>", _Descripcion_Corta)
 
-        Dim _Desc0125mr As String = _Desc0125.ToString.Replace(_Marca_Pr, "").Trim
-        Dim _Desc2650mr As String = _Desc2650.ToString.Replace(_Marca_Pr, "").Trim
+        Dim _Desc0125mr As String
+        Dim _Desc2650mr As String
+
+        If Not String.IsNullOrEmpty(_Marca_Pr) Then
+            _Desc0125mr = _Desc0125.ToString.Replace(_Marca_Pr, "").Trim
+            _Desc2650mr = _Desc2650.ToString.Replace(_Marca_Pr, "").Trim
+        End If
 
         _Texto = Replace(_Texto, "<DESCRIPCION_1-25MR>", _Desc0125mr)
         _Texto = Replace(_Texto, "<DESCRIPCION_26-50MR>", _Desc2650mr)

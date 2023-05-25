@@ -27,8 +27,6 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
         End Get
     End Property
 
-    Public Property MarcarProvQueNoTiene As Boolean
-
     Public Sub New(RowParametros As DataRow)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -76,9 +74,12 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
 
         Chk_Incluir_Ent_Excluidas.Enabled = True
 
+        AddHandler Chk_MarcarProvQueNoTiene.CheckedChanged, AddressOf Chk_MarcarProvQueNoTiene_CheckedChanged
+
         If _Accion_Automatica Then
             Timer_Ejecucion_Automatica.Start()
         End If
+
 
     End Sub
 
@@ -90,6 +91,14 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
     End Sub
 
     Private Sub BtnProcesarInf_Click(sender As System.Object, e As System.EventArgs) Handles BtnProcesarInf.Click
+
+        If Not _Accion_Automatica Then
+            If Chk_MarcarProvQueNoTiene.Checked And Input_DiasMarcarProvQueNoTiene.Value = 0 Then
+                MessageBoxEx.Show(Me, "Debe poner la cantidad de días para saber cuando marcar a los proveedores con productos sin stock", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+        End If
 
         _Proceso_Generado = Fx_Incorporar_Proveedores()
 
@@ -226,7 +235,7 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
                         Dim _Codigo = _Tbl_Detalle.Rows(0).Item("Codigo")
                         Dim _Endo = _Tbl_Detalle.Rows(0).Item("Endo_Utl_Compra")
 
-                        If Fx_RevisarComprarSinEnvioXProveedor(_Codigo, _Endo, 14, FechaDelServidor) Then
+                        If Fx_RevisarComprarSinEnvioXProveedor(_Codigo, _Endo, Input_DiasMarcarProvQueNoTiene.Value, FechaDelServidor) Then
 
                             _SqlQuery_2 += "Update " & _Tabla_Paso & Space(1) &
                                            "Set CantComprar = " & De_Num_a_Tx_01(_CantComprar, False, 5) & Space(1) &
@@ -268,7 +277,7 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
 
                                     Dim _Endo = _Fila.Item("Endo_Utl_Compra")
 
-                                    If Fx_RevisarComprarSinEnvioXProveedor(_Codigo, _Endo, 14, FechaDelServidor) Then
+                                    If Fx_RevisarComprarSinEnvioXProveedor(_Codigo, _Endo, Input_DiasMarcarProvQueNoTiene.Value, FechaDelServidor) Then
 
                                         _SqlQuery_2 += "Update " & _Tabla_Paso & Space(1) &
                                                        "Set CantComprar = " & De_Num_a_Tx_01(_CantComprar, False, 5) & Space(1) &
@@ -304,7 +313,7 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
 
                                     Dim _Endo = _Fila.Item("Endo_Utl_Compra")
 
-                                    If Fx_RevisarComprarSinEnvioXProveedor(_Codigo, _Endo, 14, FechaDelServidor) Then
+                                    If Fx_RevisarComprarSinEnvioXProveedor(_Codigo, _Endo, Input_DiasMarcarProvQueNoTiene.Value, FechaDelServidor) Then
 
                                         _SqlQuery_2 += "Update " & _Tabla_Paso & Space(1) &
                                                        "Set CantComprar = " & De_Num_a_Tx_01(_CantComprar, False, 5) & Space(1) &
@@ -369,7 +378,7 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
 
     Function Fx_RevisarComprarSinEnvioXProveedor(_Codigo As String, _Endo As String, _DiasDif As Integer, _FechaServidor As DateTime) As Boolean
 
-        If Not MarcarProvQueNoTiene Then Return True
+        If Not Chk_MarcarProvQueNoTiene.Checked Then Return True
 
         Dim _FechaMinima As DateTime = DateAdd(DateInterval.Day, -_DiasDif, _FechaServidor)
 
@@ -746,4 +755,9 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
         Timer_Ejecucion_Automatica.Stop()
         Call BtnProcesarInf_Click(Nothing, Nothing)
     End Sub
+
+    Private Sub Chk_MarcarProvQueNoTiene_CheckedChanged(sender As Object, e As EventArgs)
+        Input_DiasMarcarProvQueNoTiene.Enabled = Chk_MarcarProvQueNoTiene.Checked
+    End Sub
+
 End Class

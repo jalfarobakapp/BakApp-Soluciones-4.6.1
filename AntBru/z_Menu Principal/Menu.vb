@@ -413,9 +413,13 @@ Public Class Menu
 
     Private Sub ButtonX1_Click(sender As Object, e As EventArgs) Handles ButtonX1.Click
 
-        Dim _IdmaeedoFCV = 1121028
-        Dim _Cl As New Cl_CambiarFechaVencimiento(_IdmaeedoFCV)
-        _Cl.Fx_CambioFechaConFincred()
+        Dim Fm As New Frm_Comisiones(1)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+        'Dim _IdmaeedoFCV = 1121028
+        'Dim _Cl As New Cl_CambiarFechaVencimiento(_IdmaeedoFCV)
+        '_Cl.Fx_CambioFechaConFincred()
 
         'Dim Auto_CorreoCc = "jalfaro@bakapp.cl"
         'Dim Auto_Id_CorreoOCCMinCompra = 38

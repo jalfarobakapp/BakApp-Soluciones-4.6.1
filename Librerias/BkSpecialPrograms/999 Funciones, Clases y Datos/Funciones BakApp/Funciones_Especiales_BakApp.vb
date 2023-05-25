@@ -1567,81 +1567,81 @@ Public Module Funciones_Especiales_BakApp
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Dim _Revisa_Taza_Cambio As Boolean = _Global_Row_Configuracion_General.Item("Revisa_Taza_Cambio")
+        Dim _Revisa_Taza_Cambio As Boolean = True '_Global_Row_Configuracion_General.Item("Revisa_Taza_Cambio")
         Dim _Revisar_Taza_Solo_Mon_Extranjeras As Boolean = _Global_Row_Configuracion_General.Item("Revisar_Taza_Solo_Mon_Extranjeras")
 
         If _Revisar_Obligado Then
             _Revisa_Taza_Cambio = True
         End If
 
-        If _Revisa_Taza_Cambio Then
+        If Not _Revisa_Taza_Cambio Then
+            Return True
+        End If
 
-            Dim _Fecha As String
+        Dim _Fecha As String
 
-            If (_Fecha_Taza = Nothing) Then
-                _Fecha_Taza = FormatDateTime(FechaDelServidor(), DateFormat.ShortDate)
-            End If
+        If (_Fecha_Taza = Nothing) Then
+            _Fecha_Taza = FormatDateTime(FechaDelServidor(), DateFormat.ShortDate)
+        End If
 
-            _Fecha = Format(_Fecha_Taza, "yyyyMMdd")
+        _Fecha = Format(_Fecha_Taza, "yyyyMMdd")
 
 
-            Dim _CantMonedas As Integer = _Sql.Fx_Cuenta_Registros("TABMO", "TIMO = 'E' Or KOMO <> '$'")
+        Dim _CantMonedas As Integer = _Sql.Fx_Cuenta_Registros("TABMO", "TIMO = 'E' Or KOMO <> '$'")
 
-            Consulta_sql = "Select Distinct KOMO From MAEMO Where (FEMO = '" & _Fecha & "' AND TIMO = 'E') Or " &
-                           "(FEMO = '" & _Fecha & "' And KOMO <> '$')"
-            Dim _CantMonedas_Con_Taza = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Consulta_sql = "Select Distinct KOMO From MAEMO Where (FEMO = '" & _Fecha & "' AND TIMO = 'E') Or " &
+                       "(FEMO = '" & _Fecha & "' And KOMO <> '$')"
+        Dim _CantMonedas_Con_Taza = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-            If CBool(_CantMonedas) Then
+        If CBool(_CantMonedas) Then
 
-                If _CantMonedas_Con_Taza.Rows.Count = _CantMonedas Then
-                    Return True
-                Else
+            If _CantMonedas_Con_Taza.Rows.Count = _CantMonedas Then
+                Return True
+            Else
 
-                    Consulta_sql = "Select *,(select COUNT(*) From TABMO WHERE TIMO = 'E') as NroMonedas" & vbCrLf &
-                                   "From TABMO Where (TIMO = 'E' Or KOMO <> '$')" & vbCrLf &
-                                   "And KOMO Not IN (Select Distinct KOMO From MAEMO Where FEMO = '" & _Fecha & "')"
+                Consulta_sql = "Select *,(select COUNT(*) From TABMO WHERE TIMO = 'E') as NroMonedas" & vbCrLf &
+                               "From TABMO Where (TIMO = 'E' Or KOMO <> '$')" & vbCrLf &
+                               "And KOMO Not IN (Select Distinct KOMO From MAEMO Where FEMO = '" & _Fecha & "')"
 
-                    Dim _TblMoneda As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblMoneda As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-                    Dim _Monedas = String.Empty
+                Dim _Monedas = String.Empty
 
-                    For Each _Filas As DataRow In _TblMoneda.Rows
+                For Each _Filas As DataRow In _TblMoneda.Rows
 
-                        Dim _Revisar = False
-                        Dim _Timo = _Filas.Item("TIMO")
+                    Dim _Revisar = False
+                    Dim _Timo = _Filas.Item("TIMO")
 
-                        If _Revisar_Taza_Solo_Mon_Extranjeras Then
-                            If _Timo = "E" Then
-                                _Revisar = True
-                            End If
-                        Else
+                    If _Revisar_Taza_Solo_Mon_Extranjeras Then
+                        If _Timo = "E" Then
                             _Revisar = True
                         End If
-
-                        If _Revisar Then
-                            _Monedas += _Filas.Item("KOMO") & "-" & Trim(_Filas.Item("NOKOMO") & vbCrLf)
-                        End If
-
-                    Next
-
-                    If String.IsNullOrEmpty(_Monedas) Then
-                        Return True
                     Else
-                        If Not IsNothing(_Formulario) Then
-                            MessageBoxEx.Show(_Formulario, "No existe taza de cambio para la fecha: " & FormatDateTime(_Fecha_Taza, DateFormat.ShortDate) & vbCrLf &
-                                          "Para las monedas: " & vbCrLf & vbCrLf & _Monedas, "Validación",
-                                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                        End If
+                        _Revisar = True
                     End If
 
+                    If _Revisar Then
+                        _Monedas += _Filas.Item("KOMO") & "-" & Trim(_Filas.Item("NOKOMO") & vbCrLf)
+                    End If
+
+                Next
+
+                If String.IsNullOrEmpty(_Monedas) Then
+                    Return True
+                Else
+                    If Not IsNothing(_Formulario) Then
+                        MessageBoxEx.Show(_Formulario, "No existe taza de cambio para la fecha: " & FormatDateTime(_Fecha_Taza, DateFormat.ShortDate) & vbCrLf &
+                                      "Para las monedas: " & vbCrLf & vbCrLf & _Monedas, "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    End If
                 End If
 
-            Else
-                Return True
             End If
+
         Else
             Return True
         End If
+
 
     End Function
 
