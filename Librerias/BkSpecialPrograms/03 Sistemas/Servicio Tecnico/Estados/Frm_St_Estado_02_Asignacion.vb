@@ -222,9 +222,9 @@ Public Class Frm_St_Estado_02_Asignacion
 
                 If Fx_Fijar_Estado() Then
 
-                    _Row_Encabezado.Item("CodEstado") = "A"
-                    _Row_Encabezado.Item("CodTecnico_Asignado") = Cmb_Tecnico.SelectedValue
-                    _Row_Encabezado.Item("Tecnico_Asignado") = Trim(Cmb_Tecnico.Text)
+                    '_Row_Encabezado.Item("CodEstado") = "A"
+                    '_Row_Encabezado.Item("CodTecnico_Asignado") = Cmb_Tecnico.SelectedValue
+                    '_Row_Encabezado.Item("Tecnico_Asignado") = Trim(Cmb_Tecnico.Text)
 
                     MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado",
                                       MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -236,18 +236,61 @@ Public Class Frm_St_Estado_02_Asignacion
 
             Else
 
-                MessageBoxEx.Show(Me, "Esta Sub-Ot pertenece a un lote de productos ingresados bajo la misma descripción" & vbCrLf &
-                                  "Se fijara el estado para todos los productos de esta OT que pertenescan a esta Sub-Ot",
-                                  "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                'MessageBoxEx.Show(Me, "Esta Sub-Ot pertenece a un lote de productos ingresados bajo la misma descripción" & vbCrLf &
+                '                  "Se fijara el estado para todos los productos de esta OT que pertenescan a esta Sub-Ot",
+                '                  "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                 Dim _Nro_Ot = _Row_Encabezado.Item("Nro_Ot")
 
-                If Fx_Fijar_Estado(_Nro_Ot, _Pertenece, Txt_Nota.Text) Then
+                Dim Chk_FijarSoloEstaSubOT As New Command
+                Chk_FijarSoloEstaSubOT.Checked = True
+                Chk_FijarSoloEstaSubOT.Name = "Chk_FijarSoloEstaSubOT"
+                Chk_FijarSoloEstaSubOT.Text = "Fijar solo esta Sub-Ot" & vbCrLf
 
-                    MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Dim Chk_FijarTodasLasSubOt As New Command
+                Chk_FijarTodasLasSubOt.Checked = False
+                Chk_FijarTodasLasSubOt.Name = "Chk_FijarTodasLasSubOt"
+                Chk_FijarTodasLasSubOt.Text = "Fijar todas las Sub-Ot de la OT: " & _Nro_Ot & vbCrLf
 
-                    _Grabar = True
-                    Me.Close()
+
+                Dim _Opciones() As Command = {Chk_FijarSoloEstaSubOT, Chk_FijarTodasLasSubOt}
+
+                Dim _Info As New TaskDialogInfo("Validación del sistema",
+                                          eTaskDialogIcon.Information,
+                                          "La OT con varias Sub-Ot",
+                                          "Esta Sub-Ot pertenece a un lote de productos ingresados bajo la misma descripción." & vbCrLf,
+                                          eTaskDialogButton.Ok + eTaskDialogButton.Cancel, eTaskDialogBackgroundColor.Red,
+                                          _Opciones, Nothing, Nothing, "Seleccione su opción y [OK]", Nothing)
+
+                Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
+
+                If _Resultado <> eTaskDialogResult.Ok Then
+                    Return
+                End If
+
+                If Chk_FijarSoloEstaSubOT.Checked Then
+
+                    If Fx_Fijar_Estado() Then
+
+                        MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                        _Grabar = True
+                        Me.Close()
+
+                    End If
+
+                End If
+
+                If Chk_FijarTodasLasSubOt.Checked Then
+
+                    If Fx_Fijar_Estado(_Nro_Ot, _Pertenece, Txt_Nota.Text) Then
+
+                        MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                        _Grabar = True
+                        Me.Close()
+
+                    End If
 
                 End If
 

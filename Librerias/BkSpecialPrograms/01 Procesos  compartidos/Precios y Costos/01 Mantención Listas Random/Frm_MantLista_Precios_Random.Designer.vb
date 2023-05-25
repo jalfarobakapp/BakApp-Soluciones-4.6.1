@@ -24,9 +24,9 @@ Partial Class Frm_MantLista_Precios_Random
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_MantLista_Precios_Random))
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Ejecutar_Formula = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_Productos = New DevComponents.DotNetBar.ButtonItem()
@@ -113,6 +113,7 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Grupo_Costo_Ud1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grupo_Costo_Ud2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grupo_PM = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Chk_GrabarPreciosHistoricos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -520,36 +521,36 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle10.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle11.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle11.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle11.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle12.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.Size = New System.Drawing.Size(771, 310)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 77
@@ -682,7 +683,7 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Barra_Abajo.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Barra_Abajo.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Barra_Abajo.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnGrabar, Me.Btn_Limpiar, Me.Btn_Exportar_Excel, Me.Chk_Marcar_Todo, Me.Btn_Imprimir_Maestra})
-        Me.Barra_Abajo.Location = New System.Drawing.Point(0, 520)
+        Me.Barra_Abajo.Location = New System.Drawing.Point(0, 526)
         Me.Barra_Abajo.Name = "Barra_Abajo"
         Me.Barra_Abajo.Size = New System.Drawing.Size(783, 41)
         Me.Barra_Abajo.Stretch = True
@@ -880,6 +881,7 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Chk_Ud1_X_Ud2.Checked = True
         Me.Chk_Ud1_X_Ud2.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_Ud1_X_Ud2.CheckValue = "Y"
+        Me.Chk_Ud1_X_Ud2.FocusCuesEnabled = False
         Me.Chk_Ud1_X_Ud2.ForeColor = System.Drawing.Color.Black
         Me.Chk_Ud1_X_Ud2.Location = New System.Drawing.Point(7, 431)
         Me.Chk_Ud1_X_Ud2.Name = "Chk_Ud1_X_Ud2"
@@ -896,7 +898,7 @@ Partial Class Frm_MantLista_Precios_Random
         '
         Me.Circular_Progres_Val.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Circular_Progres_Val.FocusCuesEnabled = False
-        Me.Circular_Progres_Val.Location = New System.Drawing.Point(410, 445)
+        Me.Circular_Progres_Val.Location = New System.Drawing.Point(414, 460)
         Me.Circular_Progres_Val.Name = "Circular_Progres_Val"
         Me.Circular_Progres_Val.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
         Me.Circular_Progres_Val.ProgressColor = System.Drawing.Color.SteelBlue
@@ -915,7 +917,7 @@ Partial Class Frm_MantLista_Precios_Random
         '
         Me.Lbl_Procesando.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Procesando.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Procesando.Location = New System.Drawing.Point(420, 492)
+        Me.Lbl_Procesando.Location = New System.Drawing.Point(424, 507)
         Me.Lbl_Procesando.Name = "Lbl_Procesando"
         Me.Lbl_Procesando.Size = New System.Drawing.Size(360, 23)
         Me.Lbl_Procesando.TabIndex = 74
@@ -934,7 +936,7 @@ Partial Class Frm_MantLista_Precios_Random
         '
         Me.Circular_Progres_Porc.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Circular_Progres_Porc.FocusCuesEnabled = False
-        Me.Circular_Progres_Porc.Location = New System.Drawing.Point(476, 445)
+        Me.Circular_Progres_Porc.Location = New System.Drawing.Point(480, 460)
         Me.Circular_Progres_Porc.Name = "Circular_Progres_Porc"
         Me.Circular_Progres_Porc.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
         Me.Circular_Progres_Porc.ProgressColor = System.Drawing.Color.SteelBlue
@@ -951,7 +953,7 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Btn_Cancelar.Image = CType(resources.GetObject("Btn_Cancelar.Image"), System.Drawing.Image)
         Me.Btn_Cancelar.ImageAlt = CType(resources.GetObject("Btn_Cancelar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Cancelar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Cancelar.Location = New System.Drawing.Point(557, 445)
+        Me.Btn_Cancelar.Location = New System.Drawing.Point(561, 460)
         Me.Btn_Cancelar.Name = "Btn_Cancelar"
         Me.Btn_Cancelar.Size = New System.Drawing.Size(51, 44)
         Me.Btn_Cancelar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -965,7 +967,7 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Grupo_Rut.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.Grupo_Rut.Controls.Add(Me.Lbl_Rtu)
         Me.Grupo_Rut.DisabledBackColor = System.Drawing.Color.Empty
-        Me.Grupo_Rut.Location = New System.Drawing.Point(7, 458)
+        Me.Grupo_Rut.Location = New System.Drawing.Point(7, 460)
         Me.Grupo_Rut.Name = "Grupo_Rut"
         Me.Grupo_Rut.Size = New System.Drawing.Size(90, 57)
         '
@@ -1005,7 +1007,7 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Grupo_Costo_Ud1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.Grupo_Costo_Ud1.Controls.Add(Me.Lbl_Costo_Ultima_Compra_Ud1)
         Me.Grupo_Costo_Ud1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.Grupo_Costo_Ud1.Location = New System.Drawing.Point(103, 458)
+        Me.Grupo_Costo_Ud1.Location = New System.Drawing.Point(103, 460)
         Me.Grupo_Costo_Ud1.Name = "Grupo_Costo_Ud1"
         Me.Grupo_Costo_Ud1.Size = New System.Drawing.Size(100, 57)
         '
@@ -1045,7 +1047,7 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Grupo_Costo_Ud2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.Grupo_Costo_Ud2.Controls.Add(Me.Lbl_Costo_Ultima_Compra_Ud2)
         Me.Grupo_Costo_Ud2.DisabledBackColor = System.Drawing.Color.Empty
-        Me.Grupo_Costo_Ud2.Location = New System.Drawing.Point(208, 458)
+        Me.Grupo_Costo_Ud2.Location = New System.Drawing.Point(208, 460)
         Me.Grupo_Costo_Ud2.Name = "Grupo_Costo_Ud2"
         Me.Grupo_Costo_Ud2.Size = New System.Drawing.Size(100, 57)
         '
@@ -1085,7 +1087,7 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Grupo_PM.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.Grupo_PM.Controls.Add(Me.Lbl_Costo_PM)
         Me.Grupo_PM.DisabledBackColor = System.Drawing.Color.Empty
-        Me.Grupo_PM.Location = New System.Drawing.Point(314, 458)
+        Me.Grupo_PM.Location = New System.Drawing.Point(314, 460)
         Me.Grupo_PM.Name = "Grupo_PM"
         Me.Grupo_PM.Size = New System.Drawing.Size(100, 57)
         '
@@ -1119,11 +1121,32 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Grupo_PM.TabIndex = 80
         Me.Grupo_PM.Text = "Costo PM"
         '
+        'Chk_GrabarPreciosHistoricos
+        '
+        Me.Chk_GrabarPreciosHistoricos.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_GrabarPreciosHistoricos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_GrabarPreciosHistoricos.Checked = True
+        Me.Chk_GrabarPreciosHistoricos.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_GrabarPreciosHistoricos.CheckValue = "Y"
+        Me.Chk_GrabarPreciosHistoricos.Enabled = False
+        Me.Chk_GrabarPreciosHistoricos.FocusCuesEnabled = False
+        Me.Chk_GrabarPreciosHistoricos.ForeColor = System.Drawing.Color.Black
+        Me.Chk_GrabarPreciosHistoricos.Location = New System.Drawing.Point(633, 431)
+        Me.Chk_GrabarPreciosHistoricos.Name = "Chk_GrabarPreciosHistoricos"
+        Me.Chk_GrabarPreciosHistoricos.Size = New System.Drawing.Size(147, 23)
+        Me.Chk_GrabarPreciosHistoricos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_GrabarPreciosHistoricos.TabIndex = 81
+        Me.Chk_GrabarPreciosHistoricos.Text = "Guardar precios historicos"
+        '
         'Frm_MantLista_Precios_Random
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(783, 561)
+        Me.ClientSize = New System.Drawing.Size(783, 567)
+        Me.Controls.Add(Me.Chk_GrabarPreciosHistoricos)
         Me.Controls.Add(Me.Grupo_PM)
         Me.Controls.Add(Me.Grupo_Costo_Ud2)
         Me.Controls.Add(Me.Grupo_Costo_Ud1)
@@ -1247,4 +1270,5 @@ Partial Class Frm_MantLista_Precios_Random
     Friend WithEvents Menu_Contextual_Grabar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Grabar_Inmediatamente As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Grabar_Futuro As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Chk_GrabarPreciosHistoricos As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

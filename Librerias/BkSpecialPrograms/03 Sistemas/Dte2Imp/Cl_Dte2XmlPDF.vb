@@ -911,7 +911,15 @@ Public Class Cl_Dte2XmlPDF
                     'pgfx.DrawString("N° " & _Nro_Documento, Fte_Encabezado_Negrita_16, XBrushes.Red, 430, Ypos)
 
                     Ypos = 30
-                    pgfx.DrawString(UCase(_Razon_Emisor), Fte_Encabezado_Negrita_14, XBrushes.Black, 20, Ypos)
+
+                    If _Razon_Emisor.Length <= 40 Then
+                        pgfx.DrawString(UCase(_Razon_Emisor), Fte_Encabezado_Negrita_14, XBrushes.Black, 20, Ypos)
+                    ElseIf _Razon_Emisor.Length > 40 And _Razon_Emisor.Length <= 45 Then
+                        pgfx.DrawString(UCase(_Razon_Emisor), Fte_Encabezado_Negrita_12, XBrushes.Black, 20, Ypos)
+                    Else
+                        pgfx.DrawString(UCase(_Razon_Emisor), Fte_Encabezado_Negrita_10, XBrushes.Black, 20, Ypos)
+                    End If
+
                     Ypos += 15
                     pgfx.DrawString(UCase(_direccion_Emisor), Fte_Encabezado_Negrita_10, XBrushes.Black, 20, Ypos)
                     Ypos += 15

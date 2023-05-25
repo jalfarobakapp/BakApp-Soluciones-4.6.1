@@ -67,8 +67,8 @@ Public Class Frm_InpunBox_Bk
     End Property
 
     Public Property BuscarCarpeta As Boolean
-
-
+    Public Property ConFechaMinima As Boolean
+    Public Property FechaMinima As DateTime
     Private Sub Frm_InpunBox_Bk_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         If Global_Thema = Enum_Themas.Oscuro Then
@@ -105,6 +105,7 @@ Public Class Frm_InpunBox_Bk
         End If
 
         Btn_BuscarCarpeta.Visible = BuscarCarpeta
+        Btn_Calendario.Visible = (_Tipo_de_Caracter = _Tipo_Caracter.Fecha)
 
     End Sub
 
@@ -127,6 +128,28 @@ Public Class Frm_InpunBox_Bk
     Sub Sb_Aceptar()
 
         _Nueva_Descripcion = TxtDescripcion.Text
+
+        If _Tipo_de_Caracter = _Tipo_Caracter.Fecha Then
+
+            Dim _IsValidDate As Boolean = IsDate(_Nueva_Descripcion)
+
+            If Not _IsValidDate Then
+                MessageBoxEx.Show(Me, "El valor ingresado no es una fecha valida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                TxtDescripcion.Focus()
+                Return
+            End If
+
+            Dim _Fecha As Date = Convert.ToDateTime(_Nueva_Descripcion)
+
+            If ConFechaMinima Then
+                If FormatDateTime(_Fecha, DateFormat.ShortDate) < FormatDateTime(FechaMinima, DateFormat.ShortDate) Then
+                    MessageBoxEx.Show(Me, "La fecha no puede ser menor a " & FechaMinima.ToShortDateString, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    TxtDescripcion.Focus()
+                    Return
+                End If
+            End If
+
+        End If
 
         If BuscarCarpeta Then
 
@@ -267,6 +290,20 @@ Public Class Frm_InpunBox_Bk
             TxtDescripcion.Text = _FolderBrowserDialog.SelectedPath
 
         End If
+
+    End Sub
+
+    Private Sub Btn_Calendario_Click(sender As Object, e As EventArgs) Handles Btn_Calendario.Click
+
+        Dim Fm As New Frm_Seleccionar_Fecha
+        Fm.ExigeFechaMinima = True
+        Fm.FechaMinima = DateAdd(DateInterval.Day, -1, FechaDelServidor())
+        Fm.FechaDisplay = FechaDelServidor()
+        Fm.ShowDialog(Me)
+        If Fm.Grabar Then
+            TxtDescripcion.Text = Fm.FechaSeleccionada.ToShortDateString
+        End If
+        Fm.Dispose()
 
     End Sub
 

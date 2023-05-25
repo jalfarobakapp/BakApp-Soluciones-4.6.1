@@ -16,6 +16,7 @@ Public Class Frm_St_Estado_05_Reparacion2
     Dim _RowEntidad As DataRow
     Dim _Tbl_DetProd_Cov As DataTable
     Dim _Tbl_DetProd_Srv As DataTable
+    Dim _Tbl_OperacionesXServ As DataTable
 
     Dim _Editando_documento As Boolean
 
@@ -55,6 +56,7 @@ Public Class Frm_St_Estado_05_Reparacion2
             _Tbl_DetProd = _DsDocumento.Tables(1)
             _Row_Notas = _DsDocumento.Tables(3).Rows(0)
             _Tbl_DetProd_Cov = _DsDocumento.Tables(7)
+            _Tbl_OperacionesXServ = _DsDocumento.Tables(10)
             _Tbl_DetProd_Srv = _DsDocumento.Tables(11)
         End Set
     End Property
@@ -101,6 +103,7 @@ Public Class Frm_St_Estado_05_Reparacion2
                                            "CodFuncionario = '" & _CodFuncionario & "'").ToString.Trim
 
         Txt_NroSerie.Text = _Row_Encabezado.Item("NroSerie")
+        Txt_Nota.Text = _Row_Notas.Item("Nota_Etapa_05")
 
         Sb_Actualizar_Grilla()
         Sb_Marcar_Grilla()
@@ -111,6 +114,7 @@ Public Class Frm_St_Estado_05_Reparacion2
             Txt_NroSerie.ReadOnly = True
             Txt_Tecnico_Taller.ReadOnly = True
             Me.Text += " (Documento solo de lectura)"
+            Chk_No_se_pudo_reparar_el_equipo.Enabled = False
         End If
 
     End Sub
@@ -152,15 +156,6 @@ Public Class Frm_St_Estado_05_Reparacion2
             .Columns("Ud").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            '.Columns("Cantidad_Utilizada").Visible = True
-            '.Columns("Cantidad_Utilizada").HeaderText = "Cantidad Utilizada"
-            '.Columns("Cantidad_Utilizada").Width = 120
-            '.Columns("Cantidad_Utilizada").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            ''.Columns("Cantidad").DefaultCellStyle.Format = "###,##.##"
-            '.Columns("Cantidad_Utilizada").ReadOnly = True
-            '.Columns("Cantidad_Utilizada").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
-
         End With
 
     End Sub
@@ -174,7 +169,7 @@ Public Class Frm_St_Estado_05_Reparacion2
 
             _Fila.DefaultCellStyle.Font = New Font(Font.Name, Font.Size, FontStyle.Regular)
 
-            If _Chk_Validado Then
+            If _Chk_Validado Or SoloLectura Then
                 If _Utilizado Then
                     _Fila.Cells("BtnImagen").Value = Imagenes_16x16.Images.Item("OK")
                 Else
@@ -213,6 +208,30 @@ Public Class Frm_St_Estado_05_Reparacion2
                        "Where Id_Ot = " & _Id_Ot & " And Semilla = " & _Semilla
         Dim _Tbl_Operaciones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
+
+
+        For Each _Fl As DataRow In _Tbl_OperacionesXServ.Rows
+
+            If _Fl.Item("Semilla") = _Semilla Then
+
+                For Each _Fl2 As DataRow In _Tbl_Operaciones.Rows
+
+                    If _Fl.Item("Id") = _Fl2.Item("Id") Then
+
+                        Dim _Chk As Boolean = _Fl.Item("Chk")
+                        Dim _Cantidad As Integer = _Fl.Item("Cantidad")
+
+                        '_Fl2.Item("Cantidad") = _Cantidad
+                        _Fl2.Item("Chk") = _Chk
+
+                    End If
+
+                Next
+
+            End If
+
+        Next
+
         Dim Fm2 As New Frm_OperacionesXServicio("")
         Fm2.TblOperaciones = _Tbl_Operaciones
         Fm2.SoloLectura = SoloLectura
@@ -221,9 +240,37 @@ Public Class Frm_St_Estado_05_Reparacion2
         Fm2.Dispose()
 
         If _Grabar Then
+
+            For Each _Fl As DataRow In _Tbl_OperacionesXServ.Rows
+
+                If _Fl.Item("Semilla") = _Semilla Then
+
+                    For Each _Fl2 As DataRow In _Tbl_Operaciones.Rows
+
+                        If _Fl.Item("Id") = _Fl2.Item("Id") Then
+
+                            Dim _Chk As Boolean = _Fl2.Item("Chk")
+                            Dim _Cantidad As Integer = _Fl2.Item("Cantidad")
+
+                            _Fl.Item("Cantidad") = _Cantidad
+                            _Fl.Item("Chk") = _Chk
+                            _Fl.Item("Realizado") = _Chk
+                            _Fl.Item("CantidadRealizada") = _Cantidad
+
+                            If Not _Chk Then _Fl.Item("CantidadRealizada") = 0
+
+                        End If
+
+                    Next
+
+                End If
+
+            Next
+
             _Fila.Cells("Utilizado").Value = True
             _Fila.Cells("Chk").Value = True
             Sb_Marcar_Grilla()
+
         End If
 
     End Sub
@@ -247,8 +294,8 @@ Public Class Frm_St_Estado_05_Reparacion2
         Dim _Chk_no_se_pudo_reparar = CInt(Chk_No_se_pudo_reparar_el_equipo.Checked) * -1
 
         Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Notas Set " & vbCrLf &
-                       "Nota_Etapa_05 = '" & _Nota_Etapa_05 &
-                       "',Chk_no_se_pudo_reparar = " & _Chk_no_se_pudo_reparar & vbCrLf &
+                       "Nota_Etapa_05 = '" & _Nota_Etapa_05 & "'" & vbCrLf &
+                       ",Chk_no_se_pudo_reparar = " & _Chk_no_se_pudo_reparar & vbCrLf &
                        ",Reparacion_Realizada = '" & _Reparacion_Realizada & "'" & vbCrLf &
                        ",Motivo_no_reparo = '" & _Motivo_no_reparo & "'" & vbCrLf &
                        "Where Id_Ot = " & _Id_Ot & vbCrLf & vbCrLf
@@ -325,6 +372,54 @@ Public Class Frm_St_Estado_05_Reparacion2
                            "," & De_Num_a_Tx_01(_Iva_Linea, False, 5) &
                            "," & De_Num_a_Tx_01(_Total_Linea, False, 5) &
                            ",1," & _Idmaeedo_Cov & "," & _Idmaeddo_Cov & ")" & vbCrLf
+
+        Next
+
+
+        Dim _SerUtilizados As Integer
+
+        For Each _Fila_Srv As DataRow In _Tbl_DetProd_Srv.Rows
+
+            If _Fila_Srv.Item("Utilizado") Then
+                _SerUtilizados += 1
+            End If
+
+        Next
+
+        If _SerUtilizados = 0 Then
+            MessageBoxEx.Show(Me, "Debe confirmar algun servicio para poder fijar el estado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return False
+        End If
+
+        For Each _Fila_Cov As DataRow In _Tbl_DetProd_Srv.Rows
+
+            Dim _Semilla As Integer = _Fila_Cov.Item("Semilla")
+            Dim _Cantidad_Utilizada As Integer = _Fila_Cov.Item("Cantidad")
+            Dim _Utilizado As Integer = Convert.ToInt32(_Fila_Cov.Item("Utilizado"))
+
+            If Not CBool(_Utilizado) Then
+                _Cantidad_Utilizada = 0
+            End If
+
+            Consulta_sql += "Update " & _Global_BaseBk & "Zw_St_OT_DetProd Set " &
+                            "Utilizado=" & _Utilizado & ",Cantidad_Utilizada = " & _Cantidad_Utilizada &
+                            " Where Semilla = " & _Semilla & vbCrLf
+
+            For Each _Fl As DataRow In _Tbl_OperacionesXServ.Rows
+
+                Dim _Id As Integer = _Fl.Item("Id")
+                Dim _Realizado As Integer = Convert.ToInt32(_Fl.Item("Realizado"))
+                Dim _CantidadRealizada As Integer = Convert.ToInt32(_Fl.Item("CantidadRealizada"))
+
+                If _Fl.Item("Semilla") = _Semilla Then
+
+                    Consulta_sql += "Update " & _Global_BaseBk & "Zw_St_OT_OpeXServ Set " &
+                                    "CantidadRealizada = " & _CantidadRealizada & ",Realizado = " & _Realizado &
+                                    " Where Id = " & _Id & vbCrLf
+
+                End If
+
+            Next
 
         Next
 

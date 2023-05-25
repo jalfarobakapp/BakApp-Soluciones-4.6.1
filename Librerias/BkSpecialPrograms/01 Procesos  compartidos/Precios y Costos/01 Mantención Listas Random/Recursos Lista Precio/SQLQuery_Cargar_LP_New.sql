@@ -46,7 +46,9 @@ CREATE TABLE [dbo].[#Tbl_Paso_LP#] (
 [NOKOPR]            [CHAR] (50) NULL ,
 [UD01PR]            [CHAR] (2) NULL ,
 [UD02PR]            [CHAR] (2) NULL ,
-[Codigo]            [CHAR] (21) NULL  
+[Codigo]            [CHAR] (21) NULL,
+[FxEjecUd1]         [Bit] Default (0), 
+[FxEjecUd2]         [Bit] Default (0)
 
  CONSTRAINT [PK_#Tbl_Paso_LP#] PRIMARY KEY CLUSTERED 
 (

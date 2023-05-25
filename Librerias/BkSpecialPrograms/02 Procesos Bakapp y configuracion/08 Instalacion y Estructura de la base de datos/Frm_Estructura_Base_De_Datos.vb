@@ -285,7 +285,10 @@ Public Class Frm_Estructura_Base_De_Datos
 
             .Sb_Revisar_Tabla2(Me, "Zw_TablaDeCaracterizaciones", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Tablas_Equivalentes_Rd_Bk", _Modificar, Lbl_Eventos)
+
             .Sb_Revisar_Tabla2(Me, "Zw_Tbl_DisenoBarras", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Tbl_DisenoBarras_SalPtoxEstacion", _Modificar, Lbl_Eventos)
+
             .Sb_Revisar_Tabla2(Me, "Zw_Tbl_Reemplazos", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_TblArbol_Asociaciones", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_TblChoferes_Empresa", _Modificar, Lbl_Eventos)

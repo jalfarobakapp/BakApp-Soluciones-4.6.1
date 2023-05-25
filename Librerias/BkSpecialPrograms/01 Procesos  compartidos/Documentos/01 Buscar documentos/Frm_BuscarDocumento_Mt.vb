@@ -1523,7 +1523,10 @@ Public Class Frm_BuscarDocumento_Mt
                 End If
 
                 If _Fila.Item("Chk") Then
-                    Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Docu_Ent Set HabilitadaFac = 1, FunAutorizaFac = '" & FUNCIONARIO & "'" & vbCrLf &
+                    Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Docu_Ent Set" &
+                                   " HabilitadaFac = 1" &
+                                   ",FunAutorizaFac = '" & FUNCIONARIO & "'" &
+                                   ",FechaHoraAutoriza = Getdate()" & vbCrLf &
                                    "Where Idmaeedo = " & _Idmaeedo
                     If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
                         _Habilitado += 1

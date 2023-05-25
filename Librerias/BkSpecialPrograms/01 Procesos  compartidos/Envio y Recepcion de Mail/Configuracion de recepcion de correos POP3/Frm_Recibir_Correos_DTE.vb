@@ -1,12 +1,15 @@
-﻿Imports DevComponents.DotNetBar
-Imports System.IO
+﻿Imports System.IO
 Imports System.Net.Sockets
+Imports System.Security.Authentication
 Imports System.Text
-
+Imports BkSpecialPrograms.Class_FTP
+Imports DevComponents.DotNetBar
+Imports Limilabs.Client
+Imports Limilabs.Client.IMAP
 Imports Limilabs.Client.POP3
 Imports Limilabs.Mail
-Imports Limilabs.Mail.MIME
 Imports Limilabs.Mail.Headers
+Imports Limilabs.Mail.MIME
 
 Public Class Frm_Recibir_Correos_DTE
 
@@ -90,6 +93,9 @@ Public Class Frm_Recibir_Correos_DTE
         End If
 
         Txt_Directorio.Text = _Directorio
+
+        Txt_CarpetaDestino.ReadOnly = False
+        Txt_CarpetaLectura.ReadOnly = False
 
     End Sub
 
@@ -331,10 +337,11 @@ Public Class Frm_Recibir_Correos_DTE
     End Sub
 
     Private Sub Btn_Descargar_Archivos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Descargar_Archivos.Click
-        Sb_Descargar_Archivos(True)
+        If Rdb_POP3.Checked Then Sb_Descargar_Archivos_POP3(True)
+        If Rdb_IMAP.Checked Then Sb_Descargar_Archivos_IMAP(True)
     End Sub
 
-    Sub Sb_Descargar_Archivos(_Mostrar_Mensaje As Boolean)
+    Sub Sb_Descargar_Archivos_POP3(_Mostrar_Mensaje As Boolean)
 
         ErrorEjecucion = String.Empty
 
@@ -364,9 +371,10 @@ Public Class Frm_Recibir_Correos_DTE
             Lbl_Xml_InsertBD.Tag = 0
 
             'Using _Pop3 As New Pop3
-            _Pop3.Connect(_Host)                          ' Use overloads or ConnectSSL if you need to specify different port or SSL.
-            '_Pop3.Login(_User, _Pass)                     ' You can also use: LoginAPOP, LoginPLAIN, LoginCRAM, LoginDIGEST methods,
-            _Pop3.UseBestLogin(_User, _Pass)                     ' You can also use: LoginAPOP, LoginPLAIN, LoginCRAM, LoginDIGEST methods,
+            _Pop3.Connect(_Host)                          'Utilice sobrecargas o ConnectSSL si necesita especificar otro puerto o SSL.
+            '_Pop3.Login(_User, _Pass)                    ' You can also use: LoginAPOP, LoginPLAIN, LoginCRAM, LoginDIGEST methods,
+
+            _Pop3.UseBestLogin(_User, _Pass)              ' You can also use: LoginAPOP, LoginPLAIN, LoginCRAM, LoginDIGEST methods,
             ' or use UseBestLogin method if you want Mail.dll to choose for you.
             Dim _Contador = 0
             Dim _Archivos_Descargados = 0
@@ -495,6 +503,222 @@ Public Class Frm_Recibir_Correos_DTE
             End If
 
             _Pop3.Close()
+
+            If _Mostrar_Mensaje Then
+                MessageBoxEx.Show(Me, "Total archivos descargados: " & Lbl_Xml_Descargados.Text,
+                              "Descarga completa", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+
+        Catch ex As Exception
+            ErrorEjecucion = ex.Message
+            If _Mostrar_Mensaje Then
+                MessageBoxEx.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End If
+        Finally
+
+            Grupo.Enabled = True
+            Btn_Descargar_Archivos.Enabled = True
+            Me.ControlBox = True
+            Btn_Cancelar.Visible = False
+            Progreso_Porc.Value = 0
+            Progreso_Cont.Value = 0
+
+            'Lbl_Total_Correos.Text = 0
+            'Lbl_Xml_InsertBD.Text = 0
+            'Lbl_Xml_Descargados.Text = 0
+
+            Me.Cursor = Cursors.Default
+
+        End Try
+
+    End Sub
+
+    Sub Sb_Descargar_Archivos_IMAP(_Mostrar_Mensaje As Boolean)
+
+        ErrorEjecucion = String.Empty
+
+        If IsNothing(_Row_Cuenta) Then
+            MessageBoxEx.Show(Me, "Falta la cuenta del correo", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Host As String = _Row_Cuenta.Item("Host") 'Txt_Host.Text
+        Dim _User As String = _Row_Cuenta.Item("Nombre_Usuario") 'Txt_Usuario.Text
+        Dim _Pass As String = _Row_Cuenta.Item("Contrasena") 'Txt_Clave.Text
+
+        Lbl_Total_Correos.Text = 0
+        Lbl_Xml_InsertBD.Text = 0
+        Lbl_Xml_Descargados.Text = 0
+
+        Try
+
+            Me.Cursor = Cursors.WaitCursor
+            _Cancelar = False
+            Grupo.Enabled = False
+            Btn_Descargar_Archivos.Enabled = False
+            Me.ControlBox = False
+            Btn_Cancelar.Visible = _Mostrar_Mensaje
+            Me.Refresh()
+
+            Dim _Imap As New Imap
+
+            '_Imap.SSLConfiguration.EnabledSslProtocols = SslProtocols.Tls12
+
+            _Imap.ConnectSSL(_Host)  ' or Connect for non SSL/TLS<font></font>
+            _Imap.UseBestLogin(_User, _Pass)
+
+            _Imap.SelectInbox()
+
+            Lbl_Xml_InsertBD.Tag = 0
+
+            Dim _Contador = 0
+            Dim _Archivos_Descargados = 0
+
+            Dim _MaxCorreos As Integer
+
+            If _Imap.Connected Then
+
+                If Not String.IsNullOrEmpty(Txt_CarpetaLectura.Text) Then
+                    _Imap.Select(Txt_CarpetaLectura.Text) '("INBOX.DTE_PROCESADOS")
+                End If
+
+                Dim uids As List(Of Long) = _Imap.Search(Flag.Unseen)
+
+                Dim _FechaDesde As Date = Primerdiadelmes(FechaDelServidor())
+                Dim _FechaHasta As Date = FechaDelServidor()
+
+                _FechaHasta = New DateTime(_FechaHasta.Year, _FechaHasta.Month, _FechaHasta.Day, 23, 59, 0)
+                _FechaDesde = DateAdd(DateInterval.Day, -2, _FechaHasta)
+                _FechaDesde = New DateTime(_FechaDesde.Year, _FechaDesde.Month, _FechaDesde.Day, 0, 0, 0)
+
+                ' Esto de aca busca por fecha al parecer...
+                uids = _Imap.Search((Expression.[And](Expression.Before(_FechaHasta), Expression.Since(_FechaDesde))))
+
+
+
+                Progreso_Porc.Maximum = 100
+
+                'If uids.Count > 2000 Then
+                '    _MaxCorreos = 2000
+                'Else
+                '    _MaxCorreos = uids.Count - 1
+                'End If
+
+                _MaxCorreos = uids.Count - 1
+
+                Progreso_Cont.Maximum = _MaxCorreos - 1
+                Lbl_Total_Correos.Text = FormatNumber(_MaxCorreos, 0)
+
+                For Each uid As String In uids
+                    System.Windows.Forms.Application.DoEvents()
+                    Dim email As IMail
+
+                    Try
+                        email = New MailBuilder().CreateFromEml(_Imap.GetMessageByUID(uid))
+                    Catch ex As Exception
+                        email = Nothing
+                    End Try
+
+                    If Not IsNothing(email) Then
+
+                        Dim _STRSS As String = "Subject: " & email.Subject & vbCrLf &
+                                               "From: " + JoinMailboxes(email.From) & vbCrLf &
+                                               "To: " + JoinAddresses(email.To) & vbCrLf &
+                                               "Cc: " + JoinAddresses(email.Cc) & vbCrLf &
+                                               "Bcc: " + JoinAddresses(email.Bcc) & vbCrLf &
+                                               "Text: " + email.Text & vbCrLf &
+                                               "HTML: " + email.Html
+
+                        Dim _Fecha_Email As Date
+
+                        If email.Date.Equals(Nothing) Then
+                            _Fecha_Email = FechaDelServidor()
+                        Else
+                            _Fecha_Email = FormatDateTime(email.Date)
+                        End If
+
+                        Dim _FechaActual As DateTime = FechaDelServidor()
+
+                        If email.Date > #01-01-2023# Then
+
+                            For Each attachment As MimeData In email.Attachments
+
+                                With attachment
+
+                                    Dim _Filename As String
+
+                                    If Not IsNothing(.FileName) Then
+
+                                        _Filename = .FileName
+
+                                        If (InStr(_Filename.ToLower, ".xml")) Then
+
+                                            Dim _Nombre_Archivo As String = numero_(_Contador + 1, 5) & "_" & .FileName
+
+                                            _Nombre_Archivo = Replace(_Nombre_Archivo, "/", "_")
+                                            .Save(Txt_Directorio.Text & "\" & _Nombre_Archivo)
+
+                                            If Fx_Validar_Archivo_XML_DTE(Txt_Directorio.Text & "\" & _Nombre_Archivo) Then
+
+                                                _Archivos_Descargados += 1
+                                                Lbl_Xml_Descargados.Text = FormatNumber(_Archivos_Descargados, 0)
+
+                                                Dim _DocInsertador As Integer
+
+                                                If Fx_Grabar_En_DTE_ReccEnc_DTE_ReccDet(_Nombre_Archivo, _DocInsertador) Then
+
+                                                    Lbl_Xml_InsertBD.Tag += _DocInsertador
+                                                    Lbl_Xml_InsertBD.Text = FormatNumber(Lbl_Xml_InsertBD.Tag, 0)
+                                                    File.Delete(Txt_Directorio.Text & "\" & _Nombre_Archivo)
+
+                                                End If
+
+                                                If Not String.IsNullOrEmpty(Txt_CarpetaDestino.Text) Then
+                                                    _Imap.MoveByUID(uid, Txt_CarpetaDestino.Text)
+                                                End If
+
+                                            Else
+                                                'File.Delete(Txt_Directorio.Text & "\" & _Nombre_Archivo)
+                                            End If
+
+                                        End If
+
+                                    End If
+
+                                End With
+
+                            Next
+
+                        End If
+
+                        'ELIMINA EL CORREO EN EL SERVIDOR DE CORREOS
+                        If Chk_Borrar_Todos_Los_Correos.Checked Then
+                            _Imap.DeleteMessageByUID(uid)
+                        End If
+
+                    End If
+
+                    _Contador += 1
+                    Progreso_Porc.Value = ((_Contador * 100) / _MaxCorreos - 1) 'Mas
+                    Progreso_Cont.Value += 1
+
+                    If _Cancelar Then
+                        If MessageBoxEx.Show(Me, "¿Desea cancelar la acción?", "Cancelar",
+                                             MessageBoxButtons.YesNo,
+                                             MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+                            Exit For
+                        End If
+                    End If
+
+                    'If _Contador >= 2000 Then
+                    '    Exit For
+                    'End If
+
+                Next
+
+            End If
+
+            _Imap.Close()
 
             If _Mostrar_Mensaje Then
                 MessageBoxEx.Show(Me, "Total archivos descargados: " & Lbl_Xml_Descargados.Text,
@@ -757,7 +981,10 @@ Public Class Frm_Recibir_Correos_DTE
 
     Private Sub Timer_Segundos_Tick(sender As Object, e As EventArgs) Handles Timer_Segundos.Tick
         Timer_Segundos.Stop()
-        Sb_Descargar_Archivos(False)
+
+        If Rdb_POP3.Checked Then Sb_Descargar_Archivos_POP3(True)
+        If Rdb_IMAP.Checked Then Sb_Descargar_Archivos_IMAP(True)
+
         Me.Close()
     End Sub
 

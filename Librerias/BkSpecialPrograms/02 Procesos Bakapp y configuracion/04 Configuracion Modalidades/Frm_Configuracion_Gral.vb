@@ -210,6 +210,8 @@ Public Class Frm_Configuracion_Gral
             Chk_LasNVVDebenSerHabilitadasParaFacturar.Checked = .Item("LasNVVDebenSerHabilitadasParaFacturar")
             Chk_B4A_DespachoSimple.Checked = .Item("B4A_DespachoSimple")
 
+            Chk_GrabarPreciosHistoricos.Checked = .Item("GrabarPreciosHistoricos")
+
         End With
 
         Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.Enabled = Not _Modalidad_General
@@ -264,9 +266,10 @@ Public Class Frm_Configuracion_Gral
         LabelX20.Enabled = _Modalidad_General
         Txt_Lista_Precios_Proveedores.Enabled = _Modalidad_General
 
+        Chk_GrabarPreciosHistoricos.Enabled = _Modalidad_General
+
         Grupo_RecepXMLComp.Enabled = _Modalidad_General
 
-        'Chk_Fincred_Usar.Enabled = Not _Modalidad_General
         Txt_Fincred_Id_Token.Enabled = Not _Modalidad_General
 
         Btn_FincredConfiguracion.Enabled = _Modalidad_General
@@ -460,6 +463,7 @@ Public Class Frm_Configuracion_Gral
                        ",AlertaRevNVVConVtasMismoDia = " & Convert.ToInt32(Chk_AlertaRevNVVConVtasMismoDia.Checked) & vbCrLf &
                        ",LasNVVDebenSerHabilitadasParaFacturar = " & Convert.ToInt32(Chk_LasNVVDebenSerHabilitadasParaFacturar.Checked) & vbCrLf &
                        ",B4A_DespachoSimple = " & Convert.ToInt32(Chk_B4A_DespachoSimple.Checked) & vbCrLf &
+                       ",GrabarPreciosHistoricos = " & Convert.ToInt32(Chk_GrabarPreciosHistoricos.Checked) & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then

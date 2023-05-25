@@ -41,6 +41,7 @@ Partial Class Frm_St_Estado_02_Asignacion
         Me.Txt_Nota = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Informacion = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Highlighter1 = New DevComponents.DotNetBar.Validator.Highlighter()
         Me.Grupo_Presupuesto.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -95,7 +96,7 @@ Partial Class Frm_St_Estado_02_Asignacion
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.22774!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 69.77226!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 25.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.Chk_Tec_Domicilio, 1, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.Btn_Tecnicos, 2, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Chk_Taller_Externo, 0, 1)
@@ -119,7 +120,7 @@ Partial Class Frm_St_Estado_02_Asignacion
         '
         Me.Chk_Tec_Domicilio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Tec_Domicilio.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Tec_Domicilio.Location = New System.Drawing.Point(162, 32)
+        Me.Chk_Tec_Domicilio.Location = New System.Drawing.Point(161, 32)
         Me.Chk_Tec_Domicilio.Name = "Chk_Tec_Domicilio"
         Me.Chk_Tec_Domicilio.Size = New System.Drawing.Size(194, 16)
         Me.Chk_Tec_Domicilio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -131,7 +132,7 @@ Partial Class Frm_St_Estado_02_Asignacion
         Me.Btn_Tecnicos.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Tecnicos.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Tecnicos.Image = CType(resources.GetObject("Btn_Tecnicos.Image"), System.Drawing.Image)
-        Me.Btn_Tecnicos.Location = New System.Drawing.Point(529, 3)
+        Me.Btn_Tecnicos.Location = New System.Drawing.Point(528, 3)
         Me.Btn_Tecnicos.Name = "Btn_Tecnicos"
         Me.Btn_Tecnicos.Size = New System.Drawing.Size(19, 22)
         Me.Btn_Tecnicos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -148,7 +149,7 @@ Partial Class Frm_St_Estado_02_Asignacion
         Me.Chk_Taller_Externo.ForeColor = System.Drawing.Color.Black
         Me.Chk_Taller_Externo.Location = New System.Drawing.Point(3, 32)
         Me.Chk_Taller_Externo.Name = "Chk_Taller_Externo"
-        Me.Chk_Taller_Externo.Size = New System.Drawing.Size(153, 16)
+        Me.Chk_Taller_Externo.Size = New System.Drawing.Size(152, 16)
         Me.Chk_Taller_Externo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Taller_Externo.TabIndex = 70
         Me.Chk_Taller_Externo.Text = "Taller externo - técnico externo"
@@ -176,8 +177,9 @@ Partial Class Frm_St_Estado_02_Asignacion
         Me.Cmb_Tecnico.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Cmb_Tecnico.FocusHighlightEnabled = True
         Me.Cmb_Tecnico.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Cmb_Tecnico, True)
         Me.Cmb_Tecnico.ItemHeight = 16
-        Me.Cmb_Tecnico.Location = New System.Drawing.Point(162, 3)
+        Me.Cmb_Tecnico.Location = New System.Drawing.Point(161, 3)
         Me.Cmb_Tecnico.Name = "Cmb_Tecnico"
         Me.Cmb_Tecnico.Size = New System.Drawing.Size(361, 22)
         Me.Cmb_Tecnico.TabIndex = 68
@@ -191,7 +193,7 @@ Partial Class Frm_St_Estado_02_Asignacion
         Me.Rating_Star.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rating_Star.ForeColor = System.Drawing.Color.Black
         Me.Rating_Star.IsEditable = False
-        Me.Rating_Star.Location = New System.Drawing.Point(554, 3)
+        Me.Rating_Star.Location = New System.Drawing.Point(553, 3)
         Me.Rating_Star.Name = "Rating_Star"
         Me.Rating_Star.Size = New System.Drawing.Size(68, 23)
         Me.Rating_Star.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
@@ -218,6 +220,7 @@ Partial Class Frm_St_Estado_02_Asignacion
         Me.Btn_Fijar_Estado.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Fijar_Estado.ForeColor = System.Drawing.Color.Black
         Me.Btn_Fijar_Estado.Image = CType(resources.GetObject("Btn_Fijar_Estado.Image"), System.Drawing.Image)
+        Me.Btn_Fijar_Estado.ImageAlt = CType(resources.GetObject("Btn_Fijar_Estado.ImageAlt"), System.Drawing.Image)
         Me.Btn_Fijar_Estado.Name = "Btn_Fijar_Estado"
         Me.Btn_Fijar_Estado.Text = "Fijar Estado"
         '
@@ -226,6 +229,7 @@ Partial Class Frm_St_Estado_02_Asignacion
         Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
+        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Grabar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_Grabar.Name = "Btn_Grabar"
         Me.Btn_Grabar.Tooltip = "Grabar [F4]"
@@ -236,6 +240,7 @@ Partial Class Frm_St_Estado_02_Asignacion
         Me.Btn_Editar.FontBold = True
         Me.Btn_Editar.ForeColor = System.Drawing.Color.Red
         Me.Btn_Editar.Image = CType(resources.GetObject("Btn_Editar.Image"), System.Drawing.Image)
+        Me.Btn_Editar.ImageAlt = CType(resources.GetObject("Btn_Editar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Editar.Name = "Btn_Editar"
         Me.Btn_Editar.Tooltip = "Editar"
         Me.Btn_Editar.Visible = False
@@ -246,6 +251,7 @@ Partial Class Frm_St_Estado_02_Asignacion
         Me.Btn_Direccion_Servicio.FontBold = True
         Me.Btn_Direccion_Servicio.ForeColor = System.Drawing.Color.Red
         Me.Btn_Direccion_Servicio.Image = CType(resources.GetObject("Btn_Direccion_Servicio.Image"), System.Drawing.Image)
+        Me.Btn_Direccion_Servicio.ImageAlt = CType(resources.GetObject("Btn_Direccion_Servicio.ImageAlt"), System.Drawing.Image)
         Me.Btn_Direccion_Servicio.Name = "Btn_Direccion_Servicio"
         Me.Btn_Direccion_Servicio.Tooltip = "Dirección servicio a domicilio"
         '
@@ -255,6 +261,7 @@ Partial Class Frm_St_Estado_02_Asignacion
         Me.Btn_Cancelar.FontBold = True
         Me.Btn_Cancelar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Cancelar.Image = CType(resources.GetObject("Btn_Cancelar.Image"), System.Drawing.Image)
+        Me.Btn_Cancelar.ImageAlt = CType(resources.GetObject("Btn_Cancelar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Cancelar.Name = "Btn_Cancelar"
         Me.Btn_Cancelar.Text = "Cancelar edición"
         Me.Btn_Cancelar.Visible = False
@@ -301,6 +308,7 @@ Partial Class Frm_St_Estado_02_Asignacion
         '
         'Txt_Nota
         '
+        Me.Txt_Nota.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -311,6 +319,7 @@ Partial Class Frm_St_Estado_02_Asignacion
         Me.Txt_Nota.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Nota.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Nota.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Nota, True)
         Me.Txt_Nota.Location = New System.Drawing.Point(6, 3)
         Me.Txt_Nota.MaxLength = 300
         Me.Txt_Nota.Multiline = True
@@ -361,7 +370,6 @@ Partial Class Frm_St_Estado_02_Asignacion
         '
         'Txt_Informacion
         '
-        Me.Txt_Informacion.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -370,7 +378,6 @@ Partial Class Frm_St_Estado_02_Asignacion
         Me.Txt_Informacion.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Informacion.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Informacion.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Informacion.FocusHighlightEnabled = True
         Me.Txt_Informacion.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Informacion.ForeColor = System.Drawing.Color.Black
         Me.Txt_Informacion.Location = New System.Drawing.Point(6, 3)
@@ -381,6 +388,12 @@ Partial Class Frm_St_Estado_02_Asignacion
         Me.Txt_Informacion.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.Txt_Informacion.Size = New System.Drawing.Size(631, 44)
         Me.Txt_Informacion.TabIndex = 64
+        '
+        'Highlighter1
+        '
+        Me.Highlighter1.ContainerControl = Me
+        Me.Highlighter1.FocusHighlightColor = DevComponents.DotNetBar.Validator.eHighlightColor.Red
+        Me.Highlighter1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         '
         'Frm_St_Estado_02_Asignacion
         '
@@ -428,4 +441,5 @@ Partial Class Frm_St_Estado_02_Asignacion
     Friend WithEvents Btn_Tecnicos As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Cancelar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Highlighter1 As DevComponents.DotNetBar.Validator.Highlighter
 End Class

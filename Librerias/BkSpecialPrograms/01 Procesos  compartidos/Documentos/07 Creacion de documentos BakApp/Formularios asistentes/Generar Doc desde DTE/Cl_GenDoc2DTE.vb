@@ -244,6 +244,8 @@ Namespace Bk_GenDoc2DTE
 
                             _Registro.Precio = _Precio
                             _Registro.Dscto1 = _DecuentoPct
+                            _Registro.DescuentoMonto = _DescuentoMonto
+                            _Registro.Monto = _Monto
 
                             Dim _Decimal As Integer
 
@@ -494,6 +496,8 @@ Namespace Bk_GenDoc2DTE
         Public Property Dscto1 As Double
         Public Property Dscto2 As Double
         Public Property Dscto3 As Double
+        Public Property DescuentoMonto As Double
+        Public Property Monto As Double
 
     End Class
 

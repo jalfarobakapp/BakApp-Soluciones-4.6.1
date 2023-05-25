@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+ï»¿Imports DevComponents.DotNetBar
 
 Public Class Frm_BkpPostBusquedaOrdenBod
 
@@ -21,10 +21,10 @@ Public Class Frm_BkpPostBusquedaOrdenBod
 
     Public Sub New()
 
-        ' Esta llamada es exigida por el diseñador.
+        ' Esta llamada es exigida por el diseÃ±ador.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
 
         _Orden_Bod = "ORDEN_BOD_" & ModEmpresa.Trim & ModSucursal.Trim
 
@@ -62,7 +62,7 @@ Public Class Frm_BkpPostBusquedaOrdenBod
 
     Private Sub Frm_BkpPostBusquedaOrdenBod_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        AddHandler Grilla_Bodegas.RowPostPaint, AddressOf Sb_Grilla_RowsPostPaint
+        AddHandler Grilla_Bodegas.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         Sb_Actualizar_Grilla()
 
@@ -117,7 +117,7 @@ Public Class Frm_BkpPostBusquedaOrdenBod
 
         Try
 
-            'obtener el índice de la fila seleccionada
+            'obtener el Ã­ndice de la fila seleccionada
             _RowIndex = Grilla_Bodegas.SelectedCells(0).OwningRow.Index
 
             'crear una nueva fila
@@ -152,7 +152,7 @@ Public Class Frm_BkpPostBusquedaOrdenBod
                     _Tbl_Bodegas.Rows.RemoveAt(_RowIndex)
                     _Tbl_Bodegas.Rows.InsertAt(_Fila_Actual, _RowIndex - _Contador)
 
-                    'inserte la nueva fila en una nueva posición
+                    'inserte la nueva fila en una nueva posiciÃ³n
                     _Tbl_Bodegas.Rows.RemoveAt(_Fila_de_Arriba.Index)
                     _Tbl_Bodegas.Rows.InsertAt(_Fila_Arriba, _RowIndex)
 
@@ -187,7 +187,7 @@ Public Class Frm_BkpPostBusquedaOrdenBod
 
         Try
 
-            'obtener el índice de la fila seleccionada
+            'obtener el Ã­ndice de la fila seleccionada
             _RowIndex = Grilla_Bodegas.SelectedCells(0).OwningRow.Index
 
             'crear una nueva fila
@@ -228,7 +228,7 @@ Public Class Frm_BkpPostBusquedaOrdenBod
                     _Tbl_Bodegas.Rows.RemoveAt(_RowIndex)
                     _Tbl_Bodegas.Rows.InsertAt(_Fila_Actual, _RowIndex_Abajo) ' _RowIndex + _Contador)
 
-                    'inserte la nueva fila en una nueva posición
+                    'inserte la nueva fila en una nueva posiciÃ³n
                     _Tbl_Bodegas.Rows.RemoveAt(_Fila_de_Abajo.Index)
                     _Tbl_Bodegas.Rows.InsertAt(_Fila_Abajo, _RowIndex)
 
@@ -273,7 +273,7 @@ Public Class Frm_BkpPostBusquedaOrdenBod
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
-        If MessageBoxEx.Show(Me, "¿Desea guardar los cambios?", "Guardar cambios",
+        If MessageBoxEx.Show(Me, "Â¿Desea guardar los cambios?", "Guardar cambios",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
             Dim _Orden = 0

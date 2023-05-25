@@ -11,6 +11,7 @@ CREATE TABLE [dbo].[Zw_Docu_Ent](
 	[FechaHoraGrab]		[datetime]		NULL	 DEFAULT (getdate()),
 	[HabilitadaFac]		[bit]			NOT NULL DEFAULT (0),
 	[FunAutorizaFac]	[varchar](3)	NOT NULL DEFAULT (''),
+    [FechaHoraAutoriza]	[datetime]		NULL,
  CONSTRAINT [PK_Zw_Docu_Ent] PRIMARY KEY CLUSTERED 
 (
 	[Idmaeedo] ASC

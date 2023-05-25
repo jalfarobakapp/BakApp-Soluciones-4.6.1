@@ -918,6 +918,18 @@ Public Class Frm_00_Asis_Compra_Menu
                                       Chk_EnviarListadoOCCConMinimoCompraXCorreo.Name, Class_SQLite.Enum_Type._Boolean, Chk_EnviarListadoOCCConMinimoCompraXCorreo.Checked, _Actualizar)
 
 
+        ' Correo para envio de proveedores sin stock
+        _Sql.Sb_Parametro_Informe_Sql(Txt_CtaCorreoAvisoProveedoresSinStock, "Compras_Asistente",
+                                      Txt_CtaCorreoAvisoProveedoresSinStock.Name, Class_SQLite.Enum_Type._String, Txt_CtaCorreoAvisoProveedoresSinStock.Text, _Actualizar)
+
+        ' Check para envia listado proveedores sin stock
+        _Sql.Sb_Parametro_Informe_Sql(Chk_EnviarListadoProveedoresSinStock, "Compras_Asistente",
+                                      Chk_EnviarListadoProveedoresSinStock.Name, Class_SQLite.Enum_Type._Boolean, Chk_EnviarListadoProveedoresSinStock.Checked, _Actualizar)
+
+        ' Días de diferencia para estudio de proveedores sin stock
+        _Sql.Sb_Parametro_Informe_Sql(Input_DiasMarcarProvQueNoTiene, "Compras_Asistente",
+                                      Input_DiasMarcarProvQueNoTiene.Name, Class_SQLite.Enum_Type._Double, Input_DiasMarcarProvQueNoTiene.Value, _Actualizar)
+
     End Sub
 
     'Sub Sb_Actualizar_Revisar_Sqlite()
@@ -2289,6 +2301,9 @@ Public Class Frm_00_Asis_Compra_Menu
             Fm.Auto_NombreFormato_PDF = Txt_NombreFormato_PDF_OCC.Text
             Fm.Auto_Id_CorreoOCCMinCompra = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Id", "Nombre_Correo = '" & Txt_CtaCorreoAvisoOCCMinCompra.Text & "'")
             Fm.Auto_EnviarListadoOCCConMinimoCompraXCorreo = Chk_EnviarListadoOCCConMinimoCompraXCorreo.Checked
+            Fm.Auto_Id_CorreoProveedoresSinStock = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Id", "Nombre_Correo = '" & Txt_CtaCorreoAvisoProveedoresSinStock.Text & "'")
+            Fm.Auto_EnviarListadoProveedoresSinStock = Chk_EnviarListadoProveedoresSinStock.Checked
+            Fm.Input_DiasMarcarProvQueNoTiene = Input_DiasMarcarProvQueNoTiene.Value
         End If
 
         Fm.Modo_OCC = Modo_OCC
@@ -3304,6 +3319,10 @@ Public Class Frm_00_Asis_Compra_Menu
     End Sub
 
     Private Sub Txt_CtaCorreoEnvioAutomatizado_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CtaCorreoEnvioAutomatizado_OCC.ButtonCustomClick
+        Sb_Buscar_Cuenta_Correo(sender, "")
+    End Sub
+
+    Sub Sb_Buscar_Cuenta_Correo(Txt_CtaCorreo As Controls.TextBoxX, _Etiqueta As String)
 
         Dim _Row_Email As DataRow
 
@@ -3314,10 +3333,31 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Dispose()
 
         If Not IsNothing(_Row_Email) Then
-            Txt_CtaCorreoEnvioAutomatizado_OCC.Tag = _Row_Email.Item("Id")
-            Txt_CtaCorreoEnvioAutomatizado_OCC.Text = _Row_Email.Item("Nombre_Correo").ToString.Trim
+
+            Dim _Cuerpo As String = _Row_Email.Item("CuerpoMensaje").ToString
+
+            _Cuerpo = Replace(_Cuerpo, "&lt;", "<")
+            _Cuerpo = Replace(_Cuerpo, "&gt;", ">")
+
+            If Not String.IsNullOrEmpty(_Etiqueta) Then
+                If Not _Cuerpo.Contains(_Etiqueta) Then
+                    MessageBoxEx.Show(Me, "En el cuerpo del correo falta la etiqueta " & _Etiqueta, "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
+            End If
+
+            Txt_CtaCorreo.Tag = _Row_Email.Item("Id")
+            Txt_CtaCorreo.Text = _Row_Email.Item("Nombre_Correo").ToString.Trim
         End If
 
+    End Sub
+
+    Sub Sb_Quitar_Cuenta_Correo(Txt_CtaCorreo As Controls.TextBoxX)
+        If MessageBoxEx.Show(Me, "Confirma quitar el correo", "Quitar correo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Txt_CtaCorreo.Tag = 0
+            Txt_CtaCorreo.Text = String.Empty
+        End If
     End Sub
 
     Private Sub Txt_NombreFormato_PDF_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_NombreFormato_PDF_OCC.ButtonCustomClick
@@ -3342,17 +3382,11 @@ Public Class Frm_00_Asis_Compra_Menu
     End Sub
 
     Private Sub Txt_NombreFormato_PDF_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_NombreFormato_PDF_OCC.ButtonCustom2Click
-        If MessageBoxEx.Show(Me, "Confirma quitar el formato", "Quitar formato", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-            Txt_NombreFormato_PDF_OCC.Tag = String.Empty
-            Txt_NombreFormato_PDF_OCC.Text = String.Empty
-        End If
+        Sb_Quitar_Cuenta_Correo(sender)
     End Sub
 
     Private Sub Txt_CtaCorreoEnvioAutomatizado_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CtaCorreoEnvioAutomatizado_OCC.ButtonCustom2Click
-        If MessageBoxEx.Show(Me, "Confirma quitar el correo", "Quitar correo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-            Txt_CtaCorreoEnvioAutomatizado_OCC.Tag = 0
-            Txt_CtaCorreoEnvioAutomatizado_OCC.Text = String.Empty
-        End If
+        Sb_Quitar_Cuenta_Correo(sender)
     End Sub
 
     Private Sub Btn_Bodega_NVI_Estudio_Click(sender As Object, e As EventArgs) Handles Btn_Bodega_NVI_Estudio.Click
@@ -3383,27 +3417,11 @@ Public Class Frm_00_Asis_Compra_Menu
     End Sub
 
     Private Sub Txt_CtaCorreoEnvioAutomatizado_NVI_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CtaCorreoEnvioAutomatizado_NVI.ButtonCustomClick
-
-        Dim _Row_Email As DataRow
-
-        Dim Fm As New Frm_Correos_SMTP
-        Fm.Pro_Seleccionar = True
-        Fm.ShowDialog(Me)
-        _Row_Email = Fm.Pro_Row_Fila_Seleccionada
-        Fm.Dispose()
-
-        If Not IsNothing(_Row_Email) Then
-            Txt_CtaCorreoEnvioAutomatizado_NVI.Tag = _Row_Email.Item("Id")
-            Txt_CtaCorreoEnvioAutomatizado_NVI.Text = _Row_Email.Item("Nombre_Correo").ToString.Trim
-        End If
-
+        Sb_Buscar_Cuenta_Correo(sender, "")
     End Sub
 
     Private Sub Txt_CtaCorreoEnvioAutomatizado_NVI_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CtaCorreoEnvioAutomatizado_NVI.ButtonCustom2Click
-        If MessageBoxEx.Show(Me, "Confirma quitar el correo", "Quitar correo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-            Txt_CtaCorreoEnvioAutomatizado_NVI.Tag = 0
-            Txt_CtaCorreoEnvioAutomatizado_NVI.Text = String.Empty
-        End If
+        Sb_Quitar_Cuenta_Correo(sender)
     End Sub
 
     Private Sub Txt_NombreFormato_PDF_NVI_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_NombreFormato_PDF_NVI.ButtonCustomClick
@@ -3508,27 +3526,26 @@ Public Class Frm_00_Asis_Compra_Menu
 
     End Sub
 
+
     Private Sub Txt_CtaCorreoAvisoOCCMinCompra_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CtaCorreoAvisoOCCMinCompra.ButtonCustomClick
+        Sb_Buscar_Cuenta_Correo(sender, "<HTML_OCCMINCOMPRAS>")
+    End Sub
 
-        Dim _Row_Email As DataRow
-
-        Dim Fm As New Frm_Correos_SMTP
-        Fm.Pro_Seleccionar = True
-        Fm.ShowDialog(Me)
-        _Row_Email = Fm.Pro_Row_Fila_Seleccionada
-        Fm.Dispose()
-
-        If Not IsNothing(_Row_Email) Then
-            Txt_CtaCorreoAvisoOCCMinCompra.Tag = _Row_Email.Item("Id")
-            Txt_CtaCorreoAvisoOCCMinCompra.Text = _Row_Email.Item("Nombre_Correo").ToString.Trim
-        End If
-
+    Private Sub Txt_CtaCorreoAvisoProveedoresSinStock_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CtaCorreoAvisoProveedoresSinStock.ButtonCustomClick
+        Sb_Buscar_Cuenta_Correo(sender, "<HTML_PROVSINSTOCK>")
     End Sub
 
     Private Sub Txt_CtaCorreoAvisoOCCMinCompra_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CtaCorreoAvisoOCCMinCompra.ButtonCustom2Click
         If MessageBoxEx.Show(Me, "Confirma quitar el correo", "Quitar correo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             Txt_CtaCorreoAvisoOCCMinCompra.Tag = 0
             Txt_CtaCorreoAvisoOCCMinCompra.Text = String.Empty
+        End If
+    End Sub
+
+    Private Sub Txt_CtaCorreoAvisoProveedoresSinStock_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CtaCorreoAvisoProveedoresSinStock.ButtonCustom2Click
+        If MessageBoxEx.Show(Me, "Confirma quitar el correo", "Quitar correo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Txt_CtaCorreoAvisoProveedoresSinStock.Tag = 0
+            Txt_CtaCorreoAvisoProveedoresSinStock.Text = String.Empty
         End If
     End Sub
 End Class

@@ -865,14 +865,13 @@ Public Class Frm_St_Estado_04_Cotizaciones
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
         Else
 
-            Btn_Editar.Visible = False
-
             If Chk_No_Existe_COV_Ni_NVV.Checked Then
                 Grilla.Enabled = False
                 Btn_Fijar_Estado.Visible = True
                 Btn_Agregar_Cotizacion.Visible = False
                 _Editando_documento = True
                 Chk_No_Existe_COV_Ni_NVV.Enabled = True
+                Btn_Editar.Visible = False
             Else
                 If MessageBoxEx.Show(Me, "¿Esta seguro de dejar los documentos en evaluación?", "Dejar documentos en evaluación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
@@ -888,14 +887,12 @@ Public Class Frm_St_Estado_04_Cotizaciones
                     End If
 
                     Me.Close()
-
                 End If
             End If
 
             Txt_Nota.ReadOnly = False
             Txt_Nota.BackColor = Color.White
             Txt_Nota.FocusHighlightEnabled = True
-
 
             Me.Refresh()
 
@@ -1215,11 +1212,6 @@ Public Class Frm_St_Estado_04_Cotizaciones
     End Sub
 
     Private Sub Btn_EditarPresupuesto_Click(sender As Object, e As EventArgs) Handles Btn_EditarPresupuesto.Click
-
-        'Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
-        'Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
-
-        'Dim _Id = _Fila.Cells("Idmaeedo").Value
 
         For Each _Row As DataRow In _TblCotizaciones.Rows
 

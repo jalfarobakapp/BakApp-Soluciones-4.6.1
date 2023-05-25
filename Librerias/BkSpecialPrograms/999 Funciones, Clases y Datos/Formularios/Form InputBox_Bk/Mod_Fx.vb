@@ -26,12 +26,14 @@ Public Module Mod_Fx
         Product
         Storage
         Folder
+        Fecha
     End Enum
 
     Enum _Tipo_Caracter
         Cualquier_caracter
         Solo_Numeros_Enteros
         Moneda
+        Fecha
     End Enum
 
     Public Function InputBox_Bk(Frm_Origen As Form,
@@ -110,6 +112,44 @@ Public Module Mod_Fx
             End Select
 
         End If
+
+        Return _Aceptado
+
+    End Function
+
+    Public Function InputBox_Bk_Fecha(Frm_Origen As Form,
+                                      _TextoCentro As String,
+                                      _TextoEncabezado As String,
+                                      ByRef _TextoDescripcion As DateTime,
+                                      Optional _FechaMinima As Date = Nothing,
+                                      Optional _Mostrar_Cancelar As Boolean = False,
+                                      Optional ByRef _Chk As Controls.CheckBoxX = Nothing) As Boolean
+
+        Dim _Aceptado As Boolean
+
+        Dim Fm As New Frm_InpunBox_Bk
+
+        Fm.BtnCancelar.Visible = _Mostrar_Cancelar
+        Fm.TxtDescripcion.Text = String.Empty
+        Fm.LblComentario_Centro.Text = _TextoCentro
+        Fm.Text = _TextoEncabezado
+        Fm.TxtDescripcion.Multiline = False
+        Fm.Pro_Permitir_En_Blanco = False
+        Fm.Pro_Tipo_de_Caracter = _Tipo_Caracter.Fecha
+        Fm.Pro_Imagen = Fm.Pro_Imagen = _Tipo_Imagen.Fecha
+        Fm.Chk = _Chk
+        Fm.ConFechaMinima = Not IsNothing(_FechaMinima)
+        Fm.FechaMinima = _FechaMinima
+
+        Fm.FormBorderStyle = FormBorderStyle.FixedDialog
+        Fm.TopMost = Frm_Origen.TopMost
+        Fm.ShowDialog(Frm_Origen)
+
+        _Aceptado = Fm.Pro_Aceptado
+
+        Fm.Dispose()
+
+        If _Aceptado Then _TextoDescripcion = Convert.ToDateTime(Fm.Pro_Nueva_Descripcion)
 
         Return _Aceptado
 

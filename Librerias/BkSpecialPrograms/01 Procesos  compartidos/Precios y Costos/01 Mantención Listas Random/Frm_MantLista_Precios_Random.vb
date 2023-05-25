@@ -70,7 +70,7 @@ Public Class Frm_MantLista_Precios_Random
 
     End Sub
 
-    Private Sub Frm_MantLista_Precios_Random_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+    Private Sub Frm_MantLista_Precios_Random_FormClosed(sender As Object, e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
 
         Consulta_sql = "Drop table " & _Nombre_Tbl_Paso_Precios
         _Sql.Ej_consulta_IDU(Consulta_sql, False)
@@ -79,7 +79,7 @@ Public Class Frm_MantLista_Precios_Random
 
     End Sub
 
-    Private Sub Frm_MantLista_Precios_Random_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_MantLista_Precios_Random_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         AddHandler Grilla.CellEnter, AddressOf Sb_Grilla_CellEnter
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
@@ -127,6 +127,8 @@ Public Class Frm_MantLista_Precios_Random
         If Rdb_Traer_Bloqueados_Venta.Checked Then Btn_ProdBloqueados.Text = Rdb_Traer_Bloqueados_Venta.Text
         If Rdb_Traer_No_Bloqueados.Checked Then Btn_ProdBloqueados.Text = Rdb_Traer_No_Bloqueados.Text
         If Rdb_Traer_Todos.Checked Then Btn_ProdBloqueados.Text = Rdb_Traer_Todos.Text
+
+        Chk_GrabarPreciosHistoricos.Checked = _Global_Row_Configuracion_General.Item("GrabarPreciosHistoricos")
 
     End Sub
 
@@ -281,7 +283,7 @@ Public Class Frm_MantLista_Precios_Random
 
     End Sub
 
-    Sub Sb_Trae_un_solo_producto(ByVal _Codigo As String)
+    Sub Sb_Trae_un_solo_producto(_Codigo As String)
 
         If String.IsNullOrEmpty(_Codigo) Then
 
@@ -450,89 +452,136 @@ Public Class Frm_MantLista_Precios_Random
 
     End Sub
 
-    Sub Sb_Traer_Productos_Al_Tratamiento(ByVal _Traer_Productos_Selectivamente As Boolean)
+    Sub Sb_Traer_Productos_Al_Tratamiento(_Traer_Productos_Selectivamente As Boolean)
 
-        Sb_Habilitar_Deshabilitar_Comandos(False, False)
+        Try
 
-        Dim _Filtro_Listas As String = Generar_Filtro_IN(_Tbl_Listas_Seleccionadas, "", "KOLT", False, False, "'")
+            Sb_Habilitar_Deshabilitar_Comandos(False, False)
 
-        Consulta_sql = String.Empty
+            Dim _Filtro_Listas As String = Generar_Filtro_IN(_Tbl_Listas_Seleccionadas, "", "KOLT", False, False, "'")
+            Dim _Filtro_Productos As String = Generar_Filtro_IN(_Tbl_Productos_Seleccionados, "", "Codigo", False, False, "'")
 
-        If _Traer_Productos_Selectivamente Then
+            Dim _CantListas = _Tbl_Listas_Seleccionadas.Rows.Count
 
-            For Each _Fila As DataRow In _Tbl_Productos_Seleccionados.Rows
+            _Txt_Log.Text = String.Empty
 
-                Dim _Codigo = _Fila.Item("Codigo")
+            Consulta_sql = String.Empty
 
+            If _Traer_Productos_Selectivamente Then
+
+                For Each _Fila As DataRow In _Tbl_Productos_Seleccionados.Rows
+
+                    Dim _Codigo = _Fila.Item("Codigo")
+
+                    Consulta_sql += My.Resources.Recursos_LP.SQLQuery_Traer_Productos_LP_New
+                    Consulta_sql = Replace(Consulta_sql, "#Filtro_Productos#", "And Mp.KOPR = '" & _Codigo & "'")
+                    Consulta_sql = Replace(Consulta_sql, "#Listas#", _Filtro_Listas)
+                    Consulta_sql = Replace(Consulta_sql, "#Tbl_Paso_LP#", _Nombre_Tbl_Paso_Precios)
+
+                    Sb_AgregarProdSinListaAsociada(_Codigo, _Filtro_Listas)
+
+                Next
+
+            Else
+
+                Dim _Count = _Tbl_Productos_Seleccionados.Rows.Count
+
+                If _Count > 1 Then
+
+                    If MessageBoxEx.Show(Me, FormatNumber(_Count, 0) & " Productos encontrados" & vbCrLf &
+                                         "¿Desea agregarlos en el tratamiento?", "Traer Productos",
+                                       MessageBoxButtons.OKCancel, MessageBoxIcon.Information) = Windows.Forms.DialogResult.Cancel Then
+                        Sb_Habilitar_Deshabilitar_Comandos(True, False)
+                        Return
+                    End If
+
+                End If
+
+                Consulta_sql = "Truncate table " & _Nombre_Tbl_Paso_Precios & vbCrLf
                 Consulta_sql += My.Resources.Recursos_LP.SQLQuery_Traer_Productos_LP_New
-                Consulta_sql = Replace(Consulta_sql, "#Filtro_Productos#", "And Mp.KOPR = '" & _Codigo & "'")
+                Consulta_sql = Replace(Consulta_sql, "#Filtro_Productos#", "And Mp.KOPR In " & _Filtro_Productos)
                 Consulta_sql = Replace(Consulta_sql, "#Listas#", _Filtro_Listas)
                 Consulta_sql = Replace(Consulta_sql, "#Tbl_Paso_LP#", _Nombre_Tbl_Paso_Precios)
 
+            End If
+
+            Dim _Otros_Campos1 = String.Empty
+            Dim _Otros_Campos2 = String.Empty
+
+            For Each _Campo As String In _Lista_Campos_Adicionales
+
+                _Otros_Campos1 += "," & _Campo
+                _Otros_Campos2 += ",Tp." & _Campo
+
             Next
 
-        Else
+            If Not String.IsNullOrEmpty(_Txt_Log.Text) Then
 
-            Dim _Count = _Tbl_Productos_Seleccionados.Rows.Count
+                MessageBoxEx.Show(Me, "Existen productos que no estan asociados a una lista de precios seleccionada" & vbCrLf &
+                                      "a continuación se mostrar una lista con los errores",
+                                      "Importar datos", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
-            If _Count > 1 Then
+                Dim Fm As New Frm_Archivo_TXT
+                Fm.Pro_Nombre_Archivo = "Error_LevLista_X_Codigo.txt"
+                Fm.Pro_Texto_Log = _Txt_Log.Text
+                Fm.ShowDialog(Me)
+                Fm.Dispose()
 
-                If MessageBoxEx.Show(Me, FormatNumber(_Count, 0) & " Productos encontrados" & vbCrLf &
-                                     "¿Desea agregarlos en el tratamiento?", "Traer Productos",
-                                   MessageBoxButtons.OKCancel, MessageBoxIcon.Information) = Windows.Forms.DialogResult.Cancel Then
-                    Sb_Habilitar_Deshabilitar_Comandos(True, False)
+                If MessageBoxEx.Show(Me, "¿Desae igualmente cargar los productos sin problema?", "Importar datos",
+                                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
                     Return
                 End If
 
             End If
 
-            Dim _Filtro_Productos = Generar_Filtro_IN(_Tbl_Productos_Seleccionados, "", "Codigo", False, False, "'")
+            Consulta_sql = Replace(Consulta_sql, "#Otros_Campos1#", _Otros_Campos1)
+            Consulta_sql = Replace(Consulta_sql, "#Otros_Campos2#", _Otros_Campos2)
 
-            Consulta_sql = "Truncate table " & _Nombre_Tbl_Paso_Precios & vbCrLf
-            Consulta_sql += My.Resources.Recursos_LP.SQLQuery_Traer_Productos_LP_New
-            Consulta_sql = Replace(Consulta_sql, "#Filtro_Productos#", "And Mp.KOPR In " & _Filtro_Productos)
-            Consulta_sql = Replace(Consulta_sql, "#Listas#", _Filtro_Listas)
+            Consulta_sql += My.Resources.Recursos_LP.SQLQuery_Actualizar_Costos_Impuestos_New
             Consulta_sql = Replace(Consulta_sql, "#Tbl_Paso_LP#", _Nombre_Tbl_Paso_Precios)
+            Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+            Consulta_sql = Replace(Consulta_sql, "#Sucursal#", ModSucursal)
+
+            Consulta_sql += vbCrLf & "Select * From " & _Nombre_Tbl_Paso_Precios
+
+            _Tbl_Precios = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            Sb_Formato_Grilla()
+
+        Catch ex As Exception
+        Finally
+            Sb_Habilitar_Deshabilitar_Comandos(True, False)
+        End Try
+
+    End Sub
+
+    Sub Sb_AgregarProdSinListaAsociada(_Codigo As String, _Filtro_Listas As String)
+
+        Dim _SqlQuery1 = "Select KOLT From TABPP" & vbCrLf &
+                 "Where KOLT Not In (Select KOLT From TABPRE Where KOLT In " & _Filtro_Listas & " And KOPR = '" & _Codigo & "')" & vbCrLf &
+                 "And KOLT In " & _Filtro_Listas
+        Dim _ListaSinAsig As DataTable = _Sql.Fx_Get_Tablas(_SqlQuery1)
+
+        If _ListaSinAsig.Rows.Count Then
+
+            Dim _Filtro_Listas_NoAsig As String = Generar_Filtro_IN(_ListaSinAsig, "", "KOLT", False, False, "'")
+            Dim _Msg As String = "Código: " & _Codigo & ", lista(s) no asignada(s): " & _Filtro_Listas_NoAsig
+
+            Sb_AddToLog("Código: " & _Codigo, "Problema!. No esta asignado a la(s) lista(s): " & _Filtro_Listas_NoAsig, _Txt_Log, False)
 
         End If
 
-        Dim _Otros_Campos1 = String.Empty
-        Dim _Otros_Campos2 = String.Empty
-
-        For Each _Campo As String In _Lista_Campos_Adicionales
-
-            _Otros_Campos1 += "," & _Campo
-            _Otros_Campos2 += ",Tp." & _Campo
-
-        Next
-
-        Consulta_sql = Replace(Consulta_sql, "#Otros_Campos1#", _Otros_Campos1)
-        Consulta_sql = Replace(Consulta_sql, "#Otros_Campos2#", _Otros_Campos2)
-
-        Consulta_sql += My.Resources.Recursos_LP.SQLQuery_Actualizar_Costos_Impuestos_New
-        Consulta_sql = Replace(Consulta_sql, "#Tbl_Paso_LP#", _Nombre_Tbl_Paso_Precios)
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
-        Consulta_sql = Replace(Consulta_sql, "#Sucursal#", ModSucursal)
-
-        Consulta_sql += vbCrLf & "Select * From " & _Nombre_Tbl_Paso_Precios
-
-        _Tbl_Precios = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        Sb_Formato_Grilla()
-
-        Sb_Habilitar_Deshabilitar_Comandos(True, False)
-
     End Sub
 
-    Private Sub Btn_Busqueda_Selectiva_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Busqueda_Selectiva.Click
+    Private Sub Btn_Busqueda_Selectiva_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Busqueda_Selectiva.Click
         Sb_Busqueda_Selectiva()
     End Sub
 
-    Private Sub Btn_Buscar_Un_Producto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Buscar_Un_Producto.Click
+    Private Sub Btn_Buscar_Un_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Buscar_Un_Producto.Click
         Sb_Trae_un_solo_producto("")
     End Sub
 
-    Private Sub BtnBusquedaClass_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Busqueda_Class.Click
+    Private Sub BtnBusquedaClass_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Busqueda_Class.Click
 
         If Grilla.RowCount > 0 Then
 
@@ -665,7 +714,7 @@ Public Class Frm_MantLista_Precios_Random
 
     End Sub
 
-    Private Sub Sb_Grilla_CellEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Sb_Grilla_CellEnter(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Try
 
@@ -740,7 +789,7 @@ Public Class Frm_MantLista_Precios_Random
 
     End Sub
 
-    Private Sub Sb_Grilla_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Sb_Grilla_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Try
 
@@ -765,14 +814,16 @@ Public Class Frm_MantLista_Precios_Random
 
             If _Cabeza = "PP01UD" Or _Cabeza = "PP02UD" Then
 
-                If Chk_Ud1_X_Ud2.Checked Then 'And TipoLista = "C"
+                If Chk_Ud1_X_Ud2.Checked Then
 
                     If _Cabeza = "PP01UD" Then
                         PrecioUd2 = Math.Round(PrecioUd1 * Rtu, 5)
                         _Fila.Cells("PP02UD").Value = PrecioUd2
+                        _Fila.Cells("FxEjecUd1").Value = False
                     ElseIf _Cabeza = "PP02UD" Then
                         PrecioUd1 = Math.Round(PrecioUd2 / Rtu, 5)
                         _Fila.Cells("PP01UD").Value = PrecioUd1
+                        _Fila.Cells("FxEjecUd2").Value = False
                     End If
 
                 End If
@@ -780,6 +831,7 @@ Public Class Frm_MantLista_Precios_Random
             End If
 
             Sb_Actualizar_Datos_En_Tabla_De_Paso(_IdLista)
+
             Grilla.Columns(_Cabeza).ReadOnly = True
             Grilla.Columns("Select").ReadOnly = False
 
@@ -813,6 +865,9 @@ Public Class Frm_MantLista_Precios_Random
         _Ecuacion = Replace(LTrim(RTrim(_Ecuacion)), "'", "''")
         _Ecuacionu2 = Replace(LTrim(RTrim(_Ecuacionu2)), "'", "''")
 
+        Dim _FxEjecUd1 As Integer = Convert.ToInt32(_Fila.Item("FxEjecUd1"))
+        Dim _FxEjecUd2 As Integer = Convert.ToInt32(_Fila.Item("FxEjecUd2"))
+
         Dim _Campos_Adicionales = String.Empty
 
         For _i = 28 To _TblTabpre.Columns.Count - 1
@@ -843,6 +898,8 @@ Public Class Frm_MantLista_Precios_Random
                        "DTMA02UD = " & _Dtma02ud & "," & vbCrLf &
                        "ECUACION = '" & _Ecuacion & "'," & vbCrLf &
                        "ECUACIONU2 = '" & _Ecuacionu2 & "'," & vbCrLf &
+                       "FxEjecUd1 = '" & _FxEjecUd1 & "'," & vbCrLf &
+                       "FxEjecUd2 = '" & _FxEjecUd2 & "'," & vbCrLf &
                        _Campos_Adicionales & vbCrLf &
                        "FINMAES = 1" & vbCrLf &
                        "Where IdLista = " & _IdLista
@@ -851,11 +908,11 @@ Public Class Frm_MantLista_Precios_Random
 
     End Sub
 
-    Private Sub Sb_Grilla_CellMouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellMouseEventArgs)
+    Private Sub Sb_Grilla_CellMouseUp(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs)
         Grilla.EndEdit()
     End Sub
 
-    Private Sub Sb_Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
 
         If e.Button = Windows.Forms.MouseButtons.Right Then
 
@@ -891,7 +948,7 @@ Public Class Frm_MantLista_Precios_Random
 
     End Sub
 
-    Private Sub Sb_Grilla_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+    Private Sub Sb_Grilla_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs)
 
         Try
 
@@ -922,7 +979,7 @@ Public Class Frm_MantLista_Precios_Random
         End Try
     End Sub
 
-    Private Sub Sb_Grilla_EditingControlShowing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs)
+    Private Sub Sb_Grilla_EditingControlShowing(sender As System.Object, e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs)
         ' referencia a la celda  
         Dim validar As TextBox = CType(e.Control, TextBox)
         ' agregar el controlador de eventos para el KeyPress  
@@ -931,7 +988,7 @@ Public Class Frm_MantLista_Precios_Random
 
 
 
-    Function Fx_Contar_Checkados(ByVal _Mostrar_Mensaje As Boolean) As Integer
+    Function Fx_Contar_Checkados(_Mostrar_Mensaje As Boolean) As Integer
 
         Dim _Marcados As Integer
 
@@ -954,7 +1011,7 @@ Public Class Frm_MantLista_Precios_Random
 
     End Function
 
-    Private Sub Btn_Copiar_datos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Copiar_datos.Click
+    Private Sub Btn_Copiar_datos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Copiar_datos.Click
         Dim _Cabeza As String
         Dim _Valor As Double
 
@@ -964,7 +1021,7 @@ Public Class Frm_MantLista_Precios_Random
         Sb_Copiar_campos(_Cabeza, _Valor)
     End Sub
 
-    Private Sub Sb_Btn_Estadisticas_Producto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Sb_Btn_Estadisticas_Producto_Click(sender As System.Object, e As System.EventArgs)
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
         If Fx_Tiene_Permiso(Me, "Prod009") Then
@@ -978,20 +1035,23 @@ Public Class Frm_MantLista_Precios_Random
         End If
     End Sub
 
-    Private Sub Btn_Ejecutar_Formula_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ejecutar_Formula.Click
+    Private Sub Btn_Ejecutar_Formula_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ejecutar_Formula.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
         Dim _IdLista = Trim(_Fila.Cells("IdLista").Value)
 
         Sb_Actualizar_Datos_En_Tabla_De_Paso(_IdLista)
-        Sb_Ejecutar_Formula(_Fila, True)
+
+        Sb_Ejecutar_Formula(_Fila, True, _Cabeza)
 
     End Sub
 
     Sub Sb_Ejecutar_Formula(_Fila As DataGridViewRow,
-                            _Mostrar_Mensaje As Boolean)
+                            _Mostrar_Mensaje As Boolean,
+                            _Cabeza As String)
 
-        Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+        'Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
         Dim _IdLista = _Fila.Cells("IdLista").Value
         Dim _Campo_Precio = _Cabeza
@@ -1000,11 +1060,8 @@ Public Class Frm_MantLista_Precios_Random
 
         If _Cabeza = "PP01UD" Or _Cabeza = "PP02UD" Then
 
-            If _Cabeza = "PP01UD" Then
-                _Campo_Formula = "ECUACION"
-            Else
-                _Campo_Formula = "ECUACIONU2"
-            End If
+            If _Cabeza = "PP01UD" Then _Campo_Formula = "ECUACION"
+            If _Cabeza = "PP02UD" Then _Campo_Formula = "ECUACIONU2"
 
         Else
 
@@ -1087,11 +1144,13 @@ Public Class Frm_MantLista_Precios_Random
 
                     If Not _Error_Fx Then
 
-                        _Ecuacion_3(3) = Replace(_Ecuacion_3(3), "caprco", "")
-                        Consulta_sql = "Select " & _Ecuacion_3(3) & " As Valor"
-                        Dim _Row_Valor As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                        _Valor = Fx_Precio_Formula_Random(_RowPrecio, _Campo_Precio, _Campo_Formula, _RowPrecio, False, "", 1, 1)
 
-                        _Valor = _Row_Valor.Item("Valor")
+                        '_Ecuacion_3(3) = Replace(_Ecuacion_3(3), "caprco", "")
+                        'Consulta_sql = "Select " & _Ecuacion_3(3) & " As Valor"
+                        'Dim _Row_Valor As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                        '_Valor = _Row_Valor.Item("Valor")
 
                     End If
 
@@ -1104,6 +1163,9 @@ Public Class Frm_MantLista_Precios_Random
             End If
 
             _Fila.Cells(_Cabeza).Value = _Valor
+
+            If _Campo_Formula = "ECUACION" Then _Fila.Cells("FxEjecUd1").Value = True
+            If _Campo_Formula = "ECUACIONU2" Then _Fila.Cells("FxEjecUd2").Value = True
 
             Sb_Actualizar_Datos_En_Tabla_De_Paso(_IdLista)
 
@@ -1132,11 +1194,11 @@ Public Class Frm_MantLista_Precios_Random
 
     End Sub
 
-    Private Sub Btn_Configurar_Formula_Linea_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Configurar_Formula_Linea.Click
+    Private Sub Btn_Configurar_Formula_Linea_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Configurar_Formula_Linea.Click
         Sb_Configurar_Formula_producto_activo()
     End Sub
 
-    Private Sub Btn_Copiar_Formula_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Copiar_Formula.Click
+    Private Sub Btn_Copiar_Formula_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Copiar_Formula.Click
 
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
@@ -1163,7 +1225,7 @@ Public Class Frm_MantLista_Precios_Random
 
     End Sub
 
-    Private Sub Btn_Copiar_Datos_Precios_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Copiar_Datos_Precios.Click
+    Private Sub Btn_Copiar_Datos_Precios_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Copiar_Datos_Precios.Click
         Dim _Cabeza As String
         Dim _Valor As Double
 
@@ -1204,7 +1266,7 @@ Public Class Frm_MantLista_Precios_Random
 
     End Sub
 
-    Private Sub Btn_Limpiar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Limpiar.Click
+    Private Sub Btn_Limpiar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Limpiar.Click
 
         If Grilla.RowCount > 0 Then
             If MessageBoxEx.Show(Me, "¿Está seguro de querer limpiar el tratamiento actual?",
@@ -1217,7 +1279,7 @@ Public Class Frm_MantLista_Precios_Random
         Sb_Limpiar()
     End Sub
 
-    Private Sub ChkMarcarTodo_CheckedChanged(ByVal sender As System.Object, ByVal e As DevComponents.DotNetBar.CheckBoxChangeEventArgs) Handles Chk_Marcar_Todo.CheckedChanged
+    Private Sub ChkMarcarTodo_CheckedChanged(sender As System.Object, e As DevComponents.DotNetBar.CheckBoxChangeEventArgs) Handles Chk_Marcar_Todo.CheckedChanged
         If Grilla.RowCount > 0 Then
             For Each row As DataGridViewRow In Grilla.Rows
                 row.Cells("Select").Value = Chk_Marcar_Todo.Checked
@@ -1314,7 +1376,7 @@ Public Class Frm_MantLista_Precios_Random
 
     End Sub
 
-    Sub Sb_Copiar_campos(ByVal _Campo As String, ByVal _Dato As Object)
+    Sub Sb_Copiar_campos(_Campo As String, _Dato As Object)
 
         Dim _Marcados As Long
 
@@ -1415,7 +1477,7 @@ Public Class Frm_MantLista_Precios_Random
                     If _Select Then
 
                         Grilla.CurrentCell = Grilla.Rows(_Fila.Index).Cells(_Cabeza)
-                        Sb_Ejecutar_Formula(_Fila, False)
+                        Sb_Ejecutar_Formula(_Fila, False, _Cabeza)
                         _Marcados += 1
 
                         Circular_Progres_Val.ProgressText = _Marcados
@@ -1471,10 +1533,29 @@ Public Class Frm_MantLista_Precios_Random
 
     End Sub
 
-    Private Sub BtnGrabar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnGrabar.Click
-        'ShowContextMenu(Menu_Contextual_Grabar)
+    Private Sub BtnGrabar_Click(sender As System.Object, e As System.EventArgs) Handles BtnGrabar.Click
 
         If CBool(Grilla.Rows.Count) Then
+
+            Dim _Fevi = String.Empty
+            Dim _FechaMinima As DateTime = FechaDelServidor()
+
+            If Chk_GrabarPreciosHistoricos.Checked Then
+
+                Dim _Fecha As Date
+
+                Dim _Aceptar As Boolean
+
+                _Aceptar = InputBox_Bk_Fecha(Me, "Ingrese la fecha de vigencia de estos precios" & vbCrLf & vbCrLf &
+                               "Formato fecha: dd-mm-aaaa", "Fecha de vigencia", _Fecha, _FechaMinima, True)
+
+                If Not _Aceptar Then
+                    Return
+                End If
+
+                _Fevi = Format(_Fecha, "yyyyMMdd")
+
+            End If
 
             If Not Fx_Tiene_Permiso(Me, "Pre0011") Then
                 Return
@@ -1493,21 +1574,36 @@ Public Class Frm_MantLista_Precios_Random
 
             Next
 
-            Consulta_sql = "
-                                Update TABPRE Set 
-                                TABPRE.PP01UD = Tbl.PP01UD,
-                                TABPRE.MG01UD = Tbl.MG01UD,
-                                TABPRE.DTMA01UD = Tbl.DTMA01UD,
-                                TABPRE.PP02UD = Tbl.PP02UD,
-                                TABPRE.MG02UD = Tbl.MG02UD,
-                                TABPRE.DTMA02UD = Tbl.DTMA02UD,
-                                TABPRE.ECUACION = Tbl.ECUACION,
-                                TABPRE.ECUACIONU2 = Tbl.ECUACIONU2,
-                                " & _Campos_Adicionales & "
-                                TABPRE.PM01 = 0
-                                From " & _Nombre_Tbl_Paso_Precios & " Tbl 
-                                    Left Outer Join TABPRE ON Tbl.KOLT = TABPRE.KOLT AND Tbl.KOPR = TABPRE.KOPR
-                                Where Tbl.Editado = 1"
+            Dim _FeviStr = String.Empty
+
+            If Not String.IsNullOrEmpty(_Fevi) Then
+                _FeviStr = "TABPRE.FEVI = '" & _Fevi & "',"
+            End If
+
+            Consulta_sql = "   Update TABPRE Set 
+                               TABPRE.PP01UD = Tbl.PP01UD,
+                               TABPRE.MG01UD = Tbl.MG01UD,
+                               TABPRE.DTMA01UD = Tbl.DTMA01UD,
+                               TABPRE.PP02UD = Tbl.PP02UD,
+                               TABPRE.MG02UD = Tbl.MG02UD,
+                               TABPRE.DTMA02UD = Tbl.DTMA02UD,
+                               TABPRE.ECUACION = Tbl.ECUACION,
+                               TABPRE.ECUACIONU2 = Tbl.ECUACIONU2," & _FeviStr & "
+                               " & _Campos_Adicionales & "
+                               TABPRE.PM01 = 0
+                               From " & _Nombre_Tbl_Paso_Precios & " Tbl 
+                                   Left Outer Join TABPRE ON Tbl.KOLT = TABPRE.KOLT AND Tbl.KOPR = TABPRE.KOPR
+                               Where Tbl.Editado = 1"
+
+            If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_ListaPreHistorico") Then
+
+                Consulta_sql += vbCrLf & vbCrLf &
+                                "Insert Into " & _Global_BaseBk & "Zw_ListaPreHistorico (Codigo,Lista,CodFuncionario,Fechagrab,FechaVigencia,PrecioUd1,PrecioUd2,FxEjecUd1,FxEjecUd2) " & vbCrLf &
+                                "Select KOPR,KOLT,'" & FUNCIONARIO & "',Getdate(),'" & _Fevi & "',PP01UD,PP02UD,FxEjecUd1,FxEjecUd2" & vbCrLf &
+                                "From " & _Nombre_Tbl_Paso_Precios & vbCrLf &
+                                "Where Editado = 1"
+
+            End If
 
             If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
@@ -1517,7 +1613,7 @@ Public Class Frm_MantLista_Precios_Random
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
                 MessageBoxEx.Show(Me, FormatNumber(_Editados, 0) & " registro(s) actualizado(s) correctamente", "Actualizar Precios",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                 If _Cerrar_Al_Grabar Then
                     _Grabacion_Realizada = True
@@ -1536,11 +1632,11 @@ Public Class Frm_MantLista_Precios_Random
 
     End Sub
 
-    Private Sub Btn_Conf_Funcion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Conf_Funcion.Click
+    Private Sub Btn_Conf_Funcion_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Conf_Funcion.Click
         Sb_Configurar_Formula_producto_activo()
     End Sub
 
-    Private Sub Btn_Exportar_Excel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_Excel.Click
+    Private Sub Btn_Exportar_Excel_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Exportar_Excel.Click
 
         For Each _Fila As DataRow In _Tbl_Precios.Rows
             Dim _Codigo = _Fila.Item("KOPR")
@@ -1565,8 +1661,8 @@ Public Class Frm_MantLista_Precios_Random
 
     End Sub
 
-    Sub Sb_Habilitar_Deshabilitar_Comandos(ByVal _Habilitar As Boolean,
-                                           ByVal _Habilitar_Cancelar As Boolean)
+    Sub Sb_Habilitar_Deshabilitar_Comandos(_Habilitar As Boolean,
+                                           _Habilitar_Cancelar As Boolean)
 
         _Cancelar = False
 
@@ -1598,7 +1694,7 @@ Public Class Frm_MantLista_Precios_Random
 
     End Sub
 
-    Sub Sb_Grilla_RowsPostPaint(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewRowPostPaintEventArgs)
+    Sub Sb_Grilla_RowsPostPaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPostPaintEventArgs)
         Try
             'Captura el numero de filas del datagridview
             Dim RowsNumber As String = (e.RowIndex + 1).ToString
@@ -1617,7 +1713,7 @@ Public Class Frm_MantLista_Precios_Random
         End Try
     End Sub
 
-    Private Sub Frm_MantLista_Precios_Random_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_MantLista_Precios_Random_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
 
         If Not (_RowProducto Is Nothing) Then Return
 
@@ -1641,7 +1737,7 @@ Public Class Frm_MantLista_Precios_Random
 
     End Sub
 
-    Private Sub Btn_Traer_Todos_Los_Productos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Traer_Todos_Los_Productos.Click
+    Private Sub Btn_Traer_Todos_Los_Productos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Traer_Todos_Los_Productos.Click
         Return
         If Grilla.RowCount > 0 Then
 
@@ -1662,10 +1758,10 @@ Public Class Frm_MantLista_Precios_Random
     End Sub
 
 
-    Private Sub Btn_Cancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cancelar.Click
+    Private Sub Btn_Cancelar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cancelar.Click
 
         If MessageBoxEx.Show(Me, "¿Esta seguro cancelar la acción?", "Cancelar",
-                             MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
             _Cancelar = True
         End If
@@ -1673,7 +1769,7 @@ Public Class Frm_MantLista_Precios_Random
     End Sub
 
 
-    Private Sub Btn_Buscar_Producto_En_Grilla_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Buscar_Producto_En_Grilla.Click
+    Private Sub Btn_Buscar_Producto_En_Grilla_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Buscar_Producto_En_Grilla.Click
 
         Dim _Kopr = String.Empty
 
@@ -1703,12 +1799,12 @@ Public Class Frm_MantLista_Precios_Random
     End Sub
 
 
-    Private Sub Btn_Importar_Desde_Excel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Importar_Desde_Excel.Click
+    Private Sub Btn_Importar_Desde_Excel_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Importar_Desde_Excel.Click
 
         If Grilla.RowCount > 0 Then
             If MessageBoxEx.Show(Me, "Esta acción limpiara la lista actual" & vbCrLf &
                                   "¿Desea continuar con la operación?", "Buscar productos",
-                                  MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.No Then
+                                  MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = Windows.Forms.DialogResult.No Then
 
                 Return
             End If

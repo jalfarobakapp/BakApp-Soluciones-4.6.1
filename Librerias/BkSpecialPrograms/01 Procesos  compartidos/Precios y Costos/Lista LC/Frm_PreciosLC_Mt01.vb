@@ -96,7 +96,6 @@ Public Class Frm_PreciosLC_Mt01
     End Function
 
     Function Sb_Cargar_Producto(Optional Codigo As String = "")
-        'Try
 
         Dim TblPaso As String = "TblIMPILA" & FUNCIONARIO
 
@@ -119,8 +118,17 @@ Public Class Frm_PreciosLC_Mt01
 
         If CBool(_TblOfertas.Rows.Count) Then
 
-            'Dim _Listas = _TblOfertas.Rows(0)
-            MessageBoxEx.Show(Me, "¡ *** El producto se encuentra en OFERTA *** !", "Producto en oferta", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Consulta_sql = "Select * From MAEPR Where KOPR = '" & Codigo & "'"
+            Dim _Row_Producto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Dim info As New TaskDialogInfo("Información",
+                eTaskDialogIcon.ShieldStop, "¡ *** Producto En OFERTA *** !",
+                vbCrLf & vbCrLf & "Código: " & _Row_Producto.Item("KOPR").ToString.Trim & vbCrLf &
+                "Descripción: " & _Row_Producto.Item("NOKOPR").ToString.Trim,
+                 eTaskDialogButton.Ok _
+                 , eTaskDialogBackgroundColor.Red, Nothing, Nothing, Nothing, Nothing, Nothing)
+
+            Dim result As eTaskDialogResult = TaskDialog.Show(info)
 
         End If
 

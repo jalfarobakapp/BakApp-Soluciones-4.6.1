@@ -23,9 +23,9 @@ Partial Class Frm_St_Estado_04_Cotizaciones
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_St_Estado_04_Cotizaciones))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Accion = New DevComponents.DotNetBar.ButtonItem()
@@ -42,12 +42,13 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Fijar_Estado = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_EditarPresupuesto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Agregar_Cotizacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Editar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Nota = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Chk_No_Existe_COV_Ni_NVV = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Btn_EditarPresupuesto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Highlighter1 = New DevComponents.DotNetBar.Validator.Highlighter()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -120,18 +121,21 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         'Btn_Presupues_Aceptado
         '
         Me.Btn_Presupues_Aceptado.Image = CType(resources.GetObject("Btn_Presupues_Aceptado.Image"), System.Drawing.Image)
+        Me.Btn_Presupues_Aceptado.ImageAlt = CType(resources.GetObject("Btn_Presupues_Aceptado.ImageAlt"), System.Drawing.Image)
         Me.Btn_Presupues_Aceptado.Name = "Btn_Presupues_Aceptado"
         Me.Btn_Presupues_Aceptado.Text = "Aceptado"
         '
         'Btn_Presupuesto_Rechazado
         '
         Me.Btn_Presupuesto_Rechazado.Image = CType(resources.GetObject("Btn_Presupuesto_Rechazado.Image"), System.Drawing.Image)
+        Me.Btn_Presupuesto_Rechazado.ImageAlt = CType(resources.GetObject("Btn_Presupuesto_Rechazado.ImageAlt"), System.Drawing.Image)
         Me.Btn_Presupuesto_Rechazado.Name = "Btn_Presupuesto_Rechazado"
         Me.Btn_Presupuesto_Rechazado.Text = "Rechazado"
         '
         'Btn_Presupuestos_Evaluacion
         '
         Me.Btn_Presupuestos_Evaluacion.Image = CType(resources.GetObject("Btn_Presupuestos_Evaluacion.Image"), System.Drawing.Image)
+        Me.Btn_Presupuestos_Evaluacion.ImageAlt = CType(resources.GetObject("Btn_Presupuestos_Evaluacion.ImageAlt"), System.Drawing.Image)
         Me.Btn_Presupuestos_Evaluacion.Name = "Btn_Presupuestos_Evaluacion"
         Me.Btn_Presupuestos_Evaluacion.Text = "volver a dejar en evaluación"
         '
@@ -145,6 +149,7 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         'Btn_Ver_documento
         '
         Me.Btn_Ver_documento.Image = CType(resources.GetObject("Btn_Ver_documento.Image"), System.Drawing.Image)
+        Me.Btn_Ver_documento.ImageAlt = CType(resources.GetObject("Btn_Ver_documento.ImageAlt"), System.Drawing.Image)
         Me.Btn_Ver_documento.Name = "Btn_Ver_documento"
         Me.Btn_Ver_documento.Text = "Ver documento"
         '
@@ -157,6 +162,7 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         'Btn_Quitar_documento
         '
         Me.Btn_Quitar_documento.Image = CType(resources.GetObject("Btn_Quitar_documento.Image"), System.Drawing.Image)
+        Me.Btn_Quitar_documento.ImageAlt = CType(resources.GetObject("Btn_Quitar_documento.ImageAlt"), System.Drawing.Image)
         Me.Btn_Quitar_documento.Name = "Btn_Quitar_documento"
         Me.Btn_Quitar_documento.Text = "Quitar documento de la lista"
         '
@@ -182,23 +188,23 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle8
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
@@ -206,14 +212,14 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         Me.Grilla.MultiSelect = False
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.Grilla.Size = New System.Drawing.Size(500, 126)
         Me.Grilla.TabIndex = 1
@@ -242,6 +248,16 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         Me.Btn_Fijar_Estado.Name = "Btn_Fijar_Estado"
         Me.Btn_Fijar_Estado.Text = "Fijar Estado"
         Me.Btn_Fijar_Estado.Visible = False
+        '
+        'Btn_EditarPresupuesto
+        '
+        Me.Btn_EditarPresupuesto.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_EditarPresupuesto.ForeColor = System.Drawing.Color.Black
+        Me.Btn_EditarPresupuesto.Image = CType(resources.GetObject("Btn_EditarPresupuesto.Image"), System.Drawing.Image)
+        Me.Btn_EditarPresupuesto.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Center
+        Me.Btn_EditarPresupuesto.Name = "Btn_EditarPresupuesto"
+        Me.Btn_EditarPresupuesto.Text = "Editar presupuesto"
+        Me.Btn_EditarPresupuesto.Visible = False
         '
         'Btn_Agregar_Cotizacion
         '
@@ -304,7 +320,6 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         '
         'Txt_Nota
         '
-        Me.Txt_Nota.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -313,9 +328,9 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         Me.Txt_Nota.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Nota.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Nota.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Nota.FocusHighlightEnabled = True
         Me.Txt_Nota.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Nota.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Nota, True)
         Me.Txt_Nota.Location = New System.Drawing.Point(6, 3)
         Me.Txt_Nota.MaxLength = 300
         Me.Txt_Nota.Name = "Txt_Nota"
@@ -338,14 +353,11 @@ Partial Class Frm_St_Estado_04_Cotizaciones
         Me.Chk_No_Existe_COV_Ni_NVV.TabIndex = 104
         Me.Chk_No_Existe_COV_Ni_NVV.Text = "NO EXISTE COTIZACION NI NOTA DE VENTA"
         '
-        'Btn_EditarPresupuesto
+        'Highlighter1
         '
-        Me.Btn_EditarPresupuesto.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_EditarPresupuesto.ForeColor = System.Drawing.Color.Black
-        Me.Btn_EditarPresupuesto.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Center
-        Me.Btn_EditarPresupuesto.Name = "Btn_EditarPresupuesto"
-        Me.Btn_EditarPresupuesto.Text = "Editar presupuesto"
-        Me.Btn_EditarPresupuesto.Visible = False
+        Me.Highlighter1.ContainerControl = Me
+        Me.Highlighter1.FocusHighlightColor = DevComponents.DotNetBar.Validator.eHighlightColor.Red
+        Me.Highlighter1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         '
         'Frm_St_Estado_04_Cotizaciones
         '
@@ -397,4 +409,5 @@ Partial Class Frm_St_Estado_04_Cotizaciones
     Friend WithEvents Btn_AgregarCOVExistente As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_CrearCOVdesdePresupuesto As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_EditarPresupuesto As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Highlighter1 As DevComponents.DotNetBar.Validator.Highlighter
 End Class

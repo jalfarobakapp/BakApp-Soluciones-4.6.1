@@ -1330,6 +1330,18 @@
     <Compile Include="03 Sistemas\ChileExpress\Frm_Chilexpress_Envio.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Comisiones.Designer.vb">
+      <DependentUpon>Frm_Comisiones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Comisiones.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Comisiones_Periodos.Designer.vb">
+      <DependentUpon>Frm_Comisiones_Periodos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Comisiones_Periodos.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Formularios\Clas_Imprimir_AsisCompra.vb" />
     <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Formularios\Frm_01_Asis_Compra_Resultados_Hijo.Designer.vb">
       <DependentUpon>Frm_01_Asis_Compra_Resultados_Hijo.vb</DependentUpon>
@@ -3111,6 +3123,7 @@
     <Compile Include="999 Funciones, Clases y Datos\Clases\Clase Funciones formato\Ds documento\Ds_documento_imp.vb">
       <DependentUpon>Ds_documento_imp.xsd</DependentUpon>
     </Compile>
+    <Compile Include="999 Funciones, Clases y Datos\Clases\Crear_Html.vb" />
     <Compile Include="999 Funciones, Clases y Datos\Clases\Documentos\Creacion de documento\Datos Ds paso\Ds_Matriz_Documentos.vb">
       <DependentUpon>Ds_Matriz_Documentos.xsd</DependentUpon>
     </Compile>
@@ -4494,6 +4507,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\ChileExpress\Frm_Chilexpress_Envio.resx">
       <DependentUpon>Frm_Chilexpress_Envio.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Comisiones\Formularios\Frm_Comisiones.resx">
+      <DependentUpon>Frm_Comisiones.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Comisiones\Formularios\Frm_Comisiones_Periodos.resx">
+      <DependentUpon>Frm_Comisiones_Periodos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Formularios\Frm_01_Asis_Compra_Resultados_Hijo.resx">
       <DependentUpon>Frm_01_Asis_Compra_Resultados_Hijo.vb</DependentUpon>
@@ -7400,6 +7419,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_TblVehiculos_Empresa.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_TblVehiculos_Empresa_Imagenes.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Tbl_DisenoBarras.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Tbl_DisenoBarras_SalPtoxEstacion.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Tbl_Reemplazos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_TmpInv_InvParcial.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_TmpInv_InvParcialConf.sql" />
@@ -7431,6 +7451,7 @@
     <None Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Recursos\Sql\Informe Ventas x Perido Nivel Detalle Cubo Actualizacion2.sql" />
     <None Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Recursos\Sql\Informe Ventas x Perido Nivel Detalle Cubo Actualizacion3 Clasificaciones.sql" />
     <None Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Sql\SQLQuery Reabastecer entre bodegas.sql" />
+    <Content Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Html\Crear Html Proveedores Con Productos Sin Stock.htm" />
     <Content Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Sql\SQLQuery Info Estadistica X Producto Compra.sql" />
     <None Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Sql\SQLQuery Sacar la velocidad de venta mensual Media2.sql" />
     <Content Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Sql\SQLQuery SumTotalQty Venta X Periodo.sql" />
@@ -7664,7 +7685,9 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="03 Sistemas\Comisiones\Recursos\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

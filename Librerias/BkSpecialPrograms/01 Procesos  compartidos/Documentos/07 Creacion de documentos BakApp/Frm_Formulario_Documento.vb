@@ -11024,11 +11024,13 @@ Public Class Frm_Formulario_Documento
 
             Else
 
-                Chk_Ver_Dscto_Maximo.Visible = False
                 _Mostrar_Costos = Fx_Tiene_Permiso(Me, "Bkp00037", FUNCIONARIO, False)
                 _Mostrar_Margen = Fx_Tiene_Permiso(Me, "Bkp00038", FUNCIONARIO, False)
 
-                Sb_Revisando_Situacion_Comercial(True)
+                If Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00084", Nothing, "", "") Then
+                    Chk_Ver_Dscto_Maximo.Visible = False
+                    Sb_Revisando_Situacion_Comercial(True)
+                End If
 
             End If
 
@@ -12956,9 +12958,30 @@ Public Class Frm_Formulario_Documento
                     _Fila.Cells("FechaEmision").Value = _FechaEmision
                     _Fila.Cells("Fecha_1er_Vencimiento").Value = _Fecha_1er_Vencimiento
                     _Fila.Cells("FechaUltVencimiento").Value = _FechaUltVencimiento
-                    '_Fila.Cells("Cuotas").Value = _Cuotas
-                    '_Fila.Cells("Dias_1er_Vencimiento").Value = _Dias_1er_Vencimiento
-                    '_Fila.Cells("Dias_Vencimiento").Value = _Dias_Vencimiento
+
+                    Consulta_sql = "Select TOP 1 * From MAEMO Where KOMO = 'US$' AND FEMO = '" & Format(_FechaEmision, "yyyyMMdd") & "' Order by IDMAEMO DESC"
+                    Dim _RowMoneda_USdolar = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                    Dim _Vamo As Double = _RowMoneda_USdolar.Item("VAMO")
+
+                    If Not IsNothing(_RowMoneda_USdolar) Then
+
+                        _Fila.Cells("Valor_Dolar").Value = _Vamo
+
+                        If Fx_Revisar_si_tiene_registros() Then
+
+                            For Each _Fl As DataGridViewRow In Grilla_Detalle.Rows
+                                _Fl.Cells("Tipo_Cambio").Value = _Vamo
+                                Sb_Procesar_Datos_De_Grilla(_Fl, "Cantidad", True, True)
+                            Next
+
+                            MessageBoxEx.Show(Me, "Existían tasas de cambio en el detalle del documento" & vbCrLf &
+                                              "Que fueron cambiadas debido al cambio de fecha y su tasa respectiva.", "Información",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                        End If
+
+                    End If
 
                 End If
 
@@ -24862,6 +24885,8 @@ Public Class Frm_Formulario_Documento
                 Dim _Descripcion = _Fila.Descripcion.Trim
                 Dim _Cantidad = _Fila.Cantidad
                 Dim _Precio = _Fila.Precio
+                Dim _Monto = _Fila.Monto
+                Dim _DescuentoMonto = _Fila.DescuentoMonto
 
                 Consulta_sql = "Select * From TABCODAL Where KOEN = '" & _Koen & "' And KOPRAL = '" & _Kopral & "'"
                 Dim _Tbl_Tcb As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -24968,7 +24993,15 @@ Public Class Frm_Formulario_Documento
                             _DescuentoPorc = Math.Round(_DescuentoPorc, 2)
 
                         Else
+
                             _DescuentoPorc = 0
+
+                            Dim _Total As Double = _Precio * _Cantidad
+
+                            If Math.Round(_Total, 0) <> Math.Round(_Monto, 0) Then
+                                _Precio = _Monto / _Cantidad
+                            End If
+
                         End If
 
                         Dim _New_Fila As DataGridViewRow = Grilla_Detalle.Rows(_Contador)

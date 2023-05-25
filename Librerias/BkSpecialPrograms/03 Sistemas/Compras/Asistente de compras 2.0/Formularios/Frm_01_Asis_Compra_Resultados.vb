@@ -51,7 +51,6 @@ Public Class Frm_01_Asis_Compra_Resultados
     Dim _Ds As DataSet
     Dim _Dv, _Dv2 As New DataView
 
-
     Dim _Clas_Asistente_Compras As Clas_Asistente_Compras
     Dim _Nodo_Raiz_Asociados As Integer = _Global_Row_Configuracion_General.Item("Nodo_Raiz_Asociados")
     Dim Fm_Hijo As New Frm_01_Asis_Compra_Resultados_Hijo
@@ -88,6 +87,8 @@ Public Class Frm_01_Asis_Compra_Resultados
     Public Property Auto_Correo_NoEnviarCorreos As Boolean
     Public Property Auto_Id_CorreoOCCMinCompra As String
     Public Property Auto_EnviarListadoOCCConMinimoCompraXCorreo As Boolean
+    Public Property Auto_Id_CorreoProveedoresSinStock As String
+    Public Property Auto_EnviarListadoProveedoresSinStock As Boolean
     Public Property Pro_Tbl_Filtro_Super_Familias() As DataTable
         Get
             Return _Tbl_Filtro_Super_Familias
@@ -193,6 +194,8 @@ Public Class Frm_01_Asis_Compra_Resultados
             _Nombre_Tbl_Paso_Informe = value
         End Set
     End Property
+
+    Public Property Input_DiasMarcarProvQueNoTiene As Integer
 
     Public Property Ud As Integer
         Get
@@ -4210,7 +4213,18 @@ Public Class Frm_01_Asis_Compra_Resultados
         Fm.Accion_Automatica = _Accion_Automatica
         Fm.Chk_Incluir_Ent_Excluidas.Checked = Modo_NVI
         Fm.Chk_Incluir_Ent_Excluidas.Enabled = False
+
+        Fm.Chk_MarcarProvQueNoTiene.Checked = True
+
+        If Modo_NVI Then
+            Fm.Chk_MarcarProvQueNoTiene.Checked = False
+            Fm.Chk_MarcarProvQueNoTiene.Enabled = False
+            Fm.Input_DiasMarcarProvQueNoTiene.Enabled = False
+        End If
+
+        Fm.Input_DiasMarcarProvQueNoTiene.Value = Input_DiasMarcarProvQueNoTiene
         Fm.ShowDialog(Me)
+
         _Proceso_Automatico_Ejecutado = Fm.Pro_Proceso_Generado
         Fm.Dispose()
 
@@ -8291,8 +8305,17 @@ Drop Table #Paso"
             Next
 
             If CBool(_OrdenesBajoMinimo.Count) Then
-
                 _Generar_OCC.Fx_Enviar_Notificacion_Correo_OCC_BajoMinCompra(Auto_CorreoCc, "", Auto_Id_CorreoOCCMinCompra, _OrdenesBajoMinimo)
+            End If
+
+            If Auto_EnviarListadoProveedoresSinStock Then
+
+                Dim _Crear_Html As Crear_Html
+                _Crear_Html = Fx_CrearHtmlProveedoresSinStock()
+
+                If _Crear_Html.EsCorrecto Then
+                    _Generar_OCC.Fx_Enviar_Notificacion_Correo_Proveedores_Sin_Stock(Auto_CorreoCc, "", Val(Auto_Id_CorreoProveedoresSinStock), _Crear_Html.Cuerpo_Html)
+                End If
 
             End If
 
@@ -8882,6 +8905,148 @@ Drop Table #Paso"
         Return _Occ_Auto
 
     End Function
+
+    Private Sub Btn_CorreoProvSinStock_Click(sender As Object, e As EventArgs) Handles Btn_CorreoProvSinStock.Click
+
+        Dim _Crear_Html As Crear_Html
+        _Crear_Html = Fx_CrearHtmlProveedoresSinStock()
+
+        If _Crear_Html.EsCorrecto Then
+
+            ExportarTabla_JetExcel_Tabla(_Crear_Html.TblDetalle, Me, "ProdProvSinStock")
+
+            'Dim _Generar_OCC As New GeneraOccAuto.Generar_Doc_Auto
+            '_Generar_OCC.Fx_Enviar_Notificacion_Correo_Proveedores_Sin_Stock(Auto_CorreoCc, "", CInt(Auto_Id_CorreoProveedoresSinStock), _Crear_Html.Cuerpo_Html)
+
+        Else
+            MessageBoxEx.Show(Me, _Crear_Html.Errores, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
+
+    End Sub
+
+    Function Fx_CrearHtmlProveedoresSinStock() As Crear_Html
+
+        Dim _NewHtml As New Crear_Html
+
+        _NewHtml.EsCorrecto = False
+        _NewHtml.RutaArchivo = String.Empty
+        _NewHtml.Cuerpo_Html = String.Empty
+
+        Try
+
+            Dim _Condicion As String
+
+            If Chk_Quitare_Sospechosos_Stock.Checked Then
+                _Condicion = "And Sospecha_Baja_Rotacion = 0"
+            End If
+
+            If Chk_Mostrar_Solo_Stock_Critico.Checked Then
+                _Condicion += "And Con_Stock_CriticoUd" & Ud & " = 1" & vbCrLf
+            End If
+
+            If Chk_Quitar_Ventas_Calzadas.Checked Then
+                _Condicion += "And Refleo = 0" & vbCrLf
+            End If
+
+            Consulta_sql = "Select Endo_Utl_Compra,Suendo_Utl_Compra,NOKOEN,Codigo,Descripcion,UD1,UD2,CantComprar,Fecha_Ult_Compra--,NoComprarProvNoTiene" & vbCrLf &
+                            "From " & _Nombre_Tbl_Paso_Informe & vbCrLf &
+                            "Left Join MAEEN On KOEN = Endo_Utl_Compra And SUEN = Suendo_Utl_Compra" & vbCrLf &
+                            "Where CantComprar > 0 And NoComprarProvNoTiene = 1" & vbCrLf & _Condicion & vbCrLf &
+                            "Order By KOEN,SUEN,Fecha_Ult_Compra"
+
+            Dim _TblDetalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            If Not CBool(_TblDetalle.Rows.Count) Then
+                Throw New System.Exception("No hay productos que mostrar")
+            End If
+
+            Dim _Ruta_Archivo As String = AppPath() & "\Data\" & RutEmpresa & "\Tmp"
+
+            Dim _Documento_Html As String = My.Resources.Recursos_Asis_Compras.Crear_Html_Proveedores_Con_Productos_Sin_Stock
+            Dim _Detalle_Doc As String
+            Dim _Suma_saldo As Double
+
+            Dim _Alter As Boolean
+
+            _Documento_Html = Replace(_Documento_Html, "#Ud#", "UD" & Ud)
+
+            For Each _Detalle As DataRow In _TblDetalle.Rows
+
+                Dim _Endo_Utl_Compra As String = _Detalle.Item("Endo_Utl_Compra")
+                Dim _Suendo_Utl_Compra As String = _Detalle.Item("Suendo_Utl_Compra")
+                Dim _Nokoen As String = _Detalle.Item("NOKOEN").ToString.Trim
+                Dim _Codigo As String = _Detalle.Item("Codigo")
+                Dim _Descripcion As String = _Detalle.Item("Descripcion")
+                Dim _Ud As String = _Detalle.Item("UD" & Ud)
+                Dim _CantComprar As String = FormatNumber(_Detalle.Item("CantComprar"), 0)
+                Dim _Fecha_Ult_Compra As String = FormatDateTime(_Detalle.Item("Fecha_Ult_Compra"), DateFormat.ShortDate)
+
+                Dim _BColor As String
+
+                If _Alter Then
+                    _BColor = " bgcolor=" & Chr(34) & "DCDCDC" & Chr(34) : _Alter = False
+                Else
+                    _BColor = " bgcolor=" & Chr(34) & "FFFFFF" & Chr(34) : _Alter = True
+                End If
+
+                If _Nokoen.Length > 26 Then
+                    _Nokoen = Mid(_Nokoen, 1, 26) & "..."
+                End If
+
+                _Detalle_Doc +=
+                    "<tr" & _BColor & ">" & vbCrLf &
+                    "<td align=center style=""width: 150px"">" & _Endo_Utl_Compra & "</td>" & vbCrLf &
+                    "<td align=left style=""width: 100px"">" & _Suendo_Utl_Compra & "</td>" & vbCrLf &
+                    "<td align=left style=""width: 380px"">" & _Nokoen & "</td>" & vbCrLf &
+                    "<td align=left style=""width: 150px"">" & _Codigo & "</td>" & vbCrLf &
+                    "<td align=left style=""width: 600px"">" & _Descripcion & "</td>" & vbCrLf &
+                    "<td align=center style=""width: 100px"">" & _Ud & "</td>" & vbCrLf &
+                    "<td align=right style=""width: 100px"">" & _CantComprar & "</td>" & vbCrLf &
+                    "<td align=center style=""width: 150px"">" & _Fecha_Ult_Compra & "</td>" &
+                    "</tr>" & vbCrLf
+                ' 
+            Next
+
+            Dim _Total_Deuda As String = FormatCurrency(_Suma_saldo, 0)
+
+            _Documento_Html = Replace(_Documento_Html, "#Detalle#", _Detalle_Doc)
+            _Documento_Html = Replace(_Documento_Html, "#Total_deuda#", _Total_Deuda)
+
+            _Documento_Html = Replace(_Documento_Html, "á", "&aacute;")
+            _Documento_Html = Replace(_Documento_Html, "é", "&eacute;")
+            _Documento_Html = Replace(_Documento_Html, "í", "&iacute;")
+            _Documento_Html = Replace(_Documento_Html, "ó", "&oacute;")
+            _Documento_Html = Replace(_Documento_Html, "ú", "&uacute;")
+            _Documento_Html = Replace(_Documento_Html, "ñ", "&ntilde;")
+            _Documento_Html = Replace(_Documento_Html, "Ñ", "&Ntilde;")
+
+            ' Acento en Html
+            'a = &aacute;
+            'é = &eacute;
+            'í = &iacute;
+            'ó = &oacute;
+            'ú = &uacute;
+            'ñ = &ntilde;
+            'Ñ = &Ntilde;
+
+            CrearArchivoTxt(_Ruta_Archivo & "\", "ProvSinStock.Html", _Documento_Html, False)
+
+            _Ruta_Archivo = _Ruta_Archivo & "\ProvSinStock.Html"
+
+            _NewHtml.EsCorrecto = True
+            _NewHtml.RutaArchivo = _Ruta_Archivo
+            _NewHtml.Cuerpo_Html = _Documento_Html
+            _NewHtml.Errores = String.Empty
+            _NewHtml.TblDetalle = _TblDetalle
+
+        Catch ex As Exception
+            _NewHtml.Errores = ex.Message
+        End Try
+
+        Return _NewHtml
+
+    End Function
+
 
     Sub Sb_Estudio_NVI_Auto(ByRef _Generar_NVI As GeneraOccAuto.Generar_Doc_Auto)
 
@@ -9594,6 +9759,72 @@ Namespace GeneraOccAuto
 
                     Dim _Fecha = "Getdate()"
                     Dim _NombreEquipo As String = String.Empty '_Global_Row_EstacionBk.Item("NombreEquipo")
+
+                    _Para = _Para.Trim
+
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo (NombreEquipo,Id_Correo,Nombre_Correo,CodFuncionario,Asunto," &
+                                    "Para,Cc,Idmaeedo,Tido,Nudo,NombreFormato,Enviar,Mensaje,Fecha,Adjuntar_Documento,Doc_Adjuntos,Id_Acp)" &
+                                    vbCrLf &
+                                    "Values ('" & _NombreEquipo & "'," & _Id_Correo & ",'" & _Nombre_Correo & "','','" & _Asunto & "','" & _Para & "','" & _Cc &
+                                    "',0,'','','',1,'" & _Mensaje & "'," & _Fecha &
+                                    ",0,'',0)"
+
+                    _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+                    _Error = _Sql.Pro_Error
+
+                    If Not String.IsNullOrEmpty(_Error) Then
+                        Throw New System.Exception(_Error)
+                    End If
+
+                End If
+
+            Catch ex As Exception
+                _Error = ex.Message
+            End Try
+
+            Return _Error
+
+        End Function
+
+        Function Fx_Enviar_Notificacion_Correo_Proveedores_Sin_Stock(_Para As String,
+                                                                     _Cc As String,
+                                                                     _Id_Correo As Integer,
+                                                                     _Html As String) As String
+
+            Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+            Dim Consulta_sql As String
+            Dim _Error = String.Empty
+
+            Try
+
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos Corr Where Id = " & _Id_Correo
+                Dim _Row_Correo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                If IsNothing(_Row_Correo) Then
+                    Throw New System.Exception("No existe configuración para el envio de correos")
+                End If
+
+                Dim _Nombre_Correo As String = _Row_Correo.Item("Nombre_Correo")
+                Dim _Asunto As String = _Row_Correo.Item("Asunto")
+                Dim _Mensaje As String = _Row_Correo.Item("CuerpoMensaje")
+
+                If String.IsNullOrEmpty(_Asunto) Then
+                    _Asunto = "Correo de notificación de pedido " & RazonEmpresa
+                End If
+
+                _Mensaje = Replace(_Mensaje, "&lt;", "<")
+                _Mensaje = Replace(_Mensaje, "&gt;", ">")
+                _Mensaje = Replace(_Mensaje, "&quot;", """")
+
+                _Mensaje = Replace(_Mensaje, "'", "''")
+
+                _Mensaje = Replace(_Mensaje, "<HTML_PROVSINSTOCK>", _Html)
+
+                If Not String.IsNullOrEmpty(_Nombre_Correo) Then
+
+                    Dim _Fecha = "Getdate()"
+                    Dim _NombreEquipo As String = String.Empty
 
                     _Para = _Para.Trim
 

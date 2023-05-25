@@ -92,6 +92,7 @@ Partial Class Frm_Importar_Desde_Excel
         '
         '
         Me.Circular_Progres_Porc.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Circular_Progres_Porc.FocusCuesEnabled = False
         Me.Circular_Progres_Porc.Location = New System.Drawing.Point(63, 14)
         Me.Circular_Progres_Porc.Name = "Circular_Progres_Porc"
         Me.Circular_Progres_Porc.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
@@ -108,6 +109,7 @@ Partial Class Frm_Importar_Desde_Excel
         '
         '
         Me.Circular_Progres_Val.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Circular_Progres_Val.FocusCuesEnabled = False
         Me.Circular_Progres_Val.Location = New System.Drawing.Point(3, 14)
         Me.Circular_Progres_Val.Name = "Circular_Progres_Val"
         Me.Circular_Progres_Val.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
@@ -175,6 +177,7 @@ Partial Class Frm_Importar_Desde_Excel
         Me.Chk_Primera_Fila_Es_encabezado.Checked = True
         Me.Chk_Primera_Fila_Es_encabezado.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_Primera_Fila_Es_encabezado.CheckValue = "Y"
+        Me.Chk_Primera_Fila_Es_encabezado.FocusCuesEnabled = False
         Me.Chk_Primera_Fila_Es_encabezado.ForeColor = System.Drawing.Color.Black
         Me.Chk_Primera_Fila_Es_encabezado.Location = New System.Drawing.Point(5, 113)
         Me.Chk_Primera_Fila_Es_encabezado.Name = "Chk_Primera_Fila_Es_encabezado"
@@ -194,6 +197,7 @@ Partial Class Frm_Importar_Desde_Excel
         Me.Rdb_Exportar_Valores.Checked = True
         Me.Rdb_Exportar_Valores.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Exportar_Valores.CheckValue = "Y"
+        Me.Rdb_Exportar_Valores.FocusCuesEnabled = False
         Me.Rdb_Exportar_Valores.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Exportar_Valores.Location = New System.Drawing.Point(5, 89)
         Me.Rdb_Exportar_Valores.Name = "Rdb_Exportar_Valores"
@@ -210,6 +214,7 @@ Partial Class Frm_Importar_Desde_Excel
         '
         Me.Rdb_Exportar_Solo_Codigo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_Exportar_Solo_Codigo.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Exportar_Solo_Codigo.FocusCuesEnabled = False
         Me.Rdb_Exportar_Solo_Codigo.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Exportar_Solo_Codigo.Location = New System.Drawing.Point(244, 89)
         Me.Rdb_Exportar_Solo_Codigo.Name = "Rdb_Exportar_Solo_Codigo"
@@ -289,17 +294,17 @@ Partial Class Frm_Importar_Desde_Excel
 
     End Sub
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
-    Friend WithEvents Btn_Buscar_Archivo As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Circular_Progres_Porc As DevComponents.DotNetBar.Controls.CircularProgress
-    Friend WithEvents Circular_Progres_Val As DevComponents.DotNetBar.Controls.CircularProgress
     Friend WithEvents Grupo_01 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Txt_Nombre_Archivo As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Public WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
-    Friend WithEvents Btn_Cancelar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Lbl_Procesando As DevComponents.DotNetBar.LabelX
-    Friend WithEvents Btn_Archivo_Ayuda_Excel As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Circular_Progres_Porc As DevComponents.DotNetBar.Controls.CircularProgress
+    Friend WithEvents Circular_Progres_Val As DevComponents.DotNetBar.Controls.CircularProgress
+    Public WithEvents Chk_Primera_Fila_Es_encabezado As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Rdb_Exportar_Valores As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Rdb_Exportar_Solo_Codigo As DevComponents.DotNetBar.Controls.CheckBoxX
-    Friend WithEvents Chk_Primera_Fila_Es_encabezado As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Btn_Buscar_Archivo As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Cancelar As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Archivo_Ayuda_Excel As DevComponents.DotNetBar.ButtonItem
 End Class

@@ -34,6 +34,7 @@ Partial Class Frm_InpunBox_Bk
         Me.Imagenes_48x48_Dark = New System.Windows.Forms.ImageList(Me.components)
         Me.Chk_1 = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Btn_BuscarCarpeta = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_Calendario = New DevComponents.DotNetBar.ButtonX()
         Me.SuspendLayout()
         '
         'TxtDescripcion
@@ -138,6 +139,7 @@ Partial Class Frm_InpunBox_Bk
         Me.Imagenes_48x48_Ligth.Images.SetKeyName(15, "Storage")
         Me.Imagenes_48x48_Ligth.Images.SetKeyName(16, "Product")
         Me.Imagenes_48x48_Ligth.Images.SetKeyName(17, "Folder")
+        Me.Imagenes_48x48_Ligth.Images.SetKeyName(18, "Fecha")
         '
         'Imagenes_48x48_Dark
         '
@@ -161,6 +163,7 @@ Partial Class Frm_InpunBox_Bk
         Me.Imagenes_48x48_Dark.Images.SetKeyName(15, "Storage")
         Me.Imagenes_48x48_Dark.Images.SetKeyName(16, "Product")
         Me.Imagenes_48x48_Dark.Images.SetKeyName(17, "Folder")
+        Me.Imagenes_48x48_Dark.Images.SetKeyName(18, "Fecha")
         '
         'Chk_1
         '
@@ -197,12 +200,26 @@ Partial Class Frm_InpunBox_Bk
         Me.Btn_BuscarCarpeta.TabIndex = 37
         Me.Btn_BuscarCarpeta.Text = "Buscar carpeta..."
         '
+        'Btn_Calendario
+        '
+        Me.Btn_Calendario.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Calendario.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Calendario.Image = CType(resources.GetObject("Btn_Calendario.Image"), System.Drawing.Image)
+        Me.Btn_Calendario.ImageAlt = CType(resources.GetObject("Btn_Calendario.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Calendario.Location = New System.Drawing.Point(361, 191)
+        Me.Btn_Calendario.Name = "Btn_Calendario"
+        Me.Btn_Calendario.Size = New System.Drawing.Size(101, 38)
+        Me.Btn_Calendario.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Calendario.TabIndex = 38
+        Me.Btn_Calendario.Text = "Calendario"
+        '
         'Frm_InpunBox_Bk
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(602, 231)
         Me.ControlBox = False
+        Me.Controls.Add(Me.Btn_Calendario)
         Me.Controls.Add(Me.Btn_BuscarCarpeta)
         Me.Controls.Add(Me.Chk_1)
         Me.Controls.Add(Me.BtnCancelar)
@@ -236,4 +253,5 @@ Partial Class Frm_InpunBox_Bk
     Friend WithEvents Imagenes_48x48_Dark As ImageList
     Public WithEvents Chk_1 As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Btn_BuscarCarpeta As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Btn_Calendario As DevComponents.DotNetBar.ButtonX
 End Class

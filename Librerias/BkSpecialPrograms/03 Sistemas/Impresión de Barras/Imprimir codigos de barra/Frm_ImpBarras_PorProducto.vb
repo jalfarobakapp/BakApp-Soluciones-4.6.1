@@ -541,7 +541,6 @@ Public Class Frm_ImpBarras_PorProducto
                 Return
             End If
 
-            'If Not IsNothing(_Row_Producto) Then
 
             Dim _Rows As DataRow() = _Tbl_Productos.Select("Codigo = '" & _Row_Producto.Item("KOPR") & "'")
 
@@ -551,6 +550,30 @@ Public Class Frm_ImpBarras_PorProducto
                 Txt_Codigo.Text = String.Empty
                 Return
             End If
+
+            Dim _FechaHoy As DateTime = FechaDelServidor()
+
+            Consulta_sql = "Select Dres.CODIGO,Dres.NREG,Dres.ELEMENTO,NOKOPR,Eres.LISTAS" & vbCrLf &
+                       "From MAEDRES Dres" & vbCrLf &
+                       "Inner Join MAEERES Eres On Eres.CODIGO = Dres.CODIGO" & vbCrLf &
+                       "Left Join MAEPR On KOPR = Dres.ELEMENTO" & vbCrLf &
+                       "Where '" & Format(_FechaHoy, "yyyyMMdd") & "' Between Eres.FIOFERTA And Eres.FTOFERTA --And Eres.LISTAS Like '%PB7%'" & vbCrLf &
+                       "And Dres.ELEMENTO = '" & Txt_Codigo.Text & "' "
+            Dim _TblOfertas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            If CBool(_TblOfertas.Rows.Count) Then
+
+                Dim info As New TaskDialogInfo("Información",
+                                eTaskDialogIcon.ShieldStop, "¡ *** Producto En OFERTA *** !",
+                                vbCrLf & vbCrLf & "Código: " & _Row_Producto.Item("KOPR").ToString.Trim & vbCrLf &
+                                "Descripción: " & _Row_Producto.Item("NOKOPR").ToString.Trim,
+                                 eTaskDialogButton.Ok _
+                                 , eTaskDialogBackgroundColor.Red, Nothing, Nothing, Nothing, Nothing, Nothing)
+
+                Dim result As eTaskDialogResult = TaskDialog.Show(info)
+
+            End If
+
 
             Dim _Cantidad = 0
             If _Cantidad_Uno Then _Cantidad = 1
@@ -583,7 +606,7 @@ Public Class Frm_ImpBarras_PorProducto
                 Return
             End If
             Call Txtcodigo_ButtonCustomClick(Nothing, Nothing)
-            End If
+        End If
     End Sub
 
     Private Sub Txt_Codigo_ButtonCustom2Click_1(sender As Object, e As EventArgs) Handles Txt_Codigo.ButtonCustom2Click
@@ -676,7 +699,7 @@ Public Class Frm_ImpBarras_PorProducto
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
         Dim _Semilla As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tbl_DisenoBarras", "Semilla",
-                                                    "NombreEtiqueta = '" & Cmbetiquetas.SelectedValue & "'")
+                                                    "NombreEtiqueta = '" & Cmbetiquetas.SelectedValue & "'", True)
         Dim _Puerto As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tbl_DisenoBarras_SalPtoxEstacion", "Puerto",
                                                   "Semilla_Padre = " & _Semilla & " And NombreEquipo = '" & _NombreEquipo & "'")
 

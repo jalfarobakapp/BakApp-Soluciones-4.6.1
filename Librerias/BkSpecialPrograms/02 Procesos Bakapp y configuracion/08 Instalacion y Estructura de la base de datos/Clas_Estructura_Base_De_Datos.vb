@@ -983,6 +983,9 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Tablas_Equivalentes_Rd_Bk
             Case "Zw_Tbl_DisenoBarras"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Tbl_DisenoBarras
+            Case "Zw_Tbl_DisenoBarras_SalPtoxEstacion"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Tbl_DisenoBarras_SalPtoxEstacion
+
             Case "Zw_Tbl_Reemplazos"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Tbl_Reemplazos
             Case "Zw_TblArbol_Asociaciones"

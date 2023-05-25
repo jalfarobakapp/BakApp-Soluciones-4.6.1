@@ -118,6 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Crear_Html_Proveedores_Con_Productos_Sin_Stock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Html\Crear Html Proveedores Con Productos Sin Stock.htm;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="SQLQuery_Actualizar_Costos_en_Lista_de_Proveedores" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\sqlquery actualizar costos en lista de proveedores.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
