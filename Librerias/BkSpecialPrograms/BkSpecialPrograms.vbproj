@@ -1408,6 +1408,36 @@
     <Compile Include="03 Sistemas\Demonio automatico\Frm_Demonio_01_Conf_Local_FH.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfAsisCompra.Designer.vb">
+      <DependentUpon>Frm_Demonio_ConfAsisCompra.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfAsisCompra.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfFacAuto.Designer.vb">
+      <DependentUpon>Frm_Demonio_ConfFacAuto.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfFacAuto.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_Configuraciones.Designer.vb">
+      <DependentUpon>Frm_Demonio_Configuraciones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_Configuraciones.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfProgramacion.Designer.vb">
+      <DependentUpon>Frm_Demonio_ConfProgramacion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfProgramacion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfCierreDoc.Designer.vb">
+      <DependentUpon>Frm_Demonio_ConfCierreDoc.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfCierreDoc.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\Procedimientos\Ds_Config_Picking.vb">
       <DependentUpon>Ds_Config_Picking.xsd</DependentUpon>
     </Compile>
@@ -4537,6 +4567,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Demonio automatico\Frm_Demonio_01_Conf_Local_FH.resx">
       <DependentUpon>Frm_Demonio_01_Conf_Local_FH.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfAsisCompra.resx">
+      <DependentUpon>Frm_Demonio_ConfAsisCompra.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfCierreDoc.resx">
+      <DependentUpon>Frm_Demonio_ConfCierreDoc.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfFacAuto.resx">
+      <DependentUpon>Frm_Demonio_ConfFacAuto.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_Configuraciones.resx">
+      <DependentUpon>Frm_Demonio_Configuraciones.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfProgramacion.resx">
+      <DependentUpon>Frm_Demonio_ConfProgramacion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Demonio DTE Monitor\Frm_Demonio_DTEMonitor.resx">
       <DependentUpon>Frm_Demonio_DTEMonitor.vb</DependentUpon>

@@ -576,24 +576,6 @@ Public Class Frm_Demonio_01_Conf_Local
 
     Private Sub BtnCambiarDeUsuario_Click(sender As Object, e As EventArgs) Handles BtnCambiarDeUsuario.Click
 
-        'If MessageBoxEx.Show(Me, "Esta acción borrara ala usuario por defecto para la estación de trabajo" & vbCrLf &
-        '                     "Si confirma se cerrara el diablito y deberá abrirlo nuevamente para ingresar un nuevo usuario por defecto" & vbCrLf &
-        '                     "¿Confirma cambiar al usuario para el diablito?",
-        '                     "Usuario por defecto", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-
-        '    Consulta_sql = "Update " & _Global_BaseBk & "Zw_EstacionesBkp Set " &
-        '                   "Usuario_X_Defecto = '', Modalidad_X_Defecto = ''" & vbCrLf &
-        '                   "Where NombreEquipo = '" & _NombreEquipo & "'"
-        '    If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-        '        MessageBoxEx.Show(Me, "Usuario por defecto eliminado" & vbCrLf &
-        '                          "Recuerde que debe volver abrir el diablito para ingresar un nuevo funcionario", "Cambio de usuario por defecto",
-        '                           MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        '        _Cambiar_Usuario_X_Defecto = True
-        '        Me.Close()
-        '    End If
-
-        'End If
-
         Dim _Old_Funcionario = FUNCIONARIO
 
         Dim Fml As New Frm_Login
