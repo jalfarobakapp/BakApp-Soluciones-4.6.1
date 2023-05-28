@@ -554,6 +554,7 @@ Public Class Frm_Demonio_01
 
     End Sub
 
+
     Sub Sb_Enable_Objetos()
 
         CircularPgrs.IsRunning = True

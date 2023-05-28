@@ -777,4 +777,12 @@ Public Class Menu
         Fm.Dispose()
 
     End Sub
+
+    Private Sub ButtonItem2_Click(sender As Object, e As EventArgs) Handles ButtonItem2.Click
+
+        Dim Fm As New Frm_Demonio_New
+        Fm.ShowDialog(_Fm_Menu_Padre)
+        Fm.Dispose()
+
+    End Sub
 End Class

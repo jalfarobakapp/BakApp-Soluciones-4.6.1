@@ -28,6 +28,8 @@ Public Class Frm_Demonio_Configuraciones
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_ConfXEstacion Where Id = " & _Id
         _Row_ConfEstacion = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+        Sb_Formato_Generico_Grilla(Grilla_AsistenteCompras, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
+
     End Sub
 
     Private Sub Frm_Demonio_Configuraciones_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -45,7 +47,7 @@ Public Class Frm_Demonio_Configuraciones
         AddHandler Chk_Wordpress_Prod.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
         AddHandler Chk_Wordpress_Stock.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
         AddHandler Chk_CierreDoc.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
-        AddHandler Chk_FacturacionAuto.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
+        AddHandler Chk_FacAuto.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
         AddHandler Chk_AsistenteCompras.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
         'AddHandler Chk_EnvioCrreo.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
 
@@ -96,7 +98,14 @@ Public Class Frm_Demonio_Configuraciones
             Chk_OCCCerrar.Checked = .Item("OCCCerrar")
             Input_DiasOCC.Value = .Item("DiasOCC")
 
-            Chk_FacturacionAuto.Checked = .Item("FacturacionAuto")
+            Chk_FacAuto.Checked = .Item("FacAuto")
+
+            Txt_FacAuto_Modalidad.Text = .Item("FacAuto_Modalidad")
+            Rdb_FacAuto_Dia.Checked = .Item("FacAuto_Dia")
+            Rdb_FacAuto_Sem.Checked = .Item("FacAuto_Sem")
+            Rdb_FacAuto_Mes.Checked = .Item("FacAuto_Mes")
+            Rdb_FacAuto_Todas.Checked = .Item("FacAuto_Todas")
+
             Chk_AsistenteCompras.Checked = .Item("AsistenteCompras")
 
             Txt_ImpSolProdBod.Text = .Item("ImpSolProdBod")
@@ -104,7 +113,11 @@ Public Class Frm_Demonio_Configuraciones
 
         End With
 
+        AddHandler Grilla_AsistenteCompras.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
         Sp_SuperTabItem_Click(Sp_EnvioCorreo, Nothing)
+
+        Sb_Actualizar_Grilla_Acp()
 
     End Sub
 
@@ -139,8 +152,13 @@ Public Class Frm_Demonio_Configuraciones
                        ",DiasOCI = " & Convert.ToInt32(Input_DiasOCI.Value) &
                        ",OCCCerrar = " & Convert.ToInt32(Chk_OCCCerrar.Checked) &
                        ",DiasOCC = " & Convert.ToInt32(Input_DiasOCC.Value) &
-                       ",FacturacionAuto = " & Convert.ToInt32(Chk_FacturacionAuto.Checked) &
-                       ",AsistenteCompras = " & Convert.ToInt32(Chk_Wordpress_Prod.Checked) & vbCrLf &
+                       ",FacAuto = " & Convert.ToInt32(Chk_FacAuto.Checked) &
+                       ",FacAuto_Modalidad = '" & Txt_FacAuto_Modalidad.Text & "'" &
+                       ",FacAuto_Dia = " & Convert.ToInt32(Rdb_FacAuto_Dia.Checked) &
+                       ",FacAuto_Sem = " & Convert.ToInt32(Rdb_FacAuto_Sem.Checked) &
+                       ",FacAuto_Mes = " & Convert.ToInt32(Rdb_FacAuto_Mes.Checked) &
+                       ",FacAuto_Todas = " & Convert.ToInt32(Rdb_FacAuto_Todas.Checked) &
+                       ",AsistenteCompras = " & Convert.ToInt32(Chk_AsistenteCompras.Checked) & vbCrLf &
                        "Where Id = " & _Id
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
             Grabar = True
@@ -258,11 +276,15 @@ Public Class Frm_Demonio_Configuraciones
         Dim _Id_Prg As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_ConfProgramacion", "Id", "Id_Padre = " & _Id & " And Nombre = '" & _Nombre & "'", True)
 
         If Not CBool(_Id_Prg) Then
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_ConfProgramacion (Id_Padre,Nombre,FrecuDiaria,SucedeUnaVez) Values (" & _Id & ",'" & _Nombre & "',1,1)"
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_ConfProgramacion (Tbl_Padre,Id_Padre,Nombre,FrecuDiaria,SucedeUnaVez) Values ('Diablito'," & _Id & ",'" & _Nombre & "',1,1)"
             _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Prg)
         End If
 
         _Programacion = _Grb_Programacion.Fx_Llenar_Programacion(_Id_Prg)
+
+        If String.IsNullOrEmpty(_Programacion.Tbl_Padre) Then
+            _Programacion.Tbl_Padre = "Diablito"
+        End If
 
         Dim Fm As New Frm_Demonio_ConfProgramacion
         Fm.Programacion = _Programacion
@@ -309,7 +331,7 @@ Public Class Frm_Demonio_Configuraciones
 
         Grupo_Resumen.Text = _Tab.Text
 
-        If _Tab.Name = "Sp_FacturacionAuto" Or _Tab.Name = "Sp_AsistenteCompras" Or _Tab.Name = "" Then
+        If _Tab.Name = "Sp_SqlQueryEspecial" Or _Tab.Name = "Sp_AsistenteCompras" Or _Tab.Name = "" Then
             Btn_ConfProgramacion.Enabled = False
             Txt_Resumen.Text = "La programación depende de cada registro"
             Return
@@ -328,6 +350,119 @@ Public Class Frm_Demonio_Configuraciones
         End If
 
         Txt_Resumen.Text = _Resumen
+
+    End Sub
+
+    Private Sub Txt_FacAuto_Modalidad_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_FacAuto_Modalidad.ButtonCustomClick
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "MODALIDADES DE LA EMPRESA"
+
+        _Filtrar.Tabla = "CONFIEST"
+        _Filtrar.Campo = "MODALIDAD"
+        _Filtrar.Descripcion = "MODALIDAD"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And MODALIDAD <> '  '",
+                               Nothing, False, True) Then
+
+            Dim _Tbl_Transportista As DataTable = _Filtrar.Pro_Tbl_Filtro
+
+            Dim _Row As DataRow = _Tbl_Transportista.Rows(0)
+
+            Dim _Modalidad = _Row.Item("Codigo").ToString.Trim
+
+            Txt_FacAuto_Modalidad.Tag = _Modalidad
+            Txt_FacAuto_Modalidad.Text = _Modalidad
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_AgregarConfAsisCompra_Click(sender As Object, e As EventArgs) Handles Btn_AgregarConfAsisCompra.Click
+
+        Dim Fm As New Frm_Demonio_ConfAsisCompra(0)
+        Fm.ShowDialog(Me)
+        If Fm.Grabar Then
+            Sb_Actualizar_Grilla_Acp()
+        End If
+        Fm.Dispose()
+
+    End Sub
+
+    Sub Sb_Actualizar_Grilla_Acp()
+
+        Consulta_sql = "Select AcpA.Id,AcpA.NombreEquipo,AcpA.Modalidad,AcpA.Tido," & vbCrLf &
+                       "Case AcpA.Tido When 'NVI' Then 'NVI - Sol. interna' When 'OC1' Then 'OCC - Prov.Estrella' When 'OC2' Then 'OCC - Prov.Regular' End As 'Tipo',Prog.Resumen" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Demonio_ConfAcpAuto AcpA" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Demonio_ConfProgramacion Prog On AcpA.Id = Prog.Id_Padre And Prog.Tbl_Padre = 'AcoAuto'" & vbCrLf &
+                       "Where AcpA.NombreEquipo = '" & _NombreEquipo & "'" & vbCrLf &
+                       "Order by Modalidad,Tido"
+
+        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        With Grilla_AsistenteCompras
+
+            .DataSource = _Tbl
+
+            OcultarEncabezadoGrilla(Grilla_AsistenteCompras, True)
+
+            Dim _DisplayIndex = 0
+
+            .Columns("Modalidad").Width = 50
+            .Columns("Modalidad").HeaderText = "Mod."
+            .Columns("Modalidad").ToolTipText = "Modalidad"
+            .Columns("Modalidad").Visible = True
+            .Columns("Modalidad").Frozen = True
+            .Columns("Modalidad").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Tipo").Width = 120
+            .Columns("Tipo").HeaderText = "Tipo"
+            .Columns("Tipo").Visible = True
+            .Columns("Tipo").Frozen = True
+            .Columns("Tipo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Resumen").Width = 200
+            .Columns("Resumen").HeaderText = "Resumen"
+            .Columns("Resumen").Visible = True
+            .Columns("Resumen").Frozen = True
+            .Columns("Resumen").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+        End With
+
+    End Sub
+
+    Private Sub Grilla_AsistenteCompras_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_AsistenteCompras.CellEnter
+
+        Dim _Fila As DataGridViewRow = Grilla_AsistenteCompras.CurrentRow
+
+        Txt_Resumen.Text = _Fila.Cells("Resumen").Value
+
+    End Sub
+
+    Private Sub Grilla_AsistenteCompras_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_AsistenteCompras.CellDoubleClick
+
+        Dim _Grb_Programacion As New Grb_Programacion
+        Dim _Fila As DataGridViewRow = Grilla_AsistenteCompras.CurrentRow
+
+        Dim _Id_Padre As Integer = _Fila.Cells("Id").Value
+
+        Dim _Id As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_ConfProgramacion", "Id",
+                                                   "Id_Padre = " & _Id_Padre & " And NombreEquipo = '" & _NombreEquipo & "' And Tbl_Padre = 'AcoAuto'", True)
+
+        Dim _Programacion As Cl_NewProgramacion = _Grb_Programacion.Fx_Llenar_Programacion(_Id)
+
+        Dim Fm As New Frm_Demonio_ConfAsisCompra(_Id_Padre)
+        Fm.Programacion = _Programacion
+        Fm.ShowDialog(Me)
+        If Fm.Grabar Then
+            Sb_Actualizar_Grilla_Acp()
+        End If
+        Fm.Dispose()
 
     End Sub
 

@@ -45,7 +45,7 @@ Public Class Frm_Demonio_ConfProgramacion
         Rdb_SucedeCada.Checked = Programacion.SucedeCada
 
         Input_IntervaloCada.Value = Programacion.IntervaloCada
-        Cmb_TipoIntervaloCada.SelectedValue = Programacion.TipoIntervaloCada
+        Cmb_TipoIntervaloCada.SelectedValue = NuloPorNro(Programacion.TipoIntervaloCada, "")
 
         Dtp_ApartirDeCada.Value = Programacion.ApartirDeCada
         Dtp_HoraUnaVez.Value = Programacion.HoraUnaVez
@@ -61,7 +61,7 @@ Public Class Frm_Demonio_ConfProgramacion
 
         Sb_Crear_Resumen()
 
-        If Rdb_FrecuDiaria.Checked Then
+        If Rdb_FrecuDiaria.Checked Or Not Programacion.Validada Then
             Grupo_Frecuencia.Location = New System.Drawing.Point(Grupo_Frecuencia.Location.X, 91)
             Grupo_Resumen.Location = New System.Drawing.Point(Grupo_Frecuencia.Location.X, 212)
             Me.Height = 382
@@ -110,6 +110,8 @@ Public Class Frm_Demonio_ConfProgramacion
         Programacion.ApartirDeCada = Dtp_ApartirDeCada.Value
         Programacion.HoraUnaVez = Dtp_HoraUnaVez.Value
         Programacion.Resumen = Txt_Resumen.Text.Trim
+
+        Programacion.Validada = True
 
         Grabar = True
 

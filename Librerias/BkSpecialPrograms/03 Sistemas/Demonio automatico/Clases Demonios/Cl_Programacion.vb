@@ -1,8 +1,9 @@
 ﻿Public Class Cl_NewProgramacion
 
     Public Property Id As Integer
+    Public Property NombreEquipo As String
     Public Property Tbl_Padre As String
-    Public Property Id_Padre As Boolean
+    Public Property Id_Padre As Integer
     Public Property Nombre As String
     Public Property FrecuDiaria As Boolean
     Public Property FrecuSemanal As Boolean
@@ -21,6 +22,7 @@
     Public Property ApartirDeCada As DateTime
     Public Property FinalizaCada As DateTime
     Public Property Resumen As String
+    Public Property Validada As Boolean
 
 End Class
 
@@ -115,11 +117,33 @@ Public Class Grb_Programacion
             .TipoIntervaloCada = _Row_Programacion.Item("TipoIntervaloCada")
             .ApartirDeCada = NuloPorNro(_Row_Programacion.Item("ApartirDeCada"), "01-01-1900 00:00")
             .FinalizaCada = NuloPorNro(_Row_Programacion.Item("FinalizaCada"), "01-01-1900 23:59")
+            .Resumen = _Row_Programacion.Item("Resumen")
+            .Validada = True
 
         End With
 
         Return _New_Programacion
 
     End Function
+
+End Class
+
+Public Class DProgramaciones
+    Public Property Sp_EnvioCorreo As New Cl_NewProgramacion
+    Public Property Sp_ColaImpDoc As New Cl_NewProgramacion
+    Public Property Sp_ColaImpPick As New Cl_NewProgramacion
+    Public Property Sp_SolProdBod As New Cl_NewProgramacion
+    Public Property Sp_Prestashop_Prod As New Cl_NewProgramacion
+    Public Property Sp_Prestashop_Order As New Cl_NewProgramacion
+    Public Property Sp_Prestashop_Total As New Cl_NewProgramacion
+    Public Property Sp_ImporDTESII As New Cl_NewProgramacion
+    Public Property Sp_ArchivarDoc As New Cl_NewProgramacion
+    Public Property Sp_ConsStock As New Cl_NewProgramacion
+    Public Property Sp_Wordpress_Prod As New Cl_NewProgramacion
+    Public Property Sp_Wordpress_Stock As New Cl_NewProgramacion
+    Public Property Sp_CierreDoc As New Cl_NewProgramacion
+    Public Property Sp_FacturacionAuto As New Cl_NewProgramacion
+    Public Property Sp_AsistenteCompras As New Cl_NewProgramacion
+    Public Property Sp_SqlQueryEspecial As New Cl_NewProgramacion
 
 End Class
