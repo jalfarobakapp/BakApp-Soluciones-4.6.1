@@ -691,13 +691,13 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel7)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel4)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel6)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel5)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
         Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
         Me.SuperTabControl1.Location = New System.Drawing.Point(12, 12)
         Me.SuperTabControl1.Name = "SuperTabControl1"
@@ -950,9 +950,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel7.Controls.Add(Me.Cmb_Nodo_Raiz_Asociados)
         Me.SuperTabControlPanel7.Controls.Add(Me.LabelX15)
         Me.SuperTabControlPanel7.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel7.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel7.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel7.Name = "SuperTabControlPanel7"
-        Me.SuperTabControlPanel7.Size = New System.Drawing.Size(672, 539)
+        Me.SuperTabControlPanel7.Size = New System.Drawing.Size(672, 512)
         Me.SuperTabControlPanel7.TabIndex = 0
         Me.SuperTabControlPanel7.TabItem = Me.SpTab_Productos
         '
@@ -1154,9 +1154,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel4.Controls.Add(Me.TableLayoutPanel4)
         Me.SuperTabControlPanel4.Controls.Add(Me.Txt_ValorMinimoNVV)
         Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
-        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(672, 539)
+        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(672, 512)
         Me.SuperTabControlPanel4.TabIndex = 0
         Me.SuperTabControlPanel4.TabItem = Me.SpTab_Ventas2
         '
@@ -1294,9 +1294,9 @@ Partial Class Frm_Configuracion_Gral
         '
         Me.SuperTabControlPanel6.Controls.Add(Me.TableLayoutPanel3)
         Me.SuperTabControlPanel6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel6.Name = "SuperTabControlPanel6"
-        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(672, 539)
+        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(672, 512)
         Me.SuperTabControlPanel6.TabIndex = 0
         Me.SuperTabControlPanel6.TabItem = Me.SpTab_Ventas
         '
@@ -1314,9 +1314,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel5.Controls.Add(Me.Grupo_RecepXMLComp)
         Me.SuperTabControlPanel5.Controls.Add(Me.TableLayoutPanel1)
         Me.SuperTabControlPanel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel5.Name = "SuperTabControlPanel5"
-        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(672, 539)
+        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(672, 512)
         Me.SuperTabControlPanel5.TabIndex = 0
         Me.SuperTabControlPanel5.TabItem = Me.SpTab_Compras
         '
@@ -1695,9 +1695,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel3.Controls.Add(Me.LabelX21)
         Me.SuperTabControlPanel3.Controls.Add(Me.Chk_Fincred_Usar)
         Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(672, 539)
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(672, 512)
         Me.SuperTabControlPanel3.TabIndex = 0
         Me.SuperTabControlPanel3.TabItem = Me.SpTab_FincredPays
         '
@@ -1803,9 +1803,9 @@ Partial Class Frm_Configuracion_Gral
         '
         Me.SuperTabControlPanel2.Controls.Add(Me.GroupPanel1)
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(672, 539)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(672, 512)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.SpTab_DatosEmpresa
         '

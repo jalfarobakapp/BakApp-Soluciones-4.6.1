@@ -82,6 +82,7 @@ Partial Class Menu
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         Me.StyleManager1 = New DevComponents.DotNetBar.StyleManager(Me.components)
+        Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
         MetroTileFrame1 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame2 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame3 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
@@ -790,9 +791,9 @@ Partial Class Menu
         Me.ButtonX1.Name = "ButtonX1"
         Me.ButtonX1.Size = New System.Drawing.Size(134, 32)
         Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ButtonItem1})
         Me.ButtonX1.TabIndex = 15
         Me.ButtonX1.Text = "Boton de pruebas"
-        Me.ButtonX1.Visible = False
         '
         'Tiempo_Actualizar_BakApp
         '
@@ -1019,6 +1020,12 @@ Partial Class Menu
         Me.StyleManager1.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro
         Me.StyleManager1.MetroColorParameters = New DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(154, Byte), Integer)))
         '
+        'ButtonItem1
+        '
+        Me.ButtonItem1.GlobalItem = False
+        Me.ButtonItem1.Name = "ButtonItem1"
+        Me.ButtonItem1.Text = "ButtonItem1"
+        '
         'Menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1095,4 +1102,5 @@ Partial Class Menu
     Private WithEvents Btn_Facturacion_Electronica As DevComponents.DotNetBar.Metro.MetroTileItem
     Friend WithEvents Btn_CambioDeEmpresa As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Lbl_Estatus As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents ButtonItem1 As DevComponents.DotNetBar.ButtonItem
 End Class

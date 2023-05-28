@@ -4,19 +4,9 @@ Public Class Frm_Demonio_ConfProgramacion
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Public Property Id As Integer
-    Public Property Id_Programacion As Integer
+    Public Property Programacion As Cl_NewProgramacion
+    Public Property Grabar As Boolean
 
-    Public Property Row_Programacion As DataRow
-        Get
-            Return _Row_Programacion
-        End Get
-        Set(value As DataRow)
-            _Row_Programacion = value
-        End Set
-    End Property
-
-    Dim _Row_Programacion As DataRow
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -24,33 +14,41 @@ Public Class Frm_Demonio_ConfProgramacion
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
+        Dim _Arr_Tido(,) As String = {{"", ""}, {"HH", "Hora"}, {"MM", "Minutos"}, {"SS", "Segundos"}}
+        Sb_Llenar_Combos(_Arr_Tido, Cmb_TipoIntervaloCada)
+        Cmb_TipoIntervaloCada.SelectedValue = ""
+
     End Sub
 
     Private Sub Frm_Demonio_ConfProgramacion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_ConfProgramacion Where Id = " & _Id
-        Row_Programacion = _Sql.Fx_Get_DataRow(Consulta_sql)
+        If IsNothing(Programacion) Then
+            Programacion = New Cl_NewProgramacion
+            Programacion.FrecuDiaria = True
+            Programacion.SucedeUnaVez = True
+            Programacion.HoraUnaVez = "01-01-1900 00:00"
+        End If
 
-        Txt_Nombre.Text = _Row_Programacion.Item("Nombre")
-        Rdb_FrecuDiaria.Checked = _Row_Programacion.Item("FrecuDiaria")
-        Rdb_FrecuSemanal.Checked = _Row_Programacion.Item("FrecuSemanal")
+        Txt_Nombre.Text = Programacion.Nombre
+        Rdb_FrecuDiaria.Checked = Programacion.FrecuDiaria
+        Rdb_FrecuSemanal.Checked = Programacion.FrecuSemanal
 
-        Chk_Lunes.Checked = _Row_Programacion.Item("Lunes")
-        Chk_Martes.Checked = _Row_Programacion.Item("Martes")
-        Chk_Miercoles.Checked = _Row_Programacion.Item("Miercoles")
-        Chk_Jueves.Checked = _Row_Programacion.Item("Jueves")
-        Chk_Viernes.Checked = _Row_Programacion.Item("Viernes")
-        Chk_Sabado.Checked = _Row_Programacion.Item("Sabado")
-        Chk_Domingo.Checked = _Row_Programacion.Item("Domingo")
+        Chk_Lunes.Checked = Programacion.Lunes
+        Chk_Martes.Checked = Programacion.Martes
+        Chk_Miercoles.Checked = Programacion.Miercoles
+        Chk_Jueves.Checked = Programacion.Jueves
+        Chk_Viernes.Checked = Programacion.Viernes
+        Chk_Sabado.Checked = Programacion.Sabado
+        Chk_Domingo.Checked = Programacion.Domingo
 
-        Rdb_SucedeUnaVez.Checked = _Row_Programacion.Item("SucedeUnaVez")
-        Rdb_SucedeCada.Checked = _Row_Programacion.Item("SucedeCada")
+        Rdb_SucedeUnaVez.Checked = Programacion.SucedeUnaVez
+        Rdb_SucedeCada.Checked = Programacion.SucedeCada
 
-        Input_IntervaloCada.Value = _Row_Programacion.Item("IntervaloCada")
-        Cmb_TipoIntervaloCada.SelectedValue = _Row_Programacion.Item("TipoIntervaloCada")
+        Input_IntervaloCada.Value = Programacion.IntervaloCada
+        Cmb_TipoIntervaloCada.SelectedValue = Programacion.TipoIntervaloCada
 
-        Dtp_ApartirDeCada.Value = _Row_Programacion.Item("ApartirDeCada")
-        Dtp_HoraUnaVez.Value = _Row_Programacion.Item("HoraUnaVez")
+        Dtp_ApartirDeCada.Value = Programacion.ApartirDeCada
+        Dtp_HoraUnaVez.Value = Programacion.HoraUnaVez
 
         AddHandler Rdb_FrecuDiaria.CheckedChanged, AddressOf Rdb_Frecuencia_CheckedChanged
         AddHandler Rdb_FrecuSemanal.CheckedChanged, AddressOf Rdb_Frecuencia_CheckedChanged
@@ -60,6 +58,15 @@ Public Class Frm_Demonio_ConfProgramacion
 
         Rdb_Frecuencia_CheckedChanged(Nothing, Nothing)
         Chk_Sucede_CheckedChanged(Nothing, Nothing)
+
+        Sb_Crear_Resumen()
+
+        If Rdb_FrecuDiaria.Checked Then
+            Grupo_Frecuencia.Location = New System.Drawing.Point(Grupo_Frecuencia.Location.X, 91)
+            Grupo_Resumen.Location = New System.Drawing.Point(Grupo_Frecuencia.Location.X, 212)
+            Me.Height = 382
+            Grupo_Semanal.Visible = Rdb_FrecuSemanal.Checked
+        End If
 
     End Sub
 
@@ -76,51 +83,165 @@ Public Class Frm_Demonio_ConfProgramacion
         LabelX1.Enabled = Rdb_SucedeCada.Checked
         LabelX2.Enabled = Rdb_SucedeCada.Checked
         Dtp_ApartirDeCada.Enabled = Rdb_SucedeCada.Checked
-        Dtp_HoraUnaVez.Enabled = Rdb_SucedeCada.Checked
+        Dtp_FinalizaCada.Enabled = Rdb_SucedeCada.Checked
 
     End Sub
 
     Private Sub BtnGrabar_Click(sender As Object, e As EventArgs) Handles BtnGrabar.Click
 
-        Dim _Nombre As String = Txt_Nombre.Text
-        Dim _FrecuDiaria As Integer = Convert.ToInt32(Rdb_FrecuDiaria.Checked)
-        Dim _FrecuSemanal As Integer = Convert.ToInt32(Rdb_FrecuSemanal.Checked)
-        Dim _Lunes As Integer = Convert.ToInt32(Chk_Lunes.Checked)
-        Dim _Martes As Integer = Convert.ToInt32(Chk_Martes.Checked)
-        Dim _Miercoles As Integer = Convert.ToInt32(Chk_Miercoles.Checked)
-        Dim _Jueves As Integer = Convert.ToInt32(Chk_Jueves.Checked)
-        Dim _Viernes As Integer = Convert.ToInt32(Chk_Viernes.Checked)
-        Dim _Sabado As Integer = Convert.ToInt32(Chk_Sabado.Checked)
-        Dim _Domingo As Integer = Convert.ToInt32(Chk_Domingo.Checked)
-        Dim _SucedeUnaVez As Integer = Convert.ToInt32(Rdb_SucedeUnaVez.Checked)
-        Dim _HoraUnaVez As String = Format(Dtp_HoraUnaVez.Value, "yyymmdd HH:MM")
-        Dim _SucedeCada As Integer = Convert.ToInt32(Rdb_SucedeCada.Checked)
-        Dim _IntervaloCada As Integer = Input_IntervaloCada.Value
-        Dim _TipoIntervaloCada As String = Cmb_TipoIntervaloCada.SelectedValue
-        Dim _ApartirDeCada As String = Format(Dtp_ApartirDeCada.Value, "yyymmdd HH:MM")
-        Dim _FinalizaCada As String = Format(Dtp_FinalizaCada.Value, "yyymmdd HH:MM")
+        Programacion.Nombre = Txt_Nombre.Text
+        Programacion.FrecuDiaria = Rdb_FrecuDiaria.Checked
+        Programacion.FrecuSemanal = Rdb_FrecuSemanal.Checked
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_ConfProgramacion Set " & vbCrLf &
-                       " Nombre = ''" &
-                       ",FrecuDiaria = " & _FrecuDiaria &
-                       ",FrecuSemanal = " & _FrecuSemanal &
-                       ",Lunes = " & _Lunes &
-                       ",Martes = 1" & _Martes &
-                       ",Miercoles = 1" & _Miercoles &
-                       ",Jueves = 1" & _Jueves &
-                       ",Viernes = 1" & _Viernes &
-                       ",Sabado = 1" & _Sabado &
-                       ",Domingo = 1" & _Domingo &
-                       ",SucedeUnaVez = " & _SucedeUnaVez &
-                       ",HoraUnaVez = '" & _HoraUnaVez & "'" &
-                       ",SucedeCada = " & _SucedeCada &
-                       ",IntervaloCada = " & _IntervaloCada &
-                       ",TipoIntervaloCada = '" & _TipoIntervaloCada & "'" &
-                       ",ApartirDeCada = '" & _ApartirDeCada & "'" &
-                       ",FinalizaCada = '" & _FinalizaCada & "'" & vbCrLf &
-                       "Where Id = " & _Id
-        _Sql.Fx_Ejecutar_Consulta(Consulta_sql)
+        Programacion.Lunes = Chk_Lunes.Checked
+        Programacion.Martes = Chk_Martes.Checked
+        Programacion.Miercoles = Chk_Miercoles.Checked
+        Programacion.Jueves = Chk_Jueves.Checked
+        Programacion.Viernes = Chk_Viernes.Checked
+        Programacion.Sabado = Chk_Sabado.Checked
+        Programacion.Domingo = Chk_Domingo.Checked
 
+        Programacion.SucedeUnaVez = Rdb_SucedeUnaVez.Checked
+        Programacion.SucedeCada = Rdb_SucedeCada.Checked
+
+        Programacion.IntervaloCada = Input_IntervaloCada.Value
+        Programacion.TipoIntervaloCada = Cmb_TipoIntervaloCada.SelectedValue
+
+        Programacion.ApartirDeCada = Dtp_ApartirDeCada.Value
+        Programacion.HoraUnaVez = Dtp_HoraUnaVez.Value
+        Programacion.Resumen = Txt_Resumen.Text.Trim
+
+        Grabar = True
+
+        Me.Close()
+
+    End Sub
+
+    Sub Sb_Crear_Resumen()
+
+        Dim _Sucede As String
+
+        If Rdb_FrecuDiaria.Checked Then
+            _Sucede = "Sucede cada día "
+        End If
+
+        Dim _DiaAnterior = String.Empty
+
+        If Rdb_FrecuSemanal.Checked Then
+            _Sucede = "Sucede el "
+            If Chk_Lunes.Checked Then
+                _Sucede += "lunes"
+                _DiaAnterior = ", "
+            End If
+            If Chk_Martes.Checked Then
+                _Sucede += _DiaAnterior & "martes"
+                _DiaAnterior = ", "
+            End If
+            If Chk_Miercoles.Checked Then
+                _Sucede += _DiaAnterior & "miercoles"
+                _DiaAnterior = ", "
+            End If
+            If Chk_Jueves.Checked Then
+                _Sucede += _DiaAnterior & "jueves"
+                _DiaAnterior = ", "
+            End If
+            If Chk_Viernes.Checked Then
+                _Sucede += _DiaAnterior & "viernes"
+                _DiaAnterior = ", "
+            End If
+            If Chk_Sabado.Checked Then
+                _Sucede += _DiaAnterior & "sabádo"
+                _DiaAnterior = ", "
+            End If
+            If Chk_Domingo.Checked Then
+                _Sucede += _DiaAnterior & "domingo"
+            End If
+
+            _Sucede += " de cada semana "
+
+        End If
+
+        If Rdb_SucedeUnaVez.Checked Then _Sucede += "a las " & Dtp_HoraUnaVez.Value.ToShortTimeString & " "
+        If Rdb_SucedeCada.Checked Then _Sucede += "cada " & Input_IntervaloCada.Value & " " & Cmb_TipoIntervaloCada.Text.ToLower & " entre las " & Dtp_ApartirDeCada.Value.ToShortTimeString & " y las " & Dtp_FinalizaCada.Value.ToShortTimeString
+
+        Txt_Resumen.Text = _Sucede
+
+    End Sub
+
+    Private Sub Rdb_FrecuDiaria_CheckedChanged(sender As Object, e As EventArgs) Handles Rdb_FrecuDiaria.CheckedChanged
+        If Rdb_FrecuDiaria.Checked Then
+            Sb_Crear_Resumen()
+            Grupo_Frecuencia.Location = New System.Drawing.Point(Grupo_Frecuencia.Location.X, 91)
+            Grupo_Resumen.Location = New System.Drawing.Point(Grupo_Frecuencia.Location.X, 212)
+            Me.Height = 382
+            Grupo_Semanal.Visible = Rdb_FrecuSemanal.Checked
+        End If
+    End Sub
+
+    Private Sub Rdb_FrecuSemanal_CheckedChanged(sender As Object, e As EventArgs) Handles Rdb_FrecuSemanal.CheckedChanged
+        If Rdb_FrecuSemanal.Checked Then
+            Sb_Crear_Resumen()
+            Grupo_Frecuencia.Location = New System.Drawing.Point(Grupo_Frecuencia.Location.X, 164)
+            Grupo_Resumen.Location = New System.Drawing.Point(Grupo_Frecuencia.Location.X, 285)
+            Me.Height = 455
+            Grupo_Semanal.Visible = Rdb_FrecuSemanal.Checked
+        End If
+    End Sub
+
+    Private Sub Chk_Lunes_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Lunes.CheckedChanged
+        Sb_Crear_Resumen()
+    End Sub
+
+    Private Sub Chk_Martes_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Martes.CheckedChanged
+        Sb_Crear_Resumen()
+    End Sub
+
+    Private Sub Chk_Miercoles_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Miercoles.CheckedChanged
+        Sb_Crear_Resumen()
+    End Sub
+
+    Private Sub Chk_Jueves_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Jueves.CheckedChanged
+        Sb_Crear_Resumen()
+    End Sub
+
+    Private Sub Chk_Viernes_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Viernes.CheckedChanged
+        Sb_Crear_Resumen()
+    End Sub
+
+    Private Sub Chk_Sabado_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Sabado.CheckedChanged
+        Sb_Crear_Resumen()
+    End Sub
+
+    Private Sub Chk_Domingo_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Domingo.CheckedChanged
+        Sb_Crear_Resumen()
+    End Sub
+
+    Private Sub Rdb_SucedeUnaVez_CheckedChanged(sender As Object, e As EventArgs) Handles Rdb_SucedeUnaVez.CheckedChanged
+        If Rdb_SucedeUnaVez.Checked Then Sb_Crear_Resumen()
+    End Sub
+
+    Private Sub Rdb_SucedeCada_CheckedChanged(sender As Object, e As EventArgs) Handles Rdb_SucedeCada.CheckedChanged
+        If Rdb_SucedeCada.Checked Then Sb_Crear_Resumen()
+    End Sub
+
+    Private Sub Input_IntervaloCada_ValueChanged(sender As Object, e As EventArgs) Handles Input_IntervaloCada.ValueChanged
+        Sb_Crear_Resumen()
+    End Sub
+
+    Private Sub Cmb_TipoIntervaloCada_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cmb_TipoIntervaloCada.SelectedIndexChanged
+        Sb_Crear_Resumen()
+    End Sub
+
+    Private Sub Dtp_HoraUnaVez_ValueChanged(sender As Object, e As EventArgs) Handles Dtp_HoraUnaVez.ValueChanged
+        Sb_Crear_Resumen()
+    End Sub
+
+    Private Sub Dtp_ApartirDeCada_ValueChanged(sender As Object, e As EventArgs) Handles Dtp_ApartirDeCada.ValueChanged
+        Sb_Crear_Resumen()
+    End Sub
+
+    Private Sub Dtp_FinalizaCada_ValueChanged(sender As Object, e As EventArgs) Handles Dtp_FinalizaCada.ValueChanged
+        Sb_Crear_Resumen()
     End Sub
 
 End Class

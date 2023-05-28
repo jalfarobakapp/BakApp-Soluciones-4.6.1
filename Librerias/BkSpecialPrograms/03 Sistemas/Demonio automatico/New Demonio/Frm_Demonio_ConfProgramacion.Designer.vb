@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Demonio_ConfProgramacion
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -31,7 +31,9 @@ Partial Class Frm_Demonio_ConfProgramacion
         Me.Chk_Sabado = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Jueves = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Viernes = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Grupo_Frecuencia = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Dtp_FinalizaCada = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.Dtp_ApartirDeCada = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Cmb_TipoIntervaloCada = New DevComponents.DotNetBar.Controls.ComboBoxEx()
@@ -45,16 +47,17 @@ Partial Class Frm_Demonio_ConfProgramacion
         Me.BtnGrabar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Nombre = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Dtp_ApartirDeCada = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
-        Me.Dtp_FinalizaCada = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.Grupo_Resumen = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_Resumen = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Grupo_Semanal.SuspendLayout()
-        Me.GroupPanel2.SuspendLayout()
+        Me.Grupo_Frecuencia.SuspendLayout()
+        CType(Me.Dtp_FinalizaCada, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Dtp_ApartirDeCada, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Input_IntervaloCada, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_HoraUnaVez, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel3.SuspendLayout()
-        CType(Me.Dtp_ApartirDeCada, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Dtp_FinalizaCada, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Grupo_Resumen.SuspendLayout()
         Me.SuspendLayout()
         '
         'Grupo_Semanal
@@ -180,7 +183,7 @@ Partial Class Frm_Demonio_ConfProgramacion
         Me.Chk_Sabado.Size = New System.Drawing.Size(74, 23)
         Me.Chk_Sabado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Sabado.TabIndex = 38
-        Me.Chk_Sabado.Text = "Sab�do"
+        Me.Chk_Sabado.Text = "Sabádo"
         '
         'Chk_Jueves
         '
@@ -214,53 +217,165 @@ Partial Class Frm_Demonio_ConfProgramacion
         Me.Chk_Viernes.TabIndex = 37
         Me.Chk_Viernes.Text = "Viernes"
         '
-        'GroupPanel2
+        'Grupo_Frecuencia
         '
-        Me.GroupPanel2.BackColor = System.Drawing.Color.White
-        Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel2.Controls.Add(Me.Dtp_FinalizaCada)
-        Me.GroupPanel2.Controls.Add(Me.Dtp_ApartirDeCada)
-        Me.GroupPanel2.Controls.Add(Me.LabelX2)
-        Me.GroupPanel2.Controls.Add(Me.LabelX1)
-        Me.GroupPanel2.Controls.Add(Me.Cmb_TipoIntervaloCada)
-        Me.GroupPanel2.Controls.Add(Me.Input_IntervaloCada)
-        Me.GroupPanel2.Controls.Add(Me.Dtp_HoraUnaVez)
-        Me.GroupPanel2.Controls.Add(Me.Rdb_SucedeCada)
-        Me.GroupPanel2.Controls.Add(Me.Rdb_SucedeUnaVez)
-        Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel2.Location = New System.Drawing.Point(13, 164)
-        Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(493, 115)
-        '
-        '
-        '
-        Me.GroupPanel2.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.GroupPanel2.Style.BackColorGradientAngle = 90
-        Me.GroupPanel2.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.GroupPanel2.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderBottomWidth = 1
-        Me.GroupPanel2.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
-        Me.GroupPanel2.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderLeftWidth = 1
-        Me.GroupPanel2.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderRightWidth = 1
-        Me.GroupPanel2.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderTopWidth = 1
-        Me.GroupPanel2.Style.CornerDiameter = 4
-        Me.GroupPanel2.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.GroupPanel2.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
-        Me.GroupPanel2.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
-        Me.GroupPanel2.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        Me.Grupo_Frecuencia.BackColor = System.Drawing.Color.White
+        Me.Grupo_Frecuencia.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_Frecuencia.Controls.Add(Me.Dtp_FinalizaCada)
+        Me.Grupo_Frecuencia.Controls.Add(Me.Dtp_ApartirDeCada)
+        Me.Grupo_Frecuencia.Controls.Add(Me.LabelX2)
+        Me.Grupo_Frecuencia.Controls.Add(Me.LabelX1)
+        Me.Grupo_Frecuencia.Controls.Add(Me.Cmb_TipoIntervaloCada)
+        Me.Grupo_Frecuencia.Controls.Add(Me.Input_IntervaloCada)
+        Me.Grupo_Frecuencia.Controls.Add(Me.Dtp_HoraUnaVez)
+        Me.Grupo_Frecuencia.Controls.Add(Me.Rdb_SucedeCada)
+        Me.Grupo_Frecuencia.Controls.Add(Me.Rdb_SucedeUnaVez)
+        Me.Grupo_Frecuencia.DisabledBackColor = System.Drawing.Color.Empty
+        Me.Grupo_Frecuencia.Location = New System.Drawing.Point(12, 164)
+        Me.Grupo_Frecuencia.Name = "Grupo_Frecuencia"
+        Me.Grupo_Frecuencia.Size = New System.Drawing.Size(493, 115)
         '
         '
         '
-        Me.GroupPanel2.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Grupo_Frecuencia.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Grupo_Frecuencia.Style.BackColorGradientAngle = 90
+        Me.Grupo_Frecuencia.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Grupo_Frecuencia.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_Frecuencia.Style.BorderBottomWidth = 1
+        Me.Grupo_Frecuencia.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.Grupo_Frecuencia.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_Frecuencia.Style.BorderLeftWidth = 1
+        Me.Grupo_Frecuencia.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_Frecuencia.Style.BorderRightWidth = 1
+        Me.Grupo_Frecuencia.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_Frecuencia.Style.BorderTopWidth = 1
+        Me.Grupo_Frecuencia.Style.CornerDiameter = 4
+        Me.Grupo_Frecuencia.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Grupo_Frecuencia.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.Grupo_Frecuencia.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.Grupo_Frecuencia.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
         '
         '
         '
-        Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.GroupPanel2.TabIndex = 1
-        Me.GroupPanel2.Text = "Frecuencia diaria"
+        Me.Grupo_Frecuencia.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.Grupo_Frecuencia.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Grupo_Frecuencia.TabIndex = 1
+        Me.Grupo_Frecuencia.Text = "Frecuencia diaria"
+        '
+        'Dtp_FinalizaCada
+        '
+        Me.Dtp_FinalizaCada.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_FinalizaCada.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_FinalizaCada.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FinalizaCada.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_FinalizaCada.ButtonDropDown.Visible = True
+        Me.Dtp_FinalizaCada.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_FinalizaCada.Format = DevComponents.Editors.eDateTimePickerFormat.ShortTime
+        Me.Dtp_FinalizaCada.IsPopupCalendarOpen = False
+        Me.Dtp_FinalizaCada.Location = New System.Drawing.Point(401, 63)
+        '
+        '
+        '
+        Me.Dtp_FinalizaCada.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FinalizaCada.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FinalizaCada.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_FinalizaCada.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_FinalizaCada.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_FinalizaCada.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FinalizaCada.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_FinalizaCada.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_FinalizaCada.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_FinalizaCada.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_FinalizaCada.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FinalizaCada.MonthCalendar.DisplayMonth = New Date(2018, 11, 1, 0, 0, 0, 0)
+        Me.Dtp_FinalizaCada.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_FinalizaCada.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_FinalizaCada.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FinalizaCada.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_FinalizaCada.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FinalizaCada.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_FinalizaCada.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FinalizaCada.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_FinalizaCada.MonthCalendar.Visible = False
+        Me.Dtp_FinalizaCada.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_FinalizaCada.Name = "Dtp_FinalizaCada"
+        Me.Dtp_FinalizaCada.Size = New System.Drawing.Size(54, 22)
+        Me.Dtp_FinalizaCada.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_FinalizaCada.TabIndex = 135
+        Me.Dtp_FinalizaCada.TabStop = False
+        Me.Dtp_FinalizaCada.Value = New Date(2018, 11, 5, 23, 59, 0, 0)
+        Me.Dtp_FinalizaCada.WatermarkAlignment = DevComponents.Editors.eTextAlignment.Center
+        '
+        'Dtp_ApartirDeCada
+        '
+        Me.Dtp_ApartirDeCada.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_ApartirDeCada.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_ApartirDeCada.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_ApartirDeCada.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_ApartirDeCada.ButtonDropDown.Visible = True
+        Me.Dtp_ApartirDeCada.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_ApartirDeCada.Format = DevComponents.Editors.eDateTimePickerFormat.ShortTime
+        Me.Dtp_ApartirDeCada.IsPopupCalendarOpen = False
+        Me.Dtp_ApartirDeCada.Location = New System.Drawing.Point(401, 38)
+        '
+        '
+        '
+        Me.Dtp_ApartirDeCada.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_ApartirDeCada.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_ApartirDeCada.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_ApartirDeCada.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_ApartirDeCada.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_ApartirDeCada.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_ApartirDeCada.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_ApartirDeCada.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_ApartirDeCada.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_ApartirDeCada.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_ApartirDeCada.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_ApartirDeCada.MonthCalendar.DisplayMonth = New Date(2018, 11, 1, 0, 0, 0, 0)
+        Me.Dtp_ApartirDeCada.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_ApartirDeCada.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_ApartirDeCada.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_ApartirDeCada.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_ApartirDeCada.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_ApartirDeCada.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_ApartirDeCada.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_ApartirDeCada.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_ApartirDeCada.MonthCalendar.Visible = False
+        Me.Dtp_ApartirDeCada.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_ApartirDeCada.Name = "Dtp_ApartirDeCada"
+        Me.Dtp_ApartirDeCada.Size = New System.Drawing.Size(54, 22)
+        Me.Dtp_ApartirDeCada.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_ApartirDeCada.TabIndex = 134
+        Me.Dtp_ApartirDeCada.TabStop = False
+        Me.Dtp_ApartirDeCada.Value = New Date(2018, 11, 5, 0, 0, 0, 0)
+        Me.Dtp_ApartirDeCada.WatermarkAlignment = DevComponents.Editors.eTextAlignment.Center
         '
         'LabelX2
         '
@@ -450,9 +565,9 @@ Partial Class Frm_Demonio_ConfProgramacion
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnGrabar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 293)
+        Me.Bar1.Location = New System.Drawing.Point(0, 375)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(519, 41)
+        Me.Bar1.Size = New System.Drawing.Size(518, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 117
@@ -523,128 +638,75 @@ Partial Class Frm_Demonio_ConfProgramacion
         Me.Txt_Nombre.Size = New System.Drawing.Size(482, 22)
         Me.Txt_Nombre.TabIndex = 0
         '
-        'Dtp_ApartirDeCada
+        'Grupo_Resumen
         '
-        Me.Dtp_ApartirDeCada.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Dtp_ApartirDeCada.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Dtp_ApartirDeCada.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_ApartirDeCada.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
-        Me.Dtp_ApartirDeCada.ButtonDropDown.Visible = True
-        Me.Dtp_ApartirDeCada.ForeColor = System.Drawing.Color.Black
-        Me.Dtp_ApartirDeCada.Format = DevComponents.Editors.eDateTimePickerFormat.ShortTime
-        Me.Dtp_ApartirDeCada.IsPopupCalendarOpen = False
-        Me.Dtp_ApartirDeCada.Location = New System.Drawing.Point(401, 38)
+        Me.Grupo_Resumen.BackColor = System.Drawing.Color.White
+        Me.Grupo_Resumen.CanvasColor = System.Drawing.SystemColors.Control
+        Me.Grupo_Resumen.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_Resumen.Controls.Add(Me.Txt_Resumen)
+        Me.Grupo_Resumen.DisabledBackColor = System.Drawing.Color.Empty
+        Me.Grupo_Resumen.Location = New System.Drawing.Point(12, 285)
+        Me.Grupo_Resumen.Name = "Grupo_Resumen"
+        Me.Grupo_Resumen.Size = New System.Drawing.Size(493, 84)
         '
         '
         '
-        Me.Dtp_ApartirDeCada.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        Me.Grupo_Resumen.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Grupo_Resumen.Style.BackColorGradientAngle = 90
+        Me.Grupo_Resumen.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Grupo_Resumen.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_Resumen.Style.BorderBottomWidth = 1
+        Me.Grupo_Resumen.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.Grupo_Resumen.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_Resumen.Style.BorderLeftWidth = 1
+        Me.Grupo_Resumen.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_Resumen.Style.BorderRightWidth = 1
+        Me.Grupo_Resumen.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_Resumen.Style.BorderTopWidth = 1
+        Me.Grupo_Resumen.Style.CornerDiameter = 4
+        Me.Grupo_Resumen.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Grupo_Resumen.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.Grupo_Resumen.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.Grupo_Resumen.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
         '
         '
         '
-        Me.Dtp_ApartirDeCada.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_ApartirDeCada.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
-        Me.Dtp_ApartirDeCada.MonthCalendar.ClearButtonVisible = True
+        Me.Grupo_Resumen.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
         '
         '
         '
-        Me.Dtp_ApartirDeCada.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
-        Me.Dtp_ApartirDeCada.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_ApartirDeCada.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
-        Me.Dtp_ApartirDeCada.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.Dtp_ApartirDeCada.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
-        Me.Dtp_ApartirDeCada.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
-        Me.Dtp_ApartirDeCada.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_ApartirDeCada.MonthCalendar.DisplayMonth = New Date(2018, 11, 1, 0, 0, 0, 0)
-        Me.Dtp_ApartirDeCada.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
-        Me.Dtp_ApartirDeCada.MonthCalendar.MarkedDates = New Date(-1) {}
-        Me.Dtp_ApartirDeCada.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        Me.Grupo_Resumen.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Grupo_Resumen.TabIndex = 119
+        Me.Grupo_Resumen.Text = "Resumen, descripción"
+        '
+        'Txt_Resumen
+        '
+        Me.Txt_Resumen.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Dtp_ApartirDeCada.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.Dtp_ApartirDeCada.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_ApartirDeCada.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.Dtp_ApartirDeCada.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_ApartirDeCada.MonthCalendar.TodayButtonVisible = True
-        Me.Dtp_ApartirDeCada.MonthCalendar.Visible = False
-        Me.Dtp_ApartirDeCada.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
-        Me.Dtp_ApartirDeCada.Name = "Dtp_ApartirDeCada"
-        Me.Dtp_ApartirDeCada.Size = New System.Drawing.Size(54, 22)
-        Me.Dtp_ApartirDeCada.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Dtp_ApartirDeCada.TabIndex = 134
-        Me.Dtp_ApartirDeCada.TabStop = False
-        Me.Dtp_ApartirDeCada.Value = New Date(2018, 11, 5, 0, 0, 0, 0)
-        Me.Dtp_ApartirDeCada.WatermarkAlignment = DevComponents.Editors.eTextAlignment.Center
-        '
-        'Dtp_FinalizaCada
-        '
-        Me.Dtp_FinalizaCada.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Dtp_FinalizaCada.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Dtp_FinalizaCada.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_FinalizaCada.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
-        Me.Dtp_FinalizaCada.ButtonDropDown.Visible = True
-        Me.Dtp_FinalizaCada.ForeColor = System.Drawing.Color.Black
-        Me.Dtp_FinalizaCada.Format = DevComponents.Editors.eDateTimePickerFormat.ShortTime
-        Me.Dtp_FinalizaCada.IsPopupCalendarOpen = False
-        Me.Dtp_FinalizaCada.Location = New System.Drawing.Point(401, 63)
-        '
-        '
-        '
-        Me.Dtp_FinalizaCada.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
-        '
-        '
-        '
-        Me.Dtp_FinalizaCada.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_FinalizaCada.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
-        Me.Dtp_FinalizaCada.MonthCalendar.ClearButtonVisible = True
-        '
-        '
-        '
-        Me.Dtp_FinalizaCada.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
-        Me.Dtp_FinalizaCada.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_FinalizaCada.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
-        Me.Dtp_FinalizaCada.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.Dtp_FinalizaCada.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
-        Me.Dtp_FinalizaCada.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
-        Me.Dtp_FinalizaCada.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_FinalizaCada.MonthCalendar.DisplayMonth = New Date(2018, 11, 1, 0, 0, 0, 0)
-        Me.Dtp_FinalizaCada.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
-        Me.Dtp_FinalizaCada.MonthCalendar.MarkedDates = New Date(-1) {}
-        Me.Dtp_FinalizaCada.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
-        '
-        '
-        '
-        Me.Dtp_FinalizaCada.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.Dtp_FinalizaCada.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_FinalizaCada.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.Dtp_FinalizaCada.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_FinalizaCada.MonthCalendar.TodayButtonVisible = True
-        Me.Dtp_FinalizaCada.MonthCalendar.Visible = False
-        Me.Dtp_FinalizaCada.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
-        Me.Dtp_FinalizaCada.Name = "Dtp_FinalizaCada"
-        Me.Dtp_FinalizaCada.Size = New System.Drawing.Size(54, 22)
-        Me.Dtp_FinalizaCada.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Dtp_FinalizaCada.TabIndex = 135
-        Me.Dtp_FinalizaCada.TabStop = False
-        Me.Dtp_FinalizaCada.Value = New Date(2018, 11, 5, 23, 59, 0, 0)
-        Me.Dtp_FinalizaCada.WatermarkAlignment = DevComponents.Editors.eTextAlignment.Center
+        Me.Txt_Resumen.Border.Class = "TextBoxBorder"
+        Me.Txt_Resumen.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Resumen.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Resumen.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Resumen.Location = New System.Drawing.Point(2, 3)
+        Me.Txt_Resumen.Multiline = True
+        Me.Txt_Resumen.Name = "Txt_Resumen"
+        Me.Txt_Resumen.PreventEnterBeep = True
+        Me.Txt_Resumen.Size = New System.Drawing.Size(482, 55)
+        Me.Txt_Resumen.TabIndex = 1
         '
         'Frm_Demonio_ConfProgramacion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(519, 334)
+        Me.ClientSize = New System.Drawing.Size(518, 416)
+        Me.Controls.Add(Me.Grupo_Resumen)
+        Me.Controls.Add(Me.Grupo_Frecuencia)
         Me.Controls.Add(Me.GroupPanel3)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.Rdb_FrecuSemanal)
         Me.Controls.Add(Me.Rdb_FrecuDiaria)
-        Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.Grupo_Semanal)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -656,19 +718,20 @@ Partial Class Frm_Demonio_ConfProgramacion
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MetroForm"
         Me.Grupo_Semanal.ResumeLayout(False)
-        Me.GroupPanel2.ResumeLayout(False)
+        Me.Grupo_Frecuencia.ResumeLayout(False)
+        CType(Me.Dtp_FinalizaCada, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Dtp_ApartirDeCada, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Input_IntervaloCada, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Dtp_HoraUnaVez, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel3.ResumeLayout(False)
-        CType(Me.Dtp_ApartirDeCada, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Dtp_FinalizaCada, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Grupo_Resumen.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents Grupo_Semanal As DevComponents.DotNetBar.Controls.GroupPanel
-    Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents Grupo_Frecuencia As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Rdb_FrecuDiaria As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Rdb_FrecuSemanal As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_Domingo As DevComponents.DotNetBar.Controls.CheckBoxX
@@ -691,4 +754,6 @@ Partial Class Frm_Demonio_ConfProgramacion
     Friend WithEvents Txt_Nombre As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Dtp_FinalizaCada As DevComponents.Editors.DateTimeAdv.DateTimeInput
     Friend WithEvents Dtp_ApartirDeCada As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Friend WithEvents Grupo_Resumen As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents Txt_Resumen As DevComponents.DotNetBar.Controls.TextBoxX
 End Class

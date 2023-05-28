@@ -1,3 +1,0 @@
-Public Class Frm_Demonio_ConfCierreDoc
-
-End Class

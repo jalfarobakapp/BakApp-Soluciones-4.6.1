@@ -80,9 +80,9 @@ Partial Class Frm_Demonio_ConfFacAuto
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_ConfProgramacion})
-        Me.Bar1.Location = New System.Drawing.Point(0, 395)
+        Me.Bar1.Location = New System.Drawing.Point(0, 150)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(653, 41)
+        Me.Bar1.Size = New System.Drawing.Size(473, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 184
@@ -114,7 +114,7 @@ Partial Class Frm_Demonio_ConfFacAuto
         Me.LabelX19.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX19.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX19.ForeColor = System.Drawing.Color.Black
-        Me.LabelX19.Location = New System.Drawing.Point(193, 168)
+        Me.LabelX19.Location = New System.Drawing.Point(6, 34)
         Me.LabelX19.Name = "LabelX19"
         Me.LabelX19.Size = New System.Drawing.Size(227, 19)
         Me.LabelX19.TabIndex = 191
@@ -130,7 +130,7 @@ Partial Class Frm_Demonio_ConfFacAuto
         Me.TableLayoutPanel7.Controls.Add(Me.Rdb_FA_1Semana, 0, 1)
         Me.TableLayoutPanel7.Controls.Add(Me.Rdb_FA_1Dia, 0, 0)
         Me.TableLayoutPanel7.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel7.Location = New System.Drawing.Point(193, 187)
+        Me.TableLayoutPanel7.Location = New System.Drawing.Point(6, 53)
         Me.TableLayoutPanel7.Name = "TableLayoutPanel7"
         Me.TableLayoutPanel7.RowCount = 4
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
@@ -246,7 +246,8 @@ Partial Class Frm_Demonio_ConfFacAuto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(653, 436)
+        Me.ClientSize = New System.Drawing.Size(473, 191)
+        Me.ControlBox = False
         Me.Controls.Add(Me.LabelX19)
         Me.Controls.Add(Me.TableLayoutPanel7)
         Me.Controls.Add(Me.Cmb_Tido)
@@ -256,6 +257,8 @@ Partial Class Frm_Demonio_ConfFacAuto
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Frm_Demonio_ConfFacAuto"
         Me.Text = "MetroForm"
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()

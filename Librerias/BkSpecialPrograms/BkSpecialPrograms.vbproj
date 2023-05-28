@@ -1432,12 +1432,6 @@
     <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfProgramacion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfCierreDoc.Designer.vb">
-      <DependentUpon>Frm_Demonio_ConfCierreDoc.vb</DependentUpon>
-    </Compile>
-    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfCierreDoc.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\Procedimientos\Ds_Config_Picking.vb">
       <DependentUpon>Ds_Config_Picking.xsd</DependentUpon>
     </Compile>
@@ -4570,9 +4564,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfAsisCompra.resx">
       <DependentUpon>Frm_Demonio_ConfAsisCompra.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfCierreDoc.resx">
-      <DependentUpon>Frm_Demonio_ConfCierreDoc.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfFacAuto.resx">
       <DependentUpon>Frm_Demonio_ConfFacAuto.vb</DependentUpon>
