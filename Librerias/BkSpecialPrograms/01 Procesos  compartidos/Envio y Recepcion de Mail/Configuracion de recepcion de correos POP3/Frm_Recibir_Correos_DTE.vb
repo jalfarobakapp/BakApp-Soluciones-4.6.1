@@ -1,8 +1,6 @@
 ﻿Imports System.IO
 Imports System.Net.Sockets
-Imports System.Security.Authentication
 Imports System.Text
-Imports BkSpecialPrograms.Class_FTP
 Imports DevComponents.DotNetBar
 Imports Limilabs.Client
 Imports Limilabs.Client.IMAP
@@ -70,6 +68,8 @@ Public Class Frm_Recibir_Correos_DTE
 
         Sb_Color_Botones_Barra(Bar1)
 
+        Sb_Imap()
+
     End Sub
 
     Private Sub Frm_Recibir_Correos_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
@@ -96,6 +96,9 @@ Public Class Frm_Recibir_Correos_DTE
 
         Txt_CarpetaDestino.ReadOnly = False
         Txt_CarpetaLectura.ReadOnly = False
+
+        Dtp_Fecha_Desde.Value = Primerdiadelmes(FechaDelServidor)
+        Dtp_Fecha_Hasta.Value = FechaDelServidor()
 
     End Sub
 
@@ -576,40 +579,41 @@ Public Class Frm_Recibir_Correos_DTE
 
             Dim _MaxCorreos As Integer
 
+            Dim _Leidos = 0
+
             If _Imap.Connected Then
 
                 If Not String.IsNullOrEmpty(Txt_CarpetaLectura.Text) Then
                     _Imap.Select(Txt_CarpetaLectura.Text) '("INBOX.DTE_PROCESADOS")
                 End If
 
-                Dim uids As List(Of Long) = _Imap.Search(Flag.Unseen)
+                Dim uids As List(Of Long)
 
-                Dim _FechaDesde As Date = Primerdiadelmes(FechaDelServidor())
-                Dim _FechaHasta As Date = FechaDelServidor()
+                Dim _FechaDesde As Date = Dtp_Fecha_Desde.Value
+                Dim _FechaHasta As Date = DateAdd(DateInterval.Day, 1, Dtp_Fecha_Hasta.Value)
 
                 _FechaHasta = New DateTime(_FechaHasta.Year, _FechaHasta.Month, _FechaHasta.Day, 23, 59, 0)
-                _FechaDesde = DateAdd(DateInterval.Day, -2, _FechaHasta)
                 _FechaDesde = New DateTime(_FechaDesde.Year, _FechaDesde.Month, _FechaDesde.Day, 0, 0, 0)
 
-                ' Esto de aca busca por fecha al parecer...
-                uids = _Imap.Search((Expression.[And](Expression.Before(_FechaHasta), Expression.Since(_FechaDesde))))
+                If Rdb_DecargarNoLeidos.Checked Then
+                    uids = _Imap.Search(Flag.Unseen)
+                End If
 
+                If Rdb_DescargarRangoFechas.Checked Then
+                    ' Esto de aca busca por fecha al parecer...
+                    uids = _Imap.Search((Expression.[And](Expression.Before(_FechaHasta), Expression.Since(_FechaDesde))))
+                End If
 
 
                 Progreso_Porc.Maximum = 100
 
-                'If uids.Count > 2000 Then
-                '    _MaxCorreos = 2000
-                'Else
-                '    _MaxCorreos = uids.Count - 1
-                'End If
-
+                Lbl_Total_Correos.Text = FormatNumber(_MaxCorreos, 0)
                 _MaxCorreos = uids.Count - 1
 
                 Progreso_Cont.Maximum = _MaxCorreos - 1
-                Lbl_Total_Correos.Text = FormatNumber(_MaxCorreos, 0)
 
                 For Each uid As String In uids
+
                     System.Windows.Forms.Application.DoEvents()
                     Dim email As IMail
 
@@ -619,15 +623,17 @@ Public Class Frm_Recibir_Correos_DTE
                         email = Nothing
                     End Try
 
+                    _Leidos += 1
+
                     If Not IsNothing(email) Then
 
                         Dim _STRSS As String = "Subject: " & email.Subject & vbCrLf &
-                                               "From: " + JoinMailboxes(email.From) & vbCrLf &
-                                               "To: " + JoinAddresses(email.To) & vbCrLf &
-                                               "Cc: " + JoinAddresses(email.Cc) & vbCrLf &
-                                               "Bcc: " + JoinAddresses(email.Bcc) & vbCrLf &
-                                               "Text: " + email.Text & vbCrLf &
-                                               "HTML: " + email.Html
+                                           "From: " + JoinMailboxes(email.From) & vbCrLf &
+                                           "To: " + JoinAddresses(email.To) & vbCrLf &
+                                           "Cc: " + JoinAddresses(email.Cc) & vbCrLf &
+                                           "Bcc: " + JoinAddresses(email.Bcc) & vbCrLf &
+                                           "Text: " + email.Text & vbCrLf &
+                                           "HTML: " + email.Html
 
                         Dim _Fecha_Email As Date
 
@@ -704,8 +710,8 @@ Public Class Frm_Recibir_Correos_DTE
 
                     If _Cancelar Then
                         If MessageBoxEx.Show(Me, "¿Desea cancelar la acción?", "Cancelar",
-                                             MessageBoxButtons.YesNo,
-                                             MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+                                         MessageBoxButtons.YesNo,
+                                         MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
                             Exit For
                         End If
                     End If
@@ -721,7 +727,8 @@ Public Class Frm_Recibir_Correos_DTE
             _Imap.Close()
 
             If _Mostrar_Mensaje Then
-                MessageBoxEx.Show(Me, "Total archivos descargados: " & Lbl_Xml_Descargados.Text,
+                MessageBoxEx.Show(Me, "Total archivos descargados: " & Lbl_Xml_Descargados.Text & vbCrLf &
+                                  "Mensajes leídos; " & _Leidos,
                               "Descarga completa", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
 
@@ -997,6 +1004,23 @@ Public Class Frm_Recibir_Correos_DTE
 
         If Not IsNothing(_Row_Cuenta) Then
             Txt_Usuario.Text = _Row_Cuenta.Item("Nombre_Usuario")
+        End If
+
+    End Sub
+
+    Private Sub Rdb_IMAP_CheckedChanged(sender As Object, e As EventArgs) Handles Rdb_IMAP.CheckedChanged
+        Sb_Imap()
+    End Sub
+
+    Sub Sb_Imap()
+
+        If Rdb_IMAP.Checked Then
+            Me.Height = 458
+            Chk_Borrar_Todos_Los_Correos.Checked = False
+            Chk_Borrar_Todos_Los_Correos.Enabled = False
+        Else
+            Me.Height = 310
+            Chk_Borrar_Todos_Los_Correos.Enabled = True
         End If
 
     End Sub

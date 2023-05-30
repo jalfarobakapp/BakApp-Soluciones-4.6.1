@@ -413,7 +413,7 @@ Public Class Menu
 
     Private Sub ButtonX1_Click(sender As Object, e As EventArgs) Handles ButtonX1.Click
 
-        Dim Fm As New Frm_Comisiones(1)
+        Dim Fm As New Frm_Cms(1)
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
@@ -785,4 +785,13 @@ Public Class Menu
         Fm.Dispose()
 
     End Sub
+
+    Private Sub ButtonItem3_Click(sender As Object, e As EventArgs) Handles ButtonItem3.Click
+
+        Dim Fm As New Frm_Cms_Fun
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
 End Class
