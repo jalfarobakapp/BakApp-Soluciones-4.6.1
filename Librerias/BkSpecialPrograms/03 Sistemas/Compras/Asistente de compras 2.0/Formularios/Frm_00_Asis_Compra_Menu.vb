@@ -838,7 +838,7 @@ Public Class Frm_00_Asis_Compra_Menu
         If Not (_RowProveedor_Especial Is Nothing) Then
 
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Tmp_Prm_Informes" & vbCrLf &
-                           "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente' And Campo In ('Koen_Especial','Suen_Especial') And Modalidad = '" & Modalidad_Estudio & "'"
+                           "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente' And NombreEquipo = '" & _NombreEquipo & "' And Campo In ('Koen_Especial','Suen_Especial') And Modalidad = '" & Modalidad_Estudio & "'"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
             _Koen_Especial = Trim(_RowProveedor_Especial.Item("KOEN"))

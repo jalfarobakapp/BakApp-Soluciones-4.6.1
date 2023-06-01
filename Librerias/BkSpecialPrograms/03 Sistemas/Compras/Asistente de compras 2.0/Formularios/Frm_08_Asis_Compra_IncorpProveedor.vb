@@ -390,10 +390,7 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
                                         "IDRST In (Select IDMAEDDO From MAEDDO " &
                                         "Where TIDO = 'OCC' And ENDO = '" & _Endo & "' And KOPRCT = '" & _Codigo & "' And FEEMLI > '" & Format(_FechaMinima, "yyyyMMdd") & "')")
 
-        '        Consulta_sql = "Select * From MAEDDO Where IDRST In (Select IDMAEDDO From MAEDDO Where TIDO = 'OCC' And ENDO = '" & _Endo & "' And KOPRCT = '" & _Codigo & "' And FEEMLI > '" & Format(_FechaMinima, "yyyyMMdd") & "')"
-        '       Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        Return CBool(_Reg) 'CBool(_Tbl.Rows.Count)
+        Return CBool(_Reg)
 
     End Function
 

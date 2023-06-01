@@ -777,6 +777,8 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_ListaPreGlobal
             Case "Zw_ListaPreProducto"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_ListaPreProducto
+            Case "Zw_ListaPreHistorico"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_ListaPreHistorico
 
             Case "Zw_ListaLC_Programadas"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_ListaLC_Programadas

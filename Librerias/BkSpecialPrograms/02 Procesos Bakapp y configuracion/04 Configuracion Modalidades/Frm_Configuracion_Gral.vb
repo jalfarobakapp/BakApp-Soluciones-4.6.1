@@ -179,11 +179,6 @@ Public Class Frm_Configuracion_Gral
 
             Chk_BloqCambNomCONCEPTOSEnDocumentos.Checked = .Item("BloqCambNomCONCEPTOSEnDocumentos")
 
-            Txt_RecepXMLComp_CorreoPOP3.Text = .Item("RecepXMLComp_CorreoPOP3")
-            Chk_RecepXMLCmp_ElimiCorreosPOP3.Checked = .Item("RecepXMLCmp_ElimiCorreosPOP3")
-
-            Txt_RecepXMLCmp_MarcaAgua.Text = .Item("RecepXMLCmp_MarcaAgua")
-
             Chk_PermitirMigrarProductosBaseExterna.Checked = .Item("PermitirMigrarProductosBaseExterna")
 
             Txt_Lista_Precios_Proveedores.Tag = .Item("Lista_Precios_Proveedores").ToString.Trim
@@ -211,6 +206,9 @@ Public Class Frm_Configuracion_Gral
             Chk_B4A_DespachoSimple.Checked = .Item("B4A_DespachoSimple")
 
             Chk_GrabarPreciosHistoricos.Checked = .Item("GrabarPreciosHistoricos")
+
+
+
 
         End With
 
@@ -267,8 +265,6 @@ Public Class Frm_Configuracion_Gral
         Txt_Lista_Precios_Proveedores.Enabled = _Modalidad_General
 
         Chk_GrabarPreciosHistoricos.Enabled = _Modalidad_General
-
-        Grupo_RecepXMLComp.Enabled = _Modalidad_General
 
         Txt_Fincred_Id_Token.Enabled = Not _Modalidad_General
 
@@ -452,9 +448,6 @@ Public Class Frm_Configuracion_Gral
                        ",Incorporar_Modo_NVI_y_OCC_Asistente_Compras = " & Convert.ToInt32(Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.Checked) & vbCrLf &
                        ",Actualizar_Lista_De_Costos_Random_Desde_Bakapp = " & Convert.ToInt32(Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.Checked) & vbCrLf &
                        ",BloqCambNomCONCEPTOSEnDocumentos = " & Convert.ToInt32(Chk_BloqCambNomCONCEPTOSEnDocumentos.Checked) & vbCrLf &
-                       ",RecepXMLComp_CorreoPOP3 = '" & Txt_RecepXMLComp_CorreoPOP3.Text.Trim & "'" & vbCrLf &
-                       ",RecepXMLCmp_ElimiCorreosPOP3 = " & Convert.ToInt32(Chk_RecepXMLCmp_ElimiCorreosPOP3.Checked) & vbCrLf &
-                       ",RecepXMLCmp_MarcaAgua = '" & Txt_RecepXMLCmp_MarcaAgua.Text.Trim & "'" & vbCrLf &
                        ",PermitirMigrarProductosBaseExterna = " & Convert.ToInt32(Chk_PermitirMigrarProductosBaseExterna.Checked) & vbCrLf &
                        ",Lista_Precios_Proveedores = '" & Txt_Lista_Precios_Proveedores.Tag & "'" & vbCrLf &
                        ",Fincred_Usar = " & Convert.ToInt32(Chk_Fincred_Usar.Checked) & vbCrLf &
@@ -533,21 +526,6 @@ Public Class Frm_Configuracion_Gral
 
     Private Sub Chk_FacElec_Bakapp_Hefesto_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_FacElec_Bakapp_Hefesto.CheckedChanged
         'Chk_FacElect_Usar_AmbienteCertificacion.Enabled = Chk_FacElec_Bakapp_Hefesto.Checked
-    End Sub
-
-    Private Sub Btn_BuscarSMTPRecepXMLComp_Click_1(sender As Object, e As EventArgs) Handles Btn_BuscarSMTPRecepXMLComp.Click
-
-        Dim _Row_Cuenta As DataRow
-
-        Dim Fm As New Frm_Correos_Conf_SMTP_Lista(Frm_Correos_Conf_SMTP_Lista.Enum_Accion.Seleccionar)
-        Fm.ShowDialog(Me)
-        _Row_Cuenta = Fm.Pro_Row_Cuenta
-        Fm.Dispose()
-
-        If Not IsNothing(_Row_Cuenta) Then
-            Txt_RecepXMLComp_CorreoPOP3.Text = _Row_Cuenta.Item("Nombre_Usuario")
-        End If
-
     End Sub
 
     Private Sub Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.CheckedChanged

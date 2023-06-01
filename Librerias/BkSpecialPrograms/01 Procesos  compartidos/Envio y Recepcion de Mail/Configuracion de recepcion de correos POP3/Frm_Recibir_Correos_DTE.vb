@@ -17,7 +17,7 @@ Public Class Frm_Recibir_Correos_DTE
     Dim Server As TcpClient
     Dim NetStrm As NetworkStream
     Dim RdStrm As StreamReader
-    Dim _Directorio As String = AppPath() & "\Data\" & RutEmpresa & "\DTE"
+    Dim _Directorio As String
     Dim _Ds_Receptor_DTE As New Ds_Receptor_DTE
     Dim _Cancelar As Boolean
 
@@ -42,6 +42,8 @@ Public Class Frm_Recibir_Correos_DTE
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
+        _Directorio = AppPath() & "\Data\" & RutEmpresa & "\DTE"
+
         If Not Directory.Exists(_Directorio) Then
             Directory.CreateDirectory(_Directorio)
         End If
@@ -52,18 +54,17 @@ Public Class Frm_Recibir_Correos_DTE
             System.IO.Directory.CreateDirectory(_Directorio)
         End If
 
-        Dim _RecepXMLComp_CorreoPOP3 As String = _Global_Row_Configuracion_General.Item("RecepXMLComp_CorreoPOP3")
-        Dim _RecepXMLCmp_ElimiCorreosPOP3 As Boolean = _Global_Row_Configuracion_General.Item("RecepXMLCmp_ElimiCorreosPOP3")
+        'Dim _RecepXMLComp_CorreoPOP3 As String = _Global_Row_Configuracion_General.Item("RecepXMLComp_CorreoPOP3")
+        'Dim _RecepXMLCmp_ElimiCorreosPOP3 As Boolean = _Global_Row_Configuracion_General.Item("RecepXMLCmp_ElimiCorreosPOP3")
 
-        '_RecepXMLComp_CorreoPOP3 = "notificacionsii@sirrep.cl"
+        'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos_Cuentas Where Nombre_Usuario = '" & _RecepXMLComp_CorreoPOP3 & "'"
+        '_Row_Cuenta = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos_Cuentas Where Nombre_Usuario = '" & _RecepXMLComp_CorreoPOP3 & "'"
-        _Row_Cuenta = _Sql.Fx_Get_DataRow(Consulta_sql)
+        'Chk_Borrar_Todos_Los_Correos.Checked = _RecepXMLCmp_ElimiCorreosPOP3
 
-        Chk_Borrar_Todos_Los_Correos.Checked = _RecepXMLCmp_ElimiCorreosPOP3
+        Sb_Actualizar_Datos()
 
         Txt_Directorio.ReadOnly = True
-        'Txt_Clave.PasswordChar = "*"
         Btn_Cancelar.Visible = False
 
         Sb_Color_Botones_Barra(Bar1)
@@ -89,7 +90,7 @@ Public Class Frm_Recibir_Correos_DTE
         Btn_BuscarSMTPRecepXMLComp.Visible = Not ActivacionAutomatica
 
         If Not IsNothing(_Row_Cuenta) Then
-            Txt_Usuario.Text = _Row_Cuenta.Item("Nombre_Usuario")
+            Txt_CorreoSMTP.Text = _Row_Cuenta.Item("Nombre_Usuario")
         End If
 
         Txt_Directorio.Text = _Directorio
@@ -592,6 +593,11 @@ Public Class Frm_Recibir_Correos_DTE
                 Dim _FechaDesde As Date = Dtp_Fecha_Desde.Value
                 Dim _FechaHasta As Date = DateAdd(DateInterval.Day, 1, Dtp_Fecha_Hasta.Value)
 
+                If Rdb_DecargarCorreosHoy.Checked Then
+                    _FechaDesde = FechaDelServidor()
+                    _FechaHasta = DateAdd(DateInterval.Day, 1, _FechaDesde)
+                End If
+
                 _FechaHasta = New DateTime(_FechaHasta.Year, _FechaHasta.Month, _FechaHasta.Day, 23, 59, 0)
                 _FechaDesde = New DateTime(_FechaDesde.Year, _FechaDesde.Month, _FechaDesde.Day, 0, 0, 0)
 
@@ -599,7 +605,7 @@ Public Class Frm_Recibir_Correos_DTE
                     uids = _Imap.Search(Flag.Unseen)
                 End If
 
-                If Rdb_DescargarRangoFechas.Checked Then
+                If Rdb_DescargarRangoFechas.Checked Or Rdb_DecargarCorreosHoy.Checked Then
                     ' Esto de aca busca por fecha al parecer...
                     uids = _Imap.Search((Expression.[And](Expression.Before(_FechaHasta), Expression.Since(_FechaDesde))))
                 End If
@@ -982,10 +988,6 @@ Public Class Frm_Recibir_Correos_DTE
         _Cancelar = True
     End Sub
 
-    'Private Sub Frm_Recibir_Correos_DTE_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
-    '    Sb_Parametros_Actualizar()
-    'End Sub
-
     Private Sub Timer_Segundos_Tick(sender As Object, e As EventArgs) Handles Timer_Segundos.Tick
         Timer_Segundos.Stop()
 
@@ -1003,7 +1005,7 @@ Public Class Frm_Recibir_Correos_DTE
         Fm.Dispose()
 
         If Not IsNothing(_Row_Cuenta) Then
-            Txt_Usuario.Text = _Row_Cuenta.Item("Nombre_Usuario")
+            Txt_CorreoSMTP.Text = _Row_Cuenta.Item("Nombre_Usuario")
         End If
 
     End Sub
@@ -1015,13 +1017,60 @@ Public Class Frm_Recibir_Correos_DTE
     Sub Sb_Imap()
 
         If Rdb_IMAP.Checked Then
-            Me.Height = 458
+            Me.Height = 498
             Chk_Borrar_Todos_Los_Correos.Checked = False
             Chk_Borrar_Todos_Los_Correos.Enabled = False
         Else
             Me.Height = 310
             Chk_Borrar_Todos_Los_Correos.Enabled = True
         End If
+
+    End Sub
+
+    Private Sub Btn_ConfGeneral_Click(sender As Object, e As EventArgs) Handles Btn_ConfGeneral.Click
+
+        'Dim _Autorizado As Boolean
+
+        'Dim Fm_Pass As New Frm_Clave_Administrador
+        'Fm_Pass.ShowDialog(Me)
+        '_Autorizado = Fm_Pass.Pro_Autorizado
+        'Fm_Pass.Dispose()
+
+        'If Not _Autorizado Then
+        '    Return
+        'End If
+
+        Dim Fm As New Frm_RecepXML_Cmp_ConfGral
+        Fm.ShowDialog(Me)
+        If Fm.Grabar Then
+            Sb_Actualizar_Datos()
+        End If
+        Fm.Dispose()
+
+    End Sub
+
+    Sub Sb_Actualizar_Datos()
+
+        With _Global_Row_Configuracion_General
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos_Cuentas Where Nombre_Usuario = '" & .Item("RecepXMLComp_CorreoPOP3") & "'"
+            _Row_Cuenta = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Txt_CorreoSMTP.Text = .Item("RecepXML_Cmp_CorreoSMTP")
+            Txt_CorreoSMTP.Text = .Item("RecepXMLComp_CorreoPOP3")
+            Chk_Borrar_Todos_Los_Correos.Checked = .Item("RecepXMLCmp_ElimiCorreosPOP3")
+
+            Rdb_POP3.Checked = .Item("RecepXML_Cmp_POP3")
+            Rdb_IMAP.Checked = .Item("RecepXML_Cmp_IMAP")
+
+            Txt_CarpetaLectura.Text = .Item("RecepXML_Cmp_IMAP_CarpetaLectura")
+            Txt_CarpetaDestino.Text = .Item("RecepXML_Cmp_IMAP_CarpetaDestino")
+
+            Rdb_DescargarRangoFechas.Checked = True
+            Rdb_DecargarCorreosHoy.Checked = .Item("RecepXML_Cmp_IMAP_DescHoy")
+            Rdb_DecargarNoLeidos.Checked = .Item("RecepXML_Cmp_IMAP_DescNoLeidos")
+
+        End With
 
     End Sub
 

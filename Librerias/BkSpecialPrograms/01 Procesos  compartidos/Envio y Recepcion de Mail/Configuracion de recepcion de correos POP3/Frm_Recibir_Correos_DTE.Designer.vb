@@ -27,11 +27,12 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Descargar_Archivos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Cancelar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ConfGeneral = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Btn_BuscarSMTPRecepXMLComp = New DevComponents.DotNetBar.ButtonX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_Usuario = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_CorreoSMTP = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Directorio = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Btn_Buscar_Directorio_Destino = New DevComponents.DotNetBar.ButtonX()
@@ -53,13 +54,14 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_CarpetaDestino = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Rdb_DescargarRangoFechas = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Rdb_DecargarNoLeidos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_DecargarCorreosHoy = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Ly_Fechas = New System.Windows.Forms.TableLayoutPanel()
         Me.Lbl_FS_desde = New DevComponents.DotNetBar.LabelX()
         Me.Dtp_Fecha_Desde = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.Lbl_FS_hasta = New DevComponents.DotNetBar.LabelX()
         Me.Dtp_Fecha_Hasta = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.Rdb_DescargarRangoFechas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_DecargarNoLeidos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -75,8 +77,8 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Descargar_Archivos, Me.Btn_Cancelar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 378)
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Descargar_Archivos, Me.Btn_Cancelar, Me.Btn_ConfGeneral})
+        Me.Bar1.Location = New System.Drawing.Point(0, 418)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(584, 41)
         Me.Bar1.Stretch = True
@@ -101,6 +103,15 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.Btn_Cancelar.Image = CType(resources.GetObject("Btn_Cancelar.Image"), System.Drawing.Image)
         Me.Btn_Cancelar.Name = "Btn_Cancelar"
         Me.Btn_Cancelar.Tooltip = "Cancelar"
+        '
+        'Btn_ConfGeneral
+        '
+        Me.Btn_ConfGeneral.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_ConfGeneral.ForeColor = System.Drawing.Color.Black
+        Me.Btn_ConfGeneral.Image = CType(resources.GetObject("Btn_ConfGeneral.Image"), System.Drawing.Image)
+        Me.Btn_ConfGeneral.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
+        Me.Btn_ConfGeneral.Name = "Btn_ConfGeneral"
+        Me.Btn_ConfGeneral.Text = "Conf. General"
         '
         'Grupo
         '
@@ -148,10 +159,10 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.TableLayoutPanel1.ColumnCount = 3
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.15569!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 77.84431!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 52.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 56.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.Btn_BuscarSMTPRecepXMLComp, 2, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX1, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.Txt_Usuario, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Txt_CorreoSMTP, 1, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX4, 0, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.Txt_Directorio, 1, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.Btn_Buscar_Directorio_Destino, 2, 1)
@@ -171,7 +182,7 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.Btn_BuscarSMTPRecepXMLComp.AccessibleRole = System.Windows.Forms.AccessibleRole.StaticText
         Me.Btn_BuscarSMTPRecepXMLComp.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarSMTPRecepXMLComp.Image = CType(resources.GetObject("Btn_BuscarSMTPRecepXMLComp.Image"), System.Drawing.Image)
-        Me.Btn_BuscarSMTPRecepXMLComp.Location = New System.Drawing.Point(504, 3)
+        Me.Btn_BuscarSMTPRecepXMLComp.Location = New System.Drawing.Point(500, 3)
         Me.Btn_BuscarSMTPRecepXMLComp.Name = "Btn_BuscarSMTPRecepXMLComp"
         Me.Btn_BuscarSMTPRecepXMLComp.Size = New System.Drawing.Size(35, 20)
         Me.Btn_BuscarSMTPRecepXMLComp.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -192,22 +203,22 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.LabelX1.TabIndex = 1
         Me.LabelX1.Text = "Correo"
         '
-        'Txt_Usuario
+        'Txt_CorreoSMTP
         '
-        Me.Txt_Usuario.BackColor = System.Drawing.Color.White
+        Me.Txt_CorreoSMTP.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Txt_Usuario.Border.Class = "TextBoxBorder"
-        Me.Txt_Usuario.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Usuario.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Usuario.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Usuario.Location = New System.Drawing.Point(114, 3)
-        Me.Txt_Usuario.Name = "Txt_Usuario"
-        Me.Txt_Usuario.PreventEnterBeep = True
-        Me.Txt_Usuario.ReadOnly = True
-        Me.Txt_Usuario.Size = New System.Drawing.Size(384, 22)
-        Me.Txt_Usuario.TabIndex = 3
+        Me.Txt_CorreoSMTP.Border.Class = "TextBoxBorder"
+        Me.Txt_CorreoSMTP.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CorreoSMTP.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CorreoSMTP.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CorreoSMTP.Location = New System.Drawing.Point(113, 3)
+        Me.Txt_CorreoSMTP.Name = "Txt_CorreoSMTP"
+        Me.Txt_CorreoSMTP.PreventEnterBeep = True
+        Me.Txt_CorreoSMTP.ReadOnly = True
+        Me.Txt_CorreoSMTP.Size = New System.Drawing.Size(381, 22)
+        Me.Txt_CorreoSMTP.TabIndex = 3
         '
         'LabelX4
         '
@@ -219,7 +230,7 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
         Me.LabelX4.Location = New System.Drawing.Point(3, 29)
         Me.LabelX4.Name = "LabelX4"
-        Me.LabelX4.Size = New System.Drawing.Size(105, 20)
+        Me.LabelX4.Size = New System.Drawing.Size(104, 20)
         Me.LabelX4.TabIndex = 2
         Me.LabelX4.Text = "Directorio destino"
         '
@@ -233,11 +244,11 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.Txt_Directorio.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Directorio.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Directorio.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Directorio.Location = New System.Drawing.Point(114, 29)
+        Me.Txt_Directorio.Location = New System.Drawing.Point(113, 29)
         Me.Txt_Directorio.Name = "Txt_Directorio"
         Me.Txt_Directorio.PreventEnterBeep = True
         Me.Txt_Directorio.ReadOnly = True
-        Me.Txt_Directorio.Size = New System.Drawing.Size(384, 22)
+        Me.Txt_Directorio.Size = New System.Drawing.Size(381, 22)
         Me.Txt_Directorio.TabIndex = 3
         '
         'Btn_Buscar_Directorio_Destino
@@ -246,7 +257,7 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.Btn_Buscar_Directorio_Destino.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Buscar_Directorio_Destino.Enabled = False
         Me.Btn_Buscar_Directorio_Destino.Image = CType(resources.GetObject("Btn_Buscar_Directorio_Destino.Image"), System.Drawing.Image)
-        Me.Btn_Buscar_Directorio_Destino.Location = New System.Drawing.Point(504, 29)
+        Me.Btn_Buscar_Directorio_Destino.Location = New System.Drawing.Point(500, 29)
         Me.Btn_Buscar_Directorio_Destino.Name = "Btn_Buscar_Directorio_Destino"
         Me.Btn_Buscar_Directorio_Destino.Size = New System.Drawing.Size(35, 20)
         Me.Btn_Buscar_Directorio_Destino.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -261,7 +272,7 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.Chk_Borrar_Todos_Los_Correos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Borrar_Todos_Los_Correos.FocusCuesEnabled = False
         Me.Chk_Borrar_Todos_Los_Correos.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Borrar_Todos_Los_Correos.Location = New System.Drawing.Point(114, 55)
+        Me.Chk_Borrar_Todos_Los_Correos.Location = New System.Drawing.Point(113, 55)
         Me.Chk_Borrar_Todos_Los_Correos.Name = "Chk_Borrar_Todos_Los_Correos"
         Me.Chk_Borrar_Todos_Los_Correos.Size = New System.Drawing.Size(287, 22)
         Me.Chk_Borrar_Todos_Los_Correos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -519,8 +530,8 @@ Partial Class Frm_Recibir_Correos_DTE
         'GroupPanel1
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
-        Me.GroupPanel1.CanvasColor = System.Drawing.SystemColors.Control
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Rdb_DecargarCorreosHoy)
         Me.GroupPanel1.Controls.Add(Me.Ly_Fechas)
         Me.GroupPanel1.Controls.Add(Me.Rdb_DescargarRangoFechas)
         Me.GroupPanel1.Controls.Add(Me.Rdb_DecargarNoLeidos)
@@ -531,7 +542,7 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(8, 233)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(564, 134)
+        Me.GroupPanel1.Size = New System.Drawing.Size(564, 171)
         '
         '
         '
@@ -563,42 +574,22 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.GroupPanel1.TabIndex = 40
         Me.GroupPanel1.Text = "Configuración IMAP"
         '
-        'Rdb_DescargarRangoFechas
+        'Rdb_DecargarCorreosHoy
         '
-        Me.Rdb_DescargarRangoFechas.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Rdb_DescargarRangoFechas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_DescargarRangoFechas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_DescargarRangoFechas.FocusCuesEnabled = False
-        Me.Rdb_DescargarRangoFechas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_DescargarRangoFechas.Location = New System.Drawing.Point(3, 86)
-        Me.Rdb_DescargarRangoFechas.Name = "Rdb_DescargarRangoFechas"
-        Me.Rdb_DescargarRangoFechas.Size = New System.Drawing.Size(263, 22)
-        Me.Rdb_DescargarRangoFechas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_DescargarRangoFechas.TabIndex = 41
-        Me.Rdb_DescargarRangoFechas.Text = "Descargar correos dentro de un rango de fecha"
-        '
-        'Rdb_DecargarNoLeidos
-        '
-        Me.Rdb_DecargarNoLeidos.BackColor = System.Drawing.Color.Transparent
+        Me.Rdb_DecargarCorreosHoy.BackColor = System.Drawing.Color.Transparent
         '
         '
         '
-        Me.Rdb_DecargarNoLeidos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_DecargarNoLeidos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_DecargarNoLeidos.Checked = True
-        Me.Rdb_DecargarNoLeidos.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Rdb_DecargarNoLeidos.CheckValue = "Y"
-        Me.Rdb_DecargarNoLeidos.FocusCuesEnabled = False
-        Me.Rdb_DecargarNoLeidos.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_DecargarNoLeidos.Location = New System.Drawing.Point(3, 59)
-        Me.Rdb_DecargarNoLeidos.Name = "Rdb_DecargarNoLeidos"
-        Me.Rdb_DecargarNoLeidos.Size = New System.Drawing.Size(183, 22)
-        Me.Rdb_DecargarNoLeidos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_DecargarNoLeidos.TabIndex = 40
-        Me.Rdb_DecargarNoLeidos.Text = "Descargar correos no leidos"
+        Me.Rdb_DecargarCorreosHoy.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_DecargarCorreosHoy.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_DecargarCorreosHoy.FocusCuesEnabled = False
+        Me.Rdb_DecargarCorreosHoy.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_DecargarCorreosHoy.Location = New System.Drawing.Point(3, 87)
+        Me.Rdb_DecargarCorreosHoy.Name = "Rdb_DecargarCorreosHoy"
+        Me.Rdb_DecargarCorreosHoy.Size = New System.Drawing.Size(263, 22)
+        Me.Rdb_DecargarCorreosHoy.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_DecargarCorreosHoy.TabIndex = 43
+        Me.Rdb_DecargarCorreosHoy.Text = "Descargar los correos recibidos hoy"
         '
         'Ly_Fechas
         '
@@ -613,7 +604,7 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.Ly_Fechas.Controls.Add(Me.Lbl_FS_hasta, 2, 0)
         Me.Ly_Fechas.Controls.Add(Me.Dtp_Fecha_Hasta, 3, 0)
         Me.Ly_Fechas.ForeColor = System.Drawing.Color.Black
-        Me.Ly_Fechas.Location = New System.Drawing.Point(258, 83)
+        Me.Ly_Fechas.Location = New System.Drawing.Point(256, 115)
         Me.Ly_Fechas.Name = "Ly_Fechas"
         Me.Ly_Fechas.RowCount = 1
         Me.Ly_Fechas.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
@@ -748,11 +739,48 @@ Partial Class Frm_Recibir_Correos_DTE
         Me.Dtp_Fecha_Hasta.TabIndex = 8
         Me.Dtp_Fecha_Hasta.Value = New Date(2016, 7, 8, 16, 33, 0, 0)
         '
+        'Rdb_DescargarRangoFechas
+        '
+        Me.Rdb_DescargarRangoFechas.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_DescargarRangoFechas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_DescargarRangoFechas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_DescargarRangoFechas.FocusCuesEnabled = False
+        Me.Rdb_DescargarRangoFechas.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_DescargarRangoFechas.Location = New System.Drawing.Point(1, 115)
+        Me.Rdb_DescargarRangoFechas.Name = "Rdb_DescargarRangoFechas"
+        Me.Rdb_DescargarRangoFechas.Size = New System.Drawing.Size(263, 22)
+        Me.Rdb_DescargarRangoFechas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_DescargarRangoFechas.TabIndex = 41
+        Me.Rdb_DescargarRangoFechas.Text = "Descargar correos dentro de un rango de fecha"
+        '
+        'Rdb_DecargarNoLeidos
+        '
+        Me.Rdb_DecargarNoLeidos.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_DecargarNoLeidos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_DecargarNoLeidos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_DecargarNoLeidos.Checked = True
+        Me.Rdb_DecargarNoLeidos.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_DecargarNoLeidos.CheckValue = "Y"
+        Me.Rdb_DecargarNoLeidos.FocusCuesEnabled = False
+        Me.Rdb_DecargarNoLeidos.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_DecargarNoLeidos.Location = New System.Drawing.Point(3, 59)
+        Me.Rdb_DecargarNoLeidos.Name = "Rdb_DecargarNoLeidos"
+        Me.Rdb_DecargarNoLeidos.Size = New System.Drawing.Size(183, 22)
+        Me.Rdb_DecargarNoLeidos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_DecargarNoLeidos.TabIndex = 40
+        Me.Rdb_DecargarNoLeidos.Text = "Descargar correos no leidos"
+        '
         'Frm_Recibir_Correos_DTE
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(584, 419)
+        Me.ClientSize = New System.Drawing.Size(584, 459)
         Me.Controls.Add(Me.Rdb_IMAP)
         Me.Controls.Add(Me.Rdb_POP3)
         Me.Controls.Add(Me.TableLayoutPanel2)
@@ -788,7 +816,7 @@ Partial Class Frm_Recibir_Correos_DTE
     Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents Btn_Buscar_Directorio_Destino As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Txt_Directorio As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents Txt_Usuario As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Txt_CorreoSMTP As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Progreso_Porc As DevComponents.DotNetBar.Controls.CircularProgress
@@ -819,4 +847,6 @@ Partial Class Frm_Recibir_Correos_DTE
     Friend WithEvents Dtp_Fecha_Desde As DevComponents.Editors.DateTimeAdv.DateTimeInput
     Friend WithEvents Lbl_FS_hasta As DevComponents.DotNetBar.LabelX
     Friend WithEvents Dtp_Fecha_Hasta As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Public WithEvents Rdb_DecargarCorreosHoy As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Btn_ConfGeneral As DevComponents.DotNetBar.ButtonItem
 End Class

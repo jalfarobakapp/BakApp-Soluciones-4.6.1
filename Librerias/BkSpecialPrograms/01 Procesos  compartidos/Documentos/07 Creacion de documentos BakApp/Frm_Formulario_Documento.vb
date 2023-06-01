@@ -13450,24 +13450,10 @@ Public Class Frm_Formulario_Documento
                 Return
             End If
 
-
-            If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Entidades", "MontoMinCompra") Then
-
-                Dim _MontoMinCompra As Double = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "MontoMinCompra",
-                                                                   "CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "'", True)
-
-                If CBool(_MontoMinCompra) Then
-
-                    If _MontoMinCompra > _TblEncabezado.Rows(0).Item("TotalNetoDoc") Then
-                        MessageBoxEx.Show(Me, "Total neto bajo el mínimo de compra para este proveedor." & vbCrLf &
-                                          "Total neto: " & FormatCurrency(_TblEncabezado.Rows(0).Item("TotalNetoDoc"), 0) &
-                                          ", Mínimo de compra: " & FormatCurrency(_MontoMinCompra, 0), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                        Return
-                    End If
-
-                End If
-
+            If Not Fx_Revisar_MinimoCompra() Then
+                Return
             End If
+
 
 
             If String.IsNullOrEmpty(_TblEncabezado.Rows(0).Item("NroDocumento").ToString.Trim) Then
@@ -25214,7 +25200,38 @@ Public Class Frm_Formulario_Documento
 
     End Function
 
+    Function Fx_Revisar_MinimoCompra() As Boolean
 
+        If _Tido = "OCC" Then
+
+            If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Entidades", "MontoMinCompra") Then
+
+                Dim _MontoMinCompra As Double = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "MontoMinCompra",
+                                                                   "CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "'", True)
+
+                If CBool(_MontoMinCompra) Then
+
+                    If _MontoMinCompra > _TblEncabezado.Rows(0).Item("TotalNetoDoc") Then
+
+                        MessageBoxEx.Show(Me, "Total neto bajo el mínimo de compra para este proveedor." & vbCrLf &
+                                          "Total neto: " & FormatCurrency(_TblEncabezado.Rows(0).Item("TotalNetoDoc"), 0) &
+                                          ", Mínimo de compra: " & FormatCurrency(_MontoMinCompra, 0), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+                        If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00085", Nothing, "", "") Then
+                            Return False
+                        End If
+
+                    End If
+
+                End If
+
+            End If
+
+        End If
+
+        Return True
+
+    End Function
 
 
 End Class

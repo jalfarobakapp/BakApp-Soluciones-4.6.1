@@ -36,6 +36,7 @@ Partial Class Factura_Electronica
         Me.Btn_DiablitoDTEMonitor = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.MStb_Barra = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Etiqueta = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_DTE_Respuestas_XML = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -59,9 +60,9 @@ Partial Class Factura_Electronica
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir, Me.Btn_Pruebas, Me.Btn_Configuración})
-        Me.Bar2.Location = New System.Drawing.Point(0, 275)
+        Me.Bar2.Location = New System.Drawing.Point(0, 272)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(442, 41)
+        Me.Bar2.Size = New System.Drawing.Size(636, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 61
@@ -107,7 +108,7 @@ Partial Class Factura_Electronica
         Me.MetroTilePanel1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.MetroTilePanel1.Location = New System.Drawing.Point(3, 43)
         Me.MetroTilePanel1.Name = "MetroTilePanel1"
-        Me.MetroTilePanel1.Size = New System.Drawing.Size(604, 303)
+        Me.MetroTilePanel1.Size = New System.Drawing.Size(750, 420)
         Me.MetroTilePanel1.TabIndex = 60
         Me.MetroTilePanel1.Text = "MetroTilePanel1"
         '
@@ -117,10 +118,10 @@ Partial Class Factura_Electronica
         '
         '
         Me.ConsultaPreciosContenedor.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.ConsultaPreciosContenedor.FixedSize = New System.Drawing.Size(600, 300)
+        Me.ConsultaPreciosContenedor.FixedSize = New System.Drawing.Size(700, 200)
         Me.ConsultaPreciosContenedor.MultiLine = True
         Me.ConsultaPreciosContenedor.Name = "ConsultaPreciosContenedor"
-        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Envios_DTE, Me.Btn_Revision_Compras_SII, Me.Btn_CAF, Me.Btn_DiablitoDTEMonitor})
+        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Envios_DTE, Me.Btn_Revision_Compras_SII, Me.Btn_DTE_Respuestas_XML, Me.Btn_CAF, Me.Btn_DiablitoDTEMonitor})
         '
         '
         '
@@ -248,9 +249,9 @@ Partial Class Factura_Electronica
         Me.MStb_Barra.Font = New System.Drawing.Font("Segoe UI", 10.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MStb_Barra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Etiqueta})
         Me.MStb_Barra.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.MStb_Barra.Location = New System.Drawing.Point(0, 316)
+        Me.MStb_Barra.Location = New System.Drawing.Point(0, 313)
         Me.MStb_Barra.Name = "MStb_Barra"
-        Me.MStb_Barra.Size = New System.Drawing.Size(442, 22)
+        Me.MStb_Barra.Size = New System.Drawing.Size(636, 22)
         Me.MStb_Barra.TabIndex = 64
         Me.MStb_Barra.Text = "MetroStatusBar1"
         '
@@ -258,6 +259,33 @@ Partial Class Factura_Electronica
         '
         Me.Lbl_Etiqueta.Name = "Lbl_Etiqueta"
         Me.Lbl_Etiqueta.Text = "Ambiente de producción"
+        '
+        'Btn_DTE_Respuestas_XML
+        '
+        Me.Btn_DTE_Respuestas_XML.Image = CType(resources.GetObject("Btn_DTE_Respuestas_XML.Image"), System.Drawing.Image)
+        Me.Btn_DTE_Respuestas_XML.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_DTE_Respuestas_XML.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_DTE_Respuestas_XML.Name = "Btn_DTE_Respuestas_XML"
+        Me.Btn_DTE_Respuestas_XML.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_DTE_Respuestas_XML.Text = "<font size=""+4""><b>DTE Acuse recibo</b></font><br/><font size=""-1"">Importar XML d" &
+    "esde correo</font>"
+        Me.Btn_DTE_Respuestas_XML.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Green
+        Me.Btn_DTE_Respuestas_XML.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_DTE_Respuestas_XML.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(93, Byte), Integer))
+        Me.Btn_DTE_Respuestas_XML.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(93, Byte), Integer))
+        Me.Btn_DTE_Respuestas_XML.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_DTE_Respuestas_XML.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(93, Byte), Integer))
+        Me.Btn_DTE_Respuestas_XML.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(93, Byte), Integer))
+        Me.Btn_DTE_Respuestas_XML.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_DTE_Respuestas_XML.TileStyle.PaddingBottom = 4
+        Me.Btn_DTE_Respuestas_XML.TileStyle.PaddingLeft = 4
+        Me.Btn_DTE_Respuestas_XML.TileStyle.PaddingRight = 4
+        Me.Btn_DTE_Respuestas_XML.TileStyle.PaddingTop = 4
+        Me.Btn_DTE_Respuestas_XML.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_DTE_Respuestas_XML.TitleText = "BakApp"
         '
         'Factura_Electronica
         '
@@ -268,7 +296,7 @@ Partial Class Factura_Electronica
         Me.Controls.Add(Me.MStb_Barra)
         Me.Controls.Add(Me.MetroTilePanel1)
         Me.Name = "Factura_Electronica"
-        Me.Size = New System.Drawing.Size(442, 338)
+        Me.Size = New System.Drawing.Size(636, 335)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -287,4 +315,5 @@ Partial Class Factura_Electronica
     Friend WithEvents Lbl_Etiqueta As DevComponents.DotNetBar.LabelItem
     Private WithEvents Btn_DiablitoDTEMonitor As DevComponents.DotNetBar.Metro.MetroTileItem
     Friend WithEvents Btn_Pruebas As DevComponents.DotNetBar.ButtonItem
+    Private WithEvents Btn_DTE_Respuestas_XML As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

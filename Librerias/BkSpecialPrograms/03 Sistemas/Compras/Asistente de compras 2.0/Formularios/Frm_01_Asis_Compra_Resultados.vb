@@ -8226,7 +8226,6 @@ Drop Table #Paso"
 
             Dim _Generar_OCC As New GeneraOccAuto.Generar_Doc_Auto
 
-
             For Each _Fila As DataRow In _Tbl_Proveedores.Rows
 
                 Dim _CodEntidad As String = _Fila.Item("KOEN")
@@ -9817,9 +9816,9 @@ Namespace GeneraOccAuto
                 _Mensaje = Replace(_Mensaje, "&gt;", ">")
                 _Mensaje = Replace(_Mensaje, "&quot;", """")
 
-                _Mensaje = Replace(_Mensaje, "'", "''")
-
                 _Mensaje = Replace(_Mensaje, "<HTML_PROVSINSTOCK>", _Html)
+
+                _Mensaje = Replace(_Mensaje, "'", "''")
 
                 If Not String.IsNullOrEmpty(_Nombre_Correo) Then
 

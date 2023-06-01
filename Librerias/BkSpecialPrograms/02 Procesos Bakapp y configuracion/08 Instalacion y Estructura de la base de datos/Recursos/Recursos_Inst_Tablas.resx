@@ -385,6 +385,9 @@
   <data name="Zw_ListaPreGlobal" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_listapreglobal.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="Zw_ListaPreHistorico" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_ListaPreHistorico.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="Zw_ListaPreProducto" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_listapreproducto.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

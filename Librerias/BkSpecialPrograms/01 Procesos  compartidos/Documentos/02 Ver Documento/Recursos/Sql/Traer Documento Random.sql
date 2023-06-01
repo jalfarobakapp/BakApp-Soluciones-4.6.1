@@ -36,6 +36,7 @@ SELECT
               EDD.EMPRESA,    -- Empresa de la linea
               EDD.SULIDO,     -- Sucursal de la linea
               EDD.BOSULIDO,   -- Bodega de la linea
+              Cast(CASE WHEN TIDO LIKE 'G%' THEN 1 ELSE EDD.LINCONDESP END As Bit) As 'LINCONDESP',  -- Despacho stock
 			  EDD.KOFULIDO,   -- Vendedor
 			  EDD.NULIDO,     -- Nro. linea
               EDD.KOPRCT,     -- Código producto

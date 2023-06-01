@@ -63,6 +63,7 @@ Partial Class Menu
         Me.ButtonX1 = New DevComponents.DotNetBar.ButtonX()
         Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem2 = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem3 = New DevComponents.DotNetBar.ButtonItem()
         Me.Tiempo_Actualizar_BakApp = New System.Windows.Forms.Timer(Me.components)
         Me.Menu_BakApp = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Menu_Extra = New DevComponents.DotNetBar.ButtonItem()
@@ -84,7 +85,6 @@ Partial Class Menu
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         Me.StyleManager1 = New DevComponents.DotNetBar.StyleManager(Me.components)
-        Me.ButtonItem3 = New DevComponents.DotNetBar.ButtonItem()
         MetroTileFrame1 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame2 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame3 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
@@ -796,6 +796,7 @@ Partial Class Menu
         Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ButtonItem1, Me.ButtonItem2, Me.ButtonItem3})
         Me.ButtonX1.TabIndex = 15
         Me.ButtonX1.Text = "Boton de pruebas"
+        Me.ButtonX1.Visible = False
         '
         'ButtonItem1
         '
@@ -808,6 +809,12 @@ Partial Class Menu
         Me.ButtonItem2.GlobalItem = False
         Me.ButtonItem2.Name = "ButtonItem2"
         Me.ButtonItem2.Text = "Diablito"
+        '
+        'ButtonItem3
+        '
+        Me.ButtonItem3.GlobalItem = False
+        Me.ButtonItem3.Name = "ButtonItem3"
+        Me.ButtonItem3.Text = "Funcionarios"
         '
         'Tiempo_Actualizar_BakApp
         '
@@ -1033,12 +1040,6 @@ Partial Class Menu
         '
         Me.StyleManager1.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro
         Me.StyleManager1.MetroColorParameters = New DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(154, Byte), Integer)))
-        '
-        'ButtonItem3
-        '
-        Me.ButtonItem3.GlobalItem = False
-        Me.ButtonItem3.Name = "ButtonItem3"
-        Me.ButtonItem3.Text = "Funcionarios"
         '
         'Menu
         '

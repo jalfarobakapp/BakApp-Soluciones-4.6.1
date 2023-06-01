@@ -1547,7 +1547,7 @@ Public Class Frm_MantLista_Precios_Random
                 Dim _Aceptar As Boolean
 
                 _Aceptar = InputBox_Bk_Fecha(Me, "Ingrese la fecha de vigencia de estos precios" & vbCrLf & vbCrLf &
-                               "Formato fecha: dd-mm-aaaa", "Fecha de vigencia", _Fecha, _FechaMinima, True)
+                               "Formato fecha: dd-mm-aaaa", "Fecha de vigencia", _Fecha, Nothing, True)
 
                 If Not _Aceptar Then
                     Return

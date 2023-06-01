@@ -98,4 +98,17 @@ Public Class Factura_Electronica
         Fm.Dispose()
 
     End Sub
+
+    Private Sub Btn_DTE_Respuestas_XML_Click(sender As Object, e As EventArgs) Handles Btn_DTE_Respuestas_XML.Click
+
+        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Mail0005") Then
+
+            Dim Fm As New Frm_Recibir_Correos_DTE
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
+        End If
+
+    End Sub
+
 End Class
