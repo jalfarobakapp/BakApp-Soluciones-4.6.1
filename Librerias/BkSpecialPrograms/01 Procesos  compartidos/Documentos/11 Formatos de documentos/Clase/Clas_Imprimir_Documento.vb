@@ -1947,6 +1947,7 @@ Public Class Clas_Imprimir_Documento
                                                   _Codigo_De_Barras As Boolean,
                                                   _CodigoQr As Boolean) As Boolean
 
+        Dim _Idmaeedo As Integer
         Dim _Tido As String
         Dim _Nudo As String
 
@@ -1954,9 +1955,11 @@ Public Class Clas_Imprimir_Documento
         Dim _Cant_Caracteres_Texto As Integer
 
         Try
+            _Idmaeedo = _Row_Encabezado.Item("IDMAEEDO")
             _Tido = _Row_Encabezado.Item("TIDO")
             _Nudo = _Row_Encabezado.Item("NUDO")
         Catch ex As Exception
+            _Idmaeedo = 0
             _Tido = String.Empty
             _Nudo = String.Empty
         End Try
@@ -1970,7 +1973,9 @@ Public Class Clas_Imprimir_Documento
 
 #Region "Timbre Electronico"
 
-                If _Global_Row_Configuracion_General.Item("FacElec_Bakapp_Hefesto") Then
+                Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_DTE_Documentos", "Idmaeedo = " & _Idmaeedo)
+
+                If _Global_Row_Configuracion_General.Item("FacElec_Bakapp_Hefesto") Or CBool(_Reg) Then
                     CodBarras = Fx_Timbre_Electronico_Hefesto(_IdDoc, _Tido, _Nudo)
                 Else
                     CodBarras = Fx_Timbre_Electronico(_IdDoc, _Tido, _Nudo)

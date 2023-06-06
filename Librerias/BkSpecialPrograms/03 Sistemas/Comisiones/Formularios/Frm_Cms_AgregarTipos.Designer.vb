@@ -120,6 +120,7 @@ Partial Class Frm_Cms_AgregarTipos
         '
         Me.Chk_TieneSC.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_TieneSC.CheckBoxImageChecked = CType(resources.GetObject("Chk_TieneSC.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_TieneSC.FocusCuesEnabled = False
         Me.Chk_TieneSC.ForeColor = System.Drawing.Color.Black
         Me.Chk_TieneSC.Location = New System.Drawing.Point(3, 184)
         Me.Chk_TieneSC.Name = "Chk_TieneSC"
@@ -136,6 +137,7 @@ Partial Class Frm_Cms_AgregarTipos
         '
         Me.Chk_QuitarEntExcluidas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_QuitarEntExcluidas.CheckBoxImageChecked = CType(resources.GetObject("Chk_QuitarEntExcluidas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_QuitarEntExcluidas.FocusCuesEnabled = False
         Me.Chk_QuitarEntExcluidas.ForeColor = System.Drawing.Color.Black
         Me.Chk_QuitarEntExcluidas.Location = New System.Drawing.Point(3, 210)
         Me.Chk_QuitarEntExcluidas.Name = "Chk_QuitarEntExcluidas"
@@ -193,6 +195,7 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Rdb_VentasXVendedores.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_VentasXVendedores.CheckBoxImageChecked = CType(resources.GetObject("Rdb_VentasXVendedores.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_VentasXVendedores.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_VentasXVendedores.FocusCuesEnabled = False
         Me.Rdb_VentasXVendedores.ForeColor = System.Drawing.Color.Black
         Me.Rdb_VentasXVendedores.Location = New System.Drawing.Point(3, 157)
         Me.Rdb_VentasXVendedores.Name = "Rdb_VentasXVendedores"
@@ -210,6 +213,7 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Rdb_VentasXSucursal.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_VentasXSucursal.CheckBoxImageChecked = CType(resources.GetObject("Rdb_VentasXSucursal.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_VentasXSucursal.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_VentasXSucursal.FocusCuesEnabled = False
         Me.Rdb_VentasXSucursal.ForeColor = System.Drawing.Color.Black
         Me.Rdb_VentasXSucursal.Location = New System.Drawing.Point(3, 128)
         Me.Rdb_VentasXSucursal.Name = "Rdb_VentasXSucursal"
@@ -227,6 +231,7 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Rdb_VentasXEmpresa.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_VentasXEmpresa.CheckBoxImageChecked = CType(resources.GetObject("Rdb_VentasXEmpresa.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_VentasXEmpresa.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_VentasXEmpresa.FocusCuesEnabled = False
         Me.Rdb_VentasXEmpresa.ForeColor = System.Drawing.Color.Black
         Me.Rdb_VentasXEmpresa.Location = New System.Drawing.Point(3, 99)
         Me.Rdb_VentasXEmpresa.Name = "Rdb_VentasXEmpresa"
@@ -247,6 +252,7 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Rdb_MisVentas.Checked = True
         Me.Rdb_MisVentas.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_MisVentas.CheckValue = "Y"
+        Me.Rdb_MisVentas.FocusCuesEnabled = False
         Me.Rdb_MisVentas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_MisVentas.Location = New System.Drawing.Point(3, 73)
         Me.Rdb_MisVentas.Name = "Rdb_MisVentas"
@@ -283,7 +289,6 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Txt_Descripcion.MaxLength = 30
         Me.Txt_Descripcion.Name = "Txt_Descripcion"
         Me.Txt_Descripcion.PreventEnterBeep = True
-        Me.Txt_Descripcion.ReadOnly = True
         Me.Txt_Descripcion.Size = New System.Drawing.Size(392, 22)
         Me.Txt_Descripcion.TabIndex = 1
         '

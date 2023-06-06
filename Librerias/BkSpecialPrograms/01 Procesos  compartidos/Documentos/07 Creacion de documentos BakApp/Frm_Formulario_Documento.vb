@@ -4094,12 +4094,12 @@ Public Class Frm_Formulario_Documento
             If _Existe_En_Lista Then
 
                 Dim Chk_Agrupar As New Command
-                Chk_Agrupar.Checked = False
+                Chk_Agrupar.Checked = True
                 Chk_Agrupar.Name = "Chk_Agrupar"
                 Chk_Agrupar.Text = "Agrupar en el registro existente"
 
                 Dim Chk_INSERTar As New Command
-                Chk_INSERTar.Checked = True
+                Chk_INSERTar.Checked = False
                 Chk_INSERTar.Name = "Chk_INSERTar"
                 Chk_INSERTar.Text = "Insertar el producto en un registro nuevo"
 

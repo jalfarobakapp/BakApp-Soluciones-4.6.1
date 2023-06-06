@@ -341,8 +341,8 @@ Public Class Frm_Recibir_Correos_DTE
     End Sub
 
     Private Sub Btn_Descargar_Archivos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Descargar_Archivos.Click
-        If Rdb_POP3.Checked Then Sb_Descargar_Archivos_POP3(True)
-        If Rdb_IMAP.Checked Then Sb_Descargar_Archivos_IMAP(True)
+        If Rdb_POP3.Checked Then Sb_Descargar_Archivos_POP3(Not ActivacionAutomatica)
+        If Rdb_IMAP.Checked Then Sb_Descargar_Archivos_IMAP(Not ActivacionAutomatica)
     End Sub
 
     Sub Sb_Descargar_Archivos_POP3(_Mostrar_Mensaje As Boolean)
@@ -991,8 +991,8 @@ Public Class Frm_Recibir_Correos_DTE
     Private Sub Timer_Segundos_Tick(sender As Object, e As EventArgs) Handles Timer_Segundos.Tick
         Timer_Segundos.Stop()
 
-        If Rdb_POP3.Checked Then Sb_Descargar_Archivos_POP3(True)
-        If Rdb_IMAP.Checked Then Sb_Descargar_Archivos_IMAP(True)
+        If Rdb_POP3.Checked Then Sb_Descargar_Archivos_POP3(Not ActivacionAutomatica)
+        If Rdb_IMAP.Checked Then Sb_Descargar_Archivos_IMAP(Not ActivacionAutomatica)
 
         Me.Close()
     End Sub

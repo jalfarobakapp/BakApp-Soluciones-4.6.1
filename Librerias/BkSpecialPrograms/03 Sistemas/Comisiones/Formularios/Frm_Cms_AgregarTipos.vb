@@ -39,7 +39,6 @@
         AddHandler Rdb_VentasXSucursal.CheckedChanged, AddressOf Rdb_CheckedChanged
         AddHandler Rdb_VentasXVendedores.CheckedChanged, AddressOf Rdb_CheckedChanged
 
-
     End Sub
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
@@ -50,15 +49,18 @@
             _Sql.Ej_Insertar_Trae_Identity(Consulta_Sql, _Id)
         End If
 
+        Dim _PorcComsion As Double = De_Txt_a_Num_01(Txt_PorcComision.Text, 5)
+        Dim _Vendedores As String = Replace(Txt_Vendedores.Text, "'", "''")
+
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Comisiones_Mis Set" &
-                       " PorcComision = " & De_Num_a_Tx_01(Txt_PorcComision.Text) &
+                       " PorcComision = " & De_Num_a_Tx_01(_PorcComsion, False, 5) &
                        ",MisVentas = " & Convert.ToInt32(Rdb_MisVentas.Checked) &
                        ",VentasXEmpresa = " & Convert.ToInt32(Rdb_VentasXEmpresa.Checked) &
                        ",Empresa = " & ModEmpresa &
                        ",VentasXSucursal = " & Convert.ToInt32(Rdb_VentasXSucursal.Checked) &
                        ",XSucursales = '" & Txt_Sucursales.Text & "'" &
                        ",VentasXVendedores = " & Convert.ToInt32(Rdb_VentasXVendedores.Checked) &
-                       ",XVendedores = '" & Txt_Vendedores.Text & "'" &
+                       ",XVendedores = '" & _Vendedores & "'" &
                        ",TieneSC = " & Convert.ToInt32(Chk_TieneSC.Checked) &
                        ",QuitarEntExcluidas = " & Convert.ToInt32(Chk_QuitarEntExcluidas.Checked) & vbCrLf &
                        "Where Id = " & _Id
@@ -109,8 +111,8 @@
 
         End If
 
-        If _TblSucursales.Rows.Count Then
-            Txt_Vendedores.Text = Generar_Filtro_IN(_TblVendedores, "Chk", "Codigo", False, True)
+        If _TblVendedores.Rows.Count Then
+            Txt_Vendedores.Text = Generar_Filtro_IN(_TblVendedores, "Chk", "Codigo", False, True, "'")
         Else
             Txt_Vendedores.Text = String.Empty
         End If

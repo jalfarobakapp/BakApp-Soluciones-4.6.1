@@ -33,6 +33,7 @@ Public Class Factura_Electronica
             Dim _BackColor_Tido As Color = Color.FromArgb(235, 81, 13)
             MStb_Barra.BackgroundStyle.BackColor = _BackColor_Tido
             Lbl_Etiqueta.Text = "Ambiente de Certificación y Prueba"
+            Btn_Pruebas.Visible = True
         End If
         'Btn_Pruebas.Visible = True
     End Sub

@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports DevComponents.DotNetBar
-Imports DevComponents.DotNetBar.Controls
 
 Public Class Cl_Imprimir_Documentos
 
@@ -267,6 +266,45 @@ Public Class Cl_Imprimir_Documentos
         End If
         ' **********************************************************************
 
+        ' ACA SE FIRMAN LOS DOCUMENTOS ANTES DE ENVIARLOS A IMPRIMIR, ESTO ES PARA VILLAR HERMANOS.
+
+        If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion", "FirmarDTE") Then
+
+            _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion" & vbCrLf &
+                            "Where Tido In ('BLV','FCV','BLV','GTI','GDV') And FirmarDTE = 1 And Revizado_Demonio = 0 And NombreEquipo = '" & _Nombre_Equipo & "' And" & Space(1) &
+                            "Fecha Between Convert(Datetime, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 00:00:00', 102)" & vbCrLf &
+                            "And Convert(Datetime, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 23:59:59', 102) And Picking = 0"
+            Dim _Tbl_Firmar As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+
+            For Each _Fl As DataRow In _Tbl_Firmar.Rows
+
+                Dim _Id As Integer = _Fl.Item("Id")
+                Dim _Idmaeedo As Integer = _Fl.Item("Idmaeedo")
+                Dim _AmbienteCertificacion As Boolean = _Fl.Item("AmbienteCertificacion")
+                Dim _Msg As String = String.Empty
+
+                Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+                _Class_DTE.AmbienteCertificacion = _AmbienteCertificacion
+
+                Dim _Id_Dte As Integer = _Class_DTE.Fx_FirmarXHefesto()
+
+                If CBool(_Id_Dte) Then
+                    _Msg = "Firmado OK."
+                Else
+                    _Msg = "El documento no fue firmado, pero quedo a la espera de ser firmado por el DTEMonitor " &
+                       "Informe de esta situación al administrador del sistema para que revise que el DTEMonitor este corriendo en algún equipo"
+                End If
+                Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion Set " &
+                           "FirmarDTE = 0,Log_Firma = '" & _Msg & "', Id_Dte = " & _Id_Dte & vbCrLf &
+                           "Where Id = " & _Id
+                _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+            Next
+
+        End If
+
+        ' **********************************************************************
+
         '_Nombre_Equipo = "DESKTOP-RNEC0ET"
 
         _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion" & vbCrLf &
@@ -342,6 +380,7 @@ Public Class Cl_Imprimir_Documentos
                     _Vale_TransitorioStr = " And Vale_Transitorio = " & Convert.ToInt32(_Vale_Transitorio)
                 End If
 
+
                 If Not _Solo_Marcar_No_Imprimir Then
 
                     Dim _Log_Error = String.Empty
@@ -390,6 +429,8 @@ Public Class Cl_Imprimir_Documentos
                         _Imprimir_Voucher_TJV = _Imprimir_Voucher_TJV_Est
                         _Imprimir_Voucher_TJV_Original_Transbak = _Imprimir_Voucher_TJV_Original_Transbak_Est
                     End If
+
+
 
                     If Fx_Validar_Impresora(_Impresora) Then
 

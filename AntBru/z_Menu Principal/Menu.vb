@@ -413,9 +413,6 @@ Public Class Menu
 
     Private Sub ButtonX1_Click(sender As Object, e As EventArgs) Handles ButtonX1.Click
 
-        Dim Fm As New Frm_Cms(1)
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
 
         'Dim _IdmaeedoFCV = 1121028
         'Dim _Cl As New Cl_CambiarFechaVencimiento(_IdmaeedoFCV)
@@ -794,4 +791,10 @@ Public Class Menu
 
     End Sub
 
+    Private Sub ButtonItem4_Click(sender As Object, e As EventArgs) Handles ButtonItem4.Click
+
+        Dim Fm As New Frm_Cms(1)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+    End Sub
 End Class

@@ -85,6 +85,9 @@ Partial Class Menu
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         Me.StyleManager1 = New DevComponents.DotNetBar.StyleManager(Me.components)
+        Me.Btn_Monisiones = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem4 = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem5 = New DevComponents.DotNetBar.ButtonItem()
         MetroTileFrame1 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame2 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame3 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
@@ -793,10 +796,9 @@ Partial Class Menu
         Me.ButtonX1.Name = "ButtonX1"
         Me.ButtonX1.Size = New System.Drawing.Size(134, 32)
         Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ButtonItem1, Me.ButtonItem2, Me.ButtonItem3})
+        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5})
         Me.ButtonX1.TabIndex = 15
         Me.ButtonX1.Text = "Boton de pruebas"
-        Me.ButtonX1.Visible = False
         '
         'ButtonItem1
         '
@@ -1041,6 +1043,25 @@ Partial Class Menu
         Me.StyleManager1.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro
         Me.StyleManager1.MetroColorParameters = New DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(154, Byte), Integer)))
         '
+        'Btn_Monisiones
+        '
+        Me.Btn_Monisiones.GlobalItem = False
+        Me.Btn_Monisiones.Name = "Btn_Monisiones"
+        Me.Btn_Monisiones.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ButtonItem3, Me.ButtonItem4})
+        Me.Btn_Monisiones.Text = "Comisiones"
+        '
+        'ButtonItem4
+        '
+        Me.ButtonItem4.Name = "ButtonItem4"
+        Me.ButtonItem4.Text = "Comisiones"
+        '
+        'ButtonItem5
+        '
+        Me.ButtonItem5.GlobalItem = False
+        Me.ButtonItem5.Name = "ButtonItem5"
+        Me.ButtonItem5.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ButtonItem2, Me.ButtonItem1})
+        Me.ButtonItem5.Text = "Nuevo Diablito"
+        '
         'Menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1120,4 +1141,7 @@ Partial Class Menu
     Friend WithEvents ButtonItem1 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents ButtonItem2 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents ButtonItem3 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Monisiones As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ButtonItem4 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ButtonItem5 As DevComponents.DotNetBar.ButtonItem
 End Class

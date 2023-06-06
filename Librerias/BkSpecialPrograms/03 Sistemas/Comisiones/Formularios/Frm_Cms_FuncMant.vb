@@ -27,6 +27,12 @@
 
         Me._Id = _Id
 
+        Consulta_Sql = "Select TABFU.*,Uss.*" & vbCrLf &
+                       "From TABFU" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_Comisiones_Fun Uss On KOFU = Uss.CodFuncionario" & vbCrLf &
+                       "Where Uss.Id = " & _Id
+        _Row_Funcionario = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
     End Sub
 
     Private Sub Frm_Cms_FuncMant_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -93,7 +99,7 @@
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Comisiones_Fun Set" &
                        " AFP = " & Txt_AFP.Text &
                        ",Salud = " & Txt_Salud.Text &
-                       ",Habilidado = 0" & vbCrLf &
+                       ",Habilitado = 0" & vbCrLf &
                        "Where Id = " & _Id
         If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
             Grabar = True

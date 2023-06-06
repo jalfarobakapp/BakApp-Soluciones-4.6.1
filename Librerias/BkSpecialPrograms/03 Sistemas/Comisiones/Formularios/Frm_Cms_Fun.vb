@@ -110,4 +110,21 @@
 
 
     End Sub
+
+    Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Id As Integer = _Fila.Cells("Id").Value
+        Dim _CodFuncionario As String = _Fila.Cells("CodFuncionario").Value
+
+        Dim Fm As New Frm_Cms_FuncMant(_Id)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+        'Dim Fm As New Frm_Cms_AgregarTipos(0, _CodFuncionario)
+        'Fm.ShowDialog(Me)
+        'Fm.Dispose()
+
+    End Sub
+
 End Class
