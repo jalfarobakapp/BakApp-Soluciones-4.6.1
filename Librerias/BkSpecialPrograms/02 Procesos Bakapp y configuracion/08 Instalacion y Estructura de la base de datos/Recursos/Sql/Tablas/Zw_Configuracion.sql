@@ -103,6 +103,7 @@ CREATE TABLE [dbo].[Zw_Configuracion](
 [RecepXML_Cmp_IMAP_CarpetaDestino]                      [varchar](50)   NOT NULL DEFAULT (0), 
 [RecepXML_Cmp_IMAP_DescHoy]                             [bit]           NOT NULL DEFAULT (0), 
 [RecepXML_Cmp_IMAP_DescNoLeidos]                        [bit]           NOT NULL DEFAULT (0), 
+[Patentes_rvm]                                          [bit]           NOT NULL DEFAULT (0), 
 CONSTRAINT [PK_Zw_Configuracion] PRIMARY KEY CLUSTERED 
 (
 	[Modalidad] ASC

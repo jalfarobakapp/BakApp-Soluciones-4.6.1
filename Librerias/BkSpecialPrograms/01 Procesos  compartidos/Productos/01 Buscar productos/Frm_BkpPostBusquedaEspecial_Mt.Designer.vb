@@ -24,9 +24,9 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_BkpPostBusquedaEspecial_Mt))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GrillaBusquedaOtros = New System.Windows.Forms.DataGridView()
         Me.Txtdescripcion = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
@@ -46,9 +46,11 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Highlighter1 = New DevComponents.DotNetBar.Validator.Highlighter()
         Me.TxtCodigo = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Ficha = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Patente = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.CmbCantFilas = New System.Windows.Forms.ComboBox()
-        Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Grupo_BusquedaProducto = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Context_Menu_Solicitud_Compra = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
@@ -95,10 +97,6 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Btn_Dimensiones = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem8 = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem9 = New DevComponents.DotNetBar.ButtonItem()
-        Me.Bar2 = New DevComponents.DotNetBar.Bar()
-        Me.Btn_Subir = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Bajar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Seleccionar = New DevComponents.DotNetBar.ButtonItem()
         Me.Chk_Top20 = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Btn_Maestra_Productos = New DevComponents.DotNetBar.ButtonX()
@@ -107,11 +105,10 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         CType(Me.GrillaBusquedaOtros, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupPanel1.SuspendLayout()
+        Me.Grupo_BusquedaProducto.SuspendLayout()
         CType(Me.Context_Menu_Solicitud_Compra, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel3.SuspendLayout()
         CType(Me.Bar_Menu_Producto, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -146,7 +143,7 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Txtdescripcion.Location = New System.Drawing.Point(3, 3)
         Me.Txtdescripcion.Name = "Txtdescripcion"
         Me.Txtdescripcion.PreventEnterBeep = True
-        Me.Txtdescripcion.Size = New System.Drawing.Size(633, 22)
+        Me.Txtdescripcion.Size = New System.Drawing.Size(543, 22)
         Me.Txtdescripcion.TabIndex = 0
         Me.Txtdescripcion.WatermarkText = "Ingrese parte del código, descripción, familia, etc.. del producto a buscar"
         '
@@ -296,10 +293,10 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.TxtCodigo.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TxtCodigo.ForeColor = System.Drawing.Color.Black
         Me.Highlighter1.SetHighlightOnFocus(Me.TxtCodigo, True)
-        Me.TxtCodigo.Location = New System.Drawing.Point(687, 3)
+        Me.TxtCodigo.Location = New System.Drawing.Point(748, 3)
         Me.TxtCodigo.Name = "TxtCodigo"
         Me.TxtCodigo.PreventEnterBeep = True
-        Me.TxtCodigo.Size = New System.Drawing.Size(155, 22)
+        Me.TxtCodigo.Size = New System.Drawing.Size(94, 22)
         Me.TxtCodigo.TabIndex = 23
         Me.TxtCodigo.WatermarkText = "Ingrese parte del código, descripción, familia, etc.. del producto a buscar"
         '
@@ -325,6 +322,32 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Txt_Ficha.Size = New System.Drawing.Size(774, 33)
         Me.Txt_Ficha.TabIndex = 55
         Me.Txt_Ficha.Text = "Ficha tecnica" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Ficha tecnica"
+        '
+        'Txt_Patente
+        '
+        Me.Txt_Patente.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Patente.Border.Class = "TextBoxBorder"
+        Me.Txt_Patente.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Patente.ButtonCustom.Image = CType(resources.GetObject("Txt_Patente.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Patente.ButtonCustom2.Image = CType(resources.GetObject("Txt_Patente.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Patente.ButtonCustom2.Visible = True
+        Me.Txt_Patente.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Patente.FocusHighlightColor = System.Drawing.Color.PaleTurquoise
+        Me.Txt_Patente.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.Txt_Patente.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Patente, True)
+        Me.Txt_Patente.Location = New System.Drawing.Point(609, 3)
+        Me.Txt_Patente.MaxLength = 6
+        Me.Txt_Patente.Name = "Txt_Patente"
+        Me.Txt_Patente.PreventEnterBeep = True
+        Me.Txt_Patente.Size = New System.Drawing.Size(88, 22)
+        Me.Txt_Patente.TabIndex = 58
+        Me.Txt_Patente.Text = "WWWW99"
+        Me.Txt_Patente.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.Txt_Patente.WatermarkText = "Ingrese parte del código, descripción, familia, etc.. del producto a buscar"
         '
         'LabelX1
         '
@@ -352,47 +375,64 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.CmbCantFilas.TabIndex = 29
         Me.CmbCantFilas.Text = "100"
         '
-        'GroupPanel1
+        'Grupo_BusquedaProducto
         '
-        Me.GroupPanel1.BackColor = System.Drawing.Color.White
-        Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel1.Controls.Add(Me.LabelX2)
-        Me.GroupPanel1.Controls.Add(Me.TxtCodigo)
-        Me.GroupPanel1.Controls.Add(Me.Txtdescripcion)
-        Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(5, 9)
-        Me.GroupPanel1.Margin = New System.Windows.Forms.Padding(0)
-        Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(851, 56)
-        '
-        '
-        '
-        Me.GroupPanel1.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.GroupPanel1.Style.BackColorGradientAngle = 90
-        Me.GroupPanel1.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.GroupPanel1.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel1.Style.BorderBottomWidth = 1
-        Me.GroupPanel1.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
-        Me.GroupPanel1.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel1.Style.BorderLeftWidth = 1
-        Me.GroupPanel1.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel1.Style.BorderRightWidth = 1
-        Me.GroupPanel1.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel1.Style.BorderTopWidth = 1
-        Me.GroupPanel1.Style.CornerDiameter = 4
-        Me.GroupPanel1.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.GroupPanel1.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
-        Me.GroupPanel1.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        Me.Grupo_BusquedaProducto.BackColor = System.Drawing.Color.White
+        Me.Grupo_BusquedaProducto.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_BusquedaProducto.Controls.Add(Me.Txtdescripcion)
+        Me.Grupo_BusquedaProducto.Controls.Add(Me.LabelX4)
+        Me.Grupo_BusquedaProducto.Controls.Add(Me.Txt_Patente)
+        Me.Grupo_BusquedaProducto.Controls.Add(Me.LabelX2)
+        Me.Grupo_BusquedaProducto.Controls.Add(Me.TxtCodigo)
+        Me.Grupo_BusquedaProducto.DisabledBackColor = System.Drawing.Color.Empty
+        Me.Grupo_BusquedaProducto.Location = New System.Drawing.Point(5, 9)
+        Me.Grupo_BusquedaProducto.Margin = New System.Windows.Forms.Padding(0)
+        Me.Grupo_BusquedaProducto.Name = "Grupo_BusquedaProducto"
+        Me.Grupo_BusquedaProducto.Size = New System.Drawing.Size(851, 56)
         '
         '
         '
-        Me.GroupPanel1.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Grupo_BusquedaProducto.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Grupo_BusquedaProducto.Style.BackColorGradientAngle = 90
+        Me.Grupo_BusquedaProducto.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Grupo_BusquedaProducto.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_BusquedaProducto.Style.BorderBottomWidth = 1
+        Me.Grupo_BusquedaProducto.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.Grupo_BusquedaProducto.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_BusquedaProducto.Style.BorderLeftWidth = 1
+        Me.Grupo_BusquedaProducto.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_BusquedaProducto.Style.BorderRightWidth = 1
+        Me.Grupo_BusquedaProducto.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_BusquedaProducto.Style.BorderTopWidth = 1
+        Me.Grupo_BusquedaProducto.Style.CornerDiameter = 4
+        Me.Grupo_BusquedaProducto.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Grupo_BusquedaProducto.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.Grupo_BusquedaProducto.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
         '
         '
         '
-        Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.GroupPanel1.TabIndex = 0
-        Me.GroupPanel1.Text = "Cadena de busqueda del producto"
+        Me.Grupo_BusquedaProducto.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.Grupo_BusquedaProducto.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Grupo_BusquedaProducto.TabIndex = 0
+        Me.Grupo_BusquedaProducto.Text = "Cadena de busqueda del producto"
+        '
+        'LabelX4
+        '
+        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.ForeColor = System.Drawing.Color.Black
+        Me.LabelX4.Location = New System.Drawing.Point(552, 3)
+        Me.LabelX4.Name = "LabelX4"
+        Me.LabelX4.Size = New System.Drawing.Size(51, 23)
+        Me.LabelX4.TabIndex = 57
+        Me.LabelX4.Text = "PATENTE"
+        Me.LabelX4.TextAlignment = System.Drawing.StringAlignment.Far
         '
         'LabelX2
         '
@@ -402,11 +442,12 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(642, 2)
+        Me.LabelX2.Location = New System.Drawing.Point(703, 2)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(39, 23)
         Me.LabelX2.TabIndex = 24
         Me.LabelX2.Text = "Código"
+        Me.LabelX2.TextAlignment = System.Drawing.StringAlignment.Far
         '
         'Context_Menu_Solicitud_Compra
         '
@@ -657,7 +698,7 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Bar_Menu_Producto.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_Pr_Editar_Producto, Me.Btn_Mnu_Pr_Eliminar_Producto, Me.Btn_Mnu_Pr_Estadistica_Producto, Me.Btn_Mnu_Pr_Codigo_De_Reemplazo, Me.Btn_Productos_Asociados, Me.Btn_Mnu_Pr_Cambiar_Codigo_Producto, Me.Btn_Mnu_Pr_Ver_Clasificacion_Producto, Me.Btn_Mnu_Pr_Mantencion_Clasificacion_Producto, Me.Btn_Mnu_Pr_Imagen_Producto, Me.Btn_Mnu_Pr_Codigo_Alternativo, Me.Btn_Mnu_Pr_Kardex_Inventario, Me.Btn_Mnu_Pr_Ubicacion_Producto, Me.Btn_Ocultar, Me.Btn_Ver_Archivos_Adjuntos, Me.Btn_Dimensiones})
         Me.Bar_Menu_Producto.Location = New System.Drawing.Point(11, 68)
         Me.Bar_Menu_Producto.Name = "Bar_Menu_Producto"
-        Me.Bar_Menu_Producto.Size = New System.Drawing.Size(678, 41)
+        Me.Bar_Menu_Producto.Size = New System.Drawing.Size(662, 41)
         Me.Bar_Menu_Producto.Stretch = True
         Me.Bar_Menu_Producto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar_Menu_Producto.TabIndex = 34
@@ -797,45 +838,6 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.ButtonItem9.Name = "ButtonItem9"
         Me.ButtonItem9.Text = "DESOCULTAR"
         '
-        'Bar2
-        '
-        Me.Bar2.AntiAlias = True
-        Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Subir, Me.Btn_Bajar, Me.Btn_Seleccionar})
-        Me.Bar2.Location = New System.Drawing.Point(722, 68)
-        Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(134, 41)
-        Me.Bar2.Stretch = True
-        Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Bar2.TabIndex = 35
-        Me.Bar2.TabStop = False
-        Me.Bar2.Text = "Bar2"
-        '
-        'Btn_Subir
-        '
-        Me.Btn_Subir.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Subir.Image = CType(resources.GetObject("Btn_Subir.Image"), System.Drawing.Image)
-        Me.Btn_Subir.ImageAlt = CType(resources.GetObject("Btn_Subir.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Subir.Name = "Btn_Subir"
-        Me.Btn_Subir.Visible = False
-        '
-        'Btn_Bajar
-        '
-        Me.Btn_Bajar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Bajar.Image = CType(resources.GetObject("Btn_Bajar.Image"), System.Drawing.Image)
-        Me.Btn_Bajar.ImageAlt = CType(resources.GetObject("Btn_Bajar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Bajar.Name = "Btn_Bajar"
-        Me.Btn_Bajar.Visible = False
-        '
-        'Btn_Seleccionar
-        '
-        Me.Btn_Seleccionar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Seleccionar.Enabled = False
-        Me.Btn_Seleccionar.Image = CType(resources.GetObject("Btn_Seleccionar.Image"), System.Drawing.Image)
-        Me.Btn_Seleccionar.Name = "Btn_Seleccionar"
-        Me.Btn_Seleccionar.Tooltip = "Seleccionar producto"
-        Me.Btn_Seleccionar.Visible = False
-        '
         'Chk_Top20
         '
         Me.Chk_Top20.BackColor = System.Drawing.Color.White
@@ -848,7 +850,7 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Chk_Top20.ForeColor = System.Drawing.Color.Black
         Me.Chk_Top20.Location = New System.Drawing.Point(383, 115)
         Me.Chk_Top20.Name = "Chk_Top20"
-        Me.Chk_Top20.Size = New System.Drawing.Size(410, 25)
+        Me.Chk_Top20.Size = New System.Drawing.Size(359, 25)
         Me.Chk_Top20.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Top20.TabIndex = 51
         Me.Chk_Top20.Text = "Al buscar productos presentar esta vista de datos como predefinida."
@@ -859,35 +861,35 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle8
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(5, 148)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
         Me.Grilla.Size = New System.Drawing.Size(851, 366)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 52
@@ -949,9 +951,8 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Controls.Add(Me.Chk_Top20)
         Me.Controls.Add(Me.Bar_Menu_Producto)
         Me.Controls.Add(Me.GroupPanel3)
-        Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.LabelX1)
-        Me.Controls.Add(Me.GroupPanel1)
+        Me.Controls.Add(Me.Grupo_BusquedaProducto)
         Me.Controls.Add(Me.CmbCantFilas)
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
@@ -967,11 +968,10 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Text = "Productos del sistema."
         CType(Me.GrillaBusquedaOtros, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupPanel1.ResumeLayout(False)
+        Me.Grupo_BusquedaProducto.ResumeLayout(False)
         CType(Me.Context_Menu_Solicitud_Compra, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel3.ResumeLayout(False)
         CType(Me.Bar_Menu_Producto, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -989,7 +989,7 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Public WithEvents CmbCantFilas As System.Windows.Forms.ComboBox
     Friend WithEvents GroupPanel3 As DevComponents.DotNetBar.Controls.GroupPanel
-    Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents Grupo_BusquedaProducto As DevComponents.DotNetBar.Controls.GroupPanel
     Public WithEvents TxtCodigo As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents TouchKeyboard1 As DevComponents.DotNetBar.Keyboard.TouchKeyboard
@@ -1009,10 +1009,6 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
     Public WithEvents Btn_Mnu_Pr_Cambiar_Codigo_Producto As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents ButtonItem8 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents ButtonItem9 As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
-    Public WithEvents Btn_Subir As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Bajar As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Seleccionar As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Ver_Archivos_Adjuntos As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Context_Menu_Solicitud_Compra As DevComponents.DotNetBar.ContextMenuBar
     Public WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
@@ -1054,4 +1050,6 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Btn_Migrar_Producto As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents ButtonItem1 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
+    Public WithEvents Txt_Patente As DevComponents.DotNetBar.Controls.TextBoxX
 End Class

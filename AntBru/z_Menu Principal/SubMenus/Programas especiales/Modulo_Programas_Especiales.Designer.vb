@@ -43,6 +43,7 @@ Partial Class Modulo_Programas_Especiales
         Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnCambiarDeUsuario = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Btn_Patentes_rvm = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -74,7 +75,7 @@ Partial Class Modulo_Programas_Especiales
         Me.MnuEspecialOtros.FixedSize = New System.Drawing.Size(1000, 550)
         Me.MnuEspecialOtros.MultiLine = True
         Me.MnuEspecialOtros.Name = "MnuEspecialOtros"
-        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Demonio, Me.BtnSQL2Excel, Me.BtnDTE2PDF, Me.BtnCorreos_SMTP, Me.Btn_CRV_Control_Ruta_Vehiculos, Me.Btn_Etiquetas_De_Barra, Me.BtnCrearFormatos, Me.Btn_DTE_Respuestas_XML, Me.Btn_Precios_PrestaShop, Me.Btn_Huella, Me.Btn_Pocket_PC, Me.Btn_Archivador, Me.Btn_Cierre_Reactivacion_Documentos, Me.Btn_Habilitar_Nvv_Para_Facturar})
+        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Demonio, Me.BtnSQL2Excel, Me.BtnDTE2PDF, Me.BtnCorreos_SMTP, Me.Btn_CRV_Control_Ruta_Vehiculos, Me.Btn_Etiquetas_De_Barra, Me.BtnCrearFormatos, Me.Btn_DTE_Respuestas_XML, Me.Btn_Precios_PrestaShop, Me.Btn_Huella, Me.Btn_Pocket_PC, Me.Btn_Archivador, Me.Btn_Cierre_Reactivacion_Documentos, Me.Btn_Habilitar_Nvv_Para_Facturar, Me.Btn_Patentes_rvm})
         '
         '
         '
@@ -505,6 +506,33 @@ Partial Class Modulo_Programas_Especiales
         Me.LabelX1.TabIndex = 40
         Me.LabelX1.Text = "<font color=""#349FCE""><b>PROGRAMAS ESPECIALES</b></font>"
         '
+        'Btn_Patentes_rvm
+        '
+        Me.Btn_Patentes_rvm.Image = CType(resources.GetObject("Btn_Patentes_rvm.Image"), System.Drawing.Image)
+        Me.Btn_Patentes_rvm.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_Patentes_rvm.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Patentes_rvm.Name = "Btn_Patentes_rvm"
+        Me.Btn_Patentes_rvm.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Patentes_rvm.Text = "<font size=""+4""><b>PATENTES RVM</b></font><br/><font size=""-1"">Mantención de regi" &
+    "stro de patentes en registro de vehiculos motorizados</font>"
+        Me.Btn_Patentes_rvm.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
+        Me.Btn_Patentes_rvm.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_Patentes_rvm.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(38, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(104, Byte), Integer))
+        Me.Btn_Patentes_rvm.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(38, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(104, Byte), Integer))
+        Me.Btn_Patentes_rvm.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_Patentes_rvm.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(38, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(104, Byte), Integer))
+        Me.Btn_Patentes_rvm.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(38, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(104, Byte), Integer))
+        Me.Btn_Patentes_rvm.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Patentes_rvm.TileStyle.PaddingBottom = 4
+        Me.Btn_Patentes_rvm.TileStyle.PaddingLeft = 4
+        Me.Btn_Patentes_rvm.TileStyle.PaddingRight = 4
+        Me.Btn_Patentes_rvm.TileStyle.PaddingTop = 4
+        Me.Btn_Patentes_rvm.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Patentes_rvm.TitleText = "BakApp"
+        '
         'Modulo_Programas_Especiales
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -538,4 +566,5 @@ Partial Class Modulo_Programas_Especiales
     Private WithEvents Btn_Archivador As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Cierre_Reactivacion_Documentos As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Habilitar_Nvv_Para_Facturar As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_Patentes_rvm As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

@@ -17,9 +17,9 @@ CREATE TABLE [dbo].[Zw_TablaDeCaracterizaciones](
 	[Fecha]				[datetime]      NULL,
 	[Equiv_Kotabla]		[varchar](10)   NOT NULL DEFAULT (''),
 	[Equiv_Kocarac]		[varchar](20)   NOT NULL DEFAULT (''),
-	[Empresa]   		[varchar](2)    NOT NULL DEFAULT (''),
-	[Sucursal]	    	[varchar](3)    NOT NULL DEFAULT (''),
-	[Bodega]    		[varchar](3)    NOT NULL DEFAULT (''),
+	[Emp]          		[varchar](2)    NOT NULL DEFAULT (''),
+	[Suc]	        	[varchar](3)    NOT NULL DEFAULT (''),
+	[Bod]    	    	[varchar](3)    NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_TablaDeCaracterizaciones] PRIMARY KEY CLUSTERED 
 (
 	[Tabla] ASC,

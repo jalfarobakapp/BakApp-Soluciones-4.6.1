@@ -146,6 +146,7 @@ Public Class Frm_Formulario_Documento
     Dim _Facturacion_Automatica As Boolean
 
     Dim _DecimalesGl As Integer
+    Dim _Patente_rvm As String
 
 #Region "PROPIEDADES"
 
@@ -1066,6 +1067,7 @@ Public Class Frm_Formulario_Documento
         _Nombre_Archivo_Txt_Especial_Saime = String.Empty
         _Desde_Prestahop = False
         _ListaCodQRUnicosLeidos = New List(Of String)
+        _Patente_rvm = String.Empty
 
         Lbl_NroDecimales.Text = FormatNumber(0, _DecimalesGl)
 
@@ -6953,6 +6955,15 @@ Public Class Frm_Formulario_Documento
 
             If IsNothing(_RowProducto) Then
 
+                If _Global_Row_Configuracion_General.Item("Patentes_rvm") Then
+                    If Not String.IsNullOrEmpty(_Patente_rvm) Then
+                        If MessageBoxEx.Show(Me, "¿Desea continuar buscando productos para la patente " & _Patente_rvm & "?",
+                                         "Buscar por patente", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
+                            _Patente_rvm = String.Empty
+                        End If
+                    End If
+                End If
+
                 Dim _Tipo_Lista As String
                 Dim _Actualizar_Precios As Boolean
 
@@ -6987,6 +6998,7 @@ Public Class Frm_Formulario_Documento
                 Fm.Pro_Actualizar_Precios = _Actualizar_Precios
                 Fm.Pro_Mostrar_Clasificaciones = True
                 Fm.Pro_Mostrar_Imagenes = True
+                Fm.Patente_rvm = _Patente_rvm
 
                 If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Compra Then
                     Fm.BtnCrearProductos.Visible = True
@@ -7017,6 +7029,7 @@ Public Class Frm_Formulario_Documento
                 Fm.Usar_Bodegas_NVI = (_Tido = "NVI")
 
                 Fm.ShowDialog(Me)
+                _Patente_rvm = Fm.Patente_rvm
 
                 If Fm.Seleccion_Multiple Then
 

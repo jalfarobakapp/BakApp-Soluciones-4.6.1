@@ -207,7 +207,7 @@ Public Class Frm_Configuracion_Gral
 
             Chk_GrabarPreciosHistoricos.Checked = .Item("GrabarPreciosHistoricos")
 
-
+            Chk_Patentes_rvm.Checked = .Item("Patentes_rvm")
 
 
         End With
@@ -275,6 +275,8 @@ Public Class Frm_Configuracion_Gral
         Chk_AlertaRevNVVConVtasMismoDia.Enabled = Not _Modalidad_General
         Chk_LasNVVDebenSerHabilitadasParaFacturar.Enabled = _Modalidad_General
         Chk_B4A_DespachoSimple.Enabled = Not _Modalidad_General
+
+        Chk_Patentes_rvm.Enabled = _Modalidad_General
 
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
@@ -457,6 +459,7 @@ Public Class Frm_Configuracion_Gral
                        ",LasNVVDebenSerHabilitadasParaFacturar = " & Convert.ToInt32(Chk_LasNVVDebenSerHabilitadasParaFacturar.Checked) & vbCrLf &
                        ",B4A_DespachoSimple = " & Convert.ToInt32(Chk_B4A_DespachoSimple.Checked) & vbCrLf &
                        ",GrabarPreciosHistoricos = " & Convert.ToInt32(Chk_GrabarPreciosHistoricos.Checked) & vbCrLf &
+                       ",Patentes_rvm = " & Convert.ToInt32(Chk_Patentes_rvm.Checked) & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then

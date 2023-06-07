@@ -1735,6 +1735,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Recursos_Iconos_Notificacion.resx</DependentUpon>
     </Compile>
+    <Compile Include="03 Sistemas\Patentes rvm\Frm_Patentes.Designer.vb">
+      <DependentUpon>Frm_Patentes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Patentes rvm\Frm_Patentes.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Patentes rvm\Frm_Patentes_rvm.Designer.vb">
+      <DependentUpon>Frm_Patentes_rvm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Patentes rvm\Frm_Patentes_rvm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Pockey-Pc\Frm_Pocket_Dispositivos.Designer.vb">
       <DependentUpon>Frm_Pocket_Dispositivos.vb</DependentUpon>
     </Compile>
@@ -4749,6 +4761,12 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Recursos_Iconos_Notificacion.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Patentes rvm\Frm_Patentes.resx">
+      <DependentUpon>Frm_Patentes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Patentes rvm\Frm_Patentes_rvm.resx">
+      <DependentUpon>Frm_Patentes_rvm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Pockey-Pc\Frm_Pocket_Dispositivos.resx">
       <DependentUpon>Frm_Pocket_Dispositivos.vb</DependentUpon>

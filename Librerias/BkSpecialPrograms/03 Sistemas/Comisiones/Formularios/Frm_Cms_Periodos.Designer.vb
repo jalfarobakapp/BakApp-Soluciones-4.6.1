@@ -171,7 +171,7 @@ Partial Class Frm_Cms_Periodos
         Me.BtnExportarExcel.Name = "BtnExportarExcel"
         Me.BtnExportarExcel.Tooltip = "Exportar a excel (Vista actual)"
         '
-        'Frm_Comisiones_Periodos
+        'Frm_Cms_Periodos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -180,7 +180,7 @@ Partial Class Frm_Cms_Periodos
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Name = "Frm_Comisiones_Periodos"
+        Me.Name = "Frm_Cms_Periodos"
         Me.Text = "MetroForm"
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Grilla_Lineas, System.ComponentModel.ISupportInitialize).EndInit()
