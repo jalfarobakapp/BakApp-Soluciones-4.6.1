@@ -74,10 +74,10 @@ Public Class Menu
 
         'ButtonX1.Visible = True
 
-        'If _Global_Row_Configuracion_Estacion.Item("FacElect_Usar_AmbienteCertificacion") Then
-        '    Dim _BackColor_Tido As Color = Color.FromArgb(235, 81, 13)
-        '    Metro_Bar_Color.BackgroundStyle.BackColor = _BackColor_Tido
-        'End If
+        If _Global_Row_Configuracion_Estacion.Item("FacElect_Usar_AmbienteCertificacion") Then
+            Dim _BackColor_Tido As Color = Color.FromArgb(235, 81, 13)
+            Metro_Bar_Color.BackgroundStyle.BackColor = _BackColor_Tido
+        End If
 
         Dim DatosConex As New ConexionBK
 
