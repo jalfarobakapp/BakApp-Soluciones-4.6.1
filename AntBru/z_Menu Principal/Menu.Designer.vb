@@ -61,6 +61,12 @@ Partial Class Menu
         Me.Btn_Cerrar_Sistema = New DevComponents.DotNetBar.ButtonItem()
         Me.Lbl_Info_Bakapp = New DevComponents.DotNetBar.LabelX()
         Me.ButtonX1 = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_Monisiones = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem3 = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem4 = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem5 = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem2 = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
         Me.Tiempo_Actualizar_BakApp = New System.Windows.Forms.Timer(Me.components)
         Me.Menu_BakApp = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Menu_Extra = New DevComponents.DotNetBar.ButtonItem()
@@ -790,9 +796,47 @@ Partial Class Menu
         Me.ButtonX1.Name = "ButtonX1"
         Me.ButtonX1.Size = New System.Drawing.Size(134, 32)
         Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5})
         Me.ButtonX1.TabIndex = 15
         Me.ButtonX1.Text = "Boton de pruebas"
         Me.ButtonX1.Visible = False
+        '
+        'Btn_Monisiones
+        '
+        Me.Btn_Monisiones.GlobalItem = False
+        Me.Btn_Monisiones.Name = "Btn_Monisiones"
+        Me.Btn_Monisiones.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ButtonItem3, Me.ButtonItem4})
+        Me.Btn_Monisiones.Text = "Comisiones"
+        '
+        'ButtonItem3
+        '
+        Me.ButtonItem3.GlobalItem = False
+        Me.ButtonItem3.Name = "ButtonItem3"
+        Me.ButtonItem3.Text = "Funcionarios"
+        '
+        'ButtonItem4
+        '
+        Me.ButtonItem4.Name = "ButtonItem4"
+        Me.ButtonItem4.Text = "Comisiones"
+        '
+        'ButtonItem5
+        '
+        Me.ButtonItem5.GlobalItem = False
+        Me.ButtonItem5.Name = "ButtonItem5"
+        Me.ButtonItem5.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ButtonItem2, Me.ButtonItem1})
+        Me.ButtonItem5.Text = "Nuevo Diablito"
+        '
+        'ButtonItem2
+        '
+        Me.ButtonItem2.GlobalItem = False
+        Me.ButtonItem2.Name = "ButtonItem2"
+        Me.ButtonItem2.Text = "Diablito"
+        '
+        'ButtonItem1
+        '
+        Me.ButtonItem1.GlobalItem = False
+        Me.ButtonItem1.Name = "ButtonItem1"
+        Me.ButtonItem1.Text = "Configuración diablito"
         '
         'Tiempo_Actualizar_BakApp
         '
@@ -1095,4 +1139,10 @@ Partial Class Menu
     Private WithEvents Btn_Facturacion_Electronica As DevComponents.DotNetBar.Metro.MetroTileItem
     Friend WithEvents Btn_CambioDeEmpresa As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Lbl_Estatus As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents ButtonItem1 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ButtonItem2 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ButtonItem3 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Monisiones As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ButtonItem4 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ButtonItem5 As DevComponents.DotNetBar.ButtonItem
 End Class

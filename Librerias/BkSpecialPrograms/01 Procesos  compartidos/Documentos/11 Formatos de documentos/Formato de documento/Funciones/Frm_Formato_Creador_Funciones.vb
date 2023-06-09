@@ -162,9 +162,9 @@ Public Class Frm_Formato_Creador_Funciones
 
                 If _Tido.Contains("GRP") Or _Tido.Contains("GDP") Then
 
-                    Consulta_sql = "Declare @Id_Ot Int 
+                    Consulta_sql = "Declare @Id_Ot_Padre Int 
 
-                            Set @Id_Ot = (Select Id_Ot From " & _Global_BaseBk & "Zw_St_OT_Encabezado Where Idmaeedo_" & _Tido & "_PRE = " & _Id & ")
+                            Set @Id_Ot_Padre = (Select Top 1 Id_Ot_Padre From " & _Global_BaseBk & "Zw_St_OT_Encabezado Where Idmaeedo_" & _Tido & "_PRE = " & _Id & ")
 
                             Select ZEnc.Id_Ot, ZEnc.Nro_Ot,Empresa,ZEnc.Sucursal,ZEnc.Bodega,ZEnc.CodEntidad,ZEnc.SucEntidad,ZEnc.Rten,ZEnc.Rut, 
                             NOKOEN As Cliente,ZEnc.Fecha_Ingreso,ZEnc.Fecha_Compromiso,ZEnc.Fecha_Entrega,ZEnc.Fecha_Cierre,ZEnc.CodEstado, 
@@ -183,7 +183,7 @@ Public Class Frm_Formato_Creador_Funciones
 				                            Left Join " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller ZTecRep On ZTecRep.CodFuncionario = ZEnc.CodTecnico_Asignado
 					                            Left Join MAEEN On KOEN = ZEnc.CodEntidad And SUEN = ZEnc.SucEntidad
 						                                Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones ZCarac2 On ZCarac2.Tabla = 'ES_ENTREGA_ST' And ZCarac2.CodigoTabla =  Cod_Estado_Entrega
-                            Where ZEnc.Id_Ot = @Id_Ot"
+                            Where ZEnc.Id_Ot_Padre = @Id_Ot_Padre"
 
                     _Row_Servicio_Tecnico_Enc = _Sql.Fx_Get_DataRow(Consulta_sql)
 

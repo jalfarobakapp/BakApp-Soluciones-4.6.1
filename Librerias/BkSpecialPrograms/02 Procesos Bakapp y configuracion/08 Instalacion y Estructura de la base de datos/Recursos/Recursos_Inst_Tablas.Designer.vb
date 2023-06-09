@@ -1924,19 +1924,41 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
+        '''CREATE TABLE [dbo].[Zw_ListaPreHistorico](
+        '''	[Id]				[int] IDENTITY(1,1) NOT NULL,
+        '''	[Codigo]			[varchar](13)		NOT NULL,
+        '''	[Lista]				[varchar](3)		NOT NULL,
+        '''	[CodFuncionario]	[varchar](3)		NOT NULL,
+        '''	[Fechagrab]			[datetime]			NULL,
+        '''	[FechaVigencia]		[datetime]			NULL,
+        '''	[PrecioUd1]			[float]				NOT NULL,
+        '''	[PrecioUd2]			[float]				NOT NULL,
+        '''	[FxEjecUd1]			[bit]				NOT NULL,
+        '''	[FxEjecUd2]			[bit]				NOT NULL,
+        ''' CONSTRAINT [PK_Zw_ListaPreHistorico] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id] ASC
+        ''') [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_ListaPreHistorico() As String
+            Get
+                Return ResourceManager.GetString("Zw_ListaPreHistorico", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
         '''
         '''CREATE TABLE [dbo].[Zw_ListaPreProducto](
-        '''	[Lista] [char](3) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Codigo] [char](13) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Formula] [varchar](1000) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Redondear] [float] NOT NULL DEFAULT (0),
-        '''	[Costo] [float] NOT NULL DEFAULT (0),
-        '''	[Precio] [float] NOT NULL DEFAULT (0),
-        '''	[Margen] [float] NOT NULL DEFAULT (0),
-        '''	[Margen_Adicional] [float] NOT NULL DEFAULT (0),
-        '''	[Costo2] [float] NOT NULL DEFAULT (0),
-        '''	[Precio2] [float] NOT NULL DEFAULT (0),
-        '''	[Margen2] [ [resto de la cadena truncado]&quot;;.
+        '''	[Lista]             [char](3)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo]            [char](13)      NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Formula]           [varchar](1000) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Redondear]         [float]         NOT NULL DEFAULT (0),
+        '''	[Costo]             [float]         NOT NULL DEFAULT (0),
+        '''	[Precio]            [float]         NOT NULL DEFAULT (0),
+        '''	[Margen]            [float]         NOT NULL DEFAULT (0),
+        '''	[Margen_Adicional]  [float] [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_ListaPreProducto() As String
             Get

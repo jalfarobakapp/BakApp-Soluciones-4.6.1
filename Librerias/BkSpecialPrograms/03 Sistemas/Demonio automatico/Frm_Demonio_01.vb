@@ -554,6 +554,7 @@ Public Class Frm_Demonio_01
 
     End Sub
 
+
     Sub Sb_Enable_Objetos()
 
         CircularPgrs.IsRunning = True
@@ -1658,8 +1659,6 @@ Public Class Frm_Demonio_01
 
                             _Cl_Prestashop_Web.Fecha_Revision = DtpFecharevision.Value
                             _Cl_Prestashop_Web.Sb_Procedimiento_Prestashop2(True)
-
-                            '_Cl_Prestashop_Web.Sb_Iniciar(True)
 
                             Sb_Pausar(False)
 
@@ -3666,8 +3665,6 @@ Fin:
                            "Or KOPR In (Select KOPRCT From MAEDDO Ddo Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO " &
                            "Where CONVERT(varchar,LAHORA,112) = '" & _Fecha & "'))"
 
-            'ElseIf _ProdPrestashop Then
-            '    Consulta_sql = "Select Distinct Codigo From " & _Global_BaseBk & "Zw_Prod_PrestaShop"
         End If
 
         _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -3968,6 +3965,7 @@ Fin:
         End If
 
     End Sub
+
     Private Sub Btn_ConfImpresora_Click(sender As Object, e As EventArgs) Handles Btn_Configurar.Click
 
         Sb_Pausar(_Pausa.Pausa)

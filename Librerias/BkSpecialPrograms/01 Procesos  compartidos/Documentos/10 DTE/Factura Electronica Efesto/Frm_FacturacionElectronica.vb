@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Text
 Imports DevComponents.DotNetBar
+Imports HEFESTO.ENVIO.SETDTE.FORM
 Imports Ionic.Zip
 
 Public Class Frm_FacturacionElectronica
@@ -88,11 +89,15 @@ Public Class Frm_FacturacionElectronica
 
     Private Sub Btn_Enviar_Documento_SII_Click(sender As Object, e As EventArgs) Handles Btn_Enviar_Documento_SII.Click
 
+        Dim Fm As New frmInicio
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
         'Dim _Resultado As String
         'Dim _Trackid As String
         'Dim _Class_DTE As New Class_Genera_DTE_RdBk(Txt_Idmaeedo.Text.Trim)
 
-        'If _Class_DTE.Fx_Enviar_DTE_Al_SII(Txt_Idmaeedo.Text, _Resultado) Then
+        'If _Class_DTE.EN.Fx_Enviar_DTE_Al_SII(Txt_Idmaeedo.Text, _Resultado) Then
         '    _Trackid = _Resultado
         '    MessageBoxEx.Show(Me, _Trackid, "Trackid", MessageBoxButtons.OK, MessageBoxIcon.Information)
         'Else
@@ -103,6 +108,10 @@ Public Class Frm_FacturacionElectronica
     End Sub
 
     Private Sub ButtonX1_Click(sender As Object, e As EventArgs) Handles ButtonX1.Click
+
+        Dim Fm As New HEFESTO.CONSULTA.TRACKID.Form1
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
         'Dim _Resultado As String
         'Dim _Class_DTE As New Class_Genera_DTE_RdBk(Txt_Idmaeedo.Text.Trim)

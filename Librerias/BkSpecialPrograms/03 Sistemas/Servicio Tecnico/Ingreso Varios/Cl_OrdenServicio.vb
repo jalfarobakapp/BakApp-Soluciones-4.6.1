@@ -416,7 +416,7 @@ Public Class Cl_OrdenServicio
 
             ' --------------------------------------------------- NOTAS ---------------------------------------
 
-            Dim _Defecto_segun_cliente As String = _Row_Notas.Item("Defecto_segun_cliente")
+            Dim _Defecto_segun_cliente As String = Replace(_Row_Notas.Item("Defecto_segun_cliente"), vbCrLf, " ")
             Dim _Nota_Etapa_01 As String = _Row_Notas.Item("Nota_Etapa_01")
 
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Notas (Id_Ot,Defecto_segun_cliente,Nota_Etapa_01) Values " &

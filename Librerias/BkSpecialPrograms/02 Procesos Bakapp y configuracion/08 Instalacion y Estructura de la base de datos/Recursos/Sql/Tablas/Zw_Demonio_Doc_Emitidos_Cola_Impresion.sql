@@ -23,7 +23,11 @@ CREATE TABLE [dbo].[Zw_Demonio_Doc_Emitidos_Cola_Impresion](
     [Impresora]         		        [varchar](50)   NOT NULL DEFAULT (''),
     [Imprimir_Voucher_TJV]		        [bit]           NOT NULL DEFAULT (0),
     [Imprimir_Voucher_TJV_Original]		[bit]           NOT NULL DEFAULT (0),
-    [Vale_Transitorio]          		[bit]           NOT NULL DEFAULT (0),
+    [Vale_Transitorio]          		[bit]           NOT NULL DEFAULT (0),    
+    [FirmarDTE]          		        [bit]           NOT NULL DEFAULT (0),
+    [AmbienteCertificacion]          	[bit]           NOT NULL DEFAULT (0),
+    [Id_Dte]          		            [int]           NOT NULL DEFAULT (0),
+    [Log_Firma]          		        [varchar](500)  NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Demonio_Doc_Emitidos_Cola_Impresion] PRIMARY KEY CLUSTERED 
 (
 	[NombreEquipo] ASC,

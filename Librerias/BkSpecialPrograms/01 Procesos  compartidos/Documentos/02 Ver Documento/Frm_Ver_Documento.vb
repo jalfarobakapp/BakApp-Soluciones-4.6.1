@@ -204,8 +204,8 @@ Public Class Frm_Ver_Documento
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Sb_Formato_Generico_Grilla(GrillaEncabezado, 17, New Font("Tahoma", 8), Color.LightYellow, ScrollBars.None, False, False, False)
-        Sb_Formato_Generico_Grilla(GrillaDetalleDoc, 15, New Font("Tahoma", 8), Color.LightYellow, ScrollBars.Both, True, False, False)
+        Sb_Formato_Generico_Grilla(GrillaEncabezado, 18, New Font("Tahoma", 8), Color.LightYellow, ScrollBars.None, False, False, False)
+        Sb_Formato_Generico_Grilla(GrillaDetalleDoc, 18, New Font("Tahoma", 8), Color.LightYellow, ScrollBars.Both, True, False, False)
 
 
         Select Case _Tipo_Apertura
@@ -1483,6 +1483,16 @@ Public Class Frm_Ver_Documento
             .Columns(_Campo).Visible = True
             .Columns(_Campo).Frozen = True
             .Columns(_Campo).Width = 35
+            .Columns(_Campo).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns(_Campo).DisplayIndex = _Displayindex
+            _Displayindex += 1
+
+            _Campo = "LINCONDESP"
+            .Columns(_Campo).HeaderText = "DS"
+            .Columns(_Campo).ToolTipText = "Despacha stock"
+            .Columns(_Campo).Visible = True
+            .Columns(_Campo).Frozen = True
+            .Columns(_Campo).Width = 30
             .Columns(_Campo).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             .Columns(_Campo).DisplayIndex = _Displayindex
             _Displayindex += 1

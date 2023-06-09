@@ -461,6 +461,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\14 Exportar documentos\Cl_ExpotarDoc.vb" />
+    <Compile Include="01 Procesos  compartidos\Envio y Recepcion de Mail\Configuracion de recepcion de correos POP3\Frm_RecepXML_Cmp_ConfGral.Designer.vb">
+      <DependentUpon>Frm_RecepXML_Cmp_ConfGral.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Envio y Recepcion de Mail\Configuracion de recepcion de correos POP3\Frm_RecepXML_Cmp_ConfGral.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Familias\Frm_Crear_SpfmFmSbfm.Designer.vb">
       <DependentUpon>Frm_Crear_SpfmFmSbfm.vb</DependentUpon>
     </Compile>
@@ -1330,16 +1336,34 @@
     <Compile Include="03 Sistemas\ChileExpress\Frm_Chilexpress_Envio.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Comisiones.Designer.vb">
-      <DependentUpon>Frm_Comisiones.vb</DependentUpon>
+    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_AgregarTipos.Designer.vb">
+      <DependentUpon>Frm_Cms_AgregarTipos.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Comisiones.vb">
+    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_AgregarTipos.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Comisiones_Periodos.Designer.vb">
-      <DependentUpon>Frm_Comisiones_Periodos.vb</DependentUpon>
+    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_FuncMant.Designer.vb">
+      <DependentUpon>Frm_Cms_FuncMant.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Comisiones_Periodos.vb">
+    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_FuncMant.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Cms.Designer.vb">
+      <DependentUpon>Frm_Cms.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Cms.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_Fun.Designer.vb">
+      <DependentUpon>Frm_Cms_Fun.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_Fun.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_Periodos.Designer.vb">
+      <DependentUpon>Frm_Cms_Periodos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_Periodos.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Formularios\Clas_Imprimir_AsisCompra.vb" />
@@ -1406,6 +1430,30 @@
       <DependentUpon>Frm_Demonio_01_Conf_Local_FH.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\Frm_Demonio_01_Conf_Local_FH.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfAsisCompra.Designer.vb">
+      <DependentUpon>Frm_Demonio_ConfAsisCompra.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfAsisCompra.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_Configuraciones.Designer.vb">
+      <DependentUpon>Frm_Demonio_Configuraciones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_Configuraciones.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfProgramacion.Designer.vb">
+      <DependentUpon>Frm_Demonio_ConfProgramacion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfProgramacion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_New.Designer.vb">
+      <DependentUpon>Frm_Demonio_New.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_New.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\Procedimientos\Ds_Config_Picking.vb">
@@ -1686,6 +1734,18 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Recursos_Iconos_Notificacion.resx</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Patentes rvm\Frm_Patentes.Designer.vb">
+      <DependentUpon>Frm_Patentes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Patentes rvm\Frm_Patentes.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Patentes rvm\Frm_Patentes_rvm.Designer.vb">
+      <DependentUpon>Frm_Patentes_rvm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Patentes rvm\Frm_Patentes_rvm.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Pockey-Pc\Frm_Pocket_Dispositivos.Designer.vb">
       <DependentUpon>Frm_Pocket_Dispositivos.vb</DependentUpon>
@@ -2112,7 +2172,6 @@
     <Compile Include="01 Procesos  compartidos\Envio y Recepcion de Mail\Configuracion de recepcion de correos POP3\Frm_Recibir_Correos_DTE.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Envio y Recepcion de Mail\Configuracion de recepcion de correos POP3\POP3Message1.vb" />
     <Compile Include="01 Procesos  compartidos\Envio y Recepcion de Mail\Configuracion de correos SMTP automatico\Frm_Correos_Conf.Designer.vb">
       <DependentUpon>Frm_Correos_Conf.vb</DependentUpon>
     </Compile>
@@ -4072,6 +4131,9 @@
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Asociacion de documentos a OCC\Frm_RecargosXProd.resx">
       <DependentUpon>Frm_RecargosXProd.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Envio y Recepcion de Mail\Configuracion de recepcion de correos POP3\Frm_RecepXML_Cmp_ConfGral.resx">
+      <DependentUpon>Frm_RecepXML_Cmp_ConfGral.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Mantencion de Tablas\Familias\Frm_Crear_SpfmFmSbfm.resx">
       <DependentUpon>Frm_Crear_SpfmFmSbfm.vb</DependentUpon>
     </EmbeddedResource>
@@ -4508,11 +4570,20 @@
     <EmbeddedResource Include="03 Sistemas\ChileExpress\Frm_Chilexpress_Envio.resx">
       <DependentUpon>Frm_Chilexpress_Envio.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Comisiones\Formularios\Frm_Comisiones.resx">
-      <DependentUpon>Frm_Comisiones.vb</DependentUpon>
+    <EmbeddedResource Include="03 Sistemas\Comisiones\Formularios\Frm_Cms.resx">
+      <DependentUpon>Frm_Cms.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Comisiones\Formularios\Frm_Comisiones_Periodos.resx">
-      <DependentUpon>Frm_Comisiones_Periodos.vb</DependentUpon>
+    <EmbeddedResource Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_AgregarTipos.resx">
+      <DependentUpon>Frm_Cms_AgregarTipos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_Fun.resx">
+      <DependentUpon>Frm_Cms_Fun.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_FuncMant.resx">
+      <DependentUpon>Frm_Cms_FuncMant.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_Periodos.resx">
+      <DependentUpon>Frm_Cms_Periodos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Formularios\Frm_01_Asis_Compra_Resultados_Hijo.resx">
       <DependentUpon>Frm_01_Asis_Compra_Resultados_Hijo.vb</DependentUpon>
@@ -4537,6 +4608,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Demonio automatico\Frm_Demonio_01_Conf_Local_FH.resx">
       <DependentUpon>Frm_Demonio_01_Conf_Local_FH.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfAsisCompra.resx">
+      <DependentUpon>Frm_Demonio_ConfAsisCompra.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_Configuraciones.resx">
+      <DependentUpon>Frm_Demonio_Configuraciones.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfProgramacion.resx">
+      <DependentUpon>Frm_Demonio_ConfProgramacion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_New.resx">
+      <DependentUpon>Frm_Demonio_New.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Demonio DTE Monitor\Frm_Demonio_DTEMonitor.resx">
       <DependentUpon>Frm_Demonio_DTEMonitor.vb</DependentUpon>
@@ -4678,6 +4761,12 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Recursos_Iconos_Notificacion.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Patentes rvm\Frm_Patentes.resx">
+      <DependentUpon>Frm_Patentes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Patentes rvm\Frm_Patentes_rvm.resx">
+      <DependentUpon>Frm_Patentes_rvm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Pockey-Pc\Frm_Pocket_Dispositivos.resx">
       <DependentUpon>Frm_Pocket_Dispositivos.vb</DependentUpon>
@@ -7327,6 +7416,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_ListaPreCosto.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_ListaPreCosto_Enc.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_ListaPreGlobal.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_ListaPreHistorico.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_ListaPreProducto.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Log_Archivador.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Log_Gestiones.sql" />

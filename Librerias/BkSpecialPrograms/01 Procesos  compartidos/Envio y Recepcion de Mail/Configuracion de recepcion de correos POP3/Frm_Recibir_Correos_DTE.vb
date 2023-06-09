@@ -1,8 +1,6 @@
 ﻿Imports System.IO
 Imports System.Net.Sockets
-Imports System.Security.Authentication
 Imports System.Text
-Imports BkSpecialPrograms.Class_FTP
 Imports DevComponents.DotNetBar
 Imports Limilabs.Client
 Imports Limilabs.Client.IMAP
@@ -19,7 +17,7 @@ Public Class Frm_Recibir_Correos_DTE
     Dim Server As TcpClient
     Dim NetStrm As NetworkStream
     Dim RdStrm As StreamReader
-    Dim _Directorio As String = AppPath() & "\Data\" & RutEmpresa & "\DTE"
+    Dim _Directorio As String
     Dim _Ds_Receptor_DTE As New Ds_Receptor_DTE
     Dim _Cancelar As Boolean
 
@@ -44,6 +42,8 @@ Public Class Frm_Recibir_Correos_DTE
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
+        _Directorio = AppPath() & "\Data\" & RutEmpresa & "\DTE"
+
         If Not Directory.Exists(_Directorio) Then
             Directory.CreateDirectory(_Directorio)
         End If
@@ -54,21 +54,22 @@ Public Class Frm_Recibir_Correos_DTE
             System.IO.Directory.CreateDirectory(_Directorio)
         End If
 
-        Dim _RecepXMLComp_CorreoPOP3 As String = _Global_Row_Configuracion_General.Item("RecepXMLComp_CorreoPOP3")
-        Dim _RecepXMLCmp_ElimiCorreosPOP3 As Boolean = _Global_Row_Configuracion_General.Item("RecepXMLCmp_ElimiCorreosPOP3")
+        'Dim _RecepXMLComp_CorreoPOP3 As String = _Global_Row_Configuracion_General.Item("RecepXMLComp_CorreoPOP3")
+        'Dim _RecepXMLCmp_ElimiCorreosPOP3 As Boolean = _Global_Row_Configuracion_General.Item("RecepXMLCmp_ElimiCorreosPOP3")
 
-        '_RecepXMLComp_CorreoPOP3 = "notificacionsii@sirrep.cl"
+        'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos_Cuentas Where Nombre_Usuario = '" & _RecepXMLComp_CorreoPOP3 & "'"
+        '_Row_Cuenta = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos_Cuentas Where Nombre_Usuario = '" & _RecepXMLComp_CorreoPOP3 & "'"
-        _Row_Cuenta = _Sql.Fx_Get_DataRow(Consulta_sql)
+        'Chk_Borrar_Todos_Los_Correos.Checked = _RecepXMLCmp_ElimiCorreosPOP3
 
-        Chk_Borrar_Todos_Los_Correos.Checked = _RecepXMLCmp_ElimiCorreosPOP3
+        Sb_Actualizar_Datos()
 
         Txt_Directorio.ReadOnly = True
-        'Txt_Clave.PasswordChar = "*"
         Btn_Cancelar.Visible = False
 
         Sb_Color_Botones_Barra(Bar1)
+
+        Sb_Imap()
 
     End Sub
 
@@ -89,13 +90,16 @@ Public Class Frm_Recibir_Correos_DTE
         Btn_BuscarSMTPRecepXMLComp.Visible = Not ActivacionAutomatica
 
         If Not IsNothing(_Row_Cuenta) Then
-            Txt_Usuario.Text = _Row_Cuenta.Item("Nombre_Usuario")
+            Txt_CorreoSMTP.Text = _Row_Cuenta.Item("Nombre_Usuario")
         End If
 
         Txt_Directorio.Text = _Directorio
 
         Txt_CarpetaDestino.ReadOnly = False
         Txt_CarpetaLectura.ReadOnly = False
+
+        Dtp_Fecha_Desde.Value = Primerdiadelmes(FechaDelServidor)
+        Dtp_Fecha_Hasta.Value = FechaDelServidor()
 
     End Sub
 
@@ -337,8 +341,8 @@ Public Class Frm_Recibir_Correos_DTE
     End Sub
 
     Private Sub Btn_Descargar_Archivos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Descargar_Archivos.Click
-        If Rdb_POP3.Checked Then Sb_Descargar_Archivos_POP3(True)
-        If Rdb_IMAP.Checked Then Sb_Descargar_Archivos_IMAP(True)
+        If Rdb_POP3.Checked Then Sb_Descargar_Archivos_POP3(Not ActivacionAutomatica)
+        If Rdb_IMAP.Checked Then Sb_Descargar_Archivos_IMAP(Not ActivacionAutomatica)
     End Sub
 
     Sub Sb_Descargar_Archivos_POP3(_Mostrar_Mensaje As Boolean)
@@ -576,40 +580,46 @@ Public Class Frm_Recibir_Correos_DTE
 
             Dim _MaxCorreos As Integer
 
+            Dim _Leidos = 0
+
             If _Imap.Connected Then
 
                 If Not String.IsNullOrEmpty(Txt_CarpetaLectura.Text) Then
                     _Imap.Select(Txt_CarpetaLectura.Text) '("INBOX.DTE_PROCESADOS")
                 End If
 
-                Dim uids As List(Of Long) = _Imap.Search(Flag.Unseen)
+                Dim uids As List(Of Long)
 
-                Dim _FechaDesde As Date = Primerdiadelmes(FechaDelServidor())
-                Dim _FechaHasta As Date = FechaDelServidor()
+                Dim _FechaDesde As Date = Dtp_Fecha_Desde.Value
+                Dim _FechaHasta As Date = DateAdd(DateInterval.Day, 1, Dtp_Fecha_Hasta.Value)
+
+                If Rdb_DecargarCorreosHoy.Checked Then
+                    _FechaDesde = FechaDelServidor()
+                    _FechaHasta = DateAdd(DateInterval.Day, 1, _FechaDesde)
+                End If
 
                 _FechaHasta = New DateTime(_FechaHasta.Year, _FechaHasta.Month, _FechaHasta.Day, 23, 59, 0)
-                _FechaDesde = DateAdd(DateInterval.Day, -2, _FechaHasta)
                 _FechaDesde = New DateTime(_FechaDesde.Year, _FechaDesde.Month, _FechaDesde.Day, 0, 0, 0)
 
-                ' Esto de aca busca por fecha al parecer...
-                uids = _Imap.Search((Expression.[And](Expression.Before(_FechaHasta), Expression.Since(_FechaDesde))))
+                If Rdb_DecargarNoLeidos.Checked Then
+                    uids = _Imap.Search(Flag.Unseen)
+                End If
 
+                If Rdb_DescargarRangoFechas.Checked Or Rdb_DecargarCorreosHoy.Checked Then
+                    ' Esto de aca busca por fecha al parecer...
+                    uids = _Imap.Search((Expression.[And](Expression.Before(_FechaHasta), Expression.Since(_FechaDesde))))
+                End If
 
 
                 Progreso_Porc.Maximum = 100
 
-                'If uids.Count > 2000 Then
-                '    _MaxCorreos = 2000
-                'Else
-                '    _MaxCorreos = uids.Count - 1
-                'End If
-
+                Lbl_Total_Correos.Text = FormatNumber(_MaxCorreos, 0)
                 _MaxCorreos = uids.Count - 1
 
                 Progreso_Cont.Maximum = _MaxCorreos - 1
-                Lbl_Total_Correos.Text = FormatNumber(_MaxCorreos, 0)
 
                 For Each uid As String In uids
+
                     System.Windows.Forms.Application.DoEvents()
                     Dim email As IMail
 
@@ -619,15 +629,17 @@ Public Class Frm_Recibir_Correos_DTE
                         email = Nothing
                     End Try
 
+                    _Leidos += 1
+
                     If Not IsNothing(email) Then
 
                         Dim _STRSS As String = "Subject: " & email.Subject & vbCrLf &
-                                               "From: " + JoinMailboxes(email.From) & vbCrLf &
-                                               "To: " + JoinAddresses(email.To) & vbCrLf &
-                                               "Cc: " + JoinAddresses(email.Cc) & vbCrLf &
-                                               "Bcc: " + JoinAddresses(email.Bcc) & vbCrLf &
-                                               "Text: " + email.Text & vbCrLf &
-                                               "HTML: " + email.Html
+                                           "From: " + JoinMailboxes(email.From) & vbCrLf &
+                                           "To: " + JoinAddresses(email.To) & vbCrLf &
+                                           "Cc: " + JoinAddresses(email.Cc) & vbCrLf &
+                                           "Bcc: " + JoinAddresses(email.Bcc) & vbCrLf &
+                                           "Text: " + email.Text & vbCrLf &
+                                           "HTML: " + email.Html
 
                         Dim _Fecha_Email As Date
 
@@ -704,8 +716,8 @@ Public Class Frm_Recibir_Correos_DTE
 
                     If _Cancelar Then
                         If MessageBoxEx.Show(Me, "¿Desea cancelar la acción?", "Cancelar",
-                                             MessageBoxButtons.YesNo,
-                                             MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+                                         MessageBoxButtons.YesNo,
+                                         MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
                             Exit For
                         End If
                     End If
@@ -721,7 +733,8 @@ Public Class Frm_Recibir_Correos_DTE
             _Imap.Close()
 
             If _Mostrar_Mensaje Then
-                MessageBoxEx.Show(Me, "Total archivos descargados: " & Lbl_Xml_Descargados.Text,
+                MessageBoxEx.Show(Me, "Total archivos descargados: " & Lbl_Xml_Descargados.Text & vbCrLf &
+                                  "Mensajes leídos; " & _Leidos,
                               "Descarga completa", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
 
@@ -975,15 +988,11 @@ Public Class Frm_Recibir_Correos_DTE
         _Cancelar = True
     End Sub
 
-    'Private Sub Frm_Recibir_Correos_DTE_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
-    '    Sb_Parametros_Actualizar()
-    'End Sub
-
     Private Sub Timer_Segundos_Tick(sender As Object, e As EventArgs) Handles Timer_Segundos.Tick
         Timer_Segundos.Stop()
 
-        If Rdb_POP3.Checked Then Sb_Descargar_Archivos_POP3(True)
-        If Rdb_IMAP.Checked Then Sb_Descargar_Archivos_IMAP(True)
+        If Rdb_POP3.Checked Then Sb_Descargar_Archivos_POP3(Not ActivacionAutomatica)
+        If Rdb_IMAP.Checked Then Sb_Descargar_Archivos_IMAP(Not ActivacionAutomatica)
 
         Me.Close()
     End Sub
@@ -996,8 +1005,72 @@ Public Class Frm_Recibir_Correos_DTE
         Fm.Dispose()
 
         If Not IsNothing(_Row_Cuenta) Then
-            Txt_Usuario.Text = _Row_Cuenta.Item("Nombre_Usuario")
+            Txt_CorreoSMTP.Text = _Row_Cuenta.Item("Nombre_Usuario")
         End If
+
+    End Sub
+
+    Private Sub Rdb_IMAP_CheckedChanged(sender As Object, e As EventArgs) Handles Rdb_IMAP.CheckedChanged
+        Sb_Imap()
+    End Sub
+
+    Sub Sb_Imap()
+
+        If Rdb_IMAP.Checked Then
+            Me.Height = 498
+            Chk_Borrar_Todos_Los_Correos.Checked = False
+            Chk_Borrar_Todos_Los_Correos.Enabled = False
+        Else
+            Me.Height = 310
+            Chk_Borrar_Todos_Los_Correos.Enabled = True
+        End If
+
+    End Sub
+
+    Private Sub Btn_ConfGeneral_Click(sender As Object, e As EventArgs) Handles Btn_ConfGeneral.Click
+
+        'Dim _Autorizado As Boolean
+
+        'Dim Fm_Pass As New Frm_Clave_Administrador
+        'Fm_Pass.ShowDialog(Me)
+        '_Autorizado = Fm_Pass.Pro_Autorizado
+        'Fm_Pass.Dispose()
+
+        'If Not _Autorizado Then
+        '    Return
+        'End If
+
+        Dim Fm As New Frm_RecepXML_Cmp_ConfGral
+        Fm.ShowDialog(Me)
+        If Fm.Grabar Then
+            Sb_Actualizar_Datos()
+        End If
+        Fm.Dispose()
+
+    End Sub
+
+    Sub Sb_Actualizar_Datos()
+
+        With _Global_Row_Configuracion_General
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos_Cuentas Where Nombre_Usuario = '" & .Item("RecepXMLComp_CorreoPOP3") & "'"
+            _Row_Cuenta = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Txt_CorreoSMTP.Text = .Item("RecepXML_Cmp_CorreoSMTP")
+            Txt_CorreoSMTP.Text = .Item("RecepXMLComp_CorreoPOP3")
+            Chk_Borrar_Todos_Los_Correos.Checked = .Item("RecepXMLCmp_ElimiCorreosPOP3")
+
+            Rdb_POP3.Checked = .Item("RecepXML_Cmp_POP3")
+            Rdb_IMAP.Checked = .Item("RecepXML_Cmp_IMAP")
+
+            Txt_CarpetaLectura.Text = .Item("RecepXML_Cmp_IMAP_CarpetaLectura")
+            Txt_CarpetaDestino.Text = .Item("RecepXML_Cmp_IMAP_CarpetaDestino")
+
+            Rdb_DescargarRangoFechas.Checked = True
+            Rdb_DecargarCorreosHoy.Checked = .Item("RecepXML_Cmp_IMAP_DescHoy")
+            Rdb_DecargarNoLeidos.Checked = .Item("RecepXML_Cmp_IMAP_DescNoLeidos")
+
+        End With
 
     End Sub
 

@@ -4,7 +4,7 @@ Declare @CodEntidad Char(13),
 
 Select @CodEntidad = '#CodEntidad#',@SucEntidad = '#SucEntidad#'
 
-Select CAST( '' AS Varchar(15)) As 'Rut',
+Select CAST( '' AS Varchar(15)) As 'Rut',CAST( '' AS Varchar(15)) As 'RutSP',
        *, 
        Isnull((Select top 1 NOKOFU From TABFU Where KOFU = KOFUEN),'') As 'VENDEDOR',
        Isnull((Select top 1 NOKOFU From TABFU Where KOFU = COBRADOR),'') As 'NOMCOBRADOR',

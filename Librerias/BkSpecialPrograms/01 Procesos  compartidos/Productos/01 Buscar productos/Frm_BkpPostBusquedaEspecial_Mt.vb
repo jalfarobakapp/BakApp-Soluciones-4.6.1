@@ -30,6 +30,8 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     Dim _Usar_Bodegas_NVI As Boolean
 
+    Dim _Row_Patente_rvm As DataRow
+
     Enum Enum_Bloquear
         No_Bloquear
         Compras
@@ -49,6 +51,8 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
     End Enum
 
     Dim _Top20 As Enum_Top20 = Enum_Top20.Ninguno
+
+    Dim _Patente_rvm As String
 
 #Region "PROPIEDADES"
 
@@ -454,6 +458,24 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
     Public Property MostrarSoloServTecnico_ProIngreso As Boolean
     Public Property MostrarSoloServTecnico_ProServicio As Boolean
 
+    Public Property Patente_rvm As String
+        Get
+            Return _Patente_rvm
+        End Get
+        Set(value As String)
+            _Patente_rvm = value
+        End Set
+    End Property
+
+    Public Property Row_Patente_rvm As DataRow
+        Get
+            Return _Row_Patente_rvm
+        End Get
+        Set(value As DataRow)
+            _Row_Patente_rvm = value
+        End Set
+    End Property
+
 #End Region
 
     Enum _Opcion_Buscar
@@ -479,7 +501,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Sb_Actualizar_Tbl_Bodegas()
 
         Sb_Color_Botones_Barra(Bar1)
-        Sb_Color_Botones_Barra(Bar2)
+        'Sb_Color_Botones_Barra(Bar2)
         Sb_Color_Botones_Barra(Bar_Menu_Producto)
 
         If Global_Thema = Enum_Themas.Oscuro Then
@@ -489,6 +511,12 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     End Sub
     Private Sub Frm_BkpPostBusquedaEspecial_Mt_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+
+        If Not _Global_Row_Configuracion_General.Item("Patentes_rvm") Then
+            Txtdescripcion.Width = 694
+        End If
+
+        Fx_Buscar_Patente()
 
         Sb_Actualizar_Tbl_Bodegas()
 
@@ -542,19 +570,19 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         If _Trabajar_Alternativos Then
 
             AddHandler Grilla.CellDoubleClick, AddressOf Sb_Seleccionar_Producto_doble_clic_Alternativos
-            AddHandler Btn_Seleccionar.Click, AddressOf Sb_Seleccionar_Producto_doble_clic_Alternativos
+            'AddHandler Btn_Seleccionar.Click, AddressOf Sb_Seleccionar_Producto_doble_clic_Alternativos
 
             Me.ActiveControl = TxtCodigo
         ElseIf _Trabajar_Ubicaciones Then
 
             AddHandler Grilla.CellDoubleClick, AddressOf Sb_Seleccionar_Producto_doble_clic_Ubicaciones
-            AddHandler Btn_Seleccionar.Click, AddressOf Sb_Seleccionar_Producto_doble_clic_Ubicaciones
+            'AddHandler Btn_Seleccionar.Click, AddressOf Sb_Seleccionar_Producto_doble_clic_Ubicaciones
 
             Me.ActiveControl = Txtdescripcion
         Else
 
             AddHandler Grilla.CellDoubleClick, AddressOf Sb_Seleccionar_Producto_doble_clic
-            AddHandler Btn_Seleccionar.Click, AddressOf Sb_Seleccionar_Producto_doble_clic
+            'AddHandler Btn_Seleccionar.Click, AddressOf Sb_Seleccionar_Producto_doble_clic
 
             Me.ActiveControl = Txtdescripcion
         End If
@@ -645,6 +673,44 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Btn_Mnu_Pr_Eliminar_Producto.Enabled = _Mostrar_Eliminar
 
     End Sub
+
+    Function Fx_Buscar_Patente() As Boolean
+
+        Txt_Patente.ReadOnly = False
+        Txt_Patente.Text = String.Empty
+        Grupo_BusquedaProducto.Text = "Cadena de busqueda del producto"
+
+        If String.IsNullOrEmpty(_Patente_rvm) Then
+            Txt_Patente.ButtonCustom.Visible = True
+            Txt_Patente.ButtonCustom2.Visible = False
+            _Row_Patente_rvm = Nothing
+            Return False
+        End If
+
+        Consulta_sql = "Select *,Marca+' '+Modelo+' año: '+AFabricacion As Descripcion,Marca+' '+ModeloBusqueda+' '+AFabricacion As DescripcionBusqueda" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Patentes_rvm Where Patente = '" & _Patente_rvm & "'"
+        _Row_Patente_rvm = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row_Patente_rvm) Then
+            _Patente_rvm = String.Empty
+            Txt_Patente.ButtonCustom.Visible = True
+            Txt_Patente.ButtonCustom2.Visible = False
+            Return False
+        End If
+
+        If Not IsNothing(_Row_Patente_rvm) Then
+            Txt_Patente.ButtonCustom.Visible = False
+            Txt_Patente.ButtonCustom2.Visible = True
+            _Patente_rvm = _Row_Patente_rvm.Item("Patente")
+            Txt_Patente.Text = _Patente_rvm
+            Grupo_BusquedaProducto.Text = "CADENA DE BUSQUEDA DE PRODUCTOS PARA EL VEHICULO: " & _Row_Patente_rvm.Item("Descripcion").ToString.Trim.ToUpper
+            Txt_Patente.ReadOnly = True
+        End If
+
+        Return True
+
+    End Function
+
     Sub Sb_Actualizar_Tbl_Bodegas()
 
         Dim _Orden_Bod = "ORDEN_BOD_" & ModEmpresa.Trim & ModSucursal.Trim
@@ -876,6 +942,11 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             Else
                 _Descripcion_Busqueda = Txtdescripcion.Text.Trim
             End If
+
+            If Not IsNothing(_Row_Patente_rvm) Then
+                _Descripcion_Busqueda += Space(1) & _Row_Patente_rvm.Item("DescripcionBusqueda")
+            End If
+
 
             Dim _Sql_Filtro1 As String
             Dim _Sql_Filtro2 As String
@@ -1925,13 +1996,13 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     Private Sub Grilla_Enter(sender As System.Object, e As System.EventArgs) Handles Grilla.Enter
         Bar_Menu_Producto.Enabled = True
-        Btn_Seleccionar.Enabled = True
+        'Btn_Seleccionar.Enabled = True
         Me.Refresh()
     End Sub
 
     Private Sub Grilla_Leave(sender As System.Object, e As System.EventArgs) Handles Grilla.Leave
         Bar_Menu_Producto.Enabled = False
-        Btn_Seleccionar.Enabled = False
+        'Btn_Seleccionar.Enabled = False
         Me.Refresh()
     End Sub
 
@@ -2399,13 +2470,13 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     End Sub
 
-    Private Sub Btn_Subir_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Subir.Click
-        SendKeys.Send("{UP}")
-    End Sub
+    'Private Sub Btn_Subir_Click(sender As System.Object, e As System.EventArgs)
+    '    SendKeys.Send("{UP}")
+    'End Sub
 
-    Private Sub Btn_Bajar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Bajar.Click
-        SendKeys.Send("{DOWN}")
-    End Sub
+    'Private Sub Btn_Bajar_Click(sender As System.Object, e As System.EventArgs)
+    '    SendKeys.Send("{DOWN}")
+    'End Sub
 
 
     Function Fx_Activar_Deactivar_Teclado()
@@ -2428,9 +2499,9 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
         End If
 
-        Btn_Bajar.Visible = True '_Global_Es_Touch
-        Btn_Subir.Visible = True ' _Global_Es_Touch
-        Btn_Seleccionar.Visible = _Global_Es_Touch
+        'Btn_Bajar.Visible = True '_Global_Es_Touch
+        'Btn_Subir.Visible = True ' _Global_Es_Touch
+        'Btn_Seleccionar.Visible = _Global_Es_Touch
 
         Me.Refresh()
 
@@ -2905,6 +2976,46 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
     Private Sub Mnu_Btn_Ubicacion_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Mnu_Btn_Ubicacion_Producto.Click
         Dim _Codigo As String = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value
         Sb_Ver_Ubicacion_Bodega(Me, _Codigo, _Empresa, _Sucursal, _Bodega)
+    End Sub
+
+    Private Sub Txt_Patente_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Patente.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            Patente_rvm = Txt_Patente.Text
+            If Fx_Buscar_Patente() Then
+                Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
+                Txtdescripcion.Focus()
+            Else
+                MessageBoxEx.Show(Me, "Patente No encontrada", "Patente RVM", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Call Txt_Patente_ButtonCustomClick(Nothing, Nothing)
+            End If
+        End If
+    End Sub
+
+    Private Sub Txt_Patente_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Patente.ButtonCustomClick
+
+        Dim _Aceptar As Boolean = InputBox_Bk(Me, "INGRESE LA PATENTE A BUSCAR", "Buscar paten te en RVM", Patente_rvm, False, _Tipo_Mayus_Minus.Mayusculas, 6, True)
+
+        If Not _Aceptar Then
+            Return
+        End If
+
+        If Fx_Buscar_Patente() Then
+            MessageBoxEx.Show(Me, "Patente encontrada: " & _Row_Patente_rvm.Item("Descripcion"), "Patente RVM", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            If Not String.IsNullOrEmpty(Txtdescripcion.Text) Then
+                Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
+            End If
+            Txtdescripcion.Focus()
+        Else
+            MessageBoxEx.Show(Me, "Patente No encontrada", "Patente RVM", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Call Txt_Patente_ButtonCustomClick(Nothing, Nothing)
+        End If
+    End Sub
+
+    Private Sub Txt_Patente_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Patente.ButtonCustom2Click
+        Patente_rvm = String.Empty
+        Fx_Buscar_Patente()
+        Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
+        Txtdescripcion.Focus()
     End Sub
 
     Private Sub Mnu_Btn_Archivos_Asociados_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Mnu_Btn_Archivos_Asociados_Producto.Click

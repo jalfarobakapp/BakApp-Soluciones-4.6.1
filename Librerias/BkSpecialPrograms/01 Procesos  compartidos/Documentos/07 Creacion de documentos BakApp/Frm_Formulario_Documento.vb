@@ -146,6 +146,7 @@ Public Class Frm_Formulario_Documento
     Dim _Facturacion_Automatica As Boolean
 
     Dim _DecimalesGl As Integer
+    Dim _Patente_rvm As String
 
 #Region "PROPIEDADES"
 
@@ -1066,6 +1067,7 @@ Public Class Frm_Formulario_Documento
         _Nombre_Archivo_Txt_Especial_Saime = String.Empty
         _Desde_Prestahop = False
         _ListaCodQRUnicosLeidos = New List(Of String)
+        _Patente_rvm = String.Empty
 
         Lbl_NroDecimales.Text = FormatNumber(0, _DecimalesGl)
 
@@ -4094,12 +4096,12 @@ Public Class Frm_Formulario_Documento
             If _Existe_En_Lista Then
 
                 Dim Chk_Agrupar As New Command
-                Chk_Agrupar.Checked = False
+                Chk_Agrupar.Checked = True
                 Chk_Agrupar.Name = "Chk_Agrupar"
                 Chk_Agrupar.Text = "Agrupar en el registro existente"
 
                 Dim Chk_INSERTar As New Command
-                Chk_INSERTar.Checked = True
+                Chk_INSERTar.Checked = False
                 Chk_INSERTar.Name = "Chk_INSERTar"
                 Chk_INSERTar.Text = "Insertar el producto en un registro nuevo"
 
@@ -6953,6 +6955,15 @@ Public Class Frm_Formulario_Documento
 
             If IsNothing(_RowProducto) Then
 
+                If _Global_Row_Configuracion_General.Item("Patentes_rvm") Then
+                    If Not String.IsNullOrEmpty(_Patente_rvm) Then
+                        If MessageBoxEx.Show(Me, "¿Desea continuar buscando productos para la patente " & _Patente_rvm & "?",
+                                         "Buscar por patente", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
+                            _Patente_rvm = String.Empty
+                        End If
+                    End If
+                End If
+
                 Dim _Tipo_Lista As String
                 Dim _Actualizar_Precios As Boolean
 
@@ -6987,6 +6998,7 @@ Public Class Frm_Formulario_Documento
                 Fm.Pro_Actualizar_Precios = _Actualizar_Precios
                 Fm.Pro_Mostrar_Clasificaciones = True
                 Fm.Pro_Mostrar_Imagenes = True
+                Fm.Patente_rvm = _Patente_rvm
 
                 If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Compra Then
                     Fm.BtnCrearProductos.Visible = True
@@ -7017,6 +7029,7 @@ Public Class Frm_Formulario_Documento
                 Fm.Usar_Bodegas_NVI = (_Tido = "NVI")
 
                 Fm.ShowDialog(Me)
+                _Patente_rvm = Fm.Patente_rvm
 
                 If Fm.Seleccion_Multiple Then
 
@@ -13450,24 +13463,10 @@ Public Class Frm_Formulario_Documento
                 Return
             End If
 
-
-            If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Entidades", "MontoMinCompra") Then
-
-                Dim _MontoMinCompra As Double = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "MontoMinCompra",
-                                                                   "CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "'", True)
-
-                If CBool(_MontoMinCompra) Then
-
-                    If _MontoMinCompra > _TblEncabezado.Rows(0).Item("TotalNetoDoc") Then
-                        MessageBoxEx.Show(Me, "Total neto bajo el mínimo de compra para este proveedor." & vbCrLf &
-                                          "Total neto: " & FormatCurrency(_TblEncabezado.Rows(0).Item("TotalNetoDoc"), 0) &
-                                          ", Mínimo de compra: " & FormatCurrency(_MontoMinCompra, 0), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                        Return
-                    End If
-
-                End If
-
+            If Not Fx_Revisar_MinimoCompra() Then
+                Return
             End If
+
 
 
             If String.IsNullOrEmpty(_TblEncabezado.Rows(0).Item("NroDocumento").ToString.Trim) Then
@@ -25214,7 +25213,38 @@ Public Class Frm_Formulario_Documento
 
     End Function
 
+    Function Fx_Revisar_MinimoCompra() As Boolean
 
+        If _Tido = "OCC" Then
+
+            If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Entidades", "MontoMinCompra") Then
+
+                Dim _MontoMinCompra As Double = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "MontoMinCompra",
+                                                                   "CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "'", True)
+
+                If CBool(_MontoMinCompra) Then
+
+                    If _MontoMinCompra > _TblEncabezado.Rows(0).Item("TotalNetoDoc") Then
+
+                        MessageBoxEx.Show(Me, "Total neto bajo el mínimo de compra para este proveedor." & vbCrLf &
+                                          "Total neto: " & FormatCurrency(_TblEncabezado.Rows(0).Item("TotalNetoDoc"), 0) &
+                                          ", Mínimo de compra: " & FormatCurrency(_MontoMinCompra, 0), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+                        If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00085", Nothing, "", "") Then
+                            Return False
+                        End If
+
+                    End If
+
+                End If
+
+            End If
+
+        End If
+
+        Return True
+
+    End Function
 
 
 End Class

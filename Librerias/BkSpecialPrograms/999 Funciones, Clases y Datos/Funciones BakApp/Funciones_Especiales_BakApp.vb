@@ -893,18 +893,24 @@ Public Module Funciones_Especiales_BakApp
         _Row_Entidad = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If Not (_Row_Entidad Is Nothing) Then
-            Dim _Rut As String = Trim(_Row_Entidad.Item("RTEN"))
+
+            Dim _Rut As String = _Row_Entidad.Item("RTEN").ToString.Trim
+            Dim _Rten = _Rut
+            Dim _Dv As String
+
             If _Rut.Contains("-") Then
                 Dim _Rt = Split(_Rut, "-")
                 _Rut = _Rt(0)
             End If
             Try
-                _Rut = FormatNumber(_Rut, 0) & "-" & RutDigito(_Rut)
+                _Dv = RutDigito(_Rut)
+                _Rut = FormatNumber(_Rut, 0) & "-" & _Dv
             Catch ex As Exception
                 _Rut = _Rut
             End Try
 
             _Row_Entidad.Item("Rut") = _Rut
+            _Row_Entidad.Item("RutSP") = _Rten & "-" & _Dv
         End If
 
         Return _Row_Entidad

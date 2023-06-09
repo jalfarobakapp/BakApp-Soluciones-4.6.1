@@ -324,4 +324,18 @@ Public Class Modulo_Programas_Especiales
         NewPanel = New CRV_Control_Ruta_Vehiculos(_Fm_Menu_Padre)
         _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Right)
     End Sub
+
+    Private Sub Btn_Patentes_rvm_Click(sender As Object, e As EventArgs) Handles Btn_Patentes_rvm.Click
+
+        If Not _Global_Row_Configuracion_General.Item("Patentes_rvm") Then
+            MessageBoxEx.Show(Me, "No esta activada esta opción desde la configuración general",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_Patentes_rvm
+        Fm.ShowDialog(_Fm_Menu_Padre)
+        Fm.Dispose()
+
+    End Sub
 End Class

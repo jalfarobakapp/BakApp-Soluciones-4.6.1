@@ -74,10 +74,10 @@ Public Class Menu
 
         'ButtonX1.Visible = True
 
-        'If _Global_Row_Configuracion_Estacion.Item("FacElect_Usar_AmbienteCertificacion") Then
-        '    Dim _BackColor_Tido As Color = Color.FromArgb(235, 81, 13)
-        '    Metro_Bar_Color.BackgroundStyle.BackColor = _BackColor_Tido
-        'End If
+        If _Global_Row_Configuracion_Estacion.Item("FacElect_Usar_AmbienteCertificacion") Then
+            Dim _BackColor_Tido As Color = Color.FromArgb(235, 81, 13)
+            Metro_Bar_Color.BackgroundStyle.BackColor = _BackColor_Tido
+        End If
 
         Dim DatosConex As New ConexionBK
 
@@ -413,9 +413,6 @@ Public Class Menu
 
     Private Sub ButtonX1_Click(sender As Object, e As EventArgs) Handles ButtonX1.Click
 
-        Dim Fm As New Frm_Comisiones(1)
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
 
         'Dim _IdmaeedoFCV = 1121028
         'Dim _Cl As New Cl_CambiarFechaVencimiento(_IdmaeedoFCV)
@@ -760,5 +757,44 @@ Public Class Menu
         Catch ex As Exception
             Lbl_Estatus.Text = String.Empty
         End Try
+    End Sub
+
+    Private Sub ButtonItem1_Click(sender As Object, e As EventArgs) Handles ButtonItem1.Click
+
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+        Dim _Id_Prog As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_ConfXEstacion", "Id", "NombreEquipo = '" & _NombreEquipo & "'", True)
+
+        If Not CBool(_Id_Prog) Then
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_ConfXEstacion (NombreEquipo) Values ('" & _NombreEquipo & "')"
+            _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Prog)
+        End If
+
+        Dim Fm As New Frm_Demonio_Configuraciones(_Id_Prog, FUNCIONARIO)
+        Fm.ShowDialog(_Fm_Menu_Padre)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub ButtonItem2_Click(sender As Object, e As EventArgs) Handles ButtonItem2.Click
+
+        Dim Fm As New Frm_Demonio_New
+        Fm.ShowDialog(_Fm_Menu_Padre)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub ButtonItem3_Click(sender As Object, e As EventArgs) Handles ButtonItem3.Click
+
+        Dim Fm As New Frm_Cms_Fun
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub ButtonItem4_Click(sender As Object, e As EventArgs) Handles ButtonItem4.Click
+
+        Dim Fm As New Frm_Cms(1)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
     End Sub
 End Class

@@ -1,5 +1,5 @@
 ﻿Imports DevComponents.DotNetBar
-Public Class Frm_Comisiones
+Public Class Frm_Cms
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_Sql As String

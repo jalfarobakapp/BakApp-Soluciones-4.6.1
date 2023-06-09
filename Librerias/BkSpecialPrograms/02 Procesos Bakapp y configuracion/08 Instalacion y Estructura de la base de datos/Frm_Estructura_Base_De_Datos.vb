@@ -159,6 +159,8 @@ Public Class Frm_Estructura_Base_De_Datos
 
             .Sb_Revisar_Tabla2(Me, "Zw_ListaPreGlobal", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_ListaPreProducto", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_ListaPreHistorico", _Modificar, Lbl_Eventos)
+
             .Sb_Revisar_Tabla2(Me, "Zw_Log_Gestiones", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_ListaLC_Programadas", _Modificar, Lbl_Eventos)

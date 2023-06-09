@@ -31,7 +31,6 @@ Partial Class Frm_SQL2Excel_Diseno
         Me.ContextMenuStrip2 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.Mnu_Tex_CopiarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Mnu_Tex_PegarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Txt_Query_SQL = New DevComponents.DotNetBar.Controls.RichTextBoxEx()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.Mnu_CopiarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
@@ -51,6 +50,7 @@ Partial Class Frm_SQL2Excel_Diseno
         Me.Txt_Nombre_Query = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Rdb_Consulta_Global = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Consulta_Personal = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Txt_Query_SQL = New System.Windows.Forms.RichTextBox()
         Me.ContextMenuStrip2.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuperTabControlPanel1.SuspendLayout()
@@ -89,27 +89,6 @@ Partial Class Frm_SQL2Excel_Diseno
         Me.Mnu_Tex_PegarToolStripMenuItem.Name = "Mnu_Tex_PegarToolStripMenuItem"
         Me.Mnu_Tex_PegarToolStripMenuItem.Size = New System.Drawing.Size(109, 22)
         Me.Mnu_Tex_PegarToolStripMenuItem.Text = "Pegar"
-        '
-        'Txt_Query_SQL
-        '
-        Me.Txt_Query_SQL.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_Query_SQL.BackgroundStyle.Class = "RichTextBoxBorder"
-        Me.Txt_Query_SQL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Query_SQL.ContextMenuStrip = Me.ContextMenuStrip2
-        Me.Txt_Query_SQL.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Txt_Query_SQL.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Txt_Query_SQL.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Query_SQL.Location = New System.Drawing.Point(0, 0)
-        Me.Txt_Query_SQL.Name = "Txt_Query_SQL"
-        Me.Txt_Query_SQL.Rtf = "{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang13322{\fonttbl{\f0\fnil\fcharset0" &
-    " Courier New;}}" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "{\*\generator Riched20 10.0.22621}\viewkind4\uc1 " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "\pard\f0\fs2" &
-    "0\par" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "}" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
-        Me.Txt_Query_SQL.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical
-        Me.Txt_Query_SQL.Size = New System.Drawing.Size(879, 373)
-        Me.Txt_Query_SQL.TabIndex = 2
         '
         'ContextMenuStrip1
         '
@@ -153,9 +132,9 @@ Partial Class Frm_SQL2Excel_Diseno
         '
         Me.SuperTabControlPanel2.Controls.Add(Me.Grilla)
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 25)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(879, 398)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(879, 373)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
         '
@@ -195,7 +174,7 @@ Partial Class Frm_SQL2Excel_Diseno
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla.Size = New System.Drawing.Size(879, 398)
+        Me.Grilla.Size = New System.Drawing.Size(879, 373)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 67
         '
@@ -437,6 +416,18 @@ Partial Class Frm_SQL2Excel_Diseno
         Me.Rdb_Consulta_Personal.TabIndex = 72
         Me.Rdb_Consulta_Personal.Text = "Consulta personal"
         '
+        'Txt_Query_SQL
+        '
+        Me.Txt_Query_SQL.BackColor = System.Drawing.Color.White
+        Me.Txt_Query_SQL.ContextMenuStrip = Me.ContextMenuStrip2
+        Me.Txt_Query_SQL.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Txt_Query_SQL.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Query_SQL.Location = New System.Drawing.Point(0, 0)
+        Me.Txt_Query_SQL.Name = "Txt_Query_SQL"
+        Me.Txt_Query_SQL.Size = New System.Drawing.Size(879, 373)
+        Me.Txt_Query_SQL.TabIndex = 28
+        Me.Txt_Query_SQL.Text = ""
+        '
         'Frm_SQL2Excel_Diseno
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -474,7 +465,6 @@ Partial Class Frm_SQL2Excel_Diseno
     Friend WithEvents ContextMenuStrip2 As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents Mnu_Tex_CopiarToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents Mnu_Tex_PegarToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents Txt_Query_SQL As DevComponents.DotNetBar.Controls.RichTextBoxEx
     Friend WithEvents ContextMenuStrip1 As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents Mnu_CopiarToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SuperTabItem1 As DevComponents.DotNetBar.SuperTabItem
@@ -494,4 +484,5 @@ Partial Class Frm_SQL2Excel_Diseno
     Friend WithEvents Rdb_Consulta_Global As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Rdb_Consulta_Personal As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
+    Friend WithEvents Txt_Query_SQL As RichTextBox
 End Class

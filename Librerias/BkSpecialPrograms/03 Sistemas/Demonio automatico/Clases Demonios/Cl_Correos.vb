@@ -1264,6 +1264,38 @@ Public Class Cl_Correos
             _Texto = Replace(_Texto, "<RutEmpresa>", RutEmpresa)
             _Texto = Replace(_Texto, "<RutEmpresaActiva>", RutEmpresaActiva)
 
+            Dim _Dv, _Rut, _RutEmpresaCP, _RutEmpresaActivaCP As String
+
+            _Rut = RutEmpresa
+            If _Rut.Contains("-") Then
+                Dim _Rt = Split(_Rut, "-")
+                _Rut = _Rt(0)
+            End If
+            Try
+                _Dv = RutDigito(_Rut)
+                _Rut = FormatNumber(_Rut, 0) & "-" & _Dv
+            Catch ex As Exception
+                _Rut = _Rut
+            End Try
+            _RutEmpresaCP = _Rut
+
+            _Rut = RutEmpresaActiva
+            If _Rut.Contains("-") Then
+                Dim _Rt = Split(_Rut, "-")
+                _Rut = _Rt(0)
+            End If
+            Try
+                _Dv = RutDigito(_Rut)
+                _Rut = FormatNumber(_Rut, 0) & "-" & _Dv
+            Catch ex As Exception
+                _Rut = _Rut
+            End Try
+            _RutEmpresaActivaCP = _Rut
+
+            _Texto = Replace(_Texto, "<RutEmpresaCP>", _RutEmpresaCP)
+            _Texto = Replace(_Texto, "<RutEmpresaActivaCP>", _RutEmpresaActivaCP)
+
+
             _Texto = Replace(_Texto, "&lt;", "<")
             _Texto = Replace(_Texto, "&gt;", ">")
 
@@ -1277,38 +1309,16 @@ Public Class Cl_Correos
 
             Sb_Llenar_Listado_Funciones(0, _Texto, _Funciones)
 
-
             For Each _Funcion As String In _Funciones
 
                 Dim _Row As DataRow
 
                 _Row = _Row_Encabezado
                 If Not IsNothing(_Row) Then
-                    If Not Fx_Encontrar_Funcion(_Row_Encabezado, _Funcion, _Texto, True) Then
-                        Fx_Encontrar_Funcion(_Row_Encabezado, _Funcion, _Texto, False)
+                    If Not Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, True) Then
+                        Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, False)
                     End If
                 End If
-
-
-                'For Each _Columna As DataColumn In _Row_Encabezado.Table.Columns
-
-                '    Dim _FunEncontrada = False
-
-                '    If _Funcion.Trim = _Columna.ColumnName.Trim Then
-                '        _FunEncontrada = True
-                '    ElseIf _Funcion.Contains(_Columna.ColumnName) Then
-                '        _FunEncontrada = True
-                '    End If
-
-                '    If _FunEncontrada Then
-                '        Dim _Funcion_Buscar = "<" & _Funcion & ">"
-                '        Dim _Valor_Funcion = Fx_Parametro_Vs_Variable(_Funcion_Buscar, _Row_Encabezado)
-
-                '        _Texto = Replace(_Texto, _Funcion_Buscar, _Valor_Funcion)
-                '        Exit For
-                '    End If
-
-                'Next
 
                 Dim _Endo = _Row_Encabezado.Item("ENDO")
                 Dim _Suendo = _Row_Encabezado.Item("SUENDO")
@@ -1317,60 +1327,20 @@ Public Class Cl_Correos
 
                 _Row = _Row_Entidad
                 If Not IsNothing(_Row) Then
-                    If Not Fx_Encontrar_Funcion(_Row_Encabezado, _Funcion, _Texto, True) Then
-                        Fx_Encontrar_Funcion(_Row_Encabezado, _Funcion, _Texto, False)
+                    If Not Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, True) Then
+                        Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, False)
                     End If
                 End If
-
-                'For Each _Columna As DataColumn In _Row_Entidad.Table.Columns
-
-                '    Dim _FunEncontrada = False
-
-                '    If _Funcion.Trim = _Columna.ColumnName.Trim Then
-                '        _FunEncontrada = True
-                '    ElseIf _Funcion.Contains(_Columna.ColumnName) Then
-                '        _FunEncontrada = True
-                '    End If
-
-                '    If _FunEncontrada Then
-                '        Dim _Funcion_Buscar = "<" & _Funcion & ">"
-                '        Dim _Valor_Funcion = Fx_Parametro_Vs_Variable(_Funcion_Buscar, _Row_Encabezado)
-
-                '        _Texto = Replace(_Texto, _Funcion_Buscar, _Valor_Funcion)
-                '        Exit For
-                '    End If
-
-                'Next
 
                 Consulta_Sql = "Select * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo
                 Dim _Row_Observaciones As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
                 _Row = _Row_Observaciones
                 If Not IsNothing(_Row) Then
-                    If Not Fx_Encontrar_Funcion(_Row_Encabezado, _Funcion, _Texto, True) Then
-                        Fx_Encontrar_Funcion(_Row_Encabezado, _Funcion, _Texto, False)
+                    If Not Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, True) Then
+                        Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, False)
                     End If
                 End If
-
-                'For Each _Columna As DataColumn In _Row_Observaciones.Table.Columns
-
-                '    Dim _FunEncontrada = False
-
-                '    If _Funcion.Trim = _Columna.ColumnName.Trim Then
-                '        _FunEncontrada = True
-                '    ElseIf _Funcion.Contains(_Columna.ColumnName) Then
-                '        _FunEncontrada = True
-                '    End If
-
-                '    If _FunEncontrada Then
-                '        Dim _Funcion_Buscar = "<" & _Funcion & ">"
-                '        Dim _Valor_Funcion = Fx_Parametro_Vs_Variable(_Funcion_Buscar, _Row_Encabezado)
-
-                '        _Texto = Replace(_Texto, _Funcion_Buscar, _Valor_Funcion)
-                '        Exit For
-                '    End If
-
-                'Next
 
             Next
 
@@ -1605,12 +1575,6 @@ Public Class Cl_Correos
                     End If
 
                 End If
-
-                'Dim _Typos As New List(Of String)
-                'For i = 0 To _Row.ItemArray.Length - 1
-                '    _Typos.Add(_Row.Item(i).GetType.ToString)
-                'Next
-                'Dim f = 0
 
             Catch ex As Exception
                 _Valor_Devuelto = _Campo & " -> Función desconocida"
