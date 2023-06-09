@@ -273,7 +273,7 @@ Public Class Frm_SQL2Excel_Diseno
 
         ChangeColorForPrefixComentarios(Txt_Query_SQL, "'", "'", Color.Red)
         ChangeColorForPrefix(Txt_Query_SQL, "--", Color.Green)
-        ChangeColorForPrefixComentarios(Txt_Query_SQL, "/*", "*/'", Color.Green)
+        ChangeColorForPrefixComentarios(Txt_Query_SQL, "/*", "*/", Color.Green)
 
 
         Txt_Query_SQL.SelectionStart = _Posicion_Origen
@@ -454,6 +454,7 @@ Public Class Frm_SQL2Excel_Diseno
         Dim originalSelectionLength As Integer = richTextBox.SelectionLength
 
         Dim index As Integer = 0
+        Dim vB = prefixFIN.Length
 
         While index < richTextBox.TextLength
 
@@ -472,7 +473,13 @@ Public Class Frm_SQL2Excel_Diseno
                     If _Index2 = richTextBox.TextLength Then
                         Exit Do
                     End If
-                    Dim _Cadena_Extraida = richTextBox.Text.Substring(_Index2, 1)
+                    Dim _Cadena_Extraida
+                    Try
+                        _Cadena_Extraida = richTextBox.Text.Substring(_Index2, vB)
+                    Catch ex As Exception
+                        _Cadena_Extraida = prefixFIN
+                    End Try
+
                     If _Cadena_Extraida = prefixFIN And _Index2 <> index Then
                         _Fin = True
                         _Contador += 1
@@ -483,7 +490,7 @@ Public Class Frm_SQL2Excel_Diseno
                 Loop
 
                 richTextBox.SelectionStart = index
-                richTextBox.SelectionLength = _Contador - 1
+                richTextBox.SelectionLength = _Contador '- 1
                 richTextBox.SelectionColor = color
 
             Else
@@ -870,7 +877,7 @@ Namespace SqlCommandos
             Fx_LlenarComando("GROUP BY", Tipos.PRACTICAS)
             Fx_LlenarComando("INSERT", Tipos.PRACTICAS)
             Fx_LlenarComando("INTO", Tipos.PRACTICAS)
-            Fx_LlenarComando("AS", Tipos.PRACTICAS)
+            Fx_LlenarComando("AS ", Tipos.PRACTICAS)
             Fx_LlenarComando("ON", Tipos.PRACTICAS)
             Fx_LlenarComando("ORDER BY", Tipos.PRACTICAS)
             Fx_LlenarComando("SELECT", Tipos.PRACTICAS)

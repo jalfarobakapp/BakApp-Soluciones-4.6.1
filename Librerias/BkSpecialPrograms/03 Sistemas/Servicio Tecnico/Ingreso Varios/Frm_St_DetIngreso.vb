@@ -75,9 +75,14 @@ Public Class Frm_St_DetIngreso
 
         End If
 
+        Input_Cantidad.Value = 1
+        Input_Cantidad.Enabled = False
+
         Btn_Direccion_Servicio.Enabled = Chk_Serv_Domicilio.Checked
 
-        Me.ActiveControl = Input_Cantidad
+        Me.ActiveControl = Txt_NroSerie
+        LabelX12.Visible = False
+        Input_Cantidad.Visible = False
 
     End Sub
 
@@ -119,6 +124,16 @@ Public Class Frm_St_DetIngreso
             Txt_NroSerie.Focus()
             Return
         End If
+
+        For Each _Fl As DataRow In Cl_OrdenServicio.DsDocumento.Tables(0).Rows
+
+            If Codigo = _Fl.Item("Codigo").ToString.Trim And _Fl.Item("NroSerie").ToString.Trim = Txt_NroSerie.Text.Trim Then
+                MessageBoxEx.Show(Me, "ESTE PRODUCTO Y NUMERO DE SERIE YA SE ENCUENTRA EN LA LISTA", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_NroSerie.Focus()
+                Return
+            End If
+
+        Next
 
         If String.IsNullOrEmpty(Txt_Defecto_segun_cliente.Text.Trim) Then
             MessageBoxEx.Show(Me, "DEBE INGRESAR EL DEFECTO SEGUN EL CLIENTE", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)

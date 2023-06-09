@@ -110,19 +110,26 @@ Public Class Frm_St_EncIngreso
             _DisplayIndex += 1
 
             .Columns("Descripcion").ReadOnly = True
-            .Columns("Descripcion").Width = 490
+            .Columns("Descripcion").Width = 430
             .Columns("Descripcion").HeaderText = "Descripción"
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Cantidad").ReadOnly = True
-            .Columns("Cantidad").Width = 60
-            .Columns("Cantidad").HeaderText = "Cantidad"
-            .Columns("Cantidad").Visible = True
-            .Columns("Fecha_Entrega").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Cantidad").DisplayIndex = _DisplayIndex
+            .Columns("NroSerie").ReadOnly = True
+            .Columns("NroSerie").Width = 120
+            .Columns("NroSerie").HeaderText = "Nro. Serie"
+            .Columns("NroSerie").Visible = True
+            .Columns("NroSerie").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
+
+            '.Columns("Cantidad").ReadOnly = True
+            '.Columns("Cantidad").Width = 60
+            '.Columns("Cantidad").HeaderText = "Cantidad"
+            '.Columns("Cantidad").Visible = True
+            '.Columns("Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            '.Columns("Cantidad").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
 
             .Columns("Chk_Serv_Garantia").ReadOnly = True
             .Columns("Chk_Serv_Garantia").Width = 50
@@ -164,6 +171,11 @@ Public Class Frm_St_EncIngreso
     End Sub
 
     Private Sub Btn_Agregar_Producto_Click(sender As Object, e As EventArgs) Handles Btn_Agregar_Producto.Click
+
+        If Grilla.RowCount = 8 Then
+            MessageBoxEx.Show(Me, "No es posible ingresar mas productos, máximo 8", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Dim _RowProducto As DataRow
 
@@ -220,13 +232,13 @@ Public Class Frm_St_EncIngreso
                 _Id_Ot = Grilla_Productos.RowCount + 1
             End If
 
-            Dim _Aceptar As Boolean = InputBox_Bk(Me, "Descripción del producto", "Producto a reparar",
-                                                  _Descripcion, False,
-                                                  _Tipo_Mayus_Minus.Mayusculas, 50, True, _Tipo_Imagen.Texto)
+            'Dim _Aceptar As Boolean = InputBox_Bk(Me, "Descripción del producto", "Producto a reparar",
+            '                                      _Descripcion, False,
+            '                                      _Tipo_Mayus_Minus.Mayusculas, 50, True, _Tipo_Imagen.Texto)
 
-            If Not _Aceptar Then
-                Return
-            End If
+            'If Not _Aceptar Then
+            '    Return
+            'End If
 
             Dim _Grabar As Boolean
 
@@ -238,7 +250,13 @@ Public Class Frm_St_EncIngreso
             _Grabar = Fm2.Grabar
             Fm2.Dispose()
 
+            Sb_Actualizar_Grilla_Productos()
+
             If _Grabar Then
+
+                Grilla.CurrentCell = Grilla.Rows(Grilla.RowCount - 1).Cells(1)
+                Grilla.Rows(Grilla.RowCount - 1).Selected = True
+
                 Call Grilla_Productos_CellEnter(Nothing, Nothing)
             End If
 
@@ -248,8 +266,16 @@ Public Class Frm_St_EncIngreso
 
     Private Sub Grilla_Productos_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Productos.CellEnter
 
+        Dim _Fila As DataGridViewRow
+
+        _Fila = Grilla_Productos.CurrentRow
+
+        If IsNothing(_Fila) And CBool(Grilla.Rows.Count) Then
+            _Fila = Grilla.Rows(0)
+        End If
+
         Try
-            Dim _Fila As DataGridViewRow = Grilla_Productos.CurrentRow
+
             Dim _Id_Ot As Integer = _Fila.Cells("Id_Ot").Value
 
             Txt_Defecto_segun_cliente.Text = String.Empty
@@ -294,6 +320,8 @@ Public Class Frm_St_EncIngreso
         Fm2.ShowDialog(Me)
         _Grabar = Fm2.Grabar
         Fm2.Dispose()
+
+        'Sb_Actualizar_Grilla_Productos()
 
         If _Grabar Then
             Call Grilla_Productos_CellEnter(Nothing, Nothing)
@@ -522,21 +550,29 @@ Public Class Frm_St_EncIngreso
 
         Dim _SqlQuery = String.Empty
 
-        For Each _Fila As DataRow In Cl_OrdenServicio.DsDocumento.Tables(0).Rows
+        Consulta_sql = "Select Ots.Id_Ot,Ots.Id_Ot_Padre,Ots.Nro_Ot,Ots.Sub_Ot,Ots.Codigo,Ots.Descripcion,Ots.NroSerie,Nts.Defecto_segun_cliente" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_St_OT_Encabezado Ots" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_St_OT_Notas Nts On Ots.Id_Ot = Nts.Id_Ot" & vbCrLf &
+                       "Where Id_Ot_Padre = " & _Id_Ot_Padre
+        Dim _Tbl_Ots As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        For Each _Fila As DataRow In _Tbl_Ots.Rows 'Cl_OrdenServicio.DsDocumento.Tables(0).Rows
 
             Consulta_sql = "Insert Into MAEST (EMPRESA,KOSU,KOBO,KOPR) Values " &
                 "('" & ModEmpresa & "','" & _ServTecnico_Sucursal & "','" & _ServTecnico_Bodega & "','" & _Fila.Item("Codigo") & "')"
             _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
-            Dim _Cantidad As Double = _Fila.Item("Cantidad")
+            Dim _Cantidad As Double = 1 '_Fila.Item("Cantidad")
             Dim _Costo As Double = _Sql.Fx_Trae_Dato("TABPRE", "PP01UD",
                                                      "KOLT = '" & ModListaPrecioVenta & "' And KOPR = '" & _Fila.Item("Codigo") & "'", True)
 
             If _Costo = 0 Then _Costo = 1
 
+            Dim _Observa As String = _Fila.Item("Id_Ot")
+
             _SqlQuery += "Select '" & _ServTecnico_Sucursal & "' As Sucursal,'" & _ServTecnico_Bodega & "' As Bodega" &
                          ",'" & _Fila.Item("Codigo") & "' As Codigo,'" & _Fila.Item("Descripcion") & "' As Descripcion," &
-                         _Cantidad & " As Cantidad," & De_Num_a_Tx_01(_Costo, False, 5) & " As Costo" & vbCrLf
+                         _Cantidad & " As Cantidad," & De_Num_a_Tx_01(_Costo, False, 5) & " As Costo,'" & _Observa & "' As Observa" & vbCrLf
 
             If _Contador <> Cl_OrdenServicio.DsDocumento.Tables(0).Rows.Count Then
                 _SqlQuery += "Union" & vbCrLf
@@ -551,24 +587,50 @@ Public Class Frm_St_EncIngreso
         Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(_SqlQuery)
 
         Dim Fm As New Frm_Formulario_Documento("GRP", csGlobales.Enum_Tipo_Documento.Guia_Recepcion_Prestamos_GRP_PRE,
-                                                   False, True, False, False, False)
+                                               False, True, False, False, False)
         Fm.Pro_RowEntidad = Cl_OrdenServicio.RowEntidad
         Fm.Sb_Crear_Documento_Interno_Con_Tabla2(Me, _Tbl_Productos, FechaDelServidor,
                                                      "Codigo", "Cantidad", "Costo", _Observaciones, False, False, _NroDocumento)
         _Idmaeedo = Fm.Fx_Grabar_Documento(False,, False)
         Fm.Dispose()
 
-        If CBool(_Id_Ot_Padre) Then
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set Idmaeedo_GRP_PRE = " & _Idmaeedo & " 
-                        Where Id_Ot_Padre = " & _Id_Ot_Padre & vbCrLf &
-                       "Update MAEEDOOB Set OCDO = '" & _Nro_OT & "',TEXTO1 = '" & Txt_Nombre_Contacto.Text & "'
-                        Where IDMAEEDO = " & _Idmaeedo
-        Else
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set Idmaeedo_GRP_PRE = " & _Idmaeedo & " 
-                        Where Id_Ot = " & _Id_Ot & vbCrLf &
-                       "Update MAEEDOOB Set OCDO = '" & _Nro_OT & "',TEXTO1 = '" & Txt_Nombre_Contacto.Text & "'
-                        Where IDMAEEDO = " & _Idmaeedo
-        End If
+        Consulta_sql = "Select IDMAEEDO,IDMAEDDO,OBSERVA,TIDO,NUDO From MAEDDO Where IDMAEEDO = " & _Idmaeedo
+        Dim _Tbl_DetalleGrc As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        Consulta_sql = String.Empty
+
+        For Each _Fl As DataRow In _Tbl_DetalleGrc.Rows
+
+            Dim _Idmaeddo As Integer = _Fl.Item("IDMAEDDO")
+            _Id_Ot = _Fl.Item("OBSERVA")
+
+            For Each _Flst As DataRow In _Tbl_Ots.Rows
+
+                If _Id_Ot = _Flst.Item("Id_Ot") Then
+
+                    Dim _Observa As String = "OTS: " & _Flst.Item("Nro_Ot") & " - SubOt: " & _Flst.Item("Sub_Ot") & ", Serie: " & _Flst.Item("NroSerie") & ", " & _Flst.Item("Defecto_segun_cliente")
+
+                    Consulta_sql += "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set Idmaeedo_GRP_PRE = " & _Idmaeedo & ", Idmaeddo_GRP_PRE = " & _Idmaeddo &
+                                    " Where Id_Ot = " & _Id_Ot & vbCrLf &
+                                    "Update MAEDDO Set OBSERVA = '" & Mid(_Observa, 1, 200) & "' Where IDMAEDDO = " & _Idmaeddo & vbCrLf
+
+                End If
+
+            Next
+
+        Next
+
+        'If CBool(_Id_Ot_Padre) Then
+        '    Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set Idmaeedo_GRP_PRE = " & _Idmaeedo & " 
+        '                Where Id_Ot_Padre = " & _Id_Ot_Padre & vbCrLf &
+        '               "Update MAEEDOOB Set OCDO = '" & _Nro_OT & "',TEXTO1 = '" & Txt_Nombre_Contacto.Text & "'
+        '                Where IDMAEEDO = " & _Idmaeedo
+        'Else
+        '    Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set Idmaeedo_GRP_PRE = " & _Idmaeedo & " 
+        '                Where Id_Ot = " & _Id_Ot & vbCrLf &
+        '               "Update MAEEDOOB Set OCDO = '" & _Nro_OT & "',TEXTO1 = '" & Txt_Nombre_Contacto.Text & "'
+        '                Where IDMAEEDO = " & _Idmaeedo
+        'End If
 
         _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
