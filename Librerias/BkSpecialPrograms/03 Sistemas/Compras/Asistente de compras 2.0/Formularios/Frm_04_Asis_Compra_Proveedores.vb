@@ -94,8 +94,8 @@ Public Class Frm_04_Asis_Compra_Proveedores
                 If Rd_Costo_Lista_Proveedor.Checked Then
 
                     Consulta_Sql = "SELECT DISTINCT ENDO AS KOEN,(Select Top 1 NOKOEN From MAEEN Where KOEN = ENDO) As RAZON," & vbCrLf &
-                                   "Isnull((Select Top 1 CostoUd1 From Zw_ListaPreCosto Where Proveedor = ENDO And Codigo = '" & _Codigo & "'),0) As Ud1," & vbCrLf &
-                                   "Isnull((Select Top 1 CostoUd2 From Zw_ListaPreCosto Where Proveedor = ENDO And Codigo = '" & _Codigo & "'),0) As Ud2" & vbCrLf &
+                                   "Isnull((Select Top 1 CostoUd1 From " & _Global_BaseBk & "Zw_ListaPreCosto Where Proveedor = ENDO And Codigo = '" & _Codigo & "'),0) As Ud1," & vbCrLf &
+                                   "Isnull((Select Top 1 CostoUd2 From " & _Global_BaseBk & "Zw_ListaPreCosto Where Proveedor = ENDO And Codigo = '" & _Codigo & "'),0) As Ud2" & vbCrLf &
                                    "FROM MAEDDO Ddo WHERE KOPRCT = '" & _Codigo & "'" & vbCrLf &
                                    "AND ENDO NOT IN " & vbCrLf &
                                    "(Select DISTINCT KOEN" & vbCrLf &
@@ -105,8 +105,8 @@ Public Class Frm_04_Asis_Compra_Proveedores
                                    "UNION" & vbCrLf &
                                    "Select DISTINCT KOEN," & vbCrLf &
                                    "(Select Top 1 NOKOEN From MAEEN Where KOEN = Td.KOEN) As RAZON," & vbCrLf &
-                                   "Isnull((Select Top 1 CostoUd1 From Zw_ListaPreCosto Where Proveedor = KOEN And Codigo = '" & _Codigo & "'),0) As Ud1," & vbCrLf &
-                                   "Isnull((Select Top 1 CostoUd2 From Zw_ListaPreCosto Where Proveedor = KOEN And Codigo = '" & _Codigo & "'),0) As Ud2" & vbCrLf &
+                                   "Isnull((Select Top 1 CostoUd1 From " & _Global_BaseBk & "Zw_ListaPreCosto Where Proveedor = KOEN And Codigo = '" & _Codigo & "'),0) As Ud1," & vbCrLf &
+                                   "Isnull((Select Top 1 CostoUd2 From " & _Global_BaseBk & "Zw_ListaPreCosto Where Proveedor = KOEN And Codigo = '" & _Codigo & "'),0) As Ud2" & vbCrLf &
                                    "From TABCODAL Td" & vbCrLf &
                                    "Where KOPR = '" & _Codigo & "' And Td.KOEN <> '' And Td.KOEN In " & _Filtro_Cadena
 
@@ -114,8 +114,8 @@ Public Class Frm_04_Asis_Compra_Proveedores
 
                         Consulta_Sql = "Select DISTINCT KOEN," & vbCrLf &
                                        "(Select Top 1 NOKOEN From MAEEN Where KOEN = Td.KOEN) As RAZON," & vbCrLf &
-                                       "Isnull((Select Top 1 CostoUd1 From Zw_ListaPreCosto Where Proveedor = KOEN And Codigo = '" & _Codigo & "'),0) As Ud1," & vbCrLf &
-                                       "Isnull((Select Top 1 CostoUd2 From Zw_ListaPreCosto Where Proveedor = KOEN And Codigo = '" & _Codigo & "'),0) As Ud2" & vbCrLf &
+                                       "Isnull((Select Top 1 CostoUd1 From " & _Global_BaseBk & "Zw_ListaPreCosto Where Proveedor = KOEN And Codigo = '" & _Codigo & "'),0) As Ud1," & vbCrLf &
+                                       "Isnull((Select Top 1 CostoUd2 From " & _Global_BaseBk & "Zw_ListaPreCosto Where Proveedor = KOEN And Codigo = '" & _Codigo & "'),0) As Ud2" & vbCrLf &
                                        "From TABCODAL Td" & vbCrLf &
                                        "Where KOPR = '" & _Codigo & "' And Td.KOEN <> '' And Td.KOEN In " & _Filtro_Cadena
 

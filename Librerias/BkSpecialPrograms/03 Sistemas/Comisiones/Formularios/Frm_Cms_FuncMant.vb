@@ -33,6 +33,8 @@
                        "Where Uss.Id = " & _Id
         _Row_Funcionario = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
+        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+
     End Sub
 
     Private Sub Frm_Cms_FuncMant_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -44,9 +46,13 @@
         End If
 
         Txt_Funcionario.Text = _Row_Funcionario.Item("KOFU").ToString.Trim & " - " & _Row_Funcionario.Item("NOKOFU").ToString.Trim
-        Txt_AFP.Text = _Row_Funcionario.Item("AFP")
-        Txt_Salud.Text = _Row_Funcionario.Item("Salud")
+        Txt_AFP.Text = De_Num_a_Tx_01(_Row_Funcionario.Item("AFP"), False, 2)
+        Txt_Salud.Text = De_Num_a_Tx_01(_Row_Funcionario.Item("Salud"), False, 2)
         Chk_Habilitado.Checked = _Row_Funcionario.Item("Habilitado")
+
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
+        Sb_Actualizar_Grilla()
 
     End Sub
 
@@ -58,7 +64,8 @@
                        "When VentasXEmpresa = 1 Then 'Ventas por empresa'" & vbCrLf &
                        "When VentasXSucursal = 1 Then 'Ventas por sucursales...'+XSucursales" & vbCrLf &
                        "When VentasXVendedores = 1 Then 'Ventas por vendedores: '+XVendedores" & vbCrLf &
-                       "End As Resumen, From " & _Global_BaseBk & "Zw_Comisiones_Mis" & vbCrLf &
+                       "End As Resumen" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Comisiones_Mis" & vbCrLf &
                        "Where CodFuncionario = '" & _Row_Funcionario.Item("KOFU") & "'"
         _Tbl_MisComisiones = _Sql.Fx_Get_Tablas(Consulta_Sql)
 
@@ -68,14 +75,16 @@
 
             .DataSource = _Tbl_MisComisiones
 
-            .Columns("Descripcion").Width = 150
+            OcultarEncabezadoGrilla(Grilla)
+
+            .Columns("Descripcion").Width = 200
             .Columns("Descripcion").HeaderText = "Descripción"
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").ReadOnly = False
             .Columns("Descripcion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("PorcComision").Width = 50
+            .Columns("PorcComision").Width = 40
             .Columns("PorcComision").HeaderText = "% CM"
             .Columns("PorcComision").ToolTipText = "Porcenta de comisión"
             .Columns("PorcComision").Visible = True
@@ -83,7 +92,7 @@
             .Columns("PorcComision").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Resumen").Width = 200
+            .Columns("Resumen").Width = 250
             .Columns("Resumen").HeaderText = "Resumen"
             .Columns("Resumen").Visible = True
             .Columns("Resumen").ReadOnly = False
@@ -96,10 +105,13 @@
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
+        Dim _Afp As Double = Val(Txt_AFP.Text)
+        Dim _Salud As Double = Val(Txt_Salud.Text)
+
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Comisiones_Fun Set" &
-                       " AFP = " & Txt_AFP.Text &
-                       ",Salud = " & Txt_Salud.Text &
-                       ",Habilitado = 0" & vbCrLf &
+                       " AFP = " & De_Num_a_Tx_01(_Afp, False, 5) &
+                       ",Salud = " & De_Num_a_Tx_01(_Salud, False, 5) &
+                       ",Habilitado = " & Convert.ToInt32(Chk_Habilitado.Checked) & vbCrLf &
                        "Where Id = " & _Id
         If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
             Grabar = True
@@ -155,6 +167,19 @@
             e.Handled = True
             SendKeys.Send(".")
         End If
+    End Sub
+
+    Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        Dim _Id As Integer = _Fila.Cells("Id").Value
+        Dim _CodFuncionario As String = _Fila.Cells("CodFuncionario").Value
+
+        Dim Fm As New Frm_Cms_AgregarTipos(_Id, _CodFuncionario)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
     End Sub
 
 End Class

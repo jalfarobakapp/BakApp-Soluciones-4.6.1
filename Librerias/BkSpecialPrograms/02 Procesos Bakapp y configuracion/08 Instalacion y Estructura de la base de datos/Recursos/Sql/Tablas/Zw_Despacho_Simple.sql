@@ -8,7 +8,7 @@ CREATE TABLE [dbo].[Zw_Despacho_Simple](
 	[TipoPagoDesp]			[varchar](50)   NOT NULL DEFAULT (''),
 	[DireccionDesp]			[varchar](50)   NOT NULL DEFAULT (''),
 	[TransporteDesp]		[varchar](50)   NOT NULL DEFAULT (''),
-	[ObservacionesDesp]		[varchar](50)   NOT NULL DEFAULT (''),
+	[ObservacionesDesp]		[varchar](250)  NOT NULL DEFAULT (''),
 	[CodDocDestino]		    [varchar](3)    NOT NULL DEFAULT (''),
 	[DocDestino]		    [varchar](50)   NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Despacho_Simple] PRIMARY KEY CLUSTERED 

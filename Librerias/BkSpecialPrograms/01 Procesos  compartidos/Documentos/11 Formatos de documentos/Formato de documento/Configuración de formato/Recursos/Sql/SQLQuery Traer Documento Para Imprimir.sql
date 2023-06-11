@@ -241,7 +241,6 @@ From dbo.MAEDDO Edd
 
 Where IDMAEEDO = @Idmaeedo 
 #Condicion_Extra_Maeddo#
---Order By IDMAEDDO
 
 Update #Paso_Detalle Set MAEFICHD = Isnull((Select Top 1 FICHA From MAEFICHD Where MAEFICHD.KOPR = #Paso_Detalle.KOPR),'')
 

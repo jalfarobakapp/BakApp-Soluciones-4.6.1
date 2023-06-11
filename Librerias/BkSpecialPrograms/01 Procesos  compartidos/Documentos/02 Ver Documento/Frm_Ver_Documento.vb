@@ -3317,7 +3317,15 @@ Public Class Frm_Ver_Documento
             Fm_Fl.Dispose()
 
         Else
-            MessageBoxEx.Show(Me, "No existen datos que mostrar", "Buscar Orden de despacho", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            Dim Fm As New Frm_DespachoSimple(0, _Idmaeedo)
+            If Not IsNothing(Fm.RowDepachoSimple) Then
+                Fm.ShowDialog(Me)
+            Else
+                MessageBoxEx.Show(Me, "No existen datos que mostrar", "Buscar Orden de despacho", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End If
+            Fm.Dispose()
+
         End If
 
         Me.Enabled = True

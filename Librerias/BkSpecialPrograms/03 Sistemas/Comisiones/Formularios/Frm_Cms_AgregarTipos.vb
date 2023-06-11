@@ -34,6 +34,22 @@
 
     Private Sub Frm_Cms_AgregarTipos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        If Not IsNothing(_Row_Comisiones_Mis) Then
+
+            With _Row_Comisiones_Mis
+                Txt_Descripcion.Text = .Item("Descripcion")
+                Txt_PorcComision.Text = .Item("PorcComision")
+                Rdb_MisVentas.Checked = .Item("MisVentas")
+                Rdb_VentasXEmpresa.Checked = .Item("VentasXEmpresa")
+                Rdb_VentasXSucursal.Checked = .Item("VentasXSucursal")
+                Rdb_VentasXVendedores.Checked = .Item("VentasXVendedores")
+                Chk_QuitarEntExcluidas.Checked = .Item("QuitarEntExcluidas")
+                Chk_TieneSC.Checked = .Item("TieneSC")
+            End With
+
+        End If
+
+
         AddHandler Rdb_MisVentas.CheckedChanged, AddressOf Rdb_CheckedChanged
         AddHandler Rdb_VentasXEmpresa.CheckedChanged, AddressOf Rdb_CheckedChanged
         AddHandler Rdb_VentasXSucursal.CheckedChanged, AddressOf Rdb_CheckedChanged

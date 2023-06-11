@@ -22,9 +22,9 @@ Partial Class Frm_Cms_FuncMant
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Cms_FuncMant))
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
@@ -33,13 +33,13 @@ Partial Class Frm_Cms_FuncMant
         Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_AgregarComision = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_Salud = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_AFP = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Chk_Habilitado = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Funcionario = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_AFP = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Txt_Salud = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -91,37 +91,37 @@ Partial Class Frm_Cms_FuncMant
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle16.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle16.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle16.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle16
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle17.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle17.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle17.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle17.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle17
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle18.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle18.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle18.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle18
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.Size = New System.Drawing.Size(557, 98)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 27
@@ -214,6 +214,40 @@ Partial Class Frm_Cms_FuncMant
         Me.GroupPanel2.TabIndex = 160
         Me.GroupPanel2.Text = "Datos del funcionario"
         '
+        'Txt_Salud
+        '
+        Me.Txt_Salud.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Salud.Border.Class = "TextBoxBorder"
+        Me.Txt_Salud.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Salud.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Salud.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Salud.Location = New System.Drawing.Point(84, 60)
+        Me.Txt_Salud.Name = "Txt_Salud"
+        Me.Txt_Salud.Size = New System.Drawing.Size(54, 22)
+        Me.Txt_Salud.TabIndex = 2
+        Me.Txt_Salud.Text = "0"
+        Me.Txt_Salud.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Txt_AFP
+        '
+        Me.Txt_AFP.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_AFP.Border.Class = "TextBoxBorder"
+        Me.Txt_AFP.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_AFP.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_AFP.ForeColor = System.Drawing.Color.Black
+        Me.Txt_AFP.Location = New System.Drawing.Point(84, 32)
+        Me.Txt_AFP.Name = "Txt_AFP"
+        Me.Txt_AFP.Size = New System.Drawing.Size(54, 22)
+        Me.Txt_AFP.TabIndex = 1
+        Me.Txt_AFP.Text = "0"
+        Me.Txt_AFP.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
         'Chk_Habilitado
         '
         Me.Chk_Habilitado.BackColor = System.Drawing.Color.Transparent
@@ -290,40 +324,6 @@ Partial Class Frm_Cms_FuncMant
         Me.LabelX1.Size = New System.Drawing.Size(75, 23)
         Me.LabelX1.TabIndex = 0
         Me.LabelX1.Text = "Funcionario:"
-        '
-        'Txt_AFP
-        '
-        Me.Txt_AFP.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_AFP.Border.Class = "TextBoxBorder"
-        Me.Txt_AFP.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_AFP.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_AFP.ForeColor = System.Drawing.Color.Black
-        Me.Txt_AFP.Location = New System.Drawing.Point(84, 32)
-        Me.Txt_AFP.Name = "Txt_AFP"
-        Me.Txt_AFP.Size = New System.Drawing.Size(54, 22)
-        Me.Txt_AFP.TabIndex = 1
-        Me.Txt_AFP.Text = "0"
-        Me.Txt_AFP.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'Txt_Salud
-        '
-        Me.Txt_Salud.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_Salud.Border.Class = "TextBoxBorder"
-        Me.Txt_Salud.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Salud.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Salud.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Salud.Location = New System.Drawing.Point(84, 60)
-        Me.Txt_Salud.Name = "Txt_Salud"
-        Me.Txt_Salud.Size = New System.Drawing.Size(54, 22)
-        Me.Txt_Salud.TabIndex = 2
-        Me.Txt_Salud.Text = "0"
-        Me.Txt_Salud.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Frm_Cms_FuncMant
         '

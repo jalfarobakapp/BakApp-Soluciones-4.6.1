@@ -119,11 +119,10 @@
 
         Dim Fm As New Frm_Cms_FuncMant(_Id)
         Fm.ShowDialog(Me)
+        If Fm.Grabar Then
+            Sb_Actualizar_Grilla()
+        End If
         Fm.Dispose()
-
-        'Dim Fm As New Frm_Cms_AgregarTipos(0, _CodFuncionario)
-        'Fm.ShowDialog(Me)
-        'Fm.Dispose()
 
     End Sub
 

@@ -796,5 +796,6 @@ Public Class Menu
         Dim Fm As New Frm_Cms(1)
         Fm.ShowDialog(Me)
         Fm.Dispose()
+
     End Sub
 End Class

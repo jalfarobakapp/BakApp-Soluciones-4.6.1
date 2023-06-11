@@ -2701,8 +2701,8 @@ Public Class Frm_01_Asis_Compra_Resultados
 
                         ElseIf Reg > 1 Then
 
-                            MessageBoxEx.Show(Me, "Existe más de un proveedor para este producto",
-                                              "Asociar proveedor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                            'MessageBoxEx.Show(Me, "Existe más de un proveedor para este producto",
+                            '                  "Asociar proveedor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
 
                             Dim _Tipo_B As Frm_04_Asis_Compra_Proveedores.TipoBusqueda
 
