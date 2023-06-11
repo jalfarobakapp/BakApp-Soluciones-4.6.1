@@ -237,7 +237,7 @@ Public Class Clas_Imprimir_Documento
             _Orden_Detalle = "Order By UBICACION"
         Else
             _Condicion_Extra_Maeddo = "Order By IDMAEDDO"
-            _Orden_Detalle = "Order By IDMAEDDO"
+            _Orden_Detalle = "Order By NULIDO"
         End If
 
         Dim _Reg As Boolean = CInt(_Sql.Fx_Cuenta_Registros("MAEEDOOB", "IDMAEEDO = " & _IdDoc))

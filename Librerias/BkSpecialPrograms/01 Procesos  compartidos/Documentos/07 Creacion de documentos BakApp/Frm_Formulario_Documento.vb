@@ -23811,18 +23811,20 @@ Public Class Frm_Formulario_Documento
     End Sub
 
     Private Sub Btn_Clonar_Producto_Click(sender As Object, e As EventArgs) Handles Btn_Clonar_Producto.Click
+        Try
+            Dim _Fila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.CurrentRow.Index)
 
-        Dim _Fila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.CurrentRow.Index)
+            Dim _Nuevo_Producto As Boolean = _Fila.Cells("Nuevo_Producto").Value
 
-        Dim _Nuevo_Producto As Boolean = _Fila.Cells("Nuevo_Producto").Value
+            If _Nuevo_Producto Then
+                Beep()
+                Return
+            End If
 
-        If _Nuevo_Producto Then
-            Beep()
-            Return
-        End If
-
-        Sb_Clonar_Fila(_Fila)
-
+            Sb_Clonar_Fila(_Fila)
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message)
+        End Try
     End Sub
 
     Private Sub Btn_Mini_Clonar_Producto_Click(sender As Object, e As EventArgs) Handles Btn_Mini_Clonar_Producto.Click

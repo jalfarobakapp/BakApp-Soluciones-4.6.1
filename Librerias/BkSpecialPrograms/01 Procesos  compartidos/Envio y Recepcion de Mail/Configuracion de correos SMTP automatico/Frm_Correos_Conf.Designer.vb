@@ -91,10 +91,10 @@ Partial Class Frm_Correos_Conf
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.LabelX9 = New DevComponents.DotNetBar.LabelX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
-        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.SuperTabItem3 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SCor = New System.Windows.Forms.ColorDialog()
         Me.Grupo_Info_Sesion.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -114,8 +114,8 @@ Partial Class Frm_Correos_Conf
         Me.GroupPanel1.SuspendLayout()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
-        Me.SuperTabControlPanel1.SuspendLayout()
         Me.SuperTabControlPanel3.SuspendLayout()
+        Me.SuperTabControlPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Txt_Puerto
@@ -128,7 +128,7 @@ Partial Class Frm_Correos_Conf
         Me.Txt_Puerto.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Puerto.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Puerto.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Puerto.Location = New System.Drawing.Point(508, 30)
+        Me.Txt_Puerto.Location = New System.Drawing.Point(507, 30)
         Me.Txt_Puerto.Name = "Txt_Puerto"
         Me.Txt_Puerto.PreventEnterBeep = True
         Me.Txt_Puerto.ReadOnly = True
@@ -143,7 +143,7 @@ Partial Class Frm_Correos_Conf
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(309, 30)
+        Me.LabelX4.Location = New System.Drawing.Point(308, 30)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(75, 21)
         Me.LabelX4.TabIndex = 6
@@ -159,7 +159,7 @@ Partial Class Frm_Correos_Conf
         Me.Txt_Contrasena.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Contrasena.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Contrasena.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Contrasena.Location = New System.Drawing.Point(71, 30)
+        Me.Txt_Contrasena.Location = New System.Drawing.Point(70, 30)
         Me.Txt_Contrasena.Name = "Txt_Contrasena"
         Me.Txt_Contrasena.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.Txt_Contrasena.PreventEnterBeep = True
@@ -191,7 +191,7 @@ Partial Class Frm_Correos_Conf
         Me.Txt_Remitente.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Remitente.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Remitente.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Remitente.Location = New System.Drawing.Point(71, 3)
+        Me.Txt_Remitente.Location = New System.Drawing.Point(70, 3)
         Me.Txt_Remitente.Name = "Txt_Remitente"
         Me.Txt_Remitente.PreventEnterBeep = True
         Me.Txt_Remitente.ReadOnly = True
@@ -222,7 +222,7 @@ Partial Class Frm_Correos_Conf
         Me.Txt_Host_SMTP.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Host_SMTP.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Host_SMTP.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Host_SMTP.Location = New System.Drawing.Point(508, 3)
+        Me.Txt_Host_SMTP.Location = New System.Drawing.Point(507, 3)
         Me.Txt_Host_SMTP.Name = "Txt_Host_SMTP"
         Me.Txt_Host_SMTP.PreventEnterBeep = True
         Me.Txt_Host_SMTP.ReadOnly = True
@@ -237,7 +237,7 @@ Partial Class Frm_Correos_Conf
         '
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(309, 3)
+        Me.LabelX1.Location = New System.Drawing.Point(308, 3)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(173, 21)
         Me.LabelX1.TabIndex = 0
@@ -321,7 +321,7 @@ Partial Class Frm_Correos_Conf
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.90566!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 238.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 199.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 260.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 261.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX2, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Txt_Host_SMTP, 4, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX1, 3, 0)
@@ -347,7 +347,7 @@ Partial Class Frm_Correos_Conf
         Me.Btn_Ver_Contrasena.Image = CType(resources.GetObject("Btn_Ver_Contrasena.Image"), System.Drawing.Image)
         Me.Btn_Ver_Contrasena.Location = New System.Drawing.Point(47, 30)
         Me.Btn_Ver_Contrasena.Name = "Btn_Ver_Contrasena"
-        Me.Btn_Ver_Contrasena.Size = New System.Drawing.Size(18, 21)
+        Me.Btn_Ver_Contrasena.Size = New System.Drawing.Size(17, 21)
         Me.Btn_Ver_Contrasena.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_Ver_Contrasena.TabIndex = 14
         Me.Btn_Ver_Contrasena.Tooltip = "Ver contraseña"
@@ -1210,6 +1210,23 @@ Partial Class Frm_Correos_Conf
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem3, Me.SuperTabItem1})
         Me.SuperTabControl1.Text = "SuperTabControl1"
         '
+        'SuperTabControlPanel3
+        '
+        Me.SuperTabControlPanel3.Controls.Add(Me.GroupPanel4)
+        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(780, 454)
+        Me.SuperTabControlPanel3.TabIndex = 0
+        Me.SuperTabControlPanel3.TabItem = Me.SuperTabItem3
+        '
+        'SuperTabItem3
+        '
+        Me.SuperTabItem3.AttachedControl = Me.SuperTabControlPanel3
+        Me.SuperTabItem3.GlobalItem = False
+        Me.SuperTabItem3.Name = "SuperTabItem3"
+        Me.SuperTabItem3.Text = "Cuerpo del mensaje"
+        '
         'SuperTabControlPanel1
         '
         Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel1)
@@ -1227,23 +1244,6 @@ Partial Class Frm_Correos_Conf
         Me.SuperTabItem1.GlobalItem = False
         Me.SuperTabItem1.Name = "SuperTabItem1"
         Me.SuperTabItem1.Text = "Cuenta SMTP - Opciones de envío / Asunto"
-        '
-        'SuperTabControlPanel3
-        '
-        Me.SuperTabControlPanel3.Controls.Add(Me.GroupPanel4)
-        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(780, 454)
-        Me.SuperTabControlPanel3.TabIndex = 0
-        Me.SuperTabControlPanel3.TabItem = Me.SuperTabItem3
-        '
-        'SuperTabItem3
-        '
-        Me.SuperTabItem3.AttachedControl = Me.SuperTabControlPanel3
-        Me.SuperTabItem3.GlobalItem = False
-        Me.SuperTabItem3.Name = "SuperTabItem3"
-        Me.SuperTabItem3.Text = "Cuerpo del mensaje"
         '
         'Frm_Correos_Conf
         '
@@ -1284,8 +1284,8 @@ Partial Class Frm_Correos_Conf
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
-        Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.SuperTabControlPanel3.ResumeLayout(False)
+        Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub

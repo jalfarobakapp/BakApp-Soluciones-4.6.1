@@ -263,6 +263,12 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Despacho Simple\Frm_DespachoSimple.Designer.vb">
+      <DependentUpon>Frm_DespachoSimple.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Despacho Simple\Frm_DespachoSimple.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Frm_Ver_Documentos_Permisos.designer.vb">
       <DependentUpon>Frm_Ver_Documentos_Permisos.vb</DependentUpon>
     </Compile>
@@ -4025,6 +4031,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Despacho Simple\Frm_DespachoSimple.resx">
+      <DependentUpon>Frm_DespachoSimple.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Frm_Ver_Documentos_Permisos.resx">
       <DependentUpon>Frm_Ver_Documentos_Permisos.vb</DependentUpon>
     </EmbeddedResource>
