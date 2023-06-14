@@ -1,0 +1,90 @@
+Return-Path: <SRS0=GlEmaz=44=sii.cl=siidte_error@sirrep.cl>
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id 8XRJLpBgI1kCeAQAqFaw+A
+	; Mon, 22 May 2017 18:05:04 -0400
+Return-path: <SRS0=GlEmaz=44=sii.cl=siidte_error@sirrep.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Mon, 22 May 2017 18:05:04 -0400
+Received: from rapel12.sii.cl ([200.10.251.90] helo=mailin02.sii.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.89)
+	(envelope-from <siidte_error@sii.cl>)
+	id 1dCvRo-001EdH-IZ
+	for notificacionsii@sirrep.cl; Mon, 22 May 2017 18:05:04 -0400
+X-IronPort-AV: E=Sophos;i="5.22,559,1449543600"; 
+   d="xml'?txt'?scan'208";a="846325551"
+Received: from dte01.sii.cl (HELO dte01) ([10.20.201.29])
+  by mailout02.sii.cl with ESMTP; 22 May 2017 17:56:46 -0400
+Message-ID: <22551455.1495490824049.JavaMail.root@dte01>
+Date: Mon, 22 May 2017 18:07:04 -0400 (CLT)
+From: siidte_error@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: Produccion - Resultado de Revision Envio 2177398578 - 79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_2285_14106551.1495490824048"
+
+------=_Part_2285_14106551.1495490824048
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+SII de Chile - Validacion de DTE
+================================
+
+En el archivo adjunto esta el resultado del proceso de revision y validacion
+del envio de Documentos Tributarios Electronicos realizado por su empresa al
+Servicio de Impuestos Internos de Chile.
+
+----------------------------------------------------------------------------
+
+Este es una aplicacion automatica. No conteste este correo ni haga 
+consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue 
+mas claro en cualquier aplicacion.
+
+
+------=_Part_2285_14106551.1495490824048
+Content-Type: text/plain; name=DTEMAIL2177398578.txt
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL2177398578.txt
+
+Resultado de Validacion de Envio de DTE
+=======================================
+
+Rut de Empresa Emisora   : 79514800-0
+Rut que Realizo el Envio : 12628844-1
+Identificador de Envio   : 2177398578
+Fecha de Recepcion       : 22/05/2017 18:06:48
+Estado del Envio         : RSC - Rechazado por Error en Schema
+
+No hay Informacion de Estadisticas para este Envio
+
+Detalle de Rechazos y Reparos al Envio
+======================================
+(ENV-3-0) Error en Schema - [0] LSX-00009: data missing for type "#simple"
+
+
+
+------=_Part_2285_14106551.1495490824048
+Content-Type: application/octet-stream; name=DTEMAIL2177398578.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL2177398578.xml
+
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<RESULTADO_ENVIO>
+ <IDENTIFICACION>
+  <RUTEMISOR>79514800-0</RUTEMISOR>
+  <RUTENVIA>12628844-1</RUTENVIA>
+  <TRACKID>2177398578</TRACKID>
+  <TMSTRECEPCION>22/05/2017 18:06:48</TMSTRECEPCION>
+  <ESTADO>RSC - Rechazado por Error en Schema</ESTADO>
+ </IDENTIFICACION>
+ <ERRORENVIO>
+  <DETERRENVIO>(ENV-3-0) Error en Schema - [0] LSX-00009: data missing for type "#simple"
+</DETERRENVIO>
+ </ERRORENVIO>
+</RESULTADO_ENVIO>
+
+------=_Part_2285_14106551.1495490824048--
+

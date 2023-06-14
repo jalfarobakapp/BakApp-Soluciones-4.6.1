@@ -1,0 +1,10 @@
+<?xml version="1.0" standalone="yes"?>
+<Ds_Receptor_DTE xmlns="http://tempuri.org/Ds_Receptor_DTE.xsd">
+  <Tbl_Configuracion>
+    <Host>mail.sirrep.cl</Host>
+    <Usuario>clon_notificacionsii@sirrep.cl</Usuario>
+    <Clave>sii12345</Clave>
+    <Directorio>C:\Random.dteSIERRALTA\Recep</Directorio>
+    <Borrar_Todos_Los_Correos>false</Borrar_Todos_Los_Correos>
+  </Tbl_Configuracion>
+</Ds_Receptor_DTE>

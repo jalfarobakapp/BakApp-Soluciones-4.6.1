@@ -1,0 +1,564 @@
+<?xml version="1.0" standalone="yes"?>
+<Ds_Matriz_Documentos xmlns="http://tempuri.org/Ds_Matriz_Documentos.xsd">
+  <Observaciones_Doc>
+    <Observaciones>Documento generado desde Asistente de compras BakApp</Observaciones>
+    <Forma_pago />
+    <Orden_compra />
+    <Obs1 />
+    <Obs2 />
+    <Obs3 />
+    <Obs4 />
+    <Obs5 />
+    <Obs6 />
+    <Obs7 />
+    <Obs8 />
+    <Obs9 />
+    <Obs10 />
+    <Obs11 />
+    <Obs12 />
+    <Obs13 />
+    <Obs14 />
+    <Obs15 />
+    <Obs16 />
+    <Obs17 />
+    <Obs18 />
+    <Obs19 />
+    <Obs20 />
+    <Obs21 />
+    <Obs22 />
+    <Obs23 />
+    <Obs24 />
+    <Obs25 />
+    <Obs26 />
+    <Obs27 />
+    <Obs28 />
+    <Obs29 />
+    <Obs30 />
+    <Obs31 />
+    <Obs32 />
+    <Obs33 />
+    <Obs34 />
+    <Obs35 />
+  </Observaciones_Doc>
+  <Encabezado_Doc>
+    <Modalidad>ADMIN</Modalidad>
+    <Empresa>01</Empresa>
+    <Sucursal>CM </Sucursal>
+    <TipoDoc>OCC</TipoDoc>
+    <NroDocumento>0000039049</NroDocumento>
+    <CodEntidad>03744197     </CodEntidad>
+    <CodSucEntidad xml:space="preserve">          </CodSucEntidad>
+    <Nombre_Entidad>MIGUEL ZAMORANO FUENZALIDA                        </Nombre_Entidad>
+    <FechaEmision>2018-10-29T09:03:03.7951634-03:00</FechaEmision>
+    <Fecha_1er_Vencimiento>2018-11-28T09:03:03.7951634-03:00</Fecha_1er_Vencimiento>
+    <FechaUltVencimiento>2018-11-28T09:03:03.7951634-03:00</FechaUltVencimiento>
+    <FechaRecepcion>2018-10-29T09:03:03.7951634-03:00</FechaRecepcion>
+    <Cuotas>1</Cuotas>
+    <Dias_1er_Vencimiento>30</Dias_1er_Vencimiento>
+    <Dias_Vencimiento>0</Dias_Vencimiento>
+    <ListaPrecios>02C</ListaPrecios>
+    <CodEntidadFisica />
+    <CodSucEntidadFisica />
+    <Contacto_Ent />
+    <CodFuncionario>017</CodFuncionario>
+    <NomFuncionario>PABLO GABRIEL ROMERO BRAVO</NomFuncionario>
+    <Centro_Costo>AD</Centro_Costo>
+    <Moneda_Doc>$</Moneda_Doc>
+    <Valor_Dolar>1</Valor_Dolar>
+    <TotalNetoDoc>25350</TotalNetoDoc>
+    <TotalIvaDoc>4816</TotalIvaDoc>
+    <TotalIlaDoc>0</TotalIlaDoc>
+    <TotalBrutoDoc>30166</TotalBrutoDoc>
+    <CantTotal>31</CantTotal>
+    <CantDesp>0</CantDesp>
+    <DocEn_Neto_Bruto>N</DocEn_Neto_Bruto>
+    <Es_ValeTransitorio>0</Es_ValeTransitorio>
+    <Es_Electronico>false</Es_Electronico>
+    <TipoMoneda>N</TipoMoneda>
+    <Vizado>false</Vizado>
+    <TotalDsctoReal_Porc>-0.58</TotalDsctoReal_Porc>
+    <CodUsuario_Permiso_Dscto />
+    <Idmaeedo_Origen>0</Idmaeedo_Origen>
+    <Fun_Auto_Deuda_Ven />
+    <Fun_Auto_Stock_Ins />
+    <Fun_Auto_Cupo_Exe />
+  </Encabezado_Doc>
+  <Detalle_Doc>
+    <Id>2</Id>
+    <Empresa>01</Empresa>
+    <Sucursal>CM </Sucursal>
+    <Bodega>PR </Bodega>
+    <CodFuncionario>017</CodFuncionario>
+    <UnTrans>1</UnTrans>
+    <Lincondest>false</Lincondest>
+    <Codigo>1116973002N00</Codigo>
+    <CodigoProv />
+    <UdTrans>UN</UdTrans>
+    <Cantidad>2</Cantidad>
+    <TipoValor>N</TipoValor>
+    <Precio>350</Precio>
+    <DescuentoPorc>0</DescuentoPorc>
+    <DescuentoValor>0</DescuentoValor>
+    <Descripcion>EMPAQUETADURA  BASE DISTRIBUIDOR</Descripcion>
+    <PrecioNetoUd>350</PrecioNetoUd>
+    <PrecioNetoUdLista>300</PrecioNetoUdLista>
+    <PrecioBrutoUd>416.5</PrecioBrutoUd>
+    <PrecioBrutoUdLista>357</PrecioBrutoUdLista>
+    <Rtu>1</Rtu>
+    <Ud01PR>UN</Ud01PR>
+    <CantUd1>2</CantUd1>
+    <CodVendedor>017</CodVendedor>
+    <Prct>0</Prct>
+    <Tipr>FPN</Tipr>
+    <Tict />
+    <DsctoNeto>0</DsctoNeto>
+    <DsctoBruto>0</DsctoBruto>
+    <CDespUd1>0</CDespUd1>
+    <Ud02PR>UN</Ud02PR>
+    <CantUd2>2</CantUd2>
+    <CDespUd2>0</CDespUd2>
+    <ValVtaDescMax>false</ValVtaDescMax>
+    <ValVtaStockInf>false</ValVtaStockInf>
+    <CodLista>02C</CodLista>
+    <DescMaximo>0</DescMaximo>
+    <NroDscto>0</NroDscto>
+    <NroImpuestos>0</NroImpuestos>
+    <PorIva>19</PorIva>
+    <PorIla>0</PorIla>
+    <ValIvaLinea>133</ValIvaLinea>
+    <ValIlaLinea>0</ValIlaLinea>
+    <ValNetoLinea>700</ValNetoLinea>
+    <ValBrutoLinea>833</ValBrutoLinea>
+    <PmLinea>300</PmLinea>
+    <PmSucLinea>300</PmSucLinea>
+    <PmIFRS>300</PmIFRS>
+    <PrecioNetoRealUd1>350</PrecioNetoRealUd1>
+    <PrecioNetoRealUd2>350</PrecioNetoRealUd2>
+    <Idmaeedo_Dori>0</Idmaeedo_Dori>
+    <Idmaeddo_Dori>0</Idmaeddo_Dori>
+    <CantUd1_Dori>0</CantUd1_Dori>
+    <CantUd2_Dori>0</CantUd2_Dori>
+    <Estado />
+    <Tidopa />
+    <NudoPa />
+    <SubTotal>700</SubTotal>
+    <StockBodega>0</StockBodega>
+    <UbicacionBod>AB-3</UbicacionBod>
+    <DsctoRealPorc>-16.67</DsctoRealPorc>
+    <DsctoRealValor>-100</DsctoRealValor>
+    <Tiene_Dscto>false</Tiene_Dscto>
+    <CantidadCalculo>2</CantidadCalculo>
+    <Operacion />
+    <Potencia>0</Potencia>
+    <PrecioCalculo>350</PrecioCalculo>
+    <Observa xml:space="preserve"> </Observa>
+    <CodFunAutoriza>xyz</CodFunAutoriza>
+    <CodPermiso>Bkp00014</CodPermiso>
+    <Nuevo_Producto>0</Nuevo_Producto>
+    <Solicitado_bodega>false</Solicitado_bodega>
+    <Moneda>$</Moneda>
+    <Tipo_Moneda>N</Tipo_Moneda>
+    <Tipo_Cambio>1</Tipo_Cambio>
+    <Stock_desde_WMS>false</Stock_desde_WMS>
+  </Detalle_Doc>
+  <Detalle_Doc>
+    <Id>3</Id>
+    <Empresa>01</Empresa>
+    <Sucursal>CM </Sucursal>
+    <Bodega>PR </Bodega>
+    <CodFuncionario>017</CodFuncionario>
+    <UnTrans>1</UnTrans>
+    <Lincondest>false</Lincondest>
+    <Codigo>1315972B50N00</Codigo>
+    <CodigoProv />
+    <UdTrans>UN</UdTrans>
+    <Cantidad>7</Cantidad>
+    <TipoValor>N</TipoValor>
+    <Precio>450</Precio>
+    <DescuentoPorc>0</DescuentoPorc>
+    <DescuentoValor>0</DescuentoValor>
+    <Descripcion>EMPAQUETADURA INTERIOR MULTIPLE ADMISION          </Descripcion>
+    <PrecioNetoUd>450</PrecioNetoUd>
+    <PrecioNetoUdLista>450</PrecioNetoUdLista>
+    <PrecioBrutoUd>535.5</PrecioBrutoUd>
+    <PrecioBrutoUdLista>535.5</PrecioBrutoUdLista>
+    <Rtu>1</Rtu>
+    <Ud01PR>UN</Ud01PR>
+    <CantUd1>7</CantUd1>
+    <CodVendedor>017</CodVendedor>
+    <Prct>0</Prct>
+    <Tipr>FPN</Tipr>
+    <Tict />
+    <DsctoNeto>0</DsctoNeto>
+    <DsctoBruto>0</DsctoBruto>
+    <CDespUd1>0</CDespUd1>
+    <Ud02PR>UN</Ud02PR>
+    <CantUd2>7</CantUd2>
+    <CDespUd2>0</CDespUd2>
+    <ValVtaDescMax>false</ValVtaDescMax>
+    <ValVtaStockInf>false</ValVtaStockInf>
+    <CodLista>02C</CodLista>
+    <DescMaximo>0</DescMaximo>
+    <NroDscto>0</NroDscto>
+    <NroImpuestos>0</NroImpuestos>
+    <PorIva>19</PorIva>
+    <PorIla>0</PorIla>
+    <ValIvaLinea>598.5</ValIvaLinea>
+    <ValIlaLinea>0</ValIlaLinea>
+    <ValNetoLinea>3150</ValNetoLinea>
+    <ValBrutoLinea>3748.5</ValBrutoLinea>
+    <PmLinea>450</PmLinea>
+    <PmSucLinea>450</PmSucLinea>
+    <PmIFRS>450</PmIFRS>
+    <PrecioNetoRealUd1>450</PrecioNetoRealUd1>
+    <PrecioNetoRealUd2>450</PrecioNetoRealUd2>
+    <Idmaeedo_Dori>0</Idmaeedo_Dori>
+    <Idmaeddo_Dori>0</Idmaeddo_Dori>
+    <CantUd1_Dori>0</CantUd1_Dori>
+    <CantUd2_Dori>0</CantUd2_Dori>
+    <Estado />
+    <Tidopa />
+    <NudoPa />
+    <SubTotal>3150</SubTotal>
+    <StockBodega>0</StockBodega>
+    <UbicacionBod>AB-2</UbicacionBod>
+    <DsctoRealPorc>0</DsctoRealPorc>
+    <DsctoRealValor>0</DsctoRealValor>
+    <Tiene_Dscto>false</Tiene_Dscto>
+    <CantidadCalculo>7</CantidadCalculo>
+    <Operacion />
+    <Potencia>0</Potencia>
+    <PrecioCalculo>450</PrecioCalculo>
+    <Observa xml:space="preserve">  </Observa>
+    <CodFunAutoriza>xyz</CodFunAutoriza>
+    <CodPermiso>Bkp00014</CodPermiso>
+    <Nuevo_Producto>0</Nuevo_Producto>
+    <Solicitado_bodega>false</Solicitado_bodega>
+    <Moneda>$</Moneda>
+    <Tipo_Moneda>N</Tipo_Moneda>
+    <Tipo_Cambio>1</Tipo_Cambio>
+    <Stock_desde_WMS>false</Stock_desde_WMS>
+  </Detalle_Doc>
+  <Detalle_Doc>
+    <Id>4</Id>
+    <Empresa>01</Empresa>
+    <Sucursal>CM </Sucursal>
+    <Bodega>PR </Bodega>
+    <CodFuncionario>017</CodFuncionario>
+    <UnTrans>1</UnTrans>
+    <Lincondest>false</Lincondest>
+    <Codigo>1414179GA0N00</Codigo>
+    <CodigoProv>1414179GA0N00</CodigoProv>
+    <UdTrans>UN</UdTrans>
+    <Cantidad>2</Cantidad>
+    <TipoValor>N</TipoValor>
+    <Precio>1000</Precio>
+    <DescuentoPorc>0</DescuentoPorc>
+    <DescuentoValor>0</DescuentoValor>
+    <Descripcion>EMPAQUETADURA MULTIPLE ESCAPE ALTO 1100cc 2006&gt;&gt;</Descripcion>
+    <PrecioNetoUd>1000</PrecioNetoUd>
+    <PrecioNetoUdLista>927.26890756302532</PrecioNetoUdLista>
+    <PrecioBrutoUd>1190</PrecioBrutoUd>
+    <PrecioBrutoUdLista>1103.45</PrecioBrutoUdLista>
+    <Rtu>1</Rtu>
+    <Ud01PR>UN</Ud01PR>
+    <CantUd1>2</CantUd1>
+    <CodVendedor>017</CodVendedor>
+    <Prct>0</Prct>
+    <Tipr>FPN</Tipr>
+    <Tict />
+    <DsctoNeto>0</DsctoNeto>
+    <DsctoBruto>0</DsctoBruto>
+    <CDespUd1>0</CDespUd1>
+    <Ud02PR>UN</Ud02PR>
+    <CantUd2>2</CantUd2>
+    <CDespUd2>0</CDespUd2>
+    <ValVtaDescMax>false</ValVtaDescMax>
+    <ValVtaStockInf>false</ValVtaStockInf>
+    <CodLista>02C</CodLista>
+    <DescMaximo>0</DescMaximo>
+    <NroDscto>0</NroDscto>
+    <NroImpuestos>0</NroImpuestos>
+    <PorIva>19</PorIva>
+    <PorIla>0</PorIla>
+    <ValIvaLinea>380</ValIvaLinea>
+    <ValIlaLinea>0</ValIlaLinea>
+    <ValNetoLinea>2000</ValNetoLinea>
+    <ValBrutoLinea>2380</ValBrutoLinea>
+    <PmLinea>927.27273</PmLinea>
+    <PmSucLinea>927.27273</PmSucLinea>
+    <PmIFRS>927.27273</PmIFRS>
+    <PrecioNetoRealUd1>1000</PrecioNetoRealUd1>
+    <PrecioNetoRealUd2>1000</PrecioNetoRealUd2>
+    <Idmaeedo_Dori>0</Idmaeedo_Dori>
+    <Idmaeddo_Dori>0</Idmaeddo_Dori>
+    <CantUd1_Dori>0</CantUd1_Dori>
+    <CantUd2_Dori>0</CantUd2_Dori>
+    <Estado />
+    <Tidopa />
+    <NudoPa />
+    <SubTotal>2000</SubTotal>
+    <StockBodega>0</StockBodega>
+    <UbicacionBod>EF-05</UbicacionBod>
+    <DsctoRealPorc>-7.87</DsctoRealPorc>
+    <DsctoRealValor>-146</DsctoRealValor>
+    <Tiene_Dscto>false</Tiene_Dscto>
+    <CantidadCalculo>2</CantidadCalculo>
+    <Operacion />
+    <Potencia>0</Potencia>
+    <PrecioCalculo>1000</PrecioCalculo>
+    <Observa xml:space="preserve">  </Observa>
+    <CodFunAutoriza>xyz</CodFunAutoriza>
+    <CodPermiso>Bkp00014</CodPermiso>
+    <Nuevo_Producto>0</Nuevo_Producto>
+    <Solicitado_bodega>false</Solicitado_bodega>
+    <Moneda>$</Moneda>
+    <Tipo_Moneda>N</Tipo_Moneda>
+    <Tipo_Cambio>1</Tipo_Cambio>
+    <Stock_desde_WMS>false</Stock_desde_WMS>
+  </Detalle_Doc>
+  <Detalle_Doc>
+    <Id>5</Id>
+    <Empresa>01</Empresa>
+    <Sucursal>CM </Sucursal>
+    <Bodega>PR </Bodega>
+    <CodFuncionario>017</CodFuncionario>
+    <UnTrans>1</UnTrans>
+    <Lincondest>false</Lincondest>
+    <Codigo>1414184400N00</Codigo>
+    <CodigoProv>1414184400N00</CodigoProv>
+    <UdTrans>UN</UdTrans>
+    <Cantidad>5</Cantidad>
+    <TipoValor>N</TipoValor>
+    <Precio>700</Precio>
+    <DescuentoPorc>0</DescuentoPorc>
+    <DescuentoValor>0</DescuentoValor>
+    <Descripcion>EMPAQUETADURA MULTIPLE ESCAPE</Descripcion>
+    <PrecioNetoUd>700</PrecioNetoUd>
+    <PrecioNetoUdLista>700</PrecioNetoUdLista>
+    <PrecioBrutoUd>833</PrecioBrutoUd>
+    <PrecioBrutoUdLista>833</PrecioBrutoUdLista>
+    <Rtu>1</Rtu>
+    <Ud01PR>UN</Ud01PR>
+    <CantUd1>5</CantUd1>
+    <CodVendedor>017</CodVendedor>
+    <Prct>0</Prct>
+    <Tipr>FPN</Tipr>
+    <Tict />
+    <DsctoNeto>0</DsctoNeto>
+    <DsctoBruto>0</DsctoBruto>
+    <CDespUd1>0</CDespUd1>
+    <Ud02PR>UN</Ud02PR>
+    <CantUd2>5</CantUd2>
+    <CDespUd2>0</CDespUd2>
+    <ValVtaDescMax>false</ValVtaDescMax>
+    <ValVtaStockInf>false</ValVtaStockInf>
+    <CodLista>02C</CodLista>
+    <DescMaximo>0</DescMaximo>
+    <NroDscto>0</NroDscto>
+    <NroImpuestos>0</NroImpuestos>
+    <PorIva>19</PorIva>
+    <PorIla>0</PorIla>
+    <ValIvaLinea>665</ValIvaLinea>
+    <ValIlaLinea>0</ValIlaLinea>
+    <ValNetoLinea>3500</ValNetoLinea>
+    <ValBrutoLinea>4165</ValBrutoLinea>
+    <PmLinea>700</PmLinea>
+    <PmSucLinea>700</PmSucLinea>
+    <PmIFRS>700</PmIFRS>
+    <PrecioNetoRealUd1>700</PrecioNetoRealUd1>
+    <PrecioNetoRealUd2>700</PrecioNetoRealUd2>
+    <Idmaeedo_Dori>0</Idmaeedo_Dori>
+    <Idmaeddo_Dori>0</Idmaeddo_Dori>
+    <CantUd1_Dori>0</CantUd1_Dori>
+    <CantUd2_Dori>0</CantUd2_Dori>
+    <Estado />
+    <Tidopa />
+    <NudoPa />
+    <SubTotal>3500</SubTotal>
+    <StockBodega>0</StockBodega>
+    <UbicacionBod>EF-5</UbicacionBod>
+    <DsctoRealPorc>0</DsctoRealPorc>
+    <DsctoRealValor>0</DsctoRealValor>
+    <Tiene_Dscto>false</Tiene_Dscto>
+    <CantidadCalculo>5</CantidadCalculo>
+    <Operacion />
+    <Potencia>0</Potencia>
+    <PrecioCalculo>700</PrecioCalculo>
+    <Observa xml:space="preserve">  </Observa>
+    <CodFunAutoriza>xyz</CodFunAutoriza>
+    <CodPermiso>Bkp00014</CodPermiso>
+    <Nuevo_Producto>0</Nuevo_Producto>
+    <Solicitado_bodega>false</Solicitado_bodega>
+    <Moneda>$</Moneda>
+    <Tipo_Moneda>N</Tipo_Moneda>
+    <Tipo_Cambio>1</Tipo_Cambio>
+    <Stock_desde_WMS>false</Stock_desde_WMS>
+  </Detalle_Doc>
+  <Detalle_Doc>
+    <Id>6</Id>
+    <Empresa>01</Empresa>
+    <Sucursal>CM </Sucursal>
+    <Bodega>PR </Bodega>
+    <CodFuncionario>017</CodFuncionario>
+    <UnTrans>1</UnTrans>
+    <Lincondest>false</Lincondest>
+    <Codigo>1418378502N00</Codigo>
+    <CodigoProv />
+    <UdTrans>UN</UdTrans>
+    <Cantidad>5</Cantidad>
+    <TipoValor>N</TipoValor>
+    <Precio>1400</Precio>
+    <DescuentoPorc>0</DescuentoPorc>
+    <DescuentoValor>0</DescuentoValor>
+    <Descripcion>PICARON SALIDA ESCAPE</Descripcion>
+    <PrecioNetoUd>1400</PrecioNetoUd>
+    <PrecioNetoUdLista>1400</PrecioNetoUdLista>
+    <PrecioBrutoUd>1666</PrecioBrutoUd>
+    <PrecioBrutoUdLista>1666</PrecioBrutoUdLista>
+    <Rtu>1</Rtu>
+    <Ud01PR>UN</Ud01PR>
+    <CantUd1>5</CantUd1>
+    <CodVendedor>017</CodVendedor>
+    <Prct>0</Prct>
+    <Tipr>FPN</Tipr>
+    <Tict />
+    <DsctoNeto>0</DsctoNeto>
+    <DsctoBruto>0</DsctoBruto>
+    <CDespUd1>0</CDespUd1>
+    <Ud02PR>UN</Ud02PR>
+    <CantUd2>5</CantUd2>
+    <CDespUd2>0</CDespUd2>
+    <ValVtaDescMax>false</ValVtaDescMax>
+    <ValVtaStockInf>false</ValVtaStockInf>
+    <CodLista>02C</CodLista>
+    <DescMaximo>0</DescMaximo>
+    <NroDscto>0</NroDscto>
+    <NroImpuestos>0</NroImpuestos>
+    <PorIva>19</PorIva>
+    <PorIla>0</PorIla>
+    <ValIvaLinea>1330</ValIvaLinea>
+    <ValIlaLinea>0</ValIlaLinea>
+    <ValNetoLinea>7000</ValNetoLinea>
+    <ValBrutoLinea>8330</ValBrutoLinea>
+    <PmLinea>1400</PmLinea>
+    <PmSucLinea>1400</PmSucLinea>
+    <PmIFRS>1400</PmIFRS>
+    <PrecioNetoRealUd1>1400</PrecioNetoRealUd1>
+    <PrecioNetoRealUd2>1400</PrecioNetoRealUd2>
+    <Idmaeedo_Dori>0</Idmaeedo_Dori>
+    <Idmaeddo_Dori>0</Idmaeddo_Dori>
+    <CantUd1_Dori>0</CantUd1_Dori>
+    <CantUd2_Dori>0</CantUd2_Dori>
+    <Estado />
+    <Tidopa />
+    <NudoPa />
+    <SubTotal>7000</SubTotal>
+    <StockBodega>0</StockBodega>
+    <UbicacionBod>F-2</UbicacionBod>
+    <DsctoRealPorc>0</DsctoRealPorc>
+    <DsctoRealValor>0</DsctoRealValor>
+    <Tiene_Dscto>false</Tiene_Dscto>
+    <CantidadCalculo>5</CantidadCalculo>
+    <Operacion />
+    <Potencia>0</Potencia>
+    <PrecioCalculo>1400</PrecioCalculo>
+    <Observa xml:space="preserve">  </Observa>
+    <CodFunAutoriza>xyz</CodFunAutoriza>
+    <CodPermiso>Bkp00014</CodPermiso>
+    <Nuevo_Producto>0</Nuevo_Producto>
+    <Solicitado_bodega>false</Solicitado_bodega>
+    <Moneda>$</Moneda>
+    <Tipo_Moneda>N</Tipo_Moneda>
+    <Tipo_Cambio>1</Tipo_Cambio>
+    <Stock_desde_WMS>false</Stock_desde_WMS>
+  </Detalle_Doc>
+  <Detalle_Doc>
+    <Id>7</Id>
+    <Empresa>01</Empresa>
+    <Sucursal>CM </Sucursal>
+    <Bodega>PR </Bodega>
+    <CodFuncionario>017</CodFuncionario>
+    <UnTrans>1</UnTrans>
+    <Lincondest>false</Lincondest>
+    <Codigo>YC010071     </Codigo>
+    <CodigoProv />
+    <UdTrans>UN</UdTrans>
+    <Cantidad>10</Cantidad>
+    <TipoValor>N</TipoValor>
+    <Precio>900</Precio>
+    <DescuentoPorc>0</DescuentoPorc>
+    <DescuentoValor>0</DescuentoValor>
+    <Descripcion>EMPAQUETADURA MULTIPLE DE ADMISION</Descripcion>
+    <PrecioNetoUd>900</PrecioNetoUd>
+    <PrecioNetoUdLista>910.38655462184875</PrecioNetoUdLista>
+    <PrecioBrutoUd>1071</PrecioBrutoUd>
+    <PrecioBrutoUdLista>1083.36</PrecioBrutoUdLista>
+    <Rtu>1</Rtu>
+    <Ud01PR>UN</Ud01PR>
+    <CantUd1>10</CantUd1>
+    <CodVendedor>017</CodVendedor>
+    <Prct>0</Prct>
+    <Tipr>FPN</Tipr>
+    <Tict />
+    <DsctoNeto>0</DsctoNeto>
+    <DsctoBruto>0</DsctoBruto>
+    <CDespUd1>0</CDespUd1>
+    <Ud02PR>UN</Ud02PR>
+    <CantUd2>10</CantUd2>
+    <CDespUd2>0</CDespUd2>
+    <ValVtaDescMax>false</ValVtaDescMax>
+    <ValVtaStockInf>false</ValVtaStockInf>
+    <CodLista>02C</CodLista>
+    <DescMaximo>0</DescMaximo>
+    <NroDscto>0</NroDscto>
+    <NroImpuestos>0</NroImpuestos>
+    <PorIva>19</PorIva>
+    <PorIla>0</PorIla>
+    <ValIvaLinea>1710</ValIvaLinea>
+    <ValIlaLinea>0</ValIlaLinea>
+    <ValNetoLinea>9000</ValNetoLinea>
+    <ValBrutoLinea>10710</ValBrutoLinea>
+    <PmLinea>910.38462</PmLinea>
+    <PmSucLinea>910.38462</PmSucLinea>
+    <PmIFRS>910.38462</PmIFRS>
+    <PrecioNetoRealUd1>900</PrecioNetoRealUd1>
+    <PrecioNetoRealUd2>900</PrecioNetoRealUd2>
+    <Idmaeedo_Dori>0</Idmaeedo_Dori>
+    <Idmaeddo_Dori>0</Idmaeddo_Dori>
+    <CantUd1_Dori>0</CantUd1_Dori>
+    <CantUd2_Dori>0</CantUd2_Dori>
+    <Estado />
+    <Tidopa />
+    <NudoPa />
+    <SubTotal>9000</SubTotal>
+    <StockBodega>1</StockBodega>
+    <UbicacionBod>AB-1</UbicacionBod>
+    <DsctoRealPorc>1.1</DsctoRealPorc>
+    <DsctoRealValor>100</DsctoRealValor>
+    <Tiene_Dscto>false</Tiene_Dscto>
+    <CantidadCalculo>10</CantidadCalculo>
+    <Operacion />
+    <Potencia>0</Potencia>
+    <PrecioCalculo>900</PrecioCalculo>
+    <Observa xml:space="preserve">  </Observa>
+    <CodFunAutoriza>xyz</CodFunAutoriza>
+    <CodPermiso>Bkp00014</CodPermiso>
+    <Nuevo_Producto>0</Nuevo_Producto>
+    <Solicitado_bodega>false</Solicitado_bodega>
+    <Moneda>$</Moneda>
+    <Tipo_Moneda>N</Tipo_Moneda>
+    <Tipo_Cambio>1</Tipo_Cambio>
+    <Stock_desde_WMS>false</Stock_desde_WMS>
+  </Detalle_Doc>
+  <Permisos_Necesarios_Doc>
+    <Tiene_X_01_Stock>false</Tiene_X_01_Stock>
+    <Autorizado_Permiso_X_01_Stock>false</Autorizado_Permiso_X_01_Stock>
+    <Tiene_X_02_Descuentos>false</Tiene_X_02_Descuentos>
+    <Autorizado_Permiso_X_02_Descuentos>false</Autorizado_Permiso_X_02_Descuentos>
+    <Tiene_X_03_Morosidad>false</Tiene_X_03_Morosidad>
+    <Autorizado_Permiso_X_03_Morosidad>false</Autorizado_Permiso_X_03_Morosidad>
+    <Tiene_X_04_Cupo_Excedido>false</Tiene_X_04_Cupo_Excedido>
+    <Autorizado_Permiso_X_04_Cupo_Excedido>false</Autorizado_Permiso_X_04_Cupo_Excedido>
+  </Permisos_Necesarios_Doc>
+</Ds_Matriz_Documentos>

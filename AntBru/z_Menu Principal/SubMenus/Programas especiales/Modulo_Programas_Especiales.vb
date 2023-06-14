@@ -43,7 +43,10 @@ Public Class Modulo_Programas_Especiales
     End Sub
 
     Private Sub BtnPicking_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Demonio.Click
-        Fx_Ejecutar_Demonio2(_Fm_Menu_Padre, True)
+        'Fx_Ejecutar_Demonio2(_Fm_Menu_Padre, True)
+        Dim NewPanel As Demonios = Nothing
+        NewPanel = New Demonios(_Fm_Menu_Padre)
+        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Right)
     End Sub
 
     Private Sub BtnSalir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnSalir.Click

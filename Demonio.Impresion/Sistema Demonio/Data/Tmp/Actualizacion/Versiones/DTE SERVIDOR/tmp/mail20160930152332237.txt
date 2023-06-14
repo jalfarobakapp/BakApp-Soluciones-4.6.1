@@ -1,0 +1,482 @@
+Return-Path: <automarcorecepcion@custodium.com>
+Delivered-To: notificacionsii@sirrep.cl
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id RQoxIF3ORlcNkQAAqFaw+A
+	for <notificacionsii@sirrep.cl>; Thu, 26 May 2016 07:22:32 -0300
+Return-path: <automarcorecepcion@custodium.com>
+Received: from smtp-05.custodium.com ([146.82.91.193])
+	by srv150.tuhosting.cl with esmtp (Exim 4.86)
+	(envelope-from <automarcorecepcion@custodium.com>)
+	id 1b5sQy-0009ox-Qw
+	for notificacionsii@sirrep.cl; Thu, 26 May 2016 07:22:32 -0300
+Received: from apps3.acepta.com (unknown [172.16.14.91])
+	by smtp-05.custodium.com (Postfix) with ESMTP id 251857F587
+	for <notificacionsii@sirrep.cl>; Thu, 26 May 2016 06:23:03 -0400 (CLT)
+Date: Thu, 26 May 2016 06:24:03 -0400 (CLT)
+From: IMPORTADORA AUTOMARCO LIMITADA <automarcorecepcion@custodium.com>
+To: SIERRALTA Y COMPANIA LIMITADA <notificacionsii@sirrep.cl>
+Message-ID: <EnvioDTE-84854200-8-79514800-0-20160526-062403-035E75EA@apps3.acepta.com>
+Subject: Envio de DTEs -
+ EnvioDTE-84854200-8-79514800-0-20160526-062403-035E75EA
+MIME-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_101532_2039752226.1464258243995"
+
+------=_Part_101532_2039752226.1464258243995
+Content-Type: text/html; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+
+<html>
+<head>
+	<title>Intercambio - Envio de DTEs</title>
+	<style type="text/css">
+		div.page {
+			margin: 0 10px;
+			padding: 0;
+			width: 640px;
+		}
+
+		div.left {
+			margin: 0;
+			padding: 0 20px 0 0;
+			width: 300px;
+			float: left;
+		}
+
+		div.right {
+			margin: 0;
+			padding: 0 0 0 20px;
+			width: 300px;
+			float: right;
+		}
+
+		div.both {
+			margin: 0;
+			padding: 0;
+			clear: both;
+		}
+
+		div.footer {
+			margin: 0;
+			padding: 10px 0;
+		}
+
+		p.copyright {
+			text-align: center;
+			font-size: 9px;
+		}
+
+		span.certification {
+			color: red;
+		}
+
+		body {
+			font-family: Geneva, Verdana, sans-serif;
+			font-size: 11px;
+			color: #000;
+			background-color: #fff;
+		}
+
+		h1 {
+			margin: 0;
+			padding: 5px 0;
+			font-size: 15px;
+			color: #999;
+			border-bottom: 1px solid #999;
+		}
+
+		h2 {
+			margin: 0;
+			padding: 10px 0 5px;
+			font-size: 13px;
+		}
+
+		p {
+			margin: 0;
+			padding: 1px 0;
+		}
+
+		table {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			text-align: right;
+			border-top: 1px solid #999;
+			border-bottom: 1px solid #999;
+		}
+
+		th {
+			margin: 0;
+			padding: 3px 5px;
+			border-bottom: 1px solid #999;
+			font-size: 11px;
+		}
+
+		td {
+			margin: 0;
+			padding: 2px 5px;
+			vertical-align: top;
+			font-size: 11px;
+		}
+
+		th.url, td.url {
+			text-align: center;
+		}
+
+		td.rut {
+			white-space: nowrap;
+		}
+	</style>
+</head>
+<body>
+<div class="page">
+	<h1>Producci&oacute;n
+		&middot; Intercambio &middot; Env&iacute;o de DTEs</h1>
+
+	<div class="left">
+		<h2>Emisor</h2>
+
+		<p>IMPORTADORA AUTOMARCO LIMITADA</p>
+
+		<p>RUT 84854200-8</p>
+	</div>
+
+	<div class="right">
+		<h2>Receptor</h2>
+
+		<p>SIERRALTA Y COMPANIA LIMITADA</p>
+
+		<p>RUT 79514800-0</p>
+	</div>
+
+	<div class="both">
+		<h2>Detalle</h2>
+
+		<table cellspacing="0" cellpadding="5">
+			<tr>
+				<th class="url">URL</th>
+				<th>Emisor</th>
+				<th>Tipo</th>
+				<th>Folio</th>
+				<th>Fecha</th>
+				<th>Monto</th>
+			</tr>
+						<tr>
+							<td class="url"><a href="http://automarco1605.acepta.com/v01/4E513E94619A9FAA83A98656990C48A38C4C6431?k=a9de20624f96f9e1de3c81e0db23f174">abrir</a></td>
+							<td class="rut">84854200-8</td>
+							<td>33</td>
+							<td>113738</td>
+							<td>25/05/2016</td>
+							<td>158.299</td>
+						</tr>
+						
+		</table>
+	</div>
+
+	<div class="footer">
+		<p>Este correo adjunta Documentos Tributarios Electr&oacute;nicos (DTE) para el receptor electr&oacute;nico
+			indicado. Por favor responda con un acuse de recibo (RespuestaDTE) conforme al modelo de intercambio de
+			Factura Electr&oacute;nica del SII.</p>
+
+		<br/>
+
+		<p class="copyright">
+			Servicios de Facturaci&oacute;n Electr&oacute;nica de <a href="http://www.acepta.com">ACEPTA COM S A</a>
+		</p>
+	</div>
+</div>
+</body>
+</html>
+
+------=_Part_101532_2039752226.1464258243995
+Content-Type: application/octet-stream; 
+	name=EnvioDTE-84854200-8-79514800-0-20160526-062403-035E75EA.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; 
+	filename=EnvioDTE-84854200-8-79514800-0-20160526-062403-035E75EA.xml
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<EnvioDTE xmlns="http://www.sii.cl/SiiDte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.sii.cl/SiiDte EnvioDTE_v10.xsd">
+<SetDTE ID="EnvioDTE-84854200-8-79514800-0-20160526-062403-035E75EA">
+<Caratula version="1.0">
+<RutEmisor>84854200-8</RutEmisor>
+<RutEnvia>5544700-4</RutEnvia>
+<RutReceptor>79514800-0</RutReceptor>
+<FchResol>2007-10-30</FchResol>
+<NroResol>125</NroResol>
+<TmstFirmaEnv>2016-05-26T06:24:03</TmstFirmaEnv>
+<SubTotDTE>
+<TpoDTE>33</TpoDTE>
+<NroDTE>1</NroDTE>
+</SubTotDTE>
+</Caratula>
+<DTE xmlns="http://www.sii.cl/SiiDte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0">
+      <Documento ID="T33F113738">
+        <Encabezado>
+          <IdDoc>
+            <TipoDTE>33</TipoDTE>
+            <Folio>113738</Folio>
+            <FchEmis>2016-05-25</FchEmis>
+          </IdDoc>
+          <Emisor>
+            <RUTEmisor>84854200-8</RUTEmisor>
+            <RznSoc>Importadora Automarco Ltda.</RznSoc>
+            <GiroEmis>Importadora</GiroEmis>
+            <Telefono>8734100</Telefono>
+            <CorreoEmisor>automarco@automarco.com</CorreoEmisor>
+            <Acteco>503000</Acteco>
+            <DirOrigen>Las Esteras No 2750</DirOrigen>
+            <CmnaOrigen>Quilicura</CmnaOrigen>
+            <CiudadOrigen>SANTIAGO</CiudadOrigen>
+            <CdgVendedor>0003</CdgVendedor>
+          </Emisor>
+          <Receptor>
+            <RUTRecep>79514800-0</RUTRecep>
+            <RznSocRecep>SIERRALTA Y CIA. LTDA.</RznSocRecep>
+            <GiroRecep>REPUESTOS AUTOMOTRICES</GiroRecep>
+            <DirRecep>AVDA.BRASIL 24</DirRecep>
+            <CmnaRecep>SANTIAGO CENTRO</CmnaRecep>
+            <CiudadRecep>SANTIAGO</CiudadRecep>
+          </Receptor>
+          <Totales>
+            <MntNeto>133024</MntNeto>
+            <TasaIVA>19.00</TasaIVA>
+            <IVA>25275</IVA>
+            <MntTotal>158299</MntTotal>
+          </Totales>
+        </Encabezado>
+        <Detalle>
+          <NroLinDet>1</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>11060-4</VlrCodigo>
+          </CdgItem>
+          <NmbItem>GRANT 1.00 1615 SJ-410</NmbItem>
+          <QtyItem>2</QtyItem>
+          <UnmdItem>JGO</UnmdItem>
+          <PrcItem>9400</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>3760</DescuentoMonto>
+          <MontoItem>15040</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>2</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>11661-0</VlrCodigo>
+          </CdgItem>
+          <NmbItem>CORREA DIST. 95x19x905</NmbItem>
+          <QtyItem>4</QtyItem>
+          <UnmdItem>C/U</UnmdItem>
+          <PrcItem>6890</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>5512</DescuentoMonto>
+          <MontoItem>22048</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>3</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>13381-7</VlrCodigo>
+          </CdgItem>
+          <NmbItem>GRANT STD P-1650 SUZUKI FORZA 1.3</NmbItem>
+          <QtyItem>2</QtyItem>
+          <UnmdItem>C/U</UnmdItem>
+          <PrcItem>15320</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>6128</DescuentoMonto>
+          <MontoItem>24512</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>4</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>13421-K</VlrCodigo>
+          </CdgItem>
+          <NmbItem>GRANT STD C-5013 SUZUKI MASTER VAN 1.3</NmbItem>
+          <QtyItem>2</QtyItem>
+          <UnmdItem>JGO</UnmdItem>
+          <PrcItem>14690</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>5876</DescuentoMonto>
+          <MontoItem>23504</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>5</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>15484-9</VlrCodigo>
+          </CdgItem>
+          <NmbItem>GRANT STD 1614 SUZUKY ST</NmbItem>
+          <QtyItem>1</QtyItem>
+          <UnmdItem>JGO</UnmdItem>
+          <PrcItem>7450</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>1490</DescuentoMonto>
+          <MontoItem>5960</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>6</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>16322-8</VlrCodigo>
+          </CdgItem>
+          <NmbItem>CORREA DIST. 5318 XS</NmbItem>
+          <QtyItem>5</QtyItem>
+          <UnmdItem>C/U</UnmdItem>
+          <PrcItem>7510</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>7510</DescuentoMonto>
+          <MontoItem>30040</MontoItem>
+        </Detalle>
+        <Detalle>
+          <NroLinDet>7</NroLinDet>
+          <CdgItem>
+            <TpoCodigo>INT1</TpoCodigo>
+            <VlrCodigo>16366-K</VlrCodigo>
+          </CdgItem>
+          <NmbItem>GRANT 0.50 1614 SUZUKY ST</NmbItem>
+          <QtyItem>2</QtyItem>
+          <UnmdItem>JGO</UnmdItem>
+          <PrcItem>7450</PrcItem>
+          <DescuentoPct>20.00</DescuentoPct>
+          <DescuentoMonto>2980</DescuentoMonto>
+          <MontoItem>11920</MontoItem>
+        </Detalle>
+        <SubTotInfo>
+          <NroSTI>1</NroSTI>
+          <GlosaSTI>SUBTOTAL</GlosaSTI>
+          <ValSubtotSTI>133024</ValSubtotSTI>
+        </SubTotInfo>
+        <Referencia>
+          <NroLinRef>1</NroLinRef>
+          <TpoDocRef>802</TpoDocRef>
+          <FolioRef>060103</FolioRef>
+          <FchRef>2016-05-24</FchRef>
+        </Referencia>
+        <TED version="1.0">
+          <DD>
+            <RE>84854200-8</RE>
+            <TD>33</TD>
+            <F>113738</F>
+            <FE>2016-05-25</FE>
+            <RR>79514800-0</RR>
+            <RSR>SIERRALTA Y CIA. LTDA.</RSR>
+            <MNT>158299</MNT>
+            <IT1>GRANT 1.00 1615 SJ-410</IT1>
+            <CAF version="1.0">
+              <DA>
+                <RE>84854200-8</RE>
+                <RS>IMPORTADORA AUTOMARCO LIMITADA</RS>
+                <TD>33</TD>
+                <RNG>
+                  <D>113000</D>
+                  <H>127499</H>
+                </RNG>
+                <FA>2016-05-05</FA>
+                <RSAPK>
+                  <M>vI58TwOdIXJ4Hw4fV4DUHcP+QU99RSnP9ulhSDHoKBIyUc6BnktFpin0ukX23E4Z2LVIdvtL7vIH8WbgWf2W/Q==</M>
+                  <E>Aw==</E>
+                </RSAPK>
+                <IDK>300</IDK>
+              </DA>
+              <FRMA algoritmo="SHA1withRSA">gRNXFznbHzIdDEh6eVU8ISMRItnFeCwyBFKNwGwqApVScuI4vn7SM4QZc5ViT3eBBb3dLslzoj9wUoSdDJeWfg==</FRMA>
+            </CAF>
+            <TSTED>2016-05-25T08:29:21</TSTED>
+          </DD>
+          <FRMT algoritmo="SHA1withRSA">VN3gXoi2fhMueQKSwaECDu9w0YOkHg+XcRLq0/0qTNMQMg90nFiq1DSVJogskK1lnFaauTqDuNqh
+5h4B6AjQKg==</FRMT>
+        </TED>
+        <TmstFirma>2016-05-25T08:29:21</TmstFirma>
+      </Documento>
+      <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+	<SignedInfo>
+		<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"></CanonicalizationMethod>
+		<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"></SignatureMethod>
+		<Reference URI="#T33F113738">
+			<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"></DigestMethod>
+			<DigestValue>NF0WVjPrTq2GMr6MLVRkxQKTL5s=</DigestValue>
+		</Reference>
+	</SignedInfo>
+	<SignatureValue>n/e/FufDPMt29alLS6H826hrulXNRT19KEep1cqXrJWo/LY3+ZQ6b9xP2u4xc6qpCiS0rVtx46Gf
+ImMIvpgHS6tf+qyX/2HocLPwgsLe2oju8gA8ySwIeflTi8O8RDxdbTBSfDq+O367uVeVL8IlMyFU
+ZHj23jrfVLG9NxZSfrY=</SignatureValue>
+	<KeyInfo>
+		<KeyValue>
+			<RSAKeyValue>
+				<Modulus>pccnM8cR67WpHBGkTC1l1ZmrdQlqqZ+MSgK9a+dMxswmTzqguDT9Pje2j6dNVsDrOE4wvax9VKLy
+r4j1ZhIOAFYeU7BVR9JD0cYJJLJDjLQa/r46zH/hK+hl0VPPFZmDF/JvvbqDsS61yBbBzTcM24/t
+5LioIDAIMaPIK8RDZNE=</Modulus>
+				<Exponent>AQAB</Exponent>
+			</RSAKeyValue>
+		</KeyValue>
+		<X509Data>
+			<X509Certificate>MIIF4DCCBMigAwIBAgICFjYwDQYJKoZIhvcNAQEFBQAwgaYxCzAJBgNVBAYTAkNMMRgwFgYDVQQK
+Ew9BY2VwdGEuY29tIFMuQS4xSDBGBgNVBAMTP0FjZXB0YS5jb20gQXV0b3JpZGFkIENlcnRpZmlj
+YWRvcmEgQ2xhc2UgMyBQZXJzb25hIE5hdHVyYWwgLSBHMzEeMBwGCSqGSIb3DQEJARYPaW5mb0Bh
+Y2VwdGEuY29tMRMwEQYDVQQFEwo5NjkxOTA1MC04MB4XDTE1MDgzMTIwMjU1NFoXDTE4MDgzMTIw
+MjU1NFowgY8xCzAJBgNVBAYTAkNMMRgwFgYDVQQMEw9QRVJTT05BIE5BVFVSQUwxJjAkBgNVBAMT
+HUhFQ1RPUiBQQVRSSUNJTyBURUxMTyBBQ0VWRURPMSowKAYJKoZIhvcNAQkBFhtqYWltZS5jYWJl
+emFzQGF1dG9tYXJjby5jb20xEjAQBgNVBAUTCTk3Njc0MzItOTCBnzANBgkqhkiG9w0BAQEFAAOB
+jQAwgYkCgYEApccnM8cR67WpHBGkTC1l1ZmrdQlqqZ+MSgK9a+dMxswmTzqguDT9Pje2j6dNVsDr
+OE4wvax9VKLyr4j1ZhIOAFYeU7BVR9JD0cYJJLJDjLQa/r46zH/hK+hl0VPPFZmDF/JvvbqDsS61
+yBbBzTcM24/t5LioIDAIMaPIK8RDZNECAwEAAaOCAq8wggKrMB8GA1UdIwQYMBaAFLa7ixO5N2ff
+8E3H1bhWmd9mmpHOMB0GA1UdDgQWBBTccWU0sQpc6OOmcgu11OVz45+eHzALBgNVHQ8EBAMCBPAw
+HQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMBEGCWCGSAGG+EIBAQQEAwIFoDCB8wYDVR0g
+BIHrMIHoMIHlBgorBgEEAbVrh2oCMIHWMCgGCCsGAQUFBwIBFhxodHRwOi8vd3d3LmFjZXB0YS5j
+b20vQ1BTLUczMIGpBggrBgEFBQcCAjCBnDAWFg9BY2VwdGEuY29tIFMuQS4wAwIBAhqBgUVsIHRp
+dHVsYXIgaGEgc2lkbyB2YWxpZGFkbyBlbiBmb3JtYSBwcmVzZW5jaWFsLCBxdWVkYW5kbyBoYWJp
+bGl0YWRvIGVsIENlcnRpZmljYWRvIHBhcmEgdXNvIHRyaWJ1dGFyaW8sIHBhZ29zLCBjb21lcmNp
+byB5IG90cm9zLjBaBgNVHRIEUzBRoBgGCCsGAQQBwQECoAwWCjk2OTE5MDUwLTigJAYIKwYBBQUH
+CAOgGDAWDAo5NjkxOTA1MC04BggrBgEEAcEBAoEPaW5mb0BhY2VwdGEuY29tMGQGA1UdEQRdMFug
+FwYIKwYBBAHBAQGgCxYJOTc2NzQzMi05oCMGCCsGAQUFBwgDoBcwFQwJOTc2NzQzMi05BggrBgEE
+AcEBAoEbamFpbWUuY2FiZXphc0BhdXRvbWFyY28uY29tMDwGCCsGAQUFBwEBBDAwLjAsBggrBgEF
+BQcwAYYgaHR0cDovL29jc3AuYWNlcHRhLmNvbS9DbGFzZTMtRzMwNAYDVR0fBC0wKzApoCegJYYj
+aHR0cDovL2NybC5hY2VwdGEuY29tL0NsYXNlMy1HMy5jcmwwDQYJKoZIhvcNAQEFBQADggEBAIqz
+im+EU0CVZCzlWxNhp3JVRljpBcH0vE3xANTfUyNiQkaQ5hons/+QDi/uLT1v+B8Bq8gs2yL0byZN
+3m44Fljegf1CLXATX2eHIXl/5jlho+Y39BDlOntdiYRWcjYx1IwR6wd4De2jBHg79d7c3TmjA1ga
+yVYT4qSWjDNdQOutiX88j/9IEJydIwu0pqOb1zRfzmvDtnHdA6H7aaQBNP7q7uJqUrIHhNkhD6tM
+5z1dUgTwnbHpOC2B1/BqsZyZLNhLR17XzZD5BWyeTwxn/8Qv6CJOuehNElwRrnmMe8sDRDFiSx4D
+XK9/VteActZ7TN6XbH5T8RmSaM6nKvN/sZQ=</X509Certificate>
+		</X509Data>
+	</KeyInfo>
+</Signature>
+    </DTE></SetDTE>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"></CanonicalizationMethod><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"></SignatureMethod><Reference URI="#EnvioDTE-84854200-8-79514800-0-20160526-062403-035E75EA"><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"></DigestMethod><DigestValue>+qcFcZlWAGRfmN0KfegsNlSjKxE=</DigestValue></Reference></SignedInfo><SignatureValue>LxMcGulYxs6D+Tb/afw3DbacJBtsVpJXuktv2wurXRNhWNqCxB0je10C/Y8R6CU9ifhUphB4aZQo
+zgsAZ97118/BNOTp7uZrSwSbWNK6P/Gtf5B11TnAV8S8dA2kkAcypJ/MEReIhgtdRCdvDw4E9lr/
+3SxzvIsTlcVf2C2NykeNHPXFtonYRF7hrhe1NWYz5/3A9+KTRkGboIIFR/E5+DEeikiP9J4C4jns
+APEPsQCJ7lz58MHKB6duSveOOEIyhTXbi6n8aLaWAh+jq9GCJLvMtFv5NKylWqBhgkMLeXyVkqmA
+VVtZC63mP4Z/HcYJsbW9hYWlOpNTS08NxDmo3A==</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>wISSvvLR2F1BVmTYUp+vhvQQ0b43fprKd7mV3saIJKt/E0nuG4wWI/7lYnN5D1Ropn1Hvr4ABGiv
+anjO5CmdAtLm6v0nVm6wL/mibATDPytXfaUwMI9R8OXIvKKkAi6Z4TP2k/BTC1kIkkCbHAbcSX59
+wag0ayqNU4McdXzpjIV9YeCSezc7BmNwv3cFIpU8bSB5sF7BB3CCvvXm6EgH5Ul3XoDXztNi/B48
+t3SxSs/Ho9uUXdRFTkmaoF4nNpoHV+rLgs5D82xm8UyJyl5C5Y7EndzHzCz4Bq+GbPQuZcsba2Ol
+mblXUI5tZshDQg5UMxQ5n94QCkqMaXotZHDbXw==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIGUDCCBTigAwIBAgICFuEwDQYJKoZIhvcNAQEFBQAwgaYxCzAJBgNVBAYTAkNMMRgwFgYDVQQK
+Ew9BY2VwdGEuY29tIFMuQS4xSDBGBgNVBAMTP0FjZXB0YS5jb20gQXV0b3JpZGFkIENlcnRpZmlj
+YWRvcmEgQ2xhc2UgMyBQZXJzb25hIE5hdHVyYWwgLSBHMzEeMBwGCSqGSIb3DQEJARYPaW5mb0Bh
+Y2VwdGEuY29tMRMwEQYDVQQFEwo5NjkxOTA1MC04MB4XDTE1MDkwMzE5MzYxOFoXDTE4MDkwMzE5
+MzYxOFowgYMxCzAJBgNVBAYTAkNMMRswGQYDVQQMExJJTkcgQ0lWIElORFVTVFJJQUwxHzAdBgNV
+BAMTFlBBQkxPIElaUVVJRVJETyBXQUxLRVIxIjAgBgkqhkiG9w0BCQEWE3BpenF1aWVyZG9AaS1t
+ZWQuY2wxEjAQBgNVBAUTCTU1NDQ3MDAtNDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
+AMCEkr7y0dhdQVZk2FKfr4b0ENG+N36ayne5ld7GiCSrfxNJ7huMFiP+5WJzeQ9UaKZ9R76+AARo
+r2p4zuQpnQLS5ur9J1ZusC/5omwEwz8rV32lMDCPUfDlyLyipAIumeEz9pPwUwtZCJJAmxwG3El+
+fcGoNGsqjVODHHV86YyFfWHgkns3OwZjcL93BSKVPG0gebBewQdwgr715uhIB+VJd16A187TYvwe
+PLd0sUrPx6PblF3URU5JmqBeJzaaB1fqy4LOQ/NsZvFMicpeQuWOxJ3cx8ws+Aavhmz0LmXLG2tj
+pZm5V1CObWbIQ0IOVDMUOZ/eEApKjGl6LWRw218CAwEAAaOCAqcwggKjMB8GA1UdIwQYMBaAFLa7
+ixO5N2ff8E3H1bhWmd9mmpHOMB0GA1UdDgQWBBThlZDUXZySStYb5Clb4H40f84qZTALBgNVHQ8E
+BAMCBPAwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMBEGCWCGSAGG+EIBAQQEAwIFoDCB
+8wYDVR0gBIHrMIHoMIHlBgorBgEEAbVrh2oCMIHWMCgGCCsGAQUFBwIBFhxodHRwOi8vd3d3LmFj
+ZXB0YS5jb20vQ1BTLUczMIGpBggrBgEFBQcCAjCBnDAWFg9BY2VwdGEuY29tIFMuQS4wAwIBAhqB
+gUVsIHRpdHVsYXIgaGEgc2lkbyB2YWxpZGFkbyBlbiBmb3JtYSBwcmVzZW5jaWFsLCBxdWVkYW5k
+byBoYWJpbGl0YWRvIGVsIENlcnRpZmljYWRvIHBhcmEgdXNvIHRyaWJ1dGFyaW8sIHBhZ29zLCBj
+b21lcmNpbyB5IG90cm9zLjBaBgNVHRIEUzBRoBgGCCsGAQQBwQECoAwWCjk2OTE5MDUwLTigJAYI
+KwYBBQUHCAOgGDAWDAo5NjkxOTA1MC04BggrBgEEAcEBAoEPaW5mb0BhY2VwdGEuY29tMFwGA1Ud
+EQRVMFOgFwYIKwYBBAHBAQGgCxYJNTU0NDcwMC00oCMGCCsGAQUFBwgDoBcwFQwJNTU0NDcwMC00
+BggrBgEEAcEBAoETcGl6cXVpZXJkb0BpLW1lZC5jbDA8BggrBgEFBQcBAQQwMC4wLAYIKwYBBQUH
+MAGGIGh0dHA6Ly9vY3NwLmFjZXB0YS5jb20vQ2xhc2UzLUczMDQGA1UdHwQtMCswKaAnoCWGI2h0
+dHA6Ly9jcmwuYWNlcHRhLmNvbS9DbGFzZTMtRzMuY3JsMA0GCSqGSIb3DQEBBQUAA4IBAQBfeUD1
+FRswhMPDx/oEX6zSCdkkNMmo+OYfKVBJQoz2YE7Uvag7tVFJibRYVlLFQY4AwkSkUizDpbWQRsfu
+NmOU6Ny91/8l9bSya/1LJV/J4XCQTC66BmQ0/pWTupTLGOHuIRKkr5Jtp2Sef8XhcMCjDJZMp6ij
+rMnU9rlrpXCUWbEQ9JdndR9pMcKy0V8cXHUZ+T5fLoR3obPf5y1XUiH+OoDRGXp6MEA/1LOcqlDE
+TsfOOpZn7alwul6//rY7u3VkuxCk/czuxtMQH+l6X/gaJ1UXpTKkOimfymbKrhAKC5gRbuktxWLa
+d/bzKt5kHH32lfxSTwfw/WBxuE9BVjuX</X509Certificate></X509Data></KeyInfo></Signature></EnvioDTE>
+------=_Part_101532_2039752226.1464258243995--

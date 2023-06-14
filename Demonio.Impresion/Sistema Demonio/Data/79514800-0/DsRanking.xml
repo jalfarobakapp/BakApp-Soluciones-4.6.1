@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone="yes"?>
+<DsRanking xmlns="http://tempuri.org/DsRanking.xsd">
+  <Conf_Ranking>
+    <Fecha_Desde>2016-12-01T00:00:00-03:00</Fecha_Desde>
+    <Fecha_Hasta>2016-12-31T00:00:00-03:00</Fecha_Hasta>
+    <PPM_X_Trans>1</PPM_X_Trans>
+    <PPM>0</PPM>
+    <UC>0</UC>
+    <Lcostos>0</Lcostos>
+    <Lista>01C</Lista>
+    <Fecha_Desde_Desc>2016-12-01T00:00:00-03:00</Fecha_Desde_Desc>
+    <Fecha_Hasta_Desc>2016-12-01T00:00:00-03:00</Fecha_Hasta_Desc>
+  </Conf_Ranking>
+</DsRanking>

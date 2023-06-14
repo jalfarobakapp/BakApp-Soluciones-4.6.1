@@ -1,0 +1,127 @@
+Return-Path: <SRS0=jcccME=4W=desis.cl=dtecos@sirrep.cl>
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id 1x1/Bv4TG1m0mgAAqFaw+A
+	; Tue, 16 May 2017 11:00:14 -0400
+Return-path: <SRS0=jcccME=4W=desis.cl=dtecos@sirrep.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Tue, 16 May 2017 11:00:14 -0400
+Received: from ns21.desis.cl ([190.98.228.163] helo=mail.sertic.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.89)
+	(envelope-from <dtecos@desis.cl>)
+	id 1dAdxO-000AKI-HG
+	for notificacionsii@sirrep.cl; Tue, 16 May 2017 11:00:14 -0400
+Received: from wsdte43.facturacion.cl (ns14.desis.cl [200.74.172.230])
+	by mail.sertic.cl (Postfix) with ESMTPA id 7E74297E120;
+	Tue, 16 May 2017 12:02:04 -0300 (CLT)
+From: AUTOMOTRIZ COS LIMITADA <dtecos@desis.cl>
+To: notificacionsii@sirrep.cl, cos@automotrizcos.cl
+Message-ID: <30641031.3.1494946927642.JavaMail.root@wsdte43.facturacion.cl>
+Subject: =?ISO-8859-1?Q?Documento_Tributario_Electr?=
+ =?ISO-8859-1?Q?=F3nico:_Recibo_de_Mercader=EDas?=
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="----=_Part_2_5063138.1494946927525"
+Content-Transfer-Encoding: 7bit
+X-Mailer: WSDTE - [http://www.desis.cl/]
+Date: Tue, 16 May 2017 12:02:04 -0300 (CLT)
+
+------=_Part_2_5063138.1494946927525
+Content-Type: text/html; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+
+Adjunto se env=EDa Recibo de Mercader=EDas
+------=_Part_2_5063138.1494946927525
+Content-Type: application/octet-stream; name=ReciboMercaderias_2183.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=ReciboMercaderias_2183.xml
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<EnvioRecibos xmlns="http://www.sii.cl/SiiDte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.sii.cl/SiiDte EnvioRecibos_v10.xsd">
+	<SetRecibos ID="RMERC2183">
+		<Caratula version="1.0">
+			<RutResponde>76212390-8</RutResponde>
+			<RutRecibe>79514800-0</RutRecibe>
+			<NmbContacto>Usuario Administrador</NmbContacto>
+			<MailContacto>cos@automotrizcos.cl</MailContacto>
+			<TmstFirmaEnv>2017-05-16T11:02:03</TmstFirmaEnv>
+		</Caratula>
+		<Recibo version="1.0">
+			<DocumentoRecibo ID="F231575T33">
+				<TipoDoc>33</TipoDoc>
+				<Folio>231575</Folio>
+				<FchEmis>2017-05-16</FchEmis>
+				<RUTEmisor>79514800-0</RUTEmisor>
+				<RUTRecep>76212390-8</RUTRecep>
+				<MntTotal>28694</MntTotal>
+				<Recinto>DIRECCION</Recinto>
+				<RutFirma>9309542-1</RutFirma>
+				<Declaracion>El acuse de recibo que se declara en este acto, de acuerdo a lo dispuesto en la letra b) del Art. 4, y la letra c) del Art. 5 de la Ley 19.983, acredita que la entrega de mercaderias o servicio(s) prestado(s) ha(n) sido recibido(s).</Declaracion>
+				<TmstFirmaRecibo>2017-05-16T11:02:03</TmstFirmaRecibo>
+			</DocumentoRecibo>
+		<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI="#F231575T33"><Transforms><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>WQWiN6WcOjd3dIemSV6Su5a8x1g=</DigestValue></Reference></SignedInfo><SignatureValue>jkTEtEKEMiocUlnfWjeyRreDs4KIHLmmKW23JbF6kPW4xMl9j6N40NKncYQswJNfHeBI5+lQNDc/
+nHrkpNicFu7Ry4PjSoKVVDHUG6FEUOaI7eYH5GiKX29slWqgJIkZUbr+N1WITOsykD7JRINHM/FM
+D2UuYyeJak90bbyFXoM=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>rgaRr3wjXGvTTRdRZLIXHCMJfUZIO+pvp6AQr0zjf6LVLU5kxDl6JQxDbhoYR9UkJZJxXMzS0zOd
+L7auW6ciPrOnqIZ1lPW+7mnR/kzU1+bUv1d2DIvjjJgM4X8O4/f+X4b36fN3ie1vsCAMLtikWAeZ
+/Q/kZEoISMkMu1c3/h8=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIGSDCCBTCgAwIBAgIKaZg52QAAAAHBDzANBgkqhkiG9w0BAQUFADCB0jELMAkGA1UEBhMCQ0wx
+HTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQHEwhTYW50aWFnbzEUMBIGA1UE
+ChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9yaWRhZCBDZXJ0aWZpY2Fkb3JhMTAwLgYDVQQD
+EydFLUNFUlRDSElMRSBDQSBGSVJNQSBFTEVDVFJPTklDQSBTSU1QTEUxJzAlBgkqhkiG9w0BCQEW
+GHNjbGllbnRlc0BlLWNlcnRjaGlsZS5jbDAeFw0xNDEwMTUxNzQxMzdaFw0xNzEwMTQxNzQxMzda
+MIHKMQswCQYDVQQGEwJDTDEKMAgGA1UECAwBKjERMA8GA1UEBxMIU0FOVElBR08xNjA0BgNVBAoT
+LVNFUlZJQ0lPUyBFTiBURUNOT0xPR0lBUyBERSBJTkYuIFkgQ09NLiBMVERBLjEXMBUGA1UECxMO
+RmFjdHVyYWNpb24uY2wxIDAeBgNVBAMTF0NBUkxPUyBPUlRFR0EgU0VQVUxWRURBMSkwJwYJKoZI
+hvcNAQkBFhpmb3JtdWxhcmlvc0BmYWN0dXJhY2lvbi5jbDCBnzANBgkqhkiG9w0BAQEFAAOBjQAw
+gYkCgYEArgaRr3wjXGvTTRdRZLIXHCMJfUZIO+pvp6AQr0zjf6LVLU5kxDl6JQxDbhoYR9UkJZJx
+XMzS0zOdL7auW6ciPrOnqIZ1lPW+7mnR/kzU1+bUv1d2DIvjjJgM4X8O4/f+X4b36fN3ie1vsCAM
+LtikWAeZ/Q/kZEoISMkMu1c3/h8CAwEAAaOCAqgwggKkMAsGA1UdDwQEAwIE8DAdBgNVHQ4EFgQU
+vHwl6Vz8qeGCRLzlWnSBc5zdM3swHwYDVR0jBBgwFoAUeOE+n9ISs3o8jc0wDlOzQykHs1UwPgYD
+VR0fBDcwNTAzoDGgL4YtaHR0cDovL2NybC5lLWNlcnRjaGlsZS5jbC9lY2VydGNoaWxlY2FGRVMu
+Y3JsMDsGCCsGAQUFBwEBBC8wLTArBggrBgEFBQcwAYYfaHR0cDovL29jc3AuaW50ZXJjYXBpdC5j
+b20vb2NzcDA9BgkrBgEEAYI3FQcEMDAuBiYrBgEEAYI3FQiC3IMvhZOMZoXVnReC4twnge/sPGGB
+y54UhqiCWAIBZAIBBDAjBgNVHREEHDAaoBgGCCsGAQQBwQEBoAwWCjA5MzA5NTQyLTEwIwYDVR0S
+BBwwGqAYBggrBgEEAcEBAqAMFgo5NjkyODE4MC01MIIBTQYDVR0gBIIBRDCCAUAwggE8BggrBgEE
+AcNSBTCCAS4wLQYIKwYBBQUHAgEWIWh0dHA6Ly93d3cuZS1jZXJ0Y2hpbGUuY2wvQ1BTLmh0bTCB
+/AYIKwYBBQUHAgIwge8egewAQwBlAHIAdABpAGYAaQBjAGEAZABvACAARgBpAHIAbQBhACAAUwBp
+AG0AcABsAGUALgAgAEgAYQAgAHMAaQBkAG8AIAB2AGEAbABpAGQAYQBkAG8AIABlAG4AIABmAG8A
+cgBtAGEAIABwAHIAZQBzAGUAbgBjAGkAYQBsACwAIABxAHUAZQBkAGEAbgBkAG8AIABoAGEAYgBp
+AGwAaQB0AGEAZABvACAAZQBsACAAQwBlAHIAdABpAGYAaQBjAGEAZABvACAAcABhAHIAYQAgAHUA
+cwBvACAAdAByAGkAYgB1AHQAYQByAGkAbzANBgkqhkiG9w0BAQUFAAOCAQEAfdb3o4jdYLtrronn
+GJ12J5Y9kSt5XRbR6DYSLXxcZm45bE4Y7ACvOO9QnTN9rflQfn7ro7L6/+HmXzWGMbqz4zX4/WPr
+lEpU64EfqFdo8PPnFQeRk6jhOmbopM0knpnJnGv9wrsWwzOARIuns2/+gseo4r9MAL5CJ9koAUw2
+NUmCKSAMxAxsl4XZjRWKC9g20gShQIFuHTqgY+pBAs4Mmh/uU3gF5UuO3TbjypFNefZkTy/+bonM
+0/JQmQr94zzL/7bAHnIAoV8vYh3FO9sParyZdNuTBero7Af7jRx4Wi9cFuGpE2rHJfarVvkkFtrS
+IEHV5Ht65ydJtsF4FYsk9Q==</X509Certificate></X509Data></KeyInfo></Signature></Recibo>
+	</SetRecibos>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI="#RMERC2183"><Transforms><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>gXS1iAiLPAbvbWgCZrBAyHtx350=</DigestValue></Reference></SignedInfo><SignatureValue>NUeUVKGsMpPbyP7AVNR3gD5YvbqbknXyBMtyenfHO2M7J2iokX0Yv9nHSknU1ckDM0RZfJM6B/lU
+oE10HEqDDt3XYg5J8OKv7SLTP3GfMWiJXhOceCzvh33pcUDwzeegwdqBciGEWDze4N8jZKgfyxU7
+Y9XI6PTbQia1a7fooXs=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>rgaRr3wjXGvTTRdRZLIXHCMJfUZIO+pvp6AQr0zjf6LVLU5kxDl6JQxDbhoYR9UkJZJxXMzS0zOd
+L7auW6ciPrOnqIZ1lPW+7mnR/kzU1+bUv1d2DIvjjJgM4X8O4/f+X4b36fN3ie1vsCAMLtikWAeZ
+/Q/kZEoISMkMu1c3/h8=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIGSDCCBTCgAwIBAgIKaZg52QAAAAHBDzANBgkqhkiG9w0BAQUFADCB0jELMAkGA1UEBhMCQ0wx
+HTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQHEwhTYW50aWFnbzEUMBIGA1UE
+ChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9yaWRhZCBDZXJ0aWZpY2Fkb3JhMTAwLgYDVQQD
+EydFLUNFUlRDSElMRSBDQSBGSVJNQSBFTEVDVFJPTklDQSBTSU1QTEUxJzAlBgkqhkiG9w0BCQEW
+GHNjbGllbnRlc0BlLWNlcnRjaGlsZS5jbDAeFw0xNDEwMTUxNzQxMzdaFw0xNzEwMTQxNzQxMzda
+MIHKMQswCQYDVQQGEwJDTDEKMAgGA1UECAwBKjERMA8GA1UEBxMIU0FOVElBR08xNjA0BgNVBAoT
+LVNFUlZJQ0lPUyBFTiBURUNOT0xPR0lBUyBERSBJTkYuIFkgQ09NLiBMVERBLjEXMBUGA1UECxMO
+RmFjdHVyYWNpb24uY2wxIDAeBgNVBAMTF0NBUkxPUyBPUlRFR0EgU0VQVUxWRURBMSkwJwYJKoZI
+hvcNAQkBFhpmb3JtdWxhcmlvc0BmYWN0dXJhY2lvbi5jbDCBnzANBgkqhkiG9w0BAQEFAAOBjQAw
+gYkCgYEArgaRr3wjXGvTTRdRZLIXHCMJfUZIO+pvp6AQr0zjf6LVLU5kxDl6JQxDbhoYR9UkJZJx
+XMzS0zOdL7auW6ciPrOnqIZ1lPW+7mnR/kzU1+bUv1d2DIvjjJgM4X8O4/f+X4b36fN3ie1vsCAM
+LtikWAeZ/Q/kZEoISMkMu1c3/h8CAwEAAaOCAqgwggKkMAsGA1UdDwQEAwIE8DAdBgNVHQ4EFgQU
+vHwl6Vz8qeGCRLzlWnSBc5zdM3swHwYDVR0jBBgwFoAUeOE+n9ISs3o8jc0wDlOzQykHs1UwPgYD
+VR0fBDcwNTAzoDGgL4YtaHR0cDovL2NybC5lLWNlcnRjaGlsZS5jbC9lY2VydGNoaWxlY2FGRVMu
+Y3JsMDsGCCsGAQUFBwEBBC8wLTArBggrBgEFBQcwAYYfaHR0cDovL29jc3AuaW50ZXJjYXBpdC5j
+b20vb2NzcDA9BgkrBgEEAYI3FQcEMDAuBiYrBgEEAYI3FQiC3IMvhZOMZoXVnReC4twnge/sPGGB
+y54UhqiCWAIBZAIBBDAjBgNVHREEHDAaoBgGCCsGAQQBwQEBoAwWCjA5MzA5NTQyLTEwIwYDVR0S
+BBwwGqAYBggrBgEEAcEBAqAMFgo5NjkyODE4MC01MIIBTQYDVR0gBIIBRDCCAUAwggE8BggrBgEE
+AcNSBTCCAS4wLQYIKwYBBQUHAgEWIWh0dHA6Ly93d3cuZS1jZXJ0Y2hpbGUuY2wvQ1BTLmh0bTCB
+/AYIKwYBBQUHAgIwge8egewAQwBlAHIAdABpAGYAaQBjAGEAZABvACAARgBpAHIAbQBhACAAUwBp
+AG0AcABsAGUALgAgAEgAYQAgAHMAaQBkAG8AIAB2AGEAbABpAGQAYQBkAG8AIABlAG4AIABmAG8A
+cgBtAGEAIABwAHIAZQBzAGUAbgBjAGkAYQBsACwAIABxAHUAZQBkAGEAbgBkAG8AIABoAGEAYgBp
+AGwAaQB0AGEAZABvACAAZQBsACAAQwBlAHIAdABpAGYAaQBjAGEAZABvACAAcABhAHIAYQAgAHUA
+cwBvACAAdAByAGkAYgB1AHQAYQByAGkAbzANBgkqhkiG9w0BAQUFAAOCAQEAfdb3o4jdYLtrronn
+GJ12J5Y9kSt5XRbR6DYSLXxcZm45bE4Y7ACvOO9QnTN9rflQfn7ro7L6/+HmXzWGMbqz4zX4/WPr
+lEpU64EfqFdo8PPnFQeRk6jhOmbopM0knpnJnGv9wrsWwzOARIuns2/+gseo4r9MAL5CJ9koAUw2
+NUmCKSAMxAxsl4XZjRWKC9g20gShQIFuHTqgY+pBAs4Mmh/uU3gF5UuO3TbjypFNefZkTy/+bonM
+0/JQmQr94zzL/7bAHnIAoV8vYh3FO9sParyZdNuTBero7Af7jRx4Wi9cFuGpE2rHJfarVvkkFtrS
+IEHV5Ht65ydJtsF4FYsk9Q==</X509Certificate></X509Data></KeyInfo></Signature></EnvioRecibos>
+------=_Part_2_5063138.1494946927525--

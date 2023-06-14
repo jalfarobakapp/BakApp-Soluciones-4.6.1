@@ -1,0 +1,36 @@
+<?xml version="1.0" standalone="yes"?>
+<DatosCompra xmlns="http://tempuri.org/DatosCompra.xsd">
+  <Parametros_Inf>
+    <CodFuncionario>010</CodFuncionario>
+    <CodEntidadSel />
+    <SucEntidadSel />
+    <BuscarTodoProv>1</BuscarTodoProv>
+    <EsEntFisica>0</EsEntFisica>
+    <FechaEstudio1>2016-12-01T00:00:00-03:00</FechaEstudio1>
+    <FechaEstudio2>2016-12-31T00:00:00-03:00</FechaEstudio2>
+    <FechaEstacional1>2016-12-01T00:00:00-03:00</FechaEstacional1>
+    <FechaEstacional2>2016-12-31T00:00:00-03:00</FechaEstacional2>
+    <Clasif_Estrella>ClasificacionLibre</Clasif_Estrella>
+    <Val_StockCritico>0</Val_StockCritico>
+    <Val_DiasAbastecer>0</Val_DiasAbastecer>
+    <MostrarSoloStockCritico>0</MostrarSoloStockCritico>
+    <Sabado>0</Sabado>
+    <Domingo>0</Domingo>
+    <RestarStockBodega>0</RestarStockBodega>
+    <SacarProdSRotacion>0</SacarProdSRotacion>
+    <Unidad1>1</Unidad1>
+    <Unidad2>0</Unidad2>
+    <RdTodoProductos>1</RdTodoProductos>
+    <RdUltimoProdDias>0</RdUltimoProdDias>
+    <RdUltimoProceso>0</RdUltimoProceso>
+    <RdSelecProductos>0</RdSelecProductos>
+    <ChkNivelGenerico>0</ChkNivelGenerico>
+    <DtFechaUltProceso>2016-12-22T17:40:40.5217622-03:00</DtFechaUltProceso>
+    <CmbDiasVenta>7</CmbDiasVenta>
+    <ChkTodasLasVentas>0</ChkTodasLasVentas>
+    <Rd_Costo_UltGRC>1</Rd_Costo_UltGRC>
+    <Rd_Costo_ListaProveedor>0</Rd_Costo_ListaProveedor>
+    <Chk_DesdePrincipio_Vida>0</Chk_DesdePrincipio_Vida>
+    <Chk_Considera_Orde_Compra>false</Chk_Considera_Orde_Compra>
+  </Parametros_Inf>
+</DatosCompra>

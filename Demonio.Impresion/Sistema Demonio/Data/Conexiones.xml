@@ -1,0 +1,68 @@
+<?xml version="1.0" standalone="yes"?>
+<ConexionBK xmlns="http://tempuri.org/ConexionBK.xsd">
+  <CnBakApp>
+    <TipoConexion>SqlServer</TipoConexion>
+    <NombreConexion>SIERRALTA EXTERNO PRUEBAS 2</NombreConexion>
+    <Rut>79514800-0</Rut>
+    <Razon>SIERRALTA Y CIA LTDA.</Razon>
+    <NombreCorto>SMARTRADING</NombreCorto>
+    <Servidor>SIERRALTA</Servidor>
+    <Puerto />
+    <Usuario>SIERRALTA_PRB2</Usuario>
+    <Clave>SIERRALTA_PRB2</Clave>
+    <BaseDeDatos>SIERRALTA_PRB2</BaseDeDatos>
+    <Conectado>true</Conectado>
+  </CnBakApp>
+  <CnBakApp>
+    <TipoConexion>SqlServer</TipoConexion>
+    <NombreConexion>SIERRALTA</NombreConexion>
+    <Rut>79514800-0</Rut>
+    <Razon>SIERRALTA Y CIA LTDA.</Razon>
+    <NombreCorto>SMARTRADING</NombreCorto>
+    <Servidor>SIERRALTA</Servidor>
+    <Puerto />
+    <Usuario>SIERRALTA</Usuario>
+    <Clave>SIERRALTA</Clave>
+    <BaseDeDatos>SIERRALTA</BaseDeDatos>
+    <Conectado>false</Conectado>
+  </CnBakApp>
+  <CnBakApp>
+    <TipoConexion>SqlServer</TipoConexion>
+    <NombreConexion>SIERRALTA OFICINA</NombreConexion>
+    <Rut>79514800-0</Rut>
+    <Razon>SIERRALTA Y CIA LTDA.</Razon>
+    <NombreCorto>SMARTRADING</NombreCorto>
+    <Servidor>SIERRALTA_OF</Servidor>
+    <Puerto />
+    <Usuario>SIERRALTA</Usuario>
+    <Clave>SIERRALTA</Clave>
+    <BaseDeDatos>SIERRALTA</BaseDeDatos>
+    <Conectado>false</Conectado>
+  </CnBakApp>
+  <CnBakApp>
+    <TipoConexion>SqlServer</TipoConexion>
+    <NombreConexion>SIERRALTA LOCAL PRUEBAS</NombreConexion>
+    <Rut>79514800-0</Rut>
+    <Razon>SIERRALTA Y CIA LTDA.</Razon>
+    <NombreCorto>SMARTRADING</NombreCorto>
+    <Servidor>JALFARO-PC\SQL_2008_R2</Servidor>
+    <Puerto />
+    <Usuario>SIERRALTA_LOCAL</Usuario>
+    <Clave>SIERRALTA_LOCAL</Clave>
+    <BaseDeDatos>SIERRALTA_LOCAL</BaseDeDatos>
+    <Conectado>false</Conectado>
+  </CnBakApp>
+  <CnBakApp>
+    <TipoConexion>SqlServer</TipoConexion>
+    <NombreConexion>SIERRALTA OFICINA PRUEBAS</NombreConexion>
+    <Rut>79514800-0</Rut>
+    <Razon>SIERRALTA Y CIA LTDA.</Razon>
+    <NombreCorto>SMARTRADING</NombreCorto>
+    <Servidor>SIERRALTA_OF</Servidor>
+    <Puerto />
+    <Usuario>SIERRALTA_PRB2</Usuario>
+    <Clave>SIERRALTA_PRB2</Clave>
+    <BaseDeDatos>SIERRALTA_PRB2</BaseDeDatos>
+    <Conectado>false</Conectado>
+  </CnBakApp>
+</ConexionBK>

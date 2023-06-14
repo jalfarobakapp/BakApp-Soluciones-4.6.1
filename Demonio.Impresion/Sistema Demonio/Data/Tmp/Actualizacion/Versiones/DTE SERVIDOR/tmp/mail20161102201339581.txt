@@ -1,0 +1,107 @@
+Return-Path: <siidte_reparo@sii.cl>
+Delivered-To: notificacionsii@sirrep.cl
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id rt/sBpvlGFigbQQAqFaw+A
+	for <notificacionsii@sirrep.cl>; Tue, 01 Nov 2016 15:57:31 -0300
+Return-path: <siidte_reparo@sii.cl>
+Received: from rapel12.sii.cl ([200.10.251.90] helo=mailin02.sii.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.86)
+	(envelope-from <siidte_reparo@sii.cl>)
+	id 1c1eFW-001Dla-UM
+	for notificacionsii@sirrep.cl; Tue, 01 Nov 2016 15:57:31 -0300
+X-IronPort-AV: E=Sophos;i="5.22,559,1449543600"; 
+   d="xml'?txt'?scan'208";a="634760865"
+Received: from dte.sii.cl (HELO dte) ([146.20.1.104])
+  by mailout02.sii.cl with ESMTP; 01 Nov 2016 16:57:58 -0300
+Message-ID: <3682584.1478030426692.JavaMail.root@dte>
+Date: Tue, 1 Nov 2016 17:00:26 -0300 (CLST)
+From: siidte_reparo@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: Produccion - Resultado de Revision Envio 1791460440 - 79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_306_27366488.1478030426691"
+
+------=_Part_306_27366488.1478030426691
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+SII de Chile - Validacion de DTE
+================================
+
+En el archivo adjunto esta el resultado del proceso de revision y validacion
+del envio de Documentos Tributarios Electronicos realizado por su empresa al
+Servicio de Impuestos Internos de Chile.
+
+----------------------------------------------------------------------------
+
+Este es una aplicacion automatica. No conteste este correo ni haga 
+consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue 
+mas claro en cualquier aplicacion.
+
+
+------=_Part_306_27366488.1478030426691
+Content-Type: text/plain; name=DTEMAIL1791460440.txt
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL1791460440.txt
+
+Resultado de Validacion de Envio de DTE
+=======================================
+
+Rut de Empresa Emisora   : 79514800-0
+Rut que Realizo el Envio : 12628844-1
+Identificador de Envio   : 1791460440
+Fecha de Recepcion       : 01/11/2016 17:00:53
+Estado del Envio         : EPR - Envio Procesado
+
+Estadisticas del Envio
+======================
+Tipo DTE  Informados  Rechazos  Reparos  Aceptados
+--------------------------------------------------
+   61              1         0        1          0
+
+Detalle de Rechazos y Reparos de DTE
+====================================
+
+ Folio       Tipo  Estado
+ ------------------------------------------------------------------------------
+ 17488        61   RLV - DTE Aceptado con Reparos Leves
+     (DTE-1-650) Fecha de Envio Excede Plazo Permitido : FT[2016-10-28T19:49:41] : FE[2016-10-28] : FR[2016-11-01T17:00:53]
+
+
+------=_Part_306_27366488.1478030426691
+Content-Type: application/octet-stream; name=DTEMAIL1791460440.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL1791460440.xml
+
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<RESULTADO_ENVIO>
+ <IDENTIFICACION>
+  <RUTEMISOR>79514800-0</RUTEMISOR>
+  <RUTENVIA>12628844-1</RUTENVIA>
+  <TRACKID>1791460440</TRACKID>
+  <TMSTRECEPCION>01/11/2016 17:00:53</TMSTRECEPCION>
+  <ESTADO>EPR - Envio Procesado</ESTADO>
+ </IDENTIFICACION>
+ <ESTADISTICA>
+  <SUBTOTAL>
+   <TIPODOC>61</TIPODOC>
+   <INFORMADO>1</INFORMADO>
+   <REPARO>1</REPARO>
+  </SUBTOTAL>
+ </ESTADISTICA>
+ <REVISIONENVIO>
+  <REVISIONDTE>
+   <FOLIO>0000017488</FOLIO>
+   <TIPODTE>61</TIPODTE>
+   <ESTADO>RLV - DTE Aceptado con Reparos Leves</ESTADO>
+   <DETALLE>(DTE-1-650) Fecha de Envio Excede Plazo Permitido : FT[2016-10-28T19:49:41] : FE[2016-10-28] : FR[2016-11-01T17:00:53]</DETALLE>
+  </REVISIONDTE>
+ </REVISIONENVIO>
+</RESULTADO_ENVIO>
+
+------=_Part_306_27366488.1478030426691--
+

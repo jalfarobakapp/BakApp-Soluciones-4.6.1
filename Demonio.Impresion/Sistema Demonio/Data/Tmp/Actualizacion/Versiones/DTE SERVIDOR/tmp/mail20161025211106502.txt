@@ -1,0 +1,94 @@
+Return-Path: <siidte_error@sii.cl>
+Delivered-To: notificacionsii@sirrep.cl
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id P736JRHPB1jfiQkAqFaw+A
+	for <notificacionsii@sirrep.cl>; Wed, 19 Oct 2016 16:53:22 -0300
+Return-path: <siidte_error@sii.cl>
+Received: from rapel12.sii.cl ([200.10.251.90] helo=mailin02.sii.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.86)
+	(envelope-from <siidte_error@sii.cl>)
+	id 1bwwvS-002cwz-6X
+	for notificacionsii@sirrep.cl; Wed, 19 Oct 2016 16:53:22 -0300
+X-IronPort-AV: E=Sophos;i="5.22,559,1449543600"; 
+   d="xml'?txt'?scan'208";a="621235483"
+Received: from dte.sii.cl (HELO dte) ([146.20.1.104])
+  by mailout02.sii.cl with ESMTP; 19 Oct 2016 17:53:56 -0300
+Message-ID: <26779524.1476910566753.JavaMail.dte@dte>
+Date: Wed, 19 Oct 2016 17:56:06 -0300 (CLST)
+From: siidte_error@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: Revision Envio de Libro Normal 1770542906 - 79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_0_19543842.1476910566690"
+
+------=_Part_0_19543842.1476910566690
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+SII de Chile - Validacion de Envios de Libros
+=============================================
+
+En el archivo adjunto esta el resultado del proceso de revision y validacion
+del Envio de Libros Tributarios Electronicos realizado por su empresa al
+Servicio de Impuestos Internos de Chile.
+
+----------------------------------------------------------------------------
+
+Este es una aplicacion automatica. No conteste este correo ni haga 
+consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue 
+mas claro en cualquier aplicacion.
+
+
+------=_Part_0_19543842.1476910566690
+Content-Type: text/plain; name=LBRMAIL1770542906.txt
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment; filename=LBRMAIL1770542906.txt
+
+Resultado de Validacion de Envio de Libro Tributario
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
+
+Identificador de Envio      : 1770542906
+Rut de Empresa Emisora      : 79514800-0
+Rut que Realizo el Envio    : 12628844-1
+Fecha de Recepcion          : 19/10/2016 17:49:56
+Estado del Envio de Libro   : LRH - Envio de Libro Rechazado - Descuadrado
+Tipo de Segmento            : TOTAL
+Numero de Segmento          :   0
+
+Detalle de Errores del Envio de Libro Tributario
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+LBR - 3 - Errores en RUT, Fecha y Tipo De documento - solo se muestran los =
+primeros -
+LBR - 3 - Error en Detalle - [FchDoc] es fecha futura=09T:[33]-F:[758744]
+LBR - 2 - Reparo en Detalle - [FchDoc] excede m=E1s de 2 meses=09T:[61]-F:[=
+1002100]
+
+
+------=_Part_0_19543842.1476910566690
+Content-Type: application/octet-stream; name=LBRMAIL1770542906.xml
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=LBRMAIL1770542906.xml
+
+PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iSVNPLTg4NTktMSIgPz4KPFJlc3VsdGFkb0Vu
+dmlvTGlicm8+CiA8SWRlbnRpZmljYWNpb24+CiAgPFRyYWNrSWQ+MTc3MDU0MjkwNjwvVHJhY2tJ
+ZD4KICA8UnV0RW1pc29yPjc5NTE0ODAwLTA8L1J1dEVtaXNvcj4KICA8UnV0RW52aWE+MTI2Mjg4
+NDQtMTwvUnV0RW52aWE+CiAgPFRtc3RSZWNlcGNpb24+MTkvMTAvMjAxNiAxNzo0OTo1NjwvVG1z
+dFJlY2VwY2lvbj4KICA8RXN0YWRvRW52aW8+TFJIIC0gRW52aW8gZGUgTGlicm8gUmVjaGF6YWRv
+IC0gRGVzY3VhZHJhZG88L0VzdGFkb0VudmlvPgogIDxUaXBvU2VnbWVudG8+VE9UQUw8L1RpcG9T
+ZWdtZW50bz4KICA8TnJvU2VnbWVudG8+MDwvTnJvU2VnbWVudG8+CiA8L0lkZW50aWZpY2FjaW9u
+PgogPEVycm9yRW52aW9MaWJybz4KICA8RGV0RXJyRW52aW8+TEJSIC0gMyAtIEVycm9yZXMgZW4g
+UlVULCBGZWNoYSB5IFRpcG8gRGUgZG9jdW1lbnRvIC0gc29sbyBzZSBtdWVzdHJhbiBsb3MgcHJp
+bWVyb3MgLTwvRGV0RXJyRW52aW8+CiAgPERldEVyckVudmlvPkxCUiAtIDMgLSBFcnJvciBlbiBE
+ZXRhbGxlIC0gW0ZjaERvY10gZXMgZmVjaGEgZnV0dXJhCVQ6WzMzXS1GOls3NTg3NDRdPC9EZXRF
+cnJFbnZpbz4KICA8RGV0RXJyRW52aW8+TEJSIC0gMiAtIFJlcGFybyBlbiBEZXRhbGxlIC0gW0Zj
+aERvY10gZXhjZWRlIG3hcyBkZSAyIG1lc2VzCVQ6WzYxXS1GOlsxMDAyMTAwXTwvRGV0RXJyRW52
+aW8+CiA8L0Vycm9yRW52aW9MaWJybz4KPC9SZXN1bHRhZG9FbnZpb0xpYnJvPgo=
+------=_Part_0_19543842.1476910566690--
+

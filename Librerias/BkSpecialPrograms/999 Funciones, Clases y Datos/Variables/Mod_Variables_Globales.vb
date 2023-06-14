@@ -47,6 +47,9 @@ Public Module Mod_Variables_Globales
     Public _Global_Nombre_BakApp_Demonio As String
     Public _Global_Nombre_BakApp_DTEMonitor As String
 
+    Public _Global_Nombre_BakApp_Demonio_Impresion As String
+    Public _Global_Nombre_BakApp_Demonio_Correos As String
+
     Public _Global_Es_Touch As Boolean
     Public Dst_Licencia_Empresa As Object
 

@@ -121,7 +121,7 @@ Public Class Cl_Imprimir_Documentos
 
         Try
 
-            Sb_Procedimiento_Cola_Impresion()
+            'Sb_Procedimiento_Cola_Impresion()
 
         Catch ex As Exception
             e.Cancel = True
@@ -156,7 +156,6 @@ Public Class Cl_Imprimir_Documentos
 
         Dim _Consulta_sql = String.Empty
 
-        'Sb_Pausar(_Pausa.Pausa)
         _Procesando = True
 
         Dim _Fecha_Dia_Anterior As Date = DateAdd(DateInterval.Day, -1, _Fecha_Revision)
@@ -316,9 +315,6 @@ Public Class Cl_Imprimir_Documentos
                         "Fecha Between Convert(Datetime, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 00:00:00', 102)" & vbCrLf &
                         "And Convert(Datetime, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 23:59:59', 102) And Picking = 0"
 
-        '"FEEMDO BETWEEN CONVERT(DATETIME, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 00:00:00', 102)" & vbCrLf &
-        '              "AND CONVERT(DATETIME, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 23:59:59', 102)"
-
         Dim _Tbl_Doc_Sin_Imprimir As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql, False)
 
         If IsNothing(_Tbl_Doc_Sin_Imprimir) Then
@@ -328,7 +324,7 @@ Public Class Cl_Imprimir_Documentos
 
         Dim _Solo_Marcar_No_Imprimir As Boolean = _Solo_Marcar_No_Imprimir
 
-        If CBool(_Tbl_Doc_Sin_Imprimir.Rows.Count) Then 'CBool(rReg) Then
+        If CBool(_Tbl_Doc_Sin_Imprimir.Rows.Count) Then
 
             If _Tbl_Doc_Sin_Imprimir.Rows.Count > 10 Then
 
@@ -420,8 +416,6 @@ Public Class Cl_Imprimir_Documentos
                     If String.IsNullOrEmpty(_Impresora) Then
                         _Impresora = _Impresora_Est
                     End If
-
-                    '_Impresora = "PDFCreator"
 
                     If String.IsNullOrEmpty(_NombreFormato) Then
                         _NombreFormato = _NombreFormato_Est

@@ -452,13 +452,27 @@ Public Module Mod_Variables
         Dim _Ejecutando_Notificaciones As Process() = Process.GetProcessesByName(_Global_Nombre_BakApp_Notificaciones)
         Dim _Ejecutando_Demonio As Process() = Process.GetProcessesByName(_Global_Nombre_BakApp_Demonio)
         Dim _Ejecutando_DTEMonitor As Process() = Process.GetProcessesByName(_Global_Nombre_BakApp_DTEMonitor)
+        Dim _Ejecutando_Demonio_Impresion As Process() = Process.GetProcessesByName(_Global_Nombre_BakApp_Demonio_Impresion)
 
         For Each prog As Process In Process.GetProcesses
 
+            ' CIERRA DIABLITO OLD
             If UCase(prog.ProcessName) = UCase(_Global_Nombre_BakApp_Demonio) Then
                 If _Preguntar_Cierra_Demonio Then
                     If MessageBoxEx.Show(Frm_Menu, "El diablito de monitoreo de acciones automáticas se encuentra en ejecución." & vbCrLf &
                                                      "¿Desea cerrarlo tambien?", "Diablito", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                        prog.Kill()
+                    End If
+                Else
+                    prog.Kill()
+                End If
+            End If
+
+            ' CIERRA DIABLITO IMPRESION
+            If UCase(prog.ProcessName) = UCase(_Global_Nombre_BakApp_Demonio_Impresion) Then
+                If _Preguntar_Cierra_Demonio Then
+                    If MessageBoxEx.Show(Frm_Menu, "El diablito de monitoreo de impresiones automáticas se encuentra en ejecución." & vbCrLf &
+                                                     "¿Desea cerrarlo tambien?", "Diablito Impresión", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                         prog.Kill()
                     End If
                 Else

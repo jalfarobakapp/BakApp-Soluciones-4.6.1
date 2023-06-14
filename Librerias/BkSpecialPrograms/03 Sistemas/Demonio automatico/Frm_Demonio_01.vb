@@ -1479,10 +1479,14 @@ Public Class Frm_Demonio_01
 
                     Sb_Actualizar_Fecha()
 
+                    'Sb_Pausar(True)
+
                     _Cl_Correos.Fecha_Revision = DtpFecharevision.Value
                     _Cl_Correos.Nombre_Equipo = _Nombre_Equipo
 
                     _Cl_Correos.Sb_Procedimiento_Correos()
+
+                    'Sb_Pausar(False)
 
                     _Minutos_Correo = (_Input_Tiempo_Correo / 1000 / 60) - 1
                     _Segundos_Correo = 59
@@ -1552,6 +1556,7 @@ Public Class Frm_Demonio_01
                 Sb_Pausar(True)
 
                 Sb_Actualizar_Fecha()
+
                 _Cl_Imprimir_Picking.Fecha_Revision = DtpFecharevision.Value
                 _Cl_Imprimir_Picking.Nombre_Equipo = _Nombre_Equipo
                 _Cl_Imprimir_Picking.Sb_Procedimiento_Picking()
@@ -4150,6 +4155,8 @@ Fin:
         End Try
 
     End Function
+
+
 
     Private Sub Btn_Archivar_Documentos_Click(sender As Object, e As EventArgs) Handles Btn_Archivar_Documentos.Click
         Sb_Procedimiento_Archivar_Documentos(False)

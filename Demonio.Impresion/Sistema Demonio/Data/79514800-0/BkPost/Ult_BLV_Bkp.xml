@@ -1,0 +1,174 @@
+<?xml version="1.0" standalone="yes"?>
+<Ds_Matriz_Documentos xmlns="http://tempuri.org/Ds_Matriz_Documentos.xsd">
+  <Observaciones_Doc>
+    <Observaciones />
+    <Forma_pago />
+    <Orden_compra />
+    <Obs1 />
+    <Obs2 />
+    <Obs3 />
+    <Obs4 />
+    <Obs5 />
+    <Obs6 />
+    <Obs7 />
+    <Obs8 />
+    <Obs9 />
+    <Obs10 />
+    <Obs11 />
+    <Obs12 />
+    <Obs13 />
+    <Obs14 />
+    <Obs15 />
+    <Obs16 />
+    <Obs17 />
+    <Obs18 />
+    <Obs19 />
+    <Obs20 />
+    <Obs21 />
+    <Obs22 />
+    <Obs23 />
+    <Obs24 />
+    <Obs25 />
+    <Obs26 />
+    <Obs27 />
+    <Obs28 />
+    <Obs29 />
+    <Obs30 />
+    <Obs31 />
+    <Obs32 />
+    <Obs33 />
+    <Obs34 />
+    <Obs35 />
+  </Observaciones_Doc>
+  <Encabezado_Doc>
+    <Modalidad>VTA02</Modalidad>
+    <Empresa>01</Empresa>
+    <Sucursal>CM </Sucursal>
+    <TipoDoc>BLV</TipoDoc>
+    <NroDocumento>BV20064305</NroDocumento>
+    <CodEntidad>1            </CodEntidad>
+    <CodSucEntidad xml:space="preserve">          </CodSucEntidad>
+    <Nombre_Entidad>CLIENTE EN TRANSITO                               </Nombre_Entidad>
+    <FechaEmision>2018-11-20T14:42:42.892471-03:00</FechaEmision>
+    <Fecha_1er_Vencimiento>2018-11-20T14:42:42.892471-03:00</Fecha_1er_Vencimiento>
+    <FechaUltVencimiento>2018-11-20T14:42:42.892471-03:00</FechaUltVencimiento>
+    <FechaRecepcion>2018-11-20T14:42:42.892471-03:00</FechaRecepcion>
+    <Cuotas>1</Cuotas>
+    <Dias_1er_Vencimiento>0</Dias_1er_Vencimiento>
+    <Dias_Vencimiento>0</Dias_Vencimiento>
+    <ListaPrecios>01P</ListaPrecios>
+    <CodEntidadFisica />
+    <CodSucEntidadFisica />
+    <Contacto_Ent />
+    <CodFuncionario>006</CodFuncionario>
+    <NomFuncionario>JAIME E. MONTECINO URIBE</NomFuncionario>
+    <Centro_Costo>AD</Centro_Costo>
+    <Moneda_Doc>$</Moneda_Doc>
+    <Valor_Dolar>1</Valor_Dolar>
+    <TotalNetoDoc>3420</TotalNetoDoc>
+    <TotalIvaDoc>650</TotalIvaDoc>
+    <TotalIlaDoc>0</TotalIlaDoc>
+    <TotalBrutoDoc>4070</TotalBrutoDoc>
+    <CantTotal>1</CantTotal>
+    <CantDesp>0</CantDesp>
+    <DocEn_Neto_Bruto>B</DocEn_Neto_Bruto>
+    <Es_ValeTransitorio>1</Es_ValeTransitorio>
+    <Es_Electronico>false</Es_Electronico>
+    <TipoMoneda>N</TipoMoneda>
+    <Vizado>false</Vizado>
+    <TotalDsctoReal_Porc>0</TotalDsctoReal_Porc>
+    <CodUsuario_Permiso_Dscto />
+    <Idmaeedo_Origen>0</Idmaeedo_Origen>
+    <Fun_Auto_Deuda_Ven />
+    <Fun_Auto_Stock_Ins />
+    <Fun_Auto_Cupo_Exe />
+  </Encabezado_Doc>
+  <Detalle_Doc>
+    <Id>1</Id>
+    <Empresa>01</Empresa>
+    <Sucursal>CM </Sucursal>
+    <Bodega>PR </Bodega>
+    <CodFuncionario>006</CodFuncionario>
+    <UnTrans>1</UnTrans>
+    <Lincondest>false</Lincondest>
+    <Codigo>1378054G10TWN</Codigo>
+    <CodigoProv />
+    <UdTrans>UN</UdTrans>
+    <Cantidad>1</Cantidad>
+    <TipoValor>B</TipoValor>
+    <Precio>4070</Precio>
+    <DescuentoPorc>0</DescuentoPorc>
+    <DescuentoValor>0</DescuentoValor>
+    <Descripcion>FILTRO DE AIRE</Descripcion>
+    <PrecioNetoUd>3420.16807</PrecioNetoUd>
+    <PrecioNetoUdLista>3420</PrecioNetoUdLista>
+    <PrecioBrutoUd>4070</PrecioBrutoUd>
+    <PrecioBrutoUdLista>4070</PrecioBrutoUdLista>
+    <Rtu>1</Rtu>
+    <Ud01PR>UN</Ud01PR>
+    <CantUd1>1</CantUd1>
+    <Prct>0</Prct>
+    <Tipr>FPN</Tipr>
+    <Tict />
+    <DsctoNeto>0</DsctoNeto>
+    <DsctoBruto>0</DsctoBruto>
+    <CDespUd1>0</CDespUd1>
+    <Ud02PR>UN</Ud02PR>
+    <CantUd2>1</CantUd2>
+    <CDespUd2>0</CDespUd2>
+    <ValVtaDescMax>true</ValVtaDescMax>
+    <ValVtaStockInf>false</ValVtaStockInf>
+    <CodLista>01P</CodLista>
+    <DescMaximo>15.06</DescMaximo>
+    <NroDscto>0</NroDscto>
+    <NroImpuestos>0</NroImpuestos>
+    <PorIva>19</PorIva>
+    <PorIla>0</PorIla>
+    <ValIvaLinea>649.83</ValIvaLinea>
+    <ValIlaLinea>0</ValIlaLinea>
+    <ValNetoLinea>3420.17</ValNetoLinea>
+    <ValBrutoLinea>4070</ValBrutoLinea>
+    <PmLinea>1215</PmLinea>
+    <PmSucLinea>1215</PmSucLinea>
+    <PmIFRS>1215</PmIFRS>
+    <PrecioNetoRealUd1>3420.16807</PrecioNetoRealUd1>
+    <PrecioNetoRealUd2>3420.16807</PrecioNetoRealUd2>
+    <Idmaeedo_Dori>0</Idmaeedo_Dori>
+    <Idmaeddo_Dori>0</Idmaeddo_Dori>
+    <CantUd1_Dori>0</CantUd1_Dori>
+    <CantUd2_Dori>0</CantUd2_Dori>
+    <Estado />
+    <Tidopa />
+    <NudoPa />
+    <SubTotal>4070</SubTotal>
+    <StockBodega>30</StockBodega>
+    <UbicacionBod>H- 06  ZJ-15        </UbicacionBod>
+    <DsctoRealPorc>0</DsctoRealPorc>
+    <DsctoRealValor>0</DsctoRealValor>
+    <Tiene_Dscto>false</Tiene_Dscto>
+    <CantidadCalculo>1</CantidadCalculo>
+    <Operacion />
+    <Potencia>0</Potencia>
+    <PrecioCalculo>4070</PrecioCalculo>
+    <Observa />
+    <CodFunAutoriza>xyz</CodFunAutoriza>
+    <CodPermiso>Bkp00014</CodPermiso>
+    <Nuevo_Producto>0</Nuevo_Producto>
+    <Solicitado_bodega>false</Solicitado_bodega>
+    <Moneda>$</Moneda>
+    <Tipo_Moneda>N</Tipo_Moneda>
+    <Tipo_Cambio>1</Tipo_Cambio>
+    <Stock_desde_WMS>false</Stock_desde_WMS>
+  </Detalle_Doc>
+  <Permisos_Necesarios_Doc>
+    <Documento_Autorizado>true</Documento_Autorizado>
+    <Tiene_X_01_Stock>false</Tiene_X_01_Stock>
+    <Autorizado_Permiso_X_01_Stock>true</Autorizado_Permiso_X_01_Stock>
+    <Tiene_X_02_Descuentos>false</Tiene_X_02_Descuentos>
+    <Autorizado_Permiso_X_02_Descuentos>true</Autorizado_Permiso_X_02_Descuentos>
+    <Tiene_X_03_Morosidad>false</Tiene_X_03_Morosidad>
+    <Autorizado_Permiso_X_03_Morosidad>true</Autorizado_Permiso_X_03_Morosidad>
+    <Tiene_X_04_Cupo_Excedido>false</Tiene_X_04_Cupo_Excedido>
+    <Autorizado_Permiso_X_04_Cupo_Excedido>true</Autorizado_Permiso_X_04_Cupo_Excedido>
+  </Permisos_Necesarios_Doc>
+</Ds_Matriz_Documentos>

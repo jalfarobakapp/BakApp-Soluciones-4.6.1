@@ -1,0 +1,24 @@
+<?xml version="1.0" standalone="yes"?>
+<Ds_Actualizacion_BakApp xmlns="http://tempuri.org/Ds_Actualizacion_BakApp.xsd">
+  <Tbl_Actualizacion>
+    <Ftp_Host>_</Ftp_Host>
+    <Ftp_Puerto>21</Ftp_Puerto>
+    <Ftp_Usuario>_</Ftp_Usuario>
+    <Ftp_Contrasena>_</Ftp_Contrasena>
+    <Ftp_Direcctorio_Archivos>_</Ftp_Direcctorio_Archivos>
+    <Desde_FTP>true</Desde_FTP>
+    <Desde_Directorio>false</Desde_Directorio>
+    <Desde_SQL>false</Desde_SQL>
+    <Directorio>..</Directorio>
+    <Descargar_Version_Automaticamente>false</Descargar_Version_Automaticamente>
+    <Url_Descarga>-</Url_Descarga>
+    <Proxy_Usa>false</Proxy_Usa>
+    <Proxy_Host>-</Proxy_Host>
+    <Proxy_Puerto>8080</Proxy_Puerto>
+    <Proxy_Usuario>-</Proxy_Usuario>
+    <Proxy_Contrasena>_</Proxy_Contrasena>
+    <Proxy_Dominio>_</Proxy_Dominio>
+    <Conexion_SQL>data source = sql4.vitglobal.net,1777; initial catalog = AGRORAMA; user id = AGRORAMA; password = AGRORAMA</Conexion_SQL>
+    <Global_BaseBk>BAKAPP_SA.dbo.</Global_BaseBk>
+  </Tbl_Actualizacion>
+</Ds_Actualizacion_BakApp>

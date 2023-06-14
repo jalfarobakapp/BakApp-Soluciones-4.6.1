@@ -1,0 +1,175 @@
+Return-Path: <SRS0=7Eo6Hk=44=sii.cl=siidte_reparo@sirrep.cl>
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id aY2jAikTI1nbPggAqFaw+A
+	; Mon, 22 May 2017 12:34:49 -0400
+Return-path: <SRS0=7Eo6Hk=44=sii.cl=siidte_reparo@sirrep.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Mon, 22 May 2017 12:34:49 -0400
+Received: from rapel11.sii.cl ([200.10.252.90] helo=mailin.sii.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.89)
+	(envelope-from <siidte_reparo@sii.cl>)
+	id 1dCqIC-002H7z-SF
+	for notificacionsii@sirrep.cl; Mon, 22 May 2017 12:34:48 -0400
+X-IronPort-AV: E=Sophos;i="5.04,848,1406602800"; 
+   d="xml'?txt'?scan'208";a="1158415524"
+Received: from dte.sii.cl (HELO dte) ([146.20.1.104])
+  by mailout.sii.cl with ESMTP; 22 May 2017 12:24:05 -0400
+Message-ID: <22941867.1495470805639.JavaMail.root@dte>
+Date: Mon, 22 May 2017 12:33:25 -0400 (CLT)
+From: siidte_reparo@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: Produccion - Resultado de Revision Envio 2176301798 - 79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_3985_6952660.1495470805638"
+
+------=_Part_3985_6952660.1495470805638
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+SII de Chile - Validacion de DTE
+================================
+
+En el archivo adjunto esta el resultado del proceso de revision y validacion
+del envio de Documentos Tributarios Electronicos realizado por su empresa al
+Servicio de Impuestos Internos de Chile.
+
+----------------------------------------------------------------------------
+
+Este es una aplicacion automatica. No conteste este correo ni haga 
+consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue 
+mas claro en cualquier aplicacion.
+
+
+------=_Part_3985_6952660.1495470805638
+Content-Type: text/plain; name=DTEMAIL2176301798.txt
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment; filename=DTEMAIL2176301798.txt
+
+Resultado de Validacion de Envio de DTE
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Rut de Empresa Emisora   : 79514800-0
+Rut que Realizo el Envio : 12628844-1
+Identificador de Envio   : 2176301798
+Fecha de Recepcion       : 22/05/2017 12:36:43
+Estado del Envio         : EPR - Envio Procesado
+
+Estadisticas del Envio
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Tipo DTE  Informados  Rechazos  Reparos  Aceptados
+--------------------------------------------------
+   33              1         0        1          0
+
+Detalle de Rechazos y Reparos de DTE
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+ Folio       Tipo  Estado
+ --------------------------------------------------------------------------=
+----
+ 231706       33   RPR - DTE Aceptado con Reparos
+     (HED-2-210) REPARO- Monto Neto No Cuadra con Detalle (Durante Abril de=
+ 2017, ser=E1 cambiado a RECHAZO) : [352213.0000] <> [950620.0000]
+     (DET L[1] -1-200) REPARO- Valor Detalle Distinto a Precio * Cantidad (=
+Durante Abril de 2017, ser=E1 cambiado a RECHAZO, salvo Liq. Factura y DTE =
+exportaci=F3n) : [27900.0000] <> [125546.0000]
+     (DET L[2] -1-200) REPARO- Valor Detalle Distinto a Precio * Cantidad (=
+Durante Abril de 2017, ser=E1 cambiado a RECHAZO, salvo Liq. Factura y DTE =
+exportaci=F3n) : [59699.0000] <> [82916.0000]
+     (DET L[3] -1-200) REPARO- Valor Detalle Distinto a Precio * Cantidad (=
+Durante Abril de 2017, ser=E1 cambiado a RECHAZO, salvo Liq. Factura y DTE =
+exportaci=F3n) : [14176.0000] <> [63798.0000]
+     (DET L[4] -1-200) REPARO- Valor Detalle Distinto a Precio * Cantidad (=
+Durante Abril de 2017, ser=E1 cambiado a RECHAZO, salvo Liq. Factura y DTE =
+exportaci=F3n) : [4761.0000] <> [10315.0000]
+     (DET L[5] -1-200) REPARO- Valor Detalle Distinto a Precio * Cantidad (=
+Durante Abril de 2017, ser=E1 cambiado a RECHAZO, salvo Liq. Factura y DTE =
+exportaci=F3n) : [19897.0000] <> [50849.0000]
+     (DET L[6] -1-200) REPARO- Valor Detalle Distinto a Precio * Cantidad (=
+Durante Abril de 2017, ser=E1 cambiado a RECHAZO, salvo Liq. Factura y DTE =
+exportaci=F3n) : [11103.0000] <> [15422.0000]
+     (DET L[7] -1-200) REPARO- Valor Detalle Distinto a Precio * Cantidad (=
+Durante Abril de 2017, ser=E1 cambiado a RECHAZO, salvo Liq. Factura y DTE =
+exportaci=F3n) : [27121.0000] <> [58762.0000]
+     (DET L[8] -1-200) REPARO- Valor Detalle Distinto a Precio * Cantidad (=
+Durante Abril de 2017, ser=E1 cambiado a RECHAZO, salvo Liq. Factura y DTE =
+exportaci=F3n) : [82743.0000] <> [372339.0000]
+     (DET L[11] -1-200) REPARO- Valor Detalle Distinto a Precio * Cantidad =
+(Durante Abril de 2017, ser=E1 cambiado a RECHAZO, salvo Liq. Factura y DTE=
+ exportaci=F3n) : [14900.0000] <> [38080.0000]
+     (DET L[12] -1-200) REPARO- Valor Detalle Distinto a Precio * Cantidad =
+(Durante Abril de 2017, ser=E1 cambiado a RECHAZO, salvo Liq. Factura y DTE=
+ exportaci=F3n) : [16449.0000] <> [42035.0000]
+     (DET L[13] -1-200) REPARO- Valor Detalle Distinto a Precio * Cantidad =
+(Durante Abril de 2017, ser=E1 cambiado a RECHAZO, salvo Liq. Factura y DTE=
+ exportaci=F3n) : [43961.0000] <> [61056.0000]
+
+
+------=_Part_3985_6952660.1495470805638
+Content-Type: application/octet-stream; name=DTEMAIL2176301798.xml
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=DTEMAIL2176301798.xml
+
+PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iSVNPLTg4NTktMSIgPz4KPFJFU1VMVEFET19F
+TlZJTz4KIDxJREVOVElGSUNBQ0lPTj4KICA8UlVURU1JU09SPjc5NTE0ODAwLTA8L1JVVEVNSVNP
+Uj4KICA8UlVURU5WSUE+MTI2Mjg4NDQtMTwvUlVURU5WSUE+CiAgPFRSQUNLSUQ+MjE3NjMwMTc5
+ODwvVFJBQ0tJRD4KICA8VE1TVFJFQ0VQQ0lPTj4yMi8wNS8yMDE3IDEyOjM2OjQzPC9UTVNUUkVD
+RVBDSU9OPgogIDxFU1RBRE8+RVBSIC0gRW52aW8gUHJvY2VzYWRvPC9FU1RBRE8+CiA8L0lERU5U
+SUZJQ0FDSU9OPgogPEVTVEFESVNUSUNBPgogIDxTVUJUT1RBTD4KICAgPFRJUE9ET0M+MzM8L1RJ
+UE9ET0M+CiAgIDxJTkZPUk1BRE8+MTwvSU5GT1JNQURPPgogICA8UkVQQVJPPjE8L1JFUEFSTz4K
+ICA8L1NVQlRPVEFMPgogPC9FU1RBRElTVElDQT4KIDxSRVZJU0lPTkVOVklPPgogIDxSRVZJU0lP
+TkRURT4KICAgPEZPTElPPjAwMDAyMzE3MDY8L0ZPTElPPgogICA8VElQT0RURT4zMzwvVElQT0RU
+RT4KICAgPEVTVEFETz5SUFIgLSBEVEUgQWNlcHRhZG8gY29uIFJlcGFyb3M8L0VTVEFETz4KICAg
+PERFVEFMTEU+KEhFRC0yLTIxMCkgUkVQQVJPLSBNb250byBOZXRvIE5vIEN1YWRyYSBjb24gRGV0
+YWxsZSAoRHVyYW50ZSBBYnJpbCBkZSAyMDE3LCBzZXLhIGNhbWJpYWRvIGEgUkVDSEFaTykgOiBb
+MzUyMjEzLjAwMDBdICZsdDsmZ3Q7IFs5NTA2MjAuMDAwMF08L0RFVEFMTEU+CiAgIDxERVRBTExF
+PihERVQgTFsxXSAtMS0yMDApIFJFUEFSTy0gVmFsb3IgRGV0YWxsZSBEaXN0aW50byBhIFByZWNp
+byAqIENhbnRpZGFkIChEdXJhbnRlIEFicmlsIGRlIDIwMTcsIHNlcuEgY2FtYmlhZG8gYSBSRUNI
+QVpPLCBzYWx2byBMaXEuIEZhY3R1cmEgeSBEVEUgZXhwb3J0YWNp824pIDogWzI3OTAwLjAwMDBd
+ICZsdDsmZ3Q7IFsxMjU1NDYuMDAwMF08L0RFVEFMTEU+CiAgIDxERVRBTExFPihERVQgTFsyXSAt
+MS0yMDApIFJFUEFSTy0gVmFsb3IgRGV0YWxsZSBEaXN0aW50byBhIFByZWNpbyAqIENhbnRpZGFk
+IChEdXJhbnRlIEFicmlsIGRlIDIwMTcsIHNlcuEgY2FtYmlhZG8gYSBSRUNIQVpPLCBzYWx2byBM
+aXEuIEZhY3R1cmEgeSBEVEUgZXhwb3J0YWNp824pIDogWzU5Njk5LjAwMDBdICZsdDsmZ3Q7IFs4
+MjkxNi4wMDAwXTwvREVUQUxMRT4KICAgPERFVEFMTEU+KERFVCBMWzNdIC0xLTIwMCkgUkVQQVJP
+LSBWYWxvciBEZXRhbGxlIERpc3RpbnRvIGEgUHJlY2lvICogQ2FudGlkYWQgKER1cmFudGUgQWJy
+aWwgZGUgMjAxNywgc2Vy4SBjYW1iaWFkbyBhIFJFQ0hBWk8sIHNhbHZvIExpcS4gRmFjdHVyYSB5
+IERURSBleHBvcnRhY2nzbikgOiBbMTQxNzYuMDAwMF0gJmx0OyZndDsgWzYzNzk4LjAwMDBdPC9E
+RVRBTExFPgogICA8REVUQUxMRT4oREVUIExbNF0gLTEtMjAwKSBSRVBBUk8tIFZhbG9yIERldGFs
+bGUgRGlzdGludG8gYSBQcmVjaW8gKiBDYW50aWRhZCAoRHVyYW50ZSBBYnJpbCBkZSAyMDE3LCBz
+ZXLhIGNhbWJpYWRvIGEgUkVDSEFaTywgc2Fsdm8gTGlxLiBGYWN0dXJhIHkgRFRFIGV4cG9ydGFj
+afNuKSA6IFs0NzYxLjAwMDBdICZsdDsmZ3Q7IFsxMDMxNS4wMDAwXTwvREVUQUxMRT4KICAgPERF
+VEFMTEU+KERFVCBMWzVdIC0xLTIwMCkgUkVQQVJPLSBWYWxvciBEZXRhbGxlIERpc3RpbnRvIGEg
+UHJlY2lvICogQ2FudGlkYWQgKER1cmFudGUgQWJyaWwgZGUgMjAxNywgc2Vy4SBjYW1iaWFkbyBh
+IFJFQ0hBWk8sIHNhbHZvIExpcS4gRmFjdHVyYSB5IERURSBleHBvcnRhY2nzbikgOiBbMTk4OTcu
+MDAwMF0gJmx0OyZndDsgWzUwODQ5LjAwMDBdPC9ERVRBTExFPgogICA8REVUQUxMRT4oREVUIExb
+Nl0gLTEtMjAwKSBSRVBBUk8tIFZhbG9yIERldGFsbGUgRGlzdGludG8gYSBQcmVjaW8gKiBDYW50
+aWRhZCAoRHVyYW50ZSBBYnJpbCBkZSAyMDE3LCBzZXLhIGNhbWJpYWRvIGEgUkVDSEFaTywgc2Fs
+dm8gTGlxLiBGYWN0dXJhIHkgRFRFIGV4cG9ydGFjafNuKSA6IFsxMTEwMy4wMDAwXSAmbHQ7Jmd0
+OyBbMTU0MjIuMDAwMF08L0RFVEFMTEU+CiAgIDxERVRBTExFPihERVQgTFs3XSAtMS0yMDApIFJF
+UEFSTy0gVmFsb3IgRGV0YWxsZSBEaXN0aW50byBhIFByZWNpbyAqIENhbnRpZGFkIChEdXJhbnRl
+IEFicmlsIGRlIDIwMTcsIHNlcuEgY2FtYmlhZG8gYSBSRUNIQVpPLCBzYWx2byBMaXEuIEZhY3R1
+cmEgeSBEVEUgZXhwb3J0YWNp824pIDogWzI3MTIxLjAwMDBdICZsdDsmZ3Q7IFs1ODc2Mi4wMDAw
+XTwvREVUQUxMRT4KICAgPERFVEFMTEU+KERFVCBMWzhdIC0xLTIwMCkgUkVQQVJPLSBWYWxvciBE
+ZXRhbGxlIERpc3RpbnRvIGEgUHJlY2lvICogQ2FudGlkYWQgKER1cmFudGUgQWJyaWwgZGUgMjAx
+Nywgc2Vy4SBjYW1iaWFkbyBhIFJFQ0hBWk8sIHNhbHZvIExpcS4gRmFjdHVyYSB5IERURSBleHBv
+cnRhY2nzbikgOiBbODI3NDMuMDAwMF0gJmx0OyZndDsgWzM3MjMzOS4wMDAwXTwvREVUQUxMRT4K
+ICAgPERFVEFMTEU+KERFVCBMWzExXSAtMS0yMDApIFJFUEFSTy0gVmFsb3IgRGV0YWxsZSBEaXN0
+aW50byBhIFByZWNpbyAqIENhbnRpZGFkIChEdXJhbnRlIEFicmlsIGRlIDIwMTcsIHNlcuEgY2Ft
+YmlhZG8gYSBSRUNIQVpPLCBzYWx2byBMaXEuIEZhY3R1cmEgeSBEVEUgZXhwb3J0YWNp824pIDog
+WzE0OTAwLjAwMDBdICZsdDsmZ3Q7IFszODA4MC4wMDAwXTwvREVUQUxMRT4KICAgPERFVEFMTEU+
+KERFVCBMWzEyXSAtMS0yMDApIFJFUEFSTy0gVmFsb3IgRGV0YWxsZSBEaXN0aW50byBhIFByZWNp
+byAqIENhbnRpZGFkIChEdXJhbnRlIEFicmlsIGRlIDIwMTcsIHNlcuEgY2FtYmlhZG8gYSBSRUNI
+QVpPLCBzYWx2byBMaXEuIEZhY3R1cmEgeSBEVEUgZXhwb3J0YWNp824pIDogWzE2NDQ5LjAwMDBd
+ICZsdDsmZ3Q7IFs0MjAzNS4wMDAwXTwvREVUQUxMRT4KICAgPERFVEFMTEU+KERFVCBMWzEzXSAt
+MS0yMDApIFJFUEFSTy0gVmFsb3IgRGV0YWxsZSBEaXN0aW50byBhIFByZWNpbyAqIENhbnRpZGFk
+IChEdXJhbnRlIEFicmlsIGRlIDIwMTcsIHNlcuEgY2FtYmlhZG8gYSBSRUNIQVpPLCBzYWx2byBM
+aXEuIEZhY3R1cmEgeSBEVEUgZXhwb3J0YWNp824pIDogWzQzOTYxLjAwMDBdICZsdDsmZ3Q7IFs2
+MTA1Ni4wMDAwXTwvREVUQUxMRT4KICA8L1JFVklTSU9ORFRFPgogPC9SRVZJU0lPTkVOVklPPgo8
+L1JFU1VMVEFET19FTlZJTz4K
+------=_Part_3985_6952660.1495470805638--
+
