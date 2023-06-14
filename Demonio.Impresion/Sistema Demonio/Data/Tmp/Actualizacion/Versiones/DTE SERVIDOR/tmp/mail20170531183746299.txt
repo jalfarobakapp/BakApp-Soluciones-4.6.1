@@ -1,0 +1,324 @@
+Return-Path: <SRS0=O7bA0E=4X=custodium.com=windte_dte@sirrep.cl>
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id vUaZEltmHFm7EAQAqFaw+A
+	; Wed, 17 May 2017 11:03:55 -0400
+Return-path: <SRS0=O7bA0E=4X=custodium.com=windte_dte@sirrep.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Wed, 17 May 2017 11:03:55 -0400
+Received: from smtp04.acepta.com ([198.41.35.230])
+	by srv150.tuhosting.cl with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+	(Exim 4.89)
+	(envelope-from <windte_dte@custodium.com>)
+	id 1dB0UV-0017MV-Nd
+	for notificacionsii@sirrep.cl; Wed, 17 May 2017 11:03:55 -0400
+Received: from correo01.acepta.com (unknown [172.16.14.82])
+	by smtp04.acepta.com (Postfix) with ESMTP id DAF8D799
+	for <notificacionsii@sirrep.cl>; Wed, 17 May 2017 11:05:49 -0400 (CLT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=custodium.com;
+	s=cluster; t=1495033549;
+	bh=cr9Sjvcofh0OcJbO8bg0b9Go4ArC6Kp+HzpkeZo5cAA=;
+	h=Subject:From:To:Date;
+	b=oihcNQBvTN5dlgH1UJUhdLFWCT1nXmVm/QVqJJfApkyV9ZoA0N8e77U1ifA06VDBI
+	 w8bW188/lHsJRFZSlqIDUj6b/8Fcd+hAfo8wPpC56GhWpprWz3FRSb5xxQGWBiOdpR
+	 GZINxP6HrIwJlKY02DrSwAgk5cYxNmJzZDDaivoI=
+Received: from motor2.acepta.com (interno.acepta.com [172.16.14.88])
+	by correo01.acepta.com (Postfix) with ESMTP id C97515E0
+	for <notificacionsii@sirrep.cl>; Wed, 17 May 2017 11:05:49 -0400 (CLT)
+Content-Type: multipart/mixed; boundary="===============0586477183005118401=="
+MIME-Version: 1.0
+Subject: Acuse de Recibo de DTEs -
+ RespuestaDTE-77863560-7-79514800-0-20170517-1534739069
+From: COMERCIAL E INVERSIONES MAXPROCHILE LIMITADA <windte_dte@custodium.com>
+To: notificacionsii@sirrep.cl
+Date: Wed, 17 May 2017 11:07:38 -0400
+Sender: COMERCIAL E INVERSIONES MAXPROCHILE LIMITADA <windte_dte@custodium.com>
+
+--===============0586477183005118401==
+Content-Type: text/html; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+<html>
+<head>
+	<title>Intercambio - Acuse de Recibo de DTEs</title>
+	<style type="text/css">
+		div.page {
+			margin: 0 10px;
+			padding: 0;
+			width: 640px;
+		}
+
+		div.left {
+			margin: 0;
+			padding: 0 20px 0 0;
+			width: 300px;
+			float: left;
+		}
+
+		div.right {
+			margin: 0;
+			padding: 0 0 0 20px;
+			width: 300px;
+			float: right;
+		}
+
+		div.both {
+			margin: 0;
+			padding: 0;
+			clear: both;
+		}
+
+		div.footer {
+			margin: 0;
+			padding: 10px 0;
+		}
+
+		p.copyright {
+			text-align: center;
+			font-size: 9px;
+		}
+
+		span.certification {
+			color: red;
+		}
+
+		body {
+			font-family: Geneva, Verdana, sans-serif;
+			font-size: 11px;
+			color: #000;
+			background-color: #fff;
+		}
+
+		h1 {
+			margin: 0;
+			padding: 5px 0;
+			font-size: 15px;
+			color: #999;
+			border-bottom: 1px solid #999;
+		}
+
+		h2 {
+			margin: 0;
+			padding: 10px 0 5px;
+			font-size: 13px;
+		}
+
+		p {
+			margin: 0;
+			padding: 1px 0;
+		}
+
+		table {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			text-align: right;
+			border-top: 1px solid #999;
+			border-bottom: 1px solid #999;
+		}
+
+		th {
+			margin: 0;
+			padding: 3px 5px;
+			border-bottom: 1px solid #999;
+			font-size: 11px;
+		}
+
+		td {
+			margin: 0;
+			padding: 2px 5px;
+			vertical-align: top;
+			font-size: 11px;
+		}
+
+		th.detalle, td.detalle {
+			text-align: left;
+		}
+
+		td.detalle {
+			vertical-align: middle;
+			font-size: 10px;
+		}
+
+		td.rut {
+			white-space: nowrap;
+		}
+	</style>
+</head>
+<body>
+<div class="page">
+	<h1>Producci&oacute;n &middot; Intercambio &middot; Acuse de Recibo de DTEs</h1>
+
+	<div class="left">
+		<h2>Emite</h2>
+
+		<p>COMERCIAL E INVERSIONES MAXPROCHILE LIMITADA</p>
+
+		<p>RUT 77863560-7</p>
+	</div>
+
+	<div class="right">
+		<h2>Recibe</h2>
+
+		<p>SIERRALTA Y CIA LTDA.</p>
+
+		<p>RUT 79514800-0</p>
+	</div>
+
+	<div class="both">
+		<h2>Detalle</h2>
+
+		<div class="left">
+			<p><b>C&oacute;digo Env&iacute;o:</b>1534739069</p>
+
+			<p><b>Fecha Recepci&oacute;n:</b>17/05/2017</p>
+		</div>
+
+		<div class="right">
+			<p><b>Estado:</b>RECIBIDO</p>
+
+			<p><b>Glosa:</b>EnvioDTE Recibido</p>
+		</div>
+
+		<p>&nbsp;</p>
+
+		<table cellspacing="0" cellpadding="5">
+			<tr>
+				<th>Emisor</th>
+				<th>Tipo</th>
+				<th>Folio</th>
+				<th>Fecha</th>
+				<th>Monto</th>
+				<th>Estado</th>
+				<th class="detalle">Detalle</th>
+			</tr>
+			<tr>
+				<td class="rut">79514800-0</td>
+				<td>33</td>
+				<td>231608</td>
+				<td>17/05/2017</td>
+				<td>$ 39.928</td>
+				<td>RECIBIDO</td>
+				<td class="detalle">DTE Recibido</td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="footer">
+		<p>Este correo adjunta un Acuse de Recibo (RespuestaDTE) para el emisor electr&oacute;nico de los Documentos
+			Tributarios Electr&oacute;nicos (DTEs) recibidos conforme al modelo de intercambio de Factura Electr&oacute;nica
+			del SII.</p>
+
+		<br/>
+
+		<p class="copyright">
+			Servicios de Facturaci&oacute;n Electr&oacute;nica de <a href="http://www.acepta.com">ACEPTA COM S A</a>
+		</p>
+	</div>
+</div>
+</body>
+</html>
+
+
+--===============0586477183005118401==
+Content-Type: application/xml
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="crt_231608_33.xml"
+
+PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iSVNPLTg4NTktMSI/Pgo8UmVzcHVlc3RhRFRF
+IHhtbG5zPSJodHRwOi8vd3d3LnNpaS5jbC9TaWlEdGUiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53
+My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHZlcnNpb249IjEuMCIgeHNpOnNjaGVtYUxv
+Y2F0aW9uPSJodHRwOi8vd3d3LnNpaS5jbC9TaWlEdGUgUmVzcHVlc3RhRW52aW9EVEVfdjEwLnhz
+ZCI+CiAgICAgICAgPFJlc3VsdGFkbyBJRD0iUmVzcHVlc3RhRFRFLTc3ODYzNTYwLTctNzk1MTQ4
+MDAtMC0yMDE3MDUxNy0xNTM0NzM5MDY5Ij4KICAgICAgICAgICAgICAgICAgICAgICAgPENhcmF0
+dWxhIHZlcnNpb249IjEuMCI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPFJ1dFJl
+c3BvbmRlPjc3ODYzNTYwLTc8L1J1dFJlc3BvbmRlPgogICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIDxSdXRSZWNpYmU+Nzk1MTQ4MDAtMDwvUnV0UmVjaWJlPgogICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgIDxJZFJlc3B1ZXN0YT4xNTM0NzM5MDY5PC9JZFJlc3B1ZXN0YT4KICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8TnJvRGV0YWxsZXM+MTwvTnJvRGV0YWxsZXM+
+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPFRtc3RGaXJtYVJlc3A+MjAxNy0wNS0x
+N1QxMTowNTozNzwvVG1zdEZpcm1hUmVzcD4KICAgICAgICAgICAgICAgICAgICAgICAgPC9DYXJh
+dHVsYT4KICAgICAgICAgICAgICAgIDxSZWNlcGNpb25FbnZpbz4KICAgICAgICAgICAgICAgICAg
+ICAgICAgPE5tYkVudmlvPlNvYnJlUmVjZXB0b3IueG1sPC9ObWJFbnZpbz4KICAgICAgICAgICAg
+ICAgICAgICAgICAgPEZjaFJlY2VwPjIwMTctMDUtMTdUMTE6MDU6Mzc8L0ZjaFJlY2VwPgogICAg
+ICAgICAgICAgICAgICAgICAgICA8Q29kRW52aW8+MTUzNDczOTA2OTwvQ29kRW52aW8+CiAgICAg
+ICAgICAgICAgICAgICAgICAgIDxFbnZpb0RURUlEPlNvYnJlUmVjZXB0b3I8L0VudmlvRFRFSUQ+
+CiAgICAgICAgICAgICAgICAgICAgICAgIDxEaWdlc3Q+T3BSQnR1NVcvcjQ5bU9zOUsrNlJUdkJF
+QjBRPTwvRGlnZXN0PgogICAgICAgICAgICAgICAgICAgICAgICA8UnV0RW1pc29yPjc5NTE0ODAw
+LTA8L1J1dEVtaXNvcj4KICAgICAgICAgICAgICAgICAgICAgICAgPFJ1dFJlY2VwdG9yPjc3ODYz
+NTYwLTc8L1J1dFJlY2VwdG9yPgogICAgICAgICAgICAgICAgICAgICAgICA8RXN0YWRvUmVjZXBF
+bnY+MDwvRXN0YWRvUmVjZXBFbnY+CiAgICAgICAgICAgICAgICAgICAgICAgIDxSZWNlcEVudkds
+b3NhPkVudmlvIFJlY2liaWRvIENvbmZvcm1lPC9SZWNlcEVudkdsb3NhPgogICAgICAgICAgICAg
+ICAgICAgICAgICA8TnJvRFRFPjE8L05yb0RURT4KICAgICAgICAgICAgICAgICAgICAgICAgPFJl
+Y2VwY2lvbkRURT48VGlwb0RURT4zMzwvVGlwb0RURT48Rm9saW8+MjMxNjA4PC9Gb2xpbz48RmNo
+RW1pcz4yMDE3LTA1LTE3PC9GY2hFbWlzPjxSVVRFbWlzb3I+Nzk1MTQ4MDAtMDwvUlVURW1pc29y
+PjxSVVRSZWNlcD43Nzg2MzU2MC03PC9SVVRSZWNlcD48TW50VG90YWw+Mzk5Mjg8L01udFRvdGFs
+PjxFc3RhZG9SZWNlcERURT4wPC9Fc3RhZG9SZWNlcERURT48UmVjZXBEVEVHbG9zYT5FbnZpbyBS
+ZWNpYmlkbyBDb25mb3JtZTwvUmVjZXBEVEVHbG9zYT48L1JlY2VwY2lvbkRURT4KICAgICAgICAg
+ICAgICAgIDwvUmVjZXBjaW9uRW52aW8+CiAgICAgICAgPC9SZXN1bHRhZG8+CiAgICAgICAgPFNp
+Z25hdHVyZSB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC8wOS94bWxkc2lnIyI+PFNpZ25l
+ZEluZm8+PENhbm9uaWNhbGl6YXRpb25NZXRob2QgQWxnb3JpdGhtPSJodHRwOi8vd3d3LnczLm9y
+Zy9UUi8yMDAxL1JFQy14bWwtYzE0bi0yMDAxMDMxNSIvPjxTaWduYXR1cmVNZXRob2QgQWxnb3Jp
+dGhtPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwLzA5L3htbGRzaWcjcnNhLXNoYTEiLz48UmVmZXJl
+bmNlIFVSST0iI1Jlc3B1ZXN0YURURS03Nzg2MzU2MC03LTc5NTE0ODAwLTAtMjAxNzA1MTctMTUz
+NDczOTA2OSI+PERpZ2VzdE1ldGhvZCBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnLzIwMDAv
+MDkveG1sZHNpZyNzaGExIi8+PERpZ2VzdFZhbHVlPnRLUnRpcXcxajVRNzh0cG5RTHNUd20xN0JT
+WT08L0RpZ2VzdFZhbHVlPjwvUmVmZXJlbmNlPjwvU2lnbmVkSW5mbz48U2lnbmF0dXJlVmFsdWU+
+dVd4SWhQdy9jR0pmTFJlMHYyY2VVUVBFUmlHamdqM1Q1bFU0L0FmM1k1d2xrRkJhUXFGeWh5SmZN
+a2cvZWhZNVdMSElRVXJFZ2N3dgpiZmJlQWJBUW5JMkVYeWxLMlpxN0pDb3V1TDU5emcvNDI3N1hM
+VkovVnlVckNDRWFLNUl1bmUwUXVtZW1XRWx1M0JTNiswc1A5WGNQClRwUFY0QnRCSUk5SjhpUXRq
+ZmIvanFsQ0tsZG5NSS8vOTdRelZFb3JtdG1IVmNNZkxLMDFhdVdnd0RrbHBmdCtaMHBuZTlkaU1Z
+dEMKcWJvYnNLSGo0NUhzMmNNOG9lUzhzWHcvMUl4aUI1cGcwYzVsaGJ5TGk3UDNOak8rVHVSQUg1
+eDU3eEp4MFhUZDNNNFBvdU81RisvZQpGbUVvTGFla2FBMk0rQVRPdVBxUGFqNi9MTE1ZZUpjS3ha
+VHBIdz09PC9TaWduYXR1cmVWYWx1ZT48S2V5SW5mbz48S2V5VmFsdWU+PFJTQUtleVZhbHVlPjxN
+b2R1bHVzPndJU1N2dkxSMkYxQlZtVFlVcCt2aHZRUTBiNDNmcHJLZDdtVjNzYUlKS3QvRTBudUc0
+d1dJLzdsWW5ONUQxUm9wbjFIdnI0QUJHaXYKYW5qTzVDbWRBdExtNnYwblZtNndML21pYkFURFB5
+dFhmYVV3TUk5UjhPWEl2S0trQWk2WjRUUDJrL0JUQzFrSWtrQ2JIQWJjU1g1OQp3YWcwYXlxTlU0
+TWNkWHpwaklWOVllQ1NlemM3Qm1Od3YzY0ZJcFU4YlNCNXNGN0JCM0NDdnZYbTZFZ0g1VWwzWG9E
+WHp0TmkvQjQ4CnQzU3hTcy9Ibzl1VVhkUkZUa21hb0Y0bk5wb0hWK3JMZ3M1RDgyeG04VXlKeWw1
+QzVZN0VuZHpIekN6NEJxK0diUFF1WmNzYmEyT2wKbWJsWFVJNXRac2hEUWc1VU14UTVuOTRRQ2tx
+TWFYb3RaSERiWHc9PTwvTW9kdWx1cz48RXhwb25lbnQ+QVFBQjwvRXhwb25lbnQ+PC9SU0FLZXlW
+YWx1ZT48L0tleVZhbHVlPjxYNTA5RGF0YT48WDUwOUNlcnRpZmljYXRlPk1JSUdVRENDQlRpZ0F3
+SUJBZ0lDRnVFd0RRWUpLb1pJaHZjTkFRRUZCUUF3Z2FZeEN6QUpCZ05WQkFZVEFrTk1NUmd3RmdZ
+RFZRUUsKRXc5QlkyVndkR0V1WTI5dElGTXVRUzR4U0RCR0JnTlZCQU1UUDBGalpYQjBZUzVqYjIw
+Z1FYVjBiM0pwWkdGa0lFTmxjblJwWm1sagpZV1J2Y21FZ1EyeGhjMlVnTXlCUVpYSnpiMjVoSUU1
+aGRIVnlZV3dnTFNCSE16RWVNQndHQ1NxR1NJYjNEUUVKQVJZUGFXNW1iMEJoClkyVndkR0V1WTI5
+dE1STXdFUVlEVlFRRkV3bzVOamt4T1RBMU1DMDRNQjRYRFRFMU1Ea3dNekU1TXpZeE9Gb1hEVEU0
+TURrd016RTUKTXpZeE9Gb3dnWU14Q3pBSkJnTlZCQVlUQWtOTU1Sc3dHUVlEVlFRTUV4SkpUa2Nn
+UTBsV0lFbE9SRlZUVkZKSlFVd3hIekFkQmdOVgpCQU1URmxCQlFreFBJRWxhVVZWSlJWSkVUeUJY
+UVV4TFJWSXhJakFnQmdrcWhraUc5dzBCQ1FFV0UzQnBlbkYxYVdWeVpHOUFhUzF0ClpXUXVZMnd4
+RWpBUUJnTlZCQVVUQ1RVMU5EUTNNREF0TkRDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBB
+RENDQVFvQ2dnRUIKQU1DRWtyN3kwZGhkUVZaazJGS2ZyNGIwRU5HK04zNmF5bmU1bGQ3R2lDU3Jm
+eE5KN2h1TUZpUCs1V0p6ZVE5VWFLWjlSNzYrQUFSbwpyMnA0enVRcG5RTFM1dXI5SjFadXNDLzVv
+bXdFd3o4clYzMmxNRENQVWZEbHlMeWlwQUl1bWVFejlwUHdVd3RaQ0pKQW14d0czRWwrCmZjR29O
+R3NxalZPREhIVjg2WXlGZldIZ2tuczNPd1pqY0w5M0JTS1ZQRzBnZWJCZXdRZHdncjcxNXVoSUIr
+VkpkMTZBMTg3VFl2d2UKUExkMHNVclB4NlBibEYzVVJVNUptcUJlSnphYUIxZnF5NExPUS9Oc1p2
+Rk1pY3BlUXVXT3hKM2N4OHdzK0FhdmhtejBMbVhMRzJ0agpwWm01VjFDT2JXYklRMElPVkRNVU9a
+L2VFQXBLakdsNkxXUncyMThDQXdFQUFhT0NBcWN3Z2dLak1COEdBMVVkSXdRWU1CYUFGTGE3Cml4
+TzVOMmZmOEUzSDFiaFdtZDltbXBIT01CMEdBMVVkRGdRV0JCVGhsWkRVWFp5U1N0WWI1Q2xiNEg0
+MGY4NHFaVEFMQmdOVkhROEUKQkFNQ0JQQXdIUVlEVlIwbEJCWXdGQVlJS3dZQkJRVUhBd0lHQ0Nz
+R0FRVUZCd01FTUJFR0NXQ0dTQUdHK0VJQkFRUUVBd0lGb0RDQgo4d1lEVlIwZ0JJSHJNSUhvTUlI
+bEJnb3JCZ0VFQWJWcmgyb0NNSUhXTUNnR0NDc0dBUVVGQndJQkZoeG9kSFJ3T2k4dmQzZDNMbUZq
+ClpYQjBZUzVqYjIwdlExQlRMVWN6TUlHcEJnZ3JCZ0VGQlFjQ0FqQ0JuREFXRmc5QlkyVndkR0V1
+WTI5dElGTXVRUzR3QXdJQkFocUIKZ1VWc0lIUnBkSFZzWVhJZ2FHRWdjMmxrYnlCMllXeHBaR0Zr
+YnlCbGJpQm1iM0p0WVNCd2NtVnpaVzVqYVdGc0xDQnhkV1ZrWVc1awpieUJvWVdKcGJHbDBZV1J2
+SUdWc0lFTmxjblJwWm1sallXUnZJSEJoY21FZ2RYTnZJSFJ5YVdKMWRHRnlhVzhzSUhCaFoyOXpM
+Q0JqCmIyMWxjbU5wYnlCNUlHOTBjbTl6TGpCYUJnTlZIUklFVXpCUm9CZ0dDQ3NHQVFRQndRRUNv
+QXdXQ2prMk9URTVNRFV3TFRpZ0pBWUkKS3dZQkJRVUhDQU9nR0RBV0RBbzVOamt4T1RBMU1DMDRC
+Z2dyQmdFRUFjRUJBb0VQYVc1bWIwQmhZMlZ3ZEdFdVkyOXRNRndHQTFVZApFUVJWTUZPZ0Z3WUlL
+d1lCQkFIQkFRR2dDeFlKTlRVME5EY3dNQzAwb0NNR0NDc0dBUVVGQndnRG9CY3dGUXdKTlRVME5E
+Y3dNQzAwCkJnZ3JCZ0VFQWNFQkFvRVRjR2w2Y1hWcFpYSmtiMEJwTFcxbFpDNWpiREE4QmdnckJn
+RUZCUWNCQVFRd01DNHdMQVlJS3dZQkJRVUgKTUFHR0lHaDBkSEE2THk5dlkzTndMbUZqWlhCMFlT
+NWpiMjB2UTJ4aGMyVXpMVWN6TURRR0ExVWRId1F0TUNzd0thQW5vQ1dHSTJoMApkSEE2THk5amNt
+d3VZV05sY0hSaExtTnZiUzlEYkdGelpUTXRSek11WTNKc01BMEdDU3FHU0liM0RRRUJCUVVBQTRJ
+QkFRQmZlVUQxCkZSc3doTVBEeC9vRVg2elNDZGtrTk1tbytPWWZLVkJKUW96MllFN1V2YWc3dFZG
+SmliUllWbExGUVk0QXdrU2tVaXpEcGJXUVJzZnUKTm1PVTZOeTkxLzhsOWJTeWEvMUxKVi9KNFhD
+UVRDNjZCbVEwL3BXVHVwVExHT0h1SVJLa3I1SnRwMlNlZjhYaGNNQ2pESlpNcDZpagpyTW5VOXJs
+cnBYQ1VXYkVROUpkbmRSOXBNY0t5MFY4Y1hIVVorVDVmTG9SM29iUGY1eTFYVWlIK09vRFJHWHA2
+TUVBLzFMT2NxbERFClRzZk9PcFpuN2Fsd3VsNi8vclk3dTNWa3V4Q2svY3p1eHRNUUgrbDZYL2dh
+SjFVWHBUS2tPaW1meW1iS3JoQUtDNWdSYnVrdHhXTGEKZC9iekt0NWtISDMybGZ4U1R3ZncvV0J4
+dUU5QlZqdVg8L1g1MDlDZXJ0aWZpY2F0ZT48L1g1MDlEYXRhPjwvS2V5SW5mbz48L1NpZ25hdHVy
+ZT48L1Jlc3B1ZXN0YURURT4K
+
+--===============0586477183005118401==--

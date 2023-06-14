@@ -1,0 +1,185 @@
+Return-Path: <SRS0=kCjbC9=4R=bicimotochile.cl=cprovoste@sirrep.cl>
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id WS2WJU9xFFk4ugsAqFaw+A
+	; Thu, 11 May 2017 11:12:31 -0300
+Return-path: <SRS0=kCjbC9=4R=bicimotochile.cl=cprovoste@sirrep.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Thu, 11 May 2017 11:12:31 -0300
+Received: from ironport8-1t.isc.cl ([200.91.27.127])
+	by srv150.tuhosting.cl with esmtp (Exim 4.89)
+	(envelope-from <cprovoste@bicimotochile.cl>)
+	id 1d8opT-003Esm-Ed
+	for notificacionsii@sirrep.cl; Thu, 11 May 2017 11:12:31 -0300
+Received: from unknown (HELO rgout01.isc.cl) ([172.31.30.178])
+  by ironport8-4T.isc.cl with ESMTP; 11 May 2017 11:06:36 -0300
+X-Junkmail-Premium-Raw: score=8/50,refid=2.7.2:2017.5.11.124516:17:8.317,ip=,rules=__HAS_FROM,
+ __TO_MALFORMED_2, __TO_NO_NAME, __SUBJ_HIGHBIT, __SUBJ_ALPHA_END,
+ __HAS_MSGID, __SANE_MSGID, INVALID_MSGID_NO_FQDN, __MIME_VERSION, __CT,
+ __CTYPE_HAS_BOUNDARY, __CTYPE_MULTIPART, __CTYPE_MULTIPART_MIXED,
+ __HAS_X_MAILER, __OUTLOOK_MUA_1, __USER_AGENT_MS_GENERIC, __UNUSABLE_MSGID,
+ __MIME_TEXT_P2, __MIME_TEXT_H2, __HAS_ATTACHMENT1, __SUBJ_ALPHA_END2,
+ __HAS_HTML, HTML_NO_HTTP, BODYTEXTP_SIZE_400_LESS, BODYTEXTP_SIZE_3000_LESS,
+ BODY_SIZE_6000_6999, BODYTEXTH_SIZE_10000_LESS, __MIME_TEXT_H1,
+ __MIME_TEXT_P1, __MIME_HTML, __TAG_EXISTS_HTML, HTML_70_90, __OUTLOOK_MUA,
+ __HAS_ATTACHMENT, NO_URI_FOUND, NO_CTA_URI_FOUND, __MIME_TEXT_H,
+ __MIME_TEXT_P, NO_URI_HTTPS, BODY_SIZE_7000_LESS
+Received: from PCContabilidad (200.113.159.10) by rgout01.isc.cl (9.0.019.07-1) (authenticated as cprovoste)
+        id 58A3143603B61D87 for notificacionsii@sirrep.cl; Thu, 11 May 2017 11:12:45 -0300
+From: "Factura Proveedores" <cprovoste@bicimotochile.cl>
+To: <notificacionsii@sirrep.cl>
+Subject: =?iso-8859-1?Q?Recepci=F3n_de_Documentos_Electr=F3nicos?=
+Date: Thu, 11 May 2017 11:14:07 -0300
+Message-ID: <03a301d2ca60$e3344350$a99cc9f0$@cl>
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+	boundary="----=_NextPart_000_03A4_01D2CA47.BDE70B50"
+X-Mailer: Microsoft Office Outlook 12.0
+Content-Language: es-cl
+
+Este es un mensaje con varias partes en formato MIME.
+
+------=_NextPart_000_03A4_01D2CA47.BDE70B50
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_001_03A5_01D2CA47.BDE70B50"
+
+
+------=_NextPart_001_03A5_01D2CA47.BDE70B50
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+
+En archivo adjunto se encuentra detalle de documentos recibidos. 
+
+
+
+------=_NextPart_001_03A5_01D2CA47.BDE70B50
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV=3D"Content-Type" CONTENT=3D"text/html; =
+charset=3Diso-8859-1">
+<META NAME=3D"Generator" CONTENT=3D"MS Exchange Server version =
+08.00.0681.000">
+<TITLE></TITLE>
+</HEAD>
+<BODY>
+<!-- Converted from text/rtf format -->
+
+<P><FONT FACE=3D"Calibri">En archivo adjunto se encuentra detalle de =
+documentos recibidos.</FONT>
+</P>
+<BR>
+
+</BODY>
+</HTML>
+------=_NextPart_001_03A5_01D2CA47.BDE70B50--
+
+------=_NextPart_000_03A4_01D2CA47.BDE70B50
+Content-Type: text/xml;
+	name="RS79514800-0SetDoc.xml"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+	filename="RS79514800-0SetDoc.xml"
+
+<?xml version=3D"1.0" encoding=3D"ISO-8859-1"?>
+<RespuestaDTE xmlns=3D"http://www.sii.cl/SiiDte" =
+xmlns:xsi=3D"http://www.w3.org/2001/XMLSchema-instance" =
+xsi:schemaLocation=3D"http://www.sii.cl/SiiDte =
+RespuestaEnvioDTE_v10.xsd" version=3D"1.0">
+	<Resultado ID=3D"r7620">
+		<Caratula version=3D"1.0">
+			<RutResponde>79675760-4</RutResponde>
+			<RutRecibe>79514800-0</RutRecibe>
+			<IdRespuesta>7620</IdRespuesta>
+			<NroDetalles>1</NroDetalles>
+			<NmbContacto>CATERIN PROVOSTE</NmbContacto>
+			<FonoContacto>26786500</FonoContacto>
+			<MailContacto>pzaror@bicimotochile.cl</MailContacto>
+			<TmstFirmaResp>2017-05-10T13:25:52</TmstFirmaResp>
+		</Caratula>
+		<RecepcionEnvio>=20
+			<NmbEnvio>SobreReceptor.xml</NmbEnvio>
+			<FchRecep>2017-05-06T12:07:15</FchRecep>
+			<CodEnvio>7620</CodEnvio>
+			<EnvioDTEID>SetDoc</EnvioDTEID>
+			<Digest>PWfTpUB5TTwEWoQEQCTrVfvI0/A=3D</Digest>
+			<RutEmisor>79514800-0</RutEmisor>
+			<RutReceptor>79675760-4</RutReceptor>
+			<EstadoRecepEnv>0</EstadoRecepEnv>
+			<RecepEnvGlosa>0:Recibido Conforme.</RecepEnvGlosa>
+			<NroDTE>1</NroDTE>
+			<RecepcionDTE>
+				<TipoDTE>33</TipoDTE>
+				<Folio>231439</Folio>
+				<FchEmis>2017-05-06</FchEmis>
+				<RUTEmisor>79514800-0</RUTEmisor>
+				<RUTRecep>79675760-4</RUTRecep>
+				<MntTotal>98532</MntTotal>
+				<EstadoRecepDTE>0</EstadoRecepDTE>
+				<RecepDTEGlosa>DTE Recibido OK</RecepDTEGlosa>
+			</RecepcionDTE>
+		</RecepcionEnvio>
+	</Resultado>
+<Signature =
+xmlns=3D"http://www.w3.org/2000/09/xmldsig#"><SignedInfo><Canonicalizatio=
+nMethod Algorithm=3D"http://www.w3.org/TR/2001/REC-xml-c14n-20010315" =
+/><SignatureMethod =
+Algorithm=3D"http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference =
+URI=3D"#r7620"><Transforms><Transform =
+Algorithm=3D"http://www.w3.org/TR/2001/REC-xml-c14n-20010315" =
+/></Transforms><DigestMethod =
+Algorithm=3D"http://www.w3.org/2000/09/xmldsig#sha1" =
+/><DigestValue>TuzyOY0Ckhb6wTrA/AhgetBPGBk=3D</DigestValue></Reference></=
+SignedInfo><SignatureValue>RViGajpC0/tRkWKMVPuVCTJRx+qEv4oK41JP7Pf786ztwu=
+id89Nplu4AVEonDWkX03QGjwblK/KW7s8zLG/ZbenrSQR0xec8G3r3dVa9Z6aedk949AybDUN=
+jvRCJ+jjCAtQqksVz34gJ5QMgveHeeEAzOqN4IGw6PGAZSYyPJCQ=3D</SignatureValue><=
+KeyInfo><KeyValue =
+xmlns=3D"http://www.w3.org/2000/09/xmldsig#"><RSAKeyValue><Modulus>wjPUr/=
+hZcDLTSN4HRkHndJf5DRIo65QOIdBCN5YwxjRaK0NGCGYGFwA9sVzAotUKnHLG+eV8A9ncd2+=
+TjmefNhnM7lNyBAidajOiBXWNt0vI2DWyIpeVZB5mCjLmsn2qXNkZ1cOECHIW5pBPnLGX3/OT=
+gk/VzS65FcINEDog4Zs=3D</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></=
+KeyValue><X509Data =
+xmlns=3D"http://www.w3.org/2000/09/xmldsig#"><X509Certificate>MIIGZzCCBU+=
+gAwIBAgIKU7ZMDwAAAAPAxjANBgkqhkiG9w0BAQUFADCB0jELMAkG
+A1UEBhMCQ0wxHTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQH
+EwhTYW50aWFnbzEUMBIGA1UEChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9y
+aWRhZCBDZXJ0aWZpY2Fkb3JhMTAwLgYDVQQDEydFLUNFUlRDSElMRSBDQSBGSVJN
+QSBFTEVDVFJPTklDQSBTSU1QTEUxJzAlBgkqhkiG9w0BCQEWGHNjbGllbnRlc0Bl
+LWNlcnRjaGlsZS5jbDAeFw0xNjA1MDYyMDE5NTZaFw0xOTA1MDYyMDE5NTZaMIHq
+MQswCQYDVQQGEwJDTDEjMCEGA1UECBMaTUVUUk9QT0xJVEFOQSBERSBTQU5USUFH
+TyAxETAPBgNVBAcTCFNhbnRpYWdvMSYwJAYDVQQKEx1JTVBPUlRBRE9SQSBCSUNJ
+TU9UTyBMSU1JVEFEQTEuMCwGA1UECxMlSU1QT1JUQURPUkEgREUgUkVQVUVTVE9T
+IEFVVE9NT1RSSUNFUzEjMCEGA1UEAxMaUEFUUklDSU8gRUxJQVMgWkFST1IgWkFS
+T1IxJjAkBgkqhkiG9w0BCQEWF3B6YXJvckBiaWNpbW90b2NoaWxlLmNsMIGfMA0G
+CSqGSIb3DQEBAQUAA4GNADCBiQKBgQDCM9Sv+FlwMtNI3gdGQed0l/kNEijrlA4h
+0EI3ljDGNForQ0YIZgYXAD2xXMCi1Qqccsb55XwD2dx3b5OOZ582GczuU3IECJ1q
+M6IFdY23S8jYNbIil5VkHmYKMuayfapc2RnVw4QIchbmkE+csZff85OCT9XNLrkV
+wg0QOiDhmwIDAQABo4ICpzCCAqMwPQYJKwYBBAGCNxUHBDAwLgYmKwYBBAGCNxUI
+gtyDL4WTjGaF1Z0XguLcJ4Hv7DxhgZrnFYav4BUCAWQCAQQwHQYDVR0OBBYEFIUU
+VhkCtoCbMKgibAmg+ZVDtrkRMAsGA1UdDwQEAwIE8DAfBgNVHSMEGDAWgBR44T6f
+0hKzejyNzTAOU7NDKQezVTA+BgNVHR8ENzA1MDOgMaAvhi1odHRwOi8vY3JsLmUt
+Y2VydGNoaWxlLmNsL2VjZXJ0Y2hpbGVjYUZFUy5jcmwwOgYIKwYBBQUHAQEELjAs
+MCoGCCsGAQUFBzABhh5odHRwOi8vb2NzcC5lY2VydGNoaWxlLmNsL29jc3AwIwYD
+VR0RBBwwGqAYBggrBgEEAcEBAaAMFgowMzYzNzA1My1LMCMGA1UdEgQcMBqgGAYI
+KwYBBAHBAQKgDBYKOTY5MjgxODAtNTCCAU0GA1UdIASCAUQwggFAMIIBPAYIKwYB
+BAHDUgUwggEuMC0GCCsGAQUFBwIBFiFodHRwOi8vd3d3LmUtY2VydGNoaWxlLmNs
+L0NQUy5odG0wgfwGCCsGAQUFBwICMIHvHoHsAEMAZQByAHQAaQBmAGkAYwBhAGQA
+bwAgAEYAaQByAG0AYQAgAFMAaQBtAHAAbABlAC4AIABIAGEAIABzAGkAZABvACAA
+dgBhAGwAaQBkAGEAZABvACAAZQBuACAAZgBvAHIAbQBhACAAcAByAGUAcwBlAG4A
+YwBpAGEAbAAsACAAcQB1AGUAZABhAG4AZABvACAAaABhAGIAaQBsAGkAdABhAGQA
+bwAgAGUAbAAgAEMAZQByAHQAaQBmAGkAYwBhAGQAbwAgAHAAYQByAGEAIAB1AHMA
+bwAgAHQAcgBpAGIAdQB0AGEAcgBpAG8wDQYJKoZIhvcNAQEFBQADggEBAKoHPLil
+Px6nT4IeQCjonzkYXHLmDwEcc/mcDmdTm7p4xQzDBuACscbhWNjsAtP0Mp7znspi
+hxKyFPMl7sZoeAb0G7yA7L422eSnYIee4D2Fbf7vpOS8SzJ1Hm/xl49U86iaSYU0
+wm55WOeiG/9GL9sWhMEO3/qYkPoMXk9LnPD5SyXd+CZ5uVw/9GwxiyHyF9zJ4eT2
+mrlIfE+en4VadATDqugobYTGwy3Pcmca5bpzCfXxW7Kj8+XyqM5R54+y47qf5bdj
+Utr4paQTEjU5AZekHHVc4BqEurw6W5W7ZP4ZFWMDGbxoxNEQWK045R910z24Ay3S
+4mmXNHgPoPaoNQ0=3D</X509Certificate></X509Data></KeyInfo></Signature></Re=
+spuestaDTE>
+  
+------=_NextPart_000_03A4_01D2CA47.BDE70B50--
+

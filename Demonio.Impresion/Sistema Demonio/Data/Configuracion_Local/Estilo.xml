@@ -1,0 +1,8 @@
+<?xml version="1.0" standalone="yes"?>
+<DatosBakApp xmlns="http://tempuri.org/DatosBakApp.xsd">
+  <Themas>
+    <Cod_Estilo>9</Cod_Estilo>
+    <Color>-16748352</Color>
+    <Nombre_Estilo>Metro</Nombre_Estilo>
+  </Themas>
+</DatosBakApp>

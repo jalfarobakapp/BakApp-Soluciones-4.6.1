@@ -1,0 +1,111 @@
+<?xml version="1.0" standalone="yes"?>
+<Ds_Matriz_Documentos xmlns="http://tempuri.org/Ds_Matriz_Documentos.xsd">
+  <Observaciones_Doc>
+    <Observaciones />
+    <Forma_pago />
+    <Orden_compra />
+    <Obs1 />
+    <Obs2 />
+    <Obs3 />
+    <Obs4 />
+    <Obs5 />
+    <Obs6 />
+    <Obs7 />
+    <Obs8 />
+    <Obs9 />
+    <Obs10 />
+    <Obs11 />
+    <Obs12 />
+    <Obs13 />
+    <Obs14 />
+    <Obs15 />
+    <Obs16 />
+    <Obs17 />
+    <Obs18 />
+    <Obs19 />
+    <Obs20 />
+    <Obs21 />
+    <Obs22 />
+    <Obs23 />
+    <Obs24 />
+    <Obs25 />
+    <Obs26 />
+    <Obs27 />
+    <Obs28 />
+    <Obs29 />
+    <Obs30 />
+    <Obs31 />
+    <Obs32 />
+    <Obs33 />
+    <Obs34 />
+    <Obs35 />
+  </Observaciones_Doc>
+  <Encabezado_Doc>
+    <Modalidad>VTA02</Modalidad>
+    <Empresa>01</Empresa>
+    <Sucursal>CM </Sucursal>
+    <TipoDoc>BLV</TipoDoc>
+    <NroDocumento>BV20060797</NroDocumento>
+    <CodEntidad>1            </CodEntidad>
+    <CodSucEntidad xml:space="preserve">          </CodSucEntidad>
+    <Nombre_Entidad>CLIENTE EN TRANSITO                               </Nombre_Entidad>
+    <FechaEmision>2018-03-23T13:00:27.9239808-03:00</FechaEmision>
+    <Fecha_1er_Vencimiento>2018-03-23T13:00:27.9239808-03:00</Fecha_1er_Vencimiento>
+    <FechaUltVencimiento>2018-03-23T13:00:27.9239808-03:00</FechaUltVencimiento>
+    <FechaRecepcion>2018-03-23T13:00:27.9239808-03:00</FechaRecepcion>
+    <Cuotas>0</Cuotas>
+    <Dias_1er_Vencimiento>0</Dias_1er_Vencimiento>
+    <Dias_Vencimiento>0</Dias_Vencimiento>
+    <ListaPrecios>01P</ListaPrecios>
+    <CodEntidadFisica />
+    <CodSucEntidadFisica />
+    <Contacto_Ent />
+    <CodFuncionario>006</CodFuncionario>
+    <NomFuncionario>JAIME E. MONTECINO URIBE</NomFuncionario>
+    <Centro_Costo>AD      </Centro_Costo>
+    <Moneda_Doc>$</Moneda_Doc>
+    <Valor_Dolar>1</Valor_Dolar>
+    <TotalNetoDoc>0</TotalNetoDoc>
+    <TotalIvaDoc>0</TotalIvaDoc>
+    <TotalIlaDoc>0</TotalIlaDoc>
+    <TotalBrutoDoc>0</TotalBrutoDoc>
+    <CantTotal>0</CantTotal>
+    <CantDesp>0</CantDesp>
+    <DocEn_Neto_Bruto>B</DocEn_Neto_Bruto>
+    <TipoMoneda>N</TipoMoneda>
+    <Vizado>false</Vizado>
+    <TotalDsctoReal_Porc>NaN</TotalDsctoReal_Porc>
+  </Encabezado_Doc>
+  <Detalle_Doc>
+    <Id>1</Id>
+    <Sucursal>CM </Sucursal>
+    <Bodega>PR </Bodega>
+    <CodFuncionario>006</CodFuncionario>
+    <Codigo />
+    <Cantidad>0</Cantidad>
+    <DescuentoPorc>0</DescuentoPorc>
+    <DescuentoValor>0</DescuentoValor>
+    <Descripcion />
+    <PrecioNetoUd>0</PrecioNetoUd>
+    <CDespUd1>0</CDespUd1>
+    <CDespUd2>0</CDespUd2>
+    <CodLista>01P</CodLista>
+    <NroDscto>0</NroDscto>
+    <NroImpuestos>0</NroImpuestos>
+    <ValIvaLinea>0</ValIvaLinea>
+    <ValIlaLinea>0</ValIlaLinea>
+    <ValNetoLinea>0</ValNetoLinea>
+    <ValBrutoLinea>0</ValBrutoLinea>
+    <Idmaeedo_Dori>0</Idmaeedo_Dori>
+    <Idmaeddo_Dori>0</Idmaeddo_Dori>
+    <CantUd1_Dori>0</CantUd1_Dori>
+    <CantUd2_Dori>0</CantUd2_Dori>
+    <Estado />
+    <Tidopa />
+    <NudoPa />
+    <Tiene_Dscto>false</Tiene_Dscto>
+    <CodFunAutoriza>xyz</CodFunAutoriza>
+    <Nuevo_Producto>1</Nuevo_Producto>
+    <Solicitado_bodega>false</Solicitado_bodega>
+  </Detalle_Doc>
+</Ds_Matriz_Documentos>

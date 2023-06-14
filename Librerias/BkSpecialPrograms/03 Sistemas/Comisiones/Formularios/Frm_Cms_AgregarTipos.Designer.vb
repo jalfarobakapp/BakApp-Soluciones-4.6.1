@@ -40,6 +40,8 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_AgregarComision = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Ent_Excluidas = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_ProductosExcluidos = New DevComponents.DotNetBar.ButtonX()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -48,6 +50,8 @@ Partial Class Frm_Cms_AgregarTipos
         '
         Me.GroupPanel2.BackColor = System.Drawing.Color.White
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.Controls.Add(Me.Btn_Ent_Excluidas)
+        Me.GroupPanel2.Controls.Add(Me.Btn_ProductosExcluidos)
         Me.GroupPanel2.Controls.Add(Me.Txt_PorcComision)
         Me.GroupPanel2.Controls.Add(Me.Chk_TieneSC)
         Me.GroupPanel2.Controls.Add(Me.Chk_QuitarEntExcluidas)
@@ -63,7 +67,7 @@ Partial Class Frm_Cms_AgregarTipos
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(12, 6)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(560, 259)
+        Me.GroupPanel2.Size = New System.Drawing.Size(560, 374)
         '
         '
         '
@@ -312,7 +316,7 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Eliminar, Me.Btn_AgregarComision})
-        Me.Bar2.Location = New System.Drawing.Point(0, 281)
+        Me.Bar2.Location = New System.Drawing.Point(0, 406)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(583, 41)
         Me.Bar2.Stretch = True
@@ -348,11 +352,39 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Btn_AgregarComision.Name = "Btn_AgregarComision"
         Me.Btn_AgregarComision.Tooltip = "Configuración de asistente de compra"
         '
+        'Btn_Ent_Excluidas
+        '
+        Me.Btn_Ent_Excluidas.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Ent_Excluidas.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Ent_Excluidas.FocusCuesEnabled = False
+        Me.Btn_Ent_Excluidas.Image = CType(resources.GetObject("Btn_Ent_Excluidas.Image"), System.Drawing.Image)
+        Me.Btn_Ent_Excluidas.ImageAlt = CType(resources.GetObject("Btn_Ent_Excluidas.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Ent_Excluidas.Location = New System.Drawing.Point(3, 276)
+        Me.Btn_Ent_Excluidas.Name = "Btn_Ent_Excluidas"
+        Me.Btn_Ent_Excluidas.Size = New System.Drawing.Size(180, 30)
+        Me.Btn_Ent_Excluidas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Ent_Excluidas.TabIndex = 117
+        Me.Btn_Ent_Excluidas.Text = "Entidades excluidas"
+        '
+        'Btn_ProductosExcluidos
+        '
+        Me.Btn_ProductosExcluidos.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_ProductosExcluidos.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_ProductosExcluidos.FocusCuesEnabled = False
+        Me.Btn_ProductosExcluidos.Image = CType(resources.GetObject("Btn_ProductosExcluidos.Image"), System.Drawing.Image)
+        Me.Btn_ProductosExcluidos.ImageAlt = CType(resources.GetObject("Btn_ProductosExcluidos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ProductosExcluidos.Location = New System.Drawing.Point(3, 239)
+        Me.Btn_ProductosExcluidos.Name = "Btn_ProductosExcluidos"
+        Me.Btn_ProductosExcluidos.Size = New System.Drawing.Size(180, 29)
+        Me.Btn_ProductosExcluidos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_ProductosExcluidos.TabIndex = 118
+        Me.Btn_ProductosExcluidos.Text = "Productos excluidos"
+        '
         'Frm_Cms_AgregarTipos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(583, 322)
+        Me.ClientSize = New System.Drawing.Size(583, 447)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.Bar2)
         Me.DoubleBuffered = True
@@ -388,4 +420,6 @@ Partial Class Frm_Cms_AgregarTipos
     Friend WithEvents Chk_QuitarEntExcluidas As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_TieneSC As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Txt_PorcComision As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Btn_Ent_Excluidas As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Btn_ProductosExcluidos As DevComponents.DotNetBar.ButtonX
 End Class

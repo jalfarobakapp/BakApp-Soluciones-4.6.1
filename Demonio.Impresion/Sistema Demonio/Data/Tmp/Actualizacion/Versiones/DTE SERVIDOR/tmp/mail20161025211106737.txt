@@ -1,0 +1,99 @@
+Return-Path: <siidte@sii.cl>
+Delivered-To: notificacionsii@sirrep.cl
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id L8IUAODQB1ipxwkAqFaw+A
+	for <notificacionsii@sirrep.cl>; Wed, 19 Oct 2016 17:01:04 -0300
+Return-path: <siidte@sii.cl>
+Received: from rapel12.sii.cl ([200.10.251.90] helo=mailin02.sii.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.86)
+	(envelope-from <siidte@sii.cl>)
+	id 1bwx2t-002grv-HI
+	for notificacionsii@sirrep.cl; Wed, 19 Oct 2016 17:01:03 -0300
+X-IronPort-AV: E=Sophos;i="5.22,559,1449543600"; 
+   d="xml'?txt'?scan'208";a="621247032"
+Received: from dte.sii.cl (HELO dte) ([146.20.1.104])
+  by mailout02.sii.cl with ESMTP; 19 Oct 2016 18:01:38 -0300
+Message-ID: <19106770.1476911027996.JavaMail.dte@dte>
+Date: Wed, 19 Oct 2016 18:03:47 -0300 (CLST)
+From: siidte@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: Revision Envio de Libro Normal 1770566702 - 79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="----=_Part_0_9971081.1476911027964"
+
+------=_Part_0_9971081.1476911027964
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+SII de Chile - Validacion de Envios de Libros
+=============================================
+
+En el archivo adjunto esta el resultado del proceso de revision y validacion
+del Envio de Libros Tributarios Electronicos realizado por su empresa al
+Servicio de Impuestos Internos de Chile.
+
+----------------------------------------------------------------------------
+
+Este es una aplicacion automatica. No conteste este correo ni haga 
+consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue 
+mas claro en cualquier aplicacion.
+
+
+------=_Part_0_9971081.1476911027964
+Content-Type: text/plain; name=LBRMAIL1770566702.txt
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment; filename=LBRMAIL1770566702.txt
+
+Resultado de Validacion de Envio de Libro Tributario
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
+
+Identificador de Envio      : 1770566702
+Rut de Empresa Emisora      : 79514800-0
+Rut que Realizo el Envio    : 12628844-1
+Fecha de Recepcion          : 19/10/2016 17:57:45
+Estado del Envio de Libro   : LOK - Envio de Libro Aceptado - Cuadrado
+Tipo de Segmento            : TOTAL
+Numero de Segmento          :   0
+
+Detalle de Errores del Envio de Libro Tributario
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+LBR - 2 - Reparo en Detalle - [FchDoc] excede m=E1s de 2 meses=09T:[61]-F:[=
+2408]
+
+
+Situacion del Libro Tributario Asociado
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Tipo de Libro               : RECTIFICA
+Tipo de Operacion           : COMPRA
+Periodo Tributario          : 2015-11
+Estado del Libro Tributario : LTC - Libro Cerrado - Informacion Cuadrada
+
+------=_Part_0_9971081.1476911027964
+Content-Type: application/octet-stream; name=LBRMAIL1770566702.xml
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=LBRMAIL1770566702.xml
+
+PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iSVNPLTg4NTktMSIgPz4KPFJlc3VsdGFkb0Vu
+dmlvTGlicm8+CiA8SWRlbnRpZmljYWNpb24+CiAgPFRyYWNrSWQ+MTc3MDU2NjcwMjwvVHJhY2tJ
+ZD4KICA8UnV0RW1pc29yPjc5NTE0ODAwLTA8L1J1dEVtaXNvcj4KICA8UnV0RW52aWE+MTI2Mjg4
+NDQtMTwvUnV0RW52aWE+CiAgPFRtc3RSZWNlcGNpb24+MTkvMTAvMjAxNiAxNzo1Nzo0NTwvVG1z
+dFJlY2VwY2lvbj4KICA8RXN0YWRvRW52aW8+TE9LIC0gRW52aW8gZGUgTGlicm8gQWNlcHRhZG8g
+LSBDdWFkcmFkbzwvRXN0YWRvRW52aW8+CiAgPFRpcG9TZWdtZW50bz5UT1RBTDwvVGlwb1NlZ21l
+bnRvPgogIDxOcm9TZWdtZW50bz4wPC9Ocm9TZWdtZW50bz4KICA8VGlwb0xpYnJvPlJFQ1RJRklD
+QTwvVGlwb0xpYnJvPgogIDxUaXBvT3BlcmFjaW9uPkNPTVBSQTwvVGlwb09wZXJhY2lvbj4KICA8
+UGVyaW9kb1RyaWJ1dGFyaW8+MjAxNS0xMTwvUGVyaW9kb1RyaWJ1dGFyaW8+CiAgPEVzdGFkb0xp
+YnJvPkxUQyAtIExpYnJvIENlcnJhZG8gLSBJbmZvcm1hY2lvbiBDdWFkcmFkYTwvRXN0YWRvTGli
+cm8+CiA8L0lkZW50aWZpY2FjaW9uPgogPEVycm9yRW52aW9MaWJybz4KICA8RGV0RXJyRW52aW8+
+TEJSIC0gMiAtIFJlcGFybyBlbiBEZXRhbGxlIC0gW0ZjaERvY10gZXhjZWRlIG3hcyBkZSAyIG1l
+c2VzCVQ6WzYxXS1GOlsyNDA4XTwvRGV0RXJyRW52aW8+CiA8L0Vycm9yRW52aW9MaWJybz4KPC9S
+ZXN1bHRhZG9FbnZpb0xpYnJvPgo=
+------=_Part_0_9971081.1476911027964--
+

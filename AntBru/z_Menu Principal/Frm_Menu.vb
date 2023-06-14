@@ -57,22 +57,27 @@ Public Class Frm_Menu
                 _Global_Nombre_BakApp_Notificaciones = "BakApp_Notificaciones2"
                 _Global_Nombre_BakApp_Demonio = "BakApp_Demonio2"
                 _Global_Nombre_BakApp_DTEMonitor = "BakApp_DTEMonitor2"
+                _Global_Nombre_BakApp_Demonio_Impresion = "BakApp_Demonio_Impresion2"
             Case "BakApp_Soluciones3"
                 _Global_Nombre_BakApp_Notificaciones = "BakApp_Notificaciones3"
                 _Global_Nombre_BakApp_Demonio = "BakApp_Demonio3"
                 _Global_Nombre_BakApp_DTEMonitor = "BakApp_DTEMonitor3"
+                _Global_Nombre_BakApp_Demonio_Impresion = "BakApp_Demonio_Impresion3"
             Case "BakApp_Soluciones4"
                 _Global_Nombre_BakApp_Notificaciones = "BakApp_Notificaciones4"
                 _Global_Nombre_BakApp_Demonio = "BakApp_Demonio4"
                 _Global_Nombre_BakApp_DTEMonitor = "BakApp_DTEMonitor4"
+                _Global_Nombre_BakApp_Demonio_Impresion = "BakApp_Demonio_Impresion4"
             Case "BakApp_Soluciones5"
                 _Global_Nombre_BakApp_Notificaciones = "BakApp_Notificaciones5"
                 _Global_Nombre_BakApp_Demonio = "BakApp_Demonio5"
                 _Global_Nombre_BakApp_DTEMonitor = "BakApp_DTEMonitor5"
+                _Global_Nombre_BakApp_Demonio_Impresion = "BakApp_Demonio_Impresion5"
             Case Else
                 _Global_Nombre_BakApp_Notificaciones = "BakApp_Notificaciones"
                 _Global_Nombre_BakApp_Demonio = "BakApp_Demonio"
                 _Global_Nombre_BakApp_DTEMonitor = "BakApp_DTEMonitor"
+                _Global_Nombre_BakApp_Demonio_Impresion = "BakApp_Demonio_Impresion"
         End Select
 
 

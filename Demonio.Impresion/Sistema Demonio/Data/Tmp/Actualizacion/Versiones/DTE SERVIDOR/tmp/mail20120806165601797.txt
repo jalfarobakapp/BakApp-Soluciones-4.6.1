@@ -1,0 +1,95 @@
+Return-path: <siidte_reparo@sii.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Thu, 02 Aug 2012 18:07:07 -0400
+Received: from rapel11.sii.cl ([200.10.252.90] helo=mailin.sii.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.77)
+	(envelope-from <siidte_reparo@sii.cl>)
+	id 1Sx3Xv-0000YF-OH
+	for notificacionsii@sirrep.cl; Thu, 02 Aug 2012 18:07:07 -0400
+X-IronPort-AV: E=Sophos;i="4.77,703,1336363200"; 
+   d="xml'?txt'?scan'208";a="207655278"
+Received: from dte.sii.cl (HELO dte) ([146.20.1.104])
+  by mailout.sii.cl with ESMTP; 02 Aug 2012 17:55:26 -0400
+Message-ID: <5915893.1343945140404.JavaMail.root@dte>
+Date: Thu, 2 Aug 2012 18:05:40 -0400 (CLT)
+From: siidte_reparo@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: Produccion - Resultado de Revision Envio 421803936 - 79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_3559620_16039877.1343945140403"
+
+------=_Part_3559620_16039877.1343945140403
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+SII de Chile - Validacion de DTE
+================================
+
+En el archivo adjunto esta el resultado del proceso de revision y validacion
+del envio de Documentos Tributarios Electronicos realizado por su empresa al
+Servicio de Impuestos Internos de Chile.
+
+----------------------------------------------------------------------------
+
+Este es una aplicacion automatica. No conteste este correo ni haga 
+consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue 
+mas claro en cualquier aplicacion.
+
+
+------=_Part_3559620_16039877.1343945140403
+Content-Type: text/plain; name=DTEMAIL0421803936.txt
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment; filename=DTEMAIL0421803936.txt
+
+Resultado de Validacion de Envio de DTE
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Rut de Empresa Emisora   : 79514800-0
+Rut que Realizo el Envio : 12628844-1
+Identificador de Envio   :  421803936
+Fecha de Recepcion       : 02/08/2012 18:05:54
+Estado del Envio         : EPR - Envio Procesado
+
+Estadisticas del Envio
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Tipo DTE  Informados  Rechazos  Reparos  Aceptados
+--------------------------------------------------
+   56              1         0        1          0
+
+Detalle de Rechazos y Reparos de DTE
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+ Folio       Tipo  Estado
+ --------------------------------------------------------------------------=
+----
+ 102          56   RPR - DTE Aceptado con Reparos
+     (REF-2-780) Anulaci=F3n presenta diff. de monto con doc. referenciado =
+: [1] <> [3]
+
+
+------=_Part_3559620_16039877.1343945140403
+Content-Type: application/octet-stream; name=DTEMAIL0421803936.xml
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=DTEMAIL0421803936.xml
+
+PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iSVNPLTg4NTktMSIgPz4KPFJFU1VMVEFET19F
+TlZJTz4KIDxJREVOVElGSUNBQ0lPTj4KICA8UlVURU1JU09SPjc5NTE0ODAwLTA8L1JVVEVNSVNP
+Uj4KICA8UlVURU5WSUE+MTI2Mjg4NDQtMTwvUlVURU5WSUE+CiAgPFRSQUNLSUQ+NDIxODAzOTM2
+PC9UUkFDS0lEPgogIDxUTVNUUkVDRVBDSU9OPjAyLzA4LzIwMTIgMTg6MDU6NTQ8L1RNU1RSRUNF
+UENJT04+CiAgPEVTVEFETz5FUFIgLSBFbnZpbyBQcm9jZXNhZG88L0VTVEFETz4KIDwvSURFTlRJ
+RklDQUNJT04+CiA8RVNUQURJU1RJQ0E+CiAgPFNVQlRPVEFMPgogICA8VElQT0RPQz41NjwvVElQ
+T0RPQz4KICAgPElORk9STUFETz4xPC9JTkZPUk1BRE8+CiAgIDxSRVBBUk8+MTwvUkVQQVJPPgog
+IDwvU1VCVE9UQUw+CiA8L0VTVEFESVNUSUNBPgogPFJFVklTSU9ORU5WSU8+CiAgPFJFVklTSU9O
+RFRFPgogICA8Rk9MSU8+MDAwMDAwMDEwMjwvRk9MSU8+CiAgIDxUSVBPRFRFPjU2PC9USVBPRFRF
+PgogICA8RVNUQURPPlJQUiAtIERURSBBY2VwdGFkbyBjb24gUmVwYXJvczwvRVNUQURPPgogICA8
+REVUQUxMRT4oUkVGLTItNzgwKSBBbnVsYWNp824gcHJlc2VudGEgZGlmZi4gZGUgbW9udG8gY29u
+IGRvYy4gcmVmZXJlbmNpYWRvIDogWzFdICZsdDsmZ3Q7IFszXTwvREVUQUxMRT4KICA8L1JFVklT
+SU9ORFRFPgogPC9SRVZJU0lPTkVOVklPPgo8L1JFU1VMVEFET19FTlZJTz4K
+------=_Part_3559620_16039877.1343945140403--
+

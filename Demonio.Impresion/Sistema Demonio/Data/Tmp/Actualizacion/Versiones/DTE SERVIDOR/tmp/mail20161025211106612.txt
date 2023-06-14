@@ -1,0 +1,93 @@
+Return-Path: <siidte@sii.cl>
+Delivered-To: notificacionsii@sirrep.cl
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id JrrOA0rQB1gEsAkAqFaw+A
+	for <notificacionsii@sirrep.cl>; Wed, 19 Oct 2016 16:58:21 -0300
+Return-path: <siidte@sii.cl>
+Received: from rapel12.sii.cl ([200.10.251.90] helo=mailin02.sii.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.86)
+	(envelope-from <siidte@sii.cl>)
+	id 1bwx0H-002fTW-HJ
+	for notificacionsii@sirrep.cl; Wed, 19 Oct 2016 16:58:21 -0300
+X-IronPort-AV: E=Sophos;i="5.22,559,1449543600"; 
+   d="xml'?txt'?scan'208";a="621242764"
+Received: from dte.sii.cl (HELO dte) ([146.20.1.104])
+  by mailout02.sii.cl with ESMTP; 19 Oct 2016 17:58:55 -0300
+Message-ID: <17876004.1476910865869.JavaMail.dte@dte>
+Date: Wed, 19 Oct 2016 18:01:05 -0300 (CLST)
+From: siidte@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: Revision Envio de Libro Normal 1770558556 - 79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_0_19543842.1476910865831"
+
+------=_Part_0_19543842.1476910865831
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+SII de Chile - Validacion de Envios de Libros
+=============================================
+
+En el archivo adjunto esta el resultado del proceso de revision y validacion
+del Envio de Libros Tributarios Electronicos realizado por su empresa al
+Servicio de Impuestos Internos de Chile.
+
+----------------------------------------------------------------------------
+
+Este es una aplicacion automatica. No conteste este correo ni haga 
+consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue 
+mas claro en cualquier aplicacion.
+
+
+------=_Part_0_19543842.1476910865831
+Content-Type: text/plain; name=LBRMAIL1770558556.txt
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=LBRMAIL1770558556.txt
+
+Resultado de Validacion de Envio de Libro Tributario
+====================================================
+
+Identificador de Envio      : 1770558556
+Rut de Empresa Emisora      : 79514800-0
+Rut que Realizo el Envio    : 12628844-1
+Fecha de Recepcion          : 19/10/2016 17:55:01
+Estado del Envio de Libro   : LOK - Envio de Libro Aceptado - Cuadrado
+Tipo de Segmento            : TOTAL
+Numero de Segmento          :   0
+
+Situacion del Libro Tributario Asociado
+=======================================
+
+Tipo de Libro               : RECTIFICA
+Tipo de Operacion           : COMPRA
+Periodo Tributario          : 2015-10
+Estado del Libro Tributario : LTC - Libro Cerrado - Informacion Cuadrada
+
+------=_Part_0_19543842.1476910865831
+Content-Type: application/octet-stream; name=LBRMAIL1770558556.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=LBRMAIL1770558556.xml
+
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ResultadoEnvioLibro>
+ <Identificacion>
+  <TrackId>1770558556</TrackId>
+  <RutEmisor>79514800-0</RutEmisor>
+  <RutEnvia>12628844-1</RutEnvia>
+  <TmstRecepcion>19/10/2016 17:55:01</TmstRecepcion>
+  <EstadoEnvio>LOK - Envio de Libro Aceptado - Cuadrado</EstadoEnvio>
+  <TipoSegmento>TOTAL</TipoSegmento>
+  <NroSegmento>0</NroSegmento>
+  <TipoLibro>RECTIFICA</TipoLibro>
+  <TipoOperacion>COMPRA</TipoOperacion>
+  <PeriodoTributario>2015-10</PeriodoTributario>
+  <EstadoLibro>LTC - Libro Cerrado - Informacion Cuadrada</EstadoLibro>
+ </Identificacion>
+</ResultadoEnvioLibro>
+
+------=_Part_0_19543842.1476910865831--
+

@@ -1,0 +1,129 @@
+Return-Path: <siidte_reparo@sii.cl>
+Delivered-To: notificacionsii@sirrep.cl
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id Ca+DN4HIEFhCRwEAqFaw+A
+	for <notificacionsii@sirrep.cl>; Wed, 26 Oct 2016 12:15:43 -0300
+Return-path: <siidte_reparo@sii.cl>
+Received: from rapel12.sii.cl ([200.10.251.90] helo=mailin02.sii.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.86)
+	(envelope-from <siidte_reparo@sii.cl>)
+	id 1bzPvb-000M6L-Ey
+	for notificacionsii@sirrep.cl; Wed, 26 Oct 2016 12:15:43 -0300
+X-IronPort-AV: E=Sophos;i="5.22,559,1449543600"; 
+   d="xml'?txt'?scan'208";a="629194409"
+Received: from dte.sii.cl (HELO dte) ([146.20.1.104])
+  by mailout02.sii.cl with ESMTP; 26 Oct 2016 13:16:14 -0300
+Message-ID: <31816741.1477498714247.JavaMail.root@dte>
+Date: Wed, 26 Oct 2016 13:18:34 -0300 (CLST)
+From: siidte_reparo@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: Produccion - Resultado de Revision Envio 1782562354 - 79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_5385_8365046.1477498714246"
+
+------=_Part_5385_8365046.1477498714246
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+SII de Chile - Validacion de DTE
+================================
+
+En el archivo adjunto esta el resultado del proceso de revision y validacion
+del envio de Documentos Tributarios Electronicos realizado por su empresa al
+Servicio de Impuestos Internos de Chile.
+
+----------------------------------------------------------------------------
+
+Este es una aplicacion automatica. No conteste este correo ni haga 
+consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue 
+mas claro en cualquier aplicacion.
+
+
+------=_Part_5385_8365046.1477498714246
+Content-Type: text/plain; name=DTEMAIL1782562354.txt
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL1782562354.txt
+
+Resultado de Validacion de Envio de DTE
+=======================================
+
+Rut de Empresa Emisora   : 79514800-0
+Rut que Realizo el Envio : 12628844-1
+Identificador de Envio   : 1782562354
+Fecha de Recepcion       : 26/10/2016 12:34:35
+Estado del Envio         : EPR - Envio Procesado
+
+Estadisticas del Envio
+======================
+Tipo DTE  Informados  Rechazos  Reparos  Aceptados
+--------------------------------------------------
+   33              1         0        1          0
+
+Detalle de Rechazos y Reparos de DTE
+====================================
+
+ Folio       Tipo  Estado
+ ------------------------------------------------------------------------------
+ 215581       33   RPR - DTE Aceptado con Reparos
+     (CAF-2-517) REPARO-Fecha CAF Antiguo (RECHAZO a partir del 01.07.2017) : (Firma_DTE[2016-10-26] - CAF[2014-12-22]) > 18 meses
+     (HED-2-210) Monto Neto No Cuadra con Detalle : [157919.0000] <> [221511.0000]
+     (DET L[3] -1-200) Valor Detalle Distinto a Precio * Cantidad : [19699.0000] <> [27359.0000]
+     (DET L[6] -1-200) Valor Detalle Distinto a Precio * Cantidad : [8940.0000] <> [15893.0000]
+     (DET L[7] -1-200) Valor Detalle Distinto a Precio * Cantidad : [8070.0000] <> [14347.0000]
+     (DET L[8] -1-200) Valor Detalle Distinto a Precio * Cantidad : [6354.0000] <> [16240.0000]
+     (DET L[9] -1-200) Valor Detalle Distinto a Precio * Cantidad : [6540.0000] <> [11627.0000]
+     (DET L[10] -1-200) Valor Detalle Distinto a Precio * Cantidad : [6350.0000] <> [16229.0000]
+     (DET L[11] -1-200) Valor Detalle Distinto a Precio * Cantidad : [8939.0000] <> [15890.0000]
+     (DET L[12] -1-200) Valor Detalle Distinto a Precio * Cantidad : [6571.0000] <> [11682.0000]
+     (DET L[13] -1-200) Valor Detalle Distinto a Precio * Cantidad : [7441.0000] <> [13229.0000]
+     (TED-1-647) Fecha Timbre Fuera de Rango Permitido : FT[2016-10-26T15:34:27] : FE[2015-03-24]
+
+
+------=_Part_5385_8365046.1477498714246
+Content-Type: application/octet-stream; name=DTEMAIL1782562354.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL1782562354.xml
+
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<RESULTADO_ENVIO>
+ <IDENTIFICACION>
+  <RUTEMISOR>79514800-0</RUTEMISOR>
+  <RUTENVIA>12628844-1</RUTENVIA>
+  <TRACKID>1782562354</TRACKID>
+  <TMSTRECEPCION>26/10/2016 12:34:35</TMSTRECEPCION>
+  <ESTADO>EPR - Envio Procesado</ESTADO>
+ </IDENTIFICACION>
+ <ESTADISTICA>
+  <SUBTOTAL>
+   <TIPODOC>33</TIPODOC>
+   <INFORMADO>1</INFORMADO>
+   <REPARO>1</REPARO>
+  </SUBTOTAL>
+ </ESTADISTICA>
+ <REVISIONENVIO>
+  <REVISIONDTE>
+   <FOLIO>0000215581</FOLIO>
+   <TIPODTE>33</TIPODTE>
+   <ESTADO>RPR - DTE Aceptado con Reparos</ESTADO>
+   <DETALLE>(CAF-2-517) REPARO-Fecha CAF Antiguo (RECHAZO a partir del 01.07.2017) : (Firma_DTE[2016-10-26] - CAF[2014-12-22]) &gt; 18 meses</DETALLE>
+   <DETALLE>(HED-2-210) Monto Neto No Cuadra con Detalle : [157919.0000] &lt;&gt; [221511.0000]</DETALLE>
+   <DETALLE>(DET L[3] -1-200) Valor Detalle Distinto a Precio * Cantidad : [19699.0000] &lt;&gt; [27359.0000]</DETALLE>
+   <DETALLE>(DET L[6] -1-200) Valor Detalle Distinto a Precio * Cantidad : [8940.0000] &lt;&gt; [15893.0000]</DETALLE>
+   <DETALLE>(DET L[7] -1-200) Valor Detalle Distinto a Precio * Cantidad : [8070.0000] &lt;&gt; [14347.0000]</DETALLE>
+   <DETALLE>(DET L[8] -1-200) Valor Detalle Distinto a Precio * Cantidad : [6354.0000] &lt;&gt; [16240.0000]</DETALLE>
+   <DETALLE>(DET L[9] -1-200) Valor Detalle Distinto a Precio * Cantidad : [6540.0000] &lt;&gt; [11627.0000]</DETALLE>
+   <DETALLE>(DET L[10] -1-200) Valor Detalle Distinto a Precio * Cantidad : [6350.0000] &lt;&gt; [16229.0000]</DETALLE>
+   <DETALLE>(DET L[11] -1-200) Valor Detalle Distinto a Precio * Cantidad : [8939.0000] &lt;&gt; [15890.0000]</DETALLE>
+   <DETALLE>(DET L[12] -1-200) Valor Detalle Distinto a Precio * Cantidad : [6571.0000] &lt;&gt; [11682.0000]</DETALLE>
+   <DETALLE>(DET L[13] -1-200) Valor Detalle Distinto a Precio * Cantidad : [7441.0000] &lt;&gt; [13229.0000]</DETALLE>
+   <DETALLE>(TED-1-647) Fecha Timbre Fuera de Rango Permitido : FT[2016-10-26T15:34:27] : FE[2015-03-24]</DETALLE>
+  </REVISIONDTE>
+ </REVISIONENVIO>
+</RESULTADO_ENVIO>
+
+------=_Part_5385_8365046.1477498714246--
+

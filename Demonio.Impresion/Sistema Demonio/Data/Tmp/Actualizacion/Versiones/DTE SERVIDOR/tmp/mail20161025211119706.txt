@@ -1,0 +1,152 @@
+Return-Path: <siidte_error@sii.cl>
+Delivered-To: notificacionsii@sirrep.cl
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id dnOUAXwuCVjxhwEAqFaw+A
+	for <notificacionsii@sirrep.cl>; Thu, 20 Oct 2016 17:53:53 -0300
+Return-path: <siidte_error@sii.cl>
+Received: from rapel12.sii.cl ([200.10.251.90] helo=mailin02.sii.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.86)
+	(envelope-from <siidte_error@sii.cl>)
+	id 1bxKLZ-000R64-0a
+	for notificacionsii@sirrep.cl; Thu, 20 Oct 2016 17:53:53 -0300
+X-IronPort-AV: E=Sophos;i="5.22,559,1449543600"; 
+   d="xml'?txt'?scan'208";a="622914674"
+Received: from dte.sii.cl (HELO dte) ([146.20.1.104])
+  by mailout02.sii.cl with ESMTP; 20 Oct 2016 18:51:56 -0300
+Message-ID: <32181625.1477000448307.JavaMail.root@dte>
+Date: Thu, 20 Oct 2016 18:54:08 -0300 (CLST)
+From: siidte_error@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: [SII-Consumo de Folios-ERRONEO] TipoEnvio=Automatico TrackID=1773125128 Rut=79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_11112_9211565.1477000448306"
+
+------=_Part_11112_9211565.1477000448306
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+SII de Chile - Validacion de DTE ( Consumo de Folios )
+======================================================
+
+En el archivo adjunto esta el resultado del proceso de revision y validacion
+del envio de Documentos Tributarios Electronicos realizado por su empresa al
+Servicio de Impuestos Internos de Chile.
+
+----------------------------------------------------------------------------
+
+Este es una aplicacion automatica. No conteste este correo ni haga
+consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue
+mas claro en cualquier aplicacion.
+
+
+
+------=_Part_11112_9211565.1477000448306
+Content-Type: text/plain; name=FOLMAIL1773125128_79514800_ERRONEO.txt
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; 
+	filename=FOLMAIL1773125128_79514800_ERRONEO.txt
+
+Resultado de Validacion de Envio de Consumo de Folios
+=====================================================
+Identificador de Envio      : 1773125128
+Rut de Empresa Emisora      : 79514800-0
+Rut que Realizo el Envio    : 12628844-1
+Fecha de Recepcion          : 2016-10-20T18:53:21
+Tamano del archivo          : 5740
+Tipo de Envio               : Automatico
+
+Resultado de envio           
+=============================
+Estado del envio            : ERRONEO
+Errores                     : 6
+Reparos                     : 0
+
+Los errores del envio son:   
+=============================
++------------------------------------------------------------------------------+
+| 0   |Error en Schema                                                         |
+|Line:29 [Value '0' is not facet-valid with respect to minInclusive '1' for typ|
++------------------------------------------------------------------------------+
+| 0   |Error en Schema                                                         |
+|e 'FolioType'.]                                                               |
++------------------------------------------------------------------------------+
+| 0   |Error en Schema                                                         |
+|Line:29 [The value '0' of element 'Inicial' is not valid.]                    |
++------------------------------------------------------------------------------+
+| 0   |Error en Schema                                                         |
+|Line:30 [Value '0' is not facet-valid with respect to minInclusive '1' for typ|
++------------------------------------------------------------------------------+
+| 0   |Error en Schema                                                         |
+|e 'FolioType'.]                                                               |
++------------------------------------------------------------------------------+
+| 0   |Error en Schema                                                         |
+|Line:30 [The value '0' of element 'Final' is not valid.]                      |
++------------------------------------------------------------------------------+
+
+
+
+------=_Part_11112_9211565.1477000448306
+Content-Type: application/octet-stream; 
+	name=FOLMAIL1773125128_79514800_ERRONEO.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; 
+	filename=FOLMAIL1773125128_79514800_ERRONEO.xml
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ResultadoConsumoFolios xmlns="http://www.sii.cl/SiiDte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sii.cl/SiiDte ResultadoConsumoFolios_v10.xsd" version="1.0">
+    <DocumentoResultadoConsumoFolios ID="documento">
+        <Identificacion>
+            <Envio>
+                <TrackId>1773125128</TrackId>
+                <RutEmisor>79514800-0</RutEmisor>
+                <RutEnvia>12628844-1</RutEnvia>
+                <TmstRecepcion>2016-10-20T18:53:21</TmstRecepcion>
+                <TamanoArchivo>5740</TamanoArchivo>
+                <TipoEnvio>Automatico</TipoEnvio>
+            </Envio>
+        </Identificacion>
+        <Resultado>
+            <Estado>ERRONEO</Estado>
+            <CantidadErrores>6</CantidadErrores>
+            <Errores>
+                <Error>
+                    <Codigo>0</Codigo>
+                    <Descripcion>Error en Schema</Descripcion>
+                    <Detalle>Line:29 [Value '0' is not facet-valid with respect to minInclusive '1' for typ</Detalle>
+                </Error>
+                <Error>
+                    <Codigo>0</Codigo>
+                    <Descripcion>Error en Schema</Descripcion>
+                    <Detalle>e 'FolioType'.]</Detalle>
+                </Error>
+                <Error>
+                    <Codigo>0</Codigo>
+                    <Descripcion>Error en Schema</Descripcion>
+                    <Detalle>Line:29 [The value '0' of element 'Inicial' is not valid.]</Detalle>
+                </Error>
+                <Error>
+                    <Codigo>0</Codigo>
+                    <Descripcion>Error en Schema</Descripcion>
+                    <Detalle>Line:30 [Value '0' is not facet-valid with respect to minInclusive '1' for typ</Detalle>
+                </Error>
+                <Error>
+                    <Codigo>0</Codigo>
+                    <Descripcion>Error en Schema</Descripcion>
+                    <Detalle>e 'FolioType'.]</Detalle>
+                </Error>
+                <Error>
+                    <Codigo>0</Codigo>
+                    <Descripcion>Error en Schema</Descripcion>
+                    <Detalle>Line:30 [The value '0' of element 'Final' is not valid.]</Detalle>
+                </Error>
+            </Errores>
+        </Resultado>
+    </DocumentoResultadoConsumoFolios>
+</ResultadoConsumoFolios>
+
+------=_Part_11112_9211565.1477000448306--
+

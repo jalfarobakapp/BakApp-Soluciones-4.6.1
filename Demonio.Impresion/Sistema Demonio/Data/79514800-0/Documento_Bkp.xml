@@ -1,0 +1,75 @@
+<?xml version="1.0" standalone="yes"?>
+<Ds_Matriz_Documentos xmlns="http://tempuri.org/Ds_Matriz_Documentos.xsd">
+  <Observaciones_Doc>
+    <Observaciones />
+    <Forma_pago />
+    <Orden_compra />
+    <Obs1 />
+    <Obs2 />
+    <Obs3 />
+    <Obs4 />
+    <Obs5 />
+    <Obs6 />
+    <Obs7 />
+    <Obs8 />
+    <Obs9 />
+    <Obs10 />
+    <Obs11 />
+    <Obs12 />
+    <Obs13 />
+    <Obs14 />
+    <Obs15 />
+    <Obs16 />
+    <Obs17 />
+    <Obs18 />
+    <Obs19 />
+    <Obs20 />
+    <Obs21 />
+    <Obs22 />
+    <Obs23 />
+    <Obs24 />
+    <Obs25 />
+    <Obs26 />
+    <Obs27 />
+    <Obs28 />
+    <Obs29 />
+    <Obs30 />
+    <Obs31 />
+    <Obs32 />
+    <Obs33 />
+    <Obs34 />
+    <Obs35 />
+  </Observaciones_Doc>
+  <Encabezado_Doc>
+    <Modalidad>ADMIN</Modalidad>
+    <Empresa>01</Empresa>
+    <Sucursal>CM </Sucursal>
+    <TipoDoc>OCC</TipoDoc>
+    <NroDocumento>0000030403</NroDocumento>
+    <CodEntidad />
+    <CodSucEntidad />
+    <FechaEmision>2016-12-31T01:07:54.8258787-03:00</FechaEmision>
+    <Fecha_1er_Vencimiento>2016-12-31T01:07:54.8258787-03:00</Fecha_1er_Vencimiento>
+    <FechaUltVencimiento>2016-12-31T01:07:54.8258787-03:00</FechaUltVencimiento>
+    <FechaRecepcion>2016-12-31T01:07:54.8258787-03:00</FechaRecepcion>
+    <Cuotas>1</Cuotas>
+    <Dias_1er_Vencimiento>0</Dias_1er_Vencimiento>
+    <Dias_Vencimiento>0</Dias_Vencimiento>
+    <ListaPrecios>02C</ListaPrecios>
+    <CodSucEntidadFisica />
+    <Contacto_Ent />
+    <CodFuncionario>010</CodFuncionario>
+    <NomFuncionario>JUAN PABLO SIERRALTA</NomFuncionario>
+    <Centro_Costo>AD      </Centro_Costo>
+    <Valor_Dolar>0</Valor_Dolar>
+    <TotalNetoDoc>0</TotalNetoDoc>
+    <TotalIvaDoc>0</TotalIvaDoc>
+    <TotalIlaDoc>0</TotalIlaDoc>
+    <TotalBrutoDoc>0</TotalBrutoDoc>
+    <CantTotal>0</CantTotal>
+    <CantDesp>0</CantDesp>
+    <DocEn_Neto_Bruto>N</DocEn_Neto_Bruto>
+    <Vizado>false</Vizado>
+    <TotalDsctoReal_Porc>NaN</TotalDsctoReal_Porc>
+  </Encabezado_Doc>
+</Ds_Matriz_Documentos>

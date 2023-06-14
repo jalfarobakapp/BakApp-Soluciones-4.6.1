@@ -1,0 +1,110 @@
+Return-Path: <siidte@sii.cl>
+Delivered-To: notificacionsii@sirrep.cl
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id 2TIROhlYN1evmwsAqFaw+A
+	for <notificacionsii@sirrep.cl>; Sat, 14 May 2016 13:53:45 -0300
+Return-path: <siidte@sii.cl>
+Received: from rapel12.sii.cl ([200.10.251.90] helo=mailin02.sii.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.86)
+	(envelope-from <siidte@sii.cl>)
+	id 1b1coz-003BuW-Sb
+	for notificacionsii@sirrep.cl; Sat, 14 May 2016 13:53:45 -0300
+X-IronPort-AV: E=Sophos;i="5.22,559,1449543600"; 
+   d="xml'?txt'?scan'208";a="463010066"
+Received: from dte.sii.cl (HELO dte) ([146.20.1.104])
+  by mailout02.sii.cl with ESMTP; 14 May 2016 13:38:24 -0300
+Message-ID: <23732227.1463244840771.JavaMail.root@dte>
+Date: Sat, 14 May 2016 13:54:00 -0300 (CLT)
+From: siidte@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: [SII-Consumo de Folios-CORRECTO] TipoEnvio=Automatico TrackID=1522693768 Rut=79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_43833374_16378338.1463244840770"
+
+------=_Part_43833374_16378338.1463244840770
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+SII de Chile - Validacion de DTE ( Consumo de Folios )
+======================================================
+
+En el archivo adjunto esta el resultado del proceso de revision y validacion
+del envio de Documentos Tributarios Electronicos realizado por su empresa al
+Servicio de Impuestos Internos de Chile.
+
+----------------------------------------------------------------------------
+
+Este es una aplicacion automatica. No conteste este correo ni haga
+consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue
+mas claro en cualquier aplicacion.
+
+
+
+------=_Part_43833374_16378338.1463244840770
+Content-Type: text/plain; name=FOLMAIL1522693768_79514800_CORRECTO.txt
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; 
+	filename=FOLMAIL1522693768_79514800_CORRECTO.txt
+
+Resultado de Validacion de Envio de Consumo de Folios
+=====================================================
+Identificador de Envio      : 1522693768
+Rut de Empresa Emisora      : 79514800-0
+Rut que Realizo el Envio    : 12628844-1
+Fecha de Recepcion          : 2016-05-14T13:54:43
+Tamano del archivo          : 5620
+Tipo de Envio               : Automatico
+Informacion acerca de Resumen
+=============================
+
+Fecha Primer dia del resumen: 2016-05-14
+Fecha ultimo dia del resumen: 2016-05-14
+Secuencia de envio          : 0
+Fecha firma                 : 2016-05-14 16:54:26.0
+
+
+Resultado de envio           
+=============================
+Estado del envio            : CORRECTO
+Errores                     : 0
+Reparos                     : 0
+
+
+------=_Part_43833374_16378338.1463244840770
+Content-Type: application/octet-stream; 
+	name=FOLMAIL1522693768_79514800_CORRECTO.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; 
+	filename=FOLMAIL1522693768_79514800_CORRECTO.xml
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ResultadoConsumoFolios xmlns="http://www.sii.cl/SiiDte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sii.cl/SiiDte ResultadoConsumoFolios_v10.xsd" version="1.0">
+    <DocumentoResultadoConsumoFolios ID="documento">
+        <Identificacion>
+            <Envio>
+                <TrackId>1522693768</TrackId>
+                <RutEmisor>79514800-0</RutEmisor>
+                <RutEnvia>12628844-1</RutEnvia>
+                <TmstRecepcion>2016-05-14T13:54:43</TmstRecepcion>
+                <TamanoArchivo>5620</TamanoArchivo>
+                <TipoEnvio>Automatico</TipoEnvio>
+            </Envio>
+            <CaratulaConsumoFolios>
+                <FchInicio>2016-05-14</FchInicio>
+                <FchFinal>2016-05-14</FchFinal>
+                <SecEnvio>0</SecEnvio>
+                <TmstFirmaEnv>2016-05-14 16:54:26.0</TmstFirmaEnv>
+            </CaratulaConsumoFolios>
+        </Identificacion>
+        <Resultado>
+            <Estado>CORRECTO</Estado>
+        </Resultado>
+    </DocumentoResultadoConsumoFolios>
+</ResultadoConsumoFolios>
+
+------=_Part_43833374_16378338.1463244840770--
+

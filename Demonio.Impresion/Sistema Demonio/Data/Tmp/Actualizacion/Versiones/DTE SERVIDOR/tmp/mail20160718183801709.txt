@@ -1,0 +1,133 @@
+Return-Path: <siidte_reparo@sii.cl>
+Delivered-To: notificacionsii@sirrep.cl
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id FM9jL7VFQ1e+WwsAqFaw+A
+	for <notificacionsii@sirrep.cl>; Mon, 23 May 2016 15:02:43 -0300
+Return-path: <siidte_reparo@sii.cl>
+Received: from rapel12.sii.cl ([200.10.251.90] helo=mailin02.sii.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.86)
+	(envelope-from <siidte_reparo@sii.cl>)
+	id 1b4uBf-0037gH-5F
+	for notificacionsii@sirrep.cl; Mon, 23 May 2016 15:02:43 -0300
+X-IronPort-AV: E=Sophos;i="5.22,559,1449543600"; 
+   d="xml'?txt'?scan'208";a="469776941"
+Received: from dte.sii.cl (HELO dte) ([146.20.1.104])
+  by mailout02.sii.cl with ESMTP; 23 May 2016 14:03:56 -0300
+Message-ID: <16890539.1464026589659.JavaMail.root@dte>
+Date: Mon, 23 May 2016 15:03:09 -0300 (CLT)
+From: siidte_reparo@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: Produccion - Resultado de Revision Envio 1533307282 - 79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_50108648_5832652.1464026589658"
+
+------=_Part_50108648_5832652.1464026589658
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+SII de Chile - Validacion de DTE
+================================
+
+En el archivo adjunto esta el resultado del proceso de revision y validacion
+del envio de Documentos Tributarios Electronicos realizado por su empresa al
+Servicio de Impuestos Internos de Chile.
+
+----------------------------------------------------------------------------
+
+Este es una aplicacion automatica. No conteste este correo ni haga 
+consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue 
+mas claro en cualquier aplicacion.
+
+
+------=_Part_50108648_5832652.1464026589658
+Content-Type: text/plain; name=DTEMAIL1533307282.txt
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL1533307282.txt
+
+Resultado de Validacion de Envio de DTE
+=======================================
+
+Rut de Empresa Emisora   : 79514800-0
+Rut que Realizo el Envio : 12628844-1
+Identificador de Envio   : 1533307282
+Fecha de Recepcion       : 23/05/2016 14:04:12
+Estado del Envio         : EPR - Envio Procesado
+
+Estadisticas del Envio
+======================
+Tipo DTE  Informados  Rechazos  Reparos  Aceptados
+--------------------------------------------------
+   33              1         0        1          0
+
+Detalle de Rechazos y Reparos de DTE
+====================================
+
+ Folio       Tipo  Estado
+ ------------------------------------------------------------------------------
+ 224025       33   RPR - DTE Aceptado con Reparos
+     (HED-2-210) Monto Neto No Cuadra con Detalle : [285795.0000] <> [743536.0000]
+     (DET L[1] -1-200) Valor Detalle Distinto a Precio * Cantidad : [34797.0000] <> [156592.0000]
+     (DET L[4] -1-200) Valor Detalle Distinto a Precio * Cantidad : [7692.0000] <> [10683.0000]
+     (DET L[5] -1-200) Valor Detalle Distinto a Precio * Cantidad : [5638.0000] <> [16601.0000]
+     (DET L[6] -1-200) Valor Detalle Distinto a Precio * Cantidad : [4994.0000] <> [10820.0000]
+     (DET L[7] -1-200) Valor Detalle Distinto a Precio * Cantidad : [54799.0000] <> [246597.0000]
+     (DET L[8] -1-200) Valor Detalle Distinto a Precio * Cantidad : [37261.0000] <> [109710.0000]
+     (DET L[10] -1-200) Valor Detalle Distinto a Precio * Cantidad : [2942.0000] <> [5229.0000]
+     (DET L[11] -1-200) Valor Detalle Distinto a Precio * Cantidad : [5922.0000] <> [12829.0000]
+     (DET L[12] -1-200) Valor Detalle Distinto a Precio * Cantidad : [11843.0000] <> [44078.0000]
+     (DET L[13] -1-200) Valor Detalle Distinto a Precio * Cantidad : [4500.0000] <> [6251.0000]
+     (DET L[14] -1-200) Valor Detalle Distinto a Precio * Cantidad : [4500.0000] <> [6251.0000]
+     (DET L[15] -1-200) Valor Detalle Distinto a Precio * Cantidad : [4381.0000] <> [6085.0000]
+     (DET L[16] -1-200) Valor Detalle Distinto a Precio * Cantidad : [4530.0000] <> [9814.0000]
+
+
+------=_Part_50108648_5832652.1464026589658
+Content-Type: application/octet-stream; name=DTEMAIL1533307282.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL1533307282.xml
+
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<RESULTADO_ENVIO>
+ <IDENTIFICACION>
+  <RUTEMISOR>79514800-0</RUTEMISOR>
+  <RUTENVIA>12628844-1</RUTENVIA>
+  <TRACKID>1533307282</TRACKID>
+  <TMSTRECEPCION>23/05/2016 14:04:12</TMSTRECEPCION>
+  <ESTADO>EPR - Envio Procesado</ESTADO>
+ </IDENTIFICACION>
+ <ESTADISTICA>
+  <SUBTOTAL>
+   <TIPODOC>33</TIPODOC>
+   <INFORMADO>1</INFORMADO>
+   <REPARO>1</REPARO>
+  </SUBTOTAL>
+ </ESTADISTICA>
+ <REVISIONENVIO>
+  <REVISIONDTE>
+   <FOLIO>0000224025</FOLIO>
+   <TIPODTE>33</TIPODTE>
+   <ESTADO>RPR - DTE Aceptado con Reparos</ESTADO>
+   <DETALLE>(HED-2-210) Monto Neto No Cuadra con Detalle : [285795.0000] &lt;&gt; [743536.0000]</DETALLE>
+   <DETALLE>(DET L[1] -1-200) Valor Detalle Distinto a Precio * Cantidad : [34797.0000] &lt;&gt; [156592.0000]</DETALLE>
+   <DETALLE>(DET L[4] -1-200) Valor Detalle Distinto a Precio * Cantidad : [7692.0000] &lt;&gt; [10683.0000]</DETALLE>
+   <DETALLE>(DET L[5] -1-200) Valor Detalle Distinto a Precio * Cantidad : [5638.0000] &lt;&gt; [16601.0000]</DETALLE>
+   <DETALLE>(DET L[6] -1-200) Valor Detalle Distinto a Precio * Cantidad : [4994.0000] &lt;&gt; [10820.0000]</DETALLE>
+   <DETALLE>(DET L[7] -1-200) Valor Detalle Distinto a Precio * Cantidad : [54799.0000] &lt;&gt; [246597.0000]</DETALLE>
+   <DETALLE>(DET L[8] -1-200) Valor Detalle Distinto a Precio * Cantidad : [37261.0000] &lt;&gt; [109710.0000]</DETALLE>
+   <DETALLE>(DET L[10] -1-200) Valor Detalle Distinto a Precio * Cantidad : [2942.0000] &lt;&gt; [5229.0000]</DETALLE>
+   <DETALLE>(DET L[11] -1-200) Valor Detalle Distinto a Precio * Cantidad : [5922.0000] &lt;&gt; [12829.0000]</DETALLE>
+   <DETALLE>(DET L[12] -1-200) Valor Detalle Distinto a Precio * Cantidad : [11843.0000] &lt;&gt; [44078.0000]</DETALLE>
+   <DETALLE>(DET L[13] -1-200) Valor Detalle Distinto a Precio * Cantidad : [4500.0000] &lt;&gt; [6251.0000]</DETALLE>
+   <DETALLE>(DET L[14] -1-200) Valor Detalle Distinto a Precio * Cantidad : [4500.0000] &lt;&gt; [6251.0000]</DETALLE>
+   <DETALLE>(DET L[15] -1-200) Valor Detalle Distinto a Precio * Cantidad : [4381.0000] &lt;&gt; [6085.0000]</DETALLE>
+   <DETALLE>(DET L[16] -1-200) Valor Detalle Distinto a Precio * Cantidad : [4530.0000] &lt;&gt; [9814.0000]</DETALLE>
+  </REVISIONDTE>
+ </REVISIONENVIO>
+</RESULTADO_ENVIO>
+
+------=_Part_50108648_5832652.1464026589658--
+

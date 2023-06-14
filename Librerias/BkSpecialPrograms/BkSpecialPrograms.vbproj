@@ -1348,6 +1348,12 @@
     <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_AgregarTipos.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_Calcular.Designer.vb">
+      <DependentUpon>Frm_Cms_Calcular.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_Calcular.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_FuncMant.Designer.vb">
       <DependentUpon>Frm_Cms_FuncMant.vb</DependentUpon>
     </Compile>
@@ -1436,6 +1442,19 @@
       <DependentUpon>Frm_Demonio_01_Conf_Local_FH.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\Frm_Demonio_01_Conf_Local_FH.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\Impresion\Cl_Dem_Imprimir.vb" />
+    <Compile Include="03 Sistemas\Demonio automatico\Impresion\Frm_Dem_Imprimir.Designer.vb">
+      <DependentUpon>Frm_Dem_Imprimir.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\Impresion\Frm_Dem_Imprimir.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\Impresion\Frm_Dem_Imprimir_Conf.Designer.vb">
+      <DependentUpon>Frm_Dem_Imprimir_Conf.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\Impresion\Frm_Dem_Imprimir_Conf.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfAsisCompra.Designer.vb">
@@ -4585,6 +4604,9 @@
     <EmbeddedResource Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_AgregarTipos.resx">
       <DependentUpon>Frm_Cms_AgregarTipos.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_Calcular.resx">
+      <DependentUpon>Frm_Cms_Calcular.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_Fun.resx">
       <DependentUpon>Frm_Cms_Fun.vb</DependentUpon>
     </EmbeddedResource>
@@ -4617,6 +4639,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Demonio automatico\Frm_Demonio_01_Conf_Local_FH.resx">
       <DependentUpon>Frm_Demonio_01_Conf_Local_FH.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Demonio automatico\Impresion\Frm_Dem_Imprimir.resx">
+      <DependentUpon>Frm_Dem_Imprimir.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Demonio automatico\Impresion\Frm_Dem_Imprimir_Conf.resx">
+      <DependentUpon>Frm_Dem_Imprimir_Conf.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfAsisCompra.resx">
       <DependentUpon>Frm_Demonio_ConfAsisCompra.vb</DependentUpon>

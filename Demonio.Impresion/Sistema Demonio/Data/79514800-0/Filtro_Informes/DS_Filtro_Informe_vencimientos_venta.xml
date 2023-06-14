@@ -1,0 +1,13 @@
+<?xml version="1.0" standalone="yes"?>
+<Ds_Inf_Venc_ComVta xmlns="http://tempuri.org/Ds_Inf_Venc_ComVta.xsd">
+  <Tbl_Rango_Fecha_Emision>
+    <Dtp_Fecha_Emision_Desde>2000-01-01T00:00:00-03:00</Dtp_Fecha_Emision_Desde>
+    <Dtp_Fecha_Emision_Hasta>2018-09-27T00:00:00-03:00</Dtp_Fecha_Emision_Hasta>
+  </Tbl_Rango_Fecha_Emision>
+  <Tbl_Monto>
+    <Monto_Max>0</Monto_Max>
+  </Tbl_Monto>
+  <Tbl_Conf_Correo>
+    <Id_Correo>1</Id_Correo>
+  </Tbl_Conf_Correo>
+</Ds_Inf_Venc_ComVta>

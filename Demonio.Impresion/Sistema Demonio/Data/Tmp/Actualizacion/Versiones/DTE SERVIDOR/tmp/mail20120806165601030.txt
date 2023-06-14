@@ -1,0 +1,108 @@
+Return-path: <siidte_reparo@sii.cl>
+Envelope-to: notificacionsii@sirrep.cl
+Delivery-date: Thu, 02 Aug 2012 17:30:03 -0400
+Received: from rapel11.sii.cl ([200.10.252.90] helo=mailin.sii.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.77)
+	(envelope-from <siidte_reparo@sii.cl>)
+	id 1Sx2y3-0005NM-DO
+	for notificacionsii@sirrep.cl; Thu, 02 Aug 2012 17:30:03 -0400
+X-IronPort-AV: E=Sophos;i="4.77,703,1336363200"; 
+   d="xml'?txt'?scan'208";a="207641312"
+Received: from dte.sii.cl (HELO dte) ([146.20.1.104])
+  by mailout.sii.cl with ESMTP; 02 Aug 2012 17:18:22 -0400
+Message-ID: <5230526.1343942916112.JavaMail.root@dte>
+Date: Thu, 2 Aug 2012 17:28:36 -0400 (CLT)
+From: siidte_reparo@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: Produccion - Resultado de Revision Envio 421776746 - 79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_3545957_4478361.1343942916110"
+
+------=_Part_3545957_4478361.1343942916110
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+SII de Chile - Validacion de DTE
+================================
+
+En el archivo adjunto esta el resultado del proceso de revision y validacion
+del envio de Documentos Tributarios Electronicos realizado por su empresa al
+Servicio de Impuestos Internos de Chile.
+
+----------------------------------------------------------------------------
+
+Este es una aplicacion automatica. No conteste este correo ni haga 
+consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue 
+mas claro en cualquier aplicacion.
+
+
+------=_Part_3545957_4478361.1343942916110
+Content-Type: text/plain; name=DTEMAIL0421776746.txt
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL0421776746.txt
+
+Resultado de Validacion de Envio de DTE
+=======================================
+
+Rut de Empresa Emisora   : 79514800-0
+Rut que Realizo el Envio : 12628844-1
+Identificador de Envio   :  421776746
+Fecha de Recepcion       : 02/08/2012 17:29:00
+Estado del Envio         : EPR - Envio Procesado
+
+Estadisticas del Envio
+======================
+Tipo DTE  Informados  Rechazos  Reparos  Aceptados
+--------------------------------------------------
+   33              1         0        1          0
+
+Detalle de Rechazos y Reparos de DTE
+====================================
+
+ Folio       Tipo  Estado
+ ------------------------------------------------------------------------------
+ 200093       33   RPR - DTE Aceptado con Reparos
+     (HED-2-210) Monto Neto No Cuadra con Detalle : [24949.0000] <> [30516.0000]
+     (DET L[1] -1-200) Valor Detalle Distinto a Precio * Cantidad : [4343.0000] <> [6643.0000]
+     (DET L[2] -1-200) Valor Detalle Distinto a Precio * Cantidad : [18514.0000] <> [21781.0000]
+
+
+------=_Part_3545957_4478361.1343942916110
+Content-Type: application/octet-stream; name=DTEMAIL0421776746.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL0421776746.xml
+
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<RESULTADO_ENVIO>
+ <IDENTIFICACION>
+  <RUTEMISOR>79514800-0</RUTEMISOR>
+  <RUTENVIA>12628844-1</RUTENVIA>
+  <TRACKID>421776746</TRACKID>
+  <TMSTRECEPCION>02/08/2012 17:29:00</TMSTRECEPCION>
+  <ESTADO>EPR - Envio Procesado</ESTADO>
+ </IDENTIFICACION>
+ <ESTADISTICA>
+  <SUBTOTAL>
+   <TIPODOC>33</TIPODOC>
+   <INFORMADO>1</INFORMADO>
+   <REPARO>1</REPARO>
+  </SUBTOTAL>
+ </ESTADISTICA>
+ <REVISIONENVIO>
+  <REVISIONDTE>
+   <FOLIO>0000200093</FOLIO>
+   <TIPODTE>33</TIPODTE>
+   <ESTADO>RPR - DTE Aceptado con Reparos</ESTADO>
+   <DETALLE>(HED-2-210) Monto Neto No Cuadra con Detalle : [24949.0000] &lt;&gt; [30516.0000]</DETALLE>
+   <DETALLE>(DET L[1] -1-200) Valor Detalle Distinto a Precio * Cantidad : [4343.0000] &lt;&gt; [6643.0000]</DETALLE>
+   <DETALLE>(DET L[2] -1-200) Valor Detalle Distinto a Precio * Cantidad : [18514.0000] &lt;&gt; [21781.0000]</DETALLE>
+  </REVISIONDTE>
+ </REVISIONENVIO>
+</RESULTADO_ENVIO>
+
+------=_Part_3545957_4478361.1343942916110--
+

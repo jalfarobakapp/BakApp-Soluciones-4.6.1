@@ -279,7 +279,7 @@ Public Class Cl_Correos
                        "Where NombreEquipo = '" & _Nombre_Equipo & "' And Enviar = 0 And Enviado = 0 And Intentos <= 2"
         _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
-        '_Nombre_Equipo = "JALFARO-MSI"
+        '_Nombre_Equipo = "VILLAR_CLOUD"
 
         Consulta_Sql = "Select Top " & CantMmail & " *,Isnull(NOKOFU,'Funcionario?????') As 'Nombre_Funcionario'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo" & vbCrLf &
@@ -294,6 +294,12 @@ Public Class Cl_Correos
         '               "Order By Intentos, Id"
 
         _Tbl_Correos = _Sql.Fx_Get_Tablas(Consulta_Sql)
+
+        'Dim fic As String = AppPath(True) & "Log_Bk.txt"
+
+        'Dim sw As New System.IO.StreamWriter(fic)
+        'sw.WriteLine(Consulta_Sql)
+        'sw.Close()
 
 
         _Lbl_Estado = "Creando correos para envio..."
@@ -336,6 +342,10 @@ Public Class Cl_Correos
                 Dim _Id_Acp = _Fila.Item("Id_Acp")
 
 
+                If _Adjuntar_DTE And (_Tido = "COV" Or _Tido = "NVV") Then
+                    _Adjuntar_DTE = False
+                End If
+
                 Dim _Existe_File
 
                 Dim _Enviar_Correo = True
@@ -362,7 +372,7 @@ Public Class Cl_Correos
                     If IsNothing(_Row_Documento) Then
 
                         _Error += "No se encontro el documento " & _Tido & "-" & _Nudo & " (IDMAEEDO: " & _IdMaeedo & ")"
-                        _Intentos = 3
+                        _Intentos = 4
 
                     Else
 
@@ -372,9 +382,11 @@ Public Class Cl_Correos
                         Dim _Esdo = _Row_Documento.Item("ESDO")
                         If _Esdo = "N" Then
                             _Error += "El documento " & _Tido & "-" & _Nudo & " esta NULO"
+                            _Intentos = 4
                         Else
                             If _Row_Documento.Item("TIDO") <> _Tido Or _Row_Documento.Item("NUDO") <> _Nudo Then
                                 _Error += "El documento " & _Tido & "-" & _Nudo & " no pertenece al IDMAEEDO " & _IdMaeedo
+                                _Intentos = 4
                             End If
                         End If
 
@@ -388,6 +400,7 @@ Public Class Cl_Correos
 
                     Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo Set" & Space(1) &
                                    "Enviar = 0," &
+                                   "Intentos = 4," &
                                    "Fecha_Envio = Getdate()," &
                                    "Informacion = '" & _Error & "'" & vbCrLf &
                                    "Where Id = " & _Id

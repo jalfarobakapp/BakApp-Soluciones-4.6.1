@@ -1,0 +1,10 @@
+<?xml version="1.0" standalone="yes"?>
+<Ds_Conexion_Web xmlns="http://tempuri.org/Ds_Conexion_Web.xsd">
+  <Tbl_Conexion_Web>
+    <Servidor>72.55.183.145</Servidor>
+    <Puerto />
+    <Usuario>tusuzuki_admin</Usuario>
+    <Clave>rxkpg^#sL5kb</Clave>
+    <Base_De_Datos>tusuzuki_bd</Base_De_Datos>
+  </Tbl_Conexion_Web>
+</Ds_Conexion_Web>

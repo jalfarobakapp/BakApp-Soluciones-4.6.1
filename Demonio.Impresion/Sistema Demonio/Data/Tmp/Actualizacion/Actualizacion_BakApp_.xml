@@ -1,0 +1,16 @@
+<?xml version="1.0" standalone="yes"?>
+<Ds_Actualizacion_BakApp xmlns="http://tempuri.org/Ds_Actualizacion_BakApp.xsd">
+  <Tbl_Actualizacion>
+    <Version_Actual>3.0.3.1</Version_Actual>
+    <Ftp_Host>ftp.bakapp.cl</Ftp_Host>
+    <Ftp_Puerto>21</Ftp_Puerto>
+    <Ftp_Usuario>clicone@bakapp.cl</Ftp_Usuario>
+    <Ftp_Contrasena>clicone12.,</Ftp_Contrasena>
+    <Ftp_Direcctorio_Archivos>ftp://ftp.bakapp.cl:21/BakApp/Agrorama/Version Actual</Ftp_Direcctorio_Archivos>
+    <Desde_FTP>true</Desde_FTP>
+    <Desde_Directorio>false</Desde_Directorio>
+    <Directorio>..</Directorio>
+    <Descargar_Version_Automaticamente>true</Descargar_Version_Automaticamente>
+    <Url_Descarga>http://www.bakapp.cl/Descargas/BakApp/Agrorama/Version Actual</Url_Descarga>
+  </Tbl_Actualizacion>
+</Ds_Actualizacion_BakApp>

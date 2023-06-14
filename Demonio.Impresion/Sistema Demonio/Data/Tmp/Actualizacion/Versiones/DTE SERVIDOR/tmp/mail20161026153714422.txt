@@ -1,0 +1,111 @@
+Return-Path: <siidte_error@sii.cl>
+Delivered-To: notificacionsii@sirrep.cl
+Received: from srv150.tuhosting.cl
+	by srv150.tuhosting.cl (Dovecot) with LMTP id rm3OCfTCD1jfAQUAqFaw+A
+	for <notificacionsii@sirrep.cl>; Tue, 25 Oct 2016 17:39:23 -0300
+Return-path: <siidte_error@sii.cl>
+Received: from rapel12.sii.cl ([200.10.251.90] helo=mailin02.sii.cl)
+	by srv150.tuhosting.cl with esmtp (Exim 4.86)
+	(envelope-from <siidte_error@sii.cl>)
+	id 1bz8VH-001NXo-BG
+	for notificacionsii@sirrep.cl; Tue, 25 Oct 2016 17:39:23 -0300
+X-IronPort-AV: E=Sophos;i="5.22,559,1449543600"; 
+   d="xml'?txt'?scan'208";a="628326429"
+Received: from dte.sii.cl (HELO dte) ([146.20.1.104])
+  by mailout02.sii.cl with ESMTP; 25 Oct 2016 18:39:40 -0300
+Message-ID: <10516488.1477431718358.JavaMail.root@dte>
+Date: Tue, 25 Oct 2016 18:41:58 -0300 (CLST)
+From: siidte_error@sii.cl
+To: notificacionsii@sirrep.cl
+Subject: Produccion - Resultado de Revision Envio 1781115296 - 79514800-0
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_5063_31826127.1477431718358"
+
+------=_Part_5063_31826127.1477431718358
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+SII de Chile - Validacion de DTE
+================================
+
+En el archivo adjunto esta el resultado del proceso de revision y validacion
+del envio de Documentos Tributarios Electronicos realizado por su empresa al
+Servicio de Impuestos Internos de Chile.
+
+----------------------------------------------------------------------------
+
+Este es una aplicacion automatica. No conteste este correo ni haga 
+consultas o comentarios a la direccion de origen.
+
+Este texto no tiene acentos ni caracteres especiales para un despliegue 
+mas claro en cualquier aplicacion.
+
+
+------=_Part_5063_31826127.1477431718358
+Content-Type: text/plain; name=DTEMAIL1781115296.txt
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL1781115296.txt
+
+Resultado de Validacion de Envio de DTE
+=======================================
+
+Rut de Empresa Emisora   : 79514800-0
+Rut que Realizo el Envio : 12628844-1
+Identificador de Envio   : 1781115296
+Fecha de Recepcion       : 25/10/2016 18:01:00
+Estado del Envio         : EPR - Envio Procesado
+
+Estadisticas del Envio
+======================
+Tipo DTE  Informados  Rechazos  Reparos  Aceptados
+--------------------------------------------------
+   61              1         1        0          0
+
+Detalle de Rechazos y Reparos de DTE
+====================================
+
+ Folio       Tipo  Estado
+ ------------------------------------------------------------------------------
+ 12213        61   RCH - DTE Rechazado
+     (REF L[1] -3-821) Folio de Referencia NO puede ser 0
+     (CAF-2-517) REPARO-Fecha CAF Antiguo (RECHAZO a partir del 01.07.2017) : (Firma_DTE[2016-10-25] - CAF[2014-12-22]) > 18 meses
+     (TED-1-647) Fecha Timbre Fuera de Rango Permitido : FT[2016-10-25T21:00:46] : FE[2015-02-04]
+
+
+------=_Part_5063_31826127.1477431718358
+Content-Type: application/octet-stream; name=DTEMAIL1781115296.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=DTEMAIL1781115296.xml
+
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<RESULTADO_ENVIO>
+ <IDENTIFICACION>
+  <RUTEMISOR>79514800-0</RUTEMISOR>
+  <RUTENVIA>12628844-1</RUTENVIA>
+  <TRACKID>1781115296</TRACKID>
+  <TMSTRECEPCION>25/10/2016 18:01:00</TMSTRECEPCION>
+  <ESTADO>EPR - Envio Procesado</ESTADO>
+ </IDENTIFICACION>
+ <ESTADISTICA>
+  <SUBTOTAL>
+   <TIPODOC>61</TIPODOC>
+   <INFORMADO>1</INFORMADO>
+   <RECHAZO>1</RECHAZO>
+  </SUBTOTAL>
+ </ESTADISTICA>
+ <REVISIONENVIO>
+  <REVISIONDTE>
+   <FOLIO>12213</FOLIO>
+   <TIPODTE>61</TIPODTE>
+   <ESTADO>RCH - DTE Rechazado</ESTADO>
+   <DETALLE>(REF L[1] -3-821) Folio de Referencia NO puede ser 0</DETALLE>
+   <DETALLE>(CAF-2-517) REPARO-Fecha CAF Antiguo (RECHAZO a partir del 01.07.2017) : (Firma_DTE[2016-10-25] - CAF[2014-12-22]) &gt; 18 meses</DETALLE>
+   <DETALLE>(TED-1-647) Fecha Timbre Fuera de Rango Permitido : FT[2016-10-25T21:00:46] : FE[2015-02-04]</DETALLE>
+  </REVISIONDTE>
+ </REVISIONENVIO>
+</RESULTADO_ENVIO>
+
+------=_Part_5063_31826127.1477431718358--
+

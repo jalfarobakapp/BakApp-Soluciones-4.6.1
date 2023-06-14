@@ -47,6 +47,21 @@ Module Modulo_Demonio
             Fx_Ejecutar_Demonio2(Frm_Menu, _Mostrar_Mensaje)
         End If
 
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+        Dim Consulta_sql As String
+
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Tmp_Prm_Informes" & vbCrLf &
+                       "Where NombreEquipo = '" & _NombreEquipo & "' And Informe = 'Demonio_Impresion' And Campo = 'Chk_Ejecutar_Automaticamente'"
+        Dim _RowDemonio As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not IsNothing(_RowDemonio) Then
+            If _RowDemonio.Item("Valor") = "True" Then
+                Fx_Ejecutar_Demonio_Impresion(Frm_Menu, _Mostrar_Mensaje)
+            End If
+        End If
+
         'Fx_Ejecutar_Demonio(Frm_Menu, _Mostrar_Mensaje)
 
     End Sub
@@ -83,6 +98,47 @@ Module Modulo_Demonio
 
                 MessageBoxEx.Show(Formulario,
                         "No se encontro el archivo BakApp_Demonio.exe en el directorio (" & Application.StartupPath & ")",
+                        "Demonio", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return False
+
+            End If
+
+        End If
+
+    End Function
+
+    Function Fx_Ejecutar_Demonio_Impresion(Formulario As Form, _Mostrar_Mensaje As Boolean) As Boolean
+
+        Dim ejecutando As Process() = Process.GetProcessesByName(_Global_Nombre_BakApp_Demonio_Impresion)
+
+        If ejecutando.Length > 0 Then
+
+            If _Mostrar_Mensaje Then
+                MessageBoxEx.Show(Formulario, "la aplicación se está ejecutando" & vbCrLf & "revise la barra de tareas",
+                              "Demonio BakApp Impresión", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End If
+
+            Return False
+
+        Else
+
+            If System.IO.File.Exists(Application.StartupPath & "\" & _Global_Nombre_BakApp_Demonio_Impresion & ".exe") Then
+
+                Dim _Cadena_ConexionSQL_Server_Actual As String = Replace(Cadena_ConexionSQL_Server, " ", "@")
+                Dim _Ejecutar As String = Application.StartupPath & "\BakApp_Demonio_Impresion.exe" & Space(1) & _Cadena_ConexionSQL_Server_Actual
+
+                Try
+                    Shell(_Ejecutar, AppWinStyle.NormalFocus, False)
+                    Return True
+                Catch ex As Exception
+                    MessageBoxEx.Show(Formulario,
+                        ex.Message, "Demonio", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                End Try
+
+            Else
+
+                MessageBoxEx.Show(Formulario,
+                        "No se encontro el archivo BakApp_Demonio_Impresion.exe en el directorio (" & Application.StartupPath & ")",
                         "Demonio", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return False
 

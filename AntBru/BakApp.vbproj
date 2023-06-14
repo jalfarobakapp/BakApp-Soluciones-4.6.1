@@ -374,6 +374,12 @@
     <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\CRV Control Ruta Vehiculos\CRV_Control_Ruta_Vehiculos.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Demonios\Demonios.Designer.vb">
+      <DependentUpon>Demonios.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Demonios\Demonios.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Factura Electronica\Factura_Electronica.Designer.vb">
       <DependentUpon>Factura_Electronica.vb</DependentUpon>
     </Compile>
@@ -643,6 +649,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\CRV Control Ruta Vehiculos\CRV_Control_Ruta_Vehiculos.resx">
       <DependentUpon>CRV_Control_Ruta_Vehiculos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Demonios\Demonios.resx">
+      <DependentUpon>Demonios.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Factura Electronica\Factura_Electronica.resx">
       <DependentUpon>Factura_Electronica.vb</DependentUpon>
