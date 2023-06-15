@@ -275,6 +275,7 @@ Partial Class Frm_Demonio_ConfProgramacion
         Me.Dtp_FinalizaCada.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Dtp_FinalizaCada.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
         Me.Dtp_FinalizaCada.ButtonDropDown.Visible = True
+        Me.Dtp_FinalizaCada.Enabled = False
         Me.Dtp_FinalizaCada.ForeColor = System.Drawing.Color.Black
         Me.Dtp_FinalizaCada.Format = DevComponents.Editors.eDateTimePickerFormat.ShortTime
         Me.Dtp_FinalizaCada.IsPopupCalendarOpen = False
@@ -319,6 +320,7 @@ Partial Class Frm_Demonio_ConfProgramacion
         Me.Dtp_FinalizaCada.TabIndex = 135
         Me.Dtp_FinalizaCada.TabStop = False
         Me.Dtp_FinalizaCada.Value = New Date(2018, 11, 5, 23, 59, 0, 0)
+        Me.Dtp_FinalizaCada.Visible = False
         Me.Dtp_FinalizaCada.WatermarkAlignment = DevComponents.Editors.eTextAlignment.Center
         '
         'Dtp_ApartirDeCada
@@ -331,6 +333,7 @@ Partial Class Frm_Demonio_ConfProgramacion
         Me.Dtp_ApartirDeCada.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Dtp_ApartirDeCada.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
         Me.Dtp_ApartirDeCada.ButtonDropDown.Visible = True
+        Me.Dtp_ApartirDeCada.Enabled = False
         Me.Dtp_ApartirDeCada.ForeColor = System.Drawing.Color.Black
         Me.Dtp_ApartirDeCada.Format = DevComponents.Editors.eDateTimePickerFormat.ShortTime
         Me.Dtp_ApartirDeCada.IsPopupCalendarOpen = False
@@ -375,6 +378,7 @@ Partial Class Frm_Demonio_ConfProgramacion
         Me.Dtp_ApartirDeCada.TabIndex = 134
         Me.Dtp_ApartirDeCada.TabStop = False
         Me.Dtp_ApartirDeCada.Value = New Date(2018, 11, 5, 0, 0, 0, 0)
+        Me.Dtp_ApartirDeCada.Visible = False
         Me.Dtp_ApartirDeCada.WatermarkAlignment = DevComponents.Editors.eTextAlignment.Center
         '
         'LabelX2
@@ -384,12 +388,14 @@ Partial Class Frm_Demonio_ConfProgramacion
         '
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX2.Enabled = False
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
         Me.LabelX2.Location = New System.Drawing.Point(322, 66)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(83, 19)
         Me.LabelX2.TabIndex = 133
         Me.LabelX2.Text = "Finaliza:"
+        Me.LabelX2.Visible = False
         '
         'LabelX1
         '
@@ -398,12 +404,14 @@ Partial Class Frm_Demonio_ConfProgramacion
         '
         '
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.Enabled = False
         Me.LabelX1.ForeColor = System.Drawing.Color.Black
         Me.LabelX1.Location = New System.Drawing.Point(322, 37)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(83, 19)
         Me.LabelX1.TabIndex = 132
         Me.LabelX1.Text = "A partir de:"
+        Me.LabelX1.Visible = False
         '
         'Cmb_TipoIntervaloCada
         '
@@ -641,7 +649,6 @@ Partial Class Frm_Demonio_ConfProgramacion
         'Grupo_Resumen
         '
         Me.Grupo_Resumen.BackColor = System.Drawing.Color.White
-        Me.Grupo_Resumen.CanvasColor = System.Drawing.SystemColors.Control
         Me.Grupo_Resumen.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.Grupo_Resumen.Controls.Add(Me.Txt_Resumen)
         Me.Grupo_Resumen.DisabledBackColor = System.Drawing.Color.Empty

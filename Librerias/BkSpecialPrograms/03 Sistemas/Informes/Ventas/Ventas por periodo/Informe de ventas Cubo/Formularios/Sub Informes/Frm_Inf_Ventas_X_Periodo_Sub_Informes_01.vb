@@ -686,12 +686,17 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
 
         _Endo = _Sql.Fx_Trae_Dato("MAEEDO", "ENDO", "IDMAEEDO = " & _Idmaeedo)
 
-        Dim _Tipotransa As String = _Sql.Fx_Trae_Dato("TABTIDO", "TIPOTRANSA", "TIDO = '" & _Tido & "'")
+        Dim _Tipotransa As String
 
-        If _Tipotransa = "C" Then
-            Fm_Producto.Sb_Ver_Informacion_Adicional_producto(Me, _Codigo, _Endo, Frm_BkpPostBusquedaEspecial_Mt.Tipo_Doc.Compra)
-        ElseIf _Tipotransa = "V" Then
-            Fm_Producto.Sb_Ver_Informacion_Adicional_producto(Me, _Codigo, _Endo, Frm_BkpPostBusquedaEspecial_Mt.Tipo_Doc.Venta)
+        If _Sql.Fx_Exite_Campo("TABTIDO", "TIPOTRANSA") Then
+            _Tipotransa = _Sql.Fx_Trae_Dato("TABTIDO", "TIPOTRANSA", "TIDO = '" & _Tido & "'")
+            If _Tipotransa = "C" Then
+                Fm_Producto.Sb_Ver_Informacion_Adicional_producto(Me, _Codigo, _Endo, Frm_BkpPostBusquedaEspecial_Mt.Tipo_Doc.Compra)
+            ElseIf _Tipotransa = "V" Then
+                Fm_Producto.Sb_Ver_Informacion_Adicional_producto(Me, _Codigo, _Endo, Frm_BkpPostBusquedaEspecial_Mt.Tipo_Doc.Venta)
+            Else
+                Fm_Producto.Sb_Ver_Informacion_Adicional_producto(Me, _Codigo)
+            End If
         Else
             Fm_Producto.Sb_Ver_Informacion_Adicional_producto(Me, _Codigo)
         End If

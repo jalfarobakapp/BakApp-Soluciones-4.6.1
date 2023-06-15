@@ -16988,7 +16988,7 @@ Public Class Frm_Formulario_Documento
 
                 End If
 
-                If _Tido = "NCV" And _Tido_Origen = "BLV" Then
+                If (_Tido = "NCV" Or _Tido = "GRD") And _Tido_Origen = "BLV" Then
                     If _Merardo_Ori = "B" And ChkValores.Checked Then
                         _DescuentoPorc = 0
                     End If
@@ -17288,9 +17288,11 @@ Public Class Frm_Formulario_Documento
 
                         _Total_Campo = _Caprco1 - (_Caprex1 + _Caprad1)
 
-                        If _Tido = "GRD" Then _Total_Campo = _Caprco1 - _Caprex1
+                        If _Tido = "GRD" And _Tidopa <> "BLV" Then
+                            _Total_Campo = _Caprco1 - _Caprex1
+                        End If
 
-                        If _Tidopa = "BLV" And _Tido = "NCV" Then
+                        If _Tidopa = "BLV" And (_Tido = "NCV" Or _Tido = "GRD") Then
 
                             _Total_Campo = _Fila.Item("VADTBRLI")
                             Dim _ImpuestosLinea As Double = 1 + ((_Fila.Item("POIVLI") + _Fila.Item("POIMGLLI")) / 100)
@@ -17586,7 +17588,7 @@ Public Class Frm_Formulario_Documento
                 End If
             End If
 
-            If _Tido <> "NCV" Then
+            If _Tido <> "NCV" And _Tido <> "GRD" Then
                 Sb_Recalcular_Descuentos(_Filad, False, False)
             End If
 

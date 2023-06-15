@@ -260,12 +260,12 @@ Partial Class Frm_Demonio_New
         'ColumnHeader4
         '
         Me.ColumnHeader4.Text = "Descripción"
-        Me.ColumnHeader4.Width = 150
+        Me.ColumnHeader4.Width = 223
         '
         'ColumnHeader5
         '
         Me.ColumnHeader5.Text = "Programación"
-        Me.ColumnHeader5.Width = 600
+        Me.ColumnHeader5.Width = 500
         '
         'Imagenes_16X16
         '

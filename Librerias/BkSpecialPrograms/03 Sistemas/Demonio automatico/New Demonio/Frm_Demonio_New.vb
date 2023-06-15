@@ -35,8 +35,6 @@ Public Class Frm_Demonio_New
 
         Sb_Load()
 
-
-
     End Sub
 
     Sub Sb_Load()

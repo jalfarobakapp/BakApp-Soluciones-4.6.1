@@ -184,6 +184,8 @@ Public Class Frm_Demonio_01
     Dim _Directorio = AppPath() & "\Data\" & RutEmpresa & "\Tmp"
     Dim _Dir_Correo_Imagenes = _Directorio & "\Correo\Imagenes"
 
+    Private _Timer_HH1 As Timer
+
     Public ReadOnly Property Pro_Minimizar As Boolean
         Get
             Return _Minimizar
@@ -303,6 +305,8 @@ Public Class Frm_Demonio_01
         Lbl_Estatus.Text = "Empresa: " & ModEmpresa & ", Modalidad: " & Modalidad & ", Usuario: " & FUNCIONARIO & ", Equipo: " & _Nombre_Equipo
 
         Sb_Color_Botones_Barra(Bar1)
+
+        Sb_Programar_Timer()
 
     End Sub
 
@@ -1342,6 +1346,14 @@ Public Class Frm_Demonio_01
                 DtpFecharevision.Value = FechaDelServidor()
             End If
         End If
+
+        Dim horaProgramada As DateTime = DateTime.Today.Add(New TimeSpan(17, 60, 0))
+        ' Calcular el tiempo restante hasta la hora programada
+        Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
+
+        Dim _TiempoRestante As String = tiempoRestante.Hours & ":" & tiempoRestante.Minutes & ":" & tiempoRestante.Seconds
+
+        Lbl_Hora_AsisCompra.Text = _TiempoRestante
 
         Lbl_Segundos_FacAuto.Visible = Switch_FacAuto.Value
 
@@ -4670,6 +4682,44 @@ Fin:
         Sb_Pausar(_Pausa.Pausa)
 
     End Sub
+
+    Sub Sb_Programar_Timer()
+        ' Establecer la hora programada para la tarea (ejemplo: 14:30)
+        Dim horaProgramada As DateTime = DateTime.Today.Add(New TimeSpan(17, 60, 0))
+
+        ' Calcular el tiempo restante hasta la hora programada
+        Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
+
+        If tiempoRestante.TotalMilliseconds < 0 Then
+            ' La hora programada ya ha pasado
+            Console.WriteLine("La hora programada ya ha pasado.")
+            Return
+        End If
+
+        ' Crear un temporizador con el tiempo restante como intervalo
+        _Timer_HH1 = New Timer(AddressOf EjecutarTarea, Nothing, tiempoRestante, Timeout.InfiniteTimeSpan)
+
+        ' Mantener el programa en ejecución
+        Console.ReadLine()
+    End Sub
+
+    Sub EjecutarTarea(state As Object)
+        ' Aquí puedes colocar el código de la tarea que deseas ejecutar
+        Console.WriteLine("¡Tarea ejecutada!")
+
+        ' Reiniciar el temporizador para la próxima ejecución
+        Dim diaSemanaProgramado As DayOfWeek = DayOfWeek.Thursday ' Establecer el día de la semana programado
+        Dim horaProgramada As TimeSpan = New TimeSpan(17, 60, 0) ' Establecer la hora programada
+        Dim tiempoRestante As TimeSpan = SiguienteDiaProgramado(diaSemanaProgramado, horaProgramada) - DateTime.Now
+        _Timer_HH1.Change(tiempoRestante, Timeout.InfiniteTimeSpan)
+    End Sub
+
+    Function SiguienteDiaProgramado(diaSemanaProgramado As DayOfWeek, horaProgramada As TimeSpan) As DateTime
+        Dim fechaActual As DateTime = DateTime.Now.Date
+        Dim siguienteDia As Integer = (diaSemanaProgramado - fechaActual.DayOfWeek + 7) Mod 7
+        Dim fechaProgramada As DateTime = fechaActual.AddDays(siguienteDia).Date.Add(horaProgramada)
+        Return fechaProgramada
+    End Function
 
 
 End Class
