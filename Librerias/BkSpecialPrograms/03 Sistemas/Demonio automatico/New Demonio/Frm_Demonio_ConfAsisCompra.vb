@@ -43,11 +43,11 @@ Public Class Frm_Demonio_ConfAsisCompra
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_ConfAcpAuto Where Id = " & _Id
         _Row_Configuracion = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Dim _Arr_Tido(,) As String = {{"", ""}, {"NVI", "NVI - Nota de venta interna"},
-                                     {"OC1", "OCC - Orden de compra proveedor estrella"},
-                                     {"OC2", "OCC - Orden de compra proveedor regular"}}
-        Sb_Llenar_Combos(_Arr_Tido, Cmb_Tido)
-        Cmb_Tido.SelectedValue = ""
+        'Dim _Arr_Tido(,) As String = {{"", ""}, {"NVI", "NVI - Nota de venta interna"},
+        '                             {"OC1", "OCC - Orden de compra proveedor estrella"},
+        '                             {"OC2", "OCC - Orden de compra proveedor regular"}}
+        'Sb_Llenar_Combos(_Arr_Tido, Cmb_Tido)
+        'Cmb_Tido.SelectedValue = ""
 
     End Sub
 
@@ -55,7 +55,10 @@ Public Class Frm_Demonio_ConfAsisCompra
 
         If Not IsNothing(_Row_Configuracion) Then
             Txt_Modalidad.Text = _Row_Configuracion.Item("Modalidad")
-            Cmb_Tido.SelectedValue = _Row_Configuracion.Item("Tido")
+            'Cmb_Tido.SelectedValue = _Row_Configuracion.Item("Tido")
+            Chk_NVI.Checked = _Row_Configuracion.Item("NVI")
+            Chk_OCC_Star.Checked = _Row_Configuracion.Item("OCC_Star")
+            Chk_OCC_Prov.Checked = _Row_Configuracion.Item("OCC_Prov")
         End If
 
         If Not CBool(_Id) Then
@@ -71,7 +74,7 @@ Public Class Frm_Demonio_ConfAsisCompra
 
         Btn_Eliminar.Visible = CBool(_Id)
         Txt_Modalidad.Enabled = Not CBool(_Id)
-        Cmb_Tido.Enabled = Not CBool(_Id)
+        'Cmb_Tido.Enabled = Not CBool(_Id)
 
     End Sub
 
@@ -84,17 +87,20 @@ Public Class Frm_Demonio_ConfAsisCompra
             Return
         End If
 
-        If String.IsNullOrEmpty(Cmb_Tido.SelectedValue) Then
+        If Not Chk_NVI.Checked And Not Chk_OCC_Star.Checked And Not Chk_OCC_Prov.Checked Then
             MessageBoxEx.Show(Me, "Falta el tipo de documento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
         If Not CBool(_Id) Then
             Dim _Id_Existe As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_ConfAcpAuto", "Id",
-                                    "NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Txt_Modalidad.Text & "' And Tido = '" & Cmb_Tido.SelectedValue & "'", True)
+                                    "NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Txt_Modalidad.Text & "'" &
+                                    " And NVI = " & Convert.ToInt32(Chk_NVI.Checked) &
+                                    " And OCC_Star = " & Convert.ToInt32(Chk_OCC_Star.Checked) &
+                                    " And OCC_Prov = " & Convert.ToInt32(Chk_OCC_Prov.Checked), True)
 
             If CBool(_Id_Existe) Then
-                MessageBoxEx.Show(Me, "Ya existe una programación para esta modalidad y documento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "Ya existe una programación para esta modalidad y combinación de documentos", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
             End If
         End If
@@ -106,8 +112,9 @@ Public Class Frm_Demonio_ConfAsisCompra
 
         If Not CBool(_Id) Then
 
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_ConfAcpAuto (NombreEquipo,Modalidad,Tido) Values " &
-               "('" & _NombreEquipo & "','" & Txt_Modalidad.Text & "','" & Cmb_Tido.SelectedValue & "')"
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_ConfAcpAuto (NombreEquipo,Modalidad,NVI,OCC_Star,OCC_Prov) Values " &
+               "('" & _NombreEquipo & "','" & Txt_Modalidad.Text & "'" &
+               "," & Convert.ToInt32(Chk_NVI.Checked) & "," & Convert.ToInt32(Chk_OCC_Star.Checked) & "," & Convert.ToInt32(Chk_OCC_Prov.Checked) & ")"
             _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id)
 
             _Programacion.Tbl_Padre = "AcoAuto"

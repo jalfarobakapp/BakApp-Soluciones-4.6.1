@@ -930,6 +930,12 @@ Public Class Frm_00_Asis_Compra_Menu
         _Sql.Sb_Parametro_Informe_Sql(Input_DiasMarcarProvQueNoTiene, "Compras_Asistente",
                                       Input_DiasMarcarProvQueNoTiene.Name, Class_SQLite.Enum_Type._Double, Input_DiasMarcarProvQueNoTiene.Value, _Actualizar)
 
+        ' Observaciones para despachar
+        _Sql.Sb_Parametro_Informe_Sql(Txt_DespacharA_OCC, "Compras_Asistente",
+                                      Txt_DespacharA_OCC.Name, Class_SQLite.Enum_Type._String, Txt_DespacharA_OCC.Text, _Actualizar)
+
+
+
     End Sub
 
     'Sub Sb_Actualizar_Revisar_Sqlite()
@@ -2304,6 +2310,7 @@ Public Class Frm_00_Asis_Compra_Menu
             Fm.Auto_Id_CorreoProveedoresSinStock = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Id", "Nombre_Correo = '" & Txt_CtaCorreoAvisoProveedoresSinStock.Text & "'")
             Fm.Auto_EnviarListadoProveedoresSinStock = Chk_EnviarListadoProveedoresSinStock.Checked
             Fm.Input_DiasMarcarProvQueNoTiene = Input_DiasMarcarProvQueNoTiene.Value
+            Fm.Auto_DespacharA_OCC = Txt_DespacharA_OCC.Text
         End If
 
         Fm.Modo_OCC = Modo_OCC

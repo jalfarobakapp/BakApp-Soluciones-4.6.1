@@ -761,15 +761,16 @@ Public Class Menu
 
     Private Sub ButtonItem1_Click(sender As Object, e As EventArgs) Handles ButtonItem1.Click
 
+        Dim _Id As Integer = _Global_Row_EstacionBk.Item("Id")
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
-        Dim _Id_Prog As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_ConfXEstacion", "Id", "NombreEquipo = '" & _NombreEquipo & "'", True)
+        'Dim _Id_Prog As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_ConfXEstacion", "Id", "NombreEquipo = '" & _NombreEquipo & "'", True)
 
-        If Not CBool(_Id_Prog) Then
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_ConfXEstacion (NombreEquipo) Values ('" & _NombreEquipo & "')"
-            _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Prog)
-        End If
+        'If Not CBool(_Id_Prog) Then
+        '    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_ConfXEstacion (NombreEquipo) Values ('" & _NombreEquipo & "')"
+        '    _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Prog)
+        'End If
 
-        Dim Fm As New Frm_Demonio_Configuraciones(_Id_Prog, FUNCIONARIO)
+        Dim Fm As New Frm_Demonio_Configuraciones(_Id, FUNCIONARIO)
         Fm.ShowDialog(_Fm_Menu_Padre)
         Fm.Dispose()
 

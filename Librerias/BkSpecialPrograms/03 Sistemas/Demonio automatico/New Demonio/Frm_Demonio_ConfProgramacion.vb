@@ -7,6 +7,10 @@ Public Class Frm_Demonio_ConfProgramacion
     Public Property Programacion As Cl_NewProgramacion
     Public Property Grabar As Boolean
 
+    Public Property TISegundos As Boolean
+    Public Property TIMinutos As Boolean
+    Public Property TIHoras As Boolean
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -14,13 +18,27 @@ Public Class Frm_Demonio_ConfProgramacion
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
+        TISegundos = True
+        TIMinutos = True
+        TIHoras = True
+
         Dim _Arr_Tido(,) As String = {{"", ""}, {"HH", "Hora"}, {"MM", "Minutos"}, {"SS", "Segundos"}}
+        Sb_Cargar_Combo_Intervalo(_Arr_Tido, "")
+
+    End Sub
+
+    Public Sub Sb_Cargar_Combo_Intervalo(_Arr_Tido(,) As String, _ValorDefecto As String)
+
         Sb_Llenar_Combos(_Arr_Tido, Cmb_TipoIntervaloCada)
-        Cmb_TipoIntervaloCada.SelectedValue = ""
+        Cmb_TipoIntervaloCada.SelectedValue = _ValorDefecto
 
     End Sub
 
     Private Sub Frm_Demonio_ConfProgramacion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        If TISegundos Then Cmb_TipoIntervaloCada.SelectedValue = "SS"
+        If TIMinutos Then Cmb_TipoIntervaloCada.SelectedValue = "MM"
+        If TIHoras Then Cmb_TipoIntervaloCada.SelectedValue = "HH"
 
         If IsNothing(Programacion) Then
             Programacion = New Cl_NewProgramacion
@@ -43,6 +61,14 @@ Public Class Frm_Demonio_ConfProgramacion
 
         Rdb_SucedeUnaVez.Checked = Programacion.SucedeUnaVez
         Rdb_SucedeCada.Checked = Programacion.SucedeCada
+
+        If Not Rdb_SucedeCada.Enabled And Rdb_SucedeUnaVez.Enabled Then
+            Rdb_SucedeUnaVez.Checked = True
+        End If
+
+        If Rdb_SucedeCada.Enabled And Not Rdb_SucedeUnaVez.Enabled Then
+            Rdb_SucedeCada.Checked = True
+        End If
 
         Input_IntervaloCada.Value = Programacion.IntervaloCada
         Cmb_TipoIntervaloCada.SelectedValue = NuloPorNro(Programacion.TipoIntervaloCada, "")
@@ -80,6 +106,9 @@ Public Class Frm_Demonio_ConfProgramacion
 
         Input_IntervaloCada.Enabled = Rdb_SucedeCada.Checked
         Cmb_TipoIntervaloCada.Enabled = Rdb_SucedeCada.Checked
+
+
+
         LabelX1.Enabled = Rdb_SucedeCada.Checked
         LabelX2.Enabled = Rdb_SucedeCada.Checked
         Dtp_ApartirDeCada.Enabled = Rdb_SucedeCada.Checked
@@ -88,6 +117,25 @@ Public Class Frm_Demonio_ConfProgramacion
     End Sub
 
     Private Sub BtnGrabar_Click(sender As Object, e As EventArgs) Handles BtnGrabar.Click
+
+        If Rdb_SucedeCada.Checked Then
+            If String.IsNullOrEmpty(Cmb_TipoIntervaloCada.SelectedValue) Then
+                MessageBoxEx.Show(Me, "Falta el tipo de intervalo: Horas, Minutos o Segundos", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+        End If
+
+        If Rdb_FrecuSemanal.Checked And
+            (Not Chk_Lunes.Checked And
+             Not Chk_Martes.Checked And
+             Not Chk_Miercoles.Checked And
+             Not Chk_Jueves.Checked And
+             Not Chk_Viernes.Checked And
+             Not Chk_Sabado.Checked And
+             Not Chk_Domingo.Checked) Then
+            MessageBoxEx.Show(Me, "Debe seleccionar por lo menos un día de la semana", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Programacion.Nombre = Txt_Nombre.Text
         Programacion.FrecuDiaria = Rdb_FrecuDiaria.Checked
@@ -164,7 +212,7 @@ Public Class Frm_Demonio_ConfProgramacion
         End If
 
         If Rdb_SucedeUnaVez.Checked Then _Sucede += "a las " & Dtp_HoraUnaVez.Value.ToShortTimeString & " "
-        If Rdb_SucedeCada.Checked Then _Sucede += "cada " & Input_IntervaloCada.Value & " " & Cmb_TipoIntervaloCada.Text.ToLower & " entre las " & Dtp_ApartirDeCada.Value.ToShortTimeString & " y las " & Dtp_FinalizaCada.Value.ToShortTimeString
+        If Rdb_SucedeCada.Checked Then _Sucede += "cada " & Input_IntervaloCada.Value & " " & Cmb_TipoIntervaloCada.Text.ToLower '& " entre las " & Dtp_ApartirDeCada.Value.ToShortTimeString & " y las " & Dtp_FinalizaCada.Value.ToShortTimeString
 
         Txt_Resumen.Text = _Sucede
 

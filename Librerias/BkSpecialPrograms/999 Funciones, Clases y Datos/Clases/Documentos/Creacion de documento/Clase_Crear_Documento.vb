@@ -461,10 +461,7 @@ Public Class Clase_Crear_Documento
                         _Tipr = .Item("Tipr")
                         _Lincondesp = .Item("Lincondest")
 
-
-                        If _Prct Then
-                            _Lincondesp = True
-                        End If
+                        'If _Prct Then _Lincondesp = True
 
                         _Tidopa = .Item("Tidopa")
 
@@ -623,9 +620,9 @@ Public Class Clase_Crear_Documento
                                 _Ppprpm = 0
                                 _Ppprmsuc = 0
                                 _Ppprpmifrs = 0
-                                _Lincondesp = False
+                                '_Lincondesp = False
                                 _Nudtli = 0
-                                _Eslido = String.Empty
+                                _Eslido = "C" 'String.Empty
 
                             End If
 
@@ -754,53 +751,53 @@ Public Class Clase_Crear_Documento
 
                             If _Lincondesp And Not _Tidopa.Contains("G") Or _Tido = "GRI" Then
 
-                                    Consulta_sql = "Insert Into MAEST (EMPRESA,KOSU,KOBO,KOPR)" & vbCrLf &
-                                               "Select '" & _Empresa & "','" & _Sulido & "','" & _Bosulido & "','" & _Koprct & "'" & vbCrLf &
-                                               "From MAEPR" & vbCrLf &
-                                               "Where KOPR Not In (Select KOPR From MAEST" & Space(1) &
-                                               "Where EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sulido & "' And KOBO = '" & _Bosulido & "' And" & Space(1) &
-                                               "KOPR = '" & _Koprct & "') And KOPR = '" & _Koprct & "'"
-                                    Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                                    Comando.Transaction = myTrans
-                                    Comando.ExecuteNonQuery()
+                                Consulta_sql = "Insert Into MAEST (EMPRESA,KOSU,KOBO,KOPR)" & vbCrLf &
+                                           "Select '" & _Empresa & "','" & _Sulido & "','" & _Bosulido & "','" & _Koprct & "'" & vbCrLf &
+                                           "From MAEPR" & vbCrLf &
+                                           "Where KOPR Not In (Select KOPR From MAEST" & Space(1) &
+                                           "Where EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sulido & "' And KOBO = '" & _Bosulido & "' And" & Space(1) &
+                                           "KOPR = '" & _Koprct & "') And KOPR = '" & _Koprct & "'"
+                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                Comando.Transaction = myTrans
+                                Comando.ExecuteNonQuery()
 
-                                    Consulta_sql = "UPDATE MAEPREM SET" & vbCrLf &
-                                               "STFI1 = STFI1 " & _Signo & " " & _Caprco1 & ",STFI2 = STFI2 " & _Signo & " " & _Caprco2 & vbCrLf &
-                                               "WHERE EMPRESA = '" & _Empresa & "' AND KOPR = '" & _Koprct & "'" &
-                                               vbCrLf &
-                                               vbCrLf &
-                                               "UPDATE MAEPR SET  STFI1 = STFI1 " & _Signo & " " & _Caprco1 & ",STFI2 = STFI2 " & _Signo & " " & _Caprco2 & vbCrLf &
-                                               "WHERE KOPR = '" & _Koprct & "'" &
-                                               vbCrLf &
-                                               vbCrLf &
-                                               "UPDATE MAEST SET STFI1 = STFI1 " & _Signo & " " & _Caprco1 & ",STFI2 = STFI2 " & _Signo & " " & _Caprco2 & vbCrLf &
-                                               "WHERE EMPRESA='" & _Empresa & "' AND KOSU='" & _Sulido &
-                                               "' AND KOBO='" & _Bosulido & "' AND KOPR='" & _Koprct & "'" &
-                                               vbCrLf &
-                                               vbCrLf &
-                                               "UPDATE MAEPMSUC SET STFI1 = STFI1 " & _Signo & " 1,STFI2 = STFI2 " & _Signo & " 1" & vbCrLf &
-                                               "WHERE EMPRESA = '" & _Empresa & "' AND KOSU = '" & _Sulido & "' AND KOPR = '" & _Koprct & "'"
+                                Consulta_sql = "UPDATE MAEPREM SET" & vbCrLf &
+                                           "STFI1 = STFI1 " & _Signo & " " & _Caprco1 & ",STFI2 = STFI2 " & _Signo & " " & _Caprco2 & vbCrLf &
+                                           "WHERE EMPRESA = '" & _Empresa & "' AND KOPR = '" & _Koprct & "'" &
+                                           vbCrLf &
+                                           vbCrLf &
+                                           "UPDATE MAEPR SET  STFI1 = STFI1 " & _Signo & " " & _Caprco1 & ",STFI2 = STFI2 " & _Signo & " " & _Caprco2 & vbCrLf &
+                                           "WHERE KOPR = '" & _Koprct & "'" &
+                                           vbCrLf &
+                                           vbCrLf &
+                                           "UPDATE MAEST SET STFI1 = STFI1 " & _Signo & " " & _Caprco1 & ",STFI2 = STFI2 " & _Signo & " " & _Caprco2 & vbCrLf &
+                                           "WHERE EMPRESA='" & _Empresa & "' AND KOSU='" & _Sulido &
+                                           "' AND KOBO='" & _Bosulido & "' AND KOPR='" & _Koprct & "'" &
+                                           vbCrLf &
+                                           vbCrLf &
+                                           "UPDATE MAEPMSUC SET STFI1 = STFI1 " & _Signo & " 1,STFI2 = STFI2 " & _Signo & " 1" & vbCrLf &
+                                           "WHERE EMPRESA = '" & _Empresa & "' AND KOSU = '" & _Sulido & "' AND KOPR = '" & _Koprct & "'"
 
-                                    Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                                    Comando.Transaction = myTrans
-                                    Comando.ExecuteNonQuery()
+                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                Comando.Transaction = myTrans
+                                Comando.ExecuteNonQuery()
 
-                                Else
+                            Else
 
-                                    If _Tipr <> "SSN" Then
+                                If _Tipr <> "SSN" Then
 
-                                        _Caprad1 = 0
-                                        _Caprad2 = 0
-
-                                    End If
+                                    _Caprad1 = 0
+                                    _Caprad2 = 0
 
                                 End If
 
                             End If
 
-                            'EMPREPA,TIDOPA,NUDOPA,ENDOPA,NULIDOPA
+                        End If
 
-                            Dim _CantStockAdUd1 = _Caprco1
+                        'EMPREPA,TIDOPA,NUDOPA,ENDOPA,NULIDOPA
+
+                        Dim _CantStockAdUd1 = _Caprco1
                         Dim _CantStockAdUd2 = _Caprco2
 
                         _Emprepa = String.Empty

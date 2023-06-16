@@ -26,14 +26,16 @@ Partial Class Frm_Demonio_ConfAsisCompra
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ConfAsisCompra = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Modalidad = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Cmb_Tido = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Grupo_Resumen = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Btn_ConfProgramacion = New DevComponents.DotNetBar.ButtonX()
         Me.Txt_Resumen = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Chk_NVI = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_OCC_Star = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_OCC_Prov = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo_Resumen.SuspendLayout()
         Me.SuspendLayout()
@@ -44,7 +46,7 @@ Partial Class Frm_Demonio_ConfAsisCompra
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_ConfAsisCompra, Me.Btn_Eliminar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 143)
+        Me.Bar1.Location = New System.Drawing.Point(0, 170)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(487, 41)
         Me.Bar1.Stretch = True
@@ -71,6 +73,15 @@ Partial Class Frm_Demonio_ConfAsisCompra
         Me.Btn_ConfAsisCompra.Name = "Btn_ConfAsisCompra"
         Me.Btn_ConfAsisCompra.Tooltip = "Configuración de asistente de compra"
         '
+        'Btn_Eliminar
+        '
+        Me.Btn_Eliminar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Eliminar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Eliminar.Image = CType(resources.GetObject("Btn_Eliminar.Image"), System.Drawing.Image)
+        Me.Btn_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Eliminar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Eliminar.Name = "Btn_Eliminar"
+        Me.Btn_Eliminar.Tooltip = "Configuración de asistente de compra"
+        '
         'LabelX1
         '
         Me.LabelX1.BackColor = System.Drawing.Color.White
@@ -96,7 +107,7 @@ Partial Class Frm_Demonio_ConfAsisCompra
         Me.Txt_Modalidad.ButtonCustom.Visible = True
         Me.Txt_Modalidad.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Modalidad.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Modalidad.Location = New System.Drawing.Point(71, 15)
+        Me.Txt_Modalidad.Location = New System.Drawing.Point(87, 15)
         Me.Txt_Modalidad.Name = "Txt_Modalidad"
         Me.Txt_Modalidad.PreventEnterBeep = True
         Me.Txt_Modalidad.ReadOnly = True
@@ -104,19 +115,6 @@ Partial Class Frm_Demonio_ConfAsisCompra
         Me.Txt_Modalidad.TabIndex = 134
         Me.Txt_Modalidad.TabStop = False
         Me.Txt_Modalidad.Tag = "Lunes"
-        '
-        'Cmb_Tido
-        '
-        Me.Cmb_Tido.DisplayMember = "Text"
-        Me.Cmb_Tido.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.Cmb_Tido.ForeColor = System.Drawing.Color.Black
-        Me.Cmb_Tido.FormattingEnabled = True
-        Me.Cmb_Tido.ItemHeight = 16
-        Me.Cmb_Tido.Location = New System.Drawing.Point(229, 14)
-        Me.Cmb_Tido.Name = "Cmb_Tido"
-        Me.Cmb_Tido.Size = New System.Drawing.Size(252, 22)
-        Me.Cmb_Tido.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Cmb_Tido.TabIndex = 175
         '
         'LabelX2
         '
@@ -126,11 +124,11 @@ Partial Class Frm_Demonio_ConfAsisCompra
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(163, 14)
+        Me.LabelX2.Location = New System.Drawing.Point(6, 43)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(75, 23)
         Me.LabelX2.TabIndex = 176
-        Me.LabelX2.Text = "Documento"
+        Me.LabelX2.Text = "Documentos"
         '
         'Grupo_Resumen
         '
@@ -139,9 +137,9 @@ Partial Class Frm_Demonio_ConfAsisCompra
         Me.Grupo_Resumen.Controls.Add(Me.Btn_ConfProgramacion)
         Me.Grupo_Resumen.Controls.Add(Me.Txt_Resumen)
         Me.Grupo_Resumen.DisabledBackColor = System.Drawing.Color.Empty
-        Me.Grupo_Resumen.Location = New System.Drawing.Point(6, 53)
+        Me.Grupo_Resumen.Location = New System.Drawing.Point(6, 72)
         Me.Grupo_Resumen.Name = "Grupo_Resumen"
-        Me.Grupo_Resumen.Size = New System.Drawing.Size(475, 84)
+        Me.Grupo_Resumen.Size = New System.Drawing.Size(475, 88)
         '
         '
         '
@@ -203,22 +201,66 @@ Partial Class Frm_Demonio_ConfAsisCompra
         Me.Txt_Resumen.Size = New System.Drawing.Size(418, 55)
         Me.Txt_Resumen.TabIndex = 1
         '
-        'Btn_Eliminar
+        'Chk_NVI
         '
-        Me.Btn_Eliminar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Eliminar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Eliminar.Image = CType(resources.GetObject("Btn_Eliminar.Image"), System.Drawing.Image)
-        Me.Btn_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Eliminar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Eliminar.Name = "Btn_Eliminar"
-        Me.Btn_Eliminar.Tooltip = "Configuración de asistente de compra"
+        Me.Chk_NVI.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_NVI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_NVI.CheckBoxImageChecked = CType(resources.GetObject("Chk_NVI.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_NVI.FocusCuesEnabled = False
+        Me.Chk_NVI.ForeColor = System.Drawing.Color.Black
+        Me.Chk_NVI.Location = New System.Drawing.Point(87, 45)
+        Me.Chk_NVI.Name = "Chk_NVI"
+        Me.Chk_NVI.Size = New System.Drawing.Size(136, 21)
+        Me.Chk_NVI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_NVI.TabIndex = 188
+        Me.Chk_NVI.Text = "NVI (pedidos internos)"
+        '
+        'Chk_OCC_Star
+        '
+        Me.Chk_OCC_Star.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_OCC_Star.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_OCC_Star.CheckBoxImageChecked = CType(resources.GetObject("Chk_OCC_Star.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_OCC_Star.FocusCuesEnabled = False
+        Me.Chk_OCC_Star.ForeColor = System.Drawing.Color.Black
+        Me.Chk_OCC_Star.Location = New System.Drawing.Point(219, 45)
+        Me.Chk_OCC_Star.Name = "Chk_OCC_Star"
+        Me.Chk_OCC_Star.Size = New System.Drawing.Size(115, 21)
+        Me.Chk_OCC_Star.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_OCC_Star.TabIndex = 189
+        Me.Chk_OCC_Star.Text = "OCC (Prov. estrella)"
+        '
+        'Chk_OCC_Prov
+        '
+        Me.Chk_OCC_Prov.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_OCC_Prov.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_OCC_Prov.CheckBoxImageChecked = CType(resources.GetObject("Chk_OCC_Prov.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_OCC_Prov.FocusCuesEnabled = False
+        Me.Chk_OCC_Prov.ForeColor = System.Drawing.Color.Black
+        Me.Chk_OCC_Prov.Location = New System.Drawing.Point(340, 45)
+        Me.Chk_OCC_Prov.Name = "Chk_OCC_Prov"
+        Me.Chk_OCC_Prov.Size = New System.Drawing.Size(115, 21)
+        Me.Chk_OCC_Prov.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_OCC_Prov.TabIndex = 190
+        Me.Chk_OCC_Prov.Text = "OCC (otros proveedores)"
         '
         'Frm_Demonio_ConfAsisCompra
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(487, 184)
+        Me.ClientSize = New System.Drawing.Size(487, 211)
+        Me.Controls.Add(Me.Chk_OCC_Prov)
+        Me.Controls.Add(Me.Chk_OCC_Star)
+        Me.Controls.Add(Me.Chk_NVI)
         Me.Controls.Add(Me.Grupo_Resumen)
-        Me.Controls.Add(Me.Cmb_Tido)
         Me.Controls.Add(Me.LabelX2)
         Me.Controls.Add(Me.Txt_Modalidad)
         Me.Controls.Add(Me.LabelX1)
@@ -244,11 +286,13 @@ Partial Class Frm_Demonio_ConfAsisCompra
     Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_Modalidad As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents Cmb_Tido As DevComponents.DotNetBar.Controls.ComboBoxEx
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Btn_ConfAsisCompra As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grupo_Resumen As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Btn_ConfProgramacion As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Txt_Resumen As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Chk_NVI As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_OCC_Star As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_OCC_Prov As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

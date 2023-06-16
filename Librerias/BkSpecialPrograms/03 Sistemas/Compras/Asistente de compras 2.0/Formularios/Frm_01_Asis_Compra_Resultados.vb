@@ -89,6 +89,7 @@ Public Class Frm_01_Asis_Compra_Resultados
     Public Property Auto_EnviarListadoOCCConMinimoCompraXCorreo As Boolean
     Public Property Auto_Id_CorreoProveedoresSinStock As String
     Public Property Auto_EnviarListadoProveedoresSinStock As Boolean
+    Public Property Auto_DespacharA_OCC As String
     Public Property Pro_Tbl_Filtro_Super_Familias() As DataTable
         Get
             Return _Tbl_Filtro_Super_Familias
@@ -8738,6 +8739,12 @@ Drop Table #Paso"
         Dim _Sucursal = _Sql.Fx_Trae_Dato("CONFIEST", "ESUCURSAL", "MODALIDAD = '" & _Modalidad_Estudio & "'")
         Dim _Bodega = _Sql.Fx_Trae_Dato("CONFIEST", "EBODEGA", "MODALIDAD = '" & _Modalidad_Estudio & "'")
 
+        Dim _Observaciones As String = "Documento generado desde Asistente de compras BakApp' as OBDO"
+
+        If Not String.IsNullOrWhiteSpace(Auto_DespacharA_OCC) Then
+            _Observaciones = Auto_DespacharA_OCC
+        End If
+
         If Rd_Costo_Lista_Proveedor.Checked Then
 
             Dim _Lista As String = Cmb_Lista_Costos.SelectedItem.Value
@@ -8765,7 +8772,7 @@ Drop Table #Paso"
                             "Order by " & _Orden_Codigo & "
                              Select * From MAEIMLI Where 1<0  
                                  Select * From MAEDTLI Where 1 < 0 
-                                 Select 'Documento generado desde Asistente de compras BakApp' as OBDO"
+                                 Select '" & _Observaciones & "' as OBDO"
 
         ElseIf Rd_Costo_Ultimo_Documento_Seleccionado.Checked Then
 
@@ -8795,7 +8802,7 @@ Drop Table #Paso"
                             Order by " & _Orden_Codigo & " 
                             Select * From MAEIMLI Where 1<0  
                             Select * From MAEDTLI Where 1<0  
-                            Select 'Documento generado desde Asistente de compras BakApp' as OBDO"
+                            Select '" & _Observaciones & "' as OBDO"
 
         End If
 
