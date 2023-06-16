@@ -4033,7 +4033,33 @@ Public Class Frm_Formulario_Documento
             .Cells("Operacion").Value = String.Empty
             .Cells("Potencia").Value = 0
 
-            .Cells("Lincondest").Value = False
+            Dim _Lincondest As Boolean
+
+            Consulta_sql = "Select Case When FICO = 0 And FIAD = 0 Then 'No'
+                            WHEN FICO <> 0 AND FIAD = 1 Then 'Si'
+                            WHEN FICO <> 0 AND FIAD = 0 Then 'Si'
+                            WHEN FICO = 0 AND FIAD <> 0 Then 'Revisar'
+                            END AS Consulta
+                            From TABTIDO
+                            Where TIDO = '" & _Tido & "'"
+
+            Dim _Row_Tido As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If _Row_Tido.Item("Consulta") = "Si" Then
+                _Lincondest = True
+            ElseIf _Row_Tido.Item("Consulta") = "No" Then
+                _Lincondest = False
+            ElseIf _Row_Tido.Item("Consulta") = "Revisar" Then
+
+                Dim _Despacha_Stock As String = _Global_Row_Configuracion_Estacion.Item("EDESFACV")
+
+                If _Despacha_Stock = "S" Then
+                    _Lincondest = True
+                End If
+
+            End If
+
+            .Cells("Lincondest").Value = _Lincondest
             .Cells("ValVtaDescMax").Value = False
             .Cells("NroDscto").Value = 0
             .Cells("DsctoNeto").Value = 0
@@ -6151,6 +6177,7 @@ Public Class Frm_Formulario_Documento
                     _TotalNeto = Math.Round(_TotalBruto / _Impuestos, 5)
                     _TotalIva = (Math.Round(_TotalNeto * (_PorIva / 100), 5))
                     _TotalIla = (Math.Round(_TotalNeto * (_PorIla / 100), 5))
+                    _TotalDsctoNeto = Math.Round(_TotalNeto, 0)
                     _TotalDsctoBruto = _Descuento
                     _Total = _TotalBruto
                 End If
@@ -8180,6 +8207,14 @@ Public Class Frm_Formulario_Documento
 
                                 If _Revision_Remota Then
                                     Beep()
+                                    Return
+                                End If
+
+                                Dim _Vizado As Boolean = Grilla_Encabezado.Rows(0).Cells("Vizado").Value
+
+                                If _Vizado Then
+                                    MessageBoxEx.Show(Me, "Documento Visado", "Validación",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxButtons.OK, Me.TopMost)
                                     Return
                                 End If
 

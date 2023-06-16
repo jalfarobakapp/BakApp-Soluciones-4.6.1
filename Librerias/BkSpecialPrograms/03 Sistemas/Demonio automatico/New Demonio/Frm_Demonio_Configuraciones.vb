@@ -28,7 +28,7 @@ Public Class Frm_Demonio_Configuraciones
         'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_ConfXEstacion Where Id = " & _Id
         '_Row_ConfEstacion = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Sb_Formato_Generico_Grilla(Grilla_AsistenteCompras, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
+        Sb_Formato_Generico_Grilla(Grilla_AsistenteCompras, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
 
     End Sub
 
@@ -49,7 +49,7 @@ Public Class Frm_Demonio_Configuraciones
         AddHandler Chk_CierreDoc.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
         AddHandler Chk_FacAuto.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
         AddHandler Chk_AsistenteCompras.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
-        'AddHandler Chk_EnvioCrreo.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
+        AddHandler Chk_SqlQueryEspecial.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
 
         AddHandler Sp_EnvioCorreo.Click, AddressOf Sp_SuperTabItem_Click
         AddHandler Sp_ColaImpDoc.Click, AddressOf Sp_SuperTabItem_Click
@@ -64,7 +64,8 @@ Public Class Frm_Demonio_Configuraciones
         AddHandler Sp_Wordpress_Prod.Click, AddressOf Sp_SuperTabItem_Click
         AddHandler Sp_Wordpress_Stock.Click, AddressOf Sp_SuperTabItem_Click
         AddHandler Sp_CierreDoc.Click, AddressOf Sp_SuperTabItem_Click
-        AddHandler Sp_FacturacionAuto.Click, AddressOf Sp_SuperTabItem_Click
+        AddHandler Sp_FacAuto.Click, AddressOf Sp_SuperTabItem_Click
+        AddHandler Sp_SqlQueryEspecial.Click, AddressOf Sp_SuperTabItem_Click
         AddHandler Sp_AsistenteCompras.Click, AddressOf Sp_SuperTabItem_Click
 
         'With _Row_ConfEstacion
@@ -115,7 +116,7 @@ Public Class Frm_Demonio_Configuraciones
 
         Sb_Parametros_Informe_Sql(False)
 
-        AddHandler Grilla_AsistenteCompras.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        'AddHandler Grilla_AsistenteCompras.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         Sp_SuperTabItem_Click(Sp_EnvioCorreo, Nothing)
 
@@ -143,6 +144,10 @@ Public Class Frm_Demonio_Configuraciones
                     _RevisarProgramacion = String.IsNullOrEmpty(_Row_Programacion.Item("Resumen"))
                 End If
 
+                If _Nombre = "AsistenteCompras" Then
+                    _RevisarProgramacion = Not CBool(Grilla_AsistenteCompras.RowCount)
+                End If
+
                 If _RevisarProgramacion Then
                     MessageBoxEx.Show(Me, "Falta la programación para " & _Tab.Text, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     SuperTab.SelectedTab = _Tab
@@ -154,55 +159,24 @@ Public Class Frm_Demonio_Configuraciones
 
         Next
 
+        If Chk_SolProdBod.Checked And String.IsNullOrWhiteSpace(Txt_ImpSolProdBod.Text) Then
+            MessageBoxEx.Show(Me, "Falta la impresora en solicitud de productos a bodega", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If Chk_FacAuto.Checked And String.IsNullOrWhiteSpace(Txt_FacAuto_Modalidad.Text) Then
+            MessageBoxEx.Show(Me, "Falta la modalidad para la facturación automática", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If Chk_ArchivarDoc.Checked And String.IsNullOrWhiteSpace(Txt_DirArchivarDoc.Text) Then
+            MessageBoxEx.Show(Me, "Falta la carpeta de destino de los archivos en el archivador de documentos", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Sb_Parametros_Informe_Sql(True)
         Grabar = True
         Me.Close()
-
-        Return
-
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_ConfXEstacion Set" &
-                       " EnvioCorreo = " & Convert.ToInt32(Chk_EnvioCorreo.Checked) &
-                       ",CantCorreo = 0" &
-                       ",ColaImpDoc = " & Convert.ToInt32(Chk_ColaImpDoc.Checked) &
-                       ",ColaImpPick = " & Convert.ToInt32(Chk_ColaImpPick.Checked) &
-                       ",SolProdBod = " & Convert.ToInt32(Chk_SolProdBod.Checked) &
-                       ",ImpSolProdBod = '" & Txt_ImpSolProdBod.Text & "'" &
-                       ",Prestashop_Prod = " & Convert.ToInt32(Chk_Prestashop_Prod.Checked) &
-                       ",Prestashop_Order = " & Convert.ToInt32(Chk_Prestashop_Order.Checked) &
-                       ",Prestashop_Total = " & Convert.ToInt32(Chk_Prestashop_Total.Checked) &
-                       ",ImporDTESII = " & Convert.ToInt32(Chk_ImporDTESII.Checked) &
-                       ",ArchivarDoc = " & Convert.ToInt32(Chk_ArchivarDoc.Checked) &
-                       ",DirArchivarDoc = '" & Txt_DirArchivarDoc.Text & "'" &
-                       ",ConsStock = " & Convert.ToInt32(Chk_ConsStock.Checked) &
-                       ",ConsStock_Todos = " & Convert.ToInt32(Rdb_Cons_Stock_Todos.Checked) &
-                       ",ConsStock_Hoy = " & Convert.ToInt32(Rdb_Cons_Stock_Mov_Hoy.Checked) &
-                       ",Wordpress_Prod = " & Convert.ToInt32(Chk_Wordpress_Prod.Checked) &
-                       ",Wordpress_Stock = " & Convert.ToInt32(Chk_Wordpress_Stock.Checked) &
-                       ",CierreDoc = " & Convert.ToInt32(Chk_CierreDoc.Checked) &
-                       ",COVCerrar = " & Convert.ToInt32(Chk_COVCerrar.Checked) &
-                       ",DiasCOV = " & Convert.ToInt32(Input_DiasCOV.Value) &
-                       ",NVICerrar = " & Convert.ToInt32(Chk_NVICerrar.Checked) &
-                       ",DiasNVI = " & Convert.ToInt32(Input_DiasNVI.Value) &
-                       ",NVVCerrar = " & Convert.ToInt32(Chk_NVVCerrar.Checked) &
-                       ",DiasNVV = " & Convert.ToInt32(Input_DiasNVV.Value) &
-                       ",OCICerrar = " & Convert.ToInt32(Chk_OCICerrar.Checked) &
-                       ",DiasOCI = " & Convert.ToInt32(Input_DiasOCI.Value) &
-                       ",OCCCerrar = " & Convert.ToInt32(Chk_OCCCerrar.Checked) &
-                       ",DiasOCC = " & Convert.ToInt32(Input_DiasOCC.Value) &
-                       ",FacAuto = " & Convert.ToInt32(Chk_FacAuto.Checked) &
-                       ",FacAuto_Modalidad = '" & Txt_FacAuto_Modalidad.Text & "'" &
-                       ",FacAuto_Dia = " & Convert.ToInt32(Rdb_FacAuto_Dia.Checked) &
-                       ",FacAuto_Sem = " & Convert.ToInt32(Rdb_FacAuto_Sem.Checked) &
-                       ",FacAuto_Mes = " & Convert.ToInt32(Rdb_FacAuto_Mes.Checked) &
-                       ",FacAuto_Todas = " & Convert.ToInt32(Rdb_FacAuto_Todas.Checked) &
-                       ",AsistenteCompras = " & Convert.ToInt32(Chk_AsistenteCompras.Checked) & vbCrLf &
-                       "Where Id = " & _Id
-        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-            Sb_Parametros_Informe_Sql(False)
-            Grabar = True
-            Me.Close()
-        End If
 
     End Sub
 
@@ -382,10 +356,14 @@ Public Class Frm_Demonio_Configuraciones
         _MaxIntevalo = 60
 
         Select Case _Nombre
-            Case "EnvioCorreo", "ColaImpDoc", "ColaImpPick"
-                _Diariamente = True : _SucedeCada = True : _MinIntervalo = 1 : _MaxIntevalo = 30 : _TIMinutos = True
+            Case "EnvioCorreo", "ColaImpDoc", "ColaImpPick", "SolProdBod", "Prestashop_Prod",
+                 "Prestashop_Order", "Prestashop_Total", "ImporDTESII", "ArchivarDoc", "Wordpress_Prod", "Wordpress_Stock"
+                _Diariamente = True : _SucedeCada = True : _MinIntervalo = 5 : _MaxIntevalo = 59 : _TIMinutos = True
                 '_Arr_TipoIntercalo = {{"MM", "Minutos"}}
-
+            Case "ConsStock", "CierreDoc", "FacAuto"
+                _Diariamente = True : _Semanalmente = True : _SucedeUnaVez = True : _SucedeCada = True : _MinIntervalo = 5 : _MaxIntevalo = 59 : _TIMinutos = True
+            Case Else
+                Dim A = 1
         End Select
 
 
@@ -408,12 +386,29 @@ Public Class Frm_Demonio_Configuraciones
 
     Private Sub Chk_Habilitar_CheckedChanged(sender As Object, e As EventArgs)
 
-        Dim _Stab As SuperTabItem = SuperTab.Tabs.Item(CInt(sender.Tag))
-        If sender.Checked Then
-            _Stab.Image = Imagenes_16X16.Images.Item("symbol-ok.png")
-        Else
-            _Stab.Image = Nothing
-        End If
+        'Dim _Stab As SuperTabItem = SuperTab.Tabs.Item(CInt(sender.Tag))
+        'If sender.Checked Then
+        '    _Stab.Image = Imagenes_16X16.Images.Item("symbol-ok.png")
+        'Else
+        '    _Stab.Image = Nothing
+        'End If
+
+        Dim _NombreChk As String = CType(sender, Controls.CheckBoxX).Name.Replace("Chk_", "")
+
+        For Each _Stab As SuperTabItem In SuperTab.Tabs
+
+            Dim _NombreTab As String = Replace(_Stab.Name, "Sp_", "")
+
+            If _NombreTab = _NombreChk Then
+                If sender.Checked Then
+                    _Stab.Image = Imagenes_16X16.Images.Item("symbol-ok.png")
+                Else
+                    _Stab.Image = Nothing
+                End If
+                Exit For
+            End If
+
+        Next
 
     End Sub
 
@@ -486,12 +481,11 @@ Public Class Frm_Demonio_Configuraciones
 
     Sub Sb_Actualizar_Grilla_Acp()
 
-        Consulta_sql = "Select AcpA.Id,AcpA.NombreEquipo,AcpA.Modalidad,AcpA.Tido," & vbCrLf &
-                       "Case AcpA.Tido When 'NVI' Then 'NVI - Sol. interna' When 'OC1' Then 'OCC - Prov.Estrella' When 'OC2' Then 'OCC - Prov.Regular' End As 'Tipo',Prog.Resumen" & vbCrLf &
+        Consulta_sql = "Select AcpA.Id,AcpA.NombreEquipo,AcpA.Modalidad,AcpA.NVI,AcpA.OCC_Star,AcpA.OCC_Prov,Prog.Resumen" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Demonio_ConfAcpAuto AcpA" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Demonio_ConfProgramacion Prog On AcpA.Id = Prog.Id_Padre And Prog.Tbl_Padre = 'AcoAuto'" & vbCrLf &
                        "Where AcpA.NombreEquipo = '" & _NombreEquipo & "'" & vbCrLf &
-                       "Order by Modalidad,Tido"
+                       "Order by Modalidad,NVI,OCC_Star,OCC_Prov"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -511,17 +505,33 @@ Public Class Frm_Demonio_Configuraciones
             .Columns("Modalidad").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Tipo").Width = 120
-            .Columns("Tipo").HeaderText = "Tipo"
-            .Columns("Tipo").Visible = True
-            .Columns("Tipo").Frozen = True
-            .Columns("Tipo").DisplayIndex = _DisplayIndex
+            .Columns("NVI").Width = 40
+            .Columns("NVI").HeaderText = "NVI"
+            .Columns("NVI").Visible = True
+            .Columns("NVI").Frozen = True
+            .Columns("NVI").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("OCC_Star").Width = 40
+            .Columns("OCC_Star").HeaderText = "OCC PE"
+            .Columns("OCC_Star").ToolTipText = "Ordenes de compra al proveedor estrella"
+            .Columns("OCC_Star").Visible = True
+            .Columns("OCC_Star").Frozen = True
+            .Columns("OCC_Star").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("OCC_Prov").Width = 40
+            .Columns("OCC_Prov").HeaderText = "OCC OP"
+            .Columns("OCC_Prov").ToolTipText = "Ordenes de compra a otros proveedores"
+            .Columns("OCC_Prov").Visible = True
+            .Columns("OCC_Prov").Frozen = True
+            .Columns("OCC_Prov").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Resumen").Width = 200
             .Columns("Resumen").HeaderText = "Resumen"
             .Columns("Resumen").Visible = True
-            .Columns("Resumen").Frozen = True
+            .Columns("Resumen").Frozen = False
             .Columns("Resumen").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -566,7 +576,7 @@ Public Class Frm_Demonio_Configuraciones
 
         If _Actualizar Then
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Tmp_Prm_Informes" & vbCrLf &
-                           "Where Informe = 'Demonio_Impresion' And NombreEquipo = '" & _NombreEquipo & "'"
+                           "Where Informe = 'Demonio' And NombreEquipo = '" & _NombreEquipo & "'"
             _Sql.Ej_consulta_IDU(Consulta_sql)
         End If
 
@@ -576,7 +586,7 @@ Public Class Frm_Demonio_Configuraciones
                                       Chk_EnvioCorreo.Checked, _Actualizar, "Correo")
         _Sql.Sb_Parametro_Informe_Sql(Input_CantCorreo, "Demonio",
                                       Input_CantCorreo.Name, Class_SQLite.Enum_Type._Double,
-                                      Input_CantCorreo.Value, _Actualizar, "CierreDoc")
+                                      Input_CantCorreo.Value, _Actualizar, "Correo")
 
         'Impresiones
         _Sql.Sb_Parametro_Informe_Sql(Chk_ColaImpDoc, "Demonio",
@@ -668,7 +678,7 @@ Public Class Frm_Demonio_Configuraciones
                                       Chk_FacAuto.Name, Class_SQLite.Enum_Type._Boolean,
                                       Chk_FacAuto.Checked, _Actualizar, "FacAuto")
         _Sql.Sb_Parametro_Informe_Sql(Txt_FacAuto_Modalidad, "Demonio",
-                                      Txt_FacAuto_Modalidad.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Txt_FacAuto_Modalidad.Name, Class_SQLite.Enum_Type._String,
                                       Txt_FacAuto_Modalidad.Text, _Actualizar, "FacAuto")
         _Sql.Sb_Parametro_Informe_Sql(Rdb_FacAuto_Dia, "Demonio",
                                       Rdb_FacAuto_Dia.Name, Class_SQLite.Enum_Type._Boolean,
@@ -688,8 +698,13 @@ Public Class Frm_Demonio_Configuraciones
                                       Chk_SolProdBod.Name, Class_SQLite.Enum_Type._Boolean,
                                       Chk_SolProdBod.Checked, _Actualizar, "SolProdBod")
         _Sql.Sb_Parametro_Informe_Sql(Txt_ImpSolProdBod, "Demonio",
-                                      Txt_ImpSolProdBod.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Txt_ImpSolProdBod.Name, Class_SQLite.Enum_Type._String,
                                       Txt_ImpSolProdBod.Text, _Actualizar, "SolProdBod")
+
+        'Asistente de compras
+        _Sql.Sb_Parametro_Informe_Sql(Chk_AsistenteCompras, "Demonio",
+                                      Chk_AsistenteCompras.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_AsistenteCompras.Checked, _Actualizar, "SolProdBod")
 
 
     End Sub

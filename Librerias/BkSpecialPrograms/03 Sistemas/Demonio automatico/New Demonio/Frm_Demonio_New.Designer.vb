@@ -183,12 +183,12 @@ Partial Class Frm_Demonio_New
         Me.Txt_Log.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Log.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Log.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Log.Location = New System.Drawing.Point(12, 390)
+        Me.Txt_Log.Location = New System.Drawing.Point(12, 418)
         Me.Txt_Log.Multiline = True
         Me.Txt_Log.Name = "Txt_Log"
         Me.Txt_Log.PreventEnterBeep = True
         Me.Txt_Log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.Txt_Log.Size = New System.Drawing.Size(731, 195)
+        Me.Txt_Log.Size = New System.Drawing.Size(731, 167)
         Me.Txt_Log.TabIndex = 74
         '
         'GroupPanel1
@@ -199,7 +199,7 @@ Partial Class Frm_Demonio_New
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 78)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(731, 277)
+        Me.GroupPanel1.Size = New System.Drawing.Size(731, 305)
         '
         '
         '
@@ -251,7 +251,7 @@ Partial Class Frm_Demonio_New
         Me.Listv_Programaciones.HoverSelection = True
         Me.Listv_Programaciones.Location = New System.Drawing.Point(0, 0)
         Me.Listv_Programaciones.Name = "Listv_Programaciones"
-        Me.Listv_Programaciones.Size = New System.Drawing.Size(725, 254)
+        Me.Listv_Programaciones.Size = New System.Drawing.Size(725, 282)
         Me.Listv_Programaciones.SmallImageList = Me.Imagenes_16X16
         Me.Listv_Programaciones.TabIndex = 138
         Me.Listv_Programaciones.UseCompatibleStateImageBehavior = False
@@ -284,7 +284,7 @@ Partial Class Frm_Demonio_New
         '
         Me.Circular_Monitoreo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Circular_Monitoreo.FocusCuesEnabled = False
-        Me.Circular_Monitoreo.Location = New System.Drawing.Point(15, 358)
+        Me.Circular_Monitoreo.Location = New System.Drawing.Point(13, 386)
         Me.Circular_Monitoreo.Name = "Circular_Monitoreo"
         Me.Circular_Monitoreo.ProgressColor = System.Drawing.Color.Green
         Me.Circular_Monitoreo.Size = New System.Drawing.Size(28, 26)
@@ -299,7 +299,7 @@ Partial Class Frm_Demonio_New
         '
         Me.Lbl_Monitoreo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Monitoreo.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Monitoreo.Location = New System.Drawing.Point(49, 361)
+        Me.Lbl_Monitoreo.Location = New System.Drawing.Point(47, 389)
         Me.Lbl_Monitoreo.Name = "Lbl_Monitoreo"
         Me.Lbl_Monitoreo.Size = New System.Drawing.Size(605, 23)
         Me.Lbl_Monitoreo.TabIndex = 137

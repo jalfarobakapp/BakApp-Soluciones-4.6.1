@@ -125,6 +125,18 @@ Public Class Frm_Demonio_ConfProgramacion
             End If
         End If
 
+        If Rdb_FrecuSemanal.Checked And
+            (Not Chk_Lunes.Checked And
+             Not Chk_Martes.Checked And
+             Not Chk_Miercoles.Checked And
+             Not Chk_Jueves.Checked And
+             Not Chk_Viernes.Checked And
+             Not Chk_Sabado.Checked And
+             Not Chk_Domingo.Checked) Then
+            MessageBoxEx.Show(Me, "Debe seleccionar por lo menos un día de la semana", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         Programacion.Nombre = Txt_Nombre.Text
         Programacion.FrecuDiaria = Rdb_FrecuDiaria.Checked
         Programacion.FrecuSemanal = Rdb_FrecuSemanal.Checked

@@ -113,10 +113,11 @@ Partial Class Frm_Demonio_ConfProgramacion
         '
         Me.Chk_Domingo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Domingo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Domingo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Domingo.FocusCuesEnabled = False
         Me.Chk_Domingo.ForeColor = System.Drawing.Color.Black
         Me.Chk_Domingo.Location = New System.Drawing.Point(402, 35)
         Me.Chk_Domingo.Name = "Chk_Domingo"
-        Me.Chk_Domingo.Size = New System.Drawing.Size(74, 23)
+        Me.Chk_Domingo.Size = New System.Drawing.Size(74, 21)
         Me.Chk_Domingo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Domingo.TabIndex = 39
         Me.Chk_Domingo.Text = "Domingo"
@@ -129,10 +130,11 @@ Partial Class Frm_Demonio_ConfProgramacion
         '
         Me.Chk_Lunes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Lunes.CheckBoxImageChecked = CType(resources.GetObject("Chk_Lunes.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Lunes.FocusCuesEnabled = False
         Me.Chk_Lunes.ForeColor = System.Drawing.Color.Black
         Me.Chk_Lunes.Location = New System.Drawing.Point(16, 3)
         Me.Chk_Lunes.Name = "Chk_Lunes"
-        Me.Chk_Lunes.Size = New System.Drawing.Size(72, 23)
+        Me.Chk_Lunes.Size = New System.Drawing.Size(72, 21)
         Me.Chk_Lunes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Lunes.TabIndex = 33
         Me.Chk_Lunes.Text = "Lunes"
@@ -145,10 +147,11 @@ Partial Class Frm_Demonio_ConfProgramacion
         '
         Me.Chk_Martes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Martes.CheckBoxImageChecked = CType(resources.GetObject("Chk_Martes.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Martes.FocusCuesEnabled = False
         Me.Chk_Martes.ForeColor = System.Drawing.Color.Black
         Me.Chk_Martes.Location = New System.Drawing.Point(16, 32)
         Me.Chk_Martes.Name = "Chk_Martes"
-        Me.Chk_Martes.Size = New System.Drawing.Size(63, 23)
+        Me.Chk_Martes.Size = New System.Drawing.Size(63, 21)
         Me.Chk_Martes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Martes.TabIndex = 34
         Me.Chk_Martes.Text = "Martes"
@@ -161,10 +164,11 @@ Partial Class Frm_Demonio_ConfProgramacion
         '
         Me.Chk_Miercoles.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Miercoles.CheckBoxImageChecked = CType(resources.GetObject("Chk_Miercoles.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Miercoles.FocusCuesEnabled = False
         Me.Chk_Miercoles.ForeColor = System.Drawing.Color.Black
         Me.Chk_Miercoles.Location = New System.Drawing.Point(129, 3)
         Me.Chk_Miercoles.Name = "Chk_Miercoles"
-        Me.Chk_Miercoles.Size = New System.Drawing.Size(100, 23)
+        Me.Chk_Miercoles.Size = New System.Drawing.Size(100, 21)
         Me.Chk_Miercoles.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Miercoles.TabIndex = 35
         Me.Chk_Miercoles.Text = "Miercoles"
@@ -177,10 +181,11 @@ Partial Class Frm_Demonio_ConfProgramacion
         '
         Me.Chk_Sabado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Sabado.CheckBoxImageChecked = CType(resources.GetObject("Chk_Sabado.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Sabado.FocusCuesEnabled = False
         Me.Chk_Sabado.ForeColor = System.Drawing.Color.Black
         Me.Chk_Sabado.Location = New System.Drawing.Point(402, 3)
         Me.Chk_Sabado.Name = "Chk_Sabado"
-        Me.Chk_Sabado.Size = New System.Drawing.Size(74, 23)
+        Me.Chk_Sabado.Size = New System.Drawing.Size(74, 21)
         Me.Chk_Sabado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Sabado.TabIndex = 38
         Me.Chk_Sabado.Text = "Sabádo"
@@ -193,10 +198,11 @@ Partial Class Frm_Demonio_ConfProgramacion
         '
         Me.Chk_Jueves.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Jueves.CheckBoxImageChecked = CType(resources.GetObject("Chk_Jueves.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Jueves.FocusCuesEnabled = False
         Me.Chk_Jueves.ForeColor = System.Drawing.Color.Black
         Me.Chk_Jueves.Location = New System.Drawing.Point(129, 35)
         Me.Chk_Jueves.Name = "Chk_Jueves"
-        Me.Chk_Jueves.Size = New System.Drawing.Size(90, 23)
+        Me.Chk_Jueves.Size = New System.Drawing.Size(90, 21)
         Me.Chk_Jueves.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Jueves.TabIndex = 36
         Me.Chk_Jueves.Text = "Jueves"
@@ -209,10 +215,11 @@ Partial Class Frm_Demonio_ConfProgramacion
         '
         Me.Chk_Viernes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Viernes.CheckBoxImageChecked = CType(resources.GetObject("Chk_Viernes.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Viernes.FocusCuesEnabled = False
         Me.Chk_Viernes.ForeColor = System.Drawing.Color.Black
         Me.Chk_Viernes.Location = New System.Drawing.Point(257, 3)
         Me.Chk_Viernes.Name = "Chk_Viernes"
-        Me.Chk_Viernes.Size = New System.Drawing.Size(118, 23)
+        Me.Chk_Viernes.Size = New System.Drawing.Size(118, 21)
         Me.Chk_Viernes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Viernes.TabIndex = 37
         Me.Chk_Viernes.Text = "Viernes"
@@ -504,7 +511,9 @@ Partial Class Frm_Demonio_ConfProgramacion
         '
         '
         Me.Rdb_SucedeCada.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_SucedeCada.CheckBoxImageChecked = CType(resources.GetObject("Rdb_SucedeCada.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_SucedeCada.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_SucedeCada.FocusCuesEnabled = False
         Me.Rdb_SucedeCada.ForeColor = System.Drawing.Color.Black
         Me.Rdb_SucedeCada.Location = New System.Drawing.Point(15, 37)
         Me.Rdb_SucedeCada.Name = "Rdb_SucedeCada"
@@ -520,10 +529,12 @@ Partial Class Frm_Demonio_ConfProgramacion
         '
         '
         Me.Rdb_SucedeUnaVez.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_SucedeUnaVez.CheckBoxImageChecked = CType(resources.GetObject("Rdb_SucedeUnaVez.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_SucedeUnaVez.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_SucedeUnaVez.Checked = True
         Me.Rdb_SucedeUnaVez.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_SucedeUnaVez.CheckValue = "Y"
+        Me.Rdb_SucedeUnaVez.FocusCuesEnabled = False
         Me.Rdb_SucedeUnaVez.ForeColor = System.Drawing.Color.Black
         Me.Rdb_SucedeUnaVez.Location = New System.Drawing.Point(15, 8)
         Me.Rdb_SucedeUnaVez.Name = "Rdb_SucedeUnaVez"
@@ -539,10 +550,12 @@ Partial Class Frm_Demonio_ConfProgramacion
         '
         '
         Me.Rdb_FrecuDiaria.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_FrecuDiaria.CheckBoxImageChecked = CType(resources.GetObject("Rdb_FrecuDiaria.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_FrecuDiaria.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_FrecuDiaria.Checked = True
         Me.Rdb_FrecuDiaria.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_FrecuDiaria.CheckValue = "Y"
+        Me.Rdb_FrecuDiaria.FocusCuesEnabled = False
         Me.Rdb_FrecuDiaria.ForeColor = System.Drawing.Color.Black
         Me.Rdb_FrecuDiaria.Location = New System.Drawing.Point(12, 62)
         Me.Rdb_FrecuDiaria.Name = "Rdb_FrecuDiaria"
@@ -558,7 +571,9 @@ Partial Class Frm_Demonio_ConfProgramacion
         '
         '
         Me.Rdb_FrecuSemanal.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_FrecuSemanal.CheckBoxImageChecked = CType(resources.GetObject("Rdb_FrecuSemanal.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_FrecuSemanal.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_FrecuSemanal.FocusCuesEnabled = False
         Me.Rdb_FrecuSemanal.ForeColor = System.Drawing.Color.Black
         Me.Rdb_FrecuSemanal.Location = New System.Drawing.Point(118, 62)
         Me.Rdb_FrecuSemanal.Name = "Rdb_FrecuSemanal"

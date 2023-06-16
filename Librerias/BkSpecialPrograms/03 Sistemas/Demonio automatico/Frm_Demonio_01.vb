@@ -1495,7 +1495,6 @@ Public Class Frm_Demonio_01
 
                     _Cl_Correos.Fecha_Revision = DtpFecharevision.Value
                     _Cl_Correos.Nombre_Equipo = _Nombre_Equipo
-
                     _Cl_Correos.Sb_Procedimiento_Correos()
 
                     'Sb_Pausar(False)

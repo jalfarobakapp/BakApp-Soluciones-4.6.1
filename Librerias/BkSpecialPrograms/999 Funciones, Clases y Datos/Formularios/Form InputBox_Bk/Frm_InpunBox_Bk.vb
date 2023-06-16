@@ -285,9 +285,12 @@ Public Class Frm_InpunBox_Bk
         If ret = Windows.Forms.DialogResult.OK Then
 
             Dim nFiles As ObjectModel.ReadOnlyCollection(Of String)
-
-            nFiles = My.Computer.FileSystem.GetFiles(_FolderBrowserDialog.SelectedPath)
-            TxtDescripcion.Text = _FolderBrowserDialog.SelectedPath
+            Try
+                nFiles = My.Computer.FileSystem.GetFiles(_FolderBrowserDialog.SelectedPath)
+                TxtDescripcion.Text = _FolderBrowserDialog.SelectedPath
+            Catch ex As Exception
+                MessageBoxEx.Show(Me, ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End Try
 
         End If
 
