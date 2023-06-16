@@ -1,7 +1,9 @@
 ﻿'Imports Lib_Bakapp_VarClassFunc
+Imports System.Text
 Imports System.Text.RegularExpressions
 'Imports System.Web.Routing
 Imports DevComponents.DotNetBar
+Imports DevComponents.DotNetBar.Controls
 'Imports Microsoft.Office.Interop.Word
 
 Public Class Frm_SQL2Excel_Diseno
@@ -89,6 +91,19 @@ Public Class Frm_SQL2Excel_Diseno
         Txt_Query_SQL.SelectionLength = Txt_Query_SQL.TextLength
 
         Sb_Cambiar_Color(0, 0, Txt_Query_SQL.TextLength)
+
+        'Dim tabla As New StringBuilder()
+
+        '' Agregar encabezados de columna
+        'tabla.AppendLine("Nombre" & vbTab & "Edad" & vbTab & "País")
+
+        '' Agregar filas de datos
+        'tabla.AppendLine("Juan" & vbTab & "25" & vbTab & "España")
+        'tabla.AppendLine("María" & vbTab & "30" & vbTab & "México")
+        'tabla.AppendLine("Carlos" & vbTab & "28" & vbTab & "Argentina")
+
+        '' Insertar la tabla en el RichTextBox
+        'Txt_Query_SQL.Text = tabla.ToString()
 
     End Sub
 

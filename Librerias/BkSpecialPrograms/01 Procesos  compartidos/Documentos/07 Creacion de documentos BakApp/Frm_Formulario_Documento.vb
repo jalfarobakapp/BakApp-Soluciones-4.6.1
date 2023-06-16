@@ -141,7 +141,7 @@ Public Class Frm_Formulario_Documento
     Dim _Doc_Desde_Arch_Txt_Especial_Saime As Boolean
 
     Dim _Documento_Reciclado As Boolean
-    Dim _ListaCodQRUnicosLeidos As List(Of String)
+    Dim _ListaCodQRUnicosLeidos As List(Of CodigosDeBarra.CodigosQRLeidos)
 
     Dim _Facturacion_Automatica As Boolean
 
@@ -1066,7 +1066,7 @@ Public Class Frm_Formulario_Documento
         _Doc_Desde_Arch_Txt_Especial_Saime = False
         _Nombre_Archivo_Txt_Especial_Saime = String.Empty
         _Desde_Prestahop = False
-        _ListaCodQRUnicosLeidos = New List(Of String)
+        _ListaCodQRUnicosLeidos = New List(Of CodigosDeBarra.CodigosQRLeidos)
         _Patente_rvm = String.Empty
 
         Lbl_NroDecimales.Text = FormatNumber(0, _DecimalesGl)
@@ -8818,7 +8818,7 @@ Public Class Frm_Formulario_Documento
             Next
 
             If CBool(_ListaRows.Count) Then
-                _ListaCodQRUnicosLeidos = New List(Of String)
+                _ListaCodQRUnicosLeidos = New List(Of CodigosDeBarra.CodigosQRLeidos)
             End If
 
         End If
@@ -15761,8 +15761,9 @@ Public Class Frm_Formulario_Documento
 
             Dim _SqlQuery = String.Empty
 
-            For Each _CodigoQR As String In _ListaCodQRUnicosLeidos
+            For Each _Codigos As CodigosDeBarra.CodigosQRLeidos In _ListaCodQRUnicosLeidos
 
+                Dim _CodigoQR As String = _Codigos.CodigoQR
                 Dim _Kopral = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Prod_CodQR", "Kopral", "CodigoQR = '" & _CodigoQR & "'")
 
                 _SqlQuery += "Insert Into " & _Global_BaseBk & "Zw_Prod_CodQRLogDoc (CodigoQR,Kopral,Tido,Nudo,Idmaeedo) Values " &
