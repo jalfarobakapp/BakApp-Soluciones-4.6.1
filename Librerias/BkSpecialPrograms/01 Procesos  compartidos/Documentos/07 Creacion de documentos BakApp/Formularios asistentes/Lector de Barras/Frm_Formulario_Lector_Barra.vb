@@ -15,7 +15,7 @@ Public Class Frm_Formulario_Lector_Barra
     Dim _Permitir_Despachar_Menos As Boolean
 
     Dim _Documento_Aceptado As Boolean
-    Dim _ListaCodQRUnicosLeidos As List(Of String)
+    Dim _ListaCodQRUnicosLeidos As List(Of CodigosDeBarra.CodigosQRLeidos)
 
     Public Property Pro_Documento_Aceptado As Boolean
         Get
@@ -53,11 +53,11 @@ Public Class Frm_Formulario_Lector_Barra
         End Set
     End Property
 
-    Public Property ListaCodQRUnicosLeidos As List(Of String)
+    Public Property ListaCodQRUnicosLeidos As List(Of CodigosDeBarra.CodigosQRLeidos)
         Get
             Return _ListaCodQRUnicosLeidos
         End Get
-        Set(value As List(Of String))
+        Set(value As List(Of CodigosDeBarra.CodigosQRLeidos))
             _ListaCodQRUnicosLeidos = value
         End Set
     End Property
@@ -90,7 +90,7 @@ Public Class Frm_Formulario_Lector_Barra
         End If
 
         Txt_Codigo_Barras.ShortcutsEnabled = False
-        _ListaCodQRUnicosLeidos = New List(Of String)
+        _ListaCodQRUnicosLeidos = New List(Of CodigosDeBarra.CodigosQRLeidos)
         Chk_LeerSoloUnaVezCodBarra.Checked = _Global_Row_Configuracion_General.Item("LeerSoloUnaVezCodBarra")
         Sb_Color_Botones_Barra(Bar1)
 
@@ -112,6 +112,10 @@ Public Class Frm_Formulario_Lector_Barra
         Me.ActiveControl = Txt_Codigo_Barras
 
         Btn_VerCodigosLeidos.Visible = Chk_LeerSoloUnaVezCodBarra.Checked
+
+
+        '_ListaCodQRUnicosLeidos = New List(Of CodigosDeBarra.CodigosQRLeidos)
+
 
     End Sub
 
@@ -309,7 +313,19 @@ Public Class Frm_Formulario_Lector_Barra
                 Return
             End If
 
-            For Each _CodQr As String In _ListaCodQRUnicosLeidos
+            'For Each _CodQr As String In _ListaCodQRUnicosLeidos
+
+            '    If _CodQr = _CodQRUnicosLeido Then
+            '        Txt_Codigo_Barras.Text = String.Empty
+            '        Sb_Confirmar_Lectura("El código ya fue leído", "No puede leer mas de una vez el mismo código para esta lista")
+            '        Return
+            '    End If
+
+            'Next
+
+            For Each _ListaQr As CodigosDeBarra.CodigosQRLeidos In _ListaCodQRUnicosLeidos
+
+                Dim _CodQr As String = _ListaQr.CodigoQR
 
                 If _CodQr = _CodQRUnicosLeido Then
                     Txt_Codigo_Barras.Text = String.Empty
@@ -423,9 +439,13 @@ Public Class Frm_Formulario_Lector_Barra
                         End If
                         _Fila.Cells("Cantidad").Value += _Cantidad
 
-                        'If Not String.IsNullOrEmpty(_CodQRUnicosLeido) Then
-                        _ListaCodQRUnicosLeidos.Add(_CodQRUnicosLeido)
-                        'End If
+                        Dim _CodigosDeBarra As New CodigosDeBarra.CodigosQRLeidos
+
+                        _CodigosDeBarra.Codigo = _Codigo
+                        _CodigosDeBarra.CodigoQR = _CodQRUnicosLeido
+                        _CodigosDeBarra.CodigoAlternativo = _Kopral
+
+                        _ListaCodQRUnicosLeidos.Add(_CodigosDeBarra)
 
                     End If
 
@@ -615,15 +635,15 @@ Public Class Frm_Formulario_Lector_Barra
                 Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
                 Dim _Codigo_Barras = _Fila.Cells("Codigo_Barras").Value
-                Dim _ListaBorrar As New List(Of String)
+                Dim _ListaBorrar As New List(Of CodigosDeBarra.CodigosQRLeidos)
 
-                For Each _CodQr As String In _ListaCodQRUnicosLeidos
-                    If _CodQr.Contains(_Codigo_Barras) Then
+                For Each _CodQr As CodigosDeBarra.CodigosQRLeidos In _ListaCodQRUnicosLeidos
+                    If _CodQr.CodigoQR.Contains(_Codigo_Barras) Then
                         _ListaBorrar.Add(_CodQr)
                     End If
                 Next
 
-                For Each _CodQrBorrar As String In _ListaBorrar
+                For Each _CodQrBorrar As CodigosDeBarra.CodigosQRLeidos In _ListaBorrar
                     _ListaCodQRUnicosLeidos.Remove(_CodQrBorrar)
                 Next
 
@@ -727,7 +747,7 @@ Public Class Frm_Formulario_Lector_Barra
             Next
 
             If CBool(_ListaRows.Count) Then
-                _ListaCodQRUnicosLeidos = New List(Of String)
+                _ListaCodQRUnicosLeidos = New List(Of CodigosDeBarra.CodigosQRLeidos)
             End If
 
         End If
@@ -753,8 +773,8 @@ Public Class Frm_Formulario_Lector_Barra
 
         Dim _Texto As String
 
-        For Each _CodigoLeido As String In _ListaCodQRUnicosLeidos
-            _Texto += _CodigoLeido & vbCrLf
+        For Each _CodigoLeido As CodigosDeBarra.CodigosQRLeidos In _ListaCodQRUnicosLeidos
+            _Texto += "Código:" & _CodigoLeido.Codigo & ", CodAlternativo: " & _CodigoLeido.CodigoAlternativo & ", CodQR: " & _CodigoLeido.CodigoQR & vbCrLf
         Next
 
         Dim Fm As New Frm_Archivo_TXT
@@ -765,3 +785,15 @@ Public Class Frm_Formulario_Lector_Barra
     End Sub
 
 End Class
+
+Namespace CodigosDeBarra
+    Public Class CodigosQRLeidos
+
+        Public Property Codigo As String
+        Public Property CodigoQR As String
+        Public Property CodigoAlternativo As String
+
+    End Class
+
+
+End Namespace

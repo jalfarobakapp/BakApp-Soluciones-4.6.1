@@ -512,15 +512,11 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
     End Sub
     Private Sub Frm_BkpPostBusquedaEspecial_Mt_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
-        If Not _Global_Row_Configuracion_General.Item("Patentes_rvm") Then
-            Txtdescripcion.Width = 694
-        End If
-
-        Fx_Buscar_Patente()
+        'Fx_Buscar_Patente()
 
         Sb_Actualizar_Tbl_Bodegas()
 
-        Fx_Activar_Deactivar_Teclado()
+        'Fx_Activar_Deactivar_Teclado()
         _Mostrar_Clasificaciones = True
         Sb_Llena_Combo_CantFilas()
 
@@ -572,19 +568,19 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             AddHandler Grilla.CellDoubleClick, AddressOf Sb_Seleccionar_Producto_doble_clic_Alternativos
             'AddHandler Btn_Seleccionar.Click, AddressOf Sb_Seleccionar_Producto_doble_clic_Alternativos
 
-            Me.ActiveControl = TxtCodigo
+            'Me.ActiveControl = TxtCodigo
         ElseIf _Trabajar_Ubicaciones Then
 
             AddHandler Grilla.CellDoubleClick, AddressOf Sb_Seleccionar_Producto_doble_clic_Ubicaciones
             'AddHandler Btn_Seleccionar.Click, AddressOf Sb_Seleccionar_Producto_doble_clic_Ubicaciones
 
-            Me.ActiveControl = Txtdescripcion
+            'Me.ActiveControl = Txtdescripcion
         Else
 
             AddHandler Grilla.CellDoubleClick, AddressOf Sb_Seleccionar_Producto_doble_clic
             'AddHandler Btn_Seleccionar.Click, AddressOf Sb_Seleccionar_Producto_doble_clic
 
-            Me.ActiveControl = Txtdescripcion
+            'Me.ActiveControl = Txtdescripcion
         End If
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
@@ -593,7 +589,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             Grilla.CurrentCell = Grilla.Rows(0).Cells("Codigo")
         End If
 
-        Me.ActiveControl = Txtdescripcion
 
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
 
@@ -671,6 +666,19 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
         Btn_Mnu_Pr_Editar_Producto.Enabled = _Mostrar_Editar
         Btn_Mnu_Pr_Eliminar_Producto.Enabled = _Mostrar_Eliminar
+
+        If Not _Global_Row_Configuracion_General.Item("Patentes_rvm") Then
+            Lbl_Patente.Visible = False
+            Txt_Patente.Visible = False
+        End If
+
+        ' Me.ActiveControl = Txtdescripcion
+
+        AddHandler Txtdescripcion.Enter, AddressOf Txtdescripcion_Enter
+        AddHandler Txtdescripcion.KeyDown, AddressOf Txtdescripcion_KeyDown_1
+        AddHandler Txtdescripcion.TextChanged, AddressOf Txtdescripcion_TextChanged
+
+        Me.Refresh()
 
     End Sub
 
@@ -1552,7 +1560,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     End Sub
 
-    Private Sub Txtdescripcion_KeyDown_1(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles Txtdescripcion.KeyDown
+    Private Sub Txtdescripcion_KeyDown_1(sender As System.Object, e As System.Windows.Forms.KeyEventArgs)
 
         If e.KeyValue = Keys.Down Then
             Grilla.Focus()
@@ -1583,17 +1591,15 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         End If
     End Sub
 
-    Private Sub Txtdescripcion_TextChanged(sender As System.Object, e As System.EventArgs) Handles Txtdescripcion.TextChanged
+    Private Sub Txtdescripcion_TextChanged(sender As System.Object, e As System.EventArgs)
         If String.IsNullOrEmpty(Trim(Txtdescripcion.Text)) Then
-            ' BUSCA()
-            '_Cl_Buscar_Productos.Sb_Buscar_Productos(Txtdescripcion.Text, Class_BuscarProductos.Enum_Opcion_Buscar._Descripcion, ChkMostrarOcultos.Checked, True)
             Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
             Grilla.ClearSelection()
             GrillaBusquedaOtros.ClearSelection()
         End If
     End Sub
 
-    Private Sub Txtdescripcion_Enter(sender As System.Object, e As System.EventArgs) Handles Txtdescripcion.Enter
+    Private Sub Txtdescripcion_Enter(sender As System.Object, e As System.EventArgs)
         Grilla.ClearSelection()
         GrillaBusquedaOtros.ClearSelection()
     End Sub
@@ -2061,10 +2067,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                         _Precio = Fx_Precio_Formula_Random(_RowPrecio, "PP01UD", "ECUACION", Nothing, True, "", 1, 1)
                         _Fila.Cells("Precio_UD1").Value = _Precio
                         _Fila.Cells("Ecuacion_Generada").Value = True
-
-                        'Consulta_sql = "Update TABPRE Set PP01UD = " & De_Num_a_Tx_01(_Precio, False, 5) & vbCrLf &
-                        '               "Where KOLT = '" & _ListaBusq & "' And KOPR = '" & _Codigo & "'"
-                        '_Sql.Ej_consulta_IDU(Consulta_sql, False)
 
                     End If
 

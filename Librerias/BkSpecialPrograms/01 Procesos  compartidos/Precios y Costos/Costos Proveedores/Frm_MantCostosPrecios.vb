@@ -1055,90 +1055,17 @@ Public Class Frm_MantCostosPrecios
     End Sub
 
     Private Sub BtnGrabar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnGrabar.Click
-        'Sb_Grabar()
 
         If Chk_Ver_Solo_Repetidos.Checked Then
             MessageBoxEx.Show(Me, "Debe quitar el Check [" & Chk_Ver_Solo_Repetidos.Text & "]", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
-        Sb_Grabar_New()
+        Sb_Grabar()
+
     End Sub
 
     Sub Sb_Grabar()
-
-        Grilla.Refresh()
-
-        Consulta_sql = "Select Id, Tabla_Random, Campo_Random, Tabla_Bakapp, Campo_Bakapp
-                        From " & _Global_BaseBk & "Zw_Tablas_Equivalentes_Rd_Bk
-                        Where Tabla_Bakapp = 'Zw_ListaPreCosto'"
-        Dim _Tbl_Equivalentes As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        Dim _Sql_Equivalentes As String
-
-        For Each _Fila As DataRow In _Tbl_Equivalentes.Rows
-
-            Dim _Campo_Rd As String = _Fila.Item("Campo_Random")
-            Dim _Campo_Bk As String = _Fila.Item("Campo_Bakapp")
-
-            _Sql_Equivalentes += "," & _Campo_Rd & " = " & _Campo_Bk
-
-        Next
-
-        Consulta_sql = "Insert Into TABRECPR (KOPR,RECARGO,KOEN,ECUARECAR)
-                        Select Codigo,Flete,Proveedor,'' From " & _Nombre_Tbl_Paso_Costos & " 
-                        Where Codigo Not In (Select KOPR From TABRECPR Where KOEN = '" & _CodProveedor & "') And Flete > 0
-                            
-                        Update " & _Global_BaseBk & "Zw_ListaPreCosto Set 
-                        Descripcion = Tbp.Descripcion,
-	                    Descripcion_Alt = Tbp.Descripcion_Alt,
-	                    CostoUd1 = Tbp.CostoUd1,
-	                    CostoUd2 = Tbp.CostoUd2,
-	                    FechaVigencia = Getdate(),
-	                    Desc1 = Tbp.Desc1,
-	                    Desc2 = Tbp.Desc2,
-	                    Desc3 = Tbp.Desc3,
-	                    Desc4 = Tbp.Desc4,
-	                    Desc5 = Tbp.Desc5,
-                        DescSuma = Tbp.DescSuma,
-	                    Flete = Tbp.Flete
-                             From " & _Nombre_Tbl_Paso_Costos & " Tbp 
-	                              Inner Join " & _Global_BaseBk & "Zw_ListaPreCosto Tlc On Tbp.Lista = Tlc.Lista 
-                                        And Tbp.Proveedor = Tlc.Proveedor And Tbp.Codigo = Tlc.Codigo And Tbp.CodAlternativo = Tlc.CodAlternativo And Tbp.[Select] = 1
-                                
-                        Update TABRECPR Set RECARGO = Flete 
-                        From " & _Nombre_Tbl_Paso_Costos & " Tbp Inner Join TABRECPR On KOEN = Tbp.Proveedor And KOPR = Tbp.Codigo And Tbp.[Select] = 1 And No_Usar = 0
-                                  
-                        Update TABPRE Set PP01UD = CostoUd1,PP02UD = CostoUd2" & _Sql_Equivalentes & "
-                        From " & _Nombre_Tbl_Paso_Costos & " Tbp Inner Join TABPRE On KOLT = Tbp.Lista And KOPR = Tbp.Codigo And Tbp.[Select] = 1 And No_Usar = 0
-                        
-                        Update " & _Nombre_Tbl_Paso_Costos & " Set [Select] = 0"
-
-        Dim _Reg = _Sql.Fx_Cuenta_Registros(_Nombre_Tbl_Paso_Costos, "[Select] = 1 And No_Usar = 0")
-
-        If CBool(_Reg) Then
-
-            If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
-
-                For Each _Fila As DataRow In _Ds.Tables(0).Rows
-                    _Fila.Item("Select") = False
-                Next
-
-                MessageBoxEx.Show(Me, FormatNumber(_Reg, 0) & " Dato(s) actualizado(s) lista: " & _CodLista, "Actualizar Costos",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-            End If
-
-        Else
-
-            MessageBoxEx.Show(Me, "No se han cambiado valores o no se ha seleccionado ninguna fila", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
-        End If
-
-
-    End Sub
-
-    Sub Sb_Grabar_New()
 
         Grilla.Refresh()
 
@@ -1189,6 +1116,14 @@ Public Class Frm_MantCostosPrecios
             _Sql_Equivalentes += "," & _Campo_Rd & " = " & _Campo_Bk
 
         Next
+
+        Consulta_sql = "Insert Into TABRECPR (KOPR,RECARGO,KOEN,ECUARECAR,EMPRESA)
+                        Select Codigo,Flete,Proveedor,'','" & ModEmpresa & "' From " & _Nombre_Tbl_Paso_Costos & " 
+                        Where Codigo Not In (Select KOPR From TABRECPR Where KOEN = '" & _CodProveedor & "') And Flete > 0 
+
+                        Update TABRECPR Set EMPRESA = '" & ModEmpresa & "' 
+                        Where KOEN = '" & _CodProveedor & "' And KOPR In (Select Codigo From " & _Nombre_Tbl_Paso_Costos & ") And EMPRESA = ''"
+        _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
         _SqlActListaRandom = "Update TABPRE Set PP01UD = CostoUd1,PP02UD = CostoUd2" & _Sql_Equivalentes & vbCrLf &
                              "From " & _Nombre_Tbl_Paso_Costos & " Tbp Inner Join TABPRE On KOLT = Tbp.Lista And KOPR = Tbp.Codigo And No_Usar = 0" & vbCrLf
@@ -2019,8 +1954,8 @@ Public Class Frm_MantCostosPrecios
                         Where Proveedor = '" & _CodProveedor & "' And Sucursal = '" & _SucProveedor & "' And Lista = '" & _CodLista & "'
                         Update " & _Global_BaseBk & "Zw_ListaPreCosto_Enc Set Vigente = 1,CodFuncionario_Activa = '" & FUNCIONARIO & "',FechaActivacionVigencia = Getdate()
                         Where Id = " & _Id_Padre & "
-                        Insert Into TABRECPR (KOPR,RECARGO,KOEN,ECUARECAR)
-                        Select Codigo,Flete,Proveedor,'' From " & _Nombre_Tbl_Paso_Costos & " 
+                        Insert Into TABRECPR (KOPR,RECARGO,KOEN,ECUARECAR,EMPRESA)
+                        Select Codigo,Flete,Proveedor,'','" & ModEmpresa & "' From " & _Nombre_Tbl_Paso_Costos & " 
                         Where Codigo Not In (Select KOPR From TABRECPR Where KOEN = '" & _CodProveedor & "') And Flete > 0
                             
                         Update TABRECPR Set RECARGO = Flete 
