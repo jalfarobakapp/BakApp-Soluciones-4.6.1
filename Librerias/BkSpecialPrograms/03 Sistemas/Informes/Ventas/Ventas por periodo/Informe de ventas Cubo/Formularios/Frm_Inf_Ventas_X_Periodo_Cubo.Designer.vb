@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -351,7 +351,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Btn_Filtro_Ent_Tamano_Empresa.Image = CType(resources.GetObject("Btn_Filtro_Ent_Tamano_Empresa.Image"), System.Drawing.Image)
         Me.Btn_Filtro_Ent_Tamano_Empresa.ImageAlt = CType(resources.GetObject("Btn_Filtro_Ent_Tamano_Empresa.ImageAlt"), System.Drawing.Image)
         Me.Btn_Filtro_Ent_Tamano_Empresa.Name = "Btn_Filtro_Ent_Tamano_Empresa"
-        Me.Btn_Filtro_Ent_Tamano_Empresa.Text = "Filtrar por <b><font color=""#4E5D30""><font color=""#0072BC"">TAMAÑO EMPRESA</font><" &
+        Me.Btn_Filtro_Ent_Tamano_Empresa.Text = "Filtrar por <b><font color=""#4E5D30""><font color=""#0072BC"">TAMAÃ‘O EMPRESA</font><" &
     "/font></b>"
         '
         'Btn_Filtro_Ent_Lista_Precio_Asig
@@ -486,7 +486,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Btn_Filtro_Sucursales.Image = CType(resources.GetObject("Btn_Filtro_Sucursales.Image"), System.Drawing.Image)
         Me.Btn_Filtro_Sucursales.ImageAlt = CType(resources.GetObject("Btn_Filtro_Sucursales.ImageAlt"), System.Drawing.Image)
         Me.Btn_Filtro_Sucursales.Name = "Btn_Filtro_Sucursales"
-        Me.Btn_Filtro_Sucursales.Text = "Filtrar por <b><font color=""#0072BC"">SUCURSAL</font></b> (Línea Doc. Detalle)"
+        Me.Btn_Filtro_Sucursales.Text = "Filtrar por <b><font color=""#0072BC"">SUCURSAL</font></b> (LÃ­nea Doc. Detalle)"
         '
         'Btn_Filtro_Bodegas
         '
@@ -652,7 +652,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.LabelItem7.PaddingLeft = 10
         Me.LabelItem7.PaddingTop = 1
         Me.LabelItem7.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem7.Text = "Mantención de datos"
+        Me.LabelItem7.Text = "MantenciÃ³n de datos"
         '
         'Btn_Actualizar_Mes_Actual
         '
@@ -675,7 +675,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Btn_Reperar_Datos_Informe.ImageAlt = CType(resources.GetObject("Btn_Reperar_Datos_Informe.ImageAlt"), System.Drawing.Image)
         Me.Btn_Reperar_Datos_Informe.Name = "Btn_Reperar_Datos_Informe"
         Me.Btn_Reperar_Datos_Informe.Text = "Reparar filtros del informe "
-        Me.Btn_Reperar_Datos_Informe.Tooltip = "Actualizar datos de clasificación desde Random"
+        Me.Btn_Reperar_Datos_Informe.Tooltip = "Actualizar datos de clasificaciÃ³n desde Random"
         '
         'Menu_Contextual_Ventas
         '
@@ -798,7 +798,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Btn_Grafico_Linea_Tiempo.ForeColor = System.Drawing.Color.Black
         Me.Btn_Grafico_Linea_Tiempo.Image = CType(resources.GetObject("Btn_Grafico_Linea_Tiempo.Image"), System.Drawing.Image)
         Me.Btn_Grafico_Linea_Tiempo.Name = "Btn_Grafico_Linea_Tiempo"
-        Me.Btn_Grafico_Linea_Tiempo.Tooltip = "Ver grafico de línea de tiempo"
+        Me.Btn_Grafico_Linea_Tiempo.Tooltip = "Ver grafico de lÃ­nea de tiempo"
         Me.Btn_Grafico_Linea_Tiempo.Visible = False
         '
         'Btn_Grafico_Pie
@@ -836,7 +836,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Btn_Mantencion_Datos.ImageAlt = CType(resources.GetObject("Btn_Mantencion_Datos.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mantencion_Datos.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
         Me.Btn_Mantencion_Datos.Name = "Btn_Mantencion_Datos"
-        Me.Btn_Mantencion_Datos.Text = "Mantención de informe"
+        Me.Btn_Mantencion_Datos.Text = "MantenciÃ³n de informe"
         '
         'Btn_Consulta_Ventas_X_Cliente
         '
@@ -854,7 +854,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Btn_Arbol_Asociaciones.Image = CType(resources.GetObject("Btn_Arbol_Asociaciones.Image"), System.Drawing.Image)
         Me.Btn_Arbol_Asociaciones.ImageAlt = CType(resources.GetObject("Btn_Arbol_Asociaciones.ImageAlt"), System.Drawing.Image)
         Me.Btn_Arbol_Asociaciones.Name = "Btn_Arbol_Asociaciones"
-        Me.Btn_Arbol_Asociaciones.Tooltip = "Mantención de arbol de asociaciones"
+        Me.Btn_Arbol_Asociaciones.Tooltip = "MantenciÃ³n de arbol de asociaciones"
         '
         'TableLayoutPanel1
         '
@@ -1642,7 +1642,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Rdb_Pie_Descripcion.Size = New System.Drawing.Size(100, 23)
         Me.Rdb_Pie_Descripcion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Pie_Descripcion.TabIndex = 18
-        Me.Rdb_Pie_Descripcion.Text = "Ver Descripción"
+        Me.Rdb_Pie_Descripcion.Text = "Ver DescripciÃ³n"
         '
         'Rdb_Pie_Codigo
         '
@@ -1779,7 +1779,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel1
         Me.SuperTabItem1.GlobalItem = False
         Me.SuperTabItem1.Name = "SuperTabItem1"
-        Me.SuperTabItem1.Text = "Línea de tiempo"
+        Me.SuperTabItem1.Text = "LÃ­nea de tiempo"
         '
         'SuperTabControlPanel3
         '
