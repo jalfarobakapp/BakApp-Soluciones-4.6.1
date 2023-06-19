@@ -799,7 +799,6 @@ Partial Class Menu
         Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5})
         Me.ButtonX1.TabIndex = 15
         Me.ButtonX1.Text = "Boton de pruebas"
-        Me.ButtonX1.Visible = False
         '
         'Btn_Monisiones
         '

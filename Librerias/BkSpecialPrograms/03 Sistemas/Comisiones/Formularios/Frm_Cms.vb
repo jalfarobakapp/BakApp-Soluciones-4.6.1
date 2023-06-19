@@ -7,6 +7,32 @@ Public Class Frm_Cms
     Public Property Ds As DataSet
     Public Property Id_Enc As Integer
 
+    Dim _Tbl_Filtro_Entidad As DataTable
+    Dim _Tbl_Filtro_SucursalDoc As DataTable
+    Dim _Tbl_Filtro_Sucursales As DataTable
+    Dim _Tbl_Filtro_Bodegas As DataTable
+    Dim _Tbl_Filtro_Ciudad As DataTable
+    Dim _Tbl_Filtro_Comunas As DataTable
+    Dim _Tbl_Filtro_Rubro_Entidades As DataTable
+    Dim _Tbl_Filtro_Zonas_Entidades As DataTable
+    Dim _Tbl_Filtro_Responzables As DataTable
+    Dim _Tbl_Filtro_Vendedores As DataTable
+    Dim _Tbl_Filtro_Vendedores_Asignados As DataTable
+    Dim _Tbl_Filtro_Productos As DataTable
+    Dim _Tbl_Filtro_Super_Familias As DataTable
+    Dim _Tbl_Filtro_Familias As DataTable
+    Dim _Tbl_Filtro_Sub_Familias As DataTable
+    Dim _Tbl_Filtro_Marcas As DataTable
+    Dim _Tbl_Filtro_Rubro_Productos As DataTable
+    Dim _Tbl_Filtro_Clalibpr As DataTable
+    Dim _Tbl_Filtro_Zonas_Productos As DataTable
+    Dim _Tbl_Filtro_Tipo_Entidad As DataTable
+    Dim _Tbl_Filtro_Act_Economica As DataTable
+    Dim _Tbl_Filtro_Tama_Empresa As DataTable
+    Dim _Tbl_Filtro_Clas_BakApp As DataTable
+    Dim _Tbl_Filtro_Lista_Precio_Asig As DataTable
+    Dim _Tbl_Filtro_Lista_Precio_Docu As DataTable
+
     Public Sub New(_Id_Enc As Integer)
 
         ' Esta llamada es exigida por el diseñador.
@@ -437,5 +463,203 @@ Public Class Frm_Cms
         Me.Refresh()
 
     End Sub
+
+    Private Sub Grilla_Detalle_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Detalle.CellDoubleClick
+
+        Dim _Fila As DataGridViewRow = Grilla_Detalle.CurrentRow
+        Dim _Id_Det As Integer = _Fila.Cells("Id").Value
+        Dim _TotalNetoComisiones As Double
+
+        Sb_Cargar_TblInforme(_Id_Det)
+
+        Dim _FechaDesde As Date = Grilla_Periodo.Rows(0).Cells("FechaDesde").Value
+        Dim _FechaHasta As Date = Grilla_Periodo.Rows(0).Cells("FechaHasta").Value
+
+        Dim _Tabla_Matriz_Informe As String = "Zw_Informe_Venta" '"Zw_TblPaso" ' & Trim(FUNCIONARIO)
+
+        Dim Fm As New Frm_Inf_Ventas_X_Periodo_Cubo(Frm_Inf_Ventas_X_Periodo_Cubo.Enum_Informe.Sucursal,
+                                                    _Tabla_Matriz_Informe,
+                                                    1,
+                                                    _FechaDesde,
+                                                    _FechaHasta,
+                                                    False)
+        Fm.Tbl_Filtro_Entidad = _Tbl_Filtro_Entidad
+        Fm.Tbl_Filtro_SucursalDoc = _Tbl_Filtro_SucursalDoc
+        Fm.Tbl_Filtro_Sucursales = _Tbl_Filtro_Sucursales
+        Fm.Tbl_Filtro_Bodegas = _Tbl_Filtro_Bodegas
+        Fm.Tbl_Filtro_Ciudad = _Tbl_Filtro_Ciudad
+        Fm.Tbl_Filtro_Comunas = _Tbl_Filtro_Comunas
+        Fm.Tbl_Filtro_Rubro_Entidades = _Tbl_Filtro_Rubro_Entidades
+        Fm.Tbl_Filtro_Zonas_Entidades = _Tbl_Filtro_Zonas_Entidades
+        Fm.Tbl_Filtro_Responzables = _Tbl_Filtro_Responzables
+        Fm.Tbl_Filtro_Vendedores = _Tbl_Filtro_Vendedores
+        Fm.Tbl_Filtro_Vendedores_Asignados = _Tbl_Filtro_Vendedores_Asignados
+        Fm.Tbl_Filtro_Productos = _Tbl_Filtro_Productos
+        Fm.Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
+        Fm.Tbl_Filtro_Familias = _Tbl_Filtro_Familias
+        Fm.Tbl_Filtro_Sub_Familias = _Tbl_Filtro_Sub_Familias
+        Fm.Tbl_Filtro_Marcas = _Tbl_Filtro_Marcas
+        Fm.Tbl_Filtro_Rubro_Productos = _Tbl_Filtro_Rubro_Productos
+        Fm.Tbl_Filtro_Clalibpr = _Tbl_Filtro_Clalibpr
+        Fm.Tbl_Filtro_Zonas_Productos = _Tbl_Filtro_Zonas_Productos
+        Fm.Tbl_Filtro_Tipo_Entidad = _Tbl_Filtro_Tipo_Entidad
+        Fm.Tbl_Filtro_Act_Economica = _Tbl_Filtro_Act_Economica
+        Fm.Tbl_Filtro_Tama_Empresa = _Tbl_Filtro_Tama_Empresa
+
+        Fm.Comisiones = True
+        Fm.FechaDesdeFd = _FechaDesde
+        Fm.FechaHastaFh = _FechaHasta
+
+        Fm.ShowDialog(Me)
+
+        If Fm.ImportarComisiones Then
+
+            _TotalNetoComisiones = Fm.TotalNetoComisiones
+
+            _Tbl_Filtro_Entidad = Fm.Tbl_Filtro_Entidad
+            _Tbl_Filtro_SucursalDoc = Fm.Tbl_Filtro_SucursalDoc
+            _Tbl_Filtro_Sucursales = Fm.Tbl_Filtro_Sucursales
+            _Tbl_Filtro_Bodegas = Fm.Tbl_Filtro_Bodegas
+            _Tbl_Filtro_Ciudad = Fm.Tbl_Filtro_Ciudad
+            _Tbl_Filtro_Comunas = Fm.Tbl_Filtro_Comunas
+            _Tbl_Filtro_Rubro_Entidades = Fm.Tbl_Filtro_Rubro_Entidades
+            _Tbl_Filtro_Zonas_Entidades = Fm.Tbl_Filtro_Zonas_Entidades
+            _Tbl_Filtro_Responzables = Fm.Tbl_Filtro_Responzables
+            _Tbl_Filtro_Vendedores = Fm.Tbl_Filtro_Vendedores
+            _Tbl_Filtro_Vendedores_Asignados = Fm.Tbl_Filtro_Vendedores_Asignados
+            _Tbl_Filtro_Productos = Fm.Tbl_Filtro_Productos
+            _Tbl_Filtro_Super_Familias = Fm.Tbl_Filtro_Super_Familias
+            _Tbl_Filtro_Familias = Fm.Tbl_Filtro_Familias
+            _Tbl_Filtro_Sub_Familias = Fm.Tbl_Filtro_Sub_Familias
+            _Tbl_Filtro_Marcas = Fm.Tbl_Filtro_Marcas
+            _Tbl_Filtro_Rubro_Productos = Fm.Tbl_Filtro_Rubro_Productos
+            _Tbl_Filtro_Clalibpr = Fm.Tbl_Filtro_Clalibpr
+            _Tbl_Filtro_Zonas_Productos = Fm.Tbl_Filtro_Zonas_Productos
+            _Tbl_Filtro_Tipo_Entidad = Fm.Tbl_Filtro_Tipo_Entidad
+            _Tbl_Filtro_Act_Economica = Fm.Tbl_Filtro_Act_Economica
+            _Tbl_Filtro_Tama_Empresa = Fm.Tbl_Filtro_Tama_Empresa
+            Sb_Actualizar_TblInforme(_Id_Det)
+
+        End If
+
+        Fm.Dispose()
+
+
+    End Sub
+
+    Sub Sb_Cargar_TblInforme(_Id_Det As Integer)
+
+        _Tbl_Filtro_Entidad = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Entidad")
+        _Tbl_Filtro_SucursalDoc = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_SucursalDoc")
+        _Tbl_Filtro_Sucursales = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Sucursales")
+        _Tbl_Filtro_Bodegas = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Bodegas")
+        _Tbl_Filtro_Ciudad = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Ciudad")
+        _Tbl_Filtro_Comunas = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Comunas")
+        _Tbl_Filtro_Rubro_Entidades = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Rubro_Entidades")
+        _Tbl_Filtro_Zonas_Entidades = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Zonas_Entidades")
+        _Tbl_Filtro_Responzables = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Responzables")
+        _Tbl_Filtro_Vendedores = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Vendedores")
+        _Tbl_Filtro_Vendedores_Asignados = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Vendedores_Asignados")
+        _Tbl_Filtro_Productos = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Productos")
+        _Tbl_Filtro_Super_Familias = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Super_Familias")
+        _Tbl_Filtro_Familias = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Familias")
+        _Tbl_Filtro_Sub_Familias = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Sub_Familias")
+        _Tbl_Filtro_Marcas = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Marcas")
+        _Tbl_Filtro_Rubro_Productos = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Rubro_Productos")
+        _Tbl_Filtro_Clalibpr = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Clalibpr")
+        _Tbl_Filtro_Zonas_Productos = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Zonas_Productos")
+        _Tbl_Filtro_Tipo_Entidad = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Tipo_Entidad")
+        _Tbl_Filtro_Act_Economica = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Act_Economica")
+        _Tbl_Filtro_Tama_Empresa = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Tama_Empresa")
+        '_Tbl_Filtro_Clas_BakApp = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Clas_BakApp")
+        '_Tbl_Filtro_Lista_Precio_Asig = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Lista_Precio_Asig")
+        '_Tbl_Filtro_Lista_Precio_Docu = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Lista_Precio_Docu")
+
+    End Sub
+
+    Sub Sb_Actualizar_TblInforme(_Id_Det As Integer)
+
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Entidad, _Id_Det, "Tbl_Filtro_Entidad")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_SucursalDoc, _Id_Det, "Tbl_Filtro_SucursalDoc")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Sucursales, _Id_Det, "Tbl_Filtro_Sucursales")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Bodegas, _Id_Det, "Tbl_Filtro_Bodegas")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Ciudad, _Id_Det, "Tbl_Filtro_Ciudad")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Comunas, _Id_Det, "Tbl_Filtro_Comunas")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Rubro_Entidades, _Id_Det, "Tbl_Filtro_Rubro_Entidades")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Zonas_Entidades, _Id_Det, "Tbl_Filtro_Zonas_Entidades")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Responzables, _Id_Det, "Tbl_Filtro_Responzables")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Vendedores, _Id_Det, "Tbl_Filtro_Vendedores")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Vendedores_Asignados, _Id_Det, "Tbl_Filtro_Vendedores_Asignados")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Productos, _Id_Det, "Tbl_Filtro_Productos")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Super_Familias, _Id_Det, "Tbl_Filtro_Super_Familias")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Familias, _Id_Det, "Tbl_Filtro_Familias")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Sub_Familias, _Id_Det, "Tbl_Filtro_Sub_Familias")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Marcas, _Id_Det, "Tbl_Filtro_Marcas")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Rubro_Productos, _Id_Det, "Tbl_Filtro_Rubro_Productos")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Clalibpr, _Id_Det, "Tbl_Filtro_Clalibpr")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Zonas_Productos, _Id_Det, "Tbl_Filtro_Zonas_Productos")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Tipo_Entidad, _Id_Det, "Tbl_Filtro_Tipo_Entidad")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Act_Economica, _Id_Det, "Tbl_Filtro_Act_Economica")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Tama_Empresa, _Id_Det, "Tbl_Filtro_Tama_Empresa")
+        'Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Clas_BakApp, _Id_Det, "Tbl_Filtro_Clas_BakApp")
+        'Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Lista_Precio_Asig, _Id_Det, "Tbl_Filtro_Lista_Precio_Asig")
+        'Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Lista_Precio_Docu, _Id_Det, "Tbl_Filtro_Lista_Precio_Docu")
+
+    End Sub
+
+    Sub Sb_Actualizar_Filtro_Tmp(_Tbl As DataTable, _Id_Det As Integer, _NombreTblFiltro As String)
+
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+        Dim Consulta_sql As String
+
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl" & vbCrLf &
+                       "Where Id_Det = " & _Id_Det & " And NombreTblFiltro = '" & _NombreTblFiltro & "'" & vbCrLf
+
+        If Not _Tbl Is Nothing Then
+
+            If _Tbl.Rows.Count Then
+
+                For Each _Fila As DataRow In _Tbl.Rows
+
+                    Dim _Chk As Boolean = _Fila.Item("Chk")
+
+                    If _Chk Then
+
+                        Dim _Codigo = _Fila.Item("Codigo")
+                        Dim _Descripcion = _Fila.Item("Descripcion")
+
+                        Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl (Id_Det,Chk,Codigo,Descripcion,NombreTblFiltro) VALUES" & Space(1) &
+                                        "(" & _Id_Det & ",1,'" & _Codigo & "','" & _Descripcion & "','" & _NombreTblFiltro & "')" & vbCrLf
+
+                    End If
+
+                Next
+
+            End If
+
+        End If
+
+        _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+    End Sub
+
+    Function Fx_Cargar_TblFiltro(_Id_Dte As Integer, _NombreTblFiltro As String) As DataTable
+
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+        Dim _Tbl As DataTable
+
+        Consulta_Sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl" & vbCrLf &
+                       "Where Id_Det = " & _Id_Dte & " And NombreTblFiltro = '" & _NombreTblFiltro & "'"
+        _Tbl = _Sql.Fx_Get_Tablas(Consulta_Sql)
+
+        If CBool(_Tbl.Rows.Count) Then
+            _Tbl.TableName = _NombreTblFiltro
+        End If
+
+        Return _Tbl
+
+    End Function
+
 
 End Class
