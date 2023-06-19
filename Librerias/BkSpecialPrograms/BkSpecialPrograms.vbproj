@@ -7813,6 +7813,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="01 Procesos  compartidos\Productos\01 Buscar productos\New ProdFind\" />
     <Folder Include="03 Sistemas\Comisiones\Recursos\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

@@ -266,4 +266,7 @@ Public Class Productos
 
     End Sub
 
+    Private Sub Btn_Maestra_Productos_Click(sender As Object, e As EventArgs) Handles Btn_Maestra_Productos.Click
+
+    End Sub
 End Class

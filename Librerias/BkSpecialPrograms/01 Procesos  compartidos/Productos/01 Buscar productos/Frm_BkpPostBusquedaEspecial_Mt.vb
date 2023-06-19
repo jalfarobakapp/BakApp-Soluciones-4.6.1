@@ -1,5 +1,5 @@
-﻿Imports System.ComponentModel
-Imports System.Globalization
+﻿'Imports System.ComponentModel
+'Imports System.Globalization
 Imports DevComponents.DotNetBar
 
 Public Class Frm_BkpPostBusquedaEspecial_Mt
@@ -22,8 +22,8 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
     Dim _Seleccion_Multiple As Boolean
     Dim _Seleccionar_Multiple As Boolean
 
-    Dim _Cl_ActFxDinXProductos As New Class_ActFxDinXProductos ' Actualiza formula por producto dinamicamente en tiempo de ejecucion
-    Dim WithEvents _BackgroundWorker As New BackgroundWorker
+    Dim _Cl_ActFxDinXProductos As Class_ActFxDinXProductos ' Actualiza formula por producto dinamicamente en tiempo de ejecucion
+    'Dim WithEvents _BackgroundWorker As New BackgroundWorker
 
     Dim _Mostrar_Stock_Disponible As Boolean
     Dim _Tido_Stock As String
@@ -494,7 +494,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.White, ScrollBars.Vertical, True, True, _Seleccionar_Multiple)
-        Sb_Formato_Generico_Grilla(GrillaBusquedaOtros, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
+        'Sb_Formato_Generico_Grilla(GrillaBusquedaOtros, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
 
         _Seleccionado = False
 
@@ -511,8 +511,10 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     End Sub
     Private Sub Frm_BkpPostBusquedaEspecial_Mt_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-
+        'Return
         'Fx_Buscar_Patente()
+
+        _Cl_ActFxDinXProductos = New Class_ActFxDinXProductos
 
         Sb_Actualizar_Tbl_Bodegas()
 
@@ -555,7 +557,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion, _Top)
 
         Grilla.ClearSelection()
-        GrillaBusquedaOtros.ClearSelection()
+        'GrillaBusquedaOtros.ClearSelection()
 
         Mnu_Btn_Editar_Producto.Enabled = _Mostrar_Editar
         Mnu_Btn_Eliminar_Producto.Enabled = _Mostrar_Eliminar
@@ -672,13 +674,14 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             Txt_Patente.Visible = False
         End If
 
-        ' Me.ActiveControl = Txtdescripcion
-
         AddHandler Txtdescripcion.Enter, AddressOf Txtdescripcion_Enter
         AddHandler Txtdescripcion.KeyDown, AddressOf Txtdescripcion_KeyDown_1
         AddHandler Txtdescripcion.TextChanged, AddressOf Txtdescripcion_TextChanged
 
-        Me.Refresh()
+        AddHandler Grilla.CellEnter, AddressOf Grilla_CellEnter
+        AddHandler Grilla.CellFormatting, AddressOf Grilla_CellFormatting
+
+        Me.ActiveControl = Txtdescripcion
 
     End Sub
 
@@ -1586,6 +1589,10 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
     End Sub
 
     Private Sub Frm_BkpPostBusquedaEspecial_Mt_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+        If e.Alt Then 'AndAlso e.KeyCode = Keys.Tab Then
+            Beep()
+            e.Handled = True ' Bloquea la combinación Alt+Tab
+        End If
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
@@ -1595,13 +1602,13 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         If String.IsNullOrEmpty(Trim(Txtdescripcion.Text)) Then
             Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
             Grilla.ClearSelection()
-            GrillaBusquedaOtros.ClearSelection()
+            'GrillaBusquedaOtros.ClearSelection()
         End If
     End Sub
 
     Private Sub Txtdescripcion_Enter(sender As System.Object, e As System.EventArgs)
         Grilla.ClearSelection()
-        GrillaBusquedaOtros.ClearSelection()
+        'GrillaBusquedaOtros.ClearSelection()
     End Sub
 
     Private Sub VerClasificacionesToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs)
@@ -1682,7 +1689,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
             Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
             Grilla.ClearSelection()
-            GrillaBusquedaOtros.ClearSelection()
+            'GrillaBusquedaOtros.ClearSelection()
         End If
     End Sub
 
@@ -1939,42 +1946,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     End Function
 
-    Sub Sb_Mostrar_Class(_Codigo As String)
-
-        Consulta_sql = "Select Distinct Zw1.Codigo_Nodo,(Select Descripcion From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Zw2" & vbCrLf &
-                       "Where Zw2.Codigo_Nodo = Zw1.Codigo_Nodo) As Descripcion From " & _Global_BaseBk & "Zw_Prod_Asociacion Zw1" & vbCrLf &
-                       "Where Zw1.Codigo = '" & _Codigo & "' And Zw1.Codigo_Nodo In " & vbCrLf &
-                       "(Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Es_Seleccionable = 1)" & vbCrLf &
-                       "And Zw1.Clas_unica = 0"
-        Dim _TblClass As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-
-        Dim dt As New DataTable("Tabla1")
-        Dim dr As DataRow
-        Dim rs As New DataSet("Ds")
-
-        dt.Columns.Add("Codigo_Nodo", System.Type.[GetType]("System.String"))
-        dt.Columns.Add("Clasificacion", System.Type.[GetType]("System.String"))
-
-        For Each _Fila As DataRow In _TblClass.Rows
-            Dim _Codigo_Nodo = _Fila.Item("Codigo_Nodo")
-            Dim _Descripcion_B As String = Fx_Raiz_Clasificacion_FullPath(_Codigo_Nodo) & "\" & _Fila.Item("Descripcion")
-            dr = dt.NewRow() : dr("Codigo_Nodo") = _Codigo_Nodo : dr("Clasificacion") = _Descripcion_B : dt.Rows.Add(dr)
-
-        Next
-        rs.Tables.Add(dt)
-
-        With GrillaBusquedaOtros
-
-            .DataSource = dt
-            OcultarEncabezadoGrilla(GrillaBusquedaOtros, True)
-
-            .Columns("Clasificacion").Width = 740
-            .Columns("Clasificacion").HeaderText = "Descripción de clasificación"
-            .Columns("Clasificacion").Visible = True
-
-        End With
-    End Sub
 
     Function Fx_Raiz_Clasificacion_FullPath(_Codigo_Nodo As String)
 
@@ -2000,17 +1971,15 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     End Function
 
-    Private Sub Grilla_Enter(sender As System.Object, e As System.EventArgs) Handles Grilla.Enter
-        Bar_Menu_Producto.Enabled = True
-        'Btn_Seleccionar.Enabled = True
-        Me.Refresh()
-    End Sub
+    'Private Sub Grilla_Enter(sender As System.Object, e As System.EventArgs) Handles Grilla.Enter
+    '    Bar_Menu_Producto.Enabled = True
+    '    Me.Refresh()
+    'End Sub
 
-    Private Sub Grilla_Leave(sender As System.Object, e As System.EventArgs) Handles Grilla.Leave
-        Bar_Menu_Producto.Enabled = False
-        'Btn_Seleccionar.Enabled = False
-        Me.Refresh()
-    End Sub
+    'Private Sub Grilla_Leave(sender As System.Object, e As System.EventArgs) Handles Grilla.Leave
+    '    Bar_Menu_Producto.Enabled = False
+    '    Me.Refresh()
+    'End Sub
 
     Sub Sb_Imagen_Producto()
 
@@ -2433,25 +2402,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         End If
 
     End Sub
-
-    'Sub Sb_Grilla_RowsPostPaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPostPaintEventArgs)
-    '    Try
-    '        'Captura el numero de filas del datagridview
-    '        Dim RowsNumber As String = (e.RowIndex + 1).ToString
-    '        While RowsNumber.Length < Grilla.RowCount.ToString.Length
-    '            RowsNumber = "0" & RowsNumber
-    '        End While
-    '        Dim size As SizeF = e.Graphics.MeasureString(RowsNumber, Me.Font)
-    '        If Grilla.RowHeadersWidth < CInt(size.Width + 20) Then
-    '            Grilla.RowHeadersWidth = CInt(size.Width + 20)
-    '        End If
-    '        Dim ob As Brush = SystemBrushes.ControlText
-    '        e.Graphics.DrawString(RowsNumber, Me.Font, ob, e.RowBounds.Location.X + 15, e.RowBounds.Location.Y + ((e.RowBounds.Height - size.Height) / 2))
-    '    Catch ex As Exception
-    '        MessageBox.Show(ex.Message, "vb.net",
-    '     MessageBoxButtons.OK, MessageBoxIcon.Error)
-    '    End Try
-    'End Sub
 
     Private Sub Sb_Grilla_Scroll(sender As System.Object, e As System.Windows.Forms.ScrollEventArgs)
 
@@ -2899,26 +2849,30 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     End Sub
 
-    Private Sub Grilla_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles Grilla.CellFormatting
+    Private Sub Grilla_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs)
+        Try
 
-        Dim _Columname As String = Grilla.Columns(e.ColumnIndex).Name
+            Dim _Columname As String = Grilla.Columns(e.ColumnIndex).Name
 
-        If _Columname.Contains("STOCK_Ud") Then
+            If _Columname.Contains("STOCK_Ud") Then
 
-            Dim _Valor = e.Value
+                Dim _Valor = e.Value
 
-            If _Valor > 0 Then
-                'e.CellStyle.ForeColor = Verde
-                'e.CellStyle.Font = New Font(Grilla.Font.Name, Grilla.Font.Size, FontStyle.Bold)
-            Else
-                If Global_Thema = Enum_Themas.Oscuro Then
-                    e.CellStyle.ForeColor = Color.FromArgb(60, 60, 60)
+                If _Valor > 0 Then
+                    'e.CellStyle.ForeColor = Verde
+                    'e.CellStyle.Font = New Font(Grilla.Font.Name, Grilla.Font.Size, FontStyle.Bold)
                 Else
-                    e.CellStyle.ForeColor = Color.LightGray
+                    If Global_Thema = Enum_Themas.Oscuro Then
+                        e.CellStyle.ForeColor = Color.FromArgb(60, 60, 60)
+                    Else
+                        e.CellStyle.ForeColor = Color.LightGray
+                    End If
                 End If
-            End If
 
-        End If
+            End If
+        Catch ex As Exception
+
+        End Try
 
     End Sub
 
@@ -2930,11 +2884,10 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Sb_Dimensiones_Producto()
     End Sub
 
-    Private Sub Grilla_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellEnter
-
-        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+    Private Sub Grilla_CellEnter(sender As Object, e As DataGridViewCellEventArgs)
 
         Try
+            Dim _Fila As DataGridViewRow = Grilla.CurrentRow
             Dim _Ficha As String = _Fila.Cells("Ficha").Value
             Txt_Ficha.Text = _Ficha
         Catch ex As Exception
@@ -3177,43 +3130,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
         Grilla.EndEdit()
         Me.Refresh()
-
-    End Sub
-
-    Private Sub ButtonItem1_Click(sender As Object, e As EventArgs) Handles ButtonItem1.Click
-
-        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
-
-        Dim _Codigo As String = _Fila.Cells("Codigo").Value
-
-        Dim _Fecha = "01/01/1999"
-        Dim _FechaTope As DateTime = DateTime.ParseExact(_Fecha, "dd/MM/yyyy", Globalization.CultureInfo.CurrentCulture, DateTimeStyles.None)
-
-        Try
-            _FechaTope = _Global_Row_Configp.Item("FECHINIPPP")
-        Catch ex As Exception
-            _FechaTope = DateTime.ParseExact(_Fecha, "dd/MM/yyyy", Globalization.CultureInfo.CurrentCulture, DateTimeStyles.None)
-        End Try
-
-        Dim _Recalculado As Boolean
-        Dim _OldPpp As Double = _Sql.Fx_Trae_Dato("MAEPREM", "PM", "EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Codigo & "'")
-        Dim _NewPpp As Double
-
-        Dim Fm As New Frm_Recalculo_PPPxProd(_Codigo, _FechaTope)
-        Fm.ShowDialog(Me)
-        _Recalculado = Fm.Recalculado
-        _NewPpp = Fm.NewPPP
-        Fm.Dispose()
-
-        If _Recalculado Then
-
-            If _OldPpp <> _NewPpp Then
-
-            End If
-
-            MessageBoxEx.Show(Me, "PPP calculado: " & FormatCurrency(_NewPpp, 2), "Recalculo PM", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-        End If
 
     End Sub
 
