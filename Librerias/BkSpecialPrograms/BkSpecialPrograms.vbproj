@@ -1481,6 +1481,11 @@
     <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_New.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Recursos_NewDemonio.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Recursos_NewDemonio.resx</DependentUpon>
+    </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\Procedimientos\Ds_Config_Picking.vb">
       <DependentUpon>Ds_Config_Picking.xsd</DependentUpon>
     </Compile>
@@ -4658,6 +4663,11 @@
     <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_New.resx">
       <DependentUpon>Frm_Demonio_New.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Recursos_NewDemonio.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Recursos_NewDemonio.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Demonio DTE Monitor\Frm_Demonio_DTEMonitor.resx">
       <DependentUpon>Frm_Demonio_DTEMonitor.vb</DependentUpon>
     </EmbeddedResource>
@@ -7698,6 +7708,18 @@
     <None Include="Resources\invoice-ok.png" />
     <None Include="Resources\invoice-forbidden___copia.png" />
     <None Include="Resources\invoice-ok___copia.png" />
+    <None Include="Resources\Icon1.ico" />
+    <None Include="Resources\emoticon-wink-number-1.ico" />
+    <None Include="Resources\emoticon-wink-number-9.ico" />
+    <None Include="Resources\emoticon-wink-number-9-plus.ico" />
+    <None Include="Resources\emoticon-wink-number-8.ico" />
+    <None Include="Resources\emoticon-wink-number-7.ico" />
+    <None Include="Resources\emoticon-wink-number-6.ico" />
+    <None Include="Resources\emoticon-wink-number-5.ico" />
+    <None Include="Resources\emoticon-wink-number-4.ico" />
+    <None Include="Resources\emoticon-wink-number-3.ico" />
+    <None Include="Resources\emoticon-wink-number-2.ico" />
+    <None Include="Resources\emoticon-wink.ico" />
     <Content Include="Resources\user_add.png" />
     <None Include="Resources\_Trans\_transport_ok.png" />
     <None Include="Resources\_Trans\_transport_lock.png" />

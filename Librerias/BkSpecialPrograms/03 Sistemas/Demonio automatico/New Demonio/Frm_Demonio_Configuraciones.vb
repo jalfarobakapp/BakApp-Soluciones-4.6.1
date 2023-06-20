@@ -159,18 +159,29 @@ Public Class Frm_Demonio_Configuraciones
 
         Next
 
-        If Chk_SolProdBod.Checked And String.IsNullOrWhiteSpace(Txt_ImpSolProdBod.Text) Then
+        If Chk_SolProdBod.Checked AndAlso String.IsNullOrWhiteSpace(Txt_ImpSolProdBod.Text) Then
             MessageBoxEx.Show(Me, "Falta la impresora en solicitud de productos a bodega", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
-        If Chk_FacAuto.Checked And String.IsNullOrWhiteSpace(Txt_FacAuto_Modalidad.Text) Then
+        If Chk_FacAuto.Checked AndAlso String.IsNullOrWhiteSpace(Txt_FacAuto_Modalidad.Text) Then
             MessageBoxEx.Show(Me, "Falta la modalidad para la facturación automática", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
-        If Chk_ArchivarDoc.Checked And String.IsNullOrWhiteSpace(Txt_DirArchivarDoc.Text) Then
+        If Chk_ArchivarDoc.Checked AndAlso String.IsNullOrWhiteSpace(Txt_DirArchivarDoc.Text) Then
             MessageBoxEx.Show(Me, "Falta la carpeta de destino de los archivos en el archivador de documentos", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If Chk_CierreDoc.Checked AndAlso
+            Not Chk_COVCerrar.Checked AndAlso
+            Not Chk_NVICerrar.Checked AndAlso
+            Not Chk_NVVCerrar.Checked AndAlso
+            Not Chk_OCCCerrar.Checked AndAlso
+            Not Chk_OCICerrar.Checked Then
+            MessageBoxEx.Show(Me, "Debe indicar algún documento para cerrar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            SuperTab.SelectedTabIndex = 12
             Return
         End If
 

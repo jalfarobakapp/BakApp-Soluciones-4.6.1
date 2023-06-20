@@ -91,6 +91,7 @@ Public Class Cl_Imprimir_Documentos
         End Set
     End Property
 
+    Public Property Log_Registro As String
     Public Sub New()
 
         _BackgroundWorker.WorkerReportsProgress = True
@@ -279,6 +280,8 @@ Public Class Cl_Imprimir_Documentos
 
                 Dim _Id As Integer = _Fl.Item("Id")
                 Dim _Idmaeedo As Integer = _Fl.Item("Idmaeedo")
+                Dim _Tido As Integer = _Fl.Item("Tido")
+                Dim _Nudo As Integer = _Fl.Item("Nudo")
                 Dim _AmbienteCertificacion As Boolean = _Fl.Item("AmbienteCertificacion")
                 Dim _Msg As String = String.Empty
 
@@ -296,7 +299,11 @@ Public Class Cl_Imprimir_Documentos
                 Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion Set " &
                            "FirmarDTE = 0,Log_Firma = '" & _Msg & "', Id_Dte = " & _Id_Dte & vbCrLf &
                            "Where Id = " & _Id
-                _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+                If _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                    Log_Registro += "Se envia a firmar Documento: " & _Tido & "-" & _Nudo & vbCrLf
+                Else
+                    Log_Registro += _Sql.Pro_Error & vbCrLf
+                End If
 
             Next
 
@@ -345,6 +352,7 @@ Public Class Cl_Imprimir_Documentos
                 Dim _Id As Integer = _Fila_Imp.Item("Id")
                 Dim _IdMaeedo = _Fila_Imp.Item("Idmaeedo")
                 Dim _Tido = _Fila_Imp.Item("Tido")
+                Dim _Nudo = _Fila_Imp.Item("Nudo")
                 Dim _Funcionario = _Fila_Imp.Item("Funcionario")
                 Dim _Picking = _Fila_Imp.Item("Picking")
                 Dim _NombreFormato = _Fila_Imp.Item("NombreFormato")
@@ -389,7 +397,7 @@ Public Class Cl_Imprimir_Documentos
                     Dim _IdPadre As Integer
 
                     If IsNothing(_Row_Demonio_Cof_Estacion) Then
-                        _Log_Error = "No existe configuración en Servidor: " & _Nombre_Equipo & ". "
+                        Log_Registro += "No existe configuración en Servidor: " & _Nombre_Equipo & "." & vbCrLf
                     Else
                         _IdPadre = _Row_Demonio_Cof_Estacion.Item("Id")
                     End If
@@ -441,7 +449,11 @@ Public Class Cl_Imprimir_Documentos
                                             "Set Revizado_Demonio = 1,Impreso = 1,Error_Al_Imprimir = 0," & vbCrLf &
                                             "Log_Error = '" & _Log_Error & "'" & vbCrLf &
                                             "Where Id = " & _Id
-                            _Sql.Ej_consulta_IDU(_Consulta_sql, False)
+                            If _Sql.Ej_consulta_IDU(_Consulta_sql, False) Then
+                                Log_Registro += vbTab & " - " & _Tido & "-" & _Nudo & " - Impreso correctamente en Impresora: " & _Impresora & vbCrLf
+                            Else
+                                Log_Registro += _Sql.Pro_Error & vbCrLf
+                            End If
 
                         Else
 
@@ -449,7 +461,11 @@ Public Class Cl_Imprimir_Documentos
                                             "Set Revizado_Demonio = 1,Impreso = 0,Error_Al_Imprimir = 1," &
                                             "Log_Error = '" & _Log_Error & "'" & vbCrLf &
                                             "Where Id = " & _Id
-                            _Sql.Ej_consulta_IDU(_Consulta_sql, False)
+                            If _Sql.Ej_consulta_IDU(_Consulta_sql, False) Then
+                                Log_Registro += _Log_Error & vbCrLf
+                            Else
+                                Log_Registro += _Sql.Pro_Error & vbCrLf
+                            End If
 
                         End If
 
@@ -460,7 +476,11 @@ Public Class Cl_Imprimir_Documentos
                         _Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion" & Space(1) &
                                         "Set Revizado_Demonio = 1,Impreso = 0,Error_Al_Imprimir = 1,Log_Error = '" & _Log_Error & "'" & vbCrLf &
                                         "Where Id = " & _Id
-                        _Sql.Ej_consulta_IDU(_Consulta_sql, False)
+                        If _Sql.Ej_consulta_IDU(_Consulta_sql, False) Then
+                            Log_Registro += _Log_Error & vbCrLf
+                        Else
+                            Log_Registro += _Sql.Pro_Error & vbCrLf
+                        End If
 
                     End If
 
@@ -469,7 +489,11 @@ Public Class Cl_Imprimir_Documentos
                     _Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion " &
                                     "Set Revizado_Demonio = 1,Impreso = 0,Error_Al_Imprimir = 0,Log_Error = 'No se imprime, se marca como impreso por el usuario'" & vbCrLf &
                                     "Where Id = " & _Id
-                    _Sql.Ej_consulta_IDU(_Consulta_sql, False)
+                    If _Sql.Ej_consulta_IDU(_Consulta_sql, False) Then
+                        Log_Registro += "No se imprime, se marca como impreso por el usuario" & vbCrLf
+                    Else
+                        Log_Registro += _Sql.Pro_Error & vbCrLf
+                    End If
 
                 End If
 
