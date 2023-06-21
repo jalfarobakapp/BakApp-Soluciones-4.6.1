@@ -23,6 +23,7 @@
     Public Property FinalizaCada As DateTime
     Public Property Resumen As String
     Public Property Validada As Boolean
+    Public Property Activo As Boolean
 
 End Class
 

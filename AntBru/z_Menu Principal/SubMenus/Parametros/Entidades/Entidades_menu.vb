@@ -20,6 +20,11 @@ Public Class Entidades_menu
     End Sub
 
     Private Sub Btn_MantEntidades_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_MantEntidades.Click
+
+        Dim Fm1 As New Fm_BuscarEntidades
+        Fm1.ShowDialog(Me)
+        Fm1.Dispose()
+        Return
         Dim Nro = "CfEnt001"
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, Nro) Then
             Dim Fm As New Frm_BuscarEntidad_Mt(False)

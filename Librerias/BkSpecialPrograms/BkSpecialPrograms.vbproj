@@ -467,6 +467,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\14 Exportar documentos\Cl_ExpotarDoc.vb" />
+    <Compile Include="01 Procesos  compartidos\Entidades\02 Buscar Entiades\Fm_BuscarEntidades.Designer.vb">
+      <DependentUpon>Fm_BuscarEntidades.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Entidades\02 Buscar Entiades\Fm_BuscarEntidades.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Envio y Recepcion de Mail\Configuracion de recepcion de correos POP3\Frm_RecepXML_Cmp_ConfGral.Designer.vb">
       <DependentUpon>Frm_RecepXML_Cmp_ConfGral.vb</DependentUpon>
     </Compile>
@@ -1457,6 +1463,12 @@
     <Compile Include="03 Sistemas\Demonio automatico\Impresion\Frm_Dem_Imprimir_Conf.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Fm_Demonio.Designer.vb">
+      <DependentUpon>Fm_Demonio.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Fm_Demonio.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfAsisCompra.Designer.vb">
       <DependentUpon>Frm_Demonio_ConfAsisCompra.vb</DependentUpon>
     </Compile>
@@ -1480,6 +1492,11 @@
     </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_New.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Recursos_NewDemonio.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Recursos_NewDemonio.resx</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\Procedimientos\Ds_Config_Picking.vb">
       <DependentUpon>Ds_Config_Picking.xsd</DependentUpon>
@@ -4159,6 +4176,9 @@
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Asociacion de documentos a OCC\Frm_RecargosXProd.resx">
       <DependentUpon>Frm_RecargosXProd.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Entidades\02 Buscar Entiades\Fm_BuscarEntidades.resx">
+      <DependentUpon>Fm_BuscarEntidades.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Envio y Recepcion de Mail\Configuracion de recepcion de correos POP3\Frm_RecepXML_Cmp_ConfGral.resx">
       <DependentUpon>Frm_RecepXML_Cmp_ConfGral.vb</DependentUpon>
     </EmbeddedResource>
@@ -4646,6 +4666,9 @@
     <EmbeddedResource Include="03 Sistemas\Demonio automatico\Impresion\Frm_Dem_Imprimir_Conf.resx">
       <DependentUpon>Frm_Dem_Imprimir_Conf.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Fm_Demonio.resx">
+      <DependentUpon>Fm_Demonio.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfAsisCompra.resx">
       <DependentUpon>Frm_Demonio_ConfAsisCompra.vb</DependentUpon>
     </EmbeddedResource>
@@ -4657,6 +4680,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_New.resx">
       <DependentUpon>Frm_Demonio_New.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Recursos_NewDemonio.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Recursos_NewDemonio.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Demonio DTE Monitor\Frm_Demonio_DTEMonitor.resx">
       <DependentUpon>Frm_Demonio_DTEMonitor.vb</DependentUpon>
@@ -7698,6 +7726,18 @@
     <None Include="Resources\invoice-ok.png" />
     <None Include="Resources\invoice-forbidden___copia.png" />
     <None Include="Resources\invoice-ok___copia.png" />
+    <None Include="Resources\Icon1.ico" />
+    <None Include="Resources\emoticon-wink-number-1.ico" />
+    <None Include="Resources\emoticon-wink-number-9.ico" />
+    <None Include="Resources\emoticon-wink-number-9-plus.ico" />
+    <None Include="Resources\emoticon-wink-number-8.ico" />
+    <None Include="Resources\emoticon-wink-number-7.ico" />
+    <None Include="Resources\emoticon-wink-number-6.ico" />
+    <None Include="Resources\emoticon-wink-number-5.ico" />
+    <None Include="Resources\emoticon-wink-number-4.ico" />
+    <None Include="Resources\emoticon-wink-number-3.ico" />
+    <None Include="Resources\emoticon-wink-number-2.ico" />
+    <None Include="Resources\emoticon-wink.ico" />
     <Content Include="Resources\user_add.png" />
     <None Include="Resources\_Trans\_transport_ok.png" />
     <None Include="Resources\_Trans\_transport_lock.png" />
