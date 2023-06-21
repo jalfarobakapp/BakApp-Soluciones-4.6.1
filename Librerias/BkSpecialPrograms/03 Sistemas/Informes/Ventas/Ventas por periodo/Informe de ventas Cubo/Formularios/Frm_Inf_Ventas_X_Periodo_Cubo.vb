@@ -203,7 +203,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             '_Fl_Funcionarios = value
         End Set
     End Property
-    Public Property Pro_Tbl_Filtro_Productos() As DataTable
+    Public Property Tbl_Filtro_Productos() As DataTable
         Get
             Return _Tbl_Filtro_Productos
         End Get
@@ -211,7 +211,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Productos = value
         End Set
     End Property
-    Public Property Pro_Tbl_Filtro_Super_Familias() As DataTable
+    Public Property Tbl_Filtro_Super_Familias() As DataTable
         Get
             Return _Tbl_Filtro_Super_Familias
         End Get
@@ -219,7 +219,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Super_Familias = value
         End Set
     End Property
-    Public Property Pro_Tbl_Filtro_Marcas() As DataTable
+    Public Property Tbl_Filtro_Marcas() As DataTable
         Get
             Return _Tbl_Filtro_Marcas
         End Get
@@ -227,7 +227,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Marcas = value
         End Set
     End Property
-    Public Property Pro_Tbl_Filtro_Rubro_Productos() As DataTable
+    Public Property Tbl_Filtro_Rubro_Productos() As DataTable
         Get
             Return _Tbl_Filtro_Rubro_Productos
         End Get
@@ -235,7 +235,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Rubro_Productos = value
         End Set
     End Property
-    Public Property Pro_Tbl_Filtro_Clalibpr() As DataTable
+    Public Property Tbl_Filtro_Clalibpr() As DataTable
         Get
             Return _Tbl_Filtro_Clalibpr
         End Get
@@ -243,7 +243,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Clalibpr = value
         End Set
     End Property
-    Public Property Pro_Tbl_Filtro_Zonas_Productos() As DataTable
+    Public Property Tbl_Filtro_Zonas_Productos() As DataTable
         Get
             Return _Tbl_Filtro_Zonas_Productos
         End Get
@@ -251,7 +251,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Zonas_Productos = value
         End Set
     End Property
-    Public Property Pro_Tbl_Filtro_Entidad() As DataTable
+    Public Property Tbl_Filtro_Entidad() As DataTable
         Get
             Return _Tbl_Filtro_Entidad
         End Get
@@ -259,7 +259,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Entidad = value
         End Set
     End Property
-    Public Property Pro_Tbl_Filtro_Ciudad() As DataTable
+    Public Property Tbl_Filtro_Ciudad() As DataTable
         Get
             Return _Tbl_Filtro_Ciudad
         End Get
@@ -267,7 +267,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Ciudad = value
         End Set
     End Property
-    Public Property Pro_Tbl_Filtro_Comunas() As DataTable
+    Public Property Tbl_Filtro_Comunas() As DataTable
         Get
             Return _Tbl_Filtro_Comunas
         End Get
@@ -275,7 +275,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Comunas = value
         End Set
     End Property
-    Public Property Pro_Tbl_Filtro_Rubro_Entidades() As DataTable
+    Public Property Tbl_Filtro_Rubro_Entidades() As DataTable
         Get
             Return _Tbl_Filtro_Rubro_Entidades
         End Get
@@ -283,7 +283,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Rubro_Entidades = value
         End Set
     End Property
-    Public Property Pro_Tbl_Filtro_Zonas_Entidades() As DataTable
+    Public Property Tbl_Filtro_Zonas_Entidades() As DataTable
         Get
             Return _Tbl_Filtro_Zonas_Entidades
         End Get
@@ -291,7 +291,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Zonas_Entidades = value
         End Set
     End Property
-    Public Property Pro_Tbl_Filtro_Responzables() As DataTable
+    Public Property Tbl_Filtro_Responzables() As DataTable
         Get
             Return _Tbl_Filtro_Responzables
         End Get
@@ -299,7 +299,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Responzables = value
         End Set
     End Property
-    Public Property Pro_Tbl_Filtro_Vendedores() As DataTable
+    Public Property Tbl_Filtro_Vendedores() As DataTable
         Get
             Return _Tbl_Filtro_Vendedores
         End Get
@@ -307,7 +307,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Vendedores = value
         End Set
     End Property
-    Public Property Pro_Tbl_Filtro_Vendedores_Asignados() As DataTable
+    Public Property Tbl_Filtro_Vendedores_Asignados() As DataTable
         Get
             Return _Tbl_Filtro_Vendedores_Asignados
         End Get
@@ -460,6 +460,84 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End Set
     End Property
 
+    Public Property Tbl_Filtro_SucursalDoc As DataTable
+        Get
+            Return _Tbl_Filtro_SucursalDoc
+        End Get
+        Set(value As DataTable)
+            _Tbl_Filtro_SucursalDoc = value
+        End Set
+    End Property
+
+    Public Property Tbl_Filtro_Sucursales As DataTable
+        Get
+            Return _Tbl_Filtro_Sucursales
+        End Get
+        Set(value As DataTable)
+            _Tbl_Filtro_Sucursales = value
+        End Set
+    End Property
+
+    Public Property Tbl_Filtro_Bodegas As DataTable
+        Get
+            Return _Tbl_Filtro_Bodegas
+        End Get
+        Set(value As DataTable)
+            _Tbl_Filtro_Bodegas = value
+        End Set
+    End Property
+
+    Public Property Tbl_Filtro_Familias As DataTable
+        Get
+            Return _Tbl_Filtro_Familias
+        End Get
+        Set(value As DataTable)
+            _Tbl_Filtro_Familias = value
+        End Set
+    End Property
+
+    Public Property Tbl_Filtro_Sub_Familias As DataTable
+        Get
+            Return _Tbl_Filtro_Sub_Familias
+        End Get
+        Set(value As DataTable)
+            _Tbl_Filtro_Sub_Familias = value
+        End Set
+    End Property
+
+    Public Property Tbl_Filtro_Tipo_Entidad As DataTable
+        Get
+            Return _Tbl_Filtro_Tipo_Entidad
+        End Get
+        Set(value As DataTable)
+            _Tbl_Filtro_Tipo_Entidad = value
+        End Set
+    End Property
+
+    Public Property Tbl_Filtro_Act_Economica As DataTable
+        Get
+            Return _Tbl_Filtro_Act_Economica
+        End Get
+        Set(value As DataTable)
+            _Tbl_Filtro_Act_Economica = value
+        End Set
+    End Property
+
+    Public Property Tbl_Filtro_Tama_Empresa As DataTable
+        Get
+            Return _Tbl_Filtro_Tama_Empresa
+        End Get
+        Set(value As DataTable)
+            _Tbl_Filtro_Tama_Empresa = value
+        End Set
+    End Property
+
+    Public Property FechaDesdeFd As Date
+    Public Property FechaHastaFh As Date
+    Public Property Comisiones As Boolean
+    Public Property TotalNetoComisiones As Double
+    Public Property ImportarComisiones As Boolean
+
     Public Sub New(Informe As Enum_Informe,
                    Nombre_Tabla_Paso As String,
                    Unidad As Integer,
@@ -603,9 +681,44 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             Me.Text = "(Inf: " & _Nombre_Tabla_Paso & ")"
         End If
 
-        Tiempo.Enabled = False
 
-        Tiempo_revisa_actualizacion.Enabled = True
+        If Comisiones Then
+
+            _Filtro_Entidad_Todas = Not CBool(Tbl_Filtro_Entidad.Rows.Count)
+            _Filtro_SucursalDoc_Todas = Not CBool(_Tbl_Filtro_SucursalDoc.Rows.Count)
+            _Filtro_Sucursales_Todas = Not CBool(_Tbl_Filtro_Sucursales.Rows.Count)
+            _Filtro_Bodegas_Todas = Not CBool(_Tbl_Filtro_Bodegas.Rows.Count)
+            _Filtro_Ciudad_Todas = Not CBool(_Tbl_Filtro_Ciudad.Rows.Count)
+            _Filtro_Comunas_Todas = Not CBool(_Tbl_Filtro_Comunas.Rows.Count)
+            _Filtro_Rubro_Entidades_Todas = Not CBool(_Tbl_Filtro_Rubro_Entidades.Rows.Count)
+            _Filtro_Zonas_Entidades_Todas = Not CBool(_Tbl_Filtro_Zonas_Entidades.Rows.Count)
+            _Filtro_Responzables_Todas = Not CBool(_Tbl_Filtro_Responzables.Rows.Count)
+            _Filtro_Vendedores_Todas = Not CBool(_Tbl_Filtro_Vendedores.Rows.Count)
+            _Filtro_Vendedores_Asignados_Todas = Not CBool(_Tbl_Filtro_Vendedores_Asignados.Rows.Count)
+            _Filtro_Productos_Todos = Not CBool(_Tbl_Filtro_Productos.Rows.Count)
+            _Filtro_Super_Familias_Todas = Not CBool(_Tbl_Filtro_Super_Familias.Rows.Count)
+            _Filtro_Familias_Todas = Not CBool(_Tbl_Filtro_Familias.Rows.Count)
+            _Filtro_Sub_Familias_Todas = Not CBool(_Tbl_Filtro_Sub_Familias.Rows.Count)
+            _Filtro_Marcas_Todas = Not CBool(_Tbl_Filtro_Marcas.Rows.Count)
+            _Filtro_Rubro_Productos_Todas = Not CBool(_Tbl_Filtro_Rubro_Productos.Rows.Count)
+            _Filtro_Clalibpr_Todas = Not CBool(_Tbl_Filtro_Clalibpr.Rows.Count)
+            _Filtro_Zonas_Productos_Todas = Not CBool(_Tbl_Filtro_Zonas_Productos.Rows.Count)
+            _Filtro_Tipo_Entidad_Todas = Not CBool(_Tbl_Filtro_Tipo_Entidad.Rows.Count)
+            _Filtro_Act_Economica_Todas = Not CBool(_Tbl_Filtro_Act_Economica.Rows.Count)
+            _Filtro_Tama_Empresa_Todas = Not CBool(_Tbl_Filtro_Tama_Empresa.Rows.Count)
+
+            Tiempo.Start()
+
+        Else
+
+            Tiempo.Enabled = False
+            Tiempo_revisa_actualizacion.Enabled = True
+
+        End If
+
+
+
+
         Sb_Formato_Graficos(Grafico_Tendencias, 0, 0)
 
     End Sub
@@ -692,6 +805,12 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
     Sub Sb_Actualizar_Grilla(_Actualizar_Datos_Informe As Boolean)
 
         Try
+
+            If Comisiones Then
+                Dtp_Fecha_Desde.Value = FechaDesdeFd
+                Dtp_Fecha_Hasta.Value = FechaHastaFh
+                _Actualizar_Datos_Informe = False
+            End If
 
             Consulta_sql = "Select Min(FEEMLI) As Fecha_Desde, Max(FEEMLI) As Fecha_Hasta From " & _Nombre_Tabla_Paso
             Dim _Row_Fechas_Carga As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -1034,6 +1153,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                 Txt_Total_Neto.Text = FormatNumber(_Row_Totales.Item("TOTAL"), 0)
             End If
 
+            TotalNetoComisiones = _Row_Totales.Item("TOTAL")
 
             Sb_Actualizar_Graficos()
 
@@ -4163,6 +4283,13 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             End If
 
         End If
+
+    End Sub
+
+    Private Sub Btn_Importar_Informe_Click(sender As Object, e As EventArgs) Handles Btn_Importar_Informe.Click
+
+        ImportarComisiones = True
+        Me.Close()
 
     End Sub
 
