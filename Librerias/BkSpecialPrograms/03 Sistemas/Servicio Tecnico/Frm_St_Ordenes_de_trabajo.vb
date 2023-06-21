@@ -182,9 +182,9 @@ Public Class Frm_St_Ordenes_de_trabajo
 
             Case 0 ' Todas
                 GroupPanel1.Text = "Todas las ordenes de trabajo activas"
-                _Condicion = "And CodEstado In ('A','C','E','F','I','P','R','V') Or (CodEstado In ('CE','N') And " & _Filtro_Fecha & ")" & vbCrLf
+                _Condicion = "And (CodEstado In ('A','C','E','F','I','P','R','V') Or (CodEstado In ('CE','N') And " & _Filtro_Fecha & "))" & vbCrLf
             Case 1 ' Ingresadas
-                GroupPanel1.Text = "Ordenes de trabajo Ingresadas, en esperad de asignación a algún técnico."
+                GroupPanel1.Text = "Ordenes de trabajo Ingresadas, en espera de asignación a algún técnico."
                 _Condicion = "And CodEstado In ('I')" & vbCrLf
             Case 2 ' Asignadas tecnico
                 GroupPanel1.Text = "Ordenes de trabajo asignadas a algún técnico, a la espera de una evaluación."

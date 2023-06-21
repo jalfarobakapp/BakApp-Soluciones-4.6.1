@@ -516,6 +516,13 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
 
         Consulta_sql = String.Empty
 
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller", "PwTecnico = '" & Txt_PwTecnico.Text.Trim & "'")
+
+        If CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "La clave de usuario ya esta registrada", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         If _Accion = Accion.Editar Then
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller" & Space(1) &
                            "Where CodFuncionario = '" & _CodFuncionario & "'" & vbCrLf & vbCrLf
@@ -523,12 +530,12 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
 
         Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller (CodFuncionario,NomFuncionario,Direccion," &
                        "Telefono,Email,Pais,Ciudad,Comuna,Star," &
-                       "Chk_Taller_Externo,Chk_Habilitado,Chk_Supervisor,Chk_Domicilio,Informacion,EsTecnico,PwTecnico,EsTaller) Values " &
+                       "Chk_Taller_Externo,Chk_Habilitado,Chk_Supervisor,Chk_Domicilio,Informacion,EsTecnico,PwTecnico,EsTaller,Empresa,Sucursal) Values " &
                        "('" & _CodFuncionario & "','" & Txt_NomFuncionario.Text.Trim & "','" & Txt_Direccion.Text.Trim &
                        "','" & Txt_Telefono.Text.Trim & "','" & Txt_Email.Text.Trim &
                        "','" & _CodPais & "','" & _CodCiudad & "','" & _CodComuna & "'," & _Star &
                        "," & _Chk_Taller_Externo & "," & _Chk_Habilitado & "," & _Chk_Supervisor & "," & _Chk_Domicilio &
-                       ",'" & _Informacion & "'," & _EsTecnico & ",'" & Txt_PwTecnico.Text & "'," & _EsTaller & ")"
+                       ",'" & _Informacion & "'," & _EsTecnico & ",'" & Txt_PwTecnico.Text & "'," & _EsTaller & ",'" & ModEmpresa & "','" & ModSucursal & "')"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
             _Grabado = True

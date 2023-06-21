@@ -32,10 +32,11 @@ Public Class Frm_St_Lista_Tecnicos_Talleres
 
     Sub Sb_Actualizar_Grilla()
 
-        Consulta_sql = "SELECT CodFuncionario,NomFuncionario,Direccion,Telefono,Email,Pais,Ciudad,Comuna,Star," &
+        Consulta_sql = "Select CodFuncionario,NomFuncionario,Direccion,Telefono,Email,Pais,Ciudad,Comuna,Star," &
                        "Chk_Taller_Externo,Chk_Habilitado,Chk_Supervisor,Chk_Domicilio,Informacion," & vbCrLf &
                        "Case Chk_Taller_Externo When 1 Then 'TALLER' Else 'TECNICO' End As 'Tipo'" & vbCrLf &
-                       "FROM " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller"
+                       "From " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller" & vbCrLf &
+                       "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'"
         _TblTecnicos = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla
