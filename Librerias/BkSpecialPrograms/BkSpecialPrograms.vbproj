@@ -467,12 +467,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\14 Exportar documentos\Cl_ExpotarDoc.vb" />
-    <Compile Include="01 Procesos  compartidos\Entidades\02 Buscar Entiades\Fm_BuscarEntidades.Designer.vb">
-      <DependentUpon>Fm_BuscarEntidades.vb</DependentUpon>
-    </Compile>
-    <Compile Include="01 Procesos  compartidos\Entidades\02 Buscar Entiades\Fm_BuscarEntidades.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="01 Procesos  compartidos\Envio y Recepcion de Mail\Configuracion de recepcion de correos POP3\Frm_RecepXML_Cmp_ConfGral.Designer.vb">
       <DependentUpon>Frm_RecepXML_Cmp_ConfGral.vb</DependentUpon>
     </Compile>
@@ -4175,9 +4169,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Asociacion de documentos a OCC\Frm_RecargosXProd.resx">
       <DependentUpon>Frm_RecargosXProd.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="01 Procesos  compartidos\Entidades\02 Buscar Entiades\Fm_BuscarEntidades.resx">
-      <DependentUpon>Fm_BuscarEntidades.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Envio y Recepcion de Mail\Configuracion de recepcion de correos POP3\Frm_RecepXML_Cmp_ConfGral.resx">
       <DependentUpon>Frm_RecepXML_Cmp_ConfGral.vb</DependentUpon>
