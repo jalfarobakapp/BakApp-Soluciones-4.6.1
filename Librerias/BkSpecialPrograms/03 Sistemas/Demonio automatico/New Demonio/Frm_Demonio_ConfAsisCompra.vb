@@ -136,7 +136,7 @@ Public Class Frm_Demonio_ConfAsisCompra
 
     Private Sub Btn_ConfProgramacion_Click(sender As Object, e As EventArgs) Handles Btn_ConfProgramacion.Click
 
-        Dim Fm As New Frm_Demonio_ConfProgramacion
+        Dim Fm As New Frm_Demonio_ConfProgramacion(False, False, False, "")
         Fm.Programacion = _Programacion
         Fm.Txt_Nombre.ReadOnly = True
         Fm.ShowDialog(Me)

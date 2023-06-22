@@ -13,7 +13,11 @@ Public Class Frm_Demonio_Configuraciones
 
     Dim EnvioCorreo_Prog As New Cl_NewProgramacion
 
+    Dim _Directorio = AppPath() & "\Data\" & RutEmpresa & "\Tmp"
+    Dim _Dir_Correo_Imagenes = _Directorio & "\Correo\Imagenes"
+
     Public Property Grabar As Boolean
+    Public Property Cambiar_Usuario_X_Defecto As Boolean
 
     Public Sub New(_Id As Integer, _Funcionario_Autorizado As String)
 
@@ -317,6 +321,7 @@ Public Class Frm_Demonio_Configuraciones
         Dim _SucedeCada As Boolean
         Dim _SucedeUnaVez As Boolean
         Dim _TipoIntervalo As String = String.Empty
+        Dim _TIValorDefecto As String
         Dim _TISegundos As Boolean
         Dim _TIMinutos As Boolean
         Dim _TIHoras As Boolean
@@ -324,9 +329,9 @@ Public Class Frm_Demonio_Configuraciones
         Dim _MinIntervalo As Integer
         Dim _MaxIntevalo As Integer
 
-        Sb_Tipo_Configuracion(_Nombre, _Diariamente, _Semanalmente, _SucedeCada, _SucedeUnaVez, _TISegundos, _TIMinutos, _TIHoras, _TipoIntervalo, _MinIntervalo, _MaxIntevalo)
+        Sb_Tipo_Configuracion(_Nombre, _Diariamente, _Semanalmente, _SucedeCada, _SucedeUnaVez, _TIValorDefecto, _TISegundos, _TIMinutos, _TIHoras, _TipoIntervalo, _MinIntervalo, _MaxIntevalo)
 
-        Dim Fm As New Frm_Demonio_ConfProgramacion
+        Dim Fm As New Frm_Demonio_ConfProgramacion(_TISegundos, _TIMinutos, _TIHoras, _TIValorDefecto)
         Fm.Text = "Configuración de programación de " & _Tab.Text.ToUpper
 
         Fm.Rdb_FrecuDiaria.Enabled = _Diariamente
@@ -336,7 +341,6 @@ Public Class Frm_Demonio_Configuraciones
         Fm.Input_IntervaloCada.MinValue = _MinIntervalo
         Fm.Input_IntervaloCada.MaxValue = _MaxIntevalo
 
-        Fm.TISegundos = _TISegundos
         Fm.TIMinutos = _TIMinutos
         Fm.TIHoras = _TIHoras
 
@@ -356,6 +360,7 @@ Public Class Frm_Demonio_Configuraciones
                               ByRef _Semanalmente As Boolean,
                               ByRef _SucedeCada As Boolean,
                               ByRef _SucedeUnaVez As Boolean,
+                              ByRef _TIValorDefecto As String,
                               ByRef _TISegundos As Boolean,
                               ByRef _TIMinutos As Boolean,
                               ByRef _TIHoras As Boolean,
@@ -367,12 +372,21 @@ Public Class Frm_Demonio_Configuraciones
         _MaxIntevalo = 60
 
         Select Case _Nombre
-            Case "EnvioCorreo", "ColaImpDoc", "ColaImpPick", "SolProdBod", "Prestashop_Prod",
-                 "Prestashop_Order", "Prestashop_Total", "ImporDTESII", "ArchivarDoc", "Wordpress_Prod", "Wordpress_Stock"
-                _Diariamente = True : _SucedeCada = True : _MinIntervalo = 5 : _MaxIntevalo = 59 : _TIMinutos = True
-                '_Arr_TipoIntercalo = {{"MM", "Minutos"}}
-            Case "ConsStock", "CierreDoc", "FacAuto"
-                _Diariamente = True : _Semanalmente = True : _SucedeUnaVez = True : _SucedeCada = True : _MinIntervalo = 5 : _MaxIntevalo = 59 : _TIMinutos = True
+            Case "EnvioCorreo", "Prestashop_Prod", "Wordpress_Prod", "Wordpress_Stock", "FacAuto", "ImporDTESII"
+                _Diariamente = True : _SucedeCada = True : _MinIntervalo = 1 : _MaxIntevalo = 59 : _TIMinutos = True : _TIValorDefecto = "MM"
+            Case "ColaImpDoc"
+                _Diariamente = True : _SucedeCada = True : _MinIntervalo = 3 : _MaxIntevalo = 3 : _TISegundos = True : _TIValorDefecto = "SS"
+            Case "ColaImpPick"
+                _Diariamente = True : _SucedeCada = True : _MinIntervalo = 4 : _MaxIntevalo = 4 : _TISegundos = True : _TIValorDefecto = "SS"
+            Case "SolProdBod"
+                _Diariamente = True : _SucedeCada = True : _MinIntervalo = 5 : _MaxIntevalo = 5 : _TISegundos = True : _TIValorDefecto = "SS"
+            Case "Prestashop_Order"
+                _Diariamente = True : _SucedeCada = True : _MinIntervalo = 2 : _MaxIntevalo = 2 : _TISegundos = True : _TIValorDefecto = "SS"
+            Case "ArchivarDoc"
+                _Diariamente = True : _SucedeCada = True : _MinIntervalo = 30 : _MaxIntevalo = 30 : _TISegundos = True : _TIValorDefecto = "SS"
+            Case "ConsStock", "CierreDoc", "Prestashop_Total"
+                _Diariamente = True : _Semanalmente = True : _SucedeUnaVez = True : _SucedeCada = False
+                _MinIntervalo = 5 : _MaxIntevalo = 59 : _TIMinutos = True : _TIValorDefecto = ""
             Case Else
                 Dim A = 1
         End Select
@@ -587,7 +601,7 @@ Public Class Frm_Demonio_Configuraciones
 
         If _Actualizar Then
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Tmp_Prm_Informes" & vbCrLf &
-                           "Where Informe = 'Demonio' And NombreEquipo = '" & _NombreEquipo & "'"
+                           "Where Informe = 'Demonio' And NombreEquipo = '" & _NombreEquipo & "' And Funcionario = '" & FUNCIONARIO & "'"
             _Sql.Ej_consulta_IDU(Consulta_sql)
         End If
 
@@ -720,5 +734,44 @@ Public Class Frm_Demonio_Configuraciones
 
     End Sub
 
+    Private Sub Btn_Carpeta_Imagenes_Click(sender As Object, e As EventArgs) Handles Btn_Carpeta_Imagenes.Click
+        Process.Start("explorer.exe", _Dir_Correo_Imagenes)
+    End Sub
 
+    Private Sub BtnCambiarDeUsuario_Click(sender As Object, e As EventArgs) Handles BtnCambiarDeUsuario.Click
+
+        Dim _Old_Funcionario = FUNCIONARIO
+
+        Dim Fml As New Frm_Login
+        Fml.ShowDialog()
+        Fml.Dispose()
+
+        If _Old_Funcionario <> FUNCIONARIO Then
+
+            Dim Frm_Modalidad As New Frm_Modalidades(False)
+            Frm_Modalidad.ShowDialog()
+            Frm_Modalidad.Dispose()
+
+            If MessageBoxEx.Show(Me, "¿Desea dejar a este funcionario permanentemente como usuario por defecto para la estación de trabajo?" & vbCrLf & vbCrLf &
+                                         "Usuario: " & FUNCIONARIO & "-" & Nombre_funcionario_activo.Trim & " Modalidad: " & Modalidad,
+                                         "Usuario por defecto", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_EstacionesBkp Set " &
+                               "Usuario_X_Defecto = '" & FUNCIONARIO & "', Modalidad_X_Defecto = '" & Modalidad & "'" & vbCrLf &
+                               "Where NombreEquipo = '" & _NombreEquipo & "'"
+                If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+
+                    MessageBoxEx.Show(Me, "Nombre de usuario por defecto cambiado correctamente", "Cambio de usuario",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                End If
+
+            End If
+
+            Cambiar_Usuario_X_Defecto = True
+            Me.Close()
+
+        End If
+
+    End Sub
 End Class

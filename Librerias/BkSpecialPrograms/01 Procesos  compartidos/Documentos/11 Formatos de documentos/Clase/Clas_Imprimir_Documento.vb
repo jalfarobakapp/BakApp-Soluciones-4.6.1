@@ -163,6 +163,7 @@ Public Class Clas_Imprimir_Documento
         End Set
     End Property
 
+
     Public Sub New(_IdDoc As Integer,
                    _TipoDoc As String,
                    _NombreFormato As String,
@@ -1312,6 +1313,7 @@ Public Class Clas_Imprimir_Documento
                             If _SQL_Personalizada Then
 
                                 Dim _Error As String
+
                                 _Row = Fx_Funcion_SQL_Personalizada_Enc_Pie(_SqlQuery, _IdDoc, _Error)
 
                                 If String.IsNullOrEmpty(_Error) Then
@@ -1340,6 +1342,9 @@ Public Class Clas_Imprimir_Documento
                                                                           _Row,
                                                                           _Texto)
 
+                            If _Campo = "_Error" And String.IsNullOrEmpty(_Texto) Then
+                                _Texto = "_Error"
+                            End If
 
                             If _Formatext.Length > 1 Then
 
@@ -1431,8 +1436,8 @@ Public Class Clas_Imprimir_Documento
         Catch ex As Exception
             _Ultimo_Error = ex.Message
             My.Computer.FileSystem.WriteAllText("Log_Errores.log", ex.Message & vbCrLf & ex.StackTrace, False)
-            MsgBox(ex.Message)
-            MsgBox("Error lo puesde ver en archivo Log de errores")
+            'MsgBox(ex.Message)
+            'MsgBox("Error lo puedes ver en archivo Log de errores")
         End Try
 
     End Sub
@@ -2405,9 +2410,10 @@ Public Class Clas_Imprimir_Documento
                             If _SQL_Personalizada Then
 
                                 Dim _Error As String
+
                                 _Row = Fx_Funcion_SQL_Personalizada_Enc_Pie(_SqlQuery, _IdDoc, _Error)
 
-                                If String.IsNullOrEmpty(_Error) Then
+                                    If String.IsNullOrEmpty(_Error) Then
                                     _Campo = "CAMPO"
                                 Else
                                     _Campo = "_Error"
@@ -2428,6 +2434,10 @@ Public Class Clas_Imprimir_Documento
                                                                           _Es_Descuento,
                                                                           _Row,
                                                                           _Texto)
+
+                            If _Campo = "_Error" And String.IsNullOrEmpty(_Texto) Then
+                                _Texto = "_Error"
+                            End If
 
                             If _Formatext.Length > 1 Then
 

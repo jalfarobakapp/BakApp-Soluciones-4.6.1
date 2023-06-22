@@ -1089,7 +1089,9 @@ Error_Numero:
         For i = 0 To _Filas
             Dim _Padre = _Arreglo(i, 0)
             Dim _Hijo = _Arreglo(i, 1)
-            dr = dt.NewRow() : dr("Padre") = _Padre : dr("Hijo") = _Hijo : dt.Rows.Add(dr)
+            If Not IsNothing(_Padre) And Not IsNothing(_Hijo) Then
+                dr = dt.NewRow() : dr("Padre") = _Padre : dr("Hijo") = _Hijo : dt.Rows.Add(dr)
+            End If
         Next
         rs.Tables.Add(dt)
 

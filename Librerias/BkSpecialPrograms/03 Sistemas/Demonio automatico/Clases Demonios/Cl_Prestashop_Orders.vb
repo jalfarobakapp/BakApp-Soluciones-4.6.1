@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports DevComponents.DotNetBar
 Imports DevComponents.DotNetBar.Controls
+Imports iTextSharp.text.pdf
 
 Public Class Cl_Prestashop_Orders
 
@@ -92,6 +93,8 @@ Public Class Cl_Prestashop_Orders
         End Set
     End Property
 
+    Public Property Log_Registro As String
+
     Public Sub New()
 
         _BackgroundWorker.WorkerReportsProgress = True
@@ -155,12 +158,15 @@ Public Class Cl_Prestashop_Orders
 
     Sub Sb_Procedimiento_Prestashop_orders()
 
+        _Procesando = True
+        Log_Registro = String.Empty
+
         Consulta_Sql = "Select Od.Id_order,Od.Reference,Od.Date_add,Od.Total_paid,Ps.*
                         From " & _Global_BaseBk & "Zw_PrestaShop_orders Od
                         Inner Join " & _Global_BaseBk & "Zw_PrestaShop Ps On Ps.Codigo_Pagina = Od.Codigo_Pagina
                         Where Reference = ''"
 
-        Dim _Tbl_PrestaShop_orders As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_PrestaShop_orders As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql, False)
 
         If CBool(_Tbl_PrestaShop_orders.Rows.Count) Then
 
@@ -199,13 +205,14 @@ Public Class Cl_Prestashop_Orders
 
                     _Log_Error = Replace(_Log_Error, "'", "''")
 
-                    'Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "Zw_PrestaShop_orders", _Id_order, "Diablito",
-                    '                   "Prestashop " & _Nombre_Pagina & ": " & _Log_Error, "", "", "", "", False, "")
-
                     Consulta_Sql = "Update " & _Global_BaseBk & "Zw_PrestaShop_orders Set 
                                     Reference = 'Error! - " & Mid(_Log_Error.Trim, 1, 80) & "' 
                                     Where Codigo_Pagina = '" & _Codigo_Pagina & "' And Id_order = " & _Id_order
-                    _Sql.Ej_consulta_IDU(Consulta_Sql)
+                    If _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                        Log_Registro += _Log_Error & vbCrLf & _Sql.Pro_Error & vbCrLf
+                    Else
+                        Log_Registro += _Log_Error & vbCrLf & _Sql.Pro_Error & vbCrLf
+                    End If
 
                 End If
 
@@ -214,6 +221,8 @@ Public Class Cl_Prestashop_Orders
             Next
 
         End If
+
+        _Procesando = False
 
     End Sub
 
@@ -348,6 +357,7 @@ Public Class Cl_Prestashop_Orders
                 Next
 
                 If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_Sql_Query) Then
+                    Log_Registro = "Se inserta la Orden Id: " & _Id_orders & ", Referencia: " & _Reference & vbCrLf
                     Return ""
                 Else
                     Return _Sql.Pro_Error

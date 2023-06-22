@@ -112,6 +112,7 @@ Public Class Cl_Solicitud_Productos_Bodega
         End Set
     End Property
 
+    Public Property Log_Registro As String
     Public Sub New()
 
         _BackgroundWorker.WorkerReportsProgress = True
@@ -175,12 +176,16 @@ Public Class Cl_Solicitud_Productos_Bodega
 
     Sub Sb_Procedimiento_Solicitud_De_Productos_A_Bodega()
 
+        _Procesando = True
+
+        Log_Registro = String.Empty
+
         Dim _Id As Integer
 
         Consulta_Sql = "Select Id From " & _Global_BaseBk & "Zw_Prod_SolBodega " &
                        "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'  And Bodega = '" & ModBodega & "' And Impreso = 0"
 
-        Dim _TblProd_SolBodega = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _TblProd_SolBodega = _Sql.Fx_Get_Tablas(Consulta_Sql, False)
 
         If CBool(_TblProd_SolBodega.Rows.Count) Then
 
@@ -199,7 +204,6 @@ Public Class Cl_Solicitud_Productos_Bodega
 
             End If
 
-
             For Each _Fila As DataRow In _TblProd_SolBodega.Rows
 
                 _Id = _Fila.Item("Id")
@@ -207,7 +211,11 @@ Public Class Cl_Solicitud_Productos_Bodega
                 If _Solo_Marcar_No_Imprimir Then
 
                     Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Prod_SolBodega set Impreso = 1 where Id = " & _Id
-                    _Sql.Ej_consulta_IDU(Consulta_Sql)
+                    If _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                        Log_Registro = "Id: " & _Id & " solo marcado como impreso" & vbCrLf
+                    Else
+                        Log_Registro = _Sql.Pro_Error
+                    End If
 
                 Else
 
@@ -217,7 +225,13 @@ Public Class Cl_Solicitud_Productos_Bodega
 
                     If String.IsNullOrEmpty(_Log_Error) Then
                         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Prod_SolBodega set Impreso = 1 where Id = " & _Id
-                        _Sql.Ej_consulta_IDU(Consulta_Sql)
+                        If _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                            Log_Registro = vbTab & "Solicutud de producto a bodega Id: " & _Id & " Impreso correctamente" & vbCrLf
+                        Else
+                            Log_Registro += _Sql.Pro_Error
+                        End If
+                    Else
+                        Log_Registro += _Log_Error
                     End If
 
                 End If
@@ -225,6 +239,8 @@ Public Class Cl_Solicitud_Productos_Bodega
             Next
 
         End If
+
+        _Procesando = False
 
     End Sub
 

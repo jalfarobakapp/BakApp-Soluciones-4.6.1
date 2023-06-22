@@ -200,6 +200,8 @@ Module Mod_Imprimir
 
         _Imprimir.Fx_Imprimir_Documento(Nothing, _Vista_Previa, False)
 
+        '_Imprimir.MostrarError
+
         Dim _LogError = _Imprimir.Pro_Ultimo_Error
 
         _Documento_Impreso = _Imprimir.Pro_Documento_Impreso
@@ -628,7 +630,11 @@ Module Mod_Imprimir
         _Error = _Sql.Pro_Error
 
         If Not String.IsNullOrEmpty(_Error) Then
-            My.Computer.Clipboard.SetText(_SqlQuery)
+            Try
+                My.Computer.Clipboard.SetText(_SqlQuery)
+            Catch ex As Exception
+
+            End Try
         End If
 
         Return _Row

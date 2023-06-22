@@ -763,12 +763,6 @@ Public Class Menu
 
         Dim _Id As Integer = _Global_Row_EstacionBk.Item("Id")
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
-        'Dim _Id_Prog As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_ConfXEstacion", "Id", "NombreEquipo = '" & _NombreEquipo & "'", True)
-
-        'If Not CBool(_Id_Prog) Then
-        '    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_ConfXEstacion (NombreEquipo) Values ('" & _NombreEquipo & "')"
-        '    _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Prog)
-        'End If
 
         Dim Fm As New Frm_Demonio_Configuraciones(_Id, FUNCIONARIO)
         Fm.ShowDialog(_Fm_Menu_Padre)
@@ -778,9 +772,26 @@ Public Class Menu
 
     Private Sub ButtonItem2_Click(sender As Object, e As EventArgs) Handles ButtonItem2.Click
 
+        Dim _CambioDeConfiguracion As Boolean
+
         Dim Fm As New Frm_Demonio_New
         Fm.ShowDialog(_Fm_Menu_Padre)
+        _CambioDeConfiguracion = Fm.CambioDeConfiguracion
         Fm.Dispose()
+        Fm = Nothing
+
+        If _CambioDeConfiguracion Then
+
+            Dim _Id As Integer = _Global_Row_EstacionBk.Item("Id")
+            Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+            Dim Fm2 As New Frm_Demonio_Configuraciones(_Id, FUNCIONARIO)
+            Fm2.ShowDialog(_Fm_Menu_Padre)
+            Fm2.Dispose()
+
+            Call ButtonItem2_Click(Nothing, Nothing)
+
+        End If
 
     End Sub
 

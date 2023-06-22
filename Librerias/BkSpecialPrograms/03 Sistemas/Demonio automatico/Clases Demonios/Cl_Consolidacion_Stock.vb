@@ -119,6 +119,8 @@ Public Class Cl_Consolidacion_Stock
         End Set
     End Property
 
+    Public Property Log_Registro As String
+
     Public Sub New()
 
         _BackgroundWorker.WorkerReportsProgress = True
@@ -148,8 +150,8 @@ Public Class Cl_Consolidacion_Stock
         Dim worker As BackgroundWorker = TryCast(sender, BackgroundWorker)
 
         Try
-
-            Sb_Procedimiento_Consolidar_Stock()
+            Dim _Form As New Form
+            Sb_Procedimiento_Consolidar_Stock(_Form)
 
         Catch ex As Exception
             e.Cancel = True
@@ -180,7 +182,9 @@ Public Class Cl_Consolidacion_Stock
 
     End Sub
 
-    Sub Sb_Procedimiento_Consolidar_Stock()
+    Sub Sb_Procedimiento_Consolidar_Stock(_Formulario As Form)
+
+        Procesando = True
 
         Dim _Tbl_Productos As DataTable
 
@@ -196,13 +200,13 @@ Public Class Cl_Consolidacion_Stock
                            "KOPR IN (SELECT Distinct KOPRCT FROM MAEDDO WHERE FEEMLI = '" & _Fecha & "')"
         End If
 
-        _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_Sql, False)
 
-        If CBool(_Tbl_Productos.Rows.Count) Then
+        If Not IsNothing(_Tbl_Productos) AndAlso CBool(_Tbl_Productos.Rows.Count) Then
 
             Dim _Filtro_Productos As String = Generar_Filtro_IN(_Tbl_Productos, "", "Codigo", False, False, "'")
 
-            Dim _Formulario As New Form
+            'Dim _Formulario As New Form
 
             Dim Fm As New Frm_Consolidacion_Stock_PP(_Filtro_Productos)
             Fm.Pro_Ejecutar_Automaticamente = True
@@ -212,13 +216,19 @@ Public Class Cl_Consolidacion_Stock
 
             Dim _Hora_Termino = Date.Now.ToShortTimeString
 
-            Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "Consolidacion",
-                               "Consolidación de stock automaticamente desde el diablito según programación..." & Space(1) &
-                               "Productos: " & FormatNumber(_Tbl_Productos.Rows.Count, 0) & Space(1) &
-                               "Hora inicio: " & _Hora_Inicio & ", Hora termino: " & _Hora_Termino,
-                               "", "", "", "", 0, "")
+            Log_Registro = "Consolidación de stock..." & vbCrLf &
+                           vbTab & "Productos: " & FormatNumber(_Tbl_Productos.Rows.Count, 0) & Space(1) &
+                           vbCrLf & "Hora inicio: " & _Hora_Inicio & ", Hora termino: " & _Hora_Termino
+
+            'Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "Consolidacion",
+            '                   "Consolidación de stock automaticamente desde el diablito según programación..." & Space(1) &
+            '                   "Productos: " & FormatNumber(_Tbl_Productos.Rows.Count, 0) & Space(1) &
+            '                   "Hora inicio: " & _Hora_Inicio & ", Hora termino: " & _Hora_Termino,
+            '                   "", "", "", "", 0, "")
 
         End If
+
+        Procesando = False
 
     End Sub
 

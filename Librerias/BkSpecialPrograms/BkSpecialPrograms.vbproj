@@ -1457,12 +1457,6 @@
     <Compile Include="03 Sistemas\Demonio automatico\Impresion\Frm_Dem_Imprimir_Conf.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Fm_Demonio.Designer.vb">
-      <DependentUpon>Fm_Demonio.vb</DependentUpon>
-    </Compile>
-    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Fm_Demonio.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfAsisCompra.Designer.vb">
       <DependentUpon>Frm_Demonio_ConfAsisCompra.vb</DependentUpon>
     </Compile>
@@ -4656,9 +4650,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Demonio automatico\Impresion\Frm_Dem_Imprimir_Conf.resx">
       <DependentUpon>Frm_Dem_Imprimir_Conf.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Fm_Demonio.resx">
-      <DependentUpon>Fm_Demonio.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfAsisCompra.resx">
       <DependentUpon>Frm_Demonio_ConfAsisCompra.vb</DependentUpon>

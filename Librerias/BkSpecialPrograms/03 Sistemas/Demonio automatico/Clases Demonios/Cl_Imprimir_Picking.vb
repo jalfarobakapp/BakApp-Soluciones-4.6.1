@@ -169,19 +169,25 @@ Public Class Cl_Imprimir_Picking
         Dim Mes_1 As String = numero_(_Fecha_Revision.Month, 2)
         Dim Ano_1 As String = _Fecha_Revision.Year
 
-        Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion Set Fecha = Getdate(),Log_Error = 'Documento no impreso desde el día anterior' 
-                        Where Fecha In (Select Max(Fecha) From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion Where Impreso = 0 And Fecha <> '" & _Fecha & "')"
+        Dim _FechasAnteriores As Date = DateAdd(DateInterval.Day, -5, _Fecha_Revision)
+
+        'Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion Set Fecha = Getdate(),Log_Error = 'Documento no impreso desde el día anterior' 
+        '                Where Fecha In (Select Max(Fecha) From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion Where Impreso = 0 And Fecha <> '" & _Fecha & "')
+        '                And Impreso = 0 And Fecha <> '" & _Fecha & "' And Error_Al_Imprimir = 0"
+
+        ' Se reactivan los documentos que no han sido impreso en los ultimos 5 días
+        Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion Set Fecha = Getdate(),Log_Error = 'Documento no impreso desde el día anterior'" & vbCrLf &
+                       "Where Convert(Date,Fecha) >= '" & Format(_FechasAnteriores, "yyyyMMdd") & "' And Fecha <> '" & _Fecha & "' And Impreso = 0 And Error_Al_Imprimir = 0 And Picking = 1"
         _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
         Dim _Filtro_Fecha =
                       "FEEMLI BETWEEN CONVERT(DATETIME, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 00:00:00', 102)" & vbCrLf &
                       "AND CONVERT(DATETIME, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 23:59:59', 102)"
 
-        _Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion" & vbCrLf &
-                        "Where Fecha < '" & _Fecha & "' And NombreEquipo = '" & _Nombre_Equipo & "' -- And Impreso = 1"
+        ' Se eliminan los documentos ya impresos
+        Consulta_Sql = "Delete " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion" & vbCrLf &
+                       "Where Convert(date,Fecha) < '" & _Fecha & "' And NombreEquipo = '" & _Nombre_Equipo & "' And Impreso = 1"
         _Sql.Ej_consulta_IDU(Consulta_Sql, False)
-
-
 
         _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Cof_Estacion" & vbCrLf &
                         "Where NombreEquipo = '" & _Nombre_Equipo & "' And Imprimir_Picking = 1"
@@ -242,7 +248,7 @@ Public Class Cl_Imprimir_Picking
 
             If CBool(_Tbl_Doc_Sin_Imprimir.Rows.Count) Then
 
-                If _Tbl_Doc_Sin_Imprimir.Rows.Count > 5 Then
+                If _Tbl_Doc_Sin_Imprimir.Rows.Count > 10 Then
 
                     Dim _Frm As New Form
 
@@ -355,7 +361,7 @@ Public Class Cl_Imprimir_Picking
                                             "Set Revizado_Demonio = 1,Impreso = 0,Error_Al_Imprimir = 1,Log_Error = '" & _Log_Error & "'" & vbCrLf &
                                             "Where Id = " & _Id
                             If _Sql.Ej_consulta_IDU(_Consulta_sql, False) Then
-                                _Log_Error += _Log_Error & vbCrLf
+                                Log_Registro += _Log_Error & vbCrLf
                             Else
                                 Log_Registro += _Sql.Pro_Error & vbCrLf
                             End If
