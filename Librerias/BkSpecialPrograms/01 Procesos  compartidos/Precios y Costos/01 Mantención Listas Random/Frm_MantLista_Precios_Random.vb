@@ -473,7 +473,7 @@ Public Class Frm_MantLista_Precios_Random
 
                 Dim _Contador = 0
 
-                Sb_Habilitar_Deshabilitar_Comandos(False, False)
+                Sb_Habilitar_Deshabilitar_Comandos(False, True)
                 Lbl_Procesando.Text = "IMPORTANDO PRODUCTOS..."
 
                 For Each _Fila As DataRow In _Tbl_Productos_Seleccionados.Rows
@@ -491,6 +491,18 @@ Public Class Frm_MantLista_Precios_Random
                     Circular_Progres_Porc.Value = ((_Contador * 100) / Circular_Progres_Val.Maximum) 'Mas
                     Circular_Progres_Val.Value = _Contador
                     Circular_Progres_Val.ProgressText = _Contador
+
+                    If Not String.IsNullOrEmpty(_Txt_Log.Text) Then
+                        Circular_Progres_Porc.ProgressColor = Rojo
+                        Circular_Progres_Val.ProgressColor = Rojo
+                    End If
+
+                    Application.DoEvents()
+
+                    If _Cancelar Then
+                        Sb_Limpiar()
+                        Return
+                    End If
 
                 Next
 
@@ -548,6 +560,10 @@ Public Class Frm_MantLista_Precios_Random
 
             End If
 
+            Dim Fm_Espera As New Frm_Form_Esperar
+            Fm_Espera.BarraCircular.IsRunning = True
+            Fm_Espera.Show()
+
             Consulta_sql = Replace(Consulta_sql, "#Otros_Campos1#", _Otros_Campos1)
             Consulta_sql = Replace(Consulta_sql, "#Otros_Campos2#", _Otros_Campos2)
 
@@ -561,6 +577,8 @@ Public Class Frm_MantLista_Precios_Random
             _Tbl_Precios = _Sql.Fx_Get_Tablas(Consulta_sql)
 
             Sb_Formato_Grilla()
+
+            Fm_Espera.Close()
 
         Catch ex As Exception
         Finally
