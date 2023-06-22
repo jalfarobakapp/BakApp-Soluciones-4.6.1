@@ -452,6 +452,13 @@ Public Class Frm_Importar_Desde_Excel
         Dim _ImpEx As New Class_Importar_Excel
         Dim _Extencion As String = Replace(System.IO.Path.GetExtension(_Nombre_Archivo), ".", "")
         Dim _Arreglo = _ImpEx.Importar_Excel_Array(_Ubic_Archivo, _Extencion, 0)
+
+        If Not String.IsNullOrEmpty(_ImpEx.Errores) Then
+            MessageBoxEx.Show(Me, _ImpEx.Errores & vbCrLf &
+                              "- Revise que el archivo no tenga hipervínculos en alguna celda", "Problema al intentar cargar el archivo Excel", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         Dim _Filas = _Arreglo.GetUpperBound(0)
 
         Dim _Arreglo_Cd(_Filas) As String
@@ -553,8 +560,6 @@ Public Class Frm_Importar_Desde_Excel
                 Exit For
             End If
 
-            System.Windows.Forms.Application.DoEvents()
-
             _Contador += 1
             Circular_Progres_Porc.Value = ((_Contador * 100) / _Filas)
             Circular_Progres_Val.Value += 1
@@ -562,6 +567,8 @@ Public Class Frm_Importar_Desde_Excel
 
             Lbl_Procesando.Text = "Leyendo fila " & i & " de " & _Filas & ". Estado Ok: " & _SinProbremas & _
                                   ", Problemas: " & _Problemas & ", Producto: " & Trim(_Descripcion)
+
+            System.Windows.Forms.Application.DoEvents()
 
         Next
 
