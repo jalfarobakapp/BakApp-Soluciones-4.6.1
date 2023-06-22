@@ -24,14 +24,12 @@ Partial Class Frm_Demonio_New
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Demonio_New))
-        Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Modalidad = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Nombre_Equipo = New DevComponents.DotNetBar.LabelX()
         Me.DtpFecharevision = New System.Windows.Forms.DateTimePicker()
         Me.BtnCambFecha = New DevComponents.DotNetBar.ButtonX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Configurar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_On_Off = New DevComponents.DotNetBar.ButtonItem()
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         Me.Txt_Log = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -42,24 +40,13 @@ Partial Class Frm_Demonio_New
         Me.Imagenes_16X16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Circular_Monitoreo = New DevComponents.DotNetBar.Controls.CircularProgress()
         Me.Lbl_Monitoreo = New DevComponents.DotNetBar.LabelX()
+        Me.Imagenes_16X16_Dark = New System.Windows.Forms.ImageList(Me.components)
+        Me.timerHora = New System.Windows.Forms.Timer(Me.components)
+        Me.Lbl_Procesando = New DevComponents.DotNetBar.LabelX()
+        Me.Timer_PrestaShopWeb = New System.Windows.Forms.Timer(Me.components)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'LabelX5
-        '
-        Me.LabelX5.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX5.ForeColor = System.Drawing.Color.Black
-        Me.LabelX5.Location = New System.Drawing.Point(628, 60)
-        Me.LabelX5.Name = "LabelX5"
-        Me.LabelX5.Size = New System.Drawing.Size(51, 19)
-        Me.LabelX5.TabIndex = 71
-        Me.LabelX5.Text = "20:00"
-        Me.LabelX5.TextAlignment = System.Drawing.StringAlignment.Far
         '
         'Lbl_Modalidad
         '
@@ -115,7 +102,7 @@ Partial Class Frm_Demonio_New
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Configurar, Me.Btn_On_Off})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Configurar})
         Me.Bar1.Location = New System.Drawing.Point(0, 607)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(755, 41)
@@ -133,16 +120,6 @@ Partial Class Frm_Demonio_New
         Me.Btn_Configurar.ImageAlt = CType(resources.GetObject("Btn_Configurar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Configurar.Name = "Btn_Configurar"
         Me.Btn_Configurar.Text = "Configuración"
-        '
-        'Btn_On_Off
-        '
-        Me.Btn_On_Off.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_On_Off.ForeColor = System.Drawing.Color.Black
-        Me.Btn_On_Off.Image = CType(resources.GetObject("Btn_On_Off.Image"), System.Drawing.Image)
-        Me.Btn_On_Off.ImageAlt = CType(resources.GetObject("Btn_On_Off.ImageAlt"), System.Drawing.Image)
-        Me.Btn_On_Off.Name = "Btn_On_Off"
-        Me.Btn_On_Off.Text = "Activar-Desactivar"
-        Me.Btn_On_Off.Visible = False
         '
         'Metro_Bar_Color
         '
@@ -244,7 +221,6 @@ Partial Class Frm_Demonio_New
         Me.Listv_Programaciones.DisabledBackColor = System.Drawing.Color.Empty
         Me.Listv_Programaciones.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Listv_Programaciones.ForeColor = System.Drawing.Color.Black
-        Me.Listv_Programaciones.GridLines = True
         Me.Listv_Programaciones.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
         Me.Listv_Programaciones.HideSelection = False
         Me.Listv_Programaciones.HotTracking = True
@@ -274,7 +250,9 @@ Partial Class Frm_Demonio_New
         Me.Imagenes_16X16.Images.SetKeyName(0, "mail.png")
         Me.Imagenes_16X16.Images.SetKeyName(1, "document-printer.png")
         Me.Imagenes_16X16.Images.SetKeyName(2, "bill-credit-card-printer.png")
-        Me.Imagenes_16X16.Images.SetKeyName(3, "button-ok.png")
+        Me.Imagenes_16X16.Images.SetKeyName(3, "hand-delivery.png")
+        Me.Imagenes_16X16.Images.SetKeyName(4, "Prestashop 16.png")
+        Me.Imagenes_16X16.Images.SetKeyName(5, "button-ok.png")
         '
         'Circular_Monitoreo
         '
@@ -284,7 +262,7 @@ Partial Class Frm_Demonio_New
         '
         Me.Circular_Monitoreo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Circular_Monitoreo.FocusCuesEnabled = False
-        Me.Circular_Monitoreo.Location = New System.Drawing.Point(13, 386)
+        Me.Circular_Monitoreo.Location = New System.Drawing.Point(130, 387)
         Me.Circular_Monitoreo.Name = "Circular_Monitoreo"
         Me.Circular_Monitoreo.ProgressColor = System.Drawing.Color.Green
         Me.Circular_Monitoreo.Size = New System.Drawing.Size(28, 26)
@@ -299,22 +277,55 @@ Partial Class Frm_Demonio_New
         '
         Me.Lbl_Monitoreo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Monitoreo.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Monitoreo.Location = New System.Drawing.Point(47, 389)
+        Me.Lbl_Monitoreo.Location = New System.Drawing.Point(12, 389)
         Me.Lbl_Monitoreo.Name = "Lbl_Monitoreo"
-        Me.Lbl_Monitoreo.Size = New System.Drawing.Size(605, 23)
+        Me.Lbl_Monitoreo.Size = New System.Drawing.Size(121, 23)
         Me.Lbl_Monitoreo.TabIndex = 137
         Me.Lbl_Monitoreo.Text = "MONITOREO ACTIVO..."
+        '
+        'Imagenes_16X16_Dark
+        '
+        Me.Imagenes_16X16_Dark.ImageStream = CType(resources.GetObject("Imagenes_16X16_Dark.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.Imagenes_16X16_Dark.TransparentColor = System.Drawing.Color.Transparent
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(0, "mail.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(1, "document-printer.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(2, "bill-credit-card-printer.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(3, "hand-delivery.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(4, "Prestashop 16.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(5, "button-ok.png")
+        '
+        'timerHora
+        '
+        Me.timerHora.Interval = 1000
+        '
+        'Lbl_Procesando
+        '
+        Me.Lbl_Procesando.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_Procesando.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Procesando.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Procesando.Location = New System.Drawing.Point(164, 390)
+        Me.Lbl_Procesando.Name = "Lbl_Procesando"
+        Me.Lbl_Procesando.Size = New System.Drawing.Size(579, 23)
+        Me.Lbl_Procesando.TabIndex = 138
+        Me.Lbl_Procesando.Text = "MONITOREO ACTIVO..."
+        '
+        'Timer_PrestaShopWeb
+        '
+        Me.Timer_PrestaShopWeb.Interval = 1000
         '
         'Frm_Demonio_New
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(755, 670)
+        Me.Controls.Add(Me.Lbl_Procesando)
         Me.Controls.Add(Me.Lbl_Monitoreo)
         Me.Controls.Add(Me.Circular_Monitoreo)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Txt_Log)
-        Me.Controls.Add(Me.LabelX5)
         Me.Controls.Add(Me.Lbl_Modalidad)
         Me.Controls.Add(Me.Lbl_Nombre_Equipo)
         Me.Controls.Add(Me.DtpFecharevision)
@@ -332,14 +343,12 @@ Partial Class Frm_Demonio_New
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Lbl_Modalidad As DevComponents.DotNetBar.LabelX
     Friend WithEvents Lbl_Nombre_Equipo As DevComponents.DotNetBar.LabelX
     Friend WithEvents DtpFecharevision As DateTimePicker
     Friend WithEvents BtnCambFecha As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Configurar As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_On_Off As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Metro_Bar_Color As DevComponents.DotNetBar.Metro.MetroStatusBar
     Friend WithEvents Lbl_Estatus As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Txt_Log As DevComponents.DotNetBar.Controls.TextBoxX
@@ -350,4 +359,8 @@ Partial Class Frm_Demonio_New
     Friend WithEvents Imagenes_16X16 As ImageList
     Friend WithEvents Circular_Monitoreo As DevComponents.DotNetBar.Controls.CircularProgress
     Friend WithEvents Lbl_Monitoreo As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Imagenes_16X16_Dark As ImageList
+    Friend WithEvents timerHora As Timer
+    Friend WithEvents Lbl_Procesando As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Timer_PrestaShopWeb As Timer
 End Class

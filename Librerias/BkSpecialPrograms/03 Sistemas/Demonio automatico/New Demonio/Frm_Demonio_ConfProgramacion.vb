@@ -11,19 +11,37 @@ Public Class Frm_Demonio_ConfProgramacion
     Public Property TIMinutos As Boolean
     Public Property TIHoras As Boolean
 
-    Public Sub New()
+    Public Sub New(_TISegundos As Boolean,
+                   _TIMinutos As Boolean,
+                   _TIHoras As Boolean,
+                   _TIValorDefecto As String)
 
         ' Esta llamada es exigida por el diseñador.
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        TISegundos = True
-        TIMinutos = True
-        TIHoras = True
+        TISegundos = _TISegundos
+        TIMinutos = _TIMinutos
+        TIHoras = _TIHoras
 
-        Dim _Arr_Tido(,) As String = {{"", ""}, {"HH", "Hora"}, {"MM", "Minutos"}, {"SS", "Segundos"}}
-        Sb_Cargar_Combo_Intervalo(_Arr_Tido, "")
+        Dim _Arr_Tido(3, 1) As String '= {{"", ""}} '{{"", ""}, {"HH", "Hora"}, {"MM", "Minutos"}, {"SS", "Segundos"}}
+
+        If String.IsNullOrEmpty(_TIValorDefecto) Then
+            _Arr_Tido(0, 0) = "" : _Arr_Tido(0, 1) = ""
+        End If
+
+        If TISegundos Then
+            _Arr_Tido(1, 0) = "SS" : _Arr_Tido(1, 1) = "Segundos"
+        End If
+        If TIMinutos Then
+            _Arr_Tido(2, 0) = "MM" : _Arr_Tido(2, 1) = "Minutos"
+        End If
+        If TIHoras Then
+            _Arr_Tido(3, 0) = "HH" : _Arr_Tido(3, 1) = "Horas"
+        End If
+
+        Sb_Cargar_Combo_Intervalo(_Arr_Tido, _TIValorDefecto)
 
     End Sub
 
@@ -94,6 +112,10 @@ Public Class Frm_Demonio_ConfProgramacion
             Grupo_Semanal.Visible = Rdb_FrecuSemanal.Checked
         End If
 
+        If TISegundos AndAlso Not TIMinutos AndAlso Not TIHoras Then
+            Cmb_TipoIntervaloCada.SelectedValue = "SS"
+        End If
+
     End Sub
 
     Private Sub Rdb_Frecuencia_CheckedChanged(sender As Object, e As EventArgs)
@@ -106,8 +128,6 @@ Public Class Frm_Demonio_ConfProgramacion
 
         Input_IntervaloCada.Enabled = Rdb_SucedeCada.Checked
         Cmb_TipoIntervaloCada.Enabled = Rdb_SucedeCada.Checked
-
-
 
         LabelX1.Enabled = Rdb_SucedeCada.Checked
         LabelX2.Enabled = Rdb_SucedeCada.Checked

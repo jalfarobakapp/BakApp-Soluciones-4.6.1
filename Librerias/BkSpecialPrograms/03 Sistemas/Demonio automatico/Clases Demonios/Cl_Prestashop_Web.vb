@@ -72,6 +72,8 @@ Public Class Cl_Prestashop_Web
         End Set
     End Property
 
+    Public Property Log_Registro As String
+
     Public Sub New()
 
         _BackgroundWorker.WorkerReportsProgress = True
@@ -142,6 +144,7 @@ Public Class Cl_Prestashop_Web
 
     Sub Sb_Procedimiento_Prestashop()
 
+        Log_Registro = String.Empty
         Dim _Consulta_sql = String.Empty
 
         Dim _Fecha = Format(_Fecha_Revision, "yyyyMMdd")
@@ -163,7 +166,9 @@ Public Class Cl_Prestashop_Web
             Consulta_Sql = "Delete " & _Global_BaseBk & "Zw_Demonio_Prestashop" & Space(1) &
                            "Where NombreEquipo = '" & _Nombre_Equipo & "' And Codigo = 'Error!!'" & vbCrLf & vbCrLf &
                            "Update " & _Global_BaseBk & "Zw_Demonio_Prestashop Set Log_Error = '' Where Id In " & _Filtro_Codigos
-            _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+            If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                Log_Registro += _Sql.Pro_Error
+            End If
 
             Dim _Cadena_Conexion_MySql As String
             Dim _Clas_Ps As Class_MySQL
@@ -208,6 +213,7 @@ Public Class Cl_Prestashop_Web
                         Dim _Id As Integer = _Row_Doc.Item("Id")
 
                         _Etiqueta2.Text = _Nombre_Pagina & ", Prod.: " & _Contador & " de " & _Tbl_Productos_Prestashop.Rows.Count
+
                         _Contador += 1
 
                         _Log_Error = String.Empty
@@ -232,11 +238,15 @@ Public Class Cl_Prestashop_Web
                             _Error = False
                         End If
 
+                        Log_Registro += _Error & vbCrLf
+
                         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_Prestashop Set Revisado = 1," & vbCrLf &
                                        "Log_Error = '(" & _Log_Error & ") '+Log_Error," & Space(1) &
                                        "Error = " & CInt(_Error) * -1 & vbCrLf &
                                        "Where Id = " & _Id
-                        _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+                        If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                            Log_Registro += _Sql.Pro_Error
+                        End If
 
                     Next
 
@@ -245,7 +255,9 @@ Public Class Cl_Prestashop_Web
                     Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Prestashop (NombreEquipo,Idmaeddo,Codigo,Descripcion,Fecha,Revisado,Log_Error,Error) Values " & vbCrLf &
                                    "('" & _Nombre_Equipo & "'," & _Cont_Conexion & ",'Error!!','" & _Nombre_Pagina &
                                    "','" & _Fecha & "',1,'Error: " & _Nombre_Pagina & ", Descripción Error: " & _Log_Error & "',1)"
-                    _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+                    If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                        Log_Registro += _Sql.Pro_Error
+                    End If
 
                 End If
 

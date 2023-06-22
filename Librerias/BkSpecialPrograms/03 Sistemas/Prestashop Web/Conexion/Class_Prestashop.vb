@@ -281,9 +281,8 @@ Public Class Class_Prestashop
                 End If
 
                 _Etiqueta1.Text = _Sitio & ", Producto: " & _Codigo.Trim & " - " & _Descripcion.Trim
+                _Etiqueta2.Text = "Insertando nuevos productos desde Prestashop hacia tabla [Prod_PrestaShop]: " & FormatNumber(Contador, 0) & " de " & FormatNumber(_Tbl_Productos.Rows.Count, 0)
 
-                _Etiqueta2.Text = "Productos encontrados: " &
-                                  FormatNumber(Contador, 0) & " de " & FormatNumber(_Tbl_Productos.Rows.Count, 0)
 
                 Contador += 1
                 Progress_Porcent.Value = ((Contador * 100) / _Tbl_Productos.Rows.Count) 'Mas
@@ -410,8 +409,7 @@ Public Class Class_Prestashop
                 Progress_Porcent.Value = ((Contador * 100) / _Tbl_Productos.Rows.Count) 'Mas
                 Progress_Canti.Value += 1
 
-                _Etiqueta2.Text = "Productos encontrador: " &
-                                  FormatNumber(Contador, 0) & " de " & FormatNumber(_Tbl_Productos.Rows.Count, 0)
+                _Etiqueta2.Text = "Productos encontrador: " & FormatNumber(Contador, 0) & " de " & FormatNumber(_Tbl_Productos.Rows.Count, 0)
 
                 Application.DoEvents()
 
