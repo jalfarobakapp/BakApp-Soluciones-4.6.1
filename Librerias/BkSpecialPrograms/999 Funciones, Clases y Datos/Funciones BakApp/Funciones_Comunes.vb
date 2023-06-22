@@ -892,11 +892,15 @@ Error_Numero:
             Separador = "@"
         End If
 
-        'If (Tabla Is Nothing) Then Return "()"
+        Dim _ContieneSeparador As Boolean
 
         Dim i = 0
         For Each Valor As String In Arreglo
             If Not String.IsNullOrEmpty(Valor) Then
+                If Valor.Contains(Separador) Then
+                    Valor = Valor.Replace(Separador, ";")
+                    _ContieneSeparador = True
+                End If
                 Cadena = Cadena & Separador & Trim(Valor) & Separador '& Coma
                 i += 1
             End If
@@ -908,6 +912,10 @@ Error_Numero:
         Else
             Cadena = Replace(Cadena, "@@", "@,@")
             Cadena = Replace(Cadena, "@", "'")
+        End If
+
+        If _ContieneSeparador Then
+            Cadena = Replace(Cadena, ";", Separador)
         End If
 
         Cadena = "(" & Cadena & ")"

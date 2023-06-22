@@ -469,6 +469,13 @@ Public Class Frm_MantLista_Precios_Random
 
             If _Traer_Productos_Selectivamente Then
 
+                Circular_Progres_Val.Maximum = _Tbl_Productos_Seleccionados.Rows.Count
+
+                Dim _Contador = 0
+
+                Sb_Habilitar_Deshabilitar_Comandos(False, False)
+                Lbl_Procesando.Text = "IMPORTANDO PRODUCTOS..."
+
                 For Each _Fila As DataRow In _Tbl_Productos_Seleccionados.Rows
 
                     Dim _Codigo = _Fila.Item("Codigo")
@@ -480,7 +487,14 @@ Public Class Frm_MantLista_Precios_Random
 
                     Sb_AgregarProdSinListaAsociada(_Codigo, _Filtro_Listas)
 
+                    _Contador += 1
+                    Circular_Progres_Porc.Value = ((_Contador * 100) / Circular_Progres_Val.Maximum) 'Mas
+                    Circular_Progres_Val.Value = _Contador
+                    Circular_Progres_Val.ProgressText = _Contador
+
                 Next
+
+                Sb_Habilitar_Deshabilitar_Comandos(True, False)
 
             Else
 
@@ -1394,7 +1408,6 @@ Public Class Frm_MantLista_Precios_Random
                 Dim _Sql_Query = String.Empty
 
                 For Each _Fila As DataRow In _dv_Chequeados 'Grilla.Rows
-                    System.Windows.Forms.Application.DoEvents()
 
                     Dim _Lista As String = _Fila.Item("KOLT")
                     Dim _Codigo As String = _Fila.Item("KOPR")
@@ -1413,6 +1426,8 @@ Public Class Frm_MantLista_Precios_Random
                         Circular_Progres_Val.ProgressText = _Marcados
 
                     End If
+
+                    Application.DoEvents()
 
                     If _Cancelar Then
                         Exit For
