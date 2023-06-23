@@ -103,6 +103,8 @@ Public Class Cl_Archivador
         End Set
     End Property
 
+    Public Property Log_Registro As String
+
     Public Sub New()
 
         _BackgroundWorker.WorkerReportsProgress = True
@@ -166,12 +168,12 @@ Public Class Cl_Archivador
 
     Sub Sb_Procedimiento_Archivar_Documentos(_Incluir_Levantados As Boolean)
 
+        Procesando = True
+
         Dim _Year As String = _Fecha_Revision.Year.ToString
         Dim _Month As String = numero_(_Fecha_Revision.Month, 2)
         Dim _Month_Palabra As String = Fx_Mes_Palabra(_Month)
         Dim _Day As String = numero_(_Fecha_Revision.Day, 2)
-
-        'Dim _Ruta_Archivador As String = AppPath() & "\Data\" & RutEmpresa & "\Archivador" '"\BkPost\Ult_" & _Tido & "_Bkp.xml"
 
         Dim _Ruta_Year As String = _Ruta_Archivador & "\" & _Year
         Dim _Ruta_Month As String = _Ruta_Year & "\" & _Month & " " & _Month_Palabra
@@ -294,6 +296,10 @@ Public Class Cl_Archivador
             System.Windows.Forms.Application.DoEvents()
 
         Next
+
+        Log_Registro += _Lbl_Estado
+
+        Procesando = False
 
     End Sub
 

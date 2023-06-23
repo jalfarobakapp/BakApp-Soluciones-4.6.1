@@ -96,6 +96,8 @@ Public Class Clas_Hefesto_Dte_Libro
         End Set
     End Property
 
+    Public Property Procesando As Boolean
+
     Public Sub New()
 
         'Errores.Clear()

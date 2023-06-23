@@ -3,15 +3,17 @@
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Dim _FechaProgramacion As DateTime
+    Public Property FechaProgramacion As DateTime
+    Public Property Log_Registro As String
+    Public Property Procesando As Boolean
 
     Public Sub New()
 
     End Sub
 
-    Sub Sb_Grabar_Listas_Programadas(_FechaProgramacion As DateTime)
+    Sub Sb_Grabar_Listas_Programadas()
 
-        Me._FechaProgramacion = _FechaProgramacion
+        Procesando = True
 
         Dim _Str_FechaProgramacion = Format(_FechaProgramacion, "yyyyMMdd")
 
@@ -27,7 +29,11 @@
             Dim _Filtros_Id = Generar_Filtro_IN(_Tbl_ListasProgramadas, "", "Id", True, False, "")
 
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaLC_Programadas Set Activo = 0 Where Id In " & _Filtros_Id
-            _Sql.Ej_consulta_IDU(Consulta_sql)
+            If _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                Log_Registro += _Sql.Pro_Error & vbCrLf
+            Else
+                Log_Registro += "Se encontraron " & _Tbl_ListasProgramadas.Rows.Count & " registros para activar" & vbCrLf
+            End If
 
         End If
 
@@ -77,7 +83,14 @@
 
             If Not String.IsNullOrEmpty(_SqlQuery) Then
 
-                If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery) Then
+                Log_Registro += vbTab & " *** Consulta Sql Generada *** " & vbCrLf & _SqlQuery
+
+                If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery) Then
+                    Log_Registro += "Datos actualizados correctamente." & vbCrLf
+                Else
+
+                    Log_Registro += "¡Error en la consulta!" & vbCrLf &
+                                    _Sql.Pro_Error & vbCrLf
 
                     Dim _Filtros_Id = Generar_Filtro_IN(_Tbl_ListasProgramadas, "", "Id", True, False, "")
                     Dim _Error = Replace(_Sql.Pro_Error, "'", "''")
@@ -85,13 +98,17 @@
                     Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaLC_Programadas Set " &
                                    "Activo = 0,ErrorAlGrabar = 1,Informacion = '" & Mid(_Error.ToString.Trim, 1, 2000) & "'" & vbCrLf &
                                    "Where Id = " & _Id_Enc
-                    _Sql.Ej_consulta_IDU(Consulta_sql)
+                    If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                        Log_Registro += _Sql.Pro_Error & vbCrLf
+                    End If
 
                 End If
 
             End If
 
         Next
+
+        Procesando = False
 
     End Sub
 

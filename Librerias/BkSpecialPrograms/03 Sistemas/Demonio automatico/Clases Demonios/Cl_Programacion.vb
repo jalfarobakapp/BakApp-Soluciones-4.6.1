@@ -146,5 +146,6 @@ Public Class DProgramaciones
     Public Property Sp_FacturacionAuto As New Cl_NewProgramacion
     Public Property Sp_AsistenteCompras As New Cl_NewProgramacion
     Public Property Sp_SqlQueryEspecial As New Cl_NewProgramacion
+    Public Property Sp_ListasProgramadas As New Cl_NewProgramacion
 
 End Class

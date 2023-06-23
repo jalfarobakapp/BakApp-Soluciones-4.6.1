@@ -42,8 +42,8 @@ Partial Class Frm_Demonio_New
         Me.Lbl_Monitoreo = New DevComponents.DotNetBar.LabelX()
         Me.Imagenes_16X16_Dark = New System.Windows.Forms.ImageList(Me.components)
         Me.timerHora = New System.Windows.Forms.Timer(Me.components)
-        Me.Lbl_Procesando = New DevComponents.DotNetBar.LabelX()
         Me.Timer_PrestaShopWeb = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer_LibroDTESII = New System.Windows.Forms.Timer(Me.components)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.SuspendLayout()
@@ -165,7 +165,7 @@ Partial Class Frm_Demonio_New
         Me.Txt_Log.Name = "Txt_Log"
         Me.Txt_Log.PreventEnterBeep = True
         Me.Txt_Log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.Txt_Log.Size = New System.Drawing.Size(731, 167)
+        Me.Txt_Log.Size = New System.Drawing.Size(731, 183)
         Me.Txt_Log.TabIndex = 74
         '
         'GroupPanel1
@@ -252,7 +252,11 @@ Partial Class Frm_Demonio_New
         Me.Imagenes_16X16.Images.SetKeyName(2, "bill-credit-card-printer.png")
         Me.Imagenes_16X16.Images.SetKeyName(3, "hand-delivery.png")
         Me.Imagenes_16X16.Images.SetKeyName(4, "Prestashop 16.png")
-        Me.Imagenes_16X16.Images.SetKeyName(5, "button-ok.png")
+        Me.Imagenes_16X16.Images.SetKeyName(5, "cloud-download.png")
+        Me.Imagenes_16X16.Images.SetKeyName(6, "folder-open-attach.png")
+        Me.Imagenes_16X16.Images.SetKeyName(7, "list-time.png")
+        Me.Imagenes_16X16.Images.SetKeyName(8, "wordpress 16.png")
+        Me.Imagenes_16X16.Images.SetKeyName(9, "button-ok.png")
         '
         'Circular_Monitoreo
         '
@@ -292,36 +296,29 @@ Partial Class Frm_Demonio_New
         Me.Imagenes_16X16_Dark.Images.SetKeyName(2, "bill-credit-card-printer.png")
         Me.Imagenes_16X16_Dark.Images.SetKeyName(3, "hand-delivery.png")
         Me.Imagenes_16X16_Dark.Images.SetKeyName(4, "Prestashop 16.png")
-        Me.Imagenes_16X16_Dark.Images.SetKeyName(5, "button-ok.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(5, "cloud-download.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(6, "folder-open-attach.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(7, "list-time.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(8, "wordpress 16.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(9, "button-ok.png")
         '
         'timerHora
         '
         Me.timerHora.Interval = 1000
         '
-        'Lbl_Procesando
-        '
-        Me.Lbl_Procesando.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Lbl_Procesando.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Lbl_Procesando.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Procesando.Location = New System.Drawing.Point(164, 390)
-        Me.Lbl_Procesando.Name = "Lbl_Procesando"
-        Me.Lbl_Procesando.Size = New System.Drawing.Size(579, 23)
-        Me.Lbl_Procesando.TabIndex = 138
-        Me.Lbl_Procesando.Text = "MONITOREO ACTIVO..."
-        '
         'Timer_PrestaShopWeb
         '
         Me.Timer_PrestaShopWeb.Interval = 1000
+        '
+        'Timer_LibroDTESII
+        '
+        Me.Timer_LibroDTESII.Interval = 1000
         '
         'Frm_Demonio_New
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(755, 670)
-        Me.Controls.Add(Me.Lbl_Procesando)
         Me.Controls.Add(Me.Lbl_Monitoreo)
         Me.Controls.Add(Me.Circular_Monitoreo)
         Me.Controls.Add(Me.GroupPanel1)
@@ -361,6 +358,6 @@ Partial Class Frm_Demonio_New
     Friend WithEvents Lbl_Monitoreo As DevComponents.DotNetBar.LabelX
     Friend WithEvents Imagenes_16X16_Dark As ImageList
     Friend WithEvents timerHora As Timer
-    Friend WithEvents Lbl_Procesando As DevComponents.DotNetBar.LabelX
     Friend WithEvents Timer_PrestaShopWeb As Timer
+    Friend WithEvents Timer_LibroDTESII As Timer
 End Class

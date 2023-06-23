@@ -1,7 +1,6 @@
 ﻿Imports System.IO
-Imports System.Security.Cryptography
 Imports System.Threading
-Imports DevComponents.DotNetBar
+Imports HEFSIIREGCOMPRAVENTAS.LIB
 
 Public Class Frm_Demonio_New
 
@@ -21,7 +20,9 @@ Public Class Frm_Demonio_New
     Dim _Cl_Prestashop_Orders As New Cl_Prestashop_Orders
     Dim _Cl_Prestashop_Prod As New Cl_Prestashop_Web
     Dim _Cl_Consolidacion_Stock As New Cl_Consolidacion_Stock
-
+    Dim _Cl_Hefesto_Dte_Libro As New Clas_Hefesto_Dte_Libro
+    Dim _Cl_Archivador As New Cl_Archivador
+    Dim _Cl_Listas_Programadas As New Cl_Listas_Programadas
 
     Private _Timer_Correos As Timer
     Private _Timer_ImprimirDocumentos As Timer
@@ -29,6 +30,8 @@ Public Class Frm_Demonio_New
     Private _Timer_SolicitudProductosBodega As Timer
     Private _Timer_Prestashop_Orders As Timer
     Private _Timer_Prestashop_Prod As Timer
+    Private _Timer_Archivador As Timer
+    Private _Timer_ListasProgramadas As Timer
 
 
     Private logFilePath As String = "Log_Demonio.txt"
@@ -105,6 +108,18 @@ Public Class Frm_Demonio_New
             _DProgramaciones.Sp_Prestashop_Prod.Activo = True
         End If
 
+        If Fx_InsertarRegistroDeProgramacion("ImporDTESII", _DProgramaciones.Sp_ImporDTESII, "Importar DTE SII") Then
+            _DProgramaciones.Sp_ImporDTESII.Activo = True
+        End If
+
+        If Fx_InsertarRegistroDeProgramacion("ArchivarDoc", _DProgramaciones.Sp_ArchivarDoc, "Archivador") Then
+            _DProgramaciones.Sp_ArchivarDoc.Activo = True
+        End If
+
+        If Fx_InsertarRegistroDeProgramacion("ListasProgramadas", _DProgramaciones.Sp_ListasProgramadas, "Listas Prg.") Then
+            _DProgramaciones.Sp_ListasProgramadas.Activo = True
+        End If
+
         Dim _CantidadFilas As Integer = Listv_Programaciones.Items.Count
 
         If _CantidadFilas = 1 Then Me.Icon = My.Resources.Recursos_NewDemonio.emoticon_wink_number_1
@@ -148,42 +163,57 @@ Public Class Frm_Demonio_New
         End If
 
         If _DProgramaciones.Sp_Prestashop_Prod.Activo Then
-            'Sb_Timer_IntervaloCada(_Timer_Prestashop_Prod, _DProgramaciones.Sp_Prestashop_Prod, AddressOf Sb_Prestashop_Prod)
+            Sb_Activar_ObjetosTimer(Timer_PrestaShopWeb, _DProgramaciones.Sp_Prestashop_Prod)
+        End If
 
-            With _DProgramaciones.Sp_Prestashop_Prod
+        If _DProgramaciones.Sp_ImporDTESII.Activo Then
+            Sb_Activar_ObjetosTimer(Timer_LibroDTESII, _DProgramaciones.Sp_ImporDTESII)
+        End If
 
-                Dim milisegundos As Long
+        If _DProgramaciones.Sp_ArchivarDoc.Activo Then
+            Sb_Timer_IntervaloCada(_Timer_Archivador, _DProgramaciones.Sp_ArchivarDoc, AddressOf Sb_Archivador)
+        End If
 
-                If .FrecuDiaria Then
-                    Dim _IntervaloCada As Integer = .IntervaloCada
-                    If .SucedeCada Then
-
-                        If .TipoIntervaloCada = "HH" Then
-                            Dim tiempo As New TimeSpan(_IntervaloCada, 0, 0)
-                            milisegundos = tiempo.TotalMilliseconds ' Convertir a milisegundos
-                        End If
-
-                        If .TipoIntervaloCada = "MM" Then
-                            Dim tiempo As New TimeSpan(0, _IntervaloCada, 0)
-                            milisegundos = tiempo.TotalMilliseconds ' Convertir a milisegundos
-                        End If
-
-                        If .TipoIntervaloCada = "SS" Then
-                            Dim tiempo As New TimeSpan(0, 0, _IntervaloCada)
-                            milisegundos = tiempo.TotalMilliseconds ' Convertir a milisegundos
-                        End If
-
-                    End If
-                End If
-
-                Timer_PrestaShopWeb.Interval = milisegundos
-                Timer_PrestaShopWeb.Start()
-
-            End With
-
+        If _DProgramaciones.Sp_ListasProgramadas.Activo Then
+            Sb_Timer_IntervaloCada(_Timer_ListasProgramadas, _DProgramaciones.Sp_ListasProgramadas, AddressOf Sb_ListasProgramadas)
         End If
 
         Me.Refresh()
+
+    End Sub
+
+    Sub Sb_Activar_ObjetosTimer(_Timer As Windows.Forms.Timer, _Sp_Programacion As Cl_NewProgramacion)
+
+        With _Sp_Programacion '_DProgramaciones.Sp_Prestashop_Prod
+
+            Dim milisegundos As Long
+
+            If .FrecuDiaria Then
+                Dim _IntervaloCada As Integer = .IntervaloCada
+                If .SucedeCada Then
+
+                    If .TipoIntervaloCada = "HH" Then
+                        Dim tiempo As New TimeSpan(_IntervaloCada, 0, 0)
+                        milisegundos = tiempo.TotalMilliseconds ' Convertir a milisegundos
+                    End If
+
+                    If .TipoIntervaloCada = "MM" Then
+                        Dim tiempo As New TimeSpan(0, _IntervaloCada, 0)
+                        milisegundos = tiempo.TotalMilliseconds ' Convertir a milisegundos
+                    End If
+
+                    If .TipoIntervaloCada = "SS" Then
+                        Dim tiempo As New TimeSpan(0, 0, _IntervaloCada)
+                        milisegundos = tiempo.TotalMilliseconds ' Convertir a milisegundos
+                    End If
+
+                End If
+            End If
+
+            _Timer.Interval = milisegundos
+            _Timer.Start()
+
+        End With
 
     End Sub
 
@@ -210,8 +240,9 @@ Public Class Frm_Demonio_New
             Select Case _Campo
                 Case "EnvioCorreo"
 
-                    Dim _CantCorreo As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_CantCorreo' And NombreEquipo = '" & _NombreEquipo & "'", True)
-                    _Descripcion = "Se enviaran paquetes de " & _CantCorreo & " correos." & "; " & _CI_Programacion.Resumen
+                    Dim _CantCorreo As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                                   "Valor", "Informe = 'Demonio' And Campo = 'Input_CantCorreo' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    _Descripcion = "Se enviaran paquetes de " & _CantCorreo & " correos. " & _CI_Programacion.Resumen
                     _IndexImagen = 0
 
                 Case "ColaImpDoc"
@@ -226,18 +257,37 @@ Public Class Frm_Demonio_New
 
                 Case "SolProdBod"
 
-                    _Descripcion = "Solicitud de productos desde mesón de venta hacia bodega" & _CI_Programacion.Resumen
+                    _Descripcion = "Solicitud de productos desde mesón de venta hacia bodega. " & _CI_Programacion.Resumen
                     _IndexImagen = 3
 
                 Case "Prestashop_Order"
 
-                    _Descripcion = "Buscar ordenes de Prestashop en sitios Web..." & _CI_Programacion.Resumen
+                    _Descripcion = "Buscar ordenes de Prestashop en sitios Web. " & _CI_Programacion.Resumen
                     _IndexImagen = 4
 
                 Case "Prestashop_Prod"
 
-                    _Descripcion = "Sincronización de stock y precios con productos en la(s) Web" & _CI_Programacion.Resumen
+                    _Descripcion = "Sincronización de stock y precios con productos en la(s) Web. " & _CI_Programacion.Resumen
                     _IndexImagen = 4
+
+                Case "ImporDTESII"
+
+                    _Descripcion = "Monitoreo Libro DTE desde SII. " & _CI_Programacion.Resumen
+                    _IndexImagen = 5
+
+                Case "ArchivarDoc"
+
+                    Dim _Ruta_Archivador As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                                   "Valor", "Informe = 'Demonio' And Campo = 'Txt_DirArchivarDoc' And NombreEquipo = '" & _NombreEquipo & "'", True)
+
+                    _Cl_Archivador.Ruta_Archivador = _Ruta_Archivador
+                    _Descripcion = "Archivador de documentos del sistema para respaldos. " & _CI_Programacion.Resumen
+                    _IndexImagen = 6
+
+                Case "ListasProgramadas"
+
+                    _Descripcion = "Actualización de listas programadas a futuro. " & _CI_Programacion.Resumen
+                    _IndexImagen = 7
 
             End Select
 
@@ -454,7 +504,7 @@ Public Class Frm_Demonio_New
 
     Sub Sb_Imprimir_Picking(state As Object)
 
-        If IsNothing(_Timer_Correos) Then Return
+        If IsNothing(_Timer_ImprimirPicking) Then Return
 
         If _Cl_Imprimir_Picking.Procesando Then
 
@@ -577,18 +627,18 @@ Public Class Frm_Demonio_New
 
     End Sub
 
-    Sub Sb_Prestashop_Prod(state As Object)
+    Sub Sb_Archivador(state As Object)
 
-        If IsNothing(_Timer_Prestashop_Prod) Then Return
+        If IsNothing(_Timer_Archivador) Then Return
 
-        If _Cl_Prestashop_Prod.Procesando Or _Cl_Consolidacion_Stock.Procesando Then
+        If _Cl_Archivador.Procesando Then
 
-            Dim horaProgramada As DateTime = DateTime.Now.AddSeconds(30) 'DateTime.Now.AddMinutes(1)
+            Dim horaProgramada As DateTime = DateTime.Now.AddSeconds(2) 'DateTime.Now.AddMinutes(1)
             Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
-            _Timer_Prestashop_Prod.Change(tiempoRestante, Timeout.InfiniteTimeSpan)
+            _Timer_Archivador.Change(tiempoRestante, Timeout.InfiniteTimeSpan)
 
             ' Este método se ejecuta cada vez que se activa el temporizador (cada 1 minuto adicional)
-            Dim registro As String = DateTime.Now.ToString() & " - Prestashop sincronización de stock y precios de productos en la web (Proceso en curso se volverá a revisar en 30 segundos mas...)"
+            Dim registro As String = DateTime.Now.ToString() & " - Archivador (Proceso en curso se volverá a revisar en 2 segundos mas...)"
 
             ' Registrar la información en un archivo de registro
             RegistrarLog(registro)
@@ -596,47 +646,73 @@ Public Class Frm_Demonio_New
 
         Else
 
-            Dim registro As String = "Ejecutando tarea Prestashop Web a las: " & DateTime.Now.ToString()
-
-            RegistrarLog(registro)
-            MostrarRegistro(registro)
-
-            'Lbl_Procesando.Text = "Inicio de proceso de Prestashop Web..."
-
-            _Cl_Prestashop_Prod.Fecha_Revision = DtpFecharevision.Value
-            _Cl_Prestashop_Prod.Nombre_Equipo = _NombreEquipo
-            _Cl_Prestashop_Prod.Log_Registro = String.Empty
-
-            _Cl_Prestashop_Prod.Procesando = True
-
-            _Cl_Consolidacion_Stock.Cons_Stock_Mov_Hoy = True
-            _Cl_Consolidacion_Stock.Sb_Procedimiento_Consolidar_Stock(Me)
-
-            _Cl_Prestashop_Prod.Lbl_Estado = Lbl_Procesando.Text
-            _Cl_Prestashop_Prod.Sb_Procedimiento_Prestashop()
-            _Cl_Prestashop_Prod.Sb_Procedimiento_Prestashop3()
-
-            Sb_Timer_IntervaloCada(_Timer_Prestashop_Prod, _DProgramaciones.Sp_Prestashop_Prod, AddressOf Sb_Prestashop_Prod)
-
-            registro = "Tarea ejecutada (Prestashop Productos Web) a las: " & DateTime.Now.ToString()
-
-            If Not String.IsNullOrWhiteSpace(_Cl_Prestashop_Prod.Log_Registro) Then
-                registro += vbCrLf & _Cl_Prestashop_Prod.Log_Registro
-
-                ' Registrar la información en un archivo de registro
+            If String.IsNullOrEmpty(_Cl_Archivador.Ruta_Archivador) Then
+                _Cl_Archivador.Ruta_Archivador = AppPath() & "\Data\" & RutEmpresa & "\Archivador"
+                If Not Directory.Exists(_Cl_Archivador.Ruta_Archivador) Then
+                    System.IO.Directory.CreateDirectory(_Cl_Archivador.Ruta_Archivador)
+                End If
             End If
 
-            RegistrarLog(registro)
-            MostrarRegistro(registro)
+            _Cl_Archivador.Fecha_Revision = DtpFecharevision.Value
+            _Cl_Archivador.Nombre_Equipo = _NombreEquipo
+            _Cl_Archivador.Log_Registro = String.Empty
+            _Cl_Archivador.Sb_Procedimiento_Archivar_Documentos(False)
 
-            _Cl_Prestashop_Prod.Procesando = False
+            Sb_Timer_IntervaloCada(_Timer_Archivador, _DProgramaciones.Sp_ArchivarDoc, AddressOf Sb_Archivador)
 
+            Dim registro As String = "Tarea ejecutada (Archivador) a las: " & DateTime.Now.ToString()
 
+            If Not String.IsNullOrWhiteSpace(_Cl_Archivador.Log_Registro) Then
+                registro += vbCrLf & _Cl_Archivador.Log_Registro
+
+                ' Registrar la información en un archivo de registro
+                RegistrarLog(registro)
+                MostrarRegistro(registro)
+            End If
 
         End If
 
     End Sub
 
+    Sub Sb_ListasProgramadas(state As Object)
+
+        If IsNothing(_Timer_ListasProgramadas) Then Return
+
+        If _Cl_Listas_Programadas.Procesando Then
+
+            Dim horaProgramada As DateTime = DateTime.Now.AddSeconds(2) 'DateTime.Now.AddMinutes(1)
+            Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
+            _Timer_ListasProgramadas.Change(tiempoRestante, Timeout.InfiniteTimeSpan)
+
+            ' Este método se ejecuta cada vez que se activa el temporizador (cada 1 minuto adicional)
+            Dim registro As String = DateTime.Now.ToString() & " - Listas programadas a futuro (Proceso en curso se volverá a revisar en 2 segundos mas...)"
+
+            ' Registrar la información en un archivo de registro
+            RegistrarLog(registro)
+            MostrarRegistro(registro)
+
+        Else
+
+            _Cl_Listas_Programadas.FechaProgramacion = DtpFecharevision.Value
+            '_Cl_Listas_Programadas.Nombre_Equipo = _NombreEquipo
+            _Cl_Listas_Programadas.Log_Registro = String.Empty
+            _Cl_Listas_Programadas.Sb_Grabar_Listas_Programadas()
+
+            Sb_Timer_IntervaloCada(_Timer_ListasProgramadas, _DProgramaciones.Sp_ListasProgramadas, AddressOf Sb_ListasProgramadas)
+
+            Dim registro As String = "Tarea ejecutada (Listas programadas a futuro) a las: " & DateTime.Now.ToString()
+
+            If Not String.IsNullOrWhiteSpace(_Cl_Listas_Programadas.Log_Registro) Then
+                registro += vbCrLf & _Cl_Listas_Programadas.Log_Registro
+
+                ' Registrar la información en un archivo de registro
+                RegistrarLog(registro)
+                MostrarRegistro(registro)
+            End If
+
+        End If
+
+    End Sub
 
     Private Sub RegistrarLog(registro As String)
         Try
@@ -728,13 +804,19 @@ Public Class Frm_Demonio_New
 
         If _Cl_Prestashop_Prod.Procesando Then
 
-            For Each item As ListViewItem In Listv_Programaciones.Items
-                If item.Text = "Prestashop Web" Then
-                    item.SubItems(1).Text = _Cl_Prestashop_Prod.Etiqueta2.Text
-                    Exit For
-                End If
-            Next
+            Sb_ActualizarDetalleListview("Prestashop Web", _Cl_Prestashop_Prod.Etiqueta2.Text)
 
+            'For Each item As ListViewItem In Listv_Programaciones.Items
+            '    If item.Text = "Prestashop Web" Then
+            '        item.SubItems(1).Text = _Cl_Prestashop_Prod.Etiqueta2.Text
+            '        Exit For
+            '    End If
+            'Next
+
+        End If
+
+        If _Cl_Hefesto_Dte_Libro.Procesando Then
+            Sb_ActualizarDetalleListview("Importar DTE SII", _Cl_Hefesto_Dte_Libro.Estatus.Text)
         End If
 
         Me.Refresh()
@@ -743,14 +825,14 @@ Public Class Frm_Demonio_New
 
     Private Sub Timer_PrestaShopWeb_Tick(sender As Object, e As EventArgs) Handles Timer_PrestaShopWeb.Tick
 
-        Timer_PrestaShopWeb.Stop()
+        Sb_Pausa(False)
 
         Dim registro As String = "Ejecutando tarea Prestashop Web a las: " & DateTime.Now.ToString()
 
         RegistrarLog(registro)
         MostrarRegistro(registro)
 
-        Lbl_Procesando.Text = "Inicio de proceso de Prestashop Web..."
+        'Lbl_Procesando.Text = "Inicio de proceso de Prestashop Web..."
 
         _Cl_Prestashop_Prod.Fecha_Revision = DtpFecharevision.Value
         _Cl_Prestashop_Prod.Nombre_Equipo = _NombreEquipo
@@ -761,7 +843,7 @@ Public Class Frm_Demonio_New
         _Cl_Consolidacion_Stock.Cons_Stock_Mov_Hoy = True
         _Cl_Consolidacion_Stock.Sb_Procedimiento_Consolidar_Stock(Me)
 
-        _Cl_Prestashop_Prod.Lbl_Estado = Lbl_Procesando.Text
+        '_Cl_Prestashop_Prod.Lbl_Estado = Lbl_Procesando.Text
         _Cl_Prestashop_Prod.Sb_Procedimiento_Prestashop()
         _Cl_Prestashop_Prod.Sb_Procedimiento_Prestashop3()
 
@@ -782,16 +864,146 @@ Public Class Frm_Demonio_New
 
         Timer_PrestaShopWeb.Start()
 
+        Sb_ActualizarDetalleListview("Prestashop Web", _DProgramaciones.Sp_Prestashop_Prod.Resumen)
+
+        Sb_Pausa(True)
+
+        'For Each item As ListViewItem In Listv_Programaciones.Items
+        '    If item.Text = "Prestashop Web" Then
+        '        item.SubItems(1).Text = _DProgramaciones.Sp_Prestashop_Prod.Resumen
+        '        Exit For
+        '    End If
+        'Next
+
+    End Sub
+
+    Private Sub Timer_LibroDTESII_Tick(sender As Object, e As EventArgs) Handles Timer_LibroDTESII.Tick
+
+        Sb_Pausa(False)
+
+        Dim Fm As New Frm_Recibir_Correos_DTE
+        Fm.ActivacionAutomatica = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+        Sb_Actualizar_Fecha()
+
+        Dim _Fecha As Date = DtpFecharevision.Value
+        Dim _Fecha_Anterior As Date = DateAdd(DateInterval.Month, -1, _Fecha)
+
+        Dim _Periodo = _Fecha.Year
+        Dim _Mes = _Fecha.Month
+        Dim _Reenviar_Documentos_al_SII = False
+
+        'Dim _RecuperarResumenVentasRegistro As HefRespuesta
+        'Dim _RecuperarVentasRegistro As HefRespuesta
+        'Dim _RecuperarResumenCompras As HefRespuesta
+        Dim _RecuperarComprasRegistro As HefRespuesta
+        Dim _RecuperarComprasPendientes As HefRespuesta
+        'Dim _RecuperarComprasNoIncluir As HefRespuesta
+        'Dim _RecuperarComprasReclamadas As HefRespuesta
+
+        Dim _Registro As String
+
+        _Registro = "Recuperando los registros de compras desde el SII..."
+
+        Sb_ActualizarDetalleListview("Importar DTE SII", _Registro)
+
+        Application.DoEvents()
+
+        _RecuperarComprasRegistro = _Cl_Hefesto_Dte_Libro.Fx_RecuperarComprasRegistro(_Periodo, _Mes)
+        Thread.Sleep(2000)
+        _Registro = "Es correcto: " & _RecuperarComprasRegistro.EsCorrecto
+        Application.DoEvents()
+        Thread.Sleep(2000)
+        _Registro = "Mensaje    : " & _RecuperarComprasRegistro.Mensaje
+        Application.DoEvents()
+
+        _RecuperarComprasPendientes = _Cl_Hefesto_Dte_Libro.Fx_RecuperarComprasPendientes(_Periodo, _Mes)
+        Thread.Sleep(2000)
+        _Registro = "Es correcto: " & _RecuperarComprasPendientes.EsCorrecto
+        Application.DoEvents()
+        Thread.Sleep(2000)
+        _Registro = "Mensaje    : " & _RecuperarComprasPendientes.Mensaje
+        Application.DoEvents()
+
+        RegistrarLog(_Registro)
+        MostrarRegistro(_Registro)
+
+        If _RecuperarComprasRegistro.EsCorrecto And _RecuperarComprasPendientes.EsCorrecto Then
+
+            Dim _Fichero1 As String = File.ReadAllText(_RecuperarComprasRegistro.Directorio)
+            Dim _Fichero2 As String = File.ReadAllText(_RecuperarComprasPendientes.Directorio)
+
+            Dim _Tbl_Registro_Compras As DataTable = Fx_TblFromJson(_Fichero1, "RegistroCompras")
+            Dim _Tbl_Registro_Compras_Pendientes As DataTable = Fx_TblFromJson(_Fichero2, "RegistroComprasPendientes")
+
+            Dim _Lbl As New Label
+
+            _Cl_Hefesto_Dte_Libro.Estatus = _Lbl ' Lbl_LibroDTESII
+
+            Thread.Sleep(2000)
+
+            _Cl_Hefesto_Dte_Libro.Fx_Importar_Archivo_SII_Compras_Desde_Json(_Tbl_Registro_Compras,
+                                                                          _Tbl_Registro_Compras_Pendientes,
+                                                                          _Periodo, _Mes)
+
+            'Lbl_LibroDTESII.Text = "Monitoreo Libro DTE desde SII"
+        Else
+            _Registro = "Problema al descargar los archivos desde el SII" & vbCrLf & _RecuperarComprasRegistro.Mensaje & "-" & _RecuperarComprasRegistro.Detalle
+            RegistrarLog(_Registro)
+            MostrarRegistro(_Registro)
+        End If
+
+        Sb_ActualizarDetalleListview("Importar DTE SII", _DProgramaciones.Sp_ImporDTESII.Resumen)
+
+        Sb_Pausa(True)
+
+    End Sub
+
+    Sub Sb_ActualizarDetalleListview(_Codigo As String, _Descripcion As String)
+
         For Each item As ListViewItem In Listv_Programaciones.Items
-            If item.Text = "Prestashop Web" Then
-                item.SubItems(1).Text = _DProgramaciones.Sp_Prestashop_Prod.Resumen
+            If item.Text = _Codigo Then
+                item.SubItems(1).Text = _Descripcion
                 Exit For
             End If
         Next
 
     End Sub
 
-    Private Sub Timer_Correos_Tick(sender As Object, e As EventArgs)
+    Sub Sb_Actualizar_Fecha()
 
+        Dim _Fecha_Computador As Date = FormatDateTime(Now.Date, DateFormat.ShortDate)
+        Dim _Fecha_Dtp As Date = FormatDateTime(DtpFecharevision.Value, DateFormat.ShortDate)
+
+        If Not Me.Visible Then
+
+            If _Fecha_Computador <> _Fecha_Dtp Then
+
+                DtpFecharevision.Value = FormatDateTime(FechaDelServidor(), DateFormat.ShortDate)
+
+            End If
+
+        End If
+
+    End Sub
+
+    Sub Sb_Pausa(_Pausa As Boolean)
+
+        If _DProgramaciones.Sp_Prestashop_Prod.Activo Then
+            Timer_PrestaShopWeb.Enabled = _Pausa
+        End If
+
+        If _DProgramaciones.Sp_ImporDTESII.Activo Then
+            Timer_LibroDTESII.Enabled = _Pausa
+        End If
+
+    End Sub
+
+    Private Sub BtnCambFecha_Click(sender As Object, e As EventArgs) Handles BtnCambFecha.Click
+        If Fx_Tiene_Permiso(Me, "Pick0007") Then
+            DtpFecharevision.Enabled = True
+        End If
     End Sub
 End Class
