@@ -589,7 +589,7 @@ Public Class Frm_Chilexpress_Envio
             .TelefonoOrigen1 = Txt_Telefono_Origen.Text
             .CorreoOrigen1 = Txt_Correo_Origen.Text
             .Referencia1 = Txt_Referencia.Text
-            .Peso1 = Txt_Peso.Text
+            .Peso1 = De_Num_a_Tx_01(_Peso, False, 2)
             .Alto1 = Txt_Alto.Text
             .Largo1 = Txt_Largo.Text
             .Ancho1 = Txt_Ancho.Text

@@ -174,7 +174,8 @@ Public Class Frm_ImpBarras_PorProducto
             _Filtro_Productos = "And KOPR In " & _Filtro_Productos
         End If
 
-        Consulta_sql = "Select KOPR AS 'Codigo',NOKOPR as 'Descripcion'," & Convert.ToInt32(_Cantidad_Uno) & " As Cantidad From MAEPR" & vbCrLf &
+        Consulta_sql = "Select KOPR AS 'Codigo',NOKOPR as 'Descripcion'," & Convert.ToInt32(_Cantidad_Uno) & " As Cantidad,Cast('' As Varchar(20)) As CodAlternativo" & vbCrLf &
+                       "From MAEPR" & vbCrLf &
                        "Where 1 > 0" & vbCrLf & _Filtro_Productos
 
         _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -183,20 +184,22 @@ Public Class Frm_ImpBarras_PorProducto
 
             Grilla.DataSource = _Tbl_Productos
 
+            OcultarEncabezadoGrilla(Grilla, True)
+
             .Columns("Codigo").Width = 110
             .Columns("Codigo").HeaderText = "Código"
-            '.Columns("Codigo").DefaultCellStyle.Format = "###,##"
-            .Columns("Codigo").ReadOnly = True
+            .Columns("Codigo").Visible = True
 
             .Columns("Descripcion").Width = 400
             .Columns("Descripcion").HeaderText = "Descripción"
-            '.Columns("Descripcion").DefaultCellStyle.Format = "###,##"
-            .Columns("Descripcion").ReadOnly = True
+            .Columns("Descripcion").Visible = True
 
             .Columns("Cantidad").Width = 70
             .Columns("Cantidad").HeaderText = "Cantidad"
             .Columns("Cantidad").DefaultCellStyle.Format = "###,##"
             .Columns("Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Cantidad").ReadOnly = False
+            .Columns("Cantidad").Visible = True
 
             If Not (_Tbl_Productos Is Nothing) Then
 
@@ -332,6 +335,7 @@ Public Class Frm_ImpBarras_PorProducto
                     If Veces < 1 Then Veces = 1
 
                     Dim _Codigo = _Fila.Item("Codigo")
+                    Dim _CodAlternativo = _Fila.Item("CodAlternativo")
                     Dim _Lista = CmbLista.SelectedValue
 
                     Dim _Empresa, _Sucursal, _Bodega As String
@@ -355,7 +359,8 @@ Public Class Frm_ImpBarras_PorProducto
                                                   _Codigo_Ubic,
                                                   Chk_Imprimir_Todas_Las_Ubicaciones.Checked,
                                                   Chk_ImprimiPrecioFuturo.Checked,
-                                                  Id_PrecioFuturo)
+                                                  Id_PrecioFuturo,
+                                                  _CodAlternativo)
 
                         If Not String.IsNullOrEmpty(_Imp.Error) Then
                             If MessageBoxEx.Show(Me, _Imp.Error, "Problema al imprimir", MessageBoxButtons.OKCancel, MessageBoxIcon.Stop) <> DialogResult.OK Then
@@ -422,26 +427,30 @@ Public Class Frm_ImpBarras_PorProducto
 
     Function Fx_Buscar_Producto(_Codigo As String) As DataRow
 
-        Dim _TblProducto As DataTable
+        Dim _Kopr = _Codigo
+        Dim _Kopral = _Codigo
 
-        Dim _CodigoAlt = _Codigo
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("MAEPR", "KOPR = '" & _Kopr & " '")
 
-        _CodigoAlt = _Sql.Fx_Trae_Dato("TABCODAL", "KOPR", "KOEN = '' And KOPRAL = '" & _CodigoAlt & "'")
+        If Not CBool(_Reg) Then
 
-        If String.IsNullOrEmpty(_CodigoAlt) Then
-            _CodigoAlt = _Codigo
-            _CodigoAlt = _Sql.Fx_Trae_Dato("TABCODAL", "KOPR", "KOPRAL = '" & _CodigoAlt & "'")
+            _Kopr = _Sql.Fx_Trae_Dato("TABCODAL", "KOPR", "KOEN = '' And KOPRAL = '" & _Kopral & "'")
+
+            If String.IsNullOrEmpty(_Kopr) Then
+                _Kopr = _Sql.Fx_Trae_Dato("TABCODAL", "KOPR", "KOPRAL = '" & _Kopral & "'")
+            End If
+
+            If String.IsNullOrEmpty(_Kopr) Then
+                _Kopral = String.Empty
+            End If
+
         End If
 
-        If Not String.IsNullOrEmpty(_CodigoAlt) Then
-            _Codigo = _CodigoAlt
-        End If
+        Consulta_sql = "Select Top 1 *,'" & _Kopral & "' As CodAlternativo From MAEPR Where KOPR = '" & _Kopr & "'"
+        Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Consulta_sql = "Select top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
-        _TblProducto = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        If CBool(_TblProducto.Rows.Count) Then
-            Return _TblProducto.Rows(0)
+        If Not IsNothing(_RowProducto) Then
+            Return _RowProducto
         Else
 
             If Not Fx_Tiene_Permiso(Me, "7Brr0009") Then
@@ -466,8 +475,20 @@ Public Class Frm_ImpBarras_PorProducto
             Fm.ShowDialog(Me)
 
             If Fm.Pro_Seleccionado Then
-                '_TblProducto = Fm.Pro_RowProducto
-                Return Fm.Pro_RowProducto '_TblProducto.Rows(0)
+
+                Dim _Row As DataRow = Fm.Pro_RowProducto
+
+                ' Supongamos que tienes un DataRow llamado "row" y deseas agregar una columna llamada "NuevaColumna"
+                Dim dataTable As DataTable = _Row.Table
+                Dim nuevaColumna As New DataColumn("CodAlternativo", GetType(String)) ' Aquí especifica el tipo de datos de la columna
+
+                ' Agregar la columna a la colección de columnas de la tabla
+                dataTable.Columns.Add(nuevaColumna)
+
+                ' Asignar un valor a la nueva columna en el DataRow
+                _Row("CodAlternativo") = Fm.Txt_CodAlternativo.Text.Trim ' Aquí asigna el valor deseado a la nueva columna
+
+                Return _Row '_TblProducto.Rows(0)
             Else
                 Return Nothing
             End If
@@ -577,7 +598,7 @@ Public Class Frm_ImpBarras_PorProducto
 
             Dim _Cantidad = 0
             If _Cantidad_Uno Then _Cantidad = 1
-            Sb_Agregar_Producto(_Tbl_Productos, _Row_Producto.Item("KOPR"), _Row_Producto.Item("NOKOPR"), _Cantidad)
+            Sb_Agregar_Producto(_Tbl_Productos, _Row_Producto.Item("KOPR"), _Row_Producto.Item("NOKOPR"), _Cantidad, _Row_Producto.Item("CodAlternativo"))
 
             Txt_Codigo.Text = String.Empty
             Txt_Codigo.ButtonCustom.Visible = False
@@ -712,8 +733,8 @@ Public Class Frm_ImpBarras_PorProducto
     Sub Sb_Agregar_Producto(ByRef _Tbl As DataTable,
                              _Codigo As String,
                              _Descripcion As String,
-                             _Cantidad As Integer)
-
+                             _Cantidad As Integer,
+                             _CodAlternativo As String)
         Dim NewFila As DataRow
         NewFila = _Tbl.NewRow
         With NewFila
@@ -721,6 +742,7 @@ Public Class Frm_ImpBarras_PorProducto
             .Item("Codigo") = _Codigo
             .Item("Descripcion") = _Descripcion
             .Item("Cantidad") = _Cantidad
+            .Item("CodAlternativo") = _CodAlternativo
 
             _Tbl.Rows.Add(NewFila)
 

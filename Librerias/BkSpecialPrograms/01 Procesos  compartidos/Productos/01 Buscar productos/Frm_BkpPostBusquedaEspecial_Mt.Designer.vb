@@ -45,9 +45,11 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.CmbCantFilas = New System.Windows.Forms.ComboBox()
         Me.Grupo_BusquedaProducto = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_CodAlternativo = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txtdescripcion = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Lbl_Patente = New DevComponents.DotNetBar.LabelX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_Patente = New DevComponents.DotNetBar.LabelX()
         Me.Context_Menu_Solicitud_Compra = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
         Me.Lbl_Mnu_1 = New DevComponents.DotNetBar.LabelItem()
@@ -243,10 +245,10 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.TxtCodigo.FocusHighlightColor = System.Drawing.Color.PaleTurquoise
         Me.TxtCodigo.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TxtCodigo.ForeColor = System.Drawing.Color.Black
-        Me.TxtCodigo.Location = New System.Drawing.Point(575, 3)
+        Me.TxtCodigo.Location = New System.Drawing.Point(556, 3)
         Me.TxtCodigo.Name = "TxtCodigo"
         Me.TxtCodigo.PreventEnterBeep = True
-        Me.TxtCodigo.Size = New System.Drawing.Size(115, 22)
+        Me.TxtCodigo.Size = New System.Drawing.Size(96, 22)
         Me.TxtCodigo.TabIndex = 23
         '
         'Txt_Ficha
@@ -286,7 +288,7 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Txt_Patente.FocusHighlightColor = System.Drawing.Color.PaleTurquoise
         Me.Txt_Patente.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.Txt_Patente.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Patente.Location = New System.Drawing.Point(754, 3)
+        Me.Txt_Patente.Location = New System.Drawing.Point(768, 68)
         Me.Txt_Patente.MaxLength = 6
         Me.Txt_Patente.Name = "Txt_Patente"
         Me.Txt_Patente.PreventEnterBeep = True
@@ -324,9 +326,9 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         '
         Me.Grupo_BusquedaProducto.BackColor = System.Drawing.Color.White
         Me.Grupo_BusquedaProducto.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_BusquedaProducto.Controls.Add(Me.LabelX4)
+        Me.Grupo_BusquedaProducto.Controls.Add(Me.Txt_CodAlternativo)
         Me.Grupo_BusquedaProducto.Controls.Add(Me.Txtdescripcion)
-        Me.Grupo_BusquedaProducto.Controls.Add(Me.Lbl_Patente)
-        Me.Grupo_BusquedaProducto.Controls.Add(Me.Txt_Patente)
         Me.Grupo_BusquedaProducto.Controls.Add(Me.LabelX2)
         Me.Grupo_BusquedaProducto.Controls.Add(Me.TxtCodigo)
         Me.Grupo_BusquedaProducto.DisabledBackColor = System.Drawing.Color.Empty
@@ -364,6 +366,39 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Grupo_BusquedaProducto.TabIndex = 0
         Me.Grupo_BusquedaProducto.Text = "Cadena de busqueda del producto"
         '
+        'LabelX4
+        '
+        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.ForeColor = System.Drawing.Color.Black
+        Me.LabelX4.Location = New System.Drawing.Point(658, 3)
+        Me.LabelX4.Name = "LabelX4"
+        Me.LabelX4.Size = New System.Drawing.Size(39, 23)
+        Me.LabelX4.TabIndex = 61
+        Me.LabelX4.Text = "Cód.Alt."
+        Me.LabelX4.TextAlignment = System.Drawing.StringAlignment.Far
+        '
+        'Txt_CodAlternativo
+        '
+        Me.Txt_CodAlternativo.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CodAlternativo.Border.Class = "TextBoxBorder"
+        Me.Txt_CodAlternativo.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CodAlternativo.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CodAlternativo.FocusHighlightColor = System.Drawing.Color.PaleTurquoise
+        Me.Txt_CodAlternativo.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Txt_CodAlternativo.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CodAlternativo.Location = New System.Drawing.Point(703, 3)
+        Me.Txt_CodAlternativo.Name = "Txt_CodAlternativo"
+        Me.Txt_CodAlternativo.PreventEnterBeep = True
+        Me.Txt_CodAlternativo.Size = New System.Drawing.Size(137, 22)
+        Me.Txt_CodAlternativo.TabIndex = 60
+        '
         'Txtdescripcion
         '
         Me.Txtdescripcion.BackColor = System.Drawing.Color.White
@@ -377,23 +412,8 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Txtdescripcion.Location = New System.Drawing.Point(4, 3)
         Me.Txtdescripcion.Name = "Txtdescripcion"
         Me.Txtdescripcion.PreventEnterBeep = True
-        Me.Txtdescripcion.Size = New System.Drawing.Size(520, 22)
+        Me.Txtdescripcion.Size = New System.Drawing.Size(501, 22)
         Me.Txtdescripcion.TabIndex = 59
-        '
-        'Lbl_Patente
-        '
-        Me.Lbl_Patente.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Lbl_Patente.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Lbl_Patente.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Patente.Location = New System.Drawing.Point(696, 3)
-        Me.Lbl_Patente.Name = "Lbl_Patente"
-        Me.Lbl_Patente.Size = New System.Drawing.Size(51, 23)
-        Me.Lbl_Patente.TabIndex = 57
-        Me.Lbl_Patente.Text = "PATENTE"
-        Me.Lbl_Patente.TextAlignment = System.Drawing.StringAlignment.Far
         '
         'LabelX2
         '
@@ -403,19 +423,34 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(530, 3)
+        Me.LabelX2.Location = New System.Drawing.Point(511, 3)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(39, 23)
         Me.LabelX2.TabIndex = 24
         Me.LabelX2.Text = "Código"
         Me.LabelX2.TextAlignment = System.Drawing.StringAlignment.Far
         '
+        'Lbl_Patente
+        '
+        Me.Lbl_Patente.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_Patente.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Patente.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Patente.Location = New System.Drawing.Point(711, 68)
+        Me.Lbl_Patente.Name = "Lbl_Patente"
+        Me.Lbl_Patente.Size = New System.Drawing.Size(51, 23)
+        Me.Lbl_Patente.TabIndex = 57
+        Me.Lbl_Patente.Text = "PATENTE"
+        Me.Lbl_Patente.TextAlignment = System.Drawing.StringAlignment.Far
+        '
         'Context_Menu_Solicitud_Compra
         '
         Me.Context_Menu_Solicitud_Compra.AntiAlias = True
         Me.Context_Menu_Solicitud_Compra.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Context_Menu_Solicitud_Compra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
-        Me.Context_Menu_Solicitud_Compra.Location = New System.Drawing.Point(718, 84)
+        Me.Context_Menu_Solicitud_Compra.Location = New System.Drawing.Point(538, 217)
         Me.Context_Menu_Solicitud_Compra.Name = "Context_Menu_Solicitud_Compra"
         Me.Context_Menu_Solicitud_Compra.Size = New System.Drawing.Size(119, 25)
         Me.Context_Menu_Solicitud_Compra.Stretch = True
@@ -840,12 +875,14 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(860, 604)
+        Me.Controls.Add(Me.Context_Menu_Solicitud_Compra)
+        Me.Controls.Add(Me.Lbl_Patente)
+        Me.Controls.Add(Me.Txt_Patente)
         Me.Controls.Add(Me.Grilla)
         Me.Controls.Add(Me.LabelX3)
         Me.Controls.Add(Me.Txt_Ficha)
         Me.Controls.Add(Me.Btn_Top20)
         Me.Controls.Add(Me.Btn_Maestra_Productos)
-        Me.Controls.Add(Me.Context_Menu_Solicitud_Compra)
         Me.Controls.Add(Me.Chk_Top20)
         Me.Controls.Add(Me.Bar_Menu_Producto)
         Me.Controls.Add(Me.LabelX1)
@@ -942,4 +979,6 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
     Public WithEvents Txt_Patente As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Txtdescripcion As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
+    Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
+    Public WithEvents Txt_CodAlternativo As DevComponents.DotNetBar.Controls.TextBoxX
 End Class
