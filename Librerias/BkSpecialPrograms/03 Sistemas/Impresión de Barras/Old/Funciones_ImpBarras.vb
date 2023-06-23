@@ -75,7 +75,8 @@
                              _CodUbicacion As String,
                              _Imprimir_Todas_Las_Ubicaciones As Boolean,
                              _ImprimirDesdePrecioFuturo As Boolean,
-                             _Id_PrecioFuturo As Integer)
+                             _Id_PrecioFuturo As Integer,
+                             _CodAlternativo As String)
 
         If _Imprimir_Todas_Las_Ubicaciones Then
 
@@ -136,13 +137,20 @@
                                                            _Sucursal,
                                                            _Bodega,,
                                                            _CodUbicacion,
-                                                           _ImprimirDesdePrecioFuturo, _Id_PrecioFuturo)
+                                                           _ImprimirDesdePrecioFuturo,
+                                                           _Id_PrecioFuturo)
 
             _Codigo_principal = _Codigo
             _Codigo_tecnico = _RowProducto.Item("KOPRTE")
             _Codigo_rapido = _RowProducto.Item("KOPRRA")
             _Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
             _Descripcion_Corta = _RowProducto.Item("NOKOPRRA").ToString.Trim
+
+            If Not String.IsNullOrEmpty(_CodAlternativo) Then
+                _Codigo_Alternativo = _CodAlternativo
+            Else
+                _Codigo_Alternativo = _RowProducto.Item("Codigo_Alternativo")
+            End If
 
             _Marca_Pr = _RowProducto.Item("Marca").ToString.Trim
 
@@ -182,6 +190,9 @@
             End If
 
             _FechaProgramada_Futuro = _RowProducto.Item("FechaProgramada")
+
+            If _Dim1 = 0 Then _Dim1 = 1
+            If _Dim2 = 0 Then _Dim2 = 1
 
             _PrecioLc1 = (_Precio_ud1 / _Dim1) * _Dim2
 
@@ -686,12 +697,41 @@
         Dim _vPrecioNetoXRtu As String = Fx_Formato_Numerico(_PrecioNetoXRtu, "9", False)
         Dim _vPrecioBrutoXRtu As String = Fx_Formato_Numerico(_PrecioBrutoXRtu, "9", False)
 
-        If _Texto.Contains("PBRUTOUD1X6") Then
-            _PrecioBrutoXRtu = 6 * _PU01_Bruto
-            _vPrecioBrutoXRtu = Fx_Formato_Numerico(_PrecioBrutoXRtu, "9", False)
-            '_Texto = Replace(_Texto, "<PNETOXRTU_UD1>", _vPrecioNetoXRtu)
-            _Texto = Replace(_Texto, "<PBRUTOUD1X6>", _vPrecioBrutoXRtu)
+        If _Texto.Contains("PBRUTOUD1X6") Or _Texto.Contains("PBRUTOUD1XMULTIPLO") Or _Texto.Contains("PBRUTOUD2XMULTIPLO") Then
+
+            Consulta_sql = "Select Top 1 * From TABCODAL Where KOPRAL = '" & _Codigo_Alternativo & "' And KOPR = '" & _Codigo_principal & "'"
+            Dim _Row_Kopral As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not IsNothing(_Row_Kopral) Then
+
+                Dim _Unimulti As Integer = 1
+                Dim _Multiplo As Integer = _Row_Kopral.Item("MULTIPLO")
+
+                Dim _PrecioMulti As Double
+
+                If _Texto.Contains("PBRUTOUD2XUNIMULTI2") Then
+                    _Unimulti = 2
+                End If
+
+                If _Unimulti = 1 Then : _PrecioMulti = _PU01_Bruto : Else : _PrecioMulti = _PU02_Bruto : End If
+
+                _PrecioBrutoXRtu = _Multiplo * _PrecioMulti
+
+                _vPrecioBrutoXRtu = Fx_Formato_Numerico(_PrecioBrutoXRtu, "9", False)
+
+                _Texto = Replace(_Texto, "<PBRUTOUD1X6>", _vPrecioBrutoXRtu)
+
+            End If
+
         End If
+
+
+        'If _Texto.Contains("PBRUTOUD1X6") Then
+        '    _PrecioBrutoXRtu = 6 * _PU01_Bruto
+        '    _vPrecioBrutoXRtu = Fx_Formato_Numerico(_PrecioBrutoXRtu, "9", False)
+        '    '_Texto = Replace(_Texto, "<PNETOXRTU_UD1>", _vPrecioNetoXRtu)
+        '    _Texto = Replace(_Texto, "<PBRUTOUD1X6>", _vPrecioBrutoXRtu)
+        'End If
 
         Dim _St_PU01_Neto As String = Fx_Formato_Numerico(_PU01_Neto, "9", False)
         Dim _St_PU02_Neto As String = Fx_Formato_Numerico(_PU02_Neto, "9", False)

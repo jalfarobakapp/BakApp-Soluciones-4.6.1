@@ -218,7 +218,6 @@ Partial Class Frm_Adjuntar_Archivos
         Me.Listv_Archivos.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader6, Me.ColumnHeader1})
         Me.Listv_Archivos.DisabledBackColor = System.Drawing.Color.Empty
         Me.Listv_Archivos.ForeColor = System.Drawing.Color.Black
-        Me.Listv_Archivos.GridLines = True
         Me.Listv_Archivos.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
         Me.Listv_Archivos.HideSelection = False
         Me.Listv_Archivos.HotTracking = True

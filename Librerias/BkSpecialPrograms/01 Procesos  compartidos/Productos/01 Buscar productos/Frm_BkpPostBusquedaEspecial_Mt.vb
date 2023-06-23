@@ -481,6 +481,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
     Enum _Opcion_Buscar
         _Descripcion
         _Codigo
+        _Codigo_Alternativo
     End Enum
 
     Dim _Top = 100
@@ -991,24 +992,44 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
                 End If
 
+            ElseIf _Opcion_Buscar = Frm_BkpPostBusquedaEspecial_Mt._Opcion_Buscar._Codigo_Alternativo Then
+
+                Txtdescripcion.Text = String.Empty
+                TxtCodigo.Text = String.Empty
+                If Not String.IsNullOrEmpty(Txt_CodAlternativo.Text.Trim) Then
+                    _Sql_Filtro1 = "And Mp.KOPR IN (Select KOPR From TABCODAL Where KOPRAL = '" & Txt_CodAlternativo.Text & "')" & vbCrLf
+                End If
+
             Else
 
-                Dim _CodigoPr As String = _Sql.Fx_Trae_Dato("TABCODAL", "KOPR",
-                                                    "(KOPRAL = '" & TxtCodigo.Text & "' And KOEN = '') Or " & vbCrLf &
-                                                    "(KOPR = '" & TxtCodigo.Text & "')")
+                Dim _CodigoBuscar As String = TxtCodigo.Text
 
-                If Not String.IsNullOrEmpty(TxtCodigo.Text) Then
+                Dim _Sep1 = ""
+                Dim _Sep2 = ""
 
-                    Dim _Sql_Fl As String = CADENA_A_BUSCAR(RTrim$(TxtCodigo.Text), "DescripcionBusqueda LIKE '%")
+                If TxtCodigo.Text.Contains("%") Then
 
-                    If Not String.IsNullOrEmpty(_Sql_Fl) Then
+                    Dim _PrimerCarac = Mid(TxtCodigo.Text, 1, 1)
+                    Dim _UltimoCarac = Mid(TxtCodigo.Text, TxtCodigo.Text.Length, 1)
 
-                        _Sql_Filtro1 = "And Mp.KOPR IN (Select KOPR From TABCODAL" & vbCrLf &
-                                       "Where KOPR+KOPRAL LIKE '%" & _Sql_Fl & "%')" & vbCrLf
+                    If _PrimerCarac = "%" Then _Sep1 = "%"
+                    If _UltimoCarac = "%" Then _Sep2 = "%"
 
-                    End If
+                    'If _PrimerCarac = "%" AndAlso _UltimoCarac = "%" Then
+                    '    _Sep1 = "%" : _Sep2 = "%"
+                    'End If
 
                 End If
+
+                _CodigoBuscar = _CodigoBuscar.Replace("%", "")
+
+                If String.IsNullOrEmpty(_CodigoBuscar.Trim) Then
+                    _Sep1 = "%" : _Sep2 = "%"
+                End If
+
+                Dim _Sql_Fl As String = CADENA_A_BUSCAR(RTrim$(_CodigoBuscar), "DescripcionBusqueda LIKE '%")
+
+                _Sql_Filtro1 = "And Mp.KOPR LIKE '" & _Sep1 & _Sql_Fl & _Sep2 & "'" & vbCrLf
 
             End If
 
@@ -1599,10 +1620,9 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
     End Sub
 
     Private Sub Txtdescripcion_TextChanged(sender As System.Object, e As System.EventArgs)
-        If String.IsNullOrEmpty(Trim(Txtdescripcion.Text)) Then
+        If String.IsNullOrWhiteSpace(Txtdescripcion.Text.Trim) AndAlso String.IsNullOrWhiteSpace(Txt_CodAlternativo.Text.Trim) Then
             Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
             Grilla.ClearSelection()
-            'GrillaBusquedaOtros.ClearSelection()
         End If
     End Sub
 
@@ -2376,9 +2396,10 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
     End Sub
 
     Private Sub TxtCodigo_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles TxtCodigo.KeyDown
+
         If e.KeyValue = Keys.Down Then
             Grilla.Focus()
-            Me.ActiveControl = Grilla ' Txtdescripcion
+            Me.ActiveControl = Grilla
         End If
 
         If e.KeyValue = Keys.Return Then
@@ -2964,6 +2985,35 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             MessageBoxEx.Show(Me, "Patente No encontrada", "Patente RVM", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Call Txt_Patente_ButtonCustomClick(Nothing, Nothing)
         End If
+    End Sub
+
+    Private Sub Txt_CodAlternativo_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_CodAlternativo.KeyDown
+
+        If e.KeyValue = Keys.Down Then
+            Grilla.Focus()
+            Me.ActiveControl = Grilla
+        End If
+
+        If e.KeyValue = Keys.Return Then
+            If _Actualizar_Precios Then
+
+                If _Tipo_Lista = "P" Then
+
+                    Dim _CondExtraProveedor As String = String.Empty
+                    If Not String.IsNullOrEmpty(Trim(_CodEntidad)) Then
+                        _CondExtraProveedor = "Where Proeveedor = '" & _CodEntidad & "' And Sucursal = '" & _CodSucEntidad & "'"
+                    End If
+
+                    Actualizar_Precio_BkRandom(_ListaBusq, _Tabla_Lista, _CondExtraProveedor, True)
+                    '    BUSCA()
+                End If
+
+            End If
+            _Top = 30
+            Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Codigo_Alternativo)
+            If CBool(Grilla.RowCount) Then Grilla.Focus()
+        End If
+
     End Sub
 
     Private Sub Txt_Patente_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Patente.ButtonCustom2Click
