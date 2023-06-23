@@ -105,6 +105,13 @@ Public Class Frm_Cambio_Codigos_UnoxUno
                     Return
                 End If
 
+                _Existe_PrNew = CBool(_Sql.Fx_Cuenta_Registros("TABRECPR", "KOPR = '" & Txt_Codigo_New.Text & "'"))
+
+                If _Existe_PrNew Then
+                    Consulta_sql = "Delete TABRECPR Where KOPR = '" & Txt_Codigo_New.Text & "'"
+                    _Sql.Ej_consulta_IDU(Consulta_sql)
+                End If
+
                 If MessageBoxEx.Show("¿Esta seguro de cambiar el código?", "Cambiar código",
                                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 

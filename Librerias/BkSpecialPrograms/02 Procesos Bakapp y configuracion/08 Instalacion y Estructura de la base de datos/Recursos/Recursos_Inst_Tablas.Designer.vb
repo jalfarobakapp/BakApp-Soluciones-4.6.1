@@ -766,6 +766,48 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
+        '''CREATE TABLE [dbo].[Zw_Demonio_ConfAcpAuto](
+        '''	[Id] [int] IDENTITY(1,1) NOT NULL,
+        '''	[NombreEquipo]		[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Modalidad]			[varchar](5)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[NVI]				[bit]			NOT NULL DEFAULT (0),
+        '''	[OCC_Star]			[bit]			NOT NULL DEFAULT (0),
+        '''	[OCC_Prov]			[bit]			NOT NULL DEFAULT (0),
+        ''' CONSTRAINT [PK_Zw_Demonio_ConfAsisCompra] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS =  [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Demonio_ConfAcpAuto() As String
+            Get
+                Return ResourceManager.GetString("Zw_Demonio_ConfAcpAuto", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Demonio_ConfProgramacion](
+        '''	[Id] [int] IDENTITY(1,1) NOT NULL,
+        '''	[NombreEquipo]			[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Tbl_Padre]				[varchar](30)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Id_Padre]				[int]			NOT NULL DEFAULT (0),
+        '''	[Nombre]				[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[FrecuDiaria]			[bit]			NOT NULL DEFAULT (0),
+        '''	[FrecuSemanal]			[bit]			NOT NULL DEFAULT (0),
+        '''	[Lunes]					[bit]			NOT NULL DEFAULT (0),
+        '''	[Martes]				[bit]			NOT NULL DEFAULT (0),
+        '''	[Miercoles]				 [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Demonio_ConfProgramacion() As String
+            Get
+                Return ResourceManager.GetString("Zw_Demonio_ConfProgramacion", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
         '''
         '''CREATE TABLE [dbo].[Zw_Demonio_Doc_Emitidos_Aviso_Correo](
         '''	[Id]					[int] IDENTITY(1,1) NOT NULL,
@@ -912,14 +954,14 @@ Namespace My.Resources
         '''
         '''CREATE TABLE [dbo].[Zw_Despacho_Simple](
         '''	[Id] [int] IDENTITY(1,1) NOT NULL,
-        '''	[Idmaeedo]				[int] NOT NULL DEFAULT (0),
-        '''	[CodTipoDespacho]		[int] NOT NULL DEFAULT (0),
-        '''	[TipoDespacho]			[varchar](50) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[TipoPagoDesp]			[varchar](50) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[DireccionDesp]			[varchar](50) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[TransporteDesp]		[varchar](50) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[ObservacionesDesp]		[varchar](50) NOT NULL DEFAULT (&apos;&apos;),
-        ''' CONSTRAINT [PK_Zw_Despacho_Simple] PR [resto de la cadena truncado]&quot;;.
+        '''	[Idmaeedo]				[int]           NOT NULL DEFAULT (0),
+        '''	[CodTipoDespacho]		[int]           NOT NULL DEFAULT (0),
+        '''	[TipoDespacho]			[varchar](50)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[TipoPagoDesp]			[varchar](50)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[DireccionDesp]			[varchar](50)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[TransporteDesp]		[varchar](50)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[ObservacionesDesp]		[varchar](250)  NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodDoc [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Despacho_Simple() As String
             Get
@@ -1822,16 +1864,15 @@ Namespace My.Resources
         '''
         '''CREATE TABLE [dbo].[Zw_ListaLC_Programadas](
         '''	[Id]					[int] IDENTITY(1,1) NOT NULL,
-        '''	[Codigo]				[char](13) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[NombreProgramacion]	[varchar](200) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[FechaCreacion]			[datetime] NULL,
-        '''	[FechaProgramada]		[datetime] NULL,
-        '''	[FechaAplica]			[datetime] NULL,
-        '''	[Aplicado]				[bit] NOT NULL DEFAULT (0),
-        '''	[Funcionario]			[varchar](50) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Activo]				[bit] NOT NULL DEFAULT (0),
-        '''	[Id_Padre]				[int] NOT NULL DEFAULT (0),
-        '''	[E [resto de la cadena truncado]&quot;;.
+        '''	[Codigo]				[char](13)      NOT NULL DEFAULT (&apos;&apos;),
+        '''	[NombreProgramacion]	[varchar](200)  NOT NULL DEFAULT (&apos;&apos;),
+        '''	[FechaCreacion]			[datetime]      NULL,
+        '''	[FechaProgramada]		[datetime]      NULL,
+        '''	[FechaAplica]			[datetime]      NULL,
+        '''	[Aplicado]				[bit]           NOT NULL DEFAULT (0),
+        '''	[Funcionario]			[varchar](50)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Activo]				[bit]           NOT NULL DEFAULT (0),
+        '''	[Id [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_ListaLC_Programadas() As String
             Get
@@ -3726,16 +3767,15 @@ Namespace My.Resources
         '''
         '''
         '''CREATE TABLE [dbo].[Zw_TablaDeCaracterizaciones](
-        '''	[Tabla]				[varchar](50) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[DescripcionTabla]	[varchar](100) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[CodigoTabla]		[varchar](30) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[NombreTabla]		[varchar](100) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Orden]				[int] NOT NULL DEFAULT (0),
-        '''	[ApColor]			[bit] NOT NULL DEFAULT (0),
-        '''	[ApModelo]			[bit] NOT NULL DEFAULT (0),
-        '''	[ApMedida]			[bit] NOT NULL DEFAULT (0),
-        '''	[Porcentaje]		[float] NOT NULL DEFAULT (0),
-        '''	[Valor]		 [resto de la cadena truncado]&quot;;.
+        '''	[Tabla]				[varchar](50)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[DescripcionTabla]	[varchar](100)  NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodigoTabla]		[varchar](30)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[NombreTabla]		[varchar](100)  NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Orden]				[int]           NOT NULL DEFAULT (0),
+        '''	[ApColor]			[bit]           NOT NULL DEFAULT (0),
+        '''	[ApModelo]			[bit]           NOT NULL DEFAULT (0),
+        '''	[ApMedida]			[bit]           NOT NULL DEFAULT (0),
+        '''	[Porcenta [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_TablaDeCaracterizaciones() As String
             Get

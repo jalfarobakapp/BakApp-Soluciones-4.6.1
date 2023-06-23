@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports System.IO
+Imports DevComponents.DotNetBar
 
 Public Class Frm_Demonio_Configuraciones
 
@@ -54,6 +55,7 @@ Public Class Frm_Demonio_Configuraciones
         AddHandler Chk_FacAuto.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
         AddHandler Chk_AsistenteCompras.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
         AddHandler Chk_SqlQueryEspecial.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
+        AddHandler Chk_ListasProgramadas.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
 
         AddHandler Sp_EnvioCorreo.Click, AddressOf Sp_SuperTabItem_Click
         AddHandler Sp_ColaImpDoc.Click, AddressOf Sp_SuperTabItem_Click
@@ -71,59 +73,11 @@ Public Class Frm_Demonio_Configuraciones
         AddHandler Sp_FacAuto.Click, AddressOf Sp_SuperTabItem_Click
         AddHandler Sp_SqlQueryEspecial.Click, AddressOf Sp_SuperTabItem_Click
         AddHandler Sp_AsistenteCompras.Click, AddressOf Sp_SuperTabItem_Click
+        AddHandler Sp_ListasProgramadas.Click, AddressOf Sp_SuperTabItem_Click
 
-        'With _Row_ConfEstacion
-
-        '    Chk_EnvioCorreo.Checked = .Item("EnvioCorreo")
-        '    Chk_ColaImpDoc.Checked = .Item("ColaImpDoc")
-        '    Chk_ColaImpPick.Checked = .Item("ColaImpPick")
-        '    Chk_SolProdBod.Checked = .Item("SolProdBod")
-        '    Chk_Prestashop_Prod.Checked = .Item("Prestashop_Prod")
-        '    Chk_Prestashop_Order.Checked = .Item("Prestashop_Order")
-        '    Chk_Prestashop_Total.Checked = .Item("Prestashop_Total")
-        '    Chk_ImporDTESII.Checked = .Item("ImporDTESII")
-        '    Chk_ArchivarDoc.Checked = .Item("ArchivarDoc")
-        '    Chk_ConsStock.Checked = .Item("ConsStock")
-        '    Chk_Wordpress_Prod.Checked = .Item("Wordpress_Prod")
-        '    Chk_Wordpress_Stock.Checked = .Item("Wordpress_Stock")
-        '    Chk_CierreDoc.Checked = .Item("CierreDoc")
-
-        '    Chk_COVCerrar.Checked = .Item("COVCerrar")
-        '    Input_DiasCOV.Value = .Item("DiasCOV")
-
-        '    Chk_NVICerrar.Checked = .Item("NVICerrar")
-        '    Input_DiasNVI.Value = .Item("DiasNVI")
-
-        '    Chk_NVVCerrar.Checked = .Item("NVVCerrar")
-        '    Input_DiasNVV.Value = .Item("DiasNVV")
-
-        '    Chk_OCICerrar.Checked = .Item("OCICerrar")
-        '    Input_DiasOCI.Value = .Item("DiasOCI")
-
-        '    Chk_OCCCerrar.Checked = .Item("OCCCerrar")
-        '    Input_DiasOCC.Value = .Item("DiasOCC")
-
-        '    Chk_FacAuto.Checked = .Item("FacAuto")
-
-        '    Txt_FacAuto_Modalidad.Text = .Item("FacAuto_Modalidad")
-        '    Rdb_FacAuto_Dia.Checked = .Item("FacAuto_Dia")
-        '    Rdb_FacAuto_Sem.Checked = .Item("FacAuto_Sem")
-        '    Rdb_FacAuto_Mes.Checked = .Item("FacAuto_Mes")
-        '    Rdb_FacAuto_Todas.Checked = .Item("FacAuto_Todas")
-
-        '    Chk_AsistenteCompras.Checked = .Item("AsistenteCompras")
-
-        '    Txt_ImpSolProdBod.Text = .Item("ImpSolProdBod")
-        '    Txt_DirArchivarDoc.Text = .Item("DirArchivarDoc")
-
-        'End With
 
         Sb_Parametros_Informe_Sql(False)
-
-        'AddHandler Grilla_AsistenteCompras.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
-
         Sp_SuperTabItem_Click(Sp_EnvioCorreo, Nothing)
-
         Sb_Actualizar_Grilla_Acp()
 
     End Sub
@@ -176,6 +130,13 @@ Public Class Frm_Demonio_Configuraciones
         If Chk_ArchivarDoc.Checked AndAlso String.IsNullOrWhiteSpace(Txt_DirArchivarDoc.Text) Then
             MessageBoxEx.Show(Me, "Falta la carpeta de destino de los archivos en el archivador de documentos", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
+        End If
+
+        If Chk_ArchivarDoc.Checked Then
+            If Not Directory.Exists(Txt_DirArchivarDoc.Text) Then
+                MessageBoxEx.Show(Me, "No existe el directorio " & Txt_DirArchivarDoc.Text, "Validación archivador de documentos", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
         End If
 
         If Chk_CierreDoc.Checked AndAlso
@@ -277,18 +238,34 @@ Public Class Frm_Demonio_Configuraciones
 
     Private Sub Txt_DirArchivarDoc_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_DirArchivarDoc.ButtonCustomClick
 
+        Dim _Ruta_Archivador As String = AppPath() & "\Data\" & RutEmpresa & "\Archivador"
+
+        If MessageBoxEx.Show(Me, "¿Desea dejar la carpeta de destino por defecto?" & vbCrLf & vbCrLf &
+                             "[Si] deja carpeta por defecto" & vbCrLf &
+                             "[No] selecciona otro directorio", "Carpeta de destino de archivador",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+
+            If Not Directory.Exists(_Ruta_Archivador) Then
+                System.IO.Directory.CreateDirectory(_Ruta_Archivador)
+            End If
+
+            Txt_DirArchivarDoc.Text = _Ruta_Archivador
+            Return
+
+        End If
+
         Dim _Aceptar As Boolean
 
-        Dim _Directorio As String = Txt_DirArchivarDoc.Text
+        _Ruta_Archivador = Txt_DirArchivarDoc.Text
 
         _Aceptar = InputBox_Bk(Me, "Ingrese la carpeta de destino", "Archivador de documentos",
-                               _Directorio, False,,, True, _Tipo_Imagen.Folder,,,,,, True)
+                               _Ruta_Archivador, False,,, True, _Tipo_Imagen.Folder,,,,,, True)
 
         If Not _Aceptar Then
             Return
         End If
 
-        Txt_DirArchivarDoc.Text = _Directorio
+        Txt_DirArchivarDoc.Text = _Ruta_Archivador
 
     End Sub
 
@@ -372,7 +349,7 @@ Public Class Frm_Demonio_Configuraciones
         _MaxIntevalo = 60
 
         Select Case _Nombre
-            Case "EnvioCorreo", "Prestashop_Prod", "Wordpress_Prod", "Wordpress_Stock", "FacAuto", "ImporDTESII"
+            Case "EnvioCorreo", "Prestashop_Prod", "Wordpress_Prod", "Wordpress_Stock", "FacAuto", "ImporDTESII", "ListasProgramadas"
                 _Diariamente = True : _SucedeCada = True : _MinIntervalo = 1 : _MaxIntevalo = 59 : _TIMinutos = True : _TIValorDefecto = "MM"
             Case "ColaImpDoc"
                 _Diariamente = True : _SucedeCada = True : _MinIntervalo = 3 : _MaxIntevalo = 3 : _TISegundos = True : _TIValorDefecto = "SS"
@@ -601,136 +578,140 @@ Public Class Frm_Demonio_Configuraciones
 
         If _Actualizar Then
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Tmp_Prm_Informes" & vbCrLf &
-                           "Where Informe = 'Demonio' And NombreEquipo = '" & _NombreEquipo & "' And Funcionario = '" & FUNCIONARIO & "'"
+                           "Where Informe = 'Demonio' And NombreEquipo = '" & _NombreEquipo & "'"
             _Sql.Ej_consulta_IDU(Consulta_sql)
         End If
 
         'correo
         _Sql.Sb_Parametro_Informe_Sql(Chk_EnvioCorreo, "Demonio",
                                       Chk_EnvioCorreo.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_EnvioCorreo.Checked, _Actualizar, "Correo")
+                                      Chk_EnvioCorreo.Checked, _Actualizar, "Correo",, False)
         _Sql.Sb_Parametro_Informe_Sql(Input_CantCorreo, "Demonio",
                                       Input_CantCorreo.Name, Class_SQLite.Enum_Type._Double,
-                                      Input_CantCorreo.Value, _Actualizar, "Correo")
+                                      Input_CantCorreo.Value, _Actualizar, "Correo",, False)
 
         'Impresiones
         _Sql.Sb_Parametro_Informe_Sql(Chk_ColaImpDoc, "Demonio",
                                       Chk_ColaImpDoc.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_ColaImpDoc.Checked, _Actualizar, "Impresion")
+                                      Chk_ColaImpDoc.Checked, _Actualizar, "Impresion",, False)
         _Sql.Sb_Parametro_Informe_Sql(Chk_ColaImpPick, "Demonio",
                                       Chk_ColaImpPick.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_ColaImpPick.Checked, _Actualizar, "Impresion")
+                                      Chk_ColaImpPick.Checked, _Actualizar, "Impresion",, False)
 
         'Prestashop
         _Sql.Sb_Parametro_Informe_Sql(Chk_Prestashop_Prod, "Demonio",
                                       Chk_Prestashop_Prod.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_Prestashop_Prod.Checked, _Actualizar, "Prestashop")
+                                      Chk_Prestashop_Prod.Checked, _Actualizar, "Prestashop",, False)
         _Sql.Sb_Parametro_Informe_Sql(Chk_Prestashop_Order, "Demonio",
                                       Chk_Prestashop_Order.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_Prestashop_Order.Checked, _Actualizar, "Prestashop")
+                                      Chk_Prestashop_Order.Checked, _Actualizar, "Prestashop",, False)
         _Sql.Sb_Parametro_Informe_Sql(Chk_Prestashop_Total, "Demonio",
                                       Chk_Prestashop_Total.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_Prestashop_Total.Checked, _Actualizar, "Prestashop")
+                                      Chk_Prestashop_Total.Checked, _Actualizar, "Prestashop",, False)
 
         'Importar correos y actualizar libro de compras DTESII
         _Sql.Sb_Parametro_Informe_Sql(Chk_ImporDTESII, "Demonio",
                                       Chk_ImporDTESII.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_ImporDTESII.Checked, _Actualizar, "ImporDTESII")
+                                      Chk_ImporDTESII.Checked, _Actualizar, "ImporDTESII",, False)
         'Archivar documentos
         _Sql.Sb_Parametro_Informe_Sql(Chk_ArchivarDoc, "Demonio",
                                       Chk_ArchivarDoc.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_ArchivarDoc.Checked, _Actualizar, "ArchivarDoc")
+                                      Chk_ArchivarDoc.Checked, _Actualizar, "ArchivarDoc",, False)
         _Sql.Sb_Parametro_Informe_Sql(Txt_DirArchivarDoc, "Demonio",
                                       Txt_DirArchivarDoc.Name, Class_SQLite.Enum_Type._String,
-                                      Txt_DirArchivarDoc.Text, _Actualizar, "ArchivarDoc")
+                                      Txt_DirArchivarDoc.Text, _Actualizar, "ArchivarDoc",, False)
 
         'Consolidar stock
         _Sql.Sb_Parametro_Informe_Sql(Chk_ConsStock, "Demonio",
                                       Chk_ConsStock.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_ConsStock.Checked, _Actualizar, "ConsolidarStock")
+                                      Chk_ConsStock.Checked, _Actualizar, "ConsolidarStock",, False)
         _Sql.Sb_Parametro_Informe_Sql(Rdb_Cons_Stock_Todos, "Demonio",
                                       Rdb_Cons_Stock_Todos.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Rdb_Cons_Stock_Todos.Checked, _Actualizar, "ConsolidarStock")
+                                      Rdb_Cons_Stock_Todos.Checked, _Actualizar, "ConsolidarStock",, False)
         _Sql.Sb_Parametro_Informe_Sql(Rdb_Cons_Stock_Mov_Hoy, "Demonio",
                                       Rdb_Cons_Stock_Mov_Hoy.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Rdb_Cons_Stock_Mov_Hoy.Checked, _Actualizar, "ConsolidarStock")
+                                      Rdb_Cons_Stock_Mov_Hoy.Checked, _Actualizar, "ConsolidarStock",, False)
 
         'Wordpress
         _Sql.Sb_Parametro_Informe_Sql(Chk_Wordpress_Prod, "Demonio",
                                       Chk_Wordpress_Prod.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_Wordpress_Prod.Checked, _Actualizar, "Wordpress")
+                                      Chk_Wordpress_Prod.Checked, _Actualizar, "Wordpress",, False)
         _Sql.Sb_Parametro_Informe_Sql(Chk_Wordpress_Stock, "Demonio",
                                       Chk_Wordpress_Stock.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_Wordpress_Stock.Checked, _Actualizar, "Wordpress")
+                                      Chk_Wordpress_Stock.Checked, _Actualizar, "Wordpress",, False)
 
         'Cierre de documentos
         _Sql.Sb_Parametro_Informe_Sql(Chk_CierreDoc, "Demonio",
                                       Chk_CierreDoc.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_CierreDoc.Checked, _Actualizar, "CierreDoc")
+                                      Chk_CierreDoc.Checked, _Actualizar, "CierreDoc",, False)
         _Sql.Sb_Parametro_Informe_Sql(Chk_COVCerrar, "Demonio",
                                       Chk_COVCerrar.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_COVCerrar.Checked, _Actualizar, "CierreDoc")
+                                      Chk_COVCerrar.Checked, _Actualizar, "CierreDoc",, False)
         _Sql.Sb_Parametro_Informe_Sql(Input_DiasCOV, "Demonio",
                                       Input_DiasCOV.Name, Class_SQLite.Enum_Type._Double,
-                                      Input_DiasCOV.Value, _Actualizar, "CierreDoc")
+                                      Input_DiasCOV.Value, _Actualizar, "CierreDoc",, False)
         _Sql.Sb_Parametro_Informe_Sql(Chk_NVICerrar, "Demonio",
                                       Chk_NVICerrar.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_NVICerrar.Checked, _Actualizar, "CierreDoc")
+                                      Chk_NVICerrar.Checked, _Actualizar, "CierreDoc",, False)
         _Sql.Sb_Parametro_Informe_Sql(Input_DiasNVI, "Demonio",
                                       Input_DiasNVI.Name, Class_SQLite.Enum_Type._Double,
-                                      Input_DiasNVI.Value, _Actualizar, "CierreDoc")
+                                      Input_DiasNVI.Value, _Actualizar, "CierreDoc",, False)
         _Sql.Sb_Parametro_Informe_Sql(Chk_NVVCerrar, "Demonio",
                                       Chk_NVVCerrar.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_NVVCerrar.Checked, _Actualizar, "CierreDoc")
+                                      Chk_NVVCerrar.Checked, _Actualizar, "CierreDoc",, False)
         _Sql.Sb_Parametro_Informe_Sql(Input_DiasNVV, "Demonio",
                                       Input_DiasNVV.Name, Class_SQLite.Enum_Type._Double,
-                                      Input_DiasNVV.Value, _Actualizar, "CierreDoc")
+                                      Input_DiasNVV.Value, _Actualizar, "CierreDoc",, False)
         _Sql.Sb_Parametro_Informe_Sql(Chk_OCICerrar, "Demonio",
                                       Chk_OCICerrar.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_OCICerrar.Checked, _Actualizar, "CierreDoc")
+                                      Chk_OCICerrar.Checked, _Actualizar, "CierreDoc",, False)
         _Sql.Sb_Parametro_Informe_Sql(Input_DiasOCI, "Demonio",
                                       Input_DiasOCI.Name, Class_SQLite.Enum_Type._Double,
-                                      Input_DiasOCI.Value, _Actualizar, "CierreDoc")
+                                      Input_DiasOCI.Value, _Actualizar, "CierreDoc",, False)
         _Sql.Sb_Parametro_Informe_Sql(Chk_OCCCerrar, "Demonio",
                                       Chk_OCCCerrar.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_OCCCerrar.Checked, _Actualizar, "CierreDoc")
+                                      Chk_OCCCerrar.Checked, _Actualizar, "CierreDoc",, False)
         _Sql.Sb_Parametro_Informe_Sql(Input_DiasOCC, "Demonio",
                                       Input_DiasOCC.Name, Class_SQLite.Enum_Type._Double,
-                                      Input_DiasOCC.Value, _Actualizar, "CierreDoc")
+                                      Input_DiasOCC.Value, _Actualizar, "CierreDoc",, False)
 
         'Facturación automatica
         _Sql.Sb_Parametro_Informe_Sql(Chk_FacAuto, "Demonio",
                                       Chk_FacAuto.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_FacAuto.Checked, _Actualizar, "FacAuto")
+                                      Chk_FacAuto.Checked, _Actualizar, "FacAuto",, False)
         _Sql.Sb_Parametro_Informe_Sql(Txt_FacAuto_Modalidad, "Demonio",
                                       Txt_FacAuto_Modalidad.Name, Class_SQLite.Enum_Type._String,
-                                      Txt_FacAuto_Modalidad.Text, _Actualizar, "FacAuto")
+                                      Txt_FacAuto_Modalidad.Text, _Actualizar, "FacAuto",, False)
         _Sql.Sb_Parametro_Informe_Sql(Rdb_FacAuto_Dia, "Demonio",
                                       Rdb_FacAuto_Dia.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Rdb_FacAuto_Dia.Checked, _Actualizar, "FacAuto")
+                                      Rdb_FacAuto_Dia.Checked, _Actualizar, "FacAuto",, False)
         _Sql.Sb_Parametro_Informe_Sql(Rdb_FacAuto_Sem, "Demonio",
                                       Rdb_FacAuto_Sem.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Rdb_FacAuto_Sem.Checked, _Actualizar, "FacAuto")
+                                      Rdb_FacAuto_Sem.Checked, _Actualizar, "FacAuto",, False)
         _Sql.Sb_Parametro_Informe_Sql(Rdb_FacAuto_Mes, "Demonio",
                                       Rdb_FacAuto_Mes.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Rdb_FacAuto_Mes.Checked, _Actualizar, "FacAuto")
+                                      Rdb_FacAuto_Mes.Checked, _Actualizar, "FacAuto",, False)
         _Sql.Sb_Parametro_Informe_Sql(Rdb_FacAuto_Todas, "Demonio",
                                       Rdb_FacAuto_Todas.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Rdb_FacAuto_Todas.Checked, _Actualizar, "FacAuto")
+                                      Rdb_FacAuto_Todas.Checked, _Actualizar, "FacAuto",, False)
 
         'Solicitud de productos a bodega
         _Sql.Sb_Parametro_Informe_Sql(Chk_SolProdBod, "Demonio",
                                       Chk_SolProdBod.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_SolProdBod.Checked, _Actualizar, "SolProdBod")
+                                      Chk_SolProdBod.Checked, _Actualizar, "SolProdBod",, False)
         _Sql.Sb_Parametro_Informe_Sql(Txt_ImpSolProdBod, "Demonio",
                                       Txt_ImpSolProdBod.Name, Class_SQLite.Enum_Type._String,
-                                      Txt_ImpSolProdBod.Text, _Actualizar, "SolProdBod")
+                                      Txt_ImpSolProdBod.Text, _Actualizar, "SolProdBod",, False)
 
         'Asistente de compras
         _Sql.Sb_Parametro_Informe_Sql(Chk_AsistenteCompras, "Demonio",
                                       Chk_AsistenteCompras.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_AsistenteCompras.Checked, _Actualizar, "SolProdBod")
+                                      Chk_AsistenteCompras.Checked, _Actualizar, "SolProdBod",, False)
 
+        'Listas Programadas
+        _Sql.Sb_Parametro_Informe_Sql(Chk_ListasProgramadas, "Demonio",
+                                      Chk_ListasProgramadas.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_ListasProgramadas.Checked, _Actualizar, "ListasProgramadas",, False)
 
     End Sub
 
@@ -772,6 +753,17 @@ Public Class Frm_Demonio_Configuraciones
             Me.Close()
 
         End If
+
+    End Sub
+
+    Private Sub Txt_DirArchivarDoc_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_DirArchivarDoc.ButtonCustom2Click
+
+        If Not Directory.Exists(Txt_DirArchivarDoc.Text) Then
+            MessageBoxEx.Show(Me, "No existe el directorio " & Txt_DirArchivarDoc.Text, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Process.Start("explorer.exe", Txt_DirArchivarDoc.Text)
 
     End Sub
 End Class

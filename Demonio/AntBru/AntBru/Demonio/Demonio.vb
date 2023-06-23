@@ -73,7 +73,8 @@ Public Class Demonio
 
             'Tiempo_Diablito.Start()
 
-            Sb_Ejecutar_Demonio()
+            'Sb_Ejecutar_Demonio()
+            Sb_Ejecutar_Demonio2()
 
             'Dim Fm As New Frm_Demonio_01(Me)
             'Fm.ShowDialog(Me)
@@ -144,14 +145,84 @@ Public Class Demonio
 
             Application.ExitThread()
 
-            'If _Ejecutar_Automaticamente Then
-            '    Sb_Demonio()
-            'Else
-            '    Notify_Demonio.Visible = True
-            '    Notify_Demonio.Text = "BakApp Demonio - " & RutEmpresa
-            '    Me.Notify_Demonio.ShowBalloonTip(5, "Info. BakApp", "Monitoreo de demonio de acciones automáticas desactivado",
-            '                                              ToolTipIcon.Info)
-            'End If
+        Else
+
+            MessageBoxEx.Show(Me, "No es posible conectarse a la base de datos",
+                          "Conexión", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Application.ExitThread()
+
+        End If
+
+    End Sub
+
+    Sub Sb_Ejecutar_Demonio2()
+
+        _Class_BaseBk = New Class_Conectar_Base_BakApp(Me)
+
+        If _Class_BaseBk.Pro_Existe_Base Then
+
+            _Global_BaseBk = _Class_BaseBk.Pro_Row_Tabcarac.Item("Global_BaseBk")
+            Sb_Sistema_Demonio(Me)
+
+            Dim _Path = AppPath() & "\Data\" & RutEmpresa & "\Demonio"
+            Dim _Datos_Conf As New Ds_Config_Picking
+
+            If Not Directory.Exists(_Path) Then
+                System.IO.Directory.CreateDirectory(_Path)
+            End If
+
+            _Datos_Conf.Clear()
+            Dim exists = System.IO.File.Exists(_Path & "\Config_Local.xml")
+            With _Datos_Conf
+                If Not exists Then
+
+                    Dim NewFila As DataRow
+                    NewFila = _Datos_Conf.Tables("Tbl_Configuracion").NewRow
+
+                    With NewFila
+
+                        .Item("Impresora") = String.Empty
+                        .Item("RutaImagen") = String.Empty
+
+                    End With
+
+                    .Tables("Tbl_Configuracion").Rows.Add(NewFila)
+
+                    .WriteXml(_Path & "\Config_Local.xml")
+
+                End If
+            End With
+
+            _Datos_Conf.Clear()
+            _Datos_Conf.ReadXml(_Path & "\Config_Local.xml")
+
+            Dim _Fila As DataRow = _Datos_Conf.Tables("Tbl_Configuracion").Rows(0)
+            Dim _Ejecutar_Automaticamente As Boolean = NuloPorNro(_Fila.Item("Ejecutar_Automaticamente"), False)
+
+            Dim _CambioDeConfiguracion As Boolean
+
+            Dim Fm As New Frm_Demonio_New
+            Fm.ShowDialog(Me)
+            _CambioDeConfiguracion = Fm.CambioDeConfiguracion
+            Fm.Dispose()
+            Fm = Nothing
+
+            If _CambioDeConfiguracion Then
+
+                Dim _Id As Integer = _Global_Row_EstacionBk.Item("Id")
+                Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+                Dim Fm2 As New Frm_Demonio_Configuraciones(_Id, FUNCIONARIO)
+                Fm2.ShowDialog(Me)
+                Fm2.Dispose()
+
+                Sb_Ejecutar_Demonio2()
+
+            Else
+
+                Application.ExitThread()
+
+            End If
 
         Else
 
@@ -206,12 +277,8 @@ Public Class Demonio
 
             Cadena_ConexionSQL_Server = _Cadena
 
-            'Sb_Sistema_Demonio(Me)
-            Sb_Ejecutar_Demonio()
-
-            'Dim Fm As New Frm_Demonio_01(Me)
-            'Fm.ShowDialog(Me)
-            'Fm.Dispose()
+            'Sb_Ejecutar_Demonio()
+            Sb_Ejecutar_Demonio2()
 
         Else
 

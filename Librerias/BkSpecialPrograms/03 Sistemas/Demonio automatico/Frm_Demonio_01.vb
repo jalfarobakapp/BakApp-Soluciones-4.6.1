@@ -1754,8 +1754,6 @@ Public Class Frm_Demonio_01
                     _Contador_Reenvio_Firmas_DTE = 0
                 End If
 
-                '_Cl_LibroDTESII.Sb_Iniciar(_Periodo, _Mes, _Libro_Bajado, _Reenviar_Documentos_al_SII)
-
                 Dim _Clas_Hefesto_Dte_Libro As New Clas_Hefesto_Dte_Libro
 
                 'Dim _RecuperarResumenVentasRegistro As HefRespuesta
@@ -2073,7 +2071,8 @@ Public Class Frm_Demonio_01
 
                 Sb_Pausar(_Pausa.Pausa)
 
-                _Cl_Listas_Programadas.Sb_Grabar_Listas_Programadas(DtpFecharevision.Value)
+                _Cl_Listas_Programadas.FechaProgramacion = DtpFecharevision.Value
+                _Cl_Listas_Programadas.Sb_Grabar_Listas_Programadas()
 
                 Sb_Pausar(_Pausa.Play)
 
@@ -4239,6 +4238,7 @@ Fin:
         End Try
 
     End Function
+
 
     Function Fx_Tbl_Productos_Hermanos(_Codigo As String) As DataTable
 

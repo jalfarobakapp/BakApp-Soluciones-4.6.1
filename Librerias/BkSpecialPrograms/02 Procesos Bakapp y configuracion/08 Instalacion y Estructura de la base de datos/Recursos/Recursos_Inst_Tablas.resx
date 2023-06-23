@@ -217,6 +217,12 @@
   <data name="Zw_Demonio_Cof_Estacion" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_demonio_cof_estacion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="Zw_Demonio_ConfAcpAuto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_Demonio_ConfAcpAuto.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Demonio_ConfProgramacion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_Demonio_ConfProgramacion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="Zw_Demonio_Doc_Emitidos_Aviso_Correo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_demonio_doc_emitidos_aviso_correo.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

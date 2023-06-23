@@ -155,10 +155,6 @@ Public Module Clas_Demonio
             RutEmpresa = RutEmpresaActiva
             ModEmpresa = _Global_Row_Empresa.Item("Empresa").ToString.Trim
 
-
-
-
-
             Dim _Mod As New Clas_Modalidades
             _Mod.Sb_Actualiza_Formatos_X_Modalidad()
             _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
