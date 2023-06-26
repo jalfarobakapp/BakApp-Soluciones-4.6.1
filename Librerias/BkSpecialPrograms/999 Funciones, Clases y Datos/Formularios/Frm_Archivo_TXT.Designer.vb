@@ -44,7 +44,7 @@ Partial Class Frm_Archivo_TXT
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(764, 351)
+        Me.GroupPanel1.Size = New System.Drawing.Size(764, 502)
         '
         '
         '
@@ -88,7 +88,7 @@ Partial Class Frm_Archivo_TXT
         Me.Txt_Texto.Multiline = True
         Me.Txt_Texto.Name = "Txt_Texto"
         Me.Txt_Texto.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.Txt_Texto.Size = New System.Drawing.Size(752, 322)
+        Me.Txt_Texto.Size = New System.Drawing.Size(752, 473)
         Me.Txt_Texto.TabIndex = 1
         '
         'Bar1
@@ -97,7 +97,7 @@ Partial Class Frm_Archivo_TXT
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.ButtonItem1})
-        Me.Bar1.Location = New System.Drawing.Point(0, 369)
+        Me.Bar1.Location = New System.Drawing.Point(0, 520)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(784, 41)
         Me.Bar1.Stretch = True
@@ -133,7 +133,7 @@ Partial Class Frm_Archivo_TXT
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(784, 410)
+        Me.ClientSize = New System.Drawing.Size(784, 561)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True
@@ -141,7 +141,6 @@ Partial Class Frm_Archivo_TXT
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
-        Me.MaximumSize = New System.Drawing.Size(800, 600)
         Me.MinimizeBox = False
         Me.Name = "Frm_Archivo_TXT"
         Me.ShowInTaskbar = False

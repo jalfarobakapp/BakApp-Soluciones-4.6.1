@@ -23,10 +23,7 @@ Public Class Frm_ImpBarras_PorDocumento
 
         _Idmaeedo = Idmaeedo
 
-        If Global_Thema = Enum_Themas.Oscuro Then
-            Btnimprimiretiquetas.ForeColor = Color.White
-            Btn_imprimir_Archivo.ForeColor = Color.White
-        End If
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 

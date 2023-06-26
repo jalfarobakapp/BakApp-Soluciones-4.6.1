@@ -30,8 +30,7 @@ Public Class Frm_Demonio_Configuraciones
         Me._Funcionario_Autorizado = _Funcionario_Autorizado
         Me._Id = _Id
 
-        'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_ConfXEstacion Where Id = " & _Id
-        '_Row_ConfEstacion = _Sql.Fx_Get_DataRow(Consulta_sql)
+        Sb_Color_Botones_Barra(Bar1)
 
         Sb_Formato_Generico_Grilla(Grilla_AsistenteCompras, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
 

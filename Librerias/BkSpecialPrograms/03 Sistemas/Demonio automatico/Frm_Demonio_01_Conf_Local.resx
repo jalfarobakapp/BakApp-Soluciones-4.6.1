@@ -1657,18 +1657,6 @@
         9BuDqH6lsfQAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="SuperTabItem1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAY9JREFUOE/N
-        lF1LAkEYhd/bioKlKKOEoJKQkCANQgRTW7fV6qfURQrZ9BvqIuzCdP9bVxUmhB/dRecdZ2TS3VAvogOH
-        HWbOPPvOxy79K80sW7SWjNE6vBBeUb1Tai60SLm7Syo0xEGxIVJOtUzWdliNTqg+7IIASsNtuAefOI9l
-        lZhAujIAMkVPtE+92y+2hHrCkaFZ7AXvA5vbQTJgWbijYQa0aYYO4V1uc9+wBjlP5HxhnviECxpmw7wP
-        TXhvGGq89BiTuiOw/lzXfaqQhg1CaL/BMd50BhmwHzkjLw/ErVUotL8jgc8+oVdYLl/B8nAQzOHKVhnG
-        wj1KovPDJ/wCR3kC3PMZ78J5hoXiCsayqyUq1G9+gwbBbLlME8ayttbJeShRse5f6bD5UJDL+cK0rM0+
-        NKhSbcA6GM+OLNNPXKldveID4G/zfQSGuwdnBqc5jubxx1CnGkc1LQPG3+uRW7seH6Yl7909oJ5IANLC
-        k2HpqWBaxmWOwYmJlhkkhkbOUhQ5T9FSdEP1/rmIvgHhbm6XMPxllQAAAABJRU5ErkJggg==
-</value>
-  </data>
   <data name="Txt_Modalidad_FacAuto.ButtonCustom.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAgxJREFUOE9j
@@ -1845,6 +1833,18 @@
         btmz9NfP37/+gkwF4S8/vv0p3TIL5AzkwNjOAA17sLs796/49ev3779ff3z/U751DlgxCMM0eM+tjmYw
         K4oAByvM2q79K39Vbp/7C8aHYZAa69okJgZQDLr05ROMOLfJRYLcksKQ2OYU5mewKI/BmTSs6xKZIIoZ
         GAB7vEbGWNC69gAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="SuperTabItem1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAY9JREFUOE/N
+        lF1LAkEYhd/bioKlKKOEoJKQkCANQgRTW7fV6qfURQrZ9BvqIuzCdP9bVxUmhB/dRecdZ2TS3VAvogOH
+        HWbOPPvOxy79K80sW7SWjNE6vBBeUb1Tai60SLm7Syo0xEGxIVJOtUzWdliNTqg+7IIASsNtuAefOI9l
+        lZhAujIAMkVPtE+92y+2hHrCkaFZ7AXvA5vbQTJgWbijYQa0aYYO4V1uc9+wBjlP5HxhnviECxpmw7wP
+        TXhvGGq89BiTuiOw/lzXfaqQhg1CaL/BMd50BhmwHzkjLw/ErVUotL8jgc8+oVdYLl/B8nAQzOHKVhnG
+        wj1KovPDJ/wCR3kC3PMZ78J5hoXiCsayqyUq1G9+gwbBbLlME8ayttbJeShRse5f6bD5UJDL+cK0rM0+
+        NKhSbcA6GM+OLNNPXKldveID4G/zfQSGuwdnBqc5jubxx1CnGkc1LQPG3+uRW7seH6Yl7909oJ5IANLC
+        k2HpqWBaxmWOwYmJlhkkhkbOUhQ5T9FSdEP1/rmIvgHhbm6XMPxllQAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Chk_AsisComEjecDomingo.CheckBoxImageChecked" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

@@ -75,6 +75,7 @@ Partial Class Frm_ImpBarras_PorDocumento
         Me.Btnimprimiretiquetas.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btnimprimiretiquetas.ForeColor = System.Drawing.Color.Black
         Me.Btnimprimiretiquetas.Image = CType(resources.GetObject("Btnimprimiretiquetas.Image"), System.Drawing.Image)
+        Me.Btnimprimiretiquetas.ImageAlt = CType(resources.GetObject("Btnimprimiretiquetas.ImageAlt"), System.Drawing.Image)
         Me.Btnimprimiretiquetas.Name = "Btnimprimiretiquetas"
         Me.Btnimprimiretiquetas.Text = "Imprimir etiquetas"
         '

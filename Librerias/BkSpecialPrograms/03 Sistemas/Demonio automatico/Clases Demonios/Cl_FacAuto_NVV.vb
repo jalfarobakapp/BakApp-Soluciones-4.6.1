@@ -18,7 +18,8 @@
     Public Property FA_1Mes As Boolean
     Public Property FA_1Todas As Boolean
     Public Property Nombre_Equipo As String
-
+    Public Property Log_Registro As String
+    Public Property Procesando As Boolean
     Public Sub New()
     End Sub
 
@@ -47,26 +48,34 @@
                        "Where TIDO = 'NVV' And Ent.FacAuto = 1 " & _Filtro_Fecha & " And ESDO = ''" & vbCrLf &
                        "And IDMAEEDO Not In (Select Idmaeedo_NVV From " & _Global_BaseBk & "Zw_Demonio_FacAuto " &
                        "Where Fecha_Facturar = '" & Format(_Fecha_Revision, "yyyyMMdd") & "')"
-        _Sql.Ej_consulta_IDU(Consulta_Sql)
+        If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+            Log_Registro += _Sql.Pro_Error & vbCrLf
+        End If
 
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar = 1,ErrorGrabar = 0,Informacion = ''" & vbCrLf &
                        "Where Fecha_Facturar = '" & Format(_Fecha_Revision, "yyyyMMdd") & "' And Informacion like 'No existe taza de cambio para la fecha%'"
-        _Sql.Ej_consulta_IDU(Consulta_Sql)
+        If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+            Log_Registro += _Sql.Pro_Error & vbCrLf
+        End If
 
     End Sub
 
     Sub Sb_Facturar_Automaticamente_NVV(_Formulario As Form, ByRef Lbl_FacAuto As Object)
 
+        Procesando = True
+
         Dim _FechaEmision As Date = FechaDelServidor()
 
         Consulta_Sql = "Select Top 10 * From " & _Global_BaseBk & "Zw_Demonio_FacAuto Where Facturar = 1"
-        Dim _Tbl_Doc_Facturar As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Doc_Facturar As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql, False)
 
         If CBool(_Tbl_Doc_Facturar.Rows.Count) Then
 
             Dim _Filtro As String = Generar_Filtro_IN(_Tbl_Doc_Facturar, "", "Id", True, False, "")
             Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar= 0, Facturando = 1 Where Id In " & _Filtro
-            _Sql.Ej_consulta_IDU(Consulta_Sql)
+            If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                Log_Registro += _Sql.Pro_Error & vbCrLf
+            End If
 
             For Each _Fila As DataRow In _Tbl_Doc_Facturar.Rows
 
@@ -77,7 +86,9 @@
 
                 Dim _Nudo_Nvv As String = _Fila.Item("Nudo_Nvv")
 
-                Lbl_FacAuto.Text = "Facturando Nota de venta Nro: " & _Nudo_Nvv
+                If Not IsNothing(Lbl_FacAuto) Then
+                    Lbl_FacAuto.Text = "Facturando Nota de venta Nro: " & _Nudo_Nvv
+                End If
 
                 System.Windows.Forms.Application.DoEvents()
 
@@ -86,6 +97,8 @@
                                                                                                             _Idmaeedo,
                                                                                                             _Fecha_Emision,
                                                                                                             _Modalidad_Fac)
+
+                Log_Registro += _EstadoFacturacion.MensajeError & vbCrLf
 
                 If _EstadoFacturacion.Facturada Then
 
@@ -103,7 +116,9 @@
                                    ",Fecha_Facturado = '" & Format(_Fecha_Emision, "yyyyMMdd") & "'" &
                                    ",Informacion = '" & _EstadoFacturacion.MensajeError & "'" & vbCrLf &
                                    "Where Id = " & _Id
-                    _Sql.Ej_consulta_IDU(Consulta_Sql)
+                    If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                        Log_Registro += _Sql.Pro_Error
+                    End If
 
                 Else
 
@@ -114,7 +129,9 @@
                                    ",ErrorGrabar = 1" &
                                    ",Informacion = '" & _EstadoFacturacion.MensajeError & "'" & vbCrLf &
                                    "Where Id = " & _Id
-                    _Sql.Ej_consulta_IDU(Consulta_Sql)
+                    If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                        Log_Registro += _Sql.Pro_Error
+                    End If
 
                 End If
 
@@ -123,6 +140,8 @@
             Next
 
         End If
+
+        Procesando = False
 
     End Sub
 

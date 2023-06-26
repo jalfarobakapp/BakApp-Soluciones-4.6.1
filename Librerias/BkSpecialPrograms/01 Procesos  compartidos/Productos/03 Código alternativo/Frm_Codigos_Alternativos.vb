@@ -13,7 +13,7 @@ Public Class Frm_Codigos_Alternativos
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
-        Sb_Formato_Generico_Grilla(Grilla, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
         If Global_Thema = Enum_Themas.Oscuro Then
             Txt_Descripcion.ForeColor = Color.White
@@ -76,10 +76,19 @@ Public Class Frm_Codigos_Alternativos
             .Columns("KOPR").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("NOKOPRAL").Width = 280
+            .Columns("NOKOPRAL").Width = 240
             .Columns("NOKOPRAL").HeaderText = "Descripción"
             .Columns("NOKOPRAL").Visible = True
             .Columns("NOKOPRAL").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("MULTIPLO").Width = 40
+            .Columns("MULTIPLO").HeaderText = "Mult."
+            .Columns("MULTIPLO").ToolTipText = "Multiplo"
+            .Columns("MULTIPLO").Visible = True
+            .Columns("MULTIPLO").DefaultCellStyle.Format = "###,##"
+            .Columns("MULTIPLO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("MULTIPLO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("KOEN").Width = 80

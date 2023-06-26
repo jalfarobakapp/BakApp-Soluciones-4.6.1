@@ -100,6 +100,7 @@ Partial Class Frm_Seleccionar_Impresoras
         Me.Btn_Seleccionar_Impresora.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Seleccionar_Impresora.ForeColor = System.Drawing.Color.Black
         Me.Btn_Seleccionar_Impresora.Image = CType(resources.GetObject("Btn_Seleccionar_Impresora.Image"), System.Drawing.Image)
+        Me.Btn_Seleccionar_Impresora.ImageAlt = CType(resources.GetObject("Btn_Seleccionar_Impresora.ImageAlt"), System.Drawing.Image)
         Me.Btn_Seleccionar_Impresora.Name = "Btn_Seleccionar_Impresora"
         Me.Btn_Seleccionar_Impresora.Tooltip = "Seleccionar impresora"
         '
@@ -108,6 +109,7 @@ Partial Class Frm_Seleccionar_Impresoras
         Me.Btn_Dejar_Sin_Impresora.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Dejar_Sin_Impresora.ForeColor = System.Drawing.Color.Black
         Me.Btn_Dejar_Sin_Impresora.Image = CType(resources.GetObject("Btn_Dejar_Sin_Impresora.Image"), System.Drawing.Image)
+        Me.Btn_Dejar_Sin_Impresora.ImageAlt = CType(resources.GetObject("Btn_Dejar_Sin_Impresora.ImageAlt"), System.Drawing.Image)
         Me.Btn_Dejar_Sin_Impresora.Name = "Btn_Dejar_Sin_Impresora"
         Me.Btn_Dejar_Sin_Impresora.Tooltip = "Quitar impresora"
         '

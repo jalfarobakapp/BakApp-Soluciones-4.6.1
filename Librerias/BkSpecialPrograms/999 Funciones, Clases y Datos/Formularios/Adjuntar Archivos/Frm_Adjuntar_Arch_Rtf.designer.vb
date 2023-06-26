@@ -55,7 +55,7 @@ Partial Class Frm_Adjuntar_Arch_Rtf
         Me.Rtf_Observaciones.Location = New System.Drawing.Point(12, 37)
         Me.Rtf_Observaciones.Name = "Rtf_Observaciones"
         Me.Rtf_Observaciones.Rtf = "{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang13322{\fonttbl{\f0\fnil\fcharset0" &
-    " Segoe UI;}}" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "{\*\generator Riched20 10.0.19041}\viewkind4\uc1 " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "\pard\f0\fs17\p" &
+    " Segoe UI;}}" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "{\*\generator Riched20 10.0.22621}\viewkind4\uc1 " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "\pard\f0\fs17\p" &
     "ar" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "}" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         Me.Rtf_Observaciones.Size = New System.Drawing.Size(650, 532)
         Me.Rtf_Observaciones.TabIndex = 117
@@ -107,6 +107,7 @@ Partial Class Frm_Adjuntar_Arch_Rtf
         Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
+        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Grabar.Name = "Btn_Grabar"
         Me.Btn_Grabar.Tooltip = "Grabar"
         '
@@ -115,6 +116,7 @@ Partial Class Frm_Adjuntar_Arch_Rtf
         Me.Btn_Pegar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Pegar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Pegar.Image = CType(resources.GetObject("Btn_Pegar.Image"), System.Drawing.Image)
+        Me.Btn_Pegar.ImageAlt = CType(resources.GetObject("Btn_Pegar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Pegar.Name = "Btn_Pegar"
         Me.Btn_Pegar.Tooltip = "Pegar"
         '

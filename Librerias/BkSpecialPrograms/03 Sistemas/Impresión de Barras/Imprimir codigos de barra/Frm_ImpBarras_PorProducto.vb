@@ -63,10 +63,7 @@ Public Class Frm_ImpBarras_PorProducto
 
         Sb_Formato_Generico_Grilla(Grilla, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
-        If Global_Thema = Enum_Themas.Oscuro Then
-            Btn_imprimir_Archivo.ForeColor = Color.White
-            BtnImprimirEtiqueta.ForeColor = Color.White
-        End If
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
     Private Sub Frm_ImpBarras_PorProducto_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
