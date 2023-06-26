@@ -3946,6 +3946,17 @@ Public Class Frm_01_Asis_Compra_Resultados
                             Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Bruto = Round(Costo_Ud2Lista_Neto * (1+((Iva+Ila)/100)),0)"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
+            Dim _MostrarPrecioConFlete As Boolean
+
+            If _MostrarPrecioConFlete Then
+                Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Neto = Costo_Ud1Lista_Neto + (Costo_Flete/1.19)
+                                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Neto = Costo_Ud2Lista_Neto + ((Costo_Flete/1.19)*Rtu)
+
+                                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Bruto = Round(Costo_Ud1Lista_Bruto + Costo_Flete,0)
+                                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Bruto = Round(Costo_Ud2Lista_Bruto + (Costo_Flete*Rtu),0)"
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+            End If
+
             'Consulta_sql = "--Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Neto = Costo_Ud1Lista_Neto + Costo_FleteNeto
             '                --Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Neto = Costo_Ud2Lista_Neto + (Costo_FleteNeto*Rtu)
 

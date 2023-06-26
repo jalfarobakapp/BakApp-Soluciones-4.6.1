@@ -255,8 +255,10 @@ Partial Class Frm_Demonio_New
         Me.Imagenes_16X16.Images.SetKeyName(5, "cloud-download.png")
         Me.Imagenes_16X16.Images.SetKeyName(6, "folder-open-attach.png")
         Me.Imagenes_16X16.Images.SetKeyName(7, "list-time.png")
-        Me.Imagenes_16X16.Images.SetKeyName(8, "wordpress 16.png")
-        Me.Imagenes_16X16.Images.SetKeyName(9, "button-ok.png")
+        Me.Imagenes_16X16.Images.SetKeyName(8, "invoice-gears.png")
+        Me.Imagenes_16X16.Images.SetKeyName(9, "products-update.png")
+        Me.Imagenes_16X16.Images.SetKeyName(10, "wordpress 16.png")
+        Me.Imagenes_16X16.Images.SetKeyName(11, "button-ok.png")
         '
         'Circular_Monitoreo
         '
@@ -299,8 +301,10 @@ Partial Class Frm_Demonio_New
         Me.Imagenes_16X16_Dark.Images.SetKeyName(5, "cloud-download.png")
         Me.Imagenes_16X16_Dark.Images.SetKeyName(6, "folder-open-attach.png")
         Me.Imagenes_16X16_Dark.Images.SetKeyName(7, "list-time.png")
-        Me.Imagenes_16X16_Dark.Images.SetKeyName(8, "wordpress 16.png")
-        Me.Imagenes_16X16_Dark.Images.SetKeyName(9, "button-ok.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(8, "invoice-gears.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(9, "product-update.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(10, "wordpress 16.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(11, "button-ok.png")
         '
         'timerHora
         '

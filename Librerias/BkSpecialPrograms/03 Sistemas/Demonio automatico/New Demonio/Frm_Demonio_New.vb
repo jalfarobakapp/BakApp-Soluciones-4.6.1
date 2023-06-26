@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Threading
+Imports BkSpecialPrograms.Clas_Imprimir_Sectores
 Imports HEFSIIREGCOMPRAVENTAS.LIB
 
 Public Class Frm_Demonio_New
@@ -23,6 +24,7 @@ Public Class Frm_Demonio_New
     Dim _Cl_Hefesto_Dte_Libro As New Clas_Hefesto_Dte_Libro
     Dim _Cl_Archivador As New Cl_Archivador
     Dim _Cl_Listas_Programadas As New Cl_Listas_Programadas
+    Dim _Cl_FacturacionAuto As New Cl_FacAuto_NVV
 
     Private _Timer_Correos As Timer
     Private _Timer_ImprimirDocumentos As Timer
@@ -32,6 +34,8 @@ Public Class Frm_Demonio_New
     Private _Timer_Prestashop_Prod As Timer
     Private _Timer_Archivador As Timer
     Private _Timer_ListasProgramadas As Timer
+    Private _Timer_FacturacionAuto As Timer
+    Private _Timer_ConsolidacionStock As Timer
 
 
     Private logFilePath As String = "Log_Demonio.txt"
@@ -120,6 +124,15 @@ Public Class Frm_Demonio_New
             _DProgramaciones.Sp_ListasProgramadas.Activo = True
         End If
 
+        If Fx_InsertarRegistroDeProgramacion("FacAuto", _DProgramaciones.Sp_FacturacionAuto, "Facturación automática") Then
+            _DProgramaciones.Sp_FacturacionAuto.Activo = True
+        End If
+
+        If Fx_InsertarRegistroDeProgramacion("ConsStock", _DProgramaciones.Sp_ConsStock, "Consolidación Stock") Then
+            _DProgramaciones.Sp_ConsStock.Activo = True
+        End If
+
+
         Dim _CantidadFilas As Integer = Listv_Programaciones.Items.Count
 
         If _CantidadFilas = 1 Then Me.Icon = My.Resources.Recursos_NewDemonio.emoticon_wink_number_1
@@ -176,6 +189,14 @@ Public Class Frm_Demonio_New
 
         If _DProgramaciones.Sp_ListasProgramadas.Activo Then
             Sb_Timer_IntervaloCada(_Timer_ListasProgramadas, _DProgramaciones.Sp_ListasProgramadas, AddressOf Sb_ListasProgramadas)
+        End If
+
+        If _DProgramaciones.Sp_FacturacionAuto.Activo Then
+            Sb_Timer_IntervaloCada(_Timer_FacturacionAuto, _DProgramaciones.Sp_FacturacionAuto, AddressOf Sb_FacturacionAuto)
+        End If
+
+        If _DProgramaciones.Sp_ConsStock.Activo Then
+            Sb_Timer_IntervaloCada(_Timer_ConsolidacionStock, _DProgramaciones.Sp_ConsStock, AddressOf Sb_ConsStock)
         End If
 
         Me.Refresh()
@@ -242,6 +263,7 @@ Public Class Frm_Demonio_New
 
                     Dim _CantCorreo As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
                                                                    "Valor", "Informe = 'Demonio' And Campo = 'Input_CantCorreo' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    _Cl_Correos.CantMmail = _CantCorreo
                     _Descripcion = "Se enviaran paquetes de " & _CantCorreo & " correos. " & _CI_Programacion.Resumen
                     _IndexImagen = 0
 
@@ -288,6 +310,33 @@ Public Class Frm_Demonio_New
 
                     _Descripcion = "Actualización de listas programadas a futuro. " & _CI_Programacion.Resumen
                     _IndexImagen = 7
+
+                Case "FacAuto"
+
+                    Dim _FA_1Dia As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Rdb_FacAuto_Dia' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    Dim _FA_1Semana As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Rdb_FacAuto_Sem' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    Dim _FA_1Mes As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Rdb_FacAuto_Mes' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    Dim _FA_1Todas As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Rdb_FacAuto_Todas' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    Dim _Modalidad_Fac As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Txt_FacAuto_Modalidad' And NombreEquipo = '" & _NombreEquipo & "'", True)
+
+                    Boolean.TryParse(_FA_1Dia, _Cl_FacturacionAuto.FA_1Dia)
+                    Boolean.TryParse(_FA_1Semana, _Cl_FacturacionAuto.FA_1Semana)
+                    Boolean.TryParse(_FA_1Mes, _Cl_FacturacionAuto.FA_1Mes)
+                    Boolean.TryParse(_FA_1Todas, _Cl_FacturacionAuto.FA_1Todas)
+
+                    _Descripcion = "Facturación de notas de venta para clientes con condición automática. " & _CI_Programacion.Resumen
+                    _IndexImagen = 8
+
+                Case "ConsStock"
+
+                    Dim _Rdb_Cons_Stock_Mov_Hoy As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Rdb_Cons_Stock_Mov_Hoy' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    Dim _Rdb_Cons_Stock_Todos As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Rdb_Cons_Stock_Todos' And NombreEquipo = '" & _NombreEquipo & "'", True)
+
+                    Boolean.TryParse(_Rdb_Cons_Stock_Mov_Hoy, _Cl_Consolidacion_Stock.Cons_Stock_Mov_Hoy)
+                    Boolean.TryParse(_Rdb_Cons_Stock_Todos, _Cl_Consolidacion_Stock.Cons_Stock_Todos)
+
+                    _Descripcion = "Consolidación de productos. " & _CI_Programacion.Resumen
+                    _IndexImagen = 9
 
             End Select
 
@@ -396,21 +445,39 @@ Public Class Frm_Demonio_New
 
         _Timer = Nothing
         Dim horaProgramada As DateTime
+        Dim tiempoRestante As TimeSpan
 
         With _Sp_Programacion
 
-            If .FrecuDiaria Then
-                Dim _IntervaloCada As Integer = .IntervaloCada
-                If .SucedeCada Then
-                    If .TipoIntervaloCada = "HH" Then horaProgramada = DateTime.Now.AddHours(_IntervaloCada)
-                    If .TipoIntervaloCada = "MM" Then horaProgramada = DateTime.Now.AddMinutes(_IntervaloCada)
-                    If .TipoIntervaloCada = "SS" Then horaProgramada = DateTime.Now.AddSeconds(_IntervaloCada)
+            Dim _IntervaloCada As Integer = .IntervaloCada
+
+            If .SucedeCada Then
+
+                If .TipoIntervaloCada = "HH" Then horaProgramada = DateTime.Now.AddHours(_IntervaloCada)
+                If .TipoIntervaloCada = "MM" Then horaProgramada = DateTime.Now.AddMinutes(_IntervaloCada)
+                If .TipoIntervaloCada = "SS" Then horaProgramada = DateTime.Now.AddSeconds(_IntervaloCada)
+
+                tiempoRestante = horaProgramada - DateTime.Now
+
+            End If
+
+            If .SucedeUnaVez Then
+
+                Dim _Hora = .HoraUnaVez.Hour
+                Dim _Minuto = .HoraUnaVez.Minute
+
+                horaProgramada = DateTime.Today.AddHours(_Hora).AddMinutes(_Minuto)
+
+                If horaProgramada < DateTime.Now Then
+                    horaProgramada = horaProgramada.Date.AddDays(1).AddHours(_Hora).AddMinutes(_Minuto)
+                    tiempoRestante = horaProgramada - DateTime.Now
+                Else
+                    tiempoRestante = DateTime.Now - horaProgramada
                 End If
+
             End If
 
         End With
-
-        Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
 
         _Timer = New Timer(Sb_Proceso, Nothing, tiempoRestante, Timeout.InfiniteTimeSpan)
 
@@ -714,6 +781,113 @@ Public Class Frm_Demonio_New
 
     End Sub
 
+    Sub Sb_FacturacionAuto(state As Object)
+
+        If IsNothing(_Timer_FacturacionAuto) Then Return
+
+        If _Cl_FacturacionAuto.Procesando Then
+
+            Dim horaProgramada As DateTime = DateTime.Now.AddSeconds(2) 'DateTime.Now.AddMinutes(1)
+            Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
+            _Timer_FacturacionAuto.Change(tiempoRestante, Timeout.InfiniteTimeSpan)
+
+            ' Este método se ejecuta cada vez que se activa el temporizador (cada 1 minuto adicional)
+            Dim registro As String = DateTime.Now.ToString() & " - Facturación automática (Proceso en curso se volverá a revisar en 2 segundos mas...)"
+
+            ' Registrar la información en un archivo de registro
+            RegistrarLog(registro)
+            MostrarRegistro(registro)
+
+        Else
+
+            If Fx_CumpleDiaSemana(_DProgramaciones.Sp_FacturacionAuto) Then
+
+                _Cl_FacturacionAuto.Log_Registro = String.Empty
+                _Cl_FacturacionAuto.Fecha_Revision = DtpFecharevision.Value
+                _Cl_FacturacionAuto.Nombre_Equipo = _NombreEquipo
+                _Cl_FacturacionAuto.Log_Registro = String.Empty
+                _Cl_FacturacionAuto.Sb_Traer_NVV_A_Facturar()
+                _Cl_FacturacionAuto.Sb_Facturar_Automaticamente_NVV(Me, Nothing)
+
+            End If
+
+            Sb_Timer_IntervaloCada(_Timer_FacturacionAuto, _DProgramaciones.Sp_FacturacionAuto, AddressOf Sb_FacturacionAuto)
+
+            Dim registro As String = "Tarea ejecutada (Listas programadas a futuro) a las: " & DateTime.Now.ToString()
+
+            If Not String.IsNullOrWhiteSpace(_Cl_FacturacionAuto.Log_Registro) Then
+                registro += vbCrLf & _Cl_FacturacionAuto.Log_Registro
+
+                ' Registrar la información en un archivo de registro
+                RegistrarLog(registro)
+                MostrarRegistro(registro)
+            End If
+
+        End If
+
+    End Sub
+
+    Sub Sb_ConsStock(state As Object)
+
+        If IsNothing(_Timer_ConsolidacionStock) Then Return
+
+        If _Cl_Consolidacion_Stock.Procesando Or _Cl_Prestashop_Prod.Procesando Then
+
+            Dim horaProgramada As DateTime = DateTime.Now.AddSeconds(2) 'DateTime.Now.AddMinutes(1)
+            Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
+            _Timer_ConsolidacionStock.Change(tiempoRestante, Timeout.InfiniteTimeSpan)
+
+            ' Este método se ejecuta cada vez que se activa el temporizador (cada 1 minuto adicional)
+            Dim registro As String = DateTime.Now.ToString() & " - Consolidación de stock (Proceso en curso se volverá a revisar en 2 segundos mas...)"
+
+            ' Registrar la información en un archivo de registro
+            RegistrarLog(registro)
+            MostrarRegistro(registro)
+
+        Else
+
+            If Fx_CumpleDiaSemana(_DProgramaciones.Sp_ConsStock) Then
+
+                _Cl_Consolidacion_Stock.Log_Registro = String.Empty
+                _Cl_Consolidacion_Stock.Sb_Procedimiento_Consolidar_Stock(Me)
+
+            End If
+
+            _Timer_FacturacionAuto.Change(TimeSpan.FromDays(1), Timeout.InfiniteTimeSpan)
+            'Sb_Timer_IntervaloCada(_Timer_FacturacionAuto, _DProgramaciones.Sp_FacturacionAuto, AddressOf Sb_FacturacionAuto)
+
+            Dim registro As String = "Tarea ejecutada (Consolidación de stock) a las: " & DateTime.Now.ToString()
+            RegistrarLog(registro)
+            MostrarRegistro(registro)
+
+            'If Not String.IsNullOrWhiteSpace(_Cl_FacturacionAuto.Log_Registro) Then
+            '    registro += vbCrLf & _Cl_FacturacionAuto.Log_Registro
+
+            '    ' Registrar la información en un archivo de registro
+
+            'End If
+
+        End If
+
+    End Sub
+
+    Function Fx_CumpleDiaSemana(_Programacion As Cl_NewProgramacion) As Boolean
+
+        Dim _Hoy As Date = DtpFecharevision.Value
+        Dim _Dia = _Hoy.DayOfWeek
+
+        If (_Dia = DayOfWeek.Monday And _Programacion.Lunes) Or
+                   (_Dia = DayOfWeek.Tuesday And _Programacion.Martes) Or
+                   (_Dia = DayOfWeek.Wednesday And _Programacion.Miercoles) Or
+                   (_Dia = DayOfWeek.Thursday And _Programacion.Jueves) Or
+                   (_Dia = DayOfWeek.Friday And _Programacion.Viernes) Or
+                   (_Dia = DayOfWeek.Saturday And _Programacion.Sabado) Or
+                   (_Dia = DayOfWeek.Sunday And _Programacion.Domingo) Then
+            Return True
+        End If
+
+    End Function
+
     Private Sub RegistrarLog(registro As String)
         Try
             ' Escribir la información en el archivo de registro
@@ -840,8 +1014,14 @@ Public Class Frm_Demonio_New
 
         _Cl_Prestashop_Prod.Procesando = True
 
+        Dim _Cons_Stock_Mov_Hoy As Boolean = _Cl_Consolidacion_Stock.Cons_Stock_Mov_Hoy
+        Dim _Cons_Stock_Todos As Boolean = _Cl_Consolidacion_Stock.Cons_Stock_Todos
+
         _Cl_Consolidacion_Stock.Cons_Stock_Mov_Hoy = True
         _Cl_Consolidacion_Stock.Sb_Procedimiento_Consolidar_Stock(Me)
+
+        _Cl_Consolidacion_Stock.Cons_Stock_Mov_Hoy = _Cons_Stock_Mov_Hoy
+        _Cl_Consolidacion_Stock.Cons_Stock_Todos = _Cons_Stock_Todos
 
         '_Cl_Prestashop_Prod.Lbl_Estado = Lbl_Procesando.Text
         _Cl_Prestashop_Prod.Sb_Procedimiento_Prestashop()

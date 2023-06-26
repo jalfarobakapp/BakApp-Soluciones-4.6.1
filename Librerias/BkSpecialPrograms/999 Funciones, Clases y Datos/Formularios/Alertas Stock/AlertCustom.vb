@@ -212,10 +212,12 @@ Public Class AlertCustom
         '
         '
         Me.Rdb_Unidad_1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Unidad_1.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Unidad_1.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Unidad_1.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Unidad_1.Checked = True
         Me.Rdb_Unidad_1.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Unidad_1.CheckValue = "Y"
+        Me.Rdb_Unidad_1.FocusCuesEnabled = False
         Me.Rdb_Unidad_1.Location = New System.Drawing.Point(11, 157)
         Me.Rdb_Unidad_1.Name = "Rdb_Unidad_1"
         Me.Rdb_Unidad_1.Size = New System.Drawing.Size(75, 23)
@@ -229,7 +231,9 @@ Public Class AlertCustom
         '
         '
         Me.Rdb_Unidad_2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Unidad_2.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Unidad_2.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Unidad_2.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Unidad_2.FocusCuesEnabled = False
         Me.Rdb_Unidad_2.Location = New System.Drawing.Point(93, 157)
         Me.Rdb_Unidad_2.Name = "Rdb_Unidad_2"
         Me.Rdb_Unidad_2.Size = New System.Drawing.Size(75, 23)
@@ -299,6 +303,8 @@ Public Class AlertCustom
         '
         '
         Me.Chk_Agrupar_Asociados.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Agrupar_Asociados.CheckBoxImageChecked = CType(resources.GetObject("Chk_Agrupar_Asociados.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Agrupar_Asociados.FocusCuesEnabled = False
         Me.Chk_Agrupar_Asociados.ForeColor = System.Drawing.Color.Black
         Me.Chk_Agrupar_Asociados.Location = New System.Drawing.Point(284, 157)
         Me.Chk_Agrupar_Asociados.Name = "Chk_Agrupar_Asociados"
