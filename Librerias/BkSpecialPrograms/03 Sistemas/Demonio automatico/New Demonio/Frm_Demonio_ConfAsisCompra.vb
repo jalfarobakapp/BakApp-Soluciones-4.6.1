@@ -43,11 +43,7 @@ Public Class Frm_Demonio_ConfAsisCompra
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_ConfAcpAuto Where Id = " & _Id
         _Row_Configuracion = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        'Dim _Arr_Tido(,) As String = {{"", ""}, {"NVI", "NVI - Nota de venta interna"},
-        '                             {"OC1", "OCC - Orden de compra proveedor estrella"},
-        '                             {"OC2", "OCC - Orden de compra proveedor regular"}}
-        'Sb_Llenar_Combos(_Arr_Tido, Cmb_Tido)
-        'Cmb_Tido.SelectedValue = ""
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
@@ -65,7 +61,7 @@ Public Class Frm_Demonio_ConfAsisCompra
             _Programacion = New Cl_NewProgramacion
             _Programacion.Nombre = "Nueva programacion"
             '_Programacion.FrecuDiaria = True
-            '_Programacion.SucedeUnaVez = True
+            _Programacion.SucedeUnaVez = True
             _Programacion.HoraUnaVez = "00:00:00"
         End If
 
@@ -136,8 +132,13 @@ Public Class Frm_Demonio_ConfAsisCompra
 
     Private Sub Btn_ConfProgramacion_Click(sender As Object, e As EventArgs) Handles Btn_ConfProgramacion.Click
 
+        Programacion = New Cl_NewProgramacion
+        Programacion.SucedeUnaVez = True
+        Programacion.HoraUnaVez = "01-01-1900 00:00"
+
         Dim Fm As New Frm_Demonio_ConfProgramacion(False, False, False, "")
         Fm.Programacion = _Programacion
+        Fm.Grupo_Frecuencia.Enabled = False
         Fm.Txt_Nombre.ReadOnly = True
         Fm.ShowDialog(Me)
         Fm.Dispose()

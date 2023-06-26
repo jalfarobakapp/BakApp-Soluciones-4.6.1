@@ -44,6 +44,9 @@ Partial Class Frm_Demonio_New
         Me.timerHora = New System.Windows.Forms.Timer(Me.components)
         Me.Timer_PrestaShopWeb = New System.Windows.Forms.Timer(Me.components)
         Me.Timer_LibroDTESII = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer_ConsolidacionStock = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer_CerrarDocumentos = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer_ = New System.Windows.Forms.Timer(Me.components)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.SuspendLayout()
@@ -257,8 +260,9 @@ Partial Class Frm_Demonio_New
         Me.Imagenes_16X16.Images.SetKeyName(7, "list-time.png")
         Me.Imagenes_16X16.Images.SetKeyName(8, "invoice-gears.png")
         Me.Imagenes_16X16.Images.SetKeyName(9, "products-update.png")
-        Me.Imagenes_16X16.Images.SetKeyName(10, "wordpress 16.png")
-        Me.Imagenes_16X16.Images.SetKeyName(11, "button-ok.png")
+        Me.Imagenes_16X16.Images.SetKeyName(10, "document-padlock.png")
+        Me.Imagenes_16X16.Images.SetKeyName(11, "wordpress 16.png")
+        Me.Imagenes_16X16.Images.SetKeyName(12, "button-ok.png")
         '
         'Circular_Monitoreo
         '
@@ -303,8 +307,9 @@ Partial Class Frm_Demonio_New
         Me.Imagenes_16X16_Dark.Images.SetKeyName(7, "list-time.png")
         Me.Imagenes_16X16_Dark.Images.SetKeyName(8, "invoice-gears.png")
         Me.Imagenes_16X16_Dark.Images.SetKeyName(9, "product-update.png")
-        Me.Imagenes_16X16_Dark.Images.SetKeyName(10, "wordpress 16.png")
-        Me.Imagenes_16X16_Dark.Images.SetKeyName(11, "button-ok.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(10, "document-padlock.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(11, "wordpress 16.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(12, "button-ok.png")
         '
         'timerHora
         '
@@ -317,6 +322,18 @@ Partial Class Frm_Demonio_New
         'Timer_LibroDTESII
         '
         Me.Timer_LibroDTESII.Interval = 1000
+        '
+        'Timer_ConsolidacionStock
+        '
+        Me.Timer_ConsolidacionStock.Interval = 1000
+        '
+        'Timer_CerrarDocumentos
+        '
+        Me.Timer_CerrarDocumentos.Interval = 1000
+        '
+        'Timer_
+        '
+        Me.Timer_.Interval = 1000
         '
         'Frm_Demonio_New
         '
@@ -364,4 +381,7 @@ Partial Class Frm_Demonio_New
     Friend WithEvents timerHora As Timer
     Friend WithEvents Timer_PrestaShopWeb As Timer
     Friend WithEvents Timer_LibroDTESII As Timer
+    Friend WithEvents Timer_ConsolidacionStock As Timer
+    Friend WithEvents Timer_CerrarDocumentos As Timer
+    Friend WithEvents Timer_ As Timer
 End Class
