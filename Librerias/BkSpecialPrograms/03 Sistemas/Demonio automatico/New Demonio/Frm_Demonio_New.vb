@@ -1,6 +1,5 @@
 ﻿Imports System.IO
 Imports System.Threading
-Imports BkSpecialPrograms.Clas_Imprimir_Sectores
 Imports HEFSIIREGCOMPRAVENTAS.LIB
 
 Public Class Frm_Demonio_New
@@ -25,6 +24,7 @@ Public Class Frm_Demonio_New
     Dim _Cl_Archivador As New Cl_Archivador
     Dim _Cl_Listas_Programadas As New Cl_Listas_Programadas
     Dim _Cl_FacturacionAuto As New Cl_FacAuto_NVV
+    Dim _Cl_CerrarDocumentos As New Cl_Cerrar_Documentos
 
     Private _Timer_Correos As Timer
     Private _Timer_ImprimirDocumentos As Timer
@@ -35,8 +35,6 @@ Public Class Frm_Demonio_New
     Private _Timer_Archivador As Timer
     Private _Timer_ListasProgramadas As Timer
     Private _Timer_FacturacionAuto As Timer
-    Private _Timer_ConsolidacionStock As Timer
-
 
     Private logFilePath As String = "Log_Demonio.txt"
 
@@ -132,6 +130,10 @@ Public Class Frm_Demonio_New
             _DProgramaciones.Sp_ConsStock.Activo = True
         End If
 
+        If Fx_InsertarRegistroDeProgramacion("CierreDoc", _DProgramaciones.Sp_CierreDoc, "Cierre de documentos") Then
+            _DProgramaciones.Sp_CierreDoc.Activo = True
+        End If
+
 
         Dim _CantidadFilas As Integer = Listv_Programaciones.Items.Count
 
@@ -196,7 +198,11 @@ Public Class Frm_Demonio_New
         End If
 
         If _DProgramaciones.Sp_ConsStock.Activo Then
-            Sb_Timer_IntervaloCada(_Timer_ConsolidacionStock, _DProgramaciones.Sp_ConsStock, AddressOf Sb_ConsStock)
+            Sb_Activar_ObjetosTimer(_Timer_ConsolidacionStock, _DProgramaciones.Sp_ConsStock)
+        End If
+
+        If _DProgramaciones.Sp_CierreDoc.Activo Then
+            Sb_Activar_ObjetosTimer(Timer_CerrarDocumentos, _DProgramaciones.Sp_CierreDoc)
         End If
 
         Me.Refresh()
@@ -209,26 +215,49 @@ Public Class Frm_Demonio_New
 
             Dim milisegundos As Long
 
-            If .FrecuDiaria Then
-                Dim _IntervaloCada As Integer = .IntervaloCada
-                If .SucedeCada Then
+            'If .FrecuDiaria Then
+            Dim _IntervaloCada As Integer = .IntervaloCada
+            If .SucedeCada Then
 
-                    If .TipoIntervaloCada = "HH" Then
-                        Dim tiempo As New TimeSpan(_IntervaloCada, 0, 0)
-                        milisegundos = tiempo.TotalMilliseconds ' Convertir a milisegundos
-                    End If
-
-                    If .TipoIntervaloCada = "MM" Then
-                        Dim tiempo As New TimeSpan(0, _IntervaloCada, 0)
-                        milisegundos = tiempo.TotalMilliseconds ' Convertir a milisegundos
-                    End If
-
-                    If .TipoIntervaloCada = "SS" Then
-                        Dim tiempo As New TimeSpan(0, 0, _IntervaloCada)
-                        milisegundos = tiempo.TotalMilliseconds ' Convertir a milisegundos
-                    End If
-
+                If .TipoIntervaloCada = "HH" Then
+                    Dim tiempo As New TimeSpan(_IntervaloCada, 0, 0)
+                    milisegundos = tiempo.TotalMilliseconds ' Convertir a milisegundos
                 End If
+
+                If .TipoIntervaloCada = "MM" Then
+                    Dim tiempo As New TimeSpan(0, _IntervaloCada, 0)
+                    milisegundos = tiempo.TotalMilliseconds ' Convertir a milisegundos
+                End If
+
+                If .TipoIntervaloCada = "SS" Then
+                    Dim tiempo As New TimeSpan(0, 0, _IntervaloCada)
+                    milisegundos = tiempo.TotalMilliseconds ' Convertir a milisegundos
+                End If
+
+            End If
+            'End If
+
+            If .SucedeUnaVez Then
+
+                Dim _Hora = .HoraUnaVez.Hour
+                Dim _Minuto = .HoraUnaVez.Minute
+
+                Dim tiempo As New TimeSpan(_Hora, _Minuto, 0)
+                Dim horaProgramada As DateTime
+
+                horaProgramada = DateTime.Today.AddHours(_Hora).AddMinutes(_Minuto)
+
+                If horaProgramada < DateTime.Now Then
+                    horaProgramada = horaProgramada.Date.AddDays(1).AddHours(_Hora).AddMinutes(_Minuto)
+                    tiempo = New TimeSpan(1, _Hora, _Minuto, 0)
+                End If
+
+                Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
+
+                milisegundos = tiempoRestante.TotalMilliseconds ' Convertir a milisegundos
+
+                'Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
+
             End If
 
             _Timer.Interval = milisegundos
@@ -337,6 +366,29 @@ Public Class Frm_Demonio_New
 
                     _Descripcion = "Consolidación de productos. " & _CI_Programacion.Resumen
                     _IndexImagen = 9
+
+                Case "CierreDoc"
+
+                    Dim _Chk_COVCerrar As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_COVCerrar' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    Dim _Chk_OCICerrar As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_OCICerrar' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    Dim _Chk_OCCCerrar As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_OCCCerrar' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    Dim _Chk_NVICerrar As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_NVICerrar' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    Dim _Chk_NVVCerrar As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_NVVCerrar' And NombreEquipo = '" & _NombreEquipo & "'", True)
+
+                    Boolean.TryParse(_Chk_COVCerrar, _Cl_CerrarDocumentos.COVCerrar)
+                    Boolean.TryParse(_Chk_OCICerrar, _Cl_CerrarDocumentos.OCICerrar)
+                    Boolean.TryParse(_Chk_OCCCerrar, _Cl_CerrarDocumentos.OCCCerrar)
+                    Boolean.TryParse(_Chk_NVICerrar, _Cl_CerrarDocumentos.NVICerrar)
+                    Boolean.TryParse(_Chk_NVVCerrar, _Cl_CerrarDocumentos.NVVCerrar)
+
+                    _Cl_CerrarDocumentos.DiasCOV = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasCOV' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    _Cl_CerrarDocumentos.DiasOCI = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasOCI' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    _Cl_CerrarDocumentos.DiasOCC = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasOCC' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    _Cl_CerrarDocumentos.DiasNVI = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasNVI' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    _Cl_CerrarDocumentos.DiasNVV = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasNVV' And NombreEquipo = '" & _NombreEquipo & "'", True)
+
+                    _Descripcion = "Cierre de documentos. " & _CI_Programacion.Resumen
+                    _IndexImagen = 10
 
             End Select
 
@@ -470,10 +522,9 @@ Public Class Frm_Demonio_New
 
                 If horaProgramada < DateTime.Now Then
                     horaProgramada = horaProgramada.Date.AddDays(1).AddHours(_Hora).AddMinutes(_Minuto)
-                    tiempoRestante = horaProgramada - DateTime.Now
-                Else
-                    tiempoRestante = DateTime.Now - horaProgramada
                 End If
+
+                tiempoRestante = horaProgramada - DateTime.Now
 
             End If
 
@@ -827,63 +878,28 @@ Public Class Frm_Demonio_New
 
     End Sub
 
-    Sub Sb_ConsStock(state As Object)
-
-        If IsNothing(_Timer_ConsolidacionStock) Then Return
-
-        If _Cl_Consolidacion_Stock.Procesando Or _Cl_Prestashop_Prod.Procesando Then
-
-            Dim horaProgramada As DateTime = DateTime.Now.AddSeconds(2) 'DateTime.Now.AddMinutes(1)
-            Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
-            _Timer_ConsolidacionStock.Change(tiempoRestante, Timeout.InfiniteTimeSpan)
-
-            ' Este método se ejecuta cada vez que se activa el temporizador (cada 1 minuto adicional)
-            Dim registro As String = DateTime.Now.ToString() & " - Consolidación de stock (Proceso en curso se volverá a revisar en 2 segundos mas...)"
-
-            ' Registrar la información en un archivo de registro
-            RegistrarLog(registro)
-            MostrarRegistro(registro)
-
-        Else
-
-            If Fx_CumpleDiaSemana(_DProgramaciones.Sp_ConsStock) Then
-
-                _Cl_Consolidacion_Stock.Log_Registro = String.Empty
-                _Cl_Consolidacion_Stock.Sb_Procedimiento_Consolidar_Stock(Me)
-
-            End If
-
-            _Timer_FacturacionAuto.Change(TimeSpan.FromDays(1), Timeout.InfiniteTimeSpan)
-            'Sb_Timer_IntervaloCada(_Timer_FacturacionAuto, _DProgramaciones.Sp_FacturacionAuto, AddressOf Sb_FacturacionAuto)
-
-            Dim registro As String = "Tarea ejecutada (Consolidación de stock) a las: " & DateTime.Now.ToString()
-            RegistrarLog(registro)
-            MostrarRegistro(registro)
-
-            'If Not String.IsNullOrWhiteSpace(_Cl_FacturacionAuto.Log_Registro) Then
-            '    registro += vbCrLf & _Cl_FacturacionAuto.Log_Registro
-
-            '    ' Registrar la información en un archivo de registro
-
-            'End If
-
-        End If
-
-    End Sub
 
     Function Fx_CumpleDiaSemana(_Programacion As Cl_NewProgramacion) As Boolean
 
         Dim _Hoy As Date = DtpFecharevision.Value
         Dim _Dia = _Hoy.DayOfWeek
 
-        If (_Dia = DayOfWeek.Monday And _Programacion.Lunes) Or
+        If _Programacion.FrecuDiaria Then
+            Return True
+        End If
+
+        If _Programacion.FrecuSemanal Then
+
+            If (_Dia = DayOfWeek.Monday And _Programacion.Lunes) Or
                    (_Dia = DayOfWeek.Tuesday And _Programacion.Martes) Or
                    (_Dia = DayOfWeek.Wednesday And _Programacion.Miercoles) Or
                    (_Dia = DayOfWeek.Thursday And _Programacion.Jueves) Or
                    (_Dia = DayOfWeek.Friday And _Programacion.Viernes) Or
                    (_Dia = DayOfWeek.Saturday And _Programacion.Sabado) Or
                    (_Dia = DayOfWeek.Sunday And _Programacion.Domingo) Then
-            Return True
+                Return True
+            End If
+
         End If
 
     End Function
@@ -1023,11 +1039,8 @@ Public Class Frm_Demonio_New
         _Cl_Consolidacion_Stock.Cons_Stock_Mov_Hoy = _Cons_Stock_Mov_Hoy
         _Cl_Consolidacion_Stock.Cons_Stock_Todos = _Cons_Stock_Todos
 
-        '_Cl_Prestashop_Prod.Lbl_Estado = Lbl_Procesando.Text
         _Cl_Prestashop_Prod.Sb_Procedimiento_Prestashop()
         _Cl_Prestashop_Prod.Sb_Procedimiento_Prestashop3()
-
-        'Sb_Timer_IntervaloCada(_Timer_Prestashop_Prod, _DProgramaciones.Sp_Prestashop_Prod, AddressOf Sb_Prestashop_Prod)
 
         registro = "Tarea ejecutada (Prestashop Productos Web) a las: " & DateTime.Now.ToString()
 
@@ -1047,13 +1060,6 @@ Public Class Frm_Demonio_New
         Sb_ActualizarDetalleListview("Prestashop Web", _DProgramaciones.Sp_Prestashop_Prod.Resumen)
 
         Sb_Pausa(True)
-
-        'For Each item As ListViewItem In Listv_Programaciones.Items
-        '    If item.Text = "Prestashop Web" Then
-        '        item.SubItems(1).Text = _DProgramaciones.Sp_Prestashop_Prod.Resumen
-        '        Exit For
-        '    End If
-        'Next
 
     End Sub
 
@@ -1179,11 +1185,82 @@ Public Class Frm_Demonio_New
             Timer_LibroDTESII.Enabled = _Pausa
         End If
 
+        If _DProgramaciones.Sp_ConsStock.Activo Then
+            Timer_ConsolidacionStock.Enabled = _Pausa
+        End If
+
+        If _DProgramaciones.Sp_CierreDoc.Activo Then
+            Timer_CerrarDocumentos.Enabled = _Pausa
+        End If
+
     End Sub
 
     Private Sub BtnCambFecha_Click(sender As Object, e As EventArgs) Handles BtnCambFecha.Click
         If Fx_Tiene_Permiso(Me, "Pick0007") Then
             DtpFecharevision.Enabled = True
         End If
+    End Sub
+
+    Private Sub Timer_ConsolidacionStock_Tick(sender As Object, e As EventArgs) Handles Timer_ConsolidacionStock.Tick
+
+        If Fx_CumpleDiaSemana(_DProgramaciones.Sp_ConsStock) Then
+
+            Sb_Pausa(False)
+
+            Dim registro As String = "Ejecutando tarea Consolidación de stock a las: " & DateTime.Now.ToString()
+
+            RegistrarLog(registro)
+            MostrarRegistro(registro)
+
+            _Cl_Consolidacion_Stock.Log_Registro = String.Empty
+            _Cl_Consolidacion_Stock.Sb_Procedimiento_Consolidar_Stock(Me)
+
+            registro = "Tarea ejecutada (Consolidación de stock) a las: " & DateTime.Now.ToString()
+            registro += _Cl_Consolidacion_Stock.Log_Registro & vbCrLf
+            RegistrarLog(registro)
+            MostrarRegistro(registro)
+
+            Sb_Pausa(True)
+
+        End If
+
+        Sb_Activar_ObjetosTimer(_Timer_ConsolidacionStock, _DProgramaciones.Sp_ConsStock)
+
+    End Sub
+
+    Private Sub Timer_CerrarDocumentos_Tick(sender As Object, e As EventArgs) Handles Timer_CerrarDocumentos.Tick
+
+        If Fx_CumpleDiaSemana(_DProgramaciones.Sp_CierreDoc) Then
+
+            Sb_Pausa(False)
+
+            Dim registro As String = "Ejecutando tarea cierre de documentos a las: " & DateTime.Now.ToString()
+
+            RegistrarLog(registro)
+            MostrarRegistro(registro)
+
+            _Cl_CerrarDocumentos.Procesando = True
+
+            _Cl_CerrarDocumentos.Fecha_Revision = DtpFecharevision.Value
+            _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "COV")
+            _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "OCI")
+            _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "OCC")
+            _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "NVI")
+            _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "NVV")
+
+            _Cl_CerrarDocumentos.Procesando = False
+
+            registro = "Tarea ejecutada (Consolidación de stock) a las: " & DateTime.Now.ToString()
+            registro += _Cl_Consolidacion_Stock.Log_Registro & vbCrLf
+
+            RegistrarLog(registro)
+            MostrarRegistro(registro)
+
+            Sb_Pausa(True)
+
+        End If
+
+        Sb_Activar_ObjetosTimer(Timer_CerrarDocumentos, _DProgramaciones.Sp_CierreDoc)
+
     End Sub
 End Class

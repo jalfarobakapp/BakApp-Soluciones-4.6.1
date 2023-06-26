@@ -363,6 +363,8 @@ Public Class Frm_Demonio_Configuraciones
             Case "ConsStock", "CierreDoc", "Prestashop_Total"
                 _Diariamente = True : _Semanalmente = True : _SucedeUnaVez = True : _SucedeCada = False
                 _MinIntervalo = 5 : _MaxIntevalo = 59 : _TIMinutos = True : _TIValorDefecto = ""
+            Case "AsistenteCompras"
+                _Diariamente = True : _Semanalmente = False : _SucedeUnaVez = True : _SucedeCada = False : _TIValorDefecto = ""
             Case Else
                 Dim A = 1
         End Select
@@ -420,7 +422,7 @@ Public Class Frm_Demonio_Configuraciones
 
         Grupo_Resumen.Text = _Tab.Text
 
-        If _Tab.Name = "Sp_SqlQueryEspecial" Or _Tab.Name = "Sp_AsistenteCompras" Or _Tab.Name = "" Then
+        If _Tab.Name = "Sp_SqlQueryEspecial" Or _Tab.Name = "" Then 'Or _Tab.Name = "Sp_AsistenteCompras"
             Btn_ConfProgramacion.Enabled = False
             Txt_Resumen.Text = "La programación depende de cada registro"
             Return
