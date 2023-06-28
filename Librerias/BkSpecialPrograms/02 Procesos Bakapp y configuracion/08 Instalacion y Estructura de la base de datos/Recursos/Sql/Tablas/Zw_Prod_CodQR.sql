@@ -4,6 +4,7 @@ CREATE TABLE [dbo].[Zw_Prod_CodQR](
 	[CodigoQR]	[varchar](300)  NOT NULL DEFAULT (''),
 	[Kopral]	[varchar](21)	NOT NULL DEFAULT (''),
 	[Koen]	    [varchar](13)	NOT NULL DEFAULT (''),
+	[Kopr]	    [varchar](13)	NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Prod_CodQR] PRIMARY KEY CLUSTERED 
 (
 	[CodigoQR] ASC

@@ -817,9 +817,11 @@ Public Class Frm_Demonio_New
     Private Sub MostrarRegistro(registro As String)
         ' Agregar el registro al TextBox
         Try
+            'Txt_Log.ReadOnly = False
             Txt_Log.Invoke(Sub() Txt_Log.AppendText(registro & Environment.NewLine))
         Catch ex As Exception
-
+        Finally
+            'Txt_Log.ReadOnly = True
         End Try
     End Sub
 
@@ -1247,10 +1249,16 @@ Public Class Frm_Demonio_New
             _Cl_Correos.Sb_Procedimiento_Correos()
             _Cl_Correos.Procesando = False
 
-            Dim registro As String = "Tarea ejecutada (Correo) a las: " & DateTime.Now.ToString()
+            Dim registro As String
 
-            ' Registrar la información en un archivo de registro
+            If Not String.IsNullOrEmpty(_Cl_Correos.Lbl_Estado) Then
+                registro = _Cl_Correos.Lbl_Estado
+                RegistrarLog(registro)
+            End If
+            registro = "Tarea ejecutada (Correo) a las: " & DateTime.Now.ToString()
+
             RegistrarLog(registro)
+            MostrarRegistro(registro)
 
             Sb_ActualizarDetalleListview("Envio de correos", _DProgramaciones.Sp_EnvioCorreo.Resumen)
 

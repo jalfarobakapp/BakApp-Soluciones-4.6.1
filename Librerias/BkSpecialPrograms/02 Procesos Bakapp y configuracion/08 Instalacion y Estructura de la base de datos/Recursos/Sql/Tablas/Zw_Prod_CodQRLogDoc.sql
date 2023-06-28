@@ -8,6 +8,8 @@ CREATE TABLE [dbo].[Zw_Prod_CodQRLogDoc](
 	[Tido]			[varchar](3)		NOT NULL DEFAULT (''),
 	[Nudo]			[varchar](10)		NOT NULL DEFAULT (''),
 	[Idmaeedo]		[int]				NOT NULL DEFAULT (0),
+    [Kopr]		    [varchar](13)		NOT NULL DEFAULT (''),
+    [CodLeido]		[varchar](300)		NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Prod_CodQRLogDoc] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
