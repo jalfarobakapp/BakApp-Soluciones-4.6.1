@@ -49,9 +49,15 @@ Public Class Frm_Demonio_ConfAsisCompra
 
     Private Sub Frm_Demonio_ConfAsisCompra_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Dim _Id_Padre = _Global_Row_EstacionBk.Item("Id")
+        Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_ConfProgramacion" & vbCrLf &
+                       "Where Id_Padre = " & _Id_Padre & " And NombreEquipo = '" & _NombreEquipo & "' And Nombre = 'AsistenteCompras'"
+        Dim _Row_Programacion As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
         If Not IsNothing(_Row_Configuracion) Then
             Txt_Modalidad.Text = _Row_Configuracion.Item("Modalidad")
-            'Cmb_Tido.SelectedValue = _Row_Configuracion.Item("Tido")
             Chk_NVI.Checked = _Row_Configuracion.Item("NVI")
             Chk_OCC_Star.Checked = _Row_Configuracion.Item("OCC_Star")
             Chk_OCC_Prov.Checked = _Row_Configuracion.Item("OCC_Prov")
@@ -60,17 +66,17 @@ Public Class Frm_Demonio_ConfAsisCompra
         If Not CBool(_Id) Then
             _Programacion = New Cl_NewProgramacion
             _Programacion.Nombre = "Nueva programacion"
-            '_Programacion.FrecuDiaria = True
-            _Programacion.SucedeUnaVez = True
-            _Programacion.HoraUnaVez = "00:00:00"
         End If
+
+        _Programacion.FrecuSemanal = True
+        _Programacion.SucedeUnaVez = True
+        _Programacion.HoraUnaVez = _Row_Programacion.Item("HoraUnaVez")
 
         Btn_ConfProgramacion.Enabled = True
         Txt_Resumen.Text = _Programacion.Resumen
 
         Btn_Eliminar.Visible = CBool(_Id)
         Txt_Modalidad.Enabled = Not CBool(_Id)
-        'Cmb_Tido.Enabled = Not CBool(_Id)
 
     End Sub
 
@@ -106,7 +112,30 @@ Public Class Frm_Demonio_ConfAsisCompra
             Return
         End If
 
-        If Not CBool(_Id) Then
+        If Chk_OCC_Star.Checked Then
+
+            Dim _CodProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                         "Valor",
+                                         "Informe = 'Compras_Asistente' And Campo = 'Koen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
+                                         "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Txt_Modalidad.Text & "'")
+            Dim _CodSucProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                         "Valor",
+                                         "Informe = 'Compras_Asistente' And Campo = 'Suen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
+                                         "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Txt_Modalidad.Text & "'")
+
+            Consulta_sql = "Select * From MAEEN Where KOEN = '" & _CodProveedor_Pstar & "' And SUEN = '" & _CodSucProveedor_Pstar & "'"
+            Dim _RowProveedor As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_RowProveedor) Then
+                MessageBoxEx.Show(Me, "No esta asignado el proveedore especial para OCC al proveedor estrella." & vbCrLf & vbCrLf &
+                                  "Revise la pestaña [Bod.Ext. Prov. Especial] en la configuración del asistente para la modalidad: " & Txt_Modalidad.Text,
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+        End If
+
+            If Not CBool(_Id) Then
 
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_ConfAcpAuto (NombreEquipo,Modalidad,NVI,OCC_Star,OCC_Prov) Values " &
                "('" & _NombreEquipo & "','" & Txt_Modalidad.Text & "'" &
@@ -122,6 +151,14 @@ Public Class Frm_Demonio_ConfAsisCompra
 
         End If
 
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_ConfAcpAuto Set " &
+                       "Modalidad = '" & Txt_Modalidad.Text & "'" &
+                       ",NVI = " & Convert.ToInt32(Chk_NVI.Checked) &
+                       ",OCC_Star = " & Convert.ToInt32(Chk_OCC_Star.Checked) &
+                       ",OCC_Prov = " & Convert.ToInt32(Chk_OCC_Prov.Checked) & vbCrLf &
+                       "Where Id = " & _Id
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
         Dim _Grb_Programacion As New Grb_Programacion
         _Grb_Programacion.Sb_Actualizar_programacion(_Programacion)
 
@@ -132,14 +169,16 @@ Public Class Frm_Demonio_ConfAsisCompra
 
     Private Sub Btn_ConfProgramacion_Click(sender As Object, e As EventArgs) Handles Btn_ConfProgramacion.Click
 
-        Programacion = New Cl_NewProgramacion
-        Programacion.SucedeUnaVez = True
-        Programacion.HoraUnaVez = "01-01-1900 00:00"
+        'Programacion = New Cl_NewProgramacion
+        'Programacion.SucedeUnaVez = True
+        'Programacion.HoraUnaVez = "01-01-1900 00:00"
+        Programacion.Validada = True
 
         Dim Fm As New Frm_Demonio_ConfProgramacion(False, False, False, "")
         Fm.Programacion = _Programacion
         Fm.Grupo_Frecuencia.Enabled = False
         Fm.Txt_Nombre.ReadOnly = True
+        Fm.Rdb_FrecuDiaria.Enabled = False
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

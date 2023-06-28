@@ -25,8 +25,8 @@ Public Class Frm_Demonio_New
     Dim _Cl_Listas_Programadas As New Cl_Listas_Programadas
     Dim _Cl_FacturacionAuto As New Cl_FacAuto_NVV
     Dim _Cl_CerrarDocumentos As New Cl_Cerrar_Documentos
+    Dim _Cl_Asistente_Compras As New Cl_Asistente_Compras
 
-    Private _Timer_Correos As Timer
     Private _Timer_ImprimirDocumentos As Timer
     Private _Timer_ImprimirPicking As Timer
     Private _Timer_SolicitudProductosBodega As Timer
@@ -118,7 +118,7 @@ Public Class Frm_Demonio_New
             _DProgramaciones.Sp_ArchivarDoc.Activo = True
         End If
 
-        If Fx_InsertarRegistroDeProgramacion("ListasProgramadas", _DProgramaciones.Sp_ListasProgramadas, "Listas Prg.") Then
+        If Fx_InsertarRegistroDeProgramacion("ListasProgramadas", _DProgramaciones.Sp_ListasProgramadas, "Listas Programadas") Then
             _DProgramaciones.Sp_ListasProgramadas.Activo = True
         End If
 
@@ -134,6 +134,9 @@ Public Class Frm_Demonio_New
             _DProgramaciones.Sp_CierreDoc.Activo = True
         End If
 
+        If Fx_InsertarRegistroDeProgramacion("AsistenteCompras", _DProgramaciones.Sp_AsistenteCompras, "Asistente de compras") Then
+            _DProgramaciones.Sp_AsistenteCompras.Activo = True
+        End If
 
         Dim _CantidadFilas As Integer = Listv_Programaciones.Items.Count
 
@@ -158,7 +161,7 @@ Public Class Frm_Demonio_New
         End If
 
         If _DProgramaciones.Sp_EnvioCorreo.Activo Then
-            Sb_Timer_IntervaloCada(_Timer_Correos, _DProgramaciones.Sp_EnvioCorreo, AddressOf Sb_Enviar_Correos)
+            Sb_Activar_ObjetosTimer(Timer_Correo, _DProgramaciones.Sp_EnvioCorreo)
         End If
 
         If _DProgramaciones.Sp_ColaImpDoc.Activo Then
@@ -203,6 +206,10 @@ Public Class Frm_Demonio_New
 
         If _DProgramaciones.Sp_CierreDoc.Activo Then
             Sb_Activar_ObjetosTimer(Timer_CerrarDocumentos, _DProgramaciones.Sp_CierreDoc)
+        End If
+
+        If _DProgramaciones.Sp_AsistenteCompras.Activo Then
+            Sb_Activar_ObjetosTimer(Timer_AsistenteCompras, _DProgramaciones.Sp_AsistenteCompras)
         End If
 
         Me.Refresh()
@@ -255,8 +262,6 @@ Public Class Frm_Demonio_New
                 Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
 
                 milisegundos = tiempoRestante.TotalMilliseconds ' Convertir a milisegundos
-
-                'Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
 
             End If
 
@@ -390,6 +395,11 @@ Public Class Frm_Demonio_New
                     _Descripcion = "Cierre de documentos. " & _CI_Programacion.Resumen
                     _IndexImagen = 10
 
+                Case "AsistenteCompras"
+
+                    _Descripcion = "Asistente de compras automática" & _CI_Programacion.Resumen
+                    _IndexImagen = 11
+
             End Select
 
             _CI_Programacion.Resumen = _Descripcion
@@ -420,78 +430,6 @@ Public Class Frm_Demonio_New
         End With
 
     End Sub
-
-#Region "TIMER"
-
-    Sub Sb_Timer_Correo()
-
-        _Timer_Correos = Nothing
-        Dim horaProgramada As DateTime
-
-        If _DProgramaciones.Sp_EnvioCorreo.FrecuDiaria Then
-            Dim _IntervaloCada As Integer = _DProgramaciones.Sp_EnvioCorreo.IntervaloCada
-            If _DProgramaciones.Sp_EnvioCorreo.SucedeCada Then
-                If _DProgramaciones.Sp_EnvioCorreo.TipoIntervaloCada = "HH" Then horaProgramada = DateTime.Now.AddHours(_IntervaloCada)
-                If _DProgramaciones.Sp_EnvioCorreo.TipoIntervaloCada = "MM" Then horaProgramada = DateTime.Now.AddMinutes(_IntervaloCada)
-                If _DProgramaciones.Sp_EnvioCorreo.TipoIntervaloCada = "SS" Then horaProgramada = DateTime.Now.AddSeconds(_IntervaloCada)
-            End If
-        End If
-
-        Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
-
-        _Timer_Correos = New Timer(AddressOf Sb_Enviar_Correos, Nothing, tiempoRestante, Timeout.InfiniteTimeSpan)
-
-    End Sub
-
-    Sub Sb_Timer_ImprimirDocumentos()
-
-        _Timer_ImprimirDocumentos = Nothing
-        Dim horaProgramada As DateTime
-
-        With _DProgramaciones.Sp_ColaImpDoc
-
-            If .FrecuDiaria Then
-                Dim _IntervaloCada As Integer = .IntervaloCada
-                If .SucedeCada Then
-                    If .TipoIntervaloCada = "HH" Then horaProgramada = DateTime.Now.AddHours(_IntervaloCada)
-                    If .TipoIntervaloCada = "MM" Then horaProgramada = DateTime.Now.AddMinutes(_IntervaloCada)
-                    If .TipoIntervaloCada = "SS" Then horaProgramada = DateTime.Now.AddSeconds(_IntervaloCada)
-                End If
-            End If
-
-        End With
-
-        Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
-
-        _Timer_ImprimirDocumentos = New Timer(AddressOf Sb_Imprimir_Documentos, Nothing, tiempoRestante, Timeout.InfiniteTimeSpan)
-
-    End Sub
-
-    Sub Sb_Timer_ImprimirPicking()
-
-        _Timer_ImprimirPicking = Nothing
-        Dim horaProgramada As DateTime
-
-        With _DProgramaciones.Sp_ColaImpPick
-
-            If .FrecuDiaria Then
-                Dim _IntervaloCada As Integer = .IntervaloCada
-                If .SucedeCada Then
-                    If .TipoIntervaloCada = "HH" Then horaProgramada = DateTime.Now.AddHours(_IntervaloCada)
-                    If .TipoIntervaloCada = "MM" Then horaProgramada = DateTime.Now.AddMinutes(_IntervaloCada)
-                    If .TipoIntervaloCada = "SS" Then horaProgramada = DateTime.Now.AddSeconds(_IntervaloCada)
-                End If
-            End If
-
-        End With
-
-        Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
-
-        _Timer_ImprimirPicking = New Timer(AddressOf Sb_Imprimir_Picking, Nothing, tiempoRestante, Timeout.InfiniteTimeSpan)
-
-    End Sub
-
-#End Region
 
     Sub Sb_Timer_IntervaloCada(ByRef _Timer As Timer, ByRef _Sp_Programacion As Cl_NewProgramacion, Sb_Proceso As TimerCallback)
 
@@ -534,45 +472,6 @@ Public Class Frm_Demonio_New
 
     End Sub
 
-    Sub Sb_Enviar_Correos(state As Object)
-
-        If IsNothing(_Timer_Correos) Then Return
-
-        If _Cl_Correos.Procesando Then
-
-            Dim horaProgramada As DateTime = DateTime.Now.AddSeconds(15) 'DateTime.Now.AddMinutes(1)
-            Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
-
-            _Timer_Correos.Change(tiempoRestante, Timeout.InfiniteTimeSpan)
-
-            ' Este método se ejecuta cada vez que se activa el temporizador (cada 1 minuto adicional)
-            Dim registro As String = DateTime.Now.ToString() & " - Envío correo (Proceso en curso se volverá a revisar en 15 segundos mas...)"
-
-            ' Registrar la información en un archivo de registro
-            RegistrarLog(registro)
-            MostrarRegistro(registro)
-
-            '_Cl_Correos.Procesando = False
-
-        Else
-
-            _Cl_Correos.Fecha_Revision = DtpFecharevision.Value
-            _Cl_Correos.Sb_Procedimiento_Correos()
-
-            'Sb_Timer_Correo()
-            Sb_Timer_IntervaloCada(_Timer_Correos, _DProgramaciones.Sp_EnvioCorreo, AddressOf Sb_Enviar_Correos)
-
-            Dim registro As String = "Tarea ejecutada (Correo) a las: " & DateTime.Now.ToString() & vbCrLf
-
-            ' Registrar la información en un archivo de registro
-            RegistrarLog(registro)
-            MostrarRegistro(registro)
-
-            '_Cl_Correos.Procesando = True
-
-        End If
-
-    End Sub
 
     Sub Sb_Imprimir_Documentos(state As Object)
 
@@ -931,7 +830,6 @@ Public Class Frm_Demonio_New
     Sub Sb_Limpirar_Timers()
         Circular_Monitoreo.IsRunning = False
         Lbl_Monitoreo.Text = "MONITOREO EN PAUSA"
-        _Timer_Correos = Nothing
         _Timer_ImprimirDocumentos = Nothing
         _Timer_ImprimirPicking = Nothing
         _Timer_SolicitudProductosBodega = Nothing
@@ -993,20 +891,15 @@ Public Class Frm_Demonio_New
         Me.Text = "Demonio para acciones automatizadas, V: [" & _Version_BkSpecialPrograms & "] " & DateTime.Now.ToString("HH:mm:ss")
 
         If _Cl_Prestashop_Prod.Procesando Then
-
             Sb_ActualizarDetalleListview("Prestashop Web", _Cl_Prestashop_Prod.Etiqueta2.Text)
-
-            'For Each item As ListViewItem In Listv_Programaciones.Items
-            '    If item.Text = "Prestashop Web" Then
-            '        item.SubItems(1).Text = _Cl_Prestashop_Prod.Etiqueta2.Text
-            '        Exit For
-            '    End If
-            'Next
-
         End If
 
         If _Cl_Hefesto_Dte_Libro.Procesando Then
             Sb_ActualizarDetalleListview("Importar DTE SII", _Cl_Hefesto_Dte_Libro.Estatus.Text)
+        End If
+
+        If _Cl_Correos.Procesando Then
+            Sb_ActualizarDetalleListview("Envio de correos", _Cl_Correos.Lbl_Estado)
         End If
 
         Me.Refresh()
@@ -1193,6 +1086,14 @@ Public Class Frm_Demonio_New
             Timer_CerrarDocumentos.Enabled = _Pausa
         End If
 
+        If _DProgramaciones.Sp_AsistenteCompras.Activo Then
+            Timer_AsistenteCompras.Enabled = _Pausa
+        End If
+
+        If _DProgramaciones.Sp_EnvioCorreo.Activo Then
+            Timer_Correo.Enabled = _Pausa
+        End If
+
     End Sub
 
     Private Sub BtnCambFecha_Click(sender As Object, e As EventArgs) Handles BtnCambFecha.Click
@@ -1263,4 +1164,102 @@ Public Class Frm_Demonio_New
         Sb_Activar_ObjetosTimer(Timer_CerrarDocumentos, _DProgramaciones.Sp_CierreDoc)
 
     End Sub
+
+    Private Sub Timer_AsistenteCompras_Tick(sender As Object, e As EventArgs) Handles Timer_AsistenteCompras.Tick
+
+        If Fx_CumpleDiaSemana(_DProgramaciones.Sp_AsistenteCompras) Then
+
+            Sb_Pausa(False)
+
+            Dim registro As String = "Ejecutando asistente de compras a las: " & DateTime.Now.ToString()
+
+            RegistrarLog(registro)
+            MostrarRegistro(registro)
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_ConfAcpAuto Where NombreEquipo = '" & _NombreEquipo & "'"
+            Dim _Tbl_ConfAcpAuto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            For Each _Fila As DataRow In _Tbl_ConfAcpAuto.Rows
+
+                Dim _Id_Padre As Integer = _Fila.Item("Id")
+                Dim _Grb_Programacion As New Grb_Programacion
+                Dim _CI_Programacion As Cl_NewProgramacion
+
+                Dim _Id_Prg As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_ConfProgramacion", "Id",
+                                                           "NombreEquipo = '" & _NombreEquipo & "' And Id_Padre = " & _Id_Padre)
+                _CI_Programacion = _Grb_Programacion.Fx_Llenar_Programacion(_Id_Prg)
+
+                If Fx_CumpleDiaSemana(_CI_Programacion) Then
+
+                    Dim _NVI As Boolean = _Fila.Item("NVI")
+                    Dim _OCC_Star As Boolean = _Fila.Item("OCC_Star")
+                    Dim _OCC_Prov As Boolean = _Fila.Item("OCC_Prov")
+
+                    Dim _ModalidadOld As String = Modalidad
+                    Dim _Mod As New Clas_Modalidades
+
+                    Modalidad = _Fila.Item("Modalidad")
+
+                    _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
+                    _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
+                    _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+                    _Mod.Sb_Actualiza_Formatos_X_Modalidad()
+
+                    If _NVI Then _Cl_Asistente_Compras.Sb_Ejecutar(Me, Modalidad, False, True, False, False, True)
+                    If _OCC_Star Then _Cl_Asistente_Compras.Sb_Ejecutar(Me, Modalidad, True, False, False, True, False)
+                    If _OCC_Prov Then _Cl_Asistente_Compras.Sb_Ejecutar(Me, Modalidad, True, False, True, False, False)
+
+                    Modalidad = _ModalidadOld
+
+                    _Mod = New Clas_Modalidades
+                    _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
+                    _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
+                    _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+                    _Mod.Sb_Actualiza_Formatos_X_Modalidad()
+
+                End If
+
+            Next
+
+            registro = "Tarea ejecutada (Asistente de compras) a las: " & DateTime.Now.ToString()
+            registro += _Cl_Consolidacion_Stock.Log_Registro & vbCrLf
+
+            RegistrarLog(registro)
+            MostrarRegistro(registro)
+
+            Sb_Pausa(True)
+
+        End If
+
+        Sb_Activar_ObjetosTimer(Timer_AsistenteCompras, _DProgramaciones.Sp_AsistenteCompras)
+
+    End Sub
+
+    Private Sub Timer_Correo_Tick(sender As Object, e As EventArgs) Handles Timer_Correo.Tick
+
+        If Fx_CumpleDiaSemana(_DProgramaciones.Sp_EnvioCorreo) Then
+
+            Sb_Pausa(False)
+
+            _Cl_Correos.Procesando = True
+            _Cl_Correos.Fecha_Revision = DtpFecharevision.Value
+            _Cl_Correos.Nombre_Equipo = _NombreEquipo
+            _Cl_Correos.Sb_Procedimiento_Correos()
+            _Cl_Correos.Procesando = False
+
+            Dim registro As String = "Tarea ejecutada (Correo) a las: " & DateTime.Now.ToString()
+
+            ' Registrar la información en un archivo de registro
+            RegistrarLog(registro)
+
+            Sb_ActualizarDetalleListview("Envio de correos", _DProgramaciones.Sp_EnvioCorreo.Resumen)
+
+            Sb_Pausa(True)
+
+        End If
+
+        'Sb_Activar_ObjetosTimer(Timer_Correo, _DProgramaciones.Sp_EnvioCorreo)
+
+    End Sub
+
 End Class

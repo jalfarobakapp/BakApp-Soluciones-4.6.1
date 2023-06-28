@@ -46,7 +46,8 @@ Partial Class Frm_Demonio_New
         Me.Timer_LibroDTESII = New System.Windows.Forms.Timer(Me.components)
         Me.Timer_ConsolidacionStock = New System.Windows.Forms.Timer(Me.components)
         Me.Timer_CerrarDocumentos = New System.Windows.Forms.Timer(Me.components)
-        Me.Timer_ = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer_AsistenteCompras = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer_Correo = New System.Windows.Forms.Timer(Me.components)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.SuspendLayout()
@@ -167,6 +168,7 @@ Partial Class Frm_Demonio_New
         Me.Txt_Log.Multiline = True
         Me.Txt_Log.Name = "Txt_Log"
         Me.Txt_Log.PreventEnterBeep = True
+        Me.Txt_Log.ReadOnly = True
         Me.Txt_Log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.Txt_Log.Size = New System.Drawing.Size(731, 183)
         Me.Txt_Log.TabIndex = 74
@@ -261,8 +263,9 @@ Partial Class Frm_Demonio_New
         Me.Imagenes_16X16.Images.SetKeyName(8, "invoice-gears.png")
         Me.Imagenes_16X16.Images.SetKeyName(9, "products-update.png")
         Me.Imagenes_16X16.Images.SetKeyName(10, "document-padlock.png")
-        Me.Imagenes_16X16.Images.SetKeyName(11, "wordpress 16.png")
-        Me.Imagenes_16X16.Images.SetKeyName(12, "button-ok.png")
+        Me.Imagenes_16X16.Images.SetKeyName(11, "shopping-cart-blue-magic-wand.png")
+        Me.Imagenes_16X16.Images.SetKeyName(12, "wordpress 16.png")
+        Me.Imagenes_16X16.Images.SetKeyName(13, "button-ok.png")
         '
         'Circular_Monitoreo
         '
@@ -308,8 +311,9 @@ Partial Class Frm_Demonio_New
         Me.Imagenes_16X16_Dark.Images.SetKeyName(8, "invoice-gears.png")
         Me.Imagenes_16X16_Dark.Images.SetKeyName(9, "product-update.png")
         Me.Imagenes_16X16_Dark.Images.SetKeyName(10, "document-padlock.png")
-        Me.Imagenes_16X16_Dark.Images.SetKeyName(11, "wordpress 16.png")
-        Me.Imagenes_16X16_Dark.Images.SetKeyName(12, "button-ok.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(11, "shopping-cart-blue-magic-wand.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(12, "wordpress 16.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(13, "button-ok.png")
         '
         'timerHora
         '
@@ -331,9 +335,13 @@ Partial Class Frm_Demonio_New
         '
         Me.Timer_CerrarDocumentos.Interval = 1000
         '
-        'Timer_
+        'Timer_AsistenteCompras
         '
-        Me.Timer_.Interval = 1000
+        Me.Timer_AsistenteCompras.Interval = 1000
+        '
+        'Timer_Correo
+        '
+        Me.Timer_Correo.Interval = 1000
         '
         'Frm_Demonio_New
         '
@@ -383,5 +391,6 @@ Partial Class Frm_Demonio_New
     Friend WithEvents Timer_LibroDTESII As Timer
     Friend WithEvents Timer_ConsolidacionStock As Timer
     Friend WithEvents Timer_CerrarDocumentos As Timer
-    Friend WithEvents Timer_ As Timer
+    Friend WithEvents Timer_AsistenteCompras As Timer
+    Friend WithEvents Timer_Correo As Timer
 End Class

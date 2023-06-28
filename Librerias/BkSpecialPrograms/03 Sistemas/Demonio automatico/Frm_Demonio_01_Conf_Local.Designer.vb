@@ -106,8 +106,6 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Dtp_Cons_Stock_Hora_Ejecucion = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.Chk_Ejecutar_Automaticamente = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
-        Me.Panel_01 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Chk_Timer_FacAuto = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Txt_Modalidad_FacAuto = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -128,6 +126,8 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Chk_Fac_Viernes = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.LabelX18 = New DevComponents.DotNetBar.LabelX()
         Me.SuperTabItem4 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.Panel_01 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Btn_ConfAsisCompra = New DevComponents.DotNetBar.ButtonX()
         Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
@@ -256,10 +256,10 @@ Partial Class Frm_Demonio_01_Conf_Local
         CType(Me.Dtp_Cons_Stock_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
-        Me.Panel_01.SuspendLayout()
         Me.SuperTabControlPanel2.SuspendLayout()
         Me.TableLayoutPanel7.SuspendLayout()
         Me.TableLayoutPanel6.SuspendLayout()
+        Me.Panel_01.SuspendLayout()
         Me.SuperTabControlPanel3.SuspendLayout()
         Me.TableLayoutPanel9.SuspendLayout()
         CType(Me.Dtp_AsisCompra_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1689,8 +1689,8 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTabControl1.Controls.Add(Me.Panel_01)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel4)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
@@ -1708,30 +1708,6 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem2, Me.SuperTabItem3, Me.SuperTabItem4, Me.SuperTabItem5, Me.SuperTabItem6})
         Me.SuperTabControl1.Text = "SuperTabControl1"
         '
-        'Panel_01
-        '
-        Me.Panel_01.CanvasColor = System.Drawing.SystemColors.Control
-        Me.Panel_01.Controls.Add(Me.LabelX8)
-        Me.Panel_01.Controls.Add(Me.TableLayoutPanel1)
-        Me.Panel_01.Controls.Add(Me.TableLayoutPanel2)
-        Me.Panel_01.Controls.Add(Me.Dtp_Cons_Stock_Hora_Ejecucion)
-        Me.Panel_01.Controls.Add(Me.Chk_Timer_Consolidacion_Stock)
-        Me.Panel_01.Controls.Add(Me.PictureBox6)
-        Me.Panel_01.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel_01.Location = New System.Drawing.Point(193, 0)
-        Me.Panel_01.Name = "Panel_01"
-        Me.Panel_01.Size = New System.Drawing.Size(423, 239)
-        Me.Panel_01.TabIndex = 1
-        Me.Panel_01.TabItem = Me.SuperTabItem1
-        '
-        'SuperTabItem1
-        '
-        Me.SuperTabItem1.AttachedControl = Me.Panel_01
-        Me.SuperTabItem1.GlobalItem = False
-        Me.SuperTabItem1.Image = CType(resources.GetObject("SuperTabItem1.Image"), System.Drawing.Image)
-        Me.SuperTabItem1.Name = "SuperTabItem1"
-        Me.SuperTabItem1.Text = "Prog. consolidación de stock"
-        '
         'SuperTabControlPanel2
         '
         Me.SuperTabControlPanel2.Controls.Add(Me.Chk_Timer_FacAuto)
@@ -1741,9 +1717,9 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabControlPanel2.Controls.Add(Me.TableLayoutPanel6)
         Me.SuperTabControlPanel2.Controls.Add(Me.LabelX18)
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(184, 0)
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(193, 0)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(432, 239)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(423, 239)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem4
         '
@@ -2070,6 +2046,30 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabItem4.Name = "SuperTabItem4"
         Me.SuperTabItem4.Text = "Fac. Automática"
         '
+        'Panel_01
+        '
+        Me.Panel_01.CanvasColor = System.Drawing.SystemColors.Control
+        Me.Panel_01.Controls.Add(Me.LabelX8)
+        Me.Panel_01.Controls.Add(Me.TableLayoutPanel1)
+        Me.Panel_01.Controls.Add(Me.TableLayoutPanel2)
+        Me.Panel_01.Controls.Add(Me.Dtp_Cons_Stock_Hora_Ejecucion)
+        Me.Panel_01.Controls.Add(Me.Chk_Timer_Consolidacion_Stock)
+        Me.Panel_01.Controls.Add(Me.PictureBox6)
+        Me.Panel_01.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel_01.Location = New System.Drawing.Point(193, 0)
+        Me.Panel_01.Name = "Panel_01"
+        Me.Panel_01.Size = New System.Drawing.Size(423, 239)
+        Me.Panel_01.TabIndex = 1
+        Me.Panel_01.TabItem = Me.SuperTabItem1
+        '
+        'SuperTabItem1
+        '
+        Me.SuperTabItem1.AttachedControl = Me.Panel_01
+        Me.SuperTabItem1.GlobalItem = False
+        Me.SuperTabItem1.Image = CType(resources.GetObject("SuperTabItem1.Image"), System.Drawing.Image)
+        Me.SuperTabItem1.Name = "SuperTabItem1"
+        Me.SuperTabItem1.Text = "Prog. consolidación de stock"
+        '
         'SuperTabControlPanel3
         '
         Me.SuperTabControlPanel3.Controls.Add(Me.Btn_ConfAsisCompra)
@@ -2078,9 +2078,9 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabControlPanel3.Controls.Add(Me.Chk_AsistenteDeCompras)
         Me.SuperTabControlPanel3.Controls.Add(Me.Dtp_AsisCompra_Hora_Ejecucion)
         Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(184, 0)
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(193, 0)
         Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(432, 239)
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(423, 239)
         Me.SuperTabControlPanel3.TabIndex = 0
         Me.SuperTabControlPanel3.TabItem = Me.SuperTabItem5
         '
@@ -2538,9 +2538,9 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabControlPanel4.Controls.Add(Me.Input_EnvDocSinRecep_DiasCOV)
         Me.SuperTabControlPanel4.Controls.Add(Me.TableLayoutPanel8)
         Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(184, 0)
+        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(193, 0)
         Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
-        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(432, 239)
+        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(423, 239)
         Me.SuperTabControlPanel4.TabIndex = 0
         Me.SuperTabControlPanel4.TabItem = Me.SuperTabItem6
         '
@@ -2569,7 +2569,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX27.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX27.ForeColor = System.Drawing.Color.Black
-        Me.LabelX27.Location = New System.Drawing.Point(6, 185)
+        Me.LabelX27.Location = New System.Drawing.Point(-3, 185)
         Me.LabelX27.Name = "LabelX27"
         Me.LabelX27.SingleLineColor = System.Drawing.Color.Transparent
         Me.LabelX27.Size = New System.Drawing.Size(87, 23)
@@ -2608,7 +2608,7 @@ Partial Class Frm_Demonio_01_Conf_Local
         '
         Me.LabelX26.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX26.ForeColor = System.Drawing.Color.Black
-        Me.LabelX26.Location = New System.Drawing.Point(6, 213)
+        Me.LabelX26.Location = New System.Drawing.Point(-3, 213)
         Me.LabelX26.Name = "LabelX26"
         Me.LabelX26.SingleLineColor = System.Drawing.Color.Transparent
         Me.LabelX26.Size = New System.Drawing.Size(87, 23)
@@ -3140,9 +3140,9 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.SuperTabControlPanel1.Controls.Add(Me.Input_DiasCOV)
         Me.SuperTabControlPanel1.Controls.Add(Me.TableLayoutPanel5)
         Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(184, 0)
+        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(193, 0)
         Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(432, 239)
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(423, 239)
         Me.SuperTabControlPanel1.TabIndex = 0
         Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem3
         '
@@ -3573,9 +3573,9 @@ Partial Class Frm_Demonio_01_Conf_Local
         Me.Panel_02.Controls.Add(Me.TableLayoutPanel4)
         Me.Panel_02.Controls.Add(Me.Dtp_Prestashop_Total_Hora_Ejecucion)
         Me.Panel_02.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel_02.Location = New System.Drawing.Point(184, 0)
+        Me.Panel_02.Location = New System.Drawing.Point(193, 0)
         Me.Panel_02.Name = "Panel_02"
-        Me.Panel_02.Size = New System.Drawing.Size(432, 239)
+        Me.Panel_02.Size = New System.Drawing.Size(423, 239)
         Me.Panel_02.TabIndex = 0
         Me.Panel_02.TabItem = Me.SuperTabItem2
         '
@@ -3880,10 +3880,10 @@ Partial Class Frm_Demonio_01_Conf_Local
         CType(Me.Dtp_Cons_Stock_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
-        Me.Panel_01.ResumeLayout(False)
         Me.SuperTabControlPanel2.ResumeLayout(False)
         Me.TableLayoutPanel7.ResumeLayout(False)
         Me.TableLayoutPanel6.ResumeLayout(False)
+        Me.Panel_01.ResumeLayout(False)
         Me.SuperTabControlPanel3.ResumeLayout(False)
         Me.TableLayoutPanel9.ResumeLayout(False)
         CType(Me.Dtp_AsisCompra_Hora_Ejecucion, System.ComponentModel.ISupportInitialize).EndInit()

@@ -101,7 +101,7 @@ Public Class Frm_Demonio_Configuraciones
                     _RevisarProgramacion = String.IsNullOrEmpty(_Row_Programacion.Item("Resumen"))
                 End If
 
-                If _Nombre = "AsistenteCompras" Then
+                If _Nombre = "AsistenteCompras" AndAlso Not _RevisarProgramacion Then
                     _RevisarProgramacion = Not CBool(Grilla_AsistenteCompras.RowCount)
                 End If
 
@@ -473,6 +473,15 @@ Public Class Frm_Demonio_Configuraciones
 
     Private Sub Btn_AgregarConfAsisCompra_Click(sender As Object, e As EventArgs) Handles Btn_AgregarConfAsisCompra.Click
 
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_ConfProgramacion" & vbCrLf &
+                       "Where Id_Padre = " & _Id & " And NombreEquipo = '" & _NombreEquipo & "' And Nombre = 'AsistenteCompras'"
+        Dim _Row_Programacion As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row_Programacion) Then
+            MessageBoxEx.Show(Me, "Falta la programación del asistente de compras", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         Dim Fm As New Frm_Demonio_ConfAsisCompra(0)
         Fm.ShowDialog(Me)
         If Fm.Grabar Then
@@ -582,6 +591,11 @@ Public Class Frm_Demonio_Configuraciones
                            "Where Informe = 'Demonio' And NombreEquipo = '" & _NombreEquipo & "'"
             _Sql.Ej_consulta_IDU(Consulta_sql)
         End If
+
+        'Ejecución automática
+        _Sql.Sb_Parametro_Informe_Sql(Chk_Ejecutar_Automaticamente, "Demonio",
+                                      Chk_Ejecutar_Automaticamente.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_Ejecutar_Automaticamente.Checked, _Actualizar, "Automatica",, False)
 
         'correo
         _Sql.Sb_Parametro_Informe_Sql(Chk_EnvioCorreo, "Demonio",
