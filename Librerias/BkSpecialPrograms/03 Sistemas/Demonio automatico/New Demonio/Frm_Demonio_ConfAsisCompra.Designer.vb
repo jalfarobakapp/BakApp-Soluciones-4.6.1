@@ -176,6 +176,7 @@ Partial Class Frm_Demonio_ConfAsisCompra
         Me.Btn_ConfProgramacion.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_ConfProgramacion.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_ConfProgramacion.Enabled = False
+        Me.Btn_ConfProgramacion.FocusCuesEnabled = False
         Me.Btn_ConfProgramacion.Image = CType(resources.GetObject("Btn_ConfProgramacion.Image"), System.Drawing.Image)
         Me.Btn_ConfProgramacion.Location = New System.Drawing.Point(426, 3)
         Me.Btn_ConfProgramacion.Name = "Btn_ConfProgramacion"
@@ -211,9 +212,9 @@ Partial Class Frm_Demonio_ConfAsisCompra
         Me.Chk_NVI.CheckBoxImageChecked = CType(resources.GetObject("Chk_NVI.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_NVI.FocusCuesEnabled = False
         Me.Chk_NVI.ForeColor = System.Drawing.Color.Black
-        Me.Chk_NVI.Location = New System.Drawing.Point(87, 45)
+        Me.Chk_NVI.Location = New System.Drawing.Point(87, 43)
         Me.Chk_NVI.Name = "Chk_NVI"
-        Me.Chk_NVI.Size = New System.Drawing.Size(136, 21)
+        Me.Chk_NVI.Size = New System.Drawing.Size(136, 23)
         Me.Chk_NVI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_NVI.TabIndex = 188
         Me.Chk_NVI.Text = "NVI (pedidos internos)"
@@ -228,9 +229,9 @@ Partial Class Frm_Demonio_ConfAsisCompra
         Me.Chk_OCC_Star.CheckBoxImageChecked = CType(resources.GetObject("Chk_OCC_Star.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_OCC_Star.FocusCuesEnabled = False
         Me.Chk_OCC_Star.ForeColor = System.Drawing.Color.Black
-        Me.Chk_OCC_Star.Location = New System.Drawing.Point(219, 45)
+        Me.Chk_OCC_Star.Location = New System.Drawing.Point(219, 43)
         Me.Chk_OCC_Star.Name = "Chk_OCC_Star"
-        Me.Chk_OCC_Star.Size = New System.Drawing.Size(115, 21)
+        Me.Chk_OCC_Star.Size = New System.Drawing.Size(115, 23)
         Me.Chk_OCC_Star.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_OCC_Star.TabIndex = 189
         Me.Chk_OCC_Star.Text = "OCC (Prov. estrella)"
@@ -245,9 +246,9 @@ Partial Class Frm_Demonio_ConfAsisCompra
         Me.Chk_OCC_Prov.CheckBoxImageChecked = CType(resources.GetObject("Chk_OCC_Prov.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_OCC_Prov.FocusCuesEnabled = False
         Me.Chk_OCC_Prov.ForeColor = System.Drawing.Color.Black
-        Me.Chk_OCC_Prov.Location = New System.Drawing.Point(340, 45)
+        Me.Chk_OCC_Prov.Location = New System.Drawing.Point(340, 43)
         Me.Chk_OCC_Prov.Name = "Chk_OCC_Prov"
-        Me.Chk_OCC_Prov.Size = New System.Drawing.Size(115, 21)
+        Me.Chk_OCC_Prov.Size = New System.Drawing.Size(141, 23)
         Me.Chk_OCC_Prov.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_OCC_Prov.TabIndex = 190
         Me.Chk_OCC_Prov.Text = "OCC (otros proveedores)"

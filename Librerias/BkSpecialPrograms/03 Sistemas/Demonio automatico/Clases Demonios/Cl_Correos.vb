@@ -649,11 +649,14 @@ Public Class Cl_Correos
                             _Asunto = "Envío de correo automático por BakApp…"
                         End If
 
-                        _CuerpoMensaje = Replace(_CuerpoMensaje, "<HTML>", _Cuerpo_Html & vbCrLf)    ' Html con precio y cantidad
-                        _CuerpoMensaje = Replace(_CuerpoMensaje, "<HTML_SP>", _Cuerpo_Html & vbCrLf) ' Html sin precio, solo cantidades
+                        _CuerpoMensaje = Replace(_CuerpoMensaje, "<HTML>", "@@HTML@@")    ' Html con precio y cantidad
+                        _CuerpoMensaje = Replace(_CuerpoMensaje, "<HTML_SP>", "@@HTML_SP@@") ' Html sin precio, solo cantidades
 
                         Sb_Llenar_Variables_Etiquetas_Documento(_Asunto, _IdMaeedo)
                         Sb_Llenar_Variables_Etiquetas_Documento(_CuerpoMensaje, _IdMaeedo)
+
+                        _CuerpoMensaje = Replace(_CuerpoMensaje, "@@HTML@@", _Cuerpo_Html & vbCrLf)    ' Html con precio y cantidad
+                        _CuerpoMensaje = Replace(_CuerpoMensaje, "@@HTML_SP@@", _Cuerpo_Html & vbCrLf) ' Html sin precio, solo cantidades
 
                         If Not _Es_Html Then _CuerpoMensaje = Replace(_CuerpoMensaje, Chr(13), "<br/>")
 
@@ -1416,7 +1419,7 @@ Public Class Cl_Correos
 
                     If _Letra = ">" Then
 
-                        If _Funcion <> "br /" Then
+                        If Not _Funcion.Contains("/") And _Funcion <> "div" And _Funcion <> "br" And _Funcion <> "body" And _Funcion <> "title" And _Funcion <> "br /" And _Funcion <> "!DOCTYPE html" And _Funcion <> "html" And _Funcion <> "head" And Not _Funcion.Contains("""") Then
                             _Funciones.Add(_Funcion)
                         End If
 

@@ -8316,7 +8316,7 @@ Drop Table #Paso"
             Next
 
             If CBool(_OrdenesBajoMinimo.Count) Then
-                _Generar_OCC.Fx_Enviar_Notificacion_Correo_OCC_BajoMinCompra(Auto_CorreoCc, "", Auto_Id_CorreoOCCMinCompra, _OrdenesBajoMinimo)
+                _Generar_OCC.Fx_Enviar_Notificacion_Correo_OCC_BajoMinCompra(Auto_CorreoCc, "", Val(Auto_Id_CorreoOCCMinCompra), _OrdenesBajoMinimo)
             End If
 
             If Auto_EnviarListadoProveedoresSinStock Then
@@ -8750,7 +8750,7 @@ Drop Table #Paso"
         Dim _Sucursal = _Sql.Fx_Trae_Dato("CONFIEST", "ESUCURSAL", "MODALIDAD = '" & _Modalidad_Estudio & "'")
         Dim _Bodega = _Sql.Fx_Trae_Dato("CONFIEST", "EBODEGA", "MODALIDAD = '" & _Modalidad_Estudio & "'")
 
-        Dim _Observaciones As String = "Documento generado desde Asistente de compras BakApp' as OBDO"
+        Dim _Observaciones As String = "Documento generado desde Asistente de compras BakApp"
 
         If Not String.IsNullOrWhiteSpace(Auto_DespacharA_OCC) Then
             _Observaciones = Auto_DespacharA_OCC
