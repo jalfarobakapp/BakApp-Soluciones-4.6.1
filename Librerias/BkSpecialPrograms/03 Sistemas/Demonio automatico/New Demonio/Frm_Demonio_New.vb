@@ -1252,7 +1252,7 @@ Public Class Frm_Demonio_New
             ' Registrar la información en un archivo de registro
             RegistrarLog(registro)
 
-            Sb_ActualizarDetalleListview("EnvioCorreo", _DProgramaciones.Sp_EnvioCorreo.Resumen)
+            Sb_ActualizarDetalleListview("Envio de correos", _DProgramaciones.Sp_EnvioCorreo.Resumen)
 
             Sb_Pausa(True)
 
