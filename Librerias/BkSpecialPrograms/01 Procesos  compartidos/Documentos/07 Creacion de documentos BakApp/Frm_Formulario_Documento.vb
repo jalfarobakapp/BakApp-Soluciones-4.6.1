@@ -15763,11 +15763,13 @@ Public Class Frm_Formulario_Documento
 
             For Each _Codigos As CodigosDeBarra.CodigosQRLeidos In _ListaCodQRUnicosLeidos
 
+                Dim _CodLeido As String = _Codigos.CodLeido
+                Dim _Kopr As String = _Codigos.Codigo
                 Dim _CodigoQR As String = _Codigos.CodigoQR
-                Dim _Kopral = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Prod_CodQR", "Kopral", "CodigoQR = '" & _CodigoQR & "'")
+                Dim _Kopral As String = _Codigos.CodigoAlternativo
 
-                _SqlQuery += "Insert Into " & _Global_BaseBk & "Zw_Prod_CodQRLogDoc (CodigoQR,Kopral,Tido,Nudo,Idmaeedo) Values " &
-                               "('" & _CodigoQR & "','" & _Kopral & "','" & _Tido & "','" & _Nudo & "'," & _Idmaeedo & ")" & vbCrLf
+                _SqlQuery += "Insert Into " & _Global_BaseBk & "Zw_Prod_CodQRLogDoc (CodigoQR,Kopral,Tido,Nudo,Idmaeedo,Kopr,CodLeido) Values " &
+                               "('" & _CodigoQR & "','" & _Kopral & "','" & _Tido & "','" & _Nudo & "'," & _Idmaeedo & ",'" & _Kopr & "','" & _CodLeido & "')" & vbCrLf
 
             Next
 

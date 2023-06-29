@@ -34,7 +34,6 @@ Public Class Frm_Demonio_New
     Private _Timer_Prestashop_Prod As Timer
     Private _Timer_Archivador As Timer
     Private _Timer_ListasProgramadas As Timer
-    Private _Timer_FacturacionAuto As Timer
 
     Private logFilePath As String = "Log_Demonio.txt"
 
@@ -197,11 +196,11 @@ Public Class Frm_Demonio_New
         End If
 
         If _DProgramaciones.Sp_FacturacionAuto.Activo Then
-            Sb_Timer_IntervaloCada(_Timer_FacturacionAuto, _DProgramaciones.Sp_FacturacionAuto, AddressOf Sb_FacturacionAuto)
+            Sb_Activar_ObjetosTimer(Timer_FacturacionAuto, _DProgramaciones.Sp_FacturacionAuto)
         End If
 
         If _DProgramaciones.Sp_ConsStock.Activo Then
-            Sb_Activar_ObjetosTimer(_Timer_ConsolidacionStock, _DProgramaciones.Sp_ConsStock)
+            Sb_Activar_ObjetosTimer(Timer_ConsolidacionStock, _DProgramaciones.Sp_ConsStock)
         End If
 
         If _DProgramaciones.Sp_CierreDoc.Activo Then
@@ -357,6 +356,8 @@ Public Class Frm_Demonio_New
                     Boolean.TryParse(_FA_1Semana, _Cl_FacturacionAuto.FA_1Semana)
                     Boolean.TryParse(_FA_1Mes, _Cl_FacturacionAuto.FA_1Mes)
                     Boolean.TryParse(_FA_1Todas, _Cl_FacturacionAuto.FA_1Todas)
+
+                    _Cl_FacturacionAuto.Modalidad_Fac = _Modalidad_Fac
 
                     _Descripcion = "Facturación de notas de venta para clientes con condición automática. " & _CI_Programacion.Resumen
                     _IndexImagen = 8
@@ -731,53 +732,6 @@ Public Class Frm_Demonio_New
 
     End Sub
 
-    Sub Sb_FacturacionAuto(state As Object)
-
-        If IsNothing(_Timer_FacturacionAuto) Then Return
-
-        If _Cl_FacturacionAuto.Procesando Then
-
-            Dim horaProgramada As DateTime = DateTime.Now.AddSeconds(2) 'DateTime.Now.AddMinutes(1)
-            Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
-            _Timer_FacturacionAuto.Change(tiempoRestante, Timeout.InfiniteTimeSpan)
-
-            ' Este método se ejecuta cada vez que se activa el temporizador (cada 1 minuto adicional)
-            Dim registro As String = DateTime.Now.ToString() & " - Facturación automática (Proceso en curso se volverá a revisar en 2 segundos mas...)"
-
-            ' Registrar la información en un archivo de registro
-            RegistrarLog(registro)
-            MostrarRegistro(registro)
-
-        Else
-
-            If Fx_CumpleDiaSemana(_DProgramaciones.Sp_FacturacionAuto) Then
-
-                _Cl_FacturacionAuto.Log_Registro = String.Empty
-                _Cl_FacturacionAuto.Fecha_Revision = DtpFecharevision.Value
-                _Cl_FacturacionAuto.Nombre_Equipo = _NombreEquipo
-                _Cl_FacturacionAuto.Log_Registro = String.Empty
-                _Cl_FacturacionAuto.Sb_Traer_NVV_A_Facturar()
-                _Cl_FacturacionAuto.Sb_Facturar_Automaticamente_NVV(Me, Nothing)
-
-            End If
-
-            Sb_Timer_IntervaloCada(_Timer_FacturacionAuto, _DProgramaciones.Sp_FacturacionAuto, AddressOf Sb_FacturacionAuto)
-
-            Dim registro As String = "Tarea ejecutada (Listas programadas a futuro) a las: " & DateTime.Now.ToString()
-
-            If Not String.IsNullOrWhiteSpace(_Cl_FacturacionAuto.Log_Registro) Then
-                registro += vbCrLf & _Cl_FacturacionAuto.Log_Registro
-
-                ' Registrar la información en un archivo de registro
-                RegistrarLog(registro)
-                MostrarRegistro(registro)
-            End If
-
-        End If
-
-    End Sub
-
-
     Function Fx_CumpleDiaSemana(_Programacion As Cl_NewProgramacion) As Boolean
 
         Dim _Hoy As Date = DtpFecharevision.Value
@@ -817,9 +771,11 @@ Public Class Frm_Demonio_New
     Private Sub MostrarRegistro(registro As String)
         ' Agregar el registro al TextBox
         Try
+            'Txt_Log.ReadOnly = False
             Txt_Log.Invoke(Sub() Txt_Log.AppendText(registro & Environment.NewLine))
         Catch ex As Exception
-
+        Finally
+            'Txt_Log.ReadOnly = True
         End Try
     End Sub
 
@@ -1094,6 +1050,10 @@ Public Class Frm_Demonio_New
             Timer_Correo.Enabled = _Pausa
         End If
 
+        If _DProgramaciones.Sp_FacturacionAuto.Activo Then
+            Timer_FacturacionAuto.Enabled = _Pausa
+        End If
+
     End Sub
 
     Private Sub BtnCambFecha_Click(sender As Object, e As EventArgs) Handles BtnCambFecha.Click
@@ -1247,10 +1207,16 @@ Public Class Frm_Demonio_New
             _Cl_Correos.Sb_Procedimiento_Correos()
             _Cl_Correos.Procesando = False
 
-            Dim registro As String = "Tarea ejecutada (Correo) a las: " & DateTime.Now.ToString()
+            Dim registro As String
 
-            ' Registrar la información en un archivo de registro
+            If Not String.IsNullOrEmpty(_Cl_Correos.Lbl_Estado) Then
+                registro = _Cl_Correos.Lbl_Estado
+                RegistrarLog(registro)
+            End If
+            registro = "Tarea ejecutada (Correo) a las: " & DateTime.Now.ToString()
+
             RegistrarLog(registro)
+            MostrarRegistro(registro)
 
             Sb_ActualizarDetalleListview("Envio de correos", _DProgramaciones.Sp_EnvioCorreo.Resumen)
 
@@ -1259,6 +1225,36 @@ Public Class Frm_Demonio_New
         End If
 
         'Sb_Activar_ObjetosTimer(Timer_Correo, _DProgramaciones.Sp_EnvioCorreo)
+
+    End Sub
+
+    Private Sub Timer_FacturacionAuto_Tick(sender As Object, e As EventArgs) Handles Timer_FacturacionAuto.Tick
+
+        If Fx_CumpleDiaSemana(_DProgramaciones.Sp_FacturacionAuto) Then
+
+            Sb_Pausa(False)
+
+            _Cl_FacturacionAuto.Log_Registro = String.Empty
+            _Cl_FacturacionAuto.Fecha_Revision = DtpFecharevision.Value
+            _Cl_FacturacionAuto.Nombre_Equipo = _NombreEquipo
+            _Cl_FacturacionAuto.Log_Registro = String.Empty
+            _Cl_FacturacionAuto.Sb_Traer_NVV_A_Facturar()
+            _Cl_FacturacionAuto.Sb_Facturar_Automaticamente_NVV(Me, Nothing)
+
+            Dim registro As String = "Tarea ejecutada (Facturación automática) a las: " & DateTime.Now.ToString()
+
+            If Not String.IsNullOrWhiteSpace(_Cl_FacturacionAuto.Log_Registro) Then
+                registro += vbCrLf & _Cl_FacturacionAuto.Log_Registro
+
+                ' Registrar la información en un archivo de registro
+                RegistrarLog(registro)
+                MostrarRegistro(registro)
+            End If
+
+            Sb_Pausa(True)
+
+        End If
+
 
     End Sub
 

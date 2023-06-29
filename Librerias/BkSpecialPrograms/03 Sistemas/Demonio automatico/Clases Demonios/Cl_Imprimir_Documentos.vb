@@ -377,6 +377,7 @@ Public Class Cl_Imprimir_Documentos
                 Dim _NombreFormato = _Fila_Imp.Item("NombreFormato")
                 Dim _Nro_Copias_Impresion = 0
                 Dim _Impresora = String.Empty
+                Dim _Insertado_Desde_Diablito As Boolean = _Fila_Imp.Item("Insertado_Desde_Diablito")
                 Dim _Imprimir_Voucher_TJV As Boolean
                 Dim _Imprimir_Voucher_TJV_Original_Transbak As Boolean
                 Dim _Vale_Transitorio As Boolean
@@ -403,7 +404,6 @@ Public Class Cl_Imprimir_Documentos
                     _Vale_TransitorioStr = " And Vale_Transitorio = " & Convert.ToInt32(_Vale_Transitorio)
                 End If
 
-
                 If Not _Solo_Marcar_No_Imprimir Then
 
                     Dim _Log_Error = String.Empty
@@ -423,7 +423,7 @@ Public Class Cl_Imprimir_Documentos
 
                     Consulta_Sql = "Select Top 1 * " &
                                    "From " & _Global_BaseBk & "Zw_Demonio_Filtros_X_Estacion " &
-                                   "Where IdPadre = " & _IdPadre & " And TipoDoc = '" & _Tido & "' And Codigo = '" & _Funcionario & "' And Picking = 0 " & _Vale_TransitorioStr
+                                   "Where IdPadre = " & _IdPadre & " And TipoDoc = '" & _Tido & "' And Codigo = '" & _Funcionario & "' And Picking = 0 " & _Vale_TransitorioStr & " And Impresora <> ''"
                     Dim _Row_Demonio_Filtros_X_Estacion As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
                     Dim _NombreFormato_Est = String.Empty

@@ -23,6 +23,8 @@ Public Class Frm_LevantarMasivamenteCodAlt
                        "Cast(0 As Int) As Unimulti,Cast('' As Varchar(13)) As Precio,Cast('' As Varchar(3)) As Koen,Cast('' As Varchar(Max)) As Log_Inf From MAEPR Where 1<0"
         _Tbl_Productos_Levantar = _Sql.Fx_Get_Tablas(Consulta_sql)
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_LevantarMasivamenteCodAlt_Load(sender As Object, e As EventArgs) Handles MyBase.Load

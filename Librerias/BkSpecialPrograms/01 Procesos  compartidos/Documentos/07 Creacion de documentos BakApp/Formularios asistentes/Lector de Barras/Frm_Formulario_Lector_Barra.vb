@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports BkSpecialPrograms.Cl_Fincred_Bakapp.Cl_Fincred_SQL
+Imports DevComponents.DotNetBar
 
 Public Class Frm_Formulario_Lector_Barra
 
@@ -112,10 +113,6 @@ Public Class Frm_Formulario_Lector_Barra
         Me.ActiveControl = Txt_Codigo_Barras
 
         Btn_VerCodigosLeidos.Visible = Chk_LeerSoloUnaVezCodBarra.Checked
-
-
-        '_ListaCodQRUnicosLeidos = New List(Of CodigosDeBarra.CodigosQRLeidos)
-
 
     End Sub
 
@@ -256,12 +253,13 @@ Public Class Frm_Formulario_Lector_Barra
     Sub Sb_Leer_Codigo()
 
         Dim _Codigo As String
-        Dim _CodQRUnicosLeido As String
+        Dim _CodLeido As String
         Dim _Cantidad = 1
 
         Dim _CodigoQr As String
+        Dim _Kopral As String
 
-        _CodQRUnicosLeido = Txt_Codigo_Barras.Text
+        _CodLeido = Txt_Codigo_Barras.Text
 
         If _Global_Row_Configuracion_Estacion.Item("Utilizar_Lectura_Codigo_QR") Then
 
@@ -273,11 +271,11 @@ Public Class Frm_Formulario_Lector_Barra
                 Dim _Cola As String
                 Dim _SeparaCod() As String = Split(_CodPaso, "<ETX>", 2)
 
-                _CodPaso = _SeparaCod(0)
+                _CodigoQr = _SeparaCod(0)
                 _Cola = _SeparaCod(1)
 
-                _CodigoQr = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Prod_CodQR", "Kopral", "CodigoQR = '" & _CodPaso & "'")
-                _CodQRUnicosLeido = _CodigoQr & ";" & _CodigoLeido
+                _Kopral = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Prod_CodQR", "Kopral", "CodigoQR = '" & _CodigoQr & "'")
+                _CodLeido = _CodigoLeido '_Kopral & ";" & _CodigoLeido
 
             Else
 
@@ -290,7 +288,7 @@ Public Class Frm_Formulario_Lector_Barra
         If Chk_LeerSoloUnaVezCodBarra.Checked Then
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_CodQRLogDoc" & vbCrLf &
-                               "Where CodigoQR = '" & _CodQRUnicosLeido & "' And Tido = 'GRI'"
+                           "Where CodLeido = '" & _CodLeido & "' And Tido = 'GRI'"
             Dim _TblQrDoc As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
             If _TblQrDoc.Rows.Count Then
@@ -313,9 +311,19 @@ Public Class Frm_Formulario_Lector_Barra
                 Return
             End If
 
-            'For Each _CodQr As String In _ListaCodQRUnicosLeidos
+            Dim ListaQr As CodigosDeBarra.CodigosQRLeidos = _ListaCodQRUnicosLeidos.FirstOrDefault(Function(p) p.CodLeido = _CodLeido)
 
-            '    If _CodQr = _CodQRUnicosLeido Then
+            If Not IsNothing(ListaQr) Then
+                Txt_Codigo_Barras.Text = String.Empty
+                Sb_Confirmar_Lectura("El código ya fue leído", "No puede leer mas de una vez el mismo código para esta lista")
+                Return
+            End If
+
+            'For Each _ListaQr As CodigosDeBarra.CodigosQRLeidos In _ListaCodQRUnicosLeidos
+
+            '    Dim _CodL As String = _ListaQr.CodLeido
+
+            '    If _CodL = _CodLeido Then
             '        Txt_Codigo_Barras.Text = String.Empty
             '        Sb_Confirmar_Lectura("El código ya fue leído", "No puede leer mas de una vez el mismo código para esta lista")
             '        Return
@@ -323,24 +331,12 @@ Public Class Frm_Formulario_Lector_Barra
 
             'Next
 
-            For Each _ListaQr As CodigosDeBarra.CodigosQRLeidos In _ListaCodQRUnicosLeidos
-
-                Dim _CodQr As String = _ListaQr.CodigoQR
-
-                If _CodQr = _CodQRUnicosLeido Then
-                    Txt_Codigo_Barras.Text = String.Empty
-                    Sb_Confirmar_Lectura("El código ya fue leído", "No puede leer mas de una vez el mismo código para esta lista")
-                    Return
-                End If
-
-            Next
-
         End If
 
         _Codigo = Txt_Codigo_Barras.Text.Trim
 
-        If Not String.IsNullOrEmpty(_CodigoQr) Then
-            _Codigo = _CodigoQr
+        If Not String.IsNullOrEmpty(_Kopral) Then
+            _Codigo = _Kopral
         End If
 
         Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
@@ -371,13 +367,9 @@ Public Class Frm_Formulario_Lector_Barra
 
             Else
 
-                Dim _Kopral As String
-
                 If Txt_Codigo_Barras.Text <> _Codigo Then
 
-                    If Not String.IsNullOrEmpty(_CodigoQr) Then
-                        _Kopral = _CodigoQr
-                    Else
+                    If String.IsNullOrEmpty(_Kopral) Then
                         _Kopral = Txt_Codigo_Barras.Text
                     End If
 
@@ -392,7 +384,6 @@ Public Class Frm_Formulario_Lector_Barra
                                                 "(KOPR = '" & _Codigo & "') And CONMULTI = 1")
 
                 End If
-
 
                 If _Cantidad = 0 Then
                     _Cantidad = 1
@@ -415,9 +406,10 @@ Public Class Frm_Formulario_Lector_Barra
                 For Each _Fila As DataGridViewRow In Grilla.Rows
 
                     Dim _Kopr = Trim(_Fila.Cells("Codigo").Value)
-                    Dim _Kopral = Trim(_Fila.Cells("Codigo_Barras").Value)
+                    Dim _Codigo_Barras = Trim(_Fila.Cells("Codigo_Barras").Value)
 
-                    If _Codigo = _Kopr Or _Codigo = _Kopral Then
+                    If _Codigo = _Kopr Or _Codigo = _Codigo_Barras Then
+
                         If _Ingresar_Cantidad Then
 
                             Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese la cantidad", "Producto X Cantidad",
@@ -432,20 +424,26 @@ Public Class Frm_Formulario_Lector_Barra
 
                         End If
 
-                        If Not String.IsNullOrEmpty(_CodigoQr) Then
-                            _Fila.Cells("Codigo_Barras").Value = _CodigoQr
-                        Else
-                            _Fila.Cells("Codigo_Barras").Value = Txt_Codigo_Barras.Text
-                        End If
+                        'If String.IsNullOrEmpty(_Kopral) Then
+                        '_Fila.Cells("Codigo_Barras").Value = _Kopral
+                        'Else
+                        _Fila.Cells("Codigo_Barras").Value = _CodLeido
+                        'End If
+
                         _Fila.Cells("Cantidad").Value += _Cantidad
 
                         Dim _CodigosDeBarra As New CodigosDeBarra.CodigosQRLeidos
 
-                        _CodigosDeBarra.Codigo = _Codigo
-                        _CodigosDeBarra.CodigoQR = _CodQRUnicosLeido
-                        _CodigosDeBarra.CodigoAlternativo = _Kopral
+                        If Chk_LeerSoloUnaVezCodBarra.Checked Then
 
-                        _ListaCodQRUnicosLeidos.Add(_CodigosDeBarra)
+                            _CodigosDeBarra.CodLeido = _CodLeido
+                            _CodigosDeBarra.Codigo = _Codigo
+                            _CodigosDeBarra.CodigoQR = _CodigoQr
+                            _CodigosDeBarra.CodigoAlternativo = _Kopral
+
+                            _ListaCodQRUnicosLeidos.Add(_CodigosDeBarra)
+
+                        End If
 
                     End If
 
@@ -784,6 +782,22 @@ Public Class Frm_Formulario_Lector_Barra
 
     End Sub
 
+    Private Sub Btn_Limpiar_Click(sender As Object, e As EventArgs) Handles Btn_Limpiar.Click
+
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+            _Fila.Cells("Codigo_Barras").Value = String.Empty
+            _Fila.Cells("Cantidad").Value = 0
+            _Fila.Cells("Problema").Value = String.Empty
+            _Fila.Cells("Es_Correcto").Value = False
+        Next
+
+        _ListaCodQRUnicosLeidos = New List(Of CodigosDeBarra.CodigosQRLeidos)
+        Sb_Formato_Grilla_Detalle()
+
+        MessageBoxEx.Show(Me, "Lista limpia", "Limpiar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+    End Sub
+
 End Class
 
 Namespace CodigosDeBarra
@@ -792,6 +806,7 @@ Namespace CodigosDeBarra
         Public Property Codigo As String
         Public Property CodigoQR As String
         Public Property CodigoAlternativo As String
+        Public Property CodLeido As String
 
     End Class
 

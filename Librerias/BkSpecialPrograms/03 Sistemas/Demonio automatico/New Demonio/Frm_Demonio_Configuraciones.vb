@@ -348,7 +348,7 @@ Public Class Frm_Demonio_Configuraciones
         _MaxIntevalo = 60
 
         Select Case _Nombre
-            Case "EnvioCorreo", "Prestashop_Prod", "Wordpress_Prod", "Wordpress_Stock", "FacAuto", "ImporDTESII", "ListasProgramadas"
+            Case "EnvioCorreo", "Prestashop_Prod", "Wordpress_Prod", "Wordpress_Stock", "ImporDTESII", "ListasProgramadas"
                 _Diariamente = True : _SucedeCada = True : _MinIntervalo = 1 : _MaxIntevalo = 59 : _TIMinutos = True : _TIValorDefecto = "MM"
             Case "ColaImpDoc"
                 _Diariamente = True : _SucedeCada = True : _MinIntervalo = 3 : _MaxIntevalo = 3 : _TISegundos = True : _TIValorDefecto = "SS"
@@ -363,6 +363,9 @@ Public Class Frm_Demonio_Configuraciones
             Case "ConsStock", "CierreDoc", "Prestashop_Total"
                 _Diariamente = True : _Semanalmente = True : _SucedeUnaVez = True : _SucedeCada = False
                 _MinIntervalo = 5 : _MaxIntevalo = 59 : _TIMinutos = True : _TIValorDefecto = ""
+            Case "FacAuto"
+                _Diariamente = True : _Semanalmente = True : _SucedeUnaVez = False : _SucedeCada = True
+                _MinIntervalo = 1 : _MaxIntevalo = 59 : _TIMinutos = True : _TIValorDefecto = ""
             Case "AsistenteCompras"
                 _Diariamente = True : _Semanalmente = False : _SucedeUnaVez = True : _SucedeCada = False : _TIValorDefecto = ""
             Case Else
@@ -463,6 +466,13 @@ Public Class Frm_Demonio_Configuraciones
             Dim _Row As DataRow = _Tbl_Transportista.Rows(0)
 
             Dim _Modalidad = _Row.Item("Codigo").ToString.Trim
+
+            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, _Modalidad, "FCV", True)
+
+            If IsNothing(_RowFormato) Then
+                _Modalidad = String.Empty
+                'Throw New System.Exception("No existe formato de documento para la modalidad")
+            End If
 
             Txt_FacAuto_Modalidad.Tag = _Modalidad
             Txt_FacAuto_Modalidad.Text = _Modalidad
