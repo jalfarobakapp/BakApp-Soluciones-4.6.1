@@ -48,6 +48,9 @@ Public Class Frm_Demonio_02_Conf_X_Estacion
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         _Tipo_Configuracion = Tipo_Conf
+
+        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+
     End Sub
 
     Private Sub Frm_Imp_Picking_01_Conf_Sel_documentos_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -58,6 +61,7 @@ Public Class Frm_Demonio_02_Conf_X_Estacion
         AddHandler Rdb_Vale.CheckedChanged, AddressOf Sb_Rdb_Clic
         AddHandler Rdb_Ambos.CheckedChanged, AddressOf Sb_Rdb_Clic
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
     End Sub
 
@@ -561,7 +565,14 @@ Public Class Frm_Demonio_02_Conf_X_Estacion
 
     Private Sub Btn_Conf_Vales_Transitorios_Click(sender As Object, e As EventArgs) Handles Btn_Conf_Vales_Transitorios.Click
 
-        Me.Sb_Conf_X_Estacion(Frm_Demonio_04_Conf_Impr_X_Funcionarios.Tipo_Configuracion.Impresion_Vale_Transitorio)
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _TipoDoc As String = _Fila.Cells("TipoDoc").Value
+
+        If _TipoDoc = "BLV" Or _TipoDoc = "FCV" Then
+            Me.Sb_Conf_X_Estacion(Frm_Demonio_04_Conf_Impr_X_Funcionarios.Tipo_Configuracion.Impresion_Vale_Transitorio)
+        Else
+            MessageBoxEx.Show(Me, "Opción solo para boletas y facturas", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
 
     End Sub
 End Class

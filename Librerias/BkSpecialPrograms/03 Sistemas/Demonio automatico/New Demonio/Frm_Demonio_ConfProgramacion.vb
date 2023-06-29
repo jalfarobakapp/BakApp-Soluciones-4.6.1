@@ -42,6 +42,7 @@ Public Class Frm_Demonio_ConfProgramacion
         End If
 
         Sb_Cargar_Combo_Intervalo(_Arr_Tido, _TIValorDefecto)
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 

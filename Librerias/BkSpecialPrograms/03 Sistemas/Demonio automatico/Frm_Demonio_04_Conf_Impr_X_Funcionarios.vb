@@ -201,13 +201,13 @@ Public Class Frm_Demonio_04_Conf_Impr_X_Funcionarios
                 Dim _Impresora = _Row.Cells("Impresora").Value
 
                 If Fx_Validar_Impresora(_Impresora) Then
-                    _Row.Cells("Impresora").Style.ForeColor = Color.Green
+                    _Row.Cells("Impresora").Style.ForeColor = Verde
                 Else
                     If String.IsNullOrEmpty(_Impresora) Then
-                        _Row.Cells("Impresora").Style.ForeColor = Color.Green
+                        _Row.Cells("Impresora").Style.ForeColor = Verde
                     Else
                         _Row.Cells("Impresora").Value += " (???)"
-                        _Row.Cells("Impresora").Style.ForeColor = Color.Red
+                        _Row.Cells("Impresora").Style.ForeColor = Rojo
                     End If
                 End If
 
@@ -596,7 +596,7 @@ Public Class Frm_Demonio_04_Conf_Impr_X_Funcionarios
                         _Row.Cells("Impresora").Value = String.Empty
                         _Row.Cells("NombreFormato").Value = String.Empty
                         _Row.Cells("Nro_Copias_Impresion").Value = 1
-                        _Row.Cells("Impresora").Style.ForeColor = Color.Green
+                        _Row.Cells("Impresora").Style.ForeColor = Verde
                     Case Tipo_Configuracion.Correo
                         _Row.Cells("Correo_Para").Value = String.Empty
                         _Row.Cells("Nombre_Correo").Value = String.Empty

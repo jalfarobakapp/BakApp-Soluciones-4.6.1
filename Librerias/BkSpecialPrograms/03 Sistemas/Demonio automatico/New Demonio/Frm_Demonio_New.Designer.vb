@@ -48,6 +48,7 @@ Partial Class Frm_Demonio_New
         Me.Timer_CerrarDocumentos = New System.Windows.Forms.Timer(Me.components)
         Me.Timer_AsistenteCompras = New System.Windows.Forms.Timer(Me.components)
         Me.Timer_Correo = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer_FacturacionAuto = New System.Windows.Forms.Timer(Me.components)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.SuspendLayout()
@@ -343,6 +344,10 @@ Partial Class Frm_Demonio_New
         '
         Me.Timer_Correo.Interval = 1000
         '
+        'Timer_FacturacionAuto
+        '
+        Me.Timer_FacturacionAuto.Interval = 1000
+        '
         'Frm_Demonio_New
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -393,4 +398,5 @@ Partial Class Frm_Demonio_New
     Friend WithEvents Timer_CerrarDocumentos As Timer
     Friend WithEvents Timer_AsistenteCompras As Timer
     Friend WithEvents Timer_Correo As Timer
+    Friend WithEvents Timer_FacturacionAuto As Timer
 End Class

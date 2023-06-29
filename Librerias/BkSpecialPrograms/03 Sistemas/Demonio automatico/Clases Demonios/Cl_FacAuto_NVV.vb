@@ -96,7 +96,8 @@
                                                                                                             "FCV",
                                                                                                             _Idmaeedo,
                                                                                                             _Fecha_Emision,
-                                                                                                            _Modalidad_Fac)
+                                                                                                            _Modalidad_Fac,
+                                                                                                            False)
 
                 Log_Registro += _EstadoFacturacion.MensajeError & vbCrLf
 
@@ -149,7 +150,8 @@
                                                            _Tido_Destino As String,
                                                            _Idmaeedo_Origen As Integer,
                                                            _Fecha_Emision As DateTime,
-                                                           _Modalidad As String) As EstadoFacturacion
+                                                           _Modalidad As String,
+                                                           _Mostrar_Mensaje As Boolean) As EstadoFacturacion
 
         Dim _New_Idmaeedo As Integer
         Dim _EstadoFacturacion As New EstadoFacturacion
@@ -159,7 +161,7 @@
 
             Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Formulario, _Modalidad, _Tido_Destino, True)
+            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Formulario, _Modalidad, _Tido_Destino, _Mostrar_Mensaje)
 
             If IsNothing(_RowFormato) Then
                 Throw New System.Exception("No existe formato de documento para la modalidad")

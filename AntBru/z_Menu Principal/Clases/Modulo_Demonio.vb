@@ -38,27 +38,25 @@ Module Modulo_Demonio
         _Datos_Conf.Clear()
         _Datos_Conf.ReadXml(_Path & "\Config_Local.xml")
 
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+        Dim Consulta_sql As String
+
         Dim _Fila As DataRow = _Datos_Conf.Tables("Tbl_Configuracion").Rows(0)
         Dim _Ejecutar_Automaticamente As Boolean = NuloPorNro(_Fila.Item("Ejecutar_Automaticamente"), False)
-
-        'If _Ejecutar_Demonio Then _Ejecutar_Automaticamente = True
 
         If _Ejecutar_Automaticamente Then
             Fx_Ejecutar_Demonio2(Frm_Menu, _Mostrar_Mensaje)
         End If
 
-        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
-        Dim Consulta_sql As String
-
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Tmp_Prm_Informes" & vbCrLf &
-                       "Where NombreEquipo = '" & _NombreEquipo & "' And Informe = 'Demonio_Impresion' And Campo = 'Chk_Ejecutar_Automaticamente'"
+                       "Where NombreEquipo = '" & _NombreEquipo & "' And Informe = 'Demonio' And Campo = 'Chk_Ejecutar_Automaticamente'"
         Dim _RowDemonio As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If Not IsNothing(_RowDemonio) Then
             If _RowDemonio.Item("Valor") = "True" Then
-                Fx_Ejecutar_Demonio_Impresion(Frm_Menu, _Mostrar_Mensaje)
+                Fx_Ejecutar_Demonio2(Frm_Menu, _Mostrar_Mensaje)
             End If
         End If
 
