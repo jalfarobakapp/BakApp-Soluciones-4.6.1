@@ -82,7 +82,7 @@ Public Class Cl_Correos
             _Input_Tiempo_Correo = value
         End Set
     End Property
-
+    Public Property Ejecutar As Boolean
     Public Sub New()
 
         '_BackgroundWorker.WorkerReportsProgress = True
@@ -148,7 +148,7 @@ Public Class Cl_Correos
 
     Sub Sb_Procedimiento_Correos()
 
-        _Procesando = True
+        ' _Procesando = True
 
         '_Nombre_Equipo = "RANDOM_AUXILIAR"
 
@@ -831,7 +831,7 @@ Public Class Cl_Correos
 
         End If
 
-        _Procesando = False
+        '_Procesando = False
         _Lbl_Estado = "Monitoreo Correos"
 
     End Sub

@@ -29,7 +29,6 @@ Partial Class Demonios
         Me.MetroTilePanel1 = New DevComponents.DotNetBar.Metro.MetroTilePanel()
         Me.MnuEspecialOtros = New DevComponents.DotNetBar.ItemContainer()
         Me.Btn_Demonio_Impresion = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.Btn_Demonio_Correos = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Demonio_Old = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -44,7 +43,7 @@ Partial Class Demonios
         Me.LabelX1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
         Me.LabelX1.Location = New System.Drawing.Point(3, 0)
         Me.LabelX1.Name = "LabelX1"
-        Me.LabelX1.Size = New System.Drawing.Size(655, 49)
+        Me.LabelX1.Size = New System.Drawing.Size(519, 49)
         Me.LabelX1.TabIndex = 43
         Me.LabelX1.Text = "<font color=""#349FCE""><b>DEMONIOS DE ACCIONES AUTOMATICAS</b></font>"
         '
@@ -56,7 +55,7 @@ Partial Class Demonios
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir})
         Me.Bar2.Location = New System.Drawing.Point(0, 201)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(643, 41)
+        Me.Bar2.Size = New System.Drawing.Size(524, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 42
@@ -99,7 +98,7 @@ Partial Class Demonios
         Me.MnuEspecialOtros.FixedSize = New System.Drawing.Size(1000, 550)
         Me.MnuEspecialOtros.MultiLine = True
         Me.MnuEspecialOtros.Name = "MnuEspecialOtros"
-        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Demonio_Impresion, Me.Btn_Demonio_Correos, Me.Demonio_Old})
+        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Demonio_Impresion, Me.Demonio_Old})
         '
         '
         '
@@ -132,33 +131,6 @@ Partial Class Demonios
         Me.Btn_Demonio_Impresion.TileStyle.PaddingTop = 4
         Me.Btn_Demonio_Impresion.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Demonio_Impresion.TitleText = "BakApp"
-        '
-        'Btn_Demonio_Correos
-        '
-        Me.Btn_Demonio_Correos.Image = CType(resources.GetObject("Btn_Demonio_Correos.Image"), System.Drawing.Image)
-        Me.Btn_Demonio_Correos.ImageIndent = New System.Drawing.Point(8, -10)
-        Me.Btn_Demonio_Correos.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_Demonio_Correos.Name = "Btn_Demonio_Correos"
-        Me.Btn_Demonio_Correos.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Demonio_Correos.Text = "<font size=""+4""><b>SQL2Excel</b></font><br/><font size=""-1"">Generar Query y Expor" &
-    "tar a Excel</font>"
-        Me.Btn_Demonio_Correos.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Blue
-        Me.Btn_Demonio_Correos.TileSize = New System.Drawing.Size(200, 100)
-        '
-        '
-        '
-        Me.Btn_Demonio_Correos.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
-        Me.Btn_Demonio_Correos.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
-        Me.Btn_Demonio_Correos.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_Demonio_Correos.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
-        Me.Btn_Demonio_Correos.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
-        Me.Btn_Demonio_Correos.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_Demonio_Correos.TileStyle.PaddingBottom = 4
-        Me.Btn_Demonio_Correos.TileStyle.PaddingLeft = 4
-        Me.Btn_Demonio_Correos.TileStyle.PaddingRight = 4
-        Me.Btn_Demonio_Correos.TileStyle.PaddingTop = 4
-        Me.Btn_Demonio_Correos.TileStyle.TextColor = System.Drawing.Color.White
-        Me.Btn_Demonio_Correos.TitleText = "BakApp"
         '
         'Demonio_Old
         '
@@ -195,7 +167,7 @@ Partial Class Demonios
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.MetroTilePanel1)
         Me.Name = "Demonios"
-        Me.Size = New System.Drawing.Size(643, 242)
+        Me.Size = New System.Drawing.Size(524, 242)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -207,6 +179,5 @@ Partial Class Demonios
     Friend WithEvents MetroTilePanel1 As DevComponents.DotNetBar.Metro.MetroTilePanel
     Friend WithEvents MnuEspecialOtros As DevComponents.DotNetBar.ItemContainer
     Private WithEvents Btn_Demonio_Impresion As DevComponents.DotNetBar.Metro.MetroTileItem
-    Private WithEvents Btn_Demonio_Correos As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Demonio_Old As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

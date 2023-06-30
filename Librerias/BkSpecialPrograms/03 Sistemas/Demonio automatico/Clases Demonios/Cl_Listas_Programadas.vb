@@ -6,7 +6,7 @@
     Public Property FechaProgramacion As DateTime
     Public Property Log_Registro As String
     Public Property Procesando As Boolean
-
+    Public Property Ejecutar As Boolean
     Public Sub New()
 
     End Sub

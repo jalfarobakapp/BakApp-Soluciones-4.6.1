@@ -7220,7 +7220,7 @@ Public Class Frm_Formulario_Documento
         Try
 
             Dim _Cabeza = Grilla_Detalle.Columns(Grilla_Detalle.CurrentCell.ColumnIndex).Name
-            Dim _Fila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.CurrentRow.Index)
+            Dim _Fila As DataGridViewRow = Grilla_Detalle.CurrentRow
 
             Dim _Codigo As String = NuloPorNro(_Fila.Cells("Codigo").Value, "")
             Dim _Descripcion As String = NuloPorNro(_Fila.Cells("Descripcion").Value, "")
@@ -8110,7 +8110,7 @@ Public Class Frm_Formulario_Documento
                                         Fm.Dispose()
 
                                         If _Seleccionada Then
-                                            Sb_Cambiar_Unidad_De_Medida(_UnTrans)
+                                            Sb_Cambiar_Unidad_De_Medida(_Fila, _UnTrans)
                                         End If
 
                                         Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(Grilla_Detalle.CurrentRow.Index).Cells("Cantidad")
@@ -22408,9 +22408,7 @@ Public Class Frm_Formulario_Documento
 
     End Sub
 
-    Sub Sb_Cambiar_Unidad_De_Medida(_UnTrans As Integer)
-
-        Dim _Fila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.CurrentRow.Index)
+    Sub Sb_Cambiar_Unidad_De_Medida(_Fila As DataGridViewRow, _UnTrans As Integer)
 
         Dim _Cantidad As Double = _Fila.Cells("Cantidad").Value
         Dim _Precio As Double = _Fila.Cells("Precio").Value
@@ -23240,7 +23238,7 @@ Public Class Frm_Formulario_Documento
 
         Sb_Traer_Producto_Grilla(_Fila, _RowProducto, False, 1, False)
 
-        Sb_Cambiar_Unidad_De_Medida(_UnTrans)
+        Sb_Cambiar_Unidad_De_Medida(_Fila, _UnTrans)
 
         _Fila.Cells("Cantidad").Value = _Cantidad
         _Fila.Cells("UnTrans").Value = _UnTrans

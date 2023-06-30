@@ -120,7 +120,7 @@ Public Class Cl_Consolidacion_Stock
     End Property
 
     Public Property Log_Registro As String
-
+    Public Property Ejecutar As Boolean
     Public Sub New()
 
         _BackgroundWorker.WorkerReportsProgress = True
@@ -184,7 +184,7 @@ Public Class Cl_Consolidacion_Stock
 
     Sub Sb_Procedimiento_Consolidar_Stock(_Formulario As Form)
 
-        Procesando = True
+        'Procesando = True
 
         Dim _Tbl_Productos As DataTable
 
@@ -228,7 +228,7 @@ Public Class Cl_Consolidacion_Stock
 
         End If
 
-        Procesando = False
+        'Procesando = False
 
     End Sub
 

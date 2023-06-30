@@ -29,7 +29,8 @@
     Public Property Ejecutado_Viernes As Boolean
     Public Property Ejecutado_Sabado As Boolean
     Public Property Ejecutado_Domingo As Boolean
-
+    Public Property Procesando As Boolean
+    Public Property Ejecutar As Boolean
     Public Sub New()
 
     End Sub

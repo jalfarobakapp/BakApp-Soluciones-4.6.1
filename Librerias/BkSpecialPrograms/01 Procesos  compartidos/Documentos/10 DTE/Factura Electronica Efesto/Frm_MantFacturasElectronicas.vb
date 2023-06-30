@@ -339,6 +339,12 @@ Public Class Frm_MantFacturasElectronicas
                                  "Or IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Documentos))" & vbCrLf
             End If
 
+            If _Cl_MFElec.Estado_ErrorEnvioCorreo Then
+                _Filtro_Estado = "And IDMAEEDO In (Select Distinct Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid" & Space(1) &
+                                 "Where (Aceptado = 1 OR (Informado = 1 And Reparo = 1 And Aceptado = 0)) And" & Space(1) &
+                                 "(ErrorMailToDiablito = 1 Or MailEnviado = 0 Or ErrorEnviarMail = 1))"
+            End If
+
         End If
 
 

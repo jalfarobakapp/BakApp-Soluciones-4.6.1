@@ -53,7 +53,7 @@ Public Class Frm_Demonio_Configuraciones
         AddHandler Chk_CierreDoc.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
         AddHandler Chk_FacAuto.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
         AddHandler Chk_AsistenteCompras.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
-        AddHandler Chk_SqlQueryEspecial.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
+        AddHandler Chk_EnvDocSinRecep.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
         AddHandler Chk_ListasProgramadas.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
 
         AddHandler Sp_EnvioCorreo.Click, AddressOf Sp_SuperTabItem_Click
@@ -70,7 +70,7 @@ Public Class Frm_Demonio_Configuraciones
         AddHandler Sp_Wordpress_Stock.Click, AddressOf Sp_SuperTabItem_Click
         AddHandler Sp_CierreDoc.Click, AddressOf Sp_SuperTabItem_Click
         AddHandler Sp_FacAuto.Click, AddressOf Sp_SuperTabItem_Click
-        AddHandler Sp_SqlQueryEspecial.Click, AddressOf Sp_SuperTabItem_Click
+        AddHandler Sp_EnvDocSinRecep.Click, AddressOf Sp_SuperTabItem_Click
         AddHandler Sp_AsistenteCompras.Click, AddressOf Sp_SuperTabItem_Click
         AddHandler Sp_ListasProgramadas.Click, AddressOf Sp_SuperTabItem_Click
 
@@ -136,6 +136,34 @@ Public Class Frm_Demonio_Configuraciones
                 MessageBoxEx.Show(Me, "No existe el directorio " & Txt_DirArchivarDoc.Text, "Validación archivador de documentos", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
             End If
+        End If
+
+        If Chk_EnvDocSinRecep.Checked Then
+
+            If String.IsNullOrEmpty(Txt_ParaEnvDocSinRecep.Text) Then
+                MessageBoxEx.Show(Me, "Falta el destinatario para los envio de documentos sin recepción", "Validación documentos sin recepción", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                SuperTab.SelectedTabIndex = 16
+                Return
+            End If
+
+            If String.IsNullOrEmpty(Txt_CtaCorreoEnvDocSinRecep.Text) Then
+                MessageBoxEx.Show(Me, "Falta el correo envio de documentos sin recepción", "Validación documentos sin recepción", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                SuperTab.SelectedTabIndex = 16
+                Return
+            End If
+
+            If Not Chk_EnvDocSinRecep_COV.Checked AndAlso
+               Not Chk_EnvDocSinRecep_GDI.Checked AndAlso
+               Not Chk_EnvDocSinRecep_GTI.Checked AndAlso
+               Not Chk_EnvDocSinRecep_NVI.Checked AndAlso
+               Not Chk_EnvDocSinRecep_NVV.Checked AndAlso
+               Not Chk_EnvDocSinRecep_OCC.Checked AndAlso
+               Not Chk_EnvDocSinRecep_OCI.Checked Then
+                MessageBoxEx.Show(Me, "Debe marcar por lo menos un documento para documentos sin recepción", "Validación documentos sin recepción", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                SuperTab.SelectedTabIndex = 16
+                Return
+            End If
+
         End If
 
         If Chk_CierreDoc.Checked AndAlso
@@ -368,6 +396,8 @@ Public Class Frm_Demonio_Configuraciones
                 _MinIntervalo = 1 : _MaxIntevalo = 59 : _TIMinutos = True : _TIValorDefecto = ""
             Case "AsistenteCompras"
                 _Diariamente = True : _Semanalmente = False : _SucedeUnaVez = True : _SucedeCada = False : _TIValorDefecto = ""
+            Case "AsistenteCompras", "EnvDocSinRecep"
+                _Diariamente = True : _Semanalmente = True : _SucedeUnaVez = True : _SucedeCada = False : _TIValorDefecto = ""
             Case Else
                 Dim A = 1
         End Select
@@ -425,7 +455,7 @@ Public Class Frm_Demonio_Configuraciones
 
         Grupo_Resumen.Text = _Tab.Text
 
-        If _Tab.Name = "Sp_SqlQueryEspecial" Or _Tab.Name = "" Then 'Or _Tab.Name = "Sp_AsistenteCompras"
+        If _Tab.Name = "" Then 'Or _Tab.Name = "Sp_AsistenteCompras"
             Btn_ConfProgramacion.Enabled = False
             Txt_Resumen.Text = "La programación depende de cada registro"
             Return
@@ -561,13 +591,13 @@ Public Class Frm_Demonio_Configuraciones
 
     End Sub
 
-    Private Sub Grilla_AsistenteCompras_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_AsistenteCompras.CellEnter
+    'Private Sub Grilla_AsistenteCompras_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_AsistenteCompras.CellEnter
 
-        Dim _Fila As DataGridViewRow = Grilla_AsistenteCompras.CurrentRow
+    '    Dim _Fila As DataGridViewRow = Grilla_AsistenteCompras.CurrentRow
 
-        Txt_Resumen.Text = _Fila.Cells("Resumen").Value
+    '    Txt_Resumen.Text = _Fila.Cells("Resumen").Value
 
-    End Sub
+    'End Sub
 
     Private Sub Grilla_AsistenteCompras_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_AsistenteCompras.CellDoubleClick
 
@@ -738,6 +768,63 @@ Public Class Frm_Demonio_Configuraciones
                                       Chk_ListasProgramadas.Name, Class_SQLite.Enum_Type._Boolean,
                                       Chk_ListasProgramadas.Checked, _Actualizar, "ListasProgramadas",, False)
 
+
+        'Envio de documentos sin recepcion
+        _Sql.Sb_Parametro_Informe_Sql(Chk_EnvDocSinRecep, "Demonio",
+                                      Chk_EnvDocSinRecep.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_EnvDocSinRecep.Checked, _Actualizar, "EnvDocSinRecep",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Chk_EnvDocSinRecep_COV, "Demonio",
+                                      Chk_EnvDocSinRecep_COV.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_EnvDocSinRecep_COV.Checked, _Actualizar, "EnvDocSinRecep",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Input_EnvDocSinRecep_DiasCOV, "Demonio",
+                                      Input_EnvDocSinRecep_DiasCOV.Name, Class_SQLite.Enum_Type._Double,
+                                      Input_EnvDocSinRecep_DiasCOV.Value, _Actualizar, "EnvDocSinRecep",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Chk_EnvDocSinRecep_GDI, "Demonio",
+                                      Chk_EnvDocSinRecep_GDI.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_EnvDocSinRecep_GDI.Checked, _Actualizar, "EnvDocSinRecep",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Input_EnvDocSinRecep_DiasGDI, "Demonio",
+                                      Input_EnvDocSinRecep_DiasGDI.Name, Class_SQLite.Enum_Type._Double,
+                                      Input_EnvDocSinRecep_DiasGDI.Value, _Actualizar, "EnvDocSinRecep",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Chk_EnvDocSinRecep_GTI, "Demonio",
+                                      Chk_EnvDocSinRecep_GTI.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_EnvDocSinRecep_GTI.Checked, _Actualizar, "EnvDocSinRecep",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Input_EnvDocSinRecep_DiasGTI, "Demonio",
+                                      Input_EnvDocSinRecep_DiasGTI.Name, Class_SQLite.Enum_Type._Double,
+                                      Input_EnvDocSinRecep_DiasGTI.Value, _Actualizar, "EnvDocSinRecep",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Chk_EnvDocSinRecep_NVI, "Demonio",
+                                      Chk_EnvDocSinRecep_NVI.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_EnvDocSinRecep_NVI.Checked, _Actualizar, "EnvDocSinRecep",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Input_EnvDocSinRecep_DiasNVI, "Demonio",
+                                      Input_EnvDocSinRecep_DiasNVI.Name, Class_SQLite.Enum_Type._Double,
+                                      Input_EnvDocSinRecep_DiasNVI.Value, _Actualizar, "EnvDocSinRecep",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Chk_EnvDocSinRecep_NVV, "Demonio",
+                                      Chk_EnvDocSinRecep_NVV.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_EnvDocSinRecep_NVV.Checked, _Actualizar, "EnvDocSinRecep",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Input_EnvDocSinRecep_DiasNVV, "Demonio",
+                                      Input_EnvDocSinRecep_DiasNVV.Name, Class_SQLite.Enum_Type._Double,
+                                      Input_EnvDocSinRecep_DiasNVV.Value, _Actualizar, "EnvDocSinRecep",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Chk_EnvDocSinRecep_OCC, "Demonio",
+                                      Chk_EnvDocSinRecep_OCC.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_EnvDocSinRecep_OCC.Checked, _Actualizar, "EnvDocSinRecep",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Input_EnvDocSinRecep_DiasOCC, "Demonio",
+                                      Input_EnvDocSinRecep_DiasOCC.Name, Class_SQLite.Enum_Type._Double,
+                                      Input_EnvDocSinRecep_DiasOCC.Value, _Actualizar, "EnvDocSinRecep",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Chk_EnvDocSinRecep_OCI, "Demonio",
+                                      Chk_EnvDocSinRecep_OCI.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_EnvDocSinRecep_OCI.Checked, _Actualizar, "EnvDocSinRecep",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Input_EnvDocSinRecep_DiasOCI, "Demonio",
+                                      Input_EnvDocSinRecep_DiasOCI.Name, Class_SQLite.Enum_Type._Double,
+                                      Input_EnvDocSinRecep_DiasOCI.Value, _Actualizar, "EnvDocSinRecep",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Txt_ParaEnvDocSinRecep, "Demonio",
+                                      Txt_ParaEnvDocSinRecep.Name, Class_SQLite.Enum_Type._String,
+                                      Txt_ParaEnvDocSinRecep.Text, _Actualizar, "EnvDocSinRecep",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Txt_CtaCorreoEnvDocSinRecep, "Demonio",
+                                      Txt_CtaCorreoEnvDocSinRecep.Name, Class_SQLite.Enum_Type._String,
+                                      Txt_CtaCorreoEnvDocSinRecep.Text, _Actualizar, "EnvDocSinRecep",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Txt_CtaCorreoEnvDocSinRecep, "Demonio",
+                                      Txt_CtaCorreoEnvDocSinRecep.Name, Class_SQLite.Enum_Type._Tag,
+                                      Txt_CtaCorreoEnvDocSinRecep.Tag, _Actualizar, "EnvDocSinRecep",, False)
+
     End Sub
 
     Private Sub Btn_Carpeta_Imagenes_Click(sender As Object, e As EventArgs) Handles Btn_Carpeta_Imagenes.Click
@@ -790,5 +877,27 @@ Public Class Frm_Demonio_Configuraciones
 
         Process.Start("explorer.exe", Txt_DirArchivarDoc.Text)
 
+    End Sub
+
+    Private Sub Txt_CtaCorreoEnvDocSinRecep_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CtaCorreoEnvDocSinRecep.ButtonCustom2Click
+        If MessageBoxEx.Show(Me, "Confirma quitar el correo", "Quitar correo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Txt_CtaCorreoEnvDocSinRecep.Tag = 0
+            Txt_CtaCorreoEnvDocSinRecep.Text = String.Empty
+        End If
+    End Sub
+
+    Private Sub Txt_CtaCorreoEnvDocSinRecep_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CtaCorreoEnvDocSinRecep.ButtonCustomClick
+        Dim _Row_Email As DataRow
+
+        Dim Fm As New Frm_Correos_SMTP
+        Fm.Pro_Seleccionar = True
+        Fm.ShowDialog(Me)
+        _Row_Email = Fm.Pro_Row_Fila_Seleccionada
+        Fm.Dispose()
+
+        If Not IsNothing(_Row_Email) Then
+            Txt_CtaCorreoEnvDocSinRecep.Tag = _Row_Email.Item("Id")
+            Txt_CtaCorreoEnvDocSinRecep.Text = _Row_Email.Item("Nombre_Correo").ToString.Trim
+        End If
     End Sub
 End Class

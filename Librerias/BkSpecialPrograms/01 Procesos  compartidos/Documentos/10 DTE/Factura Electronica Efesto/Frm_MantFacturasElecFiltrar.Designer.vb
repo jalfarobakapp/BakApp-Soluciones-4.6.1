@@ -60,6 +60,7 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.Rdb_Buscar_Todos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Buscar_Uno = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_ErrorEnvioCorreo = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Grupo_Fechas.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
         CType(Me.Dtp_Fecha_Emision_Desde, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -261,7 +262,7 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Grupo_Filtros.DisabledBackColor = System.Drawing.Color.Empty
         Me.Grupo_Filtros.Location = New System.Drawing.Point(12, 108)
         Me.Grupo_Filtros.Name = "Grupo_Filtros"
-        Me.Grupo_Filtros.Size = New System.Drawing.Size(311, 165)
+        Me.Grupo_Filtros.Size = New System.Drawing.Size(311, 181)
         '
         '
         '
@@ -321,6 +322,7 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Rdb_Entidades_Algunas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Entidades_Algunas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Entidades_Algunas.CheckBoxImageUnChecked = CType(resources.GetObject("Rdb_Entidades_Algunas.CheckBoxImageUnChecked"), System.Drawing.Image)
         Me.Rdb_Entidades_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Entidades_Algunas.FocusCuesEnabled = False
         Me.Rdb_Entidades_Algunas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Entidades_Algunas.Location = New System.Drawing.Point(193, 3)
         Me.Rdb_Entidades_Algunas.Name = "Rdb_Entidades_Algunas"
@@ -342,6 +344,7 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Rdb_Entidades_Todas.Checked = True
         Me.Rdb_Entidades_Todas.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Entidades_Todas.CheckValue = "Y"
+        Me.Rdb_Entidades_Todas.FocusCuesEnabled = False
         Me.Rdb_Entidades_Todas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Entidades_Todas.Location = New System.Drawing.Point(109, 3)
         Me.Rdb_Entidades_Todas.Name = "Rdb_Entidades_Todas"
@@ -407,6 +410,7 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Rdb_Sucursales_Todas.Checked = True
         Me.Rdb_Sucursales_Todas.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Sucursales_Todas.CheckValue = "Y"
+        Me.Rdb_Sucursales_Todas.FocusCuesEnabled = False
         Me.Rdb_Sucursales_Todas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Sucursales_Todas.Location = New System.Drawing.Point(109, 3)
         Me.Rdb_Sucursales_Todas.Name = "Rdb_Sucursales_Todas"
@@ -425,6 +429,7 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Rdb_Sucursales_Algunas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Sucursales_Algunas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Sucursales_Algunas.CheckBoxImageUnChecked = CType(resources.GetObject("Rdb_Sucursales_Algunas.CheckBoxImageUnChecked"), System.Drawing.Image)
         Me.Rdb_Sucursales_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Sucursales_Algunas.FocusCuesEnabled = False
         Me.Rdb_Sucursales_Algunas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Sucursales_Algunas.Location = New System.Drawing.Point(193, 3)
         Me.Rdb_Sucursales_Algunas.Name = "Rdb_Sucursales_Algunas"
@@ -461,6 +466,7 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Rdb_Documentos_Algunos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Documentos_Algunos.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Documentos_Algunos.CheckBoxImageUnChecked = CType(resources.GetObject("Rdb_Documentos_Algunos.CheckBoxImageUnChecked"), System.Drawing.Image)
         Me.Rdb_Documentos_Algunos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Documentos_Algunos.FocusCuesEnabled = False
         Me.Rdb_Documentos_Algunos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Documentos_Algunos.Location = New System.Drawing.Point(193, 3)
         Me.Rdb_Documentos_Algunos.Name = "Rdb_Documentos_Algunos"
@@ -495,6 +501,7 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Rdb_Documentos_Todos.Checked = True
         Me.Rdb_Documentos_Todos.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Documentos_Todos.CheckValue = "Y"
+        Me.Rdb_Documentos_Todos.FocusCuesEnabled = False
         Me.Rdb_Documentos_Todos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Documentos_Todos.Location = New System.Drawing.Point(109, 3)
         Me.Rdb_Documentos_Todos.Name = "Rdb_Documentos_Todos"
@@ -547,6 +554,7 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Rdb_Responsables_Todos.Checked = True
         Me.Rdb_Responsables_Todos.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Responsables_Todos.CheckValue = "Y"
+        Me.Rdb_Responsables_Todos.FocusCuesEnabled = False
         Me.Rdb_Responsables_Todos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Responsables_Todos.Location = New System.Drawing.Point(109, 3)
         Me.Rdb_Responsables_Todos.Name = "Rdb_Responsables_Todos"
@@ -565,6 +573,7 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Rdb_Responsables_Algunos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Responsables_Algunos.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Responsables_Algunos.CheckBoxImageUnChecked = CType(resources.GetObject("Rdb_Responsables_Algunos.CheckBoxImageUnChecked"), System.Drawing.Image)
         Me.Rdb_Responsables_Algunos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Responsables_Algunos.FocusCuesEnabled = False
         Me.Rdb_Responsables_Algunos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Responsables_Algunos.Location = New System.Drawing.Point(193, 3)
         Me.Rdb_Responsables_Algunos.Name = "Rdb_Responsables_Algunos"
@@ -579,7 +588,7 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Procesar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 285)
+        Me.Bar1.Location = New System.Drawing.Point(0, 292)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(479, 41)
         Me.Bar1.Stretch = True
@@ -607,7 +616,7 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Grupo_Estado.DisabledBackColor = System.Drawing.Color.Empty
         Me.Grupo_Estado.Location = New System.Drawing.Point(329, 108)
         Me.Grupo_Estado.Name = "Grupo_Estado"
-        Me.Grupo_Estado.Size = New System.Drawing.Size(139, 165)
+        Me.Grupo_Estado.Size = New System.Drawing.Size(139, 181)
         '
         '
         '
@@ -644,7 +653,8 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Grupo_Excepciones.BackColor = System.Drawing.Color.Transparent
         Me.Grupo_Excepciones.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
         Me.Grupo_Excepciones.ColumnCount = 1
-        Me.Grupo_Excepciones.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.Grupo_Excepciones.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.Grupo_Excepciones.Controls.Add(Me.Rdb_ErrorEnvioCorreo, 0, 4)
         Me.Grupo_Excepciones.Controls.Add(Me.Rdb_EstadoSinFirmar, 0, 3)
         Me.Grupo_Excepciones.Controls.Add(Me.Rdb_EstadoRechazados, 0, 2)
         Me.Grupo_Excepciones.Controls.Add(Me.Rdb_EstadoAceptadosReparos, 0, 1)
@@ -653,12 +663,13 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Grupo_Excepciones.ForeColor = System.Drawing.Color.Black
         Me.Grupo_Excepciones.Location = New System.Drawing.Point(3, 55)
         Me.Grupo_Excepciones.Name = "Grupo_Excepciones"
-        Me.Grupo_Excepciones.RowCount = 4
-        Me.Grupo_Excepciones.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.Grupo_Excepciones.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.Grupo_Excepciones.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.Grupo_Excepciones.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.Grupo_Excepciones.Size = New System.Drawing.Size(127, 84)
+        Me.Grupo_Excepciones.RowCount = 5
+        Me.Grupo_Excepciones.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.Grupo_Excepciones.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.Grupo_Excepciones.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.Grupo_Excepciones.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.Grupo_Excepciones.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.Grupo_Excepciones.Size = New System.Drawing.Size(127, 99)
         Me.Grupo_Excepciones.TabIndex = 138
         '
         'Rdb_EstadoSinFirmar
@@ -671,10 +682,11 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Rdb_EstadoSinFirmar.CheckBoxImageChecked = CType(resources.GetObject("Rdb_EstadoSinFirmar.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_EstadoSinFirmar.CheckBoxImageUnChecked = CType(resources.GetObject("Rdb_EstadoSinFirmar.CheckBoxImageUnChecked"), System.Drawing.Image)
         Me.Rdb_EstadoSinFirmar.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_EstadoSinFirmar.FocusCuesEnabled = False
         Me.Rdb_EstadoSinFirmar.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_EstadoSinFirmar.Location = New System.Drawing.Point(4, 65)
+        Me.Rdb_EstadoSinFirmar.Location = New System.Drawing.Point(4, 61)
         Me.Rdb_EstadoSinFirmar.Name = "Rdb_EstadoSinFirmar"
-        Me.Rdb_EstadoSinFirmar.Size = New System.Drawing.Size(70, 15)
+        Me.Rdb_EstadoSinFirmar.Size = New System.Drawing.Size(70, 12)
         Me.Rdb_EstadoSinFirmar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_EstadoSinFirmar.TabIndex = 139
         Me.Rdb_EstadoSinFirmar.Text = "Sin Firmar"
@@ -689,10 +701,11 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Rdb_EstadoRechazados.CheckBoxImageChecked = CType(resources.GetObject("Rdb_EstadoRechazados.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_EstadoRechazados.CheckBoxImageUnChecked = CType(resources.GetObject("Rdb_EstadoRechazados.CheckBoxImageUnChecked"), System.Drawing.Image)
         Me.Rdb_EstadoRechazados.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_EstadoRechazados.FocusCuesEnabled = False
         Me.Rdb_EstadoRechazados.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_EstadoRechazados.Location = New System.Drawing.Point(4, 44)
+        Me.Rdb_EstadoRechazados.Location = New System.Drawing.Point(4, 42)
         Me.Rdb_EstadoRechazados.Name = "Rdb_EstadoRechazados"
-        Me.Rdb_EstadoRechazados.Size = New System.Drawing.Size(119, 14)
+        Me.Rdb_EstadoRechazados.Size = New System.Drawing.Size(119, 12)
         Me.Rdb_EstadoRechazados.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_EstadoRechazados.TabIndex = 139
         Me.Rdb_EstadoRechazados.Text = "Rachazados"
@@ -707,10 +720,11 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Rdb_EstadoAceptadosReparos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_EstadoAceptadosReparos.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_EstadoAceptadosReparos.CheckBoxImageUnChecked = CType(resources.GetObject("Rdb_EstadoAceptadosReparos.CheckBoxImageUnChecked"), System.Drawing.Image)
         Me.Rdb_EstadoAceptadosReparos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_EstadoAceptadosReparos.FocusCuesEnabled = False
         Me.Rdb_EstadoAceptadosReparos.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_EstadoAceptadosReparos.Location = New System.Drawing.Point(4, 24)
+        Me.Rdb_EstadoAceptadosReparos.Location = New System.Drawing.Point(4, 23)
         Me.Rdb_EstadoAceptadosReparos.Name = "Rdb_EstadoAceptadosReparos"
-        Me.Rdb_EstadoAceptadosReparos.Size = New System.Drawing.Size(119, 13)
+        Me.Rdb_EstadoAceptadosReparos.Size = New System.Drawing.Size(119, 12)
         Me.Rdb_EstadoAceptadosReparos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_EstadoAceptadosReparos.TabIndex = 139
         Me.Rdb_EstadoAceptadosReparos.Text = "Aceptado/Reparos"
@@ -728,10 +742,11 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Rdb_EstadoAceptados.Checked = True
         Me.Rdb_EstadoAceptados.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_EstadoAceptados.CheckValue = "Y"
+        Me.Rdb_EstadoAceptados.FocusCuesEnabled = False
         Me.Rdb_EstadoAceptados.ForeColor = System.Drawing.Color.Black
         Me.Rdb_EstadoAceptados.Location = New System.Drawing.Point(4, 4)
         Me.Rdb_EstadoAceptados.Name = "Rdb_EstadoAceptados"
-        Me.Rdb_EstadoAceptados.Size = New System.Drawing.Size(70, 13)
+        Me.Rdb_EstadoAceptados.Size = New System.Drawing.Size(70, 12)
         Me.Rdb_EstadoAceptados.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_EstadoAceptados.TabIndex = 139
         Me.Rdb_EstadoAceptados.Text = "Aceptados"
@@ -746,6 +761,7 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Rdb_EstadoExcepciones.CheckBoxImageChecked = CType(resources.GetObject("Rdb_EstadoExcepciones.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_EstadoExcepciones.CheckBoxImageUnChecked = CType(resources.GetObject("Rdb_EstadoExcepciones.CheckBoxImageUnChecked"), System.Drawing.Image)
         Me.Rdb_EstadoExcepciones.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_EstadoExcepciones.FocusCuesEnabled = False
         Me.Rdb_EstadoExcepciones.ForeColor = System.Drawing.Color.Black
         Me.Rdb_EstadoExcepciones.Location = New System.Drawing.Point(3, 33)
         Me.Rdb_EstadoExcepciones.Name = "Rdb_EstadoExcepciones"
@@ -767,6 +783,7 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Rdb_EstadoTodos.Checked = True
         Me.Rdb_EstadoTodos.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_EstadoTodos.CheckValue = "Y"
+        Me.Rdb_EstadoTodos.FocusCuesEnabled = False
         Me.Rdb_EstadoTodos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_EstadoTodos.Location = New System.Drawing.Point(3, 15)
         Me.Rdb_EstadoTodos.Name = "Rdb_EstadoTodos"
@@ -863,6 +880,7 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Rdb_Buscar_Todos.Checked = True
         Me.Rdb_Buscar_Todos.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Buscar_Todos.CheckValue = "Y"
+        Me.Rdb_Buscar_Todos.FocusCuesEnabled = False
         Me.Rdb_Buscar_Todos.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Buscar_Todos.Location = New System.Drawing.Point(12, 12)
         Me.Rdb_Buscar_Todos.Name = "Rdb_Buscar_Todos"
@@ -881,6 +899,7 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Rdb_Buscar_Uno.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Buscar_Uno.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Buscar_Uno.CheckBoxImageUnChecked = CType(resources.GetObject("Rdb_Buscar_Uno.CheckBoxImageUnChecked"), System.Drawing.Image)
         Me.Rdb_Buscar_Uno.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Buscar_Uno.FocusCuesEnabled = False
         Me.Rdb_Buscar_Uno.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Buscar_Uno.Location = New System.Drawing.Point(235, 12)
         Me.Rdb_Buscar_Uno.Name = "Rdb_Buscar_Uno"
@@ -889,11 +908,30 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Rdb_Buscar_Uno.TabIndex = 137
         Me.Rdb_Buscar_Uno.Text = "Uno en particular"
         '
+        'Rdb_ErrorEnvioCorreo
+        '
+        Me.Rdb_ErrorEnvioCorreo.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_ErrorEnvioCorreo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_ErrorEnvioCorreo.CheckBoxImageChecked = CType(resources.GetObject("Rdb_ErrorEnvioCorreo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_ErrorEnvioCorreo.CheckBoxImageUnChecked = CType(resources.GetObject("Rdb_ErrorEnvioCorreo.CheckBoxImageUnChecked"), System.Drawing.Image)
+        Me.Rdb_ErrorEnvioCorreo.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_ErrorEnvioCorreo.FocusCuesEnabled = False
+        Me.Rdb_ErrorEnvioCorreo.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_ErrorEnvioCorreo.Location = New System.Drawing.Point(4, 80)
+        Me.Rdb_ErrorEnvioCorreo.Name = "Rdb_ErrorEnvioCorreo"
+        Me.Rdb_ErrorEnvioCorreo.Size = New System.Drawing.Size(119, 15)
+        Me.Rdb_ErrorEnvioCorreo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_ErrorEnvioCorreo.TabIndex = 140
+        Me.Rdb_ErrorEnvioCorreo.Text = "Sin envió de correo"
+        '
         'Frm_MantFacturasElecFiltrar
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(479, 326)
+        Me.ClientSize = New System.Drawing.Size(479, 333)
         Me.Controls.Add(Me.Rdb_Buscar_Uno)
         Me.Controls.Add(Me.Rdb_Buscar_Todos)
         Me.Controls.Add(Me.Grupo_Uno)
@@ -966,4 +1004,5 @@ Partial Class Frm_MantFacturasElecFiltrar
     Friend WithEvents Rdb_EstadoRechazados As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Rdb_EstadoAceptadosReparos As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Rdb_EstadoAceptados As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Rdb_ErrorEnvioCorreo As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

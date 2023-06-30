@@ -192,6 +192,7 @@ Public Class Class_SQLite
         _Boolean
         _Date
         _ComboBox
+        _Tag
     End Enum
 
     Function Fx_Trae_Dato(ByVal _Tabla As String, _

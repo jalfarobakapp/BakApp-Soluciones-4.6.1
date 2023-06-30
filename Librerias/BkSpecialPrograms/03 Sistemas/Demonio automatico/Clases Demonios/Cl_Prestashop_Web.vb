@@ -73,7 +73,7 @@ Public Class Cl_Prestashop_Web
     End Property
 
     Public Property Log_Registro As String
-
+    Public Property Ejecutar As Boolean
     Public Sub New()
 
         _BackgroundWorker.WorkerReportsProgress = True

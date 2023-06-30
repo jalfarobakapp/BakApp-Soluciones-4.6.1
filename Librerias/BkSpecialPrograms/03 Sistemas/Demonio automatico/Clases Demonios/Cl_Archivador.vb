@@ -104,7 +104,7 @@ Public Class Cl_Archivador
     End Property
 
     Public Property Log_Registro As String
-
+    Public Property Ejecutar As Boolean
     Public Sub New()
 
         _BackgroundWorker.WorkerReportsProgress = True

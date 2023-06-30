@@ -10,7 +10,7 @@ Public Class Frm_Demonio_ConfProgramacion
     Public Property TISegundos As Boolean
     Public Property TIMinutos As Boolean
     Public Property TIHoras As Boolean
-
+    Public Property PonerHoraResumen As Boolean
     Public Sub New(_TISegundos As Boolean,
                    _TIMinutos As Boolean,
                    _TIHoras As Boolean,
@@ -20,6 +20,8 @@ Public Class Frm_Demonio_ConfProgramacion
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+
+        PonerHoraResumen = True
 
         TISegundos = _TISegundos
         TIMinutos = _TIMinutos
@@ -232,7 +234,7 @@ Public Class Frm_Demonio_ConfProgramacion
 
         End If
 
-        If Rdb_SucedeUnaVez.Checked Then _Sucede += "a las " & Dtp_HoraUnaVez.Value.ToShortTimeString & " "
+        If PonerHoraResumen AndAlso Rdb_SucedeUnaVez.Checked Then _Sucede += "a las " & Dtp_HoraUnaVez.Value.ToShortTimeString & " "
         If Rdb_SucedeCada.Checked Then _Sucede += "cada " & Input_IntervaloCada.Value & " " & Cmb_TipoIntervaloCada.Text.ToLower '& " entre las " & Dtp_ApartirDeCada.Value.ToShortTimeString & " y las " & Dtp_FinalizaCada.Value.ToShortTimeString
 
         Txt_Resumen.Text = _Sucede

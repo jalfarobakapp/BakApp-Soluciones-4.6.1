@@ -282,6 +282,7 @@ Public Class Frm_MantFacturasElecFiltrar
             _Cl_MFElec.Estado_AceptadoReparos = Rdb_EstadoAceptadosReparos.Checked
             _Cl_MFElec.Estado_Rechazado = Rdb_EstadoRechazados.Checked
             _Cl_MFElec.Estado_SinFirmar = Rdb_EstadoSinFirmar.Checked
+            _Cl_MFElec.Estado_ErrorEnvioCorreo = Rdb_ErrorEnvioCorreo.Checked
         End If
 
         _Aceptar = True
