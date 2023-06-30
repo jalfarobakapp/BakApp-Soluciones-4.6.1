@@ -19,7 +19,7 @@
     Public Property Estado_AceptadoReparos As Boolean
     Public Property Estado_Rechazado As Boolean
     Public Property Estado_SinFirmar As Boolean
-
+    Public Property Estado_ErrorEnvioCorreo As Boolean
     Public Sub New()
 
         _Documentos_Todos = True

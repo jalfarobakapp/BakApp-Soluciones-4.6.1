@@ -4595,13 +4595,6 @@ Fin:
 
     End Sub
 
-    Private Sub Frm_Demonio_01_Resize(sender As Object, e As EventArgs) Handles Me.Resize
-        'If Me.WindowState = FormWindowState.Minimized Then
-        '    _Minimizar = True
-        '    Me.Close()
-        'End If
-    End Sub
-
     Sub Sb_Llenar_Variables_Etiquetas_Documento(ByRef _Texto As String, _Idmaeedo As Integer)
 
         If Convert.ToBoolean(_Idmaeedo) Then

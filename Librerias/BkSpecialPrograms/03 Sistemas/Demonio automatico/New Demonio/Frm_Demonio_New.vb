@@ -73,8 +73,6 @@ Public Class Frm_Demonio_New
         timerHora.Start()
         Timer_Ejecuciones.Start()
 
-        'Me.WindowState = FormWindowState.Minimized
-
     End Sub
 
     Sub Sb_Load()
@@ -561,13 +559,11 @@ Public Class Frm_Demonio_New
 
             If Not String.IsNullOrWhiteSpace(_Cl_Imprimir_Documentos.Log_Registro) Then
                 registro += vbCrLf & _Cl_Imprimir_Documentos.Log_Registro
-
-                ' Registrar la información en un archivo de registro
-                RegistrarLog(registro)
-                MostrarRegistro(registro)
             End If
 
-            '_Cl_Imprimir_Documentos.Procesando = True
+            ' Registrar la información en un archivo de registro
+            RegistrarLog(registro)
+            MostrarRegistro(registro)
 
         End If
 
@@ -811,24 +807,21 @@ Public Class Frm_Demonio_New
     End Function
 
     Private Sub RegistrarLog(registro As String)
+        If Me.WindowState = FormWindowState.Minimized Then Return
         Try
-            ' Escribir la información en el archivo de registro
             Using writer As New StreamWriter(logFilePath, True)
                 writer.WriteLine(registro)
             End Using
         Catch ex As Exception
-
         End Try
     End Sub
 
     Private Sub MostrarRegistro(registro As String)
-        ' Agregar el registro al TextBox
+        If Me.WindowState = FormWindowState.Minimized Then Return
         Try
-            'Txt_Log.ReadOnly = False
             Txt_Log.Invoke(Sub() Txt_Log.AppendText(registro & Environment.NewLine))
         Catch ex As Exception
         Finally
-            'Txt_Log.ReadOnly = True
         End Try
     End Sub
 
@@ -837,14 +830,29 @@ Public Class Frm_Demonio_New
     End Sub
 
     Sub Sb_Limpirar_Timers()
+
         Circular_Monitoreo.IsRunning = False
         Lbl_Monitoreo.Text = "MONITOREO EN PAUSA"
+
+        _Timer_Archivador = Nothing
         _Timer_ImprimirDocumentos = Nothing
         _Timer_ImprimirPicking = Nothing
-        _Timer_SolicitudProductosBodega = Nothing
+        _Timer_ListasProgramadas = Nothing
         _Timer_Prestashop_Orders = Nothing
         _Timer_Prestashop_Prod = Nothing
+        _Timer_SolicitudProductosBodega = Nothing
+
+        Timer_AsistenteCompras.Stop()
+        Timer_CerrarDocumentos.Stop()
+        Timer_ConsolidacionStock.Stop()
+        Timer_Correo.Stop()
         Timer_Ejecuciones.Stop()
+        Timer_Enviar_Doc_SinRecepcion.Stop()
+        Timer_FacturacionAuto.Stop()
+        Timer_LibroDTESII.Stop()
+        Timer_Minimizar.Stop()
+        Timer_PrestaShopWeb.Stop()
+
     End Sub
 
     Private Sub Btn_Configurar_Click(sender As Object, e As EventArgs) Handles Btn_Configurar.Click
@@ -1011,7 +1019,9 @@ Public Class Frm_Demonio_New
     End Sub
 
     Private Sub Timer_Minimizar_Tick(sender As Object, e As EventArgs) Handles Timer_Minimizar.Tick
-        Me.WindowState = FormWindowState.Minimized
+        If Timer_Ejecuciones.Enabled Then
+            Me.WindowState = FormWindowState.Minimized
+        End If
     End Sub
 
     Private Sub Timer_Ejecuciones_Tick(sender As Object, e As EventArgs) Handles Timer_Ejecuciones.Tick
@@ -1036,18 +1046,17 @@ Public Class Frm_Demonio_New
                     registro = _Cl_Correos.Lbl_Estado
                     RegistrarLog(registro)
 
-                    registro = "Tarea ejecutada (Correo) a las: " & DateTime.Now.ToString()
-
-                    RegistrarLog(registro)
-                    MostrarRegistro(registro)
-
                 End If
 
+                registro = "Tarea ejecutada (Correo) a las: " & DateTime.Now.ToString()
+
+                RegistrarLog(registro)
+                MostrarRegistro(registro)
+
                 _Cl_Correos.Ejecutar = False
+                _Cl_Correos.Procesando = False
 
                 Sb_ActualizarDetalleListview("Envio de correos", _DProgramaciones.Sp_EnvioCorreo.Resumen)
-
-                _Cl_Correos.Procesando = False
 
             End If
 
@@ -1077,12 +1086,10 @@ Public Class Frm_Demonio_New
                 RegistrarLog(registro)
                 MostrarRegistro(registro)
 
-                'Sb_Pausa(True)
-
-                Sb_Activar_ObjetosTimer(_Timer_ConsolidacionStock, _DProgramaciones.Sp_ConsStock)
-
                 _Cl_Consolidacion_Stock.Procesando = False
                 _Cl_Consolidacion_Stock.Ejecutar = False
+
+                Sb_Activar_ObjetosTimer(_Timer_ConsolidacionStock, _DProgramaciones.Sp_ConsStock)
 
             End If
 
@@ -1108,13 +1115,13 @@ Public Class Frm_Demonio_New
 
                 If Not String.IsNullOrWhiteSpace(_Cl_FacturacionAuto.Log_Registro) Then
                     registro += vbCrLf & _Cl_FacturacionAuto.Log_Registro
-
-                    ' Registrar la información en un archivo de registro
-                    RegistrarLog(registro)
-                    MostrarRegistro(registro)
                 End If
 
+                RegistrarLog(registro)
+                MostrarRegistro(registro)
+
                 _Cl_FacturacionAuto.Procesando = False
+                _Cl_FacturacionAuto.Ejecutar = False
 
                 Sb_ActualizarDetalleListview("Facturación automática", _DProgramaciones.Sp_FacturacionAuto.Resumen)
 
@@ -1145,13 +1152,14 @@ Public Class Frm_Demonio_New
                 _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "NVI")
                 _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "NVV")
 
-                _Cl_CerrarDocumentos.Procesando = False
-
                 registro = "Tarea ejecutada (Consolidación de stock) a las: " & DateTime.Now.ToString()
                 registro += _Cl_Consolidacion_Stock.Log_Registro & vbCrLf
 
                 RegistrarLog(registro)
                 MostrarRegistro(registro)
+
+                _Cl_CerrarDocumentos.Procesando = False
+                _Cl_CerrarDocumentos.Ejecutar = False
 
                 Sb_Activar_ObjetosTimer(Timer_CerrarDocumentos, _DProgramaciones.Sp_CierreDoc)
 
@@ -1242,10 +1250,10 @@ Public Class Frm_Demonio_New
                     MostrarRegistro(_Registro)
                 End If
 
-                Sb_ActualizarDetalleListview("Importar DTE SII", _DProgramaciones.Sp_ImporDTESII.Resumen)
-
                 _Cl_Hefesto_Dte_Libro.Procesando = False
                 _Cl_Hefesto_Dte_Libro.Ejecutar = False
+
+                Sb_ActualizarDetalleListview("Importar DTE SII", _DProgramaciones.Sp_ImporDTESII.Resumen)
 
             End If
 
@@ -1300,10 +1308,10 @@ Public Class Frm_Demonio_New
 
                 Timer_PrestaShopWeb.Start()
 
-                Sb_ActualizarDetalleListview("Prestashop Web", _DProgramaciones.Sp_Prestashop_Prod.Resumen)
-
                 _Cl_Prestashop_Prod.Ejecutar = False
                 _Cl_Prestashop_Prod.Procesando = False
+
+                Sb_ActualizarDetalleListview("Prestashop Web", _DProgramaciones.Sp_Prestashop_Prod.Resumen)
 
             End If
 
@@ -1426,4 +1434,41 @@ Public Class Frm_Demonio_New
             _Cl_Enviar_Doc_SinRecepcion.Ejecutar = True
         End If
     End Sub
+
+    Private Sub Frm_Demonio_New_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+
+        If Not CambioDeConfiguracion AndAlso CBool(Listv_Programaciones.Items.Count) Then
+
+            Dim _Validar As Boolean
+
+            Dim Fm As New Frm_ValidarPermiso(Frm_ValidarPermiso.Tipo_Accion.Validar_Permiso, "Pick0011", True, False)
+            Fm.Pro_Cerrar_Automaticamente = True
+            Fm.ShowDialog(Me)
+            _Validar = Fm.Pro_Permiso_Aceptado
+            Fm.Dispose()
+
+            If Not _Validar Then
+                e.Cancel = True
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub Frm_Demonio_New_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
+
+        If Me.WindowState <> FormWindowState.Minimized Then
+
+            Timer_Minimizar.Stop()
+
+            Dim tiempo As New TimeSpan(0, 5, 0)
+            Dim milisegundos = tiempo.TotalMilliseconds
+
+            Timer_Minimizar.Interval = milisegundos
+            Timer_Minimizar.Start()
+
+        End If
+
+    End Sub
+
 End Class
