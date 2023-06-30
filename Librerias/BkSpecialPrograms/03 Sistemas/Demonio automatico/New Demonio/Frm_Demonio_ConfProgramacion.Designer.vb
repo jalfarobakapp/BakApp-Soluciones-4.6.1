@@ -602,6 +602,7 @@ Partial Class Frm_Demonio_ConfProgramacion
         Me.BtnGrabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.BtnGrabar.ForeColor = System.Drawing.Color.Black
         Me.BtnGrabar.Image = CType(resources.GetObject("BtnGrabar.Image"), System.Drawing.Image)
+        Me.BtnGrabar.ImageAlt = CType(resources.GetObject("BtnGrabar.ImageAlt"), System.Drawing.Image)
         Me.BtnGrabar.Name = "BtnGrabar"
         Me.BtnGrabar.Tooltip = "Grabar"
         '
@@ -738,7 +739,7 @@ Partial Class Frm_Demonio_ConfProgramacion
         Me.Name = "Frm_Demonio_ConfProgramacion"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MetroForm"
+        Me.Text = "CONFIGURACION DE PROGRAMACION"
         Me.Grupo_Semanal.ResumeLayout(False)
         Me.Grupo_Frecuencia.ResumeLayout(False)
         CType(Me.Dtp_FinalizaCada, System.ComponentModel.ISupportInitialize).EndInit()

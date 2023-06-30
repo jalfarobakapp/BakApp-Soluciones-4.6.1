@@ -20,6 +20,7 @@ Public Class Cl_Cerrar_Documentos
     Public Property Fecha_Revision As DateTime
     Public Property Procesando As Boolean
     Public Property Log_Registro As String
+    Public Property Ejecutar As Boolean
 #End Region
 
     Public Sub New()

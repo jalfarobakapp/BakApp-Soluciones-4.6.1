@@ -49,6 +49,9 @@ Partial Class Frm_Demonio_New
         Me.Timer_AsistenteCompras = New System.Windows.Forms.Timer(Me.components)
         Me.Timer_Correo = New System.Windows.Forms.Timer(Me.components)
         Me.Timer_FacturacionAuto = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer_Minimizar = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer_Ejecuciones = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer_Enviar_Doc_SinRecepcion = New System.Windows.Forms.Timer(Me.components)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.SuspendLayout()
@@ -265,8 +268,9 @@ Partial Class Frm_Demonio_New
         Me.Imagenes_16X16.Images.SetKeyName(9, "products-update.png")
         Me.Imagenes_16X16.Images.SetKeyName(10, "document-padlock.png")
         Me.Imagenes_16X16.Images.SetKeyName(11, "shopping-cart-blue-magic-wand.png")
-        Me.Imagenes_16X16.Images.SetKeyName(12, "wordpress 16.png")
-        Me.Imagenes_16X16.Images.SetKeyName(13, "button-ok.png")
+        Me.Imagenes_16X16.Images.SetKeyName(12, "order-warning.png")
+        Me.Imagenes_16X16.Images.SetKeyName(13, "wordpress 16.png")
+        Me.Imagenes_16X16.Images.SetKeyName(14, "button-ok.png")
         '
         'Circular_Monitoreo
         '
@@ -313,8 +317,9 @@ Partial Class Frm_Demonio_New
         Me.Imagenes_16X16_Dark.Images.SetKeyName(9, "product-update.png")
         Me.Imagenes_16X16_Dark.Images.SetKeyName(10, "document-padlock.png")
         Me.Imagenes_16X16_Dark.Images.SetKeyName(11, "shopping-cart-blue-magic-wand.png")
-        Me.Imagenes_16X16_Dark.Images.SetKeyName(12, "wordpress 16.png")
-        Me.Imagenes_16X16_Dark.Images.SetKeyName(13, "button-ok.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(12, "order-warning.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(13, "wordpress 16.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(14, "button-ok.png")
         '
         'timerHora
         '
@@ -347,6 +352,18 @@ Partial Class Frm_Demonio_New
         'Timer_FacturacionAuto
         '
         Me.Timer_FacturacionAuto.Interval = 1000
+        '
+        'Timer_Minimizar
+        '
+        Me.Timer_Minimizar.Interval = 1000
+        '
+        'Timer_Ejecuciones
+        '
+        Me.Timer_Ejecuciones.Interval = 1000
+        '
+        'Timer_Enviar_Doc_SinRecepcion
+        '
+        Me.Timer_Enviar_Doc_SinRecepcion.Interval = 1000
         '
         'Frm_Demonio_New
         '
@@ -399,4 +416,7 @@ Partial Class Frm_Demonio_New
     Friend WithEvents Timer_AsistenteCompras As Timer
     Friend WithEvents Timer_Correo As Timer
     Friend WithEvents Timer_FacturacionAuto As Timer
+    Friend WithEvents Timer_Minimizar As Timer
+    Friend WithEvents Timer_Ejecuciones As Timer
+    Friend WithEvents Timer_Enviar_Doc_SinRecepcion As Timer
 End Class

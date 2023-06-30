@@ -20,6 +20,8 @@
     Public Property Nombre_Equipo As String
     Public Property Log_Registro As String
     Public Property Procesando As Boolean
+    Public Property Ejecutar As Boolean
+
     Public Sub New()
     End Sub
 
@@ -42,7 +44,8 @@
         End If
 
         Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_FacAuto (Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar)" & vbCrLf &
-                       "Select TOP 20 Edo.IDMAEEDO,Edo.NUDO,'" & _Modalidad_Fac & "','" & Format(_Fecha_Revision, "yyyyMMdd") & "',1 From MAEEDO Edo" & vbCrLf &
+                       "Select TOP 20 Edo.IDMAEEDO,Edo.NUDO,'" & _Modalidad_Fac & "','" & Format(_Fecha_Revision, "yyyyMMdd") & "',1" & vbCrLf &
+                       "From MAEEDO Edo" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_Entidades Ent " &
                        "On Edo.ENDO = Ent.CodEntidad And Edo.SUENDO = Ent.CodSucEntidad " &
                        "Where TIDO = 'NVV' And Ent.FacAuto = 1 " & _Filtro_Fecha & " And ESDO = ''" & vbCrLf &
@@ -61,8 +64,6 @@
     End Sub
 
     Sub Sb_Facturar_Automaticamente_NVV(_Formulario As Form, ByRef Lbl_FacAuto As Object)
-
-        Procesando = True
 
         Dim _FechaEmision As Date = FechaDelServidor()
 
@@ -99,8 +100,6 @@
                                                                                                             _Modalidad_Fac,
                                                                                                             False)
 
-                Log_Registro += _EstadoFacturacion.MensajeError & vbCrLf
-
                 If _EstadoFacturacion.Facturada Then
 
                     _Idmaeedo_Fcv = _EstadoFacturacion.Idmaeedo_FCV
@@ -117,11 +116,15 @@
                                    ",Fecha_Facturado = '" & Format(_Fecha_Emision, "yyyyMMdd") & "'" &
                                    ",Informacion = '" & _EstadoFacturacion.MensajeError & "'" & vbCrLf &
                                    "Where Id = " & _Id
-                    If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                    If _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                        Log_Registro += "NVV: " & _Nudo_Nvv & " facturada correctamente. FCV-" & _Row_Factura.Item("NUDO") & vbCrLf
+                    Else
                         Log_Registro += _Sql.Pro_Error
                     End If
 
                 Else
+
+                    Log_Registro += _EstadoFacturacion.MensajeError & vbCrLf
 
                     Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
                                    " NombreEquipo = '" & _Nombre_Equipo & "'" &
@@ -141,8 +144,6 @@
             Next
 
         End If
-
-        Procesando = False
 
     End Sub
 

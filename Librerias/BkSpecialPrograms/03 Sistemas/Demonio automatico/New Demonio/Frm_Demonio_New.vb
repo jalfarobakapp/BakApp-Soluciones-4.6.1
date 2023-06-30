@@ -26,6 +26,7 @@ Public Class Frm_Demonio_New
     Dim _Cl_FacturacionAuto As New Cl_FacAuto_NVV
     Dim _Cl_CerrarDocumentos As New Cl_Cerrar_Documentos
     Dim _Cl_Asistente_Compras As New Cl_Asistente_Compras
+    Dim _Cl_Enviar_Doc_SinRecepcion As New Cl_Enviar_Doc_SinRecepcion
 
     Private _Timer_ImprimirDocumentos As Timer
     Private _Timer_ImprimirPicking As Timer
@@ -36,6 +37,7 @@ Public Class Frm_Demonio_New
     Private _Timer_ListasProgramadas As Timer
 
     Private logFilePath As String = "Log_Demonio.txt"
+
 
     Public Property CambioDeConfiguracion As Boolean
 
@@ -60,8 +62,19 @@ Public Class Frm_Demonio_New
     End Sub
 
     Private Sub Frm_Demonio_New_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
         Sb_Load()
+
+        Dim tiempo As New TimeSpan(0, 5, 0)
+        Dim milisegundos = tiempo.TotalMilliseconds
+
+        Timer_Minimizar.Interval = milisegundos
+        Timer_Minimizar.Start()
         timerHora.Start()
+        Timer_Ejecuciones.Start()
+
+        'Me.WindowState = FormWindowState.Minimized
+
     End Sub
 
     Sub Sb_Load()
@@ -137,6 +150,10 @@ Public Class Frm_Demonio_New
             _DProgramaciones.Sp_AsistenteCompras.Activo = True
         End If
 
+        If Fx_InsertarRegistroDeProgramacion("EnvDocSinRecep", _DProgramaciones.Sp_EnviarDocSinRecepcion, "Aviso documentos sin recepcionar") Then
+            _DProgramaciones.Sp_EnviarDocSinRecepcion.Activo = True
+        End If
+
         Dim _CantidadFilas As Integer = Listv_Programaciones.Items.Count
 
         If _CantidadFilas = 1 Then Me.Icon = My.Resources.Recursos_NewDemonio.emoticon_wink_number_1
@@ -209,6 +226,10 @@ Public Class Frm_Demonio_New
 
         If _DProgramaciones.Sp_AsistenteCompras.Activo Then
             Sb_Activar_ObjetosTimer(Timer_AsistenteCompras, _DProgramaciones.Sp_AsistenteCompras)
+        End If
+
+        If _DProgramaciones.Sp_EnviarDocSinRecepcion.Activo Then
+            Sb_Activar_ObjetosTimer(Timer_Enviar_Doc_SinRecepcion, _DProgramaciones.Sp_EnviarDocSinRecepcion)
         End If
 
         Me.Refresh()
@@ -302,27 +323,27 @@ Public Class Frm_Demonio_New
 
                 Case "ColaImpDoc"
 
-                    _Descripcion = "Se imprimiran documentos. " & _CI_Programacion.Resumen
+                    _Descripcion = _CI_Programacion.Resumen ' "Se imprimiran documentos. " & _CI_Programacion.Resumen
                     _IndexImagen = 1
 
                 Case "ColaImpPick"
 
-                    _Descripcion = "Se imprimiran pickings. " & _CI_Programacion.Resumen
+                    _Descripcion = _CI_Programacion.Resumen ' "Se imprimiran pickings. " & _CI_Programacion.Resumen
                     _IndexImagen = 2
 
                 Case "SolProdBod"
 
-                    _Descripcion = "Solicitud de productos desde mesón de venta hacia bodega. " & _CI_Programacion.Resumen
+                    _Descripcion = _CI_Programacion.Resumen '"Solicitud de productos desde mesón de venta hacia bodega. " & _CI_Programacion.Resumen
                     _IndexImagen = 3
 
                 Case "Prestashop_Order"
 
-                    _Descripcion = "Buscar ordenes de Prestashop en sitios Web. " & _CI_Programacion.Resumen
+                    _Descripcion = _CI_Programacion.Resumen ' "Buscar ordenes de Prestashop en sitios Web. " & _CI_Programacion.Resumen
                     _IndexImagen = 4
 
                 Case "Prestashop_Prod"
 
-                    _Descripcion = "Sincronización de stock y precios con productos en la(s) Web. " & _CI_Programacion.Resumen
+                    _Descripcion = _CI_Programacion.Resumen ' "Sincronización de stock y precios con productos en la(s) Web. " & _CI_Programacion.Resumen
                     _IndexImagen = 4
 
                 Case "ImporDTESII"
@@ -336,12 +357,12 @@ Public Class Frm_Demonio_New
                                                                    "Valor", "Informe = 'Demonio' And Campo = 'Txt_DirArchivarDoc' And NombreEquipo = '" & _NombreEquipo & "'", True)
 
                     _Cl_Archivador.Ruta_Archivador = _Ruta_Archivador
-                    _Descripcion = "Archivador de documentos del sistema para respaldos. " & _CI_Programacion.Resumen
+                    _Descripcion = _CI_Programacion.Resumen '"Archivador de documentos del sistema para respaldos. " & _CI_Programacion.Resumen
                     _IndexImagen = 6
 
                 Case "ListasProgramadas"
 
-                    _Descripcion = "Actualización de listas programadas a futuro. " & _CI_Programacion.Resumen
+                    _Descripcion = _CI_Programacion.Resumen ' "Actualización de listas programadas a futuro. " & _CI_Programacion.Resumen
                     _IndexImagen = 7
 
                 Case "FacAuto"
@@ -359,7 +380,7 @@ Public Class Frm_Demonio_New
 
                     _Cl_FacturacionAuto.Modalidad_Fac = _Modalidad_Fac
 
-                    _Descripcion = "Facturación de notas de venta para clientes con condición automática. " & _CI_Programacion.Resumen
+                    _Descripcion = _CI_Programacion.Resumen ' "Facturación de notas de venta para clientes con condición automática. " & _CI_Programacion.Resumen
                     _IndexImagen = 8
 
                 Case "ConsStock"
@@ -370,7 +391,7 @@ Public Class Frm_Demonio_New
                     Boolean.TryParse(_Rdb_Cons_Stock_Mov_Hoy, _Cl_Consolidacion_Stock.Cons_Stock_Mov_Hoy)
                     Boolean.TryParse(_Rdb_Cons_Stock_Todos, _Cl_Consolidacion_Stock.Cons_Stock_Todos)
 
-                    _Descripcion = "Consolidación de productos. " & _CI_Programacion.Resumen
+                    _Descripcion = _CI_Programacion.Resumen
                     _IndexImagen = 9
 
                 Case "CierreDoc"
@@ -393,13 +414,45 @@ Public Class Frm_Demonio_New
                     _Cl_CerrarDocumentos.DiasNVI = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasNVI' And NombreEquipo = '" & _NombreEquipo & "'", True)
                     _Cl_CerrarDocumentos.DiasNVV = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasNVV' And NombreEquipo = '" & _NombreEquipo & "'", True)
 
-                    _Descripcion = "Cierre de documentos. " & _CI_Programacion.Resumen
+                    _Descripcion = _CI_Programacion.Resumen
                     _IndexImagen = 10
 
                 Case "AsistenteCompras"
 
                     _Descripcion = "Asistente de compras automática" & _CI_Programacion.Resumen
                     _IndexImagen = 11
+
+                Case "EnvDocSinRecep"
+
+                    Dim _Chk_EnvDocSinRecep_COV As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_EnvDocSinRecep_COV' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    Dim _Chk_EnvDocSinRecep_NVI As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_EnvDocSinRecep_NVI' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    Dim _Chk_EnvDocSinRecep_NVV As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_EnvDocSinRecep_NVV' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    Dim _Chk_EnvDocSinRecep_OCI As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_EnvDocSinRecep_OCI' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    Dim _Chk_EnvDocSinRecep_OCC As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_EnvDocSinRecep_OCC' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    Dim _Chk_EnvDocSinRecep_GTI As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_EnvDocSinRecep_GTI' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    Dim _Chk_EnvDocSinRecep_GDI As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_EnvDocSinRecep_GDI' And NombreEquipo = '" & _NombreEquipo & "'", True)
+
+                    Boolean.TryParse(_Chk_EnvDocSinRecep_COV, _Cl_Enviar_Doc_SinRecepcion.COV)
+                    Boolean.TryParse(_Chk_EnvDocSinRecep_NVI, _Cl_Enviar_Doc_SinRecepcion.NVI)
+                    Boolean.TryParse(_Chk_EnvDocSinRecep_NVV, _Cl_Enviar_Doc_SinRecepcion.NVV)
+                    Boolean.TryParse(_Chk_EnvDocSinRecep_OCI, _Cl_Enviar_Doc_SinRecepcion.OCI)
+                    Boolean.TryParse(_Chk_EnvDocSinRecep_OCC, _Cl_Enviar_Doc_SinRecepcion.OCC)
+                    Boolean.TryParse(_Chk_EnvDocSinRecep_GTI, _Cl_Enviar_Doc_SinRecepcion.GTI)
+                    Boolean.TryParse(_Chk_EnvDocSinRecep_GDI, _Cl_Enviar_Doc_SinRecepcion.GDI)
+
+                    _Cl_Enviar_Doc_SinRecepcion.DiasCOV = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_EnvDocSinRecep_DiasCOV' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    _Cl_Enviar_Doc_SinRecepcion.DiasNVI = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_EnvDocSinRecep_DiasNVI' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    _Cl_Enviar_Doc_SinRecepcion.DiasNVV = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_EnvDocSinRecep_DiasNVV' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    _Cl_Enviar_Doc_SinRecepcion.DiasOCI = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_EnvDocSinRecep_DiasOCI' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    _Cl_Enviar_Doc_SinRecepcion.DiasOCC = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_EnvDocSinRecep_DiasOCC' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    _Cl_Enviar_Doc_SinRecepcion.DiasGTI = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_EnvDocSinRecep_DiasGTI' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    _Cl_Enviar_Doc_SinRecepcion.DiasGDI = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_EnvDocSinRecep_DiasGDI' And NombreEquipo = '" & _NombreEquipo & "'", True)
+
+                    _Cl_Enviar_Doc_SinRecepcion.Id_Correo = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Txt_CtaCorreoEnvDocSinRecep_Tag' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    _Cl_Enviar_Doc_SinRecepcion.Para = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Txt_ParaEnvDocSinRecep' And NombreEquipo = '" & _NombreEquipo & "'", True)
+
+                    _Descripcion = _CI_Programacion.Resumen
+                    _IndexImagen = 12
 
             End Select
 
@@ -791,6 +844,7 @@ Public Class Frm_Demonio_New
         _Timer_SolicitudProductosBodega = Nothing
         _Timer_Prestashop_Orders = Nothing
         _Timer_Prestashop_Prod = Nothing
+        Timer_Ejecuciones.Stop()
     End Sub
 
     Private Sub Btn_Configurar_Click(sender As Object, e As EventArgs) Handles Btn_Configurar.Click
@@ -807,25 +861,9 @@ Public Class Frm_Demonio_New
         FmP.Dispose()
 
         If _Validar Then
+
             CambioDeConfiguracion = True
             Me.Close()
-
-            'Dim _Id As Integer = _Global_Row_EstacionBk.Item("Id")
-            'Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
-            'Dim _Cambiar_Usuario_X_Defecto As Boolean
-
-            'Dim Fm As New Frm_Demonio_Configuraciones(_Id, _Row_Usuario_Autorizado.Item("KOFU"))
-            'Fm.ShowDialog(Me)
-            '_Cambiar_Usuario_X_Defecto = Fm.Cambiar_Usuario_X_Defecto
-            'Fm.Dispose()
-
-            'If _Cambiar_Usuario_X_Defecto Then
-
-            '    MessageBoxEx.Show(Me, "Usuario y modalidad cambiados para revisión", "Cambio de usuario", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-            'End If
-
-            'Sb_Load()
 
         Else
 
@@ -858,142 +896,20 @@ Public Class Frm_Demonio_New
             Sb_ActualizarDetalleListview("Envio de correos", _Cl_Correos.Lbl_Estado)
         End If
 
+        If _Cl_FacturacionAuto.Procesando Then
+            Sb_ActualizarDetalleListview("Facturación automática", _Cl_FacturacionAuto.Log_Registro)
+        End If
+
         Me.Refresh()
 
     End Sub
 
     Private Sub Timer_PrestaShopWeb_Tick(sender As Object, e As EventArgs) Handles Timer_PrestaShopWeb.Tick
-
-        Sb_Pausa(False)
-
-        Dim registro As String = "Ejecutando tarea Prestashop Web a las: " & DateTime.Now.ToString()
-
-        RegistrarLog(registro)
-        MostrarRegistro(registro)
-
-        'Lbl_Procesando.Text = "Inicio de proceso de Prestashop Web..."
-
-        _Cl_Prestashop_Prod.Fecha_Revision = DtpFecharevision.Value
-        _Cl_Prestashop_Prod.Nombre_Equipo = _NombreEquipo
-        _Cl_Prestashop_Prod.Log_Registro = String.Empty
-
-        _Cl_Prestashop_Prod.Procesando = True
-
-        Dim _Cons_Stock_Mov_Hoy As Boolean = _Cl_Consolidacion_Stock.Cons_Stock_Mov_Hoy
-        Dim _Cons_Stock_Todos As Boolean = _Cl_Consolidacion_Stock.Cons_Stock_Todos
-
-        _Cl_Consolidacion_Stock.Cons_Stock_Mov_Hoy = True
-        _Cl_Consolidacion_Stock.Sb_Procedimiento_Consolidar_Stock(Me)
-
-        _Cl_Consolidacion_Stock.Cons_Stock_Mov_Hoy = _Cons_Stock_Mov_Hoy
-        _Cl_Consolidacion_Stock.Cons_Stock_Todos = _Cons_Stock_Todos
-
-        _Cl_Prestashop_Prod.Sb_Procedimiento_Prestashop()
-        _Cl_Prestashop_Prod.Sb_Procedimiento_Prestashop3()
-
-        registro = "Tarea ejecutada (Prestashop Productos Web) a las: " & DateTime.Now.ToString()
-
-        If Not String.IsNullOrWhiteSpace(_Cl_Prestashop_Prod.Log_Registro) Then
-            registro += vbCrLf & _Cl_Prestashop_Prod.Log_Registro
-
-            ' Registrar la información en un archivo de registro
-        End If
-
-        RegistrarLog(registro)
-        MostrarRegistro(registro)
-
-        _Cl_Prestashop_Prod.Procesando = False
-
-        Timer_PrestaShopWeb.Start()
-
-        Sb_ActualizarDetalleListview("Prestashop Web", _DProgramaciones.Sp_Prestashop_Prod.Resumen)
-
-        Sb_Pausa(True)
-
+        _Cl_Prestashop_Prod.Ejecutar = True
     End Sub
 
     Private Sub Timer_LibroDTESII_Tick(sender As Object, e As EventArgs) Handles Timer_LibroDTESII.Tick
-
-        Sb_Pausa(False)
-
-        Dim Fm As New Frm_Recibir_Correos_DTE
-        Fm.ActivacionAutomatica = True
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
-
-        Sb_Actualizar_Fecha()
-
-        Dim _Fecha As Date = DtpFecharevision.Value
-        Dim _Fecha_Anterior As Date = DateAdd(DateInterval.Month, -1, _Fecha)
-
-        Dim _Periodo = _Fecha.Year
-        Dim _Mes = _Fecha.Month
-        Dim _Reenviar_Documentos_al_SII = False
-
-        'Dim _RecuperarResumenVentasRegistro As HefRespuesta
-        'Dim _RecuperarVentasRegistro As HefRespuesta
-        'Dim _RecuperarResumenCompras As HefRespuesta
-        Dim _RecuperarComprasRegistro As HefRespuesta
-        Dim _RecuperarComprasPendientes As HefRespuesta
-        'Dim _RecuperarComprasNoIncluir As HefRespuesta
-        'Dim _RecuperarComprasReclamadas As HefRespuesta
-
-        Dim _Registro As String
-
-        _Registro = "Recuperando los registros de compras desde el SII..."
-
-        Sb_ActualizarDetalleListview("Importar DTE SII", _Registro)
-
-        Application.DoEvents()
-
-        _RecuperarComprasRegistro = _Cl_Hefesto_Dte_Libro.Fx_RecuperarComprasRegistro(_Periodo, _Mes)
-        Thread.Sleep(2000)
-        _Registro = "Es correcto: " & _RecuperarComprasRegistro.EsCorrecto
-        Application.DoEvents()
-        Thread.Sleep(2000)
-        _Registro = "Mensaje    : " & _RecuperarComprasRegistro.Mensaje
-        Application.DoEvents()
-
-        _RecuperarComprasPendientes = _Cl_Hefesto_Dte_Libro.Fx_RecuperarComprasPendientes(_Periodo, _Mes)
-        Thread.Sleep(2000)
-        _Registro = "Es correcto: " & _RecuperarComprasPendientes.EsCorrecto
-        Application.DoEvents()
-        Thread.Sleep(2000)
-        _Registro = "Mensaje    : " & _RecuperarComprasPendientes.Mensaje
-        Application.DoEvents()
-
-        RegistrarLog(_Registro)
-        MostrarRegistro(_Registro)
-
-        If _RecuperarComprasRegistro.EsCorrecto And _RecuperarComprasPendientes.EsCorrecto Then
-
-            Dim _Fichero1 As String = File.ReadAllText(_RecuperarComprasRegistro.Directorio)
-            Dim _Fichero2 As String = File.ReadAllText(_RecuperarComprasPendientes.Directorio)
-
-            Dim _Tbl_Registro_Compras As DataTable = Fx_TblFromJson(_Fichero1, "RegistroCompras")
-            Dim _Tbl_Registro_Compras_Pendientes As DataTable = Fx_TblFromJson(_Fichero2, "RegistroComprasPendientes")
-
-            Dim _Lbl As New Label
-
-            _Cl_Hefesto_Dte_Libro.Estatus = _Lbl ' Lbl_LibroDTESII
-
-            Thread.Sleep(2000)
-
-            _Cl_Hefesto_Dte_Libro.Fx_Importar_Archivo_SII_Compras_Desde_Json(_Tbl_Registro_Compras,
-                                                                          _Tbl_Registro_Compras_Pendientes,
-                                                                          _Periodo, _Mes)
-
-            'Lbl_LibroDTESII.Text = "Monitoreo Libro DTE desde SII"
-        Else
-            _Registro = "Problema al descargar los archivos desde el SII" & vbCrLf & _RecuperarComprasRegistro.Mensaje & "-" & _RecuperarComprasRegistro.Detalle
-            RegistrarLog(_Registro)
-            MostrarRegistro(_Registro)
-        End If
-
-        Sb_ActualizarDetalleListview("Importar DTE SII", _DProgramaciones.Sp_ImporDTESII.Resumen)
-
-        Sb_Pausa(True)
-
+        _Cl_Hefesto_Dte_Libro.Ejecutar = True
     End Sub
 
     Sub Sb_ActualizarDetalleListview(_Codigo As String, _Descripcion As String)
@@ -1054,6 +970,8 @@ Public Class Frm_Demonio_New
             Timer_FacturacionAuto.Enabled = _Pausa
         End If
 
+        Timer_Minimizar.Enabled = _Pausa
+
     End Sub
 
     Private Sub BtnCambFecha_Click(sender As Object, e As EventArgs) Handles BtnCambFecha.Click
@@ -1063,199 +981,449 @@ Public Class Frm_Demonio_New
     End Sub
 
     Private Sub Timer_ConsolidacionStock_Tick(sender As Object, e As EventArgs) Handles Timer_ConsolidacionStock.Tick
-
         If Fx_CumpleDiaSemana(_DProgramaciones.Sp_ConsStock) Then
-
-            Sb_Pausa(False)
-
-            Dim registro As String = "Ejecutando tarea Consolidación de stock a las: " & DateTime.Now.ToString()
-
-            RegistrarLog(registro)
-            MostrarRegistro(registro)
-
-            _Cl_Consolidacion_Stock.Log_Registro = String.Empty
-            _Cl_Consolidacion_Stock.Sb_Procedimiento_Consolidar_Stock(Me)
-
-            registro = "Tarea ejecutada (Consolidación de stock) a las: " & DateTime.Now.ToString()
-            registro += _Cl_Consolidacion_Stock.Log_Registro & vbCrLf
-            RegistrarLog(registro)
-            MostrarRegistro(registro)
-
-            Sb_Pausa(True)
-
+            _Cl_Consolidacion_Stock.Ejecutar = True
         End If
-
-        Sb_Activar_ObjetosTimer(_Timer_ConsolidacionStock, _DProgramaciones.Sp_ConsStock)
-
     End Sub
 
     Private Sub Timer_CerrarDocumentos_Tick(sender As Object, e As EventArgs) Handles Timer_CerrarDocumentos.Tick
-
         If Fx_CumpleDiaSemana(_DProgramaciones.Sp_CierreDoc) Then
-
-            Sb_Pausa(False)
-
-            Dim registro As String = "Ejecutando tarea cierre de documentos a las: " & DateTime.Now.ToString()
-
-            RegistrarLog(registro)
-            MostrarRegistro(registro)
-
-            _Cl_CerrarDocumentos.Procesando = True
-
-            _Cl_CerrarDocumentos.Fecha_Revision = DtpFecharevision.Value
-            _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "COV")
-            _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "OCI")
-            _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "OCC")
-            _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "NVI")
-            _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "NVV")
-
-            _Cl_CerrarDocumentos.Procesando = False
-
-            registro = "Tarea ejecutada (Consolidación de stock) a las: " & DateTime.Now.ToString()
-            registro += _Cl_Consolidacion_Stock.Log_Registro & vbCrLf
-
-            RegistrarLog(registro)
-            MostrarRegistro(registro)
-
-            Sb_Pausa(True)
-
+            _Cl_CerrarDocumentos.Ejecutar = True
         End If
-
-        Sb_Activar_ObjetosTimer(Timer_CerrarDocumentos, _DProgramaciones.Sp_CierreDoc)
-
     End Sub
 
     Private Sub Timer_AsistenteCompras_Tick(sender As Object, e As EventArgs) Handles Timer_AsistenteCompras.Tick
-
         If Fx_CumpleDiaSemana(_DProgramaciones.Sp_AsistenteCompras) Then
-
-            Sb_Pausa(False)
-
-            Dim registro As String = "Ejecutando asistente de compras a las: " & DateTime.Now.ToString()
-
-            RegistrarLog(registro)
-            MostrarRegistro(registro)
-
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_ConfAcpAuto Where NombreEquipo = '" & _NombreEquipo & "'"
-            Dim _Tbl_ConfAcpAuto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-            For Each _Fila As DataRow In _Tbl_ConfAcpAuto.Rows
-
-                Dim _Id_Padre As Integer = _Fila.Item("Id")
-                Dim _Grb_Programacion As New Grb_Programacion
-                Dim _CI_Programacion As Cl_NewProgramacion
-
-                Dim _Id_Prg As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_ConfProgramacion", "Id",
-                                                           "NombreEquipo = '" & _NombreEquipo & "' And Id_Padre = " & _Id_Padre)
-                _CI_Programacion = _Grb_Programacion.Fx_Llenar_Programacion(_Id_Prg)
-
-                If Fx_CumpleDiaSemana(_CI_Programacion) Then
-
-                    Dim _NVI As Boolean = _Fila.Item("NVI")
-                    Dim _OCC_Star As Boolean = _Fila.Item("OCC_Star")
-                    Dim _OCC_Prov As Boolean = _Fila.Item("OCC_Prov")
-
-                    Dim _ModalidadOld As String = Modalidad
-                    Dim _Mod As New Clas_Modalidades
-
-                    Modalidad = _Fila.Item("Modalidad")
-
-                    _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
-                    _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
-                    _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
-                    _Mod.Sb_Actualiza_Formatos_X_Modalidad()
-
-                    If _NVI Then _Cl_Asistente_Compras.Sb_Ejecutar(Me, Modalidad, False, True, False, False, True)
-                    If _OCC_Star Then _Cl_Asistente_Compras.Sb_Ejecutar(Me, Modalidad, True, False, False, True, False)
-                    If _OCC_Prov Then _Cl_Asistente_Compras.Sb_Ejecutar(Me, Modalidad, True, False, True, False, False)
-
-                    Modalidad = _ModalidadOld
-
-                    _Mod = New Clas_Modalidades
-                    _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
-                    _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
-                    _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
-                    _Mod.Sb_Actualiza_Formatos_X_Modalidad()
-
-                End If
-
-            Next
-
-            registro = "Tarea ejecutada (Asistente de compras) a las: " & DateTime.Now.ToString()
-            registro += _Cl_Consolidacion_Stock.Log_Registro & vbCrLf
-
-            RegistrarLog(registro)
-            MostrarRegistro(registro)
-
-            Sb_Pausa(True)
-
+            _Cl_Asistente_Compras.Ejecutar = True
         End If
-
-        Sb_Activar_ObjetosTimer(Timer_AsistenteCompras, _DProgramaciones.Sp_AsistenteCompras)
-
     End Sub
 
     Private Sub Timer_Correo_Tick(sender As Object, e As EventArgs) Handles Timer_Correo.Tick
-
         If Fx_CumpleDiaSemana(_DProgramaciones.Sp_EnvioCorreo) Then
-
-            Sb_Pausa(False)
-
-            _Cl_Correos.Procesando = True
-            _Cl_Correos.Fecha_Revision = DtpFecharevision.Value
-            _Cl_Correos.Nombre_Equipo = _NombreEquipo
-            _Cl_Correos.Sb_Procedimiento_Correos()
-            _Cl_Correos.Procesando = False
-
-            Dim registro As String
-
-            If Not String.IsNullOrEmpty(_Cl_Correos.Lbl_Estado) Then
-                registro = _Cl_Correos.Lbl_Estado
-                RegistrarLog(registro)
-            End If
-            registro = "Tarea ejecutada (Correo) a las: " & DateTime.Now.ToString()
-
-            RegistrarLog(registro)
-            MostrarRegistro(registro)
-
-            Sb_ActualizarDetalleListview("Envio de correos", _DProgramaciones.Sp_EnvioCorreo.Resumen)
-
-            Sb_Pausa(True)
-
+            _Cl_Correos.Ejecutar = True
         End If
-
-        'Sb_Activar_ObjetosTimer(Timer_Correo, _DProgramaciones.Sp_EnvioCorreo)
-
     End Sub
 
     Private Sub Timer_FacturacionAuto_Tick(sender As Object, e As EventArgs) Handles Timer_FacturacionAuto.Tick
-
         If Fx_CumpleDiaSemana(_DProgramaciones.Sp_FacturacionAuto) Then
+            _Cl_FacturacionAuto.Ejecutar = True
+        End If
+    End Sub
 
-            Sb_Pausa(False)
+    Private Sub Timer_Minimizar_Tick(sender As Object, e As EventArgs) Handles Timer_Minimizar.Tick
+        Me.WindowState = FormWindowState.Minimized
+    End Sub
 
-            _Cl_FacturacionAuto.Log_Registro = String.Empty
-            _Cl_FacturacionAuto.Fecha_Revision = DtpFecharevision.Value
-            _Cl_FacturacionAuto.Nombre_Equipo = _NombreEquipo
-            _Cl_FacturacionAuto.Log_Registro = String.Empty
-            _Cl_FacturacionAuto.Sb_Traer_NVV_A_Facturar()
-            _Cl_FacturacionAuto.Sb_Facturar_Automaticamente_NVV(Me, Nothing)
+    Private Sub Timer_Ejecuciones_Tick(sender As Object, e As EventArgs) Handles Timer_Ejecuciones.Tick
 
-            Dim registro As String = "Tarea ejecutada (Facturación automática) a las: " & DateTime.Now.ToString()
+        Timer_Ejecuciones.Stop()
 
-            If Not String.IsNullOrWhiteSpace(_Cl_FacturacionAuto.Log_Registro) Then
-                registro += vbCrLf & _Cl_FacturacionAuto.Log_Registro
+#Region "ENVIO DE CORREOS"
 
-                ' Registrar la información en un archivo de registro
-                RegistrarLog(registro)
-                MostrarRegistro(registro)
+        If _Cl_Correos.Ejecutar Then
+
+            If Not _Cl_Correos.Procesando Then
+
+                _Cl_Correos.Procesando = True
+                _Cl_Correos.Fecha_Revision = DtpFecharevision.Value
+                _Cl_Correos.Nombre_Equipo = _NombreEquipo
+                _Cl_Correos.Sb_Procedimiento_Correos()
+
+                Dim registro As String
+
+                If Not String.IsNullOrEmpty(_Cl_Correos.Lbl_Estado) Then
+
+                    registro = _Cl_Correos.Lbl_Estado
+                    RegistrarLog(registro)
+
+                    registro = "Tarea ejecutada (Correo) a las: " & DateTime.Now.ToString()
+
+                    RegistrarLog(registro)
+                    MostrarRegistro(registro)
+
+                End If
+
+                _Cl_Correos.Ejecutar = False
+
+                Sb_ActualizarDetalleListview("Envio de correos", _DProgramaciones.Sp_EnvioCorreo.Resumen)
+
+                _Cl_Correos.Procesando = False
+
             End If
 
-            Sb_Pausa(True)
+        End If
+
+#End Region
+
+#Region "CONSOLIDACION DE STOCK"
+
+        If _Cl_Consolidacion_Stock.Ejecutar Then
+
+            If Not _Cl_Consolidacion_Stock.Procesando Then
+
+                _Cl_Consolidacion_Stock.Procesando = True
+
+                Dim registro As String = "Ejecutando tarea Consolidación de stock a las: " & DateTime.Now.ToString()
+
+                RegistrarLog(registro)
+                MostrarRegistro(registro)
+
+                _Cl_Consolidacion_Stock.Log_Registro = String.Empty
+                _Cl_Consolidacion_Stock.Fecha_Revision = DtpFecharevision.Value
+                _Cl_Consolidacion_Stock.Sb_Procedimiento_Consolidar_Stock(Me)
+
+                registro = "Tarea ejecutada (Consolidación de stock) a las: " & DateTime.Now.ToString()
+                registro += _Cl_Consolidacion_Stock.Log_Registro & vbCrLf
+                RegistrarLog(registro)
+                MostrarRegistro(registro)
+
+                'Sb_Pausa(True)
+
+                Sb_Activar_ObjetosTimer(_Timer_ConsolidacionStock, _DProgramaciones.Sp_ConsStock)
+
+                _Cl_Consolidacion_Stock.Procesando = False
+                _Cl_Consolidacion_Stock.Ejecutar = False
+
+            End If
+
+        End If
+
+#End Region
+
+#Region "FACTURACION AUTOMATICA"
+
+        If _Cl_FacturacionAuto.Ejecutar Then
+
+            If Not _Cl_FacturacionAuto.Procesando Then
+
+                _Cl_FacturacionAuto.Procesando = True
+                _Cl_FacturacionAuto.Log_Registro = String.Empty
+                _Cl_FacturacionAuto.Fecha_Revision = DtpFecharevision.Value
+                _Cl_FacturacionAuto.Nombre_Equipo = _NombreEquipo
+                _Cl_FacturacionAuto.Log_Registro = String.Empty
+                _Cl_FacturacionAuto.Sb_Traer_NVV_A_Facturar()
+                _Cl_FacturacionAuto.Sb_Facturar_Automaticamente_NVV(Me, Nothing)
+
+                Dim registro As String = "Tarea ejecutada (Facturación automática) a las: " & DateTime.Now.ToString()
+
+                If Not String.IsNullOrWhiteSpace(_Cl_FacturacionAuto.Log_Registro) Then
+                    registro += vbCrLf & _Cl_FacturacionAuto.Log_Registro
+
+                    ' Registrar la información en un archivo de registro
+                    RegistrarLog(registro)
+                    MostrarRegistro(registro)
+                End If
+
+                _Cl_FacturacionAuto.Procesando = False
+
+                Sb_ActualizarDetalleListview("Facturación automática", _DProgramaciones.Sp_FacturacionAuto.Resumen)
+
+            End If
 
         End If
 
 
+#End Region
+
+#Region "CIERRE DE DOCUMENTOS"
+
+        If _Cl_CerrarDocumentos.Ejecutar Then
+
+            If Not _Cl_CerrarDocumentos.Procesando Then
+
+                _Cl_CerrarDocumentos.Procesando = True
+
+                Dim registro As String = "Ejecutando tarea cierre de documentos a las: " & DateTime.Now.ToString()
+
+                RegistrarLog(registro)
+                MostrarRegistro(registro)
+
+                _Cl_CerrarDocumentos.Fecha_Revision = DtpFecharevision.Value
+                _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "COV")
+                _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "OCI")
+                _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "OCC")
+                _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "NVI")
+                _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "NVV")
+
+                _Cl_CerrarDocumentos.Procesando = False
+
+                registro = "Tarea ejecutada (Consolidación de stock) a las: " & DateTime.Now.ToString()
+                registro += _Cl_Consolidacion_Stock.Log_Registro & vbCrLf
+
+                RegistrarLog(registro)
+                MostrarRegistro(registro)
+
+                Sb_Activar_ObjetosTimer(Timer_CerrarDocumentos, _DProgramaciones.Sp_CierreDoc)
+
+            End If
+
+        End If
+
+#End Region
+
+#Region "HEFESTO DTE LIBROS DESDE EL SII"
+
+        If _Cl_Hefesto_Dte_Libro.Ejecutar Then
+
+            If Not _Cl_Hefesto_Dte_Libro.Procesando Then
+
+                _Cl_Hefesto_Dte_Libro.Procesando = True
+
+                Dim _Lbl As New Label
+                _Cl_Hefesto_Dte_Libro.Estatus = _Lbl
+
+                Dim Fm As New Frm_Recibir_Correos_DTE
+                Fm.ActivacionAutomatica = True
+                Fm.ShowDialog(Me)
+                Fm.Dispose()
+
+                Sb_Actualizar_Fecha()
+
+                Dim _Fecha As Date = DtpFecharevision.Value
+                Dim _Fecha_Anterior As Date = DateAdd(DateInterval.Month, -1, _Fecha)
+
+                Dim _Periodo = _Fecha.Year
+                Dim _Mes = _Fecha.Month
+                Dim _Reenviar_Documentos_al_SII = False
+
+                'Dim _RecuperarResumenVentasRegistro As HefRespuesta
+                'Dim _RecuperarVentasRegistro As HefRespuesta
+                'Dim _RecuperarResumenCompras As HefRespuesta
+                Dim _RecuperarComprasRegistro As HefRespuesta
+                Dim _RecuperarComprasPendientes As HefRespuesta
+                'Dim _RecuperarComprasNoIncluir As HefRespuesta
+                'Dim _RecuperarComprasReclamadas As HefRespuesta
+
+                Dim _Registro As String
+
+                _Registro = "Recuperando los registros de compras desde el SII..."
+
+                Sb_ActualizarDetalleListview("Importar DTE SII", _Registro)
+
+                Application.DoEvents()
+
+                _RecuperarComprasRegistro = _Cl_Hefesto_Dte_Libro.Fx_RecuperarComprasRegistro(_Periodo, _Mes)
+                Thread.Sleep(2000)
+                _Registro = "Es correcto: " & _RecuperarComprasRegistro.EsCorrecto
+                Application.DoEvents()
+                Thread.Sleep(2000)
+                _Registro = "Mensaje    : " & _RecuperarComprasRegistro.Mensaje
+                Application.DoEvents()
+
+                _RecuperarComprasPendientes = _Cl_Hefesto_Dte_Libro.Fx_RecuperarComprasPendientes(_Periodo, _Mes)
+                Thread.Sleep(2000)
+                _Registro = "Es correcto: " & _RecuperarComprasPendientes.EsCorrecto
+                Application.DoEvents()
+                Thread.Sleep(2000)
+                _Registro = "Mensaje    : " & _RecuperarComprasPendientes.Mensaje
+                Application.DoEvents()
+
+                RegistrarLog(_Registro)
+                MostrarRegistro(_Registro)
+
+                If _RecuperarComprasRegistro.EsCorrecto And _RecuperarComprasPendientes.EsCorrecto Then
+
+                    Dim _Fichero1 As String = File.ReadAllText(_RecuperarComprasRegistro.Directorio)
+                    Dim _Fichero2 As String = File.ReadAllText(_RecuperarComprasPendientes.Directorio)
+
+                    Dim _Tbl_Registro_Compras As DataTable = Fx_TblFromJson(_Fichero1, "RegistroCompras")
+                    Dim _Tbl_Registro_Compras_Pendientes As DataTable = Fx_TblFromJson(_Fichero2, "RegistroComprasPendientes")
+
+                    Thread.Sleep(2000)
+
+                    _Cl_Hefesto_Dte_Libro.Fx_Importar_Archivo_SII_Compras_Desde_Json(_Tbl_Registro_Compras,
+                                                                          _Tbl_Registro_Compras_Pendientes,
+                                                                          _Periodo, _Mes)
+
+                    'Lbl_LibroDTESII.Text = "Monitoreo Libro DTE desde SII"
+                Else
+                    _Registro = "Problema al descargar los archivos desde el SII" & vbCrLf & _RecuperarComprasRegistro.Mensaje & "-" & _RecuperarComprasRegistro.Detalle
+                    RegistrarLog(_Registro)
+                    MostrarRegistro(_Registro)
+                End If
+
+                Sb_ActualizarDetalleListview("Importar DTE SII", _DProgramaciones.Sp_ImporDTESII.Resumen)
+
+                _Cl_Hefesto_Dte_Libro.Procesando = False
+                _Cl_Hefesto_Dte_Libro.Ejecutar = False
+
+            End If
+
+        End If
+
+
+#End Region
+
+#Region "PRESTASHOP WEB"
+
+        If _Cl_Prestashop_Prod.Ejecutar Then
+
+            If Not _Cl_Prestashop_Prod.Procesando Then
+
+                _Cl_Prestashop_Prod.Procesando = True
+
+                Dim registro As String = "Ejecutando tarea Prestashop Web a las: " & DateTime.Now.ToString()
+
+                RegistrarLog(registro)
+                MostrarRegistro(registro)
+
+                'Lbl_Procesando.Text = "Inicio de proceso de Prestashop Web..."
+
+                _Cl_Prestashop_Prod.Fecha_Revision = DtpFecharevision.Value
+                _Cl_Prestashop_Prod.Nombre_Equipo = _NombreEquipo
+                _Cl_Prestashop_Prod.Log_Registro = String.Empty
+
+                _Cl_Prestashop_Prod.Procesando = True
+
+                Dim _Cons_Stock_Mov_Hoy As Boolean = _Cl_Consolidacion_Stock.Cons_Stock_Mov_Hoy
+                Dim _Cons_Stock_Todos As Boolean = _Cl_Consolidacion_Stock.Cons_Stock_Todos
+
+                _Cl_Consolidacion_Stock.Cons_Stock_Mov_Hoy = True
+                _Cl_Consolidacion_Stock.Sb_Procedimiento_Consolidar_Stock(Me)
+
+                _Cl_Consolidacion_Stock.Cons_Stock_Mov_Hoy = _Cons_Stock_Mov_Hoy
+                _Cl_Consolidacion_Stock.Cons_Stock_Todos = _Cons_Stock_Todos
+
+                _Cl_Prestashop_Prod.Sb_Procedimiento_Prestashop()
+                _Cl_Prestashop_Prod.Sb_Procedimiento_Prestashop3()
+
+                registro = "Tarea ejecutada (Prestashop Productos Web) a las: " & DateTime.Now.ToString()
+
+                If Not String.IsNullOrWhiteSpace(_Cl_Prestashop_Prod.Log_Registro) Then
+                    registro += vbCrLf & _Cl_Prestashop_Prod.Log_Registro
+
+                    ' Registrar la información en un archivo de registro
+                End If
+
+                RegistrarLog(registro)
+                MostrarRegistro(registro)
+
+                Timer_PrestaShopWeb.Start()
+
+                Sb_ActualizarDetalleListview("Prestashop Web", _DProgramaciones.Sp_Prestashop_Prod.Resumen)
+
+                _Cl_Prestashop_Prod.Ejecutar = False
+                _Cl_Prestashop_Prod.Procesando = False
+
+            End If
+
+        End If
+
+#End Region
+
+#Region "ASISTENTE DE COMPRAS"
+
+        If _Cl_Asistente_Compras.Ejecutar Then
+
+            If Not _Cl_Asistente_Compras.Procesando Then
+
+                _Cl_Asistente_Compras.Procesando = True
+
+                Dim registro As String = "Ejecutando asistente de compras a las: " & DateTime.Now.ToString()
+
+                RegistrarLog(registro)
+                MostrarRegistro(registro)
+
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_ConfAcpAuto Where NombreEquipo = '" & _NombreEquipo & "'"
+                Dim _Tbl_ConfAcpAuto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                For Each _Fila As DataRow In _Tbl_ConfAcpAuto.Rows
+
+                    Dim _Id_Padre As Integer = _Fila.Item("Id")
+                    Dim _Grb_Programacion As New Grb_Programacion
+                    Dim _CI_Programacion As Cl_NewProgramacion
+
+                    Dim _Id_Prg As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_ConfProgramacion", "Id",
+                                                           "NombreEquipo = '" & _NombreEquipo & "' And Id_Padre = " & _Id_Padre)
+                    _CI_Programacion = _Grb_Programacion.Fx_Llenar_Programacion(_Id_Prg)
+
+                    If Fx_CumpleDiaSemana(_CI_Programacion) Then
+
+                        Dim _NVI As Boolean = _Fila.Item("NVI")
+                        Dim _OCC_Star As Boolean = _Fila.Item("OCC_Star")
+                        Dim _OCC_Prov As Boolean = _Fila.Item("OCC_Prov")
+
+                        Dim _ModalidadOld As String = Modalidad
+                        Dim _Mod As New Clas_Modalidades
+
+                        Modalidad = _Fila.Item("Modalidad")
+
+                        _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
+                        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
+                        _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+                        _Mod.Sb_Actualiza_Formatos_X_Modalidad()
+
+                        If _NVI Then _Cl_Asistente_Compras.Sb_Ejecutar(Me, Modalidad, False, True, False, False, True)
+                        If _OCC_Star Then _Cl_Asistente_Compras.Sb_Ejecutar(Me, Modalidad, True, False, False, True, False)
+                        If _OCC_Prov Then _Cl_Asistente_Compras.Sb_Ejecutar(Me, Modalidad, True, False, True, False, False)
+
+                        Modalidad = _ModalidadOld
+
+                        _Mod = New Clas_Modalidades
+                        _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
+                        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
+                        _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+                        _Mod.Sb_Actualiza_Formatos_X_Modalidad()
+
+                    End If
+
+                Next
+
+                registro = "Tarea ejecutada (Asistente de compras) a las: " & DateTime.Now.ToString()
+                registro += _Cl_Consolidacion_Stock.Log_Registro & vbCrLf
+
+                RegistrarLog(registro)
+                MostrarRegistro(registro)
+
+                _Cl_Asistente_Compras.Procesando = False
+                _Cl_Asistente_Compras.Ejecutar = False
+
+                Sb_Activar_ObjetosTimer(Timer_AsistenteCompras, _DProgramaciones.Sp_AsistenteCompras)
+
+            End If
+
+        End If
+
+#End Region
+
+#Region "DOCUMENTOS SIN RECEPCIONAR"
+
+        If _Cl_Enviar_Doc_SinRecepcion.Ejecutar Then
+
+            If Not _Cl_Enviar_Doc_SinRecepcion.Precesando Then
+
+                _Cl_Enviar_Doc_SinRecepcion.Precesando = True
+
+                _Cl_Enviar_Doc_SinRecepcion.Sb_Procesar_Informe(DtpFecharevision.Value)
+
+                If _Cl_Enviar_Doc_SinRecepcion.Crear_Html.EsCorrecto Then
+
+                    Dim _Para = _Cl_Enviar_Doc_SinRecepcion.Para
+                    Dim _Id_Correo = _Cl_Enviar_Doc_SinRecepcion.Id_Correo
+                    Dim _RutaArchivo = _Cl_Enviar_Doc_SinRecepcion.Crear_Html.RutaArchivo
+
+                    _Cl_Enviar_Doc_SinRecepcion.Fx_EnviarNotificacionCorreoAlDiablito(_Para, "", _Id_Correo, _RutaArchivo)
+
+                End If
+
+                _Cl_Enviar_Doc_SinRecepcion.Precesando = False
+                _Cl_Enviar_Doc_SinRecepcion.Ejecutar = False
+
+                Sb_Activar_ObjetosTimer(Timer_Enviar_Doc_SinRecepcion, _DProgramaciones.Sp_EnviarDocSinRecepcion)
+
+            End If
+
+        End If
+
+#End Region
+
+        Timer_Ejecuciones.Start()
+
     End Sub
 
+    Private Sub Timer_Enviar_Doc_SinRecepcion_Tick(sender As Object, e As EventArgs) Handles Timer_Enviar_Doc_SinRecepcion.Tick
+        If Fx_CumpleDiaSemana(_DProgramaciones.Sp_EnviarDocSinRecepcion) Then
+            _Cl_Enviar_Doc_SinRecepcion.Ejecutar = True
+        End If
+    End Sub
 End Class

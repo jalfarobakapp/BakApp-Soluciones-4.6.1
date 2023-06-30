@@ -169,12 +169,10 @@ Public Class Frm_Demonio_ConfAsisCompra
 
     Private Sub Btn_ConfProgramacion_Click(sender As Object, e As EventArgs) Handles Btn_ConfProgramacion.Click
 
-        'Programacion = New Cl_NewProgramacion
-        'Programacion.SucedeUnaVez = True
-        'Programacion.HoraUnaVez = "01-01-1900 00:00"
         Programacion.Validada = True
 
         Dim Fm As New Frm_Demonio_ConfProgramacion(False, False, False, "")
+        Fm.PonerHoraResumen = False
         Fm.Programacion = _Programacion
         Fm.Grupo_Frecuencia.Enabled = False
         Fm.Txt_Nombre.ReadOnly = True

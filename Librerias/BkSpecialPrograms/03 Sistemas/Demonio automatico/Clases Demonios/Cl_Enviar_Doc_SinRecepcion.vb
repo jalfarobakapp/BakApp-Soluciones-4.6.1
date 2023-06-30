@@ -36,7 +36,9 @@ Public Class Cl_Enviar_Doc_SinRecepcion
     Public Property DiasGDI As Integer
 
     Public Property Crear_Html As Crear_Html
-
+    Public Property Ejecutar As Boolean
+    Public Property Precesando As Boolean
+    Public Property Log_Registro As String
 #End Region
 
     Public Sub New()
@@ -48,7 +50,7 @@ Public Class Cl_Enviar_Doc_SinRecepcion
         Dim _TblDetalle As DataTable = Fx_Tbl_Informe(_FechaActual)
         Crear_Html = New Crear_Html
 
-        If IsNothing(_TblDetalle) Then
+        If IsNothing(_TblDetalle) Or (_TblDetalle.Rows.Count = 0) Then
             Crear_Html.EsCorrecto = False
             Crear_Html.RutaArchivo = String.Empty
             Crear_Html.Cuerpo_Html = String.Empty
