@@ -102,6 +102,8 @@ Public Class Clas_Hefesto_Dte_Libro
 
         'Errores.Clear()
 
+        Errores = New List(Of String)
+
         Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa' And AmbienteCertificacion = 0"

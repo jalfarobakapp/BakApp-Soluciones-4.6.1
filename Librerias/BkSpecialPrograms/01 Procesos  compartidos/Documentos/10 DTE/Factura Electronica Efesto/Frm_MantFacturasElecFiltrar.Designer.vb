@@ -765,7 +765,7 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Rdb_EstadoExcepciones.ForeColor = System.Drawing.Color.Black
         Me.Rdb_EstadoExcepciones.Location = New System.Drawing.Point(3, 33)
         Me.Rdb_EstadoExcepciones.Name = "Rdb_EstadoExcepciones"
-        Me.Rdb_EstadoExcepciones.Size = New System.Drawing.Size(70, 19)
+        Me.Rdb_EstadoExcepciones.Size = New System.Drawing.Size(100, 19)
         Me.Rdb_EstadoExcepciones.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_EstadoExcepciones.TabIndex = 135
         Me.Rdb_EstadoExcepciones.Text = "Excepciones"
