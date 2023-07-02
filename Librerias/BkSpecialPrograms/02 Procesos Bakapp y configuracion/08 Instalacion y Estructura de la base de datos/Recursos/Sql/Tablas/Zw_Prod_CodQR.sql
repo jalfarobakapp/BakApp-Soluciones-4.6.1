@@ -1,6 +1,7 @@
 USE [#Base#]
 
 CREATE TABLE [dbo].[Zw_Prod_CodQR](
+    [Semilla]   [int] IDENTITY(1,1) NOT NULL,
 	[CodigoQR]	[varchar](300)  NOT NULL DEFAULT (''),
 	[Kopral]	[varchar](21)	NOT NULL DEFAULT (''),
 	[Koen]	    [varchar](13)	NOT NULL DEFAULT (''),

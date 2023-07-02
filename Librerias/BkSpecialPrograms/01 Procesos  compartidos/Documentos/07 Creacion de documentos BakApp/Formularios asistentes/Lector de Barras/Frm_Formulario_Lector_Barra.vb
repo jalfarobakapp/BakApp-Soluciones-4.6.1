@@ -288,6 +288,7 @@ Public Class Frm_Formulario_Lector_Barra
         If Chk_LeerSoloUnaVezCodBarra.Checked Then
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_CodQRLogDoc" & vbCrLf &
+                           "--Inner Join MAEDDO On IDMAEEDO = Idmaeedo" & vbCrLf &
                            "Where CodLeido = '" & _CodLeido & "' And Tido = 'GRI'"
             Dim _TblQrDoc As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 

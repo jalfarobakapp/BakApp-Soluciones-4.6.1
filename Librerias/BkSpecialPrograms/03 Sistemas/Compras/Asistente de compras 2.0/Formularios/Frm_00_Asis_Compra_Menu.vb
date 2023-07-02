@@ -2360,7 +2360,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
                 If Chk_Traer_Productos_De_Reemplazo.Checked Then
 
-                    If MessageBoxEx.Show(Me, "Desea excluir a los productos hermanos de los productos seleccionados?",
+                    If MessageBoxEx.Show(Me, "Desea incluir a los productos hermanos de los productos seleccionados?",
                                          "Productos de reemplazo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
 
