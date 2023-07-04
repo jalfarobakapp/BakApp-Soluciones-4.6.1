@@ -1,5 +1,4 @@
-﻿Imports BkSpecialPrograms.Cl_Fincred_Bakapp.Cl_Fincred_SQL
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_Formulario_Lector_Barra
 
@@ -263,6 +262,7 @@ Public Class Frm_Formulario_Lector_Barra
 
         If _Global_Row_Configuracion_Estacion.Item("Utilizar_Lectura_Codigo_QR") Then
 
+
             If Txt_Codigo_Barras.Text.Contains("<STX>") And Txt_Codigo_Barras.Text.Contains("<ETX>") Then
 
                 Dim _CodigoLeido As String = Txt_Codigo_Barras.Text
@@ -273,6 +273,28 @@ Public Class Frm_Formulario_Lector_Barra
 
                 _CodigoQr = _SeparaCod(0)
                 _Cola = _SeparaCod(1)
+
+                If Not String.IsNullOrEmpty(_Cola) Then
+
+                    Dim _NoContieneEtx = False
+
+                    If Not _Cola.Contains("<END>") Then
+                        _NoContieneEtx = True
+                    Else
+                        Dim _Etx = Split(_Cola, "<", 2)
+                        If _Etx(1) <> "END>" Then
+                            _NoContieneEtx = True
+                        End If
+                    End If
+
+                    If _NoContieneEtx Then
+                        Txt_Codigo_Barras.Text = String.Empty
+                        Sb_Confirmar_Lectura("La etiqueta no contiene la finalización <END>" & vbCrLf &
+                                             "Revise el código o vuelva a leerlo nuevamente", "Validación")
+                        Return
+                    End If
+
+                End If
 
                 _Kopral = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Prod_CodQR", "Kopral", "CodigoQR = '" & _CodigoQr & "'")
                 _CodLeido = _CodigoLeido '_Kopral & ";" & _CodigoLeido
@@ -784,6 +806,8 @@ Public Class Frm_Formulario_Lector_Barra
     End Sub
 
     Private Sub Btn_Limpiar_Click(sender As Object, e As EventArgs) Handles Btn_Limpiar.Click
+
+        Txt_Codigo_Barras.Text = String.Empty
 
         For Each _Fila As DataGridViewRow In Grilla.Rows
             _Fila.Cells("Codigo_Barras").Value = String.Empty
