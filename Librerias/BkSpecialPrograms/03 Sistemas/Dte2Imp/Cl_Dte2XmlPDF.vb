@@ -1205,9 +1205,15 @@ Public Class Cl_Dte2XmlPDF
                         If ID = _Documento_Id Then
 
                             Dim _TpoMov As String = _Fila.Item("TpoMov")
-                            Dim _GlosaDR As String = _Fila.Item("GlosaDR")
+                            Dim _GlosaDR As String
                             Dim _TpoValor As String = _Fila.Item("TpoValor")
                             Dim _ValorDR As Double = Valor_Columna(_Fila, 0, "ValorDR", True)
+
+                            Try
+                                _GlosaDR = _Fila.Item("GlosaDR")
+                            Catch ex As Exception
+                                _GlosaDR = "DESCUENTO"
+                            End Try
 
                             If _TpoMov = "D" And _TpoValor = "$" Then _ValorDR = _ValorDR * -1
 

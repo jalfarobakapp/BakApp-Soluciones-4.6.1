@@ -419,7 +419,7 @@ Public Class Frm_CreaProductos_04_CodAlternativo
         If Stab_3QR.Visible Then
 
             Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Prod_CodQR Where CodigoQR = '" & _CodigoQR & "' And Kopral = '" & _Kopral & "'" & vbCrLf &
-                            "Insert Into " & _Global_BaseBk & "Zw_Prod_CodQR (CodigoQR,Kopral) Values ('" & _CodigoQR & "','" & _Kopral & "')"
+                            "Insert Into " & _Global_BaseBk & "Zw_Prod_CodQR (CodigoQR,Kopral,Kopr) Values ('" & _CodigoQR & "','" & _Kopral & "','" & _Kopr & "')"
 
         End If
 

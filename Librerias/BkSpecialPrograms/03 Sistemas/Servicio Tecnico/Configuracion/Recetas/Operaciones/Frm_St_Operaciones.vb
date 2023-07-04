@@ -45,8 +45,11 @@
         Dim _Texto_Busqueda As String = Txt_Buscador.Text.Trim
         Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "Operacion+Descripcion Like '%")
 
+        'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Operaciones" & vbCrLf &
+        '               "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "' And Operacion+Descripcion Like '%" & _Cadena & "%'"
+
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Operaciones" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "' And Operacion+Descripcion Like '%" & _Cadena & "%'"
+                       "Where Empresa = '" & ModEmpresa & "' And Operacion+Descripcion Like '%" & _Cadena & "%'"
         _Tbl_Operaciones = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla

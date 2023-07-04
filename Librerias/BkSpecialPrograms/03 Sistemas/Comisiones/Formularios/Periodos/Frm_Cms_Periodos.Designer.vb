@@ -27,14 +27,13 @@ Partial Class Frm_Cms_Periodos
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Cms_Periodos))
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Grilla_Lineas = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
-        Me.Btn_Nuevo_Despacho = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Buscar_Despacho = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_NuevoPeriodo = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnExportarExcel = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
-        CType(Me.Grilla_Lineas, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -42,11 +41,11 @@ Partial Class Frm_Cms_Periodos
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel1.Controls.Add(Me.Grilla_Lineas)
+        Me.GroupPanel1.Controls.Add(Me.Grilla)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(795, 319)
+        Me.GroupPanel1.Size = New System.Drawing.Size(654, 464)
         '
         '
         '
@@ -78,11 +77,11 @@ Partial Class Frm_Cms_Periodos
         Me.GroupPanel1.TabIndex = 157
         Me.GroupPanel1.Text = "PERIODOS"
         '
-        'Grilla_Lineas
+        'Grilla
         '
-        Me.Grilla_Lineas.AllowUserToAddRows = False
-        Me.Grilla_Lineas.AllowUserToDeleteRows = False
-        Me.Grilla_Lineas.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Grilla.AllowUserToAddRows = False
+        Me.Grilla.AllowUserToDeleteRows = False
+        Me.Grilla.BackgroundColor = System.Drawing.Color.White
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -90,22 +89,22 @@ Partial Class Frm_Cms_Periodos
         DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Lineas.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
-        Me.Grilla_Lineas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
         DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Lineas.DefaultCellStyle = DataGridViewCellStyle2
-        Me.Grilla_Lineas.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Grilla_Lineas.EnableHeadersVisualStyles = False
-        Me.Grilla_Lineas.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
-        Me.Grilla_Lineas.Location = New System.Drawing.Point(0, 0)
-        Me.Grilla_Lineas.Name = "Grilla_Lineas"
-        Me.Grilla_Lineas.ReadOnly = True
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Grilla.EnableHeadersVisualStyles = False
+        Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
+        Me.Grilla.Location = New System.Drawing.Point(0, 0)
+        Me.Grilla.Name = "Grilla"
+        Me.Grilla.ReadOnly = True
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -113,45 +112,43 @@ Partial Class Frm_Cms_Periodos
         DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Lineas.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla_Lineas.Size = New System.Drawing.Size(789, 296)
-        Me.Grilla_Lineas.StandardTab = True
-        Me.Grilla_Lineas.TabIndex = 27
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        Me.Grilla.Size = New System.Drawing.Size(648, 441)
+        Me.Grilla.StandardTab = True
+        Me.Grilla.TabIndex = 27
         '
         'Bar2
         '
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Nuevo_Despacho, Me.Btn_Buscar_Despacho, Me.Btn_Actualizar, Me.BtnExportarExcel})
-        Me.Bar2.Location = New System.Drawing.Point(0, 353)
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_NuevoPeriodo, Me.BtnExportarExcel, Me.Btn_Actualizar})
+        Me.Bar2.Location = New System.Drawing.Point(0, 482)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(814, 41)
+        Me.Bar2.Size = New System.Drawing.Size(678, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 158
         Me.Bar2.TabStop = False
         Me.Bar2.Text = "Bar2"
         '
-        'Btn_Nuevo_Despacho
+        'Btn_NuevoPeriodo
         '
-        Me.Btn_Nuevo_Despacho.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Nuevo_Despacho.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Nuevo_Despacho.Image = CType(resources.GetObject("Btn_Nuevo_Despacho.Image"), System.Drawing.Image)
-        Me.Btn_Nuevo_Despacho.ImageAlt = CType(resources.GetObject("Btn_Nuevo_Despacho.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Nuevo_Despacho.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Nuevo_Despacho.Name = "Btn_Nuevo_Despacho"
-        Me.Btn_Nuevo_Despacho.Tooltip = "Crear Orden de despacho"
+        Me.Btn_NuevoPeriodo.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_NuevoPeriodo.ForeColor = System.Drawing.Color.Black
+        Me.Btn_NuevoPeriodo.Image = CType(resources.GetObject("Btn_NuevoPeriodo.Image"), System.Drawing.Image)
+        Me.Btn_NuevoPeriodo.ImageAlt = CType(resources.GetObject("Btn_NuevoPeriodo.ImageAlt"), System.Drawing.Image)
+        Me.Btn_NuevoPeriodo.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_NuevoPeriodo.Name = "Btn_NuevoPeriodo"
+        Me.Btn_NuevoPeriodo.Tooltip = "Crear Orden de despacho"
         '
-        'Btn_Buscar_Despacho
+        'BtnExportarExcel
         '
-        Me.Btn_Buscar_Despacho.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Buscar_Despacho.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Buscar_Despacho.Image = CType(resources.GetObject("Btn_Buscar_Despacho.Image"), System.Drawing.Image)
-        Me.Btn_Buscar_Despacho.ImageAlt = CType(resources.GetObject("Btn_Buscar_Despacho.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Buscar_Despacho.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Buscar_Despacho.Name = "Btn_Buscar_Despacho"
-        Me.Btn_Buscar_Despacho.Tooltip = "Buscar Orden de despacho"
+        Me.BtnExportarExcel.ForeColor = System.Drawing.Color.Black
+        Me.BtnExportarExcel.Image = CType(resources.GetObject("BtnExportarExcel.Image"), System.Drawing.Image)
+        Me.BtnExportarExcel.ImageAlt = CType(resources.GetObject("BtnExportarExcel.ImageAlt"), System.Drawing.Image)
+        Me.BtnExportarExcel.Name = "BtnExportarExcel"
+        Me.BtnExportarExcel.Tooltip = "Exportar a excel (Vista actual)"
         '
         'Btn_Actualizar
         '
@@ -163,37 +160,33 @@ Partial Class Frm_Cms_Periodos
         Me.Btn_Actualizar.Name = "Btn_Actualizar"
         Me.Btn_Actualizar.Tooltip = "Refrescar datos"
         '
-        'BtnExportarExcel
-        '
-        Me.BtnExportarExcel.ForeColor = System.Drawing.Color.Black
-        Me.BtnExportarExcel.Image = CType(resources.GetObject("BtnExportarExcel.Image"), System.Drawing.Image)
-        Me.BtnExportarExcel.ImageAlt = CType(resources.GetObject("BtnExportarExcel.ImageAlt"), System.Drawing.Image)
-        Me.BtnExportarExcel.Name = "BtnExportarExcel"
-        Me.BtnExportarExcel.Tooltip = "Exportar a excel (Vista actual)"
-        '
         'Frm_Cms_Periodos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(814, 394)
+        Me.ClientSize = New System.Drawing.Size(678, 523)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "Frm_Cms_Periodos"
+        Me.ShowInTaskbar = False
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MetroForm"
         Me.GroupPanel1.ResumeLayout(False)
-        CType(Me.Grilla_Lineas, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
-    Friend WithEvents Grilla_Lineas As DevComponents.DotNetBar.Controls.DataGridViewX
+    Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
-    Public WithEvents Btn_Nuevo_Despacho As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Buscar_Despacho As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_NuevoPeriodo As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Actualizar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents BtnExportarExcel As DevComponents.DotNetBar.ButtonItem
 End Class

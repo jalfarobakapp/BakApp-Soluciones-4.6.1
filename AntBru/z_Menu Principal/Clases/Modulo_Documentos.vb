@@ -56,7 +56,7 @@ Module Modulo_Documentos
 
                     End If
 
-                    If Fx_Tiene_Permiso_Generar_Documento(_Fm_Menu_Padre, _Tido) Then
+                    If Fx_Tiene_Permiso_Generar_Documento(_Fm_Menu_Padre, _Tido, _SubTido) Then
 
                         Dim _Es_Ajuste As Boolean
 
@@ -84,7 +84,7 @@ Module Modulo_Documentos
 
     End Sub
 
-    Function Fx_Tiene_Permiso_Generar_Documento(_Fm_Menu_Padre As Metro.MetroAppForm, _Tido As String) As Boolean
+    Function Fx_Tiene_Permiso_Generar_Documento(_Fm_Menu_Padre As Metro.MetroAppForm, _Tido As String, _SubTido As String) As Boolean
 
         Dim _CodPermiso As String
 
@@ -105,6 +105,18 @@ Module Modulo_Documentos
                 _CodPermiso = "Bkp00056"
             Case "GRD"
                 _CodPermiso = "Doc00069"
+            Case "GRI"
+                If String.IsNullOrEmpty(_SubTido) Then
+                    _CodPermiso = "Doc00086"
+                Else
+                    _CodPermiso = "Doc00087"
+                End If
+            Case "GDI"
+                If String.IsNullOrEmpty(_SubTido) Then
+                    _CodPermiso = "Doc00088"
+                Else
+                    _CodPermiso = "Doc00089"
+                End If
             Case Else
                 Return True
         End Select

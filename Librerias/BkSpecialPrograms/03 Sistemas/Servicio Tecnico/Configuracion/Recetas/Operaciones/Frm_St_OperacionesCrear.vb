@@ -32,8 +32,10 @@ Public Class Frm_St_OperacionesCrear
         Me._Operacion = _Operacion
 
         If Not String.IsNullOrEmpty(_Operacion) Then
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Operaciones" & vbCrLf &
-                           "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "' And Operacion = '" & _Operacion & "'"
+            Consulta_sql = "Ope.*,ISNULL(Pre.Precio,0) As Precio" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_St_OT_Operaciones Ope" & vbCrLf &
+                           "Left Join " & _Global_BaseBk & "Zw_St_OT_Operaciones_Precios Pre On Pre.Id_Ope = Ope.Id " & vbCrLf &
+                           "Where Ope.Operacion = '" & _Operacion & "'"
             _RowOperacion = _Sql.Fx_Get_DataRow(Consulta_sql)
         End If
 
@@ -131,7 +133,8 @@ Public Class Frm_St_OperacionesCrear
 
         If Chk_TienePrecio.Checked Then
             If Not CBool(Txt_Precio.Tag) Then
-                MessageBoxEx.Show(Me, "Falta el precio de la operación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "Falta el precio de la operación para la sucursal: " & ModSucursal & "-" & _Global_Row_Modalidad.Item(""),
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Txt_Precio.Focus()
                 Return
             End If
@@ -143,25 +146,30 @@ Public Class Frm_St_OperacionesCrear
 
 
         If _Nuevo Then
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Operaciones (Empresa,Sucursal,Operacion,Descripcion,Precio,Externa,CantMayor1,TienePrecio) Values " &
-                           "('" & ModEmpresa & "','" & ModSucursal & "','" & _Operacion & "','" & _Descripcion & "'," & _Precio & "," & _Externa & "," & _CantMayor1 & "," & _TienePrecio & ")"
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Operaciones (Operacion,Descripcion,Precio,Externa,CantMayor1,TienePrecio) Values " &
+                           "('" & _Operacion & "','" & _Descripcion & "'," & _Precio & "," & _Externa & "," & _CantMayor1 & "," & _TienePrecio & ")"
             If Not _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Operacion) Then
                 Return
             End If
+
         End If
 
         If _Editar Then
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Operaciones Set " & vbCrLf &
                            "Descripcion = '" & _Descripcion & "'" &
-                           ",Precio = " & _Precio &
                            ",Externa = " & _Externa &
                            ",CantMayor1 = " & _CantMayor1 & vbCrLf &
                            ",TienePrecio = " & _TienePrecio & vbCrLf &
-                           "Where Id = " & _Id_Operacion
+                           "Where Id = " & _Id_Operacion & vbCrLf &
+                           "Delete " & _Global_BaseBk & "Zw_St_OT_Operaciones_Precios Where Id_Ope = " & _Id_Operacion
             If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
                 Return
             End If
         End If
+
+        'Se actualiza el precio por sucursal
+        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Operaciones_Precios (Id_Ope,Empresa,Sucursal,Precio) Values (" & _Id_Operacion & ",'" & ModEmpresa & "','" & ModSucursal & "'," & _Precio & ")"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Operaciones Where Id = " & _Id_Operacion
         _RowOperacion = _Sql.Fx_Get_DataRow(Consulta_sql)

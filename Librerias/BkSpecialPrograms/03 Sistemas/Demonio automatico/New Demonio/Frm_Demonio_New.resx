@@ -194,7 +194,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAC
-        GgAAAk1TRnQBSQFMAgEBDwEAAYgBAAGIAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        GgAAAk1TRnQBSQFMAgEBDwEAAZABAAGQAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAUADAAEBAQABCAYAARAYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -226,7 +226,7 @@
         AgkBuwEJAfQIAAH/ARkBmAKdAZgBGQH/FAABBwXrAfQBGgOaAesBeQKaARoCAAH/AQkBGQH/AQgCuwEI
         Af8BGQEJAf8EAAH/ARkBkQaWAZEBGQH/EgAB6wX/AfQB/wF6ApoBHAF5AZoBegH/AQAB/wEJAfQBGQEA
         AdsCrAG7AQABGQH0AQkB/wIAAf8BCAqWAQgB/xEAAesG/wH0AfMCmgHqAXkBmgHzAgABCQH0AdoBGQEA
-        ARkCrAHiAQABGQHaAfQBCQIAARkDlgGRAcIBugaWARkRAAHrAf8FBwHuAf8BGgGaAeoBeQGaAf8BAAH0
+        ARkCrAHiAQABGQHaAfQBCQIAARkDlgGRAcIBugaWARkRAAHrAf8FBwG8Af8BGgGaAeoBeQGaAf8BAAH0
         ARkBugGyAf8BAAH0AYEBswH/AQAB9AGyAboBGQH0Af8BkQKWAZEB8wH/AfQBnQWWAZEB/xAAAesB/wEH
         Bf8B8gH0AZoB6wF5AfQCAAEJAfMBrAEJAQAB/wG0ArsBAAH0AboBCQGsAfMBCQEZApYBkQHzA/8B9AG6
         BZYBGRAAAesB/wcHAf8BGgGaARoB/wIAAbsBGQGsAeIBAAEIAawBGQH0AQABCAEGARkBrAEZAbsBmAGW
@@ -316,7 +316,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADY
-        GQAAAk1TRnQBSQFMAgEBDwEAAZABAAGQAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        GQAAAk1TRnQBSQFMAgEBDwEAAZgBAAGYAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAUADAAEBAQABCAYAARAYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -445,24 +445,24 @@
     <value>947, 20</value>
   </metadata>
   <metadata name="Timer_AsistenteCompras.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>55, 48</value>
+    <value>44, 55</value>
   </metadata>
   <metadata name="Timer_Correo.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>257, 55</value>
+    <value>249, 52</value>
   </metadata>
   <metadata name="Timer_FacturacionAuto.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>382, 56</value>
+    <value>372, 51</value>
   </metadata>
   <metadata name="Timer_Minimizar.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>560, 57</value>
+    <value>546, 51</value>
   </metadata>
   <metadata name="Timer_Ejecuciones.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1193, 45</value>
   </metadata>
   <metadata name="Timer_Enviar_Doc_SinRecepcion.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>701, 57</value>
+    <value>680, 50</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>82</value>
+    <value>125</value>
   </metadata>
 </root>

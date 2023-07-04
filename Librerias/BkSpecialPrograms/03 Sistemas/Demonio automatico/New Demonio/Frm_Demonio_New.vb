@@ -236,12 +236,12 @@ Public Class Frm_Demonio_New
 
     Sub Sb_Activar_ObjetosTimer(_Timer As Windows.Forms.Timer, _Sp_Programacion As Cl_NewProgramacion)
 
-        With _Sp_Programacion '_DProgramaciones.Sp_Prestashop_Prod
+        With _Sp_Programacion
 
             Dim milisegundos As Long
 
-            'If .FrecuDiaria Then
             Dim _IntervaloCada As Integer = .IntervaloCada
+
             If .SucedeCada Then
 
                 If .TipoIntervaloCada = "HH" Then
@@ -260,7 +260,6 @@ Public Class Frm_Demonio_New
                 End If
 
             End If
-            'End If
 
             If .SucedeUnaVez Then
 
@@ -1003,6 +1002,8 @@ Public Class Frm_Demonio_New
     Private Sub Timer_AsistenteCompras_Tick(sender As Object, e As EventArgs) Handles Timer_AsistenteCompras.Tick
         If Fx_CumpleDiaSemana(_DProgramaciones.Sp_AsistenteCompras) Then
             _Cl_Asistente_Compras.Ejecutar = True
+        Else
+            Sb_Activar_ObjetosTimer(Timer_AsistenteCompras, _DProgramaciones.Sp_AsistenteCompras)
         End If
     End Sub
 

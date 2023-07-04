@@ -557,6 +557,10 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00083", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00084", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00085", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00086", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00087", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00088", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00089", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -2441,6 +2445,31 @@ Public Class Class_Permiso_BakApp
 
             Case "Doc00085"
                 _DescripcionPermiso = "PERMITIR GENERAR ORDEN DE COMPRA BAJO EL MINIMO ESTABLECIDO POR PROVEEDOR"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
+            Case "Doc00085"
+                _DescripcionPermiso = "PERMITIR GENERAR ORDEN DE COMPRA BAJO EL MINIMO ESTABLECIDO POR PROVEEDOR"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
+            Case "Doc00086"
+                _DescripcionPermiso = "CREAR (GRI) GUIAS DE RECEPCION INTERNA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
+            Case "Doc00087"
+                _DescripcionPermiso = "CREAR (GRI) GUIAS DE RECEPCION INTERNA - AJUSTE"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
+            Case "Doc00088"
+                _DescripcionPermiso = "CREAR (GDI) GUIAS DE DESPACHO INTERNA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
+            Case "Doc00089"
+                _DescripcionPermiso = "CREAR (GDI) GUIAS DE DESPACHO INTERNA - AJUSTE"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 

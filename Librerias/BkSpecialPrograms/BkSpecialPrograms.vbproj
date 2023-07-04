@@ -1372,10 +1372,16 @@
     <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_Fun.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_Periodos.Designer.vb">
+    <Compile Include="03 Sistemas\Comisiones\Formularios\Periodos\Frm_Cms_Periodos.Designer.vb">
       <DependentUpon>Frm_Cms_Periodos.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_Periodos.vb">
+    <Compile Include="03 Sistemas\Comisiones\Formularios\Periodos\Frm_Cms_Periodos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Comisiones\Formularios\Periodos\Frm_Cms_Periodos_Crear.Designer.vb">
+      <DependentUpon>Frm_Cms_Periodos_Crear.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Comisiones\Formularios\Periodos\Frm_Cms_Periodos_Crear.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Formularios\Clas_Imprimir_AsisCompra.vb" />
@@ -4618,8 +4624,11 @@
     <EmbeddedResource Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_FuncMant.resx">
       <DependentUpon>Frm_Cms_FuncMant.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_Periodos.resx">
+    <EmbeddedResource Include="03 Sistemas\Comisiones\Formularios\Periodos\Frm_Cms_Periodos.resx">
       <DependentUpon>Frm_Cms_Periodos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Comisiones\Formularios\Periodos\Frm_Cms_Periodos_Crear.resx">
+      <DependentUpon>Frm_Cms_Periodos_Crear.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Formularios\Frm_01_Asis_Compra_Resultados_Hijo.resx">
       <DependentUpon>Frm_01_Asis_Compra_Resultados_Hijo.vb</DependentUpon>
