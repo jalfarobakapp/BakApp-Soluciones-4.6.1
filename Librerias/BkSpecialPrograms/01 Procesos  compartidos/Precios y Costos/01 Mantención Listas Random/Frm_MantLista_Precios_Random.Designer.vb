@@ -114,6 +114,7 @@ Partial Class Frm_MantLista_Precios_Random
         Me.Grupo_Costo_Ud2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grupo_PM = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Chk_GrabarPreciosHistoricos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_NoguardarTABPRE = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -702,6 +703,7 @@ Partial Class Frm_MantLista_Precios_Random
         '
         'Chk_Marcar_Todo
         '
+        Me.Chk_Marcar_Todo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Marcar_Todo.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Marcar_Todo.Name = "Chk_Marcar_Todo"
         Me.Chk_Marcar_Todo.Text = "Marcar todo"
         '
@@ -878,6 +880,7 @@ Partial Class Frm_MantLista_Precios_Random
         '
         '
         Me.Chk_Ud1_X_Ud2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Ud1_X_Ud2.CheckBoxImageChecked = CType(resources.GetObject("Chk_Ud1_X_Ud2.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Ud1_X_Ud2.Checked = True
         Me.Chk_Ud1_X_Ud2.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_Ud1_X_Ud2.CheckValue = "Y"
@@ -1128,24 +1131,46 @@ Partial Class Frm_MantLista_Precios_Random
         '
         '
         Me.Chk_GrabarPreciosHistoricos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_GrabarPreciosHistoricos.CheckBoxImageChecked = CType(resources.GetObject("Chk_GrabarPreciosHistoricos.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_GrabarPreciosHistoricos.Checked = True
         Me.Chk_GrabarPreciosHistoricos.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_GrabarPreciosHistoricos.CheckValue = "Y"
-        Me.Chk_GrabarPreciosHistoricos.Enabled = False
         Me.Chk_GrabarPreciosHistoricos.FocusCuesEnabled = False
         Me.Chk_GrabarPreciosHistoricos.ForeColor = System.Drawing.Color.Black
-        Me.Chk_GrabarPreciosHistoricos.Location = New System.Drawing.Point(633, 431)
+        Me.Chk_GrabarPreciosHistoricos.Location = New System.Drawing.Point(474, 431)
         Me.Chk_GrabarPreciosHistoricos.Name = "Chk_GrabarPreciosHistoricos"
         Me.Chk_GrabarPreciosHistoricos.Size = New System.Drawing.Size(147, 23)
         Me.Chk_GrabarPreciosHistoricos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_GrabarPreciosHistoricos.TabIndex = 81
         Me.Chk_GrabarPreciosHistoricos.Text = "Guardar precios historicos"
         '
+        'Chk_NoguardarTABPRE
+        '
+        Me.Chk_NoguardarTABPRE.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_NoguardarTABPRE.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_NoguardarTABPRE.CheckBoxImageChecked = CType(resources.GetObject("Chk_NoguardarTABPRE.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_NoguardarTABPRE.Checked = True
+        Me.Chk_NoguardarTABPRE.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_NoguardarTABPRE.CheckValue = "Y"
+        Me.Chk_NoguardarTABPRE.Enabled = False
+        Me.Chk_NoguardarTABPRE.FocusCuesEnabled = False
+        Me.Chk_NoguardarTABPRE.ForeColor = System.Drawing.Color.Black
+        Me.Chk_NoguardarTABPRE.Location = New System.Drawing.Point(627, 431)
+        Me.Chk_NoguardarTABPRE.Name = "Chk_NoguardarTABPRE"
+        Me.Chk_NoguardarTABPRE.Size = New System.Drawing.Size(153, 23)
+        Me.Chk_NoguardarTABPRE.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_NoguardarTABPRE.TabIndex = 82
+        Me.Chk_NoguardarTABPRE.Text = "No grabar datos en TABPRE"
+        '
         'Frm_MantLista_Precios_Random
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(783, 567)
+        Me.Controls.Add(Me.Chk_NoguardarTABPRE)
         Me.Controls.Add(Me.Chk_GrabarPreciosHistoricos)
         Me.Controls.Add(Me.Grupo_PM)
         Me.Controls.Add(Me.Grupo_Costo_Ud2)
@@ -1271,4 +1296,5 @@ Partial Class Frm_MantLista_Precios_Random
     Friend WithEvents Btn_Grabar_Inmediatamente As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Grabar_Futuro As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Chk_GrabarPreciosHistoricos As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Chk_NoguardarTABPRE As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class
