@@ -12,7 +12,7 @@ Public Class Frm_Importar_Desde_Excel
     Dim _Tbl_Listas_Seleccionadas As DataTable
     Dim _Tbl_Productos_Seleccionados As DataTable
 
-    Public Property Lista_Campos_Adicionales As List(Of String)
+    Public Property Lista_Campos_Adicionales As List(Of ListaDePrecios.LsCamposAdicionalesTabpre) ' List(Of String)
 
     Dim _Traer_Productos As Boolean
 
@@ -92,8 +92,8 @@ Public Class Frm_Importar_Desde_Excel
 
             If Not IsNothing(Lista_Campos_Adicionales) Then
                 Dim _Cc = 8
-                For Each Cmp As String In Lista_Campos_Adicionales
-                    _CamposAdicionales += ",'Númerico' as '" & Cmp & "'"
+                For Each Cmp As ListaDePrecios.LsCamposAdicionalesTabpre In Lista_Campos_Adicionales
+                    _CamposAdicionales += ",'Númerico' as '" & Cmp.Campo & "'"
                     _Cc += 1
                 Next
             End If
@@ -176,11 +176,11 @@ Public Class Frm_Importar_Desde_Excel
 
         If Not IsNothing(Lista_Campos_Adicionales) Then
             Dim _Cc = 8
-            For Each Cmp As String In Lista_Campos_Adicionales
+            For Each Cmp As ListaDePrecios.LsCamposAdicionalesTabpre In Lista_Campos_Adicionales
                 Try
                     Dim _Valor = NuloPorNro(_Arreglo(1, _Cc), 0)
                 Catch ex As Exception
-                    _Error += "Falta el campo: " & Cmp & " en el documento Excel" & vbCrLf
+                    _Error += "Falta el campo: " & Cmp.Campo & " en el documento Excel" & vbCrLf
                     Sb_AddToLog("Fila Nro :" & i + 1, "Problema!. " & _Error, _Txt_Log, False)
                 End Try
                 _Cc += 1
@@ -294,15 +294,15 @@ Public Class Frm_Importar_Desde_Excel
 
                         If Not IsNothing(Lista_Campos_Adicionales) Then
                             Dim _Cc = 8
-                            For Each Cmp As String In Lista_Campos_Adicionales
+                            For Each Cmp As ListaDePrecios.LsCamposAdicionalesTabpre In Lista_Campos_Adicionales
                                 Try
                                     Dim _Valor As Double = NuloPorNro(_Arreglo(i, _Cc), 0)
                                     Consulta_sql += "Update " & _Nombre_Tbl_Paso_Precios & " Set" & vbCrLf &
-                                                    Cmp & " = " & De_Num_a_Tx_01(_Valor, False, 5) & vbCrLf &
+                                                    Cmp.Campo & " = " & De_Num_a_Tx_01(_Valor, False, 5) & vbCrLf &
                                                     "Where KOLT = '" & _Kolt & "' And KOPR = '" & _Kopr & "'" & vbCrLf
                                 Catch ex As Exception
                                     Problemas += 1
-                                    _Error = "Falta el campo: " & Cmp & " en el documento Excel; " & ex.Message
+                                    _Error = "Falta el campo: " & Cmp.Campo & " en el documento Excel; " & ex.Message
                                     Sb_AddToLog("Fila Nro :" & i + 1, "Problema!. " & _Error, _Txt_Log, False)
                                     Problemas += 1
                                 End Try

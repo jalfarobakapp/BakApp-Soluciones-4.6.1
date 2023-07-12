@@ -37,7 +37,7 @@ Public Class Frm_MantLista_Precios_Random
 
     Dim _Txt_Log As New TextBox
 
-    Dim _Lista_Campos_Adicionales As New List(Of String)
+    Dim _Lista_Campos_Adicionales As New List(Of ListaDePrecios.LsCamposAdicionalesTabpre) ' ' List(Of String)
 
     Public ReadOnly Property Pro_Grabacion_Realizada() As Boolean
         Get
@@ -129,6 +129,8 @@ Public Class Frm_MantLista_Precios_Random
         If Rdb_Traer_Todos.Checked Then Btn_ProdBloqueados.Text = Rdb_Traer_Todos.Text
 
         Chk_GrabarPreciosHistoricos.Checked = _Global_Row_Configuracion_General.Item("GrabarPreciosHistoricos")
+        Chk_NoguardarTABPRE.Visible = Chk_GrabarPreciosHistoricos.Checked
+        Chk_NoguardarTABPRE.Enabled = Chk_GrabarPreciosHistoricos.Checked
 
     End Sub
 
@@ -141,7 +143,7 @@ Public Class Frm_MantLista_Precios_Random
         _TblTabpre = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         _Lista_Campos_Adicionales.Clear()
-        _Lista_Campos_Adicionales = New List(Of String)
+        _Lista_Campos_Adicionales = New List(Of ListaDePrecios.LsCamposAdicionalesTabpre)
 
         ' Asi es como actua el campo OPERA, este campo define como se comportaran los campos adicionales a partir del campo nro 29 en adelante
 
@@ -154,16 +156,33 @@ Public Class Frm_MantLista_Precios_Random
 
         Dim _Campos_Adicionales = String.Empty
 
+        Dim _Campo = String.Empty
+        Dim _Campofx = String.Empty
+
+        Dim _Cmp = False
+
         For _i = 28 To _TblTabpre.Columns.Count - 1
 
             Dim _Columna As DataColumn = _TblTabpre.Columns(_i)
             Dim _Nombre_Columna As String = _Columna.ColumnName
 
+            Dim _CamposAdicionales As New ListaDePrecios.LsCamposAdicionalesTabpre
+
             If Mid(_Nombre_Columna, 1, 5) = "FORM_" Then
+                _Campofx = _Nombre_Columna
                 _Campos_Adicionales += "[" & _Nombre_Columna & "] [CHAR] (121) Default ''," & vbCrLf
+                _Cmp = True
             Else
+                _Campo = _Nombre_Columna
                 _Campos_Adicionales += "[" & _Nombre_Columna & "] [Float] Default (0)," & vbCrLf
-                _Lista_Campos_Adicionales.Add(_Nombre_Columna)
+                _Cmp = False
+                '_Lista_Campos_Adicionale.Add(_Nombre_Columna)
+            End If
+
+            If _Cmp Then
+                _CamposAdicionales.Campo = _Campo
+                _CamposAdicionales.CampoFx = _Campofx
+                _Lista_Campos_Adicionales.Add(_CamposAdicionales)
             End If
 
         Next
@@ -534,12 +553,21 @@ Public Class Frm_MantLista_Precios_Random
             Dim _Otros_Campos1 = String.Empty
             Dim _Otros_Campos2 = String.Empty
 
-            For Each _Campo As String In _Lista_Campos_Adicionales
+            'For Each _Campo As String In _Lista_Campos_Adicionales
 
-                _Otros_Campos1 += "," & _Campo
-                _Otros_Campos2 += ",Tp." & _Campo
+            '    _Otros_Campos1 += "," & _Campo
+            '    _Otros_Campos2 += ",Tp." & _Campo
+
+            'Next
+
+            For Each _Campos As ListaDePrecios.LsCamposAdicionalesTabpre In _Lista_Campos_Adicionales
+
+                _Otros_Campos1 += "," & _Campos.Campo & "," & _Campos.CampoFx
+                _Otros_Campos2 += ",Tp." & _Campos.Campo & ",Tp." & _Campos.CampoFx
 
             Next
+
+            'Of ListaDePrecios.LsCamposAdicionalesTabpre
 
             If Not String.IsNullOrEmpty(_Txt_Log.Text) Then
 
@@ -1628,13 +1656,31 @@ Public Class Frm_MantLista_Precios_Random
                                    Left Outer Join TABPRE ON Tbl.KOLT = TABPRE.KOLT AND Tbl.KOPR = TABPRE.KOPR
                                Where Tbl.Editado = 1"
 
-            If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_ListaPreHistorico") Then
+            If Chk_GrabarPreciosHistoricos.Checked Then
 
-                Consulta_sql += vbCrLf & vbCrLf &
-                                "Insert Into " & _Global_BaseBk & "Zw_ListaPreHistorico (Codigo,Lista,CodFuncionario,Fechagrab,FechaVigencia,PrecioUd1,PrecioUd2,FxEjecUd1,FxEjecUd2) " & vbCrLf &
-                                "Select KOPR,KOLT,'" & FUNCIONARIO & "',Getdate(),'" & _Fevi & "',PP01UD,PP02UD,FxEjecUd1,FxEjecUd2" & vbCrLf &
-                                "From " & _Nombre_Tbl_Paso_Precios & vbCrLf &
-                                "Where Editado = 1"
+                If Chk_NoguardarTABPRE.Visible AndAlso Chk_NoguardarTABPRE.Checked Then
+
+                    Dim _Consulta = MessageBoxEx.Show(Me, "¿Confirma NO grabar los datos en TABPRE?", "Validación",
+                                                      MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+
+                    If _Consulta = DialogResult.Yes Then
+                        Consulta_sql = String.Empty
+                    Else
+                        Sb_Habilitar_Deshabilitar_Comandos(True, False)
+                        Return
+                    End If
+
+                End If
+
+                If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_ListaPreHistorico") Then
+
+                    Consulta_sql += vbCrLf & vbCrLf &
+                                    "Insert Into " & _Global_BaseBk & "Zw_ListaPreHistorico (Codigo,Lista,CodFuncionario,Fechagrab,FechaVigencia,PrecioUd1,PrecioUd2,FxEjecUd1,FxEjecUd2) " & vbCrLf &
+                                    "Select KOPR,KOLT,'" & FUNCIONARIO & "',Getdate(),'" & _Fevi & "',PP01UD,PP02UD,FxEjecUd1,FxEjecUd2" & vbCrLf &
+                                    "From " & _Nombre_Tbl_Paso_Precios & vbCrLf &
+                                    "Where Editado = 1"
+
+                End If
 
             End If
 
@@ -2065,11 +2111,22 @@ Public Class Frm_MantLista_Precios_Random
 
     End Sub
 
-    Private Sub Btn_Grabar_Inmediatamente_Click(sender As Object, e As EventArgs) Handles Btn_Grabar_Inmediatamente.Click
-
-    End Sub
-
-    Private Sub Btn_Grabar_Futuro_Click(sender As Object, e As EventArgs) Handles Btn_Grabar_Futuro.Click
-
+    Private Sub Chk_GrabarPreciosHistoricos_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_GrabarPreciosHistoricos.CheckedChanged
+        Chk_NoguardarTABPRE.Visible = Chk_GrabarPreciosHistoricos.Checked
+        If Chk_NoguardarTABPRE.Visible Then
+            Chk_NoguardarTABPRE.Checked = True
+        End If
     End Sub
 End Class
+
+Namespace ListaDePrecios
+
+    Public Class LsCamposAdicionalesTabpre
+
+        Public Property Campo As String
+        Public Property CampoFx As String
+
+    End Class
+
+End Namespace
+

@@ -1525,7 +1525,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         If _Row_Vista.Item("ARBOL_BAKAPP") Then
             If False Then Sb_Generar_Grafica_Linea_De_Tiempo_Arbol(Grafico_Linea_De_Tiempo)
         Else
-            Sb_Generar_Grafica_Linea_De_Tiempo(Grafico_Linea_De_Tiempo)
+            'Sb_Generar_Grafica_Linea_De_Tiempo(Grafico_Linea_De_Tiempo)
         End If
         Sb_Grafico_Pie_Acumulativo()
 

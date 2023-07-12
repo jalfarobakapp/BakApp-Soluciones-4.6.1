@@ -112,6 +112,9 @@ Public Class Frm_Exportar_Excel
                                   Optional ByVal Extencion As Enum_Extencion = Enum_Extencion.xlsx,
                                   Optional ByRef _Error As String = "") As String
 
+        Dim fila As Integer = 0
+        Dim columna As Integer = 0
+
         Try
 
             If String.IsNullOrEmpty(Directorio) Then
@@ -133,9 +136,6 @@ Public Class Frm_Exportar_Excel
             'Add new worksheet to workbook.
             Wbook.Worksheets.Add("Hoja1")
 
-
-            Dim fila As Integer = 0
-            Dim columna As Integer = 0
 
             ' xls, xlsx
             '/////////////////////////////////////////////////
@@ -173,6 +173,10 @@ Public Class Frm_Exportar_Excel
             'AddHandler Wbook.Progress, AddressOf workbook_SavingProgress
 
             For Each dr In _Tbl_Excel.Rows
+
+                If fila = 70165 Then
+                    Dim _Stop = True
+                End If
                 System.Windows.Forms.Application.DoEvents()
                 columna = 0
                 For Each dc In _Tbl_Excel.Columns
@@ -208,7 +212,7 @@ Public Class Frm_Exportar_Excel
                         Next
                         _Valor = Replace(_Valor, Chr(127), " ")
 
-                        Wbook.Worksheets(0).Rows(fila).Cells(columna).Value = _Valor
+                        Wbook.Worksheets(0).Rows(fila).Cells(columna).Value = _Valor.ToString.Trim
                     End If
 
 
@@ -281,7 +285,7 @@ Public Class Frm_Exportar_Excel
 
 
         Catch ex As Exception
-            _Error = ex.Message
+            _Error = "Fila: " & fila & ", Columna: " & columna & vbCrLf & ex.Message
             Return ""
             'MsgBox(ex.Message)
         Finally
@@ -301,9 +305,9 @@ Public Class Frm_Exportar_Excel
         Circular_Progres_Porcentaje.Maximum = 100 ' Bar.Value = ((Contador * 100) / Tabla.Rows.Count)
         Circular_Progres_Contador.Maximum = _Tbl_Excel.Rows.Count
 
-        Dim columna = 1
-        Dim Contador = 0
         Dim _Fila = 0
+        Dim _Columna = 1
+        Dim Contador = 0
 
         Circular_Progres_Porcentaje.Value = 0
         Circular_Progres_Contador.Value = 0
@@ -328,6 +332,12 @@ Public Class Frm_Exportar_Excel
                     System.Windows.Forms.Application.DoEvents()
                     ' Recorrer la cantidad de columnas que contiene el dataGridView  
 
+                    If _Fila = 21700 Then
+                        Dim Aca = True
+                    End If
+
+                    _Columna = 0
+
                     For Each dc In _Tbl_Excel.Columns
 
                         Dim _Valor = _Row(dc.ColumnName).ToString
@@ -335,7 +345,7 @@ Public Class Frm_Exportar_Excel
                         Dim ty As Type = dc.DataType
                         Dim TipoDeDato As String = ty.Name.ToString
 
-                        If _Valor = "5547211" Or columna = 111 Then
+                        If _Valor = "5547211" Or _Columna = 111 Then
                             Dim alto = 0
                         End If
 
@@ -354,6 +364,22 @@ Public Class Frm_Exportar_Excel
                         ElseIf TipoDeDato = "String" Then
                             'Dim _Coma As String = Chr(34) & "," & Chr(34)
                             _Valor = Replace(_Valor, ",", ".")
+                            ' Limpieza de valores ASCII
+                            For _i = 0 To 31
+                                _Valor = Replace(_Valor, Chr(_i), " ")
+                            Next
+                            _Valor = Replace(_Valor, Chr(127), " ")
+
+                            If IsNothing(_Valor) Then
+                                _Valor = String.Empty
+                            End If
+
+                            Try
+                                _Valor = _Valor.ToString.Trim
+                            Catch ex As Exception
+
+                            End Try
+
                         ElseIf TipoDeDato = "DateTime" Then
                             Dim _Fecha As Date = NuloPorNro(_Row(dc.ColumnName), "01-01-1900")
                             _Valor = _Fecha 'dr(dc.ColumnName)
@@ -363,7 +389,7 @@ Public Class Frm_Exportar_Excel
 
                         ' Almacenar el valor de toda la fila , y cada campo separado por el delimitador  
                         _Linea = _Linea & _Valor & DELIMITADOR
-                        columna += 1
+                        _Columna += 1
                     Next
 
 
@@ -408,7 +434,7 @@ Public Class Frm_Exportar_Excel
             Return _pFileName
             'error  
         Catch ex As Exception
-            _Error = ex.Message & vbCrLf & "Fila: " & _Fila
+            _Error = ex.Message & vbCrLf & "Fila: " & _Fila & ", Columna: " & _Columna
             Return ""
         Finally
             Circular_Progres_Contador.Value = 0 : Circular_Progres_Porcentaje.Value = 0
@@ -477,6 +503,22 @@ Public Class Frm_Exportar_Excel
 
                             _Valor = _Valor ' Replace(_Valor, ",", ".")
 
+                            ' Limpieza de valores ASCII
+                            For _i = 0 To 31
+                                _Valor = Replace(_Valor, Chr(_i), " ")
+                            Next
+                            _Valor = Replace(_Valor, Chr(127), " ")
+
+                            If IsNothing(_Valor) Then
+                                _Valor = String.Empty
+                            End If
+
+                            Try
+                                _Valor = _Valor.ToString.Trim
+                            Catch ex As Exception
+
+                            End Try
+
                         ElseIf TipoDeDato = "DateTime" Then
 
                             Dim _Fecha As Date = NuloPorNro(_Row(dc.ColumnName), "01-01-1900")
@@ -540,6 +582,7 @@ Public Class Frm_Exportar_Excel
         If _Procesando Then
             Btn_Exportar_a_Excel.Enabled = False
             Btn_Exportar_Csv.Enabled = False
+            Btn_Exportar_Txt.Enabled = False
             Btn_Ver_Detalle.Enabled = False
             Me.ControlBox = Not _Procesando
             Btn_Carpeta_Informes.Enabled = False
@@ -548,6 +591,7 @@ Public Class Frm_Exportar_Excel
         Else
             Btn_Exportar_a_Excel.Enabled = True
             Btn_Exportar_Csv.Enabled = True
+            Btn_Exportar_Txt.Enabled = True
             Btn_Ver_Detalle.Enabled = True
             Me.ControlBox = Not _Procesando
             Btn_Carpeta_Informes.Enabled = True
