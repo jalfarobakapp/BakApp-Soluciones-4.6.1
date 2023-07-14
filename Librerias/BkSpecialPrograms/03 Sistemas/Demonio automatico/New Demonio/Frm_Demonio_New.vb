@@ -1029,9 +1029,13 @@ Public Class Frm_Demonio_New
 
         Timer_Ejecuciones.Stop()
 
+        Sb_Actualizar_Fecha()
+
 #Region "ENVIO DE CORREOS"
 
         If _Cl_Correos.Ejecutar Then
+
+            Sb_ActualizarDetalleListview("Envio de correos", "A la espera de procesar los envíos...")
 
             If Not _Cl_Correos.Procesando Then
 
@@ -1058,7 +1062,6 @@ Public Class Frm_Demonio_New
                 _Cl_Correos.Procesando = False
 
                 Sb_ActualizarDetalleListview("Envio de correos", _DProgramaciones.Sp_EnvioCorreo.Resumen)
-                Sb_Activar_ObjetosTimer(Timer_Correo, _DProgramaciones.Sp_EnvioCorreo)
 
             End If
 
@@ -1131,7 +1134,6 @@ Public Class Frm_Demonio_New
 
         End If
 
-
 #End Region
 
 #Region "CIERRE DE DOCUMENTOS"
@@ -1186,8 +1188,6 @@ Public Class Frm_Demonio_New
                 Fm.ActivacionAutomatica = True
                 Fm.ShowDialog(Me)
                 Fm.Dispose()
-
-                Sb_Actualizar_Fecha()
 
                 Dim _Fecha As Date = DtpFecharevision.Value
                 Dim _Fecha_Anterior As Date = DateAdd(DateInterval.Month, -1, _Fecha)
@@ -1260,7 +1260,6 @@ Public Class Frm_Demonio_New
             End If
 
         End If
-
 
 #End Region
 

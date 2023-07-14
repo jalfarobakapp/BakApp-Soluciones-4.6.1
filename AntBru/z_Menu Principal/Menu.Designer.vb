@@ -847,9 +847,9 @@ Partial Class Menu
         Me.Menu_BakApp.AntiAlias = True
         Me.Menu_BakApp.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Menu_BakApp.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Menu_Extra})
-        Me.Menu_BakApp.Location = New System.Drawing.Point(365, 16)
+        Me.Menu_BakApp.Location = New System.Drawing.Point(273, 16)
         Me.Menu_BakApp.Name = "Menu_BakApp"
-        Me.Menu_BakApp.Size = New System.Drawing.Size(118, 25)
+        Me.Menu_BakApp.Size = New System.Drawing.Size(210, 25)
         Me.Menu_BakApp.Stretch = True
         Me.Menu_BakApp.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Menu_BakApp.TabIndex = 52
