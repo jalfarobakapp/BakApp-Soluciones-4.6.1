@@ -3946,7 +3946,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                             Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Bruto = Round(Costo_Ud2Lista_Neto * (1+((Iva+Ila)/100)),0)"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
-            Dim _MostrarPrecioConFlete As Boolean
+            Dim _MostrarPrecioConFlete As Boolean = Chk_MostrarFlete.Checked
 
             If _MostrarPrecioConFlete Then
                 Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Neto = Costo_Ud1Lista_Neto + (Costo_Flete/1.19)
@@ -4799,6 +4799,17 @@ Public Class Frm_01_Asis_Compra_Resultados
         _Sql.Sb_Parametro_Informe_Sql(Chk_SumerStockExternoAlFisico, "Compras_Asistente",
                                       Chk_SumerStockExternoAlFisico.Name, Class_SQLite.Enum_Type._Boolean, Chk_SumerStockExternoAlFisico.Checked, _Actualizar)
 
+
+        'Valores Netos
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_Valores_Netos, "Compras_Asistente",
+                                             Rdb_Valores_Netos.Name, Class_SQLite.Enum_Type._Boolean, Rdb_Valores_Netos.Checked, _Actualizar)
+        'Valores Brutos
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_Valores_Brutos, "Compras_Asistente",
+                                             Rdb_Valores_Brutos.Name, Class_SQLite.Enum_Type._Boolean, Rdb_Valores_Brutos.Checked, _Actualizar)
+
+        'Valores + flete
+        _Sql.Sb_Parametro_Informe_Sql(Chk_MostrarFlete, "Compras_Asistente",
+                                             Chk_MostrarFlete.Name, Class_SQLite.Enum_Type._Boolean, Chk_MostrarFlete.Checked, _Actualizar)
 
 
     End Sub
