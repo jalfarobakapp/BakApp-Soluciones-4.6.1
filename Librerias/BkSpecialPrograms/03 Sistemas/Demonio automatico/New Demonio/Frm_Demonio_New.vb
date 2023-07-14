@@ -1058,6 +1058,7 @@ Public Class Frm_Demonio_New
                 _Cl_Correos.Procesando = False
 
                 Sb_ActualizarDetalleListview("Envio de correos", _DProgramaciones.Sp_EnvioCorreo.Resumen)
+                Sb_Activar_ObjetosTimer(Timer_Correo, _DProgramaciones.Sp_EnvioCorreo)
 
             End If
 

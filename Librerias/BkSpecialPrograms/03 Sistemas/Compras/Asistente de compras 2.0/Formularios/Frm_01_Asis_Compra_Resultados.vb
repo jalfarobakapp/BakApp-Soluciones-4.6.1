@@ -8200,9 +8200,14 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         If Auto_GenerarAutomaticamenteOCCProveedores Then
 
+            Dim _QuitarBloqueadosCompra As Boolean = Chk_Quitar_Bloqueados_Compra.Checked
+
+            Chk_Quitar_Bloqueados_Compra.Checked = False
+
             Call BtnProceso_Prov_Auto_Click(Nothing, Nothing)
 
             BtnProceso_Prov_Auto.Enabled = False
+            Chk_Quitar_Bloqueados_Compra.Checked = _QuitarBloqueadosCompra
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = _Proceso_Automatico_Ejecutado
             Chk_Quitar_Ventas_Calzadas.Checked = True
             Chk_Quitare_Sospechosos_Stock.Checked = True
@@ -8336,9 +8341,14 @@ Drop Table #Paso"
 
         If Auto_GenerarAutomaticamenteOCCProveedorStar Then
 
+            Dim _QuitarBloqueadosCompra As Boolean = Chk_Quitar_Bloqueados_Compra.Checked
+
+            Chk_Quitar_Bloqueados_Compra.Checked = False
+
             Call BtnProceso_Prov_Auto_Especial_Click(Nothing, Nothing)
 
             BtnProceso_Prov_Auto.Enabled = False
+            Chk_Quitar_Bloqueados_Compra.Checked = _QuitarBloqueadosCompra
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = _Proceso_Automatico_Ejecutado
             Chk_Quitar_Ventas_Calzadas.Checked = True
             Chk_Mostrar_Solo_Stock_Critico.Checked = True
@@ -8383,12 +8393,16 @@ Drop Table #Paso"
 
         If Auto_GenerarAutomaticamenteNVI Then
 
+            Dim _QuitarBloqueadosCompra As Boolean = Chk_Quitar_Bloqueados_Compra.Checked
+
+            Chk_Quitar_Bloqueados_Compra.Checked = False
+
             Call BtnProceso_Prov_Auto_Click(Nothing, Nothing)
 
             BtnProceso_Prov_Auto.Enabled = False
 
             Chk_Restar_Stok_Bodega.Checked = True
-            Chk_Quitar_Bloqueados_Compra.Checked = True
+            Chk_Quitar_Bloqueados_Compra.Checked = _QuitarBloqueadosCompra
             'Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = True
             Chk_Mostrar_Solo_Productos_A_Comprar.Checked = True
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = True
@@ -9183,7 +9197,7 @@ Drop Table #Paso"
                     Consulta_sql = "Select * From " & _TblPaso
                     _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-                    If Not CBool(_Tbl_Productos.Rows.Count) Then
+                    If Not Auto_GenerarAutomaticamenteNVI AndAlso Not CBool(_Tbl_Productos.Rows.Count) Then
                         MessageBoxEx.Show(Me, "No se encontraron productos en otras bodegas", "Reabastecimiento entre bodegas",
                                       MessageBoxButtons.OK, MessageBoxIcon.Information)
                         Return

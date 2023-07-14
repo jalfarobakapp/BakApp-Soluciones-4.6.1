@@ -22,7 +22,6 @@ Partial Class Menu
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Dim MetroTileFrame1 As DevComponents.DotNetBar.Metro.MetroTileFrame
         Dim MetroTileFrame2 As DevComponents.DotNetBar.Metro.MetroTileFrame
         Dim MetroTileFrame3 As DevComponents.DotNetBar.Metro.MetroTileFrame
@@ -67,7 +66,7 @@ Partial Class Menu
         Me.ButtonItem5 = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem2 = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
-        Me.Tiempo_Actualizar_BakApp = New System.Windows.Forms.Timer(Me.components)
+        Me.Tiempo_Actualizar_BakApp = New System.Windows.Forms.Timer()
         Me.Menu_BakApp = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Menu_Extra = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
@@ -81,13 +80,13 @@ Partial Class Menu
         Me.Btn_DesacNotif_30 = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_DesacNotif_Siempre = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
-        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
-        Me.AppCommandTheme = New DevComponents.DotNetBar.Command(Me.components)
+        Me.ImageList1 = New System.Windows.Forms.ImageList()
+        Me.AppCommandTheme = New DevComponents.DotNetBar.Command()
         Me.Btn_Themas = New DevComponents.DotNetBar.ButtonX()
         Me.ReflectionLabel1 = New DevComponents.DotNetBar.Controls.ReflectionLabel()
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
-        Me.StyleManager1 = New DevComponents.DotNetBar.StyleManager(Me.components)
+        Me.StyleManager1 = New DevComponents.DotNetBar.StyleManager()
         MetroTileFrame1 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame2 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame3 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
@@ -799,7 +798,6 @@ Partial Class Menu
         Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5})
         Me.ButtonX1.TabIndex = 15
         Me.ButtonX1.Text = "Boton de pruebas"
-        Me.ButtonX1.Visible = False
         '
         'Btn_Monisiones
         '

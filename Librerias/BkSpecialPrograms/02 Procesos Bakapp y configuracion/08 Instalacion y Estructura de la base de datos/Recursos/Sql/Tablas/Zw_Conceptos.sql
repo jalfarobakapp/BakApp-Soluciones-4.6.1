@@ -5,6 +5,8 @@ CREATE TABLE [dbo].[Zw_Conceptos](
 	[ModFechVto]					[bit] NOT NULL DEFAULT (0),
 	[ModFechVto_Dias1erVenci]		[int] NOT NULL DEFAULT (0),
 	[NoPermitirMismoConceptoEnDoc]	[bit] NOT NULL DEFAULT (0),
+	[NoAfectaDsctoGlobal]	        [bit] NOT NULL DEFAULT (0),
+	[NoPermitirModificarValor]	    [bit] NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Conceptos] PRIMARY KEY CLUSTERED 
 (
 	[Koct] ASC
