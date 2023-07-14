@@ -87,6 +87,7 @@ Public Class Frm_RecargosXProd
         Sb_Sumar_Cantidades()
 
         Bar2.Enabled = False
+        Tiempo.Interval = 4000
         Tiempo.Start()
 
     End Sub

@@ -6447,6 +6447,9 @@ Public Class Frm_Formulario_Documento
         Dim _DsctoPorcGlobal As Double
 
         Dim _Afecta_Precio_Real As Boolean
+        Dim _NroConceptos As Integer
+        Dim _NroConceptos_NoAfectaDsctoGlobal As Integer
+        Dim _Conceptos_NoAfectaDsctoGlobal As Boolean
 
         For Each _Fila As DataGridViewRow In Grilla_Detalle.Rows
 
@@ -6480,11 +6483,19 @@ Public Class Frm_Formulario_Documento
 
                 Else
 
-                    Consulta_sql = "Select * From TABCT Where KOCT = '" & _Codigo & "'"
+                    Consulta_sql = "Select * From TABCT" & vbCrLf &
+                                   "Inner Join " & _Global_BaseBk & "Zw_Conceptos On KOCT = Koct" & vbCrLf &
+                                   "Where KOCT = '" & _Codigo & "'"
                     Dim _RowConcepto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                     If Not (_RowConcepto Is Nothing) Then
                         _Afecta_Precio_Real = _RowConcepto.Item("RECAPRRE")
+                    End If
+
+                    _NroConceptos += 1
+
+                    If _RowConcepto.Item("NoAfectaDsctoGlobal") Then
+                        _NroConceptos_NoAfectaDsctoGlobal += 1
                     End If
 
                     _TotalDsctoGlobal += Math.Round(NuloPorNro(_Fila.Cells("ValNetoLinea").Value, 0) * -1, 2)
@@ -6509,6 +6520,10 @@ Public Class Frm_Formulario_Documento
         'Datos.WriteXml(AppPath() & "\Data\" & RutEmpresa & "\filename.xml") 'Documento_vta
         Dim _Tiene_Dscto_Superado_Autorizado As Boolean
         Dim _CodFuncionario_Autoriza As String
+
+        If _NroConceptos = _NroConceptos_NoAfectaDsctoGlobal Then
+            _Conceptos_NoAfectaDsctoGlobal = True
+        End If
 
         For Each _Fila As DataGridViewRow In Grilla_Detalle.Rows
 
@@ -6539,8 +6554,8 @@ Public Class Frm_Formulario_Documento
                 _ImportanciaPorc = Math.Round(_NetoLinea / _TotalNetoSDscto, 5)
                 _ImportanciaValor = Math.Round(_ImportanciaPorc * _TotalDsctoGlobal, 5)
 
-                Dim _PrecioNetoUd1 As Double = Math.Round(_NetoLinea / _CantUd1, 3) 'Math.Round(_Fila.Cells("PrecioNetoUd").Value, 3)
-                _NetoRealUd1 = Math.Round(_PrecioNetoUd1 - (_PrecioNetoUd1 * _Var_DsctoGlobal), 3) 'Math.Round((NetoLinea / CantUd1) - ((NetoLinea / CantUd1) * Var_DsctoGlobal), 3)
+                Dim _PrecioNetoUd1 As Double = Math.Round(_NetoLinea / _CantUd1, 3)
+                _NetoRealUd1 = Math.Round(_PrecioNetoUd1 - (_PrecioNetoUd1 * _Var_DsctoGlobal), 3)
 
                 If _Rtu = 1 Then
                     _NetoRealUd2 = _NetoRealUd1 * _Rtu
@@ -6589,10 +6604,6 @@ Public Class Frm_Formulario_Documento
 
                 If _DsctoReal > _DsctoMaximoLinea Then
 
-                    'If _ValVtaDescMax Then
-                    '_Fila.Cells("DsctoGlobalSuperado").Value = False
-                    'Else
-
                     Dim _CodFunAutoriza As String = _Fila.Cells("CodFunAutoriza").Value
                     Dim _CodVendedor As String = _Fila.Cells("CodVendedor").Value
                     Dim _CodPermiso As String = NuloPorNro(_Fila.Cells("CodPermiso").Value, "")
@@ -6602,7 +6613,7 @@ Public Class Frm_Formulario_Documento
 
                     Dim _Tbl As DataTable = Fx_Trae_Permiso_Bk(_CodFunAutoriza, "Bkp00039")
 
-                    If CBool(_Tbl.Rows.Count) Then 'Not Fx_Tiene_Permiso(Me, "Bkp00014", , True) Then
+                    If CBool(_Tbl.Rows.Count) Then
                         _Valor_Dscto = _Tbl.Rows(0).Item("Valor_Dscto")
                     End If
 
@@ -6617,9 +6628,19 @@ Public Class Frm_Formulario_Documento
                             _Tiene_Dscto_Superado_Autorizado = True
                             _CodFuncionario_Autoriza = _CodFunAutoriza
                         Else
+
                             _Fila.Cells("ValVtaDescMax").Value = True
                             _Fila.Cells("DsctoGlobalSuperado").Value = True
                             _Contador += 1
+
+                            Dim _Dec = Math.Round(_DescuentoPorc - Math.Round(_DsctoMaximoLinea, 0), 2)
+
+                            If _Dec <= 0 And _Conceptos_NoAfectaDsctoGlobal Then
+                                _Fila.Cells("ValVtaDescMax").Value = False
+                                _Fila.Cells("DsctoGlobalSuperado").Value = False
+                                _Contador -= 1
+                            End If
+
                         End If
 
                     End If
@@ -7823,14 +7844,23 @@ Public Class Frm_Formulario_Documento
                                 Dim _Koen = _TblEncabezado.Rows(0).Item("CodEntidad")
                                 Dim _Suen = _TblEncabezado.Rows(0).Item("CodSucEntidad")
 
+                                Consulta_sql = "Select * From TABCT" & vbCrLf &
+                                               "Left Join " & _Global_BaseBk & "Zw_Conceptos On KOCT = Koct" & vbCrLf &
+                                               "Where KOCT = '" & _Codigo & "'"
+                                Dim _RowConcepto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
                                 If _Tict = "D" Then
                                     _Permitir = True
-                                    If _BloqEdiConcepDescuento Then _Permitir = Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00043", _Ds_Matriz_Documentos, _Koen, _suen)
+                                    If _BloqEdiConcepDescuento Or _RowConcepto.Item("NoPermitirModificarValor") Then
+                                        _Permitir = Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00043", _Ds_Matriz_Documentos, _Koen, _Suen)
+                                    End If
                                 End If
 
                                 If _Tict = "R" And _Cabeza = "DescuentoPorc" Then
                                     _Permitir = True
-                                    If _BloqEdiConcepRecargo Then _Permitir = Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00044", _Ds_Matriz_Documentos, _Koen, _Suen)
+                                    If _BloqEdiConcepRecargo Or _RowConcepto.Item("NoPermitirModificarValor") Then
+                                        _Permitir = Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00044", _Ds_Matriz_Documentos, _Koen, _Suen)
+                                    End If
                                 End If
 
                                 If _Permitir Then
@@ -8846,7 +8876,6 @@ Public Class Frm_Formulario_Documento
 
                     Dim _Codigo As String = NuloPorNro(_Fila.Cells("Codigo").Value, "")
 
-                    'Consulta_sql = "Select * From TABCT Where KOCT = '" & _Codigo & "'"
                     Consulta_sql = "Select * From TABCT" & vbCrLf &
                                    "Left Join " & _Global_BaseBk & "Zw_Conceptos On KOCT = Koct" & vbCrLf &
                                    "Where KOCT = '" & _Codigo & "'"
@@ -8926,10 +8955,7 @@ Public Class Frm_Formulario_Documento
                                 ' Esto es para que con un concepto especial el sistema cambie la fecha de vencimiento
                                 ' automaticamente si es que el concepto tiene marcada la casilla ModFechVto de la tabla Zw_Conceptos
 
-                                If _Tido = "BLV" Or _Tido = "FCV" Or _Tido = "NVV" Then
-
-                                    'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Conceptos Where Koct = '" & _Codigo & "'"
-                                    'Dim _Row_Concepto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                                If _Tido = "BLV" Or _Tido = "FCV" Or _Tido = "NVV" Or _Tido = "GDV" Or _Tido = "GDP" Then
 
                                     If Not IsNothing(_RowConcepto) Then
 

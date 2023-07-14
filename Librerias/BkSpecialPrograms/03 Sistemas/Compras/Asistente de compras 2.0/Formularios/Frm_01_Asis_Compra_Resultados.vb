@@ -3946,7 +3946,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                             Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Bruto = Round(Costo_Ud2Lista_Neto * (1+((Iva+Ila)/100)),0)"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
-            Dim _MostrarPrecioConFlete As Boolean
+            Dim _MostrarPrecioConFlete As Boolean = Chk_MostrarFlete.Checked
 
             If _MostrarPrecioConFlete Then
                 Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Neto = Costo_Ud1Lista_Neto + (Costo_Flete/1.19)
@@ -4799,6 +4799,17 @@ Public Class Frm_01_Asis_Compra_Resultados
         _Sql.Sb_Parametro_Informe_Sql(Chk_SumerStockExternoAlFisico, "Compras_Asistente",
                                       Chk_SumerStockExternoAlFisico.Name, Class_SQLite.Enum_Type._Boolean, Chk_SumerStockExternoAlFisico.Checked, _Actualizar)
 
+
+        'Valores Netos
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_Valores_Netos, "Compras_Asistente",
+                                             Rdb_Valores_Netos.Name, Class_SQLite.Enum_Type._Boolean, Rdb_Valores_Netos.Checked, _Actualizar)
+        'Valores Brutos
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_Valores_Brutos, "Compras_Asistente",
+                                             Rdb_Valores_Brutos.Name, Class_SQLite.Enum_Type._Boolean, Rdb_Valores_Brutos.Checked, _Actualizar)
+
+        'Valores + flete
+        _Sql.Sb_Parametro_Informe_Sql(Chk_MostrarFlete, "Compras_Asistente",
+                                             Chk_MostrarFlete.Name, Class_SQLite.Enum_Type._Boolean, Chk_MostrarFlete.Checked, _Actualizar)
 
 
     End Sub
@@ -8200,9 +8211,14 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         If Auto_GenerarAutomaticamenteOCCProveedores Then
 
+            Dim _QuitarBloqueadosCompra As Boolean = Chk_Quitar_Bloqueados_Compra.Checked
+
+            Chk_Quitar_Bloqueados_Compra.Checked = False
+
             Call BtnProceso_Prov_Auto_Click(Nothing, Nothing)
 
             BtnProceso_Prov_Auto.Enabled = False
+            Chk_Quitar_Bloqueados_Compra.Checked = _QuitarBloqueadosCompra
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = _Proceso_Automatico_Ejecutado
             Chk_Quitar_Ventas_Calzadas.Checked = True
             Chk_Quitare_Sospechosos_Stock.Checked = True
@@ -8336,9 +8352,14 @@ Drop Table #Paso"
 
         If Auto_GenerarAutomaticamenteOCCProveedorStar Then
 
+            Dim _QuitarBloqueadosCompra As Boolean = Chk_Quitar_Bloqueados_Compra.Checked
+
+            Chk_Quitar_Bloqueados_Compra.Checked = False
+
             Call BtnProceso_Prov_Auto_Especial_Click(Nothing, Nothing)
 
             BtnProceso_Prov_Auto.Enabled = False
+            Chk_Quitar_Bloqueados_Compra.Checked = _QuitarBloqueadosCompra
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = _Proceso_Automatico_Ejecutado
             Chk_Quitar_Ventas_Calzadas.Checked = True
             Chk_Mostrar_Solo_Stock_Critico.Checked = True
@@ -8383,12 +8404,16 @@ Drop Table #Paso"
 
         If Auto_GenerarAutomaticamenteNVI Then
 
+            Dim _QuitarBloqueadosCompra As Boolean = Chk_Quitar_Bloqueados_Compra.Checked
+
+            Chk_Quitar_Bloqueados_Compra.Checked = False
+
             Call BtnProceso_Prov_Auto_Click(Nothing, Nothing)
 
             BtnProceso_Prov_Auto.Enabled = False
 
             Chk_Restar_Stok_Bodega.Checked = True
-            Chk_Quitar_Bloqueados_Compra.Checked = True
+            Chk_Quitar_Bloqueados_Compra.Checked = _QuitarBloqueadosCompra
             'Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = True
             Chk_Mostrar_Solo_Productos_A_Comprar.Checked = True
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = True
@@ -9183,7 +9208,7 @@ Drop Table #Paso"
                     Consulta_sql = "Select * From " & _TblPaso
                     _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-                    If Not CBool(_Tbl_Productos.Rows.Count) Then
+                    If Not Auto_GenerarAutomaticamenteNVI AndAlso Not CBool(_Tbl_Productos.Rows.Count) Then
                         MessageBoxEx.Show(Me, "No se encontraron productos en otras bodegas", "Reabastecimiento entre bodegas",
                                       MessageBoxButtons.OK, MessageBoxIcon.Information)
                         Return
