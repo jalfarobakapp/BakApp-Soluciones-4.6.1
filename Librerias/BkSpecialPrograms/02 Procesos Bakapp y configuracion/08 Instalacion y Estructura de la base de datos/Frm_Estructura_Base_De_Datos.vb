@@ -181,6 +181,8 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Pago_Prov_Autoriza_02_Det", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Pago_Prov_Autoriza_02_Det_Eli", _Modificar, Lbl_Eventos)
 
+            .Sb_Revisar_Tabla2(Me, "Zw_Patentes_rvm", _Modificar, Lbl_Eventos)
+
             'CONFIGURACION DE PERMISO DE USUARIOS, ROLES
             .Sb_Revisar_Tabla2(Me, "ZW_Permisos", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "ZW_PermisosADM", _Modificar, Lbl_Eventos)

@@ -935,7 +935,7 @@ Public Class Frm_Demonio_New
         Dim _Fecha_Computador As Date = FormatDateTime(Now.Date, DateFormat.ShortDate)
         Dim _Fecha_Dtp As Date = FormatDateTime(DtpFecharevision.Value, DateFormat.ShortDate)
 
-        If Not Me.Visible Then
+        If Me.WindowState = FormWindowState.Minimized Then
 
             If _Fecha_Computador <> _Fecha_Dtp Then
 

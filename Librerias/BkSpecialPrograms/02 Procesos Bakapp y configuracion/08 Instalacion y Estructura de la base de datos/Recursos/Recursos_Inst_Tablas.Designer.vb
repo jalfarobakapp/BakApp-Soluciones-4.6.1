@@ -521,14 +521,12 @@ Namespace My.Resources
         '''	[ModFechVto]					[bit] NOT NULL DEFAULT (0),
         '''	[ModFechVto_Dias1erVenci]		[int] NOT NULL DEFAULT (0),
         '''	[NoPermitirMismoConceptoEnDoc]	[bit] NOT NULL DEFAULT (0),
+        '''	[NoAfectaDsctoGlobal]	        [bit] NOT NULL DEFAULT (0),
+        '''	[NoPermitirModificarValor]	    [bit] NOT NULL DEFAULT (0),
         ''' CONSTRAINT [PK_Zw_Conceptos] PRIMARY KEY CLUSTERED 
         '''(
         '''	[Koct] ASC
-        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-        ''') ON [PRIMARY]
-        '''
-        '''
-        '''.
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, I [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Conceptos() As String
             Get
@@ -1263,15 +1261,15 @@ Namespace My.Resources
         '''
         '''CREATE TABLE [dbo].[Zw_DTE_Aec](
         '''	[Id_Aec]					[int] IDENTITY(1,1) NOT NULL,
-        '''	[Id_Dte]					[int]			NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Idmaeedo]					[int]			NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Id_Dte]					[int]			NOT NULL DEFAULT (0),
+        '''	[Idmaeedo]					[int]			NOT NULL DEFAULT (0),
         '''	[Tido]						[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[Nudo]						[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[FechaSolicitud]			[datetime]		NULL,
         '''	[RutCedente]				[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[RutCesionario]				[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[RazonSocialCesionario]		[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Dire [resto de la cadena truncado]&quot;;.
+        '''	[Direcc [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_DTE_Aec() As String
             Get
@@ -2274,6 +2272,27 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
+        '''CREATE TABLE [dbo].[Zw_Patentes_rvm](
+        '''	[Id]				[int] IDENTITY(1,1) NOT NULL,
+        '''	[Patente]			[varchar](10)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Marca]				[varchar](30)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Modelo]			[varchar](50)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[AFabricacion]		[varchar](4)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[ModeloBusqueda]	[varchar](50)		NOT NULL DEFAULT (&apos;&apos;),
+        ''' CONSTRAINT [PK_Zw_Patentes_rvm] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLO [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Patentes_rvm() As String
+            Get
+                Return ResourceManager.GetString("Zw_Patentes_rvm", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
         '''
         '''CREATE TABLE [dbo].[Zw_Pdc_Mesones](
         '''	[Codmeson]                  [char](13)      NOT NULL DEFAULT (&apos;&apos;),
@@ -2684,18 +2703,16 @@ Namespace My.Resources
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
         '''CREATE TABLE [dbo].[Zw_Prod_CodQR](
+        '''    [Semilla]   [int] IDENTITY(1,1) NOT NULL,
         '''	[CodigoQR]	[varchar](300)  NOT NULL DEFAULT (&apos;&apos;),
         '''	[Kopral]	[varchar](21)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[Koen]	    [varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Kopr]	    [varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
         ''' CONSTRAINT [PK_Zw_Prod_CodQR] PRIMARY KEY CLUSTERED 
         '''(
         '''	[CodigoQR] ASC
         ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-        ''') ON [PRIMARY]
-        '''
-        '''
-        '''
-        '''.
+        ''')  [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Prod_CodQR() As String
             Get
@@ -2714,10 +2731,9 @@ Namespace My.Resources
         '''	[Tido]			[varchar](3)		NOT NULL DEFAULT (&apos;&apos;),
         '''	[Nudo]			[varchar](10)		NOT NULL DEFAULT (&apos;&apos;),
         '''	[Idmaeedo]		[int]				NOT NULL DEFAULT (0),
-        ''' CONSTRAINT [PK_Zw_Prod_CodQRLogDoc] PRIMARY KEY CLUSTERED 
-        '''(
-        '''	[Id] ASC
-        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  [resto de la cadena truncado]&quot;;.
+        '''    [Kopr]		    [varchar](13)		NOT NULL DEFAULT (&apos;&apos;),
+        '''    [CodLeido]		[varchar](300)		NOT NULL DEFAULT (&apos;&apos;),
+        ''' CONSTRAINT [PK_Zw_Prod_CodQRLogDoc] PRIMARY KEY CLUSTER [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Prod_CodQRLogDoc() As String
             Get

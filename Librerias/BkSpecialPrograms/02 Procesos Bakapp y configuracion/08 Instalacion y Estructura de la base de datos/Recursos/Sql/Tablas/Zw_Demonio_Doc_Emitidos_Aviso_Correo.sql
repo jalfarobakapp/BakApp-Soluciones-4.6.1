@@ -17,7 +17,7 @@ CREATE TABLE [dbo].[Zw_Demonio_Doc_Emitidos_Aviso_Correo](
 	[Intentos]				[int]               NOT NULL DEFAULT (0),
 	[Enviado]				[bit]               NOT NULL DEFAULT (0),
 	[Adjuntar_Documento]	[bit]               NOT NULL DEFAULT (0),
-	[Mensaje]				[text]              NOT NULL DEFAULT (''),
+	[Mensaje]				[varchar](max)      NOT NULL DEFAULT (''),
 	[Fecha]					[datetime]          NOT NULL DEFAULT (CONVERT([datetime],floor(CONVERT([float],getdate(),0)),0)),
 	[Fecha_Envio]			[datetime]          NULL,
 	[Informacion]			[varchar](1000)     NOT NULL DEFAULT (''),
