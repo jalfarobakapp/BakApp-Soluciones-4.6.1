@@ -813,6 +813,8 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Pago_Prov_Autoriza_02_Det
             Case "Zw_Pago_Prov_Autoriza_02_Det_Eli"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Pago_Prov_Autoriza_02_Det_Eli
+            Case "Zw_Patentes_rvm"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Patentes_rvm
             Case "Zw_Pdc_Mesones"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Pdc_Mesones
             Case "Zw_Pdc_MesonVsMaquina"

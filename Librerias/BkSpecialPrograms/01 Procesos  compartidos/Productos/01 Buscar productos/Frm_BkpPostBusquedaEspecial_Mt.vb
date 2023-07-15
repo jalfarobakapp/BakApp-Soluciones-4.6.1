@@ -512,8 +512,8 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     End Sub
     Private Sub Frm_BkpPostBusquedaEspecial_Mt_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        'Return
-        'Fx_Buscar_Patente()
+
+        Fx_Buscar_Patente()
 
         _Cl_ActFxDinXProductos = New Class_ActFxDinXProductos
 

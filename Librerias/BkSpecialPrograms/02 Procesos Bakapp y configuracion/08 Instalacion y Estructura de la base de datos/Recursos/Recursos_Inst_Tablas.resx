@@ -433,6 +433,9 @@
   <data name="Zw_Pago_Prov_Autoriza_02_Det_Eli" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_pago_prov_autoriza_02_det_eli.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="Zw_Patentes_rvm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_Patentes_rvm.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="Zw_Pdc_Mesones" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_pdc_mesones.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
