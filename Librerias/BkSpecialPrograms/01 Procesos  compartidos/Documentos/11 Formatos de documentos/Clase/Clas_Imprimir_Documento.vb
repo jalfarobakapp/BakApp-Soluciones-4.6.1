@@ -251,6 +251,7 @@ Public Class Clas_Imprimir_Documento
         Dim _Detalle_Doc_Incluye = _TblEncForm.Rows(0).Item("Detalle_Doc_Incluye")
 
         If _Detalle_Doc_Incluye = "SP" Then _Filtro_Productos = "Where TICT = ''" '_Imprimir_Fila = (_Tict = "")
+        If _Detalle_Doc_Incluye = "SP2" Then _Filtro_Productos = "Where TIPR <> 'SSN'" '_Imprimir_Fila = (_Tict = "")
         If _Detalle_Doc_Incluye = "PD" Then _Filtro_Productos = "Where TICT In ('','D')" '_Imprimir_Fila = (_Tict = "D")
         If _Detalle_Doc_Incluye = "PR" Then _Filtro_Productos = "Where TICT In ('','R')" '_Imprimir_Fila = (_Tict = "R")
         If _Detalle_Doc_Incluye = "TD" Then _Filtro_Productos = String.Empty ' _Imprimir_Fila = True

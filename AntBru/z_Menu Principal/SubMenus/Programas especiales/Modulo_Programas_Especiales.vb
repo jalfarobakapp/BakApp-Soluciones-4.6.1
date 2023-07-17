@@ -341,4 +341,10 @@ Public Class Modulo_Programas_Especiales
         Fm.Dispose()
 
     End Sub
+
+    Private Sub Btn_SisComisiones_Click(sender As Object, e As EventArgs) Handles Btn_SisComisiones.Click
+        Dim NewPanel As Comisiones = Nothing
+        NewPanel = New Comisiones(_Fm_Menu_Padre)
+        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+    End Sub
 End Class

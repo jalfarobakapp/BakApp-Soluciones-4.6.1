@@ -40,6 +40,7 @@ Partial Class Modulo_Programas_Especiales
         Me.Btn_Cierre_Reactivacion_Documentos = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Habilitar_Nvv_Para_Facturar = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Patentes_rvm = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_SisComisiones = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnCambiarDeUsuario = New DevComponents.DotNetBar.ButtonItem()
@@ -75,7 +76,7 @@ Partial Class Modulo_Programas_Especiales
         Me.MnuEspecialOtros.FixedSize = New System.Drawing.Size(1000, 550)
         Me.MnuEspecialOtros.MultiLine = True
         Me.MnuEspecialOtros.Name = "MnuEspecialOtros"
-        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Demonio, Me.BtnSQL2Excel, Me.BtnDTE2PDF, Me.BtnCorreos_SMTP, Me.Btn_CRV_Control_Ruta_Vehiculos, Me.Btn_Etiquetas_De_Barra, Me.BtnCrearFormatos, Me.Btn_DTE_Respuestas_XML, Me.Btn_Precios_PrestaShop, Me.Btn_Huella, Me.Btn_Pocket_PC, Me.Btn_Archivador, Me.Btn_Cierre_Reactivacion_Documentos, Me.Btn_Habilitar_Nvv_Para_Facturar, Me.Btn_Patentes_rvm})
+        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Demonio, Me.BtnSQL2Excel, Me.BtnDTE2PDF, Me.BtnCorreos_SMTP, Me.Btn_CRV_Control_Ruta_Vehiculos, Me.Btn_Etiquetas_De_Barra, Me.BtnCrearFormatos, Me.Btn_DTE_Respuestas_XML, Me.Btn_Precios_PrestaShop, Me.Btn_Huella, Me.Btn_Pocket_PC, Me.Btn_Archivador, Me.Btn_Cierre_Reactivacion_Documentos, Me.Btn_Habilitar_Nvv_Para_Facturar, Me.Btn_Patentes_rvm, Me.Btn_SisComisiones})
         '
         '
         '
@@ -487,6 +488,34 @@ Partial Class Modulo_Programas_Especiales
         Me.Btn_Patentes_rvm.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Patentes_rvm.TitleText = "BakApp"
         '
+        'Btn_SisComisiones
+        '
+        Me.Btn_SisComisiones.Image = CType(resources.GetObject("Btn_SisComisiones.Image"), System.Drawing.Image)
+        Me.Btn_SisComisiones.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_SisComisiones.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_SisComisiones.Name = "Btn_SisComisiones"
+        Me.Btn_SisComisiones.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_SisComisiones.Text = "<font size=""+4""><b>COMISIONES</b></font><br/><font size=""-1"">Sistema de comisione" &
+    "s por venta</font>"
+        Me.Btn_SisComisiones.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Blue
+        Me.Btn_SisComisiones.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_SisComisiones.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
+        Me.Btn_SisComisiones.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
+        Me.Btn_SisComisiones.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_SisComisiones.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
+        Me.Btn_SisComisiones.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
+        Me.Btn_SisComisiones.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_SisComisiones.TileStyle.PaddingBottom = 4
+        Me.Btn_SisComisiones.TileStyle.PaddingLeft = 4
+        Me.Btn_SisComisiones.TileStyle.PaddingRight = 4
+        Me.Btn_SisComisiones.TileStyle.PaddingTop = 4
+        Me.Btn_SisComisiones.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_SisComisiones.TitleText = "BakApp"
+        Me.Btn_SisComisiones.Visible = False
+        '
         'Bar2
         '
         Me.Bar2.AntiAlias = True
@@ -567,4 +596,5 @@ Partial Class Modulo_Programas_Especiales
     Private WithEvents Btn_Cierre_Reactivacion_Documentos As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Habilitar_Nvv_Para_Facturar As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Patentes_rvm As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_SisComisiones As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

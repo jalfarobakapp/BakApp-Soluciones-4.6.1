@@ -101,7 +101,7 @@
 
         End If
 
-        If _TblSucursales.Rows.Count Then
+        If Not IsNothing(_TblSucursales) AndAlso _TblSucursales.Rows.Count Then
             Txt_Sucursales.Text = Generar_Filtro_IN(_TblSucursales, "Chk", "Codigo", False, True)
         Else
             Txt_Sucursales.Text = String.Empty
@@ -127,7 +127,7 @@
 
         End If
 
-        If _TblVendedores.Rows.Count Then
+        If Not IsNothing(_TblVendedores) AndAlso _TblVendedores.Rows.Count Then
             Txt_Vendedores.Text = Generar_Filtro_IN(_TblVendedores, "Chk", "Codigo", False, True, "'")
         Else
             Txt_Vendedores.Text = String.Empty

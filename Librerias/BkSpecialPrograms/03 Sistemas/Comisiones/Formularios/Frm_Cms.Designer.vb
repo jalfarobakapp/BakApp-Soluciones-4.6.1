@@ -40,14 +40,13 @@ Partial Class Frm_Cms
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla_Detalle = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
-        Me.Btn_Nuevo_Despacho = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Buscar_Despacho = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ActualizarVendedores = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnExportarExcel = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla_Lineas = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla_DetalleSc = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel4.SuspendLayout()
         CType(Me.Grilla_Periodo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel3.SuspendLayout()
@@ -224,7 +223,7 @@ Partial Class Frm_Cms
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Nuevo_Despacho, Me.Btn_Buscar_Despacho, Me.Btn_Actualizar, Me.BtnExportarExcel})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_ActualizarVendedores, Me.BtnExportarExcel, Me.Btn_Actualizar})
         Me.Bar2.Location = New System.Drawing.Point(0, 600)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(813, 41)
@@ -234,35 +233,15 @@ Partial Class Frm_Cms
         Me.Bar2.TabStop = False
         Me.Bar2.Text = "Bar2"
         '
-        'Btn_Nuevo_Despacho
+        'Btn_ActualizarVendedores
         '
-        Me.Btn_Nuevo_Despacho.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Nuevo_Despacho.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Nuevo_Despacho.Image = CType(resources.GetObject("Btn_Nuevo_Despacho.Image"), System.Drawing.Image)
-        Me.Btn_Nuevo_Despacho.ImageAlt = CType(resources.GetObject("Btn_Nuevo_Despacho.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Nuevo_Despacho.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Nuevo_Despacho.Name = "Btn_Nuevo_Despacho"
-        Me.Btn_Nuevo_Despacho.Tooltip = "Crear Orden de despacho"
-        '
-        'Btn_Buscar_Despacho
-        '
-        Me.Btn_Buscar_Despacho.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Buscar_Despacho.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Buscar_Despacho.Image = CType(resources.GetObject("Btn_Buscar_Despacho.Image"), System.Drawing.Image)
-        Me.Btn_Buscar_Despacho.ImageAlt = CType(resources.GetObject("Btn_Buscar_Despacho.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Buscar_Despacho.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Buscar_Despacho.Name = "Btn_Buscar_Despacho"
-        Me.Btn_Buscar_Despacho.Tooltip = "Buscar Orden de despacho"
-        '
-        'Btn_Actualizar
-        '
-        Me.Btn_Actualizar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Actualizar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Actualizar.Image = CType(resources.GetObject("Btn_Actualizar.Image"), System.Drawing.Image)
-        Me.Btn_Actualizar.ImageAlt = CType(resources.GetObject("Btn_Actualizar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Actualizar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Actualizar.Name = "Btn_Actualizar"
-        Me.Btn_Actualizar.Tooltip = "Refrescar datos"
+        Me.Btn_ActualizarVendedores.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_ActualizarVendedores.ForeColor = System.Drawing.Color.Black
+        Me.Btn_ActualizarVendedores.Image = CType(resources.GetObject("Btn_ActualizarVendedores.Image"), System.Drawing.Image)
+        Me.Btn_ActualizarVendedores.ImageAlt = CType(resources.GetObject("Btn_ActualizarVendedores.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ActualizarVendedores.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_ActualizarVendedores.Name = "Btn_ActualizarVendedores"
+        Me.Btn_ActualizarVendedores.Tooltip = "Refrescar datos"
         '
         'BtnExportarExcel
         '
@@ -432,6 +411,16 @@ Partial Class Frm_Cms
         Me.Grilla_DetalleSc.StandardTab = True
         Me.Grilla_DetalleSc.TabIndex = 28
         '
+        'Btn_Actualizar
+        '
+        Me.Btn_Actualizar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Actualizar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Actualizar.Image = CType(resources.GetObject("Btn_Actualizar.Image"), System.Drawing.Image)
+        Me.Btn_Actualizar.ImageAlt = CType(resources.GetObject("Btn_Actualizar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Actualizar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Actualizar.Name = "Btn_Actualizar"
+        Me.Btn_Actualizar.Tooltip = "Refrescar datos"
+        '
         'Frm_Cms
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -468,12 +457,11 @@ Partial Class Frm_Cms
     Friend WithEvents GroupPanel3 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Grilla_Detalle As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
-    Public WithEvents Btn_Nuevo_Despacho As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Buscar_Despacho As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Actualizar As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_ActualizarVendedores As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents BtnExportarExcel As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Grilla_Lineas As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Grilla_DetalleSc As DevComponents.DotNetBar.Controls.DataGridViewX
+    Public WithEvents Btn_Actualizar As DevComponents.DotNetBar.ButtonItem
 End Class

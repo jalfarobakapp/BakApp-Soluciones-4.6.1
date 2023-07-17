@@ -115,6 +115,7 @@ Partial Class Frm_ImpresionDoc_Configuracion
         Me.ComboItem19 = New DevComponents.Editors.ComboItem()
         Me.ComboItem20 = New DevComponents.Editors.ComboItem()
         Me.ComboItem21 = New DevComponents.Editors.ComboItem()
+        Me.Rdb_SP2_Prod = New DevComponents.DotNetBar.CheckBoxItem()
         Me.RibbonControl1.SuspendLayout()
         Me.RibbonPanel1.SuspendLayout()
         Me.RibbonBar4.SuspendLayout()
@@ -946,7 +947,7 @@ Partial Class Frm_ImpresionDoc_Configuracion
         '
         Me.Menu_Contextual_Detalle_Incluye.AutoExpandOnClick = True
         Me.Menu_Contextual_Detalle_Incluye.Name = "Menu_Contextual_Detalle_Incluye"
-        Me.Menu_Contextual_Detalle_Incluye.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Rdb_SP_Prod, Me.Rdb_TD_Prod_Desc_Reca, Me.Rdb_PD_Prod_Desc, Me.Rdb_PR_Prod_Reca})
+        Me.Menu_Contextual_Detalle_Incluye.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Rdb_SP_Prod, Me.Rdb_TD_Prod_Desc_Reca, Me.Rdb_PD_Prod_Desc, Me.Rdb_PR_Prod_Reca, Me.Rdb_SP2_Prod})
         Me.Menu_Contextual_Detalle_Incluye.Text = "Imprimir Vista previa"
         '
         'Rdb_SP_Prod
@@ -1063,10 +1064,17 @@ Partial Class Frm_ImpresionDoc_Configuracion
         '
         Me.ComboItem21.Text = "20"
         '
+        'Rdb_SP2_Prod
+        '
+        Me.Rdb_SP2_Prod.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_SP2_Prod.Name = "Rdb_SP2_Prod"
+        Me.Rdb_SP2_Prod.Tag = "SP2"
+        Me.Rdb_SP2_Prod.Text = "SP2. Solo Productos - No incluye Servicios"
+        '
         'Frm_ImpresionDoc_Configuracion
         '
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1242, 470)
+        Me.ClientSize = New System.Drawing.Size(1242, 468)
         Me.Controls.Add(Me.ContextMenuBar1)
         Me.Controls.Add(Me.tabStrip1)
         Me.Controls.Add(Me.RibbonControl1)
@@ -1180,4 +1188,5 @@ Partial Class Frm_ImpresionDoc_Configuracion
     Public WithEvents Chk_Largo_Variable As DevComponents.DotNetBar.CheckBoxItem
     Public WithEvents Chk_Es_Picking As DevComponents.DotNetBar.CheckBoxItem
     Public WithEvents Chk_Agrupar_CodDescripcion As DevComponents.DotNetBar.CheckBoxItem
+    Friend WithEvents Rdb_SP2_Prod As DevComponents.DotNetBar.CheckBoxItem
 End Class
