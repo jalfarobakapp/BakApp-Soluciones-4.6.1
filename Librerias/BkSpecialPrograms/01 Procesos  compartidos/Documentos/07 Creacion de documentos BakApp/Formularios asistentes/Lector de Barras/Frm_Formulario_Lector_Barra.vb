@@ -486,28 +486,7 @@ Public Class Frm_Formulario_Lector_Barra
 
     End Sub
 
-    Sub Sb_Confirmar_Lectura(_Mensaje1 As String, _Mensaje2 As String)
 
-        Dim Chk_Confirmar_Lectura As New Command
-        Chk_Confirmar_Lectura.Checked = False
-        Chk_Confirmar_Lectura.Name = "Chk_Confirmar_Lectura"
-        Chk_Confirmar_Lectura.Text = "CONFIRMAR LECTURA DE LA ALERTA"
-
-        Dim _Opciones As Command = Chk_Confirmar_Lectura
-
-        Do While Not Chk_Confirmar_Lectura.Checked
-
-            Dim _Info As New TaskDialogInfo("Alerta",
-                  eTaskDialogIcon.Stop,
-                  _Mensaje1, _Mensaje2,
-                  eTaskDialogButton.Ok, eTaskDialogBackgroundColor.Red, Nothing, Nothing,
-                  _Opciones, Nothing, Nothing)
-
-            Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
-
-        Loop
-
-    End Sub
 
     Private Sub Btn_Aceptar_Click(sender As Object, e As EventArgs) Handles Btn_Aceptar.Click
 

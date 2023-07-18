@@ -1668,6 +1668,7 @@ Public Class Frm_MantCostosPrecios
             Dim _Codigo As String = _Fila.Cells("Codigo").Value
 
             Dim Fm As New Frm_EstadisticaProducto(_Codigo)
+            Fm.VerEdicionProducto = True
             Fm.ShowDialog(Me)
             Fm.Dispose()
 

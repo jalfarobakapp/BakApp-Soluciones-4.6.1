@@ -4298,6 +4298,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Fm.Rdb_Ud1.Checked = Rdb_Ud1_Compra.Checked
         Fm.Rdb_Ud2.Checked = Rdb_Ud2_Compra.Checked
         Fm.Chk_Mostrar_Solo_BLV_FCV_NCV.Checked = False
+        Fm.VerEdicionProducto = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
