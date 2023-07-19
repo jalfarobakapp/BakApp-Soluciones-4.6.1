@@ -290,7 +290,7 @@ Public Class Frm_Formulario_Lector_Barra
                     If _NoContieneEtx Then
                         Txt_Codigo_Barras.Text = String.Empty
                         Sb_Confirmar_Lectura("La etiqueta no contiene la finalización <END>" & vbCrLf &
-                                             "Revise el código o vuelva a leerlo nuevamente", "Validación")
+                                             "Revise el código o vuelva a leerlo nuevamente", "Validación", eTaskDialogIcon.Stop, Nothing)
                         Return
                     End If
 
@@ -330,7 +330,7 @@ Public Class Frm_Formulario_Lector_Barra
 
                 Sb_Confirmar_Lectura("El código ya fue leído en otro(s) documento(s) GRI",
                                          "No puede leer mas de una vez el mismo código en otro documento" & vbCrLf & vbCrLf &
-                                         "Documento(s): " & _Msg)
+                                         "Documento(s): " & _Msg, eTaskDialogIcon.Stop, Nothing)
                 Return
             End If
 
@@ -338,7 +338,7 @@ Public Class Frm_Formulario_Lector_Barra
 
             If Not IsNothing(ListaQr) Then
                 Txt_Codigo_Barras.Text = String.Empty
-                Sb_Confirmar_Lectura("El código ya fue leído", "No puede leer mas de una vez el mismo código para esta lista")
+                Sb_Confirmar_Lectura("El código ya fue leído", "No puede leer mas de una vez el mismo código para esta lista", eTaskDialogIcon.Stop, Nothing)
                 Return
             End If
 
@@ -474,7 +474,9 @@ Public Class Frm_Formulario_Lector_Barra
 
             Else
 
-                Sb_Confirmar_Lectura("Este producto no corresponde al despacho", vbCrLf & _Row_Producto.Item("KOPR").ToString.Trim & vbCrLf & _Row_Producto.Item("NOKOPR").ToString.Trim)
+                Sb_Confirmar_Lectura("Este producto no corresponde al despacho",
+                                     vbCrLf & _Row_Producto.Item("KOPR").ToString.Trim & vbCrLf & _Row_Producto.Item("NOKOPR").ToString.Trim,
+                                     eTaskDialogIcon.Stop, Nothing)
 
             End If
 

@@ -3,7 +3,7 @@ Imports System.Security.Cryptography
 Imports BkSpecialPrograms.Bk_Migrar_Producto
 Imports DevComponents.DotNetBar
 Imports Newtonsoft.Json
-
+Imports System.Drawing
 Public Module Funciones_Especiales_BakApp
 
     Dim Consulta_sql As String
@@ -3390,7 +3390,10 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
-    Function Fx_Revisar_Expiracion_Folio_SII(_Formulario As Form, _Tido As String, _Folio As String) As Boolean
+    Function Fx_Revisar_Expiracion_Folio_SII(_Formulario As Form,
+                                             _Tido As String,
+                                             _Folio As String,
+                                             _MostrarMensajeExpiracion As Boolean) As Boolean
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
@@ -3398,7 +3401,7 @@ Public Module Crear_Documentos_Desde_Otro
         Dim _Firma_RunMonitor As Boolean = Not _Firma_Bakapp
 
         If _Firma_Bakapp Then
-            Return Fx_Revisar_Expiracion_Folio_SII_Hefesto_Bakapp(_Formulario, _Tido, _Folio)
+            Return Fx_Revisar_Expiracion_Folio_SII_Hefesto_Bakapp(_Formulario, _Tido, _Folio, _MostrarMensajeExpiracion)
         End If
 
         If _Tido = "GDP" Or _Tido = "GDD" Or _Tido = "GTI" Then
@@ -3490,7 +3493,10 @@ Public Module Crear_Documentos_Desde_Otro
     End Function
 
 
-    Function Fx_Revisar_Expiracion_Folio_SII_Hefesto_Bakapp(_Formulario As Form, _Tido As String, _Folio As String) As Boolean
+    Function Fx_Revisar_Expiracion_Folio_SII_Hefesto_Bakapp(_Formulario As Form,
+                                                            _Tido As String,
+                                                            _Folio As String,
+                                                            _MostrarMensajeExpiracion As Boolean) As Boolean
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
@@ -3503,13 +3509,9 @@ Public Module Crear_Documentos_Desde_Otro
 
         _AmbienteCertificacion = Convert.ToInt32(_Global_Row_Configuracion_Estacion.Item("FacElect_Usar_AmbienteCertificacion"))
 
-        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_DTE_Caf With ( NOLOCK )" & vbCrLf &
-                       "Where Cast(RNG_D AS INT)<=" & Val(_Folio) & " And Cast(RNG_H AS INT)>=" & Val(_Folio) &
-                       " And TD='" & _Td & "' And Empresa='" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion
-
         Consulta_sql = "Select Empresa,Tido,RE,RS,TD,RNG_D,RNG_H,FA,DATEADD(MONTH,6,FA) As 'FechaVencFolios'," &
                        "DATEDIFF(DAY,GETDATE(),DATEADD(MONTH,6,FA)) As 'DiasDif', RSAPK_M," & vbCrLf &
-                       "(Select COUNT(*) From MAEEDO Where TIDO = 'FCV' And NUDO Between RIGHT(REPLICATE('0', 10) + " &
+                       "(Select COUNT(*) From MAEEDO Where TIDO = '" & _Tido & "' And NUDO Between RIGHT(REPLICATE('0', 10) + " &
                        "CAST(RNG_D AS VARCHAR(10)), 10) And RIGHT(REPLICATE('0', 10) + CAST(RNG_H AS VARCHAR(10)), 10)) As 'DocGen'," & vbCrLf &
                        "RNG_H-RNG_D+1 As 'NroDoc'," & vbCrLf &
                        "(RNG_H-RNG_D+1) - (Select COUNT(*) From MAEEDO Where TIDO = '" & _Tido & "' And NUDO between RIGHT(REPLICATE('0', 10) + " &
@@ -3527,7 +3529,7 @@ Public Module Crear_Documentos_Desde_Otro
 
             If Not IsNothing(_Formulario) Then
 
-                MessageBoxEx.Show(_Formulario, "el folio del documento electrónico no está autorizado por el SII: " & _Folio & vbCrLf & vbCrLf &
+                MessageBoxEx.Show(_Formulario, "El folio del documento electrónico no está autorizado por el SII: " & _Folio & vbCrLf & vbCrLf &
                                   "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA POR FAVOR", "Validación Modalidad: " & Modalidad,
                                   MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
@@ -3535,8 +3537,26 @@ Public Module Crear_Documentos_Desde_Otro
 
         Else
 
-            Dim _DiasAvisoExpiraFolio As Integer = 14
-            Dim _AvisoSaldoFolios As Integer = 2
+            Dim _FolioActual As Integer = _Folio
+            Dim _Rng_d As Integer = _Row_Folios.Item("RNG_D")
+            Dim _Rng_h As Integer = _Row_Folios.Item("RNG_H")
+
+            Dim _DiasAvisoExpiraFolio As Integer
+            Dim _AvisoSaldoFolios As Integer
+
+            Try
+                _DiasAvisoExpiraFolio = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad",
+                                                          "DiasAvisoExpiraFolio", "Empresa = '" & ModEmpresa & "' And TipoDoc = '" & _Tido & "' And Modalidad = '  '",, False)
+            Catch ex As Exception
+                _DiasAvisoExpiraFolio = 14
+            End Try
+
+            Try
+                _AvisoSaldoFolios = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad",
+                                                          "AvisoSaldoFolios", "Empresa = '" & ModEmpresa & "' And TipoDoc = '" & _Tido & "' And Modalidad = '  '",, False)
+            Catch ex As Exception
+                _AvisoSaldoFolios = 20
+            End Try
 
             Dim _DiasDif As Integer = _Row_Folios.Item("DiasDif")
             Dim _SaldoFolios As Integer = _Row_Folios.Item("SaldoFolios")
@@ -3547,7 +3567,7 @@ Public Module Crear_Documentos_Desde_Otro
             If _DiasDif >= 0 Then
 
                 If (_DiasAvisoExpiraFolio >= _DiasDif) Then
-                    _MsgExpiraFolios = "- Faltan " & _DiasDif & " día(s) para que se termine este correlativo de folios" & vbCrLf
+                    _MsgExpiraFolios = "- Faltan más o menos " & _DiasDif & " día(s) para que expire este correlativo de folios" & vbCrLf
                 End If
 
                 If (_AvisoSaldoFolios >= _SaldoFolios) Then
@@ -3557,7 +3577,8 @@ Public Module Crear_Documentos_Desde_Otro
                                  "And AmbienteCertificacion = " & _AmbienteCertificacion & " And Cast(RNG_D As int) > " & Val(_Folio))
 
                     If Not CBool(_Reg) Then
-                        _MsgSaldoFolios = "- Solo quedan " & _SaldoFolios & " folios disponibles y no hay mas CAF registrados"
+                        _MsgSaldoFolios = "- Solo queda(n) " & _SaldoFolios & " folio(s) disponible(s) y no hay mas CAF registrados" & vbCrLf &
+                            "Folios Desde:" & _Rng_d & ", hasta:" & _Rng_h
                     End If
                 End If
 
@@ -3567,19 +3588,17 @@ Public Module Crear_Documentos_Desde_Otro
 
                 If Not String.IsNullOrEmpty(_MsgExpiraFolios) Or Not String.IsNullOrEmpty(_MsgSaldoFolios) Then
 
-                    Sb_Confirmar_Lectura("Información importante del SII",
-                                     _MsgExpiraFolios & _MsgSaldoFolios & vbCrLf & vbCrLf & "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA POR FAVOR")
+                    If _MostrarMensajeExpiracion Then
 
+                        Sb_Confirmar_Lectura("Información importante del SII" & vbCrLf & _Tido & "-" & _Folio,
+                                     _MsgExpiraFolios & _MsgSaldoFolios & vbCrLf & vbCrLf, eTaskDialogIcon.Shield,
+                                     "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA")
 
-                    'MessageBoxEx.Show(_Formulario, _MsgExpiraFolios.ToUpper & _MsgSaldoFolios.ToUpper & vbCrLf & vbCrLf & "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA POR FAVOR",
-                    '                  "INFORMACION IMPORTANTE", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    End If
+
                 End If
 
             End If
-
-            Dim _FolioActual As Integer = _Folio
-            Dim _Rng_d As Integer = _Row_Folios.Item("RNG_D")
-            Dim _Rng_h As Integer = _Row_Folios.Item("RNG_H")
 
             Dim _DifFolios As Integer = _Rng_h - _FolioActual
 
@@ -3611,7 +3630,7 @@ Public Module Crear_Documentos_Desde_Otro
                     MessageBoxEx.Show(_Formulario, "Este folio " & _Folio & " tiene mas de (" & _Meses & ") meses desde su fecha de creación" & vbCrLf &
                           "en el SII y su configuración indica que podría estar vencido." & vbCrLf &
                           "Si usted insite en el envío, este documento podria ser rechazado." & vbCrLf & vbCrLf &
-                          "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA POR FAVOR", "Validación Modalidad: " & Modalidad, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                          "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA", "Validación Modalidad: " & Modalidad, MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                 End If
 
@@ -5695,7 +5714,7 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
-    Sub Sb_Confirmar_Lectura(_Mensaje1 As String, _Mensaje2 As String)
+    Sub Sb_Confirmar_Lectura(_Mensaje1 As String, _Mensaje2 As String, _TaskDialogIcon As eTaskDialogIcon, _FooterText As String)
 
         Dim Chk_Confirmar_Lectura As New Command
         Chk_Confirmar_Lectura.Checked = False
@@ -5703,14 +5722,28 @@ Public Module Crear_Documentos_Desde_Otro
         Chk_Confirmar_Lectura.Text = "CONFIRMAR LECTURA DE LA ALERTA"
 
         Dim _Opciones As Command = Chk_Confirmar_Lectura
+        Dim _ImagenFoot As Image
+
+        If String.IsNullOrWhiteSpace(_FooterText) Then
+            _FooterText = Nothing
+        Else
+            Dim iconoAlerta As Icon = SystemIcons.Warning
+            _ImagenFoot = iconoAlerta.ToBitmap()
+
+            ' Cambiar el tamaño del icono a 64x64 píxeles (puedes ajustar el tamaño según tus necesidades)
+            Dim nuevoTamaño As New Size(16, 16)
+            Dim iconoRedimensionado As Image = _ImagenFoot.GetThumbnailImage(nuevoTamaño.Width, nuevoTamaño.Height, Nothing, IntPtr.Zero)
+
+            _ImagenFoot = iconoRedimensionado
+        End If
 
         Do While Not Chk_Confirmar_Lectura.Checked
 
             Dim _Info As New TaskDialogInfo("Alerta",
-                  eTaskDialogIcon.Stop,
+                  _TaskDialogIcon,
                   _Mensaje1, _Mensaje2,
                   eTaskDialogButton.Ok, eTaskDialogBackgroundColor.Red, Nothing, Nothing,
-                  _Opciones, Nothing, Nothing)
+                  _Opciones, _FooterText, _ImagenFoot, True)
 
             Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
 

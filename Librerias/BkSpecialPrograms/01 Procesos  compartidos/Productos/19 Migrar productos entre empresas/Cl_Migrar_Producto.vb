@@ -368,6 +368,8 @@ Namespace Bk_Migrar_Producto
             Dim _SqlQuery = String.Empty
             Dim _GrbProd_Bodegas As String = _Row_DnExt.Item("GrbProd_Bodegas")
 
+            If String.IsNullOrWhiteSpace(_GrbProd_Bodegas) Then Return ""
+
             Consulta_sql = "Select * From TABBO Where EMPRESA+KOSU+KOBO In " & _GrbProd_Bodegas
             Dim _TblBodegas As DataTable = _Sql2.Fx_Get_Tablas(Consulta_sql)
 
@@ -390,6 +392,8 @@ Namespace Bk_Migrar_Producto
 
             Dim _SqlQuery = String.Empty
             Dim _GrbProd_Listas = _Row_DnExt.Item("GrbProd_Listas")
+
+            If String.IsNullOrWhiteSpace(_GrbProd_Listas) Then Return ""
 
             Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
             Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)

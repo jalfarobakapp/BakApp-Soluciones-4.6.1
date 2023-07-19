@@ -18,6 +18,8 @@ CREATE TABLE [dbo].[Zw_Configuracion_Formatos_X_Modalidad](
 [Id_Correo]	                    [int]			NOT NULL DEFAULT (0),
 [NombreFormato_Correo]          [varchar](50)   NOT NULL DEFAULT (''),
 [TimbrarXRandom]                [bit]			NOT NULL DEFAULT (0),
+[DiasAvisoExpiraFolio]          [int]			NOT NULL DEFAULT (0),
+[AvisoSaldoFolios]              [int]			NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Configuracion_Formatos_X_Modalidad_1] PRIMARY KEY CLUSTERED 
 (
 	[Modalidad] ASC,

@@ -482,6 +482,7 @@ Public Class Frm_MtCreacionDeProducto
                 Txt_Nokopr.Focus()
                 Return
             End If
+
         End If
 
 

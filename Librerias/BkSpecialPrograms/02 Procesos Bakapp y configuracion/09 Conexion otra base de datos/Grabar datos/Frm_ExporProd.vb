@@ -158,6 +158,9 @@ Public Class Frm_ExporProd
         _GrbProd_Bodegas = Replace(_GrbProd_Bodegas, "'", "''")
         _GrbProd_Listas = Replace(_GrbProd_Listas, "'", "''")
 
+        If _GrbProd_Bodegas = "()" Then _GrbProd_Bodegas = String.Empty
+        If _GrbProd_Listas = "()" Then _GrbProd_Listas = String.Empty
+
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_DbExt_Conexion Set " &
                        " GrbProd_Nuevos = " & _GrbProd_Nuevos &
                        ",GrbEnti_Nuevas = " & _GrbEnti_Nuevas &

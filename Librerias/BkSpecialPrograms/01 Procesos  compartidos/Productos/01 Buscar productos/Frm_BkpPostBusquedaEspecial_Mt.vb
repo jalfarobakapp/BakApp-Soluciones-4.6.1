@@ -1,6 +1,4 @@
-﻿'Imports System.ComponentModel
-'Imports System.Globalization
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_BkpPostBusquedaEspecial_Mt
 
@@ -670,9 +668,14 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Btn_Mnu_Pr_Editar_Producto.Enabled = _Mostrar_Editar
         Btn_Mnu_Pr_Eliminar_Producto.Enabled = _Mostrar_Eliminar
 
-        If Not _Global_Row_Configuracion_General.Item("Patentes_rvm") Then
-            Lbl_Patente.Visible = False
-            Txt_Patente.Visible = False
+        Lbl_Patente.Visible = False
+        Txt_Patente.Visible = False
+
+        If _Sql.Fx_Existe_Tabla("Patentes_rvm", _Global_BaseBk) Then
+            If _Global_Row_Configuracion_General.Item("Patentes_rvm") Then
+                Lbl_Patente.Visible = True
+                Txt_Patente.Visible = True
+            End If
         End If
 
         AddHandler Txtdescripcion.Enter, AddressOf Txtdescripcion_Enter

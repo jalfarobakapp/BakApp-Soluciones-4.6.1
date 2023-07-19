@@ -737,7 +737,7 @@ Public Class Frm_Formulario_Documento
 
         If _Es_Electronico Then
 
-            If Not Fx_Revisar_Expiracion_Folio_SII(Nothing, _Tido, _NroDocumento) Then
+            If Not Fx_Revisar_Expiracion_Folio_SII(Nothing, _Tido, _NroDocumento, True) Then
 
                 If Not String.IsNullOrEmpty(_NroDocumento) Then
 
@@ -1649,7 +1649,7 @@ Public Class Frm_Formulario_Documento
 
             End If
 
-            If Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _NewNeroDocumento) Then
+            If Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _NewNeroDocumento, True) Then
 
                 _NewNeroDocumento = String.Empty
 
@@ -6225,12 +6225,12 @@ Public Class Frm_Formulario_Documento
                 If ChkValores.Checked Then
                     _CantUd1 = _TotalNeto * _Multiplo
                     _CantUd2 = 0
-                    .Cells("CDespUd1").Value = _CantUd1
                 Else
                     _CantUd1 = _TotalBruto * _Multiplo
                     _CantUd2 = 0
-                    .Cells("CDespUd1").Value = _CantUd1
                 End If
+
+                If _Tido <> "OCC" Then .Cells("CDespUd1").Value = _CantUd1
 
                 .Cells("Cantidad").Value = 0
 
@@ -15406,6 +15406,30 @@ Public Class Frm_Formulario_Documento
         If Not _Post_Venta Or (_Caja_Habilitada And _Post_Venta And _Grabar_Y_Pagar_Vale) Then
 
             If _Tido = "FCV" Or _Tido = "BLV" Then
+
+                If Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nudo, True) Then
+
+                    If Not String.IsNullOrEmpty(_Nudo) Then
+
+                        'MessageBoxEx.Show(Me, "El folio del documento electrónico (" & _Nudo & ") ya expiró en el SII." & vbCrLf &
+                        '                           "Informe al administrador del sistema", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                        Modalidad = _Modalidad_Origen
+
+                        _Mod.Sb_Actualiza_Formatos_X_Modalidad()
+                        _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+
+                        _Nudo = Traer_Numero_Documento(_Tido, , _Modalidad_Origen,,, Me)
+                        _TblEncabezado.Rows(0).Item("Modalidad") = _Modalidad_Origen
+                        _TblEncabezado.Rows(0).Item("NroDocumento") = _Nudo
+                        _TblEncabezado.Rows(0).Item("Es_ValeTransitorio") = 1
+
+                        Return 0
+
+                    End If
+
+                End If
+
 
                 If _Solicitar_Pago Then
 

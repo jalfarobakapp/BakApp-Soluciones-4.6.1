@@ -278,13 +278,10 @@ Public Class Frm_Cashdro_Ingreso_Documento
                         End If
 
                         Dim _Monto As Double = _Row_Documento.Item("SALDO_ANTERIOR")
-
                         Dim _Nro_Documento As String = Traer_Numero_Documento(_Tido, , Modalidad)
-
                         Dim _Tidoelec As Integer = CInt(Fx_Es_Electronico(_Tido)) * -1
 
-
-                        If Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nro_Documento) Then
+                        If Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nro_Documento, False) Then
                             Return
                         End If
 

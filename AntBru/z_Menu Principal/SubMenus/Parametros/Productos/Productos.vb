@@ -189,6 +189,7 @@ Public Class Productos
                 .Pro_Bodega_Busqueda = ModBodega
                 .Pro_Lista_Busqueda = ModListaPrecioVenta
                 .Mnu_Btn_Cambiar_Codigo_Producto.Visible = True
+                .TraerTodosLosProductos = True
                 .ShowDialog(Me)
                 .Dispose()
             End With
