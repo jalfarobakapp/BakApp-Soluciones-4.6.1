@@ -60,6 +60,8 @@ Public Class Frm_RecargosXProd
         CmbTipoDeDocumentos.Enabled = False
         Chk_BuscarDocDeHoy.Enabled = False
 
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
 
     Private Sub Frm_RecargosXProd_Load(sender As Object, e As EventArgs) Handles MyBase.Load

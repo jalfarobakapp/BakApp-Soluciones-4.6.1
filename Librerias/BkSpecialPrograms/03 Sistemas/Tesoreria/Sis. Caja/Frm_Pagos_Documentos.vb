@@ -1222,7 +1222,7 @@ Public Class Frm_Pagos_Documentos
 
         If CBool(_Tidoelec) And CBool(_Nudonodefi) Then
 
-            If Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nro_Documento) Then
+            If Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nro_Documento, True) Then
 
                 MessageBoxEx.Show(Me, "El documento no fue grabado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Sb_Nuevo_Documento()
@@ -2396,7 +2396,7 @@ Public Class Frm_Pagos_Documentos
 
             If CBool(_Tidoelec) And CBool(_Nudonodefi) Then
 
-                If Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nro_Documento) Then
+                If Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nro_Documento, True) Then
                     Sb_Nuevo_Documento()
                     Return
                 End If

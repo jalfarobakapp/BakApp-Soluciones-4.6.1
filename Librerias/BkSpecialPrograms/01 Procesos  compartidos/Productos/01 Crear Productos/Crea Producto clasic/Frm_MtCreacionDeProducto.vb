@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports BkSpecialPrograms.My.Resources
+Imports DevComponents.DotNetBar
 Imports DevComponents.DotNetBar.Controls
 
 Public Class Frm_MtCreacionDeProducto
@@ -92,9 +93,10 @@ Public Class Frm_MtCreacionDeProducto
         'Cmb_Ud02pr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         Dim _Arr_Bloquea_Pr(,) As String = {{"", ""},
-                                            {"C", "Bloqueado para compras"},
-                                            {"T", "Bloqueado para compras y ventas"},
-                                            {"V", "Bloqueado para ventas"}}
+                                            {"C", "Bloqueado para Compras"},
+                                            {"T", "Bloqueado para Compras y Ventas"},
+                                            {"V", "Bloqueado para ventas"},
+                                            {"X", "Bloqueado en Compras, Ventas y Producción"}}
         Sb_Llenar_Combos(_Arr_Bloquea_Pr, Cmb_Bloqueapr)
         Cmb_Bloqueapr.SelectedValue = ""
 
@@ -482,6 +484,7 @@ Public Class Frm_MtCreacionDeProducto
                 Txt_Nokopr.Focus()
                 Return
             End If
+
         End If
 
 
@@ -676,7 +679,16 @@ Public Class Frm_MtCreacionDeProducto
             Dim _Producto_Creado As String
 
             If _Cl_Producto.Pro_Accion = Cl_Producto.Enum_Accion.Nuevo Then
+
+                Dim _MsgExiste As String = Fx_ExisteProductoEnOtraBase(Txt_Kopr.Text)
+
+                If Not String.IsNullOrEmpty(_MsgExiste) Then
+                    MessageBoxEx.Show(Me, _MsgExiste, "No se puede grabar el producto", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
+
                 _Producto_Creado = _Cl_Producto.Fx_Crear_Nuevo_Producto
+
             ElseIf _Cl_Producto.Pro_Accion = Cl_Producto.Enum_Accion.Editar Then
                 _Producto_Creado = _Cl_Producto.Fx_Editar_Producto
             End If
@@ -729,6 +741,40 @@ Public Class Frm_MtCreacionDeProducto
 
                                     Consulta_sql = _Cl_Producto.Fx_Editar_Producto_Base_Externa(_ConexionExternas.Global_BaseBk, _EditarRtu)
 
+                                    Dim _SincroMarcas As Boolean = _Cl_Migrar_Producto.Row_DnExt.Item("SincroMarcas")
+                                    Dim _SincroFamilias As Boolean = _Cl_Migrar_Producto.Row_DnExt.Item("SincroFamilias")
+                                    Dim _SincroRubros As Boolean = _Cl_Migrar_Producto.Row_DnExt.Item("SincroRubros")
+                                    Dim _SincroClaslibre As Boolean = _Cl_Migrar_Producto.Row_DnExt.Item("SincroClaslibre")
+                                    Dim _SincroZonaProducto As Boolean = _Cl_Migrar_Producto.Row_DnExt.Item("SincroZonaProducto")
+                                    Dim _SincroZonas As Boolean = _Cl_Migrar_Producto.Row_DnExt.Item("SincroZonas")
+                                    Dim _SincroEmpresa As Boolean = _Cl_Migrar_Producto.Row_DnExt.Item("SincroEmpresa")
+                                    Dim _SincroTratalote As Boolean = _Cl_Migrar_Producto.Row_DnExt.Item("SincroTratalote")
+                                    Dim _SincroDimensiones As Boolean = _Cl_Migrar_Producto.Row_DnExt.Item("SincroDimensiones")
+
+                                    If Not _SincroMarcas Then Consulta_sql = Replace(Consulta_sql, "MRPR = @MRPR,", "--MRPR = @MRPR,")
+                                    If Not _SincroFamilias Then
+                                        Consulta_sql = Replace(Consulta_sql, "FMPR = @FMPR,", "--FMPR = @FMPR,")
+                                        Consulta_sql = Replace(Consulta_sql, "PFPR = @PFPR,", "--PFPR = @PFPR,")
+                                        Consulta_sql = Replace(Consulta_sql, "HFPR = @HFPR,", "--HFPR = @HFPR,")
+                                    End If
+                                    If Not _SincroRubros Then Consulta_sql = Replace(Consulta_sql, "RUPR = @RUPR,", "--RUPR = @RUPR,")
+                                    If Not _SincroClaslibre Then Consulta_sql = Replace(Consulta_sql, "CLALIBPR = @CLALIBPR,", "--CLALIBPR = @CLALIBPR,")
+                                    If Not _SincroZonaProducto Then Consulta_sql = Replace(Consulta_sql, "ZONAPR = @ZONAPR,", "--ZONAPR = @ZONAPR,")
+                                    If Not _SincroTratalote Then Consulta_sql = Replace(Consulta_sql, "TRATALOTE = @TRATALOTE,", "--TRATALOTE = @TRATALOTE,")
+                                    If Not _SincroDimensiones Then
+                                        Consulta_sql = Replace(Consulta_sql, "KOPRDIM = @KOPRDIM,", "--KOPRDIM = @KOPRDIM,")
+                                        Consulta_sql = Replace(Consulta_sql, "NODIM1 = @NODIM1,", "--NODIM1 = @NODIM1,")
+                                        Consulta_sql = Replace(Consulta_sql, "NODIM2 = @NODIM2,", "--NODIM2 = @NODIM2,")
+                                        Consulta_sql = Replace(Consulta_sql, "NODIM3 = @NODIM3,", "--NODIM3 = @NODIM3,")
+                                    End If
+
+                                    'Estos tratamientos son siempre por empresa independiente
+                                    Consulta_sql = Replace(Consulta_sql, "CONUBIC = @CONUBIC,", "--CONUBIC = @CONUBIC,")
+                                    Consulta_sql = Replace(Consulta_sql, "NMARCA = @NMARCA,", "--NMARCA = @NMARCA,")
+                                    Consulta_sql = Replace(Consulta_sql, "BLOQUEAPR = @BLOQUEAPR,", "--BLOQUEAPR = @BLOQUEAPR,")
+                                    Consulta_sql = Replace(Consulta_sql, "LISCOSTO = @LISCOSTO,", "--LISCOSTO = @LISCOSTO,")
+                                    Consulta_sql = Replace(Consulta_sql, "FUNCLOTE = @FUNCLOTE,", "--FUNCLOTE = @FUNCLOTE,")
+                                    'BLOQUEAPR = @BLOQUEAPR,
                                     If _Sql2.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
                                         If _EditarRtu Then
@@ -1416,6 +1462,14 @@ Sigue_Loop_01:
         If _Cl_Producto.Pro_Accion = Cl_Producto.Enum_Accion.Nuevo Then
             If Fx_ValidarExistenciaDeCodigo(sender.text, "KOPR") = True Then Txt_Kopr.Focus()
             If Not Fx_ValidarExistenciaDeCodigoAlternativo(sender.text) Then Txt_Kopr.Focus()
+
+            Dim _MsgExiste As String = Fx_ExisteProductoEnOtraBase(Txt_Kopr.Text)
+
+            If Not String.IsNullOrEmpty(_MsgExiste) Then
+                MessageBoxEx.Show(Me, "El sistema esta configurado para sincronizar productos con otra(s) base de datos" & vbCrLf & vbCrLf & _MsgExiste,
+                                  "No se puede grabar el producto", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_Kopr.Focus()
+            End If
         End If
     End Sub
 
@@ -1762,12 +1816,15 @@ Sigue_Loop_01:
         Txt_Mensaje02.Text = String.Empty
         Txt_Mensaje03.Text = String.Empty
 
+        If CBool(_Cl_Producto.Pro_Maeprobs.Rows.Count) Then
+            Txt_Mensaje01.Text = _Cl_Producto.Pro_Maeprobs.Rows(0).Item("MENSAJE01")
+            Txt_Mensaje02.Text = _Cl_Producto.Pro_Maeprobs.Rows(0).Item("MENSAJE02")
+            Txt_Mensaje03.Text = _Cl_Producto.Pro_Maeprobs.Rows(0).Item("MENSAJE03")
+        End If
+
         If _Existe Then
 
             If CBool(_Cl_Producto.Pro_Maeprobs.Rows.Count) Then
-                Txt_Mensaje01.Text = _Cl_Producto.Pro_Maeprobs.Rows(0).Item("MENSAJE01")
-                Txt_Mensaje02.Text = _Cl_Producto.Pro_Maeprobs.Rows(0).Item("MENSAJE02")
-                Txt_Mensaje03.Text = _Cl_Producto.Pro_Maeprobs.Rows(0).Item("MENSAJE03")
                 Txt_Alto.Text = NuloPorNro(_Cl_Producto.Pro_Maeprobs.Rows(0).Item("ALTO"), 0)
                 Txt_Largo.Text = NuloPorNro(_Cl_Producto.Pro_Maeprobs.Rows(0).Item("LARGO"), 0)
                 Txt_Ancho.Text = NuloPorNro(_Cl_Producto.Pro_Maeprobs.Rows(0).Item("ANCHO"), 0)
@@ -2225,6 +2282,49 @@ Sigue_Loop_01:
             Return _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
         End If
+
+    End Function
+
+    Function Fx_ExisteProductoEnOtraBase(_Codigo As String) As String
+
+        Dim _MsgExiste As String = String.Empty
+
+        If _Global_Row_Configuracion_General.Item("PermitirMigrarProductosBaseExterna") Then
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbProd_Nuevos = 1"
+            Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
+
+                Dim _Id_Conexion As Integer = _FilaCx.Item("Id")
+                Dim _BaseDeDatos As String = _FilaCx.Item("BaseDeDatos")
+                Dim _Cl_Migrar_Producto As New Bk_Migrar_Producto.Cl_Migrar_Producto(_Id_Conexion)
+
+                If _Cl_Migrar_Producto.SePuedeMigrar Then
+
+                    Dim _GrbProd_Nuevos = _Cl_Migrar_Producto.Row_DnExt.Item("GrbProd_Nuevos")
+                    Dim _GrbEnti_Nuevas = _Cl_Migrar_Producto.Row_DnExt.Item("GrbEnti_Nuevas")
+                    Dim _GrbProd_Bodegas = _Cl_Migrar_Producto.Row_DnExt.Item("GrbProd_Bodegas")
+                    Dim _GrbProd_Listas = _Cl_Migrar_Producto.Row_DnExt.Item("GrbProd_Listas")
+
+                    Dim _ExisteMaepr As Boolean = _Cl_Migrar_Producto.Fx_ExisteProductoEnMAEPR(_Codigo)
+                    Dim _ExisteTabcodal As Boolean = _Cl_Migrar_Producto.Fx_ExisteProductoEnTABCODAL(_Codigo)
+
+                    If _ExisteMaepr Then _MsgExiste = " - Existe producto en MAEPR (BD: " & _BaseDeDatos & ")" & vbCrLf
+                    If _ExisteTabcodal Then _MsgExiste = " - Existe producto en TABCODAL (BD: " & _BaseDeDatos & ")"
+
+                Else
+                    'MessageBoxEx.Show(Me, "No fue posible crear el producto en base de datos externa" & vbCrLf & vbCrLf &
+                    '                  "Base de datos: " & _BaseDeDatos & vbCrLf & vbCrLf &
+                    '                  _Cl_Migrar_Producto.ProError, "Crear producto en base externa",
+                    '                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                End If
+
+            Next
+
+        End If
+
+        Return _MsgExiste
 
     End Function
 

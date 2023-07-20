@@ -45,6 +45,10 @@ Public Class Frm_ExporProd
         Chk_SincroZonasProd.Checked = _Row_DbExt_Conexion.Item("SincroZonaProducto")
         Chk_SincroZonas.Checked = _Row_DbExt_Conexion.Item("SincroZonas")
 
+        Chk_SincroEmpresa.Checked = _Row_DbExt_Conexion.Item("SincroEmpresa")
+        Chk_SincroTratalote.Checked = _Row_DbExt_Conexion.Item("SincroTratalote")
+        Chk_SincroDimensiones.Checked = _Row_DbExt_Conexion.Item("SincroDimensiones")
+
         Dim _Sql2 As New Class_SQL(_Cadena_ConexionSQL_Server_BodExterna)
 
         Try
@@ -134,12 +138,16 @@ Public Class Frm_ExporProd
         Dim _SincroZonasProd As Integer = Convert.ToInt32(Chk_SincroZonasProd.Checked)
         Dim _SincroZonas As Integer = Convert.ToInt32(Chk_SincroZonas.Checked)
 
+        Dim _SincroEmpresa As Integer = Convert.ToInt32(Chk_SincroEmpresa.Checked)
+        Dim _SincroTratalote As Integer = Convert.ToInt32(Chk_SincroTratalote.Checked)
+        Dim _SincroDimensiones As Integer = Convert.ToInt32(Chk_SincroDimensiones.Checked)
+
         Dim _GrbProd_BodTodas As Integer = Convert.ToInt32(Bodegas_Todas)
         Dim _GrbProd_LisTodas As Integer = Convert.ToInt32(Listas_Todas)
         Dim _GrbProd_Bodegas As String
         Dim _GrbProd_Listas As String
 
-        If Chk_GrbProd_Nuevos.Checked Then
+        If Chk_GrbProd_Nuevos.Checked AndAlso Chk_SincroEmpresa.Checked Then
             If IsNothing(Tbl_Bodegas) Then
                 MessageBoxEx.Show(Me, "Debe seleccionar las bodegas para la grabación de los productos",
                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -158,6 +166,9 @@ Public Class Frm_ExporProd
         _GrbProd_Bodegas = Replace(_GrbProd_Bodegas, "'", "''")
         _GrbProd_Listas = Replace(_GrbProd_Listas, "'", "''")
 
+        If _GrbProd_Bodegas = "()" Or Not Chk_SincroEmpresa.Checked Then _GrbProd_Bodegas = String.Empty
+        If _GrbProd_Listas = "()" Or Not Chk_SincroEmpresa.Checked Then _GrbProd_Listas = String.Empty
+
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_DbExt_Conexion Set " &
                        " GrbProd_Nuevos = " & _GrbProd_Nuevos &
                        ",GrbEnti_Nuevas = " & _GrbEnti_Nuevas &
@@ -171,6 +182,9 @@ Public Class Frm_ExporProd
                        ",SincroClaslibre = " & _SincroClaslib &
                        ",SincroZonaProducto = " & _SincroZonasProd &
                        ",SincroZonas = " & _SincroZonas &
+                       ",SincroEmpresa = " & _SincroEmpresa &
+                       ",SincroTratalote = " & _SincroTratalote &
+                       ",SincroDimensiones = " & _SincroDimensiones &
                        "Where Id = " & _Id
         If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
             MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -180,6 +194,10 @@ Public Class Frm_ExporProd
     End Sub
 
     Private Sub Btn_Bodegas_Click(sender As Object, e As EventArgs) Handles Btn_Bodegas.Click
+        If Not Chk_SincroEmpresa.Checked Then
+            MessageBoxEx.Show(Me, "Debe tickear [Grabar en empresa por defecto]", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
         Sb_Seleccionar("Rdb_Bodegas_Algunas")
         Try
             Lbl_Bodegas.Text = "Bodegas seleccionadas: " & Tbl_Bodegas.Rows.Count
@@ -189,6 +207,10 @@ Public Class Frm_ExporProd
     End Sub
 
     Private Sub Btn_Listas_Click(sender As Object, e As EventArgs) Handles Btn_Listas.Click
+        If Not Chk_SincroEmpresa.Checked Then
+            MessageBoxEx.Show(Me, "Debe tickear [Grabar en empresa por defecto]", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
         Sb_Seleccionar("Rdb_Listas_Algunas")
         Try
             Lbl_Listas.Text = "Listas seleccionadas: " & Tbl_Listas.Rows.Count

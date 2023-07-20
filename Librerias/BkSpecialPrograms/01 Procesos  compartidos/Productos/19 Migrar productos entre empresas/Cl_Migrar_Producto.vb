@@ -134,6 +134,21 @@ Namespace Bk_Migrar_Producto
 
         End Sub
 
+        Function Fx_ExisteProductoEnMAEPR(_Kopr As String) As Boolean
+
+            Dim _Reg As Integer = _Sql2.Fx_Cuenta_Registros("MAEPR", "KOPR = '" & _Kopr & "'")
+
+            Return CBool(_Reg)
+
+        End Function
+
+        Function Fx_ExisteProductoEnTABCODAL(_Kopral As String) As Boolean
+
+            Dim _Reg As Integer = _Sql2.Fx_Cuenta_Registros("TABCODAL", "KOPRAL = '" & _Kopral & "'")
+
+            Return CBool(_Reg)
+
+        End Function
 
 
         Function Fx_Migrar_Producto(_Codigo As String) As Boolean
@@ -173,17 +188,49 @@ Namespace Bk_Migrar_Producto
 
                 ' Crear consulta migracion
 
-                Dim _Consulta_sql As String
+                Dim _Consulta_sql As String = String.Empty
+
+                Dim _SincroMarcas As Boolean = Row_DnExt.Item("SincroMarcas")
+                Dim _SincroFamilias As Boolean = Row_DnExt.Item("SincroFamilias")
+                Dim _SincroRubros As Boolean = Row_DnExt.Item("SincroRubros")
+                Dim _SincroClaslibre As Boolean = Row_DnExt.Item("SincroClaslibre")
+                Dim _SincroZonaProducto As Boolean = Row_DnExt.Item("SincroZonaProducto")
+                Dim _SincroZonas As Boolean = Row_DnExt.Item("SincroZonas")
+                Dim _SincroEmpresa As Boolean = Row_DnExt.Item("SincroEmpresa")
+                Dim _SincroTratalote As Boolean = Row_DnExt.Item("SincroTratalote")
+                Dim _SincroDimensiones As Boolean = Row_DnExt.Item("SincroDimensiones")
 
                 _Ds_Producto_Local = Fx_BuscarProducto(_Codigo, _Global_BaseBk, _Sql, False)
 
-                _Consulta_sql = Fx_Insertar_Nuevo_Producto(_Ds_Producto_Local, BdBakappExt) & vbCrLf
-                _Consulta_sql += Fx_Insertar_Bodegas(_Codigo) & vbCrLf
-                _Consulta_sql += Fx_Insertar_Listas(_Codigo)
+                _Consulta_sql = Fx_Insertar_Nuevo_Producto(_Ds_Producto_Local, BdBakappExt, _SincroEmpresa) & vbCrLf
+
+                If _SincroEmpresa Then
+                    _Consulta_sql += Fx_Insertar_Bodegas(_Codigo) & vbCrLf
+                    _Consulta_sql += Fx_Insertar_Listas(_Codigo)
+                End If
 
                 If _Sql2.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_Consulta_sql) Then
+
+                    _Consulta_sql = String.Empty
+
+                    If Not _SincroMarcas Then _Consulta_sql += "Update MAEPR Set MRPR = '' Where KOPR = '" & _Codigo & "'" & vbCrLf
+                    If Not _SincroFamilias Then _Consulta_sql += "Update MAEPR Set FMPR = '',PFPR = '',HFPR = '' Where KOPR = '" & _Codigo & "'" & vbCrLf
+                    If Not _SincroRubros Then _Consulta_sql += "Update MAEPR Set RUPR = '' Where KOPR = '" & _Codigo & "'" & vbCrLf
+                    If Not _SincroClaslibre Then _Consulta_sql += "Update MAEPR Set CLALIBPR = '' Where KOPR = '" & _Codigo & "'" & vbCrLf
+                    If Not _SincroZonaProducto Then _Consulta_sql += "Update MAEPR Set ZONAPR = '' Where KOPR = '" & _Codigo & "'" & vbCrLf
+                    If Not _SincroTratalote Then _Consulta_sql += "Update MAEPR Set TRATALOTE = 0,LOTECAJA = 0 Where KOPR = '" & _Codigo & "'" & vbCrLf
+                    If Not _SincroDimensiones Then _Consulta_sql += "Update MAEPR Set KOPRDIM = '',NODIM1 = '',NODIM2 = '',NODIM3 = '' Where KOPR = '" & _Codigo & "'" & vbCrLf
+
+                    'Estos tratamientos son siempre por empresa independiente
+                    _Consulta_sql += "Update MAEPR Set CONUBIC = 0,NMARCA = '',BLOQUEAPR = '',LISCOSTO = '',FUNCLOTE = ''" & vbCrLf &
+                                     "Where KOPR = '" & _Codigo & "'" & vbCrLf
+
+                    _Sql2.Ej_consulta_IDU(_Consulta_sql)
+
+                    _Consulta_sql = String.Empty
+
                     _Consulta_sql = "Insert Into " & _Global_BaseBk & "[Zw_Migrar_Productos_Log] (Fecha, Kopr, Funcionario, Log) VALUES " &
-                        "('Getdate()', '" & _Codigo & "', '" & FUNCIONARIO & "', 'Producto migrado correctamente');"
+                    "('Getdate()', '" & _Codigo & "', '" & FUNCIONARIO & "', 'Producto migrado correctamente');"
                     _Sql.Ej_consulta_IDU(_Consulta_sql, False)
                 Else
                     ProError = _Sql2.Pro_Error
@@ -247,7 +294,7 @@ Namespace Bk_Migrar_Producto
             Return _Tbl
         End Function
 
-        Private Function Fx_Insertar_Nuevo_Producto(_Ds_Producto As DataSet, BdBakappExt As String) As String
+        Private Function Fx_Insertar_Nuevo_Producto(_Ds_Producto As DataSet, BdBakappExt As String, _SincroEmpresa As Boolean) As String
 
             Dim Consulta = String.Empty
 
@@ -255,49 +302,54 @@ Namespace Bk_Migrar_Producto
 
                 If _Ds_Producto.Tables(table).Rows.Count > 0 Then
 
+                    Dim _Sincronizar = True
                     Dim _NombreTabla As String = _Ds_Producto.Tables(table).TableName
 
-                    'If _NombreTabla.Contains("TABCODAL") Then
-                    '    Dim _Aca = 0
-                    'End If
-
-                    Consulta &= "INSERT INTO " & _NombreTabla & "("
-
-                    Dim _CantColumnas As Integer = _Ds_Producto.Tables(table).Columns.Count - 1
-
-                    If _NombreTabla = "MAEFICHD" Then
-                        _CantColumnas = _CantColumnas - 1
+                    If _NombreTabla = "MAEPREM" And Not _SincroEmpresa Then
+                        _Sincronizar = False
                     End If
 
-                    Dim _IColum = 0
+                    If _Sincronizar Then
 
-                    If _NombreTabla.Contains("Zw_Prod_Asociacion") Then
-                        _IColum = 1
-                    End If
+                        Consulta &= "INSERT INTO " & _NombreTabla & "("
 
-                    For column = _IColum To _CantColumnas
-                        Consulta &= _Ds_Producto.Tables(table).Columns(column).ColumnName & ","
-                    Next
+                        Dim _CantColumnas As Integer = _Ds_Producto.Tables(table).Columns.Count - 1
 
-                    Consulta &= ")"
-                    Consulta = Consulta.Replace(",)", ")")
+                        If _NombreTabla = "MAEFICHD" Then
+                            _CantColumnas = _CantColumnas - 1
+                        End If
 
-                    Consulta &= " VALUES "
+                        Dim _IColum = 0
 
-                    For row = 0 To _Ds_Producto.Tables(table).Rows.Count - 1
-                        Consulta &= "("
+                        If _NombreTabla.Contains("Zw_Prod_Asociacion") Then
+                            _IColum = 1
+                        End If
+
                         For column = _IColum To _CantColumnas
-                            Consulta &= "'"
-                            Consulta &= _Ds_Producto.Tables(table).Rows(row)(column).ToString().Replace(",", ".") & "',"
+                            Consulta &= _Ds_Producto.Tables(table).Columns(column).ColumnName & ","
                         Next
+
                         Consulta &= ")"
                         Consulta = Consulta.Replace(",)", ")")
-                        Consulta &= ","
-                    Next
 
-                    Consulta &= ";" & vbCrLf
+                        Consulta &= " VALUES "
 
-                    Consulta = Consulta.Replace("),;", ");")
+                        For row = 0 To _Ds_Producto.Tables(table).Rows.Count - 1
+                            Consulta &= "("
+                            For column = _IColum To _CantColumnas
+                                Consulta &= "'"
+                                Consulta &= _Ds_Producto.Tables(table).Rows(row)(column).ToString().Replace(",", ".") & "',"
+                            Next
+                            Consulta &= ")"
+                            Consulta = Consulta.Replace(",)", ")")
+                            Consulta &= ","
+                        Next
+
+                        Consulta &= ";" & vbCrLf
+
+                        Consulta = Consulta.Replace("),;", ");")
+
+                    End If
 
                 End If
 
@@ -368,6 +420,8 @@ Namespace Bk_Migrar_Producto
             Dim _SqlQuery = String.Empty
             Dim _GrbProd_Bodegas As String = _Row_DnExt.Item("GrbProd_Bodegas")
 
+            If String.IsNullOrWhiteSpace(_GrbProd_Bodegas) Then Return ""
+
             Consulta_sql = "Select * From TABBO Where EMPRESA+KOSU+KOBO In " & _GrbProd_Bodegas
             Dim _TblBodegas As DataTable = _Sql2.Fx_Get_Tablas(Consulta_sql)
 
@@ -390,6 +444,8 @@ Namespace Bk_Migrar_Producto
 
             Dim _SqlQuery = String.Empty
             Dim _GrbProd_Listas = _Row_DnExt.Item("GrbProd_Listas")
+
+            If String.IsNullOrWhiteSpace(_GrbProd_Listas) Then Return ""
 
             Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
             Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)

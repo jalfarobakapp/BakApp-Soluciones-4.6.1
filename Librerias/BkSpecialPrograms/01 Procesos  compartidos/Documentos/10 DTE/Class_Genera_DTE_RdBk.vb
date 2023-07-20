@@ -470,7 +470,7 @@ Public Class Class_Genera_DTE_RdBk
         Dim _Nudo As String = _Maeedo.Rows.Item(0).Item("NUDO")
 
         If Not _Reenviar Then
-            If Not Fx_Revisar_Expiracion_Folio_SII(_Formulario, _Tido, _Nudo) Then
+            If Not Fx_Revisar_Expiracion_Folio_SII(_Formulario, _Tido, _Nudo, True) Then
                 Return 0
             End If
         End If

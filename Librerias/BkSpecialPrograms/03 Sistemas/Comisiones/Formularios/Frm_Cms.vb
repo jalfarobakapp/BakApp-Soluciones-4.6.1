@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports System.Data.SqlClient
+Imports DevComponents.DotNetBar
 Public Class Frm_Cms
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -661,5 +662,131 @@ Public Class Frm_Cms
 
     End Function
 
+    Private Sub Btn_ActualizarVendedores_Click(sender As Object, e As EventArgs) Handles Btn_ActualizarVendedores.Click
 
+        Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Comisiones_Fun" & vbCrLf &
+                       "Where CodFuncionario not in (Select CodFuncionario From " & _Global_BaseBk & "Zw_Comisiones_Lin Where Id_Enc = 2) And Habilitado = 1"
+        Dim _Tbl_Funcionarios As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+
+        Dim _SqlQuery = String.Empty
+
+        For Each _Fila As DataRow In _Tbl_Funcionarios.Rows
+
+            Dim _CodFuncinario As String = _Fila.Item("CodFuncionario")
+
+            Sb_InsertarFuncionario(Id_Enc, _CodFuncinario)
+
+        Next
+
+        Sb_Actualizar_Grilla()
+
+    End Sub
+
+    Sub Sb_InsertarFuncionario(_Id_Enc As Integer, _CodFuncionario As String)
+
+        Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Comisiones_Enc Where Id = " & _Id_Enc
+        Dim _Row_Periodo As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+        Dim _Habiles As Integer = _Row_Periodo.Item("Habiles")
+        Dim _Sabados As Integer = _Row_Periodo.Item("Sabados")
+        Dim _Domingos As Integer = _Row_Periodo.Item("Domingos")
+        Dim _Festivos As Integer = _Row_Periodo.Item("Festivos")
+        Dim _Semanas As Integer = _Row_Periodo.Item("Semanas")
+        Dim _DiasTrabMes As Integer = _Habiles - _Festivos
+
+        Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Comisiones_Mis Where CodFuncionario = '" & _CodFuncionario & "'"
+        Dim _Tbl_MisComisiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+
+        Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Comisiones_Fun Where CodFuncionario = '" & _CodFuncionario & "'"
+        Dim _Row_Funcionario As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+        Dim _PorcCotizaciones As Double = _Row_Funcionario.Item("AFP") + _Row_Funcionario.Item("Salud")
+
+        Dim _Id_Lin As Integer
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+        Dim cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Try
+
+
+            SQL_ServerClass.Sb_Abrir_Conexion(cn2)
+
+            myTrans = cn2.BeginTransaction()
+
+            Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Comisiones_Lin (Id_Enc,CodFuncionario,PorcCotizaciones) " &
+                           "Values (" & _Id_Enc & ",'" & _CodFuncionario & "'," & De_Num_a_Tx_01(_PorcCotizaciones, False, 5) & ")"
+            Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+
+            Comando = New SqlCommand("SELECT @@IDENTITY AS 'Identity'", cn2)
+            Comando.Transaction = myTrans
+            Dim dfd1 As SqlDataReader = Comando.ExecuteReader()
+            While dfd1.Read()
+                _Id_Lin = dfd1("Identity")
+            End While
+            dfd1.Close()
+
+            For Each _Fila As DataRow In _Tbl_MisComisiones.Rows
+
+                Dim _Id_Det As Integer
+                Dim _Id_Mis As Integer = _Fila.Item("Id")
+                Dim _vPorcComision As Double = _Fila.Item("PorcComision")
+                Dim _PorcComision As String = De_Num_a_Tx_01(_vPorcComision, False, 5)
+                Dim _TieneSC As Boolean = _Fila.Item("TieneSC")
+                Dim _Descripcion As String = _Fila.Item("Descripcion")
+
+                Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Comisiones_Det (Id_Enc,Id_Lin,Id_Mis,Descripcion,CodFuncionario,PorcComision) " &
+                               "Values (" & _Id_Enc & "," & _Id_Lin & "," & _Id_Mis & ",'" & _Descripcion & "','" & _CodFuncionario & "'," & _PorcComision & ")"
+
+                Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+                Comando = New SqlCommand("SELECT @@IDENTITY AS 'Identity'", cn2)
+                Comando.Transaction = myTrans
+                dfd1 = Comando.ExecuteReader()
+                While dfd1.Read()
+                    _Id_Det = dfd1("Identity")
+                End While
+                dfd1.Close()
+
+                If _TieneSC Then
+
+                    Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Comisiones_DetSc (Id_Enc,Id_Lin,Id_Det,CodFuncionario,DiasHabiles,Sabados,Domingos,Festivos,DiasTrabMes,Semanas) Values " &
+                                   "(" & _Id_Enc & "," & _Id_Lin & "," & _Id_Det & ",'" & _CodFuncionario & "'," & _Sabados & "," & _Domingos & "," & _Festivos & "," & _DiasTrabMes & "," & _Semanas & ")"
+                    Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
+                    Comando.Transaction = myTrans
+                    Comando.ExecuteNonQuery()
+
+                End If
+
+            Next
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
+
+        Catch ex As Exception
+
+            My.Computer.FileSystem.WriteAllText("ArchivoSalida", ex.Message & vbCrLf & ex.StackTrace, False)
+            MessageBoxEx.Show(ex.Message & vbCrLf & vbCrLf & "Transaccion desecha", "Problema",
+                              Windows.Forms.MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.Stop)
+
+            If Not IsNothing(myTrans) Then
+                myTrans.Rollback()
+            End If
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
+
+        End Try
+
+    End Sub
+
+    Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click
+        Sb_Actualizar_Grilla()
+    End Sub
 End Class

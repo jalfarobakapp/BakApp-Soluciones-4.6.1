@@ -102,7 +102,7 @@ Public Class Frm_DatosConexion
 
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
 
-            MessageBoxEx.Show(Me, "Datos actuializados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             Grabar = True
             Me.Close()

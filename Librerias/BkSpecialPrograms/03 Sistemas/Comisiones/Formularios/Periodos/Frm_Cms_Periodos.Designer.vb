@@ -22,9 +22,9 @@ Partial Class Frm_Cms_Periodos
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Cms_Periodos))
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
@@ -32,15 +32,21 @@ Partial Class Frm_Cms_Periodos
         Me.Btn_NuevoPeriodo = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnExportarExcel = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
+        Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_RevisarPeriodo = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_EditarPeriodo = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupPanel1
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Menu_Contextual)
         Me.GroupPanel1.Controls.Add(Me.Grilla)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
@@ -82,37 +88,37 @@ Partial Class Frm_Cms_Periodos
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla.Size = New System.Drawing.Size(648, 441)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 27
@@ -160,6 +166,41 @@ Partial Class Frm_Cms_Periodos
         Me.Btn_Actualizar.Name = "Btn_Actualizar"
         Me.Btn_Actualizar.Tooltip = "Refrescar datos"
         '
+        'Menu_Contextual
+        '
+        Me.Menu_Contextual.AntiAlias = True
+        Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
+        Me.Menu_Contextual.Location = New System.Drawing.Point(196, 77)
+        Me.Menu_Contextual.Name = "Menu_Contextual"
+        Me.Menu_Contextual.Size = New System.Drawing.Size(139, 25)
+        Me.Menu_Contextual.Stretch = True
+        Me.Menu_Contextual.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Menu_Contextual.TabIndex = 46
+        Me.Menu_Contextual.TabStop = False
+        Me.Menu_Contextual.Text = "ContextMenuBar1"
+        '
+        'Menu_Contextual_01
+        '
+        Me.Menu_Contextual_01.AutoExpandOnClick = True
+        Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_RevisarPeriodo, Me.Btn_EditarPeriodo})
+        Me.Menu_Contextual_01.Text = "Opciones"
+        '
+        'Btn_RevisarPeriodo
+        '
+        Me.Btn_RevisarPeriodo.Image = CType(resources.GetObject("Btn_RevisarPeriodo.Image"), System.Drawing.Image)
+        Me.Btn_RevisarPeriodo.ImageAlt = CType(resources.GetObject("Btn_RevisarPeriodo.ImageAlt"), System.Drawing.Image)
+        Me.Btn_RevisarPeriodo.Name = "Btn_RevisarPeriodo"
+        Me.Btn_RevisarPeriodo.Text = "Revisar periodo"
+        '
+        'Btn_EditarPeriodo
+        '
+        Me.Btn_EditarPeriodo.Image = CType(resources.GetObject("Btn_EditarPeriodo.Image"), System.Drawing.Image)
+        Me.Btn_EditarPeriodo.ImageAlt = CType(resources.GetObject("Btn_EditarPeriodo.ImageAlt"), System.Drawing.Image)
+        Me.Btn_EditarPeriodo.Name = "Btn_EditarPeriodo"
+        Me.Btn_EditarPeriodo.Text = "Editar periodo"
+        '
         'Frm_Cms_Periodos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -179,6 +220,7 @@ Partial Class Frm_Cms_Periodos
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -189,4 +231,8 @@ Partial Class Frm_Cms_Periodos
     Public WithEvents Btn_NuevoPeriodo As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Actualizar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents BtnExportarExcel As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Menu_Contextual As DevComponents.DotNetBar.ContextMenuBar
+    Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_RevisarPeriodo As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_EditarPeriodo As DevComponents.DotNetBar.ButtonItem
 End Class

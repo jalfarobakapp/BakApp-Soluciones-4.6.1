@@ -293,7 +293,7 @@ Public Class Clase_Crear_Documento
 
                         If Not _Es_ValeTransitorio Then
 
-                            If Not Fx_Revisar_Expiracion_Folio_SII(Nothing, _Tido, Numero_de_documento) Then
+                            If Not Fx_Revisar_Expiracion_Folio_SII(Nothing, _Tido, Numero_de_documento, False) Then
                                 Throw New System.Exception("El folio del documento electrónico (" & Numero_de_documento & ") ya expiró en el SII." & vbCrLf &
                                                        "Informe al administrador del sistema")
                             End If
@@ -623,6 +623,8 @@ Public Class Clase_Crear_Documento
                                 '_Lincondesp = False
                                 _Nudtli = 0
                                 _Eslido = "C" 'String.Empty
+
+                                If _Tido = "OCC" Then _Eslido = ""
 
                             End If
 

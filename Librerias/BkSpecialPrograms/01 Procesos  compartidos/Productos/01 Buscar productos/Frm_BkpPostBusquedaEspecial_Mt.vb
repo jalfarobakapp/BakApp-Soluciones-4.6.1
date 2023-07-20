@@ -1,6 +1,4 @@
-﻿'Imports System.ComponentModel
-'Imports System.Globalization
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_BkpPostBusquedaEspecial_Mt
 
@@ -670,9 +668,14 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Btn_Mnu_Pr_Editar_Producto.Enabled = _Mostrar_Editar
         Btn_Mnu_Pr_Eliminar_Producto.Enabled = _Mostrar_Eliminar
 
-        If Not _Global_Row_Configuracion_General.Item("Patentes_rvm") Then
-            Lbl_Patente.Visible = False
-            Txt_Patente.Visible = False
+        Lbl_Patente.Visible = False
+        Txt_Patente.Visible = False
+
+        If _Sql.Fx_Existe_Tabla("Patentes_rvm", _Global_BaseBk) Then
+            If _Global_Row_Configuracion_General.Item("Patentes_rvm") Then
+                Lbl_Patente.Visible = True
+                Txt_Patente.Visible = True
+            End If
         End If
 
         AddHandler Txtdescripcion.Enter, AddressOf Txtdescripcion_Enter
@@ -1753,6 +1756,69 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Dim _Codigo = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value
         Dim _Descripcion = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Descripcion").Value
 
+        If _Global_Row_Configuracion_General.Item("PermitirMigrarProductosBaseExterna") Then
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbProd_Nuevos = 1"
+            Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
+
+                Dim _Id_Conexion As Integer = _FilaCx.Item("Id")
+                Dim _BaseDeDatos As String = _FilaCx.Item("BaseDeDatos")
+                Dim _Cl_Migrar_Producto As New Bk_Migrar_Producto.Cl_ConexionExterna
+
+                Dim _ConexionExternas As New Bk_Migrar_Producto.ConexionExternas
+
+                _ConexionExternas = _Cl_Migrar_Producto.Fx_CadenaConexionServExt(_Id_Conexion)
+
+                If _ConexionExternas.EsCorrecto Then
+
+                    Dim _Sql2 = New Class_SQL(_ConexionExternas.Cadena_ConexionSQL_Server_Ext)
+
+                    If _ConexionExternas.SincroProductos Then
+
+                        Dim _Reg = _Sql2.Fx_Cuenta_Registros("MAEPR", "KOPR = '" & _Codigo & "'")
+
+                        If CBool(_Reg) Then
+
+                            Dim _Cl_EliminaProd As New Cl_EliminaProd
+
+                            _Cl_EliminaProd = Fx_Eliminar_Producto_BaseExterna(_Codigo,
+                                                                               _ConexionExternas.Cadena_ConexionSQL_Server_Ext,
+                                                                               _ConexionExternas.Global_BaseBk, False)
+
+                            If Not _Cl_EliminaProd.EsCorrecto Then
+
+                                Dim _Msg As String
+
+                                For Each _Error As String In _Cl_EliminaProd.Problemas
+                                    _Msg += _Error & vbCrLf
+                                Next
+
+                                MessageBoxEx.Show(Me, "No se pudo eliminar el producto de la base de datos externa" & vbCrLf &
+                                                      "Base de datos: " & _BaseDeDatos & vbCrLf & vbCrLf & _Msg,
+                                                      "Eliminar producto en base externa",
+                                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                Return
+                            End If
+
+                        End If
+
+                    End If
+
+                Else
+                    MessageBoxEx.Show(Me, "No fue posible editar el producto en base de datos externa" & vbCrLf & vbCrLf &
+                                      "Base de datos: " & _BaseDeDatos & vbCrLf & vbCrLf &
+                                      _ConexionExternas.MensajeError, "Editar producto en base externa",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                End If
+
+            Next
+
+        End If
+
+
+
         If Fx_Eliminar_Producto(_Codigo, _Descripcion) Then
 
             Grilla.Rows.RemoveAt(Grilla.CurrentRow.Index)
@@ -1788,7 +1854,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
                                 _Cl_EliminaProd = Fx_Eliminar_Producto_BaseExterna(_Codigo,
                                                                                    _ConexionExternas.Cadena_ConexionSQL_Server_Ext,
-                                                                                   _ConexionExternas.Global_BaseBk)
+                                                                                   _ConexionExternas.Global_BaseBk, True)
 
                                 If _Cl_EliminaProd.EsCorrecto Then
                                     MessageBoxEx.Show(Me, "Producto eliminado correctamente en la base de datos externa" & vbCrLf &
@@ -1904,7 +1970,8 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     Function Fx_Eliminar_Producto_BaseExterna(_Codigo_a_eliminar As String,
                                               _Cadena_ConexionSQL_Server_Externa As String,
-                                              _Global_BaseBk_Externa As String) As Cl_EliminaProd
+                                              _Global_BaseBk_Externa As String,
+                                              _Eliminar As Boolean) As Cl_EliminaProd
 
         Dim _Sql As New Class_SQL(_Cadena_ConexionSQL_Server_Externa)
 
@@ -1917,6 +1984,8 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Dim _Tabcodal As Long = _Sql.Fx_Cuenta_Registros("TABCODAL", "KOPR = '" & _Codigo_a_eliminar & "'")
         Dim _Potd As Long = _Sql.Fx_Cuenta_Registros("POTD", "CODIGO = '" & _Codigo_a_eliminar & "'")
         Dim _Kasiddo As Long = _Sql.Fx_Cuenta_Registros("KASIDDO", "KOPRCT = '" & _Codigo_a_eliminar & "'")
+
+        _Cl_EliminaProd.EsCorrecto = True
 
         If CBool(_Maeddo) Then
             _Cl_EliminaProd.EsCorrecto = False
@@ -1934,31 +2003,34 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         End If
 
         Consulta_sql = "DELETE " & _Global_BaseBk_Externa & "Zw_ListaPreCosto WHERE (Codigo = '') AND (CodAlternativo = '')" & vbCrLf &
-                        "DELETE PDIMEN    WHERE CODIGO ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                        "DELETE MAEPROBS  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                        "DELETE MAEFICHA  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                        "DELETE MAEFICHD  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                        "DELETE TABIMPR   WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                        "DELETE TABPRE    WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                        "DELETE TABBOPR   WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                        "DELETE MPROENVA  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                        "DELETE MAEPREM   WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                        "DELETE MAEPR     WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                        "DELETE TABCODAL  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                        "DELETE " & _Global_BaseBk_Externa & "Zw_ListaPreCosto WHERE Codigo ='" & _Codigo_a_eliminar & "' And Proveedor = ''" & vbCrLf &
-                        "DELETE " & _Global_BaseBk_Externa & "Zw_ListaPreProducto WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                        "DELETE " & _Global_BaseBk_Externa & "Zw_Prod_Asociacion WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                        "DELETE " & _Global_BaseBk_Externa & "Zw_Prod_Dimensiones WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                        "UPDATE " & _Global_BaseBk_Externa & "Zw_ListaPreCosto Set Codigo = '', Descripcion = ''" & Space(1) &
-                        "WHERE  Codigo = '" & _Codigo_a_eliminar & "' AND Proveedor <> ''" & vbCrLf &
-                        "DELETE " & _Global_BaseBk_Externa & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo_a_eliminar & "' And Producto = 1"
+                       "DELETE PDIMEN    WHERE CODIGO ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                       "DELETE MAEPROBS  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                       "DELETE MAEFICHA  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                       "DELETE MAEFICHD  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                       "DELETE TABIMPR   WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                       "DELETE TABPRE    WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                       "DELETE TABBOPR   WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                       "DELETE MPROENVA  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                       "DELETE MAEPREM   WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                       "DELETE MAEPR     WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                       "DELETE TABCODAL  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                       "DELETE " & _Global_BaseBk_Externa & "Zw_ListaPreCosto WHERE Codigo ='" & _Codigo_a_eliminar & "' And Proveedor = ''" & vbCrLf &
+                       "DELETE " & _Global_BaseBk_Externa & "Zw_ListaPreProducto WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                       "DELETE " & _Global_BaseBk_Externa & "Zw_Prod_Asociacion WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                       "DELETE " & _Global_BaseBk_Externa & "Zw_Prod_Dimensiones WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                       "UPDATE " & _Global_BaseBk_Externa & "Zw_ListaPreCosto Set Codigo = '', Descripcion = ''" & Space(1) &
+                       "WHERE  Codigo = '" & _Codigo_a_eliminar & "' AND Proveedor <> ''" & vbCrLf &
+                       "DELETE " & _Global_BaseBk_Externa & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo_a_eliminar & "' And Producto = 1"
 
         _Cl_EliminaProd.SqlQueruDelete = Consulta_sql
 
-        If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
-            _Cl_EliminaProd.EsCorrecto = True
-        Else
-            _Cl_EliminaProd.EsCorrecto = False
+        If _Cl_EliminaProd.EsCorrecto Then
+            If _Eliminar Then
+                _Cl_EliminaProd.EsCorrecto = _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+            End If
+        End If
+
+        If Not _Cl_EliminaProd.EsCorrecto Then
             _Cl_EliminaProd.Problemas.Add(_Sql.Pro_Error)
         End If
 

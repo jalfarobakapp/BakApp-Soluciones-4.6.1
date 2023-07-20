@@ -40,6 +40,7 @@ Public Class Frm_EstadisticaProducto
     Dim _Row_Nodo_Clasificaciones As DataRow
     Dim _Es_Concepto As Boolean
 
+    Public Property VerEdicionProducto As Boolean
     Public Enum Tipo_Doc
         Ninguno
         Compra
@@ -390,6 +391,8 @@ Public Class Frm_EstadisticaProducto
 
         Sb_Color_Botones_Barra(Bar1)
         Sb_Dias_Entre_Fechas()
+
+        Btn_Mnu_Pr_Editar_Producto.Visible = VerEdicionProducto
 
     End Sub
 
@@ -2879,4 +2882,21 @@ Public Class Frm_EstadisticaProducto
 
     End Sub
 
+    Private Sub Btn_Mnu_Pr_Editar_Producto_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Pr_Editar_Producto.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Prod014") Then
+            Return
+        End If
+
+        Dim Fm As New Frm_MtCreacionDeProducto(Cl_Producto.Enum_Accion.Editar, _Codigo, False, False)
+        Fm.BtnCodAlternativosProducto.Visible = True
+        Fm.ShowDialog(Me)
+
+        If Fm.Pro_Grabar Then
+
+        End If
+
+        Fm.Dispose()
+
+    End Sub
 End Class

@@ -815,6 +815,8 @@ Public Class Frm_Formato_Diseno_Encabezado
                     CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Rdb_PD_Prod_Desc.Checked = True
                 Case "PR"
                     CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Rdb_PR_Prod_Reca.Checked = True
+                Case "SP2"
+                    CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Rdb_SP2_Prod.Checked = True
             End Select
 
 
@@ -1125,6 +1127,9 @@ Public Class Frm_Formato_Diseno_Encabezado
         If CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Rdb_PR_Prod_Reca.Checked Then _
             _Detalle_Doc_Incluye = CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Rdb_PR_Prod_Reca.Tag
 
+        If CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Rdb_SP2_Prod.Checked Then _
+            _Detalle_Doc_Incluye = CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Rdb_SP2_Prod.Tag
+
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Format_01 Set" & Space(1) &
                        "Fila_InicioDetalle = " & _Fila_InicioDetalle & vbCrLf &
                        ",Fila_FinDetalle = " & _Fila_FinDetalle & vbCrLf &
@@ -1166,134 +1171,6 @@ Public Class Frm_Formato_Diseno_Encabezado
         Else
 
             MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
-        End If
-
-        Panel1.HorizontalScroll.Value = _HorizontalScroll
-        Panel1.VerticalScroll.Value = _VerticalScroll
-
-    End Function
-
-    Public Function Sb_Grabar_Movimientos_Old()
-
-        Dim _HorizontalScroll = Panel1.HorizontalScroll.Value
-        Dim _VerticalScroll = Panel1.VerticalScroll.Value
-
-        Dim Ctrl As Control
-
-        'Dim Xx, Yy As Integer
-        'Dim NombreEtiqueta As String
-        'Dim TipoDoc = "OCC"
-        'Dim NombreFormato = "OCC PRUEBA"
-
-        If _Nuevo_Formato Then
-
-            _NombreFormato = InputBox_Bk(Me, "Ingrese el nombre del formato...", "Crear formato", "",
-                                         False, _Tipo_Mayus_Minus.Mayusculas)
-
-            If String.IsNullOrEmpty(Trim(_NombreFormato)) Then
-                MessageBoxEx.Show(_FormPadre, "Falta nombre del formato", "No se realiza grabación",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Exit Function
-            End If
-
-        End If
-
-        Dim Sql1 = String.Empty
-        Dim Sql2 = String.Empty
-
-        Dim _i = 1
-
-        For Each Ctrl In Documento.Controls
-
-            ' No asignar estos evento al botón salir
-
-            If Ctrl.Name <> "ShapeContainer1" And Ctrl.Name <> "LblVersion" And Ctrl.Name <> "Lbl_Lineas_x_Pagina" Then
-
-                ' Curiosamente un control GroupBox en apariencia
-                ' no tiene estos eventos, pero... se le asigna y...
-                ' ¡funciona!
-
-                If Ctrl.Name <> "Lbl_Lineas_x_Pagina" Then
-                    Sql1 += "-- " & _i & vbCrLf & Fx_Crear_Z_Crear_Formato(Ctrl, _TipoDoc, _NombreFormato, _Emdp)
-                End If
-
-                _i += 1
-
-            End If
-
-        Next
-
-        For Each _Ctrl In ShapeContainer1.Shapes
-            Dim _Tip As String = Mid(_Ctrl.Name, 1, 3)
-            If _Tip = "Box" Then 'Or _Tip = "Lin" Then
-                Sql2 += "-- " & _i & vbCrLf & Fx_Crear_Z_Crear_Formato(_Ctrl, _TipoDoc, _NombreFormato, _Emdp)
-                _i += 1
-            End If
-        Next
-
-        Dim _Fila_InicioDetalle As Integer
-        Dim _Fila_FinDetalle As Integer
-        Dim _Copias As Integer
-
-        'LineaPie.Y1 = 800 : LineaPie.Y2 = 800
-        'LineaPie.X1 = 1 : LineaPie.X2 = 1000
-
-        _Fila_InicioDetalle = XLineaDetalle.Y1
-        _Fila_FinDetalle = XLineaPie.Y1
-
-        'LineaDetalle.Y1 = 100 : LineaDetalle.Y2 = 100
-        'LineaDetalle.X1 = 1 : LineaDetalle.X2 = 1000
-
-        Dim _Largo_Variable As Integer = CInt(CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Chk_Largo_Variable.Checked) * -1
-        Dim _Es_Picking As Integer = CInt(CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Chk_Es_Picking.Checked) * -1
-
-        _NroLineaXPag = _FormPadre.Input_Max_Lienas.value
-        _Copias = _FormPadre.Input_Copias.value
-
-        Dim _Detalle_Doc_Incluye As String
-
-        If CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Rdb_SP_Prod.Checked Then _
-            _Detalle_Doc_Incluye = CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Rdb_SP_Prod.Tag
-
-        If CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Rdb_PD_Prod_Desc.Checked Then _
-            _Detalle_Doc_Incluye = CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Rdb_PD_Prod_Desc.Tag
-
-        If CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Rdb_TD_Prod_Desc_Reca.Checked Then _
-            _Detalle_Doc_Incluye = CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Rdb_TD_Prod_Desc_Reca.Tag
-
-        If CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Rdb_PR_Prod_Reca.Checked Then _
-            _Detalle_Doc_Incluye = CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Rdb_PR_Prod_Reca.Tag
-
-        Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Format_01 Set" & Space(1) &
-                       "Fila_InicioDetalle = " & _Fila_InicioDetalle & vbCrLf &
-                       ",Fila_FinDetalle = " & _Fila_FinDetalle & vbCrLf &
-                       ",NroLineasXpag = " & _NroLineaXPag & vbCrLf &
-                       ",Largo_Variable = " & _Largo_Variable & vbCrLf &
-                       ",Copias = " & _Copias & vbCrLf &
-                       ",Es_Picking = " & _Es_Picking & vbCrLf &
-                       ",Detalle_Doc_Incluye = '" & _Detalle_Doc_Incluye & "'" & vbCrLf &
-                       "Where TipoDoc = '" & _TipoDoc & "' and NombreFormato = '" & _NombreFormato & "'" & vbCrLf & vbCrLf &
-                       "Delete " & _Global_BaseBk & "Zw_Format_02" & vbCrLf &
-                       "Where TipoDoc = '" & _TipoDoc & "' and NombreFormato = '" & _NombreFormato & "'" & vbCrLf & vbCrLf &
-                       Sql1 & vbCrLf & Sql2
-
-        If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql) Then
-
-
-            If CBool(_Largo_Variable) Then
-
-                If CBool(_NroLineaXPag) Then
-                    MessageBoxEx.Show(Me, "El largo del documento es variable, " &
-                                      "pero el máximo de líneas por página será de: " & _NroLineaXPag, "Número de líneas por página",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                End If
-
-            End If
-
-            MessageBoxEx.Show(Me, "Datos guardados correctamente", "Guardar", MessageBoxButtons.OK,
-                              MessageBoxIcon.Information)
-            _Nuevo_Formato = False
 
         End If
 

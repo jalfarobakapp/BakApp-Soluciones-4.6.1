@@ -1095,13 +1095,23 @@ Public Class Frm_Libro_Compras_Ventas
 
     Private Sub Btn_Excel_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Excel.Click
 
+        Sb_ExportarListadoActualExcel(True)
+
+    End Sub
+
+    Sub Sb_ExportarListadoActualExcel(_MostrarSubMenu As Boolean)
+
         Select Case Tab.SelectedTabIndex
             Case 0
                 ExportarTabla_JetExcel_Tabla(_Inf_00_SII, Me, "Inf_00_SII")
             Case 1
                 ExportarTabla_JetExcel_Tabla(_Inf_01_SII_y_Random, Me, "Inf_01_SII_y_Random")
             Case 2
-                ExportarTabla_JetExcel_Tabla(_Inf_02_Solo_SII, Me, "Inf_02_Solo_SII")
+                If _MostrarSubMenu Then
+                    ShowContextMenu(Menu_Contextual_ExportarExcel)
+                Else
+                    ExportarTabla_JetExcel_Tabla(_Inf_02_Solo_SII, Me, "Inf_02_Solo_SII")
+                End If
             Case 3
                 ExportarTabla_JetExcel_Tabla(_Inf_03_SII_Random_Otro_Mes, Me, "Inf_03_SII_Random_Otro_Mes")
             Case 4
@@ -1508,4 +1518,32 @@ Public Class Frm_Libro_Compras_Ventas
 
     End Sub
 
+    Private Sub Btn_Excel_ListadoActual_Click(sender As Object, e As EventArgs) Handles Btn_Excel_ListadoActual.Click
+        Sb_ExportarListadoActualExcel(False)
+    End Sub
+
+    Private Sub Btn_Excel_ExportarProvSinPDF_Click(sender As Object, e As EventArgs) Handles Btn_Excel_ExportarProvSinPDF.Click
+
+        Consulta_sql = "Select *," & vbCrLf &
+                        "Case When Isnull((Select Top 1 Id From " & _Global_BaseBk & "Zw_DTE_ReccDet Z1" & vbCrLf &
+                        "Where Cmp.Rut_Proveedor = Z1.RutEmisor And Z1.Folio = Cmp.Folio And Cmp.TipoDoc = Z1.TipoDTE),0) = 0 Then 'No' Else 'Si' End As TPDF" & vbCrLf &
+                        "Into #Paso" & vbCrLf &
+                        "From " & _Global_BaseBk & "Zw_Compras_en_SII Cmp" & vbCrLf &
+                        "Where Libro = '' And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
+                        "And Tido+Nudo+Endo+Libro+Rut_Proveedor+Razon_Social+Folio+STR(Monto_Total) LIKE '%%'" &
+                         vbCrLf &
+                        "Select Distinct Rut_Proveedor As 'Rut',Razon_Social As 'Razon Social',FOEN As 'Telefono'" & vbCrLf &
+                        "(Select COUNT(*) From #Paso Ps2 Where Ps1.Rut_Proveedor = Ps2.Rut_Proveedor) As 'Documentos'," & vbCrLf &
+                        "(Select COUNT(*) From #Paso Ps2 Where Ps1.Rut_Proveedor = Ps2.Rut_Proveedor And TPDF = 'Si') As 'Con PDF'," & vbCrLf &
+                        "(Select COUNT(*) From #Paso Ps2 Where Ps1.Rut_Proveedor = Ps2.Rut_Proveedor And TPDF = 'No') As 'Sin PDF' " & vbCrLf &
+                        "From #Paso" & vbCrLf &
+                        "Left Join MAEEN On KOEN = Endo" & vbCrLf &
+                        "Where TPDF = 'No'" & vbCrLf &
+                        "Order by Rut_Proveedor" & vbCrLf &
+                        "Drop Table #Paso"
+        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        ExportarTabla_JetExcel_Tabla(_Tbl, Me, "PRoveedores Sin PDF")
+
+    End Sub
 End Class

@@ -76,11 +76,28 @@ Public Class Frm_ConfTidoXModal
         Rdb_TimbrarXRandom.Value = _RowFormato.Item("TimbrarXRandom")
 
         If Modalidad_General Then
+            Input_AvisoSaldoFolios.Value = NuloPorNro(_RowFormato.Item("AvisoSaldoFolios"), 10)
+            Input_DiasAvisoExpiraFolio.Value = NuloPorNro(_RowFormato.Item("DiasAvisoExpiraFolio"), 14)
+        Else
+            Input_AvisoSaldoFolios.MinValue = 0
+            Input_AvisoSaldoFolios.Value = 0
+            Input_AvisoSaldoFolios.Enabled = False
+            Lbl_AvisoSaldoFolios.Enabled = False
+
+            Input_DiasAvisoExpiraFolio.MinValue = 0
+            Input_DiasAvisoExpiraFolio.Value = 0
+            Input_DiasAvisoExpiraFolio.Enabled = False
+            Lbl_DiasAvisoExpiraFolio.Enabled = False
+        End If
+
+        If Modalidad_General Then
             Rdb_TimbrarXRandom.Enabled = False
             Rdb_TimbrarXRandom.Value = False
             LabelX16.Text = "Timbrar eléct. siempre por Random (SOLO PARA MODALIDADES DE ESTACION)"
             LabelX16.Enabled = False
+
         Else
+
             If _Tido = "GRC" Or _Tido = "GRD" Then
                 Txt_Numero.Enabled = False
                 Txt_Numero.Visible = False
@@ -94,6 +111,7 @@ Public Class Frm_ConfTidoXModal
                 Case Else
                     Rdb_TimbrarXRandom.Enabled = False
             End Select
+
         End If
 
     End Sub
@@ -135,6 +153,8 @@ Public Class Frm_ConfTidoXModal
         Dim _Id_Correo = Txt_Id_Correo.Tag
         Dim _NombreFormato_Correo = Txt_NombreFormato_Correo.Text
         Dim _TimbrarXRandom = Convert.ToInt32(Rdb_TimbrarXRandom.Value)
+        Dim _DiasAvisoExpiraFolio = Input_DiasAvisoExpiraFolio.Value
+        Dim _AvisoSaldoFolios = Input_AvisoSaldoFolios.Value
 
         If Not String.IsNullOrEmpty(_Numero) Then
 
@@ -173,9 +193,11 @@ Public Class Frm_ConfTidoXModal
 
             If _Reg Then
 
-                MessageBoxEx.Show(Me, "Esta número ya existe en el sistema" & vbCrLf &
-                                      "No puede poner este Nro " & _Numero, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return
+                If MessageBoxEx.Show(Me, "El documento Nro: " & _Tido & "-" & _Nudo & " ya existe en el sistema" & vbCrLf &
+                                      "¿Confirma la grabación omitiendo la advertencia?", "Validación",
+                                      MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
+                    Return
+                End If
 
             End If
 
@@ -209,6 +231,8 @@ Public Class Frm_ConfTidoXModal
                    ",Id_Correo = " & _Id_Correo & vbCrLf &
                    ",NombreFormato_Correo = '" & _NombreFormato_Correo & "'" & vbCrLf &
                    ",TimbrarXRandom = '" & _TimbrarXRandom & "'" & vbCrLf &
+                   ",DiasAvisoExpiraFolio = " & _DiasAvisoExpiraFolio & vbCrLf &
+                   ",AvisoSaldoFolios = " & _AvisoSaldoFolios & vbCrLf &
                    "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'" 'In " & _Filtro_Tido
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
