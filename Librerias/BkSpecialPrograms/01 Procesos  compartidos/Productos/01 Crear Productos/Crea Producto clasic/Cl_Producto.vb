@@ -1060,7 +1060,6 @@ Drop Table #Paso_Tabim"
             _SqlQuery = "Delete TABIMPR Where KOPR = '" & _kopr & "'" & vbCrLf &
                         "Delete MAEPROBS Where KOPR = '" & _kopr & "'" & vbCrLf & vbCrLf
 
-            '_SqlQuery += My.Resources.Recursos_Producto.SqlQuery_Crear_Producto & vbCrLf & vbCrLf
             _SqlQuery += My.Resources.Recursos_Producto.SqlQuery_Editar_Producto & vbCrLf & vbCrLf
             Sb_Cargar_Variables(_SqlQuery)
 
