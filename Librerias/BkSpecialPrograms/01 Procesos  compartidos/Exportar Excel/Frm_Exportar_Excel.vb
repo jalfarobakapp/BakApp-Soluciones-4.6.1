@@ -174,9 +174,9 @@ Public Class Frm_Exportar_Excel
 
             For Each dr In _Tbl_Excel.Rows
 
-                If fila = 70165 Then
-                    Dim _Stop = True
-                End If
+                'If fila = 70165 Then
+                '    Dim _Stop = True
+                'End If
                 System.Windows.Forms.Application.DoEvents()
                 columna = 0
                 For Each dc In _Tbl_Excel.Columns
@@ -211,6 +211,8 @@ Public Class Frm_Exportar_Excel
                             _Valor = Replace(_Valor, Chr(_i), " ")
                         Next
                         _Valor = Replace(_Valor, Chr(127), " ")
+
+                        If IsNothing(_Valor) Then _Valor = String.Empty
 
                         Wbook.Worksheets(0).Rows(fila).Cells(columna).Value = _Valor.ToString.Trim
                     End If

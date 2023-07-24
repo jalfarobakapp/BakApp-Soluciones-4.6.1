@@ -1,5 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports DevComponents.DotNetBar
+Imports Spire.Pdf.Exporting.XPS.Schema.Mc
+
 Public Class Frm_Cms
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -57,6 +59,8 @@ Public Class Frm_Cms
         AddHandler Grilla_Detalle.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla_DetalleSc.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
+        AddHandler Grilla_Lineas.MouseDown, AddressOf Sb_Grilla_MouseDown
+
         Sb_Actualizar_Grilla()
 
     End Sub
@@ -67,6 +71,7 @@ Public Class Frm_Cms
                        "Select *,NOKOFU From " & _Global_BaseBk & "Zw_Comisiones_Lin" & vbCrLf &
                        "Left Join TABFU On KOFU = CodFuncionario" & vbCrLf &
                        "Where Id_Enc = " & Id_Enc & vbCrLf &
+                       "Order by CodFuncionario" & vbCrLf &
                        "Select * From " & _Global_BaseBk & "Zw_Comisiones_Det" & vbCrLf &
                        "Where Id_Enc = " & Id_Enc & vbCrLf &
                        "Select 'COMISION BRUTA SUJETA A SEMANA CORRIDA' As 'Descripcion',* From " & _Global_BaseBk & "Zw_Comisiones_DetSc" & vbCrLf &
@@ -113,7 +118,7 @@ Public Class Frm_Cms
 
         With Grilla_Periodo
 
-            .Columns("Nombre").Width = 200
+            .Columns("Nombre").Width = 200 + 40
             .Columns("Nombre").HeaderText = "Número"
             .Columns("Nombre").Visible = True
             .Columns("Nombre").ReadOnly = False
@@ -214,13 +219,13 @@ Public Class Frm_Cms
             .Columns("NOKOFU").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("SubComBruta").Width = 100
+            .Columns("SubComBruta").Width = 100 + 20
             .Columns("SubComBruta").HeaderText = "Com. Neta"
             .Columns("SubComBruta").ToolTipText = "Comisión Neta"
             .Columns("SubComBruta").ReadOnly = True
             .Columns("SubComBruta").Visible = True
             .Columns("SubComBruta").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("SubComBruta").DefaultCellStyle.Format = "$ ###,##0.##"
+            .Columns("SubComBruta").DefaultCellStyle.Format = "$ ###,##0"
             .Columns("SubComBruta").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -233,13 +238,13 @@ Public Class Frm_Cms
             .Columns("PorcCotizaciones").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("ComBruta").Width = 100
+            .Columns("ComBruta").Width = 100 + 20
             .Columns("ComBruta").HeaderText = "Com. Bruta"
             .Columns("ComBruta").ToolTipText = "Comisión Bruta"
             .Columns("ComBruta").ReadOnly = True
             .Columns("ComBruta").Visible = True
             .Columns("ComBruta").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("ComBruta").DefaultCellStyle.Format = "$ ###,##0.##"
+            .Columns("ComBruta").DefaultCellStyle.Format = "$ ###,##0"
             .Columns("ComBruta").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -249,17 +254,17 @@ Public Class Frm_Cms
             .Columns("ComBrutaSemCorr").ReadOnly = True
             .Columns("ComBrutaSemCorr").Visible = True
             .Columns("ComBrutaSemCorr").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("ComBrutaSemCorr").DefaultCellStyle.Format = "$ ###,##0.##"
+            .Columns("ComBrutaSemCorr").DefaultCellStyle.Format = "$ ###,##0"
             .Columns("ComBrutaSemCorr").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("TotalComBruta").Width = 100
+            .Columns("TotalComBruta").Width = 100 + 20
             .Columns("TotalComBruta").HeaderText = "Total Comisión"
             .Columns("TotalComBruta").ToolTipText = "Comision Bruta + Comision Semana Corrida"
             .Columns("TotalComBruta").ReadOnly = True
             .Columns("TotalComBruta").Visible = True
             .Columns("TotalComBruta").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("TotalComBruta").DefaultCellStyle.Format = "$ ###,##0.##"
+            .Columns("TotalComBruta").DefaultCellStyle.Format = "$ ###,##0"
             .Columns("TotalComBruta").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -282,7 +287,7 @@ Public Class Frm_Cms
             .Columns("Descripcion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Valor").Width = 100
+            .Columns("Valor").Width = 100 + 20
             .Columns("Valor").HeaderText = "Valor"
             '.Columns("Valor").ToolTipText = "Semana corrida a pago"
             .Columns("Valor").ReadOnly = True
@@ -298,17 +303,17 @@ Public Class Frm_Cms
             .Columns("Descuento").ReadOnly = True
             .Columns("Descuento").Visible = True
             .Columns("Descuento").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Descuento").DefaultCellStyle.Format = "$ ###,##0.##"
+            .Columns("Descuento").DefaultCellStyle.Format = "$ ###,##0"
             .Columns("Descuento").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("SubTotal").Width = 100
+            .Columns("SubTotal").Width = 100 + 20
             .Columns("SubTotal").HeaderText = "Sub-Total"
             .Columns("SubTotal").ToolTipText = "Sub-Total"
             .Columns("SubTotal").ReadOnly = True
             .Columns("SubTotal").Visible = True
             .Columns("SubTotal").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("SubTotal").DefaultCellStyle.Format = "$ ###,##0.##"
+            .Columns("SubTotal").DefaultCellStyle.Format = "$ ###,##0"
             .Columns("SubTotal").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -321,13 +326,13 @@ Public Class Frm_Cms
             .Columns("PorcComision").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Total").Width = 80
+            .Columns("Total").Width = 100
             .Columns("Total").HeaderText = "Total"
             .Columns("Total").ToolTipText = "Total"
             .Columns("Total").ReadOnly = True
             .Columns("Total").Visible = True
             .Columns("Total").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Total").DefaultCellStyle.Format = "$ ###,##0.##"
+            .Columns("Total").DefaultCellStyle.Format = "$ ###,##0"
             .Columns("Total").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -346,7 +351,7 @@ Public Class Frm_Cms
             .Columns("ComBruta").ReadOnly = True
             .Columns("ComBruta").Visible = True
             .Columns("ComBruta").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("ComBruta").DefaultCellStyle.Format = "$ ###,##0.##"
+            .Columns("ComBruta").DefaultCellStyle.Format = "$ ###,##0"
             .Columns("ComBruta").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -369,7 +374,7 @@ Public Class Frm_Cms
             .Columns("ComBruta").ReadOnly = True
             .Columns("ComBruta").Visible = True
             .Columns("ComBruta").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("ComBruta").DefaultCellStyle.Format = "$ ###,##0.##"
+            .Columns("ComBruta").DefaultCellStyle.Format = "$ ###,##0"
             .Columns("ComBruta").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -388,7 +393,7 @@ Public Class Frm_Cms
             .Columns("ValorDia").ReadOnly = True
             .Columns("ValorDia").Visible = True
             .Columns("ValorDia").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("ValorDia").DefaultCellStyle.Format = "$ ###,##0.##"
+            .Columns("ValorDia").DefaultCellStyle.Format = "$ ###,##0"
             .Columns("ValorDia").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -407,7 +412,7 @@ Public Class Frm_Cms
             .Columns("TotalPagoSC").ReadOnly = True
             .Columns("TotalPagoSC").Visible = True
             .Columns("TotalPagoSC").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("TotalPagoSC").DefaultCellStyle.Format = "$ ###,##0.##"
+            .Columns("TotalPagoSC").DefaultCellStyle.Format = "$ ###,##0"
             .Columns("TotalPagoSC").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -467,84 +472,174 @@ Public Class Frm_Cms
 
     Private Sub Grilla_Detalle_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Detalle.CellDoubleClick
 
-        Dim _Fila As DataGridViewRow = Grilla_Detalle.CurrentRow
-        Dim _Id_Det As Integer = _Fila.Cells("Id").Value
+        Dim _FilaLin As DataGridViewRow = Grilla_Lineas.CurrentRow
+        Dim _FilaDet As DataGridViewRow = Grilla_Detalle.CurrentRow
+        Dim _Id_Det As Integer = _FilaDet.Cells("Id").Value
         Dim _TotalNetoComisiones As Double
 
-        Sb_Cargar_TblInforme(_Id_Det)
+        Dim _Cabeza = Grilla_Detalle.Columns(Grilla_Detalle.CurrentCell.ColumnIndex).Name
+        Dim _ActualizarTotales As Boolean
 
-        Dim _FechaDesde As Date = Grilla_Periodo.Rows(0).Cells("FechaDesde").Value
-        Dim _FechaHasta As Date = Grilla_Periodo.Rows(0).Cells("FechaHasta").Value
+        Select Case _Cabeza
+            Case "Valor"
 
-        Dim _Tabla_Matriz_Informe As String = "Zw_Informe_Venta" '"Zw_TblPaso" ' & Trim(FUNCIONARIO)
+                Sb_Cargar_TblInforme(_Id_Det)
 
-        Dim Fm As New Frm_Inf_Ventas_X_Periodo_Cubo(Frm_Inf_Ventas_X_Periodo_Cubo.Enum_Informe.Sucursal,
-                                                    _Tabla_Matriz_Informe,
-                                                    1,
-                                                    _FechaDesde,
-                                                    _FechaHasta,
-                                                    False)
-        Fm.Tbl_Filtro_Entidad = _Tbl_Filtro_Entidad
-        Fm.Tbl_Filtro_SucursalDoc = _Tbl_Filtro_SucursalDoc
-        Fm.Tbl_Filtro_Sucursales = _Tbl_Filtro_Sucursales
-        Fm.Tbl_Filtro_Bodegas = _Tbl_Filtro_Bodegas
-        Fm.Tbl_Filtro_Ciudad = _Tbl_Filtro_Ciudad
-        Fm.Tbl_Filtro_Comunas = _Tbl_Filtro_Comunas
-        Fm.Tbl_Filtro_Rubro_Entidades = _Tbl_Filtro_Rubro_Entidades
-        Fm.Tbl_Filtro_Zonas_Entidades = _Tbl_Filtro_Zonas_Entidades
-        Fm.Tbl_Filtro_Responzables = _Tbl_Filtro_Responzables
-        Fm.Tbl_Filtro_Vendedores = _Tbl_Filtro_Vendedores
-        Fm.Tbl_Filtro_Vendedores_Asignados = _Tbl_Filtro_Vendedores_Asignados
-        Fm.Tbl_Filtro_Productos = _Tbl_Filtro_Productos
-        Fm.Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
-        Fm.Tbl_Filtro_Familias = _Tbl_Filtro_Familias
-        Fm.Tbl_Filtro_Sub_Familias = _Tbl_Filtro_Sub_Familias
-        Fm.Tbl_Filtro_Marcas = _Tbl_Filtro_Marcas
-        Fm.Tbl_Filtro_Rubro_Productos = _Tbl_Filtro_Rubro_Productos
-        Fm.Tbl_Filtro_Clalibpr = _Tbl_Filtro_Clalibpr
-        Fm.Tbl_Filtro_Zonas_Productos = _Tbl_Filtro_Zonas_Productos
-        Fm.Tbl_Filtro_Tipo_Entidad = _Tbl_Filtro_Tipo_Entidad
-        Fm.Tbl_Filtro_Act_Economica = _Tbl_Filtro_Act_Economica
-        Fm.Tbl_Filtro_Tama_Empresa = _Tbl_Filtro_Tama_Empresa
+                Dim _FechaDesde As Date = Grilla_Periodo.Rows(0).Cells("FechaDesde").Value
+                Dim _FechaHasta As Date = Grilla_Periodo.Rows(0).Cells("FechaHasta").Value
 
-        Fm.Comisiones = True
-        Fm.FechaDesdeFd = _FechaDesde
-        Fm.FechaHastaFh = _FechaHasta
+                Dim _Tabla_Matriz_Informe As String = "Zw_Informe_Venta" '"Zw_TblPaso" ' & Trim(FUNCIONARIO)
 
-        Fm.ShowDialog(Me)
+                Dim Fm As New Frm_Inf_Ventas_X_Periodo_Cubo(Frm_Inf_Ventas_X_Periodo_Cubo.Enum_Informe.Sucursal,
+                                                            _Tabla_Matriz_Informe,
+                                                            1,
+                                                            _FechaDesde,
+                                                            _FechaHasta,
+                                                            False)
+                Fm.Tbl_Filtro_Entidad = _Tbl_Filtro_Entidad
+                Fm.Tbl_Filtro_SucursalDoc = _Tbl_Filtro_SucursalDoc
+                Fm.Tbl_Filtro_Sucursales = _Tbl_Filtro_Sucursales
+                Fm.Tbl_Filtro_Bodegas = _Tbl_Filtro_Bodegas
+                Fm.Tbl_Filtro_Ciudad = _Tbl_Filtro_Ciudad
+                Fm.Tbl_Filtro_Comunas = _Tbl_Filtro_Comunas
+                Fm.Tbl_Filtro_Rubro_Entidades = _Tbl_Filtro_Rubro_Entidades
+                Fm.Tbl_Filtro_Zonas_Entidades = _Tbl_Filtro_Zonas_Entidades
+                Fm.Tbl_Filtro_Responzables = _Tbl_Filtro_Responzables
+                Fm.Tbl_Filtro_Vendedores = _Tbl_Filtro_Vendedores
+                Fm.Tbl_Filtro_Vendedores_Asignados = _Tbl_Filtro_Vendedores_Asignados
+                Fm.Tbl_Filtro_Productos = _Tbl_Filtro_Productos
+                Fm.Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
+                Fm.Tbl_Filtro_Familias = _Tbl_Filtro_Familias
+                Fm.Tbl_Filtro_Sub_Familias = _Tbl_Filtro_Sub_Familias
+                Fm.Tbl_Filtro_Marcas = _Tbl_Filtro_Marcas
+                Fm.Tbl_Filtro_Rubro_Productos = _Tbl_Filtro_Rubro_Productos
+                Fm.Tbl_Filtro_Clalibpr = _Tbl_Filtro_Clalibpr
+                Fm.Tbl_Filtro_Zonas_Productos = _Tbl_Filtro_Zonas_Productos
+                Fm.Tbl_Filtro_Tipo_Entidad = _Tbl_Filtro_Tipo_Entidad
+                Fm.Tbl_Filtro_Act_Economica = _Tbl_Filtro_Act_Economica
+                Fm.Tbl_Filtro_Tama_Empresa = _Tbl_Filtro_Tama_Empresa
 
-        If Fm.ImportarComisiones Then
+                Fm.Comisiones = True
+                Fm.FechaDesdeFd = _FechaDesde
+                Fm.FechaHastaFh = _FechaHasta
 
-            _TotalNetoComisiones = Fm.TotalNetoComisiones
+                Fm.ShowDialog(Me)
 
-            _Tbl_Filtro_Entidad = Fm.Tbl_Filtro_Entidad
-            _Tbl_Filtro_SucursalDoc = Fm.Tbl_Filtro_SucursalDoc
-            _Tbl_Filtro_Sucursales = Fm.Tbl_Filtro_Sucursales
-            _Tbl_Filtro_Bodegas = Fm.Tbl_Filtro_Bodegas
-            _Tbl_Filtro_Ciudad = Fm.Tbl_Filtro_Ciudad
-            _Tbl_Filtro_Comunas = Fm.Tbl_Filtro_Comunas
-            _Tbl_Filtro_Rubro_Entidades = Fm.Tbl_Filtro_Rubro_Entidades
-            _Tbl_Filtro_Zonas_Entidades = Fm.Tbl_Filtro_Zonas_Entidades
-            _Tbl_Filtro_Responzables = Fm.Tbl_Filtro_Responzables
-            _Tbl_Filtro_Vendedores = Fm.Tbl_Filtro_Vendedores
-            _Tbl_Filtro_Vendedores_Asignados = Fm.Tbl_Filtro_Vendedores_Asignados
-            _Tbl_Filtro_Productos = Fm.Tbl_Filtro_Productos
-            _Tbl_Filtro_Super_Familias = Fm.Tbl_Filtro_Super_Familias
-            _Tbl_Filtro_Familias = Fm.Tbl_Filtro_Familias
-            _Tbl_Filtro_Sub_Familias = Fm.Tbl_Filtro_Sub_Familias
-            _Tbl_Filtro_Marcas = Fm.Tbl_Filtro_Marcas
-            _Tbl_Filtro_Rubro_Productos = Fm.Tbl_Filtro_Rubro_Productos
-            _Tbl_Filtro_Clalibpr = Fm.Tbl_Filtro_Clalibpr
-            _Tbl_Filtro_Zonas_Productos = Fm.Tbl_Filtro_Zonas_Productos
-            _Tbl_Filtro_Tipo_Entidad = Fm.Tbl_Filtro_Tipo_Entidad
-            _Tbl_Filtro_Act_Economica = Fm.Tbl_Filtro_Act_Economica
-            _Tbl_Filtro_Tama_Empresa = Fm.Tbl_Filtro_Tama_Empresa
-            Sb_Actualizar_TblInforme(_Id_Det)
+                If Fm.ImportarComisiones Then
+
+                    _TotalNetoComisiones = Fm.TotalNetoComisiones
+
+                    '_TotalNetoComisiones = 1870718747
+
+                    _Tbl_Filtro_Entidad = Fm.Tbl_Filtro_Entidad
+                    _Tbl_Filtro_SucursalDoc = Fm.Tbl_Filtro_SucursalDoc
+                    _Tbl_Filtro_Sucursales = Fm.Tbl_Filtro_Sucursales
+                    _Tbl_Filtro_Bodegas = Fm.Tbl_Filtro_Bodegas
+                    _Tbl_Filtro_Ciudad = Fm.Tbl_Filtro_Ciudad
+                    _Tbl_Filtro_Comunas = Fm.Tbl_Filtro_Comunas
+                    _Tbl_Filtro_Rubro_Entidades = Fm.Tbl_Filtro_Rubro_Entidades
+                    _Tbl_Filtro_Zonas_Entidades = Fm.Tbl_Filtro_Zonas_Entidades
+                    _Tbl_Filtro_Responzables = Fm.Tbl_Filtro_Responzables
+                    _Tbl_Filtro_Vendedores = Fm.Tbl_Filtro_Vendedores
+                    _Tbl_Filtro_Vendedores_Asignados = Fm.Tbl_Filtro_Vendedores_Asignados
+                    _Tbl_Filtro_Productos = Fm.Tbl_Filtro_Productos
+                    _Tbl_Filtro_Super_Familias = Fm.Tbl_Filtro_Super_Familias
+                    _Tbl_Filtro_Familias = Fm.Tbl_Filtro_Familias
+                    _Tbl_Filtro_Sub_Familias = Fm.Tbl_Filtro_Sub_Familias
+                    _Tbl_Filtro_Marcas = Fm.Tbl_Filtro_Marcas
+                    _Tbl_Filtro_Rubro_Productos = Fm.Tbl_Filtro_Rubro_Productos
+                    _Tbl_Filtro_Clalibpr = Fm.Tbl_Filtro_Clalibpr
+                    _Tbl_Filtro_Zonas_Productos = Fm.Tbl_Filtro_Zonas_Productos
+                    _Tbl_Filtro_Tipo_Entidad = Fm.Tbl_Filtro_Tipo_Entidad
+                    _Tbl_Filtro_Act_Economica = Fm.Tbl_Filtro_Act_Economica
+                    _Tbl_Filtro_Tama_Empresa = Fm.Tbl_Filtro_Tama_Empresa
+
+                    _FilaDet.Cells("Valor").Value = _TotalNetoComisiones
+
+                    Sb_Actualizar_TblInforme(_Id_Det)
+                    _ActualizarTotales = True
+
+                End If
+
+                Fm.Dispose()
+
+            Case "Descuento", "PorcComision"
+
+                Dim _Valor As Double = _FilaDet.Cells(_Cabeza).Value
+
+                Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese el valor", "Ediar valor", _Valor, False, ,, True, _Tipo_Imagen.Money1, False, _Tipo_Caracter.Moneda)
+
+                If Not _Aceptar Then
+                    Return
+                End If
+
+                _FilaDet.Cells(_Cabeza).Value = _Valor
+                _ActualizarTotales = True
+
+        End Select
+
+        If _ActualizarTotales Then
+
+            Sb_ActualizarValoresPorFuncionario(_FilaLin)
+            Return
+
+
+            Dim _PorcCotizaciones As Double = _FilaLin.Cells("PorcCotizaciones").Value
+
+            Dim _Cien As Double = (100 - _PorcCotizaciones) '- - / 100
+
+            Dim _Valor As Double = _FilaDet.Cells("Valor").Value
+            Dim _Descuento As Double = _FilaDet.Cells("Descuento").Value
+            Dim _SubTotal As Double = _Valor - _Descuento
+            Dim _PorcComision As Double = _FilaDet.Cells("PorcComision").Value
+
+            Dim _Total As Double = Math.Round((_PorcComision / 100) * _SubTotal, 2)
+            Dim _ComBruta As Double = (_Total * 100) / _Cien
+
+            _FilaDet.Cells("Subtotal").Value = _SubTotal
+            _FilaDet.Cells("Total").Value = _Total
+            _FilaDet.Cells("PorcImp").Value = _PorcCotizaciones
+            _FilaDet.Cells("ComBruta").Value = _ComBruta
+
+            Dim _SubComBruta As Double
+
+            For Each _Fldet As DataGridViewRow In Grilla_Detalle.Rows
+                _SubComBruta += _Fldet.Cells("Total").Value
+            Next
+
+            Dim _ComBrutaSemCorr As Double
+
+            For Each _FlDsc As DataGridViewRow In Grilla_DetalleSc.Rows
+
+                Dim _ValorDia As Double
+                Dim _TotalPagoSC As Double
+                Dim _DiasHabiles As Double = _FlDsc.Cells("DiasHabiles").Value
+                Dim _Sabados As Double = _FlDsc.Cells("Sabados").Value
+                Dim _Domingos As Double = _FlDsc.Cells("Domingos").Value
+                Dim _Festivos As Double = _FlDsc.Cells("Festivos").Value
+                Dim _DiasTrabMes As Double = _FlDsc.Cells("DiasTrabMes").Value
+                Dim _Semanas As Double = _FlDsc.Cells("Semanas").Value
+
+                _ValorDia = _ComBruta / _DiasHabiles
+                _TotalPagoSC = _ValorDia * (_Festivos + _Domingos)
+
+                _FlDsc.Cells("ValorDia").Value = _ValorDia
+                _FlDsc.Cells("ValorDia").Value = _ValorDia
+                _FlDsc.Cells("TotalPagoSC").Value = _TotalPagoSC
+
+                _ComBrutaSemCorr += _TotalPagoSC
+
+            Next
+
+            Dim _ComBrutaLin As Double = (_SubComBruta * 100) / _Cien
+            Dim _TotalComBruta As Double = _ComBrutaLin + _ComBrutaSemCorr
+
+            _FilaLin.Cells("ComBrutaSemCorr").Value = Math.Round(_ComBrutaSemCorr, 0)
+            _FilaLin.Cells("SubComBruta").Value = Math.Round(_SubComBruta, 0)
+            _FilaLin.Cells("ComBruta").Value = Math.Round(_ComBrutaLin, 0)
+            _FilaLin.Cells("TotalComBruta").Value = Math.Round(_TotalComBruta, 0)
 
         End If
-
-        Fm.Dispose()
-
 
     End Sub
 
@@ -665,7 +760,8 @@ Public Class Frm_Cms
     Private Sub Btn_ActualizarVendedores_Click(sender As Object, e As EventArgs) Handles Btn_ActualizarVendedores.Click
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Comisiones_Fun" & vbCrLf &
-                       "Where CodFuncionario not in (Select CodFuncionario From " & _Global_BaseBk & "Zw_Comisiones_Lin Where Id_Enc = 2) And Habilitado = 1"
+                       "Where CodFuncionario not in (Select CodFuncionario From " & _Global_BaseBk &
+                       "Zw_Comisiones_Lin Where Id_Enc = " & Id_Enc & ") And Habilitado = 1"
         Dim _Tbl_Funcionarios As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
 
         Dim _SqlQuery = String.Empty
@@ -674,7 +770,7 @@ Public Class Frm_Cms
 
             Dim _CodFuncinario As String = _Fila.Item("CodFuncionario")
 
-            Sb_InsertarFuncionario(Id_Enc, _CodFuncinario)
+            Sb_InsertarFuncionario(Id_Enc, _CodFuncinario, True)
 
         Next
 
@@ -682,7 +778,7 @@ Public Class Frm_Cms
 
     End Sub
 
-    Sub Sb_InsertarFuncionario(_Id_Enc As Integer, _CodFuncionario As String)
+    Sub Sb_InsertarFuncionario(_Id_Enc As Integer, _CodFuncionario As String, _DejarEnCero As Boolean)
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Comisiones_Enc Where Id = " & _Id_Enc
         Dim _Row_Periodo As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
@@ -715,6 +811,18 @@ Public Class Frm_Cms
             SQL_ServerClass.Sb_Abrir_Conexion(cn2)
 
             myTrans = cn2.BeginTransaction()
+
+            If _DejarEnCero Then
+
+                Consulta_Sql = "Delete " & _Global_BaseBk & "Zw_Comisiones_Lin Where Id_Enc = " & _Id_Enc & " And CodFuncionario = '" & _CodFuncionario & "'" & vbCrLf &
+                               "Delete " & _Global_BaseBk & "Zw_Comisiones_Det Where Id_Enc = " & _Id_Enc & " And CodFuncionario = '" & _CodFuncionario & "'" & vbCrLf &
+                               "Delete " & _Global_BaseBk & "Zw_Comisiones_DetSc Where Id_Enc = " & _Id_Enc & " And CodFuncionario = '" & _CodFuncionario & "'"
+
+                Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End If
 
             Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Comisiones_Lin (Id_Enc,CodFuncionario,PorcCotizaciones) " &
                            "Values (" & _Id_Enc & ",'" & _CodFuncionario & "'," & De_Num_a_Tx_01(_PorcCotizaciones, False, 5) & ")"
@@ -758,7 +866,7 @@ Public Class Frm_Cms
                 If _TieneSC Then
 
                     Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Comisiones_DetSc (Id_Enc,Id_Lin,Id_Det,CodFuncionario,DiasHabiles,Sabados,Domingos,Festivos,DiasTrabMes,Semanas) Values " &
-                                   "(" & _Id_Enc & "," & _Id_Lin & "," & _Id_Det & ",'" & _CodFuncionario & "'," & _Sabados & "," & _Domingos & "," & _Festivos & "," & _DiasTrabMes & "," & _Semanas & ")"
+                                   "(" & _Id_Enc & "," & _Id_Lin & "," & _Id_Det & ",'" & _CodFuncionario & "'," & _Habiles & "," & _Sabados & "," & _Domingos & "," & _Festivos & "," & _DiasTrabMes & "," & _Semanas & ")"
                     Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
                     Comando.Transaction = myTrans
                     Comando.ExecuteNonQuery()
@@ -789,4 +897,199 @@ Public Class Frm_Cms
     Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click
         Sb_Actualizar_Grilla()
     End Sub
+
+    Private Sub Btn_ActualizarUsuarioActualRecalcular_Click(sender As Object, e As EventArgs) Handles Btn_ActualizarUsuarioActualRecalcular.Click
+
+        Dim _Fila_Lin As DataGridViewRow = Grilla_Lineas.CurrentRow
+
+        Sb_ActualizarValoresPorFuncionario(_Fila_Lin)
+
+    End Sub
+
+    Private Sub Btn_ActualizarUsuarioActualDejarCero_Click(sender As Object, e As EventArgs) Handles Btn_ActualizarUsuarioActualDejarCero.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Lineas.CurrentRow
+
+        Dim _CodFuncinario As String = _Fila.Cells("CodFuncionario").Value
+
+        Sb_InsertarFuncionario(Id_Enc, _CodFuncinario, True)
+
+        MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Actualizar datos del funcionario", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        Sb_Actualizar_Grilla()
+
+    End Sub
+
+    Private Sub Sb_Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+            With sender
+                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+                    ShowContextMenu(Menu_Contextual_01)
+                End If
+            End With
+        End If
+    End Sub
+
+    Sub Sb_ActualizarValoresPorFuncionario(_Fila_Lin As DataGridViewRow)
+
+        Dim _Id_Lin As Integer = _Fila_Lin.Cells("Id").Value
+        Dim _PorcCotizaciones As Double = _Fila_Lin.Cells("PorcCotizaciones").Value
+        Dim _CodFuncionario As String = _Fila_Lin.Cells("CodFuncionario").Value
+
+        Dim _Cien As Double = (100 - _PorcCotizaciones) '- - / 100
+
+        Dim _Row_Lin = Ds.Tables("Lineas").Select("CodFuncionario = '" & _CodFuncionario & "'", "")
+
+        Dim _SubComBruta As Double
+        Dim _ComBrutaSemCorr As Double
+
+        Dim _Tbl_Detalle As DataTable = Ds.Tables("Detalle")
+
+        For Each _Row_Det As DataRow In _Tbl_Detalle.Rows
+
+            If _Id_Lin = _Row_Det.Item("Id_Lin") Then
+
+                Dim _Id_Det As Integer = _Row_Det.Item("Id")
+
+                Dim _Valor As Double = _Row_Det.Item("Valor")
+                Dim _Descuento As Double = _Row_Det.Item("Descuento")
+                Dim _SubTotal As Double = _Valor - _Descuento
+                Dim _PorcComision As Double = _Row_Det.Item("PorcComision")
+                Dim _Descripcion As String = _Row_Det.Item("Descripcion")
+
+                _PorcComision = (_PorcComision / 100)
+
+                Dim _Total As Double = Math.Round(_PorcComision * _SubTotal, 2)
+                Dim _ComBruta As Double = (_Total * 100) / _Cien
+
+                _Row_Det.Item("Subtotal") = _SubTotal
+                _Row_Det.Item("Total") = _Total
+                _Row_Det.Item("PorcImp") = _PorcCotizaciones
+                _Row_Det.Item("ComBruta") = Math.Round(_ComBruta, 0)
+
+                _SubComBruta += _Row_Det.Item("Total")
+
+                Dim _Tbl_DetalleSc As DataTable = Ds.Tables("DetalleSc")
+
+                For Each _FlDSc As DataRow In _Tbl_DetalleSc.Rows
+
+                    If _Id_Det = _FlDSc.Item("Id_Det") Then
+
+                        Dim _ValorDia As Double
+                        Dim _TotalPagoSC As Double
+                        Dim _DiasHabiles As Double = _FlDSc.Item("DiasHabiles")
+                        Dim _Sabados As Double = _FlDSc.Item("Sabados")
+                        Dim _Domingos As Double = _FlDSc.Item("Domingos")
+                        Dim _Festivos As Double = _FlDSc.Item("Festivos")
+                        Dim _DiasTrabMes As Double = _FlDSc.Item("DiasTrabMes")
+                        Dim _Semanas As Double = _FlDSc.Item("Semanas")
+
+                        _ValorDia = _ComBruta / _DiasHabiles
+                        _TotalPagoSC = _ValorDia * (_Festivos + _Domingos)
+
+                        _FlDSc.Item("ValorDia") = _ValorDia
+                        _FlDSc.Item("TotalPagoSC") = _TotalPagoSC
+                        _FlDSc.Item("ComBruta") = Math.Round(_ComBruta, 0)
+
+                        _ComBrutaSemCorr += _TotalPagoSC
+
+                    End If
+
+                Next
+
+            End If
+
+        Next
+
+        Dim _ComBrutaLin As Double = (_SubComBruta * 100) / _Cien
+        Dim _TotalComBruta As Double = _ComBrutaLin + _ComBrutaSemCorr
+
+        _Fila_Lin.Cells("ComBrutaSemCorr").Value = Math.Round(_ComBrutaSemCorr, 0)
+        _Fila_Lin.Cells("SubComBruta").Value = Math.Round(_SubComBruta, 0)
+        _Fila_Lin.Cells("ComBruta").Value = _ComBrutaLin
+        _Fila_Lin.Cells("TotalComBruta").Value = _TotalComBruta
+
+        Grilla_Lineas.Refresh()
+        Grilla_Detalle.Refresh()
+        Grilla_DetalleSc.Refresh()
+
+    End Sub
+
+    Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
+
+        Dim _Tbl_Lineas As DataTable = Ds.Tables("Lineas")
+        Dim _Tbl_Detalle As DataTable = Ds.Tables("Detalle")
+        Dim _Tbl_DetalleSc As DataTable = Ds.Tables("DetalleSc")
+
+
+        For Each _Fila_Lineas As DataRow In _Tbl_Lineas.Rows
+
+            Dim _Id_Lin As Integer = _Fila_Lineas.Item("Id")
+
+            Dim _CodFuncionario As String = _Fila_Lineas.Item("CodFuncionario")
+            Dim _SubComBruta As String = De_Num_a_Tx_01(_Fila_Lineas.Item("SubComBruta"), False, 5)
+            Dim _PorcCotizaciones As String = De_Num_a_Tx_01(_Fila_Lineas.Item("PorcCotizaciones"), False, 5)
+            Dim _ComBruta As String = De_Num_a_Tx_01(_Fila_Lineas.Item("ComBruta"), False, 5)
+            Dim _ComBrutaSemCorr As String = De_Num_a_Tx_01(_Fila_Lineas.Item("ComBrutaSemCorr"), False, 5)
+            Dim _TotalComBruta As String = De_Num_a_Tx_01(_Fila_Lineas.Item("TotalComBruta"), False, 5)
+
+            Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Comisiones_Lin Set " &
+                           "SubComBruta = " & _SubComBruta &
+                           ",PorcCotizaciones = " & _PorcCotizaciones &
+                           ",ComBruta = " & _ComBruta &
+                           ",ComBrutaSemCorr = " & _ComBrutaSemCorr &
+                           ",TotalComBruta = " & _TotalComBruta & vbCrLf &
+                           "Where Id = " & _Id_Lin & vbCrLf & vbCrLf
+
+        Next
+
+        For Each _Fila_Detalle As DataRow In _Tbl_Detalle.Rows
+
+            Dim _Id_Det As Integer = _Fila_Detalle.Item("Id_Det")
+
+            Dim _Descripcion As String = _Fila_Detalle.Item("Descripcion")
+            Dim _Valor As String = De_Num_a_Tx_01(_Fila_Detalle.Item("Valor"), False, 5)
+            Dim _Descuento As String = De_Num_a_Tx_01(_Fila_Detalle.Item("Descuento"), False, 5)
+            Dim _SubTotal As String = De_Num_a_Tx_01(_Fila_Detalle.Item("SubTotal"), False, 5)
+            Dim _PorcComision As String = De_Num_a_Tx_01(_Fila_Detalle.Item("PorcComision"), False, 5)
+            Dim _Total As String = De_Num_a_Tx_01(_Fila_Detalle.Item("Total"), False, 5)
+            Dim _PorcImp As String = De_Num_a_Tx_01(_Fila_Detalle.Item("PorcImp"), False, 5)
+            Dim _ComBruta As String = De_Num_a_Tx_01(_Fila_Detalle.Item("ComBruta"), False, 5)
+
+            Consulta_Sql += "Update " & _Global_BaseBk & "Zw_Comisiones_Det Set " &
+               "Descripcion = '" & _Descripcion & "'" &
+               ",Valor = " & _Valor &
+               ",Descuento = " & _Descuento &
+               ",SubTotal = " & _SubTotal &
+               ",PorcComision = " & _PorcComision & vbCrLf &
+               ",Total = " & _Total & vbCrLf &
+               ",PorcImp = " & _PorcImp & vbCrLf &
+               ",ComBruta = " & _ComBruta & vbCrLf &
+               "Where Id = " & _Id_Det & vbCrLf & vbCrLf
+
+        Next
+
+
+        For Each _Fila_DetalleSc As DataRow In _Tbl_DetalleSc.Rows
+
+            Dim _Id_DetSc As Integer = _Fila_DetalleSc.Item("Id")
+
+            Dim _ComBruta As String
+            Dim _ValorDia As String
+            Dim _TotalPagoSC As String
+            Dim _DiasHabiles As String
+            Dim _Sabados As String
+            Dim _Domingos As String
+            Dim _Festivos As String
+            Dim _DiasTrabMes As String
+            Dim _Semanas As String
+
+
+        Next
+
+
+    End Sub
+
 End Class

@@ -6230,7 +6230,7 @@ Public Class Frm_Formulario_Documento
                     _CantUd2 = 0
                 End If
 
-                If _Tido <> "OCC" Then .Cells("CDespUd1").Value = _CantUd1
+                'If _Tido <> "OCC" Then .Cells("CDespUd1").Value = _CantUd1
 
                 .Cells("Cantidad").Value = 0
 

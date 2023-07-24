@@ -620,11 +620,9 @@ Public Class Clase_Crear_Documento
                                 _Ppprpm = 0
                                 _Ppprmsuc = 0
                                 _Ppprpmifrs = 0
-                                '_Lincondesp = False
+                                _Lincondesp = False
                                 _Nudtli = 0
-                                _Eslido = "C" 'String.Empty
-
-                                If _Tido = "OCC" Then _Eslido = ""
+                                _Eslido = String.Empty
 
                             End If
 
