@@ -935,6 +935,13 @@ Public Class Frm_00_Asis_Compra_Menu
                                       Txt_DespacharA_OCC.Name, Class_SQLite.Enum_Type._String, Txt_DespacharA_OCC.Text, _Actualizar)
 
 
+        ' Check para incluir productos excluidos
+        _Sql.Sb_Parametro_Informe_Sql(Chk_IncluirProdExcluidosProvStar, "Compras_Asistente",
+                                      Chk_IncluirProdExcluidosProvStar.Name, Class_SQLite.Enum_Type._Boolean, Chk_IncluirProdExcluidosProvStar.Checked, _Actualizar)
+
+        ' Check para incluir productos bloqueados
+        _Sql.Sb_Parametro_Informe_Sql(Chk_IncluirProdBloqueadoProvStar, "Compras_Asistente",
+                                      Chk_IncluirProdBloqueadoProvStar.Name, Class_SQLite.Enum_Type._Boolean, Chk_IncluirProdBloqueadoProvStar.Checked, _Actualizar)
 
     End Sub
 
@@ -2184,7 +2191,7 @@ Public Class Frm_00_Asis_Compra_Menu
                     Dim _CodigosExcluidos As String = Generar_Filtro_IN(_TblFiltroProductosExcluidos, "Chk", "Codigo", False, True, "'")
 
                     Consulta_sql = "Update " & _TblPasoInforme & " Set ProductoExcluido = 1" & vbCrLf &
-                                   "Where Codigo In " & _CodigosExcluidos
+                               "Where Codigo In " & _CodigosExcluidos
                     _Sql.Ej_consulta_IDU(Consulta_sql)
 
 
@@ -3467,7 +3474,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
         If _Filtrar.Fx_Filtrar(_TblFiltroProductosExcluidos,
                                Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
-                               False, False) Then
+                               False, False,, Chk_QuitarProdExcluidos.Checked) Then
 
             Dim _Nodo_Raiz_Asociados As Integer = _Global_Row_Configuracion_General.Item("Nodo_Raiz_Asociados")
 
@@ -3477,28 +3484,30 @@ Public Class Frm_00_Asis_Compra_Menu
 
                 If Chk_Traer_Productos_De_Reemplazo.Checked Then
 
-                    If MessageBoxEx.Show(Me, "Desea excluir a los productos hermanos de los productos seleccionados?",
+                    If Not IsNothing(_TblFiltroProductosExcluidos) Then
+
+                        If MessageBoxEx.Show(Me, "Desea excluir a los productos hermanos de los productos seleccionados?",
                                          "Productos de reemplazo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
 
-                        Dim _Filtro_Pro = Generar_Filtro_IN(_TblFiltroProductosExcluidos, "", "Codigo", False, False, "'")
+                            Dim _Filtro_Pro = Generar_Filtro_IN(_TblFiltroProductosExcluidos, "", "Codigo", False, False, "'")
 
-                        If Chk_Traer_Productos_De_Reemplazo.Checked Then
+                            If Chk_Traer_Productos_De_Reemplazo.Checked Then
 
-                            Consulta_sql = "Select Arbol.Codigo_Nodo,Arbol.Codigo_Madre From 
+                                Consulta_sql = "Select Arbol.Codigo_Nodo,Arbol.Codigo_Madre From 
                                 " & _Global_BaseBk & "Zw_Prod_Asociacion Prod
                                 Inner Join " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Arbol On Prod.Codigo_Nodo = Arbol.Codigo_Nodo
                                 Where Arbol.Nodo_Raiz = " & _Nodo_Raiz_Asociados & " And Es_Seleccionable = 1 And Codigo In " & _Filtro_Pro
 
-                            Dim _Tbl_Codigos_Madre As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                                Dim _Tbl_Codigos_Madre As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-                            Dim _Filtro_Codigos_Madre = Generar_Filtro_IN(_Tbl_Codigos_Madre, "", "Codigo_Nodo", False, False, "")
+                                Dim _Filtro_Codigos_Madre = Generar_Filtro_IN(_Tbl_Codigos_Madre, "", "Codigo_Nodo", False, False, "")
 
-                            If _Tbl_Codigos_Madre.Rows.Count = 0 Then
-                                _Filtro_Codigos_Madre = "('@@@')"
-                            End If
+                                If _Tbl_Codigos_Madre.Rows.Count = 0 Then
+                                    _Filtro_Codigos_Madre = "('@@@')"
+                                End If
 
-                            Consulta_sql = "
+                                Consulta_sql = "
                                 Select Codigo 
                                 Into #Paso
                                 From " & _Global_BaseBk & "Zw_Prod_Asociacion 
@@ -3514,14 +3523,16 @@ Public Class Frm_00_Asis_Compra_Menu
 
                                 Drop Table #Paso"
 
-                            _TblFiltroProductosExcluidos = _Sql.Fx_Get_Tablas(Consulta_sql)
+                                _TblFiltroProductosExcluidos = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                            End If
 
                         End If
-
 
                     End If
 
                 End If
+
             Else
                 Rdb_Productos_Todos.Checked = True
                 _TblFiltroProductosExcluidos = Nothing
@@ -3529,7 +3540,11 @@ Public Class Frm_00_Asis_Compra_Menu
 
         End If
 
-        Btn_ProductosExcluidos.Text = "Productos excluidos (" & FormatNumber(_TblFiltroProductosExcluidos.Rows.Count, 0) & ")"
+        If IsNothing(_TblFiltroProductosExcluidos) Then
+            Btn_ProductosExcluidos.Text = "Productos excluidos"
+        Else
+            Btn_ProductosExcluidos.Text = "Productos excluidos (" & FormatNumber(_TblFiltroProductosExcluidos.Rows.Count, 0) & ")"
+        End If
 
     End Sub
 

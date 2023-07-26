@@ -178,6 +178,9 @@
 
         Dim Fm As New Frm_Cms_AgregarTipos(_Id, _CodFuncionario)
         Fm.ShowDialog(Me)
+        If Fm.Grabar Then
+            Sb_Actualizar_Grilla()
+        End If
         Fm.Dispose()
 
     End Sub

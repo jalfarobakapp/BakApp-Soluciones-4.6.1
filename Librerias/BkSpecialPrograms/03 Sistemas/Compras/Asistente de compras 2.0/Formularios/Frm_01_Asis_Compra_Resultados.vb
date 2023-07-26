@@ -76,6 +76,9 @@ Public Class Frm_01_Asis_Compra_Resultados
         End Set
     End Property
 
+    Dim Chk_IncluirProdExcluidosProvStar As Controls.CheckBoxX
+    Dim Chk_IncluirProdBloqueadoProvStar As Controls.CheckBoxX
+
     Public Property Auto_GenerarAutomaticamenteOCCProveedorStar As Boolean
     Public Property Auto_GenerarAutomaticamenteNVI As Boolean
     Public Property Auto_GenerarAutomaticamenteOCCProveedores As Boolean
@@ -864,7 +867,8 @@ Public Class Frm_01_Asis_Compra_Resultados
             .Columns(_ColDif).Width = 50
             .Columns(_ColDif).HeaderText = "%Dif.UC"
             .Columns(_ColDif).ToolTipText = "Porcentaje de diferencia de costo del costos actual vs el precio de ultima compra." & vbCrLf &
-                                                           "(No necesariamente la ultima compra es de este proveedor, confirme esta situación.)"
+                                                           "(No necesariamente la ultima compra es de este proveedor, confirme esta situación.)" & vbCrLf &
+                                                           "(Productos con flete confirme el % en la fila del detalle de la ultima FCC)"
             .Columns(_ColDif).DefaultCellStyle.Format = "% ##,##0.##"
             .Columns(_ColDif).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns(_ColDif).Visible = True
@@ -1141,7 +1145,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                 Dim _Br_Nt = "Neto"
                 If Rdb_Valores_Brutos.Checked Then _Br_Nt = "Bruto"
 
-                _Br_Nt = "Neto"
+                '_Br_Nt = "Neto"
 
                 .Columns("Porc_Dif_Precios_" & _Br_Nt).Width = 50
                 .Columns("Porc_Dif_Precios_" & _Br_Nt).HeaderText = "Dif"
@@ -1216,7 +1220,7 @@ Public Class Frm_01_Asis_Compra_Resultados
             Dim _Br_Nt2 = "Neto"
             If Rdb_Valores_Brutos.Checked Then _Br_Nt2 = "Bruto"
 
-            _Br_Nt2 = "Neto"
+            '_Br_Nt2 = "Neto"
 
             Dim _Campo_Dif = "Porc_Dif_Precios_" & _Br_Nt2
 
@@ -1604,7 +1608,13 @@ Public Class Frm_01_Asis_Compra_Resultados
         End If
 
         If Chk_QuitarProdExcluidos.Checked Then
-            _Condicion += Space(1) & "And ProductoExcluido = 0"
+            If Auto_GenerarAutomaticamenteOCCProveedorStar Or Auto_GenerarAutomaticamenteNVI Then
+                If Not Chk_IncluirProdExcluidosProvStar.Checked Then
+                    _Condicion += Space(1) & "And ProductoExcluido = 0"
+                End If
+            Else
+                _Condicion += Space(1) & "And ProductoExcluido = 0"
+            End If
         End If
 
         Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_Actualizar_Informe_Principal
@@ -1910,7 +1920,13 @@ Public Class Frm_01_Asis_Compra_Resultados
         End If
 
         If Chk_QuitarProdExcluidos.Checked Then
-            _Condicion += Space(1) & "And ProductoExcluido = 0"
+            If Auto_GenerarAutomaticamenteOCCProveedorStar Or Auto_GenerarAutomaticamenteNVI Then
+                If Not Chk_IncluirProdExcluidosProvStar.Checked Then
+                    _Condicion += Space(1) & "And ProductoExcluido = 0"
+                End If
+            Else
+                _Condicion += Space(1) & "And ProductoExcluido = 0"
+            End If
         End If
 
         Dim _Orden_Codigo As String
@@ -3980,10 +3996,19 @@ Public Class Frm_01_Asis_Compra_Resultados
         '       "Where Costo_Ud1Lista_Neto > 0 And Costo_UltComUd1 > 0"
         '_Sql.Ej_consulta_IDU(Consulta_sql)
 
-        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set " &
-               "PorcDifCostoNetUd1 = Round((Costo_UltComUd1-Costo_Ud1Lista_Neto)/Costo_UltComUd1,2)*-1" & vbCrLf &
-               "Where Costo_Ud1Lista_Neto > 0 And Costo_UltComUd1 > 0"
-        _Sql.Ej_consulta_IDU(Consulta_sql)
+        If Chk_MostrarFlete.Checked Then
+            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set " &
+                   "PorcDifCostoNetUd1 = Round((Costo_UltComUd1-(Costo_Ud1Lista_Neto-(Costo_Flete/1.19)))/Costo_UltComUd1,2)*-1" & vbCrLf &
+                   "Where Costo_Ud1Lista_Neto > 0 And Costo_UltComUd1 > 0"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+        Else
+
+            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set " &
+                   "PorcDifCostoNetUd1 = Round((Costo_UltComUd1-Costo_Ud1Lista_Neto))/Costo_UltComUd1,2)*-1" & vbCrLf &
+                   "Where Costo_Ud1Lista_Neto > 0 And Costo_UltComUd1 > 0"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+        End If
+
 
         '_DescuentoPorc = 100 * (1 - (
         '                             (1 - (_Desc1 / 100.0)) *
@@ -4812,6 +4837,23 @@ Public Class Frm_01_Asis_Compra_Resultados
         _Sql.Sb_Parametro_Informe_Sql(Chk_MostrarFlete, "Compras_Asistente",
                                              Chk_MostrarFlete.Name, Class_SQLite.Enum_Type._Boolean, Chk_MostrarFlete.Checked, _Actualizar)
 
+        If IsNothing(Chk_IncluirProdExcluidosProvStar) Then
+            Chk_IncluirProdExcluidosProvStar = New Controls.CheckBoxX
+            Chk_IncluirProdExcluidosProvStar.Name = "Chk_IncluirProdExcluidosProvStar"
+        End If
+
+        ' Check para incluir productos excluidos
+        _Sql.Sb_Parametro_Informe_Sql(Chk_IncluirProdExcluidosProvStar, "Compras_Asistente",
+                                      Chk_IncluirProdExcluidosProvStar.Name, Class_SQLite.Enum_Type._Boolean, Chk_IncluirProdExcluidosProvStar.Checked, _Actualizar)
+
+        If IsNothing(Chk_IncluirProdBloqueadoProvStar) Then
+            Chk_IncluirProdBloqueadoProvStar = New Controls.CheckBoxX
+            Chk_IncluirProdBloqueadoProvStar.Name = "Chk_IncluirProdBloqueadoProvStar"
+        End If
+
+        ' Check para incluir productos bloqueados
+        _Sql.Sb_Parametro_Informe_Sql(Chk_IncluirProdBloqueadoProvStar, "Compras_Asistente",
+                                      Chk_IncluirProdBloqueadoProvStar.Name, Class_SQLite.Enum_Type._Boolean, Chk_IncluirProdBloqueadoProvStar.Checked, _Actualizar)
 
     End Sub
 
@@ -6441,14 +6483,18 @@ Public Class Frm_01_Asis_Compra_Resultados
                                         _Condicion_Adicional As String) As DataTable
 
         Dim _Fila As DataGridViewRow = Fm_Hijo.Grilla.Rows(Fm_Hijo.Grilla.CurrentRow.Index)
+
         Dim _Br_Nt = "Neto"
+
         If Rdb_Valores_Brutos.Checked Then _Br_Nt = "Bruto"
 
-        _Br_Nt = "Neto"
+        '_Br_Nt = "Neto"
 
         Dim _CostoUd1 = De_Num_a_Tx_01(NuloPorNro(_Fila.Cells("Costo_Ud1Lista_" & _Br_Nt).Value, 0), False, 5)
 
-        Consulta_sql = "Select Top " & _Top & " IDMAEDDO,IDMAEEDO,TIDO,NUDO,ENDO,SUENDO,NOKOEN,FEEMLI,BOSULIDO,UDTRPR,UD0" & Ud & "PR As UDTRANS,UD01PR,UD02PR,
+        If Chk_MostrarFlete.Checked Then
+
+            Consulta_sql = "Select Top " & _Top & " IDMAEDDO,IDMAEEDO,TIDO,NUDO,ENDO,SUENDO,NOKOEN,FEEMLI,BOSULIDO,UDTRPR,UD0" & Ud & "PR As UDTRANS,UD01PR,UD02PR,
                         RLUDPR,CAPRCO1,CAPRCO2,MOPPPR,
                         Round(PODTGLLI/100,4) As PODTGLLI,
                         PPPRNERE1+POTENCIA As PPPRNEUd1,
@@ -6466,18 +6512,20 @@ Public Class Frm_01_Asis_Compra_Resultados
                        From MAEDDO Ddo
                        Left Join MAEEN On KOEN = ENDO And SUENDO = SUEN
                        Where TIDO = '" & _Tido & "' And KOPRCT = '" & _Codigo & "'" & _Filtro_Proveedor & vbCrLf &
-                       _Condicion_Adicional & vbCrLf &
-                       " Order By FEEMLI Desc"
+               _Condicion_Adicional & vbCrLf &
+               " Order By FEEMLI Desc"
 
-        Consulta_sql = "Select Top " & _Top & " IDMAEDDO,IDMAEEDO,TIDO,NUDO,ENDO,SUENDO,NOKOEN,FEEMLI,BOSULIDO,UDTRPR,UD0" & Ud & "PR As UDTRANS,UD01PR,UD02PR,
+        Else
+
+            Consulta_sql = "Select Top " & _Top & " IDMAEDDO,IDMAEEDO,TIDO,NUDO,ENDO,SUENDO,NOKOEN,FEEMLI,BOSULIDO,UDTRPR,UD0" & Ud & "PR As UDTRANS,UD01PR,UD02PR,
                         RLUDPR,CAPRCO1,CAPRCO2,MOPPPR,
                         Round(PODTGLLI/100,4) As PODTGLLI,
-                        PPPRNERE1+POTENCIA As PPPRNEUd1,
+                        PPPRNERE1 As PPPRNEUd1,
                         Case When " & _CostoUd1 & " = 0 then 0 Else Round((" & _CostoUd1 & "-(PPPRNERE1))/PPPRNERE1,2) End As Porc_Dif_Precios_Neto,
                         Case When " & _CostoUd1 & " = 0 then 0 Else Round((" & _CostoUd1 & "-(VABRLI/CAPRCO1))/(VABRLI/CAPRCO1),2) End As Porc_Dif_Precios_Bruto,
-                        PPPRNERE2+(POTENCIA*RLUDPR) As PPPRNEUd2,
+                        PPPRNERE2 As PPPRNEUd2,
                         (VABRLI/CAPRCO1) As VABRUTOUd1,
-                        Round((VABRLI/CAPRCO2)+(POTENCIA*RLUDPR),0) As VABRUTOUd2,
+                        Round((VABRLI/CAPRCO2),0) As VABRUTOUd2,
                         PPPRNERE1,
                         PPPRNERE2,
                         VANELI,
@@ -6487,8 +6535,10 @@ Public Class Frm_01_Asis_Compra_Resultados
                         From MAEDDO Ddo
                         Left Join MAEEN On KOEN = ENDO And SUENDO = SUEN
                         Where TIDO = '" & _Tido & "' And KOPRCT = '" & _Codigo & "'" & _Filtro_Proveedor & vbCrLf &
-                        _Condicion_Adicional & vbCrLf &
-                        " Order By FEEMLI Desc"
+                _Condicion_Adicional & vbCrLf &
+                " Order By FEEMLI Desc"
+
+        End If
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -8360,7 +8410,11 @@ Drop Table #Paso"
             Call BtnProceso_Prov_Auto_Especial_Click(Nothing, Nothing)
 
             BtnProceso_Prov_Auto.Enabled = False
-            Chk_Quitar_Bloqueados_Compra.Checked = _QuitarBloqueadosCompra
+
+            If Not Chk_IncluirProdBloqueadoProvStar.Checked Then
+                Chk_Quitar_Bloqueados_Compra.Checked = _QuitarBloqueadosCompra
+            End If
+
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = _Proceso_Automatico_Ejecutado
             Chk_Quitar_Ventas_Calzadas.Checked = True
             Chk_Mostrar_Solo_Stock_Critico.Checked = True
@@ -8375,7 +8429,7 @@ Drop Table #Paso"
 
             Dim _CodEntidad As String = _RowProveedor.Item("KOEN")
             Dim _SucEntidad As String = _RowProveedor.Item("SUEN")
-            'Dim _FechaUltCompra As DateTime = _Fila.Item("FechaUltCompra")
+
 
             Sb_Genarar_OCC_Automaticas_Por_Proveedor(_CodEntidad, _SucEntidad, _Generar_OCC)
 
@@ -8399,6 +8453,8 @@ Drop Table #Paso"
 
             Next
 
+            Chk_Quitar_Bloqueados_Compra.Checked = _QuitarBloqueadosCompra
+
             Me.Close()
 
         End If
@@ -8414,7 +8470,11 @@ Drop Table #Paso"
             BtnProceso_Prov_Auto.Enabled = False
 
             Chk_Restar_Stok_Bodega.Checked = True
-            Chk_Quitar_Bloqueados_Compra.Checked = _QuitarBloqueadosCompra
+
+            If Not Chk_IncluirProdBloqueadoProvStar.Checked Then
+                Chk_Quitar_Bloqueados_Compra.Checked = _QuitarBloqueadosCompra
+            End If
+
             'Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = True
             Chk_Mostrar_Solo_Productos_A_Comprar.Checked = True
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = True
@@ -8448,6 +8508,8 @@ Drop Table #Paso"
                 _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(_Modalidad_Estudio, _Fl.Idmaeedo)
 
             Next
+
+            Chk_Quitar_Bloqueados_Compra.Checked = _QuitarBloqueadosCompra
 
             Me.Close()
 
@@ -8759,7 +8821,13 @@ Drop Table #Paso"
         End If
 
         If Chk_QuitarProdExcluidos.Checked Then
-            _Condicion += Space(1) & "And ProductoExcluido = 0"
+            If Auto_GenerarAutomaticamenteOCCProveedorStar Or Auto_GenerarAutomaticamenteNVI Then
+                If Not Chk_IncluirProdExcluidosProvStar.Checked Then
+                    _Condicion += Space(1) & "And ProductoExcluido = 0"
+                End If
+            Else
+                _Condicion += Space(1) & "And ProductoExcluido = 0"
+            End If
         End If
 
         Dim _Orden_Codigo As String

@@ -1126,6 +1126,9 @@ Public Class Frm_Libro_Compras_Ventas
 
     Private Sub Btn_Cambiar_Libro_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cambiar_Libro.Click
 
+        Me.Cursor = Cursors.WaitCursor
+        Me.Enabled = False
+
         For Each _Fila As DataRow In _Inf_03_SII_Random_Otro_Mes.Rows
 
             Dim _Idmaeedo = _Fila.Item("IDMAEEDO")
@@ -1133,17 +1136,27 @@ Public Class Frm_Libro_Compras_Ventas
 
         Next
 
-        Sb_Actualizar_Grillas(3)
-        Sb_Actualizar_Totales_SII(_Inf_03_SII_Random_Otro_Mes)
+        Sb_Actualizar_Grillas(0)
+        Tab.SelectedTabIndex = 0
+        Sb_Refrescar_Grillas()
+
+        Me.Enabled = True
+        Me.Cursor = Cursors.Default
+
+        MessageBoxEx.Show(Me, "Los documentos se ingresaron al final del libro del periodo: " & _Periodo & "-" & _Mes,
+                          "Cambiar documentos de libro", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
 
     End Sub
 
     Sub Sb_Cambiar_Al_Libro_De_Compras(_Idmaeedo As Integer, _Libro As String)
 
-        Dim _Num_Siguiente As String
-        Dim _Ult_Libro = _Sql.Fx_Trae_Dato("MAEEDO", "MAX(LIBRO)", "LIBRO LIKE '" & _Libro & "%'")
+        'Dim _Num_Siguiente As String
 
-        'SELECT MAX(LIBRO) AS LIBRO FROM MAEEDO WHERE LIBRO LIKE '201801%'
+        Dim _LibroEdo As String = _Sql.Fx_Trae_Dato("MAEEDO", "LIBRO", "IDMAEEDO = " & _Idmaeedo)
+        Dim _SucLibro As String = Mid(_LibroEdo, 7, 3)
+
+        Dim _Ult_Libro = _Sql.Fx_Trae_Dato("MAEEDO", "MAX(LIBRO)", "LIBRO LIKE '" & _Libro & "%' And LIBRO LIKE '%" & _SucLibro & "%'")
 
         Dim _Libro_Campo = Split(_Ult_Libro, " ", 2)
         Dim _Libro_Nex = numero_(CInt(_Libro_Campo(1)) + 1, 5)
@@ -1532,11 +1545,11 @@ Public Class Frm_Libro_Compras_Ventas
                         "Where Libro = '' And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
                         "And Tido+Nudo+Endo+Libro+Rut_Proveedor+Razon_Social+Folio+STR(Monto_Total) LIKE '%%'" &
                          vbCrLf &
-                        "Select Distinct Rut_Proveedor As 'Rut',Razon_Social As 'Razon Social',FOEN As 'Telefono'" & vbCrLf &
+                        "Select Distinct Rut_Proveedor As 'Rut',Razon_Social As 'Razon Social',FOEN As 'Telefono'," & vbCrLf &
                         "(Select COUNT(*) From #Paso Ps2 Where Ps1.Rut_Proveedor = Ps2.Rut_Proveedor) As 'Documentos'," & vbCrLf &
                         "(Select COUNT(*) From #Paso Ps2 Where Ps1.Rut_Proveedor = Ps2.Rut_Proveedor And TPDF = 'Si') As 'Con PDF'," & vbCrLf &
                         "(Select COUNT(*) From #Paso Ps2 Where Ps1.Rut_Proveedor = Ps2.Rut_Proveedor And TPDF = 'No') As 'Sin PDF' " & vbCrLf &
-                        "From #Paso" & vbCrLf &
+                        "From #Paso Ps1" & vbCrLf &
                         "Left Join MAEEN On KOEN = Endo" & vbCrLf &
                         "Where TPDF = 'No'" & vbCrLf &
                         "Order by Rut_Proveedor" & vbCrLf &

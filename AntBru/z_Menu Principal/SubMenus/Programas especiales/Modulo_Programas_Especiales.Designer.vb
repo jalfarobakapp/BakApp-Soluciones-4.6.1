@@ -514,7 +514,6 @@ Partial Class Modulo_Programas_Especiales
         Me.Btn_SisComisiones.TileStyle.PaddingTop = 4
         Me.Btn_SisComisiones.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_SisComisiones.TitleText = "BakApp"
-        Me.Btn_SisComisiones.Visible = False
         '
         'Bar2
         '
