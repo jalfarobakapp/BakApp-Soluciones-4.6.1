@@ -225,6 +225,7 @@ Public Class Class_Permiso_BakApp
         CASHDRO
         DESPACHOS
         ADMINISTRADOR
+        COMISIONES
     End Enum
 
     Sub Sb_Actualizar_Base_De_Permisos(_Formulario As Form, ByRef _Objeto As Object)
@@ -4385,6 +4386,20 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "SUPERVISOR DEL SISTEMA, PUEDO OTORGAR PERMISOS A OTROS USUARIOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.ADMINISTRADOR, 6)
                 _NombreFamiliaPermiso = _Fml.ADMINISTRADOR.ToString
+
+        End Select
+
+#End Region
+
+#Region "COMISIONES"
+
+        Select Case _CodPermiso
+
+            Case "Com00001"
+
+                _DescripcionPermiso = "INGRESAR AL SISTEMA DE COMISIONES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.COMISIONES, 6)
+                _NombreFamiliaPermiso = _Fml.COMISIONES.ToString
 
         End Select
 

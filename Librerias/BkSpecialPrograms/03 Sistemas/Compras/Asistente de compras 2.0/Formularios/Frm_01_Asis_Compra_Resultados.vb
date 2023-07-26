@@ -76,6 +76,9 @@ Public Class Frm_01_Asis_Compra_Resultados
         End Set
     End Property
 
+    Dim Chk_IncluirProdExcluidosProvStar As Controls.CheckBoxX
+    Dim Chk_IncluirProdBloqueadoProvStar As Controls.CheckBoxX
+
     Public Property Auto_GenerarAutomaticamenteOCCProveedorStar As Boolean
     Public Property Auto_GenerarAutomaticamenteNVI As Boolean
     Public Property Auto_GenerarAutomaticamenteOCCProveedores As Boolean
@@ -1605,7 +1608,13 @@ Public Class Frm_01_Asis_Compra_Resultados
         End If
 
         If Chk_QuitarProdExcluidos.Checked Then
-            _Condicion += Space(1) & "And ProductoExcluido = 0"
+            If Auto_GenerarAutomaticamenteOCCProveedorStar Or Auto_GenerarAutomaticamenteNVI Then
+                If Not Chk_IncluirProdExcluidosProvStar.Checked Then
+                    _Condicion += Space(1) & "And ProductoExcluido = 0"
+                End If
+            Else
+                _Condicion += Space(1) & "And ProductoExcluido = 0"
+            End If
         End If
 
         Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_Actualizar_Informe_Principal
@@ -1911,7 +1920,13 @@ Public Class Frm_01_Asis_Compra_Resultados
         End If
 
         If Chk_QuitarProdExcluidos.Checked Then
-            _Condicion += Space(1) & "And ProductoExcluido = 0"
+            If Auto_GenerarAutomaticamenteOCCProveedorStar Or Auto_GenerarAutomaticamenteNVI Then
+                If Not Chk_IncluirProdExcluidosProvStar.Checked Then
+                    _Condicion += Space(1) & "And ProductoExcluido = 0"
+                End If
+            Else
+                _Condicion += Space(1) & "And ProductoExcluido = 0"
+            End If
         End If
 
         Dim _Orden_Codigo As String
@@ -4822,6 +4837,23 @@ Public Class Frm_01_Asis_Compra_Resultados
         _Sql.Sb_Parametro_Informe_Sql(Chk_MostrarFlete, "Compras_Asistente",
                                              Chk_MostrarFlete.Name, Class_SQLite.Enum_Type._Boolean, Chk_MostrarFlete.Checked, _Actualizar)
 
+        If IsNothing(Chk_IncluirProdExcluidosProvStar) Then
+            Chk_IncluirProdExcluidosProvStar = New Controls.CheckBoxX
+            Chk_IncluirProdExcluidosProvStar.Name = "Chk_IncluirProdExcluidosProvStar"
+        End If
+
+        ' Check para incluir productos excluidos
+        _Sql.Sb_Parametro_Informe_Sql(Chk_IncluirProdExcluidosProvStar, "Compras_Asistente",
+                                      Chk_IncluirProdExcluidosProvStar.Name, Class_SQLite.Enum_Type._Boolean, Chk_IncluirProdExcluidosProvStar.Checked, _Actualizar)
+
+        If IsNothing(Chk_IncluirProdBloqueadoProvStar) Then
+            Chk_IncluirProdBloqueadoProvStar = New Controls.CheckBoxX
+            Chk_IncluirProdBloqueadoProvStar.Name = "Chk_IncluirProdBloqueadoProvStar"
+        End If
+
+        ' Check para incluir productos bloqueados
+        _Sql.Sb_Parametro_Informe_Sql(Chk_IncluirProdBloqueadoProvStar, "Compras_Asistente",
+                                      Chk_IncluirProdBloqueadoProvStar.Name, Class_SQLite.Enum_Type._Boolean, Chk_IncluirProdBloqueadoProvStar.Checked, _Actualizar)
 
     End Sub
 
@@ -8378,7 +8410,11 @@ Drop Table #Paso"
             Call BtnProceso_Prov_Auto_Especial_Click(Nothing, Nothing)
 
             BtnProceso_Prov_Auto.Enabled = False
-            Chk_Quitar_Bloqueados_Compra.Checked = _QuitarBloqueadosCompra
+
+            If Not Chk_IncluirProdBloqueadoProvStar.Checked Then
+                Chk_Quitar_Bloqueados_Compra.Checked = _QuitarBloqueadosCompra
+            End If
+
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = _Proceso_Automatico_Ejecutado
             Chk_Quitar_Ventas_Calzadas.Checked = True
             Chk_Mostrar_Solo_Stock_Critico.Checked = True
@@ -8393,7 +8429,7 @@ Drop Table #Paso"
 
             Dim _CodEntidad As String = _RowProveedor.Item("KOEN")
             Dim _SucEntidad As String = _RowProveedor.Item("SUEN")
-            'Dim _FechaUltCompra As DateTime = _Fila.Item("FechaUltCompra")
+
 
             Sb_Genarar_OCC_Automaticas_Por_Proveedor(_CodEntidad, _SucEntidad, _Generar_OCC)
 
@@ -8417,6 +8453,8 @@ Drop Table #Paso"
 
             Next
 
+            Chk_Quitar_Bloqueados_Compra.Checked = _QuitarBloqueadosCompra
+
             Me.Close()
 
         End If
@@ -8432,7 +8470,11 @@ Drop Table #Paso"
             BtnProceso_Prov_Auto.Enabled = False
 
             Chk_Restar_Stok_Bodega.Checked = True
-            Chk_Quitar_Bloqueados_Compra.Checked = _QuitarBloqueadosCompra
+
+            If Not Chk_IncluirProdBloqueadoProvStar.Checked Then
+                Chk_Quitar_Bloqueados_Compra.Checked = _QuitarBloqueadosCompra
+            End If
+
             'Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = True
             Chk_Mostrar_Solo_Productos_A_Comprar.Checked = True
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = True
@@ -8466,6 +8508,8 @@ Drop Table #Paso"
                 _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(_Modalidad_Estudio, _Fl.Idmaeedo)
 
             Next
+
+            Chk_Quitar_Bloqueados_Compra.Checked = _QuitarBloqueadosCompra
 
             Me.Close()
 
@@ -8777,7 +8821,13 @@ Drop Table #Paso"
         End If
 
         If Chk_QuitarProdExcluidos.Checked Then
-            _Condicion += Space(1) & "And ProductoExcluido = 0"
+            If Auto_GenerarAutomaticamenteOCCProveedorStar Or Auto_GenerarAutomaticamenteNVI Then
+                If Not Chk_IncluirProdExcluidosProvStar.Checked Then
+                    _Condicion += Space(1) & "And ProductoExcluido = 0"
+                End If
+            Else
+                _Condicion += Space(1) & "And ProductoExcluido = 0"
+            End If
         End If
 
         Dim _Orden_Codigo As String

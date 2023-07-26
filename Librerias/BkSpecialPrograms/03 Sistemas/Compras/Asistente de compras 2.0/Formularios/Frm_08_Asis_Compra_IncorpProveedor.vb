@@ -11,6 +11,8 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
     Dim _Proceso_Generado As Boolean
 
     Dim _Accion_Automatica As Boolean
+    Public Property CodProveedor_Pstar As String
+    Public Property CodSucProveedor_Pstar As String
 
     Public Property Accion_Automatica As Boolean
         Get
@@ -69,6 +71,9 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
         '   Costos de la lista del proveedor
         _Sql.Sb_Parametro_Informe_Sql(Dtp_Fecha_Tope_Proveedores_Automaticos, "Compras_Asistente",
                                              Dtp_Fecha_Tope_Proveedores_Automaticos.Name, Class_SQLite.Enum_Type._Date, Dtp_Fecha_Tope_Proveedores_Automaticos.Value)
+
+
+
 
         Dtp_Fecha_Tope_Proveedores_Automaticos.Value = Primerdiadelmes(Dtp_Fecha_Tope_Proveedores_Automaticos.Value)
 
