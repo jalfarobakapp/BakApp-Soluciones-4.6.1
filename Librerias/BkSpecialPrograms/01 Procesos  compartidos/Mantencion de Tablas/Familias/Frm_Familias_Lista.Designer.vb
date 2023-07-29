@@ -23,9 +23,9 @@ Partial Class Frm_Familias_Lista
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Familias_Lista))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Super_Familia = New DevComponents.DotNetBar.ButtonItem()
@@ -46,6 +46,7 @@ Partial Class Frm_Familias_Lista
         Me.Btn_Crear = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Sincronizar = New DevComponents.DotNetBar.ButtonItem()
         Me.Lbl_Encabezado = New DevComponents.DotNetBar.LabelX()
+        Me.WarningBox = New DevComponents.DotNetBar.Controls.WarningBox()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -170,36 +171,36 @@ Partial Class Frm_Familias_Lista
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.Size = New System.Drawing.Size(564, 363)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 29
@@ -261,14 +262,12 @@ Partial Class Frm_Familias_Lista
         '
         'Txt_Descripcion
         '
-        Me.Txt_Descripcion.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.Txt_Descripcion.Border.Class = "TextBoxBorder"
         Me.Txt_Descripcion.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Descripcion.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Descripcion.FocusHighlightEnabled = True
         Me.Txt_Descripcion.ForeColor = System.Drawing.Color.Black
         Me.Txt_Descripcion.Location = New System.Drawing.Point(78, 3)
         Me.Txt_Descripcion.Name = "Txt_Descripcion"
@@ -282,7 +281,7 @@ Partial Class Frm_Familias_Lista
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Exportar_Excel, Me.Btn_Crear, Me.Btn_Sincronizar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 485)
+        Me.Bar1.Location = New System.Drawing.Point(0, 534)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(585, 41)
         Me.Bar1.Stretch = True
@@ -296,6 +295,7 @@ Partial Class Frm_Familias_Lista
         Me.Btn_Exportar_Excel.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Exportar_Excel.ForeColor = System.Drawing.Color.Black
         Me.Btn_Exportar_Excel.Image = CType(resources.GetObject("Btn_Exportar_Excel.Image"), System.Drawing.Image)
+        Me.Btn_Exportar_Excel.ImageAlt = CType(resources.GetObject("Btn_Exportar_Excel.ImageAlt"), System.Drawing.Image)
         Me.Btn_Exportar_Excel.Name = "Btn_Exportar_Excel"
         Me.Btn_Exportar_Excel.Tooltip = "Exportar a Excel"
         '
@@ -304,6 +304,7 @@ Partial Class Frm_Familias_Lista
         Me.Btn_Crear.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Crear.ForeColor = System.Drawing.Color.Black
         Me.Btn_Crear.Image = CType(resources.GetObject("Btn_Crear.Image"), System.Drawing.Image)
+        Me.Btn_Crear.ImageAlt = CType(resources.GetObject("Btn_Crear.ImageAlt"), System.Drawing.Image)
         Me.Btn_Crear.Name = "Btn_Crear"
         Me.Btn_Crear.Text = "Aceptar"
         '
@@ -312,6 +313,7 @@ Partial Class Frm_Familias_Lista
         Me.Btn_Sincronizar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Sincronizar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Sincronizar.Image = CType(resources.GetObject("Btn_Sincronizar.Image"), System.Drawing.Image)
+        Me.Btn_Sincronizar.ImageAlt = CType(resources.GetObject("Btn_Sincronizar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Sincronizar.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
         Me.Btn_Sincronizar.Name = "Btn_Sincronizar"
         Me.Btn_Sincronizar.Text = "Sincronizar BDExt."
@@ -331,11 +333,26 @@ Partial Class Frm_Familias_Lista
         Me.Lbl_Encabezado.TabIndex = 24
         Me.Lbl_Encabezado.Text = "Descripción"
         '
+        'WarningBox
+        '
+        Me.WarningBox.BackColor = System.Drawing.Color.White
+        Me.WarningBox.CloseButtonVisible = False
+        Me.WarningBox.ForeColor = System.Drawing.Color.Black
+        Me.WarningBox.Image = CType(resources.GetObject("WarningBox.Image"), System.Drawing.Image)
+        Me.WarningBox.Location = New System.Drawing.Point(8, 482)
+        Me.WarningBox.Name = "WarningBox"
+        Me.WarningBox.OptionsText = "Información..."
+        Me.WarningBox.Size = New System.Drawing.Size(570, 33)
+        Me.WarningBox.TabIndex = 25
+        Me.WarningBox.Text = "<b>Atención: </b>Esta tabla esta bloqueada desde la configuración general"
+        Me.WarningBox.Visible = False
+        '
         'Frm_Familias_Lista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(585, 526)
+        Me.ClientSize = New System.Drawing.Size(585, 575)
+        Me.Controls.Add(Me.WarningBox)
         Me.Controls.Add(Me.Lbl_Encabezado)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.GroupPanel1)
@@ -379,4 +396,5 @@ Partial Class Frm_Familias_Lista
     Friend WithEvents Menu_Contextual_Familia As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Menu_Contextual_Sub_Familia As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Sincronizar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents WarningBox As DevComponents.DotNetBar.Controls.WarningBox
 End Class

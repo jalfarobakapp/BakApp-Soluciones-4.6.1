@@ -1450,6 +1450,10 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     Sub Sb_Editar_Producto(_RowProducto As DataRow)
 
+        If IsNothing(_RowProducto) Then
+            Return
+        End If
+
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
 
         Dim _Codigo = _RowProducto.Item("KOPR")

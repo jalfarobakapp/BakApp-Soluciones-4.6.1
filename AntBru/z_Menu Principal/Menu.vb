@@ -1,4 +1,5 @@
-﻿Imports BkSpecialPrograms
+﻿Imports Bk_Produccion
+Imports BkSpecialPrograms
 Imports DevComponents.DotNetBar
 
 Public Class Menu
@@ -809,6 +810,14 @@ Public Class Menu
     Private Sub ButtonItem4_Click(sender As Object, e As EventArgs) Handles ButtonItem4.Click
 
         Dim Fm As New Frm_Cms(1)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_IngresarGRIProduccion_Click(sender As Object, e As EventArgs) Handles Btn_IngresarGRIProduccion.Click
+
+        Dim Fm As New Frm_GRI_Ingreso
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

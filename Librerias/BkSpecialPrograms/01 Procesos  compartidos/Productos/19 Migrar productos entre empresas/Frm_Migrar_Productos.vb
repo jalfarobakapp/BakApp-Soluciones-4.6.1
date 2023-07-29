@@ -13,12 +13,14 @@
 
     Dim _Cadena_ConexionSQL_Server_Ext As String
 
-    Public Sub New()
+    Public Sub New(_Cadena_ConexionSQL_Server_Ext As String)
 
         ' Esta llamada es exigida por el diseñador.
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+
+        Me._Cadena_ConexionSQL_Server_Ext = _Cadena_ConexionSQL_Server_Ext
 
         Sb_Formato_Generico_Grilla(Grilla_Productos, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
@@ -30,7 +32,7 @@
 
     Private Sub Frm_Usuarios_Random_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        ObtenerServExt()
+        'ObtenerServExt()
         _Ds_Producto_Local = BuscarProducto(Txt_KOPR.Text, _Global_BaseBk, _Sql)
         Grilla_Productos.DataSource = _Ds_Producto_Local.Tables(0)
 

@@ -490,7 +490,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
                 Select Case _TipoDoc
 
-                    Case "NVV", "BLV", "FCV", "GDV"
+                    Case "NVV", "BLV", "FCV", "GDV", "COV"
 
                         _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Venta
                         _Revisar_Documento = True

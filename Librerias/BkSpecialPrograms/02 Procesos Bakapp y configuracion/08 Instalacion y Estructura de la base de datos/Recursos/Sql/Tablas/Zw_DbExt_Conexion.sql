@@ -24,6 +24,11 @@ CREATE TABLE [dbo].[Zw_DbExt_Conexion](
 [SincroEmpresa]         [bit]      	    NOT NULL DEFAULT (0),    
 [SincroTratalote]       [bit]      	    NOT NULL DEFAULT (0),    
 [SincroDimensiones]     [bit]      	    NOT NULL DEFAULT (0),    
+[SincroTblMarcas]       [bit]      	    NOT NULL DEFAULT (0),    
+[SincroTblRubros]       [bit]      	    NOT NULL DEFAULT (0),    
+[SincroTblFamilias]     [bit]      	    NOT NULL DEFAULT (0),    
+[SincroTblClaslibre]    [bit]      	    NOT NULL DEFAULT (0),    
+[SincroTblZonaProducto] [bit]      	    NOT NULL DEFAULT (0),    
  CONSTRAINT [PK_Zw_DbExt_Conexion] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

@@ -4,6 +4,7 @@ Public Class Frm_ExporProd
 
     Dim Consulta_Sql As String
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+    Dim _Sql2 As Class_SQL
 
     Public Property Tbl_Bodegas As DataTable
     Public Property Tbl_Listas As DataTable
@@ -49,7 +50,13 @@ Public Class Frm_ExporProd
         Chk_SincroTratalote.Checked = _Row_DbExt_Conexion.Item("SincroTratalote")
         Chk_SincroDimensiones.Checked = _Row_DbExt_Conexion.Item("SincroDimensiones")
 
-        Dim _Sql2 As New Class_SQL(_Cadena_ConexionSQL_Server_BodExterna)
+        Chk_SincroTblMarcas.Checked = _Row_DbExt_Conexion.Item("SincroTblMarcas")
+        Chk_SincroTblRubros.Checked = _Row_DbExt_Conexion.Item("SincroTblRubros")
+        Chk_SincroTblFamilias.Checked = _Row_DbExt_Conexion.Item("SincroTblFamilias")
+        Chk_SincroTblClaslibre.Checked = _Row_DbExt_Conexion.Item("SincroTblClaslibre")
+        Chk_SincroTblZonaProducto.Checked = _Row_DbExt_Conexion.Item("SincroTblZonaProducto")
+
+        _Sql2 = New Class_SQL(_Cadena_ConexionSQL_Server_BodExterna)
 
         Try
             Consulta_Sql = "Select Cast(1 As Bit) As Chk,EMPRESA+KOSU+KOBO As Codigo, NOKOBO as Descripcion" & vbCrLf &
@@ -70,6 +77,8 @@ Public Class Frm_ExporProd
             Tbl_Listas = Nothing
             Lbl_Listas.Text = "Listas seleccionadas: 0"
         End Try
+
+        SuperTabControl1.SelectedTabIndex = 0
 
     End Sub
 
@@ -147,6 +156,12 @@ Public Class Frm_ExporProd
         Dim _GrbProd_Bodegas As String
         Dim _GrbProd_Listas As String
 
+        Dim _SincroTblMarcas As Integer = Convert.ToInt32(Chk_SincroTblMarcas.Checked)
+        Dim _SincroTblRubros As Integer = Convert.ToInt32(Chk_SincroTblRubros.Checked)
+        Dim _SincroTblFamilias As Integer = Convert.ToInt32(Chk_SincroTblFamilias.Checked)
+        Dim _SincroTblClaslibre As Integer = Convert.ToInt32(Chk_SincroTblClaslibre.Checked)
+        Dim _SincroTblZonaProducto As Integer = Convert.ToInt32(Chk_SincroTblZonaProducto.Checked)
+
         If Chk_GrbProd_Nuevos.Checked AndAlso Chk_SincroEmpresa.Checked Then
             If IsNothing(Tbl_Bodegas) Then
                 MessageBoxEx.Show(Me, "Debe seleccionar las bodegas para la grabación de los productos",
@@ -185,6 +200,11 @@ Public Class Frm_ExporProd
                        ",SincroEmpresa = " & _SincroEmpresa &
                        ",SincroTratalote = " & _SincroTratalote &
                        ",SincroDimensiones = " & _SincroDimensiones &
+                       ",SincroTblMarcas = " & _SincroTblMarcas &
+                       ",SincroTblRubros = " & _SincroTblRubros &
+                       ",SincroTblFamilias = " & _SincroTblFamilias &
+                       ",SincroTblClaslibre = " & _SincroTblClaslibre &
+                       ",SincroTblZonaProducto = " & _SincroTblZonaProducto &
                        "Where Id = " & _Id
         If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
             MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -219,4 +239,53 @@ Public Class Frm_ExporProd
         End Try
     End Sub
 
+
+
+    Private Sub Btn_ProdSoloBaseLocal_Click(sender As Object, e As EventArgs) Handles Btn_ProdSoloBaseLocal.Click
+
+        'Consulta_Sql = "SELECT KOPR,NOKOPR FROM MAEPR"
+        'Dim _TblLocal As DataTable
+        'Dim _TblExterna As DataTable = _Sql2.Fx_Get_Tablas(Consulta_Sql)
+
+        'Dim _FiltroProductos As String = Generar_Filtro_IN(_TblExterna, "", "KOPR", False, False, "'")
+
+        'Consulta_Sql = "Select KOPR As Codigo,NOKOPR As Descripcion From MAEPR Where KOPR Not In " & _FiltroProductos
+        '_TblLocal = _Sql2.Fx_Get_Tablas(Consulta_Sql)
+
+        'ExportarTabla_JetExcel_Tabla(_TblLocal, Me, "Productos en MAEPR solo en Base local")
+
+        Consulta_Sql = "SELECT KOPR, NOKOPR FROM MAEPR"
+
+        Dim _Tbl_MAEPRLocal As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_MAEPRExterno As DataTable = _Sql2.Fx_Get_Tablas(Consulta_Sql)
+
+        Dim idsNotInB = _Tbl_MAEPRLocal.AsEnumerable().Select(Function(r) r.Field(Of String)("KOPR")).Except(_Tbl_MAEPRExterno.AsEnumerable().[Select](Function(r) r.Field(Of String)("KOPR")))
+        Dim _TblLocal As DataTable = (From row In _Tbl_MAEPRLocal.AsEnumerable() Join id In idsNotInB On row.Field(Of String)("KOPR") Equals id Select row).CopyToDataTable()
+        ExportarTabla_JetExcel_Tabla(_TblLocal, Me, "Productos en MAEPR solo en Base local")
+
+    End Sub
+
+    Private Sub Btn_ProdSoloBaseExterna_Click(sender As Object, e As EventArgs) Handles Btn_ProdSoloBaseExterna.Click
+
+        'Consulta_Sql = "SELECT KOPR,NOKOPR FROM MAEPR"
+        'Dim _TblLocal As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        'Dim _TblExterna As DataTable
+
+        'Dim _FiltroProductos As String = Generar_Filtro_IN(_TblLocal, "", "KOPR", False, False, "'")
+
+        'Consulta_Sql = "Select KOPR As Codigo,NOKOPR As Descripcion From MAEPR Where KOPR Not In " & _FiltroProductos
+        '_TblExterna = _Sql2.Fx_Get_Tablas(Consulta_Sql)
+
+        'ExportarTabla_JetExcel_Tabla(_TblExterna, Me, "Productos en MAEPR solo en Base externa " & _Row_DbExt_Conexion.Item("Nombre_Conexion"))
+
+        Consulta_Sql = "SELECT KOPR, NOKOPR FROM MAEPR"
+
+        Dim _Tbl_MAEPRLocal As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_MAEPRExterno As DataTable = _Sql2.Fx_Get_Tablas(Consulta_Sql)
+
+        Dim idsNotInB = _Tbl_MAEPRExterno.AsEnumerable().Select(Function(r) r.Field(Of String)("KOPR")).Except(_Tbl_MAEPRLocal.AsEnumerable().[Select](Function(r) r.Field(Of String)("KOPR")))
+        Dim _TblExterna As DataTable = (From row In _Tbl_MAEPRExterno.AsEnumerable() Join id In idsNotInB On row.Field(Of String)("KOPR") Equals id Select row).CopyToDataTable()
+        ExportarTabla_JetExcel_Tabla(_TblExterna, Me, "Productos en MAEPR solo en Base externa " & _Row_DbExt_Conexion.Item("Nombre_Conexion"))
+
+    End Sub
 End Class

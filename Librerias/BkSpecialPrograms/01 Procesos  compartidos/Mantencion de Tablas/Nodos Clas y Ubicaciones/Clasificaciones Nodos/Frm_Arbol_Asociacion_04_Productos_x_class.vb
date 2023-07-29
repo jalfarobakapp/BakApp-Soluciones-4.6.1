@@ -81,12 +81,14 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
         Sb_Llenar_Combos(_Arr_Filtro, Cmb_Filtro_Codigo)
         Cmb_Filtro_Codigo.SelectedValue = "C"
 
-        If Global_Thema = Enum_Themas.Oscuro Then
+        'If Global_Thema = Enum_Themas.Oscuro Then
 
-            Btn_AgregarProductos.ForeColor = Color.White
-            Btn_Quitar_Productos.ForeColor = Color.White
+        '    Btn_AgregarProductos.ForeColor = Color.White
+        '    Btn_Quitar_Productos.ForeColor = Color.White
 
-        End If
+        'End If
+
+        Sb_Color_Botones_Barra(Bar2)
 
     End Sub
 
@@ -239,7 +241,7 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
             End If
 
-            If _Codigo_Huacho Then _Fila.DefaultCellStyle.ForeColor = Color.Red
+            If _Codigo_Huacho Then _Fila.DefaultCellStyle.ForeColor = Rojo
 
         End If
 
@@ -405,7 +407,7 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
                 _Fila.DefaultCellStyle.BackColor = Color.LightGray
             Else
                 If _En_Otra_Carpeta_Padre Then _Fila.DefaultCellStyle.BackColor = Color.PaleGoldenrod
-                If _Codigo_Huacho Then _Fila.DefaultCellStyle.ForeColor = Color.Red '_Fila.DefaultCellStyle.BackColor = Color.Tomato
+                If _Codigo_Huacho Then _Fila.DefaultCellStyle.ForeColor = Rojo '_Fila.DefaultCellStyle.BackColor = Color.Tomato
             End If
 
         Next
