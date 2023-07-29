@@ -79,13 +79,20 @@ Public Class Frm_ConfTidoXModal
             Input_AvisoSaldoFolios.Value = NuloPorNro(_RowFormato.Item("AvisoSaldoFolios"), 10)
             Input_DiasAvisoExpiraFolio.Value = NuloPorNro(_RowFormato.Item("DiasAvisoExpiraFolio"), 14)
         Else
+
+            '"Where Modalidad = '  '"
+
             Input_AvisoSaldoFolios.MinValue = 0
-            Input_AvisoSaldoFolios.Value = 0
+            Input_AvisoSaldoFolios.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad",
+                                                             "AvisoSaldoFolios",
+                                                             "Empresa = '" & ModEmpresa & "' And Modalidad = '  ' And TipoDoc = '" & _Tido & "'")
             Input_AvisoSaldoFolios.Enabled = False
             Lbl_AvisoSaldoFolios.Enabled = False
 
             Input_DiasAvisoExpiraFolio.MinValue = 0
-            Input_DiasAvisoExpiraFolio.Value = 0
+            Input_DiasAvisoExpiraFolio.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad",
+                                                             "DiasAvisoExpiraFolio",
+                                                             "Empresa = '" & ModEmpresa & "' And Modalidad = '  ' And TipoDoc = '" & _Tido & "'")
             Input_DiasAvisoExpiraFolio.Enabled = False
             Lbl_DiasAvisoExpiraFolio.Enabled = False
         End If

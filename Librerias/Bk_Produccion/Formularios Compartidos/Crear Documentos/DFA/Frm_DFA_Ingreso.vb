@@ -1,5 +1,4 @@
-Imports DevComponents.DotNetBar
-
+ï»¿Imports DevComponents.DotNetBar
 Imports BkSpecialPrograms
 
 Public Class Frm_DFA_Ingreso
@@ -49,10 +48,10 @@ Public Class Frm_DFA_Ingreso
 
     Public Sub New()
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
 
         Sb_Formato_Generico_Grilla(Grilla_Pobrefad, 20, New Font("Tahoma", 10), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
 
@@ -87,13 +86,13 @@ Public Class Frm_DFA_Ingreso
 
     Function Fx_Trae_Operaciones_SubOt(ByVal _Idpotl As Integer, ByVal _Cod_Maquina As String) As DataTable
 
-        Consulta_sql = "SELECT POTPR.*,POPER.NOMBREOP,POPER.UDAD,POPER.OBREROS,POPER.CODMAQ," & _
-                       "ISNULL((SELECT TOP 1 NOMBREMAQ FROM PMAQUI WITH ( NOLOCK )  WHERE CODMAQ=POPER.CODMAQ),'') as MAQUINA," & _
-                       "PVELPROP.NOOPPR,PVELPROP.CODMAQOPPR " & vbCrLf & _
-                       "FROM POTPR WITH ( NOLOCK ) " & vbCrLf & _
-                       "LEFT OUTER JOIN POPER ON POTPR.OPERACION=POPER.OPERACION " & vbCrLf & _
-                       "LEFT OUTER JOIN PVELPROP ON POTPR.OPERACION=PVELPROP.OPERACION AND POTPR.CODIGO = PVELPROP.KOPR " & vbCrLf & _
-                       "WHERE POTPR.IDPOTL='" & _Idpotl & "'" & vbCrLf & _
+        Consulta_sql = "SELECT POTPR.*,POPER.NOMBREOP,POPER.UDAD,POPER.OBREROS,POPER.CODMAQ," &
+                       "ISNULL((SELECT TOP 1 NOMBREMAQ FROM PMAQUI WITH ( NOLOCK )  WHERE CODMAQ=POPER.CODMAQ),'') as MAQUINA," &
+                       "PVELPROP.NOOPPR,PVELPROP.CODMAQOPPR " & vbCrLf &
+                       "FROM POTPR WITH ( NOLOCK ) " & vbCrLf &
+                       "LEFT OUTER JOIN POPER ON POTPR.OPERACION=POPER.OPERACION " & vbCrLf &
+                       "LEFT OUTER JOIN PVELPROP ON POTPR.OPERACION=PVELPROP.OPERACION AND POTPR.CODIGO = PVELPROP.KOPR " & vbCrLf &
+                       "WHERE POTPR.IDPOTL='" & _Idpotl & "'" & vbCrLf &
                        "AND POPER.CODMAQ = '" & _Cod_Maquina & "'"
 
         Fx_Trae_Operaciones_SubOt = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -167,7 +166,7 @@ Public Class Frm_DFA_Ingreso
                 'Txt_Maquina.Text = UCase(Trim(_Row_Maquina.Item("CODMAQ")) & " - " & _Row_Maquina.Item("NOMBREMAQ"))
 
             Else
-                MessageBoxEx.Show(Me, "ESTA MAQUINA NO ESTA ASOCIADA A NINGUNA OPERACION DE LA SUB OT", _
+                MessageBoxEx.Show(Me, "ESTA MAQUINA NO ESTA ASOCIADA A NINGUNA OPERACION DE LA SUB OT",
                                   "MAQUINA: " & _Row_Maquina.Item("NOMBREMAQ"), MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
             End If
@@ -206,27 +205,27 @@ Public Class Frm_DFA_Ingreso
 
     Sub Sb_Actualizar_Grillas()
 
-        Consulta_sql = "SELECT TOP 1 * FROM PDATFAE" & vbCrLf & _
-                       "WHERE 1 < 0" & _
-                       vbCrLf & _
-                       vbCrLf & _
-                       "SELECT TOP 1 CAST(0 AS INT) AS IDPDATFAD,ARCHIRST,IDRST,EMPRESA,NUMDF,NUMOT,NUMODC,OPERACION,CODMAQ,FECHA,NREGOTL,CODIGO," & _
-                       "UDAD,REALJOR,FECHINI,HORAINI,FECHTER,HORATER,TIEMPO,OBRERO1,OBRERO2,OBRERO3,OBRERO4,OBRERO5,OBRERO6," & _
-                       "ESULTOPER,UDAD2,REALJOR2,RLUD,KOCAUDET,FACTOR,IDGDI,KOMOLDE,CAVIUSADAS,CICLOUSADO,IDOCCOPEXT,NUDOOCC" & vbCrLf & _
-                       "FROM PDATFAD" & vbCrLf & _
-                       "WHERE 1 < 0" & _
-                       vbCrLf & _
-                       vbCrLf & _
-                       "SELECT CAST(0 AS INT) AS IDPDATFAD,OBRERO,OBRERO AS CODIGOOB,CAST('' AS VARCHAR(50)) AS NOMBREOB,FECHINIOB,HORAINIOB,FECHTEROB,HORATEROB,TIEMPOOB,VALHORA,VALUNID," & _
-                       "VALADI1,VALADI2,KOJORNADA,TIEMPOOBHE" & vbCrLf & _
-                       "FROM POBREFAD" & vbCrLf & _
+        Consulta_sql = "SELECT TOP 1 * FROM PDATFAE" & vbCrLf &
+                       "WHERE 1 < 0" &
+                       vbCrLf &
+                       vbCrLf &
+                       "SELECT TOP 1 CAST(0 AS INT) AS IDPDATFAD,ARCHIRST,IDRST,EMPRESA,NUMDF,NUMOT,NUMODC,OPERACION,CODMAQ,FECHA,NREGOTL,CODIGO," &
+                       "UDAD,REALJOR,FECHINI,HORAINI,FECHTER,HORATER,TIEMPO,OBRERO1,OBRERO2,OBRERO3,OBRERO4,OBRERO5,OBRERO6," &
+                       "ESULTOPER,UDAD2,REALJOR2,RLUD,KOCAUDET,FACTOR,IDGDI,KOMOLDE,CAVIUSADAS,CICLOUSADO,IDOCCOPEXT,NUDOOCC" & vbCrLf &
+                       "FROM PDATFAD" & vbCrLf &
+                       "WHERE 1 < 0" &
+                       vbCrLf &
+                       vbCrLf &
+                       "SELECT CAST(0 AS INT) AS IDPDATFAD,OBRERO,OBRERO AS CODIGOOB,CAST('' AS VARCHAR(50)) AS NOMBREOB,FECHINIOB,HORAINIOB,FECHTEROB,HORATEROB,TIEMPOOB,VALHORA,VALUNID," &
+                       "VALADI1,VALADI2,KOJORNADA,TIEMPOOBHE" & vbCrLf &
+                       "FROM POBREFAD" & vbCrLf &
                        "WHERE 1 < 0"
 
         _Ds_DFA = _Sql.Fx_Get_DataSet(Consulta_sql)
 
 
-        _Ds_DFA.Relations.Add("Relacion_DFA", _
-                                  _Ds_DFA.Tables("Table1").Columns("IDPDATFAD"), _
+        _Ds_DFA.Relations.Add("Relacion_DFA",
+                                  _Ds_DFA.Tables("Table1").Columns("IDPDATFAD"),
                                   _Ds_DFA.Tables("Table2").Columns("IDPDATFAD"), False)
 
 
@@ -274,7 +273,7 @@ Public Class Frm_DFA_Ingreso
             .Columns("OPERACION").DisplayIndex = 4
 
             .Columns("CODMAQ").Visible = True
-            .Columns("CODMAQ").HeaderText = "Máquina"
+            .Columns("CODMAQ").HeaderText = "MÃ¡quina"
             .Columns("CODMAQ").Width = 160
             .Columns("CODMAQ").DisplayIndex = 5
 
@@ -297,7 +296,7 @@ Public Class Frm_DFA_Ingreso
             .Columns("HORAINI").DisplayIndex = 7
 
             '.Columns("CODIGO").Visible = True
-            '.Columns("CODIGO").HeaderText = "Descripción"
+            '.Columns("CODIGO").HeaderText = "DescripciÃ³n"
             '.Columns("CODIGO").Width = 550
             '.Columns("CODIGO").DisplayIndex = 1
 
@@ -312,12 +311,12 @@ Public Class Frm_DFA_Ingreso
             OcultarEncabezadoGrilla(Grilla_Pobrefad, True)
 
             .Columns("CODIGOOB").Visible = True
-            .Columns("CODIGOOB").HeaderText = "Código"
+            .Columns("CODIGOOB").HeaderText = "CÃ³digo"
             .Columns("CODIGOOB").Width = 120
             .Columns("CODIGOOB").DisplayIndex = 0
 
             .Columns("NOMBREOB").Visible = True
-            .Columns("NOMBREOB").HeaderText = "Descripción"
+            .Columns("NOMBREOB").HeaderText = "DescripciÃ³n"
             .Columns("NOMBREOB").Width = 550
             .Columns("NOMBREOB").DisplayIndex = 1
 
@@ -328,8 +327,8 @@ Public Class Frm_DFA_Ingreso
 
     End Sub
 
-    Function Fx_Es_Inicio(ByVal _Lectura As String, _
-                          ByRef _Row_Ot As DataRow, _
+    Function Fx_Es_Inicio(ByVal _Lectura As String,
+                          ByRef _Row_Ot As DataRow,
                           ByRef _Row_SubOt As DataRow) As Boolean
 
         If _Lectura.Contains(";") Then
@@ -343,7 +342,7 @@ Public Class Frm_DFA_Ingreso
 
                 Dim _Numot As String = _Row_SubOt.Item("NUMOT")
 
-                Consulta_sql = "Select Top 1 * From POTE" & vbCrLf & _
+                Consulta_sql = "Select Top 1 * From POTE" & vbCrLf &
                                "Where 1 > 0 And NUMOT = '" & _Numot & "'"
                 _Row_Ot = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -356,8 +355,8 @@ Public Class Frm_DFA_Ingreso
 
     End Function
 
-    Function Fx_Es_Fin(ByVal _Lectura As String, _
-                       ByRef _Row_Ot As DataRow, _
+    Function Fx_Es_Fin(ByVal _Lectura As String,
+                       ByRef _Row_Ot As DataRow,
                        ByRef _Row_SubOt As DataRow) As Boolean
 
         If _Lectura.Contains(";") Then
@@ -371,7 +370,7 @@ Public Class Frm_DFA_Ingreso
 
                 Dim _Numot As String = _Row_SubOt.Item("NUMOT")
 
-                Consulta_sql = "Select Top 1 * From POTE" & vbCrLf & _
+                Consulta_sql = "Select Top 1 * From POTE" & vbCrLf &
                                "Where 1 > 0 And NUMOT = '" & _Numot & "'"
                 _Row_Ot = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -384,12 +383,12 @@ Public Class Frm_DFA_Ingreso
 
     End Function
 
-    Sub Fx_Lectura_Codigo_Operacion_X_Tarea_En_Hoja_de_Ruta(ByVal _Lectura As String, _
-                                                            ByRef _Row_Ot As DataRow, _
-                                                            ByRef _Row_SubOt As DataRow, _
-                                                            ByRef _Row_Operacion_SubOt As DataRow, _
-                                                            ByRef _Row_Operacion As DataRow, _
-                                                            ByRef _Es_Inicio As Boolean, _
+    Sub Fx_Lectura_Codigo_Operacion_X_Tarea_En_Hoja_de_Ruta(ByVal _Lectura As String,
+                                                            ByRef _Row_Ot As DataRow,
+                                                            ByRef _Row_SubOt As DataRow,
+                                                            ByRef _Row_Operacion_SubOt As DataRow,
+                                                            ByRef _Row_Operacion As DataRow,
+                                                            ByRef _Es_Inicio As Boolean,
                                                             ByRef _Es_Fin As Boolean)
 
         Dim _Error_Formato_Lectura As Boolean
@@ -419,19 +418,19 @@ Public Class Frm_DFA_Ingreso
 
                         Dim _Numot As String = _Row_SubOt.Item("NUMOT")
 
-                        Consulta_sql = "Select Top 1 * From POTE" & vbCrLf & _
+                        Consulta_sql = "Select Top 1 * From POTE" & vbCrLf &
                                        "Where 1 > 0 And NUMOT = '" & _Numot & "'"
                         _Row_Ot = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                         Dim _Operacion = _Row_Operacion_SubOt.Item("OPERACION")
 
-                        Consulta_sql = "Select Top 1 * From POPER" & vbCrLf & _
+                        Consulta_sql = "Select Top 1 * From POPER" & vbCrLf &
                                        "Where 1 > 0 And OPERACION = '" & _Operacion & "'"
                         _Row_Operacion = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                     Else
                         _Es_Inicio = False : _Es_Fin = False
-                        MessageBoxEx.Show(Me, "Registro no encontrado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        MessageBoxEx.Show(Me, "Registro no encontrado", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                         Txt_Numero_OT.Text = String.Empty
                         Txt_Numero_OT.Focus()
                     End If
@@ -449,7 +448,7 @@ Public Class Frm_DFA_Ingreso
         If _Error_Formato_Lectura Then
             _Es_Inicio = False : _Es_Fin = False
             Beep()
-            ToastNotification.Show(Me, "NO SE RECONOCE EL COMANDO", Nothing, _
+            ToastNotification.Show(Me, "NO SE RECONOCE EL COMANDO", Nothing,
                                    2 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
             Sb_Limpiar_DFA()
             Txt_Numero_OT.Focus()
@@ -467,12 +466,12 @@ Public Class Frm_DFA_Ingreso
             Dim _Row_Operacion As DataRow
             Dim _Row_Operacion_SubOt As DataRow
 
-            Fx_Lectura_Codigo_Operacion_X_Tarea_En_Hoja_de_Ruta(Txt_Numero_OT.Text, _
-                                                                _Row_OT, _
-                                                                _Row_SubOt, _
-                                                                _Row_Operacion_SubOt, _
-                                                                _Row_Operacion, _
-                                                                _Es_Inicio, _
+            Fx_Lectura_Codigo_Operacion_X_Tarea_En_Hoja_de_Ruta(Txt_Numero_OT.Text,
+                                                                _Row_OT,
+                                                                _Row_SubOt,
+                                                                _Row_Operacion_SubOt,
+                                                                _Row_Operacion,
+                                                                _Es_Inicio,
                                                                 _Es_Fin)
 
 
@@ -494,11 +493,11 @@ Public Class Frm_DFA_Ingreso
                         Dim _Operacion = _Row_Operacion.Item("OPERACION")
                         Dim _Nombreop = _Row_Operacion.Item("NOMBREOP")
 
-                        Dim Pregunta = MessageBoxEx.Show(Me, "Esta operación se encuentra realizada." & vbCrLf & vbCrLf & _
-                                        _Operacion & " - " & _Nombreop & vbCrLf & vbCrLf & _
-                                       "FABRICAR : " & FormatNumber(_Fabricar, _Dec_01) & vbCrLf & _
-                                       "REALIZADO: " & FormatNumber(_Realizado, _Dec_02) & vbCrLf & vbCrLf & _
-                                        "¿Desea seguir con la gestión?", "OPERACION REGISTRADA", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning)
+                        Dim Pregunta = MessageBoxEx.Show(Me, "Esta operaciÃ³n se encuentra realizada." & vbCrLf & vbCrLf &
+                                        _Operacion & " - " & _Nombreop & vbCrLf & vbCrLf &
+                                       "FABRICAR : " & FormatNumber(_Fabricar, _Dec_01) & vbCrLf &
+                                       "REALIZADO: " & FormatNumber(_Realizado, _Dec_02) & vbCrLf & vbCrLf &
+                                        "Â¿Desea seguir con la gestiÃ³n?", "OPERACION REGISTRADA", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning)
 
                         If Pregunta <> Windows.Forms.DialogResult.Yes Then
                             Sb_Limpiar_DFA()
@@ -525,7 +524,7 @@ Public Class Frm_DFA_Ingreso
             '_Row_OT = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If _Row_OT Is Nothing Then
-                MessageBoxEx.Show(Me, "Registro no encontrado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "Registro no encontrado", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Txt_Numero_OT.Text = String.Empty
                 Txt_Numero_OT.Focus()
             Else
@@ -566,9 +565,9 @@ Public Class Frm_DFA_Ingreso
 
                         Dim _Fila As DataGridViewRow = Grilla_Pdatfad.Rows(Grilla_Pdatfad.Rows.Count - 1)
 
-                        Consulta_sql = "Select distinct * From PMAQUI" & vbCrLf & _
-                                       "Where CODMAQ IN (Select CODMAQ From POPER Where OPERACION = 'IFF2') OR" & Space(1) & _
-                                       "CODMAQ IN (Select CODMAQAL From PMAQALT Where CODMAQPR In" & Space(1) & _
+                        Consulta_sql = "Select distinct * From PMAQUI" & vbCrLf &
+                                       "Where CODMAQ IN (Select CODMAQ From POPER Where OPERACION = 'IFF2') OR" & Space(1) &
+                                       "CODMAQ IN (Select CODMAQAL From PMAQALT Where CODMAQPR In" & Space(1) &
                                        "(Select CODMAQ From POPER Where OPERACION = 'IFF2'))"
 
                         Dim _Tbl_Maquinas_Permitidas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -585,12 +584,12 @@ Public Class Frm_DFA_Ingreso
                         Dim _Codmaq = Trim(_Tbl_Pdatfad.Rows(0).Item("CODMAQ"))
                         Dim _Operacion = Trim(_Tbl_Pdatfad.Rows(0).Item("OPERACION"))
 
-                        Consulta_sql = "SELECT * FROM PDATFAE" & vbCrLf & _
-                                       "WHERE" & vbCrLf & _
-                                       "REQCONFIR = 1 AND IDPDATFAE IN" & Space(1) & _
-                                       "(SELECT IDPDATFAE FROM PDATFAD" & Space(1) & _
-                                       "WHERE OPERACION = '" & _Operacion & "' AND CODMAQ = '" & _Codmaq & "' AND" & Space(1) & _
-                                       "NUMOT = '" & Txt_Numero_OT.Text & "')" & vbCrLf & _
+                        Consulta_sql = "SELECT * FROM PDATFAE" & vbCrLf &
+                                       "WHERE" & vbCrLf &
+                                       "REQCONFIR = 1 AND IDPDATFAE IN" & Space(1) &
+                                       "(SELECT IDPDATFAE FROM PDATFAD" & Space(1) &
+                                       "WHERE OPERACION = '" & _Operacion & "' AND CODMAQ = '" & _Codmaq & "' AND" & Space(1) &
+                                       "NUMOT = '" & Txt_Numero_OT.Text & "')" & vbCrLf &
                                        "And FECHA = '" & Format(Dtp_Fecha_Ingreso.Value, "yyyyMMdd") & "'"
                         Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
                         Dim _Ds_DFA_Encontrada As DataSet
@@ -604,9 +603,9 @@ Public Class Frm_DFA_Ingreso
                             _Existe_Pre_DFA = True
 
                             _Pre_Idpdatfae = _Tbl.Rows(0).Item("IDPDATFAE")
-                            Consulta_sql = "Select * From PDATFAE Where IDPDATFAE =" & _Pre_Idpdatfae & vbCrLf & _
-                                           "SELECT * FROM PDATFAD WHERE IDPDATFAE =" & _Pre_Idpdatfae & vbCrLf & _
-                                           "SELECT * FROM POBREFAD WHERE IDPDATFAD IN" & Space(1) & _
+                            Consulta_sql = "Select * From PDATFAE Where IDPDATFAE =" & _Pre_Idpdatfae & vbCrLf &
+                                           "SELECT * FROM PDATFAD WHERE IDPDATFAE =" & _Pre_Idpdatfae & vbCrLf &
+                                           "SELECT * FROM POBREFAD WHERE IDPDATFAD IN" & Space(1) &
                                            "(SELECT DISTINCT IDPDATFAD FROM PDATFAD WHERE IDPDATFAE = " & _Pre_Idpdatfae & ")"
                             _Ds_DFA_Encontrada = _Sql.Fx_Get_DataSet(Consulta_sql)
 
@@ -659,13 +658,13 @@ Public Class Frm_DFA_Ingreso
 
                             End If
 
-                            'If MessageBoxEx.Show(Me, "¿Confirma Grabar?", "Grabar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+                            'If MessageBoxEx.Show(Me, "Â¿Confirma Grabar?", "Grabar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
                             If _Existe_Pre_DFA Then
 
                                 _Tbl_Pdatfae.Rows(0).Item("NUMDF") = Fx_Siguiente_Nro_DFA()
-                                Consulta_sql = "DELETE POBREFAD FROM PDATFAD WHERE POBREFAD.IDPDATFAD = PDATFAD.IDPDATFAD AND PDATFAD.IDPDATFAE= " & _Pre_Idpdatfae & vbCrLf & _
-                                               "DELETE FROM PDATFAD WHERE IDPDATFAE= " & _Pre_Idpdatfae & vbCrLf & _
+                                Consulta_sql = "DELETE POBREFAD FROM PDATFAD WHERE POBREFAD.IDPDATFAD = PDATFAD.IDPDATFAD AND PDATFAD.IDPDATFAE= " & _Pre_Idpdatfae & vbCrLf &
+                                               "DELETE FROM PDATFAD WHERE IDPDATFAE= " & _Pre_Idpdatfae & vbCrLf &
                                                "DELETE FROM PDATFAE WHERE IDPDATFAE=" & _Pre_Idpdatfae
                                 _Sql.Ej_consulta_IDU(Consulta_sql)
                                 _Tbl_Pdatfae.Rows(0).Item("REQCONFIR") = 0
@@ -687,20 +686,20 @@ Public Class Frm_DFA_Ingreso
                                     Dim _Numot = _Row_SubOt.Item("NUMOT")
                                     Dim _Nreg = _Row_SubOt.Item("NREG")
 
-                                    Consulta_sql = "SELECT TOP 1 PORENTRAR,REALIZADO FROM POTL WITH ( NOLOCK )" & vbCrLf & _
+                                    Consulta_sql = "SELECT TOP 1 PORENTRAR,REALIZADO FROM POTL WITH ( NOLOCK )" & vbCrLf &
                                                    "WHERE NUMOT = '" & _Numot & "' AND NREG = '" & _Nreg & "'"
                                     Dim _Row_Potl As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                                     Dim _Porentrar As Double = _Tbl_Pdatfad.Rows(0).Item("REALJOR") + _Row_Potl.Item("REALIZADO")
 
-                                    Consulta_sql = "UPDATE POTL SET PORENTRAR=" & _Porentrar & ",INFORABODE='P'" & vbCrLf & _
+                                    Consulta_sql = "UPDATE POTL SET PORENTRAR=" & _Porentrar & ",INFORABODE='P'" & vbCrLf &
                                                    "WHERE NUMOT = '" & _Numot & "' AND NREG = '" & _Nreg & "'"
                                     _Sql.Ej_consulta_IDU(Consulta_sql)
 
                                 End If
 
 
-                                MessageBoxEx.Show(Me, "DATOS INGRESADOS CORRECTAMENTE", "GRABAR", _
+                                MessageBoxEx.Show(Me, "DATOS INGRESADOS CORRECTAMENTE", "GRABAR",
                                             MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                                 'MessageBoxEx.Show(Me, "Pre-DFA creada correctamente", "GRABAR DFA", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -739,8 +738,8 @@ Public Class Frm_DFA_Ingreso
                         _Msg = "Orden de Compra Cerrada"
                     End If
 
-                    MessageBoxEx.Show(Me, "Solo se pueden ingresar Datos de Fabricación para Ordenes de Trabajo Vigente", _
-                                      "Validación, " & _Msg, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    MessageBoxEx.Show(Me, "Solo se pueden ingresar Datos de FabricaciÃ³n para Ordenes de Trabajo Vigente",
+                                      "ValidaciÃ³n, " & _Msg, MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     Txt_Numero_OT.Text = String.Empty
                     Txt_Numero_OT.Focus()
                 End If
@@ -751,9 +750,9 @@ Public Class Frm_DFA_Ingreso
 
     End Sub
 
-    Private Sub Sb_Txt_Leer_SubOT_Pistoleado_Inicio(ByVal _Row_Ot As DataRow, _
-                                                    ByVal _Row_SubOt As DataRow, _
-                                                    ByVal _Row_Operacion_SubOt As DataRow, _
+    Private Sub Sb_Txt_Leer_SubOT_Pistoleado_Inicio(ByVal _Row_Ot As DataRow,
+                                                    ByVal _Row_SubOt As DataRow,
+                                                    ByVal _Row_Operacion_SubOt As DataRow,
                                                     ByVal _Row_Operacion As DataRow)
 
 
@@ -769,10 +768,10 @@ Public Class Frm_DFA_Ingreso
 
                 Dim _Idpotpr = _Row_Operacion_SubOt.Item("IDPOTPR")
 
-                Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Produccion_DFA_Espera" & vbCrLf & _
-                               "Where Idpdatfae NOT In (Select IDPDATFAE From PDATFAE)" & vbCrLf & _
-                               "SELECT Id,Idpdatfae,Idpotpr" & vbCrLf & _
-                               "From " & _Global_BaseBk & "Zw_Produccion_DFA_Espera" & vbCrLf & _
+                Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Produccion_DFA_Espera" & vbCrLf &
+                               "Where Idpdatfae NOT In (Select IDPDATFAE From PDATFAE)" & vbCrLf &
+                               "SELECT Id,Idpdatfae,Idpotpr" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_Produccion_DFA_Espera" & vbCrLf &
                                "Where Idpotpr = " & _Idpotpr
 
                 Dim _Row_Dfa_Espera As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -789,9 +788,9 @@ Public Class Frm_DFA_Ingreso
 
                     Dim _Operacion = _Row_Operacion.Item("OPERACION")
 
-                    Consulta_sql = "Select distinct * From PMAQUI" & vbCrLf & _
-                                   "Where CODMAQ IN (Select CODMAQ From POPER Where OPERACION = '" & _Operacion & "') OR" & Space(1) & _
-                                   "CODMAQ IN (Select CODMAQAL From PMAQALT Where CODMAQPR In" & Space(1) & _
+                    Consulta_sql = "Select distinct * From PMAQUI" & vbCrLf &
+                                   "Where CODMAQ IN (Select CODMAQ From POPER Where OPERACION = '" & _Operacion & "') OR" & Space(1) &
+                                   "CODMAQ IN (Select CODMAQAL From PMAQALT Where CODMAQPR In" & Space(1) &
                                    "(Select CODMAQ From POPER Where OPERACION = '" & _Operacion & "'))"
 
                     Dim _Tbl_Maquinas_Permitidas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -842,26 +841,26 @@ Public Class Frm_DFA_Ingreso
                                 Dim _Numot = _Row_SubOt.Item("NUMOT")
                                 Dim _Nreg = _Row_SubOt.Item("NREG")
 
-                                Consulta_sql = "SELECT TOP 1 PORENTRAR,REALIZADO FROM POTL WITH ( NOLOCK )" & vbCrLf & _
+                                Consulta_sql = "SELECT TOP 1 PORENTRAR,REALIZADO FROM POTL WITH ( NOLOCK )" & vbCrLf &
                                                "WHERE NUMOT = '" & _Numot & "' AND NREG = '" & _Nreg & "'"
                                 Dim _Row_Potl As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                                 Dim _Porentrar As Double = _Tbl_Pdatfad.Rows(0).Item("REALJOR") + _Row_Potl.Item("REALIZADO")
 
-                                Consulta_sql = "UPDATE POTL SET PORENTRAR=" & _Porentrar & ",INFORABODE='P'" & vbCrLf & _
+                                Consulta_sql = "UPDATE POTL SET PORENTRAR=" & _Porentrar & ",INFORABODE='P'" & vbCrLf &
                                                "WHERE NUMOT = '" & _Numot & "' AND NREG = '" & _Nreg & "'"
                                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
                             End If
 
-                            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Produccion_DFA_Espera" & Space(1) & _
-                                           "(Idpdatfae,Idpotpr,Operacion,Codmaq,Codigoob) Values" & vbCrLf & _
-                                           "(" & _Idpdatfae & "," & _Idpotpr & ",'" & _Operacion & _
+                            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Produccion_DFA_Espera" & Space(1) &
+                                           "(Idpdatfae,Idpotpr,Operacion,Codmaq,Codigoob) Values" & vbCrLf &
+                                           "(" & _Idpdatfae & "," & _Idpotpr & ",'" & _Operacion &
                                            "','" & _Codmaq & "','" & _Codigoob & "')"
 
                             If _Sql.Ej_consulta_IDU(Consulta_sql) Then
                                 Beep()
-                                ToastNotification.Show(Me, "DATOS INGRESADOS CORRECTAMENTE", Nothing, _
+                                ToastNotification.Show(Me, "DATOS INGRESADOS CORRECTAMENTE", Nothing,
                                   3 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
 
                             End If
@@ -882,9 +881,9 @@ Public Class Frm_DFA_Ingreso
                 Else
 
                     'EL DOCUMENTO YA FUE PISTOLEADO PARA INICIAR EL TRABAJO
-                    MessageBoxEx.Show(Me, "Esta operación se encuentra en curso" & vbCrLf & _
-                                     "Para iniciar el proceso nuevamente debe cerrar la operación anterior", _
-                                     "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    MessageBoxEx.Show(Me, "Esta operaciÃ³n se encuentra en curso" & vbCrLf &
+                                     "Para iniciar el proceso nuevamente debe cerrar la operaciÃ³n anterior",
+                                     "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     Sb_Limpiar_DFA()
                     Txt_Numero_OT.Focus()
                 End If
@@ -902,16 +901,16 @@ Public Class Frm_DFA_Ingreso
                 _Msg = "Orden de Trabajo Cerrada"
             End If
 
-            MessageBoxEx.Show(Me, "Solo se pueden ingresar Datos de Fabricación para Ordenes de Trabajo Vigente", _
-                              "Validación, " & _Msg, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, "Solo se pueden ingresar Datos de FabricaciÃ³n para Ordenes de Trabajo Vigente",
+                              "ValidaciÃ³n, " & _Msg, MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_Numero_OT.Text = String.Empty
             Txt_Numero_OT.Focus()
         End If
 
     End Sub
 
-    Private Sub Sb_Txt_Leer_SubOT_Pistoleado_Fin(ByVal _Row_Ot As DataRow, _
-                                                 ByVal _Row_SubOt As DataRow, _
+    Private Sub Sb_Txt_Leer_SubOT_Pistoleado_Fin(ByVal _Row_Ot As DataRow,
+                                                 ByVal _Row_SubOt As DataRow,
                                                  ByVal _Row_Operacion_SubOt As DataRow)
 
 
@@ -925,7 +924,7 @@ Public Class Frm_DFA_Ingreso
             If Not (_Row_SubOt Is Nothing) Then
 
                 Dim _Idpotpr = _Row_Operacion_SubOt.Item("IDPOTPR")
-                Consulta_sql = "SELECT * From " & _Global_BaseBk & "Zw_Produccion_DFA_Espera" & vbCrLf & _
+                Consulta_sql = "SELECT * From " & _Global_BaseBk & "Zw_Produccion_DFA_Espera" & vbCrLf &
                                "Where Idpotpr = " & _Idpotpr
 
                 Dim _Row_Dfa_Espera As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -964,9 +963,9 @@ Public Class Frm_DFA_Ingreso
                         '_Existe_Pre_DFA = True
 
                         _Pre_Idpdatfae = _Tbl.Rows(0).Item("IDPDATFAE")
-                        Consulta_sql = "Select * From PDATFAE Where IDPDATFAE =" & _Pre_Idpdatfae & vbCrLf & _
-                                       "SELECT * FROM PDATFAD WHERE IDPDATFAE =" & _Pre_Idpdatfae & vbCrLf & _
-                                       "SELECT * FROM POBREFAD WHERE IDPDATFAD IN" & Space(1) & _
+                        Consulta_sql = "Select * From PDATFAE Where IDPDATFAE =" & _Pre_Idpdatfae & vbCrLf &
+                                       "SELECT * FROM PDATFAD WHERE IDPDATFAE =" & _Pre_Idpdatfae & vbCrLf &
+                                       "SELECT * FROM POBREFAD WHERE IDPDATFAD IN" & Space(1) &
                                        "(SELECT DISTINCT IDPDATFAD FROM PDATFAD WHERE IDPDATFAE = " & _Pre_Idpdatfae & ")"
                         _Ds_DFA_Encontrada = _Sql.Fx_Get_DataSet(Consulta_sql)
 
@@ -1007,8 +1006,8 @@ Public Class Frm_DFA_Ingreso
 
                             Dim _Hora_Inicio = Convert.ToDateTime(_Hh_Ini & ":" & _Mm_Ini)
 
-                            MessageBoxEx.Show(Me, "Esta operación está atrasada, debe cerrarse con los antecedentes del día en que fue abierta.", _
-                                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                            MessageBoxEx.Show(Me, "Esta operaciÃ³n estÃ¡ atrasada, debe cerrarse con los antecedentes del dÃ­a en que fue abierta.",
+                                              "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                             Dim Fm_C As New Frm_DFA_Cierre_Atrasado
                             Fm_C.Pro_Fecha_Ingreso = _Fechini
@@ -1090,13 +1089,13 @@ Public Class Frm_DFA_Ingreso
                         Else
 
                             Beep()
-                            ToastNotification.Show(Me, "LOS DATOS NO FUERON GRABADOS", Nothing, _
+                            ToastNotification.Show(Me, "LOS DATOS NO FUERON GRABADOS", Nothing,
                               3 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
 
                             'Dim info As New TaskDialogInfo("Conectar con base de datos", _
                             '                            eTaskDialogIcon.ShieldOk, _
                             '                             "XXX", _
-                            '                             "la conexión con la base de datos resulto exitosa." & vbCrLf & vbCrLf & _
+                            '                             "la conexiÃ³n con la base de datos resulto exitosa." & vbCrLf & vbCrLf & _
                             '                             "Rut: " & RutEmpresa & vbCrLf & _
                             '                             "Empresa: " & RazonEmpresa, _
                             '                             eTaskDialogButton.Ok _
@@ -1110,7 +1109,7 @@ Public Class Frm_DFA_Ingreso
 
                         'End If
 
-                        'If MessageBoxEx.Show(Me, "¿Confirma Grabar?", "Grabar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+                        'If MessageBoxEx.Show(Me, "Â¿Confirma Grabar?", "Grabar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
                         'If _Existe_Pre_DFA Then
 
@@ -1127,11 +1126,11 @@ Public Class Frm_DFA_Ingreso
 
                         If CBool(_Idpdatfae) Then
 
-                            Consulta_sql = "DELETE POBREFAD FROM PDATFAD WHERE POBREFAD.IDPDATFAD = PDATFAD.IDPDATFAD AND PDATFAD.IDPDATFAE= " & _Pre_Idpdatfae & vbCrLf & _
-                                           "DELETE FROM PDATFAD WHERE IDPDATFAE= " & _Pre_Idpdatfae & vbCrLf & _
-                                           "DELETE FROM PDATFAE WHERE IDPDATFAE=" & _Pre_Idpdatfae & vbCrLf & _
-                                           vbCrLf & _
-                                           "UPDATE PDATFAE SET NUMDF = '" & _Numdf_Old & "' WHERE IDPDATFAE = " & _Idpdatfae & vbCrLf & _
+                            Consulta_sql = "DELETE POBREFAD FROM PDATFAD WHERE POBREFAD.IDPDATFAD = PDATFAD.IDPDATFAD AND PDATFAD.IDPDATFAE= " & _Pre_Idpdatfae & vbCrLf &
+                                           "DELETE FROM PDATFAD WHERE IDPDATFAE= " & _Pre_Idpdatfae & vbCrLf &
+                                           "DELETE FROM PDATFAE WHERE IDPDATFAE=" & _Pre_Idpdatfae & vbCrLf &
+                                           vbCrLf &
+                                           "UPDATE PDATFAE SET NUMDF = '" & _Numdf_Old & "' WHERE IDPDATFAE = " & _Idpdatfae & vbCrLf &
                                            "UPDATE PDATFAD SET NUMDF = '" & _Numdf_Old & "' WHERE IDPDATFAE = " & _Idpdatfae
                             _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
@@ -1144,25 +1143,25 @@ Public Class Frm_DFA_Ingreso
                                 Dim _Numot = _Row_SubOt.Item("NUMOT")
                                 Dim _Nreg = _Row_SubOt.Item("NREG")
 
-                                Consulta_sql = "SELECT TOP 1 PORENTRAR,REALIZADO FROM POTL WITH ( NOLOCK )" & vbCrLf & _
+                                Consulta_sql = "SELECT TOP 1 PORENTRAR,REALIZADO FROM POTL WITH ( NOLOCK )" & vbCrLf &
                                                "WHERE NUMOT = '" & _Numot & "' AND NREG = '" & _Nreg & "'"
                                 Dim _Row_Potl As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                                 Dim _Porentrar As Double = _Tbl_Pdatfad.Rows(0).Item("REALJOR") + _Row_Potl.Item("REALIZADO")
 
-                                Consulta_sql = "UPDATE POTL SET PORENTRAR=" & _Porentrar & ",INFORABODE='P'" & vbCrLf & _
+                                Consulta_sql = "UPDATE POTL SET PORENTRAR=" & _Porentrar & ",INFORABODE='P'" & vbCrLf &
                                                "WHERE NUMOT = '" & _Numot & "' AND NREG = '" & _Nreg & "'"
                                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
                             End If
 
-                            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Produccion_DFA_Espera" & vbCrLf & _
+                            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Produccion_DFA_Espera" & vbCrLf &
                                            "Where Id = " & _Id_Dfa_Espera
                             _Sql.Ej_consulta_IDU(Consulta_sql)
 
 
                             Beep()
-                            ToastNotification.Show(Me, "DATOS INGRESADOS CORRECTAMENTE", Nothing, _
+                            ToastNotification.Show(Me, "DATOS INGRESADOS CORRECTAMENTE", Nothing,
                               3 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
 
                             'MessageBoxEx.Show(Me, "DATOS INGRESADOS CORRECTAMENTE", "GRABAR", _
@@ -1182,7 +1181,7 @@ Public Class Frm_DFA_Ingreso
                     End If
 
                 Else
-                    MessageBoxEx.Show(Me, "Esta operación aun no ha sido iniciada", "Validación", _
+                    MessageBoxEx.Show(Me, "Esta operaciÃ³n aun no ha sido iniciada", "ValidaciÃ³n",
                                       MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     Sb_Limpiar_DFA()
                     Txt_Numero_OT.Focus()
@@ -1201,8 +1200,8 @@ Public Class Frm_DFA_Ingreso
                 _Msg = "Orden de Trabajo Cerrada"
             End If
 
-            MessageBoxEx.Show(Me, "Solo se pueden ingresar Datos de Fabricación para Ordenes de Trabajo Vigente", _
-                              "Validación, " & _Msg, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, "Solo se pueden ingresar Datos de FabricaciÃ³n para Ordenes de Trabajo Vigente",
+                              "ValidaciÃ³n, " & _Msg, MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_Numero_OT.Text = String.Empty
             Txt_Numero_OT.Focus()
         End If
@@ -1221,12 +1220,12 @@ Public Class Frm_DFA_Ingreso
 
             If String.IsNullOrEmpty(_Maquina) Then
 
-                Consulta_sql = "SELECT DISTINCT POPER.CODMAQ," & _
-                               "ISNULL((SELECT TOP 1 NOMBREMAQ FROM PMAQUI WITH ( NOLOCK )" & Space(1) & _
-                               "WHERE CODMAQ=POPER.CODMAQ),'') as NOMBREMAQ" & vbCrLf & _
-                               "FROM POTPR WITH ( NOLOCK ) " & vbCrLf & _
-                               "LEFT OUTER JOIN POPER ON POTPR.OPERACION=POPER.OPERACION " & vbCrLf & _
-                               "LEFT OUTER JOIN PVELPROP ON POTPR.OPERACION=PVELPROP.OPERACION AND POTPR.CODIGO = PVELPROP.KOPR" & vbCrLf & _
+                Consulta_sql = "SELECT DISTINCT POPER.CODMAQ," &
+                               "ISNULL((SELECT TOP 1 NOMBREMAQ FROM PMAQUI WITH ( NOLOCK )" & Space(1) &
+                               "WHERE CODMAQ=POPER.CODMAQ),'') as NOMBREMAQ" & vbCrLf &
+                               "FROM POTPR WITH ( NOLOCK ) " & vbCrLf &
+                               "LEFT OUTER JOIN POPER ON POTPR.OPERACION=POPER.OPERACION " & vbCrLf &
+                               "LEFT OUTER JOIN PVELPROP ON POTPR.OPERACION=PVELPROP.OPERACION AND POTPR.CODIGO = PVELPROP.KOPR" & vbCrLf &
                                "WHERE(POTPR.IDPOTL = " & _Idpotl & ")"
 
                 Dim _Tbl_Maquinas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -1237,7 +1236,7 @@ Public Class Frm_DFA_Ingreso
                 Fm_m.Dispose()
 
             Else
-                Consulta_sql = "Select Top 1 * From PMAQUI" & vbCrLf & _
+                Consulta_sql = "Select Top 1 * From PMAQUI" & vbCrLf &
                                            "Where 1 > 0 And CODMAQ = '" & _Maquina & "'"
 
                 _Row_Maquina = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -1245,7 +1244,7 @@ Public Class Frm_DFA_Ingreso
 
             If _Row_Maquina Is Nothing Then
                 If Not String.IsNullOrEmpty(_Maquina) Then
-                    MessageBoxEx.Show(Me, "Registro no encontrado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    MessageBoxEx.Show(Me, "Registro no encontrado", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 End If
                 'Txt_Maquina.Text = String.Empty
                 'Txt_Maquina.Focus()
@@ -1282,13 +1281,13 @@ Public Class Frm_DFA_Ingreso
                             'Lbl_Operacion.Text = Trim(_Row_Operacion.Item("OPERACION")) & " - " & _Row_Operacion.Item("NOMBREOP")
                             'Sb_Agregar_Operario()
                         Else
-                            MessageBoxEx.Show(Me, "NO SE SELECCIONO NINGUNA OPERACION", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                            MessageBoxEx.Show(Me, "NO SE SELECCIONO NINGUNA OPERACION", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                             'Txt_Maquina.Text = String.Empty
                             'Txt_Maquina.Focus()
                         End If
 
                     Else
-                        MessageBoxEx.Show(Me, "ESTA MAQUINA NO ESTA ASOCIADA A NINGUNA OPERACION DE LA SUB OT", _
+                        MessageBoxEx.Show(Me, "ESTA MAQUINA NO ESTA ASOCIADA A NINGUNA OPERACION DE LA SUB OT",
                                           "MAQUINA: " & _Row_Maquina.Item("NOMBREMAQ"), MessageBoxButtons.OK, MessageBoxIcon.Stop)
                         'Txt_Maquina.Text = String.Empty
                         'Txt_Maquina.Focus()
@@ -1304,10 +1303,10 @@ Public Class Frm_DFA_Ingreso
 
     End Sub
 
-    Sub Sb_Agregar_Maquina(ByVal _Maquina As String, _
-                           ByVal _Fila As DataGridViewRow, _
-                           ByVal _Buscar_Con_Lector As Boolean, _
-                           Optional ByVal _Es_Maquina_Alternativa As Boolean = False, _
+    Sub Sb_Agregar_Maquina(ByVal _Maquina As String,
+                           ByVal _Fila As DataGridViewRow,
+                           ByVal _Buscar_Con_Lector As Boolean,
+                           Optional ByVal _Es_Maquina_Alternativa As Boolean = False,
                            Optional ByVal _Row_Maquina_Alternativa As DataRow = Nothing)
 
         _Row_Maquina = Nothing
@@ -1344,14 +1343,14 @@ Public Class Frm_DFA_Ingreso
             Fm_m.Dispose()
 
         Else
-            Consulta_sql = "Select Top 1 * From PMAQUI" & vbCrLf & _
+            Consulta_sql = "Select Top 1 * From PMAQUI" & vbCrLf &
                            "Where 1 > 0 And CODMAQ = '" & _Maquina & "'"
             _Row_Maquina = _Sql.Fx_Get_DataRow(Consulta_sql)
         End If
 
         If _Row_Maquina Is Nothing Then
             If Not String.IsNullOrEmpty(_Maquina) Then
-                MessageBoxEx.Show(Me, "Registro no encontrado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "Registro no encontrado", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
         Else
 
@@ -1394,14 +1393,14 @@ Public Class Frm_DFA_Ingreso
                         _Fila.Cells("IDRST").Value = _Row_Operacion.Item("IDPOTPR")
 
                     Else
-                        MessageBoxEx.Show(Me, "NO SE SELECCIONO NINGUNA OPERACION", "Validación", _
+                        MessageBoxEx.Show(Me, "NO SE SELECCIONO NINGUNA OPERACION", "ValidaciÃ³n",
                                           MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     End If
 
                 Else
 
-                    Consulta_sql = "SELECT EMPRESA,OPERACION,CODMAQPR,CODMAQAL,RENDIMIEN" & vbCrLf & _
-                       "FROM PMAQALT" & vbCrLf & _
+                    Consulta_sql = "SELECT EMPRESA,OPERACION,CODMAQPR,CODMAQAL,RENDIMIEN" & vbCrLf &
+                       "FROM PMAQALT" & vbCrLf &
                        "Where CODMAQAL = '" & _Cod_Maquina & "' And CODMAQPR <> '" & _Cod_Maquina & "'"
                     Dim _Tbl_Maquinas_Alternativas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -1416,10 +1415,10 @@ Public Class Frm_DFA_Ingreso
                             _Row_Maquina_Alternativa = _Row_Maquina
                         Else
 
-                            Dim _Filtro_Maquinas As String = Generar_Filtro_IN(_Tbl_Maquinas_Alternativas, "", _
+                            Dim _Filtro_Maquinas As String = Generar_Filtro_IN(_Tbl_Maquinas_Alternativas, "",
                                                                                "CODMAQPR", False, False, "'")
 
-                            Consulta_sql = "Select CODMAQ,NOMBREMAQ * From PMAQUI" & vbCrLf & _
+                            Consulta_sql = "Select CODMAQ,NOMBREMAQ * From PMAQUI" & vbCrLf &
                                            "Where 1 > 0 And CODMAQ In " & _Filtro_Maquinas
 
                             Dim Fm = New Frm_Seleccionar_Op_SubOt_Maq_Etc("CODMAQ", "NOMBREMAQ", _Tbl_Maquinas_Alternativas)
@@ -1446,7 +1445,7 @@ Public Class Frm_DFA_Ingreso
                         End If
 
                     Else
-                        MessageBoxEx.Show(Me, "ESTA MAQUINA NO ESTA ASOCIADA A NINGUNA OPERACION DE LA SUB OT", _
+                        MessageBoxEx.Show(Me, "ESTA MAQUINA NO ESTA ASOCIADA A NINGUNA OPERACION DE LA SUB OT",
                                           "MAQUINA: " & _Row_Maquina.Item("NOMBREMAQ"), MessageBoxButtons.OK, MessageBoxIcon.Stop)
                         Sb_Agregar_Maquina("", _Fila, _Buscar_Con_Lector)
                     End If
@@ -1463,10 +1462,10 @@ Public Class Frm_DFA_Ingreso
 
     'CREAR VALIDADOR DE MAQUINA EN ESTA CLASE
 
-    Sub Sb_Agregar_Maquina_Solo_Operacion(ByVal _Fila As DataGridViewRow, _
-                                          ByVal _Buscar_Con_Lector As Boolean, _
-                                          ByVal _Tbl_Maquinas_Permitidas As DataTable, _
-                                          ByVal _Row_Operacion As DataRow, _
+    Sub Sb_Agregar_Maquina_Solo_Operacion(ByVal _Fila As DataGridViewRow,
+                                          ByVal _Buscar_Con_Lector As Boolean,
+                                          ByVal _Tbl_Maquinas_Permitidas As DataTable,
+                                          ByVal _Row_Operacion As DataRow,
                                           ByRef _Row_Maquina As DataRow)
 
         _Row_Maquina = Nothing
@@ -1530,7 +1529,7 @@ Public Class Frm_DFA_Ingreso
             If _Maquina_Aceptada Then
                 Return
             Else
-                MessageBoxEx.Show(Me, "ESTA MAQUINA NO ESTA ASOCIADA A LA OPERACION: " & _Operacion & " - " & _Nombreop, _
+                MessageBoxEx.Show(Me, "ESTA MAQUINA NO ESTA ASOCIADA A LA OPERACION: " & _Operacion & " - " & _Nombreop,
                                      "MAQUINA: " & _Row_Maquina.Item("NOMBREMAQ"), MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Sb_Agregar_Maquina_Solo_Operacion(_Fila, _Buscar_Con_Lector, _Tbl_Maquinas_Permitidas, _Row_Operacion, _Row_Maquina)
             End If
@@ -1539,10 +1538,10 @@ Public Class Frm_DFA_Ingreso
 
     End Sub
 
-    Sub Sb_Agregar_Operario(ByVal _Idpdatfad As Integer, _
-                            ByVal _Cierre As Boolean, _
-                            ByVal _Preguntar_Agrega_Otro_Operario As Boolean, _
-                            ByVal _Row_Maquina As DataRow, _
+    Sub Sb_Agregar_Operario(ByVal _Idpdatfad As Integer,
+                            ByVal _Cierre As Boolean,
+                            ByVal _Preguntar_Agrega_Otro_Operario As Boolean,
+                            ByVal _Row_Maquina As DataRow,
                             ByVal _Acepta_estar_en_mas_de_una_maquina As Boolean)
 
         Dim _Fecha As String = Format(FechaDelServidor, "yyyyMMdd")
@@ -1571,23 +1570,23 @@ Public Class Frm_DFA_Ingreso
             Dim _Codigoob As String = _Row_Operario.Item("CODIGOOB")
             Dim _Inactivo As Boolean = _Row_Operario.Item("INACTIVO")
 
-            Consulta_sql = "SELECT * FROM PDATFAE WHERE IDPDATFAE IN " & vbCrLf & _
-                           "(SELECT IDPDATFAE FROM PDATFAD WHERE IDPDATFAD IN" & Space(1) & _
-                           "(SELECT IDPDATFAD FROM POBREFAD WHERE OBRERO = '" & _Codigoob & "' AND FECHINI < '" & _Fecha & "'))" & vbCrLf & _
-                           "AND REQCONFIR = 1" & vbCrLf & vbCrLf & _
-                           "SELECT * FROM PDATFAE WHERE IDPDATFAE IN " & vbCrLf & _
-                           "(SELECT IDPDATFAE FROM PDATFAD WHERE IDPDATFAD IN" & Space(1) & _
-                           "(SELECT IDPDATFAD FROM POBREFAD WHERE OBRERO = '" & _Codigoob & "' AND CODMAQ = '" & _Codmaq & "' AND FECHINI = '" & _Fecha & "'))" & vbCrLf & _
-                           "AND REQCONFIR = 1" & vbCrLf & vbCrLf & _
-                           "SELECT * FROM PDATFAE WHERE IDPDATFAE IN " & vbCrLf & _
-                           "(SELECT IDPDATFAE FROM PDATFAD WHERE IDPDATFAD IN" & Space(1) & _
-                           "(SELECT IDPDATFAD FROM POBREFAD WHERE OBRERO = '" & _Codigoob & "' AND CODMAQ <> '" & _Codmaq & "' AND FECHINI = '" & _Fecha & "'))" & vbCrLf & _
-                           "AND REQCONFIR = 1" & vbCrLf & vbCrLf & _
-                           "SELECT (Select Top 1 FABRICAR From POTPR Where IDPOTPR = IDRST) as Fabricar" & vbCrLf & _
-                           "Into #Paso" & vbCrLf & _
-                           "FROM PDATFAD WHERE IDPDATFAD IN (SELECT IDPDATFAD FROM POBREFAD WHERE CODMAQ = '" & _Codmaq & "')" & vbCrLf & _
-                           "AND IDPDATFAE IN (SELECT IDPDATFAE FROM PDATFAE WHERE REQCONFIR = 1)" & vbCrLf & _
-                           "Select ISNULL(Sum(Fabricar),0) As Fabricando From #Paso" & vbCrLf & _
+            Consulta_sql = "SELECT * FROM PDATFAE WHERE IDPDATFAE IN " & vbCrLf &
+                           "(SELECT IDPDATFAE FROM PDATFAD WHERE IDPDATFAD IN" & Space(1) &
+                           "(SELECT IDPDATFAD FROM POBREFAD WHERE OBRERO = '" & _Codigoob & "' AND FECHINI < '" & _Fecha & "'))" & vbCrLf &
+                           "AND REQCONFIR = 1" & vbCrLf & vbCrLf &
+                           "SELECT * FROM PDATFAE WHERE IDPDATFAE IN " & vbCrLf &
+                           "(SELECT IDPDATFAE FROM PDATFAD WHERE IDPDATFAD IN" & Space(1) &
+                           "(SELECT IDPDATFAD FROM POBREFAD WHERE OBRERO = '" & _Codigoob & "' AND CODMAQ = '" & _Codmaq & "' AND FECHINI = '" & _Fecha & "'))" & vbCrLf &
+                           "AND REQCONFIR = 1" & vbCrLf & vbCrLf &
+                           "SELECT * FROM PDATFAE WHERE IDPDATFAE IN " & vbCrLf &
+                           "(SELECT IDPDATFAE FROM PDATFAD WHERE IDPDATFAD IN" & Space(1) &
+                           "(SELECT IDPDATFAD FROM POBREFAD WHERE OBRERO = '" & _Codigoob & "' AND CODMAQ <> '" & _Codmaq & "' AND FECHINI = '" & _Fecha & "'))" & vbCrLf &
+                           "AND REQCONFIR = 1" & vbCrLf & vbCrLf &
+                           "SELECT (Select Top 1 FABRICAR From POTPR Where IDPOTPR = IDRST) as Fabricar" & vbCrLf &
+                           "Into #Paso" & vbCrLf &
+                           "FROM PDATFAD WHERE IDPDATFAD IN (SELECT IDPDATFAD FROM POBREFAD WHERE CODMAQ = '" & _Codmaq & "')" & vbCrLf &
+                           "AND IDPDATFAE IN (SELECT IDPDATFAE FROM PDATFAE WHERE REQCONFIR = 1)" & vbCrLf &
+                           "Select ISNULL(Sum(Fabricar),0) As Fabricando From #Paso" & vbCrLf &
                            "Drop Table #Paso"
 
             Dim _Ds_TO As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
@@ -1618,16 +1617,16 @@ Public Class Frm_DFA_Ingreso
                     'If _Oper_Abiertas_Otros_dias + _Oper_Abiertas_Hoy_Otras_Maquinas = 1 And _Oper_Abiertas_Hoy_Misma_Maquina = 0 Then
 
                     If _Oper_Abiertas_Otros_dias = 1 Then
-                        MessageBoxEx.Show(Me, "¡Existe 1 operación que aún no ha sido cerrada por usted en otro día!" & vbCrLf & vbCrLf & _
-                        "Ahora podrá registrar este trabajo, pero debe informar a la administración para cerrar la orden pendiente." & vbCrLf & _
-                        "Si tiene más de una orden pendiente no podrá ingresar más tareas hasta que no haya solucionado el problema", _
+                        MessageBoxEx.Show(Me, "Â¡Existe 1 operaciÃ³n que aÃºn no ha sido cerrada por usted en otro dÃ­a!" & vbCrLf & vbCrLf &
+                        "Ahora podrÃ¡ registrar este trabajo, pero debe informar a la administraciÃ³n para cerrar la orden pendiente." & vbCrLf &
+                        "Si tiene mÃ¡s de una orden pendiente no podrÃ¡ ingresar mÃ¡s tareas hasta que no haya solucionado el problema",
                         "VALIDACION", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                     Else
                         'If (_Oper_Abiertas_Hoy_Otras_Maquinas + _Oper_Abiertas_Otros_dias) > 1 Then
                         If (_Oper_Abiertas_Hoy_Otras_Maquinas + _Oper_Abiertas_Otros_dias) > 1 Then
-                            MessageBoxEx.Show(Me, "Existen " & _Oper_Abiertas & " operaciones que aún no han sido cerradas por usted de otros días." & vbCrLf & _
-                                              "Para poder continuar debe dirigirse a la administración para que cierren las ordenes y luego podrá ingresar un trabajo." & vbCrLf & vbCrLf & _
-                                              "¡LOS DATOS NO SERAN GUARDADOS!", _
+                            MessageBoxEx.Show(Me, "Existen " & _Oper_Abiertas & " operaciones que aÃºn no han sido cerradas por usted de otros dÃ­as." & vbCrLf &
+                                              "Para poder continuar debe dirigirse a la administraciÃ³n para que cierren las ordenes y luego podrÃ¡ ingresar un trabajo." & vbCrLf & vbCrLf &
+                                              "Â¡LOS DATOS NO SERAN GUARDADOS!",
                                               "VALIDACION", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                             Return
                         End If
@@ -1644,16 +1643,16 @@ Public Class Frm_DFA_Ingreso
 
             If _Multicarga = "S" Then
                 If _Fabricando > _Capacidad Then
-                    MessageBoxEx.Show(Me, "La máquina esta sobre cargada según datos de parametrización" & vbCrLf & vbCrLf & _
-                                      "Capacidad máxima " & FormatNumber(_Capacidad, 0) & Space(1) & _Udadcarga & vbCrLf & _
-                                      "Cantidad que está siendo fabricada: " & FormatNumber(_Fabricando, 0) & Space(1) & _Udadcarga & vbCrLf & vbCrLf & _
-                                      "¡LOS DATOS NO SERAN GUARDADOS!", "VALIDACION", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    MessageBoxEx.Show(Me, "La mÃ¡quina esta sobre cargada segÃºn datos de parametrizaciÃ³n" & vbCrLf & vbCrLf &
+                                      "Capacidad mÃ¡xima " & FormatNumber(_Capacidad, 0) & Space(1) & _Udadcarga & vbCrLf &
+                                      "Cantidad que estÃ¡ siendo fabricada: " & FormatNumber(_Fabricando, 0) & Space(1) & _Udadcarga & vbCrLf & vbCrLf &
+                                      "Â¡LOS DATOS NO SERAN GUARDADOS!", "VALIDACION", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     Return
                 End If
             Else
-                MessageBoxEx.Show(Me, "La máquina  [" & _Nombremaq & "] no acepta sobre carga según datos de parametrización" & vbCrLf & _
-                            "Para poder continuar debe dirigirse a la administración para que cierren las ordenes y luego podrá ingresar un trabajo." & vbCrLf & vbCrLf & _
-                             "¡LOS DATOS NO SERAN GUARDADOS!", _
+                MessageBoxEx.Show(Me, "La mÃ¡quina  [" & _Nombremaq & "] no acepta sobre carga segÃºn datos de parametrizaciÃ³n" & vbCrLf &
+                            "Para poder continuar debe dirigirse a la administraciÃ³n para que cierren las ordenes y luego podrÃ¡ ingresar un trabajo." & vbCrLf & vbCrLf &
+                             "Â¡LOS DATOS NO SERAN GUARDADOS!",
                              "VALIDACION", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
             End If
@@ -1665,20 +1664,20 @@ Public Class Frm_DFA_Ingreso
             '_Tbl_DFA_Ddtes = _Sql.Fx_Get_Tablas(Consulta_sql)
 
             If _Inactivo Then
-                MessageBoxEx.Show(Me, "USUARIO INACTIVO", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "USUARIO INACTIVO", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Sb_Agregar_Operario(_Idpdatfad, _Cierre, _Preguntar_Agrega_Otro_Operario, _Row_Maquina, Chk_Acepta_estar_en_mas_de_una_maquina.Checked)
             Else
                 Dim foundRows() As Data.DataRow
                 foundRows = _Tbl_Pobrefad.Select("CODIGOOB = '" & _Codigoob & "'")
 
                 If CBool(foundRows.Length) Then
-                    MessageBoxEx.Show(Me, "Este operario ya esta en la lista", "Validación", _
+                    MessageBoxEx.Show(Me, "Este operario ya esta en la lista", "ValidaciÃ³n",
                                       MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     Sb_Agregar_Operario(_Idpdatfad, _Cierre, _Preguntar_Agrega_Otro_Operario, _Row_Maquina, Chk_Acepta_estar_en_mas_de_una_maquina.Checked)
                 Else
                     If Fx_Ingresar_Nuevo_Operario_POBREFAD(_Idpdatfad, _Row_Operario, _Cierre) Then
                         If _Preguntar_Agrega_Otro_Operario Then
-                            If MessageBoxEx.Show(Me, "¿Desea ingresar otro operario a la DFA?", "Ingreso de operarios", _
+                            If MessageBoxEx.Show(Me, "Â¿Desea ingresar otro operario a la DFA?", "Ingreso de operarios",
                                                  MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
                                 Sb_Agregar_Operario(_Idpdatfad, _Cierre, _Preguntar_Agrega_Otro_Operario, _Row_Maquina, Chk_Acepta_estar_en_mas_de_una_maquina.Checked)
                             End If
@@ -1794,8 +1793,8 @@ Public Class Frm_DFA_Ingreso
 
     End Function
 
-    Function Fx_Ingresar_Nuevo_Operario_POBREFAD(ByVal _Idpdatfad As Integer, _
-                                                 ByVal _Row_Operario As DataRow, _
+    Function Fx_Ingresar_Nuevo_Operario_POBREFAD(ByVal _Idpdatfad As Integer,
+                                                 ByVal _Row_Operario As DataRow,
                                                  ByVal _Cierre As Boolean) As Boolean
 
         'IDPDATFAD,OBRERO,FECHINIOB,HORAINIOB,FECHTEROB,HORATEROB,TIEMPOOB,KOJORNADA,TIEMPOOBHE

@@ -51,6 +51,7 @@ Public Class Frm_Configuracion_Gral
 
         SpTab_DatosEmpresa.Visible = (_Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Empresas") And _Modalidad_General)
         SpTab_FincredPays.Visible = (RutEmpresaActiva = "76095906-5" Or RutEmpresaActiva = "79514800-0")
+        SuperTabItem1.Visible = _Modalidad_General
 
         Txt_Fincred_Id_Token.Text = String.Empty
 
@@ -209,6 +210,12 @@ Public Class Frm_Configuracion_Gral
 
             Chk_Patentes_rvm.Checked = .Item("Patentes_rvm")
 
+            Chk_BloqueaClasificacionLibre.Checked = .Item("BloqueaClasificacionLibre")
+            Chk_BloqueaFamilias.Checked = .Item("BloqueaFamilias")
+            Chk_BloqueaMarcas.Checked = .Item("BloqueaMarcas")
+            Chk_BloqueaRubros.Checked = .Item("BloqueaRubros")
+            Chk_BloqueaZonaProductos.Checked = .Item("BloqueaZonaProductos")
+
 
         End With
 
@@ -277,6 +284,12 @@ Public Class Frm_Configuracion_Gral
         Chk_B4A_DespachoSimple.Enabled = Not _Modalidad_General
 
         Chk_Patentes_rvm.Enabled = _Modalidad_General
+
+        Chk_BloqueaClasificacionLibre.Enabled = _Modalidad_General
+        Chk_BloqueaFamilias.Enabled = _Modalidad_General
+        Chk_BloqueaMarcas.Enabled = _Modalidad_General
+        Chk_BloqueaRubros.Enabled = _Modalidad_General
+        Chk_BloqueaZonaProductos.Enabled = _Modalidad_General
 
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
@@ -460,6 +473,11 @@ Public Class Frm_Configuracion_Gral
                        ",B4A_DespachoSimple = " & Convert.ToInt32(Chk_B4A_DespachoSimple.Checked) & vbCrLf &
                        ",GrabarPreciosHistoricos = " & Convert.ToInt32(Chk_GrabarPreciosHistoricos.Checked) & vbCrLf &
                        ",Patentes_rvm = " & Convert.ToInt32(Chk_Patentes_rvm.Checked) & vbCrLf &
+                       ",BloqueaMarcas = " & Convert.ToInt32(Chk_BloqueaMarcas.Checked) & vbCrLf &
+                       ",BloqueaRubros = " & Convert.ToInt32(Chk_BloqueaRubros.Checked) & vbCrLf &
+                       ",BloqueaClasificacionLibre = " & Convert.ToInt32(Chk_BloqueaClasificacionLibre.Checked) & vbCrLf &
+                       ",BloqueaZonaProductos = " & Convert.ToInt32(Chk_BloqueaZonaProductos.Checked) & vbCrLf &
+                       ",BloqueaFamilias = " & Convert.ToInt32(Chk_BloqueaFamilias.Checked) & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then

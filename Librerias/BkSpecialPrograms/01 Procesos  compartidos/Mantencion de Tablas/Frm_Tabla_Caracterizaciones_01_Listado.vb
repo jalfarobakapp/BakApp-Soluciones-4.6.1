@@ -43,6 +43,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
     Dim _Padre_Tabla, _Padre_CodigoTabla As String
     Dim _Ano_Feriados As Integer
 
+    Public Property TablaBloqueadaDesdeModGeneral As Boolean
 
     Dim _Accion As Accion
 
@@ -122,6 +123,8 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
         _Accion = Accion_Fm
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_Tabla_Caracterizaciones_01_Listado_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
@@ -145,6 +148,18 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
         instance.MaxInputLength = _InfoTabla.MaxCaracDescripcion ' _Arr_Info_Tabla(3)
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
+        If TablaBloqueadaDesdeModGeneral Then
+
+            Grilla.AllowUserToAddRows = Not TablaBloqueadaDesdeModGeneral
+            Grilla.AllowUserToDeleteRows = Not TablaBloqueadaDesdeModGeneral
+
+            WarningBox.Visible = TablaBloqueadaDesdeModGeneral
+
+            Btn_Grabar.Enabled = False
+            BtnCrear.Enabled = False
+
+        End If
 
     End Sub
 
@@ -224,7 +239,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
             .Columns("NombreTabla").Width = 320 - _Largo
             .Columns("NombreTabla").Visible = True
 
-            If _Accion = Accion.Seleccionar Then
+            If _Accion = Accion.Seleccionar Or TablaBloqueadaDesdeModGeneral Then
                 .Columns("CodigoTabla").ReadOnly = True
                 .Columns("NombreTabla").ReadOnly = True
             End If
@@ -479,17 +494,19 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
     End Sub
 
     Private Sub Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles Grilla.MouseDown
+
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
                 If Hitest.Type = DataGridViewHitTestType.Cell Then
                     .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
-                    MenuContextual.Enabled = True
+                    MenuContextual.Enabled = Not TablaBloqueadaDesdeModGeneral
                 Else
                     MenuContextual.Enabled = False
                 End If
             End With
         End If
+
     End Sub
 
     Private Sub EditarDescripciónToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles EditarDescripciónToolStripMenuItem.Click
@@ -531,7 +548,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
         Sb_Grabar()
 
-        Dim _CampoSincro As String = "Sincro" & _Tabla.ToString
+        Dim _CampoSincro As String = "SincroTbl" & _Tabla.ToString
 
         If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_DbExt_Conexion", _CampoSincro) Then
 
@@ -552,7 +569,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
                 Else
                     _SqlQuery = "Select " & _InfoTabla.Campo & " As Codigo," & _InfoTabla.Descripcion & " As Descripcion From " & _InfoTabla.Tabla
                 End If
-                'SELECT 'CLALIBPR','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0 FROM TABCARAC WHERE KOTABLA = 'CLALIBPR'
+
                 Dim _Cl_ConexionExterna As New Cl_ConexionExterna
                 Dim _Conexion As New ConexionExternas
 
@@ -586,8 +603,6 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
                         Next
 
-                        '_Sql2.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
-
                         If Not String.IsNullOrEmpty(_InfoTabla.SqlQueryActualizaTablaCaracterizaciones) Then
 
                             Consulta_sql += "Delete " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
@@ -596,12 +611,12 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
                             Consulta_sql = Replace(Consulta_sql, _Global_BaseBk, _Conexion.Global_BaseBk)
 
-                            '_Sql2.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
-
                         End If
 
                         If _Sql2.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
-                            MessageBoxEx.Show(Me, "Datos actualizado en la base de datos externa", "Sincronización base externa", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                            MessageBoxEx.Show(Me, "Datos actualizado en la base de datos externa" & vbCrLf &
+                                              "Conexión: " & _FilaCx.Item("Nombre_Conexion") & vbCrLf &
+                                              "Base de datos: " & _FilaCx.Item("BaseDeDatos"), "Sincronización base externa", MessageBoxButtons.OK, MessageBoxIcon.Information)
                         Else
                             MessageBoxEx.Show(Me, "Error al actualizar la base de datos externa" & vbCrLf &
                                               _Sql2.Pro_Error, "Sincronización base externa", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -959,6 +974,8 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
                                                                      "Select 'MARCAS','', KOMR, NOKOMR,rank() OVER (ORDER BY KOMR) as Orden,0,0,0 " &
                                                                      "From TABMR Order By Orden"
 
+                TablaBloqueadaDesdeModGeneral = _Global_Row_Configuracion_General.Item("BloqueaMarcas")
+
             Case Enum_Tablas_Random.Rubros
                 _Arrgeglo(0) = 3
                 _Arrgeglo(1) = "RUBROS"
@@ -973,6 +990,8 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
                                "Select 'RUBROS','', KORU, NOKORU,rank() OVER (ORDER BY KORU) as Orden,0,0,0 " &
                                "From TABRU Order By Orden"
 
+                TablaBloqueadaDesdeModGeneral = _Global_Row_Configuracion_General.Item("BloqueaRubros")
+
             Case Enum_Tablas_Random.Claslibre
                 _Arrgeglo(0) = 10
                 _Arrgeglo(1) = "CLALIBPR"
@@ -986,6 +1005,8 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
                                "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf &
                                "SELECT 'CLALIBPR','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0 FROM TABCARAC " &
                                "WHERE KOTABLA = 'CLALIBPR'"
+
+                TablaBloqueadaDesdeModGeneral = _Global_Row_Configuracion_General.Item("BloqueaClasificacionLibre")
 
             Case Enum_Tablas_Random.Actividade
                 _Arrgeglo(0) = 10
@@ -1205,6 +1226,8 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
                                "(Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Orden,ApColor,ApMedida,ApModelo)" & vbCrLf &
                                "SELECT 'ZONAPRODUC','',KOCARAC,NOKOCARAC,rank() OVER (ORDER BY KOTABLA,KOCARAC) as Orden,0,0,0  FROM TABCARAC " &
                                "WHERE KOTABLA = 'ZONAPRODUC'"
+
+                TablaBloqueadaDesdeModGeneral = _Global_Row_Configuracion_General.Item("BloqueaZonaProductos")
 
         End Select
 
@@ -1534,6 +1557,15 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
     Private Sub Grilla_MouseUp(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Grilla.MouseUp
         Grilla.EndEdit()
+    End Sub
+
+    Private Sub Grilla_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles Grilla.DataError
+
+    End Sub
+
+    Private Sub WarningBox_OptionsClick(sender As Object, e As EventArgs) Handles WarningBox.OptionsClick
+        MessageBoxEx.Show(Me, "La tabla se encuentra bloqueada para creación/edición/eliminación de registros." & vbCrLf &
+                          "Esta configuración se obtiene de la configuración general.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
     Function Fx_Permiso() As String

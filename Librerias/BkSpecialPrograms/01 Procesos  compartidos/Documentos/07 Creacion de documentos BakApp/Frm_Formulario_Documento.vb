@@ -13046,7 +13046,9 @@ Public Class Frm_Formulario_Documento
 
                             For Each _Fl As DataGridViewRow In Grilla_Detalle.Rows
                                 _Fl.Cells("Tipo_Cambio").Value = _Vamo
-                                Sb_Procesar_Datos_De_Grilla(_Fl, "Cantidad", True, True)
+                                'If _Tido <> "GRD" Then
+                                '    Sb_Procesar_Datos_De_Grilla(_Fl, "Cantidad", True, True)
+                                'End If
                             Next
 
                             MessageBoxEx.Show(Me, "Existían tasas de cambio en el detalle del documento" & vbCrLf &

@@ -105,6 +105,13 @@ Public Class Frm_Familias_Lista
 
         Sb_Actualizar_Grilla()
 
+        If _Global_Row_Configuracion_General.Item("BloqueaFamilias") Then
+            RemoveHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
+            Btn_Crear.Enabled = False
+            Btn_Sincronizar.Enabled = False
+            WarningBox.Visible = True
+        End If
+
     End Sub
 
     Sub Sb_Actualizar_Grilla()
@@ -588,7 +595,7 @@ Public Class Frm_Familias_Lista
 
     Sub Sb_Sincronizar_Bases_Externas()
 
-        Dim _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where SincroFamilias = 1"
+        Dim _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where SincroTblFamilias = 1"
         Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
 
         If _Tbl_Conexiones.Rows.Count Then
@@ -762,5 +769,9 @@ Public Class Frm_Familias_Lista
         Sb_Sincronizar_Bases_Externas_Todo()
     End Sub
 
+    Private Sub WarningBox_OptionsClick(sender As Object, e As EventArgs) Handles WarningBox.OptionsClick
+        MessageBoxEx.Show(Me, "La tabla se encuentra bloqueada para creación/edición/eliminación de registros." & vbCrLf &
+                          "Esta configuración se obtiene de la configuración general.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
+    End Sub
 End Class

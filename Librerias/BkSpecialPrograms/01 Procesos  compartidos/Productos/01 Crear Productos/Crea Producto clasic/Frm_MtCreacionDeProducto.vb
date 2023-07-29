@@ -675,15 +675,23 @@ Public Class Frm_MtCreacionDeProducto
 
             _Crear_Alternativo = False
 
+            Dim _MsgExisteTbl As String
+
+            _MsgExisteTbl = Fx_ExisteRegistroEnTablaDeOtraBase()
+
+            If Not String.IsNullOrEmpty(_MsgExisteTbl) Then
+                MessageBoxEx.Show(Me, _MsgExisteTbl, "No se puede grabar el producto", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
 
             Dim _Producto_Creado As String
 
             If _Cl_Producto.Pro_Accion = Cl_Producto.Enum_Accion.Nuevo Then
 
-                Dim _MsgExiste As String = Fx_ExisteProductoEnOtraBase(Txt_Kopr.Text)
+                Dim _MsgExistePr As String = Fx_ExisteProductoEnOtraBase(Txt_Kopr.Text)
 
-                If Not String.IsNullOrEmpty(_MsgExiste) Then
-                    MessageBoxEx.Show(Me, _MsgExiste, "No se puede grabar el producto", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                If Not String.IsNullOrEmpty(_MsgExistePr) Then
+                    MessageBoxEx.Show(Me, _MsgExistePr, "No se puede grabar el producto", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     Return
                 End If
 
@@ -2318,6 +2326,86 @@ Sigue_Loop_01:
                     '                  "Base de datos: " & _BaseDeDatos & vbCrLf & vbCrLf &
                     '                  _Cl_Migrar_Producto.ProError, "Crear producto en base externa",
                     '                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                End If
+
+            Next
+
+        End If
+
+        Return _MsgExiste
+
+    End Function
+
+
+    Function Fx_ExisteRegistroEnTablaDeOtraBase() As String
+
+        Dim _MsgExiste As String = String.Empty
+
+        If _Global_Row_Configuracion_General.Item("PermitirMigrarProductosBaseExterna") Then
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbProd_Nuevos = 1"
+            Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
+
+                Dim _Id_Conexion As Integer = _FilaCx.Item("Id")
+                Dim _BaseDeDatos As String = _FilaCx.Item("BaseDeDatos")
+                Dim _Cl_Migrar_Producto As New Bk_Migrar_Producto.Cl_Migrar_Producto(_Id_Conexion)
+
+                If _Cl_Migrar_Producto.SePuedeMigrar Then
+
+                    Dim _SincroMarcas As Boolean = _Cl_Migrar_Producto.Row_DnExt.Item("SincroMarcas")
+                    Dim _SincroFamilias As Boolean = _Cl_Migrar_Producto.Row_DnExt.Item("SincroFamilias")
+                    Dim _SincroRubros As Boolean = _Cl_Migrar_Producto.Row_DnExt.Item("SincroRubros")
+                    Dim _SincroClaslibre As Boolean = _Cl_Migrar_Producto.Row_DnExt.Item("SincroClaslibre")
+                    Dim _SincroZonaProducto As Boolean = _Cl_Migrar_Producto.Row_DnExt.Item("SincroZonaProducto")
+
+                    If _SincroMarcas Then
+                        If Not String.IsNullOrEmpty(Cmb_Mrpr.SelectedValue) AndAlso Not (_Cl_Migrar_Producto.Fx_ExisteReistroenTabla("TABMR", "KOMR = '" & Cmb_Mrpr.SelectedValue & "'")) Then
+                            _MsgExiste += " - No Existe MARCA: " & Cmb_Mrpr.SelectedValue.ToString.Trim & "-" & Cmb_Mrpr.Text & vbCrLf
+                        End If
+                    End If
+
+                    If _SincroRubros Then
+                        If Not String.IsNullOrEmpty(Cmb_Rupr.SelectedValue) AndAlso Not (_Cl_Migrar_Producto.Fx_ExisteReistroenTabla("TABRU", "KORU = '" & Cmb_Rupr.SelectedValue & "'")) Then
+                            _MsgExiste += " - No Existe RUBRO: " & Cmb_Rupr.SelectedValue.ToString.Trim & "-" & Cmb_Rupr.Text & vbCrLf
+                        End If
+                    End If
+
+                    If _SincroClaslibre Then
+                        If Not String.IsNullOrEmpty(Cmb_Clalibpr.SelectedValue) AndAlso Not (_Cl_Migrar_Producto.Fx_ExisteReistroenTabla("TABCARAC", "KOTABLA = 'CLALIBPR' And KOCARAC = '" & Cmb_Clalibpr.SelectedValue & "'")) Then
+                            _MsgExiste += " - No Existe CLASIFICACION LIBRE: " & Cmb_Clalibpr.SelectedValue.ToString.Trim & "-" & Cmb_Clalibpr.Text & vbCrLf
+                        End If
+                    End If
+
+                    If _SincroZonaProducto Then
+                        If Not String.IsNullOrEmpty(Cmb_Zonapr.SelectedValue) AndAlso Not (_Cl_Migrar_Producto.Fx_ExisteReistroenTabla("TABCARAC", "KOTABLA = 'ZONAPRODUC' And KOCARAC = '" & Cmb_Zonapr.SelectedValue & "'")) Then
+                            _MsgExiste += " - No Existe ZONA PRODUCTO: " & Cmb_Zonapr.SelectedValue.ToString.Trim & "-" & Cmb_Zonapr.Text & vbCrLf
+                        End If
+                    End If
+
+                    If _SincroFamilias Then
+
+                        If Not String.IsNullOrEmpty(CmbSuperFamilia.SelectedValue) AndAlso Not (_Cl_Migrar_Producto.Fx_ExisteReistroenTabla("TABFM", "KOFM = '" & CmbSuperFamilia.SelectedValue & "'")) Then
+                            _MsgExiste += " - No Existe SUPER-FAMILIA: " & CmbSuperFamilia.SelectedValue.ToString.Trim & "-" & CmbSuperFamilia.Text & vbCrLf
+                        End If
+
+                        If Not String.IsNullOrEmpty(CmbFamilia.SelectedValue) AndAlso Not (_Cl_Migrar_Producto.Fx_ExisteReistroenTabla("TABPF", "KOFM = '" & CmbSuperFamilia.SelectedValue & "' And KOPF = '" & CmbFamilia.SelectedValue & "'")) Then
+                            _MsgExiste += " - No Existe FAMILIA: " & CmbSuperFamilia.SelectedValue.ToString.Trim & "-" & CmbFamilia.SelectedValue & "-" & CmbFamilia.Text & vbCrLf
+                        End If
+
+                        If Not String.IsNullOrEmpty(CmbSubFamilia.SelectedValue) AndAlso Not (_Cl_Migrar_Producto.Fx_ExisteReistroenTabla("TABHF", "KOFM = '" & CmbSubFamilia.SelectedValue & "' And KOPF = '" & CmbFamilia.SelectedValue & "' And KOHF = '" & CmbSubFamilia.SelectedValue & "'")) Then
+                            _MsgExiste += " - No Existe SUB-FAMILIA: " & CmbSuperFamilia.SelectedValue.ToString.Trim & "-" & CmbFamilia.SelectedValue & "-" & CmbSubFamilia.SelectedValue & "-" & CmbSubFamilia.Text & vbCrLf
+                        End If
+
+                    End If
+
+                    If Not String.IsNullOrEmpty(_MsgExiste) Then
+
+                        _MsgExiste = "Debe reparar estas  inconsistencias con la datos externa: " & _BaseDeDatos & vbCrLf & vbCrLf & _MsgExiste
+
+                    End If
+
                 End If
 
             Next

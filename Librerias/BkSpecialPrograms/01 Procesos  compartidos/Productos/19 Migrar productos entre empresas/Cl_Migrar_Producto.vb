@@ -150,6 +150,14 @@ Namespace Bk_Migrar_Producto
 
         End Function
 
+        Function Fx_ExisteReistroenTabla(_Tabla As String, _Condicion As String) As Boolean
+
+            Dim _Reg As Integer = _Sql2.Fx_Cuenta_Registros(_Tabla, _Condicion)
+
+            Return CBool(_Reg)
+
+        End Function
+
 
         Function Fx_Migrar_Producto(_Codigo As String) As Boolean
 

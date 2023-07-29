@@ -41,16 +41,35 @@ Partial Class Frm_ExporProd
         Me.Chk_SincroClaslib = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_SincroZonasProd = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_SincroZonas = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Line1 = New DevComponents.DotNetBar.Controls.Line()
-        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
-        Me.Line2 = New DevComponents.DotNetBar.Controls.Line()
         Me.Chk_SincroTratalote = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Chk_SincroDimensiones = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Btn_ProdSoloBaseLocal = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_ProdSoloBaseExterna = New DevComponents.DotNetBar.ButtonX()
+        Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
+        Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Chk_SincroTblMarcas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_SincroTblRubros = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_SincroTblFamilias = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_SincroTblClaslibre = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_SincroTblZonaProducto = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.SuperTabItem3 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel1.SuspendLayout()
+        CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuperTabControl1.SuspendLayout()
+        Me.SuperTabControlPanel3.SuspendLayout()
+        Me.TableLayoutPanel3.SuspendLayout()
+        Me.SuperTabControlPanel1.SuspendLayout()
+        Me.SuperTabControlPanel2.SuspendLayout()
+        Me.TableLayoutPanel2.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupPanel2
@@ -63,7 +82,7 @@ Partial Class Frm_ExporProd
         Me.GroupPanel2.Controls.Add(Me.Btn_Listas)
         Me.GroupPanel2.Controls.Add(Me.Btn_Bodegas)
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel2.Location = New System.Drawing.Point(24, 81)
+        Me.GroupPanel2.Location = New System.Drawing.Point(3, 32)
         Me.GroupPanel2.Name = "GroupPanel2"
         Me.GroupPanel2.Size = New System.Drawing.Size(281, 116)
         '
@@ -105,6 +124,7 @@ Partial Class Frm_ExporProd
         '
         Me.Chk_SincroEmpresa.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_SincroEmpresa.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroEmpresa.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroEmpresa.FocusCuesEnabled = False
         Me.Chk_SincroEmpresa.ForeColor = System.Drawing.Color.Black
         Me.Chk_SincroEmpresa.Location = New System.Drawing.Point(3, 3)
         Me.Chk_SincroEmpresa.Name = "Chk_SincroEmpresa"
@@ -171,8 +191,9 @@ Partial Class Frm_ExporProd
         '
         Me.Chk_GrbProd_Nuevos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_GrbProd_Nuevos.CheckBoxImageChecked = CType(resources.GetObject("Chk_GrbProd_Nuevos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_GrbProd_Nuevos.FocusCuesEnabled = False
         Me.Chk_GrbProd_Nuevos.ForeColor = System.Drawing.Color.Black
-        Me.Chk_GrbProd_Nuevos.Location = New System.Drawing.Point(12, 52)
+        Me.Chk_GrbProd_Nuevos.Location = New System.Drawing.Point(9, 3)
         Me.Chk_GrbProd_Nuevos.Name = "Chk_GrbProd_Nuevos"
         Me.Chk_GrbProd_Nuevos.Size = New System.Drawing.Size(293, 23)
         Me.Chk_GrbProd_Nuevos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -187,7 +208,7 @@ Partial Class Frm_ExporProd
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
         Me.Bar1.Location = New System.Drawing.Point(0, 503)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(339, 41)
+        Me.Bar1.Size = New System.Drawing.Size(539, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 126
@@ -211,10 +232,11 @@ Partial Class Frm_ExporProd
         '
         Me.Chk_GrbEnti_Nuevas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_GrbEnti_Nuevas.CheckBoxImageChecked = CType(resources.GetObject("Chk_GrbEnti_Nuevas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_GrbEnti_Nuevas.FocusCuesEnabled = False
         Me.Chk_GrbEnti_Nuevas.ForeColor = System.Drawing.Color.Black
-        Me.Chk_GrbEnti_Nuevas.Location = New System.Drawing.Point(12, 428)
+        Me.Chk_GrbEnti_Nuevas.Location = New System.Drawing.Point(3, 3)
         Me.Chk_GrbEnti_Nuevas.Name = "Chk_GrbEnti_Nuevas"
-        Me.Chk_GrbEnti_Nuevas.Size = New System.Drawing.Size(311, 23)
+        Me.Chk_GrbEnti_Nuevas.Size = New System.Drawing.Size(275, 18)
         Me.Chk_GrbEnti_Nuevas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_GrbEnti_Nuevas.TabIndex = 127
         Me.Chk_GrbEnti_Nuevas.Text = "Grabar Entidades"
@@ -227,10 +249,11 @@ Partial Class Frm_ExporProd
         '
         Me.Chk_GrbOCC_Nuevas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_GrbOCC_Nuevas.CheckBoxImageChecked = CType(resources.GetObject("Chk_GrbOCC_Nuevas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_GrbOCC_Nuevas.FocusCuesEnabled = False
         Me.Chk_GrbOCC_Nuevas.ForeColor = System.Drawing.Color.Black
-        Me.Chk_GrbOCC_Nuevas.Location = New System.Drawing.Point(24, 474)
+        Me.Chk_GrbOCC_Nuevas.Location = New System.Drawing.Point(3, 51)
         Me.Chk_GrbOCC_Nuevas.Name = "Chk_GrbOCC_Nuevas"
-        Me.Chk_GrbOCC_Nuevas.Size = New System.Drawing.Size(311, 23)
+        Me.Chk_GrbOCC_Nuevas.Size = New System.Drawing.Size(275, 18)
         Me.Chk_GrbOCC_Nuevas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_GrbOCC_Nuevas.TabIndex = 128
         Me.Chk_GrbOCC_Nuevas.Text = "Grabar OCC en la otra empresa"
@@ -243,6 +266,7 @@ Partial Class Frm_ExporProd
         '
         Me.Chk_SincroProductos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_SincroProductos.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroProductos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroProductos.FocusCuesEnabled = False
         Me.Chk_SincroProductos.ForeColor = System.Drawing.Color.Black
         Me.Chk_SincroProductos.Location = New System.Drawing.Point(3, 3)
         Me.Chk_SincroProductos.Name = "Chk_SincroProductos"
@@ -259,6 +283,7 @@ Partial Class Frm_ExporProd
         '
         Me.Chk_SincroMarcas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_SincroMarcas.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroMarcas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroMarcas.FocusCuesEnabled = False
         Me.Chk_SincroMarcas.ForeColor = System.Drawing.Color.Black
         Me.Chk_SincroMarcas.Location = New System.Drawing.Point(3, 51)
         Me.Chk_SincroMarcas.Name = "Chk_SincroMarcas"
@@ -275,6 +300,7 @@ Partial Class Frm_ExporProd
         '
         Me.Chk_SincroRubros.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_SincroRubros.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroRubros.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroRubros.FocusCuesEnabled = False
         Me.Chk_SincroRubros.ForeColor = System.Drawing.Color.Black
         Me.Chk_SincroRubros.Location = New System.Drawing.Point(3, 75)
         Me.Chk_SincroRubros.Name = "Chk_SincroRubros"
@@ -291,6 +317,7 @@ Partial Class Frm_ExporProd
         '
         Me.Chk_SincroFamilias.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_SincroFamilias.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroFamilias.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroFamilias.FocusCuesEnabled = False
         Me.Chk_SincroFamilias.ForeColor = System.Drawing.Color.Black
         Me.Chk_SincroFamilias.Location = New System.Drawing.Point(3, 99)
         Me.Chk_SincroFamilias.Name = "Chk_SincroFamilias"
@@ -307,6 +334,7 @@ Partial Class Frm_ExporProd
         '
         Me.Chk_SincroClaslib.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_SincroClaslib.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroClaslib.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroClaslib.FocusCuesEnabled = False
         Me.Chk_SincroClaslib.ForeColor = System.Drawing.Color.Black
         Me.Chk_SincroClaslib.Location = New System.Drawing.Point(3, 123)
         Me.Chk_SincroClaslib.Name = "Chk_SincroClaslib"
@@ -323,6 +351,7 @@ Partial Class Frm_ExporProd
         '
         Me.Chk_SincroZonasProd.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_SincroZonasProd.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroZonasProd.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroZonasProd.FocusCuesEnabled = False
         Me.Chk_SincroZonasProd.ForeColor = System.Drawing.Color.Black
         Me.Chk_SincroZonasProd.Location = New System.Drawing.Point(3, 147)
         Me.Chk_SincroZonasProd.Name = "Chk_SincroZonasProd"
@@ -339,63 +368,14 @@ Partial Class Frm_ExporProd
         '
         Me.Chk_SincroZonas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_SincroZonas.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroZonas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroZonas.FocusCuesEnabled = False
         Me.Chk_SincroZonas.ForeColor = System.Drawing.Color.Black
-        Me.Chk_SincroZonas.Location = New System.Drawing.Point(24, 453)
+        Me.Chk_SincroZonas.Location = New System.Drawing.Point(3, 27)
         Me.Chk_SincroZonas.Name = "Chk_SincroZonas"
-        Me.Chk_SincroZonas.Size = New System.Drawing.Size(293, 23)
+        Me.Chk_SincroZonas.Size = New System.Drawing.Size(275, 18)
         Me.Chk_SincroZonas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_SincroZonas.TabIndex = 135
         Me.Chk_SincroZonas.Text = "Sincronizar Zonas"
-        '
-        'Line1
-        '
-        Me.Line1.BackColor = System.Drawing.Color.White
-        Me.Line1.ForeColor = System.Drawing.Color.Black
-        Me.Line1.Location = New System.Drawing.Point(66, 399)
-        Me.Line1.Name = "Line1"
-        Me.Line1.Size = New System.Drawing.Size(257, 23)
-        Me.Line1.TabIndex = 136
-        Me.Line1.Text = "Line1"
-        '
-        'LabelX1
-        '
-        Me.LabelX1.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(10, 399)
-        Me.LabelX1.Name = "LabelX1"
-        Me.LabelX1.Size = New System.Drawing.Size(57, 23)
-        Me.LabelX1.TabIndex = 137
-        Me.LabelX1.Text = "Entidades"
-        '
-        'LabelX2
-        '
-        Me.LabelX2.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(10, 23)
-        Me.LabelX2.Name = "LabelX2"
-        Me.LabelX2.Size = New System.Drawing.Size(57, 23)
-        Me.LabelX2.TabIndex = 139
-        Me.LabelX2.Text = "Productos"
-        '
-        'Line2
-        '
-        Me.Line2.BackColor = System.Drawing.Color.White
-        Me.Line2.ForeColor = System.Drawing.Color.Black
-        Me.Line2.Location = New System.Drawing.Point(66, 23)
-        Me.Line2.Name = "Line2"
-        Me.Line2.Size = New System.Drawing.Size(257, 23)
-        Me.Line2.TabIndex = 138
-        Me.Line2.Text = "Line2"
         '
         'Chk_SincroTratalote
         '
@@ -405,6 +385,7 @@ Partial Class Frm_ExporProd
         '
         Me.Chk_SincroTratalote.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_SincroTratalote.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroTratalote.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroTratalote.FocusCuesEnabled = False
         Me.Chk_SincroTratalote.ForeColor = System.Drawing.Color.Black
         Me.Chk_SincroTratalote.Location = New System.Drawing.Point(3, 27)
         Me.Chk_SincroTratalote.Name = "Chk_SincroTratalote"
@@ -427,7 +408,7 @@ Partial Class Frm_ExporProd
         Me.TableLayoutPanel1.Controls.Add(Me.Chk_SincroTratalote, 0, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.Chk_SincroProductos, 0, 0)
         Me.TableLayoutPanel1.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(24, 203)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(9, 164)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 8
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
@@ -449,6 +430,7 @@ Partial Class Frm_ExporProd
         '
         Me.Chk_SincroDimensiones.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_SincroDimensiones.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroDimensiones.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroDimensiones.FocusCuesEnabled = False
         Me.Chk_SincroDimensiones.ForeColor = System.Drawing.Color.Black
         Me.Chk_SincroDimensiones.Location = New System.Drawing.Point(3, 171)
         Me.Chk_SincroDimensiones.Name = "Chk_SincroDimensiones"
@@ -457,22 +439,258 @@ Partial Class Frm_ExporProd
         Me.Chk_SincroDimensiones.TabIndex = 142
         Me.Chk_SincroDimensiones.Text = "Sincronizar Dimensiones"
         '
+        'Btn_ProdSoloBaseLocal
+        '
+        Me.Btn_ProdSoloBaseLocal.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_ProdSoloBaseLocal.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_ProdSoloBaseLocal.Image = CType(resources.GetObject("Btn_ProdSoloBaseLocal.Image"), System.Drawing.Image)
+        Me.Btn_ProdSoloBaseLocal.ImageAlt = CType(resources.GetObject("Btn_ProdSoloBaseLocal.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ProdSoloBaseLocal.Location = New System.Drawing.Point(9, 375)
+        Me.Btn_ProdSoloBaseLocal.Name = "Btn_ProdSoloBaseLocal"
+        Me.Btn_ProdSoloBaseLocal.Size = New System.Drawing.Size(129, 47)
+        Me.Btn_ProdSoloBaseLocal.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_ProdSoloBaseLocal.TabIndex = 144
+        Me.Btn_ProdSoloBaseLocal.Text = "Productos solo en base Local"
+        '
+        'Btn_ProdSoloBaseExterna
+        '
+        Me.Btn_ProdSoloBaseExterna.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_ProdSoloBaseExterna.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_ProdSoloBaseExterna.Image = CType(resources.GetObject("Btn_ProdSoloBaseExterna.Image"), System.Drawing.Image)
+        Me.Btn_ProdSoloBaseExterna.ImageAlt = CType(resources.GetObject("Btn_ProdSoloBaseExterna.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ProdSoloBaseExterna.Location = New System.Drawing.Point(155, 375)
+        Me.Btn_ProdSoloBaseExterna.Name = "Btn_ProdSoloBaseExterna"
+        Me.Btn_ProdSoloBaseExterna.Size = New System.Drawing.Size(129, 47)
+        Me.Btn_ProdSoloBaseExterna.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_ProdSoloBaseExterna.TabIndex = 145
+        Me.Btn_ProdSoloBaseExterna.Text = "Productos solo en base Externa"
+        '
+        'SuperTabControl1
+        '
+        Me.SuperTabControl1.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        '
+        '
+        '
+        Me.SuperTabControl1.ControlBox.CloseBox.Name = ""
+        '
+        '
+        '
+        Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
+        Me.SuperTabControl1.ControlBox.Name = ""
+        Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
+        Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
+        Me.SuperTabControl1.Location = New System.Drawing.Point(12, 12)
+        Me.SuperTabControl1.Name = "SuperTabControl1"
+        Me.SuperTabControl1.ReorderTabsEnabled = True
+        Me.SuperTabControl1.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.SuperTabControl1.SelectedTabIndex = 2
+        Me.SuperTabControl1.Size = New System.Drawing.Size(516, 461)
+        Me.SuperTabControl1.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.SuperTabControl1.TabIndex = 146
+        Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem2, Me.SuperTabItem3})
+        Me.SuperTabControl1.Text = "SuperTabControl1"
+        '
+        'SuperTabControlPanel3
+        '
+        Me.SuperTabControlPanel3.Controls.Add(Me.TableLayoutPanel3)
+        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(516, 434)
+        Me.SuperTabControlPanel3.TabIndex = 0
+        Me.SuperTabControlPanel3.TabItem = Me.SuperTabItem3
+        '
+        'TableLayoutPanel3
+        '
+        Me.TableLayoutPanel3.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel3.ColumnCount = 1
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_SincroTblMarcas, 0, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_SincroTblRubros, 0, 1)
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_SincroTblFamilias, 0, 2)
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_SincroTblClaslibre, 0, 3)
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_SincroTblZonaProducto, 0, 4)
+        Me.TableLayoutPanel3.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
+        Me.TableLayoutPanel3.RowCount = 8
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(281, 190)
+        Me.TableLayoutPanel3.TabIndex = 142
+        '
+        'Chk_SincroTblMarcas
+        '
+        Me.Chk_SincroTblMarcas.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_SincroTblMarcas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SincroTblMarcas.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroTblMarcas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroTblMarcas.FocusCuesEnabled = False
+        Me.Chk_SincroTblMarcas.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SincroTblMarcas.Location = New System.Drawing.Point(3, 3)
+        Me.Chk_SincroTblMarcas.Name = "Chk_SincroTblMarcas"
+        Me.Chk_SincroTblMarcas.Size = New System.Drawing.Size(275, 18)
+        Me.Chk_SincroTblMarcas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SincroTblMarcas.TabIndex = 130
+        Me.Chk_SincroTblMarcas.Text = "Sincronizar Marcas"
+        '
+        'Chk_SincroTblRubros
+        '
+        Me.Chk_SincroTblRubros.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_SincroTblRubros.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SincroTblRubros.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroTblRubros.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroTblRubros.FocusCuesEnabled = False
+        Me.Chk_SincroTblRubros.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SincroTblRubros.Location = New System.Drawing.Point(3, 27)
+        Me.Chk_SincroTblRubros.Name = "Chk_SincroTblRubros"
+        Me.Chk_SincroTblRubros.Size = New System.Drawing.Size(275, 18)
+        Me.Chk_SincroTblRubros.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SincroTblRubros.TabIndex = 131
+        Me.Chk_SincroTblRubros.Text = "Sincronizar Rubros"
+        '
+        'Chk_SincroTblFamilias
+        '
+        Me.Chk_SincroTblFamilias.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_SincroTblFamilias.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SincroTblFamilias.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroTblFamilias.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroTblFamilias.FocusCuesEnabled = False
+        Me.Chk_SincroTblFamilias.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SincroTblFamilias.Location = New System.Drawing.Point(3, 51)
+        Me.Chk_SincroTblFamilias.Name = "Chk_SincroTblFamilias"
+        Me.Chk_SincroTblFamilias.Size = New System.Drawing.Size(275, 18)
+        Me.Chk_SincroTblFamilias.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SincroTblFamilias.TabIndex = 132
+        Me.Chk_SincroTblFamilias.Text = "Sincronizar Super familias/familias/subfamilias"
+        '
+        'Chk_SincroTblClaslibre
+        '
+        Me.Chk_SincroTblClaslibre.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_SincroTblClaslibre.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SincroTblClaslibre.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroTblClaslibre.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroTblClaslibre.FocusCuesEnabled = False
+        Me.Chk_SincroTblClaslibre.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SincroTblClaslibre.Location = New System.Drawing.Point(3, 75)
+        Me.Chk_SincroTblClaslibre.Name = "Chk_SincroTblClaslibre"
+        Me.Chk_SincroTblClaslibre.Size = New System.Drawing.Size(275, 18)
+        Me.Chk_SincroTblClaslibre.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SincroTblClaslibre.TabIndex = 133
+        Me.Chk_SincroTblClaslibre.Text = "Sincronizar Clasificación libre"
+        '
+        'Chk_SincroTblZonaProducto
+        '
+        Me.Chk_SincroTblZonaProducto.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_SincroTblZonaProducto.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SincroTblZonaProducto.CheckBoxImageChecked = CType(resources.GetObject("Chk_SincroTblZonaProducto.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SincroTblZonaProducto.FocusCuesEnabled = False
+        Me.Chk_SincroTblZonaProducto.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SincroTblZonaProducto.Location = New System.Drawing.Point(3, 99)
+        Me.Chk_SincroTblZonaProducto.Name = "Chk_SincroTblZonaProducto"
+        Me.Chk_SincroTblZonaProducto.Size = New System.Drawing.Size(275, 18)
+        Me.Chk_SincroTblZonaProducto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SincroTblZonaProducto.TabIndex = 134
+        Me.Chk_SincroTblZonaProducto.Text = "Sincronizar Zonas (producto)"
+        '
+        'SuperTabItem3
+        '
+        Me.SuperTabItem3.AttachedControl = Me.SuperTabControlPanel3
+        Me.SuperTabItem3.GlobalItem = False
+        Me.SuperTabItem3.Name = "SuperTabItem3"
+        Me.SuperTabItem3.Text = "Tablas"
+        '
+        'SuperTabControlPanel1
+        '
+        Me.SuperTabControlPanel1.Controls.Add(Me.Chk_GrbProd_Nuevos)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Btn_ProdSoloBaseExterna)
+        Me.SuperTabControlPanel1.Controls.Add(Me.TableLayoutPanel1)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Btn_ProdSoloBaseLocal)
+        Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel2)
+        Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(516, 434)
+        Me.SuperTabControlPanel1.TabIndex = 1
+        Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
+        '
+        'SuperTabItem1
+        '
+        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel1
+        Me.SuperTabItem1.GlobalItem = False
+        Me.SuperTabItem1.Name = "SuperTabItem1"
+        Me.SuperTabItem1.Text = "Productos"
+        '
+        'SuperTabControlPanel2
+        '
+        Me.SuperTabControlPanel2.Controls.Add(Me.TableLayoutPanel2)
+        Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(516, 461)
+        Me.SuperTabControlPanel2.TabIndex = 0
+        Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
+        '
+        'TableLayoutPanel2
+        '
+        Me.TableLayoutPanel2.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel2.ColumnCount = 1
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel2.Controls.Add(Me.Chk_GrbEnti_Nuevas, 0, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Chk_GrbOCC_Nuevas, 0, 2)
+        Me.TableLayoutPanel2.Controls.Add(Me.Chk_SincroZonas, 0, 1)
+        Me.TableLayoutPanel2.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 8
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(281, 190)
+        Me.TableLayoutPanel2.TabIndex = 142
+        '
+        'SuperTabItem2
+        '
+        Me.SuperTabItem2.AttachedControl = Me.SuperTabControlPanel2
+        Me.SuperTabItem2.GlobalItem = False
+        Me.SuperTabItem2.Name = "SuperTabItem2"
+        Me.SuperTabItem2.Text = "Entidades"
+        '
         'Frm_ExporProd
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(339, 544)
-        Me.Controls.Add(Me.TableLayoutPanel1)
-        Me.Controls.Add(Me.LabelX2)
-        Me.Controls.Add(Me.Line2)
-        Me.Controls.Add(Me.LabelX1)
-        Me.Controls.Add(Me.Line1)
-        Me.Controls.Add(Me.Chk_SincroZonas)
-        Me.Controls.Add(Me.Chk_GrbOCC_Nuevas)
-        Me.Controls.Add(Me.Chk_GrbEnti_Nuevas)
+        Me.ClientSize = New System.Drawing.Size(539, 544)
+        Me.Controls.Add(Me.SuperTabControl1)
         Me.Controls.Add(Me.Bar1)
-        Me.Controls.Add(Me.Chk_GrbProd_Nuevos)
-        Me.Controls.Add(Me.GroupPanel2)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -487,6 +705,13 @@ Partial Class Frm_ExporProd
         Me.GroupPanel2.ResumeLayout(False)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel1.ResumeLayout(False)
+        CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SuperTabControl1.ResumeLayout(False)
+        Me.SuperTabControlPanel3.ResumeLayout(False)
+        Me.TableLayoutPanel3.ResumeLayout(False)
+        Me.SuperTabControlPanel1.ResumeLayout(False)
+        Me.SuperTabControlPanel2.ResumeLayout(False)
+        Me.TableLayoutPanel2.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -508,12 +733,24 @@ Partial Class Frm_ExporProd
     Friend WithEvents Chk_SincroClaslib As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_SincroZonasProd As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_SincroZonas As DevComponents.DotNetBar.Controls.CheckBoxX
-    Friend WithEvents Line1 As DevComponents.DotNetBar.Controls.Line
-    Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents Line2 As DevComponents.DotNetBar.Controls.Line
     Friend WithEvents Chk_SincroTratalote As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_SincroEmpresa As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents Chk_SincroDimensiones As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Btn_ProdSoloBaseLocal As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Btn_ProdSoloBaseExterna As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents SuperTabControl1 As DevComponents.DotNetBar.SuperTabControl
+    Friend WithEvents SuperTabControlPanel2 As DevComponents.DotNetBar.SuperTabControlPanel
+    Friend WithEvents SuperTabItem2 As DevComponents.DotNetBar.SuperTabItem
+    Friend WithEvents SuperTabControlPanel1 As DevComponents.DotNetBar.SuperTabControlPanel
+    Friend WithEvents SuperTabItem1 As DevComponents.DotNetBar.SuperTabItem
+    Friend WithEvents SuperTabControlPanel3 As DevComponents.DotNetBar.SuperTabControlPanel
+    Friend WithEvents SuperTabItem3 As DevComponents.DotNetBar.SuperTabItem
+    Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
+    Friend WithEvents Chk_SincroTblMarcas As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_SincroTblRubros As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_SincroTblFamilias As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_SincroTblClaslibre As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_SincroTblZonaProducto As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class
