@@ -182,7 +182,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
             .Columns("RAZON").Visible = True
 
             .Columns("KOFULIDO").HeaderText = "Cod."
-            .Columns("KOFULIDO").Width = 30
+            .Columns("KOFULIDO").Width = 35
             .Columns("KOFULIDO").Visible = True
 
             .Columns("VENDEDOR").HeaderText = "Vendedor"

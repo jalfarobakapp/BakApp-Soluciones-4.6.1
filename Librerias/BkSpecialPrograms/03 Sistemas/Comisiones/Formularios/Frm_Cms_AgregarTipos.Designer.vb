@@ -24,6 +24,8 @@ Partial Class Frm_Cms_AgregarTipos
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Cms_AgregarTipos))
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Btn_Ent_Excluidas = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_ProductosExcluidos = New DevComponents.DotNetBar.ButtonX()
         Me.Txt_PorcComision = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Chk_TieneSC = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_QuitarEntExcluidas = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -40,8 +42,8 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_AgregarComision = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Ent_Excluidas = New DevComponents.DotNetBar.ButtonX()
-        Me.Btn_ProductosExcluidos = New DevComponents.DotNetBar.ButtonX()
+        Me.Txt_Bodegas = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Rdb_VentasXBodega = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -50,6 +52,8 @@ Partial Class Frm_Cms_AgregarTipos
         '
         Me.GroupPanel2.BackColor = System.Drawing.Color.White
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.Controls.Add(Me.Txt_Bodegas)
+        Me.GroupPanel2.Controls.Add(Me.Rdb_VentasXBodega)
         Me.GroupPanel2.Controls.Add(Me.Btn_Ent_Excluidas)
         Me.GroupPanel2.Controls.Add(Me.Btn_ProductosExcluidos)
         Me.GroupPanel2.Controls.Add(Me.Txt_PorcComision)
@@ -99,6 +103,34 @@ Partial Class Frm_Cms_AgregarTipos
         Me.GroupPanel2.TabIndex = 163
         Me.GroupPanel2.Text = "Datos del funcionario"
         '
+        'Btn_Ent_Excluidas
+        '
+        Me.Btn_Ent_Excluidas.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Ent_Excluidas.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Ent_Excluidas.FocusCuesEnabled = False
+        Me.Btn_Ent_Excluidas.Image = CType(resources.GetObject("Btn_Ent_Excluidas.Image"), System.Drawing.Image)
+        Me.Btn_Ent_Excluidas.ImageAlt = CType(resources.GetObject("Btn_Ent_Excluidas.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Ent_Excluidas.Location = New System.Drawing.Point(3, 311)
+        Me.Btn_Ent_Excluidas.Name = "Btn_Ent_Excluidas"
+        Me.Btn_Ent_Excluidas.Size = New System.Drawing.Size(180, 30)
+        Me.Btn_Ent_Excluidas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Ent_Excluidas.TabIndex = 117
+        Me.Btn_Ent_Excluidas.Text = "Entidades excluidas"
+        '
+        'Btn_ProductosExcluidos
+        '
+        Me.Btn_ProductosExcluidos.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_ProductosExcluidos.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_ProductosExcluidos.FocusCuesEnabled = False
+        Me.Btn_ProductosExcluidos.Image = CType(resources.GetObject("Btn_ProductosExcluidos.Image"), System.Drawing.Image)
+        Me.Btn_ProductosExcluidos.ImageAlt = CType(resources.GetObject("Btn_ProductosExcluidos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ProductosExcluidos.Location = New System.Drawing.Point(3, 274)
+        Me.Btn_ProductosExcluidos.Name = "Btn_ProductosExcluidos"
+        Me.Btn_ProductosExcluidos.Size = New System.Drawing.Size(180, 29)
+        Me.Btn_ProductosExcluidos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_ProductosExcluidos.TabIndex = 118
+        Me.Btn_ProductosExcluidos.Text = "Productos excluidos"
+        '
         'Txt_PorcComision
         '
         Me.Txt_PorcComision.BackColor = System.Drawing.Color.White
@@ -126,9 +158,9 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Chk_TieneSC.CheckBoxImageChecked = CType(resources.GetObject("Chk_TieneSC.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_TieneSC.FocusCuesEnabled = False
         Me.Chk_TieneSC.ForeColor = System.Drawing.Color.Black
-        Me.Chk_TieneSC.Location = New System.Drawing.Point(3, 184)
+        Me.Chk_TieneSC.Location = New System.Drawing.Point(3, 214)
         Me.Chk_TieneSC.Name = "Chk_TieneSC"
-        Me.Chk_TieneSC.Size = New System.Drawing.Size(311, 23)
+        Me.Chk_TieneSC.Size = New System.Drawing.Size(242, 23)
         Me.Chk_TieneSC.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_TieneSC.TabIndex = 41
         Me.Chk_TieneSC.Text = "Tiene comisión bruta sujeta a semana corrida"
@@ -143,9 +175,9 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Chk_QuitarEntExcluidas.CheckBoxImageChecked = CType(resources.GetObject("Chk_QuitarEntExcluidas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_QuitarEntExcluidas.FocusCuesEnabled = False
         Me.Chk_QuitarEntExcluidas.ForeColor = System.Drawing.Color.Black
-        Me.Chk_QuitarEntExcluidas.Location = New System.Drawing.Point(3, 210)
+        Me.Chk_QuitarEntExcluidas.Location = New System.Drawing.Point(3, 240)
         Me.Chk_QuitarEntExcluidas.Name = "Chk_QuitarEntExcluidas"
-        Me.Chk_QuitarEntExcluidas.Size = New System.Drawing.Size(215, 23)
+        Me.Chk_QuitarEntExcluidas.Size = New System.Drawing.Size(212, 23)
         Me.Chk_QuitarEntExcluidas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_QuitarEntExcluidas.TabIndex = 40
         Me.Chk_QuitarEntExcluidas.Text = "No incluir venta de entidades excluidas"
@@ -164,7 +196,7 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Txt_Vendedores.ButtonCustom2.Visible = True
         Me.Txt_Vendedores.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Vendedores.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Vendedores.Location = New System.Drawing.Point(151, 152)
+        Me.Txt_Vendedores.Location = New System.Drawing.Point(151, 179)
         Me.Txt_Vendedores.Name = "Txt_Vendedores"
         Me.Txt_Vendedores.PreventEnterBeep = True
         Me.Txt_Vendedores.Size = New System.Drawing.Size(392, 22)
@@ -201,9 +233,9 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Rdb_VentasXVendedores.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_VentasXVendedores.FocusCuesEnabled = False
         Me.Rdb_VentasXVendedores.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_VentasXVendedores.Location = New System.Drawing.Point(3, 157)
+        Me.Rdb_VentasXVendedores.Location = New System.Drawing.Point(3, 184)
         Me.Rdb_VentasXVendedores.Name = "Rdb_VentasXVendedores"
-        Me.Rdb_VentasXVendedores.Size = New System.Drawing.Size(157, 17)
+        Me.Rdb_VentasXVendedores.Size = New System.Drawing.Size(133, 17)
         Me.Rdb_VentasXVendedores.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_VentasXVendedores.TabIndex = 37
         Me.Rdb_VentasXVendedores.Text = "Ventas por vendedores"
@@ -221,7 +253,7 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Rdb_VentasXSucursal.ForeColor = System.Drawing.Color.Black
         Me.Rdb_VentasXSucursal.Location = New System.Drawing.Point(3, 128)
         Me.Rdb_VentasXSucursal.Name = "Rdb_VentasXSucursal"
-        Me.Rdb_VentasXSucursal.Size = New System.Drawing.Size(157, 17)
+        Me.Rdb_VentasXSucursal.Size = New System.Drawing.Size(119, 17)
         Me.Rdb_VentasXSucursal.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_VentasXSucursal.TabIndex = 36
         Me.Rdb_VentasXSucursal.Text = "Ventas por sucursal"
@@ -239,7 +271,7 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Rdb_VentasXEmpresa.ForeColor = System.Drawing.Color.Black
         Me.Rdb_VentasXEmpresa.Location = New System.Drawing.Point(3, 99)
         Me.Rdb_VentasXEmpresa.Name = "Rdb_VentasXEmpresa"
-        Me.Rdb_VentasXEmpresa.Size = New System.Drawing.Size(157, 17)
+        Me.Rdb_VentasXEmpresa.Size = New System.Drawing.Size(157, 18)
         Me.Rdb_VentasXEmpresa.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_VentasXEmpresa.TabIndex = 35
         Me.Rdb_VentasXEmpresa.Text = "Ventas por empresa global"
@@ -260,7 +292,7 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Rdb_MisVentas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_MisVentas.Location = New System.Drawing.Point(3, 73)
         Me.Rdb_MisVentas.Name = "Rdb_MisVentas"
-        Me.Rdb_MisVentas.Size = New System.Drawing.Size(157, 17)
+        Me.Rdb_MisVentas.Size = New System.Drawing.Size(75, 20)
         Me.Rdb_MisVentas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_MisVentas.TabIndex = 34
         Me.Rdb_MisVentas.Text = "Mis ventas"
@@ -352,33 +384,43 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Btn_AgregarComision.Name = "Btn_AgregarComision"
         Me.Btn_AgregarComision.Tooltip = "Configuración de asistente de compra"
         '
-        'Btn_Ent_Excluidas
+        'Txt_Bodegas
         '
-        Me.Btn_Ent_Excluidas.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Ent_Excluidas.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Ent_Excluidas.FocusCuesEnabled = False
-        Me.Btn_Ent_Excluidas.Image = CType(resources.GetObject("Btn_Ent_Excluidas.Image"), System.Drawing.Image)
-        Me.Btn_Ent_Excluidas.ImageAlt = CType(resources.GetObject("Btn_Ent_Excluidas.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Ent_Excluidas.Location = New System.Drawing.Point(3, 276)
-        Me.Btn_Ent_Excluidas.Name = "Btn_Ent_Excluidas"
-        Me.Btn_Ent_Excluidas.Size = New System.Drawing.Size(180, 30)
-        Me.Btn_Ent_Excluidas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Ent_Excluidas.TabIndex = 117
-        Me.Btn_Ent_Excluidas.Text = "Entidades excluidas"
+        Me.Txt_Bodegas.BackColor = System.Drawing.Color.White
         '
-        'Btn_ProductosExcluidos
         '
-        Me.Btn_ProductosExcluidos.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_ProductosExcluidos.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_ProductosExcluidos.FocusCuesEnabled = False
-        Me.Btn_ProductosExcluidos.Image = CType(resources.GetObject("Btn_ProductosExcluidos.Image"), System.Drawing.Image)
-        Me.Btn_ProductosExcluidos.ImageAlt = CType(resources.GetObject("Btn_ProductosExcluidos.ImageAlt"), System.Drawing.Image)
-        Me.Btn_ProductosExcluidos.Location = New System.Drawing.Point(3, 239)
-        Me.Btn_ProductosExcluidos.Name = "Btn_ProductosExcluidos"
-        Me.Btn_ProductosExcluidos.Size = New System.Drawing.Size(180, 29)
-        Me.Btn_ProductosExcluidos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_ProductosExcluidos.TabIndex = 118
-        Me.Btn_ProductosExcluidos.Text = "Productos excluidos"
+        '
+        Me.Txt_Bodegas.Border.Class = "TextBoxBorder"
+        Me.Txt_Bodegas.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Bodegas.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Bodegas.ButtonCustom.Visible = True
+        Me.Txt_Bodegas.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Bodegas.ButtonCustom2.Visible = True
+        Me.Txt_Bodegas.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Bodegas.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Bodegas.Location = New System.Drawing.Point(151, 151)
+        Me.Txt_Bodegas.Name = "Txt_Bodegas"
+        Me.Txt_Bodegas.PreventEnterBeep = True
+        Me.Txt_Bodegas.Size = New System.Drawing.Size(392, 22)
+        Me.Txt_Bodegas.TabIndex = 120
+        '
+        'Rdb_VentasXBodega
+        '
+        Me.Rdb_VentasXBodega.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_VentasXBodega.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_VentasXBodega.CheckBoxImageChecked = CType(resources.GetObject("Rdb_VentasXBodega.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_VentasXBodega.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_VentasXBodega.FocusCuesEnabled = False
+        Me.Rdb_VentasXBodega.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_VentasXBodega.Location = New System.Drawing.Point(3, 156)
+        Me.Rdb_VentasXBodega.Name = "Rdb_VentasXBodega"
+        Me.Rdb_VentasXBodega.Size = New System.Drawing.Size(119, 17)
+        Me.Rdb_VentasXBodega.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_VentasXBodega.TabIndex = 119
+        Me.Rdb_VentasXBodega.Text = "Ventas por bodega"
         '
         'Frm_Cms_AgregarTipos
         '
@@ -422,4 +464,6 @@ Partial Class Frm_Cms_AgregarTipos
     Friend WithEvents Txt_PorcComision As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Btn_Ent_Excluidas As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Btn_ProductosExcluidos As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Txt_Bodegas As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Rdb_VentasXBodega As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class
