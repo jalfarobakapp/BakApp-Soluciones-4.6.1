@@ -705,7 +705,12 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
         If Comisiones Then
 
-            _Filtro_Entidad_Todas = Not CBool(Tbl_Filtro_Entidad.Rows.Count)
+            If IsNothing(Tbl_Filtro_Entidad) Then
+                _Filtro_Entidad_Todas = True
+            Else
+                _Filtro_Entidad_Todas = Not CBool(Tbl_Filtro_Entidad.Rows.Count)
+            End If
+
             _Filtro_SucursalDoc_Todas = Not CBool(_Tbl_Filtro_SucursalDoc.Rows.Count)
             _Filtro_Sucursales_Todas = Not CBool(_Tbl_Filtro_Sucursales.Rows.Count)
             _Filtro_Bodegas_Todas = Not CBool(_Tbl_Filtro_Bodegas.Rows.Count)
@@ -717,7 +722,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Filtro_Vendedores_Todas = Not CBool(_Tbl_Filtro_Vendedores.Rows.Count)
             _Filtro_Vendedores_Asignados_Todas = Not CBool(_Tbl_Filtro_Vendedores_Asignados.Rows.Count)
 
-            _Filtro_Productos_Todos = Not CBool(_Tbl_Filtro_Productos.Rows.Count)
+            If IsNothing(_Tbl_Filtro_Productos) Then
+                _Filtro_Productos_Todos = True
+            Else
+                _Filtro_Productos_Todos = Not CBool(_Tbl_Filtro_Productos.Rows.Count)
+            End If
 
             _Filtro_Super_Familias_Todas = Not CBool(_Tbl_Filtro_Super_Familias.Rows.Count)
             _Filtro_Familias_Todas = Not CBool(_Tbl_Filtro_Familias.Rows.Count)
