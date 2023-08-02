@@ -2394,7 +2394,7 @@ Sigue_Loop_01:
                             _MsgExiste += " - No Existe FAMILIA: " & CmbSuperFamilia.SelectedValue.ToString.Trim & "-" & CmbFamilia.SelectedValue & "-" & CmbFamilia.Text & vbCrLf
                         End If
 
-                        If Not String.IsNullOrEmpty(CmbSubFamilia.SelectedValue) AndAlso Not (_Cl_Migrar_Producto.Fx_ExisteReistroenTabla("TABHF", "KOFM = '" & CmbSubFamilia.SelectedValue & "' And KOPF = '" & CmbFamilia.SelectedValue & "' And KOHF = '" & CmbSubFamilia.SelectedValue & "'")) Then
+                        If Not String.IsNullOrEmpty(CmbSubFamilia.SelectedValue) AndAlso Not (_Cl_Migrar_Producto.Fx_ExisteReistroenTabla("TABHF", "KOFM = '" & CmbSuperFamilia.SelectedValue & "' And KOPF = '" & CmbFamilia.SelectedValue & "' And KOHF = '" & CmbSubFamilia.SelectedValue & "'")) Then
                             _MsgExiste += " - No Existe SUB-FAMILIA: " & CmbSuperFamilia.SelectedValue.ToString.Trim & "-" & CmbFamilia.SelectedValue & "-" & CmbSubFamilia.SelectedValue & "-" & CmbSubFamilia.Text & vbCrLf
                         End If
 

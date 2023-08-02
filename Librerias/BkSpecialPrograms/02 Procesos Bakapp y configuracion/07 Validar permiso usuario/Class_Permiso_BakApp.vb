@@ -164,7 +164,7 @@ Public Class Class_Permiso_BakApp
 
 
                 Else
-                    MsgBox("No existe este permisos Código: " & _Codpermiso, MsgBoxStyle.Critical, "Bakapp")
+                    MsgBox("No existe este permiso, Código: " & _Codpermiso, MsgBoxStyle.Critical, "Bakapp")
                     Return False
                 End If
 
@@ -2022,7 +2022,7 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Bkp00050"
-                _DescripcionPermiso = "PERMITIR CAMBIAR REDONDEDO A CERO"
+                _DescripcionPermiso = "PERMITIR CAMBIAR REDONDEO A CERO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Bkp00051"
@@ -2487,7 +2487,7 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.ESPECIALES, 6)
                 _NombreFamiliaPermiso = _Fml.ESPECIALES.ToString
             Case "Espr0002"
-                _DescripcionPermiso = "INGRESAR MODULO PRECIOS FERRETERIA OHIGGINS"
+                _DescripcionPermiso = "INGRESAR MODULO PRECIOS FERRETERIA O´HIGGINS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.ESPECIALES, 6)
                 _NombreFamiliaPermiso = _Fml.ESPECIALES.ToString
             Case "Espr0003"
@@ -2495,7 +2495,7 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.ESPECIALES, 6)
                 _NombreFamiliaPermiso = _Fml.ESPECIALES.ToString
             Case "Espr0004"
-                _DescripcionPermiso = "CAMBIAR ENTODAD DEL DOCUMENTO"
+                _DescripcionPermiso = "CAMBIAR ENTIDAD DEL DOCUMENTO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.ESPECIALES, 6)
                 _NombreFamiliaPermiso = _Fml.ESPECIALES.ToString
             Case "Espr0005"
@@ -2930,7 +2930,7 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO_PARCIALIZADO, 6)
                 _NombreFamiliaPermiso = _Fml.INVENTARIO_PARCIALIZADO.ToString
             Case "Invp0002"
-                _DescripcionPermiso = "GRABAR DATOS INVENTARIAO PACIALIZADO"
+                _DescripcionPermiso = "GRABAR DATOS INVENTARIO PARCIALIZADO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO_PARCIALIZADO, 6)
                 _NombreFamiliaPermiso = _Fml.INVENTARIO_PARCIALIZADO.ToString
             Case "Invp0003"
@@ -3099,7 +3099,7 @@ Public Class Class_Permiso_BakApp
         Select Case _CodPermiso
 
             Case "Ppro0001"
-                _DescripcionPermiso = "AUTORIZAR A PAGAR DOCUMENTOS SOSPECHOZOS (CON REFLEOS)"
+                _DescripcionPermiso = "AUTORIZAR A PAGAR DOCUMENTOS SOSPECHOSOS (CON REFLEOS)"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PAGO_PROVEEDORES, 6)
                 _NombreFamiliaPermiso = _Fml.PAGO_PROVEEDORES.ToString
             Case "Ppro0002"
@@ -3248,7 +3248,7 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
             Case "Prod004"
-                _DescripcionPermiso = "OCULTAR/DESOCURTAR PRODUCTOS"
+                _DescripcionPermiso = "OCULTAR/DESOCULTAR PRODUCTOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
             Case "Prod005"
@@ -3328,39 +3328,39 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
             Case "Prod024"
-                _DescripcionPermiso = "PERMINITAR GRABAR PRODUCTO SIN JEFE DE PRODUCTO"
+                _DescripcionPermiso = "PERMITIR GRABAR PRODUCTO SIN JEFE DE PRODUCTO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
             Case "Prod025"
-                _DescripcionPermiso = "PERMINITAR GRABAR PRODUCTO SIN ZONA"
+                _DescripcionPermiso = "PERMITIR GRABAR PRODUCTO SIN ZONA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
             Case "Prod026"
-                _DescripcionPermiso = "PERMINITAR GRABAR PRODUCTO SIN MARCA"
+                _DescripcionPermiso = "PERMITIR GRABAR PRODUCTO SIN MARCA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
             Case "Prod027"
-                _DescripcionPermiso = "PERMINITAR GRABAR PRODUCTO SIN LISTA DE COSTOS POR DEFECTO"
+                _DescripcionPermiso = "PERMITIR GRABAR PRODUCTO SIN LISTA DE COSTOS POR DEFECTO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
             Case "Prod028"
-                _DescripcionPermiso = "PERMINITAR GRABAR PRODUCTO SIN RUBRO"
+                _DescripcionPermiso = "PERMITIR GRABAR PRODUCTO SIN RUBRO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
             Case "Prod029"
-                _DescripcionPermiso = "PERMINITAR GRABAR PRODUCTO SIN CLASIFICACION LIBRE"
+                _DescripcionPermiso = "PERMITIR GRABAR PRODUCTO SIN CLASIFICACION LIBRE"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
             Case "Prod030"
-                _DescripcionPermiso = "PERMINITAR GRABAR PRODUCTO SIN SUPER FAMILIA"
+                _DescripcionPermiso = "PERMITIR GRABAR PRODUCTO SIN SUPER FAMILIA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
             Case "Prod031"
-                _DescripcionPermiso = "PERMINITAR GRABAR PRODUCTO SIN FAMILIA"
+                _DescripcionPermiso = "PERMITIR GRABAR PRODUCTO SIN FAMILIA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
             Case "Prod033"
-                _DescripcionPermiso = "PERMINITAR GRABAR PRODUCTO SIN SUB FAMILIA"
+                _DescripcionPermiso = "PERMITIR GRABAR PRODUCTO SIN SUB FAMILIA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
             Case "Prod034"
@@ -3412,7 +3412,7 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
             Case "Prod047"
-                _DescripcionPermiso = "ELIMINAR ARCHIVO ADJUNTADJUNTO DEL PRODUCTO"
+                _DescripcionPermiso = "ELIMINAR ARCHIVO ADJUNTO DEL PRODUCTO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
             Case "Prod050"
@@ -3428,7 +3428,7 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
             Case "Prod056"
-                _DescripcionPermiso = "VER PRODUCTOS ADOCIADOS, DE LA MISMA CLASIFICACION"
+                _DescripcionPermiso = "VER PRODUCTOS ASOCIADOS, DE LA MISMA CLASIFICACION"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
             Case "Prod057"
@@ -4213,12 +4213,12 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.RECLAMOS.ToString
 
             Case "Rcl00010"
-                _DescripcionPermiso = "GESTIOJN, REPROCESO DE MERCADERIA"
+                _DescripcionPermiso = "GESTION, REPROCESO DE MERCADERIA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.RECLAMOS, 6)
                 _NombreFamiliaPermiso = _Fml.RECLAMOS.ToString
 
             Case "Rcl00011"
-                _DescripcionPermiso = "GESTION, ENVIO A BODEGA DE VETAS"
+                _DescripcionPermiso = "GESTION, ENVIO A BODEGA DE VENTAS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.RECLAMOS, 6)
                 _NombreFamiliaPermiso = _Fml.RECLAMOS.ToString
 

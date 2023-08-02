@@ -2186,7 +2186,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
                 End If
 
-                If CBool(_TblFiltroProductosExcluidos.Rows.Count) Then
+                If Not IsNothing(_TblFiltroProductosExcluidos) AndAlso CBool(_TblFiltroProductosExcluidos.Rows.Count) Then
 
                     Dim _CodigosExcluidos As String = Generar_Filtro_IN(_TblFiltroProductosExcluidos, "Chk", "Codigo", False, True, "'")
 

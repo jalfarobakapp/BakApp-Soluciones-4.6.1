@@ -301,8 +301,8 @@ Public Class Frm_Crear_Entidad_Mt
                 Btn_ProductosExcluidos.Visible = True
 
                 Consulta_sql = "Select Chk,Codigo,Descripcion" & vbCrLf &
-                           "From " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos" & vbCrLf &
-                           "Where CodEntidad = '" & TxtxCodEntidad.Text & "' And CodSucEntidad = '" & TxtxSucursal.Text & "'"
+                               "From " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos" & vbCrLf &
+                               "Where CodEntidad = '" & TxtxCodEntidad.Text & "' And CodSucEntidad = '" & TxtxSucursal.Text & "'"
                 _TblFiltroProductosExcluidos = _Sql.Fx_Get_Tablas(Consulta_sql)
 
                 If IsNothing(_TblFiltroProductosExcluidos) Then
