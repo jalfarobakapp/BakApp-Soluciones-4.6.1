@@ -822,7 +822,7 @@ Public Class Class_SQL
 
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
         Dim Consulta_sql As String
-
+        '_Tbl = Nothing
         If Not _Tbl Is Nothing Then
 
             If _Tbl.Rows.Count Then

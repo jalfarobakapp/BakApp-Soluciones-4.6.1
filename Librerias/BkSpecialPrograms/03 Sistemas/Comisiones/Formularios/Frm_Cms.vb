@@ -11,6 +11,7 @@ Public Class Frm_Cms
     Public Property Id_Enc As Integer
 
     Dim _Tbl_Filtro_Entidad As DataTable
+    Dim _Tbl_Filtro_EntidadExcluidas As DataTable
     Dim _Tbl_Filtro_SucursalDoc As DataTable
     Dim _Tbl_Filtro_Sucursales As DataTable
     Dim _Tbl_Filtro_Bodegas As DataTable
@@ -22,6 +23,7 @@ Public Class Frm_Cms
     Dim _Tbl_Filtro_Vendedores As DataTable
     Dim _Tbl_Filtro_Vendedores_Asignados As DataTable
     Dim _Tbl_Filtro_Productos As DataTable
+    Dim _Tbl_Filtro_ProductosExcluidos As DataTable
     Dim _Tbl_Filtro_Super_Familias As DataTable
     Dim _Tbl_Filtro_Familias As DataTable
     Dim _Tbl_Filtro_Sub_Familias As DataTable
@@ -497,6 +499,7 @@ Public Class Frm_Cms
                                                             _FechaHasta,
                                                             False)
                 Fm.Tbl_Filtro_Entidad = _Tbl_Filtro_Entidad
+                Fm.Tbl_Filtro_EntidadExcluidas = _Tbl_Filtro_EntidadExcluidas
                 Fm.Tbl_Filtro_SucursalDoc = _Tbl_Filtro_SucursalDoc
                 Fm.Tbl_Filtro_Sucursales = _Tbl_Filtro_Sucursales
                 Fm.Tbl_Filtro_Bodegas = _Tbl_Filtro_Bodegas
@@ -508,6 +511,7 @@ Public Class Frm_Cms
                 Fm.Tbl_Filtro_Vendedores = _Tbl_Filtro_Vendedores
                 Fm.Tbl_Filtro_Vendedores_Asignados = _Tbl_Filtro_Vendedores_Asignados
                 Fm.Tbl_Filtro_Productos = _Tbl_Filtro_Productos
+                Fm.Tbl_Filtro_ProductosExcluidos = _Tbl_Filtro_ProductosExcluidos
                 Fm.Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
                 Fm.Tbl_Filtro_Familias = _Tbl_Filtro_Familias
                 Fm.Tbl_Filtro_Sub_Familias = _Tbl_Filtro_Sub_Familias
@@ -523,6 +527,12 @@ Public Class Frm_Cms
                 Fm.FechaDesdeFd = _FechaDesde
                 Fm.FechaHastaFh = _FechaHasta
 
+                Fm.Btn_Graficar.Visible = False
+                Fm.Btn_Crear_Venta.Visible = False
+                Fm.Btn_Mantencion_Datos.Visible = False
+                Fm.Btn_Consulta_Ventas_X_Cliente.Visible = False
+                Fm.Btn_Arbol_Asociaciones.Visible = False
+
                 Fm.ShowDialog(Me)
 
                 If Fm.ImportarComisiones Then
@@ -531,7 +541,13 @@ Public Class Frm_Cms
 
                     '_TotalNetoComisiones = 1870718747
 
-                    _Tbl_Filtro_Entidad = Fm.Tbl_Filtro_Entidad
+                    If Fm.Pro_Filtro_Entidad_Todas Then
+                        _Tbl_Filtro_Entidad = Nothing
+                    Else
+                        _Tbl_Filtro_Entidad = Fm.Tbl_Filtro_Entidad
+                    End If
+
+                    _Tbl_Filtro_EntidadExcluidas = Fm.Tbl_Filtro_EntidadExcluidas
                     _Tbl_Filtro_SucursalDoc = Fm.Tbl_Filtro_SucursalDoc
                     _Tbl_Filtro_Sucursales = Fm.Tbl_Filtro_Sucursales
                     _Tbl_Filtro_Bodegas = Fm.Tbl_Filtro_Bodegas
@@ -542,7 +558,14 @@ Public Class Frm_Cms
                     _Tbl_Filtro_Responzables = Fm.Tbl_Filtro_Responzables
                     _Tbl_Filtro_Vendedores = Fm.Tbl_Filtro_Vendedores
                     _Tbl_Filtro_Vendedores_Asignados = Fm.Tbl_Filtro_Vendedores_Asignados
-                    _Tbl_Filtro_Productos = Fm.Tbl_Filtro_Productos
+
+                    If Fm.Pro_Filtro_Productos_Todos Then
+                        _Tbl_Filtro_Productos = Nothing
+                    Else
+                        _Tbl_Filtro_Productos = Fm.Tbl_Filtro_Productos
+                    End If
+
+                    _Tbl_Filtro_ProductosExcluidos = Fm.Tbl_Filtro_ProductosExcluidos
                     _Tbl_Filtro_Super_Familias = Fm.Tbl_Filtro_Super_Familias
                     _Tbl_Filtro_Familias = Fm.Tbl_Filtro_Familias
                     _Tbl_Filtro_Sub_Familias = Fm.Tbl_Filtro_Sub_Familias
@@ -646,6 +669,7 @@ Public Class Frm_Cms
     Sub Sb_Cargar_TblInforme(_Id_Det As Integer)
 
         _Tbl_Filtro_Entidad = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Entidad")
+        _Tbl_Filtro_EntidadExcluidas = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_EntidadExcluidas")
         _Tbl_Filtro_SucursalDoc = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_SucursalDoc")
         _Tbl_Filtro_Sucursales = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Sucursales")
         _Tbl_Filtro_Bodegas = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Bodegas")
@@ -657,6 +681,7 @@ Public Class Frm_Cms
         _Tbl_Filtro_Vendedores = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Vendedores")
         _Tbl_Filtro_Vendedores_Asignados = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Vendedores_Asignados")
         _Tbl_Filtro_Productos = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Productos")
+        _Tbl_Filtro_ProductosExcluidos = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_ProductosExcluidos")
         _Tbl_Filtro_Super_Familias = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Super_Familias")
         _Tbl_Filtro_Familias = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Familias")
         _Tbl_Filtro_Sub_Familias = Fx_Cargar_TblFiltro(_Id_Det, "Tbl_Filtro_Sub_Familias")
@@ -676,6 +701,7 @@ Public Class Frm_Cms
     Sub Sb_Actualizar_TblInforme(_Id_Det As Integer)
 
         Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Entidad, _Id_Det, "Tbl_Filtro_Entidad")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_EntidadExcluidas, _Id_Det, "Tbl_Filtro_EntidadExcluidas")
         Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_SucursalDoc, _Id_Det, "Tbl_Filtro_SucursalDoc")
         Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Sucursales, _Id_Det, "Tbl_Filtro_Sucursales")
         Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Bodegas, _Id_Det, "Tbl_Filtro_Bodegas")
@@ -687,6 +713,7 @@ Public Class Frm_Cms
         Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Vendedores, _Id_Det, "Tbl_Filtro_Vendedores")
         Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Vendedores_Asignados, _Id_Det, "Tbl_Filtro_Vendedores_Asignados")
         Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Productos, _Id_Det, "Tbl_Filtro_Productos")
+        Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_ProductosExcluidos, _Id_Det, "Tbl_Filtro_ProductosExcluidos")
         Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Super_Familias, _Id_Det, "Tbl_Filtro_Super_Familias")
         Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Familias, _Id_Det, "Tbl_Filtro_Familias")
         Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Sub_Familias, _Id_Det, "Tbl_Filtro_Sub_Familias")
@@ -697,9 +724,6 @@ Public Class Frm_Cms
         Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Tipo_Entidad, _Id_Det, "Tbl_Filtro_Tipo_Entidad")
         Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Act_Economica, _Id_Det, "Tbl_Filtro_Act_Economica")
         Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Tama_Empresa, _Id_Det, "Tbl_Filtro_Tama_Empresa")
-        'Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Clas_BakApp, _Id_Det, "Tbl_Filtro_Clas_BakApp")
-        'Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Lista_Precio_Asig, _Id_Det, "Tbl_Filtro_Lista_Precio_Asig")
-        'Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Lista_Precio_Docu, _Id_Det, "Tbl_Filtro_Lista_Precio_Docu")
 
     End Sub
 
@@ -1023,6 +1047,7 @@ Public Class Frm_Cms
         Dim _Tbl_Detalle As DataTable = Ds.Tables("Detalle")
         Dim _Tbl_DetalleSc As DataTable = Ds.Tables("DetalleSc")
 
+        Consulta_Sql = String.Empty
 
         For Each _Fila_Lineas As DataRow In _Tbl_Lineas.Rows
 
@@ -1035,19 +1060,21 @@ Public Class Frm_Cms
             Dim _ComBrutaSemCorr As String = De_Num_a_Tx_01(_Fila_Lineas.Item("ComBrutaSemCorr"), False, 5)
             Dim _TotalComBruta As String = De_Num_a_Tx_01(_Fila_Lineas.Item("TotalComBruta"), False, 5)
 
-            Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Comisiones_Lin Set " &
+            Consulta_Sql += "Update " & _Global_BaseBk & "Zw_Comisiones_Lin Set " &
                            "SubComBruta = " & _SubComBruta &
                            ",PorcCotizaciones = " & _PorcCotizaciones &
                            ",ComBruta = " & _ComBruta &
                            ",ComBrutaSemCorr = " & _ComBrutaSemCorr &
-                           ",TotalComBruta = " & _TotalComBruta & vbCrLf &
-                           "Where Id = " & _Id_Lin & vbCrLf & vbCrLf
+                           ",TotalComBruta = " & _TotalComBruta &
+                           "Where Id = " & _Id_Lin & vbCrLf
 
         Next
 
+        Consulta_Sql += vbCrLf
+
         For Each _Fila_Detalle As DataRow In _Tbl_Detalle.Rows
 
-            Dim _Id_Det As Integer = _Fila_Detalle.Item("Id_Det")
+            Dim _Id_Det As Integer = _Fila_Detalle.Item("Id")
 
             Dim _Descripcion As String = _Fila_Detalle.Item("Descripcion")
             Dim _Valor As String = De_Num_a_Tx_01(_Fila_Detalle.Item("Valor"), False, 5)
@@ -1063,31 +1090,47 @@ Public Class Frm_Cms
                ",Valor = " & _Valor &
                ",Descuento = " & _Descuento &
                ",SubTotal = " & _SubTotal &
-               ",PorcComision = " & _PorcComision & vbCrLf &
-               ",Total = " & _Total & vbCrLf &
-               ",PorcImp = " & _PorcImp & vbCrLf &
-               ",ComBruta = " & _ComBruta & vbCrLf &
-               "Where Id = " & _Id_Det & vbCrLf & vbCrLf
+               ",PorcComision = " & _PorcComision &
+               ",Total = " & _Total &
+               ",PorcImp = " & _PorcImp &
+               ",ComBruta = " & _ComBruta &
+               "Where Id = " & _Id_Det & vbCrLf
 
         Next
 
+        Consulta_Sql += vbCrLf
 
         For Each _Fila_DetalleSc As DataRow In _Tbl_DetalleSc.Rows
 
             Dim _Id_DetSc As Integer = _Fila_DetalleSc.Item("Id")
 
-            Dim _ComBruta As String
-            Dim _ValorDia As String
-            Dim _TotalPagoSC As String
-            Dim _DiasHabiles As String
-            Dim _Sabados As String
-            Dim _Domingos As String
-            Dim _Festivos As String
-            Dim _DiasTrabMes As String
-            Dim _Semanas As String
+            Dim _ComBruta As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("ComBruta"), False, 5)
+            Dim _ValorDia As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("ValorDia"), False, 5)
+            Dim _TotalPagoSC As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("TotalPagoSC"), False, 5)
+            Dim _DiasHabiles As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("DiasHabiles"), False, 5)
+            Dim _Sabados As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("Sabados"), False, 5)
+            Dim _Domingos As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("Domingos"), False, 5)
+            Dim _Festivos As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("Festivos"), False, 5)
+            Dim _DiasTrabMes As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("DiasTrabMes"), False, 5)
+            Dim _Semanas As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("Semanas"), False, 5)
+
+            Consulta_Sql += "Update " & _Global_BaseBk & "Zw_Comisiones_DetSc Set " &
+                "ComBruta = " & _ComBruta &
+                ",ValorDia = " & _ValorDia &
+                ",TotalPagoSC = " & _TotalPagoSC &
+                ",DiasHabiles = " & _DiasHabiles &
+                ",Sabados = " & _Sabados &
+                ",Domingos = " & _Domingos &
+                ",Festivos = " & _Festivos &
+                ",DiasTrabMes = " & _DiasTrabMes &
+                ",Semanas = " & _Semanas &
+                "Where Id = " & _Id_DetSc & vbCrLf
 
         Next
 
+        If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql) Then
+            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
 
     End Sub
 

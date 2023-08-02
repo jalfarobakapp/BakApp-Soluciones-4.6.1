@@ -48,6 +48,9 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
     Dim _Tbl_Filtro_Lista_Precio_Asig As DataTable
     Dim _Tbl_Filtro_Lista_Precio_Docu As DataTable
 
+    Dim _Tbl_Filtro_EntidadExcluidas As DataTable
+    Dim _Tbl_Filtro_ProductosExcluidos As DataTable
+
     Dim _Filtro_Entidad_Todas As Boolean
     Dim _Filtro_SucursalDoc_Todas As Boolean
     Dim _Filtro_Sucursales_Todas As Boolean
@@ -538,6 +541,24 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
     Public Property TotalNetoComisiones As Double
     Public Property ImportarComisiones As Boolean
 
+    Public Property Tbl_Filtro_EntidadExcluidas As DataTable
+        Get
+            Return _Tbl_Filtro_EntidadExcluidas
+        End Get
+        Set(value As DataTable)
+            _Tbl_Filtro_EntidadExcluidas = value
+        End Set
+    End Property
+
+    Public Property Tbl_Filtro_ProductosExcluidos As DataTable
+        Get
+            Return _Tbl_Filtro_ProductosExcluidos
+        End Get
+        Set(value As DataTable)
+            _Tbl_Filtro_ProductosExcluidos = value
+        End Set
+    End Property
+
     Public Sub New(Informe As Enum_Informe,
                    Nombre_Tabla_Paso As String,
                    Unidad As Integer,
@@ -684,7 +705,12 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
         If Comisiones Then
 
-            _Filtro_Entidad_Todas = Not CBool(Tbl_Filtro_Entidad.Rows.Count)
+            If IsNothing(Tbl_Filtro_Entidad) Then
+                _Filtro_Entidad_Todas = True
+            Else
+                _Filtro_Entidad_Todas = Not CBool(Tbl_Filtro_Entidad.Rows.Count)
+            End If
+
             _Filtro_SucursalDoc_Todas = Not CBool(_Tbl_Filtro_SucursalDoc.Rows.Count)
             _Filtro_Sucursales_Todas = Not CBool(_Tbl_Filtro_Sucursales.Rows.Count)
             _Filtro_Bodegas_Todas = Not CBool(_Tbl_Filtro_Bodegas.Rows.Count)
@@ -695,7 +721,13 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Filtro_Responzables_Todas = Not CBool(_Tbl_Filtro_Responzables.Rows.Count)
             _Filtro_Vendedores_Todas = Not CBool(_Tbl_Filtro_Vendedores.Rows.Count)
             _Filtro_Vendedores_Asignados_Todas = Not CBool(_Tbl_Filtro_Vendedores_Asignados.Rows.Count)
-            _Filtro_Productos_Todos = Not CBool(_Tbl_Filtro_Productos.Rows.Count)
+
+            If IsNothing(_Tbl_Filtro_Productos) Then
+                _Filtro_Productos_Todos = True
+            Else
+                _Filtro_Productos_Todos = Not CBool(_Tbl_Filtro_Productos.Rows.Count)
+            End If
+
             _Filtro_Super_Familias_Todas = Not CBool(_Tbl_Filtro_Super_Familias.Rows.Count)
             _Filtro_Familias_Todas = Not CBool(_Tbl_Filtro_Familias.Rows.Count)
             _Filtro_Sub_Familias_Todas = Not CBool(_Tbl_Filtro_Sub_Familias.Rows.Count)
@@ -1179,6 +1211,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Filtro_Sucursales,
             _Filtro_Bodegas,
             _Filtro_Entidades,
+            _Filtro_EntidadesExcluidas,
             _Filtro_Ciudad,
             _Filtro_Comunas,
             _Filtro_Rubros_En,
@@ -1190,6 +1223,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Filtro_Vendedores_Asignados,
             _Filtro_Responzables,
             _Filtro_Productos,
+            _Filtro_ProductosExcluidos,
             _Filtro_Marcas,
             _Filtro_Rubros_Pr,
             _Filtro_Zonas_Pr,
@@ -1226,6 +1260,13 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Else
             _Filtro_Entidades = Generar_Filtro_IN(_Tbl_Filtro_Entidad, "Chk", "Codigo", False, True, "'")
             _Filtro_Entidades = "And ENDO IN " & _Filtro_Entidades & vbCrLf
+        End If
+
+        If Not IsNothing(_Tbl_Filtro_EntidadExcluidas) AndAlso CBool(_Tbl_Filtro_EntidadExcluidas.Rows.Count) Then
+            _Filtro_EntidadesExcluidas = Generar_Filtro_IN(_Tbl_Filtro_EntidadExcluidas, "Chk", "Codigo", False, True, "'")
+            _Filtro_EntidadesExcluidas = "And ENDO Not In " & _Filtro_EntidadesExcluidas & vbCrLf
+        Else
+            _Filtro_EntidadesExcluidas = String.Empty
         End If
 
         If _Filtro_Lista_Precio_Asig_Todas Then
@@ -1313,12 +1354,18 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Filtro_Vendedores_Asignados = "And KOFUEN IN " & _Filtro_Vendedores_Asignados & vbCrLf
         End If
 
-
         If _Filtro_Productos_Todos Then
             _Filtro_Productos = String.Empty
         Else
             _Filtro_Productos = Generar_Filtro_IN(_Tbl_Filtro_Productos, "Chk", "Codigo", False, True, "'")
             _Filtro_Productos = "And KOPRCT IN " & _Filtro_Productos & vbCrLf
+        End If
+
+        If Not IsNothing(_Tbl_Filtro_ProductosExcluidos) AndAlso CBool(_Tbl_Filtro_ProductosExcluidos.Rows.Count) Then
+            _Filtro_ProductosExcluidos = Generar_Filtro_IN(_Tbl_Filtro_ProductosExcluidos, "Chk", "Codigo", False, True, "'")
+            _Filtro_ProductosExcluidos = "And KOPRCT Not In " & _Filtro_ProductosExcluidos & vbCrLf
+        Else
+            _Filtro_ProductosExcluidos = String.Empty
         End If
 
         If _Filtro_Rubro_Productos_Todas Then
@@ -1391,6 +1438,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                               _Filtro_Sucursales &
                               _Filtro_Bodegas &
                               _Filtro_Entidades &
+                              _Filtro_EntidadesExcluidas &
                               _Filtro_Ciudad &
                               _Filtro_Comunas &
                               _Filtro_Rubros_En &
@@ -1402,6 +1450,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                               _Filtro_Vendedores &
                               _Filtro_Vendedores_Asignados &
                               _Filtro_Productos &
+                              _Filtro_ProductosExcluidos &
                               _Filtro_Rubros_Pr &
                               _Filtro_Marcas &
                               _Filtro_Zonas_Pr &
@@ -3305,6 +3354,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End If
 
         Btn_Filtro_Ent_Entidades.Image = Fx_Imagen_Filtro(_Filtro_Entidad_Todas)
+        Btn_Filtro_Ent_EntidadesExcluidas.Image = Fx_Imagen_Filtro(Not (Not IsNothing(_Tbl_Filtro_EntidadExcluidas) AndAlso CBool(_Tbl_Filtro_EntidadExcluidas.Rows.Count)))
         Btn_Filtro_Ent_Ciudades.Image = Fx_Imagen_Filtro(_Filtro_Ciudad_Todas)
         Btn_Filtro_Ent_Comunas.Image = Fx_Imagen_Filtro(_Filtro_Comunas_Todas)
         Btn_Filtro_Ent_Rubros.Image = Fx_Imagen_Filtro(_Filtro_Rubro_Entidades_Todas)
@@ -3326,7 +3376,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
            Not _Filtro_Tipo_Entidad_Todas Or
            Not _Filtro_Tama_Empresa_Todas Or
            Not _Filtro_Lista_Precio_Asig_Todas Or
-           Not _Filtro_Lista_Precio_Docu_Todas Then
+           Not _Filtro_Lista_Precio_Docu_Todas Or
+           (Not IsNothing(_Tbl_Filtro_EntidadExcluidas) AndAlso CBool(_Tbl_Filtro_EntidadExcluidas.Rows.Count)) Then
 
             Btn_Filtrar_Entidades.Image = Imagenes_16x16.Images.Item("filter.png")
         Else
@@ -3334,6 +3385,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End If
 
         Btn_Filtro_Pro_Productos.Image = Fx_Imagen_Filtro(_Filtro_Productos_Todos)
+        Btn_Filtro_Pro_ProductosExcluidos.Image = Fx_Imagen_Filtro(Not (Not IsNothing(_Tbl_Filtro_ProductosExcluidos) AndAlso CBool(_Tbl_Filtro_ProductosExcluidos.Rows.Count)))
         Btn_Filtro_Pro_Super_Familias.Image = Fx_Imagen_Filtro(_Filtro_Super_Familias_Todas)
         Btn_Filtro_Pro_Familias.Image = Fx_Imagen_Filtro(_Filtro_Familias_Todas)
         Btn_Filtro_Pro_Sub_Familias.Image = Fx_Imagen_Filtro(_Filtro_Sub_Familias_Todas)
@@ -3349,7 +3401,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
            Not _Filtro_Marcas_Todas Or
            Not _Filtro_Clalibpr_Todas Or
            Not _Filtro_Rubro_Productos_Todas Or
-           Not _Filtro_Zonas_Productos_Todas Then
+           Not _Filtro_Zonas_Productos_Todas Or
+           (Not IsNothing(_Tbl_Filtro_ProductosExcluidos) AndAlso CBool(_Tbl_Filtro_ProductosExcluidos.Rows.Count)) Then
             Btn_Filtrar_Productos.Image = Imagenes_16x16.Images.Item("filter.png")
         Else
             Btn_Filtrar_Productos.Image = Nothing
@@ -4293,6 +4346,52 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
+    Private Sub Btn_Filtro_Ent_EntidadesExcluidas_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Ent_EntidadesExcluidas.Click
+
+        Dim _SqlFiltro_Fechas As String
+
+        _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
+                            Format(Dtp_Fecha_Hasta.Value, "yyyyMMdd") & "'" & vbCrLf
+
+        Dim _Sql_Filtro_Condicion_Extra = "And KOEN+SUEN In (Select Distinct ENDO+SUENDO From " & _Nombre_Tabla_Paso & ")"
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl_Filtro_EntidadExcluidas,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Entidades, _Sql_Filtro_Condicion_Extra,
+                               False, False,, False,, False) Then
+
+            _Tbl_Filtro_EntidadExcluidas = _Filtrar.Pro_Tbl_Filtro
+
+            Sb_Actualizar_Grilla(False)
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_Filtro_Pro_ProductosExcluidos_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Pro_ProductosExcluidos.Click
+
+        Dim _SqlFiltro_Fechas As String
+
+        _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
+                             Format(Dtp_Fecha_Hasta.Value, "yyyyMMdd") & "'" & vbCrLf
+
+        Dim _Sql_Filtro_Condicion_Extra = "And KOPR In (Select Distinct KOPRCT From " & _Nombre_Tabla_Paso & ")"
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl_Filtro_ProductosExcluidos,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
+                               False, False) Then
+
+            _Tbl_Filtro_ProductosExcluidos = _Filtrar.Pro_Tbl_Filtro
+
+            Sb_Actualizar_Grilla(False)
+
+        End If
+
+    End Sub
+
     Sub Sb_Formato_Graficos(_Grafico As Chart,
                             _ChartArea As Integer,
                             _Serie As Integer)
@@ -4424,7 +4523,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End With
 
     End Sub
-
 
     Private Sub Sb_Grafico_Tendencias()
 

@@ -63,6 +63,7 @@
                        "When MisVentas = 1 Then 'Mis ventas'" & vbCrLf &
                        "When VentasXEmpresa = 1 Then 'Ventas por empresa'" & vbCrLf &
                        "When VentasXSucursal = 1 Then 'Ventas por sucursales...'+XSucursales" & vbCrLf &
+                       "When VentasXBodegas = 1 Then 'Ventas por bodegas...'+XBodegas" & vbCrLf &
                        "When VentasXVendedores = 1 Then 'Ventas por vendedores: '+XVendedores" & vbCrLf &
                        "End As Resumen" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Comisiones_Mis" & vbCrLf &

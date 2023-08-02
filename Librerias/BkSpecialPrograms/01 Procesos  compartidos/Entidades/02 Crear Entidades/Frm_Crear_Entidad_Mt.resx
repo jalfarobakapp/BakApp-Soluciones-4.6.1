@@ -127,7 +127,7 @@
   <data name="Btn_Agregar_Notif.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAGVJREFUOE/l0jEKgEAQA8ADwQP1ff7Jx/gyKyvtYlIIR24L4RrFYprdbKpNAJqE
+        vQAADr0BR/uQrQAAAGVJREFUOE/l0jEKgEAQA8ADwQP1ff7Jx/gyKyvtYlIIR24L4RrFYprdbKpNAJqE
         w3ldOtpMH2WrgTCsApgcZauBMPy1Ai53Oo0X+F6Gu+AgP3hifEmB4+J3f+AYbisQHkylKAMgXZ51qgwv
         K0wNAAAAAElFTkSuQmCC
 </value>
@@ -230,7 +230,7 @@
   <data name="Btn_Agregar_CtaCte.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAGVJREFUOE/l0jEKgEAQA8ADwQP1ff7Jx/gyKyvtYlIIR24L4RrFYprdbKpNAJqE
+        vQAADr0BR/uQrQAAAGVJREFUOE/l0jEKgEAQA8ADwQP1ff7Jx/gyKyvtYlIIR24L4RrFYprdbKpNAJqE
         w3ldOtpMH2WrgTCsApgcZauBMPy1Ai53Oo0X+F6Gu+AgP3hifEmB4+J3f+AYbisQHkylKAMgXZ51qgwv
         K0wNAAAAAElFTkSuQmCC
 </value>
@@ -238,7 +238,7 @@
   <data name="ReflectionImage1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAACjBJREFUeF7lmn9MXlcZx8faumXO/YhL1anRqDGZzqgzsy4xSxYX/5gm6tTENdXO
+        vQAADr0BR/uQrQAACjBJREFUeF7lmn9MXlcZx8faumXO/YhL1anRqDGZzqgzsy4xSxYX/5gm6tTENdXO
         NbRSi5TawgIBWU0jCoLUtZ0oUykp8jZlQTZplOb1ImEQICCRki5z+6O1oliWYhkwWK+f53jP2bn3Hl5e
         4KXQ9SQf+t7nPPc5z/d57zn3nvv2Ot/3r2mcxkywffv2W7Kzs/fBT3fs2PFel89awGlcDgi+HvFf2rZt
         27PgBZzClg03us5ZTZzGpYLAjyL2l1p4bW2t19ra6lEUXYgEPve7zl0tnMbFgqhbEfk4ApMitKSkxBsd
@@ -1079,6 +1079,58 @@ Ya sean estos de venta o compra.
         YGdttQAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="Btn_ProductosExcluidos.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAS7SURBVFhH7Zd7UFRVHMcPT4cSnSGN8gEqMNGEsBGU9Ec2vnAxpDAsLZomqHFnZAQd4g+FlAFm
+        KEah3RApc9AMhekxtBAkycQG7OUZhCSrLvIIFoFdHrEP7tmm37l7dthd7iyG+1d5Zj6z955z7u/7Peee
+        8zt7EV+JfdkPlaTvRCUZO9HFjF12uZAeibKPxSHRoQ9QRvJB9OWJ3bz9zPx4PhXJaiuQSCSiahbF28sD
+        hHegYel7T49IE+pVlQlYVZlotEfvd4cNl4o/0YslErat7Kier888CXi693stxrhF0c1QVVritvmjntK3
+        XUA4TSVNmOUPMM+wNJG9/tVxnVgsYSUSMftbecoi4ol45na1DmMWT3Zd1LZXZJuE1656lBs1CAcBDM+D
+        C/jj2yRDybk8fYG40FgoEc91f3NkEfH38V9910F8jtV0fK6DOlxT8KrJwMjNOvexX06euFd7TAsY7THy
+        UwquvZSu+xRGTcSLis7O3axMN/D1tQDPDjToMGtg1a2fEXFiCtfkUwPwPuqN91EMBoPx8tdXMRE2c29s
+        DNNmuwWzc+wEc8ZyluYNjDfkDI/LMo2LMVSXxU25lYH6TO247JTeHjPKa7OsVmOwELc2ADeDNo283K04
+        pLM1AAvRNvACpnrKtQ8N/DcMjEgTsfzKh/qG0jQO5mqqeUvZxWEGlspDA/97A3iqp2wIDKjgmrWs5zUw
+        Nzuhp+n7vgrpD0e37X8GDKdqxdCV+Gil+HXPvsJkNFCSi/qK3l05WBq/d+SHBCnpw2tAp9Ph1tY2fEep
+        xFVV1RgOINzY2IT7+wc45HKGQzU6ihWKW9xBZGkAhFUgHNmTtuvx1n1hp5qjBG3ANDADtLe+9lzmjZTt
+        3gMlByNrzsQsNKBWq41ni4qxtLIKH05KJvc4NzcPy2S/cuR+nMfdd3Z2cX0sDRDx/gsHnuqIj4ht2fOs
+        GvibDzCiaYkJjfv5jXDk5e7qMAOYjNwkLmCp0O+ACHgBiACOAnc5I1ECDNdxBWEbHWOAvHMy7RCcGzkE
+        L5bvDnY9HrQOBa7wQOmb1yOo8wWUnAFTn8lmYcgTDjFAFhy885M0cEuTMMTlxdWe3Ct+a+NqIu4D3KHt
+        /UAfvc7iNbDYIrQxwCrF+zwhWBsN+s6RwDX2xDcByfS+08qAeRdoNBrcJGeM5LcXVnt7RycRw903ejhs
+        dsGoIieaCE3ToIJNy5eZxdcDt83iTORmP3H4BsRECZ6ndbNWBpaYB8YU2dEIFtYMDbrlo2Af1Cy0Eh+A
+        NeF3WuCDHoOVD22hpB6e0VoZWCKssiB2RfMeQTsVSwPWAbfM4oww2D8/1Be5OTuh/b6ryMwkUgNd5Htg
+        iCfov4JkOJJkqOCfgIJeDzLCkID8sA3IzckJ+TyyDF3bEeQC9R20PYcYKINPpokHAdLr5S7RVm8IqOFG
+        RsVhmwV8scUfLXd1Rq+s9UI124OcoV5C26eg/UlUdToaVefvRTX5MQ9EXdJWxAgFcZCIMBUgM5EKhINQ
+        EPweABppG0lEb56PCOB2i0PKSjcXVP5SICywkP0QfNI8E7ZA2xQRr9z2DFrj4U6fdlDxcndBJL2SDAci
+        WUAnoKV0ATlk2snITeII/QMUNBSZ0EckhwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="Btn_ProductosExcluidos.ImageAlt" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAATBSURBVFhH7Zd7TFNXHMdPwOA0Q12cQJNNN5FsJiyb29yUbJTWRijcMmjBUqQloJu9dMBWIMRh
+        xoCCBpOt0ILIFJWVxECygZJIlj1dQuacOBVMmM8JWzB7iJQ+sKfLfudybmi7u5Jh/9o8ySf33vM79/f9
+        nudtkVBJS3gSWcskqKVMOi8W4xb0bnEW0u96He025KBmo0ywHU9VoRjJXn0RiUQiquZTVq1YgqxGCRq2
+        adeP2HSnL3flY8AbjO+O6WeOtDa6LRar5+sjpW6hNnPocOPb6U6xOPGsfEsCVaUl/ZW1aPCgOhyEK0e6
+        dA7hBHMM2/I9/Yd2u5pB2GqxeL45WhxUHPLi2jcVriSxGLdVZTr3FW+dFRatXMr1GhrEA2eEXg7kzDF2
+        pqN1v7vJ0uptsTbfGzxqCCo+DOJ79GmupCSxp6Na5YI63F2XNmuA1cgiBszqPYPt252ANxjfHtLikx++
+        w/WaiJvN5nsDB96YEWrrA67YkeqSSsQeW10WESemcI+JmTUA83FaLBZ750MikXhr6uoxEeZhGAUWahuI
+        BHrevTfbd5TmDPS/r/7llDnHOx8nzVpuyH05ZdY4B5py3MGoLmIcTLJkxkfc3wA8jAUEBTn/0Q5XoAFY
+        iIGJ/8YHFRnOBwb+GwZGbPn4s44y96eHyzk+7zDyWyooITOwUB4Y+N8bwOaKjHEmRTIB9x7fekEDihSp
+        W+gs/ydIe/KN59+n4Ms23YnRDq3ielNu5FdlSnS8kEGX9qmXjx7WpkOsn7QRNCCTyXBpaSnWarXYZDJh
+        qVSKy8vLsUaj4TAajRxKpRIXFBRwHyI/AzbdBAgnT9Spo+wlqhpnkeocMAXYgaHpkqza29Xq6CsH85J7
+        +M+xrwGFQuHt7OzE9fX1eGhoCL52DO7r68OVlZUcvb293DPLsrihocHfAIhfbct7arI8W+k0qP5wGbL+
+        FAKM3JkuVmWPGhRo1ZLFITOASc+JuMug8lChSwALvAxsBozATRrDQHZvGvwsC4kBmPOJWnUU33NI3m7X
+        Zy5qSdqANjy6ArVJXkBQtwa47jMSkw5WGRMSA2TBwZy/RxOfteuV4cmrY7gpLn02joivBq7R+E/ADXpv
+        EjSQl5fHLUL4FSS4CAMMeG4050ZCsnM0qW5vwjOceImAuKNItRaub9HnC34G+F0gl8uxni3ypqTIsSZ3
+        Oy4o3IkTExOxVpfPEbALbo/t1xChKZr0ufWPRPLijwNXefGpXa/FnmASEAz9S7TO4T8CCzsHfh1v5AzY
+        adJN7VIy50pf8Vt2fUZsT/JGFA0rHww8T+udfgYWiOdmU+4ySDZEk1Y6ipSPwfUKLz7NZq77OHUTWhwW
+        htj4WGJ2J41dJP8HxgWS/ivICUcOGZr0Z+BHej/mYDPjPknbzImvW/4wGi9kwqH+PI03EAPdwO+wle6H
+        rt+qtkVDwjsk8Zy4Mu6LjES0LGIR0j69Bt0qYMKg3krjdyEuQsdr5Ki7LhWRo/F++L5CQeY2GxJjKkBG
+        ogLYCPXxcNUAg7OxLHIQ5XypTOJ2S0jKyoci0A+arWTxbYPkk/xIBAKxu0T8Wn4qeiJyKX07RCUKVjg5
+        XmERxoCICbgAOCkXgQaIiUjPZ8UR+guE5v+jh2zHVgAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAAAAAAAEAIADdGQAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAEAAAABAAgGAAAAXHKoZgAAGaRJ
@@ -1197,7 +1249,7 @@ Ya sean estos de venta o compra.
   <data name="Btn_Editar_Anotacion_Evento.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAVFJREFUSEu1lD1OxDAQhRNxAAoKrsUZEuUgHIGOK1BS5AZ4UZrdW1DSIiEl5r3s
+        vQAADr0BR/uQrQAAAVFJREFUSEu1lD1OxDAQhRNxAAoKrsUZEuUgHIGOK1BS5AZ4UZrdW1DSIiEl5r3s
         TLDX4+BEy0hf5sfxe3aKVN77hKZpfNu2I/JEUHvOBO3DtbD+Bk+qZYrLBuY9cO+oeok4T6HsCdVAxAa6
         ICeYrysxSdbQnjmpqcP9KH8NdFhosBqqhfJsgOYxFA1riWkYBt/3fRbnnLxqGEBopJgIzsOg3xw0CLX+
         3wCDa3+iT/CK8mzABwazcM5AckkcsfcOedYlS0GTQgPtmcP6BO5BVXcHT1gvBkRNlA1B8VuwaKlJZEBo
@@ -1209,7 +1261,7 @@ Ya sean estos de venta o compra.
   <data name="Btn_Eliminar_tabla.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAY9JREFUSEu1lbtOw0AQRbeDMlDwCiQ9FQVflNTwDaQA8aiAT0EWFQVIEaSgBIki
+        vQAADr0BR/uQrQAAAY9JREFUSEu1lbtOw0AQRbeDMlDwCiQ9FQVflNTwDaQA8aiAT0EWFQVIEaSgBIki
         fAItDyle7pi5ydjrRJtFGelkHt69147txHnvAzqdju92uyPkXEDtZaawt8ds/QMuqVUrrhskpyB7R9QL
         xOUsSEpQA1E24AE9g+JyNXLNDPaSg1p0ZD/KiQGHkQYzg1oo/wzQ9KyorTXywWDgsyybSr/f16U1BhAa
         iZgKFkPTzx1iYLUWb4DBYr8i+eBwmoHmqKAWyomBIAciDdhLDuqpBgJNSEpQAxEaCDwDzbN4BwfgzsyE
@@ -1222,7 +1274,7 @@ Ya sean estos de venta o compra.
   <data name="Btn_Opciones_Link.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAhNJREFUSEudlU0rRVEUhsmlRIky8A/8Bv+ACSW5KKV8JMqEmYkykV9gZET5yOfA
+        vQAADr0BR/uQrQAAAhNJREFUSEudlU0rRVEUhsmlRIky8A/8Bv+ACSW5KKV8JMqEmYkykV9gZET5yOfA
         zEcpAxMZmCoDJsSIwcXxvrt33dY5d7vuNXjuWnvtd717ndM+1CRJ8m8aRo4n6vIH9yBB/oG4DnJek2qo
         BhjtwTShuQ7weYvpShorAQb7NHS8Z9bfIBwSNSgHJjzSpDRhnGMdeStr3FOd1EdNfgON+2o0o1m/j1ob
         99wBmymDctCcjY6UudO1Os1niSAGhOG1sEmTzcR0BnSP0sUFHoh2ZGyPXtYc+8NukJeoyICwl2JHMEcc
@@ -1237,7 +1289,7 @@ Ya sean estos de venta o compra.
   <data name="Btn_Ver_Link.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAZlJREFUSEvVlkFLAkEUxyeKoI8QRLfOHtZbdAiCQK8mEhWdCrpJUIfO0SXoSwRS
+        vQAADr0BR/uQrQAAAZlJREFUSEvVlkFLAkEUxyeKoI8QRLfOHtZbdAiCQK8mEhWdCrpJUIfO0SXoSwRS
         gighdOviBosH7dAx69TVoMJMdPq/tz6zTdud2oIe/N7Mzrx5vxVxV6W1VrFYrBKNRnUkEgkE1eLMYzwe
         n6XzX8HJsqw2xsBBAsdxSKL9JJzorkxC6svlsq+E03cFFLZtk6QzTPJjAUWpVOJPgghP4IW+F0Q4gkHx
         F4IOht8TdHv8T8EtuEKPB4yhCZrgAEwB6TEq835kE0PgeAJzwG2wVDhWiZzuUlep4qrs8T4lQ8EacA+/
@@ -1250,7 +1302,7 @@ Ya sean estos de venta o compra.
   <data name="Btn_Ir_Ubicacion_Link.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAmhJREFUSEu1k09oE0EUxqe0FnIQRLwI4kHwKoIHL70IImFLFaGG1qZp2JBIpVhC
+        vQAADr0BR/uQrQAAAmhJREFUSEu1k09oE0EUxqe0FnIQRLwI4kHwKoIHL70IImFLFaGG1qZp2JBIpVhC
         RQNFMVDx0IPoodZDb5XSBqqlBmo3qBcFD2IVPXjQKkJvWlFLG9vs+L3ZncnuZjd/1A788t6bffN985Ys
         45xvKyyRSNzTdd0kkHNvTpF6/A7XAxlUiHoN7PhXJsKgTkqgYZNGJlDPZG3vqWjnW4jR7TQg1KSNvKJG
         WA6YQB+7ONC3czQTDY1d7QmNX+sOjWc90eZu1kIKBeE0+JEdirWs5DoOcyNc4gWNI5oVUUK1tVeO7txU
@@ -1266,7 +1318,7 @@ Ya sean estos de venta o compra.
   <data name="Btn_Ver_Documento.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAZlJREFUSEvVlkFLAkEUxyeKoI8QRLfOHtZbdAiCQK8mEhWdCrpJUIfO0SXoSwRS
+        vQAADr0BR/uQrQAAAZlJREFUSEvVlkFLAkEUxyeKoI8QRLfOHtZbdAiCQK8mEhWdCrpJUIfO0SXoSwRS
         gighdOviBosH7dAx69TVoMJMdPq/tz6zTdud2oIe/N7Mzrx5vxVxV6W1VrFYrBKNRnUkEgkE1eLMYzwe
         n6XzX8HJsqw2xsBBAsdxSKL9JJzorkxC6svlsq+E03cFFLZtk6QzTPJjAUWpVOJPgghP4IW+F0Q4gkHx
         F4IOht8TdHv8T8EtuEKPB4yhCZrgAEwB6TEq835kE0PgeAJzwG2wVDhWiZzuUlep4qrs8T4lQ8EacA+/

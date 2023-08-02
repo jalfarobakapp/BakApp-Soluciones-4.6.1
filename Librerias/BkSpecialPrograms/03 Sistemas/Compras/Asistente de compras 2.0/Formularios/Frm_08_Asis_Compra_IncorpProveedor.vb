@@ -154,26 +154,53 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
 
             Me.Enabled = False
 
+            Dim _NoIncluirProveedoresConProdBloqueados As Boolean = True
 
             'BUSCA LA ULTIMA COMPRA DE LOS PRODUCTOS QUE NO ENCONTRO GRC DENTRO DE LA FECHA TOPE, ES DECIR
-            Consulta_sql = "Update " & _Tabla_Paso & vbCrLf &
+
+            If _NoIncluirProveedoresConProdBloqueados Then
+
+                Consulta_sql = "Update " & _Tabla_Paso & vbCrLf &
                            "Set Id_Ult_Compra = Isnull((Select top 1 IDMAEDDO From MAEDDO" & vbCrLf &
                            "Where TIDO = '" & Cmb_Documento_Compra.SelectedValue & "' and KOPRCT = Codigo" & vbCrLf &
                            "And FEEMLI >= '" & Format(_Fecha, "yyyyMMdd") & "'" & vbCrLf &
+                           "And ENDO+SUENDO Not In (Select CodEntidad+CodSucEntidad From " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos Z1 " &
+                           "Where Z1.Chk = 1 And Z1.CodEntidad+Z1.CodSucEntidad = ENDO+SUENDO And Z1.Codigo = KOPRCT)" & vbCrLf &
                            "Order by PPPRNERE1),0)"
-            _Sql.Ej_consulta_IDU(Consulta_sql)
+                _Sql.Ej_consulta_IDU(Consulta_sql)
 
-
-            'LITERALMETE LA ULTIMA VEZ QUE SE COMPRO EL PRODUCTO SIN IMPORTAR LA FECHA TOPE
-            Consulta_sql = "Update " & _Tabla_Paso & vbCrLf &
+                'LITERALMETE LA ULTIMA VEZ QUE SE COMPRO EL PRODUCTO SIN IMPORTAR LA FECHA TOPE
+                Consulta_sql = "Update " & _Tabla_Paso & vbCrLf &
                            "Set Id_Ult_Compra = Isnull((Select top 1 IDMAEDDO From MAEDDO" & vbCrLf &
                            "Where TIDO = '" & Cmb_Documento_Compra.SelectedValue & "' and KOPRCT = Codigo" & vbCrLf &
+                           "And ENDO+SUENDO Not In (Select CodEntidad+CodSucEntidad From " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos Z1 " &
+                           "Where Z1.Chk = 1 And Z1.CodEntidad+Z1.CodSucEntidad = ENDO+SUENDO And Z1.Codigo = KOPRCT)" & vbCrLf &
                            "Order by FEEMLI DESC),0)" & vbCrLf &
                            "Where Id_Ult_Compra = 0"
-            _Sql.Ej_consulta_IDU(Consulta_sql)
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            Else
+
+                Consulta_sql = "Update " & _Tabla_Paso & vbCrLf &
+               "Set Id_Ult_Compra = Isnull((Select top 1 IDMAEDDO From MAEDDO" & vbCrLf &
+               "Where TIDO = '" & Cmb_Documento_Compra.SelectedValue & "' and KOPRCT = Codigo" & vbCrLf &
+               "And FEEMLI >= '" & Format(_Fecha, "yyyyMMdd") & "'" & vbCrLf &
+               "Where Z1.CodEntidad+Z1.CodSucEntidad = ENDO+SUENDO And Z1.Codigo = Codigo)" & vbCrLf &
+               "Order by PPPRNERE1),0)"
+                _Sql.Ej_consulta_IDU(Consulta_sql)
 
 
-            'INCORPORAR LOS DATOS DE LAS ULTMIAS COMPRAS A LOS PRODUCTOS MASIVAMENTE
+                'LITERALMETE LA ULTIMA VEZ QUE SE COMPRO EL PRODUCTO SIN IMPORTAR LA FECHA TOPE
+                Consulta_sql = "Update " & _Tabla_Paso & vbCrLf &
+                               "Set Id_Ult_Compra = Isnull((Select top 1 IDMAEDDO From MAEDDO" & vbCrLf &
+                               "Where TIDO = '" & Cmb_Documento_Compra.SelectedValue & "' and KOPRCT = Codigo" & vbCrLf &
+                               "Order by FEEMLI DESC),0)" & vbCrLf &
+                               "Where Id_Ult_Compra = 0"
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            End If
+
+            'INCORPORAR LOS DATOS DE LAS ULTIMAS COMPRAS A LOS PRODUCTOS MASIVAMENTE
             Consulta_sql = "Update " & _Tabla_Paso & " Set Endo_Utl_Compra = Ddo.ENDO,Suendo_Utl_Compra = Ddo.SUENDO," & vbCrLf &
                            "Costo_Ult_Compra_RealUd1 = Ddo.PPPRNERE1," & vbCrLf &
                            "Costo_Ult_Compra_RealUd2 = Ddo.PPPRNERE2,Costo_Ult_Compra = Ddo.PPPRNE,Dscto_Ult_Compra =PODTGLLI," & vbCrLf &
@@ -208,6 +235,9 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
 
             Dim _SqlQuery_2 As String = String.Empty
 
+            Consulta_sql = "Select * From " & _Tabla_Paso & vbCrLf &
+                           "Where Codigo+Endo_Utl_Compra+Suendo_Utl_Compra In (Select Codigo+CodEntidad+CodSucEntidad From " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos Where Chk = 1)"
+            Dim _Tbl_ProdBloqueadoProveedores As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
 
             If CBool(_Tbl_Codigos_Madre.Rows.Count) Then

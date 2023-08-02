@@ -4,6 +4,7 @@
     Dim Consulta_Sql As String
 
     Dim _CodFuncionario As String
+    Dim _TblBodega As DataTable
     Dim _TblSucursales As DataTable
     Dim _TblVendedores As DataTable
 
@@ -42,13 +43,16 @@
                 Rdb_MisVentas.Checked = .Item("MisVentas")
                 Rdb_VentasXEmpresa.Checked = .Item("VentasXEmpresa")
                 Rdb_VentasXSucursal.Checked = .Item("VentasXSucursal")
+                Txt_Sucursales.Text = .Item("XSucursales")
                 Rdb_VentasXVendedores.Checked = .Item("VentasXVendedores")
+                Txt_Vendedores.Text = .Item("XVendedores")
                 Chk_QuitarEntExcluidas.Checked = .Item("QuitarEntExcluidas")
                 Chk_TieneSC.Checked = .Item("TieneSC")
+                Rdb_VentasXBodega.Checked = .Item("VentasXBodegas")
+                Txt_Bodegas.Text = .Item("XBodegas")
             End With
 
         End If
-
 
         AddHandler Rdb_MisVentas.CheckedChanged, AddressOf Rdb_CheckedChanged
         AddHandler Rdb_VentasXEmpresa.CheckedChanged, AddressOf Rdb_CheckedChanged
@@ -66,7 +70,10 @@
         End If
 
         Dim _PorcComsion As Double = De_Txt_a_Num_01(Txt_PorcComision.Text, 5)
-        Dim _Vendedores As String = Replace(Txt_Vendedores.Text, "'", "''")
+
+        Dim _XVendedores As String = Replace(Txt_Vendedores.Text, "'", "''")
+        Dim _XSucursales As String = Replace(Txt_Sucursales.Text, "'", "''")
+        Dim _XBodegas As String = Replace(Txt_Bodegas.Text, "'", "''")
 
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Comisiones_Mis Set" &
                        " PorcComision = " & De_Num_a_Tx_01(_PorcComsion, False, 5) &
@@ -74,11 +81,13 @@
                        ",VentasXEmpresa = " & Convert.ToInt32(Rdb_VentasXEmpresa.Checked) &
                        ",Empresa = " & ModEmpresa &
                        ",VentasXSucursal = " & Convert.ToInt32(Rdb_VentasXSucursal.Checked) &
-                       ",XSucursales = '" & Txt_Sucursales.Text & "'" &
+                       ",XSucursales = '" & _XSucursales & "'" &
                        ",VentasXVendedores = " & Convert.ToInt32(Rdb_VentasXVendedores.Checked) &
-                       ",XVendedores = '" & _Vendedores & "'" &
+                       ",XVendedores = '" & _XVendedores & "'" &
                        ",TieneSC = " & Convert.ToInt32(Chk_TieneSC.Checked) &
-                       ",QuitarEntExcluidas = " & Convert.ToInt32(Chk_QuitarEntExcluidas.Checked) & vbCrLf &
+                       ",QuitarEntExcluidas = " & Convert.ToInt32(Chk_QuitarEntExcluidas.Checked) &
+                       ",XBodegas = '" & _XBodegas & "'" &
+                       ",VentasXBodegas = " & Convert.ToInt32(Rdb_VentasXBodega.Checked) & vbCrLf &
                        "Where Id = " & _Id
         If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
             Grabar = True
@@ -89,7 +98,7 @@
 
     Private Sub Txt_Sucursales_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Sucursales.ButtonCustomClick
 
-        Dim _Sql_Filtro_Condicion_Extra '= "And KOFU Not In (Select CodFuncionario From " & _Global_BaseBk & "Zw_Comisiones_Fun)"
+        Dim _Sql_Filtro_Condicion_Extra
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
 
@@ -110,7 +119,7 @@
     End Sub
 
     Private Sub Txt_Sucursales_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Sucursales.ButtonCustom2Click
-
+        Txt_Sucursales.Text = String.Empty
     End Sub
 
     Private Sub Txt_Vendedores_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Vendedores.ButtonCustomClick
@@ -136,7 +145,7 @@
     End Sub
 
     Private Sub Txt_Vendedores_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Vendedores.ButtonCustom2Click
-
+        Txt_Vendedores.Text = String.Empty
     End Sub
 
     Private Sub Txt_PorcComision_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Txt_PorcComision.KeyPress
@@ -165,4 +174,35 @@
 
     End Sub
 
+    Private Sub Txt_Bodegas_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Bodegas.ButtonCustomClick
+
+        Dim _Sql_Filtro_Condicion_Extra
+
+        If Not String.IsNullOrEmpty(Txt_Bodegas.Text) Then
+            Dim _Bodegas As String = Replace(Txt_Bodegas.Text, "''", "'")
+            Consulta_Sql = "Select Cast(1 As Bit) As Chk,EMPRESA+KOSU+KOBO As Codigo,NOKOBO As Descripcion From TABBO Where EMPRESA+KOSU+KOBO In " & _Bodegas
+            _TblBodega = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        End If
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_TblBodega,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Bodegas, _Sql_Filtro_Condicion_Extra,
+                               False, False) Then
+
+            _TblBodega = _Filtrar.Pro_Tbl_Filtro
+
+        End If
+
+        If Not IsNothing(_TblBodega) AndAlso _TblBodega.Rows.Count Then
+            Txt_Bodegas.Text = Generar_Filtro_IN(_TblBodega, "Chk", "Codigo", False, True, "'")
+        Else
+            Txt_Bodegas.Text = String.Empty
+        End If
+
+    End Sub
+
+    Private Sub Txt_Bodegas_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Bodegas.ButtonCustom2Click
+        Txt_Bodegas.Text = String.Empty
+    End Sub
 End Class

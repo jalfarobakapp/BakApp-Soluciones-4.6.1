@@ -85,7 +85,7 @@ Partial Class Frm_Cms_Periodos_Crear
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(12, 3)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(531, 295)
+        Me.GroupPanel2.Size = New System.Drawing.Size(531, 294)
         '
         '
         '
@@ -507,7 +507,7 @@ Partial Class Frm_Cms_Periodos_Crear
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Eliminar})
-        Me.Bar2.Location = New System.Drawing.Point(0, 318)
+        Me.Bar2.Location = New System.Drawing.Point(0, 311)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(553, 41)
         Me.Bar2.Stretch = True
@@ -538,7 +538,7 @@ Partial Class Frm_Cms_Periodos_Crear
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(553, 359)
+        Me.ClientSize = New System.Drawing.Size(553, 352)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.Bar2)
         Me.DoubleBuffered = True

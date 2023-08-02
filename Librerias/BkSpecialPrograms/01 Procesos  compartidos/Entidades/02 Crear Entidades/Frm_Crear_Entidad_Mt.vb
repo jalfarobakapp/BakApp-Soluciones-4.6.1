@@ -25,6 +25,7 @@ Public Class Frm_Crear_Entidad_Mt
 
     Dim _Pais, _Ciudad, _Comuna As String
     Dim _Existe_Tbl_Entidades_Bakapp As Boolean
+    Private _TblFiltroProductosExcluidos As DataTable
 
     Public Property Pro_CreaNuevaEntidad() As Boolean
         Get
@@ -255,6 +256,7 @@ Public Class Frm_Crear_Entidad_Mt
     Private Sub Frm_Crear_Entidad_Mt_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
         Chk_Libera_NVV.Visible = _Existe_Tbl_Entidades_Bakapp
+        Btn_ProductosExcluidos.Visible = False
 
         If _Crear_Entidad Then
 
@@ -294,9 +296,26 @@ Public Class Frm_Crear_Entidad_Mt
             _BlocDesb_VtayCmp = ChkxBloqueadaVyC.Checked
             _BlocDesb_Compra = ChkxBlocCompras.Checked
 
+            If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Entidades_ProdExcluidos") Then
+
+                Btn_ProductosExcluidos.Visible = True
+
+                Consulta_sql = "Select Chk,Codigo,Descripcion" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos" & vbCrLf &
+                               "Where CodEntidad = '" & TxtxCodEntidad.Text & "' And CodSucEntidad = '" & TxtxSucursal.Text & "'"
+                _TblFiltroProductosExcluidos = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                If IsNothing(_TblFiltroProductosExcluidos) Then
+                    Btn_ProductosExcluidos.Tooltip = "Productos excluidos"
+                Else
+                    Btn_ProductosExcluidos.Tooltip = "Productos excluidos: " & FormatNumber(_TblFiltroProductosExcluidos.Rows.Count, 0)
+                End If
+
+            End If
+
         End If
 
-        AddHandler ChkxBloqueadaVyC.CheckValueChanged, AddressOf Sb_ChkxBloqueadaVyC
+            AddHandler ChkxBloqueadaVyC.CheckValueChanged, AddressOf Sb_ChkxBloqueadaVyC
         AddHandler ChkxBlocCompras.CheckValueChanged, AddressOf Sb_ChkxBlocCompras
 
         Sb_Llenar_Grilla_Ctas_Ctes()
@@ -691,6 +710,10 @@ Public Class Frm_Crear_Entidad_Mt
             '                               "And SUEN = '" & TxtxSucursal.Text & "'"))
             'Loop While (_Existe_Suc)
 
+        End If
+
+        If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Entidades_ProdExcluidos") Then
+            Sb_Actualizar_Filtro_Tmp(_TblFiltroProductosExcluidos, TxtxCodEntidad.Text, TxtxSucursal.Text)
         End If
 
         Dim cn2 As New SqlConnection
@@ -2351,6 +2374,30 @@ Public Class Frm_Crear_Entidad_Mt
         Btn_Modificar_RevCredFincred.Enabled = Not Chk_RevCredFincred.Enabled
     End Sub
 
+    Private Sub Btn_ProductosExcluidos_Click(sender As Object, e As EventArgs) Handles Btn_ProductosExcluidos.Click
+
+        Dim _Sql_Filtro_Condicion_Extra = "And TIPR In ('FPN','FIN')"
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_TblFiltroProductosExcluidos,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
+                               False, False,, False,, False) Then
+
+            Dim _Nodo_Raiz_Asociados As Integer = _Global_Row_Configuracion_General.Item("Nodo_Raiz_Asociados")
+
+            _TblFiltroProductosExcluidos = _Filtrar.Pro_Tbl_Filtro
+
+        End If
+
+        If IsNothing(_TblFiltroProductosExcluidos) Then
+            Btn_ProductosExcluidos.Tooltip = "Productos excluidos"
+        Else
+            Btn_ProductosExcluidos.Tooltip = "Productos excluidos: " & FormatNumber(_TblFiltroProductosExcluidos.Rows.Count, 0)
+        End If
+
+    End Sub
+
     Private Sub Btn_Cta_Eliminar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cta_Eliminar.Click
 
         If MessageBoxEx.Show(Me, "¿Confirma la eliminación de la cuenta?", "Eliminar cuenta",
@@ -2393,5 +2440,40 @@ Public Class Frm_Crear_Entidad_Mt
         End If
     End Sub
 
+    Sub Sb_Actualizar_Filtro_Tmp(_Tbl As DataTable, _CodEntidad As String, _CodSucEntidad As String)
+
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+        Dim Consulta_sql As String
+
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos" & vbCrLf &
+                       "Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _CodSucEntidad & "'" & vbCrLf
+
+        If Not IsNothing(_Tbl) Then
+
+            If _Tbl.Rows.Count Then
+
+                For Each _Fila As DataRow In _Tbl.Rows
+
+                    Dim _Chk As Boolean = _Fila.Item("Chk")
+
+                    If _Chk Then
+
+                        Dim _Codigo = _Fila.Item("Codigo")
+                        Dim _Descripcion = _Fila.Item("Descripcion")
+
+                        Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos (CodEntidad,CodSucEntidad,Chk,Codigo,Descripcion) VALUES" & Space(1) &
+                                        "('" & _CodEntidad & "','" & _CodSucEntidad & "',1,'" & _Codigo & "','" & _Descripcion & "')" & vbCrLf
+
+                    End If
+
+                Next
+
+            End If
+
+        End If
+
+        _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+    End Sub
 
 End Class

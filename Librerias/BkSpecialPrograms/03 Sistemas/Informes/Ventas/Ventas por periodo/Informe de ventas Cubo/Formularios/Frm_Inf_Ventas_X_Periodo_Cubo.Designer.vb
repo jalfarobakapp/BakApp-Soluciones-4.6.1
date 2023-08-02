@@ -24,28 +24,28 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Inf_Ventas_X_Periodo_Cubo))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend3 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend4 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series5 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim ChartArea5 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend5 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series6 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim ChartArea6 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend6 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series7 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim ChartArea8 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend8 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series8 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea9 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend9 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series9 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea7 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend7 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim ChartArea10 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend10 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series10 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series11 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series12 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea11 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend11 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series13 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea12 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend12 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series14 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.Btn_Informe_X_Documentos_Entidades = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo_Venta_Diaria = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
@@ -143,9 +143,6 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Grupo_Total = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Total_Neto = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Super_Tab = New DevComponents.DotNetBar.SuperTabControl()
-        Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.Grafico_Acumulado_X_Grupo = New System.Windows.Forms.DataVisualization.Charting.Chart()
-        Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel4 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Chk_Ver_Leyenda = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Grafico_Pie = New System.Windows.Forms.DataVisualization.Charting.Chart()
@@ -160,6 +157,9 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Grafico_Linea_De_Tiempo = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Grafico_Acumulado_X_Grupo = New System.Windows.Forms.DataVisualization.Charting.Chart()
+        Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Grafico_Tendencias = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.Grafico_Year2 = New System.Windows.Forms.DataVisualization.Charting.Chart()
@@ -170,6 +170,10 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Tiempo_revisa_actualizacion = New System.Windows.Forms.Timer(Me.components)
         Me.Imagenes_32x32 = New System.Windows.Forms.ImageList(Me.components)
+        Me.LabelItem9 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Filtro_Ent_EntidadesExcluidas = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Filtro_Pro_ProductosExcluidos = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem10 = New DevComponents.DotNetBar.LabelItem()
         Me.Grupo_Venta_Diaria.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -196,13 +200,13 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Grupo_Total.SuspendLayout()
         CType(Me.Super_Tab, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Super_Tab.SuspendLayout()
-        Me.SuperTabControlPanel2.SuspendLayout()
-        CType(Me.Grafico_Acumulado_X_Grupo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel4.SuspendLayout()
         CType(Me.Grafico_Pie, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Num_Agrupador_Pie, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel1.SuspendLayout()
         CType(Me.Grafico_Linea_De_Tiempo, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuperTabControlPanel2.SuspendLayout()
+        CType(Me.Grafico_Acumulado_X_Grupo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel3.SuspendLayout()
         CType(Me.Grafico_Tendencias, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grafico_Year2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -265,7 +269,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.ContextMenuBar1.DockSide = DevComponents.DotNetBar.eDockSide.Document
         Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Filtros_Entidades, Me.Menu_Contextual_Filtros_Productos, Me.Menu_Contextual_Filtros_Suc_Bod, Me.Menu_Contextual_Filtros_Funcionarios, Me.Menu_Contextual_Vista_Detalle, Me.Menu_Contextual_Consulta_Entidades, Me.Menu_Contextual_Mantencion_Informe, Me.Menu_Contextual_Ventas})
-        Me.ContextMenuBar1.Location = New System.Drawing.Point(9, 66)
+        Me.ContextMenuBar1.Location = New System.Drawing.Point(9, 13)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
         Me.ContextMenuBar1.Size = New System.Drawing.Size(463, 69)
         Me.ContextMenuBar1.Stretch = True
@@ -278,7 +282,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         '
         Me.Menu_Contextual_Filtros_Entidades.AutoExpandOnClick = True
         Me.Menu_Contextual_Filtros_Entidades.Name = "Menu_Contextual_Filtros_Entidades"
-        Me.Menu_Contextual_Filtros_Entidades.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem3, Me.Btn_Filtro_Ent_Entidades, Me.Btn_Filtro_Ent_Ciudades, Me.Btn_Filtro_Ent_Comunas, Me.Btn_Filtro_Ent_Rubros, Me.Btn_Filtro_Ent_Zonas, Me.Btn_Filtro_Ent_Tipo_Entidad, Me.Btn_Filtro_Ent_Act_Economica, Me.Btn_Filtro_Ent_Tamano_Empresa, Me.Btn_Filtro_Ent_Lista_Precio_Asig, Me.Btn_Filtro_Ent_Lista_Precio_Doc})
+        Me.Menu_Contextual_Filtros_Entidades.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem3, Me.Btn_Filtro_Ent_Entidades, Me.Btn_Filtro_Ent_Ciudades, Me.Btn_Filtro_Ent_Comunas, Me.Btn_Filtro_Ent_Rubros, Me.Btn_Filtro_Ent_Zonas, Me.Btn_Filtro_Ent_Tipo_Entidad, Me.Btn_Filtro_Ent_Act_Economica, Me.Btn_Filtro_Ent_Tamano_Empresa, Me.Btn_Filtro_Ent_Lista_Precio_Asig, Me.Btn_Filtro_Ent_Lista_Precio_Doc, Me.LabelItem9, Me.Btn_Filtro_Ent_EntidadesExcluidas})
         Me.Menu_Contextual_Filtros_Entidades.Text = "Filtros Entidades"
         '
         'LabelItem3
@@ -377,7 +381,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Menu_Contextual_Filtros_Productos.AutoExpandOnClick = True
         Me.Menu_Contextual_Filtros_Productos.ImageAlt = CType(resources.GetObject("Menu_Contextual_Filtros_Productos.ImageAlt"), System.Drawing.Image)
         Me.Menu_Contextual_Filtros_Productos.Name = "Menu_Contextual_Filtros_Productos"
-        Me.Menu_Contextual_Filtros_Productos.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem2, Me.Btn_Filtro_Pro_Productos, Me.Btn_Filtro_Pro_Super_Familias, Me.Btn_Filtro_Pro_Familias, Me.Btn_Filtro_Pro_Sub_Familias, Me.Btn_Filtro_Pro_Marcas, Me.Btn_Filtro_Pro_Clas_Libre, Me.Btn_Filtro_Pro_Rubros, Me.Btn_Filtro_Pro_Zonas})
+        Me.Menu_Contextual_Filtros_Productos.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem2, Me.Btn_Filtro_Pro_Productos, Me.Btn_Filtro_Pro_Super_Familias, Me.Btn_Filtro_Pro_Familias, Me.Btn_Filtro_Pro_Sub_Familias, Me.Btn_Filtro_Pro_Marcas, Me.Btn_Filtro_Pro_Clas_Libre, Me.Btn_Filtro_Pro_Rubros, Me.Btn_Filtro_Pro_Zonas, Me.LabelItem10, Me.Btn_Filtro_Pro_ProductosExcluidos})
         Me.Menu_Contextual_Filtros_Productos.Text = "Filtros Productos"
         '
         'LabelItem2
@@ -717,37 +721,37 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla.Size = New System.Drawing.Size(481, 361)
         Me.Grilla.TabIndex = 97
         '
@@ -1440,9 +1444,9 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Super_Tab.ControlBox.MenuBox.Name = ""
         Me.Super_Tab.ControlBox.Name = ""
         Me.Super_Tab.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Super_Tab.ControlBox.MenuBox, Me.Super_Tab.ControlBox.CloseBox})
+        Me.Super_Tab.Controls.Add(Me.SuperTabControlPanel2)
         Me.Super_Tab.Controls.Add(Me.SuperTabControlPanel4)
         Me.Super_Tab.Controls.Add(Me.SuperTabControlPanel1)
-        Me.Super_Tab.Controls.Add(Me.SuperTabControlPanel2)
         Me.Super_Tab.Controls.Add(Me.SuperTabControlPanel3)
         Me.Super_Tab.ForeColor = System.Drawing.Color.Black
         Me.Super_Tab.Location = New System.Drawing.Point(3, 3)
@@ -1455,6 +1459,253 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Super_Tab.TabIndex = 1
         Me.Super_Tab.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem2, Me.SuperTabItem1, Me.SuperTabItem4, Me.SuperTabItem3})
         Me.Super_Tab.Text = "SuperTabControl1"
+        '
+        'SuperTabControlPanel4
+        '
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Ver_Leyenda)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Grafico_Pie)
+        Me.SuperTabControlPanel4.Controls.Add(Me.LabelX2)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Num_Agrupador_Pie)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Rdb_Pie_Descripcion)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Rdb_Pie_Codigo)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Btn_Totar_Pie_Izquierda)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Btn_Totar_Pie_Derecha)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Ver_Pie_3D)
+        Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
+        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(652, 559)
+        Me.SuperTabControlPanel4.TabIndex = 0
+        Me.SuperTabControlPanel4.TabItem = Me.SuperTabItem4
+        '
+        'Chk_Ver_Leyenda
+        '
+        Me.Chk_Ver_Leyenda.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Chk_Ver_Leyenda.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Ver_Leyenda.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Ver_Leyenda.Checked = True
+        Me.Chk_Ver_Leyenda.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_Ver_Leyenda.CheckValue = "Y"
+        Me.Chk_Ver_Leyenda.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Ver_Leyenda.Location = New System.Drawing.Point(353, 527)
+        Me.Chk_Ver_Leyenda.Name = "Chk_Ver_Leyenda"
+        Me.Chk_Ver_Leyenda.Size = New System.Drawing.Size(83, 23)
+        Me.Chk_Ver_Leyenda.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Ver_Leyenda.TabIndex = 23
+        Me.Chk_Ver_Leyenda.Text = "Ver Leyenda"
+        '
+        'Grafico_Pie
+        '
+        ChartArea8.Name = "ChartArea1"
+        Me.Grafico_Pie.ChartAreas.Add(ChartArea8)
+        Legend8.Font = New System.Drawing.Font("Courier New", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Legend8.ForeColor = System.Drawing.Color.Maroon
+        Legend8.IsTextAutoFit = False
+        Legend8.Name = "Legend1"
+        Legend8.TitleAlignment = System.Drawing.StringAlignment.Near
+        Me.Grafico_Pie.Legends.Add(Legend8)
+        Me.Grafico_Pie.Location = New System.Drawing.Point(-1, 3)
+        Me.Grafico_Pie.Name = "Grafico_Pie"
+        Me.Grafico_Pie.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen
+        Series8.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.DashDot
+        Series8.ChartArea = "ChartArea1"
+        Series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie
+        Series8.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Series8.Legend = "Legend1"
+        Series8.Name = "Series1"
+        Series8.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.BrightPastel
+        Me.Grafico_Pie.Series.Add(Series8)
+        Me.Grafico_Pie.Size = New System.Drawing.Size(655, 453)
+        Me.Grafico_Pie.TabIndex = 22
+        Me.Grafico_Pie.Text = "Chart1"
+        '
+        'LabelX2
+        '
+        Me.LabelX2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.LabelX2.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX2.ForeColor = System.Drawing.Color.Black
+        Me.LabelX2.Location = New System.Drawing.Point(136, 526)
+        Me.LabelX2.Name = "LabelX2"
+        Me.LabelX2.Size = New System.Drawing.Size(101, 23)
+        Me.LabelX2.TabIndex = 21
+        Me.LabelX2.Text = "Agrupar por % <="
+        '
+        'Num_Agrupador_Pie
+        '
+        Me.Num_Agrupador_Pie.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Num_Agrupador_Pie.BackColor = System.Drawing.Color.White
+        Me.Num_Agrupador_Pie.ForeColor = System.Drawing.Color.Black
+        Me.Num_Agrupador_Pie.Location = New System.Drawing.Point(243, 528)
+        Me.Num_Agrupador_Pie.Maximum = New Decimal(New Integer() {20, 0, 0, 0})
+        Me.Num_Agrupador_Pie.Name = "Num_Agrupador_Pie"
+        Me.Num_Agrupador_Pie.Size = New System.Drawing.Size(40, 22)
+        Me.Num_Agrupador_Pie.TabIndex = 20
+        Me.Num_Agrupador_Pie.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        '
+        'Rdb_Pie_Descripcion
+        '
+        Me.Rdb_Pie_Descripcion.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Rdb_Pie_Descripcion.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_Pie_Descripcion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Pie_Descripcion.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Pie_Descripcion.Checked = True
+        Me.Rdb_Pie_Descripcion.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_Pie_Descripcion.CheckValue = "Y"
+        Me.Rdb_Pie_Descripcion.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_Pie_Descripcion.Location = New System.Drawing.Point(3, 536)
+        Me.Rdb_Pie_Descripcion.Name = "Rdb_Pie_Descripcion"
+        Me.Rdb_Pie_Descripcion.Size = New System.Drawing.Size(100, 23)
+        Me.Rdb_Pie_Descripcion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_Pie_Descripcion.TabIndex = 18
+        Me.Rdb_Pie_Descripcion.Text = "Ver Descripción"
+        '
+        'Rdb_Pie_Codigo
+        '
+        Me.Rdb_Pie_Codigo.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Rdb_Pie_Codigo.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_Pie_Codigo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Pie_Codigo.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Pie_Codigo.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_Pie_Codigo.Location = New System.Drawing.Point(3, 516)
+        Me.Rdb_Pie_Codigo.Name = "Rdb_Pie_Codigo"
+        Me.Rdb_Pie_Codigo.Size = New System.Drawing.Size(56, 23)
+        Me.Rdb_Pie_Codigo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_Pie_Codigo.TabIndex = 17
+        Me.Rdb_Pie_Codigo.Text = "Ver %"
+        '
+        'Btn_Totar_Pie_Izquierda
+        '
+        Me.Btn_Totar_Pie_Izquierda.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Totar_Pie_Izquierda.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Totar_Pie_Izquierda.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Totar_Pie_Izquierda.Image = CType(resources.GetObject("Btn_Totar_Pie_Izquierda.Image"), System.Drawing.Image)
+        Me.Btn_Totar_Pie_Izquierda.Location = New System.Drawing.Point(518, 529)
+        Me.Btn_Totar_Pie_Izquierda.Name = "Btn_Totar_Pie_Izquierda"
+        Me.Btn_Totar_Pie_Izquierda.Size = New System.Drawing.Size(57, 23)
+        Me.Btn_Totar_Pie_Izquierda.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Totar_Pie_Izquierda.TabIndex = 16
+        Me.Btn_Totar_Pie_Izquierda.Text = "Rotar "
+        '
+        'Btn_Totar_Pie_Derecha
+        '
+        Me.Btn_Totar_Pie_Derecha.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Totar_Pie_Derecha.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Totar_Pie_Derecha.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Totar_Pie_Derecha.Image = CType(resources.GetObject("Btn_Totar_Pie_Derecha.Image"), System.Drawing.Image)
+        Me.Btn_Totar_Pie_Derecha.ImagePosition = DevComponents.DotNetBar.eImagePosition.Right
+        Me.Btn_Totar_Pie_Derecha.Location = New System.Drawing.Point(581, 528)
+        Me.Btn_Totar_Pie_Derecha.Name = "Btn_Totar_Pie_Derecha"
+        Me.Btn_Totar_Pie_Derecha.Size = New System.Drawing.Size(57, 23)
+        Me.Btn_Totar_Pie_Derecha.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Totar_Pie_Derecha.TabIndex = 15
+        Me.Btn_Totar_Pie_Derecha.Text = "Rotar "
+        '
+        'Chk_Ver_Pie_3D
+        '
+        Me.Chk_Ver_Pie_3D.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Chk_Ver_Pie_3D.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Ver_Pie_3D.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Ver_Pie_3D.Checked = True
+        Me.Chk_Ver_Pie_3D.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_Ver_Pie_3D.CheckValue = "Y"
+        Me.Chk_Ver_Pie_3D.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Ver_Pie_3D.Location = New System.Drawing.Point(444, 527)
+        Me.Chk_Ver_Pie_3D.Name = "Chk_Ver_Pie_3D"
+        Me.Chk_Ver_Pie_3D.Size = New System.Drawing.Size(73, 23)
+        Me.Chk_Ver_Pie_3D.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Ver_Pie_3D.TabIndex = 13
+        Me.Chk_Ver_Pie_3D.Text = "Ver en 3D"
+        '
+        'SuperTabItem4
+        '
+        Me.SuperTabItem4.AttachedControl = Me.SuperTabControlPanel4
+        Me.SuperTabItem4.GlobalItem = False
+        Me.SuperTabItem4.Name = "SuperTabItem4"
+        Me.SuperTabItem4.Text = "% de ventas"
+        '
+        'SuperTabControlPanel1
+        '
+        Me.SuperTabControlPanel1.Controls.Add(Me.Grafico_Linea_De_Tiempo)
+        Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(652, 559)
+        Me.SuperTabControlPanel1.TabIndex = 1
+        Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
+        '
+        'Grafico_Linea_De_Tiempo
+        '
+        Me.Grafico_Linea_De_Tiempo.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Grafico_Linea_De_Tiempo.BackSecondaryColor = System.Drawing.Color.White
+        Me.Grafico_Linea_De_Tiempo.BorderlineColor = System.Drawing.Color.Empty
+        Me.Grafico_Linea_De_Tiempo.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
+        Me.Grafico_Linea_De_Tiempo.BorderlineWidth = 2
+        ChartArea9.Area3DStyle.Inclination = 15
+        ChartArea9.Area3DStyle.IsClustered = True
+        ChartArea9.Area3DStyle.IsRightAngleAxes = False
+        ChartArea9.Area3DStyle.Perspective = 10
+        ChartArea9.Area3DStyle.Rotation = 10
+        ChartArea9.Area3DStyle.WallWidth = 0
+        ChartArea9.AxisX.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
+        ChartArea9.AxisX.LabelStyle.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.[Auto]
+        ChartArea9.AxisX.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea9.AxisX.MajorGrid.Interval = 0R
+        ChartArea9.AxisX.MajorGrid.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.[Auto]
+        ChartArea9.AxisX.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea9.AxisX.MajorTickMark.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.[Auto]
+        ChartArea9.AxisY.IsLabelAutoFit = False
+        ChartArea9.AxisY.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
+        ChartArea9.AxisY.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea9.AxisY.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea9.BackColor = System.Drawing.Color.White
+        ChartArea9.BackSecondaryColor = System.Drawing.Color.White
+        ChartArea9.BorderColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea9.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
+        ChartArea9.Name = "Default"
+        ChartArea9.ShadowColor = System.Drawing.Color.Transparent
+        Me.Grafico_Linea_De_Tiempo.ChartAreas.Add(ChartArea9)
+        Legend9.BackColor = System.Drawing.Color.Transparent
+        Legend9.DockedToChartArea = "Default"
+        Legend9.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Legend9.IsTextAutoFit = False
+        Legend9.Name = "Default"
+        Me.Grafico_Linea_De_Tiempo.Legends.Add(Legend9)
+        Me.Grafico_Linea_De_Tiempo.Location = New System.Drawing.Point(3, 3)
+        Me.Grafico_Linea_De_Tiempo.Name = "Grafico_Linea_De_Tiempo"
+        Me.Grafico_Linea_De_Tiempo.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen
+        Series9.ChartArea = "Default"
+        Series9.Legend = "Default"
+        Series9.Name = "Series1"
+        Series9.YValuesPerPoint = 6
+        Me.Grafico_Linea_De_Tiempo.Series.Add(Series9)
+        Me.Grafico_Linea_De_Tiempo.Size = New System.Drawing.Size(646, 553)
+        Me.Grafico_Linea_De_Tiempo.TabIndex = 126
+        '
+        'SuperTabItem1
+        '
+        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel1
+        Me.SuperTabItem1.GlobalItem = False
+        Me.SuperTabItem1.Name = "SuperTabItem1"
+        Me.SuperTabItem1.Text = "Línea de tiempo"
+        Me.SuperTabItem1.Visible = False
         '
         'SuperTabControlPanel2
         '
@@ -1477,52 +1728,52 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Grafico_Acumulado_X_Grupo.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
         Me.Grafico_Acumulado_X_Grupo.BorderlineWidth = 2
         Me.Grafico_Acumulado_X_Grupo.BorderSkin.SkinStyle = System.Windows.Forms.DataVisualization.Charting.BorderSkinStyle.Emboss
-        ChartArea3.Area3DStyle.Inclination = 15
-        ChartArea3.Area3DStyle.IsClustered = True
-        ChartArea3.Area3DStyle.IsRightAngleAxes = False
-        ChartArea3.Area3DStyle.Perspective = 10
-        ChartArea3.Area3DStyle.Rotation = 10
-        ChartArea3.Area3DStyle.WallWidth = 0
-        ChartArea3.AxisX.LabelAutoFitStyle = CType((((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.DecreaseFont Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels) _
+        ChartArea7.Area3DStyle.Inclination = 15
+        ChartArea7.Area3DStyle.IsClustered = True
+        ChartArea7.Area3DStyle.IsRightAngleAxes = False
+        ChartArea7.Area3DStyle.Perspective = 10
+        ChartArea7.Area3DStyle.Rotation = 10
+        ChartArea7.Area3DStyle.WallWidth = 0
+        ChartArea7.AxisX.LabelAutoFitStyle = CType((((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.DecreaseFont Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels) _
             Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep30) _
             Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap), System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)
-        ChartArea3.AxisX.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
-        ChartArea3.AxisX.LabelStyle.Interval = 1.0R
-        ChartArea3.AxisX.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea3.AxisX.MajorGrid.Interval = 0R
-        ChartArea3.AxisX.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea3.AxisX.MajorTickMark.Enabled = False
-        ChartArea3.AxisX.MajorTickMark.Interval = 1.0R
-        ChartArea3.AxisY.IsStartedFromZero = False
-        ChartArea3.AxisY.LabelAutoFitStyle = CType((((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.DecreaseFont Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels) _
+        ChartArea7.AxisX.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
+        ChartArea7.AxisX.LabelStyle.Interval = 1.0R
+        ChartArea7.AxisX.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea7.AxisX.MajorGrid.Interval = 0R
+        ChartArea7.AxisX.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea7.AxisX.MajorTickMark.Enabled = False
+        ChartArea7.AxisX.MajorTickMark.Interval = 1.0R
+        ChartArea7.AxisY.IsStartedFromZero = False
+        ChartArea7.AxisY.LabelAutoFitStyle = CType((((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.DecreaseFont Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels) _
             Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep30) _
             Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap), System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)
-        ChartArea3.AxisY.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
-        ChartArea3.AxisY.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea3.AxisY.MajorGrid.Interval = 0R
-        ChartArea3.AxisY.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea3.AxisY.MajorTickMark.Enabled = False
-        ChartArea3.AxisY.MajorTickMark.Interval = 1.0R
-        ChartArea3.BackColor = System.Drawing.Color.Transparent
-        ChartArea3.BackSecondaryColor = System.Drawing.Color.White
-        ChartArea3.BorderColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea3.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
-        ChartArea3.Name = "Default"
-        ChartArea3.Position.Auto = False
-        ChartArea3.Position.Height = 73.0!
-        ChartArea3.Position.Width = 89.43796!
-        ChartArea3.Position.X = 4.824818!
-        ChartArea3.Position.Y = 10.0!
-        ChartArea3.ShadowColor = System.Drawing.Color.Transparent
-        Me.Grafico_Acumulado_X_Grupo.ChartAreas.Add(ChartArea3)
-        Legend3.Alignment = System.Drawing.StringAlignment.Center
-        Legend3.BackColor = System.Drawing.Color.Transparent
-        Legend3.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom
-        Legend3.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
-        Legend3.IsTextAutoFit = False
-        Legend3.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row
-        Legend3.Name = "Default"
-        Me.Grafico_Acumulado_X_Grupo.Legends.Add(Legend3)
+        ChartArea7.AxisY.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
+        ChartArea7.AxisY.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea7.AxisY.MajorGrid.Interval = 0R
+        ChartArea7.AxisY.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea7.AxisY.MajorTickMark.Enabled = False
+        ChartArea7.AxisY.MajorTickMark.Interval = 1.0R
+        ChartArea7.BackColor = System.Drawing.Color.Transparent
+        ChartArea7.BackSecondaryColor = System.Drawing.Color.White
+        ChartArea7.BorderColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea7.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
+        ChartArea7.Name = "Default"
+        ChartArea7.Position.Auto = False
+        ChartArea7.Position.Height = 73.0!
+        ChartArea7.Position.Width = 89.43796!
+        ChartArea7.Position.X = 4.824818!
+        ChartArea7.Position.Y = 10.0!
+        ChartArea7.ShadowColor = System.Drawing.Color.Transparent
+        Me.Grafico_Acumulado_X_Grupo.ChartAreas.Add(ChartArea7)
+        Legend7.Alignment = System.Drawing.StringAlignment.Center
+        Legend7.BackColor = System.Drawing.Color.Transparent
+        Legend7.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom
+        Legend7.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
+        Legend7.IsTextAutoFit = False
+        Legend7.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row
+        Legend7.Name = "Default"
+        Me.Grafico_Acumulado_X_Grupo.Legends.Add(Legend7)
         Me.Grafico_Acumulado_X_Grupo.Location = New System.Drawing.Point(1, 3)
         Me.Grafico_Acumulado_X_Grupo.Name = "Grafico_Acumulado_X_Grupo"
         Me.Grafico_Acumulado_X_Grupo.Size = New System.Drawing.Size(649, 526)
@@ -1535,253 +1786,6 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.SuperTabItem2.Name = "SuperTabItem2"
         Me.SuperTabItem2.Text = "Ventas Rango de fecha"
         Me.SuperTabItem2.Visible = False
-        '
-        'SuperTabControlPanel4
-        '
-        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Ver_Leyenda)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Grafico_Pie)
-        Me.SuperTabControlPanel4.Controls.Add(Me.LabelX2)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Num_Agrupador_Pie)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Rdb_Pie_Descripcion)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Rdb_Pie_Codigo)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Btn_Totar_Pie_Izquierda)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Btn_Totar_Pie_Derecha)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Ver_Pie_3D)
-        Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
-        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(652, 532)
-        Me.SuperTabControlPanel4.TabIndex = 0
-        Me.SuperTabControlPanel4.TabItem = Me.SuperTabItem4
-        '
-        'Chk_Ver_Leyenda
-        '
-        Me.Chk_Ver_Leyenda.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Chk_Ver_Leyenda.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Ver_Leyenda.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Ver_Leyenda.Checked = True
-        Me.Chk_Ver_Leyenda.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Chk_Ver_Leyenda.CheckValue = "Y"
-        Me.Chk_Ver_Leyenda.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Ver_Leyenda.Location = New System.Drawing.Point(353, 500)
-        Me.Chk_Ver_Leyenda.Name = "Chk_Ver_Leyenda"
-        Me.Chk_Ver_Leyenda.Size = New System.Drawing.Size(83, 23)
-        Me.Chk_Ver_Leyenda.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Ver_Leyenda.TabIndex = 23
-        Me.Chk_Ver_Leyenda.Text = "Ver Leyenda"
-        '
-        'Grafico_Pie
-        '
-        ChartArea1.Name = "ChartArea1"
-        Me.Grafico_Pie.ChartAreas.Add(ChartArea1)
-        Legend1.Font = New System.Drawing.Font("Courier New", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Legend1.ForeColor = System.Drawing.Color.Maroon
-        Legend1.IsTextAutoFit = False
-        Legend1.Name = "Legend1"
-        Legend1.TitleAlignment = System.Drawing.StringAlignment.Near
-        Me.Grafico_Pie.Legends.Add(Legend1)
-        Me.Grafico_Pie.Location = New System.Drawing.Point(-1, 3)
-        Me.Grafico_Pie.Name = "Grafico_Pie"
-        Me.Grafico_Pie.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen
-        Series1.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.DashDot
-        Series1.ChartArea = "ChartArea1"
-        Series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie
-        Series1.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Series1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.BrightPastel
-        Me.Grafico_Pie.Series.Add(Series1)
-        Me.Grafico_Pie.Size = New System.Drawing.Size(655, 453)
-        Me.Grafico_Pie.TabIndex = 22
-        Me.Grafico_Pie.Text = "Chart1"
-        '
-        'LabelX2
-        '
-        Me.LabelX2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.LabelX2.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(136, 499)
-        Me.LabelX2.Name = "LabelX2"
-        Me.LabelX2.Size = New System.Drawing.Size(101, 23)
-        Me.LabelX2.TabIndex = 21
-        Me.LabelX2.Text = "Agrupar por % <="
-        '
-        'Num_Agrupador_Pie
-        '
-        Me.Num_Agrupador_Pie.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Num_Agrupador_Pie.BackColor = System.Drawing.Color.White
-        Me.Num_Agrupador_Pie.ForeColor = System.Drawing.Color.Black
-        Me.Num_Agrupador_Pie.Location = New System.Drawing.Point(243, 501)
-        Me.Num_Agrupador_Pie.Maximum = New Decimal(New Integer() {20, 0, 0, 0})
-        Me.Num_Agrupador_Pie.Name = "Num_Agrupador_Pie"
-        Me.Num_Agrupador_Pie.Size = New System.Drawing.Size(40, 22)
-        Me.Num_Agrupador_Pie.TabIndex = 20
-        Me.Num_Agrupador_Pie.Value = New Decimal(New Integer() {1, 0, 0, 0})
-        '
-        'Rdb_Pie_Descripcion
-        '
-        Me.Rdb_Pie_Descripcion.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Rdb_Pie_Descripcion.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Rdb_Pie_Descripcion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_Pie_Descripcion.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_Pie_Descripcion.Checked = True
-        Me.Rdb_Pie_Descripcion.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Rdb_Pie_Descripcion.CheckValue = "Y"
-        Me.Rdb_Pie_Descripcion.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Pie_Descripcion.Location = New System.Drawing.Point(3, 509)
-        Me.Rdb_Pie_Descripcion.Name = "Rdb_Pie_Descripcion"
-        Me.Rdb_Pie_Descripcion.Size = New System.Drawing.Size(100, 23)
-        Me.Rdb_Pie_Descripcion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_Pie_Descripcion.TabIndex = 18
-        Me.Rdb_Pie_Descripcion.Text = "Ver Descripción"
-        '
-        'Rdb_Pie_Codigo
-        '
-        Me.Rdb_Pie_Codigo.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Rdb_Pie_Codigo.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Rdb_Pie_Codigo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_Pie_Codigo.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_Pie_Codigo.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Pie_Codigo.Location = New System.Drawing.Point(3, 489)
-        Me.Rdb_Pie_Codigo.Name = "Rdb_Pie_Codigo"
-        Me.Rdb_Pie_Codigo.Size = New System.Drawing.Size(56, 23)
-        Me.Rdb_Pie_Codigo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_Pie_Codigo.TabIndex = 17
-        Me.Rdb_Pie_Codigo.Text = "Ver %"
-        '
-        'Btn_Totar_Pie_Izquierda
-        '
-        Me.Btn_Totar_Pie_Izquierda.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Totar_Pie_Izquierda.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Btn_Totar_Pie_Izquierda.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Totar_Pie_Izquierda.Image = CType(resources.GetObject("Btn_Totar_Pie_Izquierda.Image"), System.Drawing.Image)
-        Me.Btn_Totar_Pie_Izquierda.Location = New System.Drawing.Point(518, 502)
-        Me.Btn_Totar_Pie_Izquierda.Name = "Btn_Totar_Pie_Izquierda"
-        Me.Btn_Totar_Pie_Izquierda.Size = New System.Drawing.Size(57, 23)
-        Me.Btn_Totar_Pie_Izquierda.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Totar_Pie_Izquierda.TabIndex = 16
-        Me.Btn_Totar_Pie_Izquierda.Text = "Rotar "
-        '
-        'Btn_Totar_Pie_Derecha
-        '
-        Me.Btn_Totar_Pie_Derecha.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Totar_Pie_Derecha.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Btn_Totar_Pie_Derecha.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Totar_Pie_Derecha.Image = CType(resources.GetObject("Btn_Totar_Pie_Derecha.Image"), System.Drawing.Image)
-        Me.Btn_Totar_Pie_Derecha.ImagePosition = DevComponents.DotNetBar.eImagePosition.Right
-        Me.Btn_Totar_Pie_Derecha.Location = New System.Drawing.Point(581, 501)
-        Me.Btn_Totar_Pie_Derecha.Name = "Btn_Totar_Pie_Derecha"
-        Me.Btn_Totar_Pie_Derecha.Size = New System.Drawing.Size(57, 23)
-        Me.Btn_Totar_Pie_Derecha.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Totar_Pie_Derecha.TabIndex = 15
-        Me.Btn_Totar_Pie_Derecha.Text = "Rotar "
-        '
-        'Chk_Ver_Pie_3D
-        '
-        Me.Chk_Ver_Pie_3D.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Chk_Ver_Pie_3D.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Ver_Pie_3D.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Ver_Pie_3D.Checked = True
-        Me.Chk_Ver_Pie_3D.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Chk_Ver_Pie_3D.CheckValue = "Y"
-        Me.Chk_Ver_Pie_3D.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Ver_Pie_3D.Location = New System.Drawing.Point(444, 500)
-        Me.Chk_Ver_Pie_3D.Name = "Chk_Ver_Pie_3D"
-        Me.Chk_Ver_Pie_3D.Size = New System.Drawing.Size(73, 23)
-        Me.Chk_Ver_Pie_3D.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Ver_Pie_3D.TabIndex = 13
-        Me.Chk_Ver_Pie_3D.Text = "Ver en 3D"
-        '
-        'SuperTabItem4
-        '
-        Me.SuperTabItem4.AttachedControl = Me.SuperTabControlPanel4
-        Me.SuperTabItem4.GlobalItem = False
-        Me.SuperTabItem4.Name = "SuperTabItem4"
-        Me.SuperTabItem4.Text = "% de ventas"
-        '
-        'SuperTabControlPanel1
-        '
-        Me.SuperTabControlPanel1.Controls.Add(Me.Grafico_Linea_De_Tiempo)
-        Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(652, 532)
-        Me.SuperTabControlPanel1.TabIndex = 1
-        Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
-        '
-        'Grafico_Linea_De_Tiempo
-        '
-        Me.Grafico_Linea_De_Tiempo.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Grafico_Linea_De_Tiempo.BackSecondaryColor = System.Drawing.Color.White
-        Me.Grafico_Linea_De_Tiempo.BorderlineColor = System.Drawing.Color.Empty
-        Me.Grafico_Linea_De_Tiempo.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
-        Me.Grafico_Linea_De_Tiempo.BorderlineWidth = 2
-        ChartArea2.Area3DStyle.Inclination = 15
-        ChartArea2.Area3DStyle.IsClustered = True
-        ChartArea2.Area3DStyle.IsRightAngleAxes = False
-        ChartArea2.Area3DStyle.Perspective = 10
-        ChartArea2.Area3DStyle.Rotation = 10
-        ChartArea2.Area3DStyle.WallWidth = 0
-        ChartArea2.AxisX.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
-        ChartArea2.AxisX.LabelStyle.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.[Auto]
-        ChartArea2.AxisX.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea2.AxisX.MajorGrid.Interval = 0R
-        ChartArea2.AxisX.MajorGrid.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.[Auto]
-        ChartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea2.AxisX.MajorTickMark.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.[Auto]
-        ChartArea2.AxisY.IsLabelAutoFit = False
-        ChartArea2.AxisY.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
-        ChartArea2.AxisY.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea2.BackColor = System.Drawing.Color.White
-        ChartArea2.BackSecondaryColor = System.Drawing.Color.White
-        ChartArea2.BorderColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea2.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
-        ChartArea2.Name = "Default"
-        ChartArea2.ShadowColor = System.Drawing.Color.Transparent
-        Me.Grafico_Linea_De_Tiempo.ChartAreas.Add(ChartArea2)
-        Legend2.BackColor = System.Drawing.Color.Transparent
-        Legend2.DockedToChartArea = "Default"
-        Legend2.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Legend2.IsTextAutoFit = False
-        Legend2.Name = "Default"
-        Me.Grafico_Linea_De_Tiempo.Legends.Add(Legend2)
-        Me.Grafico_Linea_De_Tiempo.Location = New System.Drawing.Point(3, 3)
-        Me.Grafico_Linea_De_Tiempo.Name = "Grafico_Linea_De_Tiempo"
-        Me.Grafico_Linea_De_Tiempo.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen
-        Series2.ChartArea = "Default"
-        Series2.Legend = "Default"
-        Series2.Name = "Series1"
-        Series2.YValuesPerPoint = 6
-        Me.Grafico_Linea_De_Tiempo.Series.Add(Series2)
-        Me.Grafico_Linea_De_Tiempo.Size = New System.Drawing.Size(646, 526)
-        Me.Grafico_Linea_De_Tiempo.TabIndex = 126
-        '
-        'SuperTabItem1
-        '
-        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel1
-        Me.SuperTabItem1.GlobalItem = False
-        Me.SuperTabItem1.Name = "SuperTabItem1"
-        Me.SuperTabItem1.Text = "Línea de tiempo"
-        Me.SuperTabItem1.Visible = False
         '
         'SuperTabControlPanel3
         '
@@ -1801,81 +1805,81 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Grafico_Tendencias.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
         Me.Grafico_Tendencias.BorderlineWidth = 2
         Me.Grafico_Tendencias.BorderSkin.BorderColor = System.Drawing.Color.White
-        ChartArea4.Area3DStyle.Inclination = 15
-        ChartArea4.Area3DStyle.IsClustered = True
-        ChartArea4.Area3DStyle.IsRightAngleAxes = False
-        ChartArea4.Area3DStyle.Perspective = 10
-        ChartArea4.Area3DStyle.Rotation = 10
-        ChartArea4.Area3DStyle.WallWidth = 0
-        ChartArea4.AxisX.LabelAutoFitStyle = CType((((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.DecreaseFont Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels) _
+        ChartArea10.Area3DStyle.Inclination = 15
+        ChartArea10.Area3DStyle.IsClustered = True
+        ChartArea10.Area3DStyle.IsRightAngleAxes = False
+        ChartArea10.Area3DStyle.Perspective = 10
+        ChartArea10.Area3DStyle.Rotation = 10
+        ChartArea10.Area3DStyle.WallWidth = 0
+        ChartArea10.AxisX.LabelAutoFitStyle = CType((((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.DecreaseFont Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels) _
             Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep30) _
             Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap), System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)
-        ChartArea4.AxisX.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
-        ChartArea4.AxisX.LabelStyle.Format = "dd MMM"
-        ChartArea4.AxisX.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea4.AxisX.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea4.AxisX2.LabelAutoFitStyle = CType((((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.DecreaseFont Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels) _
+        ChartArea10.AxisX.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
+        ChartArea10.AxisX.LabelStyle.Format = "dd MMM"
+        ChartArea10.AxisX.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea10.AxisX.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea10.AxisX2.LabelAutoFitStyle = CType((((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.DecreaseFont Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels) _
             Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep30) _
             Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap), System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)
-        ChartArea4.AxisY.IsStartedFromZero = False
-        ChartArea4.AxisY.LabelAutoFitStyle = CType((((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.DecreaseFont Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels) _
+        ChartArea10.AxisY.IsStartedFromZero = False
+        ChartArea10.AxisY.LabelAutoFitStyle = CType((((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.DecreaseFont Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels) _
             Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep30) _
             Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap), System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)
-        ChartArea4.AxisY.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
-        ChartArea4.AxisY.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea4.AxisY.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea4.AxisY2.LabelAutoFitStyle = CType((((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.DecreaseFont Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels) _
+        ChartArea10.AxisY.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
+        ChartArea10.AxisY.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea10.AxisY.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea10.AxisY2.LabelAutoFitStyle = CType((((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.DecreaseFont Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels) _
             Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep30) _
             Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap), System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)
-        ChartArea4.BackColor = System.Drawing.Color.White
-        ChartArea4.BackSecondaryColor = System.Drawing.Color.Transparent
-        ChartArea4.BorderColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea4.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
-        ChartArea4.Name = "Default"
-        ChartArea4.ShadowColor = System.Drawing.Color.Transparent
-        Me.Grafico_Tendencias.ChartAreas.Add(ChartArea4)
-        Legend4.Alignment = System.Drawing.StringAlignment.Far
-        Legend4.BackColor = System.Drawing.Color.Transparent
-        Legend4.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom
-        Legend4.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
-        Legend4.IsDockedInsideChartArea = False
-        Legend4.IsTextAutoFit = False
-        Legend4.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row
-        Legend4.Name = "Default"
-        Me.Grafico_Tendencias.Legends.Add(Legend4)
+        ChartArea10.BackColor = System.Drawing.Color.White
+        ChartArea10.BackSecondaryColor = System.Drawing.Color.Transparent
+        ChartArea10.BorderColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea10.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
+        ChartArea10.Name = "Default"
+        ChartArea10.ShadowColor = System.Drawing.Color.Transparent
+        Me.Grafico_Tendencias.ChartAreas.Add(ChartArea10)
+        Legend10.Alignment = System.Drawing.StringAlignment.Far
+        Legend10.BackColor = System.Drawing.Color.Transparent
+        Legend10.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom
+        Legend10.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
+        Legend10.IsDockedInsideChartArea = False
+        Legend10.IsTextAutoFit = False
+        Legend10.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row
+        Legend10.Name = "Default"
+        Me.Grafico_Tendencias.Legends.Add(Legend10)
         Me.Grafico_Tendencias.Location = New System.Drawing.Point(15, 359)
         Me.Grafico_Tendencias.Name = "Grafico_Tendencias"
-        Series3.BorderColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(59, Byte), Integer), CType(CType(105, Byte), Integer))
-        Series3.ChartArea = "Default"
-        Series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Range
-        Series3.Color = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(140, Byte), Integer), CType(CType(240, Byte), Integer))
-        Series3.Legend = "Default"
-        Series3.Name = "Rango"
-        Series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime
-        Series3.YValuesPerPoint = 2
-        Series4.BorderWidth = 2
-        Series4.ChartArea = "Default"
-        Series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
-        Series4.Color = System.Drawing.Color.FromArgb(CType(CType(252, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(65, Byte), Integer))
-        Series4.LabelForeColor = System.Drawing.Color.OrangeRed
-        Series4.Legend = "Default"
-        Series4.Name = "Proyeccion"
-        Series4.ShadowColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Series4.ShadowOffset = 1
-        Series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime
-        Series5.BorderWidth = 2
-        Series5.ChartArea = "Default"
-        Series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
-        Series5.Color = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(10, Byte), Integer))
-        Series5.Legend = "Default"
-        Series5.Name = "Ventas"
-        Series5.ShadowColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Series5.ShadowOffset = 1
-        Series5.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime
-        Series5.YValuesPerPoint = 4
-        Me.Grafico_Tendencias.Series.Add(Series3)
-        Me.Grafico_Tendencias.Series.Add(Series4)
-        Me.Grafico_Tendencias.Series.Add(Series5)
+        Series10.BorderColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(59, Byte), Integer), CType(CType(105, Byte), Integer))
+        Series10.ChartArea = "Default"
+        Series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Range
+        Series10.Color = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(140, Byte), Integer), CType(CType(240, Byte), Integer))
+        Series10.Legend = "Default"
+        Series10.Name = "Rango"
+        Series10.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime
+        Series10.YValuesPerPoint = 2
+        Series11.BorderWidth = 2
+        Series11.ChartArea = "Default"
+        Series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
+        Series11.Color = System.Drawing.Color.FromArgb(CType(CType(252, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(65, Byte), Integer))
+        Series11.LabelForeColor = System.Drawing.Color.OrangeRed
+        Series11.Legend = "Default"
+        Series11.Name = "Proyeccion"
+        Series11.ShadowColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Series11.ShadowOffset = 1
+        Series11.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime
+        Series12.BorderWidth = 2
+        Series12.ChartArea = "Default"
+        Series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
+        Series12.Color = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(10, Byte), Integer))
+        Series12.Legend = "Default"
+        Series12.Name = "Ventas"
+        Series12.ShadowColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Series12.ShadowOffset = 1
+        Series12.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime
+        Series12.YValuesPerPoint = 4
+        Me.Grafico_Tendencias.Series.Add(Series10)
+        Me.Grafico_Tendencias.Series.Add(Series11)
+        Me.Grafico_Tendencias.Series.Add(Series12)
         Me.Grafico_Tendencias.Size = New System.Drawing.Size(625, 124)
         Me.Grafico_Tendencias.TabIndex = 129
         '
@@ -1888,46 +1892,46 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Grafico_Year2.BorderlineColor = System.Drawing.Color.Empty
         Me.Grafico_Year2.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
         Me.Grafico_Year2.BorderlineWidth = 2
-        ChartArea5.Area3DStyle.Inclination = 15
-        ChartArea5.Area3DStyle.IsClustered = True
-        ChartArea5.Area3DStyle.IsRightAngleAxes = False
-        ChartArea5.Area3DStyle.Perspective = 10
-        ChartArea5.Area3DStyle.Rotation = 10
-        ChartArea5.Area3DStyle.WallWidth = 0
-        ChartArea5.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount
-        ChartArea5.AxisX.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Months
-        ChartArea5.AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Months
-        ChartArea5.AxisX.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
-        ChartArea5.AxisX.LabelStyle.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.[Auto]
-        ChartArea5.AxisX.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea5.AxisX.MajorGrid.Interval = 0R
-        ChartArea5.AxisX.MajorGrid.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.[Auto]
-        ChartArea5.AxisX.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea5.AxisX.MajorTickMark.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.[Auto]
-        ChartArea5.AxisY.IsLabelAutoFit = False
-        ChartArea5.AxisY.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
-        ChartArea5.AxisY.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea5.AxisY.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea5.BackColor = System.Drawing.Color.White
-        ChartArea5.BackSecondaryColor = System.Drawing.Color.White
-        ChartArea5.BorderColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea5.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
-        ChartArea5.Name = "Default"
-        ChartArea5.ShadowColor = System.Drawing.Color.Transparent
-        Me.Grafico_Year2.ChartAreas.Add(ChartArea5)
-        Legend5.BackColor = System.Drawing.Color.Transparent
-        Legend5.DockedToChartArea = "Default"
-        Legend5.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Legend5.IsTextAutoFit = False
-        Legend5.Name = "Default"
-        Me.Grafico_Year2.Legends.Add(Legend5)
+        ChartArea11.Area3DStyle.Inclination = 15
+        ChartArea11.Area3DStyle.IsClustered = True
+        ChartArea11.Area3DStyle.IsRightAngleAxes = False
+        ChartArea11.Area3DStyle.Perspective = 10
+        ChartArea11.Area3DStyle.Rotation = 10
+        ChartArea11.Area3DStyle.WallWidth = 0
+        ChartArea11.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount
+        ChartArea11.AxisX.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Months
+        ChartArea11.AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Months
+        ChartArea11.AxisX.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
+        ChartArea11.AxisX.LabelStyle.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.[Auto]
+        ChartArea11.AxisX.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea11.AxisX.MajorGrid.Interval = 0R
+        ChartArea11.AxisX.MajorGrid.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.[Auto]
+        ChartArea11.AxisX.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea11.AxisX.MajorTickMark.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.[Auto]
+        ChartArea11.AxisY.IsLabelAutoFit = False
+        ChartArea11.AxisY.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
+        ChartArea11.AxisY.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea11.AxisY.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea11.BackColor = System.Drawing.Color.White
+        ChartArea11.BackSecondaryColor = System.Drawing.Color.White
+        ChartArea11.BorderColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea11.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
+        ChartArea11.Name = "Default"
+        ChartArea11.ShadowColor = System.Drawing.Color.Transparent
+        Me.Grafico_Year2.ChartAreas.Add(ChartArea11)
+        Legend11.BackColor = System.Drawing.Color.Transparent
+        Legend11.DockedToChartArea = "Default"
+        Legend11.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Legend11.IsTextAutoFit = False
+        Legend11.Name = "Default"
+        Me.Grafico_Year2.Legends.Add(Legend11)
         Me.Grafico_Year2.Location = New System.Drawing.Point(15, 194)
         Me.Grafico_Year2.Name = "Grafico_Year2"
-        Series6.ChartArea = "Default"
-        Series6.Legend = "Default"
-        Series6.Name = "Series1"
-        Series6.YValuesPerPoint = 6
-        Me.Grafico_Year2.Series.Add(Series6)
+        Series13.ChartArea = "Default"
+        Series13.Legend = "Default"
+        Series13.Name = "Series1"
+        Series13.YValuesPerPoint = 6
+        Me.Grafico_Year2.Series.Add(Series13)
         Me.Grafico_Year2.Size = New System.Drawing.Size(625, 202)
         Me.Grafico_Year2.TabIndex = 128
         '
@@ -1940,46 +1944,46 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Grafico_Year1.BorderlineColor = System.Drawing.Color.Empty
         Me.Grafico_Year1.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
         Me.Grafico_Year1.BorderlineWidth = 2
-        ChartArea6.Area3DStyle.Inclination = 15
-        ChartArea6.Area3DStyle.IsClustered = True
-        ChartArea6.Area3DStyle.IsRightAngleAxes = False
-        ChartArea6.Area3DStyle.Perspective = 10
-        ChartArea6.Area3DStyle.Rotation = 10
-        ChartArea6.Area3DStyle.WallWidth = 0
-        ChartArea6.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount
-        ChartArea6.AxisX.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Months
-        ChartArea6.AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Months
-        ChartArea6.AxisX.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
-        ChartArea6.AxisX.LabelStyle.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.[Auto]
-        ChartArea6.AxisX.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea6.AxisX.MajorGrid.Interval = 0R
-        ChartArea6.AxisX.MajorGrid.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.[Auto]
-        ChartArea6.AxisX.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea6.AxisX.MajorTickMark.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.[Auto]
-        ChartArea6.AxisY.IsLabelAutoFit = False
-        ChartArea6.AxisY.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
-        ChartArea6.AxisY.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea6.AxisY.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea6.BackColor = System.Drawing.Color.White
-        ChartArea6.BackSecondaryColor = System.Drawing.Color.White
-        ChartArea6.BorderColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea6.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
-        ChartArea6.Name = "Default"
-        ChartArea6.ShadowColor = System.Drawing.Color.Transparent
-        Me.Grafico_Year1.ChartAreas.Add(ChartArea6)
-        Legend6.BackColor = System.Drawing.Color.Transparent
-        Legend6.DockedToChartArea = "Default"
-        Legend6.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Legend6.IsTextAutoFit = False
-        Legend6.Name = "Default"
-        Me.Grafico_Year1.Legends.Add(Legend6)
+        ChartArea12.Area3DStyle.Inclination = 15
+        ChartArea12.Area3DStyle.IsClustered = True
+        ChartArea12.Area3DStyle.IsRightAngleAxes = False
+        ChartArea12.Area3DStyle.Perspective = 10
+        ChartArea12.Area3DStyle.Rotation = 10
+        ChartArea12.Area3DStyle.WallWidth = 0
+        ChartArea12.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount
+        ChartArea12.AxisX.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Months
+        ChartArea12.AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Months
+        ChartArea12.AxisX.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
+        ChartArea12.AxisX.LabelStyle.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.[Auto]
+        ChartArea12.AxisX.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea12.AxisX.MajorGrid.Interval = 0R
+        ChartArea12.AxisX.MajorGrid.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.[Auto]
+        ChartArea12.AxisX.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea12.AxisX.MajorTickMark.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.[Auto]
+        ChartArea12.AxisY.IsLabelAutoFit = False
+        ChartArea12.AxisY.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
+        ChartArea12.AxisY.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea12.AxisY.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea12.BackColor = System.Drawing.Color.White
+        ChartArea12.BackSecondaryColor = System.Drawing.Color.White
+        ChartArea12.BorderColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea12.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
+        ChartArea12.Name = "Default"
+        ChartArea12.ShadowColor = System.Drawing.Color.Transparent
+        Me.Grafico_Year1.ChartAreas.Add(ChartArea12)
+        Legend12.BackColor = System.Drawing.Color.Transparent
+        Legend12.DockedToChartArea = "Default"
+        Legend12.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Legend12.IsTextAutoFit = False
+        Legend12.Name = "Default"
+        Me.Grafico_Year1.Legends.Add(Legend12)
         Me.Grafico_Year1.Location = New System.Drawing.Point(15, 11)
         Me.Grafico_Year1.Name = "Grafico_Year1"
-        Series7.ChartArea = "Default"
-        Series7.Legend = "Default"
-        Series7.Name = "Series1"
-        Series7.YValuesPerPoint = 6
-        Me.Grafico_Year1.Series.Add(Series7)
+        Series14.ChartArea = "Default"
+        Series14.Legend = "Default"
+        Series14.Name = "Series1"
+        Series14.YValuesPerPoint = 6
+        Me.Grafico_Year1.Series.Add(Series14)
         Me.Grafico_Year1.Size = New System.Drawing.Size(625, 239)
         Me.Grafico_Year1.TabIndex = 127
         '
@@ -2020,6 +2024,48 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Imagenes_32x32.TransparentColor = System.Drawing.Color.Transparent
         Me.Imagenes_32x32.Images.SetKeyName(0, "cloud.png")
         Me.Imagenes_32x32.Images.SetKeyName(1, "cloud-download.png")
+        '
+        'LabelItem9
+        '
+        Me.LabelItem9.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem9.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem9.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem9.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem9.Name = "LabelItem9"
+        Me.LabelItem9.PaddingBottom = 1
+        Me.LabelItem9.PaddingLeft = 10
+        Me.LabelItem9.PaddingTop = 1
+        Me.LabelItem9.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem9.Text = "Datos excluidos"
+        '
+        'Btn_Filtro_Ent_EntidadesExcluidas
+        '
+        Me.Btn_Filtro_Ent_EntidadesExcluidas.Image = CType(resources.GetObject("Btn_Filtro_Ent_EntidadesExcluidas.Image"), System.Drawing.Image)
+        Me.Btn_Filtro_Ent_EntidadesExcluidas.ImageAlt = CType(resources.GetObject("Btn_Filtro_Ent_EntidadesExcluidas.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Filtro_Ent_EntidadesExcluidas.Name = "Btn_Filtro_Ent_EntidadesExcluidas"
+        Me.Btn_Filtro_Ent_EntidadesExcluidas.Text = "<font color=""#0072BC""><b><font color=""#ED1C24"">CLIENTES EXCLUIDOS</font></b></fon" &
+    "t>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'Btn_Filtro_Pro_ProductosExcluidos
+        '
+        Me.Btn_Filtro_Pro_ProductosExcluidos.Image = CType(resources.GetObject("Btn_Filtro_Pro_ProductosExcluidos.Image"), System.Drawing.Image)
+        Me.Btn_Filtro_Pro_ProductosExcluidos.ImageAlt = CType(resources.GetObject("Btn_Filtro_Pro_ProductosExcluidos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Filtro_Pro_ProductosExcluidos.Name = "Btn_Filtro_Pro_ProductosExcluidos"
+        Me.Btn_Filtro_Pro_ProductosExcluidos.Text = "<font color=""#0072BC""><b><font color=""#ED1C24"">PRODUCTOS EXCLUIDOS</font></b></fo" &
+    "nt>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'LabelItem10
+        '
+        Me.LabelItem10.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem10.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem10.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem10.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem10.Name = "LabelItem10"
+        Me.LabelItem10.PaddingBottom = 1
+        Me.LabelItem10.PaddingLeft = 10
+        Me.LabelItem10.PaddingTop = 1
+        Me.LabelItem10.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem10.Text = "Datos excluidos"
         '
         'Frm_Inf_Ventas_X_Periodo_Cubo
         '
@@ -2066,13 +2112,13 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Grupo_Total.ResumeLayout(False)
         CType(Me.Super_Tab, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Super_Tab.ResumeLayout(False)
-        Me.SuperTabControlPanel2.ResumeLayout(False)
-        CType(Me.Grafico_Acumulado_X_Grupo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel4.ResumeLayout(False)
         CType(Me.Grafico_Pie, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Num_Agrupador_Pie, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel1.ResumeLayout(False)
         CType(Me.Grafico_Linea_De_Tiempo, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SuperTabControlPanel2.ResumeLayout(False)
+        CType(Me.Grafico_Acumulado_X_Grupo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel3.ResumeLayout(False)
         CType(Me.Grafico_Tendencias, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grafico_Year2, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2204,4 +2250,8 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
     Public WithEvents Btn_Filtro_Ent_Lista_Precio_Doc As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Filtro_SucursalDoc As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Importar_Informe As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem9 As DevComponents.DotNetBar.LabelItem
+    Public WithEvents Btn_Filtro_Ent_EntidadesExcluidas As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem10 As DevComponents.DotNetBar.LabelItem
+    Public WithEvents Btn_Filtro_Pro_ProductosExcluidos As DevComponents.DotNetBar.ButtonItem
 End Class
