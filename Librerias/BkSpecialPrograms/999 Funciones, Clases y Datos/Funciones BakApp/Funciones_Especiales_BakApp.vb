@@ -4844,7 +4844,7 @@ Public Module Crear_Documentos_Desde_Otro
     End Sub
 
     Public Function Fx_Eliminar_Entidad(_CodEntidad As String,
-                                        _SucEntidada As String,
+                                        _SucEntidad As String,
                                         _Fmr As Form) As Boolean
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -4853,7 +4853,7 @@ Public Module Crear_Documentos_Desde_Otro
 
             Dim _Reg As Integer = 0
 
-            _Reg += _Sql.Fx_Cuenta_Registros("MAEEDO", "ENDO='" & _CodEntidad & "' AND SUENDO='" & _SucEntidada & "'")
+            _Reg += _Sql.Fx_Cuenta_Registros("MAEEDO", "ENDO='" & _CodEntidad & "' AND SUENDO='" & _SucEntidad & "'")
 
             Dim _CanEnt As Integer = _Sql.Fx_Cuenta_Registros("MAEEDO", "ENDO='" & _CodEntidad & "'")
 
@@ -4870,7 +4870,7 @@ Public Module Crear_Documentos_Desde_Otro
                     Return False
                 End If
 
-                Consulta_sql = "Delete MAEEN Where KOEN = '" & _CodEntidad & "' AND SUEN = '" & _SucEntidada & "'" & vbCrLf
+                Consulta_sql = "Delete MAEEN Where KOEN = '" & _CodEntidad & "' AND SUEN = '" & _SucEntidad & "'" & vbCrLf
 
                 If _CanEnt = 1 Then
                     Consulta_sql += "Delete MAEENCON Where KOEN = '" & _CodEntidad & "'" & vbCrLf &
@@ -4879,11 +4879,12 @@ Public Module Crear_Documentos_Desde_Otro
                 End If
 
                 If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Entidades") Then
-
-                    Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Entidades Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _SucEntidada & "'"
-
+                    Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Entidades Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _SucEntidad & "'"
                 End If
 
+                If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Entidades_ProdExcluidos") Then
+                    Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _SucEntidad & "'"
+                End If
 
                 If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
                     MessageBoxEx.Show(_Fmr, "Entidad eliminada correctamente",

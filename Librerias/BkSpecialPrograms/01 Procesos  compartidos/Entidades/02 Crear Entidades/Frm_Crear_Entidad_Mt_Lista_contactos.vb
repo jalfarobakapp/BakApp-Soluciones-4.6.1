@@ -108,8 +108,6 @@ Public Class Frm_Crear_Entidad_Mt_Lista_contactos
 
     Sub Sb_Llenar_Contactos_Entidad()
 
-
-
         Consulta_Sql = "SELECT KOEN,RUTCONTACT,NOKOCON,FONOCON,FAXCON,EMAILCON,AREACON,CARGOCON," & vbCrLf &
                        "ISNULL((SELECT NOKOCARAC FROM TABCARAC WHERE KOTABLA = 'AREASACTIV' AND KOCARAC = AREACON),'') AS AREA," & vbCrLf &
                        "ISNULL((SELECT NOKOCARAC FROM TABCARAC WHERE KOTABLA = 'CARGOS' AND KOCARAC = CARGOCON),'') AS CARGO" & vbCrLf &
