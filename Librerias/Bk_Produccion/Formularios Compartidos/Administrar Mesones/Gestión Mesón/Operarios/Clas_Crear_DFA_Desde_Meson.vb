@@ -440,14 +440,13 @@ Public Class Clas_Crear_DFA_Desde_Meson
             Dim _Row_Pdatfae As DataRow = _Tbl_Pdatfae.Rows(0)
 
             Dim _Empresa As String = _Row_Pdatfae.Item("EMPRESA")
-            'Dim _Numdf = _Row_Pdatfae.Item("NUMDF")
             Dim _Numodc = _Row_Pdatfae.Item("NUMODC")
             Dim _Fecha = _Row_Pdatfae.Item("FECHA")
             Dim _Responsabl = _Row_Pdatfae.Item("RESPONSABL")
             Dim _Horagrab = _Row_Pdatfae.Item("HORAGRAB")
             Dim _Reqconfir = _Row_Pdatfae.Item("REQCONFIR")
 
-            _Horagrab = Hora_Grab_fx(False) 'Math.Round((_HH * 3600) + (_MM * 60) + _SS, 0)
+            _Horagrab = Hora_Grab_fx(False)
 
             Dim _Idpdatfae As Integer
 

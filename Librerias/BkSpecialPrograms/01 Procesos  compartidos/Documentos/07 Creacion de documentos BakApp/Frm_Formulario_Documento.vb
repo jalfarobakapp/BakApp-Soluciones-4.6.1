@@ -13573,7 +13573,8 @@ Public Class Frm_Formulario_Documento
 
                     If _Existe_Idmaeddo_Dori Then
 
-                        Dim _Fecha_Dori As Date = FormatDateTime(_Sql.Fx_Trae_Dato("MAEDDO", "FEEMLI", "IDMAEDDO = " & _Idmaeddo_Dori), DateFormat.ShortDate)
+                        Dim _Idmaeedo_Dori As Integer = _Sql.Fx_Trae_Dato("MAEDDO", "IDMAEEDO", "IDMAEDDO = " & _Idmaeddo_Dori)
+                        Dim _Fecha_Dori As Date = FormatDateTime(_Sql.Fx_Trae_Dato("MAEEDO", "FEEMDO", "IDMAEEDO = " & _Idmaeedo_Dori), DateFormat.ShortDate)
 
                         Dim _Mes_Dori = _Fecha_Dori.Month
                         Dim _Mes_Emi = _Fecha_Emision.Month

@@ -671,7 +671,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Lbl_Patente.Visible = False
         Txt_Patente.Visible = False
 
-        If _Sql.Fx_Existe_Tabla("Patentes_rvm", _Global_BaseBk) Then
+        If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Patentes_rvm") Then
             If _Global_Row_Configuracion_General.Item("Patentes_rvm") Then
                 Lbl_Patente.Visible = True
                 Txt_Patente.Visible = True
