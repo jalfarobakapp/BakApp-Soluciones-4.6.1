@@ -109,6 +109,9 @@ CREATE TABLE [dbo].[Zw_Configuracion](
 [BloqueaClasificacionLibre]                             [bit]           NOT NULL DEFAULT (0), 
 [BloqueaZonaProductos]                                  [bit]           NOT NULL DEFAULT (0), 
 [BloqueaFamilias]                                       [bit]           NOT NULL DEFAULT (0), 
+[Pr_Creacion_Exigir_1raDimension]                       [bit]           NOT NULL DEFAULT (0), 
+[Pr_Creacion_Exigir_2daDimension]                       [bit]           NOT NULL DEFAULT (0), 
+[Pr_Creacion_Exigir_3raDimension]                       [bit]           NOT NULL DEFAULT (0), 
 CONSTRAINT [PK_Zw_Configuracion] PRIMARY KEY CLUSTERED 
 (
 	[Modalidad] ASC

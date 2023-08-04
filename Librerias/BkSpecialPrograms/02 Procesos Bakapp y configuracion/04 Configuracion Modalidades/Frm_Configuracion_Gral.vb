@@ -216,6 +216,9 @@ Public Class Frm_Configuracion_Gral
             Chk_BloqueaRubros.Checked = .Item("BloqueaRubros")
             Chk_BloqueaZonaProductos.Checked = .Item("BloqueaZonaProductos")
 
+            Chk_Pr_Creacion_Exigir_1raDimension.Checked = .Item("Pr_Creacion_Exigir_1raDimension")
+            Chk_Pr_Creacion_Exigir_2daDimension.Checked = .Item("Pr_Creacion_Exigir_2daDimension")
+            Chk_Pr_Creacion_Exigir_3raDimension.Checked = .Item("Pr_Creacion_Exigir_3raDimension")
 
         End With
 
@@ -239,6 +242,10 @@ Public Class Frm_Configuracion_Gral
         Chk_Pr_Creacion_Exigir_Clasificacion_busqueda.Enabled = _Modalidad_General
         Chk_Pr_Creacion_Exigir_Codigo_Alternativo.Enabled = _Modalidad_General
         chk_Pr_Creacion_Exigir_Dimensiones.Enabled = _Modalidad_General
+
+        Chk_Pr_Creacion_Exigir_1raDimension.Enabled = _Modalidad_General
+        Chk_Pr_Creacion_Exigir_2daDimension.Enabled = _Modalidad_General
+        Chk_Pr_Creacion_Exigir_3raDimension.Enabled = _Modalidad_General
 
         Chk_Centro_Costo_Obligatorio_OCC.Enabled = _Modalidad_General
         Chk_Solicitar_Permiso_OCC_SOC.Enabled = _Modalidad_General
@@ -478,6 +485,9 @@ Public Class Frm_Configuracion_Gral
                        ",BloqueaClasificacionLibre = " & Convert.ToInt32(Chk_BloqueaClasificacionLibre.Checked) & vbCrLf &
                        ",BloqueaZonaProductos = " & Convert.ToInt32(Chk_BloqueaZonaProductos.Checked) & vbCrLf &
                        ",BloqueaFamilias = " & Convert.ToInt32(Chk_BloqueaFamilias.Checked) & vbCrLf &
+                       ",Pr_Creacion_Exigir_1raDimension = " & Convert.ToInt32(Chk_Pr_Creacion_Exigir_1raDimension.Checked) & vbCrLf &
+                       ",Pr_Creacion_Exigir_2daDimension = " & Convert.ToInt32(Chk_Pr_Creacion_Exigir_2daDimension.Checked) & vbCrLf &
+                       ",Pr_Creacion_Exigir_3raDimension = " & Convert.ToInt32(Chk_Pr_Creacion_Exigir_3raDimension.Checked) & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then

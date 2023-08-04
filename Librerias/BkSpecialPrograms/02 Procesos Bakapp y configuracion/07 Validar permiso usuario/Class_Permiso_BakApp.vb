@@ -367,6 +367,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("CfEnt027", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("CfEnt028", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("CfEnt029", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("CfEnt030", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Crv0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Crv0002", _Objeto, _Formulario)
@@ -794,6 +795,9 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Prod070", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Prod071", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Prod072", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Prod073", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Prod074", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Prod075", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("NO00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("NO00002", _Objeto, _Formulario)
@@ -1611,6 +1615,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
             Case "CfEnt029"
                 _DescripcionPermiso = "EDITAR SELECCION DE CREDITO FINCRED"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
+                _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
+            Case "CfEnt030"
+                _DescripcionPermiso = "CREAR/EDITAR/ELIMINAR PRODUCTOS BLOQUEADOS POR PROVEEDORES"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
                 _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
 
@@ -3491,6 +3499,18 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "INGRESAR A CONFIGURACION DE IMPRESION ADICIONAL POR PRODUCTO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
+            Case "Prod073"
+                _DescripcionPermiso = "PERMITIR GRABAR PRODUCTO SIN 1RA. DIMENSION (OBLIGATORIO POR MOD. GENERAL)"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
+                _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
+            Case "Prod074"
+                _DescripcionPermiso = "PERMITIR GRABAR PRODUCTO SIN 2DA. DIMENSION (OBLIGATORIO POR MOD. GENERAL)"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
+                _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
+            Case "Prod075"
+                _DescripcionPermiso = "PERMITIR GRABAR PRODUCTO SIN 3RA. DIMENSION (OBLIGATORIO POR MOD. GENERAL)"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
+                _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
 
         End Select
 
@@ -3819,7 +3839,7 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.SQL_CONSULTAS, 6)
                 _NombreFamiliaPermiso = _Fml.SQL_CONSULTAS.ToString
             Case "Sql00005"
-                _DescripcionPermiso = "PODER CREAR/EDITAR CONSULTAS SQL PERSONALIDAS"
+                _DescripcionPermiso = "PODER CREAR/EDITAR CONSULTAS SQL PERSONALIZADAS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.SQL_CONSULTAS, 6)
                 _NombreFamiliaPermiso = _Fml.SQL_CONSULTAS.ToString
 

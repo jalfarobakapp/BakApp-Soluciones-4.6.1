@@ -7110,23 +7110,43 @@ Public Class Frm_Formulario_Documento
 
         If Not IsNothing(_RowProducto) Then
 
+            Dim _Codigo As String = _RowProducto.Item("KOPR")
             Dim _Bloqueapr As String = _RowProducto.Item("BLOQUEAPR")
             Dim _Bloqueado As Boolean
+            Dim _Msg As String = String.Empty
 
             Select Case _Tipo_Documento
 
                 Case csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra
-                    If _Bloqueapr = "C" Or _Bloqueapr = "T" Then
-                        _Bloqueado = True
-                    End If
+                    If _Bloqueapr = "C" Then _Msg = "Producto bloqueado para compras"
+                    If _Bloqueapr = "T" Then _Msg = "Producto bloqueado para compras y ventas"
                 Case csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta
-                    If _Bloqueapr = "V" Or _Bloqueapr = "T" Then
-                        _Bloqueado = True
-                    End If
+                    If _Bloqueapr = "V" Then _Msg = "Producto bloqueado para ventas"
+                    If _Bloqueapr = "T" Then _Msg = "Producto bloqueado para compras y ventas"
             End Select
 
+            If Not String.IsNullOrEmpty(_Msg) Then
+                _Bloqueado = True
+            End If
+
+            Dim _Row_ProdBloquCompra As DataRow
+
+            If Not _Bloqueado Then
+
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos" & vbCrLf &
+                               "Where CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "' And Codigo = '" & _Codigo & "'"
+                _Row_ProdBloquCompra = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                If Not IsNothing(_Row_ProdBloquCompra) Then
+                    _Msg = "Producto bloqueado para comprar a este proveedor." & vbCrLf &
+                        "Motivo: " & _Row_ProdBloquCompra.Item("Motivo")
+                    _Bloqueado = True
+                End If
+
+            End If
+
             If _Bloqueado Then
-                MessageBoxEx.Show(Me, "Producto bloqueado para uso", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, _Msg, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 _RowProducto = Nothing
             End If
 

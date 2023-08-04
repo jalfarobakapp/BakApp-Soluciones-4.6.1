@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports System.Data.SqlClient
+Imports DevComponents.DotNetBar
 
 Public Class Frm_ExporProd
 
@@ -6,13 +7,13 @@ Public Class Frm_ExporProd
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim _Sql2 As Class_SQL
 
+    Public Property Tbl_Empresas As DataTable
     Public Property Tbl_Bodegas As DataTable
     Public Property Tbl_Listas As DataTable
-    'Public Property Tbl_Empresas As DataTable
 
+    Public Property Empresas_Todas As Boolean
     Public Property Bodegas_Todas As Boolean
     Public Property Listas_Todas As Boolean
-    'Public Property Empresas_Todas As Boolean
 
     Dim _Cadena_ConexionSQL_Server_BodExterna As String
     Dim _Cadena_ConexionSQL_Server_Original = Cadena_ConexionSQL_Server
@@ -56,27 +57,39 @@ Public Class Frm_ExporProd
         Chk_SincroTblClaslibre.Checked = _Row_DbExt_Conexion.Item("SincroTblClaslibre")
         Chk_SincroTblZonaProducto.Checked = _Row_DbExt_Conexion.Item("SincroTblZonaProducto")
 
+        Chk_PermitirMigrarProductosBaseExterna.Checked = _Global_Row_Configuracion_General.Item("PermitirMigrarProductosBaseExterna")
+
         _Sql2 = New Class_SQL(_Cadena_ConexionSQL_Server_BodExterna)
 
-        Try
-            Consulta_Sql = "Select Cast(1 As Bit) As Chk,EMPRESA+KOSU+KOBO As Codigo, NOKOBO as Descripcion" & vbCrLf &
-                           "From TABBO Where EMPRESA+KOSU+KOBO In " & _Row_DbExt_Conexion.Item("GrbProd_Bodegas")
-            Tbl_Bodegas = _Sql2.Fx_Get_Tablas(Consulta_Sql, False)
-            Lbl_Bodegas.Text = "Bodegas seleccionadas: " & Tbl_Bodegas.Rows.Count
-        Catch ex As Exception
+        Dim cn2 As New SqlConnection
+        _Sql2.Sb_Abrir_Conexion(cn2)
+
+        If String.IsNullOrEmpty(_Sql2.Pro_Error) Then
+            Try
+                Consulta_Sql = "Select Cast(1 As Bit) As Chk,EMPRESA+KOSU+KOBO As Codigo, NOKOBO as Descripcion" & vbCrLf &
+                               "From TABBO Where EMPRESA+KOSU+KOBO In " & _Row_DbExt_Conexion.Item("GrbProd_Bodegas")
+                Tbl_Bodegas = _Sql2.Fx_Get_Tablas(Consulta_Sql, False)
+                Lbl_Bodegas.Text = "Bodegas seleccionadas: " & Tbl_Bodegas.Rows.Count
+            Catch ex As Exception
+                Tbl_Bodegas = Nothing
+                Lbl_Bodegas.Text = "Bodegas seleccionadas: 0"
+            End Try
+
+            Try
+                Consulta_Sql = "Select Cast(1 As Bit) As Chk,KOLT As Codigo,NOKOLT As Descripcion" & vbCrLf &
+                           "From TABPP Where KOLT In " & _Row_DbExt_Conexion.Item("GrbProd_Listas")
+                Tbl_Listas = _Sql2.Fx_Get_Tablas(Consulta_Sql, False)
+                Lbl_Listas.Text = "Listas seleccionadas: " & Tbl_Listas.Rows.Count
+            Catch ex As Exception
+                Tbl_Listas = Nothing
+                Lbl_Listas.Text = "Listas seleccionadas: 0"
+            End Try
+        Else
             Tbl_Bodegas = Nothing
             Lbl_Bodegas.Text = "Bodegas seleccionadas: 0"
-        End Try
-
-        Try
-            Consulta_Sql = "Select Cast(1 As Bit) As Chk,KOLT As Codigo,NOKOLT As Descripcion" & vbCrLf &
-                       "From TABPP Where KOLT In " & _Row_DbExt_Conexion.Item("GrbProd_Listas")
-            Tbl_Listas = _Sql2.Fx_Get_Tablas(Consulta_Sql, False)
-            Lbl_Listas.Text = "Listas seleccionadas: " & Tbl_Listas.Rows.Count
-        Catch ex As Exception
             Tbl_Listas = Nothing
             Lbl_Listas.Text = "Listas seleccionadas: 0"
-        End Try
+        End If
 
         SuperTabControl1.SelectedTabIndex = 0
 
@@ -162,18 +175,18 @@ Public Class Frm_ExporProd
         Dim _SincroTblClaslibre As Integer = Convert.ToInt32(Chk_SincroTblClaslibre.Checked)
         Dim _SincroTblZonaProducto As Integer = Convert.ToInt32(Chk_SincroTblZonaProducto.Checked)
 
-        If Chk_GrbProd_Nuevos.Checked AndAlso Chk_SincroEmpresa.Checked Then
-            If IsNothing(Tbl_Bodegas) Then
-                MessageBoxEx.Show(Me, "Debe seleccionar las bodegas para la grabación de los productos",
-                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return
-            End If
-            If IsNothing(Tbl_Listas) Then
-                MessageBoxEx.Show(Me, "Debe seleccionar las listas para la grabación de los productos",
-                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return
-            End If
-        End If
+        'If Chk_GrbProd_Nuevos.Checked AndAlso Chk_SincroEmpresa.Checked Then
+        '    If IsNothing(Tbl_Bodegas) Then
+        '        MessageBoxEx.Show(Me, "Debe seleccionar las bodegas para la grabación de los productos",
+        '                          "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '        Return
+        '    End If
+        '    If IsNothing(Tbl_Listas) Then
+        '        MessageBoxEx.Show(Me, "Debe seleccionar las listas para la grabación de los productos",
+        '                          "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '        Return
+        '    End If
+        'End If
 
         If Not Bodegas_Todas Then _GrbProd_Bodegas = Generar_Filtro_IN(Tbl_Bodegas, "", "Codigo", False, False, "'")
         If Not Listas_Todas Then _GrbProd_Listas = Generar_Filtro_IN(Tbl_Listas, "", "Codigo", False, False, "'")
@@ -205,8 +218,14 @@ Public Class Frm_ExporProd
                        ",SincroTblFamilias = " & _SincroTblFamilias &
                        ",SincroTblClaslibre = " & _SincroTblClaslibre &
                        ",SincroTblZonaProducto = " & _SincroTblZonaProducto &
-                       "Where Id = " & _Id
+                       "Where Id = " & _Id & vbCrLf & vbCrLf
+
+        Consulta_Sql += "Update " & _Global_BaseBk & "Zw_Configuracion Set" & vbCrLf &
+                        "PermitirMigrarProductosBaseExterna = " & Convert.ToInt32(Chk_PermitirMigrarProductosBaseExterna.Checked) & vbCrLf &
+                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '  '"
+
         If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
+            _Global_Row_Configuracion_General.Item("PermitirMigrarProductosBaseExterna") = Chk_PermitirMigrarProductosBaseExterna.Checked
             MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Me.Close()
         End If
