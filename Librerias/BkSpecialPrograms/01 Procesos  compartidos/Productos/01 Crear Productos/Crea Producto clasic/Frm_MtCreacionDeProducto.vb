@@ -524,6 +524,18 @@ Public Class Frm_MtCreacionDeProducto
             If Not Fx_Tiene_Permiso(Me, "Prod033") Then Return
         End If
 
+        If _Global_Row_Configuracion_General.Item("Pr_Creacion_Exigir_1raDimension") AndAlso String.IsNullOrEmpty(Txt_Nodim1.Text.Trim) Then
+            If Not Fx_Tiene_Permiso(Me, "Prod073") Then Return
+        End If
+
+        If _Global_Row_Configuracion_General.Item("Pr_Creacion_Exigir_2daDimension") AndAlso String.IsNullOrEmpty(Txt_Nodim2.Text.Trim) Then
+            If Not Fx_Tiene_Permiso(Me, "Prod074") Then Return
+        End If
+
+        If _Global_Row_Configuracion_General.Item("Pr_Creacion_Exigir_3raDimension") AndAlso String.IsNullOrEmpty(Txt_Nodim3.Text.Trim) Then
+            If Not Fx_Tiene_Permiso(Me, "Prod075") Then Return
+        End If
+
         ListaCostoPro = Cmb_Codlista.SelectedValue
 
         Dim _Pr_AutoPr_Crear_Codigo_Principal_Automatico =

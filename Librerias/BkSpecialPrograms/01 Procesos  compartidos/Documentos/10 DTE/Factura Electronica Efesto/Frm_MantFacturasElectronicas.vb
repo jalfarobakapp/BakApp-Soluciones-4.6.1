@@ -616,6 +616,7 @@ Public Class Frm_MantFacturasElectronicas
 
         Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
         Dim _Id_Dte As Integer = _Fila.Cells("Id_Dte").Value
+        Dim _Id_Trackid As Integer = _Fila.Cells("Id_Trackid").Value
         Dim _Tido_Nudo As String = _Fila.Cells("Tido_Nudo").Value
         Dim _Trackid As String = _Fila.Cells("Trackid").Value
         Dim _DocFirmado As Boolean = _Fila.Cells("DocFirmado").Value
@@ -631,7 +632,7 @@ Public Class Frm_MantFacturasElectronicas
 
         Dim _Msg2 As String
 
-        If _Estado = "RPT" Or _Estado = "RFR" Or _Estado = "RCT" Or _Estado = "RCH" Or _Estado = "007" Or _Estado = "-11" Or _Estado = "001" Or _Estado = "107" Or _Estado = "REC" Or
+        If _Estado = "RPT" Or _Estado = "RFR" Or _Estado = "RCT" Or _Estado = "RCH" Or _Estado = "007" Or _Estado = "001" Or _Estado = "107" Or _Estado = "REC" Or
                        (_Id_Dte <> 0 And Not _DocFirmado) Then
 
             Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
@@ -661,7 +662,14 @@ Public Class Frm_MantFacturasElectronicas
         End If
 
         If _Estado = "EPR" Or _Estado = "-11" Then
+
             _RechazadoSII = False
+
+            If _Estado = "-11" Then
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Intentos = 1 Where Id = " & _Id_Trackid
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+            End If
+
         End If
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Documentos Where Id_Dte = " & _Id_Dte
@@ -682,25 +690,9 @@ Public Class Frm_MantFacturasElectronicas
         End If
 
         If _Procesado Then
-            'If _Estado = "SOK" Then
-            '    If MessageBoxEx.Show(Me, "Este documento ya fue procesado por el DTEMonitor" & vbCrLf &
-            '                      "En breve tendremos la respuesta desde el SII" & vbCrLf & vbCrLf &
-            '                      "¿Desea volver a procesarlo de todas maneras nuevamente?", "Validación",
-            '                      MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
-
-            '        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Eliminado = 1 Where Id_Dte = " & _Id_Dte
-            '        _Sql.Ej_consulta_IDU(Consulta_sql)
-
-            '        _Fila.Cells("Id_Dte").Value = 0
-            '        _Fila.Cells("Estado").Value = "107"
-
-            '        Call Btn_Reenviar_SII_Click(Nothing, Nothing)
-            '    Else
             MessageBoxEx.Show(Me, "Este documento ya fue procesado por el DTEMonitor" & vbCrLf &
                                   "En breve tendremos la respuesta desde el SII", "Validación",
                                   MessageBoxButtons.OK, MessageBoxIcon.Information)
-            '    End If
-            'End If
             Return
         End If
 

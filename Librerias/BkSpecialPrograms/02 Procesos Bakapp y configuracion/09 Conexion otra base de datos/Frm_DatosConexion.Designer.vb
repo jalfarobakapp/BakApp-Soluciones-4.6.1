@@ -129,7 +129,7 @@ Partial Class Frm_DatosConexion
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Conectar, Me.Btn_Grabar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 279)
+        Me.Bar1.Location = New System.Drawing.Point(0, 306)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(368, 57)
         Me.Bar1.Stretch = True
@@ -261,7 +261,7 @@ Partial Class Frm_DatosConexion
         Me.Label7.AutoSize = True
         Me.Label7.BackColor = System.Drawing.Color.Transparent
         Me.Label7.ForeColor = System.Drawing.Color.Black
-        Me.Label7.Location = New System.Drawing.Point(30, 248)
+        Me.Label7.Location = New System.Drawing.Point(21, 248)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(50, 13)
         Me.Label7.TabIndex = 91
@@ -271,7 +271,7 @@ Partial Class Frm_DatosConexion
         '
         Me.Txt_Empresa.BackColor = System.Drawing.Color.White
         Me.Txt_Empresa.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Empresa.Location = New System.Drawing.Point(141, 248)
+        Me.Txt_Empresa.Location = New System.Drawing.Point(141, 245)
         Me.Txt_Empresa.Name = "Txt_Empresa"
         Me.Txt_Empresa.ReadOnly = True
         Me.Txt_Empresa.Size = New System.Drawing.Size(60, 22)
@@ -281,7 +281,7 @@ Partial Class Frm_DatosConexion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(368, 336)
+        Me.ClientSize = New System.Drawing.Size(368, 363)
         Me.Controls.Add(Me.Txt_Empresa)
         Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.Label6)

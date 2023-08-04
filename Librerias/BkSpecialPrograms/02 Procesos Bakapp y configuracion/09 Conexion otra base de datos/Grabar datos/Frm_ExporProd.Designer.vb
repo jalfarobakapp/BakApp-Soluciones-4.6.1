@@ -60,6 +60,9 @@ Partial Class Frm_ExporProd
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.ButtonX1 = New DevComponents.DotNetBar.ButtonX()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_PermitirMigrarProductosBaseExterna = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -76,15 +79,15 @@ Partial Class Frm_ExporProd
         '
         Me.GroupPanel2.BackColor = System.Drawing.Color.White
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel2.Controls.Add(Me.Chk_SincroEmpresa)
         Me.GroupPanel2.Controls.Add(Me.Lbl_Listas)
+        Me.GroupPanel2.Controls.Add(Me.Chk_SincroEmpresa)
         Me.GroupPanel2.Controls.Add(Me.Lbl_Bodegas)
         Me.GroupPanel2.Controls.Add(Me.Btn_Listas)
         Me.GroupPanel2.Controls.Add(Me.Btn_Bodegas)
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel2.Location = New System.Drawing.Point(3, 32)
+        Me.GroupPanel2.Location = New System.Drawing.Point(6, 32)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(281, 116)
+        Me.GroupPanel2.Size = New System.Drawing.Size(281, 114)
         '
         '
         '
@@ -128,7 +131,7 @@ Partial Class Frm_ExporProd
         Me.Chk_SincroEmpresa.ForeColor = System.Drawing.Color.Black
         Me.Chk_SincroEmpresa.Location = New System.Drawing.Point(3, 3)
         Me.Chk_SincroEmpresa.Name = "Chk_SincroEmpresa"
-        Me.Chk_SincroEmpresa.Size = New System.Drawing.Size(269, 23)
+        Me.Chk_SincroEmpresa.Size = New System.Drawing.Size(175, 23)
         Me.Chk_SincroEmpresa.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_SincroEmpresa.TabIndex = 141
         Me.Chk_SincroEmpresa.Text = "Grabar en empresa por defecto"
@@ -206,7 +209,7 @@ Partial Class Frm_ExporProd
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 503)
+        Me.Bar1.Location = New System.Drawing.Point(0, 501)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(539, 41)
         Me.Bar1.Stretch = True
@@ -481,9 +484,9 @@ Partial Class Frm_ExporProd
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
         Me.SuperTabControl1.Location = New System.Drawing.Point(12, 12)
         Me.SuperTabControl1.Name = "SuperTabControl1"
@@ -625,6 +628,8 @@ Partial Class Frm_ExporProd
         '
         'SuperTabControlPanel1
         '
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX1)
+        Me.SuperTabControlPanel1.Controls.Add(Me.ButtonX1)
         Me.SuperTabControlPanel1.Controls.Add(Me.Chk_GrbProd_Nuevos)
         Me.SuperTabControlPanel1.Controls.Add(Me.Btn_ProdSoloBaseExterna)
         Me.SuperTabControlPanel1.Controls.Add(Me.TableLayoutPanel1)
@@ -648,9 +653,9 @@ Partial Class Frm_ExporProd
         '
         Me.SuperTabControlPanel2.Controls.Add(Me.TableLayoutPanel2)
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(516, 461)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(516, 434)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
         '
@@ -684,11 +689,57 @@ Partial Class Frm_ExporProd
         Me.SuperTabItem2.Name = "SuperTabItem2"
         Me.SuperTabItem2.Text = "Entidades"
         '
+        'ButtonX1
+        '
+        Me.ButtonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.ButtonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.ButtonX1.Location = New System.Drawing.Point(290, 75)
+        Me.ButtonX1.Name = "ButtonX1"
+        Me.ButtonX1.Size = New System.Drawing.Size(123, 23)
+        Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ButtonX1.TabIndex = 4
+        Me.ButtonX1.Text = "Empresas"
+        Me.ButtonX1.Visible = False
+        '
+        'LabelX1
+        '
+        Me.LabelX1.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.ForeColor = System.Drawing.Color.Black
+        Me.LabelX1.Location = New System.Drawing.Point(290, 104)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(146, 23)
+        Me.LabelX1.TabIndex = 5
+        Me.LabelX1.Text = "Empresas seleccionadas: 0"
+        Me.LabelX1.Visible = False
+        '
+        'Chk_PermitirMigrarProductosBaseExterna
+        '
+        Me.Chk_PermitirMigrarProductosBaseExterna.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_PermitirMigrarProductosBaseExterna.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_PermitirMigrarProductosBaseExterna.CheckBoxImageChecked = CType(resources.GetObject("Chk_PermitirMigrarProductosBaseExterna.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_PermitirMigrarProductosBaseExterna.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_PermitirMigrarProductosBaseExterna.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_PermitirMigrarProductosBaseExterna.FocusCuesEnabled = False
+        Me.Chk_PermitirMigrarProductosBaseExterna.ForeColor = System.Drawing.Color.Black
+        Me.Chk_PermitirMigrarProductosBaseExterna.Location = New System.Drawing.Point(12, 479)
+        Me.Chk_PermitirMigrarProductosBaseExterna.Name = "Chk_PermitirMigrarProductosBaseExterna"
+        Me.Chk_PermitirMigrarProductosBaseExterna.Size = New System.Drawing.Size(284, 15)
+        Me.Chk_PermitirMigrarProductosBaseExterna.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_PermitirMigrarProductosBaseExterna.TabIndex = 147
+        Me.Chk_PermitirMigrarProductosBaseExterna.Text = "Permitir migrar productos a base de datos externa."
+        '
         'Frm_ExporProd
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(539, 544)
+        Me.ClientSize = New System.Drawing.Size(539, 542)
+        Me.Controls.Add(Me.Chk_PermitirMigrarProductosBaseExterna)
         Me.Controls.Add(Me.SuperTabControl1)
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
@@ -753,4 +804,7 @@ Partial Class Frm_ExporProd
     Friend WithEvents Chk_SincroTblFamilias As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_SincroTblClaslibre As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_SincroTblZonaProducto As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents ButtonX1 As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Chk_PermitirMigrarProductosBaseExterna As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

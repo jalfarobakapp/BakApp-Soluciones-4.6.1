@@ -163,14 +163,14 @@ Partial Class Frm_MtCreacionDeProducto
         Me.Lbl_Ancho = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Alto = New DevComponents.DotNetBar.LabelX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
-        Me.SuperTabControlPanel5 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.SuperTabItem5 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.SuperTabItem3 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel5 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.SuperTabItem5 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel4 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.GroupPanel9 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.SuperTabItem4 = New DevComponents.DotNetBar.SuperTabItem()
@@ -233,10 +233,10 @@ Partial Class Frm_MtCreacionDeProducto
         Me.GroupPanel1.SuspendLayout()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
-        Me.SuperTabControlPanel5.SuspendLayout()
-        Me.SuperTabControlPanel1.SuspendLayout()
-        Me.SuperTabControlPanel2.SuspendLayout()
         Me.SuperTabControlPanel3.SuspendLayout()
+        Me.SuperTabControlPanel1.SuspendLayout()
+        Me.SuperTabControlPanel5.SuspendLayout()
+        Me.SuperTabControlPanel2.SuspendLayout()
         Me.SuperTabControlPanel4.SuspendLayout()
         Me.GroupPanel9.SuspendLayout()
         Me.SuperTabControlPanel6.SuspendLayout()
@@ -2703,12 +2703,12 @@ Partial Class Frm_MtCreacionDeProducto
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel6)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel5)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel4)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel6)
         Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
         Me.SuperTabControl1.Location = New System.Drawing.Point(9, 12)
         Me.SuperTabControl1.Name = "SuperTabControl1"
@@ -2721,24 +2721,36 @@ Partial Class Frm_MtCreacionDeProducto
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem2, Me.SuperTabItem3, Me.SuperTabItem4, Me.STab_Dimensiones, Me.SuperTabItem5})
         Me.SuperTabControl1.Text = "SuperTabControl1"
         '
-        'SuperTabControlPanel5
+        'SuperTabControlPanel3
         '
-        Me.SuperTabControlPanel5.Controls.Add(Me.GroupPanel1)
-        Me.SuperTabControlPanel5.Controls.Add(Me.GroupPanel8)
-        Me.SuperTabControlPanel5.Controls.Add(Me.GroupPanel7)
-        Me.SuperTabControlPanel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(0, 0)
-        Me.SuperTabControlPanel5.Name = "SuperTabControlPanel5"
-        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(977, 494)
-        Me.SuperTabControlPanel5.TabIndex = 0
-        Me.SuperTabControlPanel5.TabItem = Me.SuperTabItem5
+        Me.SuperTabControlPanel3.Controls.Add(Me.Cmb_Clalibpr)
+        Me.SuperTabControlPanel3.Controls.Add(Me.GroupPanel6)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Label10)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Label25)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Btn_Zonas)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Btn_Rubro)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Label12)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Cmb_Mrpr)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Cmb_Kofupr)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Cmb_Zonapr)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Label24)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Cmb_Rupr)
+        Me.SuperTabControlPanel3.Controls.Add(Me.ButtonX2)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Label11)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Btn_Marcas)
+        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(977, 494)
+        Me.SuperTabControlPanel3.TabIndex = 0
+        Me.SuperTabControlPanel3.TabItem = Me.SuperTabItem3
         '
-        'SuperTabItem5
+        'SuperTabItem3
         '
-        Me.SuperTabItem5.AttachedControl = Me.SuperTabControlPanel5
-        Me.SuperTabItem5.GlobalItem = False
-        Me.SuperTabItem5.Name = "SuperTabItem5"
-        Me.SuperTabItem5.Text = "ADICIONALES"
+        Me.SuperTabItem3.AttachedControl = Me.SuperTabControlPanel3
+        Me.SuperTabItem3.GlobalItem = False
+        Me.SuperTabItem3.Name = "SuperTabItem3"
+        Me.SuperTabItem3.Text = "CLASIFICACIONES"
         '
         'SuperTabControlPanel1
         '
@@ -2759,6 +2771,25 @@ Partial Class Frm_MtCreacionDeProducto
         Me.SuperTabItem1.Name = "SuperTabItem1"
         Me.SuperTabItem1.Text = "PRODUCTO"
         '
+        'SuperTabControlPanel5
+        '
+        Me.SuperTabControlPanel5.Controls.Add(Me.GroupPanel1)
+        Me.SuperTabControlPanel5.Controls.Add(Me.GroupPanel8)
+        Me.SuperTabControlPanel5.Controls.Add(Me.GroupPanel7)
+        Me.SuperTabControlPanel5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel5.Name = "SuperTabControlPanel5"
+        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(977, 494)
+        Me.SuperTabControlPanel5.TabIndex = 0
+        Me.SuperTabControlPanel5.TabItem = Me.SuperTabItem5
+        '
+        'SuperTabItem5
+        '
+        Me.SuperTabItem5.AttachedControl = Me.SuperTabControlPanel5
+        Me.SuperTabItem5.GlobalItem = False
+        Me.SuperTabItem5.Name = "SuperTabItem5"
+        Me.SuperTabItem5.Text = "ADICIONALES"
+        '
         'SuperTabControlPanel2
         '
         Me.SuperTabControlPanel2.Controls.Add(Me.ChkSelTodo)
@@ -2778,37 +2809,6 @@ Partial Class Frm_MtCreacionDeProducto
         Me.SuperTabItem2.GlobalItem = False
         Me.SuperTabItem2.Name = "SuperTabItem2"
         Me.SuperTabItem2.Text = "UBICACION"
-        '
-        'SuperTabControlPanel3
-        '
-        Me.SuperTabControlPanel3.Controls.Add(Me.Cmb_Clalibpr)
-        Me.SuperTabControlPanel3.Controls.Add(Me.GroupPanel6)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Label10)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Label25)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Btn_Zonas)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Btn_Rubro)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Label12)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Cmb_Mrpr)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Cmb_Kofupr)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Cmb_Zonapr)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Label24)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Cmb_Rupr)
-        Me.SuperTabControlPanel3.Controls.Add(Me.ButtonX2)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Label11)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Btn_Marcas)
-        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(977, 467)
-        Me.SuperTabControlPanel3.TabIndex = 0
-        Me.SuperTabControlPanel3.TabItem = Me.SuperTabItem3
-        '
-        'SuperTabItem3
-        '
-        Me.SuperTabItem3.AttachedControl = Me.SuperTabControlPanel3
-        Me.SuperTabItem3.GlobalItem = False
-        Me.SuperTabItem3.Name = "SuperTabItem3"
-        Me.SuperTabItem3.Text = "CLASIFICACIONES"
         '
         'SuperTabControlPanel4
         '
@@ -2877,9 +2877,9 @@ Partial Class Frm_MtCreacionDeProducto
         Me.SuperTabControlPanel6.Controls.Add(Me.LabelX32)
         Me.SuperTabControlPanel6.Controls.Add(Me.GroupPanel10)
         Me.SuperTabControlPanel6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel6.Name = "SuperTabControlPanel6"
-        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(977, 494)
+        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(977, 467)
         Me.SuperTabControlPanel6.TabIndex = 0
         Me.SuperTabControlPanel6.TabItem = Me.STab_Dimensiones
         '
@@ -3432,11 +3432,11 @@ Partial Class Frm_MtCreacionDeProducto
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
-        Me.SuperTabControlPanel5.ResumeLayout(False)
-        Me.SuperTabControlPanel1.ResumeLayout(False)
-        Me.SuperTabControlPanel2.ResumeLayout(False)
         Me.SuperTabControlPanel3.ResumeLayout(False)
         Me.SuperTabControlPanel3.PerformLayout()
+        Me.SuperTabControlPanel1.ResumeLayout(False)
+        Me.SuperTabControlPanel5.ResumeLayout(False)
+        Me.SuperTabControlPanel2.ResumeLayout(False)
         Me.SuperTabControlPanel4.ResumeLayout(False)
         Me.GroupPanel9.ResumeLayout(False)
         Me.SuperTabControlPanel6.ResumeLayout(False)

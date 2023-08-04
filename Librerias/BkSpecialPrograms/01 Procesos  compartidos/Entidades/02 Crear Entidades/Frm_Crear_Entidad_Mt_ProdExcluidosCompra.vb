@@ -82,6 +82,8 @@ Public Class Frm_Crear_Entidad_Mt_ProdExcluidosCompra
 
     Private Sub Btn_AgregarProductos_Click(sender As Object, e As EventArgs) Handles Btn_AgregarProductos.Click
 
+        If Not Fx_Tiene_Permiso(Me, "CfEnt030") Then Return
+
         Dim _Sql_Filtro_Condicion_Extra = "And TIPR In ('FPN','FIN') And KOPR Not In " &
                                           "(Select Codigo From " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos " &
                                           "Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _CodSucEntidad & "')"
@@ -113,6 +115,8 @@ Public Class Frm_Crear_Entidad_Mt_ProdExcluidosCompra
 
     Private Sub Btn_QuitarProducto_Click(sender As Object, e As EventArgs) Handles Btn_QuitarProducto.Click
 
+        If Not Fx_Tiene_Permiso(Me, "CfEnt030") Then Return
+
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
         Dim _Indice As Integer = _Fila.Index
         Dim _Id As Integer = _Fila.Cells("Id").Value
@@ -130,6 +134,8 @@ Public Class Frm_Crear_Entidad_Mt_ProdExcluidosCompra
     End Sub
 
     Private Sub Btn_EditarMotivo_Click(sender As Object, e As EventArgs) Handles Btn_EditarMotivo.Click
+
+        If Not Fx_Tiene_Permiso(Me, "CfEnt030") Then Return
 
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
 
