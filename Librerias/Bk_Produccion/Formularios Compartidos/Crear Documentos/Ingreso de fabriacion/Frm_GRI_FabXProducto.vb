@@ -138,8 +138,39 @@ Public Class Frm_GRI_FabXProducto
     End Sub
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
-        MessageBoxEx.Show(Me, "Cantidad: " & Txt_Cantidad.Tag, "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        Dim _New_Idmaeedo As Integer
+        Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+        Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Koen As String = _Row_Configp.Item("RUT").ToString.Trim
+        Dim _Observaciones As String
+
+        Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Koen & "'"
+        Dim _Row_Entidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Cantidad As String = De_Num_a_Tx_01(Txt_Cantidad.Tag, False, 5)
+
+        Consulta_sql = "Select *," & _Cantidad & " As Cantidad,'" & ModSucursal & "' As Sucursal,'" & ModBodega & "' As Bodega" & vbCrLf &
+                       "From POTL Where IDPOTL = " & _Row_Potl.Item("IDPOTL")
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        Dim Fm As New Frm_Formulario_Documento("GRI", csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna,
+                                               False, False, False, False, False, False)
+
+        Fm.Pro_RowEntidad = _Row_Entidad
+        Fm.Sb_Crear_Documento_Interno_Con_Tabla3Potl(Me, _Tbl_Productos, Dtp_Fecha_Ingreso.Value, "CODIGO", "Cantidad", "C_FABRIC", _Observaciones, False, False, 1)
+        _New_Idmaeedo = Fm.Fx_Grabar_Documento(False)
+        Fm.Dispose()
+
+        Sb_Limpiar()
+
+        ' Falta agregar los siguientes campos
+        ' MAEEDO: NUVEDO = 0,ESFADO = '',DESPACHO = 0
+        ' MAEDDO: OPERACION,PPOPPR = 0, COSTOTRIB y COSTOIFRS = VANELI,TAMOPPPR = 0,TASADORIG = 0
+
     End Sub
+
     Private Sub Sb_Txt_Nros_Validated(sender As Object, e As EventArgs)
         Btn_Grabar.Enabled = True
         CType(sender, Controls.TextBoxX).Tag = Val(CType(sender, Controls.TextBoxX).Text)

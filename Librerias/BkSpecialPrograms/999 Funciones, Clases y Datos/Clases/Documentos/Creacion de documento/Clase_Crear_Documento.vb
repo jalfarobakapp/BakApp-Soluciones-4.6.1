@@ -231,9 +231,16 @@ Public Class Clase_Crear_Documento
         Dim _Filtro_Idmaeddo_Dori As String = Generar_Filtro_IN(_Tbl_Detalle, "", "Idmaeddo_Dori", 1, False, "")
         Dim _Tbl_Maeddo_Dori As DataTable
 
+        For Each _Fl As DataRow In _Tbl_Detalle.Rows
+            If _Fl.Item("Tidopa") = "OTL" Then
+                _Filtro_Idmaeddo_Dori = "()"
+                Exit For
+            End If
+        Next
+
         If _Filtro_Idmaeddo_Dori <> "()" Then
 
-            Consulta_sql = "Select IDMAEDDO,KOPRCT,ESLIDO,
+            Consulta_sql = "Select IDMAEDDO,TIDO,KOPRCT,ESLIDO,
                             CAPRCO1-CAPREX1 AS 'CantUd1_Dori',CAPRCO2-CAPREX2 AS 'CantUd2_Dori',
                             CASE WHEN TIDO In ('GRD','NCV') THEN CAPRCO1-CAPREX1 ELSE (CAPRAD1+CAPREX1)-CAPRNC1 END AS 'CantUd1_Dori_Ncv',
 	                        CASE WHEN TIDO In ('GRD','NCV') THEN CAPRCO2-CAPREX2 ELSE (CAPRAD2+CAPREX2)-CAPRNC2 END AS 'CantUd2_Dori_Ncv'
@@ -801,7 +808,7 @@ Public Class Clase_Crear_Documento
                         Dim _CantStockAdUd2 = _Caprco2
 
                         _Emprepa = String.Empty
-                        _Tidopa = String.Empty
+                        If _Tidopa <> "OTL" Then _Tidopa = String.Empty
                         _Subtidopa = String.Empty
                         _Nudopa = String.Empty
                         _Endopa = String.Empty
@@ -817,7 +824,21 @@ Public Class Clase_Crear_Documento
                                            "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
                                            "Where IDMAEDDO = " & _Idrst
 
-                            Dim _Row_Doc_Origen As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                            Dim _Row_Doc_Origen As DataRow
+
+                            If _Tidopa = "OTL" Then
+
+                                Consulta_sql = "Select *,'" & _Endo & "' As ENDO,'OTL' As TIDO,NUMOT As NUDO,NREG As NULIDO,'' As SUBTIDO" & vbCrLf &
+                                                "From POTL Where IDPOTL = " & _Idrst
+                                .Item("CantUd1_Dori") = .Item("CantUd1")
+                                .Item("CantUd2_Dori") = .Item("CantUd2")
+
+                                _Caprad1 = 0
+                                _Caprad2 = 0
+
+                            End If
+
+                            _Row_Doc_Origen = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                             _Emprepa = _Row_Doc_Origen.Item("EMPRESA")
                             _Tidopa = _Row_Doc_Origen.Item("TIDO")
@@ -826,10 +847,17 @@ Public Class Clase_Crear_Documento
                             _Endopa = _Row_Doc_Origen.Item("ENDO")
                             _Nulidopa = _Row_Doc_Origen.Item("NULIDO")
 
-                            Dim _Caprnc1_Ori As Double = _Row_Doc_Origen.Item("CAPRNC1")
-                            Dim _Caprnc2_Ori As Double = _Row_Doc_Origen.Item("CAPRNC2")
-                            Dim _Caprex1_Ori As Double = _Row_Doc_Origen.Item("CAPREX1")
-                            Dim _Caprex2_Ori As Double = _Row_Doc_Origen.Item("CAPREX2")
+                            Dim _Caprnc1_Ori As Double
+                            Dim _Caprnc2_Ori As Double
+                            Dim _Caprex1_Ori As Double
+                            Dim _Caprex2_Ori As Double
+
+                            If _Tidopa <> "OTL" Then
+                                _Caprnc1_Ori = _Row_Doc_Origen.Item("CAPRNC1")
+                                _Caprnc2_Ori = _Row_Doc_Origen.Item("CAPRNC2")
+                                _Caprex1_Ori = _Row_Doc_Origen.Item("CAPREX1")
+                                _Caprex2_Ori = _Row_Doc_Origen.Item("CAPREX2")
+                            End If
 
                             Dim _CantUd1_Dori As Double = .Item("CantUd1_Dori")
                             Dim _CantUd2_Dori As Double = .Item("CantUd2_Dori")
@@ -837,7 +865,7 @@ Public Class Clase_Crear_Documento
                             Dim _CantUd1 As Double = .Item("CantUd1")
                             Dim _CantUd2 As Double = .Item("CantUd2")
 
-                            If _CantUd1_Dori < _CantUd1 Then
+                            If _CantUd1_Dori < _CantUd1 Or _Tidopa = "OTL" Then
 
                                 If _Tido = "NCV" And Not _Tidopa.Contains("G") Then
                                     _Caprnc1 = De_Num_a_Tx_01(_CantUd1_Dori, False, 5)
@@ -850,7 +878,7 @@ Public Class Clase_Crear_Documento
                             Else
 
                                 If (_Tido = "NCV" And Not _Tidopa.Contains("G")) Or (_Tido = "GDD" And _Subtido = String.Empty) Or
-                                   (_Tido = "GRD" And _Tidopa = "FCV") Or (_Tido = "GRD" And _Tidopa = "BLV") Then
+                               (_Tido = "GRD" And _Tidopa = "FCV") Or (_Tido = "GRD" And _Tidopa = "BLV") Then
 
                                     _Caprnc1 = De_Num_a_Tx_01(_CantUd1, False, 5)
                                     _Caprnc2 = De_Num_a_Tx_01(_CantUd2, False, 5)
@@ -872,23 +900,38 @@ Public Class Clase_Crear_Documento
 
                             End If
 
+                            If _Tidopa = "OTL" Then
+
+                                Consulta_sql = "Update POTL Set REALIZADO=REALIZADO+(" & _Caprex1 & "),PORENTRAR=PORENTRAR-(" & _Caprex1 & ") WHERE IDPOTL=" & _Idrst
+                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                Comando.Transaction = myTrans
+                                Comando.ExecuteNonQuery()
+
+                                Consulta_sql = "Update POTL Set INFORABODE=CASE WHEN PORENTRAR-(" & _Caprex1 & ")<0 THEN 'I' WHEN PORENTRAR-(" & _Caprex1 & ")>0 THEN 'P'  ELSE ' ' END  WHERE IDPOTL=" & _Idrst
+                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                Comando.Transaction = myTrans
+                                Comando.ExecuteNonQuery()
+
+                            End If
+
+
                             _Archirst = "MAEDDO"
                             _Tigeli = "E"
 
                             If (CBool(_Fiad) And _Tido.Contains("N") And Not _Tidopa.Contains("G")) Or
-                                (_Tido = "GDD" And _Subtido = String.Empty) Or
-                                (_Tido = "GRD" And _Tidopa <> "NCV") Then
+                            (_Tido = "GDD" And _Subtido = String.Empty) Or
+                            (_Tido = "GRD" And _Tidopa <> "NCV") Then
                                 '_Tido = "NCC" Or _Tido = "NCV" Then
 
                                 Consulta_sql = "UPDATE MAEDDO SET CAPRNC1=CAPRNC1+" & _Caprnc1 &
-                                                                    ",CAPRNC2=CAPRNC2+" & _Caprnc2 & "," &
-                                                   "ESLIDO = " & vbCrLf &
-                                                   "CASE" & vbCrLf &
-                                                   "WHEN UDTRPR='1' AND CAPRCO1-CAPRAD1-CAPREX1=0 THEN 'C'" & vbCrLf &
-                                                   "WHEN UDTRPR='2' AND CAPRCO2-CAPRAD2-CAPREX2=0 THEN 'C'" & vbCrLf &
-                                                   "ELSE ''" & vbCrLf &
-                                                   "END" & vbCrLf &
-                                                   "WHERE IDMAEDDO = " & _Idrst
+                                                                ",CAPRNC2=CAPRNC2+" & _Caprnc2 & "," &
+                                               "ESLIDO = " & vbCrLf &
+                                               "CASE" & vbCrLf &
+                                               "WHEN UDTRPR='1' AND CAPRCO1-CAPRAD1-CAPREX1=0 THEN 'C'" & vbCrLf &
+                                               "WHEN UDTRPR='2' AND CAPRCO2-CAPRAD2-CAPREX2=0 THEN 'C'" & vbCrLf &
+                                               "ELSE ''" & vbCrLf &
+                                               "END" & vbCrLf &
+                                               "WHERE IDMAEDDO = " & _Idrst
 
                                 Comando = New SqlCommand("SELECT Sum(CAPRNC1) AS 'CAPRNC1',Sum(CAPRNC2) AS 'CAPRNC2'  From MAEDDO Where IDMAEDDO = " & _Idrst, cn2)
                                 Comando.Transaction = myTrans
@@ -903,16 +946,16 @@ Public Class Clase_Crear_Documento
                             Else
 
                                 Consulta_sql = "UPDATE MAEDDO SET CAPREX1=CAPREX1+" & _Caprex1 &
-                                                                        ",CAPREX2=CAPREX2+" & _Caprex2 & "," &
-                                                       "ESLIDO = " &
-                                                       "CASE" & vbCrLf &
-                                                       "WHEN UDTRPR='1' AND " &
-                                                       "ROUND(CAPRCO1-CAPRAD1-(CAPREX1+" & _Caprex1 & "),5)=0 THEN 'C'" & vbCrLf &
-                                                       "WHEN UDTRPR='2' AND " &
-                                                       "ROUND(CAPRCO2-CAPRAD2-(CAPREX2+" & _Caprex2 & "),5)=0 THEN 'C'" & vbCrLf &
-                                                       "Else ''" & vbCrLf &
-                                                       "End" & vbCrLf &
-                                                       "WHERE IDMAEDDO = " & _Idrst
+                                                                    ",CAPREX2=CAPREX2+" & _Caprex2 & "," &
+                                                   "ESLIDO = " &
+                                                   "CASE" & vbCrLf &
+                                                   "WHEN UDTRPR='1' AND " &
+                                                   "ROUND(CAPRCO1-CAPRAD1-(CAPREX1+" & _Caprex1 & "),5)=0 THEN 'C'" & vbCrLf &
+                                                   "WHEN UDTRPR='2' AND " &
+                                                   "ROUND(CAPRCO2-CAPRAD2-(CAPREX2+" & _Caprex2 & "),5)=0 THEN 'C'" & vbCrLf &
+                                                   "Else ''" & vbCrLf &
+                                                   "End" & vbCrLf &
+                                                   "WHERE IDMAEDDO = " & _Idrst
 
 
                             End If
@@ -3810,6 +3853,11 @@ Public Class Clase_Crear_Documento
 
                 _Campos.Add("DEVENGNCV1")
                 _Campos.Add("DEVENGNCV2")
+
+            Case "OTL"
+
+                _Campos.Add("STENFAB1")
+                _Campos.Add("STENFAB2")
 
         End Select
 
