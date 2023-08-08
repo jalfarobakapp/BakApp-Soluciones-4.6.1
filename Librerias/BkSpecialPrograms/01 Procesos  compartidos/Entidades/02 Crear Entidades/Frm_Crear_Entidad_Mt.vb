@@ -302,7 +302,7 @@ Public Class Frm_Crear_Entidad_Mt
 
         End If
 
-            AddHandler ChkxBloqueadaVyC.CheckValueChanged, AddressOf Sb_ChkxBloqueadaVyC
+        AddHandler ChkxBloqueadaVyC.CheckValueChanged, AddressOf Sb_ChkxBloqueadaVyC
         AddHandler ChkxBlocCompras.CheckValueChanged, AddressOf Sb_ChkxBlocCompras
 
         Sb_Llenar_Grilla_Ctas_Ctes()

@@ -1622,6 +1622,20 @@ Public Class Frm_01_Asis_Compra_Resultados
         Consulta_sql = Replace(Consulta_sql, "#TablaPaso#", _Nombre_Tbl_Paso_Informe)
         Consulta_sql = Replace(Consulta_sql, "#Condicion#", _Condicion)
 
+        If _Con_Proveedor_Desde_Estudio Then
+
+            Dim _Koen = _RowProveedor.Item("KOEN")
+            Dim _Suen = _RowProveedor.Item("SUEN")
+
+            If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Entidades_ProdExcluidos") Then
+                Dim _BloqueaProductosPorProveedor = "Update " & _Nombre_Tbl_Paso_Informe & " Set Bloqueapr = 'C' " & vbCrLf &
+                                                    "Where Codigo In (Select Codigo From " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos " &
+                                                    "Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "' And Chk = 1)"
+                Consulta_sql = Replace(Consulta_sql, "--#BloqueaProductosPorProveedor#", _BloqueaProductosPorProveedor)
+            End If
+
+        End If
+
         Dim _Campo_Orden As String
 
         _Campo_Orden = My.Settings.Asis_Compra_Campo_Orden
