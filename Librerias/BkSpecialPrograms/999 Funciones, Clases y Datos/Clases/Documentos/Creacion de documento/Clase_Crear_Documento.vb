@@ -228,12 +228,14 @@ Public Class Clase_Crear_Documento
 
         Next
 
+        Dim _DesdeProduccion As Boolean
         Dim _Filtro_Idmaeddo_Dori As String = Generar_Filtro_IN(_Tbl_Detalle, "", "Idmaeddo_Dori", 1, False, "")
         Dim _Tbl_Maeddo_Dori As DataTable
 
         For Each _Fl As DataRow In _Tbl_Detalle.Rows
             If _Fl.Item("Tidopa") = "OTL" Then
                 _Filtro_Idmaeddo_Dori = "()"
+                _DesdeProduccion = True
                 Exit For
             End If
         Next
@@ -828,8 +830,9 @@ Public Class Clase_Crear_Documento
 
                             If _Tidopa = "OTL" Then
 
-                                Consulta_sql = "Select *,'" & _Endo & "' As ENDO,'OTL' As TIDO,NUMOT As NUDO,NREG As NULIDO,'' As SUBTIDO" & vbCrLf &
-                                                "From POTL Where IDPOTL = " & _Idrst
+                                Consulta_sql = "Select *,'" & _Endo & "' As ENDO,'OTL' As TIDO,NUMOT As NUDO,NREG As NULIDO,'' As SUBTIDO," &
+                                               "Isnull((Select Top 1 OPERACION From POTPR Where POTPR.IDPOTL = POTL.IDPOTL Order By ORDEN Desc),'') As OPERACION" & vbCrLf &
+                                               "From POTL Where IDPOTL = " & _Idrst
                                 .Item("CantUd1_Dori") = .Item("CantUd1")
                                 .Item("CantUd2_Dori") = .Item("CantUd2")
 
@@ -852,7 +855,9 @@ Public Class Clase_Crear_Documento
                             Dim _Caprex1_Ori As Double
                             Dim _Caprex2_Ori As Double
 
-                            If _Tidopa <> "OTL" Then
+                            If _Tidopa = "OTL" Then
+                                _Operacion = _Row_Doc_Origen.Item("OPERACION")
+                            Else
                                 _Caprnc1_Ori = _Row_Doc_Origen.Item("CAPRNC1")
                                 _Caprnc2_Ori = _Row_Doc_Origen.Item("CAPRNC2")
                                 _Caprex1_Ori = _Row_Doc_Origen.Item("CAPREX1")
@@ -900,6 +905,9 @@ Public Class Clase_Crear_Documento
 
                             End If
 
+                            _Archirst = "MAEDDO"
+                            _Tigeli = "E"
+
                             If _Tidopa = "OTL" Then
 
                                 Consulta_sql = "Update POTL Set REALIZADO=REALIZADO+(" & _Caprex1 & "),PORENTRAR=PORENTRAR-(" & _Caprex1 & ") WHERE IDPOTL=" & _Idrst
@@ -912,11 +920,9 @@ Public Class Clase_Crear_Documento
                                 Comando.Transaction = myTrans
                                 Comando.ExecuteNonQuery()
 
+                                _Archirst = "POTL"
+
                             End If
-
-
-                            _Archirst = "MAEDDO"
-                            _Tigeli = "E"
 
                             If (CBool(_Fiad) And _Tido.Contains("N") And Not _Tidopa.Contains("G")) Or
                             (_Tido = "GDD" And _Subtido = String.Empty) Or
@@ -1166,6 +1172,16 @@ Public Class Clase_Crear_Documento
                             _Idmaeddo = dfd1("Identity")
                         End While
                         dfd1.Close()
+
+                        If _Tidopa = "OTL" Then
+
+                            Consulta_sql = "Update MAEDDO Set PPOPPR = 0,COSTOTRIB = VANELI,COSTOIFRS = VANELI,TAMOPPPR = 0,TASADORIG = 0" & vbCrLf &
+                                           "Where IDMAEDDO = " & _Idmaeddo
+                            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                            Comando.Transaction = myTrans
+                            Comando.ExecuteNonQuery()
+
+                        End If
 
 
                         ' **** Insertamos datos en tabla de disribucion de recargos
@@ -1464,7 +1480,14 @@ Public Class Clase_Crear_Documento
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
 
+            If _DesdeProduccion Then
 
+                Consulta_sql = "Update MAEEDO Set NUVEDO = 0,ESFADO = '',DESPACHO = 0 Where IDMAEEDO = " & _Idmaeedo
+                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End If
 
             Consulta_sql = "UPDATE MAEEDO SET ESDO = CASE WHEN ROUND(CAPRCO-CAPRAD-CAPREX,5)=0 THEN 'C' ELSE '' END WHERE IDMAEEDO = " & _Idmaeedo
 

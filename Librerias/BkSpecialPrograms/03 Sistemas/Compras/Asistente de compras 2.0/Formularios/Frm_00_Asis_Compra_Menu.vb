@@ -3046,9 +3046,14 @@ Public Class Frm_00_Asis_Compra_Menu
         End If
 
         Dim _Koen = _RowProveedor.Item("KOEN")
+        Dim _Suen = _RowProveedor.Item("SUEN")
 
         Dim _Sql_Filtro_Condicion_Extra = "And TIPR = 'FPN' And KOPR In (Select KOPR From TABCODAL Where KOEN = '" & _Koen & "')"
 
+        If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Entidades_ProdExcluidos") Then
+            _Sql_Filtro_Condicion_Extra += vbCrLf & "And KOPR Not In (Select Codigo From " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos " &
+                                           "Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "' And Chk = 1)"
+        End If
 
         Dim Fm As New Frm_Filtro_Especial_Productos
 
@@ -3421,6 +3426,11 @@ Public Class Frm_00_Asis_Compra_Menu
     End Sub
 
     Private Sub Btn_GrabarConfiguracion_Click(sender As Object, e As EventArgs) Handles Btn_GrabarConfiguracion.Click
+
+        If Rdb_Productos_Proveedor.Checked Then
+            MessageBoxEx.Show(Me, "No puede dejar un proveedor asignado en esta configuración", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Me.Enabled = False
         Sb_Parametros_Informe_Sql(True)

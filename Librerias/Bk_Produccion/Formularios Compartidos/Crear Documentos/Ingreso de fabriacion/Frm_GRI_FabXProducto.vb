@@ -65,6 +65,13 @@ Public Class Frm_GRI_FabXProducto
                 Return
             End If
 
+            If _Row_Pote.Item("ESTADO") = "C" Then
+                MessageBoxEx.Show(Me, "la OT Nro: " & _Numot & " Se encuentra cerrada" & vbCrLf &
+                                  "No se permite el movimiento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                _Numot = String.Empty
+                Return
+            End If
+
             Txt_Numot.ReadOnly = True
 
             Lbl_ReferenciaOT.Text = "REFERENCIA: " & _Row_Pote.Item("REFERENCIA")
@@ -167,7 +174,7 @@ Public Class Frm_GRI_FabXProducto
 
         ' Falta agregar los siguientes campos
         ' MAEEDO: NUVEDO = 0,ESFADO = '',DESPACHO = 0
-        ' MAEDDO: OPERACION,PPOPPR = 0, COSTOTRIB y COSTOIFRS = VANELI,TAMOPPPR = 0,TASADORIG = 0
+        ' MAEDDO: ARCHIRST = 'POTL' OPERACION,PPOPPR = 0, COSTOTRIB y COSTOIFRS = VANELI,TAMOPPPR = 0,TASADORIG = 0
 
     End Sub
 
