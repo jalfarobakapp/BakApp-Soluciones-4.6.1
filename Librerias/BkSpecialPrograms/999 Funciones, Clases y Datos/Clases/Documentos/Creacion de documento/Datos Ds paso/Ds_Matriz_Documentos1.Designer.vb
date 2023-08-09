@@ -6645,6 +6645,14 @@ Partial Public Class Ds_Matriz_Documentos
         
         Private columnCantidad_Documento As Global.System.Data.DataColumn
         
+        Private columnUnTrans As Global.System.Data.DataColumn
+        
+        Private columnUd01PR As Global.System.Data.DataColumn
+        
+        Private columnUd02PR As Global.System.Data.DataColumn
+        
+        Private columnRtu As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub New()
@@ -6737,6 +6745,38 @@ Partial Public Class Ds_Matriz_Documentos
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property UnTransColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnUnTrans
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property Ud01PRColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnUd01PR
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property Ud02PRColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnUd02PR
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property RtuColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnRtu
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -6773,9 +6813,9 @@ Partial Public Class Ds_Matriz_Documentos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
-        Public Overloads Function AddTbl_Lector_BarraRow(ByVal Codigo_Barras As String, ByVal Codigo As String, ByVal Descripcion As String, ByVal Cantidad As Double, ByVal Problema As String, ByVal Es_Correcto As Boolean, ByVal Cantidad_Documento As Double) As Tbl_Lector_BarraRow
+        Public Overloads Function AddTbl_Lector_BarraRow(ByVal Codigo_Barras As String, ByVal Codigo As String, ByVal Descripcion As String, ByVal Cantidad As Double, ByVal Problema As String, ByVal Es_Correcto As Boolean, ByVal Cantidad_Documento As Double, ByVal UnTrans As Integer, ByVal Ud01PR As String, ByVal Ud02PR As String, ByVal Rtu As Double) As Tbl_Lector_BarraRow
             Dim rowTbl_Lector_BarraRow As Tbl_Lector_BarraRow = CType(Me.NewRow,Tbl_Lector_BarraRow)
-            Dim columnValuesArray() As Object = New Object() {Codigo_Barras, Codigo, Descripcion, Cantidad, Problema, Es_Correcto, Cantidad_Documento}
+            Dim columnValuesArray() As Object = New Object() {Codigo_Barras, Codigo, Descripcion, Cantidad, Problema, Es_Correcto, Cantidad_Documento, UnTrans, Ud01PR, Ud02PR, Rtu}
             rowTbl_Lector_BarraRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowTbl_Lector_BarraRow)
             Return rowTbl_Lector_BarraRow
@@ -6805,6 +6845,10 @@ Partial Public Class Ds_Matriz_Documentos
             Me.columnProblema = MyBase.Columns("Problema")
             Me.columnEs_Correcto = MyBase.Columns("Es_Correcto")
             Me.columnCantidad_Documento = MyBase.Columns("Cantidad_Documento")
+            Me.columnUnTrans = MyBase.Columns("UnTrans")
+            Me.columnUd01PR = MyBase.Columns("Ud01PR")
+            Me.columnUd02PR = MyBase.Columns("Ud02PR")
+            Me.columnRtu = MyBase.Columns("Rtu")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -6824,6 +6868,14 @@ Partial Public Class Ds_Matriz_Documentos
             MyBase.Columns.Add(Me.columnEs_Correcto)
             Me.columnCantidad_Documento = New Global.System.Data.DataColumn("Cantidad_Documento", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnCantidad_Documento)
+            Me.columnUnTrans = New Global.System.Data.DataColumn("UnTrans", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnUnTrans)
+            Me.columnUd01PR = New Global.System.Data.DataColumn("Ud01PR", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnUd01PR)
+            Me.columnUd02PR = New Global.System.Data.DataColumn("Ud02PR", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnUd02PR)
+            Me.columnRtu = New Global.System.Data.DataColumn("Rtu", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnRtu)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -14904,6 +14956,66 @@ Partial Public Class Ds_Matriz_Documentos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property UnTrans() As Integer
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Lector_Barra.UnTransColumn),Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'UnTrans' de la tabla 'Tbl_Lector_Barra' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Lector_Barra.UnTransColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property Ud01PR() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Lector_Barra.Ud01PRColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Ud01PR' de la tabla 'Tbl_Lector_Barra' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Lector_Barra.Ud01PRColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property Ud02PR() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Lector_Barra.Ud02PRColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Ud02PR' de la tabla 'Tbl_Lector_Barra' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Lector_Barra.Ud02PRColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property Rtu() As Double
+            Get
+                Try 
+                    Return CType(Me(Me.tableTbl_Lector_Barra.RtuColumn),Double)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Rtu' de la tabla 'Tbl_Lector_Barra' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTbl_Lector_Barra.RtuColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Function IsCodigo_BarrasNull() As Boolean
             Return Me.IsNull(Me.tableTbl_Lector_Barra.Codigo_BarrasColumn)
         End Function
@@ -14984,6 +15096,54 @@ Partial Public Class Ds_Matriz_Documentos
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub SetCantidad_DocumentoNull()
             Me(Me.tableTbl_Lector_Barra.Cantidad_DocumentoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsUnTransNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Lector_Barra.UnTransColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetUnTransNull()
+            Me(Me.tableTbl_Lector_Barra.UnTransColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsUd01PRNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Lector_Barra.Ud01PRColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetUd01PRNull()
+            Me(Me.tableTbl_Lector_Barra.Ud01PRColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsUd02PRNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Lector_Barra.Ud02PRColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetUd02PRNull()
+            Me(Me.tableTbl_Lector_Barra.Ud02PRColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsRtuNull() As Boolean
+            Return Me.IsNull(Me.tableTbl_Lector_Barra.RtuColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetRtuNull()
+            Me(Me.tableTbl_Lector_Barra.RtuColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     

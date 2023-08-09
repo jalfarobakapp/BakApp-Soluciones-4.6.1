@@ -220,9 +220,12 @@ Public Class Frm_Configuracion_Gral
             Chk_Pr_Creacion_Exigir_2daDimension.Checked = .Item("Pr_Creacion_Exigir_2daDimension")
             Chk_Pr_Creacion_Exigir_3raDimension.Checked = .Item("Pr_Creacion_Exigir_3raDimension")
 
+            Chk_ValidaMovFisConCodBarra.Checked = .Item("ValidaMovFisConCodBarra")
+
         End With
 
         Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.Enabled = Not _Modalidad_General
+        Chk_ValidaMovFisConCodBarra.Enabled = Not _Modalidad_General
 
         Chk_Revisar_Tasa_de_Cambio.Enabled = _Modalidad_General
         Chk_Revisar_Taza_Solo_Mon_Extranjeras.Enabled = _Modalidad_General
@@ -488,6 +491,7 @@ Public Class Frm_Configuracion_Gral
                        ",Pr_Creacion_Exigir_1raDimension = " & Convert.ToInt32(Chk_Pr_Creacion_Exigir_1raDimension.Checked) & vbCrLf &
                        ",Pr_Creacion_Exigir_2daDimension = " & Convert.ToInt32(Chk_Pr_Creacion_Exigir_2daDimension.Checked) & vbCrLf &
                        ",Pr_Creacion_Exigir_3raDimension = " & Convert.ToInt32(Chk_Pr_Creacion_Exigir_3raDimension.Checked) & vbCrLf &
+                       ",ValidaMovFisConCodBarra = " & Convert.ToInt32(Chk_ValidaMovFisConCodBarra.Checked) & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
