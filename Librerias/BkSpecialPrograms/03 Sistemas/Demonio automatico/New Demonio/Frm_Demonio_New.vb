@@ -554,15 +554,19 @@ Public Class Frm_Demonio_New
             Sb_Timer_IntervaloCada(_Timer_ImprimirDocumentos, _DProgramaciones.Sp_ColaImpDoc, AddressOf Sb_Imprimir_Documentos)
             'Sb_Timer_ImprimirDocumentos()
 
-            Dim registro As String = "Tarea ejecutada (Imprimir documentos) a las: " & DateTime.Now.ToString()
+            Dim registro As String
 
             If Not String.IsNullOrWhiteSpace(_Cl_Imprimir_Documentos.Log_Registro) Then
+                registro = "Tarea ejecutada (Imprimir documentos) a las: " & DateTime.Now.ToString()
                 registro += vbCrLf & _Cl_Imprimir_Documentos.Log_Registro
             End If
 
             ' Registrar la información en un archivo de registro
-            RegistrarLog(registro)
-            MostrarRegistro(registro)
+            If Not String.IsNullOrWhiteSpace(registro) Then
+                registro = registro.Trim
+                RegistrarLog(registro)
+                MostrarRegistro(registro)
+            End If
 
         End If
 

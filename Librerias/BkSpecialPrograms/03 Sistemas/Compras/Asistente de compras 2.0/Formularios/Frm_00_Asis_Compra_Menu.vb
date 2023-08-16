@@ -3499,7 +3499,6 @@ Public Class Frm_00_Asis_Compra_Menu
                         If MessageBoxEx.Show(Me, "Desea excluir a los productos hermanos de los productos seleccionados?",
                                          "Productos de reemplazo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
-
                             Dim _Filtro_Pro = Generar_Filtro_IN(_TblFiltroProductosExcluidos, "", "Codigo", False, False, "'")
 
                             If Chk_Traer_Productos_De_Reemplazo.Checked Then

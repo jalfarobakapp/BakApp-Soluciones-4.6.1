@@ -593,7 +593,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         _Filtro_SucursalDoc_Todas = True
         _Filtro_Sucursales_Todas = True
         _Filtro_Bodegas_Todas = True
-
         _Filtro_Entidad_Todas = True
         _Filtro_Ciudad_Todas = True
         _Filtro_Comunas_Todas = True
@@ -604,20 +603,15 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         _Filtro_Tama_Empresa_Todas = True
         _Filtro_Lista_Precio_Asig_Todas = True
         _Filtro_Lista_Precio_Docu_Todas = True
-
         _Filtro_Vendedores_Todas = True
-
         _Filtro_Responzables_Todas = True
-
         _Filtro_Productos_Todos = True
         _Filtro_Clalibpr_Todas = True
         _Filtro_Marcas_Todas = True
         _Filtro_Rubro_Productos_Todas = True
-
         _Filtro_Super_Familias_Todas = True
         _Filtro_Familias_Todas = True
         _Filtro_Sub_Familias_Todas = True
-
         _Filtro_Zonas_Productos_Todas = True
         _Filtro_Clas_BakApp_Todas = True
 

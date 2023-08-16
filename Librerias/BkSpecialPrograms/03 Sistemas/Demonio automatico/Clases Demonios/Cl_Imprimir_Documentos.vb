@@ -451,17 +451,33 @@ Public Class Cl_Imprimir_Documentos
                         _Imprimir_Voucher_TJV_Original_Transbak = _Imprimir_Voucher_TJV_Original_Transbak_Est
                     End If
 
-
+                    'If String.IsNullOrWhiteSpace(_IdMaeedo) Then
+                    '    _IdMaeedo = 0
+                    'End If
 
                     If Fx_Validar_Impresora(_Impresora) Then
 
-                        _Log_Error += Fx_Enviar_A_Imprimir_Documento(Nothing, _NombreFormato,
+                        Try
+                            _Log_Error += Fx_Enviar_A_Imprimir_Documento(Nothing, _NombreFormato,
                                                                     _IdMaeedo, False, False, _Impresora, False, _Nro_Copias_Impresion, False, "")
+                        Catch ex As Exception
+                            _Log_Error += Replace(ex.Message, "'", "''")
+                            If String.IsNullOrWhiteSpace(_IdMaeedo) Then
+                                _Log_Error += " (Falta el Idmaeedo, Doc:" & _Tido & "-" & _Nudo & ") "
+                            End If
+                        End Try
 
                         If String.IsNullOrEmpty(_Log_Error) Then
 
                             If _Imprimir_Voucher_TJV Or _Imprimir_Voucher_TJV_Original_Transbak Then
-                                Sb_Imprimir_Voucher_Tarjeta(_IdMaeedo, _Log_Error, _Impresora, _Imprimir_Voucher_TJV_Original_Transbak)
+                                Try
+                                    Sb_Imprimir_Voucher_Tarjeta(_IdMaeedo, _Log_Error, _Impresora, _Imprimir_Voucher_TJV_Original_Transbak)
+                                Catch ex As Exception
+                                    _Log_Error += Replace(ex.Message, "'", "''")
+                                    If String.IsNullOrWhiteSpace(_IdMaeedo) Then
+                                        _Log_Error += " (Falta el Idmaeedo, Doc:" & _Tido & "-" & _Nudo & ") "
+                                    End If
+                                End Try
                             End If
 
                             _Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion" & Space(1) &
@@ -528,6 +544,16 @@ Public Class Cl_Imprimir_Documentos
                                     ByRef _LogError As String,
                                     ByVal _Impresora As String,
                                     ByVal _Imprimir_Voucher_Original_Transbank As Boolean)
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Consulta_Sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
+        Dim _RowMaeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+        If _RowMaeedo Is Nothing Then
+            _LogError += "No se encontro documento IDMAEEDO:" & _Idmaeedo
+            Return
+        End If
 
         If _Imprimir_Voucher_Original_Transbank Then
             Dim _Cl_Voucher As New Clas_Imprimir_Voucher

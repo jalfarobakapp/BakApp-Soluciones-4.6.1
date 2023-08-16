@@ -822,4 +822,25 @@ Public Class Menu
         Fm.Dispose()
 
     End Sub
+
+    Private Sub LabelX1_DoubleClick(sender As Object, e As EventArgs) Handles LabelX1.DoubleClick
+        Dim _Autorizado As Boolean
+
+        If ButtonX1.Visible Then
+            ButtonX1.Visible = False
+            Return
+        End If
+
+        Dim Fm_Pass As New Frm_Clave_Administrador
+        Fm_Pass.ShowDialog(Me)
+        _Autorizado = Fm_Pass.Pro_Autorizado
+        Fm_Pass.Dispose()
+
+        If Not _Autorizado Then
+            Return
+        End If
+
+        ButtonX1.Visible = True
+        Me.Refresh()
+    End Sub
 End Class
