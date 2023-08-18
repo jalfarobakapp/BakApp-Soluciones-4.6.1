@@ -3142,7 +3142,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                         Mnu_Btn_Ocultar.Checked = False
                     End If
 
-                    Btn_Migrar_Producto.Visible = _Global_Row_Configuracion_General.Item("PermitirMigrarProductosBaseExterna")
+                    Btn_Migrar_Producto.Visible = True ' _Global_Row_Configuracion_General.Item("PermitirMigrarProductosBaseExterna")
 
                     ShowContextMenu(Menu_Contextual_01)
 
