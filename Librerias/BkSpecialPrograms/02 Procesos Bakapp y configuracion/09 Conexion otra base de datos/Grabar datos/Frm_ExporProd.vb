@@ -59,6 +59,8 @@ Public Class Frm_ExporProd
 
         Chk_PermitirMigrarProductosBaseExterna.Checked = _Global_Row_Configuracion_General.Item("PermitirMigrarProductosBaseExterna")
 
+        Chk_SincroNmarca.Checked = _Row_DbExt_Conexion.Item("SincroNmarca")
+
         _Sql2 = New Class_SQL(_Cadena_ConexionSQL_Server_BodExterna)
 
         Dim cn2 As New SqlConnection
@@ -159,6 +161,7 @@ Public Class Frm_ExporProd
         Dim _SincroClaslib As Integer = Convert.ToInt32(Chk_SincroClaslib.Checked)
         Dim _SincroZonasProd As Integer = Convert.ToInt32(Chk_SincroZonasProd.Checked)
         Dim _SincroZonas As Integer = Convert.ToInt32(Chk_SincroZonas.Checked)
+        Dim _SincroNmarca As Integer = Convert.ToInt32(Chk_SincroNmarca.Checked)
 
         Dim _SincroEmpresa As Integer = Convert.ToInt32(Chk_SincroEmpresa.Checked)
         Dim _SincroTratalote As Integer = Convert.ToInt32(Chk_SincroTratalote.Checked)
@@ -218,6 +221,7 @@ Public Class Frm_ExporProd
                        ",SincroTblFamilias = " & _SincroTblFamilias &
                        ",SincroTblClaslibre = " & _SincroTblClaslibre &
                        ",SincroTblZonaProducto = " & _SincroTblZonaProducto &
+                       ",SincroNmarca = " & _SincroNmarca &
                        "Where Id = " & _Id & vbCrLf & vbCrLf
 
         Consulta_Sql += "Update " & _Global_BaseBk & "Zw_Configuracion Set" & vbCrLf &

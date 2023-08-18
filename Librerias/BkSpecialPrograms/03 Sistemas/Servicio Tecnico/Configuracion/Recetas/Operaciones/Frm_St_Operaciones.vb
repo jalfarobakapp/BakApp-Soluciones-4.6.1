@@ -120,6 +120,12 @@
         If ModoSeleccion Then
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Operaciones Where Operacion = '" & _Operacion & "'"
+
+            Consulta_sql = "Select Ope.*,ISNULL(Pre.Costo,0) As Costo,ISNULL(Pre.Precio,0) As Precio" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_St_OT_Operaciones Ope" & vbCrLf &
+                           "Left Join " & _Global_BaseBk & "Zw_St_OT_Operaciones_Precios Pre On Pre.Id_Ope = Ope.Id And " &
+                           "Pre.Empresa = '" & ModEmpresa & "' And Pre.Sucursal = '" & ModSucursal & "'" & vbCrLf &
+                           "Where Ope.Operacion = '" & _Operacion & "'"
             _Row_Operacion = _Sql.Fx_Get_DataRow(Consulta_sql)
             Me.Close()
 

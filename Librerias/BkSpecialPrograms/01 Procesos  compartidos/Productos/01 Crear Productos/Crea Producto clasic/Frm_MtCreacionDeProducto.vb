@@ -467,11 +467,21 @@ Public Class Frm_MtCreacionDeProducto
         End If
 
         If Len(Trim(Txt_Nokopr.Text)) > 50 Then
-
             MessageBoxEx.Show(Me, "Largo máximo de la descripción 50 caracteres",
-                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
+        End If
 
+        If Txt_Ud01pr.Text <> Txt_Ud02pr.Text AndAlso Val(Txt_Rlud.Text) = 1 Then
+            MessageBoxEx.Show(Me, "No puede crear un producto con distinta unidad de medida y RTU = 1",
+                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If Txt_Ud01pr.Text = Txt_Ud02pr.Text AndAlso Val(Txt_Rlud.Text) <> 1 Then
+            MessageBoxEx.Show(Me, "No puede crear un producto con distinta unidad de medida y RTU = 1",
+                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
         End If
 
 
@@ -746,7 +756,7 @@ Public Class Frm_MtCreacionDeProducto
                                 Dim _RludExt = _Sql2.Fx_Trae_Dato("MAEPR", "RLUD", "KOPR = '" & _Codigo & "'")
                                 Dim _EditarRtu As Boolean = True
 
-                                If _RludExt <> Txt_Rlud.Text Then
+                                If Val(_RludExt) <> Val(Txt_Rlud.Text) Then
                                     _EditarRtu = False
                                 End If
 
@@ -759,6 +769,10 @@ Public Class Frm_MtCreacionDeProducto
                                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
                                 Else
 
+                                    Dim _SincroNmarca As Boolean = _Cl_Migrar_Producto.Row_DnExt.Item("SincroNmarca")
+
+                                    If _SincroNmarca Then _EditarRtu = True
+
                                     Consulta_sql = _Cl_Producto.Fx_Editar_Producto_Base_Externa(_ConexionExternas.Global_BaseBk, _EditarRtu)
 
                                     Dim _SincroMarcas As Boolean = _Cl_Migrar_Producto.Row_DnExt.Item("SincroMarcas")
@@ -770,6 +784,7 @@ Public Class Frm_MtCreacionDeProducto
                                     Dim _SincroEmpresa As Boolean = _Cl_Migrar_Producto.Row_DnExt.Item("SincroEmpresa")
                                     Dim _SincroTratalote As Boolean = _Cl_Migrar_Producto.Row_DnExt.Item("SincroTratalote")
                                     Dim _SincroDimensiones As Boolean = _Cl_Migrar_Producto.Row_DnExt.Item("SincroDimensiones")
+
 
                                     If Not _SincroMarcas Then Consulta_sql = Replace(Consulta_sql, "MRPR = @MRPR,", "--MRPR = @MRPR,")
                                     If Not _SincroFamilias Then
@@ -787,10 +802,10 @@ Public Class Frm_MtCreacionDeProducto
                                         Consulta_sql = Replace(Consulta_sql, "NODIM2 = @NODIM2,", "--NODIM2 = @NODIM2,")
                                         Consulta_sql = Replace(Consulta_sql, "NODIM3 = @NODIM3,", "--NODIM3 = @NODIM3,")
                                     End If
+                                    If Not _SincroNmarca Then Consulta_sql = Replace(Consulta_sql, "NMARCA = @NMARCA,", "--NMARCA = @NMARCA,")
 
                                     'Estos tratamientos son siempre por empresa independiente
                                     Consulta_sql = Replace(Consulta_sql, "CONUBIC = @CONUBIC,", "--CONUBIC = @CONUBIC,")
-                                    Consulta_sql = Replace(Consulta_sql, "NMARCA = @NMARCA,", "--NMARCA = @NMARCA,")
                                     Consulta_sql = Replace(Consulta_sql, "BLOQUEAPR = @BLOQUEAPR,", "--BLOQUEAPR = @BLOQUEAPR,")
                                     Consulta_sql = Replace(Consulta_sql, "LISCOSTO = @LISCOSTO,", "--LISCOSTO = @LISCOSTO,")
                                     Consulta_sql = Replace(Consulta_sql, "FUNCLOTE = @FUNCLOTE,", "--FUNCLOTE = @FUNCLOTE,")

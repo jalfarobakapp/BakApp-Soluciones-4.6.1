@@ -207,6 +207,7 @@ Namespace Bk_Migrar_Producto
                 Dim _SincroEmpresa As Boolean = Row_DnExt.Item("SincroEmpresa")
                 Dim _SincroTratalote As Boolean = Row_DnExt.Item("SincroTratalote")
                 Dim _SincroDimensiones As Boolean = Row_DnExt.Item("SincroDimensiones")
+                Dim _SincroNmarca As Boolean = Row_DnExt.Item("SincroNmarca")
 
                 _Ds_Producto_Local = Fx_BuscarProducto(_Codigo, _Global_BaseBk, _Sql, False)
 
@@ -228,9 +229,10 @@ Namespace Bk_Migrar_Producto
                     If Not _SincroZonaProducto Then _Consulta_sql += "Update MAEPR Set ZONAPR = '' Where KOPR = '" & _Codigo & "'" & vbCrLf
                     If Not _SincroTratalote Then _Consulta_sql += "Update MAEPR Set TRATALOTE = 0,LOTECAJA = 0 Where KOPR = '" & _Codigo & "'" & vbCrLf
                     If Not _SincroDimensiones Then _Consulta_sql += "Update MAEPR Set KOPRDIM = '',NODIM1 = '',NODIM2 = '',NODIM3 = '' Where KOPR = '" & _Codigo & "'" & vbCrLf
+                    If Not _SincroNmarca Then _Consulta_sql += "Update MAEPR Set NMARCA = '' Where KOPR = '" & _Codigo & "'" & vbCrLf
 
                     'Estos tratamientos son siempre por empresa independiente
-                    _Consulta_sql += "Update MAEPR Set CONUBIC = 0,NMARCA = '',BLOQUEAPR = '',LISCOSTO = '',FUNCLOTE = ''" & vbCrLf &
+                    _Consulta_sql += "Update MAEPR Set CONUBIC = 0,BLOQUEAPR = '',LISCOSTO = '',FUNCLOTE = ''" & vbCrLf &
                                      "Where KOPR = '" & _Codigo & "'" & vbCrLf
 
                     _Sql2.Ej_consulta_IDU(_Consulta_sql)
@@ -544,6 +546,7 @@ Namespace Bk_Migrar_Producto
                 _ConexionExternas.SincroMarcas = _Row_DnExt.Item("SincroMarcas")
                 _ConexionExternas.SincroRubros = _Row_DnExt.Item("SincroRubros")
                 _ConexionExternas.SincroZonas = _Row_DnExt.Item("SincroZonas")
+                _ConexionExternas.SincroNmarca = _Row_DnExt.Item("SincroNmarca")
 
             Else
                 _ConexionExternas.MensajeError = _Sql2.Pro_Error & vbCrLf & "No es posible conectarse con la base de datos externa. Revise los datos de conexión." & vbCrLf &
@@ -571,8 +574,7 @@ Namespace Bk_Migrar_Producto
         Public Property SincroClaslib As Boolean
         Public Property SincroZonasProd As Boolean
         Public Property SincroZonas As Boolean
-
-
+        Public Property SincroNmarca As Boolean
 
     End Class
 
