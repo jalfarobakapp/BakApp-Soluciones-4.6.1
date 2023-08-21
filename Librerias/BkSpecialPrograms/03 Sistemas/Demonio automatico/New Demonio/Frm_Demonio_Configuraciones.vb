@@ -537,7 +537,7 @@ Public Class Frm_Demonio_Configuraciones
                        "From " & _Global_BaseBk & "Zw_Demonio_ConfAcpAuto AcpA" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Demonio_ConfProgramacion Prog On AcpA.Id = Prog.Id_Padre And Prog.Tbl_Padre = 'AcoAuto'" & vbCrLf &
                        "Where AcpA.NombreEquipo = '" & _NombreEquipo & "'" & vbCrLf &
-                       "Order by Modalidad,NVI,OCC_Star,OCC_Prov"
+                       "Order by Modalidad,NVI Desc,OCC_Star Desc"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 

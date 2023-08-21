@@ -1503,6 +1503,8 @@ Sigue_Loop_01:
             If Not String.IsNullOrEmpty(_MsgExiste) Then
                 MessageBoxEx.Show(Me, "El sistema esta configurado para sincronizar productos con otra(s) base de datos" & vbCrLf & vbCrLf & _MsgExiste,
                                   "No se puede grabar el producto", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_Kopr.Text = String.Empty
+                Txt_Koprte.Text = String.Empty
                 Txt_Kopr.Focus()
             End If
         End If

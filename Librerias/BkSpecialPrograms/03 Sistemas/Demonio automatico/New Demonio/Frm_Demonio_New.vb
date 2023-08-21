@@ -1337,7 +1337,9 @@ Public Class Frm_Demonio_New
                 RegistrarLog(registro)
                 MostrarRegistro(registro)
 
-                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_ConfAcpAuto Where NombreEquipo = '" & _NombreEquipo & "'"
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_ConfAcpAuto" & vbCrLf &
+                               "Where NombreEquipo = '" & _NombreEquipo & "'" & vbCrLf &
+                               "Order By NVI Desc,OCC_Star Desc"
                 Dim _Tbl_ConfAcpAuto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
                 For Each _Fila As DataRow In _Tbl_ConfAcpAuto.Rows
