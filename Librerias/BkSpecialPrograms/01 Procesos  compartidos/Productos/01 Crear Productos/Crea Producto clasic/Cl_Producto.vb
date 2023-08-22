@@ -1172,7 +1172,7 @@ Drop Table #Paso_Tabim"
             _SqlQuery += "Delete " & _Global_BaseBk & "Zw_Prod_Dimensiones Where Codigo = '" & _kopr & "'" & vbCrLf &
                          "Insert Into " & _Global_BaseBk & "Zw_Prod_Dimensiones (Codigo,Peso,Alto,Largo,Ancho) Values " &
                            "('" & _kopr & "'," &
-                           De_Num_a_Tx_01(_pesoubic, False, 5) & "," &
+                           _pesoubic & "," &
                            De_Num_a_Tx_01(_alto, False, 5) & "," &
                            De_Num_a_Tx_01(_largo, False, 5) & "," &
                            De_Num_a_Tx_01(_ancho, False, 5) & ")" & vbCrLf

@@ -843,4 +843,52 @@ Public Class Menu
         ButtonX1.Visible = True
         Me.Refresh()
     End Sub
+
+    Private Sub Btn_CrearNVVDesdeOCC_Click(sender As Object, e As EventArgs) Handles Btn_CrearNVVDesdeOCC.Click
+
+        Dim _Id_Enc As Integer = 5
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_NVVAuto Where Id_Enc = " & _Id_Enc
+        Dim _Row_Encabezado As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Endo As String = _Row_Encabezado.Item("Endo_Ori")
+        Dim _Suendo As String = _Row_Encabezado.Item("Suendo_Ori")
+
+        Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Endo & "' And SUEN = '" & _Suendo & "'"
+        Dim _Row_Entidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Tido As String = "NVV"
+        Dim _Fecha_Emision As DateTime = FechaDelServidor()
+
+        Consulta_sql = "Select *,1 As Precio From " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Where Id_Enc = " & _Id_Enc
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        Dim Fm As New Frm_Formulario_Documento(_Tido,
+                                               csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta,
+                                               False, False, False, False, False)
+
+        Fm.Pro_RowEntidad = _Row_Entidad
+        Fm.Sb_Crear_Documento_Interno_Con_Tabla(_Fm_Menu_Padre, _Tbl_Productos, _Fecha_Emision,
+                                                "Codigo", "Cantidad", "Precio", "Observacion", False, True)
+        'Fm.Pro_Bodega_Destino = _Bod_Destino
+        Dim _New_Idmaeedo = Fm.Fx_Grabar_Documento(False)
+        Fm.Dispose()
+
+        If CBool(_New_Idmaeedo) Then
+            Consulta_sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_NVVAuto Set " &
+                           "NVVGenerada = 1" &
+                           ",Idmaeedo_NVV = " & _Row.Item("IDMAEEDO") &
+                           ",Nudo_NVV = '" & _Row.Item("NUDO") & "'" &
+                           ",Feemdo_NVV = '" & Format(_Row.Item("FEEMDO"), "yyyyMMdd") & "'" & vbCrLf &
+                            "Where Id_Enc = " & _Id_Enc
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        End If
+
+    End Sub
+
+
 End Class

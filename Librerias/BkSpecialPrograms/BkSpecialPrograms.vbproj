@@ -1440,6 +1440,7 @@
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Imprimir_Picking.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_LibroDTESII.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Listas_Programadas.vb" />
+    <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_NVVAutoExterna.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Prestashop_Orders.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Prestashop_Web.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Programacion.vb" />

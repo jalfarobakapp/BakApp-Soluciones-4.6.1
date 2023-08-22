@@ -148,5 +148,6 @@ Public Class DProgramaciones
     Public Property Sp_SqlQueryEspecial As New Cl_NewProgramacion
     Public Property Sp_ListasProgramadas As New Cl_NewProgramacion
     Public Property Sp_EnviarDocSinRecepcion As New Cl_NewProgramacion
+    Public Property Sp_NVVExterna As New Cl_NewProgramacion
 
 End Class

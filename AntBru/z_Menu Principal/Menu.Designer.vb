@@ -89,6 +89,7 @@ Partial Class Menu
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         Me.StyleManager1 = New DevComponents.DotNetBar.StyleManager(Me.components)
+        Me.Btn_CrearNVVDesdeOCC = New DevComponents.DotNetBar.ButtonItem()
         MetroTileFrame1 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame2 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame3 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
@@ -797,7 +798,7 @@ Partial Class Menu
         Me.ButtonX1.Name = "ButtonX1"
         Me.ButtonX1.Size = New System.Drawing.Size(134, 32)
         Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5, Me.Btn_IngresarGRIProduccion})
+        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5, Me.Btn_IngresarGRIProduccion, Me.Btn_CrearNVVDesdeOCC})
         Me.ButtonX1.TabIndex = 15
         Me.ButtonX1.Text = "Boton de pruebas"
         Me.ButtonX1.Visible = False
@@ -1070,6 +1071,12 @@ Partial Class Menu
         Me.StyleManager1.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro
         Me.StyleManager1.MetroColorParameters = New DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(154, Byte), Integer)))
         '
+        'Btn_CrearNVVDesdeOCC
+        '
+        Me.Btn_CrearNVVDesdeOCC.GlobalItem = False
+        Me.Btn_CrearNVVDesdeOCC.Name = "Btn_CrearNVVDesdeOCC"
+        Me.Btn_CrearNVVDesdeOCC.Text = "Crear NVV desde OCC Externa"
+        '
         'Menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1153,4 +1160,5 @@ Partial Class Menu
     Friend WithEvents ButtonItem4 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents ButtonItem5 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_IngresarGRIProduccion As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_CrearNVVDesdeOCC As DevComponents.DotNetBar.ButtonItem
 End Class

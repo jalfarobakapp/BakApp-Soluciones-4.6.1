@@ -335,6 +335,9 @@ Public Class Frm_MtCreacionDeProducto
 
         Sb_Limpiar()
 
+        AddHandler Chk_Tratalote.CheckedChanged, AddressOf Chk_Tratalote_CheckedChanged
+        AddHandler Chk_Lotecaja.CheckedChanged, AddressOf Chk_Lotecaja_CheckedChanged
+
     End Sub
 
     Sub Sb_Limpiar()
@@ -795,7 +798,10 @@ Public Class Frm_MtCreacionDeProducto
                                     If Not _SincroRubros Then Consulta_sql = Replace(Consulta_sql, "RUPR = @RUPR,", "--RUPR = @RUPR,")
                                     If Not _SincroClaslibre Then Consulta_sql = Replace(Consulta_sql, "CLALIBPR = @CLALIBPR,", "--CLALIBPR = @CLALIBPR,")
                                     If Not _SincroZonaProducto Then Consulta_sql = Replace(Consulta_sql, "ZONAPR = @ZONAPR,", "--ZONAPR = @ZONAPR,")
-                                    If Not _SincroTratalote Then Consulta_sql = Replace(Consulta_sql, "TRATALOTE = @TRATALOTE,", "--TRATALOTE = @TRATALOTE,")
+                                    If Not _SincroTratalote Then
+                                        Consulta_sql = Replace(Consulta_sql, "TRATALOTE = @TRATALOTE,", "--TRATALOTE = @TRATALOTE,")
+                                        Consulta_sql = Replace(Consulta_sql, "LOTECAJA = @LOTECAJA,", "--LOTECAJA = @LOTECAJA,")
+                                    End If
                                     If Not _SincroDimensiones Then
                                         Consulta_sql = Replace(Consulta_sql, "KOPRDIM = @KOPRDIM,", "--KOPRDIM = @KOPRDIM,")
                                         Consulta_sql = Replace(Consulta_sql, "NODIM1 = @NODIM1,", "--NODIM1 = @NODIM1,")
@@ -1873,10 +1879,10 @@ Sigue_Loop_01:
             Dim _Row_dimensiones As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If Not IsNothing(_Row_dimensiones) Then
-                Txt_Pesoubic.Text = NuloPorNro(_Row_dimensiones.Item("Peso"), 0)
-                Txt_Alto.Text = NuloPorNro(_Row_dimensiones.Item("Alto"), 0)
-                Txt_Largo.Text = NuloPorNro(_Row_dimensiones.Item("Largo"), 0)
-                Txt_Ancho.Text = NuloPorNro(_Row_dimensiones.Item("Ancho"), 0)
+                Txt_Pesoubic.Text = De_Num_a_Tx_01(NuloPorNro(_Row_dimensiones.Item("Peso"), 0))
+                Txt_Alto.Text = De_Num_a_Tx_01(NuloPorNro(_Row_dimensiones.Item("Alto"), 0))
+                Txt_Largo.Text = De_Num_a_Tx_01(NuloPorNro(_Row_dimensiones.Item("Largo"), 0))
+                Txt_Ancho.Text = De_Num_a_Tx_01(NuloPorNro(_Row_dimensiones.Item("Ancho"), 0))
             End If
 
         End If
@@ -2010,16 +2016,15 @@ Sigue_Loop_01:
 
         End With
 
-
     End Sub
 
-    Private Sub Chk_Tratalote_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Tratalote.CheckedChanged
+    Private Sub Chk_Tratalote_CheckedChanged(sender As Object, e As EventArgs)
         If Chk_Tratalote.Checked Then
             Chk_Lotecaja.Checked = False
         End If
     End Sub
 
-    Private Sub Chk_Lotecaja_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Lotecaja.CheckedChanged
+    Private Sub Chk_Lotecaja_CheckedChanged(sender As Object, e As EventArgs)
         If Chk_Lotecaja.Checked Then
             Chk_Tratalote.Checked = False
         End If
@@ -3027,15 +3032,38 @@ Namespace Bk_Comporamiento_UdMedidas
             End If
 
             Select Case _Nmarca
+                Case "", "A", "B", "C", "D", "E", ">", "W", "¡"
+                    _FxNmarca.Comportamiento = Enum_Comportamiento.c01_Solicitar_Ud_Que_Hara_Transaccion ' .c01_Caso_normal_respetar_RTU_definida
+                Case "1", "5", "6", "7", "8", "9", "<", "X", "¿"
+                    _FxNmarca.Comportamiento = Enum_Comportamiento.c02_Comprar_en_1ra_Udad_Vender_1ra_Udad '.c02_Solicitar_Ancho_Largo_y_Alto_Para_obtener_1ra_Udad
+                Case "2", "F", "G", "H", "I", "J", "_", "Y", "^"
+                    _FxNmarca.Comportamiento = Enum_Comportamiento.c03_Comprar_en_2da_Udad_Vender_1ra_Udad '.c03_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_MT2
+                Case "3", "K", "L", "M", "N", "O", "-", "Z", "\"
+                    _FxNmarca.Comportamiento = Enum_Comportamiento.c04_Comprar_en_1ra_Udad_Vender_2da_Udad '.c04_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_CM2
+                Case "4", "p", "q", "r", "s", "T", "(", "U", "#", "R", "S"
+                    _FxNmarca.Comportamiento = Enum_Comportamiento.c05_Comprar_en_2da_Udad_Vender_2da_Udad '.c05_Solicitar_cant_solo_Udad_seleccionada_y_calcular_x_RTU_la_otra_Udad
+                Case "a", "b", "c", "d", "e", "f", ")", "V", "@"
+                    _FxNmarca.Comportamiento = Enum_Comportamiento.c06_Solicitar_Udad_si_es_compra_Vender_1ra_Udad '.c06_Calcular_RTU_forma_invertida
+                Case "g", "h", "i", "j", "k", "l", "[", "y", "|"
+                    _FxNmarca.Comportamiento = Enum_Comportamiento.c07_Solicitar_Udad_si_es_compra_Vender_2da_Udad' .c07_Solicitar_cantidad_ambas_unidades_del_producto
+                Case "m", "n", "o", "p", "q", "r", "]", "z", "&"
+                    _FxNmarca.Comportamiento = Enum_Comportamiento.c08_Comrar_en_1ra_Udad_Solicitar_Udad_si_es_venta' .c08_Solicitar_RTU_producto
+                Case "s", "t", "u", "v", "w", "x", "*", "+", "$"
+                    _FxNmarca.Comportamiento = Enum_Comportamiento.c09_Comrar_en_2da_Udad_Solicitar_Udad_si_es_venta' .c09_RTU_variable
+                Case "Ñ"
+                    _FxNmarca.Comportamiento = Enum_Comportamiento.c10_Utilizar_unidad_indivisible_solo_RTU_constante '.c10_RTU_constante
+            End Select
+
+            Select Case _Nmarca
                 Case "", "1", "2", "3", "4", "a", "g", "m", "s"
                     _FxNmarca.Tratamiento = Enum_Tratamientos_RTU.c01_Caso_normal_respetar_RTU_definida
                 Case "A", "5", "F", "K", "p", "b", "h", "n", "t"
                     _FxNmarca.Tratamiento = Enum_Tratamientos_RTU.c02_Solicitar_Ancho_Largo_y_Alto_Para_obtener_1ra_Udad
                 Case "B", "6", "G", "L", "q", "c", "i", "o", "u"
                     _FxNmarca.Tratamiento = Enum_Tratamientos_RTU.c03_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_MT2
-                Case "C", "7", "H", "M", "r", "d", "j", "p", "v"
+                Case "C", "7", "H", "M", "r", "d", "j", "p", "v", "R"
                     _FxNmarca.Tratamiento = Enum_Tratamientos_RTU.c04_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_CM2
-                Case "D", "8", "I", "N", "s", "e", "k", "q", "w"
+                Case "D", "8", "I", "N", "s", "e", "k", "q", "w", "S"
                     _FxNmarca.Tratamiento = Enum_Tratamientos_RTU.c05_Solicitar_cant_solo_Udad_seleccionada_y_calcular_x_RTU_la_otra_Udad
                 Case "E", "9", "J", "O", "T", "f", "l", "r", "x"
                     _FxNmarca.Tratamiento = Enum_Tratamientos_RTU.c06_Calcular_RTU_forma_invertida
@@ -3047,29 +3075,6 @@ Namespace Bk_Comporamiento_UdMedidas
                     _FxNmarca.Tratamiento = Enum_Tratamientos_RTU.c09_RTU_variable
                 Case "Ñ"
                     _FxNmarca.Tratamiento = Enum_Tratamientos_RTU.c10_RTU_constante
-            End Select
-
-            Select Case _Nmarca
-                Case "", "A", "B", "C", "D", "E", ">", "W", "¡"
-                    _FxNmarca.Comportamiento = Enum_Tratamientos_RTU.c01_Caso_normal_respetar_RTU_definida
-                Case "1", "5", "6", "7", "8", "9", "<", "X", "¿"
-                    _FxNmarca.Comportamiento = Enum_Tratamientos_RTU.c02_Solicitar_Ancho_Largo_y_Alto_Para_obtener_1ra_Udad
-                Case "2", "F", "G", "H", "I", "J", "_", "Y", "^"
-                    _FxNmarca.Comportamiento = Enum_Tratamientos_RTU.c03_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_MT2
-                Case "3", "K", "L", "M", "N", "O", "-", "Z", "\"
-                    _FxNmarca.Comportamiento = Enum_Tratamientos_RTU.c04_Solicitar_Ancho_y_Largo_Para_Para_obtener_1ra_Udad_CM2
-                Case "4", "p", "q", "r", "s", "T", "(", "U", "#"
-                    _FxNmarca.Comportamiento = Enum_Tratamientos_RTU.c05_Solicitar_cant_solo_Udad_seleccionada_y_calcular_x_RTU_la_otra_Udad
-                Case "a", "b", "c", "d", "e", "f", ")", "V", "@"
-                    _FxNmarca.Comportamiento = Enum_Tratamientos_RTU.c06_Calcular_RTU_forma_invertida
-                Case "g", "h", "i", "j", "k", "l", "[", "y", "|"
-                    _FxNmarca.Comportamiento = Enum_Tratamientos_RTU.c07_Solicitar_cantidad_ambas_unidades_del_producto
-                Case "m", "n", "o", "p", "q", "r", "]", "z", "&"
-                    _FxNmarca.Comportamiento = Enum_Tratamientos_RTU.c08_Solicitar_RTU_producto
-                Case "s", "t", "u", "v", "w", "x", "*", "+", "$"
-                    _FxNmarca.Comportamiento = Enum_Tratamientos_RTU.c09_RTU_variable
-                Case "Ñ"
-                    _FxNmarca.Comportamiento = Enum_Tratamientos_RTU.c10_RTU_constante
             End Select
 
             Return _FxNmarca

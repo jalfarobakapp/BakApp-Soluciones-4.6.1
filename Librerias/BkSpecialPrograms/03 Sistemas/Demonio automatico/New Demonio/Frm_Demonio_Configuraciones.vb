@@ -55,6 +55,7 @@ Public Class Frm_Demonio_Configuraciones
         AddHandler Chk_AsistenteCompras.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
         AddHandler Chk_EnvDocSinRecep.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
         AddHandler Chk_ListasProgramadas.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
+        AddHandler Chk_NVVAuto.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
 
         AddHandler Sp_EnvioCorreo.Click, AddressOf Sp_SuperTabItem_Click
         AddHandler Sp_ColaImpDoc.Click, AddressOf Sp_SuperTabItem_Click
@@ -73,6 +74,7 @@ Public Class Frm_Demonio_Configuraciones
         AddHandler Sp_EnvDocSinRecep.Click, AddressOf Sp_SuperTabItem_Click
         AddHandler Sp_AsistenteCompras.Click, AddressOf Sp_SuperTabItem_Click
         AddHandler Sp_ListasProgramadas.Click, AddressOf Sp_SuperTabItem_Click
+        AddHandler Sp_NVVAuto.Click, AddressOf Sp_SuperTabItem_Click
 
 
         Sb_Parametros_Informe_Sql(False)
@@ -174,6 +176,11 @@ Public Class Frm_Demonio_Configuraciones
             Not Chk_OCICerrar.Checked Then
             MessageBoxEx.Show(Me, "Debe indicar algún documento para cerrar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             SuperTab.SelectedTabIndex = 12
+            Return
+        End If
+
+        If Chk_NVVAuto.Checked AndAlso String.IsNullOrWhiteSpace(Txt_NvvAuto_Modalidad.Text) Then
+            MessageBoxEx.Show(Me, "Falta la modalidad para las notas de venta automáticas externas", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
@@ -391,7 +398,7 @@ Public Class Frm_Demonio_Configuraciones
             Case "ConsStock", "CierreDoc", "Prestashop_Total"
                 _Diariamente = True : _Semanalmente = True : _SucedeUnaVez = True : _SucedeCada = False
                 _MinIntervalo = 5 : _MaxIntevalo = 59 : _TIMinutos = True : _TIValorDefecto = ""
-            Case "FacAuto"
+            Case "FacAuto", "NVVAuto"
                 _Diariamente = True : _Semanalmente = True : _SucedeUnaVez = False : _SucedeCada = True
                 _MinIntervalo = 1 : _MaxIntevalo = 59 : _TIMinutos = True : _TIValorDefecto = ""
             Case "AsistenteCompras"
@@ -421,13 +428,6 @@ Public Class Frm_Demonio_Configuraciones
     End Function
 
     Private Sub Chk_Habilitar_CheckedChanged(sender As Object, e As EventArgs)
-
-        'Dim _Stab As SuperTabItem = SuperTab.Tabs.Item(CInt(sender.Tag))
-        'If sender.Checked Then
-        '    _Stab.Image = Imagenes_16X16.Images.Item("symbol-ok.png")
-        'Else
-        '    _Stab.Image = Nothing
-        'End If
 
         Dim _NombreChk As String = CType(sender, Controls.CheckBoxX).Name.Replace("Chk_", "")
 
@@ -825,6 +825,14 @@ Public Class Frm_Demonio_Configuraciones
                                       Txt_CtaCorreoEnvDocSinRecep.Name, Class_SQLite.Enum_Type._Tag,
                                       Txt_CtaCorreoEnvDocSinRecep.Tag, _Actualizar, "EnvDocSinRecep",, False)
 
+        ' Notas de venta externas
+        _Sql.Sb_Parametro_Informe_Sql(Chk_NVVAuto, "Demonio",
+                                      Chk_NVVAuto.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_NVVAuto.Checked, _Actualizar, "NVVAuto",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Txt_NvvAuto_Modalidad, "Demonio",
+                                      Txt_NvvAuto_Modalidad.Name, Class_SQLite.Enum_Type._String,
+                                      Txt_NvvAuto_Modalidad.Text, _Actualizar, "NVVAuto",, False)
+
     End Sub
 
     Private Sub Btn_Carpeta_Imagenes_Click(sender As Object, e As EventArgs) Handles Btn_Carpeta_Imagenes.Click
@@ -899,5 +907,39 @@ Public Class Frm_Demonio_Configuraciones
             Txt_CtaCorreoEnvDocSinRecep.Tag = _Row_Email.Item("Id")
             Txt_CtaCorreoEnvDocSinRecep.Text = _Row_Email.Item("Nombre_Correo").ToString.Trim
         End If
+    End Sub
+
+    Private Sub Txt_NvvAuto_Modalidad_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_NvvAuto_Modalidad.ButtonCustomClick
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "MODALIDADES DE LA EMPRESA"
+
+        _Filtrar.Tabla = "CONFIEST"
+        _Filtrar.Campo = "MODALIDAD"
+        _Filtrar.Descripcion = "MODALIDAD"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And MODALIDAD <> '  '",
+                               Nothing, False, True) Then
+
+            Dim _Tbl_Transportista As DataTable = _Filtrar.Pro_Tbl_Filtro
+
+            Dim _Row As DataRow = _Tbl_Transportista.Rows(0)
+
+            Dim _Modalidad = _Row.Item("Codigo").ToString.Trim
+
+            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, _Modalidad, "NVV", True)
+
+            If IsNothing(_RowFormato) Then
+                _Modalidad = String.Empty
+                'Throw New System.Exception("No existe formato de documento para la modalidad")
+            End If
+
+            Txt_NvvAuto_Modalidad.Tag = _Modalidad
+            Txt_NvvAuto_Modalidad.Text = _Modalidad
+
+        End If
+
     End Sub
 End Class
