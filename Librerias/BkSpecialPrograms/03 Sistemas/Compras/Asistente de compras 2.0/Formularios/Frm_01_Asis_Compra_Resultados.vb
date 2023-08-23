@@ -93,6 +93,8 @@ Public Class Frm_01_Asis_Compra_Resultados
     Public Property Auto_Id_CorreoProveedoresSinStock As String
     Public Property Auto_EnviarListadoProveedoresSinStock As Boolean
     Public Property Auto_DespacharA_OCC As String
+    Public Property Auto_Id_Conexion_Externa As Integer
+
     Public Property Pro_Tbl_Filtro_Super_Familias() As DataTable
         Get
             Return _Tbl_Filtro_Super_Familias
@@ -8457,12 +8459,56 @@ Drop Table #Paso"
                 _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Acp)
 
                 If Not String.IsNullOrEmpty(Auto_Id_Correo) Then
+
                     Dim _Error As String = _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, Auto_CorreoCc, "", Auto_Id_Correo, Auto_NombreFormato_PDF, _Id_Acp)
 
-                    If Not String.IsNullOrEmpty(_Error) Then
+                    If String.IsNullOrEmpty(_Error) Then
+
+                        'Enviar a crear NVV a Smartrading
+
+                        Dim _New_Idmaeedo = _Fl.Idmaeedo
+                        Dim _Tido As String = _Fl.Tido
+                        Dim _Nudo As String = _Fl.Nudo
+
+                        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where Id = " & Auto_Id_Conexion_Externa
+                        Dim _Tbl_DnExt As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                        If Not CBool(_Tbl_DnExt.Rows.Count) Then
+                            MessageBoxEx.Show(Me, "No existen conexiones a otras bases de datos para poder hacer esta gestión", "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                            Return
+                        End If
+
+                        Dim _Respuesta As New Bk_ExpotarDoc.Respuesta
+
+                        Me.Cursor = Cursors.WaitCursor
+
+                        Dim _Cl_ExportarDoc As New Bk_ExpotarDoc.Cl_ExpotarDoc
+                        _Respuesta = _Cl_ExportarDoc.Fx_CrearNVVDesdeOCC(_New_Idmaeedo, Auto_Id_Conexion_Externa)
+
+                        Me.Cursor = Cursors.Default
+
+                        Dim _Msg As String
+
+                        For Each _Inf As String In _Respuesta.Mensajes
+                            _Msg += vbCrLf & _Inf
+                        Next
+
+                        Dim _Empresa = _Respuesta.RowEmpresa.Item("EMPRESA")
+                        Dim _Razon = _Respuesta.RowEmpresa.Item("RAZON")
+
+                        If _Respuesta.EsCorrecto Then
+                            _Msg = "Se envia correctamente la solicitud de generación de NVV a la empresa: " & _Empresa & "-" & _Razon
+                        End If
+
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_AcpAuto Set Informacion = Informacion+' -" & _Msg & "' Where Id = " & _Id_Acp
+                        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+                    Else
                         Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_AcpAuto Set Informacion = Informacion+' -" & _Error.Trim & "' Where Id = " & _Id_Acp
                         _Sql.Ej_consulta_IDU(Consulta_sql, False)
                     End If
+
                 End If
 
             Next
