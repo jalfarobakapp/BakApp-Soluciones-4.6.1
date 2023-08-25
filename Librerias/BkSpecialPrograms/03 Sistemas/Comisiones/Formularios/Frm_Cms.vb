@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports System.Security.Cryptography
 Imports DevComponents.DotNetBar
 Imports Spire.Pdf.Exporting.XPS.Schema.Mc
 
@@ -477,6 +478,7 @@ Public Class Frm_Cms
         Dim _FilaLin As DataGridViewRow = Grilla_Lineas.CurrentRow
         Dim _FilaDet As DataGridViewRow = Grilla_Detalle.CurrentRow
         Dim _Id_Det As Integer = _FilaDet.Cells("Id").Value
+        Dim _Id_Mis As Integer = _FilaDet.Cells("Id_Mis").Value
         Dim _TotalNetoComisiones As Double
 
         Dim _Cabeza = Grilla_Detalle.Columns(Grilla_Detalle.CurrentCell.ColumnIndex).Name
@@ -484,6 +486,23 @@ Public Class Frm_Cms
 
         Select Case _Cabeza
             Case "Valor"
+
+                Dim _Valor As Double = _FilaDet.Cells("Valor").Value
+
+                If Not CBool(_Valor) Then
+
+                    Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Comisiones_DetFlTbl", "Id_Mis = " & _Id_Mis)
+
+                    If CBool(_Reg) Then
+                        Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl (Id_Det,Chk,Codigo,Descripcion,NombreTblFiltro)" & vbCrLf &
+                                   "Select " & _Id_Det & " As Id_Det,Chk,Codigo,Descripcion,NombreTblFiltro" & vbCrLf &
+                                   "From " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl Where Id_Mis = " & _Id_Mis
+                        If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
+                            MessageBoxEx.Show(Me, "Filtros actualizados desde la ficha del funcionario", "Actualizar Filtros", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        End If
+                    End If
+
+                End If
 
                 Sb_Cargar_TblInforme(_Id_Det)
 
@@ -577,7 +596,7 @@ Public Class Frm_Cms
                     _Tbl_Filtro_Act_Economica = Fm.Tbl_Filtro_Act_Economica
                     _Tbl_Filtro_Tama_Empresa = Fm.Tbl_Filtro_Tama_Empresa
 
-                    _FilaDet.Cells("Valor").Value = _TotalNetoComisiones
+                    _FilaDet.Cells("Valor").Value = Math.Round(_TotalNetoComisiones, 0)
 
                     Sb_Actualizar_TblInforme(_Id_Det)
                     _ActualizarTotales = True
@@ -820,7 +839,9 @@ Public Class Frm_Cms
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Comisiones_Fun Where CodFuncionario = '" & _CodFuncionario & "'"
         Dim _Row_Funcionario As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
-        Dim _PorcCotizaciones As Double = _Row_Funcionario.Item("AFP") + _Row_Funcionario.Item("Salud")
+        Dim _Afp As Double = _Row_Funcionario.Item("AFP")
+        Dim _Salud As Double = _Row_Funcionario.Item("Salud")
+        Dim _PorcCotizaciones As Double = _Afp + _Salud
 
         Dim _Id_Lin As Integer
 
@@ -848,8 +869,8 @@ Public Class Frm_Cms
 
             End If
 
-            Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Comisiones_Lin (Id_Enc,CodFuncionario,PorcCotizaciones) " &
-                           "Values (" & _Id_Enc & ",'" & _CodFuncionario & "'," & De_Num_a_Tx_01(_PorcCotizaciones, False, 5) & ")"
+            Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Comisiones_Lin (Id_Enc,CodFuncionario,AFP,Salud,PorcCotizaciones) " &
+                           "Values (" & _Id_Enc & ",'" & _CodFuncionario & "'," & De_Num_a_Tx_01(_Afp, False, 5) & "," & De_Num_a_Tx_01(_Salud, False, 5) & "," & De_Num_a_Tx_01(_PorcCotizaciones, False, 5) & ")"
             Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
@@ -937,6 +958,10 @@ Public Class Frm_Cms
         Dim _CodFuncinario As String = _Fila.Cells("CodFuncionario").Value
 
         Sb_InsertarFuncionario(Id_Enc, _CodFuncinario, True)
+
+        Consulta_Sql = "Delete " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl" & vbCrLf &
+                       "Where Id_Det Not In (Select Id From " & _Global_BaseBk & "Zw_Comisiones_Det) And Id_Det <> 0"
+        _Sql.Ej_consulta_IDU(Consulta_Sql)
 
         MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Actualizar datos del funcionario", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
@@ -1055,6 +1080,8 @@ Public Class Frm_Cms
 
             Dim _CodFuncionario As String = _Fila_Lineas.Item("CodFuncionario")
             Dim _SubComBruta As String = De_Num_a_Tx_01(_Fila_Lineas.Item("SubComBruta"), False, 5)
+            Dim _Afp As String = De_Num_a_Tx_01(_Fila_Lineas.Item("AFP"), False, 5)
+            Dim _Salud As String = De_Num_a_Tx_01(_Fila_Lineas.Item("Salud"), False, 5)
             Dim _PorcCotizaciones As String = De_Num_a_Tx_01(_Fila_Lineas.Item("PorcCotizaciones"), False, 5)
             Dim _ComBruta As String = De_Num_a_Tx_01(_Fila_Lineas.Item("ComBruta"), False, 5)
             Dim _ComBrutaSemCorr As String = De_Num_a_Tx_01(_Fila_Lineas.Item("ComBrutaSemCorr"), False, 5)
@@ -1062,6 +1089,8 @@ Public Class Frm_Cms
 
             Consulta_Sql += "Update " & _Global_BaseBk & "Zw_Comisiones_Lin Set " &
                            "SubComBruta = " & _SubComBruta &
+                           ",AFP = " & _Afp &
+                           ",Salud = " & _Salud &
                            ",PorcCotizaciones = " & _PorcCotizaciones &
                            ",ComBruta = " & _ComBruta &
                            ",ComBrutaSemCorr = " & _ComBrutaSemCorr &
@@ -1134,4 +1163,61 @@ Public Class Frm_Cms
 
     End Sub
 
+    Private Sub Grilla_Lineas_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Lineas.CellDoubleClick
+
+        Dim _Fila As DataGridViewRow = Grilla_Lineas.CurrentRow
+
+        Dim _Id_Lin As Integer = _Fila.Cells("Id").Value
+        Dim _CodFuncionario As String = _Fila.Cells("CodFuncionario").Value
+        Dim _Afp As Double = _Fila.Cells("AFP").Value
+        Dim _Salud As Double = _Fila.Cells("Salud").Value
+        Dim _PorcCotizaciones As Double = _Fila.Cells("PorcCotizaciones").Value
+
+        Dim _Cabeza = Grilla_Lineas.Columns(Grilla_Lineas.CurrentCell.ColumnIndex).Name
+        Dim _Grabar As Boolean
+
+        Select Case _Cabeza
+            Case "PorcCotizaciones"
+                Consulta_Sql = "Select TABFU.*,Uss.*" & vbCrLf &
+                                       "From TABFU" & vbCrLf &
+                                       "Inner Join " & _Global_BaseBk & "Zw_Comisiones_Fun Uss On KOFU = Uss.CodFuncionario" & vbCrLf &
+                                       "Where Uss.CodFuncionario = '" & _CodFuncionario & "'"
+                Dim _Row_Funcionario As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+                Dim Fm As New Frm_Cms_FuncMant(0)
+                Fm.EditandoDesdeComisiones = True
+                Fm.Row_Funcionario = _Row_Funcionario
+                Fm.Chk_Habilitado.Visible = False
+                Fm.Txt_AFP.Text = De_Num_a_Tx_01(_Afp, False, 2)
+                Fm.Txt_Salud.Text = De_Num_a_Tx_01(_Salud, False, 2)
+                Fm.ShowDialog(Me)
+                _Grabar = Fm.Grabar
+                _Afp = Fm.Afp
+                _Salud = Fm.Salud
+                Fm.Dispose()
+
+                If _Grabar Then
+
+                    _PorcCotizaciones = _Afp + _Salud
+
+                    _Fila.Cells("AFP").Value = _Afp
+                    _Fila.Cells("Salud").Value = _Salud
+                    _Fila.Cells("PorcCotizaciones").Value = _PorcCotizaciones
+
+                    Sb_ActualizarValoresPorFuncionario(_Fila)
+
+                    'Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Comisiones_Lin Set " &
+                    '               "AFP = " & De_Num_a_Tx_01(_Afp, False, 5) &
+                    '               ",Salud = " & De_Num_a_Tx_01(_Salud, False, 5) &
+                    '               ",PorcCotizaciones = " & De_Num_a_Tx_01(_PorcCotizaciones, False, 5) & vbCrLf &
+                    '               "Where Id = " & _Id_Lin
+                    'If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
+
+                    'End If
+
+                End If
+
+        End Select
+
+    End Sub
 End Class

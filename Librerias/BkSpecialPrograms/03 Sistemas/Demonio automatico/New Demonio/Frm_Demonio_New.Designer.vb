@@ -52,6 +52,7 @@ Partial Class Frm_Demonio_New
         Me.Timer_Minimizar = New System.Windows.Forms.Timer(Me.components)
         Me.Timer_Ejecuciones = New System.Windows.Forms.Timer(Me.components)
         Me.Timer_Enviar_Doc_SinRecepcion = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer_NVVAutoExterna = New System.Windows.Forms.Timer(Me.components)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.SuspendLayout()
@@ -271,6 +272,7 @@ Partial Class Frm_Demonio_New
         Me.Imagenes_16X16.Images.SetKeyName(12, "order-warning.png")
         Me.Imagenes_16X16.Images.SetKeyName(13, "wordpress 16.png")
         Me.Imagenes_16X16.Images.SetKeyName(14, "button-ok.png")
+        Me.Imagenes_16X16.Images.SetKeyName(15, "documents-update.png")
         '
         'Circular_Monitoreo
         '
@@ -320,6 +322,7 @@ Partial Class Frm_Demonio_New
         Me.Imagenes_16X16_Dark.Images.SetKeyName(12, "order-warning.png")
         Me.Imagenes_16X16_Dark.Images.SetKeyName(13, "wordpress 16.png")
         Me.Imagenes_16X16_Dark.Images.SetKeyName(14, "button-ok.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(15, "documents-update.png")
         '
         'timerHora
         '
@@ -364,6 +367,10 @@ Partial Class Frm_Demonio_New
         'Timer_Enviar_Doc_SinRecepcion
         '
         Me.Timer_Enviar_Doc_SinRecepcion.Interval = 1000
+        '
+        'Timer_NVVAutoExterna
+        '
+        Me.Timer_NVVAutoExterna.Interval = 1000
         '
         'Frm_Demonio_New
         '
@@ -419,4 +426,5 @@ Partial Class Frm_Demonio_New
     Friend WithEvents Timer_Minimizar As Timer
     Friend WithEvents Timer_Ejecuciones As Timer
     Friend WithEvents Timer_Enviar_Doc_SinRecepcion As Timer
+    Friend WithEvents Timer_NVVAutoExterna As Timer
 End Class

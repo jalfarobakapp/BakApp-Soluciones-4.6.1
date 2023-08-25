@@ -41,7 +41,7 @@ Module Mod_Imprimir
         _RowMaeedo = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If _RowMaeedo Is Nothing Then
-            Return "No se encontro documento ID:" & _Idmaeedo
+            Return "No se encontro documento IDMAEEDO:" & _Idmaeedo
         End If
 
         Dim _Tido = _RowMaeedo.Item("TIDO")

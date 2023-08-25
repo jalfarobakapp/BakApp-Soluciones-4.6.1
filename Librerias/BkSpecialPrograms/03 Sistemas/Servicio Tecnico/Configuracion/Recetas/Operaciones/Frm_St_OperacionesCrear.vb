@@ -32,9 +32,10 @@ Public Class Frm_St_OperacionesCrear
         Me._Operacion = _Operacion
 
         If Not String.IsNullOrEmpty(_Operacion) Then
-            Consulta_sql = "Ope.*,ISNULL(Pre.Precio,0) As Precio" & vbCrLf &
+            Consulta_sql = "Select Ope.*,ISNULL(Pre.Costo,0) As Costo,ISNULL(Pre.Precio,0) As Precio" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_St_OT_Operaciones Ope" & vbCrLf &
-                           "Left Join " & _Global_BaseBk & "Zw_St_OT_Operaciones_Precios Pre On Pre.Id_Ope = Ope.Id " & vbCrLf &
+                           "Left Join " & _Global_BaseBk & "Zw_St_OT_Operaciones_Precios Pre On Pre.Id_Ope = Ope.Id And " &
+                           "Pre.Empresa = '" & ModEmpresa & "' And Pre.Sucursal = '" & ModSucursal & "'" & vbCrLf &
                            "Where Ope.Operacion = '" & _Operacion & "'"
             _RowOperacion = _Sql.Fx_Get_DataRow(Consulta_sql)
         End If
@@ -49,17 +50,26 @@ Public Class Frm_St_OperacionesCrear
     End Sub
     Private Sub Frm_St_OperacionesCrear_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        AddHandler Txt_Costo.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros
+        AddHandler Txt_Costo.Validated, AddressOf Sb_Txt_Nros_Validated
+        AddHandler Txt_Costo.Enter, AddressOf Sb_Txt_Nros_Enter
+
         AddHandler Txt_Precio.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros
         AddHandler Txt_Precio.Validated, AddressOf Sb_Txt_Nros_Validated
         AddHandler Txt_Precio.Enter, AddressOf Sb_Txt_Nros_Enter
 
+        Txt_Costo.Tag = 0
         Txt_Precio.Tag = 0
-        Txt_Precio.Enabled = True
+
+        Dim _NomSucursal As String = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", "EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "'")
+        Grupo_CostosPrecios.Text = "Costos y Precios de Sucursal: " & ModSucursal.Trim & "-" & _NomSucursal.Trim
 
         If _Editar Then
             Txt_Operacion.Text = _RowOperacion.Item("Operacion")
             Txt_Operacion.Enabled = False
             Txt_Descripcion.Text = _RowOperacion.Item("Descripcion")
+            Txt_Costo.Tag = _RowOperacion.Item("Costo")
+            Txt_Costo.Text = FormatNumber(Txt_Costo.Tag, 0)
             Txt_Precio.Tag = _RowOperacion.Item("Precio")
             Txt_Precio.Text = FormatNumber(Txt_Precio.Tag, 0)
             Btn_Eliminar.Visible = True
@@ -105,6 +115,7 @@ Public Class Frm_St_OperacionesCrear
 
         Dim _Operacion As String = Txt_Operacion.Text
         Dim _Descripcion As String = Txt_Descripcion.Text
+        Dim _Costo As String = De_Num_a_Tx_01(Txt_Costo.Tag, False, 5)
         Dim _Precio As String = De_Num_a_Tx_01(Txt_Precio.Tag, False, 5)
         Dim _Externa As Integer = Convert.ToInt32(Rdb_Externa.Checked)
         Dim _CantMayor1 As Integer = Convert.ToInt32(Rdb_CantMayor1.Checked)
@@ -132,10 +143,10 @@ Public Class Frm_St_OperacionesCrear
         End If
 
         If Chk_TienePrecio.Checked Then
-            If Not CBool(Txt_Precio.Tag) Then
+            If Not CBool(Txt_Costo.Tag) Then
                 MessageBoxEx.Show(Me, "Falta el precio de la operación para la sucursal: " & ModSucursal & "-" & _Global_Row_Modalidad.Item(""),
                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Txt_Precio.Focus()
+                Txt_Costo.Focus()
                 Return
             End If
         End If
@@ -143,7 +154,6 @@ Public Class Frm_St_OperacionesCrear
         If Not Chk_TienePrecio.Checked Then
             _Precio = 0
         End If
-
 
         If _Nuevo Then
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Operaciones (Operacion,Descripcion,Precio,Externa,CantMayor1,TienePrecio) Values " &
@@ -168,7 +178,8 @@ Public Class Frm_St_OperacionesCrear
         End If
 
         'Se actualiza el precio por sucursal
-        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Operaciones_Precios (Id_Ope,Empresa,Sucursal,Precio) Values (" & _Id_Operacion & ",'" & ModEmpresa & "','" & ModSucursal & "'," & _Precio & ")"
+        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Operaciones_Precios (Id_Ope,Empresa,Sucursal,Costo,Precio) Values " &
+                       "(" & _Id_Operacion & ",'" & ModEmpresa & "','" & ModSucursal & "'," & _Costo & "," & _Precio & ")"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Operaciones Where Id = " & _Id_Operacion

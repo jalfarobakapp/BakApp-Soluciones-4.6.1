@@ -1440,6 +1440,7 @@
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Imprimir_Picking.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_LibroDTESII.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Listas_Programadas.vb" />
+    <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_NVVAutoExterna.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Prestashop_Orders.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Prestashop_Web.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Programacion.vb" />
@@ -7433,6 +7434,8 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Demonio_Doc_Emitidos_Cola_Impresion.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Demonio_FacAuto.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Demonio_Filtros_X_Estacion.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Demonio_NVVAuto.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Demonio_NVVAutoDet.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Demonio_Prestashop.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Demonio_Wordpress.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Despachos.sql" />
@@ -7461,6 +7464,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_Trackid.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Empresas.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Entidades.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Entidades_ProdExcluidos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Entidad_Cia_Seguros.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_EstacionesBkp.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_EstacionesBkp_Configuracion_Local.sql" />

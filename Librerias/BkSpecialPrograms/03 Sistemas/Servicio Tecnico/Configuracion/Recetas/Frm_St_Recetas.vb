@@ -28,6 +28,7 @@ Public Class Frm_St_Recetas
         Me.Text = "RECETAS PARA REPARACIONES SUCURSAL: (" & ModSucursal & ") - " & _NomSucursal
 
         Sb_Actualizar_Grilla()
+
         AddHandler Grilla_Recetas.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla_Productos.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla_Recetas.MouseDown, AddressOf Sb_Grilla_Recetas_MouseDown
@@ -48,7 +49,7 @@ Public Class Frm_St_Recetas
 
         Consulta_sql = "Select Id,Empresa,CodReceta,Descripcion,Activo" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_St_OT_Recetas_Enc" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'" & vbCrLf &
+                       "Where Empresa = '" & ModEmpresa & "' --And Sucursal = '" & ModSucursal & "'" & vbCrLf &
                        "And CodReceta+Descripcion Like '%" & _Cadena & "%'" & _CondicionProd
         _Tbl_Recetas = _Sql.Fx_Get_Tablas(Consulta_sql)
 

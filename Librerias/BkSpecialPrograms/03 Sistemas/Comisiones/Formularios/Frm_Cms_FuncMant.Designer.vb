@@ -52,7 +52,7 @@ Partial Class Frm_Cms_FuncMant
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel1.Controls.Add(Me.Grilla)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(12, 133)
+        Me.GroupPanel1.Location = New System.Drawing.Point(12, 144)
         Me.GroupPanel1.Name = "GroupPanel1"
         Me.GroupPanel1.Size = New System.Drawing.Size(563, 121)
         '
@@ -132,7 +132,7 @@ Partial Class Frm_Cms_FuncMant
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Eliminar, Me.Btn_AgregarComision})
-        Me.Bar2.Location = New System.Drawing.Point(0, 266)
+        Me.Bar2.Location = New System.Drawing.Point(0, 272)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(582, 41)
         Me.Bar2.Stretch = True
@@ -329,7 +329,7 @@ Partial Class Frm_Cms_FuncMant
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(582, 307)
+        Me.ClientSize = New System.Drawing.Size(582, 313)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel1)

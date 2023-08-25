@@ -93,6 +93,10 @@ Public Class Frm_01_Asis_Compra_Resultados
     Public Property Auto_Id_CorreoProveedoresSinStock As String
     Public Property Auto_EnviarListadoProveedoresSinStock As Boolean
     Public Property Auto_DespacharA_OCC As String
+    Public Property Auto_Id_Conexion_Externa As Integer
+    Public Property Auto_RowProveedor_NVVExterna As DataRow
+    Public Property Auto_NVVAutoExterna As Boolean
+
     Public Property Pro_Tbl_Filtro_Super_Familias() As DataTable
         Get
             Return _Tbl_Filtro_Super_Familias
@@ -8457,12 +8461,60 @@ Drop Table #Paso"
                 _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Acp)
 
                 If Not String.IsNullOrEmpty(Auto_Id_Correo) Then
+
                     Dim _Error As String = _Generar_OCC.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Fl.Idmaeedo, Auto_CorreoCc, "", Auto_Id_Correo, Auto_NombreFormato_PDF, _Id_Acp)
 
                     If Not String.IsNullOrEmpty(_Error) Then
                         Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_AcpAuto Set Informacion = Informacion+' -" & _Error.Trim & "' Where Id = " & _Id_Acp
                         _Sql.Ej_consulta_IDU(Consulta_sql, False)
                     End If
+
+                End If
+
+                If Auto_NVVAutoExterna AndAlso CBool(_Id_Acp) Then
+
+                    'Enviar a crear NVV a Smartrading
+
+                    Dim _New_Idmaeedo = _Fl.Idmaeedo
+                    Dim _Tido As String = _Fl.Tido
+                    Dim _Nudo As String = _Fl.Nudo
+
+                    Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where Id = " & Auto_Id_Conexion_Externa
+                    Dim _Row_DnExt As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                    Dim _Msg As String
+
+                    If Not IsNothing(_Row_DnExt) Then
+
+                        Dim _Respuesta As New Bk_ExpotarDoc.Respuesta
+
+                        Me.Cursor = Cursors.WaitCursor
+
+                        Dim _Endo_Ori As String = Auto_RowProveedor_NVVExterna.Item("KOEN")
+                        Dim _Suendo_Ori As String = Auto_RowProveedor_NVVExterna.Item("SUEN")
+
+                        Dim _Cl_ExportarDoc As New Bk_ExpotarDoc.Cl_ExpotarDoc
+                        _Respuesta = _Cl_ExportarDoc.Fx_CrearNVVDesdeOCC(_New_Idmaeedo, _Endo_Ori, _Suendo_Ori, Auto_Id_Conexion_Externa)
+
+                        Me.Cursor = Cursors.Default
+
+                        For Each _Inf As String In _Respuesta.Mensajes
+                            _Msg += vbCrLf & _Inf
+                        Next
+
+                        Dim _BaseDeDatos = _Row_DnExt.Item("BaseDeDatos")
+
+                        If _Respuesta.EsCorrecto Then
+                            _Msg = "Se envia correctamente la solicitud de generación de NVV a base de datos: " & _BaseDeDatos
+                        End If
+
+                    Else
+                        _Msg = "No existen conexiones a otras bases de datos para poder hacer esta gestión, revise la configuración"
+                    End If
+
+                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_AcpAuto Set Informacion = Informacion+' -" & _Msg & "' Where Id = " & _Id_Acp
+                    _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
                 End If
 
             Next

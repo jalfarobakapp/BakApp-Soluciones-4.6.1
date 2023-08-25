@@ -282,6 +282,7 @@ Public Class Frm_Ver_Documento
     Private Sub Frm_Documento_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         Btn_CopiarDocOtrEmpresa.Visible = (RutEmpresa = "77458040-9" Or RutEmpresa = "07251245-6" Or RutEmpresa = "77634877-5" Or RutEmpresa = "77634879-1")
+        Btn_CrearNVVdesdeOCCOtraEmpresa.Visible = (RutEmpresa = "79514800-0")
 
         _Campo_Koen = "ENDO"
         _Campo_Suen = "SUENDO"
@@ -4595,6 +4596,53 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
+
+    Sub Sb_CrearNVVDesdeOCC()
+
+        Dim _New_Idmaeedo = _Idmaeedo
+        Dim _Tido As String = _TblEncabezado.Rows(0).Item("TIPODOCUMENTO")
+        Dim _Nudo As String = _TblEncabezado.Rows(0).Item("NUDO")
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion --Where GrbOCC_Nuevas = 1"
+        Dim _Tbl_DnExt As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        If Not CBool(_Tbl_DnExt.Rows.Count) Then
+            MessageBoxEx.Show(Me, "No existen conexiones a otras bases de datos para poder hacer esta gestión", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Id_Conexion = 1
+
+        Dim _Respuesta As New Bk_ExpotarDoc.Respuesta
+
+        Me.Cursor = Cursors.WaitCursor
+
+        Dim _Cl_ExportarDoc As New Bk_ExpotarDoc.Cl_ExpotarDoc
+        _Respuesta = _Cl_ExportarDoc.Fx_CrearNVVDesdeOCC(_Idmaeedo, "", "", _Id_Conexion)
+
+        Me.Cursor = Cursors.Default
+
+        Dim _Msg As String
+
+        For Each _Inf As String In _Respuesta.Mensajes
+            _Msg += vbCrLf & _Inf
+        Next
+
+        Dim _Empresa = _Respuesta.RowEmpresa.Item("EMPRESA")
+        Dim _Razon = _Respuesta.RowEmpresa.Item("RAZON")
+
+        If _Respuesta.EsCorrecto Then
+            MessageBoxEx.Show(Me, "Se grabo correctamente el envio a la empresa: " & _Empresa & " - " & _Razon & vbCrLf & _Msg, "Grabar NVV desde OCC",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Me.Close()
+        Else
+            MessageBoxEx.Show(Me, "Problema al grabar en la empresa: " & _Empresa & " - " & _Razon & vbCrLf & _Msg, "Problema :(",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+
+    End Sub
+
     Private Sub Btn_VerXMLPDF_Click(sender As Object, e As EventArgs) Handles Btn_VerXMLPDF.Click
 
         Dim _Tido As String = _TblEncabezado.Rows(0).Item("TIDO")
@@ -4737,6 +4785,10 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
+    Private Sub Btn_CrearNVVdesdeOCCOtraEmpresa_Click(sender As Object, e As EventArgs) Handles Btn_CrearNVVdesdeOCCOtraEmpresa.Click
+        Sb_CrearNVVDesdeOCC()
+    End Sub
+
     Sub Sb_Eliminar_Anular(_Accion As Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion)
 
         _Row_Maeedo_Doc = _TblEncabezado.Rows(0)
@@ -4791,5 +4843,6 @@ Public Class Frm_Ver_Documento
         End If
 
     End Sub
+
 
 End Class

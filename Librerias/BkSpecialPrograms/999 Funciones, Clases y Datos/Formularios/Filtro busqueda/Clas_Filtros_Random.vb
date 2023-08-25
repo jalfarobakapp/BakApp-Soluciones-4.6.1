@@ -118,7 +118,8 @@
                    Optional _Seleccionar_Solo_Uno As Boolean = False,
                    Optional _Requiere_Seleccion As Boolean = True,
                    Optional _Activar_Crear_Editar_Eliminar As Boolean = False,
-                   Optional _Seleccionar_Todos_Visible As Boolean = True) As Boolean
+                   Optional _Seleccionar_Todos_Visible As Boolean = True,
+                   Optional _TableName As String = "") As Boolean
 
         _Tbl_Filtro = Tbl_Filtro
         _Filtro_Todas = Filtro_Todas
@@ -142,6 +143,8 @@
         If Fm.Pro_Filtrar Then
 
             _Tbl_Filtro = Fm.Pro_Tbl_Filtro
+
+            If Not IsNothing(_Tbl_Filtro) Then _Tbl_Filtro.TableName = _TableName
 
             If Fm.Pro_Filtrar_Todo Then
                 _Filtro_Todas = True '_Control_Todas.Checked = True

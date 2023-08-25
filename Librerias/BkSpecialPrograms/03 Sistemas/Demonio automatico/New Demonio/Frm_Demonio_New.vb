@@ -27,6 +27,7 @@ Public Class Frm_Demonio_New
     Dim _Cl_CerrarDocumentos As New Cl_Cerrar_Documentos
     Dim _Cl_Asistente_Compras As New Cl_Asistente_Compras
     Dim _Cl_Enviar_Doc_SinRecepcion As New Cl_Enviar_Doc_SinRecepcion
+    Dim _Cl_NVVAutoExterna As New Cl_NVVAutoExterna
 
     Private _Timer_ImprimirDocumentos As Timer
     Private _Timer_ImprimirPicking As Timer
@@ -152,6 +153,10 @@ Public Class Frm_Demonio_New
             _DProgramaciones.Sp_EnviarDocSinRecepcion.Activo = True
         End If
 
+        If Fx_InsertarRegistroDeProgramacion("NVVAuto", _DProgramaciones.Sp_NVVExterna, "Notas de venta externas") Then
+            _DProgramaciones.Sp_NVVExterna.Activo = True
+        End If
+
         Dim _CantidadFilas As Integer = Listv_Programaciones.Items.Count
 
         If _CantidadFilas = 1 Then Me.Icon = My.Resources.Recursos_NewDemonio.emoticon_wink_number_1
@@ -228,6 +233,10 @@ Public Class Frm_Demonio_New
 
         If _DProgramaciones.Sp_EnviarDocSinRecepcion.Activo Then
             Sb_Activar_ObjetosTimer(Timer_Enviar_Doc_SinRecepcion, _DProgramaciones.Sp_EnviarDocSinRecepcion)
+        End If
+
+        If _DProgramaciones.Sp_NVVExterna.Activo Then
+            Sb_Activar_ObjetosTimer(Timer_NVVAutoExterna, _DProgramaciones.Sp_NVVExterna)
         End If
 
         Me.Refresh()
@@ -451,6 +460,15 @@ Public Class Frm_Demonio_New
                     _Descripcion = _CI_Programacion.Resumen
                     _IndexImagen = 12
 
+                Case "NVVAuto"
+
+                    Dim _Modalidad_NVV As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Txt_NvvAuto_Modalidad' And NombreEquipo = '" & _NombreEquipo & "'", True)
+
+                    _Cl_NVVAutoExterna.Modalidad_NVV = _Modalidad_NVV
+
+                    _Descripcion = _CI_Programacion.Resumen
+                    _IndexImagen = 15
+
             End Select
 
             _CI_Programacion.Resumen = _Descripcion
@@ -554,15 +572,19 @@ Public Class Frm_Demonio_New
             Sb_Timer_IntervaloCada(_Timer_ImprimirDocumentos, _DProgramaciones.Sp_ColaImpDoc, AddressOf Sb_Imprimir_Documentos)
             'Sb_Timer_ImprimirDocumentos()
 
-            Dim registro As String = "Tarea ejecutada (Imprimir documentos) a las: " & DateTime.Now.ToString()
+            Dim registro As String
 
             If Not String.IsNullOrWhiteSpace(_Cl_Imprimir_Documentos.Log_Registro) Then
+                registro = "Tarea ejecutada (Imprimir documentos) a las: " & DateTime.Now.ToString()
                 registro += vbCrLf & _Cl_Imprimir_Documentos.Log_Registro
             End If
 
             ' Registrar la información en un archivo de registro
-            RegistrarLog(registro)
-            MostrarRegistro(registro)
+            If Not String.IsNullOrWhiteSpace(registro) Then
+                registro = registro.Trim
+                RegistrarLog(registro)
+                MostrarRegistro(registro)
+            End If
 
         End If
 
@@ -1333,7 +1355,9 @@ Public Class Frm_Demonio_New
                 RegistrarLog(registro)
                 MostrarRegistro(registro)
 
-                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_ConfAcpAuto Where NombreEquipo = '" & _NombreEquipo & "'"
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_ConfAcpAuto" & vbCrLf &
+                               "Where NombreEquipo = '" & _NombreEquipo & "'" & vbCrLf &
+                               "Order By NVI Desc,OCC_Star Desc"
                 Dim _Tbl_ConfAcpAuto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
                 For Each _Fila As DataRow In _Tbl_ConfAcpAuto.Rows
@@ -1426,6 +1450,34 @@ Public Class Frm_Demonio_New
 
 #End Region
 
+#Region "CREACION DE NVV AUTOMATICAS EXTERNAS"
+
+        If _Cl_NVVAutoExterna.Ejecutar Then
+
+            If Not _Cl_NVVAutoExterna.Procesando Then
+
+                _Cl_NVVAutoExterna.Sb_Procesar_NVV(Me)
+
+                Dim registro As String = "Tarea ejecutada (Facturación automática) a las: " & DateTime.Now.ToString()
+
+                If Not String.IsNullOrWhiteSpace(_Cl_FacturacionAuto.Log_Registro) Then
+                    registro += vbCrLf & _Cl_FacturacionAuto.Log_Registro
+                End If
+
+                RegistrarLog(registro)
+                MostrarRegistro(registro)
+
+                _Cl_NVVAutoExterna.Procesando = False
+                _Cl_NVVAutoExterna.Ejecutar = False
+
+                Sb_ActualizarDetalleListview("Notas de venta externas", _DProgramaciones.Sp_NVVExterna.Resumen)
+
+            End If
+
+        End If
+
+#End Region
+
         Timer_Ejecuciones.Start()
 
     End Sub
@@ -1472,4 +1524,9 @@ Public Class Frm_Demonio_New
 
     End Sub
 
+    Private Sub Timer_NVVAutoExterna_Tick(sender As Object, e As EventArgs) Handles Timer_NVVAutoExterna.Tick
+        If Fx_CumpleDiaSemana(_DProgramaciones.Sp_NVVExterna) Then
+            _Cl_NVVAutoExterna.Ejecutar = True
+        End If
+    End Sub
 End Class

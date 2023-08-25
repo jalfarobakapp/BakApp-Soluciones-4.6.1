@@ -8,6 +8,9 @@
     Dim _Tbl_MisComisiones As DataTable
 
     Public Property Grabar As Boolean
+    Public Property EditandoDesdeComisiones As Boolean
+    Public Property Afp As Double
+    Public Property Salud As Double
 
     Public Property Row_Funcionario As DataRow
         Get
@@ -33,6 +36,11 @@
                        "Where Uss.Id = " & _Id
         _Row_Funcionario = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
+        If Not IsNothing(_Row_Funcionario) Then
+            Txt_AFP.Text = De_Num_a_Tx_01(_Row_Funcionario.Item("AFP"), False, 2)
+            Txt_Salud.Text = De_Num_a_Tx_01(_Row_Funcionario.Item("Salud"), False, 2)
+        End If
+
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
     End Sub
@@ -46,8 +54,6 @@
         End If
 
         Txt_Funcionario.Text = _Row_Funcionario.Item("KOFU").ToString.Trim & " - " & _Row_Funcionario.Item("NOKOFU").ToString.Trim
-        Txt_AFP.Text = De_Num_a_Tx_01(_Row_Funcionario.Item("AFP"), False, 2)
-        Txt_Salud.Text = De_Num_a_Tx_01(_Row_Funcionario.Item("Salud"), False, 2)
         Chk_Habilitado.Checked = _Row_Funcionario.Item("Habilitado")
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
@@ -59,14 +65,8 @@
 
     Sub Sb_Actualizar_Grilla()
 
-        Consulta_Sql = "Select *,Case" & vbCrLf &
-                       "When MisVentas = 1 Then 'Mis ventas'" & vbCrLf &
-                       "When VentasXEmpresa = 1 Then 'Ventas por empresa'" & vbCrLf &
-                       "When VentasXSucursal = 1 Then 'Ventas por sucursales...'+XSucursales" & vbCrLf &
-                       "When VentasXBodegas = 1 Then 'Ventas por bodegas...'+XBodegas" & vbCrLf &
-                       "When VentasXVendedores = 1 Then 'Ventas por vendedores: '+XVendedores" & vbCrLf &
-                       "End As Resumen" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Comisiones_Mis" & vbCrLf &
+        Consulta_Sql = "Select Mis.*,Case When (Select COUNT(*) From " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl Fl Where Id_Mis = Mis.Id) = 0 Then 'No' Else 'Si' End As Resumen" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Comisiones_Mis Mis" & vbCrLf &
                        "Where CodFuncionario = '" & _Row_Funcionario.Item("KOFU") & "'"
         _Tbl_MisComisiones = _Sql.Fx_Get_Tablas(Consulta_Sql)
 
@@ -78,7 +78,7 @@
 
             OcultarEncabezadoGrilla(Grilla)
 
-            .Columns("Descripcion").Width = 200
+            .Columns("Descripcion").Width = 300
             .Columns("Descripcion").HeaderText = "Descripción"
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").ReadOnly = False
@@ -93,8 +93,8 @@
             .Columns("PorcComision").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Resumen").Width = 250
-            .Columns("Resumen").HeaderText = "Resumen"
+            .Columns("Resumen").Width = 100
+            .Columns("Resumen").HeaderText = "Tiene Filtros"
             .Columns("Resumen").Visible = True
             .Columns("Resumen").ReadOnly = False
             .Columns("Resumen").DisplayIndex = _DisplayIndex
@@ -106,8 +106,14 @@
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
-        Dim _Afp As Double = Val(Txt_AFP.Text)
-        Dim _Salud As Double = Val(Txt_Salud.Text)
+        _Afp = Val(Txt_AFP.Text)
+        _Salud = Val(Txt_Salud.Text)
+
+        If EditandoDesdeComisiones Then
+            Grabar = True
+            Me.Close()
+            Return
+        End If
 
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Comisiones_Fun Set" &
                        " AFP = " & De_Num_a_Tx_01(_Afp, False, 5) &

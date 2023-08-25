@@ -142,6 +142,7 @@ Public Class Frm_Formulario_Documento
 
     Dim _Documento_Reciclado As Boolean
     Dim _ListaCodQRUnicosLeidos As List(Of CodigosDeBarra.CodigosQRLeidos)
+    Dim _ListaCodConDocLeidos As List(Of CodigosDeBarra.CodigosConDocLeidos)
 
     Dim _Facturacion_Automatica As Boolean
 
@@ -1067,6 +1068,7 @@ Public Class Frm_Formulario_Documento
         _Nombre_Archivo_Txt_Especial_Saime = String.Empty
         _Desde_Prestahop = False
         _ListaCodQRUnicosLeidos = New List(Of CodigosDeBarra.CodigosQRLeidos)
+        _ListaCodConDocLeidos = New List(Of CodigosDeBarra.CodigosConDocLeidos)
         _Patente_rvm = String.Empty
 
         Lbl_NroDecimales.Text = FormatNumber(0, _DecimalesGl)
@@ -8869,6 +8871,7 @@ Public Class Frm_Formulario_Documento
 
             If CBool(_ListaRows.Count) Then
                 _ListaCodQRUnicosLeidos = New List(Of CodigosDeBarra.CodigosQRLeidos)
+                _ListaCodConDocLeidos = New List(Of CodigosDeBarra.CodigosConDocLeidos)
             End If
 
         End If
@@ -15846,6 +15849,20 @@ Public Class Frm_Formulario_Documento
 
             Next
 
+            For Each _Codigos As CodigosDeBarra.CodigosConDocLeidos In _ListaCodConDocLeidos
+
+                Dim _CodLeido As String = _Codigos.CodLeido
+                Dim _Kopr As String = _Codigos.Codigo
+                Dim _TidoOri As String = _Codigos.Tido
+                Dim _NudoOri As String = _Codigos.Nudo
+                Dim _CodigoQR As String = String.Empty
+                Dim _Kopral As String = String.Empty
+
+                _SqlQuery += "Insert Into " & _Global_BaseBk & "Zw_Prod_CodQRLogDoc (CodigoQR,Kopral,Tido,Nudo,Idmaeedo,Kopr,CodLeido,TidoOri,NudoOri) Values " &
+                               "('" & _CodigoQR & "','" & _Kopral & "','" & _Tido & "','" & _Nudo & "'," & _Idmaeedo & ",'" & _Kopr & "','" & _CodLeido & "','" & _TidoOri & "','" & _NudoOri & "')" & vbCrLf
+
+            Next
+
             If Not String.IsNullOrEmpty(_SqlQuery) Then
                 _Sql.Ej_consulta_IDU(_SqlQuery, False)
             End If
@@ -21279,7 +21296,13 @@ Public Class Frm_Formulario_Documento
         Dim _Fisconbarr = _Global_Row_Modalidad.Item("FISCONBARR")
         Dim _Funcionario_Inicia As String = FUNCIONARIO
 
-        If _Fisconbarr = "S" Then
+        Dim _ValidaMovFisConCodBarra As Boolean = (_Fisconbarr = "S")
+
+        If Not _ValidaMovFisConCodBarra Then
+            _ValidaMovFisConCodBarra = _Global_Row_Configuracion_Estacion.Item("ValidaMovFisConCodBarra")
+        End If
+
+        If _ValidaMovFisConCodBarra Then '_Fisconbarr = "S" Then
 
             Consulta_sql = "Select Top 1 * From TABTIDO Where TIDO = '" & _Tido & "'"
             Dim _Row_Tabtido As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -21317,6 +21340,7 @@ Public Class Frm_Formulario_Documento
                                                           _Ds_Matriz_Documentos.Tables("Detalle_Doc"),
                                                           _Ds_Matriz_Documentos.Tables("Permisos_Doc"))
                 Fm.ListaCodQRUnicosLeidos = _ListaCodQRUnicosLeidos
+                Fm.ListaCodConDocLeidos = _ListaCodConDocLeidos
                 Fm.ShowDialog(Me)
                 _Documento_Aceptado = Fm.Pro_Documento_Aceptado
                 _ListaCodQRUnicosLeidos = Fm.ListaCodQRUnicosLeidos
