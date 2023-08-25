@@ -547,6 +547,8 @@ Namespace Bk_ExpotarDoc
 
 
         Function Fx_CrearNVVDesdeOCC(_Idmaeedo_Desde As Integer,
+                                     _Endo_Ori As String,
+                                     _Suendo_Ori As String,
                                      _Id_Conexion As Integer) As Bk_ExpotarDoc.Respuesta
 
             Dim _Respuestas As New Bk_ExpotarDoc.Respuesta
@@ -638,8 +640,8 @@ Namespace Bk_ExpotarDoc
 
                 Dim _Subtido = _Fila_Encabezado.Item("SUBTIDO")
 
-                Consulta_Sql = "Insert Into " & _Global_BaseBk_Destino & "Zw_Demonio_NVVAuto (IdmaeedoOCC_Ori,NudoOCC_Ori,FechaGrab,GenerarNVV) Values " &
-                               "(" & _Idmaeedo_Ori & ",'" & _Nudo & "',Getdate(),1)"
+                Consulta_Sql = "Insert Into " & _Global_BaseBk_Destino & "Zw_Demonio_NVVAuto (IdmaeedoOCC_Ori,Endo_Ori,Suendo_Ori,NudoOCC_Ori,FechaGrab,GenerarNVV) Values " &
+                               "(" & _Idmaeedo_Ori & ",'" & _Endo_Ori & "','" & _Suendo_Ori & "','" & _Nudo & "',Getdate(),1)"
 
                 Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
                 Comando.Transaction = myTrans

@@ -771,10 +771,10 @@ Namespace My.Resources
         '''	[NVI]				[bit]			NOT NULL DEFAULT (0),
         '''	[OCC_Star]			[bit]			NOT NULL DEFAULT (0),
         '''	[OCC_Prov]			[bit]			NOT NULL DEFAULT (0),
-        ''' CONSTRAINT [PK_Zw_Demonio_ConfAsisCompra] PRIMARY KEY CLUSTERED 
+        ''' CONSTRAINT [PK_Zw_Demonio_ConfAcpAuto] PRIMARY KEY CLUSTERED 
         '''(
         '''	[Id] ASC
-        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS =  [resto de la cadena truncado]&quot;;.
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Demonio_ConfAcpAuto() As String
             Get
@@ -899,6 +899,49 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Zw_Demonio_Filtros_X_Estacion() As String
             Get
                 Return ResourceManager.GetString("Zw_Demonio_Filtros_X_Estacion", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Demonio_NVVAuto](
+        '''	[Id_Enc]			[int] IDENTITY(1,1) NOT NULL,
+        '''	[IdmaeedoOCC_Ori]	[int] NOT NULL DEFAULT (0),
+        '''	[NudoOCC_Ori]		[varchar](10) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Endo_Ori]			[varchar](13) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Suendo_Ori]		[varchar](10) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[FechaGrab]			[datetime] NULL,
+        '''	[GenerarNVV]		[bit] NOT NULL DEFAULT (0),
+        '''	[NVVGenerada]		[bit] NOT NULL DEFAULT (0),
+        '''	[Idmaeedo_NVV]		[int] NOT NULL DEFAULT (0),
+        '''	[Nudo_NVV]			[varchar](10) NOT NULL [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Demonio_NVVAuto() As String
+            Get
+                Return ResourceManager.GetString("Zw_Demonio_NVVAuto", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Demonio_NVVAutoDet](
+        '''	[Id_Det]		[int] 			IDENTITY(1,1) NOT NULL,
+        '''	[Id_Enc]		[int]			NOT NULL DEFAULT (0),
+        '''	[Idmaeddo_Ori]	[int]			NOT NULL DEFAULT (0),
+        '''	[Codigo]		[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Cantidad]		[float]			NOT NULL DEFAULT (0),
+        '''	[Untrans]		[int]			NOT NULL DEFAULT (0),
+        '''	[Descripcion]	[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        ''' CONSTRAINT [PK_Zw_Demonio_NVVAutoDet] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id_Det] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUT [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Demonio_NVVAutoDet() As String
+            Get
+                Return ResourceManager.GetString("Zw_Demonio_NVVAutoDet", resourceCulture)
             End Get
         End Property
         
@@ -2748,14 +2791,15 @@ Namespace My.Resources
         '''
         '''CREATE TABLE [dbo].[Zw_Prod_CodQRLogDoc](
         '''	[Id]			[int] IDENTITY(1,1)	NOT NULL,
+        '''    [CodLeido]		[varchar](300)		NOT NULL DEFAULT (&apos;&apos;),
+        '''    [Kopr]		    [varchar](13)		NOT NULL DEFAULT (&apos;&apos;),
         '''	[CodigoQR]		[varchar](300)		NOT NULL DEFAULT (&apos;&apos;),
         '''	[Kopral]		[varchar](21)		NOT NULL DEFAULT (&apos;&apos;),
         '''	[Tido]			[varchar](3)		NOT NULL DEFAULT (&apos;&apos;),
         '''	[Nudo]			[varchar](10)		NOT NULL DEFAULT (&apos;&apos;),
         '''	[Idmaeedo]		[int]				NOT NULL DEFAULT (0),
-        '''    [Kopr]		    [varchar](13)		NOT NULL DEFAULT (&apos;&apos;),
-        '''    [CodLeido]		[varchar](300)		NOT NULL DEFAULT (&apos;&apos;),
-        ''' CONSTRAINT [PK_Zw_Prod_CodQRLogDoc] PRIMARY KEY CLUSTER [resto de la cadena truncado]&quot;;.
+        '''    [TidoOri]		[varchar](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[N [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Prod_CodQRLogDoc() As String
             Get

@@ -1843,8 +1843,11 @@ Sigue_Loop_01:
         Cmb_Kofupr.SelectedValue = NuloPorNro(_RowProducto.Item("KOFUPR"), "")
         Cmb_Zonapr.SelectedValue = NuloPorNro(_RowProducto.Item("ZONAPR"), "")
 
-        Txt_Pesoubic.Text = NuloPorNro(_RowProducto.Item("PESOUBIC"), 0)
-        Txt_Ltsubic.Text = NuloPorNro(_RowProducto.Item("LTSUBIC"), 0)
+        Txt_Pesoubic.Tag = NuloPorNro(_RowProducto.Item("PESOUBIC"), 0)
+        Txt_Pesoubic.Text = FormatNumber(Txt_Pesoubic.Tag, 5)
+
+        Txt_Ltsubic.Tag = NuloPorNro(_RowProducto.Item("LTSUBIC"), 0)
+        Txt_Ltsubic.Text = FormatNumber(Txt_Ltsubic.Tag, 5)
 
         Txt_Tolelote.Text = NuloPorNro(_RowProducto.Item("TOLELOTE"), 0)
         Txt_Vidamedia.Text = NuloPorNro(_RowProducto.Item("VIDAMEDIA"), 0)
@@ -1879,10 +1882,19 @@ Sigue_Loop_01:
             Dim _Row_dimensiones As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If Not IsNothing(_Row_dimensiones) Then
-                Txt_Pesoubic.Text = De_Num_a_Tx_01(NuloPorNro(_Row_dimensiones.Item("Peso"), 0))
-                Txt_Alto.Text = De_Num_a_Tx_01(NuloPorNro(_Row_dimensiones.Item("Alto"), 0))
-                Txt_Largo.Text = De_Num_a_Tx_01(NuloPorNro(_Row_dimensiones.Item("Largo"), 0))
-                Txt_Ancho.Text = De_Num_a_Tx_01(NuloPorNro(_Row_dimensiones.Item("Ancho"), 0))
+
+                Txt_Pesoubic.Tag = NuloPorNro(_Row_dimensiones.Item("Peso"), 0)
+                Txt_Pesoubic.Text = FormatNumber(Txt_Pesoubic.Tag, 5)
+
+                Txt_Alto.Tag = NuloPorNro(_Row_dimensiones.Item("Alto"), 0)
+                Txt_Alto.Text = Txt_Alto.Tag 'FormatNumber(Txt_Alto.Tag, 5)
+
+                Txt_Largo.Tag = NuloPorNro(_Row_dimensiones.Item("Largo"), 0)
+                Txt_Largo.Text = Txt_Largo.Tag 'FormatNumber(Txt_Largo.Tag, 5)
+
+                Txt_Ancho.Tag = NuloPorNro(_Row_dimensiones.Item("Ancho"), 0)
+                Txt_Ancho.Text = Txt_Ancho.Tag 'FormatNumber(Txt_Ancho.Tag, 5)
+
             End If
 
         End If

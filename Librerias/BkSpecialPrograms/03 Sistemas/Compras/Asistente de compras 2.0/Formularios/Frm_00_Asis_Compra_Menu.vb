@@ -45,6 +45,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
     Dim _RowProveedor As DataRow
     Dim _RowProveedor_Especial As DataRow
+    Dim _RowProveedor_NVVExterna As DataRow
     Dim _RowParametros As DataRow
 
     Dim _Cmb_Padre_Asociacion_Productos As String
@@ -833,9 +834,7 @@ Public Class Frm_00_Asis_Compra_Menu
                 Txt_ProvEspecial.Text = _RowProveedor_Especial.Item("KOEN").ToString.Trim & " - " & _RowProveedor_Especial.Item("NOKOEN").ToString.Trim
             End If
 
-        End If
-
-        If Not (_RowProveedor_Especial Is Nothing) Then
+        Else
 
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Tmp_Prm_Informes" & vbCrLf &
                            "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente' And NombreEquipo = '" & _NombreEquipo & "' And Campo In ('Koen_Especial','Suen_Especial') And Modalidad = '" & Modalidad_Estudio & "'"
@@ -942,6 +941,47 @@ Public Class Frm_00_Asis_Compra_Menu
         ' Check para incluir productos bloqueados
         _Sql.Sb_Parametro_Informe_Sql(Chk_IncluirProdBloqueadoProvStar, "Compras_Asistente",
                                       Chk_IncluirProdBloqueadoProvStar.Name, Class_SQLite.Enum_Type._Boolean, Chk_IncluirProdBloqueadoProvStar.Checked, _Actualizar)
+
+
+        ' Check para Enviar a crear NVV a base externa
+        _Sql.Sb_Parametro_Informe_Sql(Chk_NVVAutoExterna, "Compras_Asistente",
+                                      Chk_NVVAutoExterna.Name, Class_SQLite.Enum_Type._Boolean, Chk_NVVAutoExterna.Checked, _Actualizar)
+
+        Dim _Koen_NVVExterna As String
+        Dim _Suen_NVVExterna As String
+
+        If (_RowProveedor_NVVExterna Is Nothing) Then
+
+            _Koen_NVVExterna = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor",
+                                      "Informe = 'Compras_Asistente' And Campo = 'Koen_NVVExterna' And NombreEquipo = '" & _NombreEquipo & "' And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad_Estudio & "'")
+            _Suen_NVVExterna = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor",
+                                      "Informe = 'Compras_Asistente' And Campo = 'Suen_NVVExterna' And NombreEquipo = '" & _NombreEquipo & "' And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad_Estudio & "'")
+
+            Txt_ProvParaNVVExterna.Text = String.Empty
+            _RowProveedor_NVVExterna = Fx_Traer_Datos_Entidad(_Koen_NVVExterna, _Suen_NVVExterna)
+
+            If Not IsNothing(_RowProveedor_NVVExterna) Then
+                Txt_ProvParaNVVExterna.Text = _RowProveedor_NVVExterna.Item("KOEN").ToString.Trim &
+                                    " (" & _RowProveedor_NVVExterna.Item("SUEN").ToString.Trim & ") " & " - " & _RowProveedor_NVVExterna.Item("NOKOEN").ToString.Trim
+
+            End If
+
+        Else
+
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Tmp_Prm_Informes" & vbCrLf &
+                           "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente' And NombreEquipo = '" & _NombreEquipo & "' And Campo In ('Koen_NVVExterna','Suen_NVVExterna') And Modalidad = '" & Modalidad_Estudio & "'"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            _Koen_NVVExterna = Trim(_RowProveedor_NVVExterna.Item("KOEN"))
+            _Suen_NVVExterna = Trim(_RowProveedor_NVVExterna.Item("SUEN"))
+
+            Txt_ProvParaNVVExterna.Text = _RowProveedor_NVVExterna.Item("KOEN").ToString.Trim &
+                                    " (" & _RowProveedor_NVVExterna.Item("SUEN").ToString.Trim & ") " & " - " & _RowProveedor_NVVExterna.Item("NOKOEN").ToString.Trim
+
+            _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Koen_NVVExterna", Class_SQLite.Enum_Type._String, _Koen_NVVExterna, _Actualizar, "Seleccion_Productos")
+            _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Suen_NVVExterna", Class_SQLite.Enum_Type._String, _Suen_NVVExterna, _Actualizar, "Seleccion_Productos")
+
+        End If
 
     End Sub
 
@@ -2320,6 +2360,10 @@ Public Class Frm_00_Asis_Compra_Menu
             Fm.Auto_DespacharA_OCC = Txt_DespacharA_OCC.Text
         End If
 
+        Fm.Auto_NVVAutoExterna = Chk_NVVAutoExterna.Checked
+        Fm.Auto_Id_Conexion_Externa = Txt_DbExt_Nombre_Conexion.Tag
+        Fm.Auto_RowProveedor_NVVExterna = _RowProveedor_NVVExterna
+
         Fm.Modo_OCC = Modo_OCC
         Fm.Modo_NVI = _Modo_NVI
 
@@ -3578,5 +3622,44 @@ Public Class Frm_00_Asis_Compra_Menu
             Txt_CtaCorreoAvisoProveedoresSinStock.Tag = 0
             Txt_CtaCorreoAvisoProveedoresSinStock.Text = String.Empty
         End If
+    End Sub
+
+    Private Sub Btn_Buscar_Txt_ProvParaNVVExterna_Click(sender As Object, e As EventArgs) Handles Btn_Buscar_Txt_ProvParaNVVExterna.Click
+
+        If Not CBool(Txt_DbExt_Nombre_Conexion.Tag) Then
+            MessageBoxEx.Show(Me, "Falta la conexión externa", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_BuscarEntidad_Mt(False)
+        Fm.ShowInTaskbar = False
+        Fm.ShowDialog(Me)
+
+        If Fm.Pro_Entidad_Seleccionada Then
+
+            _RowProveedor_NVVExterna = Fm.Pro_RowEntidad
+            Txt_ProvParaNVVExterna.Text = _RowProveedor_NVVExterna.Item("KOEN").ToString.Trim &
+                                        " (" & _RowProveedor_NVVExterna.Item("SUEN").ToString.Trim & ") " & " - " & _RowProveedor_NVVExterna.Item("NOKOEN").ToString.Trim
+
+        End If
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Txt_ProvParaNVVExterna_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_ProvParaNVVExterna.ButtonCustom2Click
+
+        If MessageBoxEx.Show(Me, "¿confirma quitar a la entidad?", "quitar entidad", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Tmp_Prm_Informes" & vbCrLf &
+                           "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente' And NombreEquipo = '" & _NombreEquipo & "' And Campo In ('Koen_NVVExterna','Suen_NVVExterna') And Modalidad = '" & Modalidad_Estudio & "'"
+
+            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                _RowProveedor_NVVExterna = Nothing
+                Txt_ProvParaNVVExterna.Text = String.Empty
+
+            End If
+
+        End If
+
     End Sub
 End Class

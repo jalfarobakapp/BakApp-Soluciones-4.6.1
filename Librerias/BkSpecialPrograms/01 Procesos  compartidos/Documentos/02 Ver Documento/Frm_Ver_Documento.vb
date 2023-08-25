@@ -4619,7 +4619,7 @@ Public Class Frm_Ver_Documento
         Me.Cursor = Cursors.WaitCursor
 
         Dim _Cl_ExportarDoc As New Bk_ExpotarDoc.Cl_ExpotarDoc
-        _Respuesta = _Cl_ExportarDoc.Fx_CrearNVVDesdeOCC(_Idmaeedo, _Id_Conexion)
+        _Respuesta = _Cl_ExportarDoc.Fx_CrearNVVDesdeOCC(_Idmaeedo, "", "", _Id_Conexion)
 
         Me.Cursor = Cursors.Default
 

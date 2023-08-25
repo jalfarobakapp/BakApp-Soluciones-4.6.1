@@ -702,7 +702,10 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Demonio_ConfAcpAuto
             Case "Zw_Demonio_ConfProgramacion"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Demonio_ConfProgramacion
-
+            Case "Zw_Demonio_NVVAuto"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Demonio_NVVAuto
+            Case "Zw_Demonio_NVVAutoDet"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Demonio_NVVAutoDet
 
 
             Case "Zw_Docu_Archivos"

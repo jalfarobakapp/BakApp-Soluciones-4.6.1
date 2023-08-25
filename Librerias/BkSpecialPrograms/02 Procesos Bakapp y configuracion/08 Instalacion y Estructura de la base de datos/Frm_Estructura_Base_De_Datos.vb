@@ -113,6 +113,8 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Demonio_Wordpress", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Demonio_FacAuto", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Demonio_AcpAuto", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Demonio_NVVAuto", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Demonio_NVVAutoDet", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_Demonio_ConfAcpAuto", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Demonio_ConfProgramacion", _Modificar, Lbl_Eventos)

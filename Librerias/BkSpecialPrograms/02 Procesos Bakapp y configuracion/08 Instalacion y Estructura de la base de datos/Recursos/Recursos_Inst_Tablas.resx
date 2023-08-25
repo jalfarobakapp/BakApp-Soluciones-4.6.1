@@ -238,6 +238,12 @@
   <data name="Zw_Demonio_Filtros_X_Estacion" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_demonio_filtros_x_estacion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="Zw_Demonio_NVVAuto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_Demonio_NVVAuto.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Demonio_NVVAutoDet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_Demonio_NVVAutoDet.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="Zw_Demonio_Prestashop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_demonio_prestashop.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
