@@ -12,6 +12,8 @@ Public Class Frm_ImpBarras_PorDocumento
     Dim _Puerto, _Etiqueta As String
     Dim _Idmaeedo As String
 
+    Public Property CantidadCero As Boolean
+
     Public Sub New(Idmaeedo As Integer)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -96,11 +98,12 @@ Public Class Frm_ImpBarras_PorDocumento
                         If Veces < 1 Then Veces = 1
 
                         Dim _Idmaeddo = _Fila.Item("IDMAEDDO")
+                        Dim _Kopral = _Fila.Item("ALTERNAT").ToString.Trim
 
                         For w = 1 To Val(Veces)
 
                             Dim _Imp As New Class_Imprimir_Barras
-                            _Imp.Sb_Imprimir_Documento(_Etiqueta, _Puerto, _Idmaeedo, _Idmaeddo)
+                            _Imp.Sb_Imprimir_Documento(_Etiqueta, _Puerto, _Idmaeedo, _Idmaeddo, _Kopral)
                             _Etiquetas_Imp += 1
 
                         Next
@@ -205,6 +208,12 @@ Public Class Frm_ImpBarras_PorDocumento
 
         End With
 
+        If CantidadCero Then
+            For Each _Fila As DataRow In _TblDetalle.Rows
+                _Fila.Item("CANTIDAD") = 0
+            Next
+        End If
+
         _TblDetalle.Columns("CANTIDAD").ReadOnly = False
 
         With Grilla
@@ -212,12 +221,6 @@ Public Class Frm_ImpBarras_PorDocumento
             .DataSource = _TblDetalle
 
             OcultarEncabezadoGrilla(Grilla, True)
-
-            '.Columns("ITEM").HeaderText = "Item"
-            '.Columns("ITEM").Visible = True
-            '.Columns("ITEM").Width = 40
-            '.Columns("ITEM").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            '.Columns("ITEM").DisplayIndex = 0
 
             .Columns("BOSULIDO").HeaderText = "Bod"
             .Columns("BOSULIDO").Visible = True
@@ -240,13 +243,13 @@ Public Class Frm_ImpBarras_PorDocumento
 
             .Columns("ALTERNAT").HeaderText = "Cód. Alternativo"
             .Columns("ALTERNAT").Visible = True
-            .Columns("ALTERNAT").Width = 100
+            .Columns("ALTERNAT").Width = 120
             .Columns("ALTERNAT").DisplayIndex = 4
             .Columns("ALTERNAT").ReadOnly = True
 
             .Columns("NOKOPR").HeaderText = "Descripción"
             .Columns("NOKOPR").Visible = True
-            .Columns("NOKOPR").Width = 420
+            .Columns("NOKOPR").Width = 400
             .Columns("NOKOPR").DisplayIndex = 5
             .Columns("NOKOPR").ReadOnly = True
 
@@ -291,6 +294,42 @@ Public Class Frm_ImpBarras_PorDocumento
         AddHandler validar.KeyPress, AddressOf validar_Keypress
     End Sub
 
+    Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+
+        If _Cabeza = "ALTERNAT" Then
+
+            Dim _Codigo As String = _Fila.Cells("KOPRCT").Value
+            Dim _Descripcion As String = _Fila.Cells("NOKOPR").Value.ToString.Trim
+            Dim _Rtu As Double = _Fila.Cells("RLUDPR").Value
+            Dim _RowTabcodal As DataRow
+
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("TABCODAL", "KOPR = '" & _Codigo & "'")
+
+            If _Reg = 0 Then
+                MessageBoxEx.Show(Me, "Este producto no tiene códigos alternativos asociados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            Dim Fm As New Frm_CodAlternativo_Ver
+            Fm.TxtCodigo.Text = _Codigo
+            Fm.Txtdescripcion.Text = _Descripcion
+            Fm.TxtRTU.Text = _Rtu
+            Fm.ModoSeleccion = True
+            Fm.ShowDialog(Me)
+            _RowTabcodal = Fm.RowTabcodalSeleccionado
+            Fm.Dispose()
+
+            If Not IsNothing(_RowTabcodal) Then
+                _Fila.Cells("ALTERNAT").Value = _RowTabcodal.Item("KOPRAL")
+            End If
+
+        End If
+
+    End Sub
+
     Private Sub validar_Keypress(sender As Object, e As System.Windows.Forms.KeyPressEventArgs)
         ' evento Keypress  
 
@@ -322,66 +361,6 @@ Public Class Frm_ImpBarras_PorDocumento
             Me.Close()
         End If
     End Sub
-
-    'Private Sub ButtonItem1_Click(sender As System.Object, e As System.EventArgs) Handles ButtonItem1.Click
-    '   ActualizarGrillaSQL()
-
-    'Dim Ruta As String = AppPath(True)
-    'Dim Archivo As String = "Archivo.txt"
-
-    'Dim CodigoPrincipal As String
-    'Dim CodigoProveedor As String
-    'Dim Descripcion As String
-    'Dim Detalle As String = ""
-
-    '    Try
-
-    '        Consulta_sql = "SELECT CodProducto,CodProductoProveedor,Descripcion,Cantidad,Ubicacion FROM " & TablaDePaso & vbCrLf & _
-    '                       "WHERE Cantidad = 0"
-    'Dim Tabla As New DataTable
-
-
-    '        Tabla = _SQL.Fx_Get_Tablas(Consulta_sql)
-
-    '        If Tabla.Rows.Count > 0 Then
-    'Dim Fila As DataRow
-
-    '            For i = 0 To Tabla.Rows.Count - 1
-    '                Fila = Tabla.Rows(i)
-    '                CodigoPrincipal = Fila.Item("CodProducto").ToString
-    '                CodigoPrincipal = Rellenar(_Sql.Fx_Trae_Dato(, "KOPRTE", "MAEPR", "KOPR = '" & CodigoPrincipal & "'"), 20, " ")
-    '                CodigoProveedor = Rellenar(Fila.Item("CodProductoProveedor").ToString, 20, " ")
-    '                Descripcion = Rellenar(Mid(Fila.Item("Descripcion").ToString, 1, 43), 43, " ")
-    '                Detalle = Detalle & "|  " & CodigoPrincipal & " | " & CodigoProveedor & " | " & Descripcion & "   | " & vbCrLf
-    '            Next
-
-    'Dim Encabezado As String = ""
-    '            Encabezado = RazonEmpresa & vbCrLf & RutEmpresa & vbCrLf & vbCrLf & _
-    '                         "Entidad: " & Rellenar(txtrazonsocial.Text, 58, " ") & _
-    '                         "Tipo Doc. " & Txtipodocumento.Text & " Nro:" & Txtnrodocumento.Text & vbCrLf & _
-    '                         vbCrLf & _
-    '                         " +----------------------------------------------------------------------------------------------+" & vbCrLf & _
-    '                         " |  CODIGO RANDOM        | CODIGO ENTIDAD       | DESCRIPCION                                   |" & vbCrLf & _
-    '                         " +----------------------------------------------------------------------------------------------+" & vbCrLf
-
-    'Dim Pie As String
-    '            Pie = "+----------------------------------------------------------------------------------------------+"
-
-    'Dim Cuerpo As String = ""
-    '            Cuerpo = Chr(15) & Encabezado & Detalle & Pie & Chr(18)
-
-    '            CrearArchivoTxt(Ruta, Archivo, Cuerpo)
-    '            System.IO.File.Copy(Ruta & Archivo, CmbpuertoLPT.Text)
-
-    '        End If
-
-    '    Catch ex As Exception
-    '        MsgBox(ex.Message)
-    '    End Try
-
-    'End Sub
-
-
 
     Private Sub Btn_imprimir_Archivo_Click(sender As System.Object, e As System.EventArgs) Handles Btn_imprimir_Archivo.Click
 

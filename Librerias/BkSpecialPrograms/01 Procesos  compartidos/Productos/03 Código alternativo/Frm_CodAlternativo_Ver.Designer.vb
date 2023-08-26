@@ -22,25 +22,13 @@ Partial Class Frm_CodAlternativo_Ver
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_CodAlternativo_Ver))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.TxtRTU = New System.Windows.Forms.TextBox()
-        Me.TxtCodigo = New System.Windows.Forms.TextBox()
-        Me.Txtdescripcion = New System.Windows.Forms.TextBox()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.BtnAgregarCodAlternativos = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnAgregarCodBarra = New DevComponents.DotNetBar.ButtonItem()
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.Mnu_BtnEditarDescripProducto = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Mnu_BtnEliminarLinea = New System.Windows.Forms.ToolStripMenuItem()
-        Me.TxtDescripcion_Proveedor = New System.Windows.Forms.TextBox()
-        Me.Label4 = New System.Windows.Forms.Label()
         Me.GrillAlternativos = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
@@ -48,77 +36,21 @@ Partial Class Frm_CodAlternativo_Ver
         Me.Btn_Editar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Ver_Usuario_Con_Este_Permiso = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.TxtRTU = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.TxtCodigo = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txtdescripcion = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.Chk_Lect_Barras_IngrxCantidad = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.TxtDescripcion_Proveedor = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ContextMenuStrip1.SuspendLayout()
         CType(Me.GrillAlternativos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.BackColor = System.Drawing.Color.Transparent
-        Me.Label3.ForeColor = System.Drawing.Color.Black
-        Me.Label3.Location = New System.Drawing.Point(580, 12)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(37, 13)
-        Me.Label3.TabIndex = 5
-        Me.Label3.Text = "R.T.U."
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.BackColor = System.Drawing.Color.Transparent
-        Me.Label2.ForeColor = System.Drawing.Color.Black
-        Me.Label2.Location = New System.Drawing.Point(130, 12)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(67, 13)
-        Me.Label2.TabIndex = 4
-        Me.Label2.Text = "Descripción"
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.BackColor = System.Drawing.Color.Transparent
-        Me.Label1.ForeColor = System.Drawing.Color.Black
-        Me.Label1.Location = New System.Drawing.Point(3, 12)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(45, 13)
-        Me.Label1.TabIndex = 3
-        Me.Label1.Text = "Código"
-        '
-        'TxtRTU
-        '
-        Me.TxtRTU.BackColor = System.Drawing.Color.White
-        Me.TxtRTU.ForeColor = System.Drawing.Color.Black
-        Me.TxtRTU.Location = New System.Drawing.Point(583, 28)
-        Me.TxtRTU.Name = "TxtRTU"
-        Me.TxtRTU.ReadOnly = True
-        Me.TxtRTU.Size = New System.Drawing.Size(60, 22)
-        Me.TxtRTU.TabIndex = 2
-        '
-        'TxtCodigo
-        '
-        Me.TxtCodigo.BackColor = System.Drawing.Color.White
-        Me.TxtCodigo.ForeColor = System.Drawing.Color.Black
-        Me.TxtCodigo.Location = New System.Drawing.Point(6, 28)
-        Me.TxtCodigo.Name = "TxtCodigo"
-        Me.TxtCodigo.ReadOnly = True
-        Me.TxtCodigo.Size = New System.Drawing.Size(120, 22)
-        Me.TxtCodigo.TabIndex = 0
-        '
-        'Txtdescripcion
-        '
-        Me.Txtdescripcion.BackColor = System.Drawing.Color.White
-        Me.Txtdescripcion.ForeColor = System.Drawing.Color.Black
-        Me.Txtdescripcion.Location = New System.Drawing.Point(133, 28)
-        Me.Txtdescripcion.Name = "Txtdescripcion"
-        Me.Txtdescripcion.ReadOnly = True
-        Me.Txtdescripcion.Size = New System.Drawing.Size(444, 22)
-        Me.Txtdescripcion.TabIndex = 0
         '
         'Bar1
         '
@@ -128,7 +60,7 @@ Partial Class Frm_CodAlternativo_Ver
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnAgregarCodAlternativos, Me.BtnAgregarCodBarra})
         Me.Bar1.Location = New System.Drawing.Point(0, 397)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(662, 41)
+        Me.Bar1.Size = New System.Drawing.Size(879, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 31
@@ -153,49 +85,6 @@ Partial Class Frm_CodAlternativo_Ver
         Me.BtnAgregarCodBarra.ImageAlt = CType(resources.GetObject("BtnAgregarCodBarra.ImageAlt"), System.Drawing.Image)
         Me.BtnAgregarCodBarra.Name = "BtnAgregarCodBarra"
         Me.BtnAgregarCodBarra.Text = "Agregar código de barras (F2)"
-        '
-        'ContextMenuStrip1
-        '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Mnu_BtnEditarDescripProducto, Me.Mnu_BtnEliminarLinea})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(240, 48)
-        Me.ContextMenuStrip1.Text = "Sub Menu productos"
-        '
-        'Mnu_BtnEditarDescripProducto
-        '
-        Me.Mnu_BtnEditarDescripProducto.Image = CType(resources.GetObject("Mnu_BtnEditarDescripProducto.Image"), System.Drawing.Image)
-        Me.Mnu_BtnEditarDescripProducto.Name = "Mnu_BtnEditarDescripProducto"
-        Me.Mnu_BtnEditarDescripProducto.Size = New System.Drawing.Size(239, 22)
-        Me.Mnu_BtnEditarDescripProducto.Text = "Editar descripción del producto"
-        '
-        'Mnu_BtnEliminarLinea
-        '
-        Me.Mnu_BtnEliminarLinea.Image = Global.BkSpecialPrograms.My.Resources.Resources.delete2
-        Me.Mnu_BtnEliminarLinea.Name = "Mnu_BtnEliminarLinea"
-        Me.Mnu_BtnEliminarLinea.Size = New System.Drawing.Size(239, 22)
-        Me.Mnu_BtnEliminarLinea.Text = "Eliminar línea"
-        '
-        'TxtDescripcion_Proveedor
-        '
-        Me.TxtDescripcion_Proveedor.BackColor = System.Drawing.Color.White
-        Me.TxtDescripcion_Proveedor.ForeColor = System.Drawing.Color.Black
-        Me.TxtDescripcion_Proveedor.Location = New System.Drawing.Point(154, 337)
-        Me.TxtDescripcion_Proveedor.Name = "TxtDescripcion_Proveedor"
-        Me.TxtDescripcion_Proveedor.ReadOnly = True
-        Me.TxtDescripcion_Proveedor.Size = New System.Drawing.Size(498, 22)
-        Me.TxtDescripcion_Proveedor.TabIndex = 34
-        Me.TxtDescripcion_Proveedor.TabStop = False
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.BackColor = System.Drawing.Color.White
-        Me.Label4.ForeColor = System.Drawing.Color.Black
-        Me.Label4.Location = New System.Drawing.Point(3, 340)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(145, 13)
-        Me.Label4.TabIndex = 33
-        Me.Label4.Text = "Descripción del proveedor:"
         '
         'GrillAlternativos
         '
@@ -235,7 +124,7 @@ Partial Class Frm_CodAlternativo_Ver
         Me.GrillAlternativos.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.GrillAlternativos.RowHeadersVisible = False
         Me.GrillAlternativos.RowTemplate.Height = 25
-        Me.GrillAlternativos.Size = New System.Drawing.Size(643, 213)
+        Me.GrillAlternativos.Size = New System.Drawing.Size(858, 207)
         Me.GrillAlternativos.TabIndex = 55
         '
         'GroupPanel1
@@ -247,7 +136,7 @@ Partial Class Frm_CodAlternativo_Ver
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(6, 95)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(649, 236)
+        Me.GroupPanel1.Size = New System.Drawing.Size(864, 230)
         '
         '
         '
@@ -318,16 +207,16 @@ Partial Class Frm_CodAlternativo_Ver
         '
         Me.GroupPanel2.BackColor = System.Drawing.Color.White
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel2.Controls.Add(Me.Label3)
-        Me.GroupPanel2.Controls.Add(Me.Label1)
-        Me.GroupPanel2.Controls.Add(Me.Label2)
-        Me.GroupPanel2.Controls.Add(Me.Txtdescripcion)
-        Me.GroupPanel2.Controls.Add(Me.TxtCodigo)
         Me.GroupPanel2.Controls.Add(Me.TxtRTU)
+        Me.GroupPanel2.Controls.Add(Me.TxtCodigo)
+        Me.GroupPanel2.Controls.Add(Me.Txtdescripcion)
+        Me.GroupPanel2.Controls.Add(Me.LabelX2)
+        Me.GroupPanel2.Controls.Add(Me.LabelX3)
+        Me.GroupPanel2.Controls.Add(Me.LabelX4)
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(6, 12)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(649, 83)
+        Me.GroupPanel2.Size = New System.Drawing.Size(864, 77)
         '
         '
         '
@@ -359,6 +248,99 @@ Partial Class Frm_CodAlternativo_Ver
         Me.GroupPanel2.TabIndex = 57
         Me.GroupPanel2.Text = "Producto"
         '
+        'TxtRTU
+        '
+        Me.TxtRTU.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.TxtRTU.Border.Class = "TextBoxBorder"
+        Me.TxtRTU.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.TxtRTU.DisabledBackColor = System.Drawing.Color.White
+        Me.TxtRTU.ForeColor = System.Drawing.Color.Black
+        Me.TxtRTU.Location = New System.Drawing.Point(792, 28)
+        Me.TxtRTU.Name = "TxtRTU"
+        Me.TxtRTU.PreventEnterBeep = True
+        Me.TxtRTU.ReadOnly = True
+        Me.TxtRTU.Size = New System.Drawing.Size(63, 22)
+        Me.TxtRTU.TabIndex = 63
+        '
+        'TxtCodigo
+        '
+        Me.TxtCodigo.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.TxtCodigo.Border.Class = "TextBoxBorder"
+        Me.TxtCodigo.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.TxtCodigo.DisabledBackColor = System.Drawing.Color.White
+        Me.TxtCodigo.ForeColor = System.Drawing.Color.Black
+        Me.TxtCodigo.Location = New System.Drawing.Point(6, 28)
+        Me.TxtCodigo.Name = "TxtCodigo"
+        Me.TxtCodigo.PreventEnterBeep = True
+        Me.TxtCodigo.ReadOnly = True
+        Me.TxtCodigo.Size = New System.Drawing.Size(120, 22)
+        Me.TxtCodigo.TabIndex = 62
+        '
+        'Txtdescripcion
+        '
+        Me.Txtdescripcion.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txtdescripcion.Border.Class = "TextBoxBorder"
+        Me.Txtdescripcion.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txtdescripcion.DisabledBackColor = System.Drawing.Color.White
+        Me.Txtdescripcion.ForeColor = System.Drawing.Color.Black
+        Me.Txtdescripcion.Location = New System.Drawing.Point(132, 28)
+        Me.Txtdescripcion.Name = "Txtdescripcion"
+        Me.Txtdescripcion.PreventEnterBeep = True
+        Me.Txtdescripcion.ReadOnly = True
+        Me.Txtdescripcion.Size = New System.Drawing.Size(654, 22)
+        Me.Txtdescripcion.TabIndex = 61
+        '
+        'LabelX2
+        '
+        Me.LabelX2.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX2.ForeColor = System.Drawing.Color.Black
+        Me.LabelX2.Location = New System.Drawing.Point(6, 7)
+        Me.LabelX2.Name = "LabelX2"
+        Me.LabelX2.Size = New System.Drawing.Size(56, 23)
+        Me.LabelX2.TabIndex = 61
+        Me.LabelX2.Text = "Código"
+        '
+        'LabelX3
+        '
+        Me.LabelX3.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX3.ForeColor = System.Drawing.Color.Black
+        Me.LabelX3.Location = New System.Drawing.Point(132, 7)
+        Me.LabelX3.Name = "LabelX3"
+        Me.LabelX3.Size = New System.Drawing.Size(145, 23)
+        Me.LabelX3.TabIndex = 62
+        Me.LabelX3.Text = "Descripción"
+        '
+        'LabelX4
+        '
+        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.ForeColor = System.Drawing.Color.Black
+        Me.LabelX4.Location = New System.Drawing.Point(792, 7)
+        Me.LabelX4.Name = "LabelX4"
+        Me.LabelX4.Size = New System.Drawing.Size(56, 23)
+        Me.LabelX4.TabIndex = 63
+        Me.LabelX4.Text = "R.T.U."
+        '
         'Chk_Lect_Barras_IngrxCantidad
         '
         Me.Chk_Lect_Barras_IngrxCantidad.BackColor = System.Drawing.Color.White
@@ -374,17 +356,48 @@ Partial Class Frm_CodAlternativo_Ver
         Me.Chk_Lect_Barras_IngrxCantidad.TabIndex = 58
         Me.Chk_Lect_Barras_IngrxCantidad.Text = "Ingresar cantidades al leer código de barras en despacho/recepción"
         '
+        'TxtDescripcion_Proveedor
+        '
+        Me.TxtDescripcion_Proveedor.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.TxtDescripcion_Proveedor.Border.Class = "TextBoxBorder"
+        Me.TxtDescripcion_Proveedor.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.TxtDescripcion_Proveedor.DisabledBackColor = System.Drawing.Color.White
+        Me.TxtDescripcion_Proveedor.ForeColor = System.Drawing.Color.Black
+        Me.TxtDescripcion_Proveedor.Location = New System.Drawing.Point(145, 331)
+        Me.TxtDescripcion_Proveedor.Name = "TxtDescripcion_Proveedor"
+        Me.TxtDescripcion_Proveedor.PreventEnterBeep = True
+        Me.TxtDescripcion_Proveedor.ReadOnly = True
+        Me.TxtDescripcion_Proveedor.Size = New System.Drawing.Size(725, 22)
+        Me.TxtDescripcion_Proveedor.TabIndex = 59
+        '
+        'LabelX1
+        '
+        Me.LabelX1.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.ForeColor = System.Drawing.Color.Black
+        Me.LabelX1.Location = New System.Drawing.Point(6, 330)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(142, 23)
+        Me.LabelX1.TabIndex = 60
+        Me.LabelX1.Text = "Descripción del proveedor:"
+        '
         'Frm_CodAlternativo_Ver
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(662, 438)
+        Me.ClientSize = New System.Drawing.Size(879, 438)
+        Me.Controls.Add(Me.TxtDescripcion_Proveedor)
         Me.Controls.Add(Me.Chk_Lect_Barras_IngrxCantidad)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.GroupPanel1)
-        Me.Controls.Add(Me.TxtDescripcion_Proveedor)
-        Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Bar1)
+        Me.Controls.Add(Me.LabelX1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -397,29 +410,15 @@ Partial Class Frm_CodAlternativo_Ver
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Asociar código alternativo"
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ContextMenuStrip1.ResumeLayout(False)
         CType(Me.GrillAlternativos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel2.ResumeLayout(False)
-        Me.GroupPanel2.PerformLayout()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
-    Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Public WithEvents TxtRTU As System.Windows.Forms.TextBox
-    Public WithEvents TxtCodigo As System.Windows.Forms.TextBox
-    Public WithEvents Txtdescripcion As System.Windows.Forms.TextBox
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Friend WithEvents BtnAgregarCodAlternativos As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents TxtDescripcion_Proveedor As System.Windows.Forms.TextBox
-    Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents ContextMenuStrip1 As System.Windows.Forms.ContextMenuStrip
-    Friend WithEvents Mnu_BtnEditarDescripProducto As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents Mnu_BtnEliminarLinea As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents BtnAgregarCodBarra As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GrillAlternativos As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
@@ -429,4 +428,12 @@ Partial Class Frm_CodAlternativo_Ver
     Friend WithEvents Menu_Contextual_Permisos As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Editar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Ver_Usuario_Con_Este_Permiso As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents TxtDescripcion_Proveedor As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents TxtRTU As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents TxtCodigo As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Txtdescripcion As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
 End Class

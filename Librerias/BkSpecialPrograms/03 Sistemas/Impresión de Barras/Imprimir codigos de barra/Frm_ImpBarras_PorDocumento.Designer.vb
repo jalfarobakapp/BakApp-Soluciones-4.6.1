@@ -22,13 +22,13 @@ Partial Class Frm_ImpBarras_PorDocumento
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_ImpBarras_PorDocumento))
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_ImpBarras_PorDocumento))
         Me.Highlighter1 = New DevComponents.DotNetBar.Validator.Highlighter()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btnimprimiretiquetas = New DevComponents.DotNetBar.ButtonItem()
@@ -41,12 +41,17 @@ Partial Class Frm_ImpBarras_PorDocumento
         Me.Cmbetiquetas = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.LblEntidadFisica = New DevComponents.DotNetBar.LabelX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
+        Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
+        Me.Menu_Contextual_Permisos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Editar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Ver_Usuario_Con_Este_Permiso = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.GrillaEncabezado, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel3.SuspendLayout()
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Highlighter1
@@ -172,6 +177,7 @@ Partial Class Frm_ImpBarras_PorDocumento
         '
         Me.GroupPanel2.BackColor = System.Drawing.Color.White
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.Controls.Add(Me.ContextMenuBar1)
         Me.GroupPanel2.Controls.Add(Me.Grilla)
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(12, 127)
@@ -328,6 +334,41 @@ Partial Class Frm_ImpBarras_PorDocumento
         Me.LabelX4.TabIndex = 69
         Me.LabelX4.Text = "Ent. física:"
         '
+        'ContextMenuBar1
+        '
+        Me.ContextMenuBar1.AntiAlias = True
+        Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Permisos})
+        Me.ContextMenuBar1.Location = New System.Drawing.Point(212, 110)
+        Me.ContextMenuBar1.Name = "ContextMenuBar1"
+        Me.ContextMenuBar1.Size = New System.Drawing.Size(306, 25)
+        Me.ContextMenuBar1.Stretch = True
+        Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ContextMenuBar1.TabIndex = 57
+        Me.ContextMenuBar1.TabStop = False
+        Me.ContextMenuBar1.Text = "ContextMenuBar1"
+        '
+        'Menu_Contextual_Permisos
+        '
+        Me.Menu_Contextual_Permisos.AutoExpandOnClick = True
+        Me.Menu_Contextual_Permisos.Name = "Menu_Contextual_Permisos"
+        Me.Menu_Contextual_Permisos.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Editar, Me.Btn_Ver_Usuario_Con_Este_Permiso})
+        Me.Menu_Contextual_Permisos.Text = "Opciones productos"
+        '
+        'Btn_Editar
+        '
+        Me.Btn_Editar.Image = CType(resources.GetObject("Btn_Editar.Image"), System.Drawing.Image)
+        Me.Btn_Editar.ImageAlt = CType(resources.GetObject("Btn_Editar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Editar.Name = "Btn_Editar"
+        Me.Btn_Editar.Text = "Editar"
+        '
+        'Btn_Ver_Usuario_Con_Este_Permiso
+        '
+        Me.Btn_Ver_Usuario_Con_Este_Permiso.Image = CType(resources.GetObject("Btn_Ver_Usuario_Con_Este_Permiso.Image"), System.Drawing.Image)
+        Me.Btn_Ver_Usuario_Con_Este_Permiso.ImageAlt = CType(resources.GetObject("Btn_Ver_Usuario_Con_Este_Permiso.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Ver_Usuario_Con_Este_Permiso.Name = "Btn_Ver_Usuario_Con_Este_Permiso"
+        Me.Btn_Ver_Usuario_Con_Este_Permiso.Text = "Eliminar"
+        '
         'Frm_ImpBarras_PorDocumento
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -356,6 +397,7 @@ Partial Class Frm_ImpBarras_PorDocumento
         Me.GroupPanel2.ResumeLayout(False)
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel3.ResumeLayout(False)
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -371,4 +413,8 @@ Partial Class Frm_ImpBarras_PorDocumento
     Friend WithEvents Btn_imprimir_Archivo As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Cmbetiquetas As DevComponents.DotNetBar.Controls.ComboBoxEx
+    Friend WithEvents ContextMenuBar1 As DevComponents.DotNetBar.ContextMenuBar
+    Friend WithEvents Menu_Contextual_Permisos As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Editar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Ver_Usuario_Con_Este_Permiso As DevComponents.DotNetBar.ButtonItem
 End Class
