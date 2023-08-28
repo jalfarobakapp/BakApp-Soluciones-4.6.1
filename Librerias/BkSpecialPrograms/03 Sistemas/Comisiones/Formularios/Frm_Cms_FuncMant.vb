@@ -1,4 +1,6 @@
-﻿Public Class Frm_Cms_FuncMant
+﻿Imports DevComponents.DotNetBar
+
+Public Class Frm_Cms_FuncMant
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_Sql As String
@@ -49,7 +51,6 @@
 
         If Not CBool(_Id) Then
             Me.Height = 212
-            Btn_Eliminar.Visible = False
             Btn_AgregarComision.Visible = False
         End If
 
@@ -109,6 +110,24 @@
         _Afp = Val(Txt_AFP.Text)
         _Salud = Val(Txt_Salud.Text)
 
+        If _Afp = 0 Then
+            If MessageBoxEx.Show(Me, "AFP en cero" & vbCrLf &
+                                 "¿Confirma dejar el valor en cero?", "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
+                Txt_AFP.Text = 0
+                Txt_AFP.Focus()
+                Return
+            End If
+        End If
+
+        If _Salud = 0 Then
+            If MessageBoxEx.Show(Me, "Salud en cero" & vbCrLf &
+                                 "¿Confirma dejar el valor en cero?", "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
+                Txt_Salud.Text = 0
+                Txt_Salud.Focus()
+                Return
+            End If
+        End If
+
         If EditandoDesdeComisiones Then
             Grabar = True
             Me.Close()
@@ -130,6 +149,7 @@
     Private Sub Btn_AgregarComision_Click(sender As Object, e As EventArgs) Handles Btn_AgregarComision.Click
 
         Dim Fm As New Frm_Cms_AgregarTipos(0, _Row_Funcionario.Item("KOFU"))
+        Fm.Text = "FUNCIONARIO: " & _Row_Funcionario.Item("KOFU").ToString.Trim & "-" & _Row_Funcionario.Item("NOKOFU").ToString.Trim
         Fm.ShowDialog(Me)
         If Fm.Grabar Then
             Sb_Actualizar_Grilla()
