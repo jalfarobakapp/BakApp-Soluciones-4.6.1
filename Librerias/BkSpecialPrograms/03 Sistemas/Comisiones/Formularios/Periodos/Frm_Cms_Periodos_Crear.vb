@@ -62,6 +62,12 @@ Public Class Frm_Cms_Periodos_Crear
             Cmb_Ano.Enabled = False
             Cmb_Mes.Enabled = False
 
+            Input_Habiles.Value = _Row_Periodo.Item("Habiles")
+            Input_Sabados.Value = _Row_Periodo.Item("Sabados")
+            Input_Domingos.Value = _Row_Periodo.Item("Domingos")
+            Input_Festivos.Value = _Row_Periodo.Item("Festivos")
+            Input_Semanas.Value = _Row_Periodo.Item("Semanas")
+
         End If
 
     End Sub

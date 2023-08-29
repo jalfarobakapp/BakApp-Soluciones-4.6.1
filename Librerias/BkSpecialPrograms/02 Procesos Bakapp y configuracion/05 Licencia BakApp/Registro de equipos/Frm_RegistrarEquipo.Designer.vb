@@ -461,10 +461,10 @@ Partial Class Frm_RegistrarEquipo
         Me.STab.ControlBox.MenuBox.Name = ""
         Me.STab.ControlBox.Name = ""
         Me.STab.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.STab.ControlBox.MenuBox, Me.STab.ControlBox.CloseBox})
-        Me.STab.Controls.Add(Me.SuperTabControlPanel3)
         Me.STab.Controls.Add(Me.SuperTabControlPanel1)
         Me.STab.Controls.Add(Me.SuperTabControlPanel2)
         Me.STab.Controls.Add(Me.SuperTabControlPanel4)
+        Me.STab.Controls.Add(Me.SuperTabControlPanel3)
         Me.STab.ForeColor = System.Drawing.Color.Black
         Me.STab.Location = New System.Drawing.Point(5, 12)
         Me.STab.Name = "STab"
@@ -643,9 +643,9 @@ Partial Class Frm_RegistrarEquipo
         '
         Me.SuperTabControlPanel2.Controls.Add(Me.GroupPanel4)
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(553, 276)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(553, 249)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.Tab_Empresas
         '
@@ -665,7 +665,7 @@ Partial Class Frm_RegistrarEquipo
         Me.GroupPanel4.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupPanel4.Location = New System.Drawing.Point(0, 0)
         Me.GroupPanel4.Name = "GroupPanel4"
-        Me.GroupPanel4.Size = New System.Drawing.Size(553, 276)
+        Me.GroupPanel4.Size = New System.Drawing.Size(553, 249)
         '
         '
         '
@@ -883,9 +883,9 @@ Partial Class Frm_RegistrarEquipo
         '
         Me.SuperTabControlPanel4.Controls.Add(Me.GroupPanel5)
         Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
-        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(553, 276)
+        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(553, 249)
         Me.SuperTabControlPanel4.TabIndex = 0
         Me.SuperTabControlPanel4.TabItem = Me.Tab_Impresoras
         '
@@ -901,7 +901,7 @@ Partial Class Frm_RegistrarEquipo
         Me.GroupPanel5.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupPanel5.Location = New System.Drawing.Point(0, 0)
         Me.GroupPanel5.Name = "GroupPanel5"
-        Me.GroupPanel5.Size = New System.Drawing.Size(553, 276)
+        Me.GroupPanel5.Size = New System.Drawing.Size(553, 249)
         '
         '
         '

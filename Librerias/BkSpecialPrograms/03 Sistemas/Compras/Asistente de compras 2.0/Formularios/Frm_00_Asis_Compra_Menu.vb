@@ -1506,12 +1506,16 @@ Public Class Frm_00_Asis_Compra_Menu
             End If
         End If
 
-
-
         If Chk_DbExt_SincronizarPRBD.Checked And Txt_DbExt_Nombre_Conexion.Tag = 0 Then
             MessageBoxEx.Show(Me, "Faltan los datos de conexión hacia la base de datos externa" & vbCrLf & vbCrLf &
                               "Revise la pestaña: Bod.Ext. Prov. Especial", "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            STabConfiguracion.SelectedTabIndex = 6
+            Return
+        End If
+
+        If Chk_NVVAutoExterna.Checked AndAlso IsNothing(_RowProveedor_NVVExterna) Then
+            MessageBoxEx.Show(Me, "Falta el cliente para generación de NVV en empresa externa", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             STabConfiguracion.SelectedTabIndex = 6
             Return
         End If
@@ -2382,7 +2386,17 @@ Public Class Frm_00_Asis_Compra_Menu
         _Sql.Sb_Eliminar_Tabla_De_Paso(_TblPasoInforme)
 
         If Not Modo_ConfAuto Then
+
+            If Chk_NVVAutoExterna.Checked AndAlso IsNothing(_RowProveedor_NVVExterna) Then
+                MessageBoxEx.Show(Me, "Falta el cliente para generación de NVV en empresa externa", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                STabConfiguracion.SelectedTabIndex = 6
+                e.Cancel = True
+                Me.Enabled = True
+                Return
+            End If
+
             Sb_Parametros_Informe_Sql(True)
+
         End If
 
     End Sub
@@ -3473,6 +3487,12 @@ Public Class Frm_00_Asis_Compra_Menu
 
         If Rdb_Productos_Proveedor.Checked Then
             MessageBoxEx.Show(Me, "No puede dejar un proveedor asignado en esta configuración", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If Chk_NVVAutoExterna.Checked AndAlso IsNothing(_RowProveedor_NVVExterna) Then
+            MessageBoxEx.Show(Me, "Falta el cliente para generación de NVV en empresa externa", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            STabConfiguracion.SelectedTabIndex = 6
             Return
         End If
 

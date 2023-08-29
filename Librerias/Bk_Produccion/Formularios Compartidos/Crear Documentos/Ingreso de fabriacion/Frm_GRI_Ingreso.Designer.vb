@@ -1,9 +1,9 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_GRI_Ingreso
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,13 +20,14 @@ Partial Class Frm_GRI_Ingreso
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_GRI_Ingreso))
         Me.ReflectionImage1 = New DevComponents.DotNetBar.Controls.ReflectionImage()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
-        Me.Btn_Buscar_OT = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Ingresar_GRI = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_ImprimirEtiquetas = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnConfiguracion = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -51,7 +52,7 @@ Partial Class Frm_GRI_Ingreso
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Buscar_OT})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_ImprimirEtiquetas, Me.BtnConfiguracion})
         Me.Bar1.Location = New System.Drawing.Point(0, 345)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(547, 41)
@@ -60,17 +61,6 @@ Partial Class Frm_GRI_Ingreso
         Me.Bar1.TabIndex = 33
         Me.Bar1.TabStop = False
         Me.Bar1.Text = "Bar1"
-        '
-        'Btn_Buscar_OT
-        '
-        Me.Btn_Buscar_OT.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Buscar_OT.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Buscar_OT.Image = CType(resources.GetObject("Btn_Buscar_OT.Image"), System.Drawing.Image)
-        Me.Btn_Buscar_OT.ImageAlt = CType(resources.GetObject("Btn_Buscar_OT.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Buscar_OT.Name = "Btn_Buscar_OT"
-        Me.Btn_Buscar_OT.Text = "Buscar OT"
-        Me.Btn_Buscar_OT.Tooltip = "Ver OT"
-        Me.Btn_Buscar_OT.Visible = False
         '
         'Btn_Ingresar_GRI
         '
@@ -85,6 +75,26 @@ Partial Class Frm_GRI_Ingreso
         Me.Btn_Ingresar_GRI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_Ingresar_GRI.TabIndex = 32
         Me.Btn_Ingresar_GRI.Text = "<b>INGRESAR PRODUCTOS</b><br/> " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<b>FABRICADOS A BODEGA</b>"
+        '
+        'Btn_ImprimirEtiquetas
+        '
+        Me.Btn_ImprimirEtiquetas.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_ImprimirEtiquetas.ForeColor = System.Drawing.Color.Black
+        Me.Btn_ImprimirEtiquetas.Image = CType(resources.GetObject("Btn_ImprimirEtiquetas.Image"), System.Drawing.Image)
+        Me.Btn_ImprimirEtiquetas.ImageAlt = CType(resources.GetObject("Btn_ImprimirEtiquetas.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ImprimirEtiquetas.Name = "Btn_ImprimirEtiquetas"
+        Me.Btn_ImprimirEtiquetas.Tooltip = "Imprimir etiquetas"
+        '
+        'BtnConfiguracion
+        '
+        Me.BtnConfiguracion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.BtnConfiguracion.ForeColor = System.Drawing.Color.Black
+        Me.BtnConfiguracion.Image = CType(resources.GetObject("BtnConfiguracion.Image"), System.Drawing.Image)
+        Me.BtnConfiguracion.ImageAlt = CType(resources.GetObject("BtnConfiguracion.ImageAlt"), System.Drawing.Image)
+        Me.BtnConfiguracion.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.BtnConfiguracion.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
+        Me.BtnConfiguracion.Name = "BtnConfiguracion"
+        Me.BtnConfiguracion.Tooltip = "Configuración de sistema"
         '
         'Frm_GRI_Ingreso
         '
@@ -111,6 +121,7 @@ Partial Class Frm_GRI_Ingreso
 
     Friend WithEvents ReflectionImage1 As DevComponents.DotNetBar.Controls.ReflectionImage
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
-    Public WithEvents Btn_Buscar_OT As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Ingresar_GRI As DevComponents.DotNetBar.ButtonX
+    Public WithEvents Btn_ImprimirEtiquetas As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents BtnConfiguracion As DevComponents.DotNetBar.ButtonItem
 End Class

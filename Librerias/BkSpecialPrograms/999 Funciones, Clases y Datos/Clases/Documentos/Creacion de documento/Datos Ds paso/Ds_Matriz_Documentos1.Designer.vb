@@ -639,6 +639,8 @@ Partial Public Class Ds_Matriz_Documentos
         
         Private columnOrden_compra As Global.System.Data.DataColumn
         
+        Private columnMotivo As Global.System.Data.DataColumn
+        
         Private columnObs1 As Global.System.Data.DataColumn
         
         Private columnObs2 As Global.System.Data.DataColumn
@@ -769,6 +771,14 @@ Partial Public Class Ds_Matriz_Documentos
         Public ReadOnly Property Orden_compraColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnOrden_compra
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property MotivoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnMotivo
             End Get
         End Property
         
@@ -1109,6 +1119,7 @@ Partial Public Class Ds_Matriz_Documentos
                     ByVal Observaciones As String,  _
                     ByVal Forma_pago As String,  _
                     ByVal Orden_compra As String,  _
+                    ByVal Motivo As String,  _
                     ByVal Obs1 As String,  _
                     ByVal Obs2 As String,  _
                     ByVal Obs3 As String,  _
@@ -1147,7 +1158,7 @@ Partial Public Class Ds_Matriz_Documentos
                     ByVal Placa As String,  _
                     ByVal CodRetirador As String) As Observaciones_DocRow
             Dim rowObservaciones_DocRow As Observaciones_DocRow = CType(Me.NewRow,Observaciones_DocRow)
-            Dim columnValuesArray() As Object = New Object() {Observaciones, Forma_pago, Orden_compra, Obs1, Obs2, Obs3, Obs4, Obs5, Obs6, Obs7, Obs8, Obs9, Obs10, Obs11, Obs12, Obs13, Obs14, Obs15, Obs16, Obs17, Obs18, Obs19, Obs20, Obs21, Obs22, Obs23, Obs24, Obs25, Obs26, Obs27, Obs28, Obs29, Obs30, Obs31, Obs32, Obs33, Obs34, Obs35, Placa, CodRetirador}
+            Dim columnValuesArray() As Object = New Object() {Observaciones, Forma_pago, Orden_compra, Motivo, Obs1, Obs2, Obs3, Obs4, Obs5, Obs6, Obs7, Obs8, Obs9, Obs10, Obs11, Obs12, Obs13, Obs14, Obs15, Obs16, Obs17, Obs18, Obs19, Obs20, Obs21, Obs22, Obs23, Obs24, Obs25, Obs26, Obs27, Obs28, Obs29, Obs30, Obs31, Obs32, Obs33, Obs34, Obs35, Placa, CodRetirador}
             rowObservaciones_DocRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowObservaciones_DocRow)
             Return rowObservaciones_DocRow
@@ -1173,6 +1184,7 @@ Partial Public Class Ds_Matriz_Documentos
             Me.columnObservaciones = MyBase.Columns("Observaciones")
             Me.columnForma_pago = MyBase.Columns("Forma_pago")
             Me.columnOrden_compra = MyBase.Columns("Orden_compra")
+            Me.columnMotivo = MyBase.Columns("Motivo")
             Me.columnObs1 = MyBase.Columns("Obs1")
             Me.columnObs2 = MyBase.Columns("Obs2")
             Me.columnObs3 = MyBase.Columns("Obs3")
@@ -1221,6 +1233,8 @@ Partial Public Class Ds_Matriz_Documentos
             MyBase.Columns.Add(Me.columnForma_pago)
             Me.columnOrden_compra = New Global.System.Data.DataColumn("Orden_compra", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnOrden_compra)
+            Me.columnMotivo = New Global.System.Data.DataColumn("Motivo", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnMotivo)
             Me.columnObs1 = New Global.System.Data.DataColumn("Obs1", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnObs1)
             Me.columnObs2 = New Global.System.Data.DataColumn("Obs2", GetType(String), Nothing, Global.System.Data.MappingType.Element)
@@ -7728,6 +7742,21 @@ Partial Public Class Ds_Matriz_Documentos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property Motivo() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableObservaciones_Doc.MotivoColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Motivo' de la tabla 'Observaciones_Doc' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableObservaciones_Doc.MotivoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Property Obs1() As String
             Get
                 Return CType(Me(Me.tableObservaciones_Doc.Obs1Column),String)
@@ -8140,6 +8169,18 @@ Partial Public Class Ds_Matriz_Documentos
                 Me(Me.tableObservaciones_Doc.CodRetiradorColumn) = value
             End Set
         End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsMotivoNull() As Boolean
+            Return Me.IsNull(Me.tableObservaciones_Doc.MotivoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetMotivoNull()
+            Me(Me.tableObservaciones_Doc.MotivoColumn) = Global.System.Convert.DBNull
+        End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _

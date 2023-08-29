@@ -7,6 +7,9 @@ Public Class Frm_CodAlternativo_Ver
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
+    Public Property ModoSeleccion As Boolean
+    Public Property RowTabcodalSeleccionado As DataRow
+
     Public Sub New()
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -43,48 +46,81 @@ Public Class Frm_CodAlternativo_Ver
         AddHandler Chk_Lect_Barras_IngrxCantidad.CheckedChanged, AddressOf Chk_Lect_Barras_IngrxCantidad_CheckedChanged
         AddHandler Chk_Lect_Barras_IngrxCantidad.CheckedChanging, AddressOf Chk_Lect_Barras_IngrxCantidad_CheckedChanging
 
+        Bar1.Enabled = Not ModoSeleccion
+        Chk_Lect_Barras_IngrxCantidad.Visible = Not ModoSeleccion
+
     End Sub
 
     Sub Sb_ActualizarGrilla()
 
-        Consulta_sql = "Select KOPRAL,NOKOPRAL,KOEN," & vbCrLf &
-                       "ISNULL((SELECT TOP 1 NOKOEN FROM MAEEN" & vbCrLf &
-                       "WHERE KOEN = TABCODAL.KOEN),'Código de barras asociado') AS PROVEEDOR" & vbCrLf &
-                       "FROM TABCODAL" & vbCrLf &
-                       "WHERE KOPR = '" & TxtCodigo.Text & "'" & vbCrLf &
-                       "Order By KOEN"
-
-        Consulta_sql = "Select Td.KOPRAL,Td.NOKOPRAL,Td.KOEN," & vbCrLf &
+        Consulta_sql = "Select Td.KOPRAL,Td.KOPR,Td.NOKOPRAL,Td.KOEN,Td.CONMULTI,case When Td.UNIMULTI = 2 Then Mp.UD02PR Else Mp.UD01PR End As UD,Td.MULTIPLO,Td.TXTMULTI," & vbCrLf &
                        "ISNULL((SELECT TOP 1 NOKOEN FROM MAEEN" & vbCrLf &
                        "WHERE KOEN = Td.KOEN),'Código de barras asociado') AS PROVEEDOR,Isnull(Qr.CodigoQR,'') As CodigoQR," & vbCrLf &
                        "Cast(0 As bit) As QR" & vbCrLf &
                        "From TABCODAL Td" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Prod_CodQR Qr On Td.KOPRAL = Qr.Kopral" & vbCrLf &
-                       "Where KOPR = '" & TxtCodigo.Text & "'" & vbCrLf &
+                       "Left Join MAEPR Mp On Td.KOPR = Mp.KOPR" & vbCrLf &
+                       "Where Td.KOPR = '" & TxtCodigo.Text & "'" & vbCrLf &
                        "Order By KOEN"
+
+        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With GrillAlternativos
 
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _Tbl
             OcultarEncabezadoGrilla(GrillAlternativos, True)
+
+            Dim _DisplayIndex = 0
 
             .Columns("KOPRAL").Width = 120
             .Columns("KOPRAL").HeaderText = "Código alternativo"
             .Columns("KOPRAL").Visible = True
+            .Columns("KOPRAL").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("KOEN").Width = 100
             .Columns("KOEN").HeaderText = "Proveedor"
             .Columns("KOEN").Visible = True
+            .Columns("KOEN").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("PROVEEDOR").Width = 360
             .Columns("PROVEEDOR").HeaderText = "Razón social"
             .Columns("PROVEEDOR").Visible = True
+            .Columns("PROVEEDOR").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("CONMULTI").Width = 30
+            .Columns("CONMULTI").HeaderText = "CM"
+            .Columns("CONMULTI").Visible = True
+            .Columns("CONMULTI").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("UD").Width = 30
+            .Columns("Ud").HeaderText = "UD"
+            .Columns("UD").Visible = True
+            .Columns("UD").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("MULTIPLO").Width = 50
+            .Columns("MULTIPLO").HeaderText = "Mult"
+            .Columns("MULTIPLO").Visible = True
+            .Columns("MULTIPLO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("TXTMULTI").Width = 100
+            .Columns("TXTMULTI").HeaderText = "Texto"
+            .Columns("TXTMULTI").Visible = True
+            .Columns("TXTMULTI").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
         End With
 
     End Sub
 
     Sub Sb_Eliminar_Linea()
+
+        If Not ModoSeleccion Then Return
 
         Dim _Fila As DataGridViewRow = GrillAlternativos.Rows(GrillAlternativos.CurrentRow.Index)
 
@@ -136,53 +172,6 @@ Public Class Frm_CodAlternativo_Ver
 
         If e.KeyValue = Keys.Delete Then
             Sb_Eliminar_Linea()
-        End If
-
-    End Sub
-
-    Private Sub GrillAlternativos_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles GrillAlternativos.MouseDown
-
-        If e.Button = Windows.Forms.MouseButtons.Right Then
-            With sender
-                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
-                If Hitest.Type = DataGridViewHitTestType.Cell Then
-                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
-                    ContextMenuStrip1.Enabled = True
-                Else
-                    ContextMenuStrip1.Enabled = False
-                End If
-            End With
-        End If
-
-    End Sub
-
-    Private Sub Mnu_BtnEditarDescripProducto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Mnu_BtnEditarDescripProducto.Click
-
-        Dim _Fila As DataGridViewRow = GrillAlternativos.Rows(GrillAlternativos.CurrentRow.Index)
-
-        Dim _CodigoAlt As String = _Fila.Cells("KOPRAL").Value.ToString.Trim
-        Dim _Descripcion As String = _Fila.Cells("NOKOPRAL").Value
-        Dim _Aceptar As Boolean
-
-        If Fx_Tiene_Permiso(Me, "Prod018") Then
-
-            _Aceptar = InputBox_Bk(Me, "Cambio de descripción del código alternativo",
-                                                     "Mantención de código", _Descripcion,
-                                                     False, _Tipo_Mayus_Minus.Mayusculas, 50, True,
-                                                     _Tipo_Imagen.Texto.Texto)
-
-            If _Aceptar Then
-                Consulta_sql = "UPDATE TABCODAL SET NOKOPRAL = '" & _Descripcion & "'" & vbCrLf &
-                               "WHERE KOPRAL = '" & _CodigoAlt & "' AND KOPR = '" & TxtCodigo.Text & "'"
-                If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-
-                    Beep()
-                    ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
-                                           1 * 1000, eToastGlowColor.Blue, eToastPosition.MiddleCenter)
-
-                    GrillAlternativos.Rows(GrillAlternativos.CurrentRow.Index).Cells("NOKOPRAL").Value = _Descripcion
-                End If
-            End If
         End If
 
     End Sub
@@ -296,7 +285,7 @@ Public Class Frm_CodAlternativo_Ver
             Return
         End If
 
-        Dim _Fila As DataGridViewRow = GrillAlternativos.Rows(GrillAlternativos.CurrentRow.Index)
+        Dim _Fila As DataGridViewRow = GrillAlternativos.CurrentRow
 
         Dim _Kopral As String = _Fila.Cells("KOPRAL").Value.ToString.Trim
         Dim _Koen As String = _Fila.Cells("KOEN").Value.ToString.Trim
@@ -334,6 +323,8 @@ Public Class Frm_CodAlternativo_Ver
 
     Private Sub Sb_Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
 
+        If ModoSeleccion Then Return
+
         If e.Button = Windows.Forms.MouseButtons.Right Then
 
             With GrillAlternativos
@@ -351,4 +342,22 @@ Public Class Frm_CodAlternativo_Ver
 
     End Sub
 
+    Private Sub GrillAlternativos_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles GrillAlternativos.CellDoubleClick
+
+        If Not ModoSeleccion Then
+            Return
+        End If
+
+        Dim _Fila As DataGridViewRow = GrillAlternativos.CurrentRow
+
+        Dim _Kopral As String = _Fila.Cells("KOPRAL").Value
+        Dim _Kopr As String = _Fila.Cells("KOPR").Value
+        Dim _Koen As String = _Fila.Cells("KOEN").Value
+
+        Consulta_sql = "Select * From TABCODAL Where KOPRAL = '" & _Kopral & "' And KOPR = '" & _Kopr & "' And KOEN = '" & _Koen & "'"
+        RowTabcodalSeleccionado = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Me.Close()
+
+    End Sub
 End Class

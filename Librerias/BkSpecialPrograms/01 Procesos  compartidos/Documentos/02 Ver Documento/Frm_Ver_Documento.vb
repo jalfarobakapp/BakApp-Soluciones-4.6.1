@@ -1641,6 +1641,7 @@ Public Class Frm_Ver_Documento
 
             Next
 
+
             If _Marcar_Grilla_Pendientes Then
 
                 For Each _Fila As DataGridViewRow In GrillaDetalleDoc.Rows

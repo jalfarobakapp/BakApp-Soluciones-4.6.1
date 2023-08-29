@@ -52,6 +52,9 @@
     Dim _Stock_Minimo_Ubic
     Dim _Stock_Maximo_Ubic
 
+    Dim _Tidopa As String
+    Dim _Nudopa As String
+
     Public Property [Error] As String
         Get
             Return _Error
@@ -246,7 +249,8 @@
     Sub Sb_Imprimir_Documento(_NombreEtiqueta As String,
                               _Puerto As String,
                               _Idmaeedo As String,
-                              _Idmaeddo As String)
+                              _Idmaeddo As String,
+                              _Kopral As String)
 
         Dim _Fecha_impresion As Date = Now
         Dim _RowEtiqueta As DataRow = Fx_TraeEtiqueta(_NombreEtiqueta)
@@ -286,6 +290,9 @@
                 Dim _Sucursal = _Fila.Item("SULIDO")
                 Dim _Bodega = _Fila.Item("BOSULIDO")
 
+                _Tidopa = _Fila.Item("TIDOPA")
+                _Nudopa = _Fila.Item("NUDOPA")
+
                 _RowProducto = Fx_DatosProducto(_Codigo_principal, _Lista, _Empresa, _Sucursal, _Bodega, _CodEntidad)
 
                 Exit For
@@ -299,7 +306,12 @@
 
         _Codigo_tecnico = _RowProducto.Item("KOPRTE")
         _Codigo_rapido = _RowProducto.Item("KOPRRA")
-        _Codigo_Alternativo = _RowProducto.Item("Codigo_Alternativo")
+
+        If String.IsNullOrEmpty(_Kopral) Then
+            _Codigo_Alternativo = _RowProducto.Item("Codigo_Alternativo")
+        Else
+            _Codigo_Alternativo = _Kopral
+        End If
 
         _Descripcion = _RowProducto.Item("NOKOPR")
         _Desc0125 = Mid(_Descripcion, 1, 25)
@@ -350,12 +362,7 @@
         _Nodim2 = _RowProducto.Item("NODIM2").ToString.Trim
         _Nodim3 = _RowProducto.Item("NODIM3").ToString.Trim
 
-
         _PrecioLc1 = 0
-
-
-
-
 
         Sb_Imprimir_PRN(_Texto, _Puerto)
 
@@ -801,6 +808,20 @@
 
         _Texto = Replace(_Texto, "<TIDO>", _Tido)
         _Texto = Replace(_Texto, "<NUDO>", _Nudo)
+
+        _Texto = Replace(_Texto, "<TIDOPA>", _Tidopa)
+        _Texto = Replace(_Texto, "<NUDOPA>", _Nudopa)
+
+        Dim _Nudopa_Sc As String
+
+        Try
+            _Nudopa_Sc = CInt(_Nudopa)
+        Catch ex As Exception
+            _Nudopa_Sc = _Nudopa
+        End Try
+
+        _Texto = Replace(_Texto, "<NUDOPA_SC>", _Nudopa_Sc.Trim)
+
 
         Dim fic As String = AppPath(True) & "Barra.prn"
 

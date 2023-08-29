@@ -272,6 +272,9 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                             And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "'"
             _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
+            Consulta_Sql = "Delete " & _Nombre_Tabla_Paso & vbCrLf &
+                           "Where IDMAEEDO Not In (Select IDMAEEDO From MAEEDO) And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "'"
+            _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
             Consulta_Sql = "Select Distinct FEEMLI From MAEDDO Where IDMAEDDO Not In (Select IDMAEDDO From " & _Nombre_Tabla_Paso & ")
                             And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "' 

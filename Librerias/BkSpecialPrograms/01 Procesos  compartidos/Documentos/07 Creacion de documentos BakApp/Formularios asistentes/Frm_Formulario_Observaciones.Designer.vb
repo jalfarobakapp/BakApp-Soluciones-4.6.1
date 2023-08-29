@@ -24,9 +24,9 @@ Partial Class Frm_Formulario_Observaciones
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Formulario_Observaciones))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TxtOrdendecompra = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.TxtFormadepago = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -60,6 +60,8 @@ Partial Class Frm_Formulario_Observaciones
         Me.Warning_Visado = New DevComponents.DotNetBar.Controls.WarningBox()
         Me.Imagenes_32x32 = New System.Windows.Forms.ImageList(Me.components)
         Me.Btn_GDI_GTI = New DevComponents.DotNetBar.ButtonX()
+        Me.Txt_MotivoNCV = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
         CType(Me.DtpFechaEntrega, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
@@ -239,7 +241,7 @@ Partial Class Frm_Formulario_Observaciones
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_e_Imprimir, Me.Btn_Solo_Grabar, Me.Btn_Grabar_Observaciones, Me.Btn_Referencias_DTE, Me.Btn_Grabar_Pagar})
-        Me.Bar2.Location = New System.Drawing.Point(0, 333)
+        Me.Bar2.Location = New System.Drawing.Point(0, 370)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(684, 41)
         Me.Bar2.Stretch = True
@@ -343,6 +345,8 @@ Partial Class Frm_Formulario_Observaciones
         '
         Me.GroupPanel2.BackColor = System.Drawing.Color.White
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.Controls.Add(Me.Txt_MotivoNCV)
+        Me.GroupPanel2.Controls.Add(Me.LabelX6)
         Me.GroupPanel2.Controls.Add(Me.Btn_Crear_Retirador)
         Me.GroupPanel2.Controls.Add(Me.Btn_Buscar_Placa_Patente)
         Me.GroupPanel2.Controls.Add(Me.Btn_Buscar_Retirador)
@@ -358,7 +362,7 @@ Partial Class Frm_Formulario_Observaciones
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(6, 153)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(654, 64)
+        Me.GroupPanel2.Size = New System.Drawing.Size(654, 100)
         '
         '
         '
@@ -396,7 +400,7 @@ Partial Class Frm_Formulario_Observaciones
         Me.Btn_Crear_Retirador.Image = CType(resources.GetObject("Btn_Crear_Retirador.Image"), System.Drawing.Image)
         Me.Btn_Crear_Retirador.Location = New System.Drawing.Point(454, 17)
         Me.Btn_Crear_Retirador.Name = "Btn_Crear_Retirador"
-        Me.Btn_Crear_Retirador.Size = New System.Drawing.Size(25, 23)
+        Me.Btn_Crear_Retirador.Size = New System.Drawing.Size(25, 22)
         Me.Btn_Crear_Retirador.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_Crear_Retirador.TabIndex = 11
         Me.Btn_Crear_Retirador.Tooltip = "Crear nuevo retirador"
@@ -406,9 +410,9 @@ Partial Class Frm_Formulario_Observaciones
         Me.Btn_Buscar_Placa_Patente.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Buscar_Placa_Patente.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Buscar_Placa_Patente.Image = CType(resources.GetObject("Btn_Buscar_Placa_Patente.Image"), System.Drawing.Image)
-        Me.Btn_Buscar_Placa_Patente.Location = New System.Drawing.Point(621, 15)
+        Me.Btn_Buscar_Placa_Patente.Location = New System.Drawing.Point(621, 17)
         Me.Btn_Buscar_Placa_Patente.Name = "Btn_Buscar_Placa_Patente"
-        Me.Btn_Buscar_Placa_Patente.Size = New System.Drawing.Size(25, 23)
+        Me.Btn_Buscar_Placa_Patente.Size = New System.Drawing.Size(25, 22)
         Me.Btn_Buscar_Placa_Patente.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_Buscar_Placa_Patente.TabIndex = 10
         Me.Btn_Buscar_Placa_Patente.Tooltip = "Buscar placa patente"
@@ -420,7 +424,7 @@ Partial Class Frm_Formulario_Observaciones
         Me.Btn_Buscar_Retirador.Image = CType(resources.GetObject("Btn_Buscar_Retirador.Image"), System.Drawing.Image)
         Me.Btn_Buscar_Retirador.Location = New System.Drawing.Point(482, 17)
         Me.Btn_Buscar_Retirador.Name = "Btn_Buscar_Retirador"
-        Me.Btn_Buscar_Retirador.Size = New System.Drawing.Size(25, 23)
+        Me.Btn_Buscar_Retirador.Size = New System.Drawing.Size(25, 22)
         Me.Btn_Buscar_Retirador.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_Buscar_Retirador.TabIndex = 8
         Me.Btn_Buscar_Retirador.Tooltip = "Buscar retirador"
@@ -435,7 +439,7 @@ Partial Class Frm_Formulario_Observaciones
         Me.Txt_Placa.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Placa.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Placa.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Placa.Location = New System.Drawing.Point(530, 16)
+        Me.Txt_Placa.Location = New System.Drawing.Point(530, 17)
         Me.Txt_Placa.MaxLength = 20
         Me.Txt_Placa.Name = "Txt_Placa"
         Me.Txt_Placa.PreventEnterBeep = True
@@ -498,7 +502,7 @@ Partial Class Frm_Formulario_Observaciones
         '
         Me.Lbl_Nombre_Retirador_Mercaderia.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Nombre_Retirador_Mercaderia.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Nombre_Retirador_Mercaderia.Location = New System.Drawing.Point(387, 38)
+        Me.Lbl_Nombre_Retirador_Mercaderia.Location = New System.Drawing.Point(377, 36)
         Me.Lbl_Nombre_Retirador_Mercaderia.Name = "Lbl_Nombre_Retirador_Mercaderia"
         Me.Lbl_Nombre_Retirador_Mercaderia.Size = New System.Drawing.Size(196, 23)
         Me.Lbl_Nombre_Retirador_Mercaderia.TabIndex = 9
@@ -523,12 +527,12 @@ Partial Class Frm_Formulario_Observaciones
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
-        Me.SuperTabControl1.Location = New System.Drawing.Point(12, 35)
+        Me.SuperTabControl1.Location = New System.Drawing.Point(10, 35)
         Me.SuperTabControl1.Name = "SuperTabControl1"
         Me.SuperTabControl1.ReorderTabsEnabled = True
         Me.SuperTabControl1.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
         Me.SuperTabControl1.SelectedTabIndex = 0
-        Me.SuperTabControl1.Size = New System.Drawing.Size(668, 254)
+        Me.SuperTabControl1.Size = New System.Drawing.Size(670, 290)
         Me.SuperTabControl1.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SuperTabControl1.TabIndex = 40
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem2})
@@ -541,7 +545,7 @@ Partial Class Frm_Formulario_Observaciones
         Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 34)
         Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(668, 220)
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(670, 256)
         Me.SuperTabControlPanel1.TabIndex = 1
         Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
         '
@@ -559,7 +563,7 @@ Partial Class Frm_Formulario_Observaciones
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 0)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(668, 254)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(670, 290)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
         '
@@ -568,37 +572,37 @@ Partial Class Frm_Formulario_Observaciones
         Me.Grilla_Obs_Adicionales.AllowUserToAddRows = False
         Me.Grilla_Obs_Adicionales.AllowUserToDeleteRows = False
         Me.Grilla_Obs_Adicionales.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Obs_Adicionales.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Obs_Adicionales.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.Grilla_Obs_Adicionales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Obs_Adicionales.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Obs_Adicionales.DefaultCellStyle = DataGridViewCellStyle8
         Me.Grilla_Obs_Adicionales.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Obs_Adicionales.EnableHeadersVisualStyles = False
         Me.Grilla_Obs_Adicionales.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_Obs_Adicionales.Location = New System.Drawing.Point(0, 0)
         Me.Grilla_Obs_Adicionales.Name = "Grilla_Obs_Adicionales"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Obs_Adicionales.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla_Obs_Adicionales.Size = New System.Drawing.Size(668, 254)
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Obs_Adicionales.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
+        Me.Grilla_Obs_Adicionales.Size = New System.Drawing.Size(670, 290)
         Me.Grilla_Obs_Adicionales.StandardTab = True
         Me.Grilla_Obs_Adicionales.TabIndex = 28
         '
@@ -616,7 +620,7 @@ Partial Class Frm_Formulario_Observaciones
         Me.Warning_Visado.CloseButtonVisible = False
         Me.Warning_Visado.ForeColor = System.Drawing.Color.Black
         Me.Warning_Visado.Image = CType(resources.GetObject("Warning_Visado.Image"), System.Drawing.Image)
-        Me.Warning_Visado.Location = New System.Drawing.Point(12, 295)
+        Me.Warning_Visado.Location = New System.Drawing.Point(12, 331)
         Me.Warning_Visado.Name = "Warning_Visado"
         Me.Warning_Visado.OptionsText = "Ver permisos"
         Me.Warning_Visado.Size = New System.Drawing.Size(443, 33)
@@ -641,18 +645,54 @@ Partial Class Frm_Formulario_Observaciones
         '
         Me.Btn_GDI_GTI.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_GDI_GTI.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_GDI_GTI.Location = New System.Drawing.Point(461, 295)
+        Me.Btn_GDI_GTI.Location = New System.Drawing.Point(461, 331)
         Me.Btn_GDI_GTI.Name = "Btn_GDI_GTI"
         Me.Btn_GDI_GTI.Size = New System.Drawing.Size(219, 32)
         Me.Btn_GDI_GTI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_GDI_GTI.TabIndex = 136
         Me.Btn_GDI_GTI.Text = "Se grabara GDI modo traspaso interno" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
+        'Txt_MotivoNCV
+        '
+        Me.Txt_MotivoNCV.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_MotivoNCV.Border.Class = "TextBoxBorder"
+        Me.Txt_MotivoNCV.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_MotivoNCV.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_MotivoNCV.ButtonCustom.Visible = True
+        Me.Txt_MotivoNCV.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_MotivoNCV.ButtonCustom2.Visible = True
+        Me.Txt_MotivoNCV.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_MotivoNCV.ForeColor = System.Drawing.Color.Black
+        Me.Txt_MotivoNCV.Location = New System.Drawing.Point(3, 65)
+        Me.Txt_MotivoNCV.MaxLength = 30
+        Me.Txt_MotivoNCV.Name = "Txt_MotivoNCV"
+        Me.Txt_MotivoNCV.PreventEnterBeep = True
+        Me.Txt_MotivoNCV.ReadOnly = True
+        Me.Txt_MotivoNCV.Size = New System.Drawing.Size(362, 22)
+        Me.Txt_MotivoNCV.TabIndex = 13
+        '
+        'LabelX6
+        '
+        Me.LabelX6.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX6.ForeColor = System.Drawing.Color.Black
+        Me.LabelX6.Location = New System.Drawing.Point(3, 45)
+        Me.LabelX6.Name = "LabelX6"
+        Me.LabelX6.Size = New System.Drawing.Size(187, 23)
+        Me.LabelX6.TabIndex = 12
+        Me.LabelX6.Text = "Motivos asociados al documento"
+        '
         'Frm_Formulario_Observaciones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(684, 374)
+        Me.ClientSize = New System.Drawing.Size(684, 411)
         Me.Controls.Add(Me.Btn_GDI_GTI)
         Me.Controls.Add(Me.Warning_Visado)
         Me.Controls.Add(Me.SuperTabControl1)
@@ -715,4 +755,6 @@ Partial Class Frm_Formulario_Observaciones
     Friend WithEvents Btn_Crear_Retirador As DevComponents.DotNetBar.ButtonX
     Public WithEvents Btn_Grabar_Pagar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_GDI_GTI As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Txt_MotivoNCV As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
 End Class

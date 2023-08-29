@@ -91,6 +91,31 @@ Public Class Frm_Cms_AgregarTipos
 
     Private Sub Frm_Cms_AgregarTipos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        _Filtro_Entidad_Todas = True
+        _Filtro_SucursalDoc_Todas = True
+        _Filtro_Sucursales_Todas = True
+        _Filtro_Bodegas_Todas = True
+        _Filtro_Ciudad_Todas = True
+        _Filtro_Comunas_Todas = True
+        _Filtro_Rubro_Entidades_Todas = True
+        _Filtro_Zonas_Entidades_Todas = True
+        _Filtro_Responzables_Todas = True
+        _Filtro_Vendedores_Todas = True
+        _Filtro_Vendedores_Asignados_Todas = True
+        _Filtro_Productos_Todos = True
+        _Filtro_Super_Familias_Todas = True
+        _Filtro_Familias_Todas = True
+        _Filtro_Sub_Familias_Todas = True
+        _Filtro_Marcas_Todas = True
+        _Filtro_Rubro_Productos_Todas = True
+        _Filtro_Clalibpr_Todas = True
+        _Filtro_Zonas_Productos_Todas = True
+        _Filtro_Tipo_Entidad_Todas = True
+        _Filtro_Act_Economica_Todas = True
+        _Filtro_Tama_Empresa_Todas = True
+        _Filtro_Lista_Precio_Asig_Todas = True
+        _Filtro_Lista_Precio_Docu_Todas = True
+
         If Not IsNothing(_Row_Comisiones_Mis) Then
 
             With _Row_Comisiones_Mis
@@ -98,31 +123,6 @@ Public Class Frm_Cms_AgregarTipos
                 Txt_PorcComision.Text = .Item("PorcComision")
                 Chk_TieneSC.Checked = .Item("TieneSC")
             End With
-
-            '_Filtro_SucursalDoc_Todas = True
-            '_Filtro_Sucursales_Todas = True
-            '_Filtro_Bodegas_Todas = True
-            '_Filtro_Entidad_Todas = True
-            '_Filtro_Ciudad_Todas = True
-            '_Filtro_Comunas_Todas = True
-            '_Filtro_Rubro_Entidades_Todas = True
-            '_Filtro_Zonas_Entidades_Todas = True
-            '_Filtro_Act_Economica_Todas = True
-            '_Filtro_Tipo_Entidad_Todas = True
-            '_Filtro_Tama_Empresa_Todas = True
-            '_Filtro_Lista_Precio_Asig_Todas = True
-            '_Filtro_Lista_Precio_Docu_Todas = True
-            '_Filtro_Vendedores_Todas = True
-            '_Filtro_Responzables_Todas = True
-            '_Filtro_Productos_Todos = True
-            '_Filtro_Clalibpr_Todas = True
-            '_Filtro_Marcas_Todas = True
-            '_Filtro_Rubro_Productos_Todas = True
-            '_Filtro_Super_Familias_Todas = True
-            '_Filtro_Familias_Todas = True
-            '_Filtro_Sub_Familias_Todas = True
-            '_Filtro_Zonas_Productos_Todas = True
-            '_Filtro_Vendedores_Asignados_Todas = True
 
             _Tbl_Filtro_Entidad = Fx_Cargar_TblFiltro("Tbl_Filtro_Entidad")
             _Tbl_Filtro_SucursalDoc = Fx_Cargar_TblFiltro("Tbl_Filtro_SucursalDoc")
@@ -187,16 +187,34 @@ Public Class Frm_Cms_AgregarTipos
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
+        If String.IsNullOrEmpty(Txt_Descripcion.Text.Trim) Then
+            MessageBoxEx.Show(Me, "Falta el nombre de la comisión", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Descripcion.Focus()
+            Return
+        End If
+
+        Dim _PorcComsion As Double = De_Txt_a_Num_01(Txt_PorcComision.Text, 5)
+
+        If _PorcComsion = 0 Then
+            If MessageBoxEx.Show(Me, "Porcentaje de comisión en cero" & vbCrLf &
+                                 "¿Confirma dejar el valor en cero?", "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
+                Txt_PorcComision.Text = 0
+                Txt_PorcComision.Focus()
+                Return
+            End If
+        End If
+
         If Not CBool(_Id_Mis) Then
             Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Comisiones_Mis (CodFuncionario,Descripcion) Values " &
                            "('" & _CodFuncionario & "','" & Txt_Descripcion.Text & "')"
             _Sql.Ej_Insertar_Trae_Identity(Consulta_Sql, _Id_Mis)
         End If
 
-        Dim _PorcComsion As Double = De_Txt_a_Num_01(Txt_PorcComision.Text, 5)
+
 
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Comisiones_Mis Set" &
-                       " PorcComision = " & De_Num_a_Tx_01(_PorcComsion, False, 5) &
+                       " Descripcion = '" & Txt_Descripcion.Text.Trim & "'" &
+                       ",PorcComision = " & De_Num_a_Tx_01(_PorcComsion, False, 5) &
                        ",Empresa = " & ModEmpresa &
                        ",TieneSC = " & Convert.ToInt32(Chk_TieneSC.Checked) &
                        "Where Id = " & _Id_Mis &

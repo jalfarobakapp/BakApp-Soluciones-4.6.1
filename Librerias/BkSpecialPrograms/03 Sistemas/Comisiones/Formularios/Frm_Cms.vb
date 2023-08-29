@@ -53,6 +53,8 @@ Public Class Frm_Cms
 
         Me._Id_Enc = _Id_Enc
 
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
 
     Private Sub Frm_Comi_Periodos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -77,7 +79,7 @@ Public Class Frm_Cms
                        "Order by CodFuncionario" & vbCrLf &
                        "Select * From " & _Global_BaseBk & "Zw_Comisiones_Det" & vbCrLf &
                        "Where Id_Enc = " & Id_Enc & vbCrLf &
-                       "Select 'COMISION BRUTA SUJETA A SEMANA CORRIDA' As 'Descripcion',* From " & _Global_BaseBk & "Zw_Comisiones_DetSc" & vbCrLf &
+                       "Select 'COMISION BRUTA SUJETA A SEMANA CORRIDA' As 'Descripcion',*,DiasTrabMes AS 'DiasTrabMesResp' From " & _Global_BaseBk & "Zw_Comisiones_DetSc" & vbCrLf &
                        "Where Id_Enc = " & Id_Enc
         _Ds = _Sql.Fx_Get_DataSet(Consulta_Sql)
 
@@ -484,7 +486,10 @@ Public Class Frm_Cms
         Dim _Cabeza = Grilla_Detalle.Columns(Grilla_Detalle.CurrentCell.ColumnIndex).Name
         Dim _ActualizarTotales As Boolean
 
+        Dim Fm_Espera As Frm_Form_Esperar
+
         Select Case _Cabeza
+
             Case "Valor"
 
                 Dim _Valor As Double = _FilaDet.Cells("Valor").Value
@@ -552,7 +557,14 @@ Public Class Frm_Cms
                 Fm.Btn_Consulta_Ventas_X_Cliente.Visible = False
                 Fm.Btn_Arbol_Asociaciones.Visible = False
 
-                Fm.ShowDialog(Me)
+                If Not CBool(_Valor) Then
+                    Fm_Espera = New Frm_Form_Esperar
+                    Fm_Espera.BarraCircular.IsRunning = True
+                    Fm_Espera.Show()
+                    Fm.Sb_TraerValoresParaComisiones()
+                Else
+                    Fm.ShowDialog(Me)
+                End If
 
                 If Fm.ImportarComisiones Then
 
@@ -623,64 +635,15 @@ Public Class Frm_Cms
         If _ActualizarTotales Then
 
             Sb_ActualizarValoresPorFuncionario(_FilaLin)
-            Return
 
+            If Not IsNothing(Fm_Espera) Then
+                Fm_Espera.Dispose()
+            End If
 
-            Dim _PorcCotizaciones As Double = _FilaLin.Cells("PorcCotizaciones").Value
+        End If
 
-            Dim _Cien As Double = (100 - _PorcCotizaciones) '- - / 100
-
-            Dim _Valor As Double = _FilaDet.Cells("Valor").Value
-            Dim _Descuento As Double = _FilaDet.Cells("Descuento").Value
-            Dim _SubTotal As Double = _Valor - _Descuento
-            Dim _PorcComision As Double = _FilaDet.Cells("PorcComision").Value
-
-            Dim _Total As Double = Math.Round((_PorcComision / 100) * _SubTotal, 2)
-            Dim _ComBruta As Double = (_Total * 100) / _Cien
-
-            _FilaDet.Cells("Subtotal").Value = _SubTotal
-            _FilaDet.Cells("Total").Value = _Total
-            _FilaDet.Cells("PorcImp").Value = _PorcCotizaciones
-            _FilaDet.Cells("ComBruta").Value = _ComBruta
-
-            Dim _SubComBruta As Double
-
-            For Each _Fldet As DataGridViewRow In Grilla_Detalle.Rows
-                _SubComBruta += _Fldet.Cells("Total").Value
-            Next
-
-            Dim _ComBrutaSemCorr As Double
-
-            For Each _FlDsc As DataGridViewRow In Grilla_DetalleSc.Rows
-
-                Dim _ValorDia As Double
-                Dim _TotalPagoSC As Double
-                Dim _DiasHabiles As Double = _FlDsc.Cells("DiasHabiles").Value
-                Dim _Sabados As Double = _FlDsc.Cells("Sabados").Value
-                Dim _Domingos As Double = _FlDsc.Cells("Domingos").Value
-                Dim _Festivos As Double = _FlDsc.Cells("Festivos").Value
-                Dim _DiasTrabMes As Double = _FlDsc.Cells("DiasTrabMes").Value
-                Dim _Semanas As Double = _FlDsc.Cells("Semanas").Value
-
-                _ValorDia = _ComBruta / _DiasHabiles
-                _TotalPagoSC = _ValorDia * (_Festivos + _Domingos)
-
-                _FlDsc.Cells("ValorDia").Value = _ValorDia
-                _FlDsc.Cells("ValorDia").Value = _ValorDia
-                _FlDsc.Cells("TotalPagoSC").Value = _TotalPagoSC
-
-                _ComBrutaSemCorr += _TotalPagoSC
-
-            Next
-
-            Dim _ComBrutaLin As Double = (_SubComBruta * 100) / _Cien
-            Dim _TotalComBruta As Double = _ComBrutaLin + _ComBrutaSemCorr
-
-            _FilaLin.Cells("ComBrutaSemCorr").Value = Math.Round(_ComBrutaSemCorr, 0)
-            _FilaLin.Cells("SubComBruta").Value = Math.Round(_SubComBruta, 0)
-            _FilaLin.Cells("ComBruta").Value = Math.Round(_ComBrutaLin, 0)
-            _FilaLin.Cells("TotalComBruta").Value = Math.Round(_TotalComBruta, 0)
-
+        If Not IsNothing(Fm_Espera) Then
+            Fm_Espera.Dispose()
         End If
 
     End Sub
@@ -802,17 +765,26 @@ Public Class Frm_Cms
 
     Private Sub Btn_ActualizarVendedores_Click(sender As Object, e As EventArgs) Handles Btn_ActualizarVendedores.Click
 
-        Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Comisiones_Fun" & vbCrLf &
-                       "Where CodFuncionario not in (Select CodFuncionario From " & _Global_BaseBk &
-                       "Zw_Comisiones_Lin Where Id_Enc = " & Id_Enc & ") And Habilitado = 1"
-        Dim _Tbl_Funcionarios As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Funcionarios As DataTable
+
+        Dim _Sql_Filtro_Condicion_Extra = "And KOFU Not In (Select CodFuncionario From " & _Global_BaseBk &
+                                          "Zw_Comisiones_Lin Where Id_Enc = " & Id_Enc & ")" & vbCrLf &
+                                          "And KOFU In (Select CodFuncionario From " & _Global_BaseBk & "Zw_Comisiones_Fun)"
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra, False, False) Then
+            _Tbl_Funcionarios = _Filtrar.Pro_Tbl_Filtro
+        Else
+            Return
+        End If
 
         Dim _SqlQuery = String.Empty
 
         For Each _Fila As DataRow In _Tbl_Funcionarios.Rows
 
-            Dim _CodFuncinario As String = _Fila.Item("CodFuncionario")
-
+            Dim _CodFuncinario As String = _Fila.Item("Codigo")
             Sb_InsertarFuncionario(Id_Enc, _CodFuncinario, True)
 
         Next
@@ -947,15 +919,31 @@ Public Class Frm_Cms
 
         Dim _Fila_Lin As DataGridViewRow = Grilla_Lineas.CurrentRow
 
+        Dim _CodFuncinario As String = _Fila_Lin.Cells("CodFuncionario").Value
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Comisiones_Mis", "CodFuncionario = '" & _CodFuncinario & "'")
+
+        If Not CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "Faltan datos en la configuración de este funcionario", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         Sb_ActualizarValoresPorFuncionario(_Fila_Lin)
 
     End Sub
 
     Private Sub Btn_ActualizarUsuarioActualDejarCero_Click(sender As Object, e As EventArgs) Handles Btn_ActualizarUsuarioActualDejarCero.Click
 
-        Dim _Fila As DataGridViewRow = Grilla_Lineas.CurrentRow
+        Dim _Fila_Lin As DataGridViewRow = Grilla_Lineas.CurrentRow
 
-        Dim _CodFuncinario As String = _Fila.Cells("CodFuncionario").Value
+        Dim _CodFuncinario As String = _Fila_Lin.Cells("CodFuncionario").Value
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Comisiones_Mis", "CodFuncionario = '" & _CodFuncinario & "'")
+
+        If Not CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "Faltan datos en la configuración de este funcionario", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Sb_InsertarFuncionario(Id_Enc, _CodFuncinario, True)
 
@@ -965,6 +953,13 @@ Public Class Frm_Cms
 
         MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Actualizar datos del funcionario", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
+        'For Each _Filas As DataGridViewRow In Grilla_Detalle.Rows
+
+        '    Fx_TraerValoresAlInforme(_Filas)
+
+        'Next
+
+        'Sb_ActualizarValoresPorFuncionario(_Fila_Lin)
         Sb_Actualizar_Grilla()
 
     End Sub
@@ -1035,7 +1030,7 @@ Public Class Frm_Cms
                         Dim _DiasTrabMes As Double = _FlDSc.Item("DiasTrabMes")
                         Dim _Semanas As Double = _FlDSc.Item("Semanas")
 
-                        _ValorDia = _ComBruta / _DiasHabiles
+                        _ValorDia = _ComBruta / _DiasTrabMes '_DiasHabiles
                         _TotalPagoSC = _ValorDia * (_Festivos + _Domingos)
 
                         _FlDSc.Item("ValorDia") = _ValorDia
@@ -1177,7 +1172,9 @@ Public Class Frm_Cms
         Dim _Grabar As Boolean
 
         Select Case _Cabeza
+
             Case "PorcCotizaciones"
+
                 Consulta_Sql = "Select TABFU.*,Uss.*" & vbCrLf &
                                        "From TABFU" & vbCrLf &
                                        "Inner Join " & _Global_BaseBk & "Zw_Comisiones_Fun Uss On KOFU = Uss.CodFuncionario" & vbCrLf &
@@ -1206,18 +1203,201 @@ Public Class Frm_Cms
 
                     Sb_ActualizarValoresPorFuncionario(_Fila)
 
-                    'Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Comisiones_Lin Set " &
-                    '               "AFP = " & De_Num_a_Tx_01(_Afp, False, 5) &
-                    '               ",Salud = " & De_Num_a_Tx_01(_Salud, False, 5) &
-                    '               ",PorcCotizaciones = " & De_Num_a_Tx_01(_PorcCotizaciones, False, 5) & vbCrLf &
-                    '               "Where Id = " & _Id_Lin
-                    'If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
-
-                    'End If
-
                 End If
 
         End Select
 
     End Sub
+
+
+    Function Fx_TraerValoresAlInforme(_FilaDet As DataGridViewRow)
+
+        Dim _Id_Det = _FilaDet.Cells("Id").Value
+
+        'Dim _Valor As Double = _FilaDet.Cells("Valor").Value
+
+        'If Not CBool(_Valor) Then
+
+        '    Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Comisiones_DetFlTbl", "Id_Mis = " & _Id_Mis)
+
+        '    If CBool(_Reg) Then
+        '        Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl (Id_Det,Chk,Codigo,Descripcion,NombreTblFiltro)" & vbCrLf &
+        '                   "Select " & _Id_Det & " As Id_Det,Chk,Codigo,Descripcion,NombreTblFiltro" & vbCrLf &
+        '                   "From " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl Where Id_Mis = " & _Id_Mis
+        '        If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
+        '            MessageBoxEx.Show(Me, "Filtros actualizados desde la ficha del funcionario", "Actualizar Filtros", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        '        End If
+        '    End If
+
+        'End If
+
+        Sb_Cargar_TblInforme(_Id_Det)
+
+        Dim _FechaDesde As Date = Grilla_Periodo.Rows(0).Cells("FechaDesde").Value
+        Dim _FechaHasta As Date = Grilla_Periodo.Rows(0).Cells("FechaHasta").Value
+
+        Dim _Tabla_Matriz_Informe As String = "Zw_Informe_Venta" '"Zw_TblPaso" ' & Trim(FUNCIONARIO)
+
+        Dim Fm As New Frm_Inf_Ventas_X_Periodo_Cubo(Frm_Inf_Ventas_X_Periodo_Cubo.Enum_Informe.Sucursal,
+                                                    _Tabla_Matriz_Informe,
+                                                    1,
+                                                    _FechaDesde,
+                                                    _FechaHasta,
+                                                    False)
+        Fm.Tbl_Filtro_Entidad = _Tbl_Filtro_Entidad
+        Fm.Tbl_Filtro_EntidadExcluidas = _Tbl_Filtro_EntidadExcluidas
+        Fm.Tbl_Filtro_SucursalDoc = _Tbl_Filtro_SucursalDoc
+        Fm.Tbl_Filtro_Sucursales = _Tbl_Filtro_Sucursales
+        Fm.Tbl_Filtro_Bodegas = _Tbl_Filtro_Bodegas
+        Fm.Tbl_Filtro_Ciudad = _Tbl_Filtro_Ciudad
+        Fm.Tbl_Filtro_Comunas = _Tbl_Filtro_Comunas
+        Fm.Tbl_Filtro_Rubro_Entidades = _Tbl_Filtro_Rubro_Entidades
+        Fm.Tbl_Filtro_Zonas_Entidades = _Tbl_Filtro_Zonas_Entidades
+        Fm.Tbl_Filtro_Responzables = _Tbl_Filtro_Responzables
+        Fm.Tbl_Filtro_Vendedores = _Tbl_Filtro_Vendedores
+        Fm.Tbl_Filtro_Vendedores_Asignados = _Tbl_Filtro_Vendedores_Asignados
+        Fm.Tbl_Filtro_Productos = _Tbl_Filtro_Productos
+        Fm.Tbl_Filtro_ProductosExcluidos = _Tbl_Filtro_ProductosExcluidos
+        Fm.Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
+        Fm.Tbl_Filtro_Familias = _Tbl_Filtro_Familias
+        Fm.Tbl_Filtro_Sub_Familias = _Tbl_Filtro_Sub_Familias
+        Fm.Tbl_Filtro_Marcas = _Tbl_Filtro_Marcas
+        Fm.Tbl_Filtro_Rubro_Productos = _Tbl_Filtro_Rubro_Productos
+        Fm.Tbl_Filtro_Clalibpr = _Tbl_Filtro_Clalibpr
+        Fm.Tbl_Filtro_Zonas_Productos = _Tbl_Filtro_Zonas_Productos
+        Fm.Tbl_Filtro_Tipo_Entidad = _Tbl_Filtro_Tipo_Entidad
+        Fm.Tbl_Filtro_Act_Economica = _Tbl_Filtro_Act_Economica
+        Fm.Tbl_Filtro_Tama_Empresa = _Tbl_Filtro_Tama_Empresa
+
+        Fm.Comisiones = True
+        Fm.FechaDesdeFd = _FechaDesde
+        Fm.FechaHastaFh = _FechaHasta
+
+        Fm.Btn_Graficar.Visible = False
+        Fm.Btn_Crear_Venta.Visible = False
+        Fm.Btn_Mantencion_Datos.Visible = False
+        Fm.Btn_Consulta_Ventas_X_Cliente.Visible = False
+        Fm.Btn_Arbol_Asociaciones.Visible = False
+
+        'Fm.ShowDialog(Me)
+        Fm.Sb_TraerValoresParaComisiones()
+
+        If Fm.ImportarComisiones Then
+
+            Dim _TotalNetoComisiones As Double = Fm.TotalNetoComisiones
+
+            If Fm.Pro_Filtro_Entidad_Todas Then
+                _Tbl_Filtro_Entidad = Nothing
+            Else
+                _Tbl_Filtro_Entidad = Fm.Tbl_Filtro_Entidad
+            End If
+
+            _Tbl_Filtro_EntidadExcluidas = Fm.Tbl_Filtro_EntidadExcluidas
+            _Tbl_Filtro_SucursalDoc = Fm.Tbl_Filtro_SucursalDoc
+            _Tbl_Filtro_Sucursales = Fm.Tbl_Filtro_Sucursales
+            _Tbl_Filtro_Bodegas = Fm.Tbl_Filtro_Bodegas
+            _Tbl_Filtro_Ciudad = Fm.Tbl_Filtro_Ciudad
+            _Tbl_Filtro_Comunas = Fm.Tbl_Filtro_Comunas
+            _Tbl_Filtro_Rubro_Entidades = Fm.Tbl_Filtro_Rubro_Entidades
+            _Tbl_Filtro_Zonas_Entidades = Fm.Tbl_Filtro_Zonas_Entidades
+            _Tbl_Filtro_Responzables = Fm.Tbl_Filtro_Responzables
+            _Tbl_Filtro_Vendedores = Fm.Tbl_Filtro_Vendedores
+            _Tbl_Filtro_Vendedores_Asignados = Fm.Tbl_Filtro_Vendedores_Asignados
+
+            If Fm.Pro_Filtro_Productos_Todos Then
+                _Tbl_Filtro_Productos = Nothing
+            Else
+                _Tbl_Filtro_Productos = Fm.Tbl_Filtro_Productos
+            End If
+
+            _Tbl_Filtro_ProductosExcluidos = Fm.Tbl_Filtro_ProductosExcluidos
+            _Tbl_Filtro_Super_Familias = Fm.Tbl_Filtro_Super_Familias
+            _Tbl_Filtro_Familias = Fm.Tbl_Filtro_Familias
+            _Tbl_Filtro_Sub_Familias = Fm.Tbl_Filtro_Sub_Familias
+            _Tbl_Filtro_Marcas = Fm.Tbl_Filtro_Marcas
+            _Tbl_Filtro_Rubro_Productos = Fm.Tbl_Filtro_Rubro_Productos
+            _Tbl_Filtro_Clalibpr = Fm.Tbl_Filtro_Clalibpr
+            _Tbl_Filtro_Zonas_Productos = Fm.Tbl_Filtro_Zonas_Productos
+            _Tbl_Filtro_Tipo_Entidad = Fm.Tbl_Filtro_Tipo_Entidad
+            _Tbl_Filtro_Act_Economica = Fm.Tbl_Filtro_Act_Economica
+            _Tbl_Filtro_Tama_Empresa = Fm.Tbl_Filtro_Tama_Empresa
+
+            _FilaDet.Cells("Valor").Value = Math.Round(_TotalNetoComisiones, 0)
+
+            Sb_Actualizar_TblInforme(_Id_Det)
+
+        End If
+
+        Fm.Dispose()
+
+    End Function
+
+    Private Sub Btn_QuitarVendedor_Click(sender As Object, e As EventArgs) Handles Btn_QuitarVendedor.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Lineas.CurrentRow
+        Dim _Id_Lin As Integer = _Fila.Cells("Id").Value
+
+        Dim _Index As Integer = _Fila.Index
+
+        If MessageBoxEx.Show(Me, "¿Confirma quitar a este vendedor del tratamiento?", "Quitar vendedor",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+
+            Consulta_Sql = "Delete " & _Global_BaseBk & "Zw_Comisiones_Lin Where Id = " & _Id_Lin & vbCrLf &
+                           "Delete " & _Global_BaseBk & "Zw_Comisiones_Det Where Id_Lin = " & _Id_Lin & vbCrLf &
+                           "Delete " & _Global_BaseBk & "Zw_Comisiones_DetSc Where Id_Lin = " & _Id_Lin & vbCrLf &
+                           "Delete " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl Where Id_Det Not In (Select Id From " & _Global_BaseBk & "Zw_Comisiones_Det) And Id_Mis = 0"
+
+            If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql) Then
+                Grilla_Lineas.Rows.RemoveAt(_Index)
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub Grilla_DetalleSc_KeyDown(sender As Object, e As KeyEventArgs) Handles Grilla_DetalleSc.KeyDown
+
+        Dim _Cabeza = Grilla_DetalleSc.Columns(Grilla_DetalleSc.CurrentCell.ColumnIndex).Name
+        Dim _Tecla As Keys = e.KeyValue
+
+        If _Tecla = Keys.Enter Then
+
+            If _Cabeza = "DiasTrabMes" Then
+
+                SendKeys.Send("{F2}") 'RIGHt
+
+                e.SuppressKeyPress = True
+                e.Handled = True
+
+                Grilla_DetalleSc.Columns(_Cabeza).ReadOnly = False
+                Grilla_DetalleSc.BeginEdit(True)
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub Grilla_DetalleSc_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_DetalleSc.CellEndEdit
+
+        Dim _Fila As DataGridViewRow = Grilla_DetalleSc.Rows(0)
+        Dim _FilaLin As DataGridViewRow = Grilla_Lineas.CurrentRow
+
+        Dim _Cabeza = Grilla_DetalleSc.Columns(Grilla_DetalleSc.CurrentCell.ColumnIndex).Name
+
+        If _Cabeza = "DiasTrabMes" Then
+
+            Dim _DiasTrabMes As Double = _Fila.Cells("DiasTrabMes").Value
+            Dim _DiasTrabMesResp As Double = _Fila.Cells("DiasTrabMesResp").Value
+
+            If _DiasTrabMes = _DiasTrabMesResp Then
+                Return
+            End If
+
+            Sb_ActualizarValoresPorFuncionario(_FilaLin)
+
+        End If
+
+    End Sub
+
 End Class

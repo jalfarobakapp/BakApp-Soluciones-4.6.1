@@ -645,7 +645,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             Me.Left = _Left + 5
         End If
 
-
         AddHandler Me.KeyDown, AddressOf Sb_Frm_KeyDown
 
         Dtp_Fecha_Desde.Value = Primerdiadelmes(Now.Date)
@@ -696,7 +695,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             Me.Text = "(Inf: " & _Nombre_Tabla_Paso & ")"
         End If
 
-
         If Comisiones Then
 
             If IsNothing(Tbl_Filtro_Entidad) Then
@@ -741,9 +739,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             Tiempo_revisa_actualizacion.Enabled = True
 
         End If
-
-
-
 
         Sb_Formato_Graficos(Grafico_Tendencias, 0, 0)
 
@@ -1117,6 +1112,16 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Informe = _Ds.Tables(0) '_Sql.Fx_Get_Tablas(Consulta_sql)
             Dim _Row_Totales As DataRow = _Ds.Tables(1).Rows(0)
 
+            If Rdb_Ver_Valores.Checked Then
+                Txt_Total_Neto.Text = FormatCurrency(_Row_Totales.Item("TOTAL"), 0)
+            Else
+                Txt_Total_Neto.Text = FormatNumber(_Row_Totales.Item("TOTAL"), 0)
+            End If
+
+            TotalNetoComisiones = _Row_Totales.Item("TOTAL")
+
+
+
             If _Tbl_Informe.Rows.Count = 0 Then
                 Throw New Exception("No existe información de ventas entre estas fechas")
             End If
@@ -1173,14 +1178,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
             End With
 
-            If Rdb_Ver_Valores.Checked Then
-                Txt_Total_Neto.Text = FormatCurrency(_Row_Totales.Item("TOTAL"), 0)
-            Else
-                Txt_Total_Neto.Text = FormatNumber(_Row_Totales.Item("TOTAL"), 0)
-            End If
-
-            TotalNetoComisiones = _Row_Totales.Item("TOTAL")
-
             Sb_Actualizar_Graficos()
 
             Sb_Marcar_Grafico_Barras(_Tbl_Informe.Rows(0).Item("CODIGO"))
@@ -1198,6 +1195,318 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End Try
 
     End Sub
+
+
+
+    Sub Sb_Actualizar_Datos_Del_Informe(_Actualizar_Datos_Informe As Boolean)
+
+        Try
+
+            If Comisiones Then
+                Dtp_Fecha_Desde.Value = FechaDesdeFd
+                Dtp_Fecha_Hasta.Value = FechaHastaFh
+                _Actualizar_Datos_Informe = False
+            End If
+
+            Consulta_sql = "Select Min(FEEMLI) As Fecha_Desde, Max(FEEMLI) As Fecha_Hasta From " & _Nombre_Tabla_Paso
+            Dim _Row_Fechas_Carga As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Try
+                If Not (_Row_Fechas_Carga Is Nothing) Then
+                    _Fecha_Carga_Desde = FormatDateTime(_Row_Fechas_Carga.Item("Fecha_Desde"), DateFormat.ShortDate)
+                    _Fecha_Carga_Hasta = FormatDateTime(_Row_Fechas_Carga.Item("Fecha_Hasta"), DateFormat.ShortDate)
+                End If
+
+            Catch ex As Exception
+
+            End Try
+
+            If Dtp_Fecha_Desde.Value > Dtp_Fecha_Hasta.Value Then
+                Throw New Exception("Error en Rango de fecha, La fecha Desde no puede ser mayor a la fecha Hasta")
+            End If
+
+            Dim _F1 As Date = FormatDateTime(Dtp_Fecha_Desde.Value, DateFormat.ShortDate)
+            Dim _F2 As Date = FormatDateTime(_Fecha_Carga_Desde, DateFormat.ShortDate)
+
+            If _F1 < _F2 Then
+                Dtp_Fecha_Desde.Value = _Fecha_Carga_Desde
+                Throw New Exception("Error en Rango de fecha, La fecha Desde no puede ser menor que " & _F2 & vbCrLf &
+                                    "El historial de información para el usuario activo son movimientos de ventas desde: " & _Fecha_Carga_Desde & " hasta: " & _Fecha_Carga_Hasta & vbCrLf & vbCrLf &
+                                    "Si desea mas información debe actualizar la matriz de datos para sus informes." & vbCrLf & vbCrLf &
+                                    "   Botón [Mantención de informe] - >[Actualizar datos del informe]")
+            End If
+
+
+            Me.Cursor = Cursors.WaitCursor
+            Me.Enabled = False
+            Me.Refresh()
+
+            If _Actualizar_Datos_Informe Then
+
+                Consulta_sql = "SELECT Count(IDMAEEDO) AS Doc_en_DDO FROM MAEDDO WHERE FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
+                            Format(Dtp_Fecha_Hasta.Value, "yyyyMMdd") & "'" & Space(1) &
+                            "AND TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE'," &
+                            "'FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV','RIN')" & Space(1) &
+                            "And IDMAEEDO Not IN (Select IDMAEEDO From MAEEDO Where NUDONODEFI = 1)" &
+                            vbCrLf &
+                            "SELECT Count(IDMAEEDO) As Doc_en_Paso FROM " & _Nombre_Tabla_Paso & Space(1) &
+                            "WHERE " &
+                            "FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") &
+                            "' AND " &
+                            "'" & Format(Dtp_Fecha_Hasta.Value, "yyyyMMdd") & "'" & Space(1) &
+                            "AND TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE'," &
+                            "'FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV','RIN')"
+
+                Dim _Ds_Documento As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+
+                Dim _Doc_en_DDO As Double = _Ds_Documento.Tables(0).Rows(0).Item(0)
+                Dim _Doc_en_Paso As Double = _Ds_Documento.Tables(1).Rows(0).Item(0)
+
+                If _Doc_en_DDO <> _Doc_en_Paso Then
+
+                    ToastNotification.Show(Me, "ACTUALIZANDO DATOS DEL INFORME, POR FAVOR ESPERE...",
+                                           Imagenes_32x32.Images.Item("cloud-download.png"),
+                                               5 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+
+                    'System.Threading.Thread.Sleep(5000)
+                    Dim Fm As New Frm_Inf_Ventas_X_Periodo_Fechas(Frm_Inf_Ventas_X_Periodo_Fechas.Enum_Acciones.Actualizar_Informe_Automatico)
+                    Fm.Nombre_Tabla_Paso = _Nombre_Tabla_Paso
+                    Fm.Pro_Fecha_Desde = Dtp_Fecha_Desde.Value
+                    Fm.Pro_Fecha_Hasta = Dtp_Fecha_Hasta.Value
+                    Fm.ShowDialog(Me)
+
+                    If Fm.Pro_Informe_Actualizado Then
+                        Sb_Actualizar_Grilla(False)
+                    End If
+                    Fm.Dispose()
+
+                End If
+
+            End If
+
+
+            _SqlFiltro_Detalle = Fx_Filtro_Detalle()
+
+            Dim _Codigo
+
+            _Codigo = _Row_Vista.Item("CODIGO")
+            _Cp_Codigo = _Row_Vista.Item("CODIGO")
+            _Cp_Descripcion = _Row_Vista.Item("DESCRIPCION")
+
+
+            Dim _ARBOL_BAKAPP As Boolean = _Row_Vista.Item("ARBOL_BAKAPP")
+
+            Txt_Vista_Informe.Text = _Row_Vista.Item("DESCRIPCION_VISTA")
+
+            Dim _Campo_Mostrar, _Cabecera_Mostrar, _Formato_Campo As String
+
+            If Rdb_Ver_Cantidades.Checked Then
+                _Cabecera_Mostrar = "Cantidades"
+                _Campo_Mostrar = "CAPRCO" & _Unidad
+                _Formato_Campo = "###,##"
+                Grupo_Total.Text = "Total cantidades"
+                _Campo_Mostrar = "Sum(" & _Campo_Mostrar & ")"
+            End If
+
+            If Rdb_Ver_Valores.Checked Then
+                _Campo_Mostrar = "CASE WHEN MODO = '$' THEN VANELI ELSE ROUND(VANELI*TAMODO,0) END"
+                _Cabecera_Mostrar = "Total Neto"
+                _Formato_Campo = "$ ###,##"
+                Grupo_Total.Text = "Total neto"
+                _Campo_Mostrar = "Sum(" & _Campo_Mostrar & ")"
+            End If
+
+            Dim _GroupBy = "Group By " & _Cp_Codigo & "," & _Cp_Descripcion
+            Dim _Distinct = String.Empty
+
+            If Rdb_Ver_Clientes.Checked Or Rdb_Ver_documentos.Checked Then
+
+                Dim _Campos As String
+
+                If Rdb_Ver_documentos.Checked Then
+                    _Campos = "TIDO+NUDO"
+                    _Cabecera_Mostrar = "Documentos"
+                    Grupo_Total.Text = "Total documentos"
+                End If
+
+                If Rdb_Ver_Clientes.Checked Then
+                    _Campos = "ENDO+SUENDO"
+                    _Cabecera_Mostrar = "Clientes"
+                    Grupo_Total.Text = "Total clientes"
+                End If
+
+                Dim _Filtro_Tipr = String.Empty
+
+                If Not Chk_Incluir_Conceptos.Checked Then
+                    _Filtro_Tipr = "And PRCT = 0"
+                End If
+
+                _Campo_Mostrar = "(Select Count(Distinct " & _Campos & ") From " & _Nombre_Tabla_Paso & " Z2 Where " &
+                                  "FEEMDO BETWEEN " &
+                                  "'" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' And " &
+                                  "'" & Format(Dtp_Fecha_Hasta.Value, "yyyyMMdd") & "' " &
+                                  _Filtro_Tipr & " And " & _Nombre_Tabla_Paso & "." & _Cp_Codigo & " = Z2." & _Cp_Codigo & ")"
+
+                _Campo_Mostrar = "(Select Count(Distinct " & _Campos & ") From " & _Nombre_Tabla_Paso & " Z2 Where 1 > 0 " &
+                                  _SqlFiltro_Detalle & " And " & _Nombre_Tabla_Paso & "." & _Cp_Codigo & " = Z2." & _Cp_Codigo & ")"
+
+                _Distinct = "Distinct "
+                _GroupBy = String.Empty
+
+                _Formato_Campo = "###,##"
+
+            End If
+
+
+            If _ARBOL_BAKAPP Then
+
+                Dim _Condicion_Nodo As String
+
+                If _Row_Vista.Item("Es_Seleccionable") Then
+                    _Codigo = _Row_Vista.Item("Nodo_Padre")
+                End If
+
+                Dim _Chk_Mayor_Cero As String
+
+                If Chk_Quitar_Valor_Cero.Checked Then
+                    _Chk_Mayor_Cero = "Where TOTAL > 0"
+                End If
+
+                Dim _Ins_Sin_Asociacion_01 As String
+                Dim _Ins_Sin_Asociacion_02 As String
+
+                If _Codigo = "0" Then
+
+                    _Ins_Sin_Asociacion_01 = "Insert Into #Paso1 (CODIGO,DESCRIPCION) Values (-1,'Sin Clasificación')" & vbCrLf &
+                                             "Insert Into #Paso1 (CODIGO,DESCRIPCION) Values (-2,'Prod. Desconocidos')"
+
+                    _Ins_Sin_Asociacion_02 = "Update #Paso1 Set TOTAL = Isnull((Select Sum(VANELI) From " & _Nombre_Tabla_Paso & vbCrLf &
+                                             "Where KOPRCT  In (Select KOPR From MAEPR Where KOPR Not In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Producto = 0))" & vbCrLf &
+                                             _SqlFiltro_Detalle & "),0)" & vbCrLf &
+                                             "Where CODIGO = -1" & vbCrLf &
+                                             "Update #Paso1 Set TOTAL = Isnull((Select Sum(VANELI) From " & _Nombre_Tabla_Paso & vbCrLf &
+                                             "Where KOPRCT Not In (Select KOPR From MAEPR)" & vbCrLf &
+                                             _SqlFiltro_Detalle & "),0)" & vbCrLf &
+                                             "Where CODIGO = -2"
+                End If
+
+                Dim _Filtro_Nodos As String
+
+                If _Filtro_Clas_BakApp_Todas Then
+                    _Filtro_Nodos = String.Empty
+                Else
+                    _Filtro_Nodos = Generar_Filtro_IN(_Tbl_Filtro_Clas_BakApp, "Chk", "Codigo_Nodo", False, True, "")
+                    _Filtro_Nodos = "And Codigo In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
+                                    "Where Codigo_Nodo In " & _Filtro_Nodos & ")"
+                End If
+
+                Consulta_sql = "Select Distinct Codigo_Nodo As CODIGO,Descripcion As DESCRIPCION," & vbCrLf &
+                               "CAST(0 as Float) As Porc,CAST(0 as Float) As TOTAL" & vbCrLf &
+                               "Into #Paso1" & vbCrLf &
+                               "FROM " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
+                               "Where 1 > 0" & vbCrLf &
+                               "And Clas_Unica_X_Producto = 1 And Identificacdor_NodoPadre = " & _Codigo & vbCrLf &
+                               "Order By DESCRIPCION" &
+                               vbCrLf &
+                               vbCrLf &
+                               _Ins_Sin_Asociacion_01 &
+                               vbCrLf &
+                               vbCrLf &
+                               "Update #Paso1 Set TOTAL = Isnull((Select Sum(VANELI) From " & _Nombre_Tabla_Paso & " Where KOPRCT In" & vbCrLf &
+                               "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
+                               "Where Codigo_Nodo = CODIGO" & vbCrLf &
+                               _Filtro_Nodos & vbCrLf &
+                               ")" & vbCrLf &
+                               _SqlFiltro_Detalle & vbCrLf &
+                               "),0)" &
+                               vbCrLf &
+                               vbCrLf &
+                               _Ins_Sin_Asociacion_02 &
+                               vbCrLf &
+                               vbCrLf &
+                               "Select Isnull(Sum(TOTAL),0) As TOTAL" & vbCrLf &
+                               "Into #Paso2" & vbCrLf &
+                               "From #Paso1" & vbCrLf &
+                               "Where 1 > 0" & vbCrLf &
+                               "Update #Paso1 Set Porc = CASE WHEN TOTAL > 0 THEN ROUND(CASE WHEN (Select TOTAL From #Paso2) > 0 THEN Isnull((Round(TOTAL/(Select TOTAL From #Paso2),4)),0) ELSE 0 END,5) ELSE 0 END" & vbCrLf &
+                               "Select * From #Paso1" & vbCrLf & _Chk_Mayor_Cero & vbCrLf &
+                               "Select * From #Paso2" & vbCrLf &
+                               "Drop Table #Paso1" & vbCrLf &
+                               "Drop table #Paso2"
+
+            Else
+
+                _Nombre_Excel = _Row_Vista.Item("EXCEL")
+
+                Dim _Filtro_Nodos As String
+
+                If _Filtro_Clas_BakApp_Todas Then
+                    _Filtro_Nodos = String.Empty
+                Else
+                    _Filtro_Nodos = Generar_Filtro_IN(_Tbl_Filtro_Clas_BakApp, "Chk", "Codigo_Nodo", False, True, "")
+                    _Filtro_Nodos = "And KOPRCT In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
+                                    "Where Codigo_Nodo In " & _Filtro_Nodos & ")"
+                End If
+
+                ' CAST(0 as Float) As Porc,Sum(CASE WHEN MODO = '$' THEN VANELI ELSE ROUND(VANELI*TAMODO,0) END)
+
+                Consulta_sql = "Declare @Total Float" &
+                                vbCrLf &
+                                vbCrLf &
+                               "Select " & _Distinct & _Cp_Codigo & " As CODIGO," & _Cp_Descripcion & " As DESCRIPCION," &
+                               "CAST('' As Varchar(3)) As VND,CAST(0 as Float) As Porc," & _Campo_Mostrar & " As TOTAL" & vbCrLf &
+                               "Into #Paso1" & vbCrLf &
+                               "From " & _Nombre_Tabla_Paso & vbCrLf &
+                               "Where 1 > 0" & vbCrLf &
+                               _SqlFiltro &
+                               vbCrLf &
+                               _SqlFiltro_Detalle &
+                               _Filtro_Nodos & vbCrLf &
+                               vbCrLf &
+                               _SqlFiltro_Arbol_BakApp &
+                               _GroupBy &
+                               vbCrLf &
+                               vbCrLf &
+                               "Select Isnull(Sum(TOTAL),0) As TOTAL Into #Paso2 From #Paso1" & vbCrLf &
+                               "Set @Total = (Select Sum(TOTAL) From #Paso1)" &
+                               vbCrLf &
+                               vbCrLf &
+                               "Update #Paso1 Set Porc = CASE WHEN TOTAL > 0 THEN ROUND(CASE WHEN (Select TOTAL From #Paso2) > 0 THEN TOTAL/(Select TOTAL From #Paso2) ELSE 0 END,5) ELSE 0 END" & vbCrLf &
+                               "Update #Paso1 Set Porc = CASE WHEN TOTAL > 0 THEN ROUND(CASE WHEN (Select TOTAL From #Paso2) > 0 THEN TOTAL/@Total ELSE 0 END,5) ELSE 0 END" & vbCrLf &
+                               "Update #Paso1 Set VND = Isnull((Select KOFUEN From MAEEN Where CODIGO = KOEN+SUEN),'???')" & vbCrLf &
+                               "Select * From #Paso1" & vbCrLf &
+                               "Select * From #Paso2" & vbCrLf &
+                               "Drop Table #Paso1" & vbCrLf &
+                               "Drop Table #Paso2"
+            End If
+
+            _Sql_Consulta_Grafica_Acumulativa = Consulta_sql
+
+            Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+
+            _Tbl_Informe = _Ds.Tables(0) '_Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Row_Totales As DataRow = _Ds.Tables(1).Rows(0)
+
+            If Rdb_Ver_Valores.Checked Then
+                Txt_Total_Neto.Text = FormatCurrency(_Row_Totales.Item("TOTAL"), 0)
+            Else
+                Txt_Total_Neto.Text = FormatNumber(_Row_Totales.Item("TOTAL"), 0)
+            End If
+
+            TotalNetoComisiones = _Row_Totales.Item("TOTAL")
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Error al generar informe", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        Finally
+
+            Me.Cursor = Cursors.Default
+            Me.Enabled = True
+        End Try
+
+    End Sub
+
+
+
 
     Function Fx_Filtro_Detalle(Optional _Incluye_Fechas As Boolean = True)
 
@@ -4668,6 +4977,50 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Catch ex As Exception
 
         End Try
+
+    End Sub
+
+    Sub Sb_TraerValoresParaComisiones()
+
+        Sb_Cargar_Combo_Vista_Informe()
+
+        If IsNothing(Tbl_Filtro_Entidad) Then
+            _Filtro_Entidad_Todas = True
+        Else
+            _Filtro_Entidad_Todas = Not CBool(Tbl_Filtro_Entidad.Rows.Count)
+        End If
+
+        _Filtro_SucursalDoc_Todas = Not CBool(_Tbl_Filtro_SucursalDoc.Rows.Count)
+        _Filtro_Sucursales_Todas = Not CBool(_Tbl_Filtro_Sucursales.Rows.Count)
+        _Filtro_Bodegas_Todas = Not CBool(_Tbl_Filtro_Bodegas.Rows.Count)
+        _Filtro_Ciudad_Todas = Not CBool(_Tbl_Filtro_Ciudad.Rows.Count)
+        _Filtro_Comunas_Todas = Not CBool(_Tbl_Filtro_Comunas.Rows.Count)
+        _Filtro_Rubro_Entidades_Todas = Not CBool(_Tbl_Filtro_Rubro_Entidades.Rows.Count)
+        _Filtro_Zonas_Entidades_Todas = Not CBool(_Tbl_Filtro_Zonas_Entidades.Rows.Count)
+        _Filtro_Responzables_Todas = Not CBool(_Tbl_Filtro_Responzables.Rows.Count)
+        _Filtro_Vendedores_Todas = Not CBool(_Tbl_Filtro_Vendedores.Rows.Count)
+        _Filtro_Vendedores_Asignados_Todas = Not CBool(_Tbl_Filtro_Vendedores_Asignados.Rows.Count)
+
+        If IsNothing(_Tbl_Filtro_Productos) Then
+            _Filtro_Productos_Todos = True
+        Else
+            _Filtro_Productos_Todos = Not CBool(_Tbl_Filtro_Productos.Rows.Count)
+        End If
+
+        _Filtro_Super_Familias_Todas = Not CBool(_Tbl_Filtro_Super_Familias.Rows.Count)
+        _Filtro_Familias_Todas = Not CBool(_Tbl_Filtro_Familias.Rows.Count)
+        _Filtro_Sub_Familias_Todas = Not CBool(_Tbl_Filtro_Sub_Familias.Rows.Count)
+        _Filtro_Marcas_Todas = Not CBool(_Tbl_Filtro_Marcas.Rows.Count)
+        _Filtro_Rubro_Productos_Todas = Not CBool(_Tbl_Filtro_Rubro_Productos.Rows.Count)
+        _Filtro_Clalibpr_Todas = Not CBool(_Tbl_Filtro_Clalibpr.Rows.Count)
+        _Filtro_Zonas_Productos_Todas = Not CBool(_Tbl_Filtro_Zonas_Productos.Rows.Count)
+        _Filtro_Tipo_Entidad_Todas = Not CBool(_Tbl_Filtro_Tipo_Entidad.Rows.Count)
+        _Filtro_Act_Economica_Todas = Not CBool(_Tbl_Filtro_Act_Economica.Rows.Count)
+        _Filtro_Tama_Empresa_Todas = Not CBool(_Tbl_Filtro_Tama_Empresa.Rows.Count)
+
+        Sb_Actualizar_Datos_Del_Informe(False)
+
+        ImportarComisiones = True
 
     End Sub
 

@@ -52,6 +52,10 @@ Partial Class Frm_Cms
         Me.Grilla_Lineas = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla_DetalleSc = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_ActVendedoresTodos = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem3 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_QuitarVendedor = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel4.SuspendLayout()
         CType(Me.Grilla_Periodo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel3.SuspendLayout()
@@ -211,7 +215,6 @@ Partial Class Frm_Cms
         Me.Grilla_Detalle.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_Detalle.Location = New System.Drawing.Point(0, 0)
         Me.Grilla_Detalle.Name = "Grilla_Detalle"
-        Me.Grilla_Detalle.ReadOnly = True
         DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -257,7 +260,7 @@ Partial Class Frm_Cms
         Me.Btn_ActualizarVendedores.ImageAlt = CType(resources.GetObject("Btn_ActualizarVendedores.ImageAlt"), System.Drawing.Image)
         Me.Btn_ActualizarVendedores.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_ActualizarVendedores.Name = "Btn_ActualizarVendedores"
-        Me.Btn_ActualizarVendedores.Tooltip = "Refrescar datos"
+        Me.Btn_ActualizarVendedores.Tooltip = "Cargar vendedores"
         '
         'BtnExportarExcel
         '
@@ -322,10 +325,10 @@ Partial Class Frm_Cms
         '
         Me.Menu_Contextual.AntiAlias = True
         Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
+        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01, Me.ButtonItem1})
         Me.Menu_Contextual.Location = New System.Drawing.Point(70, 36)
         Me.Menu_Contextual.Name = "Menu_Contextual"
-        Me.Menu_Contextual.Size = New System.Drawing.Size(189, 25)
+        Me.Menu_Contextual.Size = New System.Drawing.Size(412, 25)
         Me.Menu_Contextual.Stretch = True
         Me.Menu_Contextual.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Menu_Contextual.TabIndex = 47
@@ -336,7 +339,7 @@ Partial Class Frm_Cms
         '
         Me.Menu_Contextual_01.AutoExpandOnClick = True
         Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_ActualizarUsuarioActualRecalcular, Me.Btn_ActualizarUsuarioActualDejarCero})
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_ActualizarUsuarioActualRecalcular, Me.Btn_ActualizarUsuarioActualDejarCero, Me.Btn_QuitarVendedor})
         Me.Menu_Contextual_01.Text = "Opciones"
         '
         'Btn_ActualizarUsuarioActualRecalcular
@@ -460,7 +463,6 @@ Partial Class Frm_Cms
         Me.Grilla_DetalleSc.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_DetalleSc.Location = New System.Drawing.Point(0, 0)
         Me.Grilla_DetalleSc.Name = "Grilla_DetalleSc"
-        Me.Grilla_DetalleSc.ReadOnly = True
         DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle12.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -472,6 +474,35 @@ Partial Class Frm_Cms
         Me.Grilla_DetalleSc.Size = New System.Drawing.Size(848, 50)
         Me.Grilla_DetalleSc.StandardTab = True
         Me.Grilla_DetalleSc.TabIndex = 28
+        '
+        'ButtonItem1
+        '
+        Me.ButtonItem1.AutoExpandOnClick = True
+        Me.ButtonItem1.Name = "ButtonItem1"
+        Me.ButtonItem1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_ActVendedoresTodos, Me.ButtonItem3})
+        Me.ButtonItem1.Text = "Opciones"
+        '
+        'Btn_Mnu_ActVendedoresTodos
+        '
+        Me.Btn_Mnu_ActVendedoresTodos.Image = CType(resources.GetObject("Btn_Mnu_ActVendedoresTodos.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_ActVendedoresTodos.ImageAlt = CType(resources.GetObject("Btn_Mnu_ActVendedoresTodos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_ActVendedoresTodos.Name = "Btn_Mnu_ActVendedoresTodos"
+        Me.Btn_Mnu_ActVendedoresTodos.Text = "Traer valores segun configuracion desde ficha del vendedor"
+        '
+        'ButtonItem3
+        '
+        Me.ButtonItem3.Image = CType(resources.GetObject("ButtonItem3.Image"), System.Drawing.Image)
+        Me.ButtonItem3.ImageAlt = CType(resources.GetObject("ButtonItem3.ImageAlt"), System.Drawing.Image)
+        Me.ButtonItem3.Name = "ButtonItem3"
+        Me.ButtonItem3.Text = "Traer valores segun configuracion desde ficha del vendedor (Ver informe de venta)" &
+    ""
+        '
+        'Btn_QuitarVendedor
+        '
+        Me.Btn_QuitarVendedor.Image = CType(resources.GetObject("Btn_QuitarVendedor.Image"), System.Drawing.Image)
+        Me.Btn_QuitarVendedor.ImageAlt = CType(resources.GetObject("Btn_QuitarVendedor.ImageAlt"), System.Drawing.Image)
+        Me.Btn_QuitarVendedor.Name = "Btn_QuitarVendedor"
+        Me.Btn_QuitarVendedor.Text = "Quitar vendedor"
         '
         'Frm_Cms
         '
@@ -523,4 +554,8 @@ Partial Class Frm_Cms
     Friend WithEvents Btn_ActualizarUsuarioActualRecalcular As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_ActualizarUsuarioActualDejarCero As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ButtonItem1 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_ActVendedoresTodos As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ButtonItem3 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_QuitarVendedor As DevComponents.DotNetBar.ButtonItem
 End Class
