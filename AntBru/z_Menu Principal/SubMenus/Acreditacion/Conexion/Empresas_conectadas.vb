@@ -155,7 +155,10 @@ Public Class Empresas_conectadas
                             Sb_Cerrar_Sistema(False)
                             End
                         Case "Dfa"
-                            Sb_Produccion_Mesones_DFA(True)
+                            Sb_Produccion_Mesones_DFA()
+                            End
+                        Case "OT1"
+                            Sb_IngresoGRIProduccion()
                             End
                         Case Else
                             Dim NewPanel As Login = Nothing

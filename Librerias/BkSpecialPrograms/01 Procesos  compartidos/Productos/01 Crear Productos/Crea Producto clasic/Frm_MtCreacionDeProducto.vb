@@ -2188,6 +2188,7 @@ Sigue_Loop_01:
             Consulta_sql = Union & "SELECT KOCARAC AS Padre,LTRIM(RTRIM(KOCARAC))+'-'+LTRIM(RTRIM(NOKOCARAC)) AS Hijo FROM TABCARAC WHERE KOTABLA = 'CLALIBPR' ORDER BY Hijo"
             Cmb_Clalibpr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
             Cmb_Clalibpr.SelectedValue = _ClasifLibre
+
         End If
     End Sub
 

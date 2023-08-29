@@ -1494,6 +1494,7 @@ Public Class Frm_Formulario_Documento
         With NewFila
             .Item("Observaciones") = String.Empty
             .Item("Forma_pago") = String.Empty
+            .Item("Motivo") = String.Empty
             .Item("Orden_compra") = String.Empty
             .Item("Placa") = String.Empty
             .Item("CodRetirador") = String.Empty

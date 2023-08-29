@@ -214,7 +214,12 @@ Public Class Login
 
                     Case "Dfa"
 
-                        Sb_Produccion_Mesones_DFA(False)
+                        Sb_Produccion_Mesones_DFA()
+                        End
+
+                    Case "OT1"
+
+                        Sb_IngresoGRIProduccion()
                         End
 
                     Case "BR1"

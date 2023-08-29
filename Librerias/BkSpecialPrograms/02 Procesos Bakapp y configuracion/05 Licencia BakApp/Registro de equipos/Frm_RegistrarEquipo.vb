@@ -487,6 +487,7 @@ Public Class Frm_RegistrarEquipo
                        {"C1", "CAJA PAGO DOCUMENTOS"},
                        {"Cd", "CAJA AUTOMATICA (CashDro-Transbank-Nota de crédito)"},
                        {"Dfa", "REGISTRO DE FABRICACION (DFA Producción)"},
+                       {"OT1", "INGRESO DE FABRICACION 1 (Producción)"},
                        {"Nvv", "SOLO NOTAS DE VENTA"},
                        {"B4A", "DISPOSITIVO MOVIL (B4A)"},
                        {"BR1", "IMPRESOR DE CODIGOS DE BARRA POR PRODUCTOS"}}

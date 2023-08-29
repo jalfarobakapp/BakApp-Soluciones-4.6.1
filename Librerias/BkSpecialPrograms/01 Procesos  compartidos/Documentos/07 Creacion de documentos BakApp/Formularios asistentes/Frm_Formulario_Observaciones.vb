@@ -102,6 +102,9 @@ Public Class Frm_Formulario_Observaciones
         TxtFormadepago.Text = _Row_Observaciones.Item("Forma_pago")
         TxtOrdendecompra.Text = _Row_Observaciones.Item("Orden_compra")
 
+        Txt_MotivoNCV.Tag = _Row_Observaciones.Item("Placa")
+        Txt_MotivoNCV.Text = _Sql.Fx_Trae_Dato("TABCARAC", "NOKOCARAC", "KOTABLA = 'MOTIVOSNCV' And KOCARAC = '" & Txt_MotivoNCV.Tag & "'")
+
         Txt_Placa.Text = _Row_Observaciones.Item("Placa")
         Txt_CodRetirador.Text = _Row_Observaciones.Item("CodRetirador")
         Lbl_Nombre_Retirador_Mercaderia.Text = _Sql.Fx_Trae_Dato("TABRETI", "NORETI", "KORETI = '" & Txt_CodRetirador.Text & "'")
@@ -112,12 +115,17 @@ Public Class Frm_Formulario_Observaciones
 
         _TblObservaciones = Fx_Crear_Tabla()
 
+        Txt_MotivoNCV.Enabled = False
+        LabelX6.Enabled = False
+
         Dim _Tido = _Row_Encabezado.Item("TipoDoc")
 
         If _Tido = "NCV" Then
             If Not Fx_Tiene_Permiso(Me, "Doc00074",, False) Then
                 Documento_Autorizado = False
             End If
+            Txt_MotivoNCV.Enabled = True
+            LabelX6.Enabled = True
         End If
 
         If Global_Thema = Enum_Themas.Oscuro Then
@@ -436,6 +444,7 @@ Public Class Frm_Formulario_Observaciones
                 .Item("Observaciones") = TxtObservaciones.Text
                 .Item("Forma_pago") = TxtFormadepago.Text
                 .Item("Orden_compra") = TxtOrdendecompra.Text
+                .Item("Motivo") = Txt_MotivoNCV.Tag
 
                 .Item("Placa") = Txt_Placa.Text
                 .Item("CodRetirador") = Txt_CodRetirador.Text
@@ -857,4 +866,20 @@ Public Class Frm_Formulario_Observaciones
 
     End Sub
 
+    Private Sub Txt_MotivoNCV_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_MotivoNCV.ButtonCustomClick
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Tabla_Tabcarac, "And KOTABLA = 'MOTIVOSNCV'", Nothing,, True, False) Then
+
+            Txt_MotivoNCV.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+            Txt_MotivoNCV.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
+
+        End If
+    End Sub
+
+    Private Sub Txt_MotivoNCV_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_MotivoNCV.ButtonCustom2Click
+        Txt_MotivoNCV.Tag = String.Empty
+        Txt_MotivoNCV.Text = String.Empty
+    End Sub
 End Class

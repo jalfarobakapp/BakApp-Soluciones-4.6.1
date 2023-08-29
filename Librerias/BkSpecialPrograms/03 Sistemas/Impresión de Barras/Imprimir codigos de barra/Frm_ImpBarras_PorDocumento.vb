@@ -13,6 +13,7 @@ Public Class Frm_ImpBarras_PorDocumento
     Dim _Idmaeedo As String
 
     Public Property CantidadCero As Boolean
+    Public Property CerrarPorConfigurar As Boolean
 
     Public Sub New(Idmaeedo As Integer)
 
@@ -274,6 +275,16 @@ Public Class Frm_ImpBarras_PorDocumento
         _Puerto = Fm.Ds_ConfBarras.Tables("Tbl_Configuracion").Rows(0).Item("Puerto")
         _Etiqueta = Fm.Ds_ConfBarras.Tables("Tbl_Configuracion").Rows(0).Item("Etiqueta")
 
+
+        Dim _Arr_Filtro(,) As String
+
+        _Arr_Filtro = {{"LPT1", "Puerto LPT1"},
+                       {"LPT2", "Puerto LPT2"},
+                       {"LPT3", "Puerto LPT3"},
+                       {"LPT4", "Puerto LPT4"}}
+        Sb_Llenar_Combos(_Arr_Filtro, CmbPuerto)
+        CmbPuerto.SelectedValue = "LPT1"
+
         caract_combo(Cmbetiquetas)
         Consulta_sql = "SELECT NombreEtiqueta AS Padre,NombreEtiqueta+', Cantidad de etiquetas por fila '+RTRIM(LTRIM(STR(CantPorLinea))) AS Hijo" & vbCrLf &
                        "FROM " & _Global_BaseBk & "Zw_Tbl_DisenoBarras order by NombreEtiqueta"
@@ -282,6 +293,9 @@ Public Class Frm_ImpBarras_PorDocumento
 
         AddHandler Btnimprimiretiquetas.Click, AddressOf Sb_Imprimir_Etiquetas
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        AddHandler Cmbetiquetas.SelectedIndexChanged, AddressOf Sb_Cmbetiquetas_SelectedIndexChanged
+
+        Call Sb_Cmbetiquetas_SelectedIndexChanged(Nothing, Nothing)
 
         Sb_Actualizar_Grilla()
 
@@ -326,6 +340,75 @@ Public Class Frm_ImpBarras_PorDocumento
                 _Fila.Cells("ALTERNAT").Value = _RowTabcodal.Item("KOPRAL")
             End If
 
+        End If
+
+    End Sub
+
+    Private Sub Btn_Conf_PuertoEtiqueta_Click(sender As Object, e As EventArgs) Handles Btn_Conf_PuertoEtiqueta.Click
+
+        If Not Fx_Tiene_Permiso(Me, "7Brr0006") Then Return
+
+        Dim Fm As New Frm_Barras_ConfPuerto("Configuracion_local.xml")
+        Fm.ShowDialog(Me)
+        If Fm.Grabar Then
+            CmbPuerto.SelectedValue = Fm.Puerto
+            Cmbetiquetas.SelectedValue = Fm.Etiqueta
+        End If
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_Conf_ConfEstacion_Click(sender As Object, e As EventArgs) Handles Btn_Conf_ConfEstacion.Click
+
+        Dim _Autorizado As Boolean
+
+        Dim Fm_Pass As New Frm_Clave_Administrador
+        Fm_Pass.ShowDialog(Me)
+        _Autorizado = Fm_Pass.Pro_Autorizado
+        Fm_Pass.Dispose()
+
+        If _Autorizado Then
+
+            Dim _Grabar As Boolean
+
+            Dim _Id = _Global_Row_EstacionBk.Item("Id")
+            Dim Fm As New Frm_RegistrarEquipo(Frm_RegistrarEquipo.Enum_Accion.Editar, _Id, False)
+            Fm.ShowDialog(Me)
+            _Grabar = Fm.Grabar
+            Fm.Dispose()
+
+            Dim _Mod As New Clas_Modalidades
+
+            _Mod.Sb_Actualiza_Formatos_X_Modalidad()
+            _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+
+            Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_EstacionesBkp Where NombreEquipo = '" & _NombreEquipo & "'"
+            _Global_Row_EstacionBk = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If _Grabar Then
+                CerrarPorConfigurar = True
+                Me.Close()
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_ConfPuertoXEtiquetaXEquipo_Click(sender As Object, e As EventArgs) Handles Btn_ConfPuertoXEtiquetaXEquipo.Click
+
+        If Not Fx_Tiene_Permiso(Me, "7Brr0008") Then Return
+
+        Dim _Grabar As Boolean
+
+        Dim Fm As New Frm_PuertosXEtiquetaXEstacion
+        Fm.ShowDialog(Me)
+        _Grabar = Fm.Grabar
+        Fm.Dispose()
+
+        If _Grabar Then
+            Call Sb_Cmbetiquetas_SelectedIndexChanged(Nothing, Nothing)
         End If
 
     End Sub
@@ -406,6 +489,21 @@ Public Class Frm_ImpBarras_PorDocumento
                                   My.Resources.cross,
                                  1 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
 
+        End If
+
+    End Sub
+
+    Private Sub Sb_Cmbetiquetas_SelectedIndexChanged(sender As Object, e As EventArgs)
+
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+        Dim _Semilla As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tbl_DisenoBarras", "Semilla",
+                                                    "NombreEtiqueta = '" & Cmbetiquetas.SelectedValue & "'", True)
+        Dim _Puerto As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tbl_DisenoBarras_SalPtoxEstacion", "Puerto",
+                                                  "Semilla_Padre = " & _Semilla & " And NombreEquipo = '" & _NombreEquipo & "'")
+
+        If Not String.IsNullOrEmpty(_Puerto) Then
+            CmbPuerto.SelectedValue = _Puerto
         End If
 
     End Sub

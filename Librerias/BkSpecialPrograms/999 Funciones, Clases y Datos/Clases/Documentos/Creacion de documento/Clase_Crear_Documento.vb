@@ -170,6 +170,7 @@ Public Class Clase_Crear_Documento
     Dim _Cpdo As String         ' Condiciones de pago del documento
     Dim _Diendesp As String     ' Dirección entidad de despacho 
     Dim _Ocdo As String         ' Orden de compra del documento
+    Dim _Motivo As String       ' Motivo de nota de credito
     Dim Obs(34) As String       ' Textos del 1 al 35
 
 #End Region
@@ -1717,6 +1718,7 @@ Public Class Clase_Crear_Documento
                 _Obdo = .Rows(0).Item("Observaciones")
                 _Cpdo = .Rows(0).Item("Forma_pago")
                 _Ocdo = .Rows(0).Item("Orden_compra")
+                _Motivo = .Rows(0).Item("Motivo")
 
                 Dim _Placapat As String = .Rows(0).Item("Placa").ToString.Trim
                 Dim _Diendesp As String = .Rows(0).Item("CodRetirador").ToString
@@ -1736,7 +1738,7 @@ Public Class Clase_Crear_Documento
                            "(" & _Idmaeedo & ",'" & _Obdo & "','" & _Cpdo & "','" & _Ocdo & "','" & _Diendesp & "','" & Obs(0) & "','" & Obs(1) &
                            "','" & Obs(2) & "','" & Obs(3) & "','" & Obs(4) & "','" & Obs(5) & "','" & Obs(6) & "','" & Obs(7) &
                            "','" & Obs(8) & "','" & Obs(9) & "','" & Obs(10) & "','" & Obs(11) & "','" & Obs(12) & "','" & Obs(13) &
-                           "','" & Obs(14) & "','','','','','','','','','',GETDATE(),'','','','',GETDATE(),'','','','" & Obs(15) &
+                           "','" & Obs(14) & "','','','','','','','','','',GETDATE(),'','','','',GETDATE(),'','','" & _Motivo & "','" & Obs(15) &
                            "','" & Obs(16) & "','" & Obs(17) & "','" & Obs(18) & "','" & Obs(19) &
                            "','" & Obs(20) & "','" & Obs(21) & "','" & Obs(22) & "','" & Obs(23) & "','" & Obs(24) &
                            "','" & Obs(25) & "','" & Obs(26) & "','" & Obs(27) & "','" & Obs(28) & "','" & Obs(29) &

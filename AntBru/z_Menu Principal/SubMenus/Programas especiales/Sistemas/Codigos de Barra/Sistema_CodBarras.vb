@@ -61,11 +61,11 @@ Public Class Sistema_CodBarras
     Sub Sb_ImpBarras_Documento()
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "7Brr0004") Then
+
             Dim _Fm As New Frm_BusquedaDocumento_Filtro(False)
             _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Todos, "OCC")
             _Fm.Pro_TipoDoc_Seleccionado = Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Todos
             _Fm.Rdb_Tipo_Documento_Algunos.Enabled = False
-            '_Fm.PRO_Imprimir_Codigos_Barra = True
 
             _Fm.Rdb_Fecha_Emision_Cualquiera.Checked = False
             _Fm.Rdb_Fecha_Emision_Desde_Hasta.Checked = True
@@ -83,7 +83,6 @@ Public Class Sistema_CodBarras
                 Fm.ShowDialog(Me)
                 Fm.Dispose()
             End If
-
 
         End If
 
