@@ -171,7 +171,7 @@ Public Class Frm_St_Estado_03_Presupuesto2
         '    Grilla.AllowUserToAddRows = True
         'End If
 
-        Me.Text = "PRESUPUESTO OT: " & _Row_Encabezado.Item("Nro_Ot")
+        Me.Text = "PRESUPUESTO OT: " & _Row_Encabezado.Item("Nro_Ot") & " (" & _Row_Encabezado.Item("Codigo").ToString.Trim & "-" & _Row_Encabezado.Item("Descripcion").ToString.Trim & ")"
 
         If Not String.IsNullOrEmpty(_Row_Encabezado.Item("Sub_Ot").ToString.Trim) Then
             Me.Text += " (Sub OT: " & _Row_Encabezado.Item("Sub_Ot") & ")"
@@ -899,8 +899,11 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
             Dim _CodReceta As String = Fm.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
 
-            Consulta_sql = "Select Rece.*,Oper.Descripcion,Cast(0 As Bit) As Chk From " & _Global_BaseBk & "Zw_St_OT_Recetas_Ope Rece" & vbCrLf &
+            Consulta_sql = "Select Rece.*,Oper.Descripcion,Isnull(Pre.Precio,0) As Precio,Cast(0 As Bit) As Chk" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_St_OT_Recetas_Ope Rece" & vbCrLf &
                            "Left Join " & _Global_BaseBk & "Zw_St_OT_Operaciones Oper On Rece.Operacion = Oper.Operacion" & vbCrLf &
+                           "Left Join " & _Global_BaseBk & "Zw_St_OT_Recetas_OpePre Pre On Rece.Id = Pre.Id_ReOpe " &
+                           "And Pre.Empresa = '" & ModEmpresa & "' And Pre.Sucursal = '" & ModSucursal & "'" & vbCrLf &
                            "Where CodReceta = '" & _CodReceta & "'"
 
             Dim _TblOperaciones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)

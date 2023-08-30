@@ -134,7 +134,7 @@ Public Class Frm_St_Estado_02_Asignacion
     Sub Sb_Cargar_Tecnicos(_Tecnico As String,
                            Optional _Solo_Este_Tecnico As Boolean = False)
 
-        Dim _Condicion = String.Empty
+        Dim _Condicion = "And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'" & vbCrLf
 
         If _Solo_Este_Tecnico Then
             _Condicion = vbCrLf & "And CodFuncionario = '" & _Tecnico & "'" & vbCrLf

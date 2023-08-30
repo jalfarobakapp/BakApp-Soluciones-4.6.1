@@ -3595,17 +3595,14 @@ Namespace My.Resources
         '''
         '''
         '''CREATE TABLE [dbo].[Zw_St_OT_Accesorios](
-        '''	[Id_Ot] [int] NOT NULL DEFAULT (0),
-        '''	[Semilla] [int] IDENTITY(1,1) NOT NULL,
-        '''	[Codigo] [varchar](10) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Articulo] [varchar](100) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Cantidad] [float] NOT NULL DEFAULT (0),
-        '''	[NroSerie] [varchar](50) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Nota] [varchar](100) NOT NULL DEFAULT (&apos;&apos;),
-        ''' CONSTRAINT [PK_Zw_St_OT_Accesorios] PRIMARY KEY CLUSTERED 
-        '''(
-        '''	[Semilla] ASC
-        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF [resto de la cadena truncado]&quot;;.
+        '''    [Id_Ot]         [int]           NOT NULL DEFAULT (0),
+        '''    [Semilla]       [int]           IDENTITY(1,1) NOT NULL,
+        '''	[Codigo]        [varchar](10)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Articulo]      [varchar](100)  NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Cantidad]      [float]         NOT NULL DEFAULT (0),
+        '''	[NroSerie]      [varchar](50)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nota]          [varchar](100)  NOT NULL DEFAULT (&apos;&apos;),
+        ''' CONSTRAINT [PK_Zw_St_OT_Accesorios] PRIMARY KE [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_St_OT_Accesorios() As String
             Get
@@ -3618,17 +3615,15 @@ Namespace My.Resources
         '''
         '''
         '''CREATE TABLE [dbo].[Zw_St_OT_CheckIn](
-        '''	[Id_Ot] [int] NOT NULL DEFAULT (0),
-        '''	[Semilla] [int] IDENTITY(1,1) NOT NULL,
-        '''	[Codigo] [varchar](10) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Check_In] [varchar](50) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Nota] [varchar](100) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Id_Ot]     [int]           NOT NULL DEFAULT (0),
+        '''	[Semilla]   [int]           IDENTITY(1,1) NOT NULL,
+        '''	[Codigo]    [varchar](10)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Check_In]  [varchar](50)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nota]      [varchar](100)  NOT NULL DEFAULT (&apos;&apos;),
         ''' CONSTRAINT [PK_Zw_St_OT_CheckIn] PRIMARY KEY CLUSTERED 
         '''(
         '''	[Semilla] ASC
-        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-        ''') ON [PRIMARY]
-        '''        ''' [resto de la cadena truncado]&quot;;.
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOC [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_St_OT_CheckIn() As String
             Get
@@ -3700,17 +3695,17 @@ Namespace My.Resources
         '''
         '''
         '''CREATE TABLE [dbo].[Zw_St_OT_Estados](
-        '''	[Id_Ot] [int] NOT NULL DEFAULT (0),
-        '''	[CodEstado] [varchar](2) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Fecha_Fijacion] [datetime] NULL,
-        '''	[CodFuncionario] [char](3) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[NomFuncionario] [varchar](50) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Semilla] [int] IDENTITY(1,1) NOT NULL,
+        '''	[Id_Ot]             [int]           NOT NULL DEFAULT (0),
+        '''	[CodEstado]         [varchar](2)    NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Fecha_Fijacion]    [datetime]      NULL,
+        '''	[CodFuncionario]    [char](3)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[NomFuncionario]    [varchar](50)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Semilla]           [int]           IDENTITY(1,1) NOT NULL,
         ''' CONSTRAINT [PK_Zw_St_OT_Estados] PRIMARY KEY CLUSTERED 
         '''(
         '''	[Id_Ot] ASC,
         '''	[CodEstado] ASC
-        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_ [resto de la cadena truncado]&quot;;.
+        ''')WITH (PAD_ [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_St_OT_Estados() As String
             Get
@@ -3723,13 +3718,13 @@ Namespace My.Resources
         '''
         '''
         '''CREATE TABLE [dbo].[Zw_St_OT_Notas](
-        '''	[Id_Ot]                     [int] NOT NULL DEFAULT (0),
+        '''	[Id_Ot]                     [int]           NOT NULL DEFAULT (0),
         '''	[Defecto_segun_cliente]     [varchar](2000) NOT NULL DEFAULT (&apos;&apos;),
         '''	[Reparacion_a_realizar]     [varchar](2000) NOT NULL DEFAULT (&apos;&apos;),
         '''	[Defecto_encontrado]        [varchar](2000) NOT NULL DEFAULT (&apos;&apos;),
         '''	[Reparacion_Realizada]      [varchar](2000) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Chk_no_se_pudo_reparar]    [bit] NOT NULL DEFAULT (0),
-        '''	[Motivo_no_reparo]          [varchar](1000) NOT NULL DEFAULT (&apos; [resto de la cadena truncado]&quot;;.
+        '''	[Chk_no_se_pudo_reparar]    [bit]           NOT NULL DEFAULT (0),
+        '''	[Motivo_no_reparo]          [varchar](1000) [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_St_OT_Notas() As String
             Get
@@ -3742,19 +3737,41 @@ Namespace My.Resources
         '''
         '''CREATE TABLE [dbo].[Zw_St_OT_Operaciones](
         '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
-        '''	[Empresa]		[char](2)		NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Sucursal]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Operacion]		[varchar](5)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Descripcion]	[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Precio]		[float]			NOT NULL DEFAULT (0),
-        '''	[CantMayor1]	[bit]			NOT NULL DEFAULT (0),
-        '''	[Externa]		[bit]			NOT NULL DEFAULT (0),
-        '''	[TienePrecio]	[bit]			NOT NULL DEFAULT (0),
-        ''' CONSTRAINT [PK_Zw_St_OT_Operacion [resto de la cadena truncado]&quot;;.
+        '''	[Empresa]		[char](2)		    NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]		[varchar](3)	    NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Operacion]		[varchar](5)	    NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Descripcion]	[varchar](50)	    NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Precio]		[float]			    NOT NULL DEFAULT (0),
+        '''	[CantMayor1]	[bit]			    NOT NULL DEFAULT (0),
+        '''	[Externa]		[bit]			    NOT NULL DEFAULT (0),
+        '''	[TienePrecio]	[bit]			    NOT NULL DEFAULT (0),
+        ''' C [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_St_OT_Operaciones() As String
             Get
                 Return ResourceManager.GetString("Zw_St_OT_Operaciones", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_St_OT_Operaciones_Precios](
+        '''	[Id_Ope]	[int]           NOT NULL DEFAULT (0),
+        '''	[Empresa]	[varchar](2)    NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]	[varchar](3)    NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Costo]		[float]         NOT NULL DEFAULT (0),
+        '''	[Precio]	[float]         NOT NULL DEFAULT (0),
+        ''' CONSTRAINT [PK_Zw_St_OT_Recetas_Ope_Precios] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id_Ope] ASC,
+        '''	[Empresa] ASC,
+        '''	[Sucursal] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY =  [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_St_OT_Operaciones_Precios() As String
+            Get
+                Return ResourceManager.GetString("Zw_St_OT_Operaciones_Precios", resourceCulture)
             End Get
         End Property
         
@@ -3807,17 +3824,39 @@ Namespace My.Resources
         '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
         '''	[Id_Rec]		[int]			NOT NULL DEFAULT (0),
         '''	[Empresa]		[char](2)		NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Sucursal]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[CodReceta]		[varchar](20)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[Operacion]		[varchar](5)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[Orden]			[int]			NOT NULL DEFAULT (0),
         '''	[Cantidad]		[int]			NOT NULL DEFAULT (0),
-        '''	[Precio]		[float]			NOT NULL DEFAULT (0),
-        '''	[CantMayor1]	[bit]			NOT NULL DEFAULT (0 [resto de la cadena truncado]&quot;;.
+        '''	[CantMayor1]	[bit]			NOT NULL DEFAULT (0),
+        '''	[Externa]		[bit]			NOT NULL DEFAULT (0),
+        '''	[TienePrecio]	[bit]			NOT NULL DEFAULT (0),
+        '''  [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_St_OT_Recetas_Ope() As String
             Get
                 Return ResourceManager.GetString("Zw_St_OT_Recetas_Ope", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_St_OT_Recetas_OpePre](
+        '''	[Id]		[int]			IDENTITY(1,1) NOT NULL,
+        '''	[Id_Rec]	[int]			NOT NULL DEFAULT (0),
+        '''	[Id_ReOpe]	[int]			NOT NULL DEFAULT (0),
+        '''	[Empresa]	[char](2)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]	[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Precio]	[float]			NOT NULL DEFAULT (0),
+        ''' CONSTRAINT [PK_Zw_St_OT_Recetas_OpePre] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_St_OT_Recetas_OpePre() As String
+            Get
+                Return ResourceManager.GetString("Zw_St_OT_Recetas_OpePre", resourceCulture)
             End Get
         End Property
         

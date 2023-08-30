@@ -116,6 +116,12 @@
     <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Mesones\Frm_Meson_Asignar_Productos.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Mesones\Observacione fabricacion\Frm_Meson_ObsXMaq.Designer.vb">
+      <DependentUpon>Frm_Meson_ObsXMaq.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Mesones\Observacione fabricacion\Frm_Meson_ObsXMaq.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Alerta trabajo sin cerrar\Clas_Alerta_Trab_Sin_Cerrar.vb" />
     <Compile Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Alerta trabajo sin cerrar\Frm_TrabMaq_Opciones_Cierre.Designer.vb">
       <DependentUpon>Frm_TrabMaq_Opciones_Cierre.vb</DependentUpon>
@@ -388,6 +394,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Mesones\Frm_Meson_Reordenar_Productos.resx">
       <DependentUpon>Frm_Meson_Reordenar_Productos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Mesones\Observacione fabricacion\Frm_Meson_ObsXMaq.resx">
+      <DependentUpon>Frm_Meson_ObsXMaq.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios Compartidos\Administrar Mesones\Gestión Mesón\Operarios\Alerta trabajo sin cerrar\Frm_TrabMaq_Opciones_Cierre.resx">
       <DependentUpon>Frm_TrabMaq_Opciones_Cierre.vb</DependentUpon>

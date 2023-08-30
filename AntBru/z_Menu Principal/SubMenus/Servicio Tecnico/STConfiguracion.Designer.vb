@@ -33,6 +33,7 @@ Partial Class STConfiguracion
         Me.Btn_Recetas = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Operaciones = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_FiltroProductos = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_BodegaServicio = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -102,7 +103,7 @@ Partial Class STConfiguracion
         Me.ConsultaPreciosContenedor.FixedSize = New System.Drawing.Size(700, 400)
         Me.ConsultaPreciosContenedor.MultiLine = True
         Me.ConsultaPreciosContenedor.Name = "ConsultaPreciosContenedor"
-        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mantencion_Tecnicos, Me.Btn_Conf_Info_Reportes, Me.Btn_Recetas, Me.Btn_Operaciones, Me.Btn_FiltroProductos})
+        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mantencion_Tecnicos, Me.Btn_Conf_Info_Reportes, Me.Btn_Recetas, Me.Btn_Operaciones, Me.Btn_FiltroProductos, Me.Btn_BodegaServicio})
         '
         '
         '
@@ -234,6 +235,33 @@ Partial Class STConfiguracion
         Me.Btn_FiltroProductos.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_FiltroProductos.TitleText = "BakApp"
         '
+        'Btn_BodegaServicio
+        '
+        Me.Btn_BodegaServicio.Image = CType(resources.GetObject("Btn_BodegaServicio.Image"), System.Drawing.Image)
+        Me.Btn_BodegaServicio.ImageIndent = New System.Drawing.Point(8, -6)
+        Me.Btn_BodegaServicio.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_BodegaServicio.Name = "Btn_BodegaServicio"
+        Me.Btn_BodegaServicio.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_BodegaServicio.Text = "<font size=""+4""><b>BODEGA</b></font><br/><font size=""-1"">Configuración de bodega " &
+    "para servicio técnico.</font>"
+        Me.Btn_BodegaServicio.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Teal
+        Me.Btn_BodegaServicio.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_BodegaServicio.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(200, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(10, Byte), Integer))
+        Me.Btn_BodegaServicio.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(200, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(10, Byte), Integer))
+        Me.Btn_BodegaServicio.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_BodegaServicio.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(200, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(10, Byte), Integer))
+        Me.Btn_BodegaServicio.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(200, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(10, Byte), Integer))
+        Me.Btn_BodegaServicio.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_BodegaServicio.TileStyle.PaddingBottom = 4
+        Me.Btn_BodegaServicio.TileStyle.PaddingLeft = 4
+        Me.Btn_BodegaServicio.TileStyle.PaddingRight = 4
+        Me.Btn_BodegaServicio.TileStyle.PaddingTop = 4
+        Me.Btn_BodegaServicio.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_BodegaServicio.TitleText = "BakApp"
+        '
         'STConfiguracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -258,4 +286,5 @@ Partial Class STConfiguracion
     Private WithEvents Btn_Recetas As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Operaciones As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_FiltroProductos As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_BodegaServicio As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class
