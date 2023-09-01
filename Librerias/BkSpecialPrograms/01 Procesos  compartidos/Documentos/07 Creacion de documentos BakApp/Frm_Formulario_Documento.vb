@@ -14012,10 +14012,12 @@ Public Class Frm_Formulario_Documento
                     Fm_Obs.Btn_Grabar_Pagar.Visible = (_Caja_Habilitada And _Post_Venta And (_Tido = "BLV" Or _Tido = "FCV"))
                     Fm_Obs.TieneOrdenDeDespacho = Not (IsNothing(_Cl_Despacho))
                     Fm_Obs.ShowDialog(Me)
+
                     _Grabar_Obs = Fm_Obs.Pro_Grabar
                     _Class_Referencias_DTE = Fm_Obs.Pro_Class_Referencias_DTE
                     _Grabar_e_Imprimir = Not Fm_Obs.Solo_Grabar
                     _Grabar_Y_Pagar_Vale = Fm_Obs.Grabar_Y_Pagar_Vale
+
                     Fm_Obs.Dispose()
 
                     If _Grabar_Obs Then

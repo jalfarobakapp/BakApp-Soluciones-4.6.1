@@ -317,7 +317,7 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
         If Fx_Tiene_Permiso(Me, "Stec0010") Then
 
             If _Tiene_OT Then
-                MessageBoxEx.Show(Me, "Este registro no se puede eliminar, ya que este presente en algunas Ordenes de trabajo" & vbCrLf &
+                MessageBoxEx.Show(Me, "Este registro no se puede eliminar, ya que esta presente en algunas Ordenes de servicio" & vbCrLf &
                                   "Puede dejar el registro deshabilitado si no quiere que se utilice mas",
                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Else

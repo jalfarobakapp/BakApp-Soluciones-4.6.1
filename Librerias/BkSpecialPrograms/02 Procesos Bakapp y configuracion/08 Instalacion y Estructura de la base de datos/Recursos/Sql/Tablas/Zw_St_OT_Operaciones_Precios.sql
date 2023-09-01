@@ -6,7 +6,7 @@ CREATE TABLE [dbo].[Zw_St_OT_Operaciones_Precios](
 	[Sucursal]	[varchar](3)    NOT NULL DEFAULT (''),
 	[Costo]		[float]         NOT NULL DEFAULT (0),
 	[Precio]	[float]         NOT NULL DEFAULT (0),
- CONSTRAINT [PK_Zw_St_OT_Recetas_Ope_Precios] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_Zw_St_OT_Operaciones_Precios] PRIMARY KEY CLUSTERED 
 (
 	[Id_Ope] ASC,
 	[Empresa] ASC,

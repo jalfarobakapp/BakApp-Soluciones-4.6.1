@@ -36,7 +36,7 @@ Public Class Frm_Estructura_Base_De_Datos
 
         With Grilla
 
-            OcultarEncabezadoGrilla(Grilla)
+            OcultarEncabezadoGrilla(Grilla, True)
 
             .Columns("Tabla").Width = 250
             .Columns("Tabla").HeaderText = "Tabla"

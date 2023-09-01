@@ -610,6 +610,18 @@
     <Compile Include="01 Procesos  compartidos\Productos\20 Impresiones adicionales\Frm_ImpAdicXProd.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\21 Ofertas\Ofertas dinamicas\Frm_OfDinamFicha.Designer.vb">
+      <DependentUpon>Frm_OfDinamFicha.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\21 Ofertas\Ofertas dinamicas\Frm_OfDinamFicha.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\21 Ofertas\Ofertas dinamicas\Frm_OfDinamLista.Designer.vb">
+      <DependentUpon>Frm_OfDinamLista.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\21 Ofertas\Ofertas dinamicas\Frm_OfDinamLista.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="02 Procesos Bakapp y configuracion\01 Actualizacion BakApp\Clas_Actualiza_BakApp_Sql.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random.Designer.vb">
       <DependentUpon>Frm_Usuarios_Random.vb</DependentUpon>
@@ -4247,6 +4259,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Productos\20 Impresiones adicionales\Frm_ImpAdicXProd_Lista.resx">
       <DependentUpon>Frm_ImpAdicXProd_Lista.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Productos\21 Ofertas\Ofertas dinamicas\Frm_OfDinamFicha.resx">
+      <DependentUpon>Frm_OfDinamFicha.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Productos\21 Ofertas\Ofertas dinamicas\Frm_OfDinamLista.resx">
+      <DependentUpon>Frm_OfDinamLista.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random.resx">
       <DependentUpon>Frm_Usuarios_Random.vb</DependentUpon>

@@ -1560,7 +1560,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
     End Sub
 
     Private Sub Grilla_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles Grilla.DataError
-
+        MessageBoxEx.Show(Me, e.Exception.ToString, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
     End Sub
 
     Private Sub WarningBox_OptionsClick(sender As Object, e As EventArgs) Handles WarningBox.OptionsClick
