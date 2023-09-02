@@ -18314,6 +18314,11 @@ Public Class Frm_Formulario_Documento
 
         Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False, False)
 
+        Dim _CodLista = "01C" '_TblEncabezado.Rows(0).Item("ListaPrecios")
+
+        _TblEncabezado.Rows(0).Item("ListaPrecios") = _CodLista
+        _TblDetalle.Rows(0).Item("CodLista") = _CodLista
+
         _TblEncabezado.Rows(0).Item("FechaEmision") = _FechaEmision
         _TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento") = _FechaEmision
         _TblEncabezado.Rows(0).Item("FechaUltVencimiento") = _FechaEmision
@@ -18322,7 +18327,6 @@ Public Class Frm_Formulario_Documento
         _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = 0
         _TblObservaciones.Rows(0).Item("Forma_pago") = String.Empty
 
-        Dim _CodLista = _TblEncabezado.Rows(0).Item("ListaPrecios")
         Dim _Contador = 0
 
         For Each Fila As DataRow In _Tbl_Detalle_Externo.Rows

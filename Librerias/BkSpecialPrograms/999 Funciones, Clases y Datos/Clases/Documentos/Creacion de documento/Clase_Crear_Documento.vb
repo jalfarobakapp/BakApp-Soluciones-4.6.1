@@ -1136,6 +1136,11 @@ Public Class Clase_Crear_Documento
                             End If
                         End If
 
+                        If _Tido = "GRI" AndAlso _DesdeProduccion Then
+                            _Ppprnelt = _Ppprne
+                            _Ppprbrlt = _Ppprbr
+                        End If
+
                         Consulta_sql =
                               "INSERT INTO MAEDDO (IDMAEEDO,ARCHIRST,IDRST,EMPRESA,TIDO,NUDO,ENDO,SUENDO,LILG,NULIDO," & vbCrLf &
                               "SULIDO,BOSULIDO,LUVTLIDO,PROYECTO,KOFULIDO,TIPR,TICT,PRCT,KOPRCT,UDTRPR,RLUDPR,CAPRCO1," & vbCrLf &

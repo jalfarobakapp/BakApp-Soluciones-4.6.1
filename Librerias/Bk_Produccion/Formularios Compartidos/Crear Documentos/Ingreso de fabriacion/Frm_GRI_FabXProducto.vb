@@ -170,6 +170,8 @@ Public Class Frm_GRI_FabXProducto
         _New_Idmaeedo = Fm.Fx_Grabar_Documento(False)
         Fm.Dispose()
 
+        Sb_Imprimir_Documento(Me, _New_Idmaeedo, False, Modalidad)
+
         Sb_Limpiar()
 
         ' Falta agregar los siguientes campos
