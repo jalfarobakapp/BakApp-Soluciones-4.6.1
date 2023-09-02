@@ -58,6 +58,8 @@ CREATE TABLE [dbo].[Zw_St_OT_Encabezado](
 	[Idmaeedo_GDP_PRE]                      [int]               NOT NULL DEFAULT (0),
     [Pertenece]                             [varchar](3)        NOT NULL DEFAULT (''),
     [CodTecnico_Presupuesta]                [char](3)           NOT NULL DEFAULT (''),
+    [Idmaeddo_GRP_PRE]                      [int]               NOT NULL DEFAULT (0),
+	[Idmaeddo_GDP_PRE]                      [int]               NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_St_OT_Encabezado] PRIMARY KEY CLUSTERED 
 (
 	[Id_Ot] ASC

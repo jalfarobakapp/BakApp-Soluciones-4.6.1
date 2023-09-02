@@ -2,8 +2,8 @@ USE [#Base#]
 
 
 CREATE TABLE [dbo].[Zw_Pdp_MesonVsProductos](
-	[IdMeson]                   [int] IDENTITY(1,1) NOT NULL,
-	[Codmeson]                  [char](13)      NOT NULL DEFAULT (''),
+	[IdMeson]               [int] IDENTITY(1,1) NOT NULL,
+	[Codmeson]                   [char](13)      NOT NULL DEFAULT (''),
 	[Orden_Meson]               [int]           NOT NULL DEFAULT (0),
 	[Estado]                    [char](2)       NOT NULL DEFAULT (''),
 	[Idpotpr]                   [int]           NOT NULL DEFAULT (0),
@@ -43,6 +43,8 @@ CREATE TABLE [dbo].[Zw_Pdp_MesonVsProductos](
 	[Idpotl_Padre]              [int]           NOT NULL DEFAULT (0),
 	[AsignadoAlPrincipio]       [int]           NOT NULL DEFAULT (0),
     [CodMesonManda]             [varchar](13)   NOT NULL DEFAULT (''),
+    [IdPotpr_Ac1]                [int]           NOT NULL DEFAULT (0),
+    [IdPotpr_Ac2]               [int]           NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Pdp_MesonVsProductos] PRIMARY KEY CLUSTERED 
 (
 	[IdMeson] ASC

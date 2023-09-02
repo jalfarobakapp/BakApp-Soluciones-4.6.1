@@ -20,6 +20,10 @@ Public Class Frm_GRI_Ingreso
 
     Private Sub Btn_Ingresar_GRI_Click(sender As Object, e As EventArgs) Handles Btn_Ingresar_GRI.Click
 
+        If Not Fx_Revisar_Taza_Cambio(Me) Then
+            Return
+        End If
+
         Dim Fm As New Frm_GRI_FabXProducto
         Fm.ShowDialog(Me)
         Fm.Dispose()

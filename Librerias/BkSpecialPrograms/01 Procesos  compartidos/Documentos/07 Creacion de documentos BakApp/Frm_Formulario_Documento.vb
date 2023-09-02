@@ -14012,10 +14012,12 @@ Public Class Frm_Formulario_Documento
                     Fm_Obs.Btn_Grabar_Pagar.Visible = (_Caja_Habilitada And _Post_Venta And (_Tido = "BLV" Or _Tido = "FCV"))
                     Fm_Obs.TieneOrdenDeDespacho = Not (IsNothing(_Cl_Despacho))
                     Fm_Obs.ShowDialog(Me)
+
                     _Grabar_Obs = Fm_Obs.Pro_Grabar
                     _Class_Referencias_DTE = Fm_Obs.Pro_Class_Referencias_DTE
                     _Grabar_e_Imprimir = Not Fm_Obs.Solo_Grabar
                     _Grabar_Y_Pagar_Vale = Fm_Obs.Grabar_Y_Pagar_Vale
+
                     Fm_Obs.Dispose()
 
                     If _Grabar_Obs Then
@@ -18312,6 +18314,11 @@ Public Class Frm_Formulario_Documento
 
         Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False, False)
 
+        Dim _CodLista = "01C" '_TblEncabezado.Rows(0).Item("ListaPrecios")
+
+        _TblEncabezado.Rows(0).Item("ListaPrecios") = _CodLista
+        _TblDetalle.Rows(0).Item("CodLista") = _CodLista
+
         _TblEncabezado.Rows(0).Item("FechaEmision") = _FechaEmision
         _TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento") = _FechaEmision
         _TblEncabezado.Rows(0).Item("FechaUltVencimiento") = _FechaEmision
@@ -18320,7 +18327,6 @@ Public Class Frm_Formulario_Documento
         _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = 0
         _TblObservaciones.Rows(0).Item("Forma_pago") = String.Empty
 
-        Dim _CodLista = _TblEncabezado.Rows(0).Item("ListaPrecios")
         Dim _Contador = 0
 
         For Each Fila As DataRow In _Tbl_Detalle_Externo.Rows

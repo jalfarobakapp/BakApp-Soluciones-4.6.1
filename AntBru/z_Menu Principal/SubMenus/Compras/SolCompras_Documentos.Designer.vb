@@ -100,7 +100,7 @@ Partial Class SolCompras_Documentos
         Me.Btn_OCC.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.Btn_OCC.Name = "Btn_OCC"
         Me.Btn_OCC.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_OCC.Text = "<font size=""+4""><b>ORDEN DE COMPRA</b></font>"
+        Me.Btn_OCC.Text = "<font size=""+4""><b>OCC - ORDEN DE COMPRA</b></font>"
         Me.Btn_OCC.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Azure
         Me.Btn_OCC.TileSize = New System.Drawing.Size(200, 100)
         '
@@ -120,7 +120,7 @@ Partial Class SolCompras_Documentos
         Me.Btn_GRC.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.Btn_GRC.Name = "Btn_GRC"
         Me.Btn_GRC.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_GRC.Text = "<font size=""+4""><b>GUIA DE RECEPCION DE COMPRA</b></font><br/>"
+        Me.Btn_GRC.Text = "<font size=""+4""><b>GRC - GUIA DE RECEPCION DE COMPRA</b></font><br/>"
         Me.Btn_GRC.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Green
         Me.Btn_GRC.TileSize = New System.Drawing.Size(200, 100)
         '
@@ -140,7 +140,7 @@ Partial Class SolCompras_Documentos
         Me.Btn_Recomendacion_Compra.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.Btn_Recomendacion_Compra.Name = "Btn_Recomendacion_Compra"
         Me.Btn_Recomendacion_Compra.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Recomendacion_Compra.Text = "<font size=""+4""><b>FACTURA DE COMPRA</b></font><br/>"
+        Me.Btn_Recomendacion_Compra.Text = "<font size=""+4""><b>FCC - FACTURA DE COMPRA</b></font><br/>"
         Me.Btn_Recomendacion_Compra.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Blueish
         Me.Btn_Recomendacion_Compra.TileSize = New System.Drawing.Size(200, 100)
         '

@@ -42,7 +42,7 @@ Public Class Frm_St_Mant_ProdServTecnico
 
         If _Filtrar.Fx_Filtrar(_TblProdIngreso,
                                Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
-                               False, False) Then
+                               False, False,, False) Then
 
             _TblProdIngreso = _Filtrar.Pro_Tbl_Filtro
             If _Filtrar.Pro_Filtro_Todas Then
@@ -63,7 +63,7 @@ Public Class Frm_St_Mant_ProdServTecnico
 
         If _Filtrar.Fx_Filtrar(_TblProdServicio,
                                Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
-                               False, False) Then
+                               False, False,, False) Then
 
             _TblProdServicio = _Filtrar.Pro_Tbl_Filtro
             If _Filtrar.Pro_Filtro_Todas Then
@@ -78,8 +78,11 @@ Public Class Frm_St_Mant_ProdServTecnico
 
     Sub Sb_ActualizarCantidades()
 
-        Dim _Reg_ProdIngreso As Integer = _TblProdIngreso.Rows.Count '_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Tmp_Filtros_Busqueda", "Informe = 'ServicioTecnico' And Filtro = 'ProdIngreso'")
-        Dim _Reg_ProdServicio As Integer = _TblProdServicio.Rows.Count '_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Tmp_Filtros_Busqueda", "Informe = 'ServicioTecnico' And Filtro = 'ProdServicio'")
+        Dim _Reg_ProdIngreso As Integer
+        Dim _Reg_ProdServicio As Integer
+
+        If Not IsNothing(_TblProdIngreso) Then _Reg_ProdIngreso = _TblProdIngreso.Rows.Count
+        If Not IsNothing(_TblProdServicio) Then _Reg_ProdServicio = _TblProdServicio.Rows.Count
 
         Lbl_SelProdIngreso.Text = "PRODUCTOS ASOCIADOS A INGRESO A TALLER... (Asignados: " & FormatNumber(_Reg_ProdIngreso, 0) & ")"
         Lbl_SelProdServicio.Text = "PRODUCTOS ASOCIADOS A SERVICIOS DE REPARACION... (Asignados: " & FormatNumber(_Reg_ProdServicio, 0) & ")"
@@ -88,8 +91,23 @@ Public Class Frm_St_Mant_ProdServTecnico
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
-        _Sql.Sb_Actualizar_Filtro_Tmp(_TblProdIngreso, "ServicioTecnico", "ProdIngreso", "", "", "")
-        _Sql.Sb_Actualizar_Filtro_Tmp(_TblProdServicio, "ServicioTecnico", "ProdServicio", "", "", "")
+        If IsNothing(_TblProdIngreso) Then
+            Consulta_sql = "Delete From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
+                           "Where Funcionario = '' And Informe = 'ServicioTecnico'" & Space(1) &
+                           "And Filtro = 'ProdIngreso' And NombreEquipo = '' And Modalidad = ''"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+        Else
+            _Sql.Sb_Actualizar_Filtro_Tmp(_TblProdIngreso, "ServicioTecnico", "ProdIngreso", "", "", "")
+        End If
+
+        If IsNothing(_TblProdIngreso) Then
+            Consulta_sql = "Delete From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
+                           "Where Funcionario = '' And Informe = 'ServicioTecnico'" & Space(1) &
+                           "And Filtro = 'ProdServicio' And NombreEquipo = '' And Modalidad = ''"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+        Else
+            _Sql.Sb_Actualizar_Filtro_Tmp(_TblProdServicio, "ServicioTecnico", "ProdServicio", "", "", "")
+        End If
 
         MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
 

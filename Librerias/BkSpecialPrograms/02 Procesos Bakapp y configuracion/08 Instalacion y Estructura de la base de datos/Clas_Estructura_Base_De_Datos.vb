@@ -984,12 +984,16 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_St_OT_Notas
             Case "Zw_St_OT_Operaciones"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_St_OT_Operaciones
+            Case "Zw_St_OT_Operaciones_Precios"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_St_OT_Operaciones_Precios
             Case "Zw_St_OT_OpeXServ"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_St_OT_OpeXServ
             Case "Zw_St_OT_Recetas_Enc"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_St_OT_Recetas_Enc
             Case "Zw_St_OT_Recetas_Ope"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_St_OT_Recetas_Ope
+            Case "Zw_St_OT_Recetas_OpePre"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_St_OT_Recetas_OpePre
             Case "Zw_St_OT_Recetas_Prod"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_St_OT_Recetas_Prod
 

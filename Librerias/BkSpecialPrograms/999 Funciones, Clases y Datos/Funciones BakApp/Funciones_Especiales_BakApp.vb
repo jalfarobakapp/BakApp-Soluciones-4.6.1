@@ -1993,10 +1993,19 @@ Public Module Modulo_Precios_Costos
             Return 0
         End If
 
-        Dim _Lista = _RowPrecio.Item("KOLT")
-        Dim _Codigo = _RowPrecio.Item("KOPR")
+        Dim _Kolt = _RowPrecio.Item("KOLT")
+        Dim _Kopr = _RowPrecio.Item("KOPR")
 
-        Dim _Rtu = De_Num_a_Tx_01(_RowPrecio.Item("RLUD"), False, 5)
+        Dim _Rtu As String
+
+        Try
+            _Rtu = De_Num_a_Tx_01(_RowPrecio.Item("RLUD"), False, 5)
+        Catch ex As Exception
+            _Rtu = _Sql.Fx_Trae_Dato("MAEPR", "RLUD", "KOPR = '" & _Kopr & "'")
+            Consulta_sql = "Update TABPRE Set RLUD = " & _Rtu & " Where KOLT = '" & _Kolt & "' And KOPR = '" & _Kopr & "'"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+        End Try
+
         Dim _Precio As Double
 
         Dim _Formula
@@ -2012,7 +2021,7 @@ Public Module Modulo_Precios_Costos
         Dim _Tiene_Cor As Boolean = InStr(1, _Ecuacion, "[")
 
         If _Tiene_Cor Then
-            _Precio = Fx_Funcion_Ecuacion_Random(Nothing, "", _Ecuacion, _Codigo, 1, _RowPrecio, 1, 1, 1)
+            _Precio = Fx_Funcion_Ecuacion_Random(Nothing, "", _Ecuacion, _Kopr, 1, _RowPrecio, 1, 1, 1)
             Return _Precio
         End If
 
@@ -2061,7 +2070,7 @@ Public Module Modulo_Precios_Costos
                 Consulta_sql = "Select Top 1 PM,PM As PM01,PPUL01,PPUL02,Isnull(Round(PMSUC,5),0) As PMSUC
                                 From MAEPREM EM
                                 Left Join MAEPMSUC SUC On EM.EMPRESA = SUC.EMPRESA AND SUC.KOSU = '" & ModSucursal & "' AND EM.KOPR = SUC.KOPR
-                                Where EM.EMPRESA = '" & ModEmpresa & "' And EM.KOPR = '" & _Codigo & "'"
+                                Where EM.EMPRESA = '" & ModEmpresa & "' And EM.KOPR = '" & _Kopr & "'"
 
                 _RowCostos_PM = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -2094,7 +2103,7 @@ Public Module Modulo_Precios_Costos
             Else
 
                 If _Fx1.ToString.Contains("<") Then
-                    _Fx1 = Fx_Traer_Campo_Desde_Otra_Lista(_Codigo, _Fx1, _Koen, _vCantUd1, _vCantUd2)
+                    _Fx1 = Fx_Traer_Campo_Desde_Otra_Lista(_Kopr, _Fx1, _Koen, _vCantUd1, _vCantUd2)
                 End If
 
                 _Fx1 = Replace(_Fx1, "RLUD", _Rtu)
@@ -2118,7 +2127,7 @@ Public Module Modulo_Precios_Costos
                 _Fx1 = Replace(_Fx1, ",", ".")
                 _Fx1 = UCase(_Fx1)
 
-                Sb_Buscar_Valor_En_Dimensiones(_Fx1, _Codigo, _Koen)
+                Sb_Buscar_Valor_En_Dimensiones(_Fx1, _Kopr, _Koen)
 
                 Consulta_sql = "Select " & _Fx1 & " As Valor"
                 Dim _RowPr As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)

@@ -42,6 +42,7 @@ Partial Class Frm_Meson_Asignar_Productos
         Me.Btn_Ver_Meson = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Alertas = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Reimprimir_Comprobante_EnvRec = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Observaciones = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_Potl = New DevComponents.DotNetBar.ButtonItem()
         Me.Mnu_Btn_Imprimir_Hoja_De_Ruta = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Ver_Doc_Comercial = New DevComponents.DotNetBar.ButtonItem()
@@ -165,7 +166,7 @@ Partial Class Frm_Meson_Asignar_Productos
         '
         Me.Menu_Contextual_Potpr.AutoExpandOnClick = True
         Me.Menu_Contextual_Potpr.Name = "Menu_Contextual_Potpr"
-        Me.Menu_Contextual_Potpr.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_Enviar_Al_Meson, Me.Btn_Quitar_Del_Meson, Me.Btn_Mnu_Incorporar_Reproceso, Me.Btn_Ver_Meson, Me.Btn_Alertas, Me.Btn_Reimprimir_Comprobante_EnvRec})
+        Me.Menu_Contextual_Potpr.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_Enviar_Al_Meson, Me.Btn_Quitar_Del_Meson, Me.Btn_Mnu_Incorporar_Reproceso, Me.Btn_Ver_Meson, Me.Btn_Alertas, Me.Btn_Reimprimir_Comprobante_EnvRec, Me.Btn_Observaciones})
         Me.Menu_Contextual_Potpr.Text = "Opc Potpr"
         '
         'Btn_Mnu_Enviar_Al_Meson
@@ -210,6 +211,13 @@ Partial Class Frm_Meson_Asignar_Productos
         Me.Btn_Reimprimir_Comprobante_EnvRec.ImageAlt = CType(resources.GetObject("Btn_Reimprimir_Comprobante_EnvRec.ImageAlt"), System.Drawing.Image)
         Me.Btn_Reimprimir_Comprobante_EnvRec.Name = "Btn_Reimprimir_Comprobante_EnvRec"
         Me.Btn_Reimprimir_Comprobante_EnvRec.Text = "Re-imprimir comprobante de envio/recepcion"
+        '
+        'Btn_Observaciones
+        '
+        Me.Btn_Observaciones.Image = CType(resources.GetObject("Btn_Observaciones.Image"), System.Drawing.Image)
+        Me.Btn_Observaciones.ImageAlt = CType(resources.GetObject("Btn_Observaciones.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Observaciones.Name = "Btn_Observaciones"
+        Me.Btn_Observaciones.Text = "Observaciones..."
         '
         'Menu_Contextual_Potl
         '
@@ -1073,4 +1081,5 @@ Partial Class Frm_Meson_Asignar_Productos
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
     Public WithEvents Btn_AplicarBusqueda As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_AplicarBusqueda2 As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Btn_Observaciones As DevComponents.DotNetBar.ButtonItem
 End Class

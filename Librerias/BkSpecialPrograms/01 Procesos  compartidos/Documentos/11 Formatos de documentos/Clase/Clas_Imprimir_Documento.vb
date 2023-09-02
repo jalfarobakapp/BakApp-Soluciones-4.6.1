@@ -330,7 +330,7 @@ Public Class Clas_Imprimir_Documento
 
                             Set @Id_Ot = (Select Distinct Id_Ot_Padre From " & _Global_BaseBk & "Zw_St_OT_Encabezado Where Idmaeedo_" & _TipoDoc & "_PRE = " & _IdDoc & ")
 
-                            Select ZEnc.Id_Ot, ZEnc.Nro_Ot,Empresa,ZEnc.Sucursal,ZEnc.Bodega,ZEnc.CodEntidad,ZEnc.SucEntidad,ZEnc.Rten,ZEnc.Rut, 
+                            Select ZEnc.Id_Ot, ZEnc.Nro_Ot,ZEnc.Empresa,ZEnc.Sucursal,ZEnc.Bodega,ZEnc.CodEntidad,ZEnc.SucEntidad,ZEnc.Rten,ZEnc.Rut, 
                             NOKOEN As Cliente,ZEnc.Fecha_Ingreso,ZEnc.Fecha_Compromiso,ZEnc.Fecha_Entrega,ZEnc.Fecha_Cierre,ZEnc.CodEstado, 
                             IsNull(ZCarac1.NombreTabla,'') As 'Estado',ZEnc.CodMaquina,ZEnc.CodMarca,ZEnc.CodModelo,ZEnc.CodCategoria,ZEnc.NroSerie,ZEnc.Chk_Serv_Domicilio,
 	                        ZEnc.Pais,ZEnc.Ciudad,ZEnc.Comuna,ZEnc.Direccion,ZEnc.Nombre_Contacto,ZEnc.Telefono_Contacto,ZEnc.Email_Contacto,ZEnc.Chk_Serv_Reparacion_Stock,

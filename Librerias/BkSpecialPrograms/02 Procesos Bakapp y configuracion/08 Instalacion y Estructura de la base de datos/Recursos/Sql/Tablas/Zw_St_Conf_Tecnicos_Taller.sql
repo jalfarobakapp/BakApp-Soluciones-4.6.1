@@ -19,6 +19,8 @@ CREATE TABLE [dbo].[Zw_St_Conf_Tecnicos_Taller](
     [EsTecnico]             [bit]           NOT NULL DEFAULT (0),
     [PwTecnico]             [varchar](5)    NOT NULL DEFAULT (''),
     [EsTaller]              [bit]           NOT NULL DEFAULT (0),
+    [Empresa]               [varchar](2)    NOT NULL DEFAULT (''),
+    [Sucursal]              [varchar](3)    NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_St_Conf_Tecnicos_Taller] PRIMARY KEY CLUSTERED 
 (
 	[CodFuncionario] ASC

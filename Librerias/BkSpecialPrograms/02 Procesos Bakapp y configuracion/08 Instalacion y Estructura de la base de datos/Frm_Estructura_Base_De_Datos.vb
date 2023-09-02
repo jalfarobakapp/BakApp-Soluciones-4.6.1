@@ -36,7 +36,7 @@ Public Class Frm_Estructura_Base_De_Datos
 
         With Grilla
 
-            OcultarEncabezadoGrilla(Grilla)
+            OcultarEncabezadoGrilla(Grilla, True)
 
             .Columns("Tabla").Width = 250
             .Columns("Tabla").HeaderText = "Tabla"
@@ -288,9 +288,11 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_St_OT_Notas", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_St_OT_Operaciones", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_St_OT_Operaciones_Precios", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_St_OT_OpeXServ", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_St_OT_Recetas_Enc", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_St_OT_Recetas_Ope", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_St_OT_Recetas_OpePre", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_St_OT_Recetas_Prod", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_TablaDeCaracterizaciones", _Modificar, Lbl_Eventos)

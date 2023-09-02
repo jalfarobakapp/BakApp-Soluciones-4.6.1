@@ -2509,4 +2509,29 @@ Public Class Frm_Meson_Asignar_Productos
     Private Sub Btn_AplicarBusqueda2_Click(sender As Object, e As EventArgs) Handles Btn_AplicarBusqueda2.Click
         Sb_Actualizar_Grillas()
     End Sub
+
+    Private Sub Btn_Observaciones_Click(sender As Object, e As EventArgs) Handles Btn_Observaciones.Click
+
+        Dim _Fila_Pote As DataGridViewRow
+        Dim _Fila_Potl As DataGridViewRow
+        Dim _Fila_Potpr As DataGridViewRow
+
+        Try
+            _Fila_Potl = Grilla_Potl.Rows(Grilla_Potl.CurrentRow.Index)
+        Catch ex As Exception
+            _Fila_Potl = Grilla_Potl.Rows(0)
+        End Try
+        Try
+            _Fila_Potpr = Grilla_Potpr.Rows(Grilla_Potpr.CurrentRow.Index)
+        Catch ex As Exception
+            _Fila_Potpr = Grilla_Potpr.Rows(0)
+        End Try
+
+        Dim _Idpotpr As Integer = _Fila_Potpr.Cells("IDPOTPR").Value
+
+        Dim Fm As New Frm_Meson_ObsXMaq(_Idpotpr)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class
