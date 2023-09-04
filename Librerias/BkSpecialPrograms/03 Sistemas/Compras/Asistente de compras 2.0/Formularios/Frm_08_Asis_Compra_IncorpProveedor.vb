@@ -150,6 +150,30 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
 
         Dim _Fecha As Date = Dtp_Fecha_Tope_Proveedores_Automaticos.Value
 
+        Dim _QuitarProveedorStar As Boolean = True
+
+        If _QuitarProveedorStar Then
+
+            Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+            _CodProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                 "Valor",
+                                                 "Informe = 'Compras_Asistente' And Campo = 'Koen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
+                                                 "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad & "'")
+            _CodSucProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                        "Valor",
+                                                        "Informe = 'Compras_Asistente' And Campo = 'Suen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
+                                                        "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad & "'")
+
+        End If
+
+        'Consulta_sql = "Select * From MAEEN Where KOEN = '" & _CodProveedor_Pstar & "' And SUEN = '" & _CodSucProveedor_Pstar & "'"
+        'Dim _RowProveedorStar As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+
+
+
+
         Try
 
             Me.Enabled = False
@@ -160,35 +184,59 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
 
             If _NoIncluirProveedoresConProdBloqueados Then
 
-                Consulta_sql = "Update " & _Tabla_Paso & vbCrLf &
-                           "Set Id_Ult_Compra = Isnull((Select top 1 IDMAEDDO From MAEDDO" & vbCrLf &
-                           "Where TIDO = '" & Cmb_Documento_Compra.SelectedValue & "' and KOPRCT = Codigo" & vbCrLf &
-                           "And FEEMLI >= '" & Format(_Fecha, "yyyyMMdd") & "'" & vbCrLf &
-                           "And ENDO+SUENDO Not In (Select CodEntidad+CodSucEntidad From " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos Z1 " &
-                           "Where Z1.Chk = 1 And Z1.CodEntidad+Z1.CodSucEntidad = ENDO+SUENDO And Z1.Codigo = KOPRCT)" & vbCrLf &
-                           "Order by PPPRNERE1),0)"
-                _Sql.Ej_consulta_IDU(Consulta_sql)
+                If _QuitarProveedorStar AndAlso Not String.IsNullOrWhiteSpace(_CodProveedor_Pstar) Then
 
-                'LITERALMETE LA ULTIMA VEZ QUE SE COMPRO EL PRODUCTO SIN IMPORTAR LA FECHA TOPE
-                Consulta_sql = "Update " & _Tabla_Paso & vbCrLf &
-                           "Set Id_Ult_Compra = Isnull((Select top 1 IDMAEDDO From MAEDDO" & vbCrLf &
-                           "Where TIDO = '" & Cmb_Documento_Compra.SelectedValue & "' and KOPRCT = Codigo" & vbCrLf &
-                           "And ENDO+SUENDO Not In (Select CodEntidad+CodSucEntidad From " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos Z1 " &
-                           "Where Z1.Chk = 1 And Z1.CodEntidad+Z1.CodSucEntidad = ENDO+SUENDO And Z1.Codigo = KOPRCT)" & vbCrLf &
-                           "Order by FEEMLI DESC),0)" & vbCrLf &
-                           "Where Id_Ult_Compra = 0"
-                _Sql.Ej_consulta_IDU(Consulta_sql)
+                    Consulta_sql = "Update " & _Tabla_Paso & vbCrLf &
+                                   "Set Id_Ult_Compra = Isnull((Select top 1 IDMAEDDO From MAEDDO" & vbCrLf &
+                                   "Where TIDO = '" & Cmb_Documento_Compra.SelectedValue & "' and KOPRCT = Codigo" & vbCrLf &
+                                   "And FEEMLI >= '" & Format(_Fecha, "yyyyMMdd") & "'" & vbCrLf &
+                                   "And ENDO+SUENDO Not In (Select CodEntidad+CodSucEntidad From " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos Z1 " &
+                                   "Where Z1.Chk = 1 And Z1.CodEntidad+Z1.CodSucEntidad = ENDO+SUENDO And Z1.Codigo = KOPRCT)" & vbCrLf &
+                                   "And ENDO <> '" & _CodProveedor_Pstar & "'" & vbCrLf &
+                                   "Order by PPPRNERE1),0)"
+                    _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                    'LITERALMETE LA ULTIMA VEZ QUE SE COMPRO EL PRODUCTO SIN IMPORTAR LA FECHA TOPE
+                    Consulta_sql = "Update " & _Tabla_Paso & vbCrLf &
+                                   "Set Id_Ult_Compra = Isnull((Select top 1 IDMAEDDO From MAEDDO" & vbCrLf &
+                                   "Where TIDO = '" & Cmb_Documento_Compra.SelectedValue & "' and KOPRCT = Codigo" & vbCrLf &
+                                   "And ENDO+SUENDO Not In (Select CodEntidad+CodSucEntidad From " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos Z1 " &
+                                   "Where Z1.Chk = 1 And Z1.CodEntidad+Z1.CodSucEntidad = ENDO+SUENDO And Z1.Codigo = KOPRCT)" & vbCrLf &
+                                   "And ENDO <> '" & _CodProveedor_Pstar & "'" & vbCrLf &
+                                   "Order by FEEMLI DESC),0)" & vbCrLf &
+                                   "Where Id_Ult_Compra = 0"
+                    _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                Else
+                    Consulta_sql = "Update " & _Tabla_Paso & vbCrLf &
+                                   "Set Id_Ult_Compra = Isnull((Select top 1 IDMAEDDO From MAEDDO" & vbCrLf &
+                                   "Where TIDO = '" & Cmb_Documento_Compra.SelectedValue & "' and KOPRCT = Codigo" & vbCrLf &
+                                   "And FEEMLI >= '" & Format(_Fecha, "yyyyMMdd") & "'" & vbCrLf &
+                                   "And ENDO+SUENDO Not In (Select CodEntidad+CodSucEntidad From " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos Z1 " &
+                                   "Where Z1.Chk = 1 And Z1.CodEntidad+Z1.CodSucEntidad = ENDO+SUENDO And Z1.Codigo = KOPRCT)" & vbCrLf &
+                                   "Order by PPPRNERE1),0)"
+
+                    'LITERALMETE LA ULTIMA VEZ QUE SE COMPRO EL PRODUCTO SIN IMPORTAR LA FECHA TOPE
+                    Consulta_sql = "Update " & _Tabla_Paso & vbCrLf &
+                                   "Set Id_Ult_Compra = Isnull((Select top 1 IDMAEDDO From MAEDDO" & vbCrLf &
+                                   "Where TIDO = '" & Cmb_Documento_Compra.SelectedValue & "' and KOPRCT = Codigo" & vbCrLf &
+                                   "And ENDO+SUENDO Not In (Select CodEntidad+CodSucEntidad From " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos Z1 " &
+                                   "Where Z1.Chk = 1 And Z1.CodEntidad+Z1.CodSucEntidad = ENDO+SUENDO And Z1.Codigo = KOPRCT)" & vbCrLf &
+                                   "Order by FEEMLI DESC),0)" & vbCrLf &
+                                   "Where Id_Ult_Compra = 0"
+                    _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                End If
 
             Else
 
                 Consulta_sql = "Update " & _Tabla_Paso & vbCrLf &
-               "Set Id_Ult_Compra = Isnull((Select top 1 IDMAEDDO From MAEDDO" & vbCrLf &
-               "Where TIDO = '" & Cmb_Documento_Compra.SelectedValue & "' and KOPRCT = Codigo" & vbCrLf &
-               "And FEEMLI >= '" & Format(_Fecha, "yyyyMMdd") & "'" & vbCrLf &
-               "Where Z1.CodEntidad+Z1.CodSucEntidad = ENDO+SUENDO And Z1.Codigo = Codigo)" & vbCrLf &
-               "Order by PPPRNERE1),0)"
+                               "Set Id_Ult_Compra = Isnull((Select top 1 IDMAEDDO From MAEDDO" & vbCrLf &
+                               "Where TIDO = '" & Cmb_Documento_Compra.SelectedValue & "' and KOPRCT = Codigo" & vbCrLf &
+                               "And FEEMLI >= '" & Format(_Fecha, "yyyyMMdd") & "'" & vbCrLf &
+                               "Where Z1.CodEntidad+Z1.CodSucEntidad = ENDO+SUENDO And Z1.Codigo = Codigo)" & vbCrLf &
+                               "Order by PPPRNERE1),0)"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
-
 
                 'LITERALMETE LA ULTIMA VEZ QUE SE COMPRO EL PRODUCTO SIN IMPORTAR LA FECHA TOPE
                 Consulta_sql = "Update " & _Tabla_Paso & vbCrLf &

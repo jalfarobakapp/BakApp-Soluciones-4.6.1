@@ -74,7 +74,6 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_AgregarComision = New DevComponents.DotNetBar.ButtonItem()
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.GroupPanel2.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -98,7 +97,7 @@ Partial Class Frm_Cms_AgregarTipos
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(12, 6)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(560, 198)
+        Me.GroupPanel2.Size = New System.Drawing.Size(560, 184)
         '
         '
         '
@@ -584,8 +583,8 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Eliminar, Me.Btn_AgregarComision})
-        Me.Bar2.Location = New System.Drawing.Point(0, 217)
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Eliminar})
+        Me.Bar2.Location = New System.Drawing.Point(0, 205)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(583, 41)
         Me.Bar2.Stretch = True
@@ -612,15 +611,6 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Btn_Eliminar.Name = "Btn_Eliminar"
         Me.Btn_Eliminar.Tooltip = "Configuración de asistente de compra"
         '
-        'Btn_AgregarComision
-        '
-        Me.Btn_AgregarComision.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_AgregarComision.ForeColor = System.Drawing.Color.Black
-        Me.Btn_AgregarComision.Image = CType(resources.GetObject("Btn_AgregarComision.Image"), System.Drawing.Image)
-        Me.Btn_AgregarComision.ImageAlt = CType(resources.GetObject("Btn_AgregarComision.ImageAlt"), System.Drawing.Image)
-        Me.Btn_AgregarComision.Name = "Btn_AgregarComision"
-        Me.Btn_AgregarComision.Tooltip = "Configuración de asistente de compra"
-        '
         'Imagenes_16x16
         '
         Me.Imagenes_16x16.ImageStream = CType(resources.GetObject("Imagenes_16x16.ImageStream"), System.Windows.Forms.ImageListStreamer)
@@ -633,7 +623,7 @@ Partial Class Frm_Cms_AgregarTipos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(583, 258)
+        Me.ClientSize = New System.Drawing.Size(583, 246)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.Bar2)
         Me.DoubleBuffered = True
@@ -660,7 +650,6 @@ Partial Class Frm_Cms_AgregarTipos
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_AgregarComision As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Chk_TieneSC As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Txt_PorcComision As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents ContextMenuBar1 As DevComponents.DotNetBar.ContextMenuBar
