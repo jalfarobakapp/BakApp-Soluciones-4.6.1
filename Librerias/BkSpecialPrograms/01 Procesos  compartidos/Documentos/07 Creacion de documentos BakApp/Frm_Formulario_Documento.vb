@@ -13585,7 +13585,7 @@ Public Class Frm_Formulario_Documento
 
                         If _Mes_Dori < _Mes_Emi Then
 
-                            If _Tidopa = "GDV" Then
+                            If False Then 'If _Tidopa = "GDV" Then
 
                                 Dim _Info As New TaskDialogInfo("Validación del sistema",
                                           eTaskDialogIcon.Stop,
@@ -13602,7 +13602,7 @@ Public Class Frm_Formulario_Documento
 
                             If Not _Permiso_Fac_Gdp Then
 
-                                If _Tidopa = "GDP" Then
+                                If _Tidopa = "GDP" Or _Tidopa = "GDV" Then
 
                                     If MessageBoxEx.Show(Me, "Se estaría facturando la guía Nro: " & _Nudopa & " de un mes anterio al actual" & vbCrLf &
                                                 "¿Desea facturar igualmente?",
