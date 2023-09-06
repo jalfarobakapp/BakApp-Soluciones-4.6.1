@@ -138,7 +138,14 @@ Public Module Mod_Fx
         Fm.Pro_Tipo_de_Caracter = _Tipo_Caracter.Fecha
         Fm.Pro_Imagen = Fm.Pro_Imagen = _Tipo_Imagen.Fecha
         Fm.Chk = _Chk
-        Fm.ConFechaMinima = Not IsNothing(_FechaMinima)
+
+        Dim _ConFechaMinima As Boolean = True
+
+        If _FechaMinima = #1/1/0001 12:00:00 AM# Then
+            _ConFechaMinima = False
+        End If
+
+        Fm.ConFechaMinima = _ConFechaMinima
         Fm.FechaMinima = _FechaMinima
 
         Fm.FormBorderStyle = FormBorderStyle.FixedDialog

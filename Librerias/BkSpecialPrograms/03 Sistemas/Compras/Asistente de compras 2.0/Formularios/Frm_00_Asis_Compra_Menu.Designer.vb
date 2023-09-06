@@ -219,6 +219,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.ButtonItem7 = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem8 = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem9 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Chk_QuitarDeEstudioAutomatico = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Bar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel6.SuspendLayout()
         Me.Layout_Producto.SuspendLayout()
@@ -834,6 +835,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         Me.Grupo_DbExt.BackColor = System.Drawing.Color.White
         Me.Grupo_DbExt.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_DbExt.Controls.Add(Me.Chk_QuitarDeEstudioAutomatico)
         Me.Grupo_DbExt.Controls.Add(Me.Chk_NVVAutoExterna)
         Me.Grupo_DbExt.Controls.Add(Me.Chk_IncluirProdExcluidosProvStar)
         Me.Grupo_DbExt.Controls.Add(Me.Chk_IncluirProdBloqueadoProvStar)
@@ -911,9 +913,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Chk_IncluirProdExcluidosProvStar.CheckBoxImageChecked = CType(resources.GetObject("Chk_IncluirProdExcluidosProvStar.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_IncluirProdExcluidosProvStar.FocusCuesEnabled = False
         Me.Chk_IncluirProdExcluidosProvStar.ForeColor = System.Drawing.Color.Black
-        Me.Chk_IncluirProdExcluidosProvStar.Location = New System.Drawing.Point(178, 111)
+        Me.Chk_IncluirProdExcluidosProvStar.Location = New System.Drawing.Point(167, 111)
         Me.Chk_IncluirProdExcluidosProvStar.Name = "Chk_IncluirProdExcluidosProvStar"
-        Me.Chk_IncluirProdExcluidosProvStar.Size = New System.Drawing.Size(210, 20)
+        Me.Chk_IncluirProdExcluidosProvStar.Size = New System.Drawing.Size(160, 20)
         Me.Chk_IncluirProdExcluidosProvStar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_IncluirProdExcluidosProvStar.TabIndex = 10022
         Me.Chk_IncluirProdExcluidosProvStar.Text = "Incluir productos excluidos"
@@ -1142,7 +1144,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Chk_SumerStockExternoAlFisico.ForeColor = System.Drawing.Color.Black
         Me.Chk_SumerStockExternoAlFisico.Location = New System.Drawing.Point(220, 68)
         Me.Chk_SumerStockExternoAlFisico.Name = "Chk_SumerStockExternoAlFisico"
-        Me.Chk_SumerStockExternoAlFisico.Size = New System.Drawing.Size(210, 20)
+        Me.Chk_SumerStockExternoAlFisico.Size = New System.Drawing.Size(157, 20)
         Me.Chk_SumerStockExternoAlFisico.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_SumerStockExternoAlFisico.TabIndex = 10020
         Me.Chk_SumerStockExternoAlFisico.Text = "Sumar stock externo al físico"
@@ -3576,6 +3578,23 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.ButtonItem9.Name = "ButtonItem9"
         Me.ButtonItem9.Text = "Entidades excluidas"
         '
+        'Chk_QuitarDeEstudioAutomatico
+        '
+        Me.Chk_QuitarDeEstudioAutomatico.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_QuitarDeEstudioAutomatico.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_QuitarDeEstudioAutomatico.CheckBoxImageChecked = CType(resources.GetObject("Chk_QuitarDeEstudioAutomatico.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_QuitarDeEstudioAutomatico.FocusCuesEnabled = False
+        Me.Chk_QuitarDeEstudioAutomatico.ForeColor = System.Drawing.Color.Black
+        Me.Chk_QuitarDeEstudioAutomatico.Location = New System.Drawing.Point(319, 111)
+        Me.Chk_QuitarDeEstudioAutomatico.Name = "Chk_QuitarDeEstudioAutomatico"
+        Me.Chk_QuitarDeEstudioAutomatico.Size = New System.Drawing.Size(164, 20)
+        Me.Chk_QuitarDeEstudioAutomatico.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_QuitarDeEstudioAutomatico.TabIndex = 10027
+        Me.Chk_QuitarDeEstudioAutomatico.Text = "Quitar de estudio automático"
+        '
         'Frm_00_Asis_Compra_Menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -3849,4 +3868,5 @@ Partial Class Frm_00_Asis_Compra_Menu
     Friend WithEvents Txt_ProvParaNVVExterna As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Btn_Buscar_Txt_ProvParaNVVExterna As DevComponents.DotNetBar.ButtonX
     Friend WithEvents LabelX32 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Chk_QuitarDeEstudioAutomatico As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class
