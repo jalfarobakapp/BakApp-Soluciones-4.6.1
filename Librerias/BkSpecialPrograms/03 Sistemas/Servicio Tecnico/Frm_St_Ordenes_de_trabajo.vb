@@ -330,8 +330,7 @@ Public Class Frm_St_Ordenes_de_trabajo
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Dim _DsDocumento As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
-
+        Dim _DsDocumento As DataSet = _Sql.Fx_Get_DataSet(Consulta_Sql)
 
         Dim Fm As New Frm_St_Documento(Frm_St_Documento.Accion.Editar)
         Fm.Id_Ot = _Id_Ot

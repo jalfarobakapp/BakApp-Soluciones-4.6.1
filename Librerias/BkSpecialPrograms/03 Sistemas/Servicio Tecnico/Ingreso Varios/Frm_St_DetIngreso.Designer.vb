@@ -70,6 +70,7 @@ Partial Class Frm_St_DetIngreso
         Me.LabelX24 = New DevComponents.DotNetBar.LabelX()
         Me.Input_Cantidad = New DevComponents.Editors.IntegerInput()
         Me.LabelX12 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_SinNroSerie = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -565,6 +566,7 @@ Partial Class Frm_St_DetIngreso
         '
         Me.GroupPanel3.BackColor = System.Drawing.Color.White
         Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel3.Controls.Add(Me.Chk_SinNroSerie)
         Me.GroupPanel3.Controls.Add(Me.Txt_NroSerie)
         Me.GroupPanel3.Controls.Add(Me.LabelX17)
         Me.GroupPanel3.Controls.Add(Me.TableLayoutPanel4)
@@ -633,9 +635,9 @@ Partial Class Frm_St_DetIngreso
         Me.LabelX17.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX17.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX17.ForeColor = System.Drawing.Color.Black
-        Me.LabelX17.Location = New System.Drawing.Point(3, 153)
+        Me.LabelX17.Location = New System.Drawing.Point(3, 151)
         Me.LabelX17.Name = "LabelX17"
-        Me.LabelX17.Size = New System.Drawing.Size(268, 18)
+        Me.LabelX17.Size = New System.Drawing.Size(220, 20)
         Me.LabelX17.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.LabelX17.TabIndex = 96
         Me.LabelX17.Text = "Número de serie (Chasis/Pieza/Parte)"
@@ -849,7 +851,7 @@ Partial Class Frm_St_DetIngreso
         Me.Input_Cantidad.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Cantidad.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Cantidad.ForeColor = System.Drawing.Color.Black
-        Me.Input_Cantidad.Location = New System.Drawing.Point(85, 117)
+        Me.Input_Cantidad.Location = New System.Drawing.Point(456, 151)
         Me.Input_Cantidad.MaxValue = 100
         Me.Input_Cantidad.MinValue = 0
         Me.Input_Cantidad.Name = "Input_Cantidad"
@@ -866,12 +868,31 @@ Partial Class Frm_St_DetIngreso
         Me.LabelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX12.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX12.ForeColor = System.Drawing.Color.Black
-        Me.LabelX12.Location = New System.Drawing.Point(3, 117)
+        Me.LabelX12.Location = New System.Drawing.Point(396, 151)
         Me.LabelX12.Name = "LabelX12"
-        Me.LabelX12.Size = New System.Drawing.Size(78, 19)
+        Me.LabelX12.Size = New System.Drawing.Size(54, 20)
         Me.LabelX12.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.LabelX12.TabIndex = 89
         Me.LabelX12.Text = "Cantidad"
+        '
+        'Chk_SinNroSerie
+        '
+        Me.Chk_SinNroSerie.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_SinNroSerie.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SinNroSerie.CheckBoxImageChecked = CType(resources.GetObject("Chk_SinNroSerie.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SinNroSerie.FocusCuesEnabled = False
+        Me.Chk_SinNroSerie.Font = New System.Drawing.Font("Segoe UI", 9.75!)
+        Me.Chk_SinNroSerie.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SinNroSerie.Location = New System.Drawing.Point(229, 151)
+        Me.Chk_SinNroSerie.Name = "Chk_SinNroSerie"
+        Me.Chk_SinNroSerie.Size = New System.Drawing.Size(136, 20)
+        Me.Chk_SinNroSerie.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SinNroSerie.TabIndex = 97
+        Me.Chk_SinNroSerie.TabStop = False
+        Me.Chk_SinNroSerie.Text = "Sin número de serie"
         '
         'Frm_St_DetIngreso
         '
@@ -951,4 +972,5 @@ Partial Class Frm_St_DetIngreso
     Friend WithEvents Btn_Doc_Externo_Boleta As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Doc_Externo_Factura As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Input_Cantidad As DevComponents.Editors.IntegerInput
+    Friend WithEvents Chk_SinNroSerie As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

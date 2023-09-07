@@ -123,13 +123,13 @@ Public Class Frm_St_EncIngreso
             .Columns("NroSerie").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            '.Columns("Cantidad").ReadOnly = True
-            '.Columns("Cantidad").Width = 60
-            '.Columns("Cantidad").HeaderText = "Cantidad"
-            '.Columns("Cantidad").Visible = True
-            '.Columns("Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("Cantidad").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
+            .Columns("Cantidad").ReadOnly = True
+            .Columns("Cantidad").Width = 60
+            .Columns("Cantidad").HeaderText = "Cantidad"
+            .Columns("Cantidad").Visible = True
+            .Columns("Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Cantidad").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Chk_Serv_Garantia").ReadOnly = True
             .Columns("Chk_Serv_Garantia").Width = 50
