@@ -8,6 +8,8 @@ Public Class Frm_GRI_ProductosOT
 
     Public Property Tbl_Productos As DataTable
     Public Property FilaSeleccionada As DataRow
+    Public Property MarcarFilasSinSaldo As Boolean
+
 
     Public Sub New()
 
@@ -36,22 +38,68 @@ Public Class Frm_GRI_ProductosOT
 
             OcultarEncabezadoGrilla(Grilla)
 
-            .Columns("NREG").Width = 60
+            Dim _DisplayIndex = 0
+
+            .Columns("NREG").Width = 50
             .Columns("NREG").HeaderText = "SubOt"
             .Columns("NREG").ReadOnly = True
             .Columns("NREG").Visible = True
+            .Columns("NREG").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            .Columns("CODIGO").Width = 120
+            .Columns("CODIGO").Width = 100
             .Columns("CODIGO").HeaderText = "Producto"
             .Columns("CODIGO").ReadOnly = True
             .Columns("CODIGO").Visible = True
+            .Columns("CODIGO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            .Columns("GLOSA").Width = 450
+            .Columns("GLOSA").Width = 350
             .Columns("GLOSA").HeaderText = "Nombre producto"
             .Columns("GLOSA").ReadOnly = True
             .Columns("GLOSA").Visible = True
+            .Columns("GLOSA").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("FABRICAR").Visible = True
+            .Columns("FABRICAR").HeaderText = "Fabricar"
+            .Columns("FABRICAR").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("FABRICAR").Width = 80
+            .Columns("FABRICAR").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("FABRICAR").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("REALIZADO").Visible = True
+            .Columns("REALIZADO").HeaderText = "Realizado"
+            .Columns("REALIZADO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("REALIZADO").Width = 80
+            .Columns("REALIZADO").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("REALIZADO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("SALDO").Visible = True
+            .Columns("SALDO").HeaderText = "Saldo"
+            .Columns("SALDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("SALDO").Width = 80
+            .Columns("SALDO").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("SALDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
         End With
+
+        If MarcarFilasSinSaldo Then
+
+            For Each row As DataGridViewRow In Grilla.Rows
+
+                Dim _Saldo As Double = row.Cells("SALDO").Value
+
+                If _Saldo = 0 Then
+                    row.DefaultCellStyle.ForeColor = Color.Gray
+                End If
+
+            Next
+
+        End If
 
     End Sub
 

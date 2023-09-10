@@ -1,5 +1,4 @@
-﻿'Imports Lib_Bakapp_VarClassFunc
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_ImpBarras_PorDocumento
 
@@ -274,7 +273,6 @@ Public Class Frm_ImpBarras_PorDocumento
 
         _Puerto = Fm.Ds_ConfBarras.Tables("Tbl_Configuracion").Rows(0).Item("Puerto")
         _Etiqueta = Fm.Ds_ConfBarras.Tables("Tbl_Configuracion").Rows(0).Item("Etiqueta")
-
 
         Dim _Arr_Filtro(,) As String
 

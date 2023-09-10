@@ -25,9 +25,9 @@ Partial Class Frm_GRI_Ingreso
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_GRI_Ingreso))
         Me.ReflectionImage1 = New DevComponents.DotNetBar.Controls.ReflectionImage()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
-        Me.Btn_Ingresar_GRI = New DevComponents.DotNetBar.ButtonX()
         Me.Btn_ImprimirEtiquetas = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnConfiguracion = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Ingresar_GRI = New DevComponents.DotNetBar.ButtonX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -62,20 +62,6 @@ Partial Class Frm_GRI_Ingreso
         Me.Bar1.TabStop = False
         Me.Bar1.Text = "Bar1"
         '
-        'Btn_Ingresar_GRI
-        '
-        Me.Btn_Ingresar_GRI.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Ingresar_GRI.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Ingresar_GRI.Font = New System.Drawing.Font("Segoe UI", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Btn_Ingresar_GRI.Image = CType(resources.GetObject("Btn_Ingresar_GRI.Image"), System.Drawing.Image)
-        Me.Btn_Ingresar_GRI.ImageAlt = CType(resources.GetObject("Btn_Ingresar_GRI.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Ingresar_GRI.Location = New System.Drawing.Point(64, 40)
-        Me.Btn_Ingresar_GRI.Name = "Btn_Ingresar_GRI"
-        Me.Btn_Ingresar_GRI.Size = New System.Drawing.Size(411, 139)
-        Me.Btn_Ingresar_GRI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Ingresar_GRI.TabIndex = 32
-        Me.Btn_Ingresar_GRI.Text = "<b>INGRESAR PRODUCTOS</b><br/> " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<b>FABRICADOS A BODEGA</b>"
-        '
         'Btn_ImprimirEtiquetas
         '
         Me.Btn_ImprimirEtiquetas.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
@@ -95,6 +81,20 @@ Partial Class Frm_GRI_Ingreso
         Me.BtnConfiguracion.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
         Me.BtnConfiguracion.Name = "BtnConfiguracion"
         Me.BtnConfiguracion.Tooltip = "Configuración de sistema"
+        '
+        'Btn_Ingresar_GRI
+        '
+        Me.Btn_Ingresar_GRI.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Ingresar_GRI.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Ingresar_GRI.Font = New System.Drawing.Font("Segoe UI", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_Ingresar_GRI.Image = CType(resources.GetObject("Btn_Ingresar_GRI.Image"), System.Drawing.Image)
+        Me.Btn_Ingresar_GRI.ImageAlt = CType(resources.GetObject("Btn_Ingresar_GRI.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Ingresar_GRI.Location = New System.Drawing.Point(64, 40)
+        Me.Btn_Ingresar_GRI.Name = "Btn_Ingresar_GRI"
+        Me.Btn_Ingresar_GRI.Size = New System.Drawing.Size(411, 139)
+        Me.Btn_Ingresar_GRI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Ingresar_GRI.TabIndex = 32
+        Me.Btn_Ingresar_GRI.Text = "<b>INGRESAR PRODUCTOS</b><br/> " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<b>FABRICADOS A BODEGA</b>"
         '
         'Frm_GRI_Ingreso
         '

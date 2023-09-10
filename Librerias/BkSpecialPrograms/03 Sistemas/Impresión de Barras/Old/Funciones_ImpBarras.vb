@@ -328,8 +328,6 @@
 
         _Marca_Pr = _RowProducto.Item("Marca").ToString.Trim
 
-
-
         _Codigo_tecnico = _RowProducto.Item("KOPRTE")
         _Codigo_rapido = _RowProducto.Item("KOPRRA")
         _Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
@@ -616,6 +614,173 @@
 
 #End Region
 
+#Region "IMPRIMIR DESDE OT"
+
+    Sub Sb_Imprimir_Etiqueta_OT(_Puerto As String, _NombreEtiqueta As String, _Idpote As Integer, _Row_Potl As DataRow)
+
+        _Error = String.Empty
+
+        Consulta_sql = "Select * From POTE Where IDPOTE = " & _Idpote
+        Dim _Row_Pote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row_Pote) Then
+            _Error = "No existe registro de OT Tabla POTE"
+            Return
+        End If
+
+        'Consulta_sql = "Select POTL.*,Ltd.NroLote,Lte.FechaVenci,'" & _Kopral & "' As ALTERNAT,'" & _Kopral & "' As CODIGO_ALT" & vbCrLf &
+        '               "From POTL" & vbCrLf &
+        '               "Left Join " & _Global_BaseBk & "Zw_Lotes_Det Ltd On IDPOTL = IdTabla" & vbCrLf &
+        '               "Left Join " & _Global_BaseBk & "Zw_Lotes_Enc Lte On Ltd.Id_Lote = Lte.Id_Lote" & vbCrLf &
+        '               "Where IDPOTL = " & _Idpotl
+
+        'Dim _Row_Potl As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        'If IsNothing(_Row_Potl) Then
+        '    _Error = "No existe registro de OT Tabla POTL"
+        '    Return
+        'End If
+
+        Dim _Fecha_impresion As Date = Now
+        Dim _RowEtiqueta As DataRow = Fx_TraeEtiqueta(_NombreEtiqueta)
+
+        Dim _Texto = _RowEtiqueta.Item("FUNCION")
+
+        Dim _NumotInt As Integer = CInt(_Row_Pote.Item("NUMOT"))
+        _Texto = Replace(_Texto, "<NUMOT_INT>", _NumotInt)
+
+        Dim _Funciones As New List(Of String)
+        Sb_Llenar_Listado_Funciones(0, _Texto, _Funciones)
+
+        ' Encabezado
+        For Each _Funcion As String In _Funciones
+
+            For Each _Columna As DataColumn In _Row_Pote.Table.Columns
+
+                If _Funcion.Contains(_Columna.ColumnName) Then
+
+                    Dim _Funcion_Buscar = "<" & _Funcion & ">"
+                    Dim _Valor_Funcion = Fx_Parametro_Vs_Variable(_Funcion_Buscar, _Row_Pote)
+
+                    If _Funcion_Buscar = "<barcode>" Then
+                        Dim _New_Valor_Funcion = Mid(_Valor_Funcion, 1, 22) & ">6" & Mid(_Valor_Funcion, 23, 1)
+                        _Valor_Funcion = _New_Valor_Funcion
+                        '60503035247121012939710
+                    End If
+                    _Texto = Replace(_Texto, _Funcion_Buscar, _Valor_Funcion)
+                    Exit For
+
+                End If
+
+            Next
+
+        Next
+
+        ' Descripcion
+
+        _Funciones.Clear()
+
+        Sb_Llenar_Listado_Funciones(0, _Texto, _Funciones)
+
+        For Each _Funcion As String In _Funciones
+
+            For Each _Columna As DataColumn In _Row_Potl.Table.Columns
+
+                If _Funcion.Contains(_Columna.ColumnName) Then
+
+                    Dim _Funcion_Buscar = "<" & _Funcion & ">"
+                    Dim _Valor_Funcion = Fx_Parametro_Vs_Variable(_Funcion_Buscar, _Row_Potl)
+
+                    If _Funcion_Buscar = "<barcode>" Then
+                        Dim _New_Valor_Funcion = Mid(_Valor_Funcion, 1, 22) & ">6" & Mid(_Valor_Funcion, 23, 1)
+                        _Valor_Funcion = _New_Valor_Funcion
+                        '60503035247121012939710
+                    End If
+                    _Texto = Replace(_Texto, _Funcion_Buscar, _Valor_Funcion)
+                    Exit For
+
+                End If
+
+            Next
+
+        Next
+
+        _Texto = Replace(_Texto, "ñ", "n")
+        _Texto = Replace(_Texto, "Ñ", "N")
+        _Texto = Replace(_Texto, "á", "a")
+        _Texto = Replace(_Texto, "é", "e")
+        _Texto = Replace(_Texto, "í", "i")
+        _Texto = Replace(_Texto, "ó", "o")
+        _Texto = Replace(_Texto, "ú", "u")
+
+        _Texto = Replace(_Texto, "Á", "A")
+        _Texto = Replace(_Texto, "É", "E")
+        _Texto = Replace(_Texto, "Í", "I")
+        _Texto = Replace(_Texto, "Ó", "O")
+        _Texto = Replace(_Texto, "Ú", "U")
+
+        _Texto = Replace(_Texto, "|", " ")
+        _Texto = Replace(_Texto, "°", " ")
+        _Texto = Replace(_Texto, "¨", " ")
+        _Texto = Replace(_Texto, "´", " ")
+
+        Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Row_Potl.Item("CODIGO") & "'"
+        Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        _Codigo_principal = _RowProducto.Item("KOPR")
+        _Codigo_tecnico = _RowProducto.Item("KOPRTE")
+        _Codigo_rapido = _RowProducto.Item("KOPRRA")
+        _Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
+        _Descripcion_Corta = _RowProducto.Item("NOKOPRRA").ToString.Trim
+
+        '_Marca_Pr = _RowProducto.Item("Marca").ToString.Trim
+
+        '_Wms_Ubicacion_Codigo = _RowProducto.Item("Codigo_Ubic")
+        '_Wms_Ubicacion_Columna = _RowProducto.Item("Columna")
+        '_Wms_Ubicacion_Fila = _RowProducto.Item("Fila")
+
+        '_Wms_Sector_Codigo = _RowProducto.Item("Codigo_Sector")
+        '_Wms_Sector_Nombre = _RowProducto.Item("Nombre_Sector")
+
+        '_Wms_Mapa_Nombre = _RowProducto.Item("Nombre_Mapa")
+        '_Wms_Ubicacion_Nombre = _RowProducto.Item("Descripcion_Ubic")
+
+        '_Ubicacion = _RowProducto.Item("Codigo_Ubic")
+
+        '_Precio_ud1 = _RowProducto.Item("Precio_ud1")
+        '_Precio_ud2 = _RowProducto.Item("Precio_ud2")
+
+        '_PU01_Neto = _RowProducto.Item("PU01_Neto")
+        '_PU02_Neto = _RowProducto.Item("PU02_Neto")
+        '_PU01_Bruto = _RowProducto.Item("PU01_Bruto")
+        '_PU02_Bruto = _RowProducto.Item("PU02_Bruto")
+
+        '_Stock_Minimo_Ubic = _RowProducto.Item("Stock_Minimo_Ubic")
+        '_Stock_Maximo_Ubic = _RowProducto.Item("Stock_Maximo_Ubic")
+
+        _PrecioNetoXRtu = 0
+        _PrecioBrutoXRtu = 0
+
+        _PrecioLc1 = 0
+
+        _Descripcion = Replace(_Descripcion, Chr(34), "")
+        _Desc0125 = Mid(_Descripcion, 1, 25)
+        _Desc2650 = Mid(_Descripcion, 26, 50)
+
+        Sb_Imprimir_PRN(_Texto, _Puerto)
+
+        'Dim fic As String = AppPath(True) & "Barra.prn"
+
+        'Dim sw As New System.IO.StreamWriter(fic)
+        'sw.WriteLine(_Texto)
+        'sw.Close()
+
+        'System.IO.File.Copy("Barra.prn", _Puerto)
+
+    End Sub
+
+#End Region
+
 #Region "PROCEDIMIENTOS PRIVADOS"
 
 #Region "TRAER ETIQUETA"
@@ -638,6 +803,7 @@
 #Region "IMPRIMIR EL ARCHIVO"
     Private Sub Sb_Imprimir_PRN(_Texto As String, _Puerto As String)
 
+        Dim _TextoOri As String = _Texto
         Dim _Fecha_impresion As Date = Now
 
         _Error = String.Empty

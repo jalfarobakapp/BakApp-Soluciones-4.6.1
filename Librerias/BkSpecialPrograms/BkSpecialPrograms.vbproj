@@ -1634,6 +1634,12 @@
     <Compile Include="03 Sistemas\Impresión de Barras\Configuracion\Frm_PuertosXEtiquetaXEstacion.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_PorOT.Designer.vb">
+      <DependentUpon>Frm_ImpBarras_PorOT.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_PorOT.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Cl_InfProyStXVnta.vb" />
     <Compile Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Frm_InfProyStXVnta.Designer.vb">
       <DependentUpon>Frm_InfProyStXVnta.vb</DependentUpon>
@@ -4762,6 +4768,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Impresión de Barras\Configuracion\Frm_PuertosXEtiquetaXEstacion.resx">
       <DependentUpon>Frm_PuertosXEtiquetaXEstacion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_PorOT.resx">
+      <DependentUpon>Frm_ImpBarras_PorOT.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Frm_InfProyStXVnta.resx">
       <DependentUpon>Frm_InfProyStXVnta.vb</DependentUpon>
