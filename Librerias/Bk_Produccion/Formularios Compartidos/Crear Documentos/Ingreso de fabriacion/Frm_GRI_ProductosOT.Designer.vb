@@ -43,7 +43,7 @@ Partial Class Frm_GRI_ProductosOT
         Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel4.Location = New System.Drawing.Point(12, 12)
         Me.GroupPanel4.Name = "GroupPanel4"
-        Me.GroupPanel4.Size = New System.Drawing.Size(699, 298)
+        Me.GroupPanel4.Size = New System.Drawing.Size(812, 298)
         '
         '
         '
@@ -112,7 +112,7 @@ Partial Class Frm_GRI_ProductosOT
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla.Size = New System.Drawing.Size(693, 275)
+        Me.Grilla.Size = New System.Drawing.Size(806, 275)
         Me.Grilla.TabIndex = 1
         '
         'Bar1
@@ -123,7 +123,7 @@ Partial Class Frm_GRI_ProductosOT
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
         Me.Bar1.Location = New System.Drawing.Point(0, 325)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(723, 41)
+        Me.Bar1.Size = New System.Drawing.Size(836, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 99
@@ -143,7 +143,7 @@ Partial Class Frm_GRI_ProductosOT
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(723, 366)
+        Me.ClientSize = New System.Drawing.Size(836, 366)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.GroupPanel4)
         Me.DoubleBuffered = True

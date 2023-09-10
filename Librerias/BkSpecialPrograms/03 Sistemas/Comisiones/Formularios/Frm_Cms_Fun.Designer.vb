@@ -158,6 +158,7 @@ Partial Class Frm_Cms_Fun
         '
         Me.Chk_MostrarSoloHabilitados.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_MostrarSoloHabilitados.CheckBoxImageChecked = CType(resources.GetObject("Chk_MostrarSoloHabilitados.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_MostrarSoloHabilitados.FocusCuesEnabled = False
         Me.Chk_MostrarSoloHabilitados.ForeColor = System.Drawing.Color.Black
         Me.Chk_MostrarSoloHabilitados.Location = New System.Drawing.Point(12, 487)
         Me.Chk_MostrarSoloHabilitados.Name = "Chk_MostrarSoloHabilitados"

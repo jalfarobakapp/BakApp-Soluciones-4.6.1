@@ -19,6 +19,7 @@ Public Class Frm_Cms_Periodos_Crear
 
         If CBool(_Id) Then
 
+            Id = _Id
             Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Comisiones_Enc Where Id = " & _Id
             _Row_Periodo = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
@@ -56,17 +57,20 @@ Public Class Frm_Cms_Periodos_Crear
 
         If Not IsNothing(_Row_Periodo) Then
 
-            Txt_Nombre.Text = _Row_Periodo.Item("Nombre")
-            Cmb_Ano.SelectedItem = _Row_Periodo.Item("Ano")
-            Cmb_Mes.SelectedValue = _Row_Periodo.Item("Mes")
+            Txt_Nombre.Text = Row_Periodo.Item("Nombre")
+            Cmb_Ano.SelectedItem = Row_Periodo.Item("Ano")
+            Cmb_Mes.SelectedValue = Row_Periodo.Item("Mes")
             Cmb_Ano.Enabled = False
             Cmb_Mes.Enabled = False
 
-            Input_Habiles.Value = _Row_Periodo.Item("Habiles")
-            Input_Sabados.Value = _Row_Periodo.Item("Sabados")
-            Input_Domingos.Value = _Row_Periodo.Item("Domingos")
-            Input_Festivos.Value = _Row_Periodo.Item("Festivos")
-            Input_Semanas.Value = _Row_Periodo.Item("Semanas")
+            Input_Habiles.Value = Row_Periodo.Item("Habiles")
+            Input_Sabados.Value = Row_Periodo.Item("Sabados")
+            Input_Domingos.Value = Row_Periodo.Item("Domingos")
+            Input_Festivos.Value = Row_Periodo.Item("Festivos")
+            Input_Semanas.Value = Row_Periodo.Item("Semanas")
+
+            Dtp_FechaDesde.Value = Row_Periodo.Item("FechaDesde")
+            Dtp_FechaHasta.Value = Row_Periodo.Item("FechaHasta")
 
         End If
 
@@ -99,7 +103,7 @@ Public Class Frm_Cms_Periodos_Crear
 
         Dim _Periodo = numero_(Cmb_Mes.SelectedValue, 2) & "-" & Cmb_Ano.Text
 
-        If Not CBool(_Id) Then
+        If Not CBool(Id) Then
 
             Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Comisiones_Enc", "Periodo = '" & _Periodo & "'")
 

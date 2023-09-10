@@ -983,6 +983,12 @@ Public Class Frm_00_Asis_Compra_Menu
 
         End If
 
+        ' Check para proveedor estrella de estudio para incorporar a proveedor con mejor precio.
+        _Sql.Sb_Parametro_Informe_Sql(Chk_QuitarDeEstudioAutomatico, "Compras_Asistente",
+                                      Chk_QuitarDeEstudioAutomatico.Name, Class_SQLite.Enum_Type._Boolean, Chk_QuitarDeEstudioAutomatico.Checked, _Actualizar)
+
+
+
     End Sub
 
     'Sub Sb_Actualizar_Revisar_Sqlite()

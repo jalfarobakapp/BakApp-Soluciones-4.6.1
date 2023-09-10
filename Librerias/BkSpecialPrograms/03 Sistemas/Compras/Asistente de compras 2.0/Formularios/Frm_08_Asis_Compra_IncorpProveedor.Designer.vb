@@ -66,6 +66,7 @@ Partial Class Frm_08_Asis_Compra_IncorpProveedor
         Me.Chk_MarcarProvQueNoTiene = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Input_DiasMarcarProvQueNoTiene = New DevComponents.Editors.IntegerInput()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_QuitarDeEstudioAutomatico = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.GroupPanel2.SuspendLayout()
@@ -101,7 +102,7 @@ Partial Class Frm_08_Asis_Compra_IncorpProveedor
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnProcesarInf, Me.BtnEntidadesExcluidas})
-        Me.Bar1.Location = New System.Drawing.Point(0, 188)
+        Me.Bar1.Location = New System.Drawing.Point(0, 215)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(757, 41)
         Me.Bar1.Stretch = True
@@ -856,12 +857,14 @@ Partial Class Frm_08_Asis_Compra_IncorpProveedor
         '
         'Input_DiasMarcarProvQueNoTiene
         '
+        Me.Input_DiasMarcarProvQueNoTiene.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.Input_DiasMarcarProvQueNoTiene.BackgroundStyle.Class = "DateTimeInputBackground"
         Me.Input_DiasMarcarProvQueNoTiene.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_DiasMarcarProvQueNoTiene.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_DiasMarcarProvQueNoTiene.ForeColor = System.Drawing.Color.Black
         Me.Input_DiasMarcarProvQueNoTiene.Location = New System.Drawing.Point(499, 163)
         Me.Input_DiasMarcarProvQueNoTiene.MaxValue = 90
         Me.Input_DiasMarcarProvQueNoTiene.MinValue = 0
@@ -872,21 +875,41 @@ Partial Class Frm_08_Asis_Compra_IncorpProveedor
         '
         'LabelX4
         '
+        Me.LabelX4.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.ForeColor = System.Drawing.Color.Black
         Me.LabelX4.Location = New System.Drawing.Point(554, 163)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(75, 23)
         Me.LabelX4.TabIndex = 115
         Me.LabelX4.Text = "días"
         '
+        'Chk_QuitarDeEstudioAutomatico
+        '
+        Me.Chk_QuitarDeEstudioAutomatico.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_QuitarDeEstudioAutomatico.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_QuitarDeEstudioAutomatico.CheckBoxImageChecked = CType(resources.GetObject("Chk_QuitarDeEstudioAutomatico.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_QuitarDeEstudioAutomatico.FocusCuesEnabled = False
+        Me.Chk_QuitarDeEstudioAutomatico.ForeColor = System.Drawing.Color.Black
+        Me.Chk_QuitarDeEstudioAutomatico.Location = New System.Drawing.Point(12, 188)
+        Me.Chk_QuitarDeEstudioAutomatico.Name = "Chk_QuitarDeEstudioAutomatico"
+        Me.Chk_QuitarDeEstudioAutomatico.Size = New System.Drawing.Size(213, 20)
+        Me.Chk_QuitarDeEstudioAutomatico.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_QuitarDeEstudioAutomatico.TabIndex = 10028
+        Me.Chk_QuitarDeEstudioAutomatico.Text = "Quitar de estudio a proveedor estrella"
+        '
         'Frm_08_Asis_Compra_IncorpProveedor
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(757, 229)
+        Me.ClientSize = New System.Drawing.Size(757, 256)
+        Me.Controls.Add(Me.Chk_QuitarDeEstudioAutomatico)
         Me.Controls.Add(Me.LabelX4)
         Me.Controls.Add(Me.Input_DiasMarcarProvQueNoTiene)
         Me.Controls.Add(Me.Chk_MarcarProvQueNoTiene)
@@ -973,4 +996,5 @@ Partial Class Frm_08_Asis_Compra_IncorpProveedor
     Public WithEvents Chk_MarcarProvQueNoTiene As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Input_DiasMarcarProvQueNoTiene As DevComponents.Editors.IntegerInput
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
+    Public WithEvents Chk_QuitarDeEstudioAutomatico As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

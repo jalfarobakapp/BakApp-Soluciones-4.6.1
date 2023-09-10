@@ -2531,4 +2531,32 @@ Public Class Frm_Pagos_Generales
 
     End Sub
 
+    Private Sub Btn_BuscarDocumento_Click(sender As Object, e As EventArgs) Handles Btn_BuscarDocumento.Click
+
+        If Not CBool(Grilla_Estado_de_Cuentas.Rows.Count) Then
+            MessageBoxEx.Show(Me, "No existen datos que buscar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _NroDocumento As String
+        Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese el numero de documento a buscar...", "Buscar documento", _NroDocumento, False, , 10, True, _Tipo_Imagen.Texto,, _Tipo_Caracter.Solo_Numeros_Enteros, False)
+
+        If Not _Aceptar Then
+            Return
+        End If
+
+        _NroDocumento = numero_(_NroDocumento, 10)
+
+        Dim resultado() As DataRow
+        resultado = _Tbl_Estado_Cuenta.Select("NUDP = '" & _NroDocumento & "'")
+
+        If resultado.Length > 0 Then
+            BuscarDatoEnGrilla(_NroDocumento, "NUDP", Grilla_Estado_de_Cuentas)
+        Else
+            MessageBoxEx.Show(Me, "Documento no encontrado", "Buscar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Call Btn_BuscarDocumento_Click(Nothing, Nothing)
+        End If
+
+    End Sub
+
 End Class

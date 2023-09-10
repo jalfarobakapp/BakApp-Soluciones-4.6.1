@@ -217,7 +217,7 @@ Public Class Frm_Cms
             .Columns("CodFuncionario").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("NOKOFU").Width = 250
+            .Columns("NOKOFU").Width = 250 + 100
             .Columns("NOKOFU").HeaderText = "Funcionario"
             .Columns("NOKOFU").ReadOnly = True
             .Columns("NOKOFU").Visible = True
@@ -234,7 +234,7 @@ Public Class Frm_Cms
             .Columns("SubComBruta").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("PorcCotizaciones").Width = 40
+            .Columns("PorcCotizaciones").Width = 60
             .Columns("PorcCotizaciones").HeaderText = "Porc %"
             .Columns("PorcCotizaciones").ToolTipText = "Porcentaje comisión"
             .Columns("PorcCotizaciones").ReadOnly = True
@@ -263,15 +263,15 @@ Public Class Frm_Cms
             .Columns("ComBrutaSemCorr").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("TotalComBruta").Width = 100 + 20
-            .Columns("TotalComBruta").HeaderText = "Total Comisión"
-            .Columns("TotalComBruta").ToolTipText = "Comision Bruta + Comision Semana Corrida"
-            .Columns("TotalComBruta").ReadOnly = True
-            .Columns("TotalComBruta").Visible = True
-            .Columns("TotalComBruta").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("TotalComBruta").DefaultCellStyle.Format = "$ ###,##0"
-            .Columns("TotalComBruta").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
+            '.Columns("TotalComBruta").Width = 100 + 20
+            '.Columns("TotalComBruta").HeaderText = "Total Comisión"
+            '.Columns("TotalComBruta").ToolTipText = "Comision Bruta + Comision Semana Corrida"
+            '.Columns("TotalComBruta").ReadOnly = True
+            '.Columns("TotalComBruta").Visible = True
+            '.Columns("TotalComBruta").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            '.Columns("TotalComBruta").DefaultCellStyle.Format = "$ ###,##0"
+            '.Columns("TotalComBruta").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
 
 
             .Refresh()
@@ -803,7 +803,7 @@ Public Class Frm_Cms
         Dim _Domingos As Integer = _Row_Periodo.Item("Domingos")
         Dim _Festivos As Integer = _Row_Periodo.Item("Festivos")
         Dim _Semanas As Integer = _Row_Periodo.Item("Semanas")
-        Dim _DiasTrabMes As Integer = _Habiles - _Festivos
+        Dim _DiasTrabMes As Integer = _Habiles '- _Festivos
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Comisiones_Mis Where CodFuncionario = '" & _CodFuncionario & "'"
         Dim _Tbl_MisComisiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
@@ -951,15 +951,6 @@ Public Class Frm_Cms
                        "Where Id_Det Not In (Select Id From " & _Global_BaseBk & "Zw_Comisiones_Det) And Id_Det <> 0"
         _Sql.Ej_consulta_IDU(Consulta_Sql)
 
-        MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Actualizar datos del funcionario", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-        'For Each _Filas As DataGridViewRow In Grilla_Detalle.Rows
-
-        '    Fx_TraerValoresAlInforme(_Filas)
-
-        'Next
-
-        'Sb_ActualizarValoresPorFuncionario(_Fila_Lin)
         Sb_Actualizar_Grilla()
 
     End Sub
@@ -1071,26 +1062,32 @@ Public Class Frm_Cms
 
         For Each _Fila_Lineas As DataRow In _Tbl_Lineas.Rows
 
-            Dim _Id_Lin As Integer = _Fila_Lineas.Item("Id")
+            Dim Estado As DataRowState = _Fila_Lineas.RowState
 
-            Dim _CodFuncionario As String = _Fila_Lineas.Item("CodFuncionario")
-            Dim _SubComBruta As String = De_Num_a_Tx_01(_Fila_Lineas.Item("SubComBruta"), False, 5)
-            Dim _Afp As String = De_Num_a_Tx_01(_Fila_Lineas.Item("AFP"), False, 5)
-            Dim _Salud As String = De_Num_a_Tx_01(_Fila_Lineas.Item("Salud"), False, 5)
-            Dim _PorcCotizaciones As String = De_Num_a_Tx_01(_Fila_Lineas.Item("PorcCotizaciones"), False, 5)
-            Dim _ComBruta As String = De_Num_a_Tx_01(_Fila_Lineas.Item("ComBruta"), False, 5)
-            Dim _ComBrutaSemCorr As String = De_Num_a_Tx_01(_Fila_Lineas.Item("ComBrutaSemCorr"), False, 5)
-            Dim _TotalComBruta As String = De_Num_a_Tx_01(_Fila_Lineas.Item("TotalComBruta"), False, 5)
+            If Not Estado = DataRowState.Deleted Then
 
-            Consulta_Sql += "Update " & _Global_BaseBk & "Zw_Comisiones_Lin Set " &
-                           "SubComBruta = " & _SubComBruta &
-                           ",AFP = " & _Afp &
-                           ",Salud = " & _Salud &
-                           ",PorcCotizaciones = " & _PorcCotizaciones &
-                           ",ComBruta = " & _ComBruta &
-                           ",ComBrutaSemCorr = " & _ComBrutaSemCorr &
-                           ",TotalComBruta = " & _TotalComBruta &
-                           "Where Id = " & _Id_Lin & vbCrLf
+                Dim _Id_Lin As Integer = _Fila_Lineas.Item("Id")
+
+                Dim _CodFuncionario As String = _Fila_Lineas.Item("CodFuncionario")
+                Dim _SubComBruta As String = De_Num_a_Tx_01(_Fila_Lineas.Item("SubComBruta"), False, 5)
+                Dim _Afp As String = De_Num_a_Tx_01(_Fila_Lineas.Item("AFP"), False, 5)
+                Dim _Salud As String = De_Num_a_Tx_01(_Fila_Lineas.Item("Salud"), False, 5)
+                Dim _PorcCotizaciones As String = De_Num_a_Tx_01(_Fila_Lineas.Item("PorcCotizaciones"), False, 5)
+                Dim _ComBruta As String = De_Num_a_Tx_01(_Fila_Lineas.Item("ComBruta"), False, 5)
+                Dim _ComBrutaSemCorr As String = De_Num_a_Tx_01(_Fila_Lineas.Item("ComBrutaSemCorr"), False, 5)
+                Dim _TotalComBruta As String = De_Num_a_Tx_01(_Fila_Lineas.Item("TotalComBruta"), False, 5)
+
+                Consulta_Sql += "Update " & _Global_BaseBk & "Zw_Comisiones_Lin Set " &
+                               "SubComBruta = " & _SubComBruta &
+                               ",AFP = " & _Afp &
+                               ",Salud = " & _Salud &
+                               ",PorcCotizaciones = " & _PorcCotizaciones &
+                               ",ComBruta = " & _ComBruta &
+                               ",ComBrutaSemCorr = " & _ComBrutaSemCorr &
+                               ",TotalComBruta = " & _TotalComBruta &
+                               "Where Id = " & _Id_Lin & vbCrLf
+
+            End If
 
         Next
 
@@ -1098,27 +1095,33 @@ Public Class Frm_Cms
 
         For Each _Fila_Detalle As DataRow In _Tbl_Detalle.Rows
 
-            Dim _Id_Det As Integer = _Fila_Detalle.Item("Id")
+            Dim Estado As DataRowState = _Fila_Detalle.RowState
 
-            Dim _Descripcion As String = _Fila_Detalle.Item("Descripcion")
-            Dim _Valor As String = De_Num_a_Tx_01(_Fila_Detalle.Item("Valor"), False, 5)
-            Dim _Descuento As String = De_Num_a_Tx_01(_Fila_Detalle.Item("Descuento"), False, 5)
-            Dim _SubTotal As String = De_Num_a_Tx_01(_Fila_Detalle.Item("SubTotal"), False, 5)
-            Dim _PorcComision As String = De_Num_a_Tx_01(_Fila_Detalle.Item("PorcComision"), False, 5)
-            Dim _Total As String = De_Num_a_Tx_01(_Fila_Detalle.Item("Total"), False, 5)
-            Dim _PorcImp As String = De_Num_a_Tx_01(_Fila_Detalle.Item("PorcImp"), False, 5)
-            Dim _ComBruta As String = De_Num_a_Tx_01(_Fila_Detalle.Item("ComBruta"), False, 5)
+            If Not Estado = DataRowState.Deleted Then
 
-            Consulta_Sql += "Update " & _Global_BaseBk & "Zw_Comisiones_Det Set " &
-               "Descripcion = '" & _Descripcion & "'" &
-               ",Valor = " & _Valor &
-               ",Descuento = " & _Descuento &
-               ",SubTotal = " & _SubTotal &
-               ",PorcComision = " & _PorcComision &
-               ",Total = " & _Total &
-               ",PorcImp = " & _PorcImp &
-               ",ComBruta = " & _ComBruta &
-               "Where Id = " & _Id_Det & vbCrLf
+                Dim _Id_Det As Integer = _Fila_Detalle.Item("Id")
+
+                Dim _Descripcion As String = _Fila_Detalle.Item("Descripcion")
+                Dim _Valor As String = De_Num_a_Tx_01(_Fila_Detalle.Item("Valor"), False, 5)
+                Dim _Descuento As String = De_Num_a_Tx_01(_Fila_Detalle.Item("Descuento"), False, 5)
+                Dim _SubTotal As String = De_Num_a_Tx_01(_Fila_Detalle.Item("SubTotal"), False, 5)
+                Dim _PorcComision As String = De_Num_a_Tx_01(_Fila_Detalle.Item("PorcComision"), False, 5)
+                Dim _Total As String = De_Num_a_Tx_01(_Fila_Detalle.Item("Total"), False, 5)
+                Dim _PorcImp As String = De_Num_a_Tx_01(_Fila_Detalle.Item("PorcImp"), False, 5)
+                Dim _ComBruta As String = De_Num_a_Tx_01(_Fila_Detalle.Item("ComBruta"), False, 5)
+
+                Consulta_Sql += "Update " & _Global_BaseBk & "Zw_Comisiones_Det Set " &
+                   "Descripcion = '" & _Descripcion & "'" &
+                   ",Valor = " & _Valor &
+                   ",Descuento = " & _Descuento &
+                   ",SubTotal = " & _SubTotal &
+                   ",PorcComision = " & _PorcComision &
+                   ",Total = " & _Total &
+                   ",PorcImp = " & _PorcImp &
+                   ",ComBruta = " & _ComBruta &
+                   "Where Id = " & _Id_Det & vbCrLf
+
+            End If
 
         Next
 
@@ -1126,29 +1129,35 @@ Public Class Frm_Cms
 
         For Each _Fila_DetalleSc As DataRow In _Tbl_DetalleSc.Rows
 
-            Dim _Id_DetSc As Integer = _Fila_DetalleSc.Item("Id")
+            Dim Estado As DataRowState = _Fila_DetalleSc.RowState
 
-            Dim _ComBruta As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("ComBruta"), False, 5)
-            Dim _ValorDia As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("ValorDia"), False, 5)
-            Dim _TotalPagoSC As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("TotalPagoSC"), False, 5)
-            Dim _DiasHabiles As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("DiasHabiles"), False, 5)
-            Dim _Sabados As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("Sabados"), False, 5)
-            Dim _Domingos As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("Domingos"), False, 5)
-            Dim _Festivos As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("Festivos"), False, 5)
-            Dim _DiasTrabMes As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("DiasTrabMes"), False, 5)
-            Dim _Semanas As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("Semanas"), False, 5)
+            If Not Estado = DataRowState.Deleted Then
 
-            Consulta_Sql += "Update " & _Global_BaseBk & "Zw_Comisiones_DetSc Set " &
-                "ComBruta = " & _ComBruta &
-                ",ValorDia = " & _ValorDia &
-                ",TotalPagoSC = " & _TotalPagoSC &
-                ",DiasHabiles = " & _DiasHabiles &
-                ",Sabados = " & _Sabados &
-                ",Domingos = " & _Domingos &
-                ",Festivos = " & _Festivos &
-                ",DiasTrabMes = " & _DiasTrabMes &
-                ",Semanas = " & _Semanas &
-                "Where Id = " & _Id_DetSc & vbCrLf
+                Dim _Id_DetSc As Integer = _Fila_DetalleSc.Item("Id")
+
+                Dim _ComBruta As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("ComBruta"), False, 5)
+                Dim _ValorDia As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("ValorDia"), False, 5)
+                Dim _TotalPagoSC As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("TotalPagoSC"), False, 5)
+                Dim _DiasHabiles As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("DiasHabiles"), False, 5)
+                Dim _Sabados As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("Sabados"), False, 5)
+                Dim _Domingos As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("Domingos"), False, 5)
+                Dim _Festivos As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("Festivos"), False, 5)
+                Dim _DiasTrabMes As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("DiasTrabMes"), False, 5)
+                Dim _Semanas As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("Semanas"), False, 5)
+
+                Consulta_Sql += "Update " & _Global_BaseBk & "Zw_Comisiones_DetSc Set " &
+                    "ComBruta = " & _ComBruta &
+                    ",ValorDia = " & _ValorDia &
+                    ",TotalPagoSC = " & _TotalPagoSC &
+                    ",DiasHabiles = " & _DiasHabiles &
+                    ",Sabados = " & _Sabados &
+                    ",Domingos = " & _Domingos &
+                    ",Festivos = " & _Festivos &
+                    ",DiasTrabMes = " & _DiasTrabMes &
+                    ",Semanas = " & _Semanas &
+                    "Where Id = " & _Id_DetSc & vbCrLf
+
+            End If
 
         Next
 

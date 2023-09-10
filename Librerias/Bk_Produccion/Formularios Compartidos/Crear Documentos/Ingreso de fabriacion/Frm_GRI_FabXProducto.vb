@@ -8,6 +8,7 @@ Public Class Frm_GRI_FabXProducto
 
     Dim _Row_Pote As DataRow
     Dim _Row_Potl As DataRow
+    Dim _Row_Maepr As DataRow
 
     Dim _FechaDelServidor As Date
 
@@ -84,14 +85,15 @@ Public Class Frm_GRI_FabXProducto
 
     Sub Sb_BuscarProductos(_Numot As String)
 
-        Consulta_sql = "Select * From POTL" & vbCrLf &
-               "Where NUMOT='" & _Numot & "' And EMPRESA = '" & ModEmpresa & "' And LILG <> 'IM' " &
-               "And Exists (Select TABBOPR.* From TABBOPR " &
-               "Where TABBOPR.KOPR = POTL.CODIGO And TABBOPR.KOSU = '" & ModSucursal & "' AND TABBOPR.KOBO = '" & ModBodega & "' ) "
+        Consulta_sql = "Select *,(FABRICAR-REALIZADO) As SALDO From POTL" & vbCrLf &
+                       "Where NUMOT='" & _Numot & "' And EMPRESA = '" & ModEmpresa & "' And LILG <> 'IM' " &
+                       "And Exists (Select TABBOPR.* From TABBOPR " &
+                       "Where TABBOPR.KOPR = POTL.CODIGO And TABBOPR.KOSU = '" & ModSucursal & "' AND TABBOPR.KOBO = '" & ModBodega & "')"
 
         Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         Dim Fm As New Frm_GRI_ProductosOT
+        Fm.MarcarFilasSinSaldo = True
         Fm.Tbl_Productos = _Tbl_Productos
         Fm.ShowDialog(Me)
         _Row_Potl = Fm.FilaSeleccionada
@@ -100,6 +102,8 @@ Public Class Frm_GRI_FabXProducto
         If IsNothing(_Row_Potl) Then
             If String.IsNullOrEmpty(Txt_Codigo.Text) Then
                 MessageBoxEx.Show(Me, "Debe seleccionar algun producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_Numot.Text = String.Empty
+                Txt_Numot.Focus()
             Else
                 Txt_Cantidad.Focus()
             End If
@@ -113,6 +117,13 @@ Public Class Frm_GRI_FabXProducto
         Txt_Codigo.ButtonCustom.Enabled = True
         Txt_Codigo.Text = _Row_Potl.Item("CODIGO")
         Txt_Descripcion.Text = _Row_Potl.Item("GLOSA")
+
+        Lbl_Fabricar.Text = FormatNumber(_Row_Potl.Item("FABRICAR"), 0)
+        Lbl_Realizado.Text = FormatNumber(_Row_Potl.Item("REALIZADO"), 0)
+        Lbl_Saldo.Text = FormatNumber(_Row_Potl.Item("FABRICAR") - _Row_Potl.Item("REALIZADO"), 0)
+
+        Consulta_sql = "Select * From MAEPR Where KOPR = '" & Txt_Codigo.Text & "'"
+        _Row_Maepr = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Txt_Cantidad.Enabled = True
         Txt_Cantidad.Focus()
@@ -136,6 +147,9 @@ Public Class Frm_GRI_FabXProducto
         Txt_Cantidad.Text = String.Empty
         Txt_Cantidad.Tag = 0
         Btn_Grabar.Enabled = False
+        Lbl_Fabricar.Text = "0"
+        Lbl_Realizado.Text = "0"
+        Lbl_Saldo.Text = "0"
         Txt_Numot.Focus()
         Me.Refresh()
     End Sub
@@ -155,6 +169,13 @@ Public Class Frm_GRI_FabXProducto
 
         Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Koen & "'"
         Dim _Row_Entidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If (Txt_Cantidad.Tag + _Row_Potl.Item("REALIZADO")) > _Row_Potl.Item("FABRICAR") Then
+            MessageBoxEx.Show(Me, "Usted no puede recepcionar más que el SALDO indicado en la orden" & vbCrLf &
+                              "", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Cantidad.Focus()
+            Return
+        End If
 
         Dim _Cantidad As String = De_Num_a_Tx_01(Txt_Cantidad.Tag, False, 5)
 
@@ -195,5 +216,31 @@ Public Class Frm_GRI_FabXProducto
             e.Handled = True ' Evita que el ENTER se refleje en el TextBox
             Me.SelectNextControl(ActiveControl, True, True, True, True) ' Salta al siguiente control
         End If
+    End Sub
+
+    Private Sub Txt_Cantidad_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Txt_Cantidad.Validating
+
+        Dim _Ud2 As String = _Row_Maepr.Item("UD02PR")
+        Dim _Cantidad As Double = Val(Txt_Cantidad.Text)
+        Dim _Rtu As Double = _Row_Maepr.Item("RLUD")
+        Dim _Resultado As Double = _Cantidad / _Rtu
+
+        If _Cantidad = 0 Then
+            MessageBoxEx.Show(Me, "Debe ingresar la cantidad", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            e.Cancel = True
+            Return
+        End If
+
+        If (_Cantidad + _Row_Potl.Item("REALIZADO")) > _Row_Potl.Item("FABRICAR") Then
+            MessageBoxEx.Show(Me, "Usted no puede recepcionar más que el SALDO indicado en la orden", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            e.Cancel = True
+            Return
+        End If
+
+        If Not (_Resultado Mod 1 = 0) Then
+            MessageBoxEx.Show(Me, "La cantidad ingresada no es divisible por la unidad 2 " & _Ud2 & "-" & _Rtu, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            e.Cancel = True
+        End If
+
     End Sub
 End Class

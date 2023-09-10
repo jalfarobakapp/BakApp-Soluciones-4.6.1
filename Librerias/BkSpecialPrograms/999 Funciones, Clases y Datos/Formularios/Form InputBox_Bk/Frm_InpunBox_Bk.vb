@@ -299,7 +299,7 @@ Public Class Frm_InpunBox_Bk
     Private Sub Btn_Calendario_Click(sender As Object, e As EventArgs) Handles Btn_Calendario.Click
 
         Dim Fm As New Frm_Seleccionar_Fecha
-        Fm.ExigeFechaMinima = True
+        Fm.ExigeFechaMinima = ConFechaMinima
         Fm.FechaMinima = DateAdd(DateInterval.Day, -1, FechaDelServidor())
         Fm.FechaDisplay = FechaDelServidor()
         Fm.ShowDialog(Me)

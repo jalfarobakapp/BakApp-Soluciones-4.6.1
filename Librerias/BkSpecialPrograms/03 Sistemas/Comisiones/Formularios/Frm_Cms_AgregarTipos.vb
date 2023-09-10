@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports System.Security.Cryptography
+Imports DevComponents.DotNetBar
 
 Public Class Frm_Cms_AgregarTipos
 
@@ -116,6 +117,8 @@ Public Class Frm_Cms_AgregarTipos
         _Filtro_Lista_Precio_Asig_Todas = True
         _Filtro_Lista_Precio_Docu_Todas = True
 
+        Btn_Eliminar.Visible = False
+
         If Not IsNothing(_Row_Comisiones_Mis) Then
 
             With _Row_Comisiones_Mis
@@ -178,6 +181,7 @@ Public Class Frm_Cms_AgregarTipos
             _Filtro_Lista_Precio_Asig_Todas = Not CBool(_Tbl_Filtro_Lista_Precio_Asig.Rows.Count)
             _Filtro_Lista_Precio_Docu_Todas = Not CBool(_Tbl_Filtro_Lista_Precio_Docu.Rows.Count)
 
+            Btn_Eliminar.Visible = True
 
         End If
 
@@ -996,8 +1000,11 @@ Public Class Frm_Cms_AgregarTipos
             If _Filtro_Vendedores_Todas Then
                 _Tbl_Filtro_Vendedores = Nothing
             End If
+
             Sb_Imagenes_Filtros()
+
         End If
+
     End Sub
 
     Private Sub Btn_Filtro_Vendedor_Asignado_Entidad_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Vendedor_Asignado_Entidad.Click
@@ -1017,4 +1024,22 @@ Public Class Frm_Cms_AgregarTipos
             Sb_Imagenes_Filtros()
         End If
     End Sub
+
+    Private Sub Btn_Eliminar_Click(sender As Object, e As EventArgs) Handles Btn_Eliminar.Click
+
+        If MessageBoxEx.Show(Me, "¿Confirma eliminar esta comisión?",
+                             "Eliminar periodo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+
+            Consulta_Sql = "Delete " & _Global_BaseBk & "Zw_Comisiones_Mis Where Id = " & _Id_Mis & vbCrLf &
+                           "Delete " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl" & vbCrLf & "Where Id_Mis = " & _Id_Mis
+            If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql) Then
+                MessageBoxEx.Show(Me, "Regristro eliminado", "Eliminar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Grabar = True
+                Me.Close()
+            End If
+
+        End If
+
+    End Sub
+
 End Class

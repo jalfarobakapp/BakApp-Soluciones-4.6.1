@@ -75,25 +75,26 @@ Public Class Frm_St_DetIngreso
 
         End If
 
-        Input_Cantidad.Value = 1
-        Input_Cantidad.Enabled = False
+        'Input_Cantidad.Value = 1
+        'Input_Cantidad.Enabled = False
 
         Btn_Direccion_Servicio.Enabled = Chk_Serv_Domicilio.Checked
 
         Me.ActiveControl = Txt_NroSerie
-        LabelX12.Visible = False
-        Input_Cantidad.Visible = False
+        'LabelX12.Visible = False
+        'Input_Cantidad.Visible = False
 
     End Sub
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
-        If Input_Cantidad.Value <= 0 Then
+        If Chk_SinNroSerie.Checked And Input_Cantidad.Value <= 0 Then
             MessageBoxEx.Show(Me, "Debe ingresar la cantidad de piezas a reparar", "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Input_Cantidad.Focus()
             Return
         End If
+
 
         If Not Chk_Serv_Domicilio.Checked _
            And Not Chk_Serv_Reparacion_Stock.Checked _
@@ -127,7 +128,7 @@ Public Class Frm_St_DetIngreso
 
         For Each _Fl As DataRow In Cl_OrdenServicio.DsDocumento.Tables(0).Rows
 
-            If Codigo = _Fl.Item("Codigo").ToString.Trim And _Fl.Item("NroSerie").ToString.Trim = Txt_NroSerie.Text.Trim Then
+            If Input_Cantidad.Value = 1 AndAlso Codigo = _Fl.Item("Codigo").ToString.Trim And _Fl.Item("NroSerie").ToString.Trim = Txt_NroSerie.Text.Trim Then
                 MessageBoxEx.Show(Me, "ESTE PRODUCTO Y NUMERO DE SERIE YA SE ENCUENTRA EN LA LISTA", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Txt_NroSerie.Focus()
                 Return
@@ -376,4 +377,19 @@ Public Class Frm_St_DetIngreso
     Private Sub Chk_Serv_Domicilio_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Serv_Domicilio.CheckedChanged
         Btn_Direccion_Servicio.Enabled = Chk_Serv_Domicilio.Checked
     End Sub
+
+    Private Sub Chk_SinNroSerie_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_SinNroSerie.CheckedChanged
+
+        LabelX12.Visible =  Chk_SinNroSerie.Checked
+        Input_Cantidad.Visible = Chk_SinNroSerie.Checked
+        Txt_NroSerie.Enabled = Not Chk_SinNroSerie.Checked
+
+        If Chk_SinNroSerie.Checked Then
+            Txt_NroSerie.Text = String.Empty
+        Else
+            Txt_NroSerie.Focus()
+        End If
+
+    End Sub
+
 End Class

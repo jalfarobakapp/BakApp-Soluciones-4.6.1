@@ -270,4 +270,12 @@ Public Class Productos
     Private Sub Btn_Maestra_Productos_Click(sender As Object, e As EventArgs) Handles Btn_Maestra_Productos.Click
 
     End Sub
+
+    Private Sub Btn_Ofertas_Click(sender As Object, e As EventArgs) Handles Btn_Ofertas.Click
+
+        Dim Fm As New Frm_OfDinamLista
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class

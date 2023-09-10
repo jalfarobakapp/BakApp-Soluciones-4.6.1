@@ -170,7 +170,7 @@ Where Id_Ot = @Id_Ot
 SELECT  Cast(0 as Bit) As Nuevo_Item,Cast(0 As Bit) As Chk,*
         --Id_Ot, ,Semilla, 
         --Utilizado,Codigo,Descripcion, Cantidad, Ud, Un, CantUd1, CantUd2, Precio, Neto_Linea, Iva_Linea, Total_Linea
-FROM    INGETEC_PRB2.dbo.Zw_St_OT_DetProd
+FROM    #Db_BakApp#Zw_St_OT_DetProd
 Where Id_Ot = @Id_Ot And Desde_COV = 0 And EsServicio = 1
 Order by Semilla
 
