@@ -3619,8 +3619,14 @@ Public Module Crear_Documentos_Desde_Otro
             If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_DTE_Configuracion") Then
 
                 Try
-                    _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-                                           "Campo = 'sii.meses.expiran.folios' And Empresa = '" & ModEmpresa & "'")
+                    If _Tido = "GDV" Then
+                        _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
+                                 "Campo = 'siimesesexpiranfolios_GUIAS' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion)
+                    Else
+                        _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
+                                           "Campo = 'siimesesexpiranfolios' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion)
+                    End If
+
                 Catch ex As Exception
                     _Meses = 6
                 End Try

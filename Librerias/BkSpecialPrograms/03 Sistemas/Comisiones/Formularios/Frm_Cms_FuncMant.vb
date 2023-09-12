@@ -66,7 +66,9 @@ Public Class Frm_Cms_FuncMant
 
     Sub Sb_Actualizar_Grilla()
 
-        Consulta_Sql = "Select Mis.*,Case When (Select COUNT(*) From " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl Fl Where Id_Mis = Mis.Id) = 0 Then 'No' Else 'Si' End As Resumen" & vbCrLf &
+        Consulta_Sql = "Select Mis.*," &
+                       "Case When (Select COUNT(*) From " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl Fl Where Id_Mis = Mis.Id) = 0 Then 'No' Else 'Si' End As Resumen," &
+                       "Case When TieneSC = 1 Then 'Si' Else 'No' End As TieneSmeCorr" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Comisiones_Mis Mis" & vbCrLf &
                        "Where CodFuncionario = '" & _Row_Funcionario.Item("KOFU") & "'"
         _Tbl_MisComisiones = _Sql.Fx_Get_Tablas(Consulta_Sql)
@@ -79,7 +81,7 @@ Public Class Frm_Cms_FuncMant
 
             OcultarEncabezadoGrilla(Grilla)
 
-            .Columns("Descripcion").Width = 300
+            .Columns("Descripcion").Width = 330
             .Columns("Descripcion").HeaderText = "Descripción"
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").ReadOnly = False
@@ -94,11 +96,19 @@ Public Class Frm_Cms_FuncMant
             .Columns("PorcComision").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Resumen").Width = 100
+            .Columns("Resumen").Width = 60
             .Columns("Resumen").HeaderText = "Tiene Filtros"
             .Columns("Resumen").Visible = True
             .Columns("Resumen").ReadOnly = False
             .Columns("Resumen").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("TieneSmeCorr").Width = 60
+            .Columns("TieneSmeCorr").HeaderText = "Tiene S.C."
+            .Columns("TieneSmeCorr").ToolTipText = "Tiene semana corrida"
+            .Columns("TieneSmeCorr").Visible = True
+            .Columns("TieneSmeCorr").ReadOnly = False
+            .Columns("TieneSmeCorr").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
         End With
