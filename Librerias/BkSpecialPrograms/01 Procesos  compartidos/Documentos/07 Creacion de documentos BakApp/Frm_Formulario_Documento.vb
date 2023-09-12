@@ -18050,7 +18050,8 @@ Public Class Frm_Formulario_Documento
                                                     _Observaciones As String,
                                                     _Aplica_Descuentos As Boolean,
                                                     _Aplicar_Precio_De_Listas As Boolean,
-                                                    Optional _NroDocumento As String = "")
+                                                    Optional _NroDocumento As String = "",
+                                                    Optional _AgregarDscotSeteados As Boolean = False)
 
         _TblObservaciones.Rows(0).Item("Observaciones") = _Observaciones
 
@@ -18132,11 +18133,22 @@ Public Class Frm_Formulario_Documento
                 _New_Fila.Cells("Operacion").Value = String.Empty
 
                 If _New_Fila.Cells("Precio").Value > 0 Then
+
                     Sb_Procesar_Datos_De_Grilla(_New_Fila, "Cantidad", True, True)
+
                     If _DescuentoPorc > 0 Then
                         _New_Fila.Cells("DescuentoPorc").Value = Math.Round(_DescuentoPorc, 2)
                         Sb_Procesar_Datos_De_Grilla(_New_Fila, "DescuentoPorc", True, True)
+                    Else
+
+                        If _AgregarDscotSeteados Then
+
+                            Sb_Agregar_DsctoSeteadoPorLinea(_New_Fila)
+
+                        End If
+
                     End If
+
                 End If
 
                 _Contador += 1
@@ -18147,6 +18159,94 @@ Public Class Frm_Formulario_Documento
         Next
 
         Sb_Marcar_Grilla()
+
+    End Sub
+
+
+    Sub Sb_Agregar_DsctoSeteadoPorLinea(ByRef _Fila As DataGridViewRow)
+
+        Dim _Id As Integer = _Fila.Cells("Id").Value
+        Dim _Precio As Double
+
+        Dim _TblMaedtli As DataTable = Fx_Crea_Tabla_Con_Filtro(_Ds_Matriz_Documentos.Tables("Descuentos_Doc"), "Id = " & _Id, "Id")
+
+        _Fila.Cells("Recargo_Campo").Value = String.Empty
+        _Fila.Cells("Recargo_Valor").Value = 0
+
+        If Not CBool(_TblMaedtli.Rows.Count) Then
+            Sb_Traer_Descuentos_Seteados_Desde_Lista(_Fila)
+            _TblMaedtli = Fx_Crea_Tabla_Con_Filtro(_Ds_Matriz_Documentos.Tables("Descuentos_Doc"), "Id = " & _Id, "Id")
+        End If
+
+        ' VOLVEMOS A RECALCULAR LOS DESCUENTOS
+        If ChkValores.Checked Then
+            _Precio = _Fila.Cells("ValNetoLinea").Value() + _Fila.Cells("DsctoNeto").Value()
+        Else
+            _Precio = _Fila.Cells("ValBrutoLinea").Value + _Fila.Cells("DsctoBruto").Value()
+        End If
+
+        Dim _Total_Descuento As Double = 0
+        Dim _NroDsctos As Integer
+
+        Eliminar_Campos(_Ds_Matriz_Documentos.Tables("Descuentos_Doc"), _Id)
+
+        Dim _Decimal As Integer
+
+        If ChkValores.Checked Then
+            _Decimal = 1
+        Else
+            _Decimal = 0
+        End If
+
+        For Each _Fila_Dscto As DataRow In _TblMaedtli.Rows
+
+            Dim _Podt As Double = _Fila_Dscto.Item("Podt_Original")
+            Dim _Podt_Original As Double = Math.Round(_Fila_Dscto.Item("Podt_Original"), 5)
+            Dim _Vadt As Double = Math.Round((_Podt / 100) * _Precio, 1)
+
+            Dim _TblDsctos = _Ds_Matriz_Documentos.Tables("Descuentos_Doc").Select("Id = " & _Id)
+            Dim _Valor = _Precio - _Total_Descuento
+
+            If _Podt > 0 Then
+
+                _Vadt = Math.Round((_Podt / 100) * _Valor, _Decimal)
+
+                If Chk_Redondear_Cero.Checked Then _Vadt = Fx_Redondeo_Descuento(_Vadt, Chk_Redondear_Cero.Checked)
+
+                _Podt = Math.Round((_Vadt / _Valor) * 100, 5)
+
+                Dim NewFila As DataRow
+                NewFila = _Ds_Matriz_Documentos.Tables("Descuentos_Doc").NewRow
+
+                With NewFila
+                    .Item("Id") = _Id
+                    .Item("Podt") = _Podt
+                    .Item("Vadt") = _Vadt
+                    .Item("Podt_Original") = _Podt_Original
+                    _Ds_Matriz_Documentos.Tables("Descuentos_Doc").Rows.Add(NewFila)
+                End With
+
+            End If
+
+            _Total_Descuento += _Vadt
+            _NroDsctos += 1
+
+        Next
+
+        _Total_Descuento = Math.Round(_Total_Descuento)
+
+        _Fila.Cells("DescuentoValor").Value = Math.Round(_Total_Descuento, 0)
+        _Fila.Cells("NroDscto").Value = _NroDsctos
+
+        Dim _Recargo_Valor As Double = _Fila.Cells("Recargo_Valor").Value
+
+        If CBool(_Recargo_Valor) Then
+            Sb_Procesar_Datos_De_Grilla(_Fila, "Cantidad", False, False)
+        End If
+
+        If CBool(_Total_Descuento) Then
+            Sb_Procesar_Datos_De_Grilla(_Fila, "DescuentoValor", False, False)
+        End If
 
     End Sub
 

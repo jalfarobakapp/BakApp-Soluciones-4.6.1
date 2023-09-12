@@ -65,6 +65,7 @@ Public Class Frm_Cms
         AddHandler Grilla_DetalleSc.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         AddHandler Grilla_Lineas.MouseDown, AddressOf Sb_Grilla_MouseDown
+        AddHandler Grilla_Detalle.MouseDown, AddressOf Sb_Grilla_Detalle_MouseDown
 
         Sb_Actualizar_Grilla()
 
@@ -254,7 +255,7 @@ Public Class Frm_Cms
             _DisplayIndex += 1
 
             .Columns("ComBrutaSemCorr").Width = 100
-            .Columns("ComBrutaSemCorr").HeaderText = "Com. Bruta S/C"
+            .Columns("ComBrutaSemCorr").HeaderText = "Sem. Corrida"
             .Columns("ComBrutaSemCorr").ToolTipText = "Comision Bruta sujeta a Semana Corrida"
             .Columns("ComBrutaSemCorr").ReadOnly = True
             .Columns("ComBrutaSemCorr").Visible = True
@@ -402,13 +403,31 @@ Public Class Frm_Cms
             .Columns("ValorDia").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Semanas").Width = 100
-            .Columns("Semanas").HeaderText = "Semanas"
-            .Columns("Semanas").ToolTipText = "Semanas"
-            .Columns("Semanas").ReadOnly = True
-            .Columns("Semanas").Visible = True
-            .Columns("Semanas").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Semanas").DisplayIndex = _DisplayIndex
+            '.Columns("Semanas").Width = 100
+            '.Columns("Semanas").HeaderText = "Semanas"
+            '.Columns("Semanas").ToolTipText = "Semanas"
+            '.Columns("Semanas").ReadOnly = True
+            '.Columns("Semanas").Visible = True
+            '.Columns("Semanas").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            '.Columns("Semanas").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
+            .Columns("Domingos").Width = 30
+            .Columns("Domingos").HeaderText = "Dom"
+            .Columns("Domingos").ToolTipText = "Sabados"
+            .Columns("Domingos").ReadOnly = True
+            .Columns("Domingos").Visible = True
+            .Columns("Domingos").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Domingos").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Festivos").Width = 30
+            .Columns("Festivos").HeaderText = "Fes"
+            .Columns("Festivos").ToolTipText = "Festivos"
+            .Columns("Festivos").ReadOnly = True
+            .Columns("Festivos").Visible = True
+            .Columns("Festivos").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Festivos").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("TotalPagoSC").Width = 100
@@ -439,23 +458,7 @@ Public Class Frm_Cms
             '.Columns("Sabados").DisplayIndex = _DisplayIndex
             '_DisplayIndex += 1
 
-            '.Columns("Domingos").Width = 30
-            '.Columns("Domingos").HeaderText = "Dom"
-            '.Columns("Domingos").ToolTipText = "Sabados"
-            '.Columns("Domingos").ReadOnly = True
-            '.Columns("Domingos").Visible = True
-            '.Columns("Domingos").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("Domingos").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
 
-            '.Columns("Festivos").Width = 30
-            '.Columns("Festivos").HeaderText = "Fes"
-            '.Columns("Festivos").ToolTipText = "Festivos"
-            '.Columns("Festivos").ReadOnly = True
-            '.Columns("Festivos").Visible = True
-            '.Columns("Festivos").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("Festivos").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
 
             .Refresh()
 
@@ -500,8 +503,8 @@ Public Class Frm_Cms
 
                     If CBool(_Reg) Then
                         Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl (Id_Det,Chk,Codigo,Descripcion,NombreTblFiltro)" & vbCrLf &
-                                   "Select " & _Id_Det & " As Id_Det,Chk,Codigo,Descripcion,NombreTblFiltro" & vbCrLf &
-                                   "From " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl Where Id_Mis = " & _Id_Mis
+                                       "Select " & _Id_Det & " As Id_Det,Chk,Codigo,Descripcion,NombreTblFiltro" & vbCrLf &
+                                       "From " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl Where Id_Mis = " & _Id_Mis
                         If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
                             MessageBoxEx.Show(Me, "Filtros actualizados desde la ficha del funcionario", "Actualizar Filtros", MessageBoxButtons.OK, MessageBoxIcon.Information)
                         End If
@@ -967,6 +970,23 @@ Public Class Frm_Cms
         End If
     End Sub
 
+    Private Sub Sb_Grilla_Detalle_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+            With sender
+                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+                    Dim _Cabeza = Grilla_Detalle.Columns(Grilla_Detalle.CurrentCell.ColumnIndex).Name
+
+                    If _Cabeza = "Valor" Then
+                        ShowContextMenu(Menu_Contextual_02)
+                    End If
+
+                End If
+            End With
+        End If
+    End Sub
+
     Sub Sb_ActualizarValoresPorFuncionario(_Fila_Lin As DataGridViewRow)
 
         Dim _Id_Lin As Integer = _Fila_Lin.Cells("Id").Value
@@ -1204,7 +1224,7 @@ Public Class Frm_Cms
 
                 If _Grabar Then
 
-                    _PorcCotizaciones = _Afp + _Salud
+                    _PorcCotizaciones = Math.Round(_Afp + _Salud, 2)
 
                     _Fila.Cells("AFP").Value = _Afp
                     _Fila.Cells("Salud").Value = _Salud
@@ -1218,128 +1238,6 @@ Public Class Frm_Cms
 
     End Sub
 
-
-    Function Fx_TraerValoresAlInforme(_FilaDet As DataGridViewRow)
-
-        Dim _Id_Det = _FilaDet.Cells("Id").Value
-
-        'Dim _Valor As Double = _FilaDet.Cells("Valor").Value
-
-        'If Not CBool(_Valor) Then
-
-        '    Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Comisiones_DetFlTbl", "Id_Mis = " & _Id_Mis)
-
-        '    If CBool(_Reg) Then
-        '        Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl (Id_Det,Chk,Codigo,Descripcion,NombreTblFiltro)" & vbCrLf &
-        '                   "Select " & _Id_Det & " As Id_Det,Chk,Codigo,Descripcion,NombreTblFiltro" & vbCrLf &
-        '                   "From " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl Where Id_Mis = " & _Id_Mis
-        '        If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
-        '            MessageBoxEx.Show(Me, "Filtros actualizados desde la ficha del funcionario", "Actualizar Filtros", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        '        End If
-        '    End If
-
-        'End If
-
-        Sb_Cargar_TblInforme(_Id_Det)
-
-        Dim _FechaDesde As Date = Grilla_Periodo.Rows(0).Cells("FechaDesde").Value
-        Dim _FechaHasta As Date = Grilla_Periodo.Rows(0).Cells("FechaHasta").Value
-
-        Dim _Tabla_Matriz_Informe As String = "Zw_Informe_Venta" '"Zw_TblPaso" ' & Trim(FUNCIONARIO)
-
-        Dim Fm As New Frm_Inf_Ventas_X_Periodo_Cubo(Frm_Inf_Ventas_X_Periodo_Cubo.Enum_Informe.Sucursal,
-                                                    _Tabla_Matriz_Informe,
-                                                    1,
-                                                    _FechaDesde,
-                                                    _FechaHasta,
-                                                    False)
-        Fm.Tbl_Filtro_Entidad = _Tbl_Filtro_Entidad
-        Fm.Tbl_Filtro_EntidadExcluidas = _Tbl_Filtro_EntidadExcluidas
-        Fm.Tbl_Filtro_SucursalDoc = _Tbl_Filtro_SucursalDoc
-        Fm.Tbl_Filtro_Sucursales = _Tbl_Filtro_Sucursales
-        Fm.Tbl_Filtro_Bodegas = _Tbl_Filtro_Bodegas
-        Fm.Tbl_Filtro_Ciudad = _Tbl_Filtro_Ciudad
-        Fm.Tbl_Filtro_Comunas = _Tbl_Filtro_Comunas
-        Fm.Tbl_Filtro_Rubro_Entidades = _Tbl_Filtro_Rubro_Entidades
-        Fm.Tbl_Filtro_Zonas_Entidades = _Tbl_Filtro_Zonas_Entidades
-        Fm.Tbl_Filtro_Responzables = _Tbl_Filtro_Responzables
-        Fm.Tbl_Filtro_Vendedores = _Tbl_Filtro_Vendedores
-        Fm.Tbl_Filtro_Vendedores_Asignados = _Tbl_Filtro_Vendedores_Asignados
-        Fm.Tbl_Filtro_Productos = _Tbl_Filtro_Productos
-        Fm.Tbl_Filtro_ProductosExcluidos = _Tbl_Filtro_ProductosExcluidos
-        Fm.Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
-        Fm.Tbl_Filtro_Familias = _Tbl_Filtro_Familias
-        Fm.Tbl_Filtro_Sub_Familias = _Tbl_Filtro_Sub_Familias
-        Fm.Tbl_Filtro_Marcas = _Tbl_Filtro_Marcas
-        Fm.Tbl_Filtro_Rubro_Productos = _Tbl_Filtro_Rubro_Productos
-        Fm.Tbl_Filtro_Clalibpr = _Tbl_Filtro_Clalibpr
-        Fm.Tbl_Filtro_Zonas_Productos = _Tbl_Filtro_Zonas_Productos
-        Fm.Tbl_Filtro_Tipo_Entidad = _Tbl_Filtro_Tipo_Entidad
-        Fm.Tbl_Filtro_Act_Economica = _Tbl_Filtro_Act_Economica
-        Fm.Tbl_Filtro_Tama_Empresa = _Tbl_Filtro_Tama_Empresa
-
-        Fm.Comisiones = True
-        Fm.FechaDesdeFd = _FechaDesde
-        Fm.FechaHastaFh = _FechaHasta
-
-        Fm.Btn_Graficar.Visible = False
-        Fm.Btn_Crear_Venta.Visible = False
-        Fm.Btn_Mantencion_Datos.Visible = False
-        Fm.Btn_Consulta_Ventas_X_Cliente.Visible = False
-        Fm.Btn_Arbol_Asociaciones.Visible = False
-
-        'Fm.ShowDialog(Me)
-        Fm.Sb_TraerValoresParaComisiones()
-
-        If Fm.ImportarComisiones Then
-
-            Dim _TotalNetoComisiones As Double = Fm.TotalNetoComisiones
-
-            If Fm.Pro_Filtro_Entidad_Todas Then
-                _Tbl_Filtro_Entidad = Nothing
-            Else
-                _Tbl_Filtro_Entidad = Fm.Tbl_Filtro_Entidad
-            End If
-
-            _Tbl_Filtro_EntidadExcluidas = Fm.Tbl_Filtro_EntidadExcluidas
-            _Tbl_Filtro_SucursalDoc = Fm.Tbl_Filtro_SucursalDoc
-            _Tbl_Filtro_Sucursales = Fm.Tbl_Filtro_Sucursales
-            _Tbl_Filtro_Bodegas = Fm.Tbl_Filtro_Bodegas
-            _Tbl_Filtro_Ciudad = Fm.Tbl_Filtro_Ciudad
-            _Tbl_Filtro_Comunas = Fm.Tbl_Filtro_Comunas
-            _Tbl_Filtro_Rubro_Entidades = Fm.Tbl_Filtro_Rubro_Entidades
-            _Tbl_Filtro_Zonas_Entidades = Fm.Tbl_Filtro_Zonas_Entidades
-            _Tbl_Filtro_Responzables = Fm.Tbl_Filtro_Responzables
-            _Tbl_Filtro_Vendedores = Fm.Tbl_Filtro_Vendedores
-            _Tbl_Filtro_Vendedores_Asignados = Fm.Tbl_Filtro_Vendedores_Asignados
-
-            If Fm.Pro_Filtro_Productos_Todos Then
-                _Tbl_Filtro_Productos = Nothing
-            Else
-                _Tbl_Filtro_Productos = Fm.Tbl_Filtro_Productos
-            End If
-
-            _Tbl_Filtro_ProductosExcluidos = Fm.Tbl_Filtro_ProductosExcluidos
-            _Tbl_Filtro_Super_Familias = Fm.Tbl_Filtro_Super_Familias
-            _Tbl_Filtro_Familias = Fm.Tbl_Filtro_Familias
-            _Tbl_Filtro_Sub_Familias = Fm.Tbl_Filtro_Sub_Familias
-            _Tbl_Filtro_Marcas = Fm.Tbl_Filtro_Marcas
-            _Tbl_Filtro_Rubro_Productos = Fm.Tbl_Filtro_Rubro_Productos
-            _Tbl_Filtro_Clalibpr = Fm.Tbl_Filtro_Clalibpr
-            _Tbl_Filtro_Zonas_Productos = Fm.Tbl_Filtro_Zonas_Productos
-            _Tbl_Filtro_Tipo_Entidad = Fm.Tbl_Filtro_Tipo_Entidad
-            _Tbl_Filtro_Act_Economica = Fm.Tbl_Filtro_Act_Economica
-            _Tbl_Filtro_Tama_Empresa = Fm.Tbl_Filtro_Tama_Empresa
-
-            _FilaDet.Cells("Valor").Value = Math.Round(_TotalNetoComisiones, 0)
-
-            Sb_Actualizar_TblInforme(_Id_Det)
-
-        End If
-
-        Fm.Dispose()
-
-    End Function
 
     Private Sub Btn_QuitarVendedor_Click(sender As Object, e As EventArgs) Handles Btn_QuitarVendedor.Click
 
@@ -1409,4 +1307,165 @@ Public Class Frm_Cms
 
     End Sub
 
+    Sub Sb_ImportarDatosInforme(_VerInforme As Boolean)
+
+        Dim _FilaLin As DataGridViewRow = Grilla_Lineas.CurrentRow
+        Dim _FilaDet As DataGridViewRow = Grilla_Detalle.CurrentRow
+        Dim _Id_Det As Integer = _FilaDet.Cells("Id").Value
+        Dim _Id_Mis As Integer = _FilaDet.Cells("Id_Mis").Value
+        Dim _TotalNetoComisiones As Double
+
+        Dim _Cabeza = Grilla_Detalle.Columns(Grilla_Detalle.CurrentCell.ColumnIndex).Name
+        Dim _ActualizarTotales As Boolean
+
+        Dim Fm_Espera As Frm_Form_Esperar
+
+        Dim _Valor As Double = _FilaDet.Cells("Valor").Value
+
+        If Not CBool(_Valor) Then
+
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Comisiones_DetFlTbl", "Id_Mis = " & _Id_Mis)
+
+            If CBool(_Reg) Then
+                Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl (Id_Det,Chk,Codigo,Descripcion,NombreTblFiltro)" & vbCrLf &
+                               "Select " & _Id_Det & " As Id_Det,Chk,Codigo,Descripcion,NombreTblFiltro" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl Where Id_Mis = " & _Id_Mis
+                If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
+                    MessageBoxEx.Show(Me, "Filtros actualizados desde la ficha del funcionario", "Actualizar Filtros", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                End If
+            End If
+
+        End If
+
+        Sb_Cargar_TblInforme(_Id_Det)
+
+        Dim _FechaDesde As Date = Grilla_Periodo.Rows(0).Cells("FechaDesde").Value
+        Dim _FechaHasta As Date = Grilla_Periodo.Rows(0).Cells("FechaHasta").Value
+
+        Dim _Tabla_Matriz_Informe As String = "Zw_Informe_Venta" '"Zw_TblPaso" ' & Trim(FUNCIONARIO)
+
+        Dim Fm As New Frm_Inf_Ventas_X_Periodo_Cubo(Frm_Inf_Ventas_X_Periodo_Cubo.Enum_Informe.Sucursal,
+                                                    _Tabla_Matriz_Informe,
+                                                    1,
+                                                    _FechaDesde,
+                                                    _FechaHasta,
+                                                    False)
+        Fm.Tbl_Filtro_Entidad = _Tbl_Filtro_Entidad
+        Fm.Tbl_Filtro_EntidadExcluidas = _Tbl_Filtro_EntidadExcluidas
+        Fm.Tbl_Filtro_SucursalDoc = _Tbl_Filtro_SucursalDoc
+        Fm.Tbl_Filtro_Sucursales = _Tbl_Filtro_Sucursales
+        Fm.Tbl_Filtro_Bodegas = _Tbl_Filtro_Bodegas
+        Fm.Tbl_Filtro_Ciudad = _Tbl_Filtro_Ciudad
+        Fm.Tbl_Filtro_Comunas = _Tbl_Filtro_Comunas
+        Fm.Tbl_Filtro_Rubro_Entidades = _Tbl_Filtro_Rubro_Entidades
+        Fm.Tbl_Filtro_Zonas_Entidades = _Tbl_Filtro_Zonas_Entidades
+        Fm.Tbl_Filtro_Responzables = _Tbl_Filtro_Responzables
+        Fm.Tbl_Filtro_Vendedores = _Tbl_Filtro_Vendedores
+        Fm.Tbl_Filtro_Vendedores_Asignados = _Tbl_Filtro_Vendedores_Asignados
+        Fm.Tbl_Filtro_Productos = _Tbl_Filtro_Productos
+        Fm.Tbl_Filtro_ProductosExcluidos = _Tbl_Filtro_ProductosExcluidos
+        Fm.Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
+        Fm.Tbl_Filtro_Familias = _Tbl_Filtro_Familias
+        Fm.Tbl_Filtro_Sub_Familias = _Tbl_Filtro_Sub_Familias
+        Fm.Tbl_Filtro_Marcas = _Tbl_Filtro_Marcas
+        Fm.Tbl_Filtro_Rubro_Productos = _Tbl_Filtro_Rubro_Productos
+        Fm.Tbl_Filtro_Clalibpr = _Tbl_Filtro_Clalibpr
+        Fm.Tbl_Filtro_Zonas_Productos = _Tbl_Filtro_Zonas_Productos
+        Fm.Tbl_Filtro_Tipo_Entidad = _Tbl_Filtro_Tipo_Entidad
+        Fm.Tbl_Filtro_Act_Economica = _Tbl_Filtro_Act_Economica
+        Fm.Tbl_Filtro_Tama_Empresa = _Tbl_Filtro_Tama_Empresa
+
+        Fm.Comisiones = True
+        Fm.FechaDesdeFd = _FechaDesde
+        Fm.FechaHastaFh = _FechaHasta
+
+        Fm.Btn_Graficar.Visible = False
+        Fm.Btn_Crear_Venta.Visible = False
+        Fm.Btn_Mantencion_Datos.Visible = False
+        Fm.Btn_Consulta_Ventas_X_Cliente.Visible = False
+        Fm.Btn_Arbol_Asociaciones.Visible = False
+
+        If _VerInforme Then
+            Fm.ShowDialog(Me)
+        Else
+            Fm_Espera = New Frm_Form_Esperar
+            Fm_Espera.BarraCircular.IsRunning = True
+            Fm_Espera.Show()
+            Fm.Sb_TraerValoresParaComisiones()
+        End If
+
+        If Fm.ImportarComisiones Then
+
+            _TotalNetoComisiones = Fm.TotalNetoComisiones
+
+            '_TotalNetoComisiones = 1870718747
+
+            If Fm.Pro_Filtro_Entidad_Todas Then
+                _Tbl_Filtro_Entidad = Nothing
+            Else
+                _Tbl_Filtro_Entidad = Fm.Tbl_Filtro_Entidad
+            End If
+
+            _Tbl_Filtro_EntidadExcluidas = Fm.Tbl_Filtro_EntidadExcluidas
+            _Tbl_Filtro_SucursalDoc = Fm.Tbl_Filtro_SucursalDoc
+            _Tbl_Filtro_Sucursales = Fm.Tbl_Filtro_Sucursales
+            _Tbl_Filtro_Bodegas = Fm.Tbl_Filtro_Bodegas
+            _Tbl_Filtro_Ciudad = Fm.Tbl_Filtro_Ciudad
+            _Tbl_Filtro_Comunas = Fm.Tbl_Filtro_Comunas
+            _Tbl_Filtro_Rubro_Entidades = Fm.Tbl_Filtro_Rubro_Entidades
+            _Tbl_Filtro_Zonas_Entidades = Fm.Tbl_Filtro_Zonas_Entidades
+            _Tbl_Filtro_Responzables = Fm.Tbl_Filtro_Responzables
+            _Tbl_Filtro_Vendedores = Fm.Tbl_Filtro_Vendedores
+            _Tbl_Filtro_Vendedores_Asignados = Fm.Tbl_Filtro_Vendedores_Asignados
+
+            If Fm.Pro_Filtro_Productos_Todos Then
+                _Tbl_Filtro_Productos = Nothing
+            Else
+                _Tbl_Filtro_Productos = Fm.Tbl_Filtro_Productos
+            End If
+
+            _Tbl_Filtro_ProductosExcluidos = Fm.Tbl_Filtro_ProductosExcluidos
+            _Tbl_Filtro_Super_Familias = Fm.Tbl_Filtro_Super_Familias
+            _Tbl_Filtro_Familias = Fm.Tbl_Filtro_Familias
+            _Tbl_Filtro_Sub_Familias = Fm.Tbl_Filtro_Sub_Familias
+            _Tbl_Filtro_Marcas = Fm.Tbl_Filtro_Marcas
+            _Tbl_Filtro_Rubro_Productos = Fm.Tbl_Filtro_Rubro_Productos
+            _Tbl_Filtro_Clalibpr = Fm.Tbl_Filtro_Clalibpr
+            _Tbl_Filtro_Zonas_Productos = Fm.Tbl_Filtro_Zonas_Productos
+            _Tbl_Filtro_Tipo_Entidad = Fm.Tbl_Filtro_Tipo_Entidad
+            _Tbl_Filtro_Act_Economica = Fm.Tbl_Filtro_Act_Economica
+            _Tbl_Filtro_Tama_Empresa = Fm.Tbl_Filtro_Tama_Empresa
+
+            _FilaDet.Cells("Valor").Value = Math.Round(_TotalNetoComisiones, 0)
+
+            Sb_Actualizar_TblInforme(_Id_Det)
+            _ActualizarTotales = True
+
+        End If
+
+        Fm.Dispose()
+
+        If _ActualizarTotales Then
+
+            Sb_ActualizarValoresPorFuncionario(_FilaLin)
+
+            If Not IsNothing(Fm_Espera) Then
+                Fm_Espera.Dispose()
+            End If
+
+        End If
+
+        If Not IsNothing(Fm_Espera) Then
+            Fm_Espera.Dispose()
+        End If
+
+    End Sub
+
+    Private Sub Btn_TraerVentasDeLaComision_Click(sender As Object, e As EventArgs) Handles Btn_TraerVentasDeLaComision.Click
+        Sb_ImportarDatosInforme(False)
+    End Sub
+
+    Private Sub Btn_VerInformeDeLaComsion_Click(sender As Object, e As EventArgs) Handles Btn_VerInformeDeLaComsion.Click
+        Sb_ImportarDatosInforme(True)
+    End Sub
 End Class

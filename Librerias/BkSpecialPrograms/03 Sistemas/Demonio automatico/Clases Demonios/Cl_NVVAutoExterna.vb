@@ -68,7 +68,7 @@ Public Class Cl_NVVAutoExterna
         Fm.Sb_Limpiar(Modalidad_NVV)
         Fm.Pro_RowEntidad = _Row_Entidad
         Fm.Sb_Crear_Documento_Interno_Con_Tabla(_Formulario, _Tbl_Productos, _Fecha_Emision,
-                                                "Codigo", "Cantidad", "Precio", "Observacion", False, True)
+                                                "Codigo", "Cantidad", "Precio", "Observacion", False, True,, True)
         'Fm.Pro_Bodega_Destino = _Bod_Destino
         Dim _New_Idmaeedo = Fm.Fx_Grabar_Documento(False)
         Fm.Dispose()

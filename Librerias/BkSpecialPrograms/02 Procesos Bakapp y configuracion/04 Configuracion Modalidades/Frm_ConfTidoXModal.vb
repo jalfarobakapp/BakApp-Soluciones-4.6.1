@@ -242,6 +242,13 @@ Public Class Frm_ConfTidoXModal
                    ",AvisoSaldoFolios = " & _AvisoSaldoFolios & vbCrLf &
                    "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'" 'In " & _Filtro_Tido
 
+        If _Filtro_Tido = "('GDV','GTI','GDP','GDD')" Then
+            Consulta_sql += vbCrLf & vbCrLf & "Update " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad Set" & vbCrLf &
+                            "DiasAvisoExpiraFolio = " & _DiasAvisoExpiraFolio & vbCrLf &
+                            ",AvisoSaldoFolios = " & _AvisoSaldoFolios & vbCrLf &
+                            "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc In " & _Filtro_Tido
+        End If
+
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
             Consulta_sql = "Select ZConf.*,Td.*" & vbCrLf &

@@ -1367,12 +1367,6 @@
     <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_AgregarTipos.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_Calcular.Designer.vb">
-      <DependentUpon>Frm_Cms_Calcular.vb</DependentUpon>
-    </Compile>
-    <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_Calcular.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_FuncMant.Designer.vb">
       <DependentUpon>Frm_Cms_FuncMant.vb</DependentUpon>
     </Compile>
@@ -4649,9 +4643,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_AgregarTipos.resx">
       <DependentUpon>Frm_Cms_AgregarTipos.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_Calcular.resx">
-      <DependentUpon>Frm_Cms_Calcular.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Comisiones\Formularios\Frm_Cms_Fun.resx">
       <DependentUpon>Frm_Cms_Fun.vb</DependentUpon>
