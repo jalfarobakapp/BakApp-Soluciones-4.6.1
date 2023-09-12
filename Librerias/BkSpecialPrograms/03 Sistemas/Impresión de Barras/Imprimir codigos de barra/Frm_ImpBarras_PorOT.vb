@@ -302,7 +302,7 @@ Public Class Frm_ImpBarras_PorOT
             _Global_Row_EstacionBk = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If _Grabar Then
-                CerrarPorConfigurar = True
+                'CerrarPorConfigurar = True
                 Me.Close()
             End If
 

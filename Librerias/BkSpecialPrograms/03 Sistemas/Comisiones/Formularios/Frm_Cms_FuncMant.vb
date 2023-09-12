@@ -110,22 +110,26 @@ Public Class Frm_Cms_FuncMant
         _Afp = Val(Txt_AFP.Text)
         _Salud = Val(Txt_Salud.Text)
 
-        If _Afp = 0 Then
-            If MessageBoxEx.Show(Me, "AFP en cero" & vbCrLf &
-                                 "¿Confirma dejar el valor en cero?", "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
-                Txt_AFP.Text = 0
-                Txt_AFP.Focus()
-                Return
-            End If
-        End If
+        If Chk_Habilitado.Checked Then
 
-        If _Salud = 0 Then
-            If MessageBoxEx.Show(Me, "Salud en cero" & vbCrLf &
-                                 "¿Confirma dejar el valor en cero?", "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
-                Txt_Salud.Text = 0
-                Txt_Salud.Focus()
-                Return
+            If _Afp = 0 Then
+                If MessageBoxEx.Show(Me, "AFP en cero" & vbCrLf &
+                                     "¿Confirma dejar el valor en cero?", "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
+                    Txt_AFP.Text = 0
+                    Txt_AFP.Focus()
+                    Return
+                End If
             End If
+
+            If _Salud = 0 Then
+                If MessageBoxEx.Show(Me, "Salud en cero" & vbCrLf &
+                                     "¿Confirma dejar el valor en cero?", "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
+                    Txt_Salud.Text = 0
+                    Txt_Salud.Focus()
+                    Return
+                End If
+            End If
+
         End If
 
         If EditandoDesdeComisiones Then
@@ -204,6 +208,7 @@ Public Class Frm_Cms_FuncMant
         Dim _CodFuncionario As String = _Fila.Cells("CodFuncionario").Value
 
         Dim Fm As New Frm_Cms_AgregarTipos(_Id, _CodFuncionario)
+        Fm.Text = "FUNCIONARIO(A): " & Txt_Funcionario.Text.Trim
         Fm.ShowDialog(Me)
         If Fm.Grabar Then
             Sb_Actualizar_Grilla()

@@ -156,7 +156,7 @@ Partial Class Frm_Cms_FuncMant
         Me.Btn_AgregarComision.Image = CType(resources.GetObject("Btn_AgregarComision.Image"), System.Drawing.Image)
         Me.Btn_AgregarComision.ImageAlt = CType(resources.GetObject("Btn_AgregarComision.ImageAlt"), System.Drawing.Image)
         Me.Btn_AgregarComision.Name = "Btn_AgregarComision"
-        Me.Btn_AgregarComision.Tooltip = "Configuración de asistente de compra"
+        Me.Btn_AgregarComision.Tooltip = "Agregar comisión"
         '
         'GroupPanel2
         '
