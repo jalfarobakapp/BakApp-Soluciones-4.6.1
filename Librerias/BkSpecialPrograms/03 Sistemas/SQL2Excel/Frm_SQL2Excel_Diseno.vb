@@ -779,7 +779,7 @@ Public Class Frm_SQL2Excel_Diseno
 
                 If Not (_Row_SQL_Querys Is Nothing) Then
                     Consulta_sql = "Update " & _Global_BaseBk & "Zw_SQL_Querys Set 
-                                    Nombre_Query = '" & Trim(Txt_Nombre_Query.Text) & "',
+                                    Nombre_Query = '" & Txt_Nombre_Query.Text.Trim & "',
                                     SQL_Query = '" & _SQL_Query & "',
                                     Consulta_Global = " & CInt(Rdb_Consulta_Global.Checked) * -1 & ",
                                     Consulta_Personal = " & CInt(Rdb_Consulta_Personal.Checked) * -1 & "

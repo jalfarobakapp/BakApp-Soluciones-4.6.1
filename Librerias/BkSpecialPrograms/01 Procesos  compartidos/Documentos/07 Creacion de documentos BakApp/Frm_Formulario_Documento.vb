@@ -16640,7 +16640,30 @@ Public Class Frm_Formulario_Documento
             End If
 
             If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Venta Then
-                Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, _Revisar_Permiso_Lista_Precio,, False)
+
+                Dim _Idmaeedo_Origen2 As Integer = _RowMaeedo_Origen.Item("IDMAEEDO")
+
+                Consulta_sql = "Select FResp.*,Isnull(FDoc.Autorizacion,'RECHAZADO') As CodAutorizacion" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_Fincred_TramaRespuesta FResp" & vbCrLf &
+                               "Left Join " & _Global_BaseBk & "Zw_Fincred_Documentos FDoc On FResp.Id = FDoc.Id_TR" & vbCrLf &
+                               "Where (Idmaeedo = " & _Idmaeedo_Origen2 & ")"
+                Dim _RowFincred As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                Dim _Aplicar_Vencimientos As Boolean = True
+
+                If Not IsNothing(_RowFincred) Then
+
+                    Dim _Codigo_negacion_transaccion = _RowFincred.Item("Codigo_negacion_transaccion")
+                    Dim _Descripcion_negacion = _RowFincred.Item("Descripcion_negacion")
+                    Dim _CodAutorizacion = _RowFincred.Item("CodAutorizacion")
+
+                    If _Codigo_negacion_transaccion <> 0 Or _CodAutorizacion = "RECHAZADO" Then
+                        _Aplicar_Vencimientos = False
+                    End If
+
+                End If
+
+                Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, _Revisar_Permiso_Lista_Precio, _Aplicar_Vencimientos, False)
             Else
                 Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False)
             End If
@@ -25030,6 +25053,7 @@ Public Class Frm_Formulario_Documento
         'NO00017 GDV - -NVV / FCV
         'NO00018 NVV - -COV
         'NO00019 NCV - -FCV
+        'NO00020 GRD - -NCV
 
         Select Case _Tido
             Case "GRI" : _Permiso = "NO00013" : _Tidopa1 = "GTI o GDI" ': _Tidopa2 = "GDI"
@@ -25039,8 +25063,7 @@ Public Class Frm_Formulario_Documento
             Case "GDV" : _Permiso = "NO00017" : _Tidopa1 = "NVV o FCV" ': _Tidopa2 = "FCV"
             Case "NVV" : _Permiso = "NO00018" : _Tidopa1 = "COV"
             Case "NCV" : _Permiso = "NO00019" : _Tidopa1 = "FCV o GRD"
-            Case "GRD"
-                Dim Grd = True
+            Case "GRD" : _Permiso = "NO00020" : _Tidopa1 = "NCV"
             Case Else
                 Return True
         End Select
@@ -25056,8 +25079,6 @@ Public Class Frm_Formulario_Documento
                 Dim _Suen = _RowEntidad.Item("SUEN")
 
                 If Fx_Tiene_Permiso(Me, _Permiso,, False) Then
-                    '    Return True
-                    'Else
                     If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00080", _Ds_Matriz_Documentos, _Koen, _Suen) Then
                         MessageBoxEx.Show(Me, "No puede grabar " & _Tido & " sin documentos relacionados: " & _Tidopa1, "Validación",
                                       MessageBoxButtons.OK, MessageBoxIcon.Stop)
