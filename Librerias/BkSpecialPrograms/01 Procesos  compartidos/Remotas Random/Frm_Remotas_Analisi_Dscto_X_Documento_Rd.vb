@@ -141,6 +141,11 @@ Public Class Frm_Remotas_Analisi_Dscto_X_Documento_Rd
         If _Exite_Documento Then
 
             _Row_Encabezado = _Ds_Documento.Tables(0).Rows(0)
+
+            'If _Row_Encabezado.Item("TIDO") <> "BLV" Then
+            _Row_Encabezado.Item("MEARDO") = "N"
+            'End If
+
             _Tbl_Detalle = _Ds_Documento.Tables(1)
 
             _Tbl_Detalle.Columns.Add("Total_Costo", System.Type.[GetType]("System.Double"))
@@ -365,7 +370,7 @@ Public Class Frm_Remotas_Analisi_Dscto_X_Documento_Rd
             .Columns(_Precio_Lista).Visible = True
             .Columns(_Precio_Lista).DisplayIndex = 6
 
-            .Columns(_Precio_Linea).Width = 72
+            .Columns(_Precio_Linea).Width = 80
             .Columns(_Precio_Linea).HeaderText = _Titulo_Precio & " (Digitado)"
             .Columns(_Precio_Linea).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns(_Precio_Linea).DefaultCellStyle.Format = _FormatoPrecio

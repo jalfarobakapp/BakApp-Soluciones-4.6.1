@@ -27,6 +27,8 @@ Partial Class Frm_Dte_Configuracion
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Importar_Datos_Random = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_MailContactoSIIPruebas = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_FchResol = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Btn_Buscar_Cn = New DevComponents.DotNetBar.ButtonX()
         Me.Txt_Cn = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -61,11 +63,17 @@ Partial Class Frm_Dte_Configuracion
         Me.LabelX11 = New DevComponents.DotNetBar.LabelX()
         Me.MStb_Barra = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Etiqueta = New DevComponents.DotNetBar.LabelItem()
-        Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_MailContactoSIIPruebas = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.LabelX14 = New DevComponents.DotNetBar.LabelX()
+        Me.Input_siimesesexpiranfolios = New DevComponents.Editors.IntegerInput()
+        Me.Input_siimesesexpiranfolios_GUIAS = New DevComponents.Editors.IntegerInput()
+        Me.LabelX15 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.GroupPanel2.SuspendLayout()
+        Me.GroupPanel3.SuspendLayout()
+        CType(Me.Input_siimesesexpiranfolios, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Input_siimesesexpiranfolios_GUIAS, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Bar1
@@ -74,7 +82,7 @@ Partial Class Frm_Dte_Configuracion
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Importar_Datos_Random})
-        Me.Bar1.Location = New System.Drawing.Point(0, 439)
+        Me.Bar1.Location = New System.Drawing.Point(0, 509)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(510, 41)
         Me.Bar1.Stretch = True
@@ -156,6 +164,38 @@ Partial Class Frm_Dte_Configuracion
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 43
         Me.GroupPanel1.Text = "Configuración de empresa"
+        '
+        'Txt_MailContactoSIIPruebas
+        '
+        Me.Txt_MailContactoSIIPruebas.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_MailContactoSIIPruebas.Border.Class = "TextBoxBorder"
+        Me.Txt_MailContactoSIIPruebas.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_MailContactoSIIPruebas.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_MailContactoSIIPruebas.ForeColor = System.Drawing.Color.Black
+        Me.Txt_MailContactoSIIPruebas.Location = New System.Drawing.Point(237, 149)
+        Me.Txt_MailContactoSIIPruebas.Name = "Txt_MailContactoSIIPruebas"
+        Me.Txt_MailContactoSIIPruebas.PreventEnterBeep = True
+        Me.Txt_MailContactoSIIPruebas.Size = New System.Drawing.Size(240, 22)
+        Me.Txt_MailContactoSIIPruebas.TabIndex = 70
+        Me.Txt_MailContactoSIIPruebas.Tag = "NroResol"
+        Me.Txt_MailContactoSIIPruebas.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'LabelX13
+        '
+        Me.LabelX13.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX13.ForeColor = System.Drawing.Color.Black
+        Me.LabelX13.Location = New System.Drawing.Point(165, 150)
+        Me.LabelX13.Name = "LabelX13"
+        Me.LabelX13.Size = New System.Drawing.Size(99, 23)
+        Me.LabelX13.TabIndex = 69
+        Me.LabelX13.Text = "Email pruebas"
         '
         'Txt_FchResol
         '
@@ -696,7 +736,7 @@ Partial Class Frm_Dte_Configuracion
         Me.MStb_Barra.ForeColor = System.Drawing.Color.Black
         Me.MStb_Barra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Etiqueta})
         Me.MStb_Barra.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.MStb_Barra.Location = New System.Drawing.Point(0, 480)
+        Me.MStb_Barra.Location = New System.Drawing.Point(0, 550)
         Me.MStb_Barra.Name = "MStb_Barra"
         Me.MStb_Barra.Size = New System.Drawing.Size(510, 22)
         Me.MStb_Barra.TabIndex = 46
@@ -707,43 +747,119 @@ Partial Class Frm_Dte_Configuracion
         Me.Lbl_Etiqueta.Name = "Lbl_Etiqueta"
         Me.Lbl_Etiqueta.Text = "Ambiente de producción"
         '
-        'LabelX13
+        'GroupPanel3
         '
-        Me.LabelX13.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX13.ForeColor = System.Drawing.Color.Black
-        Me.LabelX13.Location = New System.Drawing.Point(165, 150)
-        Me.LabelX13.Name = "LabelX13"
-        Me.LabelX13.Size = New System.Drawing.Size(99, 23)
-        Me.LabelX13.TabIndex = 69
-        Me.LabelX13.Text = "Email pruebas"
-        '
-        'Txt_MailContactoSIIPruebas
-        '
-        Me.Txt_MailContactoSIIPruebas.BackColor = System.Drawing.Color.White
+        Me.GroupPanel3.BackColor = System.Drawing.Color.White
+        Me.GroupPanel3.CanvasColor = System.Drawing.SystemColors.Control
+        Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel3.Controls.Add(Me.Input_siimesesexpiranfolios_GUIAS)
+        Me.GroupPanel3.Controls.Add(Me.LabelX15)
+        Me.GroupPanel3.Controls.Add(Me.Input_siimesesexpiranfolios)
+        Me.GroupPanel3.Controls.Add(Me.LabelX14)
+        Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel3.Location = New System.Drawing.Point(12, 444)
+        Me.GroupPanel3.Name = "GroupPanel3"
+        Me.GroupPanel3.Size = New System.Drawing.Size(486, 59)
         '
         '
         '
-        Me.Txt_MailContactoSIIPruebas.Border.Class = "TextBoxBorder"
-        Me.Txt_MailContactoSIIPruebas.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_MailContactoSIIPruebas.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_MailContactoSIIPruebas.ForeColor = System.Drawing.Color.Black
-        Me.Txt_MailContactoSIIPruebas.Location = New System.Drawing.Point(237, 149)
-        Me.Txt_MailContactoSIIPruebas.Name = "Txt_MailContactoSIIPruebas"
-        Me.Txt_MailContactoSIIPruebas.PreventEnterBeep = True
-        Me.Txt_MailContactoSIIPruebas.Size = New System.Drawing.Size(240, 22)
-        Me.Txt_MailContactoSIIPruebas.TabIndex = 70
-        Me.Txt_MailContactoSIIPruebas.Tag = "NroResol"
-        Me.Txt_MailContactoSIIPruebas.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.GroupPanel3.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel3.Style.BackColorGradientAngle = 90
+        Me.GroupPanel3.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel3.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderBottomWidth = 1
+        Me.GroupPanel3.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel3.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderLeftWidth = 1
+        Me.GroupPanel3.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderRightWidth = 1
+        Me.GroupPanel3.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderTopWidth = 1
+        Me.GroupPanel3.Style.CornerDiameter = 4
+        Me.GroupPanel3.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel3.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel3.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel3.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel3.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel3.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel3.TabIndex = 47
+        Me.GroupPanel3.Text = "Meses para expiración de folios"
+        '
+        'LabelX14
+        '
+        Me.LabelX14.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX14.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX14.ForeColor = System.Drawing.Color.Black
+        Me.LabelX14.Location = New System.Drawing.Point(3, 10)
+        Me.LabelX14.Name = "LabelX14"
+        Me.LabelX14.Size = New System.Drawing.Size(112, 23)
+        Me.LabelX14.TabIndex = 33
+        Me.LabelX14.Text = "FCV, BLV, NCV y FDV"
+        '
+        'Input_siimesesexpiranfolios
+        '
+        '
+        '
+        '
+        Me.Input_siimesesexpiranfolios.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_siimesesexpiranfolios.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_siimesesexpiranfolios.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_siimesesexpiranfolios.Enabled = False
+        Me.Input_siimesesexpiranfolios.Location = New System.Drawing.Point(111, 11)
+        Me.Input_siimesesexpiranfolios.MaxValue = 6
+        Me.Input_siimesesexpiranfolios.MinValue = 6
+        Me.Input_siimesesexpiranfolios.Name = "Input_siimesesexpiranfolios"
+        Me.Input_siimesesexpiranfolios.ShowUpDown = True
+        Me.Input_siimesesexpiranfolios.Size = New System.Drawing.Size(55, 22)
+        Me.Input_siimesesexpiranfolios.TabIndex = 34
+        Me.Input_siimesesexpiranfolios.Value = 6
+        '
+        'Input_siimesesexpiranfolios_GUIAS
+        '
+        '
+        '
+        '
+        Me.Input_siimesesexpiranfolios_GUIAS.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_siimesesexpiranfolios_GUIAS.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_siimesesexpiranfolios_GUIAS.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_siimesesexpiranfolios_GUIAS.Location = New System.Drawing.Point(222, 11)
+        Me.Input_siimesesexpiranfolios_GUIAS.MaxValue = 100
+        Me.Input_siimesesexpiranfolios_GUIAS.MinValue = 6
+        Me.Input_siimesesexpiranfolios_GUIAS.Name = "Input_siimesesexpiranfolios_GUIAS"
+        Me.Input_siimesesexpiranfolios_GUIAS.ShowUpDown = True
+        Me.Input_siimesesexpiranfolios_GUIAS.Size = New System.Drawing.Size(55, 22)
+        Me.Input_siimesesexpiranfolios_GUIAS.TabIndex = 36
+        Me.Input_siimesesexpiranfolios_GUIAS.Value = 100
+        '
+        'LabelX15
+        '
+        Me.LabelX15.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX15.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX15.ForeColor = System.Drawing.Color.Black
+        Me.LabelX15.Location = New System.Drawing.Point(184, 11)
+        Me.LabelX15.Name = "LabelX15"
+        Me.LabelX15.Size = New System.Drawing.Size(39, 23)
+        Me.LabelX15.TabIndex = 35
+        Me.LabelX15.Text = "Guías"
         '
         'Frm_Dte_Configuracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(510, 502)
+        Me.ClientSize = New System.Drawing.Size(510, 572)
+        Me.Controls.Add(Me.GroupPanel3)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Bar1)
@@ -762,6 +878,9 @@ Partial Class Frm_Dte_Configuracion
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
         Me.GroupPanel2.ResumeLayout(False)
+        Me.GroupPanel3.ResumeLayout(False)
+        CType(Me.Input_siimesesexpiranfolios, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Input_siimesesexpiranfolios_GUIAS, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -806,4 +925,9 @@ Partial Class Frm_Dte_Configuracion
     Friend WithEvents Btn_Importar_Datos_Random As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Txt_MailContactoSIIPruebas As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX13 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents GroupPanel3 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents Input_siimesesexpiranfolios_GUIAS As DevComponents.Editors.IntegerInput
+    Friend WithEvents LabelX15 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Input_siimesesexpiranfolios As DevComponents.Editors.IntegerInput
+    Friend WithEvents LabelX14 As DevComponents.DotNetBar.LabelX
 End Class

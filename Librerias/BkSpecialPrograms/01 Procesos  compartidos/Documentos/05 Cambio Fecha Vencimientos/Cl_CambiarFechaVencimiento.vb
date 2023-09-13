@@ -241,12 +241,12 @@ Public Class Cl_CambiarFechaVencimiento
         If CBool(_Reg) Then
 
             Consulta_sql = "Select Tresp.Nudo,Tresp.Json," & vbCrLf &
-               "Case When TDoc.Fecha_vencimiento Is not null Then " &
-               "CAST(''+Substring(TDoc.Fecha_vencimiento,1,2)+'/'+Substring(TDoc.Fecha_vencimiento,3,2)+'/'+Substring(TDoc.Fecha_vencimiento,5,4)+'' As datetime) Else Null End As Fecha_vencimiento" & vbCrLf &
-               ",Isnull(TDoc.Autorizacion,'Rechazado') As Autorizacion" & vbCrLf &
-               "From " & _Global_BaseBk & "Zw_Fincred_TramaRespuesta Tresp" & vbCrLf &
-               "Inner Join " & _Global_BaseBk & "Zw_Fincred_Documentos TDoc On TDoc.Id_TR = Tresp.Id" & vbCrLf &
-               "Where Tresp.Idmaeedo = " & _IdmaeedoNVV
+                           "Case When TDoc.Fecha_vencimiento Is not null Then " &
+                           "CAST(''+Substring(TDoc.Fecha_vencimiento,1,2)+'/'+Substring(TDoc.Fecha_vencimiento,3,2)+'/'+Substring(TDoc.Fecha_vencimiento,5,4)+'' As datetime) Else Null End As Fecha_vencimiento" & vbCrLf &
+                           ",Isnull(TDoc.Autorizacion,'Rechazado') As Autorizacion" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_Fincred_TramaRespuesta Tresp" & vbCrLf &
+                           "Inner Join " & _Global_BaseBk & "Zw_Fincred_Documentos TDoc On TDoc.Id_TR = Tresp.Id" & vbCrLf &
+                           "Where Tresp.Idmaeedo = " & _IdmaeedoNVV
 
             Dim _RowFincred As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
             Dim _Fecha_vencimiento As Date

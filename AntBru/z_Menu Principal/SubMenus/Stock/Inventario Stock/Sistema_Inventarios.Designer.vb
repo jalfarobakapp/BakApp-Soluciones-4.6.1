@@ -33,6 +33,7 @@ Partial Class Sistema_Inventarios
         Me.Btn_Documentos_Stock = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Maquila = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.BtnCambiarDeUsuario = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -41,8 +42,8 @@ Partial Class Sistema_Inventarios
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir})
-        Me.Bar2.Location = New System.Drawing.Point(0, 286)
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir, Me.BtnCambiarDeUsuario})
+        Me.Bar2.Location = New System.Drawing.Point(0, 291)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(642, 41)
         Me.Bar2.Stretch = True
@@ -204,6 +205,7 @@ Partial Class Sistema_Inventarios
         Me.Btn_Maquila.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(209, Byte), Integer), CType(CType(93, Byte), Integer), CType(CType(123, Byte), Integer))
         Me.Btn_Maquila.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
         Me.Btn_Maquila.TitleText = "BakApp"
+        Me.Btn_Maquila.Visible = False
         '
         'LabelX1
         '
@@ -219,6 +221,16 @@ Partial Class Sistema_Inventarios
         Me.LabelX1.TabIndex = 36
         Me.LabelX1.Text = "<font color=""#349FCE""><b>INVENTARIOS</b></font>"
         '
+        'BtnCambiarDeUsuario
+        '
+        Me.BtnCambiarDeUsuario.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.BtnCambiarDeUsuario.ForeColor = System.Drawing.Color.Black
+        Me.BtnCambiarDeUsuario.Image = CType(resources.GetObject("BtnCambiarDeUsuario.Image"), System.Drawing.Image)
+        Me.BtnCambiarDeUsuario.ImageAlt = CType(resources.GetObject("BtnCambiarDeUsuario.ImageAlt"), System.Drawing.Image)
+        Me.BtnCambiarDeUsuario.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.BtnCambiarDeUsuario.Name = "BtnCambiarDeUsuario"
+        Me.BtnCambiarDeUsuario.Tooltip = "Cambiar de usuario"
+        '
         'Sistema_Inventarios
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -227,7 +239,7 @@ Partial Class Sistema_Inventarios
         Me.Controls.Add(Me.MetroTilePanel1)
         Me.Controls.Add(Me.LabelX1)
         Me.Name = "Sistema_Inventarios"
-        Me.Size = New System.Drawing.Size(642, 327)
+        Me.Size = New System.Drawing.Size(642, 332)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -242,4 +254,5 @@ Partial Class Sistema_Inventarios
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Private WithEvents Btn_Documentos_Stock As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Maquila As DevComponents.DotNetBar.Metro.MetroTileItem
+    Friend WithEvents BtnCambiarDeUsuario As DevComponents.DotNetBar.ButtonItem
 End Class
