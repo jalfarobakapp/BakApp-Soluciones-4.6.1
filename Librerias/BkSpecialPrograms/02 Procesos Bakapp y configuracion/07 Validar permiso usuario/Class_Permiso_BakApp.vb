@@ -563,6 +563,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00087", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00088", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00089", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00090", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -843,6 +844,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Stec0017", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Stec0018", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Stec0019", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Stec0020", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Scn00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Scn00002", _Objeto, _Formulario)
@@ -2483,6 +2485,11 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 
+            Case "Doc00090"
+                _DescripcionPermiso = "PERMITIR CAMBIAR LA FECHA DE EMISION EN DOCUMENTOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
         End Select
 
 #End Region
@@ -3720,6 +3727,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.SERVICIO_TECNICO.ToString
             Case "Stec0019"
                 _DescripcionPermiso = "INGRESAR A CONFIGURACIONES DEL SIS. SERV. TECNICO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SERVICIO_TECNICO, 6)
+                _NombreFamiliaPermiso = _Fml.SERVICIO_TECNICO.ToString
+            Case "Stec0020"
+                _DescripcionPermiso = "PERMITIR GENERAR ORDENES DE SERVICIO CON DEUDA VENCIDA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.SERVICIO_TECNICO, 6)
                 _NombreFamiliaPermiso = _Fml.SERVICIO_TECNICO.ToString
 

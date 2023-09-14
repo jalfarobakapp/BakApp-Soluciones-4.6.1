@@ -11957,10 +11957,18 @@ Public Class Frm_Formulario_Documento
 
                     Dim _Vizado As Boolean = Grilla_Encabezado.Rows(0).Cells("Vizado").Value
 
-                    If _Vizado And _Cabeza = "FechaEmision" Then
-                        If Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00052", _Ds_Matriz_Documentos) Then 'Fx_Tiene_Permiso(Me, "Doc00052") Then
-                            _Vizado = False
+                    If _Cabeza = "FechaEmision" Then
+
+                        If _Vizado Then
+                            If Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00052", _Ds_Matriz_Documentos) Then
+                                _Vizado = False
+                            End If
+                        Else
+                            If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00090", Nothing) Then
+                                Return
+                            End If
                         End If
+
                     End If
 
                     If _Vizado Then
@@ -18419,6 +18427,8 @@ Public Class Frm_Formulario_Documento
         Next
 
         Sb_Marcar_Grilla()
+
+        Return
 
     End Sub
 

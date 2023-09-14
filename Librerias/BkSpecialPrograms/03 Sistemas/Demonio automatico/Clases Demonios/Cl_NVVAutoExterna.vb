@@ -33,6 +33,19 @@ Public Class Cl_NVVAutoExterna
 
                 Dim _Id_Enc As Integer = _Fila.Item("Id_Enc")
 
+                Consulta_Sql = "Select Codigo,'Descripcion' From " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet" & vbCrLf &
+                               "Where Id_Enc = " & _Filtro_Id_Enc
+
+                Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+
+                Dim _Filtro_Productos As String = Generar_Filtro_IN(_Tbl_Productos, "", "Codigo", False, False, "'")
+
+                Dim Fm As New Frm_Consolidacion_Stock_PP(_Filtro_Productos)
+                Fm.Pro_Ejecutar_Automaticamente = True
+                Fm.TopMost = True
+                Fm.ShowDialog(_Formulario)
+                Fm.Dispose()
+
                 Fx_Crear_NVV(_Formulario, _Id_Enc)
 
             Next
