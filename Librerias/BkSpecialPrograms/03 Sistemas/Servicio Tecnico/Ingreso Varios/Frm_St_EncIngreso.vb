@@ -40,6 +40,8 @@ Public Class Frm_St_EncIngreso
 
     Private Sub Frm_St_EncIngreso_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Me.Text = "CREACION DE NUEVA ORDEN DE TRABAJO... EN PROCESO"
+
         AddHandler Grilla_Productos.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         Sb_Actualizar_Grilla_Encabezado()
@@ -356,6 +358,16 @@ Public Class Frm_St_EncIngreso
 
         End If
 
+        Dim _Bloqueada = Cl_OrdenServicio.RowEntidad.Item("BLOQUEADO")
+
+        If Not Fx_Entidad_Tiene_Deudas_CtaCte(Me, Cl_OrdenServicio.RowEntidad, False, False, _Bloqueada) Then
+
+            If Not Fx_Tiene_Permiso(Me, "Stec0020",,,,, Cl_OrdenServicio.RowEntidad.Item("KOEN"), Cl_OrdenServicio.RowEntidad.Item("SUEN")) Then
+                Return
+            End If
+
+        End If
+
         Dim _Id_Ot_Padre As Integer = 0
         Dim _Id_Ot As Integer = 0
         Dim _Nro_Ot As String = String.Empty
@@ -437,7 +449,12 @@ Public Class Frm_St_EncIngreso
 
         Dim _Nro_GRP As String
         Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese Nro Interno/Guía o Factura del cliente", "Recepción de producto", _Nro_GRP,
-                                              False, _Tipo_Mayus_Minus.Mayusculas, 10, True)
+                                              False, _Tipo_Mayus_Minus.Mayusculas, 10)
+
+        If Not _Aceptar Then
+            Sb_Agregar_GRP(_Id_Ot_Padre, _Id_Ot, _Nro_Ot)
+            Return
+        End If
 
         If _Aceptar Then
 
@@ -550,10 +567,18 @@ Public Class Frm_St_EncIngreso
 
         Dim _SqlQuery = String.Empty
 
+
+        'Consulta_sql = "Select Ots.Id_Ot_Padre,Ots.Nro_Ot,Ots.Codigo,Ots.Descripcion,Ots.NroSerie,Nts.Defecto_segun_cliente,SUM(1) As Cantidad" & vbCrLf &
+        '               "From " & _Global_BaseBk & "Zw_St_OT_Encabezado Ots" & vbCrLf &
+        '               "Left Join " & _Global_BaseBk & "Zw_St_OT_Notas Nts On Ots.Id_Ot = Nts.Id_Ot" & vbCrLf &
+        '               "Where Id_Ot_Padre = " & _Id_Ot_Padre & vbCrLf &
+        '               "Group by Ots.Id_Ot_Padre,Ots.Nro_Ot,Ots.Codigo,Ots.Descripcion,Ots.NroSerie,Nts.Defecto_segun_cliente"
+
         Consulta_sql = "Select Ots.Id_Ot,Ots.Id_Ot_Padre,Ots.Nro_Ot,Ots.Sub_Ot,Ots.Codigo,Ots.Descripcion,Ots.NroSerie,Nts.Defecto_segun_cliente" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_St_OT_Encabezado Ots" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_St_OT_Notas Nts On Ots.Id_Ot = Nts.Id_Ot" & vbCrLf &
                        "Where Id_Ot_Padre = " & _Id_Ot_Padre
+
         Dim _Tbl_Ots As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl_Ots.Rows 'Cl_OrdenServicio.DsDocumento.Tables(0).Rows
@@ -574,7 +599,7 @@ Public Class Frm_St_EncIngreso
                          ",'" & _Fila.Item("Codigo") & "' As Codigo,'" & _Fila.Item("Descripcion") & "' As Descripcion," &
                          _Cantidad & " As Cantidad," & De_Num_a_Tx_01(_Costo, False, 5) & " As Costo,'" & _Observa & "' As Observa" & vbCrLf
 
-            If _Contador <> Cl_OrdenServicio.DsDocumento.Tables(0).Rows.Count Then
+            If _Contador <> _Tbl_Ots.Rows.Count Then
                 _SqlQuery += "Union" & vbCrLf
             End If
 

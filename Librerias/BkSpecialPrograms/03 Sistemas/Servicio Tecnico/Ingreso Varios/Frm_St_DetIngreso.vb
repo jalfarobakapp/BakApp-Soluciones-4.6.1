@@ -111,13 +111,17 @@ Public Class Frm_St_DetIngreso
 
         End If
 
-        If Input_Cantidad.Value > 1 And Not String.IsNullOrEmpty(Txt_NroSerie.Text.Trim) Then
+        If Not Chk_SinNroSerie.Checked AndAlso Input_Cantidad.Value > 1 And Not String.IsNullOrEmpty(Txt_NroSerie.Text.Trim) Then
             MessageBoxEx.Show(Me, "No puede agregar un número de serie cuando la cantidad es mayor que 1." & vbCrLf & vbCrLf &
                 "Opciones:" & vbCrLf & vbCrLf &
                 "1.- Agregar producto con cantidad igual a 1 e ingresar su número de serie" & vbCrLf &
                 "2.- Agregar productos con cantidad mayor a 1, pero el número de serie debe quedar vacío", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Input_Cantidad.Focus()
             Return
+        End If
+
+        If Not Chk_SinNroSerie.Checked Then
+            Input_Cantidad.Value = 1
         End If
 
         If Input_Cantidad.Value = 1 And String.IsNullOrEmpty(Txt_NroSerie.Text.Trim) Then
@@ -385,8 +389,12 @@ Public Class Frm_St_DetIngreso
         Txt_NroSerie.Enabled = Not Chk_SinNroSerie.Checked
 
         If Chk_SinNroSerie.Checked Then
-            Txt_NroSerie.Text = String.Empty
+            Input_Cantidad.Value = 0
+            Txt_NroSerie.Text = "S/N"
         Else
+            If Txt_NroSerie.Text = "S/N" Then
+                Txt_NroSerie.Text = String.Empty
+            End If
             Txt_NroSerie.Focus()
         End If
 

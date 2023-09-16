@@ -24,7 +24,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
         Get
             Return _NroRemota_Marcar
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _NroRemota_Marcar = value
         End Set
     End Property
@@ -32,13 +32,13 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
         Get
             Return _Solo_Mis_Notificaciones
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Solo_Mis_Notificaciones = value
             Chk_Mis_Permisos.Checked = value
         End Set
     End Property
 
-    Public Sub New(ByVal Funcionario As String, ByVal Revisar_Automaticamente_X_Notificacion As Boolean)
+    Public Sub New(Funcionario As String, Revisar_Automaticamente_X_Notificacion As Boolean)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -59,7 +59,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
     End Sub
 
-    Private Sub Frm_Remotas_Lista_Permisos_Solicitados_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Remotas_Lista_Permisos_Solicitados_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         csNotificaciones.Notificacion._Revisando_Permiso_Remoto = True
 
@@ -239,7 +239,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
     End Sub
 
-    Private Sub Frm_Remotas_Lista_Permisos_Solicitados_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Remotas_Lista_Permisos_Solicitados_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
             'Me.Hide()
@@ -248,11 +248,11 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
         End If
     End Sub
 
-    Private Sub Btn_Refresh_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Refresh.Click
+    Private Sub Btn_Refresh_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Refresh.Click
         Sb_Actualizar_Grilla()
     End Sub
 
-    Private Sub Grilla_CellEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEnter
+    Private Sub Grilla_CellEnter(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEnter
 
         Dim _CodPermiso = String.Empty
         Dim _Nombre_Funcionario = String.Empty
@@ -282,7 +282,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
     End Sub
 
-    Private Sub Timer_Notificaciones_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer_Actualizar_Remotas.Tick
+    Private Sub Timer_Notificaciones_Tick(sender As System.Object, e As System.EventArgs) Handles Timer_Actualizar_Remotas.Tick
 
         Dim _Reg As Integer
 
@@ -307,12 +307,12 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
     End Sub
 
-    Private Sub Chk_Notificacion_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Chk_Notificacion_Descuento.CheckedChanged
+    Private Sub Chk_Notificacion_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles Chk_Notificacion_Descuento.CheckedChanged
         Timer_Actualizar_Remotas.Enabled = Chk_Notificacion_Descuento.Checked
         Me.Refresh()
     End Sub
 
-    Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
@@ -324,7 +324,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
     End Sub
 
-    Sub Sb_Revisar_Registro_Para_Permiso(ByVal _Fila As DataGridViewRow)
+    Sub Sb_Revisar_Registro_Para_Permiso(_Fila As DataGridViewRow)
 
         Timer_Cierre_Automatico.Stop()
         CircularProgressItem1.Visible = False
@@ -346,13 +346,17 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
     End Sub
 
-    Sub Sb_Revisar_Permiso(ByVal _Fila As DataGridViewRow)
+    Sub Sb_Revisar_Permiso(_Fila As DataGridViewRow)
 
         Dim _Id_Casi_DocEnc As Integer = _Fila.Cells("Id_Casi_DocEnc").Value
         Dim _NroRemota As String = _Fila.Cells("NroRemota").Value
         Dim _Nombre_Permiso As String = _Fila.Cells("Nombre_Permiso").Value
         Dim _CodFuncionario_Solicita As String = _Fila.Cells("CodFuncionario_Solicita").Value
         Dim _Espera_En_Linea As Boolean = _Fila.Cells("Espera_En_Linea").Value
+
+        Dim _CodEntidad As String = _Fila.Cells("CodEntidad").Value
+        Dim _CodSucEntidad As String = _Fila.Cells("CodSucEntidad").Value
+
 
         Dim _DsDocumento As DataSet
 
@@ -430,13 +434,12 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
                 Else
 
+                    LabelItem2.Visible = Not String.IsNullOrWhiteSpace(_CodEntidad)
+                    Btn_Ver_deuda_pendiente.Visible = Not String.IsNullOrWhiteSpace(_CodEntidad)
+
                     ShowContextMenu(Menu_Contextual_01)
 
                 End If
-
-                '    Case Else
-
-                'End Select
 
             Else
 
@@ -457,7 +460,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
     End Sub
 
-    Sub Sb_Revisar_Documento_Remoto(ByVal _NroRemota As String,
+    Sub Sb_Revisar_Documento_Remoto(_NroRemota As String,
                                     ByRef _Autorizado As Boolean,
                                     ByRef _Rechazado As Boolean)
 
@@ -610,7 +613,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
     End Sub
 
-    Function Fx_Revisar_Documento_Trae_Ds(ByVal _Fila As DataGridViewRow) As DataSet
+    Function Fx_Revisar_Documento_Trae_Ds(_Fila As DataGridViewRow) As DataSet
 
         Dim _Id_Casi_DocEnc As Integer = _Fila.Cells("Id_Casi_DocEnc").Value
         Dim _NroRemota As String = _Fila.Cells("NroRemota").Value
@@ -654,7 +657,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
     End Function
 
-    Private Sub Frm_Remotas_Lista_Permisos_Solicitados_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+    Private Sub Frm_Remotas_Lista_Permisos_Solicitados_FormClosed(sender As Object, e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
 
         csNotificaciones.Notificacion._Revisando_Permiso_Remoto = False
         Cadena_ConexionSQL_Server = _Cadena_ConexionSQL_Server_Original
@@ -678,7 +681,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
     End Sub
 
-    Private Sub Btn_Cambiar_de_empresa_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cambiar_de_empresa.Click
+    Private Sub Btn_Cambiar_de_empresa_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cambiar_de_empresa.Click
 
         Timer_Cierre_Automatico.Stop()
         CircularProgressItem1.Visible = False
@@ -805,8 +808,8 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
     End Sub
 
-    Function Fx_Permisos_CtaCte_Entidad(ByVal _NroRemota As String,
-                                        ByVal _CodPermiso As String) As Boolean
+    Function Fx_Permisos_CtaCte_Entidad(_NroRemota As String,
+                                        _CodPermiso As String) As Boolean
 
         Dim _Row_Encabezado_Venta As DataRow
 
@@ -873,7 +876,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
     End Function
 
-    Sub Sb_Rechazar_Permiso(ByVal _NroRemota As String)
+    Sub Sb_Rechazar_Permiso(_NroRemota As String)
 
         Dim _Aceptado As Boolean
         Dim _Observaciones As String
@@ -895,7 +898,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
     End Sub
 
-    Private Sub Btn_Admin_Permisos_Usuarios_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Admin_Permisos_Usuarios.Click
+    Private Sub Btn_Admin_Permisos_Usuarios_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Admin_Permisos_Usuarios.Click
 
         Dim _Autorizado As Boolean
 
@@ -912,15 +915,15 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
     End Sub
 
-    Private Sub Timer_Cierre_Automatico_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer_Cierre_Automatico.Tick
+    Private Sub Timer_Cierre_Automatico_Tick(sender As System.Object, e As System.EventArgs) Handles Timer_Cierre_Automatico.Tick
         Me.Close()
     End Sub
 
-    Sub Sb_Actualizar_Notificacion(ByVal _Autorizado As Boolean,
-                                   ByVal _Rechazado As Boolean,
-                                   ByVal _NroRemota As String,
-                                   ByVal _CodFuncionario_Solicita As String,
-                                   ByVal _Espera_En_Linea As Boolean)
+    Sub Sb_Actualizar_Notificacion(_Autorizado As Boolean,
+                                   _Rechazado As Boolean,
+                                   _NroRemota As String,
+                                   _CodFuncionario_Solicita As String,
+                                   _Espera_En_Linea As Boolean)
 
         Dim _Consulta_sql As String
 
@@ -1035,7 +1038,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
     End Sub
 
-    Private Sub Timer_Notificaciones_automaticas_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer_Notificaciones_automaticas.Tick
+    Private Sub Timer_Notificaciones_automaticas_Tick(sender As System.Object, e As System.EventArgs) Handles Timer_Notificaciones_automaticas.Tick
 
         Timer_Notificaciones_automaticas.Enabled = False
         Me.Hide()
@@ -1093,7 +1096,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
     Private Sub Btn_Rechazar_Permiso_Click(sender As Object, e As EventArgs) Handles Btn_Rechazar_Permiso.Click
 
-        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
 
         Dim _NroRemota As String = _Fila.Cells("NroRemota").Value
         Dim _Espera_En_Linea As Boolean = _Fila.Cells("Espera_En_Linea").Value
@@ -1134,6 +1137,22 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
             Sb_Actualizar_Grilla()
 
         End If
+
+    End Sub
+
+    Private Sub Btn_Ver_deuda_pendiente_Click(sender As Object, e As EventArgs) Handles Btn_Ver_deuda_pendiente.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        Dim _Koen As String = _Fila.Cells("CodEntidad").Value
+        Dim _Suen As String = _Fila.Cells("CodSucEntidad").Value
+
+        Dim _RowEntidad As DataRow = Fx_Traer_Datos_Entidad(_Koen, _Suen)
+
+        Dim Fm As New Frm_InfoEnt_Deudas_Doc_Comerciales(_RowEntidad, 0, 0, 0, 0, True)
+        Fm.Btn_CambCodPago.Visible = False
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 

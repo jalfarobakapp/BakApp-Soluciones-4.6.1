@@ -132,6 +132,19 @@ Public Class Frm_St_Ordenes_de_trabajo
             End If
             Fm_Ent.Dispose()
 
+            Dim _Bloqueada = _RowEntidad.Item("BLOQUEADO")
+
+            If Not Fx_Entidad_Tiene_Deudas_CtaCte(Me, _RowEntidad, False, False, _Bloqueada) Then
+
+                'If _Bloqueada Then Return Nothing
+
+                MessageBoxEx.Show(Me, "La entidad presenta morosidad" & Environment.NewLine &
+                                      "Está situación será evaluada nuevamente al grabar el documento",
+                                      "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
+
+            End If
+
             Dim _Cl_OrdenServicio As Cl_OrdenServicio
 
             Dim Fm As New Frm_St_EncIngreso(_RowEntidad)
@@ -253,9 +266,15 @@ Public Class Frm_St_Ordenes_de_trabajo
             .Columns("Rut").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            .Columns("SucEntidad").Visible = True
+            .Columns("SucEntidad").HeaderText = "Suc."
+            .Columns("SucEntidad").Width = 60
+            .Columns("SucEntidad").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             .Columns("Cliente").Visible = True
             .Columns("Cliente").HeaderText = "Cliente"
-            .Columns("Cliente").Width = 300
+            .Columns("Cliente").Width = 240
             .Columns("Cliente").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 

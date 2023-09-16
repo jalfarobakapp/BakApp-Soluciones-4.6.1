@@ -2785,6 +2785,14 @@ Public Class Clas_Imprimir_Documento
                             _Imprimir_Detalle = False
                         End If
 
+
+                        Dim _FilaEnc = _TblEncForm.Rows(0)
+                        Dim _Agrupar_CodDescripcion As Boolean = _FilaEnc.Item("Agrupar_CodDescripcion")
+
+                        If _Orden_Detalle = 2 And _Agrupar_CodDescripcion Then
+                            _Imprimir_Detalle = False
+                        End If
+
                         If CBool(_IdDoc) Then
 
                             If _NombreObjeto = "Texto_libre" Then
@@ -2843,7 +2851,7 @@ Public Class Clas_Imprimir_Documento
                                                                                _Row_Fila_D,
                                                                                _Texto)
 
-                                    If _Orden_Detalle = 2 And Not String.IsNullOrEmpty(_Texto) Then
+                                    If _Imprimir_Detalle AndAlso _Orden_Detalle = 2 And Not String.IsNullOrEmpty(_Texto) Then
 
                                         _Detalle_Y += _Alto + 2
 

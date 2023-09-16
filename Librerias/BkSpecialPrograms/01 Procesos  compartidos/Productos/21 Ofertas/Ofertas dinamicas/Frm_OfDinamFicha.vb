@@ -1,13 +1,16 @@
-﻿Public Class Frm_OfDinamFicha
+﻿Imports DevComponents.DotNetBar
+
+Public Class Frm_OfDinamFicha
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
     Dim _Codigo As String
-    Dim _Row_Maeeres As DataRow
     Dim _Tbl_Listas As DataTable
 
     Public Property Grabar As Boolean
+    Public Property Eliminado As Boolean
+    Public Property Row_Maeeres As DataRow
 
     Public Sub New(_Codigo As String)
 
@@ -39,11 +42,20 @@
         Cmb_Concepto.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
         Cmb_Concepto.SelectedValue = ""
 
-        If Not IsNothing(_Row_Maeeres) Then
+        If IsNothing(_Row_Maeeres) Then
+
+            Dtp_Fioferta.Value = Nothing
+            Dtp_Ftoferta.Value = Nothing
+            Txt_Codigo.Enabled = True
+            Txt_Udad.Enabled = True
+            Txt_Udad.Text = String.Empty
+            Me.ActiveControl = Txt_Codigo
+
+        Else
 
             Txt_Codigo.Enabled = False
             Txt_Codigo.Text = _Row_Maeeres.Item("CODIGO")
-            Txt_Descriptor.Text = _Row_Maeeres.Item("DESCRIPTOR")
+            Txt_Descriptor.Text = _Row_Maeeres.Item("DESCRIPTOR").ToString.Trim
             Dtp_Fioferta.Value = _Row_Maeeres.Item("FIOFERTA")
             Dtp_Ftoferta.Value = _Row_Maeeres.Item("FTOFERTA")
             Txt_Udad.Text = _Row_Maeeres.Item("UDAD")
@@ -64,7 +76,7 @@
             End Select
 
             Txt_Valdesc.Text = _Row_Maeeres.Item("VALDESC")
-            Txt_Ecupordesc.Text = _Row_Maeeres.Item("ECUPORDESC")
+            Txt_Ecupordesc.Text = _Row_Maeeres.Item("ECUPORDESC").ToString.Trim
             Cmb_Concepto.SelectedValue = _Row_Maeeres.Item("CONCEPTO")
 
             Txt_Listas.Text = _Row_Maeeres.Item("LISTAS")
@@ -89,8 +101,9 @@
             Chk_Desc_Sab.Checked = (_Row_Maeeres.Item("DESC_SAB") = "S")
             Chk_Desc_Dom.Checked = (_Row_Maeeres.Item("DESC_DOM") = "S")
 
-        End If
+            Me.ActiveControl = Txt_Codigo
 
+        End If
 
     End Sub
 
@@ -130,8 +143,127 @@
     End Sub
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
-        Grabar = True
-        Me.Close()
+
+        If String.IsNullOrEmpty(Txt_Codigo.Text) Then
+            MessageBoxEx.Show(Me, "Código de descuento no puede estar vacío", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Codigo.Focus()
+            Return
+        End If
+
+        If Dtp_Fioferta.Value = #1/1/0001 12:00:00 AM# Then
+            MessageBoxEx.Show(Me, "La fecha de inicio no puede estar vacía", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Dtp_Fioferta.Focus()
+            Return
+        End If
+
+        If Dtp_Ftoferta.Value = #1/1/0001 12:00:00 AM# Then
+            MessageBoxEx.Show(Me, "La fecha de termino no puede estar vacía", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Dtp_Ftoferta.Focus()
+            Return
+        End If
+
+        If Dtp_Fioferta.Value > Dtp_Ftoferta.Value Then
+            MessageBoxEx.Show(Me, "La fecha de inicio no puede ser mayor a la fecha de termino", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Dtp_Ftoferta.Focus()
+            Return
+        End If
+
+        If String.IsNullOrEmpty(Txt_Udad.Text) Then
+            MessageBoxEx.Show(Me, "Unidad de medida no puede estar vacío", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Udad.Focus()
+            Return
+        End If
+
+        Dim _Codigo As String = Txt_Codigo.Text
+        Dim _Cantmin As Integer = Input_Cantmin.Value
+        Dim _Rangos As Integer = Convert.ToInt32(Chk_Rangos.Checked)
+        Dim _Descriptor As String = Txt_Descriptor.Text
+        Dim _Udad As String = Txt_Udad.Text
+        Dim _Concepto As String = Cmb_Concepto.SelectedValue
+        Dim _Fioferta As String = Format(Dtp_Fioferta.Value, "yyyyMMdd")
+        Dim _Ftoferta As String = Format(Dtp_Ftoferta.Value, "yyyyMMdd")
+        Dim _Listas As String = Txt_Listas.Text
+        Dim _Desc_lun As String = "N"
+        Dim _Desc_mar As String = "N"
+        Dim _Desc_mie As String = "N"
+        Dim _Desc_jue As String = "N"
+        Dim _Desc_vie As String = "N"
+        Dim _Desc_sab As String = "N"
+        Dim _Desc_dom As String = "N"
+
+        If Chk_Desc_Lun.Checked Then _Desc_lun = "S"
+        If Chk_Desc_Mar.Checked Then _Desc_mar = "S"
+        If Chk_Desc_Mie.Checked Then _Desc_mie = "S"
+        If Chk_Desc_Jue.Checked Then _Desc_jue = "S"
+        If Chk_Desc_Vie.Checked Then _Desc_vie = "S"
+        If Chk_Desc_Sab.Checked Then _Desc_sab = "S"
+        If Chk_Desc_Dom.Checked Then _Desc_dom = "S"
+
+        Dim _Valdesc As String = De_Num_a_Tx_01(Txt_Valdesc.Text, False, 5)
+
+        Dim _Tipotrat As Integer = 1
+
+        If Chk_Tipotrat1.Checked Then _Tipotrat = 1
+        If Chk_Tipotrat2.Checked Then _Tipotrat = 2
+        If Chk_Tipotrat3.Checked Then _Tipotrat = 3
+        If Chk_Tipotrat4.Checked Then _Tipotrat = 4
+
+        Dim _Ecuvaldesc As String = Txt_Ecupordesc.Text
+
+        Consulta_sql = "Delete MAEERES Where CODIGO = '" & _Codigo & "' And TIPORESE = 'din'" & vbCrLf &
+                       "Insert Into MAEERES (CODIGO,CANTIDAD,CANTMIN,RANGOS,DESCRIPTOR,UDAD,TIPORESE,CONCEPTO,FIOFERTA,FTOFERTA,LISTAS,APLICAUT,DESC_LUN,DESC_MAR,DESC_MIE,DESC_JUE,DESC_VIE,DESC_SAB,DESC_DOM,DESCVALOR,TIPOTRAT,VALDESC,ECUVALDESC) VALUES " &
+                       "('" & _Codigo & "',0," & _Cantmin & "," & _Rangos & ",'" & _Descriptor & "','" & _Udad & "','din','" & _Concepto & "'" &
+                       ",'" & _Fioferta & "','" & _Ftoferta & "','" & _Listas & "',0" &
+                       ",'" & _Desc_lun & "','" & _Desc_mar & "','" & _Desc_mie & "','" & _Desc_jue & "','" & _Desc_vie & "'" &
+                       ",'" & _Desc_sab & "','" & _Desc_dom & "',0," & _Tipotrat & "," & _Valdesc & ",'" & _Ecuvaldesc & "')"
+
+        If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+            Consulta_sql = "Select * From MAEERES Where CODIGO = '" & Txt_Codigo.Text & "' And TIPORESE = 'din'"
+            Row_Maeeres = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Grabar = True
+            Me.Close()
+        Else
+            MessageBoxEx.Show(Me, _Sql.Pro_Error, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
+
     End Sub
 
+    Private Sub Txt_Codigo_Leave(sender As Object, e As EventArgs) Handles Txt_Codigo.Leave
+
+        Dim _Codigo As String = Txt_Codigo.Text
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("MAEERES", "CODIGO = '" & _Codigo & "'")
+
+        If CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "Código de oferta ya existe", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Codigo.Focus()
+        End If
+
+    End Sub
+
+    Private Sub Btn_Eliminar_Click(sender As Object, e As EventArgs) Handles Btn_Eliminar.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Ofer0004") Then
+            Return
+        End If
+
+        Dim _Codigo As String = Txt_Codigo.Text
+
+        If MessageBoxEx.Show(Me, "¿Confirma quitar este producto de la oferta?", "Quitar productos",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Consulta_sql = "Delete From MAEERES Where CODIGO = '" & _Codigo & "'" & vbCrLf &
+                       "Delete From MAEDRES Where CODIGO = '" & _Codigo & "'"
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            Grabar = True
+            Eliminado = True
+            MessageBoxEx.Show(Me, "Oferta eliminada correctamente", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Me.Close()
+        End If
+
+    End Sub
 End Class
