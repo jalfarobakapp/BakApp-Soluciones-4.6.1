@@ -61,6 +61,7 @@ Partial Class Frm_OfDinamFicha
         Me.Chk_Desc_Vie = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Input_Cantmin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_Fioferta, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -139,7 +140,7 @@ Partial Class Frm_OfDinamFicha
         Me.Input_Cantmin.Name = "Input_Cantmin"
         Me.Input_Cantmin.ShowUpDown = True
         Me.Input_Cantmin.Size = New System.Drawing.Size(80, 22)
-        Me.Input_Cantmin.TabIndex = 77
+        Me.Input_Cantmin.TabIndex = 5
         Me.Input_Cantmin.Value = 1
         '
         'LabelX6
@@ -223,7 +224,7 @@ Partial Class Frm_OfDinamFicha
         Me.Dtp_Fioferta.Name = "Dtp_Fioferta"
         Me.Dtp_Fioferta.Size = New System.Drawing.Size(86, 22)
         Me.Dtp_Fioferta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Dtp_Fioferta.TabIndex = 7
+        Me.Dtp_Fioferta.TabIndex = 2
         Me.Dtp_Fioferta.Value = New Date(2016, 7, 8, 16, 32, 31, 0)
         '
         'Dtp_Ftoferta
@@ -275,7 +276,7 @@ Partial Class Frm_OfDinamFicha
         Me.Dtp_Ftoferta.Name = "Dtp_Ftoferta"
         Me.Dtp_Ftoferta.Size = New System.Drawing.Size(86, 22)
         Me.Dtp_Ftoferta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Dtp_Ftoferta.TabIndex = 8
+        Me.Dtp_Ftoferta.TabIndex = 3
         Me.Dtp_Ftoferta.Value = New Date(2016, 7, 8, 16, 33, 0, 0)
         '
         'LabelX4
@@ -308,7 +309,7 @@ Partial Class Frm_OfDinamFicha
         Me.Chk_Rangos.Name = "Chk_Rangos"
         Me.Chk_Rangos.Size = New System.Drawing.Size(400, 22)
         Me.Chk_Rangos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Rangos.TabIndex = 72
+        Me.Chk_Rangos.TabIndex = 6
         Me.Chk_Rangos.TabStop = False
         Me.Chk_Rangos.Text = "Rango: La oferta se activa desde la cantidad mínima en adelante" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
@@ -331,7 +332,7 @@ Partial Class Frm_OfDinamFicha
         Me.Txt_Udad.Name = "Txt_Udad"
         Me.Txt_Udad.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.Txt_Udad.Size = New System.Drawing.Size(63, 22)
-        Me.Txt_Udad.TabIndex = 70
+        Me.Txt_Udad.TabIndex = 4
         Me.Txt_Udad.Text = "UN"
         Me.Txt_Udad.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -508,7 +509,7 @@ Partial Class Frm_OfDinamFicha
         Me.Txt_Ecupordesc.Name = "Txt_Ecupordesc"
         Me.Txt_Ecupordesc.PreventEnterBeep = True
         Me.Txt_Ecupordesc.Size = New System.Drawing.Size(417, 22)
-        Me.Txt_Ecupordesc.TabIndex = 82
+        Me.Txt_Ecupordesc.TabIndex = 12
         '
         'Cmb_Concepto
         '
@@ -520,7 +521,7 @@ Partial Class Frm_OfDinamFicha
         Me.Cmb_Concepto.Location = New System.Drawing.Point(535, 74)
         Me.Cmb_Concepto.Name = "Cmb_Concepto"
         Me.Cmb_Concepto.Size = New System.Drawing.Size(301, 22)
-        Me.Cmb_Concepto.TabIndex = 81
+        Me.Cmb_Concepto.TabIndex = 13
         '
         'LabelX9
         '
@@ -573,7 +574,7 @@ Partial Class Frm_OfDinamFicha
         Me.Txt_Valdesc.Name = "Txt_Valdesc"
         Me.Txt_Valdesc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.Txt_Valdesc.Size = New System.Drawing.Size(81, 22)
-        Me.Txt_Valdesc.TabIndex = 75
+        Me.Txt_Valdesc.TabIndex = 11
         Me.Txt_Valdesc.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Lbl_Valdesc
@@ -605,7 +606,7 @@ Partial Class Frm_OfDinamFicha
         Me.Chk_Tipotrat4.Name = "Chk_Tipotrat4"
         Me.Chk_Tipotrat4.Size = New System.Drawing.Size(214, 23)
         Me.Chk_Tipotrat4.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Tipotrat4.TabIndex = 3
+        Me.Chk_Tipotrat4.TabIndex = 10
         Me.Chk_Tipotrat4.Text = "Un precio bruto fijo por producto"
         '
         'Chk_Tipotrat3
@@ -621,7 +622,7 @@ Partial Class Frm_OfDinamFicha
         Me.Chk_Tipotrat3.Name = "Chk_Tipotrat3"
         Me.Chk_Tipotrat3.Size = New System.Drawing.Size(186, 23)
         Me.Chk_Tipotrat3.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Tipotrat3.TabIndex = 2
+        Me.Chk_Tipotrat3.TabIndex = 9
         Me.Chk_Tipotrat3.Text = "Un precio neto fijo por producto"
         '
         'Chk_Tipotrat2
@@ -638,7 +639,7 @@ Partial Class Frm_OfDinamFicha
         Me.Chk_Tipotrat2.Name = "Chk_Tipotrat2"
         Me.Chk_Tipotrat2.Size = New System.Drawing.Size(180, 23)
         Me.Chk_Tipotrat2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Tipotrat2.TabIndex = 1
+        Me.Chk_Tipotrat2.TabIndex = 8
         Me.Chk_Tipotrat2.Text = "Un monto a modo de descuento"
         '
         'Chk_Tipotrat1
@@ -658,7 +659,7 @@ Partial Class Frm_OfDinamFicha
         Me.Chk_Tipotrat1.Name = "Chk_Tipotrat1"
         Me.Chk_Tipotrat1.Size = New System.Drawing.Size(200, 23)
         Me.Chk_Tipotrat1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Tipotrat1.TabIndex = 0
+        Me.Chk_Tipotrat1.TabIndex = 7
         Me.Chk_Tipotrat1.Text = "Un porcentaje a modo de descuento"
         '
         'GroupPanel3
@@ -719,7 +720,7 @@ Partial Class Frm_OfDinamFicha
         Me.Txt_Listas.Name = "Txt_Listas"
         Me.Txt_Listas.PreventEnterBeep = True
         Me.Txt_Listas.Size = New System.Drawing.Size(823, 22)
-        Me.Txt_Listas.TabIndex = 84
+        Me.Txt_Listas.TabIndex = 14
         '
         'GroupPanel4
         '
@@ -781,7 +782,7 @@ Partial Class Frm_OfDinamFicha
         Me.Chk_Desc_Dom.Name = "Chk_Desc_Dom"
         Me.Chk_Desc_Dom.Size = New System.Drawing.Size(66, 21)
         Me.Chk_Desc_Dom.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Desc_Dom.TabIndex = 46
+        Me.Chk_Desc_Dom.TabIndex = 21
         Me.Chk_Desc_Dom.Text = "Domingo"
         '
         'Chk_Desc_Lun
@@ -798,7 +799,7 @@ Partial Class Frm_OfDinamFicha
         Me.Chk_Desc_Lun.Name = "Chk_Desc_Lun"
         Me.Chk_Desc_Lun.Size = New System.Drawing.Size(51, 21)
         Me.Chk_Desc_Lun.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Desc_Lun.TabIndex = 40
+        Me.Chk_Desc_Lun.TabIndex = 15
         Me.Chk_Desc_Lun.Text = "Lunes"
         '
         'Chk_Desc_Mar
@@ -815,7 +816,7 @@ Partial Class Frm_OfDinamFicha
         Me.Chk_Desc_Mar.Name = "Chk_Desc_Mar"
         Me.Chk_Desc_Mar.Size = New System.Drawing.Size(63, 21)
         Me.Chk_Desc_Mar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Desc_Mar.TabIndex = 41
+        Me.Chk_Desc_Mar.TabIndex = 16
         Me.Chk_Desc_Mar.Text = "Martes"
         '
         'Chk_Desc_Mie
@@ -832,7 +833,7 @@ Partial Class Frm_OfDinamFicha
         Me.Chk_Desc_Mie.Name = "Chk_Desc_Mie"
         Me.Chk_Desc_Mie.Size = New System.Drawing.Size(74, 21)
         Me.Chk_Desc_Mie.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Desc_Mie.TabIndex = 42
+        Me.Chk_Desc_Mie.TabIndex = 17
         Me.Chk_Desc_Mie.Text = "Miercoles"
         '
         'Chk_Desc_Sab
@@ -849,7 +850,7 @@ Partial Class Frm_OfDinamFicha
         Me.Chk_Desc_Sab.Name = "Chk_Desc_Sab"
         Me.Chk_Desc_Sab.Size = New System.Drawing.Size(67, 21)
         Me.Chk_Desc_Sab.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Desc_Sab.TabIndex = 45
+        Me.Chk_Desc_Sab.TabIndex = 20
         Me.Chk_Desc_Sab.Text = "Sabádo"
         '
         'Chk_Desc_Jue
@@ -866,7 +867,7 @@ Partial Class Frm_OfDinamFicha
         Me.Chk_Desc_Jue.Name = "Chk_Desc_Jue"
         Me.Chk_Desc_Jue.Size = New System.Drawing.Size(58, 21)
         Me.Chk_Desc_Jue.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Desc_Jue.TabIndex = 43
+        Me.Chk_Desc_Jue.TabIndex = 18
         Me.Chk_Desc_Jue.Text = "Jueves"
         '
         'Chk_Desc_Vie
@@ -883,7 +884,7 @@ Partial Class Frm_OfDinamFicha
         Me.Chk_Desc_Vie.Name = "Chk_Desc_Vie"
         Me.Chk_Desc_Vie.Size = New System.Drawing.Size(58, 21)
         Me.Chk_Desc_Vie.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Desc_Vie.TabIndex = 44
+        Me.Chk_Desc_Vie.TabIndex = 19
         Me.Chk_Desc_Vie.Text = "Viernes"
         '
         'Bar2
@@ -891,8 +892,8 @@ Partial Class Frm_OfDinamFicha
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
-        Me.Bar2.Location = New System.Drawing.Point(0, 481)
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Eliminar})
+        Me.Bar2.Location = New System.Drawing.Point(0, 472)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(874, 41)
         Me.Bar2.Stretch = True
@@ -909,11 +910,20 @@ Partial Class Frm_OfDinamFicha
         Me.Btn_Grabar.Name = "Btn_Grabar"
         Me.Btn_Grabar.Tooltip = "Grabar"
         '
+        'Btn_Eliminar
+        '
+        Me.Btn_Eliminar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Eliminar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Eliminar.Image = CType(resources.GetObject("Btn_Eliminar.Image"), System.Drawing.Image)
+        Me.Btn_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Eliminar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Eliminar.Name = "Btn_Eliminar"
+        Me.Btn_Eliminar.Tooltip = "Grabar"
+        '
         'Frm_OfDinamFicha
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(874, 522)
+        Me.ClientSize = New System.Drawing.Size(874, 513)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel4)
         Me.Controls.Add(Me.GroupPanel3)
@@ -921,6 +931,7 @@ Partial Class Frm_OfDinamFicha
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -978,4 +989,5 @@ Partial Class Frm_OfDinamFicha
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Input_Cantmin As DevComponents.Editors.IntegerInput
+    Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
 End Class

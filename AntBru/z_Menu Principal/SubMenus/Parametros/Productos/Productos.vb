@@ -267,15 +267,15 @@ Public Class Productos
 
     End Sub
 
-    Private Sub Btn_Maestra_Productos_Click(sender As Object, e As EventArgs) Handles Btn_Maestra_Productos.Click
-
-    End Sub
-
     Private Sub Btn_Ofertas_Click(sender As Object, e As EventArgs) Handles Btn_Ofertas.Click
 
-        Dim Fm As New Frm_OfDinamLista
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
+        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Ofer0001") Then
+
+            Dim Fm As New Frm_OfDinamLista
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
+        End If
 
     End Sub
 End Class
