@@ -873,6 +873,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Btn_Importar_Informe.ImageAlt = CType(resources.GetObject("Btn_Importar_Informe.ImageAlt"), System.Drawing.Image)
         Me.Btn_Importar_Informe.Name = "Btn_Importar_Informe"
         Me.Btn_Importar_Informe.Text = "Importar informe"
+        Me.Btn_Importar_Informe.Visible = False
         '
         'Btn_Mantencion_Datos
         '
@@ -2249,9 +2250,9 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
     Public WithEvents Btn_Filtro_Ent_Lista_Precio_Asig As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Filtro_Ent_Lista_Precio_Doc As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Filtro_SucursalDoc As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Importar_Informe As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem9 As DevComponents.DotNetBar.LabelItem
     Public WithEvents Btn_Filtro_Ent_EntidadesExcluidas As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem10 As DevComponents.DotNetBar.LabelItem
     Public WithEvents Btn_Filtro_Pro_ProductosExcluidos As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Importar_Informe As DevComponents.DotNetBar.ButtonItem
 End Class

@@ -462,7 +462,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             Dtp_Fecha_Hasta.Value = value
         End Set
     End Property
-
     Public Property Tbl_Filtro_SucursalDoc As DataTable
         Get
             Return _Tbl_Filtro_SucursalDoc
@@ -471,7 +470,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_SucursalDoc = value
         End Set
     End Property
-
     Public Property Tbl_Filtro_Sucursales As DataTable
         Get
             Return _Tbl_Filtro_Sucursales
@@ -480,7 +478,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Sucursales = value
         End Set
     End Property
-
     Public Property Tbl_Filtro_Bodegas As DataTable
         Get
             Return _Tbl_Filtro_Bodegas
@@ -489,7 +486,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Bodegas = value
         End Set
     End Property
-
     Public Property Tbl_Filtro_Familias As DataTable
         Get
             Return _Tbl_Filtro_Familias
@@ -498,7 +494,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Familias = value
         End Set
     End Property
-
     Public Property Tbl_Filtro_Sub_Familias As DataTable
         Get
             Return _Tbl_Filtro_Sub_Familias
@@ -507,7 +502,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Sub_Familias = value
         End Set
     End Property
-
     Public Property Tbl_Filtro_Tipo_Entidad As DataTable
         Get
             Return _Tbl_Filtro_Tipo_Entidad
@@ -516,7 +510,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Tipo_Entidad = value
         End Set
     End Property
-
     Public Property Tbl_Filtro_Act_Economica As DataTable
         Get
             Return _Tbl_Filtro_Act_Economica
@@ -525,7 +518,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Act_Economica = value
         End Set
     End Property
-
     Public Property Tbl_Filtro_Tama_Empresa As DataTable
         Get
             Return _Tbl_Filtro_Tama_Empresa
@@ -534,13 +526,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Tama_Empresa = value
         End Set
     End Property
-
     Public Property FechaDesdeFd As Date
     Public Property FechaHastaFh As Date
     Public Property Comisiones As Boolean
     Public Property TotalNetoComisiones As Double
     Public Property ImportarComisiones As Boolean
-
     Public Property Tbl_Filtro_EntidadExcluidas As DataTable
         Get
             Return _Tbl_Filtro_EntidadExcluidas
@@ -549,7 +539,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_EntidadExcluidas = value
         End Set
     End Property
-
     Public Property Tbl_Filtro_ProductosExcluidos As DataTable
         Get
             Return _Tbl_Filtro_ProductosExcluidos

@@ -71,6 +71,55 @@ Public Class Cl_NVVAutoExterna
         Consulta_Sql = "Select *,1 As Precio From " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Where Id_Enc = " & _Id_Enc
         Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
 
+        Consulta_Sql = "Select * From CONFIEST Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & Modalidad_NVV & "'"
+        Dim _Row_Modalidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+        Dim _Sucursal As String = _Row_Modalidad.Item("ESUCURSAL")
+        Dim _Bodega As String = _Row_Modalidad.Item("EBODEGA")
+
+        Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Set " &
+                       "Empresa = '" & ModEmpresa & "',Sucursal = '" & _Sucursal & "',Bodega = '" & _Bodega & "' Where Id_Enc = " & _Id_Enc
+        _Sql.Ej_consulta_IDU(Consulta_Sql)
+
+        Consulta_Sql = "Select Nvd.Id_Det As Id,Cantidad,STFI1,STFI2,
+	Case 
+		When Untrans = 1 Then 
+			Case 
+				When STFI1 <=0 Then 0 
+				Else 
+					Case 
+						When (STFI1-Cantidad) >= 0 Then Cantidad 
+						When STFI1 > 0 Then STFI1 
+						Else 0
+					End 
+				End 
+				When Untrans = 2 Then 
+			Case 
+				When STFI2 <=0 Then 0 
+				Else 
+					Case 
+						When (STFI2-Cantidad) >= 0 Then Cantidad 
+						When STFI2 > 0 Then STFI2 
+						Else 0
+					End 
+				End 
+		End	As CntPedida 
+Into #Paso
+From " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Nvd
+Inner Join MAEST On EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR = Codigo
+Where Id_Enc = 20
+
+Update " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Set Stfi1 = STFI1,Stfi2 = STFI2,CantidadDefinitiva = CntPedida
+From #Paso Inner Join " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet On Id = Id_Det
+
+Drop table #Paso"
+        _Sql.Ej_consulta_IDU(Consulta_Sql)
+
+        Consulta_Sql = "Select *,1 As Precio From " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Where Id_Enc = " & _Id_Enc & " And CantidadDefinitiva > 0"
+        _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_Sql)
+
+        'ACA PONER UN VALIDADOR SI ES QUE NO HAY DETALLE DISPONIBLE.....
+
         Dim _Modalidad_Old As String = Modalidad
 
         Modalidad = Modalidad_NVV
@@ -81,7 +130,7 @@ Public Class Cl_NVVAutoExterna
         Fm.Sb_Limpiar(Modalidad_NVV)
         Fm.Pro_RowEntidad = _Row_Entidad
         Fm.Sb_Crear_Documento_Interno_Con_Tabla(_Formulario, _Tbl_Productos, _Fecha_Emision,
-                                                "Codigo", "Cantidad", "Precio", "Observacion", False, True,, True)
+                                                "Codigo", "CantidadDefinitiva", "Precio", "Observacion", False, True,, True)
         'Fm.Pro_Bodega_Destino = _Bod_Destino
         Dim _New_Idmaeedo = Fm.Fx_Grabar_Documento(False)
         Fm.Dispose()

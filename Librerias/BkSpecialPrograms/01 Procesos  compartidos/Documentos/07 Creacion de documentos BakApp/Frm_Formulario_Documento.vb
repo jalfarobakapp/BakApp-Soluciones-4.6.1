@@ -9387,7 +9387,12 @@ Public Class Frm_Formulario_Documento
                         (_Tipo_Documento = csGlobales.Enum_Tipo_Documento.Venta Or
                          _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Traslado_Interno Or
                          _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Nota_Venta_Interna Or
-                         _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna) Then
+                         _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna Or
+                         _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Devolucion Or
+                         _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Consignaciones_GPD_CON Or
+                         _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Prestamo_GDP_PRE Or
+                         _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Devolucion_Consignaciones_GDD_CON Or
+                         _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Devolucion_Prestamo_GDD_PRE) Then
 
                         Dim _Tipr = _Fila.Cells("Tipr").Value
                         Dim _Sucursal = _Fila.Cells("Sucursal").Value
