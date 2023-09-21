@@ -3086,69 +3086,69 @@ Public Class Frm_Ver_Documento
 
     Private Sub Btn_Mnu_Exportar_XML_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Exportar_XML.Click
 
-        If Fx_Tiene_Permiso(Me, "Doc00025") Then
+        If Not Fx_Tiene_Permiso(Me, "Doc00025") Then
+            Return
+        End If
 
-            Dim SaveFileDialog1 As New SaveFileDialog
-            Dim _Archivo_Xml As String
-            Dim _Errores As New List(Of String)
+        Dim SaveFileDialog1 As New SaveFileDialog
+        Dim _Archivo_Xml As String
+        Dim _Errores As New List(Of String)
 
-            Dim _Xml As New Class_Genera_DTE_RdBk(_Idmaeedo)
-            _Archivo_Xml = _Xml.Fx_Crear_Archivo_XML(Me)
-            _Errores = _Xml.Pro_Errores
+        Dim _Xml As New Class_Genera_DTE_RdBk(_Idmaeedo)
+        _Archivo_Xml = _Xml.Fx_Crear_Archivo_XML(Me)
+        _Errores = _Xml.Pro_Errores
 
-            Dim _Tido = _TblEncabezado.Rows(0).Item("TIDO")
-            Dim _Nudo = _TblEncabezado.Rows(0).Item("NUDO")
+        Dim _Tido = _TblEncabezado.Rows(0).Item("TIDO")
+        Dim _Nudo = _TblEncabezado.Rows(0).Item("NUDO")
 
-            Dim _Td As Integer = Fx_Tipo_DTE_VS_TIDO(_Tido)
+        Dim _Td As Integer = Fx_Tipo_DTE_VS_TIDO(_Tido)
 
-            Dim _ID As String = "F" & CInt(_TblEncabezado.Rows(0).Item("NUDO")) & "T" & _Td
+        Dim _ID As String = "F" & CInt(_TblEncabezado.Rows(0).Item("NUDO")) & "T" & _Td
 
-            Dim _a1 = "<Documento ID=""" & _ID & """>" '"<Documento ID = " & _ID & ">"
+        Dim _a1 = "<Documento ID=""" & _ID & """>" '"<Documento ID = " & _ID & ">"
 
-            _Archivo_Xml = Replace(_Archivo_Xml, _a1, "<DTE version=""1.0"">" & vbCrLf & _a1)
-            _Archivo_Xml = Replace(_Archivo_Xml, "</Documento>", "</Documento>" & vbCrLf & "</DTE>")
+        _Archivo_Xml = Replace(_Archivo_Xml, _a1, "<DTE version=""1.0"">" & vbCrLf & _a1)
+        _Archivo_Xml = Replace(_Archivo_Xml, "</Documento>", "</Documento>" & vbCrLf & "</DTE>")
 
-            Dim _Dir As String = AppPath() & "\Data\" & RutEmpresa & "\Temp" '\" & _Nudo & ".xml"
+        Dim _Dir As String = AppPath() & "\Data\" & RutEmpresa & "\Temp" '\" & _Nudo & ".xml"
 
-            If Not Directory.Exists(_Dir) Then
-                System.IO.Directory.CreateDirectory(_Dir)
-            End If
+        If Not Directory.Exists(_Dir) Then
+            System.IO.Directory.CreateDirectory(_Dir)
+        End If
 
 
-            If Not String.IsNullOrEmpty(_Archivo_Xml) Then
+        If Not String.IsNullOrEmpty(_Archivo_Xml) Then
 
-                SaveFileDialog1.FileName = _Tido & "-" & _Nudo & "_DTE"
+            SaveFileDialog1.FileName = _Tido & "-" & _Nudo & "_DTE"
 
-                SaveFileDialog1.Filter = "XML Files (*.xml)|*.xml"
-                If SaveFileDialog1.ShowDialog = Windows.Forms.DialogResult.OK Then
+            SaveFileDialog1.Filter = "XML Files (*.xml)|*.xml"
+            If SaveFileDialog1.ShowDialog = Windows.Forms.DialogResult.OK Then
 
-                    'My.Computer.FileSystem.WriteAllText _
-                    '(SaveFileDialog1.FileName, RichTextBox1.Text, True)
+                'My.Computer.FileSystem.WriteAllText _
+                '(SaveFileDialog1.FileName, RichTextBox1.Text, True)
 
-                    _Dir = SaveFileDialog1.FileName
+                _Dir = SaveFileDialog1.FileName
 
-                    Dim oSW As New System.IO.StreamWriter(_Dir)
+                Dim oSW As New System.IO.StreamWriter(_Dir)
 
-                    oSW.WriteLine(_Archivo_Xml)
-                    oSW.Close()
+                oSW.WriteLine(_Archivo_Xml)
+                oSW.Close()
 
-                    MessageBoxEx.Show(Me, "Archivo guardado correctamente" & vbCrLf &
+                MessageBoxEx.Show(Me, "Archivo guardado correctamente" & vbCrLf &
                                          "Ruta: " & _Dir, "Exportar a Xml", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                End If
-
-            Else
-                Dim _MsgErrores As String
-                If _Errores.Count > 0 Then
-                    For Each _Er As String In _Errores
-                        _MsgErrores += _Er & vbCrLf
-                    Next
-                End If
-
-                MessageBoxEx.Show(Me, "No exiten datos que exportar" & vbCrLf & _MsgErrores,
-                                  "Exportar a .csv", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
 
+        Else
+            Dim _MsgErrores As String
+            If _Errores.Count > 0 Then
+                For Each _Er As String In _Errores
+                    _MsgErrores += _Er & vbCrLf
+                Next
+            End If
+
+            MessageBoxEx.Show(Me, "No exiten datos que exportar" & vbCrLf & _MsgErrores,
+                                  "Exportar a .csv", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
 
     End Sub
@@ -4255,8 +4255,9 @@ Public Class Frm_Ver_Documento
 
             If _AceptadoSII Or (_InformadoSII And _ReparoSII) Then
                 MessageBoxEx.Show(Me, "Este documento ya fue enviado al SII" & vbCrLf &
-                              "Respueta SII:" & vbCrLf &
-                              "Estado: " & _Estado & "-" & _Glosa, "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                              "Respueta SII:" & vbCrLf & vbCrLf &
+                              Space(5) & "Estado: " & _Estado & "-" & _Glosa & vbCrLf &
+                              Space(5) & "Trackid: " & _Trackid, "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Return
             End If
 

@@ -1,4 +1,6 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports System.IO
+Imports System.Text
+Imports DevComponents.DotNetBar
 
 Public Class Frm_MantFacturasElectronicas
 
@@ -604,8 +606,6 @@ Public Class Frm_MantFacturasElectronicas
 
         End If
 
-        'Sb_Pintar_Fila(_Fila)
-
     End Sub
 
     Private Sub Btn_Reenviar_SII_Click(sender As Object, e As EventArgs) Handles Btn_Reenviar_SII.Click
@@ -727,12 +727,14 @@ Public Class Frm_MantFacturasElectronicas
         Btn_Reenviar_SII.Visible = CBool(_Id_Dte)
         Btn_ReConsultar_Trackid.Visible = CBool(_Id_Dte)
         Btn_Reenviar_Correo.Visible = CBool(_Id_Dte)
+        Btn_Mnu_Exportar_XML_Hefesto.Visible = CBool(_Id_Dte)
 
         If _ErrorEnvioDTE Then
             Btn_Firmar_Documento.Visible = True
             Btn_Reenviar_SII.Visible = False
             Btn_ReConsultar_Trackid.Visible = False
             Btn_Reenviar_Correo.Visible = False
+            Btn_Mnu_Exportar_XML_Hefesto.Visible = False
         End If
 
         If Btn_Firmar_Documento.Visible Then
@@ -1085,4 +1087,109 @@ Public Class Frm_MantFacturasElectronicas
 
     End Sub
 
+    Private Sub Btn_Mnu_Exportar_XML_Hefesto_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Exportar_XML_Hefesto.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Doc00025") Then
+            Return
+        End If
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
+        Dim _Id_Dte As Integer = _Fila.Cells("Id_Dte").Value
+        Dim _Id_Trackid As String = _Fila.Cells("Id_Trackid").Value
+        Dim _Trackid As String = _Fila.Cells("Trackid").Value
+        Dim _DocFirmado As Boolean = _Fila.Cells("DocFirmado").Value
+        Dim _AceptadoSII As Boolean = _Fila.Cells("AceptadoSII").Value
+        Dim _InformadoSII As Boolean = _Fila.Cells("InformadoSII").Value
+        Dim _RechazadoSII As Boolean = _Fila.Cells("RechazadoSII").Value
+        Dim _ReparoSII As Boolean = _Fila.Cells("ReparoSII").Value
+        Dim _EnviadoSII As Boolean = _Fila.Cells("EnviadoSII").Value
+
+        Dim _Msg As String = String.Empty
+
+        If Not _DocFirmado Then
+            _Msg = "-Falta firmar el documento" & vbCrLf
+        End If
+
+        If Not _EnviadoSII Then
+            _Msg += "-No ha sido enviado al SII" & vbCrLf
+        End If
+
+        If String.IsNullOrEmpty(_Trackid) Or
+            (Not CBool(_AceptadoSII) And Not CBool(_ReparoSII)) Then
+            _Msg += "-Aun no ha sido autorizado por el SII" & vbCrLf
+        End If
+
+        If CBool(_AceptadoSII) Then
+
+            Dim SaveFileDialog1 As New SaveFileDialog
+            Dim _CaratulaXml As String
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Documentos Where Id_Dte = " & _Id_Dte
+            Dim _Row_Zw_DTE_Documentos As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _Tido = _Row_Zw_DTE_Documentos.Item("Tido")
+            Dim _Nudo = _Row_Zw_DTE_Documentos.Item("Nudo")
+
+            _CaratulaXml = _Row_Zw_DTE_Documentos.Item("CaratulaXml")
+
+            Dim _Directorio As String = AppPath() & "\Data\" & RutEmpresa & "\Temp"
+
+            If Not Directory.Exists(_Directorio) Then
+                System.IO.Directory.CreateDirectory(_Directorio)
+            End If
+
+            If Not String.IsNullOrEmpty(_CaratulaXml) Then
+
+                SaveFileDialog1.FileName = _Tido & "-" & _Nudo & "_DTE"
+
+                SaveFileDialog1.Filter = "XML Files (*.xml)|*.xml"
+                If SaveFileDialog1.ShowDialog = Windows.Forms.DialogResult.OK Then
+
+                    _Directorio = SaveFileDialog1.FileName
+
+                    Dim oSW As New System.IO.StreamWriter(_Directorio)
+
+                    oSW.WriteLine(_CaratulaXml)
+                    oSW.Close()
+
+                    '' Crea un objeto XmlDocument para cargar el archivo XML
+                    Dim xmlDoc As New XmlDocument()
+
+                    xmlDoc.Load(_Directorio)
+
+                    Dim settings As New XmlWriterSettings()
+                    settings.Indent = True  ' Indentación para el formato
+                    settings.IndentChars = "	"
+                    settings.NewLineChars = vbCrLf  ' Separadores de líneas
+                    settings.Encoding = Encoding.GetEncoding("ISO-8859-1")
+
+
+                    Using writer As XmlWriter = XmlWriter.Create(_Directorio, settings)
+                        'Replace(writer.WriteString, "ISO-8859-1", "ISO-8859-1")
+                        xmlDoc.Save(writer)
+                    End Using
+
+                    'Transforme "iso-8859-1" a "ISO-8859-1"
+                    Dim contenido As String = File.ReadAllText(_Directorio, Encoding.GetEncoding("ISO-8859-1"))
+                    contenido = contenido.Replace("iso-8859-1", "ISO-8859-1")
+                    contenido = contenido.Replace(""" />", """/>")
+
+                    File.WriteAllText(_Directorio, contenido, Encoding.GetEncoding("ISO-8859-1"))
+
+                    MessageBoxEx.Show(Me, "Archivo guardado correctamente" & vbCrLf &
+                                             "Ruta: " & _Directorio, "Exportar a Xml", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                    Process.Start("explorer.exe", _Directorio)
+
+                End If
+
+            Else
+                MessageBoxEx.Show(Me, "No exiten datos que exportar",
+                                      "Exportar a .csv", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End If
+
+        End If
+
+    End Sub
 End Class

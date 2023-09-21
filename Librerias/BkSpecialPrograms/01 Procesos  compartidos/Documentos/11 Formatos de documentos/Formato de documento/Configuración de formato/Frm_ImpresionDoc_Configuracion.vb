@@ -534,6 +534,10 @@ Public Class Frm_ImpresionDoc_Configuracion
 
         If _Imprimir_Excel Then
 
+            If IsNothing(_RowDocumento_Pruebas) Then
+                Return
+            End If
+
             Dim _Doc_Electronico As Boolean = _Row_Formato.Item("Doc_Electronico") 'Fx_Es_Electronico(_TipoDoc)
             Dim _Copias As Integer = _Row_Formato.Item("Copias")
 
