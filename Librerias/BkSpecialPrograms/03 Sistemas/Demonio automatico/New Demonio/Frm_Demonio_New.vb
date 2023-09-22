@@ -1460,8 +1460,8 @@ Public Class Frm_Demonio_New
 
                 Dim registro As String = "Tarea ejecutada (Facturación automática) a las: " & DateTime.Now.ToString()
 
-                If Not String.IsNullOrWhiteSpace(_Cl_FacturacionAuto.Log_Registro) Then
-                    registro += vbCrLf & _Cl_FacturacionAuto.Log_Registro
+                If Not String.IsNullOrWhiteSpace(_Cl_NVVAutoExterna.Log_Registro) Then
+                    registro += vbCrLf & _Cl_NVVAutoExterna.Log_Registro
                 End If
 
                 RegistrarLog(registro)

@@ -397,7 +397,7 @@ Module Mod_Imprimir
         If String.IsNullOrEmpty(_Formato) Then Return "?S/formato" '_Formato = _Row_Zw_Format_Fx.Item("Formato")
 
         Try
-            _Valor = _RowDetalle.Item(Trim(_Campo))
+            _Valor = NuloPorNro(_RowDetalle.Item(Trim(_Campo)), "")
         Catch ex As Exception
             If _Prct Then
                 _Valor = String.Empty

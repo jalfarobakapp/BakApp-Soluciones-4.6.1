@@ -35,7 +35,7 @@ Public Class Cl_NVVAutoExterna
                 Dim _Id_Enc As Integer = _Fila.Item("Id_Enc")
 
                 Consulta_Sql = "Select Codigo,'Descripcion' From " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet" & vbCrLf &
-                               "Where Id_Enc = " & _Filtro_Id_Enc
+                               "Where Id_Enc = " & _Id_Enc
 
                 Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
 
@@ -51,7 +51,22 @@ Public Class Cl_NVVAutoExterna
                     Log_Registro += vbCrLf
                 End If
 
-                Log_Registro = Fx_Crear_NVV(_Formulario, _Id_Enc)
+                Dim _NLog_Registro As String = Fx_Crear_NVV(_Formulario, _Id_Enc)
+
+                If Not String.IsNullOrEmpty(_NLog_Registro) Then
+
+                    Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_NVVAuto Set " &
+                                   "Nudo_NVV = 'XXXXXXXXXX',Feemdo_NVV = Getdate(),Observaciones = '" & _NLog_Registro & "'" & vbCrLf &
+                                   "Where Id_Enc = " & _Id_Enc
+                    _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+                    If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                        _NLog_Registro = _NLog_Registro & vbCrLf & _Sql.Pro_Error
+                    End If
+
+                    Log_Registro += _NLog_Registro
+
+                End If
 
             Next
 
@@ -62,7 +77,7 @@ Public Class Cl_NVVAutoExterna
     Function Fx_Crear_NVV(_Formulario As Form, _Id_Enc As Integer) As String
 
         Dim _Modalidad_Old As String = Modalidad
-        Dim _LogR As String
+        Dim _LogR As String = String.Empty
 
         Try
 
@@ -104,10 +119,6 @@ Public Class Cl_NVVAutoExterna
             Dim _Row_Modalidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then Throw New System.Exception(_Sql.Pro_Error)
-
-            If _Tbl_Productos.Rows.Count = 0 Then
-                Throw New System.Exception("No se encuentran registros para la tabla Zw_Demonio_NVVAutoDet con el Id_Enc = " & _Id_Enc)
-            End If
 
             Dim _Sucursal As String = _Row_Modalidad.Item("ESUCURSAL")
             Dim _Bodega As String = _Row_Modalidad.Item("EBODEGA")
@@ -161,13 +172,7 @@ Drop table #Paso"
 
             If _Tbl_Productos.Rows.Count = 0 Then
 
-                Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_NVVAuto Set " &
-                               "Nudo_NVV = 'XXXXXXXXXX',Feemdo_NVV = Getdate(),Observaciones = 'Todos los productos están sin Stock suficiente'" & vbCrLf &
-                                "Where Id_Enc = " & _Id_Enc
-                _Sql.Ej_consulta_IDU(Consulta_Sql, False)
-
                 If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then Throw New System.Exception(_Sql.Pro_Error)
-
                 Throw New System.Exception("Todos los productos están sin Stock suficiente para la OCC-" & _NudoOCC_Ori)
 
             End If
