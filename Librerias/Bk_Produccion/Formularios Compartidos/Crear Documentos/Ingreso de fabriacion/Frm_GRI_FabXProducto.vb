@@ -74,7 +74,7 @@ Public Class Frm_GRI_FabXProducto
             End If
 
             Txt_Numot.ReadOnly = True
-
+            Txt_Numot.ButtonCustom.Visible = True
             Lbl_ReferenciaOT.Text = "REFERENCIA: " & _Row_Pote.Item("REFERENCIA")
 
             Sb_BuscarProductos(_Numot)
@@ -93,6 +93,7 @@ Public Class Frm_GRI_FabXProducto
         Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         Dim Fm As New Frm_GRI_ProductosOT
+        Fm.Text = "COMPONETES DE LA ORDEN DE TRABAJO: " & Txt_Numot.Text
         Fm.MarcarFilasSinSaldo = True
         Fm.Tbl_Productos = _Tbl_Productos
         Fm.ShowDialog(Me)
@@ -101,8 +102,10 @@ Public Class Frm_GRI_FabXProducto
 
         If IsNothing(_Row_Potl) Then
             If String.IsNullOrEmpty(Txt_Codigo.Text) Then
+                Grupo_Producto.Text = "DETALLE DE DATOS DE FABRICACION"
                 MessageBoxEx.Show(Me, "Debe seleccionar algun producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Txt_Numot.Text = String.Empty
+                Txt_Numot.ButtonCustom.Visible = False
                 Txt_Numot.Focus()
             Else
                 Txt_Cantidad.Focus()
@@ -110,6 +113,7 @@ Public Class Frm_GRI_FabXProducto
             Return
         End If
 
+        Grupo_Producto.Text = "DETALLE DE DATOS DE FABRICACION SUBOT: " & _Row_Potl.Item("NREG").ToString.Trim
         Txt_Cantidad.Text = String.Empty
         Txt_Cantidad.Tag = 0
 
@@ -138,6 +142,7 @@ Public Class Frm_GRI_FabXProducto
         Dtp_Fecha_Ingreso.Value = _FechaDelServidor
         Txt_Numot.Text = String.Empty
         Txt_Numot.ReadOnly = False
+        Txt_Numot.ButtonCustom.Visible = False
         Grupo_Producto.Enabled = False
         Txt_Codigo.Text = String.Empty
         Txt_Codigo.ButtonCustom.Enabled = False
@@ -151,14 +156,13 @@ Public Class Frm_GRI_FabXProducto
         Lbl_Realizado.Text = "0"
         Lbl_Saldo.Text = "0"
         Txt_Numot.Focus()
+        Grupo_Producto.Text = "DETALLE DE DATOS DE FABRICACION"
         Me.Refresh()
     End Sub
 
-    Private Sub Txt_Codigo_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Codigo.ButtonCustomClick
-        Sb_BuscarProductos(Txt_Numot.Text)
-    End Sub
-
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
+
+        Btn_Grabar.Enabled = False
 
         Dim _New_Idmaeedo As Integer
         Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
@@ -170,14 +174,35 @@ Public Class Frm_GRI_FabXProducto
         Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Koen & "'"
         Dim _Row_Entidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        If (Txt_Cantidad.Tag + _Row_Potl.Item("REALIZADO")) > _Row_Potl.Item("FABRICAR") Then
-            MessageBoxEx.Show(Me, "Usted no puede recepcionar más que el SALDO indicado en la orden" & vbCrLf &
-                              "", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        Dim _Cantidad As String = De_Num_a_Tx_01(Txt_Cantidad.Tag, False, 5)
+
+        Dim _Ud2 As String = _Row_Maepr.Item("UD02PR")
+        Dim _Cantidadv As Double = Txt_Cantidad.Tag
+        Dim _Rtu As Double = _Row_Maepr.Item("RLUD")
+        Dim _Resultado As Double = _Cantidadv / _Rtu
+
+        If _Cantidadv = 0 Then
+            MessageBoxEx.Show(Me, "Debe ingresar la cantidad", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_Cantidad.Focus()
             Return
         End If
 
-        Dim _Cantidad As String = De_Num_a_Tx_01(Txt_Cantidad.Tag, False, 5)
+        If (_Cantidadv + _Row_Potl.Item("REALIZADO")) > _Row_Potl.Item("FABRICAR") Then
+            MessageBoxEx.Show(Me, "Usted no puede recepcionar más que el SALDO indicado en la orden", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Cantidad.Focus()
+            Return
+        End If
+
+        If Not (_Resultado Mod 1 = 0) Then
+            MessageBoxEx.Show(Me, "La cantidad ingresada no es divisible por la unidad 2 " & _Ud2 & "-" & _Rtu, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Cantidad.Focus()
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Confirma la grabación por " & Txt_Cantidad.Text & " " & LabelX3.Text & "?", "Confirmar Grabación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Txt_Cantidad.Focus()
+            Return
+        End If
 
         Consulta_sql = "Select *," & _Cantidad & " As Cantidad,'" & ModSucursal & "' As Sucursal,'" & ModBodega & "' As Bodega" & vbCrLf &
                        "From POTL Where IDPOTL = " & _Row_Potl.Item("IDPOTL")
@@ -218,29 +243,33 @@ Public Class Frm_GRI_FabXProducto
         End If
     End Sub
 
-    Private Sub Txt_Cantidad_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Txt_Cantidad.Validating
-
-        Dim _Ud2 As String = _Row_Maepr.Item("UD02PR")
-        Dim _Cantidad As Double = Val(Txt_Cantidad.Text)
-        Dim _Rtu As Double = _Row_Maepr.Item("RLUD")
-        Dim _Resultado As Double = _Cantidad / _Rtu
-
-        If _Cantidad = 0 Then
-            MessageBoxEx.Show(Me, "Debe ingresar la cantidad", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            e.Cancel = True
-            Return
-        End If
-
-        If (_Cantidad + _Row_Potl.Item("REALIZADO")) > _Row_Potl.Item("FABRICAR") Then
-            MessageBoxEx.Show(Me, "Usted no puede recepcionar más que el SALDO indicado en la orden", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            e.Cancel = True
-            Return
-        End If
-
-        If Not (_Resultado Mod 1 = 0) Then
-            MessageBoxEx.Show(Me, "La cantidad ingresada no es divisible por la unidad 2 " & _Ud2 & "-" & _Rtu, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            e.Cancel = True
-        End If
-
+    Private Sub Txt_Numot_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Numot.ButtonCustomClick
+        Sb_BuscarProductos(Txt_Numot.Text)
     End Sub
+
+    'Private Sub Txt_Cantidad_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Txt_Cantidad.Validating
+
+    '    Dim _Ud2 As String = _Row_Maepr.Item("UD02PR")
+    '    Dim _Cantidad As Double = Val(Txt_Cantidad.Text)
+    '    Dim _Rtu As Double = _Row_Maepr.Item("RLUD")
+    '    Dim _Resultado As Double = _Cantidad / _Rtu
+
+    '    If _Cantidad = 0 Then
+    '        MessageBoxEx.Show(Me, "Debe ingresar la cantidad", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+    '        e.Cancel = True
+    '        Return
+    '    End If
+
+    '    If (_Cantidad + _Row_Potl.Item("REALIZADO")) > _Row_Potl.Item("FABRICAR") Then
+    '        MessageBoxEx.Show(Me, "Usted no puede recepcionar más que el SALDO indicado en la orden", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+    '        e.Cancel = True
+    '        Return
+    '    End If
+
+    '    If Not (_Resultado Mod 1 = 0) Then
+    '        MessageBoxEx.Show(Me, "La cantidad ingresada no es divisible por la unidad 2 " & _Ud2 & "-" & _Rtu, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+    '        e.Cancel = True
+    '    End If
+
+    'End Sub
 End Class

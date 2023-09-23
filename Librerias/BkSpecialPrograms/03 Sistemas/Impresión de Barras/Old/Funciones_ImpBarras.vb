@@ -616,7 +616,7 @@
 
 #Region "IMPRIMIR DESDE OT"
 
-    Sub Sb_Imprimir_Etiqueta_OT(_Puerto As String, _NombreEtiqueta As String, _Idpote As Integer, _Row_Potl As DataRow)
+    Sub Sb_Imprimir_Etiqueta_OT(_Puerto As String, _NombreEtiqueta As String, _Idpote As Integer, _Kopral As String, _Idpotl As Integer)
 
         _Error = String.Empty
 
@@ -628,18 +628,18 @@
             Return
         End If
 
-        'Consulta_sql = "Select POTL.*,Ltd.NroLote,Lte.FechaVenci,'" & _Kopral & "' As ALTERNAT,'" & _Kopral & "' As CODIGO_ALT" & vbCrLf &
-        '               "From POTL" & vbCrLf &
-        '               "Left Join " & _Global_BaseBk & "Zw_Lotes_Det Ltd On IDPOTL = IdTabla" & vbCrLf &
-        '               "Left Join " & _Global_BaseBk & "Zw_Lotes_Enc Lte On Ltd.Id_Lote = Lte.Id_Lote" & vbCrLf &
-        '               "Where IDPOTL = " & _Idpotl
+        Consulta_sql = "Select POTL.*,Ltd.NroLote,Lte.FechaVenci,'" & _Kopral & "' As ALTERNAT,'" & _Kopral & "' As CODIGO_ALT" & vbCrLf &
+                       "From POTL" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Lotes_Det Ltd On IDPOTL = IdTabla" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Lotes_Enc Lte On Ltd.Id_Lote = Lte.Id_Lote" & vbCrLf &
+                       "Where IDPOTL = " & _Idpotl
 
-        'Dim _Row_Potl As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+        Dim _Row_Potl As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        'If IsNothing(_Row_Potl) Then
-        '    _Error = "No existe registro de OT Tabla POTL"
-        '    Return
-        'End If
+        If IsNothing(_Row_Potl) Then
+            _Error = "No existe registro de OT Tabla POTL"
+            Return
+        End If
 
         Dim _Fecha_impresion As Date = Now
         Dim _RowEtiqueta As DataRow = Fx_TraeEtiqueta(_NombreEtiqueta)

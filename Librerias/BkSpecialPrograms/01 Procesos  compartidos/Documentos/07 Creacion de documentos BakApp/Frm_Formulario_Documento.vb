@@ -12603,7 +12603,7 @@ Public Class Frm_Formulario_Documento
 
                                 Dim _Msg = String.Empty
 
-                                If _Tido = "NCV" Or _Tido = "GRD" Then
+                                If _Tido = "NCV" Or _Tido = "GRD" Or (_Tido = "GDD" And _SubTido = "") Then
 
                                     Dim _Dias_Para_Hacer_NCV As Integer = _Global_Row_Configuracion_General.Item("Dias_Para_Hacer_NCV")
                                     Dim _Dias_Para_Hacer_NCV_Oblig As Integer = _Global_Row_Configuracion_General.Item("Dias_Para_Hacer_NCV_Oblig")
@@ -12623,22 +12623,32 @@ Public Class Frm_Formulario_Documento
 
                                                 If _Dias_Transcurridos > _Dias_Para_Hacer_NCV_Oblig Then
 
-                                                    Dim _Dias_Pasados = _Dias_Transcurridos - _Dias_Para_Hacer_NCV_Oblig
+                                                    Dim _MostrarAlerta = True
 
-                                                    _Msg = "El documento " & _Tido_Doc & "-" & _Nudo_Doc & " tiene mas de " & FormatNumber(_Dias_Para_Hacer_NCV_Oblig, 0) & " día(s)" & Environment.NewLine &
+                                                    If _Tido = "GDD" And _Tido_Doc = "NCC" Then
+                                                        _MostrarAlerta = False
+                                                    End If
+
+                                                    If _MostrarAlerta Then
+
+                                                        Dim _Dias_Pasados = _Dias_Transcurridos - _Dias_Para_Hacer_NCV_Oblig
+
+                                                        _Msg = "El documento " & _Tido_Doc & "-" & _Nudo_Doc & " tiene mas de " & FormatNumber(_Dias_Para_Hacer_NCV_Oblig, 0) & " día(s)" & Environment.NewLine &
                                                        "Está pasado en " & FormatNumber(_Dias_Pasados, 0) & " día(s) según su fecha de emisión (" & _Fecha_Doc & ")." & Environment.NewLine & Environment.NewLine &
                                                        "Recuerde que no se pueden hacer notas de crédito con documentos relacionados de mas de " & FormatNumber(_Dias_Para_Hacer_NCV_Oblig, 0) & " días desde su fecha de emisión." & Environment.NewLine &
                                                        "Esta norma esta estipulada por el SII"
 
-                                                    MessageBoxEx.Show(Me, _Msg, "Validación",
+                                                        MessageBoxEx.Show(Me, _Msg, "Validación",
                                                              MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
 
-                                                    Sb_Limpiar(Modalidad, True)
-                                                    Return
+                                                        Sb_Limpiar(Modalidad, True)
+                                                        Return
+
+                                                    End If
 
                                                 Else
 
-                                                    If _Dias_Transcurridos > _Dias_Para_Hacer_NCV Then
+                                                    If _Tido <> "GDD" AndAlso _Dias_Transcurridos > _Dias_Para_Hacer_NCV Then
 
                                                         Dim _Dias_Pasados = _Dias_Transcurridos - _Dias_Para_Hacer_NCV
 

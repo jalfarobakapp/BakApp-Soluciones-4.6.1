@@ -222,7 +222,12 @@ Public Class Frm_Configuracion_Gral
 
             Chk_ValidaMovFisConCodBarra.Checked = .Item("ValidaMovFisConCodBarra")
 
+            Input_Dias_Para_Hacer_NCV.Value = .Item("Dias_Para_Hacer_NCV")
+
         End With
+
+        Input_Dias_Para_Hacer_NCV.Enabled = Not _Modalidad_General
+        Lbl_Dias_Para_Hacer_NCV.Enabled = Not _Modalidad_General
 
         Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.Enabled = Not _Modalidad_General
         Chk_ValidaMovFisConCodBarra.Enabled = Not _Modalidad_General
@@ -448,6 +453,7 @@ Public Class Frm_Configuracion_Gral
                        ",Crear_FCC_Desde_GRC_Vinculado_SII = " & Convert.ToInt32(Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.Checked) & vbCrLf &
                        ",Centro_Costo_Obligatorio_OCC = " & Convert.ToInt32(Chk_Centro_Costo_Obligatorio_OCC.Checked) & vbCrLf &
                        ",No_Solicitar_Permiso_Entidad_Preferencial = " & Convert.ToInt32(Chk_No_Solicitar_Permiso_Entidad_Preferencial.Checked) & vbCrLf &
+                       ",Dias_Para_Hacer_NCV = " & Input_Dias_Para_Hacer_NCV.Value & vbCrLf &
                        ",Utilizar_NVV_En_Credito_X_Cliente = " & Convert.ToInt32(Chk_Utilizar_NVV_En_Credito_X_Cliente.Checked) & vbCrLf &
                        ",Volver_A_Solicitar_Permiso_FCV_desde_NVV = " & Convert.ToInt32(Chk_Volver_A_Solicitar_Permiso_FCV_desde_NVV.Checked) & vbCrLf &
                        ",No_Permitir_Grabar_Con_Dscto_Superado = " & Convert.ToInt32(Chk_No_Permitir_Grabar_Con_Dscto_Superado.Checked) & vbCrLf &

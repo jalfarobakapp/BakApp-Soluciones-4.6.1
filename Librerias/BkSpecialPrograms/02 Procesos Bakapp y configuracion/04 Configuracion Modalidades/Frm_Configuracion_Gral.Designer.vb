@@ -35,7 +35,6 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_Conservar_Responzable_Doc_Relacionado = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_No_Permitir_Grabar_Con_Dscto_Superado = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Utilizar_NVV_En_Credito_X_Cliente = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.CheckBoxX1 = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Preguntar_Documento = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Redondear_Dscto_Cero = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Vnta_Ofrecer_Otras_Bod_Stock_Insuficiente = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -54,6 +53,7 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
         Me.SuperTabControlPanel7 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Chk_ValidaMovFisConCodBarra = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Pr_Creacion_Exigir_3raDimension = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Pr_Creacion_Exigir_2daDimension = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Pr_Creacion_Exigir_1raDimension = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -155,7 +155,8 @@ Partial Class Frm_Configuracion_Gral
         Me.Btn_Excluir_Documentos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_DocConceptosVsPagos = New DevComponents.DotNetBar.ButtonItem()
         Me.CheckBoxX2 = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_ValidaMovFisConCodBarra = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Input_Dias_Para_Hacer_NCV = New DevComponents.Editors.IntegerInput()
+        Me.Lbl_Dias_Para_Hacer_NCV = New DevComponents.DotNetBar.LabelX()
         Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.Input_Monto_Max_CRV_FacMasiva, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel4.SuspendLayout()
@@ -176,6 +177,7 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel8.SuspendLayout()
         Me.TableLayoutPanel6.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Input_Dias_Para_Hacer_NCV, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TableLayoutPanel3
@@ -183,24 +185,23 @@ Partial Class Frm_Configuracion_Gral
         Me.TableLayoutPanel3.BackColor = System.Drawing.Color.Transparent
         Me.TableLayoutPanel3.ColumnCount = 1
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
-        Me.TableLayoutPanel3.Controls.Add(Me.Chk_B4A_DespachoSimple, 0, 17)
-        Me.TableLayoutPanel3.Controls.Add(Me.Chk_LasNVVDebenSerHabilitadasParaFacturar, 0, 16)
-        Me.TableLayoutPanel3.Controls.Add(Me.Chk_AlertaRevNVVConVtasMismoDia, 0, 15)
-        Me.TableLayoutPanel3.Controls.Add(Me.Chk_ListaDesdeSustentatorio, 0, 14)
-        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Las_Cotizaciones_No_Revisan_Permisos, 0, 13)
-        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Permisos_Descuentos_Por_Responzable, 0, 12)
-        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Volver_A_Solicitar_Permiso_FCV_desde_NVV, 0, 11)
-        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Preguntar_Si_Cambia_Responsable_Doc_Relacionado, 0, 9)
-        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Conservar_Responzable_Doc_Relacionado, 0, 10)
         Me.TableLayoutPanel3.Controls.Add(Me.Chk_No_Permitir_Grabar_Con_Dscto_Superado, 0, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Chk_Utilizar_NVV_En_Credito_X_Cliente, 0, 1)
-        Me.TableLayoutPanel3.Controls.Add(Me.CheckBoxX1, 0, 2)
-        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Preguntar_Documento, 0, 3)
-        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Redondear_Dscto_Cero, 0, 4)
-        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Vnta_Ofrecer_Otras_Bod_Stock_Insuficiente, 0, 5)
-        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Conservar_Bodega_Sig_Linea_Venta, 0, 6)
-        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Dias_Max_Fecha_Despacho_Sab, 0, 7)
-        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Dias_Max_Fecha_Despacho_Dom, 0, 8)
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Preguntar_Documento, 0, 2)
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Redondear_Dscto_Cero, 0, 3)
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Vnta_Ofrecer_Otras_Bod_Stock_Insuficiente, 0, 4)
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Conservar_Bodega_Sig_Linea_Venta, 0, 5)
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Dias_Max_Fecha_Despacho_Sab, 0, 6)
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Dias_Max_Fecha_Despacho_Dom, 0, 7)
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Preguntar_Si_Cambia_Responsable_Doc_Relacionado, 0, 8)
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Conservar_Responzable_Doc_Relacionado, 0, 9)
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Volver_A_Solicitar_Permiso_FCV_desde_NVV, 0, 10)
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Permisos_Descuentos_Por_Responzable, 0, 11)
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_Las_Cotizaciones_No_Revisan_Permisos, 0, 12)
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_ListaDesdeSustentatorio, 0, 13)
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_AlertaRevNVVConVtasMismoDia, 0, 14)
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_LasNVVDebenSerHabilitadasParaFacturar, 0, 15)
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_B4A_DespachoSimple, 0, 16)
         Me.TableLayoutPanel3.ForeColor = System.Drawing.Color.Black
         Me.TableLayoutPanel3.Location = New System.Drawing.Point(3, 3)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
@@ -236,7 +237,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_B4A_DespachoSimple.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_B4A_DespachoSimple.CheckBoxImageIndeterminate"), System.Drawing.Image)
         Me.Chk_B4A_DespachoSimple.FocusCuesEnabled = False
         Me.Chk_B4A_DespachoSimple.ForeColor = System.Drawing.Color.Black
-        Me.Chk_B4A_DespachoSimple.Location = New System.Drawing.Point(3, 309)
+        Me.Chk_B4A_DespachoSimple.Location = New System.Drawing.Point(3, 291)
         Me.Chk_B4A_DespachoSimple.Name = "Chk_B4A_DespachoSimple"
         Me.Chk_B4A_DespachoSimple.Size = New System.Drawing.Size(635, 12)
         Me.Chk_B4A_DespachoSimple.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -253,7 +254,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_LasNVVDebenSerHabilitadasParaFacturar.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_LasNVVDebenSerHabilitadasParaFacturar.CheckBoxImageIndeterminate"), System.Drawing.Image)
         Me.Chk_LasNVVDebenSerHabilitadasParaFacturar.FocusCuesEnabled = False
         Me.Chk_LasNVVDebenSerHabilitadasParaFacturar.ForeColor = System.Drawing.Color.Black
-        Me.Chk_LasNVVDebenSerHabilitadasParaFacturar.Location = New System.Drawing.Point(3, 291)
+        Me.Chk_LasNVVDebenSerHabilitadasParaFacturar.Location = New System.Drawing.Point(3, 273)
         Me.Chk_LasNVVDebenSerHabilitadasParaFacturar.Name = "Chk_LasNVVDebenSerHabilitadasParaFacturar"
         Me.Chk_LasNVVDebenSerHabilitadasParaFacturar.Size = New System.Drawing.Size(635, 12)
         Me.Chk_LasNVVDebenSerHabilitadasParaFacturar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -270,7 +271,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_AlertaRevNVVConVtasMismoDia.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_AlertaRevNVVConVtasMismoDia.CheckBoxImageIndeterminate"), System.Drawing.Image)
         Me.Chk_AlertaRevNVVConVtasMismoDia.FocusCuesEnabled = False
         Me.Chk_AlertaRevNVVConVtasMismoDia.ForeColor = System.Drawing.Color.Black
-        Me.Chk_AlertaRevNVVConVtasMismoDia.Location = New System.Drawing.Point(3, 273)
+        Me.Chk_AlertaRevNVVConVtasMismoDia.Location = New System.Drawing.Point(3, 255)
         Me.Chk_AlertaRevNVVConVtasMismoDia.Name = "Chk_AlertaRevNVVConVtasMismoDia"
         Me.Chk_AlertaRevNVVConVtasMismoDia.Size = New System.Drawing.Size(635, 12)
         Me.Chk_AlertaRevNVVConVtasMismoDia.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -288,7 +289,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_ListaDesdeSustentatorio.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_ListaDesdeSustentatorio.CheckBoxImageIndeterminate"), System.Drawing.Image)
         Me.Chk_ListaDesdeSustentatorio.FocusCuesEnabled = False
         Me.Chk_ListaDesdeSustentatorio.ForeColor = System.Drawing.Color.Black
-        Me.Chk_ListaDesdeSustentatorio.Location = New System.Drawing.Point(3, 255)
+        Me.Chk_ListaDesdeSustentatorio.Location = New System.Drawing.Point(3, 237)
         Me.Chk_ListaDesdeSustentatorio.Name = "Chk_ListaDesdeSustentatorio"
         Me.Chk_ListaDesdeSustentatorio.Size = New System.Drawing.Size(635, 12)
         Me.Chk_ListaDesdeSustentatorio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -306,7 +307,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_Las_Cotizaciones_No_Revisan_Permisos.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Las_Cotizaciones_No_Revisan_Permisos.CheckBoxImageIndeterminate"), System.Drawing.Image)
         Me.Chk_Las_Cotizaciones_No_Revisan_Permisos.FocusCuesEnabled = False
         Me.Chk_Las_Cotizaciones_No_Revisan_Permisos.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Las_Cotizaciones_No_Revisan_Permisos.Location = New System.Drawing.Point(3, 237)
+        Me.Chk_Las_Cotizaciones_No_Revisan_Permisos.Location = New System.Drawing.Point(3, 219)
         Me.Chk_Las_Cotizaciones_No_Revisan_Permisos.Name = "Chk_Las_Cotizaciones_No_Revisan_Permisos"
         Me.Chk_Las_Cotizaciones_No_Revisan_Permisos.Size = New System.Drawing.Size(635, 12)
         Me.Chk_Las_Cotizaciones_No_Revisan_Permisos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -323,7 +324,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_Permisos_Descuentos_Por_Responzable.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Permisos_Descuentos_Por_Responzable.CheckBoxImageIndeterminate"), System.Drawing.Image)
         Me.Chk_Permisos_Descuentos_Por_Responzable.FocusCuesEnabled = False
         Me.Chk_Permisos_Descuentos_Por_Responzable.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Permisos_Descuentos_Por_Responzable.Location = New System.Drawing.Point(3, 219)
+        Me.Chk_Permisos_Descuentos_Por_Responzable.Location = New System.Drawing.Point(3, 201)
         Me.Chk_Permisos_Descuentos_Por_Responzable.Name = "Chk_Permisos_Descuentos_Por_Responzable"
         Me.Chk_Permisos_Descuentos_Por_Responzable.Size = New System.Drawing.Size(635, 12)
         Me.Chk_Permisos_Descuentos_Por_Responzable.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -341,7 +342,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_Volver_A_Solicitar_Permiso_FCV_desde_NVV.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Volver_A_Solicitar_Permiso_FCV_desde_NVV.CheckBoxImageIndeterminate"), System.Drawing.Image)
         Me.Chk_Volver_A_Solicitar_Permiso_FCV_desde_NVV.FocusCuesEnabled = False
         Me.Chk_Volver_A_Solicitar_Permiso_FCV_desde_NVV.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Volver_A_Solicitar_Permiso_FCV_desde_NVV.Location = New System.Drawing.Point(3, 201)
+        Me.Chk_Volver_A_Solicitar_Permiso_FCV_desde_NVV.Location = New System.Drawing.Point(3, 183)
         Me.Chk_Volver_A_Solicitar_Permiso_FCV_desde_NVV.Name = "Chk_Volver_A_Solicitar_Permiso_FCV_desde_NVV"
         Me.Chk_Volver_A_Solicitar_Permiso_FCV_desde_NVV.Size = New System.Drawing.Size(635, 12)
         Me.Chk_Volver_A_Solicitar_Permiso_FCV_desde_NVV.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -359,7 +360,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_Preguntar_Si_Cambia_Responsable_Doc_Relacionado.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Preguntar_Si_Cambia_Responsable_Doc_Relacionado.CheckBoxImageIndeterminate"), System.Drawing.Image)
         Me.Chk_Preguntar_Si_Cambia_Responsable_Doc_Relacionado.FocusCuesEnabled = False
         Me.Chk_Preguntar_Si_Cambia_Responsable_Doc_Relacionado.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Preguntar_Si_Cambia_Responsable_Doc_Relacionado.Location = New System.Drawing.Point(3, 165)
+        Me.Chk_Preguntar_Si_Cambia_Responsable_Doc_Relacionado.Location = New System.Drawing.Point(3, 147)
         Me.Chk_Preguntar_Si_Cambia_Responsable_Doc_Relacionado.Name = "Chk_Preguntar_Si_Cambia_Responsable_Doc_Relacionado"
         Me.Chk_Preguntar_Si_Cambia_Responsable_Doc_Relacionado.Size = New System.Drawing.Size(483, 12)
         Me.Chk_Preguntar_Si_Cambia_Responsable_Doc_Relacionado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -378,7 +379,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_Conservar_Responzable_Doc_Relacionado.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Conservar_Responzable_Doc_Relacionado.CheckBoxImageIndeterminate"), System.Drawing.Image)
         Me.Chk_Conservar_Responzable_Doc_Relacionado.FocusCuesEnabled = False
         Me.Chk_Conservar_Responzable_Doc_Relacionado.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Conservar_Responzable_Doc_Relacionado.Location = New System.Drawing.Point(3, 183)
+        Me.Chk_Conservar_Responzable_Doc_Relacionado.Location = New System.Drawing.Point(3, 165)
         Me.Chk_Conservar_Responzable_Doc_Relacionado.Name = "Chk_Conservar_Responzable_Doc_Relacionado"
         Me.Chk_Conservar_Responzable_Doc_Relacionado.Size = New System.Drawing.Size(635, 12)
         Me.Chk_Conservar_Responzable_Doc_Relacionado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -401,7 +402,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_No_Permitir_Grabar_Con_Dscto_Superado.Size = New System.Drawing.Size(276, 12)
         Me.Chk_No_Permitir_Grabar_Con_Dscto_Superado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_No_Permitir_Grabar_Con_Dscto_Superado.TabIndex = 86
-        Me.Chk_No_Permitir_Grabar_Con_Dscto_Superado.Text = "No Permitir Grabar Venta Con Dscto Superado"
+        Me.Chk_No_Permitir_Grabar_Con_Dscto_Superado.Text = "No Permitir Grabar Venta Con Descuento Superado"
         '
         'Chk_Utilizar_NVV_En_Credito_X_Cliente
         '
@@ -420,23 +421,6 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_Utilizar_NVV_En_Credito_X_Cliente.TabIndex = 108
         Me.Chk_Utilizar_NVV_En_Credito_X_Cliente.Text = "Considera NVV abiertas como cupo utilizado"
         '
-        'CheckBoxX1
-        '
-        '
-        '
-        '
-        Me.CheckBoxX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.CheckBoxX1.CheckBoxImageChecked = CType(resources.GetObject("CheckBoxX1.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.CheckBoxX1.CheckBoxImageIndeterminate = CType(resources.GetObject("CheckBoxX1.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.CheckBoxX1.FocusCuesEnabled = False
-        Me.CheckBoxX1.ForeColor = System.Drawing.Color.Black
-        Me.CheckBoxX1.Location = New System.Drawing.Point(3, 39)
-        Me.CheckBoxX1.Name = "CheckBoxX1"
-        Me.CheckBoxX1.Size = New System.Drawing.Size(276, 12)
-        Me.CheckBoxX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.CheckBoxX1.TabIndex = 110
-        Me.CheckBoxX1.Text = "No Permitir Grabar Venta Con Dscto Superado"
-        '
         'Chk_Preguntar_Documento
         '
         Me.Chk_Preguntar_Documento.BackColor = System.Drawing.Color.Transparent
@@ -448,7 +432,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_Preguntar_Documento.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Preguntar_Documento.CheckBoxImageIndeterminate"), System.Drawing.Image)
         Me.Chk_Preguntar_Documento.FocusCuesEnabled = False
         Me.Chk_Preguntar_Documento.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Preguntar_Documento.Location = New System.Drawing.Point(3, 57)
+        Me.Chk_Preguntar_Documento.Location = New System.Drawing.Point(3, 39)
         Me.Chk_Preguntar_Documento.Name = "Chk_Preguntar_Documento"
         Me.Chk_Preguntar_Documento.Size = New System.Drawing.Size(461, 12)
         Me.Chk_Preguntar_Documento.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -466,7 +450,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_Redondear_Dscto_Cero.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Redondear_Dscto_Cero.CheckBoxImageIndeterminate"), System.Drawing.Image)
         Me.Chk_Redondear_Dscto_Cero.FocusCuesEnabled = False
         Me.Chk_Redondear_Dscto_Cero.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Redondear_Dscto_Cero.Location = New System.Drawing.Point(3, 75)
+        Me.Chk_Redondear_Dscto_Cero.Location = New System.Drawing.Point(3, 57)
         Me.Chk_Redondear_Dscto_Cero.Name = "Chk_Redondear_Dscto_Cero"
         Me.Chk_Redondear_Dscto_Cero.Size = New System.Drawing.Size(461, 12)
         Me.Chk_Redondear_Dscto_Cero.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -484,7 +468,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_Vnta_Ofrecer_Otras_Bod_Stock_Insuficiente.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Vnta_Ofrecer_Otras_Bod_Stock_Insuficiente.CheckBoxImageIndeterminate"), System.Drawing.Image)
         Me.Chk_Vnta_Ofrecer_Otras_Bod_Stock_Insuficiente.FocusCuesEnabled = False
         Me.Chk_Vnta_Ofrecer_Otras_Bod_Stock_Insuficiente.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Vnta_Ofrecer_Otras_Bod_Stock_Insuficiente.Location = New System.Drawing.Point(3, 93)
+        Me.Chk_Vnta_Ofrecer_Otras_Bod_Stock_Insuficiente.Location = New System.Drawing.Point(3, 75)
         Me.Chk_Vnta_Ofrecer_Otras_Bod_Stock_Insuficiente.Name = "Chk_Vnta_Ofrecer_Otras_Bod_Stock_Insuficiente"
         Me.Chk_Vnta_Ofrecer_Otras_Bod_Stock_Insuficiente.Size = New System.Drawing.Size(461, 12)
         Me.Chk_Vnta_Ofrecer_Otras_Bod_Stock_Insuficiente.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -502,7 +486,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_Conservar_Bodega_Sig_Linea_Venta.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Conservar_Bodega_Sig_Linea_Venta.CheckBoxImageIndeterminate"), System.Drawing.Image)
         Me.Chk_Conservar_Bodega_Sig_Linea_Venta.FocusCuesEnabled = False
         Me.Chk_Conservar_Bodega_Sig_Linea_Venta.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Conservar_Bodega_Sig_Linea_Venta.Location = New System.Drawing.Point(3, 111)
+        Me.Chk_Conservar_Bodega_Sig_Linea_Venta.Location = New System.Drawing.Point(3, 93)
         Me.Chk_Conservar_Bodega_Sig_Linea_Venta.Name = "Chk_Conservar_Bodega_Sig_Linea_Venta"
         Me.Chk_Conservar_Bodega_Sig_Linea_Venta.Size = New System.Drawing.Size(651, 12)
         Me.Chk_Conservar_Bodega_Sig_Linea_Venta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -519,7 +503,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_Dias_Max_Fecha_Despacho_Sab.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Dias_Max_Fecha_Despacho_Sab.CheckBoxImageIndeterminate"), System.Drawing.Image)
         Me.Chk_Dias_Max_Fecha_Despacho_Sab.FocusCuesEnabled = False
         Me.Chk_Dias_Max_Fecha_Despacho_Sab.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Dias_Max_Fecha_Despacho_Sab.Location = New System.Drawing.Point(3, 129)
+        Me.Chk_Dias_Max_Fecha_Despacho_Sab.Location = New System.Drawing.Point(3, 111)
         Me.Chk_Dias_Max_Fecha_Despacho_Sab.Name = "Chk_Dias_Max_Fecha_Despacho_Sab"
         Me.Chk_Dias_Max_Fecha_Despacho_Sab.Size = New System.Drawing.Size(248, 12)
         Me.Chk_Dias_Max_Fecha_Despacho_Sab.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -536,7 +520,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_Dias_Max_Fecha_Despacho_Dom.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Dias_Max_Fecha_Despacho_Dom.CheckBoxImageIndeterminate"), System.Drawing.Image)
         Me.Chk_Dias_Max_Fecha_Despacho_Dom.FocusCuesEnabled = False
         Me.Chk_Dias_Max_Fecha_Despacho_Dom.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Dias_Max_Fecha_Despacho_Dom.Location = New System.Drawing.Point(3, 147)
+        Me.Chk_Dias_Max_Fecha_Despacho_Dom.Location = New System.Drawing.Point(3, 129)
         Me.Chk_Dias_Max_Fecha_Despacho_Dom.Name = "Chk_Dias_Max_Fecha_Despacho_Dom"
         Me.Chk_Dias_Max_Fecha_Despacho_Dom.Size = New System.Drawing.Size(216, 12)
         Me.Chk_Dias_Max_Fecha_Despacho_Dom.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -698,14 +682,14 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel7)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel5)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel6)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel4)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel5)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel8)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel7)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel4)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
         Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
         Me.SuperTabControl1.Location = New System.Drawing.Point(12, 12)
         Me.SuperTabControl1.Name = "SuperTabControl1"
@@ -769,6 +753,25 @@ Partial Class Frm_Configuracion_Gral
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142857!))
         Me.TableLayoutPanel2.Size = New System.Drawing.Size(666, 281)
         Me.TableLayoutPanel2.TabIndex = 101
+        '
+        'Chk_ValidaMovFisConCodBarra
+        '
+        Me.Chk_ValidaMovFisConCodBarra.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_ValidaMovFisConCodBarra.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_ValidaMovFisConCodBarra.CheckBoxImageChecked = CType(resources.GetObject("Chk_ValidaMovFisConCodBarra.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_ValidaMovFisConCodBarra.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_ValidaMovFisConCodBarra.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_ValidaMovFisConCodBarra.FocusCuesEnabled = False
+        Me.Chk_ValidaMovFisConCodBarra.ForeColor = System.Drawing.Color.Black
+        Me.Chk_ValidaMovFisConCodBarra.Location = New System.Drawing.Point(3, 263)
+        Me.Chk_ValidaMovFisConCodBarra.Name = "Chk_ValidaMovFisConCodBarra"
+        Me.Chk_ValidaMovFisConCodBarra.Size = New System.Drawing.Size(480, 12)
+        Me.Chk_ValidaMovFisConCodBarra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_ValidaMovFisConCodBarra.TabIndex = 102
+        Me.Chk_ValidaMovFisConCodBarra.Text = "Los movimientos físicos de mercadería requieren ser validados con códigos de barr" &
+    "a al grabar"
         '
         'Chk_Pr_Creacion_Exigir_3raDimension
         '
@@ -1106,7 +1109,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_Revisar_Taza_Solo_Mon_Extranjeras.Size = New System.Drawing.Size(483, 14)
         Me.Chk_Revisar_Taza_Solo_Mon_Extranjeras.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Revisar_Taza_Solo_Mon_Extranjeras.TabIndex = 110
-        Me.Chk_Revisar_Taza_Solo_Mon_Extranjeras.Text = "Revisar taza de cambio solo de monedas extranjeras"
+        Me.Chk_Revisar_Taza_Solo_Mon_Extranjeras.Text = "Revisar tasa de cambio solo de monedas extranjeras"
         '
         'Chk_Pedir_Permiso_Para_Usar_Stanby
         '
@@ -1203,7 +1206,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_LeerSoloUnaVezCodBarra.Size = New System.Drawing.Size(483, 14)
         Me.Chk_LeerSoloUnaVezCodBarra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_LeerSoloUnaVezCodBarra.TabIndex = 117
-        Me.Chk_LeerSoloUnaVezCodBarra.Text = "Permitir ingrsar solo una vez la lectura de un código de barras o QR"
+        Me.Chk_LeerSoloUnaVezCodBarra.Text = "Permitir ingresar solo una vez la lectura de un código de barras o QR"
         '
         'Chk_GrabarPreciosHistoricos
         '
@@ -1234,9 +1237,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel5.Controls.Add(Me.LabelX20)
         Me.SuperTabControlPanel5.Controls.Add(Me.TableLayoutPanel1)
         Me.SuperTabControlPanel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel5.Name = "SuperTabControlPanel5"
-        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(672, 539)
+        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(672, 512)
         Me.SuperTabControlPanel5.TabIndex = 0
         Me.SuperTabControlPanel5.TabItem = Me.SpTab_Compras
         '
@@ -1469,11 +1472,13 @@ Partial Class Frm_Configuracion_Gral
         '
         'SuperTabControlPanel6
         '
+        Me.SuperTabControlPanel6.Controls.Add(Me.Input_Dias_Para_Hacer_NCV)
         Me.SuperTabControlPanel6.Controls.Add(Me.TableLayoutPanel3)
+        Me.SuperTabControlPanel6.Controls.Add(Me.Lbl_Dias_Para_Hacer_NCV)
         Me.SuperTabControlPanel6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel6.Name = "SuperTabControlPanel6"
-        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(672, 539)
+        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(672, 512)
         Me.SuperTabControlPanel6.TabIndex = 0
         Me.SuperTabControlPanel6.TabItem = Me.SpTab_Ventas
         '
@@ -1496,9 +1501,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel4.Controls.Add(Me.TableLayoutPanel4)
         Me.SuperTabControlPanel4.Controls.Add(Me.Txt_ValorMinimoNVV)
         Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
-        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(672, 539)
+        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(672, 512)
         Me.SuperTabControlPanel4.TabIndex = 0
         Me.SuperTabControlPanel4.TabItem = Me.SpTab_Ventas2
         '
@@ -1533,7 +1538,7 @@ Partial Class Frm_Configuracion_Gral
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(280, 19)
         Me.LabelX2.TabIndex = 118
-        Me.LabelX2.Text = "Valor minimo para generar NVV (valor 0 = sin condición)"
+        Me.LabelX2.Text = "Valor mínimo para generar NVV (valor 0 = sin condición)"
         '
         'Btn_Buscar_Cliente
         '
@@ -1636,9 +1641,9 @@ Partial Class Frm_Configuracion_Gral
         '
         Me.SuperTabControlPanel2.Controls.Add(Me.GroupPanel1)
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(672, 539)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(672, 512)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.SpTab_DatosEmpresa
         '
@@ -2041,9 +2046,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel3.Controls.Add(Me.LabelX21)
         Me.SuperTabControlPanel3.Controls.Add(Me.Chk_Fincred_Usar)
         Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(672, 539)
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(672, 512)
         Me.SuperTabControlPanel3.TabIndex = 0
         Me.SuperTabControlPanel3.TabItem = Me.SpTab_FincredPays
         '
@@ -2149,9 +2154,9 @@ Partial Class Frm_Configuracion_Gral
         '
         Me.SuperTabControlPanel8.Controls.Add(Me.TableLayoutPanel6)
         Me.SuperTabControlPanel8.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel8.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel8.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel8.Name = "SuperTabControlPanel8"
-        Me.SuperTabControlPanel8.Size = New System.Drawing.Size(672, 539)
+        Me.SuperTabControlPanel8.Size = New System.Drawing.Size(672, 512)
         Me.SuperTabControlPanel8.TabIndex = 0
         Me.SuperTabControlPanel8.TabItem = Me.SuperTabItem1
         '
@@ -2349,24 +2354,33 @@ Partial Class Frm_Configuracion_Gral
         Me.CheckBoxX2.TabIndex = 117
         Me.CheckBoxX2.Text = "Ambiente de pruebas y certificación"
         '
-        'Chk_ValidaMovFisConCodBarra
-        '
-        Me.Chk_ValidaMovFisConCodBarra.BackColor = System.Drawing.Color.Transparent
+        'Input_Dias_Para_Hacer_NCV
         '
         '
         '
-        Me.Chk_ValidaMovFisConCodBarra.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_ValidaMovFisConCodBarra.CheckBoxImageChecked = CType(resources.GetObject("Chk_ValidaMovFisConCodBarra.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_ValidaMovFisConCodBarra.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_ValidaMovFisConCodBarra.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_ValidaMovFisConCodBarra.FocusCuesEnabled = False
-        Me.Chk_ValidaMovFisConCodBarra.ForeColor = System.Drawing.Color.Black
-        Me.Chk_ValidaMovFisConCodBarra.Location = New System.Drawing.Point(3, 263)
-        Me.Chk_ValidaMovFisConCodBarra.Name = "Chk_ValidaMovFisConCodBarra"
-        Me.Chk_ValidaMovFisConCodBarra.Size = New System.Drawing.Size(480, 12)
-        Me.Chk_ValidaMovFisConCodBarra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_ValidaMovFisConCodBarra.TabIndex = 102
-        Me.Chk_ValidaMovFisConCodBarra.Text = "Los movimientos físicos de mercadería requieren ser validados con códigos de barr" &
-    "a al grabar"
+        '
+        Me.Input_Dias_Para_Hacer_NCV.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_Dias_Para_Hacer_NCV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_Dias_Para_Hacer_NCV.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_Dias_Para_Hacer_NCV.Location = New System.Drawing.Point(250, 336)
+        Me.Input_Dias_Para_Hacer_NCV.Name = "Input_Dias_Para_Hacer_NCV"
+        Me.Input_Dias_Para_Hacer_NCV.ShowUpDown = True
+        Me.Input_Dias_Para_Hacer_NCV.Size = New System.Drawing.Size(58, 22)
+        Me.Input_Dias_Para_Hacer_NCV.TabIndex = 91
+        '
+        'Lbl_Dias_Para_Hacer_NCV
+        '
+        Me.Lbl_Dias_Para_Hacer_NCV.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_Dias_Para_Hacer_NCV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Dias_Para_Hacer_NCV.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Dias_Para_Hacer_NCV.Location = New System.Drawing.Point(6, 336)
+        Me.Lbl_Dias_Para_Hacer_NCV.Name = "Lbl_Dias_Para_Hacer_NCV"
+        Me.Lbl_Dias_Para_Hacer_NCV.Size = New System.Drawing.Size(248, 23)
+        Me.Lbl_Dias_Para_Hacer_NCV.TabIndex = 92
+        Me.Lbl_Dias_Para_Hacer_NCV.Text = "Máximo de días de una FCV para hacer una NCV"
         '
         'Frm_Configuracion_Gral
         '
@@ -2404,6 +2418,7 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel8.ResumeLayout(False)
         Me.TableLayoutPanel6.ResumeLayout(False)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Input_Dias_Para_Hacer_NCV, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -2411,7 +2426,6 @@ Partial Class Frm_Configuracion_Gral
     Friend WithEvents Chk_No_Permitir_Grabar_Con_Dscto_Superado As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Input_Monto_Max_CRV_FacMasiva As DevComponents.Editors.IntegerInput
     Friend WithEvents Lbl_Monto_CRV As DevComponents.DotNetBar.LabelX
-    Friend WithEvents CheckBoxX1 As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_Utilizar_NVV_En_Credito_X_Cliente As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents SuperTabControl1 As DevComponents.DotNetBar.SuperTabControl
     Friend WithEvents SuperTabControlPanel6 As DevComponents.DotNetBar.SuperTabControlPanel
@@ -2540,4 +2554,6 @@ Partial Class Frm_Configuracion_Gral
     Friend WithEvents Chk_Pr_Creacion_Exigir_3raDimension As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_Pr_Creacion_Exigir_2daDimension As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_ValidaMovFisConCodBarra As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Input_Dias_Para_Hacer_NCV As DevComponents.Editors.IntegerInput
+    Friend WithEvents Lbl_Dias_Para_Hacer_NCV As DevComponents.DotNetBar.LabelX
 End Class
