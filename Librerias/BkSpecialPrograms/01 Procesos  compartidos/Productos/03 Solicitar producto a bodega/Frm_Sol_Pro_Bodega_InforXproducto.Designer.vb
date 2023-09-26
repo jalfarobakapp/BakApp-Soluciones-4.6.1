@@ -563,7 +563,7 @@ Partial Class Frm_Sol_Pro_Bodega_InforXproducto
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Location = New System.Drawing.Point(0, 358)
+        Me.Bar1.Location = New System.Drawing.Point(0, 352)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(722, 25)
         Me.Bar1.Stretch = True
@@ -576,7 +576,7 @@ Partial Class Frm_Sol_Pro_Bodega_InforXproducto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(722, 383)
+        Me.ClientSize = New System.Drawing.Size(722, 377)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.GroupPanel2)
         Me.DoubleBuffered = True

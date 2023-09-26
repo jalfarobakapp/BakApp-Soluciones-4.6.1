@@ -38,16 +38,14 @@ Public Class Frm_Sol_Pro_Bodega_ListaPendientes
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         Sb_Formato_Generico_Grilla(Grilla, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
-        If Global_Thema = Enum_Themas.Oscuro Then
-            TxtCodigoSol.FocusHighlightEnabled = False
-        End If
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
-    Private Sub BtnxSalir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnxSalir.Click
-        _SoloCierra = True
-        Me.Close()
-    End Sub
+    'Private Sub BtnxSalir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnxSalir.Click
+    '    _SoloCierra = True
+    '    Me.Close()
+    'End Sub
 
     Private Sub Frm_Sol_Pro_Bodega_ListaPendientes_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
@@ -563,22 +561,9 @@ Public Class Frm_Sol_Pro_Bodega_ListaPendientes
         Sb_Actualizar_Grilla(_Condicion)
     End Sub
 
-    Private Sub VerEstadisticasDelProductoToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles VerEstadisticasDelProductoToolStripMenuItem.Click
 
-        If Fx_Tiene_Permiso(Me, "Prod009") Then
-
-            Dim _Codigo = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value
-            Dim Fm As New Frm_EstadisticaProducto(_Codigo)
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-
-        End If
-
-    End Sub
 
     Private Sub Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Grilla.MouseDown
-
-        Grilla.ContextMenuStrip = Nothing
 
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
@@ -587,7 +572,7 @@ Public Class Frm_Sol_Pro_Bodega_ListaPendientes
                     .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
 
                     If Not Grilla.Rows(Grilla.CurrentRow.Index).IsNewRow Then
-                        Grilla.ContextMenuStrip = MenuContextual
+                        ShowContextMenu(Menu_Contextual_01)
                     End If
                 End If
             End With
@@ -595,22 +580,20 @@ Public Class Frm_Sol_Pro_Bodega_ListaPendientes
 
     End Sub
 
-    Private Sub Frm_Sol_Pro_Bodega_ListaPendientes_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
-        If Not _SoloCierra Then
-            If MessageBoxEx.Show(Me, "¿Desea cerrar la ventana?", "Cerrar",
-                                 MessageBoxButtons.OKCancel, MessageBoxIcon.Question) <> Windows.Forms.DialogResult.OK Then
-
-                e.Cancel = True
-            End If
-        End If
-    End Sub
-
     Private Sub Frm_Sol_Pro_Bodega_ListaPendientes_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then Me.Close()
     End Sub
 
-    Private Sub VerTrazaToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles VerTrazaToolStripMenuItem.Click
 
+    Private Sub Sb_Chk_Validar_Usuario_Con_Huella_CheckedChanged(sender As Object, e As EventArgs)
+        If Not Chk_Validar_Usuario_Con_Huella.Checked Then
+            If Not Fx_Tiene_Permiso(Me, "Bkp00052") Then
+                Chk_Validar_Usuario_Con_Huella.Checked = True
+            End If
+        End If
+    End Sub
+
+    Private Sub Mnu_Btn_VerTraza_Click(sender As Object, e As EventArgs) Handles Mnu_Btn_VerTraza.Click
         If Fx_Tiene_Permiso(Me, "Bkp00032") Then
 
             Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
@@ -621,15 +604,16 @@ Public Class Frm_Sol_Pro_Bodega_ListaPendientes
             Fm.Dispose()
 
         End If
-
     End Sub
 
-    Private Sub Sb_Chk_Validar_Usuario_Con_Huella_CheckedChanged(sender As Object, e As EventArgs)
-        If Not Chk_Validar_Usuario_Con_Huella.Checked Then
-            If Not Fx_Tiene_Permiso(Me, "Bkp00052") Then
-                Chk_Validar_Usuario_Con_Huella.Checked = True
-            End If
+    Private Sub Mnu_Btn_Ver_Informacion_de_producto_Click(sender As Object, e As EventArgs) Handles Mnu_Btn_Ver_Informacion_de_producto.Click
+        If Fx_Tiene_Permiso(Me, "Prod009") Then
+
+            Dim _Codigo = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value
+            Dim Fm As New Frm_EstadisticaProducto(_Codigo)
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
         End If
     End Sub
-
 End Class

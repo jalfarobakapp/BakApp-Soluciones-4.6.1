@@ -110,7 +110,8 @@ CREATE TABLE [dbo].[Zw_Casi_DocDet](
 	[Cantidad_Oferta]      [float]				NOT NULL DEFAULT (0),
 	[Porcdesc_Oferta]      [float]				NOT NULL DEFAULT (0),
 	[Tasadorig]		       [float]				NOT NULL DEFAULT (0),
-    [FunValida_Compra]     [varchar](3)	    	NOT NULL DEFAULT (''),    
+    [FunValida_Compra]     [varchar](3)	    	NOT NULL DEFAULT (''),
+    [IdDet_Ori]			   [int]				NOT NULL DEFAULT (0),
 ) ON [PRIMARY]
 
 

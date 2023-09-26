@@ -28,6 +28,22 @@ Partial Class Frm_Demonio_Configuraciones
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Demonio_Configuraciones))
         Me.SuperTab = New DevComponents.DotNetBar.SuperTabControl()
+        Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_AsistenteCompras = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Grilla_AsistenteCompras = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.Btn_AgregarConfAsisCompra = New DevComponents.DotNetBar.ButtonX()
+        Me.Sp_AsistenteCompras = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel5 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
+        Me.Btn_Filtro_Doc_Correo = New DevComponents.DotNetBar.ButtonX()
+        Me.LabelX15 = New DevComponents.DotNetBar.LabelX()
+        Me.Input_CantCorreo = New DevComponents.Editors.IntegerInput()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_EnvioCorreo = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Line2 = New DevComponents.DotNetBar.Controls.Line()
+        Me.Sp_EnvioCorreo = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel4 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Line17 = New DevComponents.DotNetBar.Controls.Line()
         Me.LabelX21 = New DevComponents.DotNetBar.LabelX()
@@ -72,22 +88,6 @@ Partial Class Frm_Demonio_Configuraciones
         Me.Chk_FacAuto = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Line15 = New DevComponents.DotNetBar.Controls.Line()
         Me.Sp_FacAuto = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
-        Me.Chk_AsistenteCompras = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Grilla_AsistenteCompras = New DevComponents.DotNetBar.Controls.DataGridViewX()
-        Me.Btn_AgregarConfAsisCompra = New DevComponents.DotNetBar.ButtonX()
-        Me.Sp_AsistenteCompras = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel5 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
-        Me.Btn_Filtro_Doc_Correo = New DevComponents.DotNetBar.ButtonX()
-        Me.LabelX15 = New DevComponents.DotNetBar.LabelX()
-        Me.Input_CantCorreo = New DevComponents.Editors.IntegerInput()
-        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
-        Me.Chk_EnvioCorreo = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Line2 = New DevComponents.DotNetBar.Controls.Line()
-        Me.Sp_EnvioCorreo = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel9 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.LabelX30 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX31 = New DevComponents.DotNetBar.LabelX()
@@ -202,6 +202,11 @@ Partial Class Frm_Demonio_Configuraciones
         Me.Chk_Ejecutar_Automaticamente = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.SuperTab, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTab.SuspendLayout()
+        Me.SuperTabControlPanel3.SuspendLayout()
+        Me.GroupPanel1.SuspendLayout()
+        CType(Me.Grilla_AsistenteCompras, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuperTabControlPanel5.SuspendLayout()
+        CType(Me.Input_CantCorreo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel4.SuspendLayout()
         CType(Me.Input_EnvDocSinRecep_DiasGDI, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Input_EnvDocSinRecep_DiasGTI, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -213,11 +218,6 @@ Partial Class Frm_Demonio_Configuraciones
         Me.SuperTabControlPanel17.SuspendLayout()
         Me.SuperTabControlPanel2.SuspendLayout()
         Me.TableLayoutPanel7.SuspendLayout()
-        Me.SuperTabControlPanel3.SuspendLayout()
-        Me.GroupPanel1.SuspendLayout()
-        CType(Me.Grilla_AsistenteCompras, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SuperTabControlPanel5.SuspendLayout()
-        CType(Me.Input_CantCorreo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel9.SuspendLayout()
         Me.SuperTabControlPanel15.SuspendLayout()
         Me.SuperTabControlPanel10.SuspendLayout()
@@ -260,13 +260,14 @@ Partial Class Frm_Demonio_Configuraciones
         Me.SuperTab.ControlBox.MenuBox.Name = ""
         Me.SuperTab.ControlBox.Name = ""
         Me.SuperTab.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTab.ControlBox.MenuBox, Me.SuperTab.ControlBox.CloseBox})
-        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel3)
+        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel7)
+        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel15)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel5)
+        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel4)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel17)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel9)
-        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel15)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel10)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel16)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel12)
@@ -275,7 +276,6 @@ Partial Class Frm_Demonio_Configuraciones
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel13)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel14)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel11)
-        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel7)
         Me.SuperTab.Controls.Add(Me.Panel_02)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel1)
         Me.SuperTab.ForeColor = System.Drawing.Color.Black
@@ -292,6 +292,280 @@ Partial Class Frm_Demonio_Configuraciones
         Me.SuperTab.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Sp_EnvioCorreo, Me.Sp_ColaImpDoc, Me.Sp_ColaImpPick, Me.Sp_SolProdBod, Me.Sp_Prestashop_Prod, Me.Sp_Prestashop_Order, Me.Sp_Prestashop_Total, Me.Sp_ImporDTESII, Me.Sp_ArchivarDoc, Me.Sp_ListasProgramadas, Me.Sp_ConsStock, Me.Sp_Wordpress_Prod, Me.Sp_Wordpress_Stock, Me.Sp_CierreDoc, Me.Sp_FacAuto, Me.Sp_AsistenteCompras, Me.Sp_EnvDocSinRecep, Me.Sp_NVVAuto})
         Me.SuperTab.TabVerticalSpacing = 3
         Me.SuperTab.Text = "Archivar documentos"
+        '
+        'SuperTabControlPanel3
+        '
+        Me.SuperTabControlPanel3.Controls.Add(Me.LabelX17)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Chk_AsistenteCompras)
+        Me.SuperTabControlPanel3.Controls.Add(Me.GroupPanel1)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Btn_AgregarConfAsisCompra)
+        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(205, 0)
+        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(410, 474)
+        Me.SuperTabControlPanel3.TabIndex = 0
+        Me.SuperTabControlPanel3.TabItem = Me.Sp_AsistenteCompras
+        '
+        'LabelX17
+        '
+        Me.LabelX17.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX17.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX17.Dock = System.Windows.Forms.DockStyle.Top
+        Me.LabelX17.ForeColor = System.Drawing.Color.Black
+        Me.LabelX17.Location = New System.Drawing.Point(0, 0)
+        Me.LabelX17.Name = "LabelX17"
+        Me.LabelX17.Size = New System.Drawing.Size(410, 19)
+        Me.LabelX17.TabIndex = 136
+        Me.LabelX17.Text = "ENVIO DE CORREOS"
+        '
+        'Chk_AsistenteCompras
+        '
+        Me.Chk_AsistenteCompras.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_AsistenteCompras.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_AsistenteCompras.FocusCuesEnabled = False
+        Me.Chk_AsistenteCompras.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Chk_AsistenteCompras.ForeColor = System.Drawing.Color.Black
+        Me.Chk_AsistenteCompras.Location = New System.Drawing.Point(3, 25)
+        Me.Chk_AsistenteCompras.Name = "Chk_AsistenteCompras"
+        Me.Chk_AsistenteCompras.Size = New System.Drawing.Size(273, 19)
+        Me.Chk_AsistenteCompras.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_AsistenteCompras.TabIndex = 135
+        Me.Chk_AsistenteCompras.Tag = "14"
+        Me.Chk_AsistenteCompras.Text = "Habilitado"
+        '
+        'GroupPanel1
+        '
+        Me.GroupPanel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupPanel1.BackColor = System.Drawing.Color.White
+        Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Grilla_AsistenteCompras)
+        Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel1.Location = New System.Drawing.Point(3, 50)
+        Me.GroupPanel1.Name = "GroupPanel1"
+        Me.GroupPanel1.Size = New System.Drawing.Size(400, 360)
+        '
+        '
+        '
+        Me.GroupPanel1.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel1.Style.BackColorGradientAngle = 90
+        Me.GroupPanel1.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel1.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderBottomWidth = 1
+        Me.GroupPanel1.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel1.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderLeftWidth = 1
+        Me.GroupPanel1.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderRightWidth = 1
+        Me.GroupPanel1.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderTopWidth = 1
+        Me.GroupPanel1.Style.CornerDiameter = 4
+        Me.GroupPanel1.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel1.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel1.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel1.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel1.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel1.TabIndex = 134
+        Me.GroupPanel1.Text = "Programación"
+        '
+        'Grilla_AsistenteCompras
+        '
+        Me.Grilla_AsistenteCompras.AllowUserToAddRows = False
+        Me.Grilla_AsistenteCompras.AllowUserToDeleteRows = False
+        Me.Grilla_AsistenteCompras.BackgroundColor = System.Drawing.Color.White
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_AsistenteCompras.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.Grilla_AsistenteCompras.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_AsistenteCompras.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Grilla_AsistenteCompras.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Grilla_AsistenteCompras.EnableHeadersVisualStyles = False
+        Me.Grilla_AsistenteCompras.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
+        Me.Grilla_AsistenteCompras.Location = New System.Drawing.Point(0, 0)
+        Me.Grilla_AsistenteCompras.Name = "Grilla_AsistenteCompras"
+        Me.Grilla_AsistenteCompras.ReadOnly = True
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_AsistenteCompras.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        Me.Grilla_AsistenteCompras.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        Me.Grilla_AsistenteCompras.Size = New System.Drawing.Size(394, 337)
+        Me.Grilla_AsistenteCompras.TabIndex = 85
+        '
+        'Btn_AgregarConfAsisCompra
+        '
+        Me.Btn_AgregarConfAsisCompra.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_AgregarConfAsisCompra.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_AgregarConfAsisCompra.Location = New System.Drawing.Point(6, 414)
+        Me.Btn_AgregarConfAsisCompra.Name = "Btn_AgregarConfAsisCompra"
+        Me.Btn_AgregarConfAsisCompra.Size = New System.Drawing.Size(156, 21)
+        Me.Btn_AgregarConfAsisCompra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_AgregarConfAsisCompra.TabIndex = 133
+        Me.Btn_AgregarConfAsisCompra.Text = "Agregar configuración"
+        '
+        'Sp_AsistenteCompras
+        '
+        Me.Sp_AsistenteCompras.AttachedControl = Me.SuperTabControlPanel3
+        Me.Sp_AsistenteCompras.GlobalItem = False
+        Me.Sp_AsistenteCompras.Name = "Sp_AsistenteCompras"
+        Me.Sp_AsistenteCompras.Tag = "14"
+        Me.Sp_AsistenteCompras.Text = "Asistente de compras"
+        '
+        'SuperTabControlPanel5
+        '
+        Me.SuperTabControlPanel5.Controls.Add(Me.LabelX4)
+        Me.SuperTabControlPanel5.Controls.Add(Me.Btn_Filtro_Doc_Correo)
+        Me.SuperTabControlPanel5.Controls.Add(Me.LabelX15)
+        Me.SuperTabControlPanel5.Controls.Add(Me.Input_CantCorreo)
+        Me.SuperTabControlPanel5.Controls.Add(Me.LabelX1)
+        Me.SuperTabControlPanel5.Controls.Add(Me.Chk_EnvioCorreo)
+        Me.SuperTabControlPanel5.Controls.Add(Me.Line2)
+        Me.SuperTabControlPanel5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(205, 0)
+        Me.SuperTabControlPanel5.Name = "SuperTabControlPanel5"
+        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(410, 474)
+        Me.SuperTabControlPanel5.TabIndex = 0
+        Me.SuperTabControlPanel5.TabItem = Me.Sp_EnvioCorreo
+        '
+        'LabelX4
+        '
+        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.ForeColor = System.Drawing.Color.Black
+        Me.LabelX4.Location = New System.Drawing.Point(49, 80)
+        Me.LabelX4.Name = "LabelX4"
+        Me.LabelX4.Size = New System.Drawing.Size(213, 23)
+        Me.LabelX4.TabIndex = 137
+        Me.LabelX4.Text = "Configurar salidas de correos automáticos"
+        '
+        'Btn_Filtro_Doc_Correo
+        '
+        Me.Btn_Filtro_Doc_Correo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Filtro_Doc_Correo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Filtro_Doc_Correo.FocusCuesEnabled = False
+        Me.Btn_Filtro_Doc_Correo.Location = New System.Drawing.Point(3, 80)
+        Me.Btn_Filtro_Doc_Correo.Name = "Btn_Filtro_Doc_Correo"
+        Me.Btn_Filtro_Doc_Correo.Size = New System.Drawing.Size(40, 23)
+        Me.Btn_Filtro_Doc_Correo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Filtro_Doc_Correo.TabIndex = 34
+        Me.Btn_Filtro_Doc_Correo.Text = "..."
+        '
+        'LabelX15
+        '
+        Me.LabelX15.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX15.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX15.ForeColor = System.Drawing.Color.Black
+        Me.LabelX15.Location = New System.Drawing.Point(49, 112)
+        Me.LabelX15.Name = "LabelX15"
+        Me.LabelX15.Size = New System.Drawing.Size(130, 19)
+        Me.LabelX15.TabIndex = 131
+        Me.LabelX15.Text = "Cantidad de mail a enviar"
+        '
+        'Input_CantCorreo
+        '
+        Me.Input_CantCorreo.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_CantCorreo.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_CantCorreo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_CantCorreo.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_CantCorreo.ForeColor = System.Drawing.Color.Black
+        Me.Input_CantCorreo.Location = New System.Drawing.Point(3, 109)
+        Me.Input_CantCorreo.MaxValue = 60
+        Me.Input_CantCorreo.MinValue = 1
+        Me.Input_CantCorreo.Name = "Input_CantCorreo"
+        Me.Input_CantCorreo.ShowUpDown = True
+        Me.Input_CantCorreo.Size = New System.Drawing.Size(40, 22)
+        Me.Input_CantCorreo.TabIndex = 130
+        Me.Input_CantCorreo.Value = 30
+        '
+        'LabelX1
+        '
+        Me.LabelX1.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.LabelX1.ForeColor = System.Drawing.Color.Black
+        Me.LabelX1.Location = New System.Drawing.Point(0, 0)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(410, 19)
+        Me.LabelX1.TabIndex = 133
+        Me.LabelX1.Text = "ENVIO DE CORREOS"
+        '
+        'Chk_EnvioCorreo
+        '
+        Me.Chk_EnvioCorreo.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EnvioCorreo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EnvioCorreo.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvioCorreo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EnvioCorreo.FocusCuesEnabled = False
+        Me.Chk_EnvioCorreo.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Chk_EnvioCorreo.ForeColor = System.Drawing.Color.Black
+        Me.Chk_EnvioCorreo.Location = New System.Drawing.Point(3, 25)
+        Me.Chk_EnvioCorreo.Name = "Chk_EnvioCorreo"
+        Me.Chk_EnvioCorreo.Size = New System.Drawing.Size(273, 19)
+        Me.Chk_EnvioCorreo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EnvioCorreo.TabIndex = 15
+        Me.Chk_EnvioCorreo.Tag = "0"
+        Me.Chk_EnvioCorreo.Text = "Habilitado"
+        '
+        'Line2
+        '
+        Me.Line2.BackColor = System.Drawing.Color.Transparent
+        Me.Line2.ForeColor = System.Drawing.Color.Black
+        Me.Line2.Location = New System.Drawing.Point(3, 61)
+        Me.Line2.Name = "Line2"
+        Me.Line2.Size = New System.Drawing.Size(426, 23)
+        Me.Line2.TabIndex = 136
+        Me.Line2.Text = "Line2"
+        '
+        'Sp_EnvioCorreo
+        '
+        Me.Sp_EnvioCorreo.AttachedControl = Me.SuperTabControlPanel5
+        Me.Sp_EnvioCorreo.GlobalItem = False
+        Me.Sp_EnvioCorreo.Name = "Sp_EnvioCorreo"
+        Me.Sp_EnvioCorreo.Tag = "0"
+        Me.Sp_EnvioCorreo.Text = "Envío de correos"
         '
         'SuperTabControlPanel4
         '
@@ -1023,280 +1297,6 @@ Partial Class Frm_Demonio_Configuraciones
         Me.Sp_FacAuto.Name = "Sp_FacAuto"
         Me.Sp_FacAuto.Tag = "12"
         Me.Sp_FacAuto.Text = "Facturación automática"
-        '
-        'SuperTabControlPanel3
-        '
-        Me.SuperTabControlPanel3.Controls.Add(Me.LabelX17)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Chk_AsistenteCompras)
-        Me.SuperTabControlPanel3.Controls.Add(Me.GroupPanel1)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Btn_AgregarConfAsisCompra)
-        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(205, 0)
-        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(410, 474)
-        Me.SuperTabControlPanel3.TabIndex = 0
-        Me.SuperTabControlPanel3.TabItem = Me.Sp_AsistenteCompras
-        '
-        'LabelX17
-        '
-        Me.LabelX17.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX17.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX17.Dock = System.Windows.Forms.DockStyle.Top
-        Me.LabelX17.ForeColor = System.Drawing.Color.Black
-        Me.LabelX17.Location = New System.Drawing.Point(0, 0)
-        Me.LabelX17.Name = "LabelX17"
-        Me.LabelX17.Size = New System.Drawing.Size(410, 19)
-        Me.LabelX17.TabIndex = 136
-        Me.LabelX17.Text = "ENVIO DE CORREOS"
-        '
-        'Chk_AsistenteCompras
-        '
-        Me.Chk_AsistenteCompras.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_AsistenteCompras.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_AsistenteCompras.FocusCuesEnabled = False
-        Me.Chk_AsistenteCompras.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Chk_AsistenteCompras.ForeColor = System.Drawing.Color.Black
-        Me.Chk_AsistenteCompras.Location = New System.Drawing.Point(3, 25)
-        Me.Chk_AsistenteCompras.Name = "Chk_AsistenteCompras"
-        Me.Chk_AsistenteCompras.Size = New System.Drawing.Size(273, 19)
-        Me.Chk_AsistenteCompras.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_AsistenteCompras.TabIndex = 135
-        Me.Chk_AsistenteCompras.Tag = "14"
-        Me.Chk_AsistenteCompras.Text = "Habilitado"
-        '
-        'GroupPanel1
-        '
-        Me.GroupPanel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupPanel1.BackColor = System.Drawing.Color.White
-        Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel1.Controls.Add(Me.Grilla_AsistenteCompras)
-        Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(3, 50)
-        Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(400, 360)
-        '
-        '
-        '
-        Me.GroupPanel1.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.GroupPanel1.Style.BackColorGradientAngle = 90
-        Me.GroupPanel1.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.GroupPanel1.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel1.Style.BorderBottomWidth = 1
-        Me.GroupPanel1.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
-        Me.GroupPanel1.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel1.Style.BorderLeftWidth = 1
-        Me.GroupPanel1.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel1.Style.BorderRightWidth = 1
-        Me.GroupPanel1.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel1.Style.BorderTopWidth = 1
-        Me.GroupPanel1.Style.CornerDiameter = 4
-        Me.GroupPanel1.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.GroupPanel1.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
-        Me.GroupPanel1.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
-        Me.GroupPanel1.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
-        '
-        '
-        '
-        Me.GroupPanel1.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.GroupPanel1.TabIndex = 134
-        Me.GroupPanel1.Text = "Programación"
-        '
-        'Grilla_AsistenteCompras
-        '
-        Me.Grilla_AsistenteCompras.AllowUserToAddRows = False
-        Me.Grilla_AsistenteCompras.AllowUserToDeleteRows = False
-        Me.Grilla_AsistenteCompras.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_AsistenteCompras.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
-        Me.Grilla_AsistenteCompras.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_AsistenteCompras.DefaultCellStyle = DataGridViewCellStyle2
-        Me.Grilla_AsistenteCompras.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Grilla_AsistenteCompras.EnableHeadersVisualStyles = False
-        Me.Grilla_AsistenteCompras.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
-        Me.Grilla_AsistenteCompras.Location = New System.Drawing.Point(0, 0)
-        Me.Grilla_AsistenteCompras.Name = "Grilla_AsistenteCompras"
-        Me.Grilla_AsistenteCompras.ReadOnly = True
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_AsistenteCompras.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla_AsistenteCompras.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla_AsistenteCompras.Size = New System.Drawing.Size(394, 337)
-        Me.Grilla_AsistenteCompras.TabIndex = 85
-        '
-        'Btn_AgregarConfAsisCompra
-        '
-        Me.Btn_AgregarConfAsisCompra.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_AgregarConfAsisCompra.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_AgregarConfAsisCompra.Location = New System.Drawing.Point(6, 414)
-        Me.Btn_AgregarConfAsisCompra.Name = "Btn_AgregarConfAsisCompra"
-        Me.Btn_AgregarConfAsisCompra.Size = New System.Drawing.Size(156, 21)
-        Me.Btn_AgregarConfAsisCompra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_AgregarConfAsisCompra.TabIndex = 133
-        Me.Btn_AgregarConfAsisCompra.Text = "Agregar configuración"
-        '
-        'Sp_AsistenteCompras
-        '
-        Me.Sp_AsistenteCompras.AttachedControl = Me.SuperTabControlPanel3
-        Me.Sp_AsistenteCompras.GlobalItem = False
-        Me.Sp_AsistenteCompras.Name = "Sp_AsistenteCompras"
-        Me.Sp_AsistenteCompras.Tag = "14"
-        Me.Sp_AsistenteCompras.Text = "Asistente de compras"
-        '
-        'SuperTabControlPanel5
-        '
-        Me.SuperTabControlPanel5.Controls.Add(Me.LabelX4)
-        Me.SuperTabControlPanel5.Controls.Add(Me.Btn_Filtro_Doc_Correo)
-        Me.SuperTabControlPanel5.Controls.Add(Me.LabelX15)
-        Me.SuperTabControlPanel5.Controls.Add(Me.Input_CantCorreo)
-        Me.SuperTabControlPanel5.Controls.Add(Me.LabelX1)
-        Me.SuperTabControlPanel5.Controls.Add(Me.Chk_EnvioCorreo)
-        Me.SuperTabControlPanel5.Controls.Add(Me.Line2)
-        Me.SuperTabControlPanel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(205, 0)
-        Me.SuperTabControlPanel5.Name = "SuperTabControlPanel5"
-        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(410, 474)
-        Me.SuperTabControlPanel5.TabIndex = 0
-        Me.SuperTabControlPanel5.TabItem = Me.Sp_EnvioCorreo
-        '
-        'LabelX4
-        '
-        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(49, 80)
-        Me.LabelX4.Name = "LabelX4"
-        Me.LabelX4.Size = New System.Drawing.Size(213, 23)
-        Me.LabelX4.TabIndex = 137
-        Me.LabelX4.Text = "Configurar salidas de correos automáticos"
-        '
-        'Btn_Filtro_Doc_Correo
-        '
-        Me.Btn_Filtro_Doc_Correo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Filtro_Doc_Correo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Filtro_Doc_Correo.FocusCuesEnabled = False
-        Me.Btn_Filtro_Doc_Correo.Location = New System.Drawing.Point(3, 80)
-        Me.Btn_Filtro_Doc_Correo.Name = "Btn_Filtro_Doc_Correo"
-        Me.Btn_Filtro_Doc_Correo.Size = New System.Drawing.Size(40, 23)
-        Me.Btn_Filtro_Doc_Correo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Filtro_Doc_Correo.TabIndex = 34
-        Me.Btn_Filtro_Doc_Correo.Text = "..."
-        '
-        'LabelX15
-        '
-        Me.LabelX15.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX15.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX15.ForeColor = System.Drawing.Color.Black
-        Me.LabelX15.Location = New System.Drawing.Point(49, 112)
-        Me.LabelX15.Name = "LabelX15"
-        Me.LabelX15.Size = New System.Drawing.Size(130, 19)
-        Me.LabelX15.TabIndex = 131
-        Me.LabelX15.Text = "Cantidad de mail a enviar"
-        '
-        'Input_CantCorreo
-        '
-        Me.Input_CantCorreo.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Input_CantCorreo.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Input_CantCorreo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Input_CantCorreo.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.Input_CantCorreo.ForeColor = System.Drawing.Color.Black
-        Me.Input_CantCorreo.Location = New System.Drawing.Point(3, 109)
-        Me.Input_CantCorreo.MaxValue = 60
-        Me.Input_CantCorreo.MinValue = 1
-        Me.Input_CantCorreo.Name = "Input_CantCorreo"
-        Me.Input_CantCorreo.ShowUpDown = True
-        Me.Input_CantCorreo.Size = New System.Drawing.Size(40, 22)
-        Me.Input_CantCorreo.TabIndex = 130
-        Me.Input_CantCorreo.Value = 30
-        '
-        'LabelX1
-        '
-        Me.LabelX1.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(0, 0)
-        Me.LabelX1.Name = "LabelX1"
-        Me.LabelX1.Size = New System.Drawing.Size(410, 19)
-        Me.LabelX1.TabIndex = 133
-        Me.LabelX1.Text = "ENVIO DE CORREOS"
-        '
-        'Chk_EnvioCorreo
-        '
-        Me.Chk_EnvioCorreo.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_EnvioCorreo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_EnvioCorreo.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvioCorreo.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_EnvioCorreo.FocusCuesEnabled = False
-        Me.Chk_EnvioCorreo.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Chk_EnvioCorreo.ForeColor = System.Drawing.Color.Black
-        Me.Chk_EnvioCorreo.Location = New System.Drawing.Point(3, 25)
-        Me.Chk_EnvioCorreo.Name = "Chk_EnvioCorreo"
-        Me.Chk_EnvioCorreo.Size = New System.Drawing.Size(273, 19)
-        Me.Chk_EnvioCorreo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_EnvioCorreo.TabIndex = 15
-        Me.Chk_EnvioCorreo.Tag = "0"
-        Me.Chk_EnvioCorreo.Text = "Habilitado"
-        '
-        'Line2
-        '
-        Me.Line2.BackColor = System.Drawing.Color.Transparent
-        Me.Line2.ForeColor = System.Drawing.Color.Black
-        Me.Line2.Location = New System.Drawing.Point(3, 61)
-        Me.Line2.Name = "Line2"
-        Me.Line2.Size = New System.Drawing.Size(426, 23)
-        Me.Line2.TabIndex = 136
-        Me.Line2.Text = "Line2"
-        '
-        'Sp_EnvioCorreo
-        '
-        Me.Sp_EnvioCorreo.AttachedControl = Me.SuperTabControlPanel5
-        Me.Sp_EnvioCorreo.GlobalItem = False
-        Me.Sp_EnvioCorreo.Name = "Sp_EnvioCorreo"
-        Me.Sp_EnvioCorreo.Tag = "0"
-        Me.Sp_EnvioCorreo.Text = "Envío de correos"
         '
         'SuperTabControlPanel9
         '
@@ -2221,7 +2221,7 @@ Partial Class Frm_Demonio_Configuraciones
         Me.Txt_ImpSolProdBod.Name = "Txt_ImpSolProdBod"
         Me.Txt_ImpSolProdBod.PreventEnterBeep = True
         Me.Txt_ImpSolProdBod.ReadOnly = True
-        Me.Txt_ImpSolProdBod.Size = New System.Drawing.Size(196, 22)
+        Me.Txt_ImpSolProdBod.Size = New System.Drawing.Size(394, 22)
         Me.Txt_ImpSolProdBod.TabIndex = 157
         Me.Txt_ImpSolProdBod.TabStop = False
         Me.Txt_ImpSolProdBod.Tag = "Lunes"
@@ -2882,6 +2882,11 @@ Partial Class Frm_Demonio_Configuraciones
         Me.Text = "CONFIGURACION DIABLITO DE PROGRAMACION ES AUTOMATICAS"
         CType(Me.SuperTab, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTab.ResumeLayout(False)
+        Me.SuperTabControlPanel3.ResumeLayout(False)
+        Me.GroupPanel1.ResumeLayout(False)
+        CType(Me.Grilla_AsistenteCompras, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SuperTabControlPanel5.ResumeLayout(False)
+        CType(Me.Input_CantCorreo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel4.ResumeLayout(False)
         CType(Me.Input_EnvDocSinRecep_DiasGDI, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Input_EnvDocSinRecep_DiasGTI, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2893,11 +2898,6 @@ Partial Class Frm_Demonio_Configuraciones
         Me.SuperTabControlPanel17.ResumeLayout(False)
         Me.SuperTabControlPanel2.ResumeLayout(False)
         Me.TableLayoutPanel7.ResumeLayout(False)
-        Me.SuperTabControlPanel3.ResumeLayout(False)
-        Me.GroupPanel1.ResumeLayout(False)
-        CType(Me.Grilla_AsistenteCompras, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SuperTabControlPanel5.ResumeLayout(False)
-        CType(Me.Input_CantCorreo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel9.ResumeLayout(False)
         Me.SuperTabControlPanel15.ResumeLayout(False)
         Me.SuperTabControlPanel10.ResumeLayout(False)
