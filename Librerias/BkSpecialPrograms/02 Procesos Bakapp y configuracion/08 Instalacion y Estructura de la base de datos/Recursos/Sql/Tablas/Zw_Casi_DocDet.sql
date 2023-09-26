@@ -84,7 +84,7 @@ CREATE TABLE [dbo].[Zw_Casi_DocDet](
 	[PrecioCalculo]        [float]				NOT NULL DEFAULT (0),
 	[OCCGenerada]          [bit]				NOT NULL DEFAULT (0),
 	[Bloqueapr]            [char](1)			NOT NULL DEFAULT (''),
-	[Observa]              [varchar](50)		NOT NULL DEFAULT (''),
+	[Observa]              [varchar](200)		NOT NULL DEFAULT (''),
 	[CodFunAutoriza]       [varchar](3)			NOT NULL DEFAULT (''),
 	[CodPermiso]           [varchar](10)		NOT NULL DEFAULT (''),
 	[Nuevo_Producto]       [bit]				NOT NULL DEFAULT (0),

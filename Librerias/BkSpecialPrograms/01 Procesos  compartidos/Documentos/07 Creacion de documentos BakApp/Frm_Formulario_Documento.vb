@@ -10054,8 +10054,8 @@ Public Class Frm_Formulario_Documento
                                            "Observación",
                                            _Observa,
                                            True,
-                                           _Tipo_Mayus_Minus.Normal,
-                                           100,
+                                           _Tipo_Mayus_Minus.Mayusculas,
+                                           200,
                                            True,
                                            _Tipo_Imagen.Texto,
                                            True)

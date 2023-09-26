@@ -3237,7 +3237,7 @@ Public Class Clase_Crear_Documento
                                        "CodPermiso,Nuevo_Producto,Solicitado_bodega,Moneda,Tipo_Moneda,Tipo_Cambio,Crear_CPr,Id_CPr," &
                                        "Centro_Costo,Proyecto,Tasadorig," &
                                        "Id_Oferta,Es_Padre_Oferta,Oferta,Padre_Oferta,Aplica_Oferta,Hijo_Oferta," &
-                                       "Cantidad_Oferta,Porcdesc_Oferta) Values" & vbCrLf &
+                                       "Cantidad_Oferta,Porcdesc_Oferta,IdDet_Ori) Values" & vbCrLf &
                                        "(" & _Id_DocEnc & ",'" & _Empresa & "','" & _Sucursal_Linea & "','" & _Bodega_Linea & "'," & _UnTrans & "," & _Lincondest &
                                        ",'" & _NroLinea & "','" & _Codigo & "','" & _CodigoProv & "','" & _UdTrans &
                                        "'," & _Cantidad & ",'" & _TipoValor & "'," & _Precio & "," & _DescuentoPorc &
@@ -3262,7 +3262,7 @@ Public Class Clase_Crear_Documento
                                        "'," & _Tipo_Cambio & "," & _Crear_CPr & "," & _Id_CPr & ",'" & _Centro_Costo_Linea &
                                        "','" & _Proyecto & "'," & _Tasadorig_Det &
                                        "," & _Id_Oferta & "," & _Es_Padre_Oferta & ",'" & _Oferta & "'," & _Padre_Oferta & "," & _Aplica_Oferta & "," & _Hijo_Oferta &
-                                       "," & _Cantidad_Oferta & "," & _Porcdesc_Oferta & ")"
+                                       "," & _Cantidad_Oferta & "," & _Porcdesc_Oferta & "," & Id_Linea & ")"
 
                         Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                         Comando.Transaction = myTrans
