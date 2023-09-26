@@ -1386,6 +1386,7 @@ Public Class Frm_Cms
         Fm.Btn_Arbol_Asociaciones.Visible = False
 
         If _VerInforme Then
+            Fm.Btn_Importar_Informe.Visible = True
             Fm.ShowDialog(Me)
         Else
             Fm_Espera = New Frm_Form_Esperar

@@ -798,6 +798,26 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                                        "Where NroRemota = '" & _NroRemota & "'"
                         _Row_Remota = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+                        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Casi_DocDet Where Id_DocEnc = " & _Id_DocEnc & " Order By NroLinea"
+                        Dim _Tbl_Zw_Casi_DocDet As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                        For Each _FilaR As DataRow In _Tbl_Zw_Casi_DocDet.Rows
+
+                            Dim _IdR As Integer = _FilaR.Item("IdDet_Ori")
+
+                            For Each _FilaL As DataRow In _Ds_Matriz_Documentos.Tables("Detalle_Doc").Rows
+
+                                Dim _IdL As Integer = _FilaL.Item("Id")
+
+                                If _IdL = _IdR Then
+                                    _FilaL.Item("Observa") = _FilaR.Item("Observa")
+                                    Exit For
+                                End If
+
+                            Next
+
+                        Next
+
                         'Dim _Permiso_Otorgado As Boolean = _Row_Remota.Item("Permiso_Otorgado")
                         'Dim _CodFunAutoriza As String = _Row_Remota.Item("CodFuncionario_Autoriza")
 

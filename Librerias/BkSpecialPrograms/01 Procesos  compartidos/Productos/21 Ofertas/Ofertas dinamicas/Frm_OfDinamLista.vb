@@ -250,7 +250,6 @@ Public Class Frm_OfDinamLista
 
         End If
 
-
     End Sub
 
     Private Sub Btn_Mnu_QuitarProducto_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_QuitarProducto.Click

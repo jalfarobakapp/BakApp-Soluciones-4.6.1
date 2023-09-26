@@ -185,7 +185,7 @@ Public Class Clas_Imprimir_Documento
             _Imprimir_Cedible = False
             _Emdp = String.Empty
             _TipoDoc = "SPB"
-            _NombreFormato = "X Defecto"
+            Me._NombreFormato = "X Defecto"
             Sb_Traer_Datos_Para_Impresion_De_Productos_Solicitados_A_Bodega(_IdDoc)
 
         Else
@@ -449,38 +449,73 @@ Public Class Clas_Imprimir_Documento
                        "Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "'"
         _TblEncForm = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-        Consulta_sql = "SELECT *," &
-                                    "Isnull((Select Funcion_Bk From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
-                                    "Where Nombre_Funcion = Funcion),0) As Funcion_Bk," & vbCrLf &
-                                    "Isnull((Select Formato From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
-                                    "Where Nombre_Funcion = Funcion),0) As Formato_Fx," & vbCrLf &
-                                    "Isnull((Select Campo From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
-                                    "Where Nombre_Funcion = Funcion),0) As Campo," & vbCrLf &
-                                    "Isnull((Select Codigo_De_Barras From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
-                                    "Where Nombre_Funcion = Funcion),0) As Codigo_De_Barras," & vbCrLf &
-                                    "Isnull((Select Es_Descuento From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
-                                    "Where Nombre_Funcion = Funcion),0) As Es_Descuento" & vbCrLf &
-                                    "FROM " & _Global_BaseBk & "Zw_Format_02" & vbCrLf &
-                                    "Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Seccion In ('E','P')"
+
+        Consulta_sql = "Select Fdt.*,
+	                       Isnull(Fx.Funcion_Bk,'') As Funcion_Bk,
+	                       Isnull(Fx.Formato,'') As Formato_Fx,
+	                       Isnull(Fx.Campo,'') As Campo,
+	                       Isnull(Fx.Codigo_De_Barras,'') As Codigo_De_Barras,
+                           Isnull(Fx.CodigoQR,'') As CodigoQR,
+	                       Isnull(Fx.Es_Descuento,0) As Es_Descuento,
+	                       Isnull(Fx.SqlQuery,'') As SqlQuery, 
+	                       Isnull(Fx.SQL_Personalizada,0) As SQL_Personalizada
+                    From " & _Global_BaseBk & "Zw_Format_02 Fdt
+                    Left Join " & _Global_BaseBk & "Zw_Format_Fx Fx On Fdt.Funcion = Fx.Nombre_Funcion
+                    Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Fdt.Seccion In ('E','P')"
 
         _Tbl_Fx_Encabezado = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         ' Llena formato del detalle
-        Consulta_sql = "SELECT *," &
-                          "Isnull((Select Funcion_Bk From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
-                          "Where Nombre_Funcion = Funcion),0) As Funcion_Bk," & vbCrLf &
-                          "Isnull((Select Formato From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
-                          "Where Nombre_Funcion = Funcion),0) As Formato_Fx," & vbCrLf &
-                          "Isnull((Select Campo From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
-                          "Where Nombre_Funcion = Funcion),0) As Campo," & vbCrLf &
-                          "Isnull((Select Codigo_De_Barras From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
-                          "Where Nombre_Funcion = Funcion),0) As Codigo_De_Barras," & vbCrLf &
-                          "Isnull((Select Es_Descuento From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
-                          "Where Nombre_Funcion = Funcion),0) As Es_Descuento" & vbCrLf &
-                          "FROM " & _Global_BaseBk & "Zw_Format_02" & vbCrLf &
-                          "Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Seccion = 'D'" & vbCrLf &
-                          "Order by Orden_Detalle"
+        Consulta_sql = "Select Fdt.*,
+	                       Isnull(Fx.Funcion_Bk,'') As Funcion_Bk,
+	                       Isnull(Fx.Formato,'') As Formato_Fx,
+	                       Isnull(Fx.Campo,'') As Campo,
+	                       Isnull(Fx.Codigo_De_Barras,'') As Codigo_De_Barras,
+                           Isnull(Fx.CodigoQR,'') As CodigoQR,
+	                       Isnull(Fx.Es_Descuento,0) As Es_Descuento,
+	                       Isnull(Fx.SqlQuery,'') As SqlQuery, 
+	                       Isnull(Fx.SQL_Personalizada,0) As SQL_Personalizada
+                    From " & _Global_BaseBk & "Zw_Format_02 Fdt
+                    Left Join " & _Global_BaseBk & "Zw_Format_Fx Fx On Fdt.Funcion = Fx.Nombre_Funcion
+                    Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Fdt.Seccion = 'D'" & vbCrLf &
+                    "Order by Fdt.Orden_Detalle"
+
         _Tbl_Fx_Detalle = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+
+
+        'Consulta_sql = "SELECT *," &
+        '                            "Isnull((Select Funcion_Bk From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
+        '                            "Where Nombre_Funcion = Funcion),0) As Funcion_Bk," & vbCrLf &
+        '                            "Isnull((Select Formato From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
+        '                            "Where Nombre_Funcion = Funcion),0) As Formato_Fx," & vbCrLf &
+        '                            "Isnull((Select Campo From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
+        '                            "Where Nombre_Funcion = Funcion),0) As Campo," & vbCrLf &
+        '                            "Isnull((Select Codigo_De_Barras From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
+        '                            "Where Nombre_Funcion = Funcion),0) As Codigo_De_Barras," & vbCrLf &
+        '                            "Isnull((Select Es_Descuento From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
+        '                            "Where Nombre_Funcion = Funcion),0) As Es_Descuento" & vbCrLf &
+        '                            "FROM " & _Global_BaseBk & "Zw_Format_02" & vbCrLf &
+        '                            "Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Seccion In ('E','P')"
+
+        '_Tbl_Fx_Encabezado = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        '' Llena formato del detalle
+        'Consulta_sql = "SELECT *," &
+        '                  "Isnull((Select Funcion_Bk From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
+        '                  "Where Nombre_Funcion = Funcion),0) As Funcion_Bk," & vbCrLf &
+        '                  "Isnull((Select Formato From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
+        '                  "Where Nombre_Funcion = Funcion),0) As Formato_Fx," & vbCrLf &
+        '                  "Isnull((Select Campo From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
+        '                  "Where Nombre_Funcion = Funcion),0) As Campo," & vbCrLf &
+        '                  "Isnull((Select Codigo_De_Barras From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
+        '                  "Where Nombre_Funcion = Funcion),0) As Codigo_De_Barras," & vbCrLf &
+        '                  "Isnull((Select Es_Descuento From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
+        '                  "Where Nombre_Funcion = Funcion),0) As Es_Descuento" & vbCrLf &
+        '                  "FROM " & _Global_BaseBk & "Zw_Format_02" & vbCrLf &
+        '                  "Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Seccion = 'D'" & vbCrLf &
+        '                  "Order by Orden_Detalle"
+        '_Tbl_Fx_Detalle = _Sql.Fx_Get_Tablas(Consulta_sql)
 
     End Sub
 
@@ -2569,125 +2604,131 @@ Public Class Clas_Imprimir_Documento
                         _Texto = _Fila.Item("Texto")
                         _RutaImagen = _Fila.Item("RutaImagen")
 
-                        _SQL_Personalizada = _Fila.Item("SQL_Personalizada")
-                        _SqlQuery = _Fila.Item("SqlQuery")
+                        Dim _Orden_Detalle = _Fila.Item("Orden_Detalle")
 
-                        Dim _Prct As Boolean = _Fila_D.Item("PRCT")
-                        _Mostrar_En_Concepto = _Fila.Item("Mostrar_En_Concepto")
+                        If _Orden_Detalle = 1 Then
 
-                        Dim _Imprimir_Detalle As Boolean = True
+                            _SQL_Personalizada = _Fila.Item("SQL_Personalizada")
+                            _SqlQuery = _Fila.Item("SqlQuery")
 
-                        If _Prct And Not _Mostrar_En_Concepto Then
-                            _Imprimir_Detalle = False
-                        End If
+                            Dim _Prct As Boolean = _Fila_D.Item("PRCT")
+                            _Mostrar_En_Concepto = _Fila.Item("Mostrar_En_Concepto")
 
-                        Select Case _Estilo
-                            Case 0
-                                _Style = FontStyle.Regular
-                            Case 1
-                                _Style = FontStyle.Bold
-                            Case 2
-                                _Style = FontStyle.Italic
-                            Case 4
-                                _Style = FontStyle.Underline
-                            Case 8
-                                _Style = FontStyle.Strikeout
-                            Case Else
-                                _Style = FontStyle.Regular
-                        End Select
+                            Dim _Imprimir_Detalle As Boolean = True
 
-                        _Fte_Usar = New Font(_Fuente, _Tamano, _Style)
+                            If _Prct And Not _Mostrar_En_Concepto Then
+                                _Imprimir_Detalle = False
+                            End If
 
-                        _Funcion_Bk = _Fila.Item("Funcion_Bk")
-                        _Formato_Fx = _Fila.Item("Formato_Fx")
-                        _Campo = _Fila.Item("Campo")
-                        _Codigo_De_Barras = _Fila.Item("Codigo_De_Barras")
-                        _Es_Descuento = _Fila.Item("Es_Descuento")
+                            Select Case _Estilo
+                                Case 0
+                                    _Style = FontStyle.Regular
+                                Case 1
+                                    _Style = FontStyle.Bold
+                                Case 2
+                                    _Style = FontStyle.Italic
+                                Case 4
+                                    _Style = FontStyle.Underline
+                                Case 8
+                                    _Style = FontStyle.Strikeout
+                                Case Else
+                                    _Style = FontStyle.Regular
+                            End Select
 
-                        _Color = Color.FromArgb(_Color)
-                        Dim _DrawBrush As New SolidBrush(_Color)
+                            _Fte_Usar = New Font(_Fuente, _Tamano, _Style)
 
-                        If CBool(_IdDoc) Then
+                            _Funcion_Bk = _Fila.Item("Funcion_Bk")
+                            _Formato_Fx = _Fila.Item("Formato_Fx")
+                            _Campo = _Fila.Item("Campo")
+                            _Codigo_De_Barras = _Fila.Item("Codigo_De_Barras")
+                            _Es_Descuento = _Fila.Item("Es_Descuento")
 
-                            If _NombreObjeto = "Texto_libre" Then
+                            _Color = Color.FromArgb(_Color)
+                            Dim _DrawBrush As New SolidBrush(_Color)
 
-                                If _Imprimir_Detalle Then
+                            If CBool(_IdDoc) Then
 
-                                    Dim _Y_Texto = _Fila_InicioDetalle
+                                If _NombreObjeto = "Texto_libre" Then
 
-                                    For Each _Fii As DataRow In _Tbl_Detalle.Rows
-                                        e.Graphics.DrawString(_Texto, _Fte_Usar, Brushes.Black, _Columna_X, _Y_Texto)
-                                        _Y_Texto += _Salto_Linea
-                                    Next
+                                    If _Imprimir_Detalle Then
 
-                                End If
+                                        Dim _Y_Texto = _Fila_InicioDetalle
 
-                            ElseIf _NombreObjeto = "Funcion" Then
-
-                                If _Funcion_Bk Then
-
-                                    If Fx_Imprimir_Funciones_Detalle(_Funcion,
-                                                                        _Texto,
-                                                                        _Tbl_Detalle,
-                                                                        e,
-                                                                        _Fila_Y,
-                                                                        _Columna_X,
-                                                                        _Fte_Usar,
-                                                                        _DrawBrush, _Imprimir_Detalle) Then
-                                        _Salir_del_For = True
-                                        Exit For
-                                    End If
-
-                                Else
-
-                                    Dim _Row_Fila_D As DataRow = _Fila_D
-
-                                    If _SQL_Personalizada Then
-
-                                        Dim _Error As String
-                                        Dim _Idmaeddo = _Fila_D.Item("IDMAEDDO")
-
-                                        _Row_Fila_D = Fx_Funcion_SQL_Personalizada_Detalle(_SqlQuery, _Idmaeddo, _Error)
-
-                                        If String.IsNullOrEmpty(_Error) Then
-                                            _Campo = "CAMPO"
-                                        Else
-                                            _Campo = "_Error"
-                                        End If
+                                        For Each _Fii As DataRow In _Tbl_Detalle.Rows
+                                            e.Graphics.DrawString(_Texto, _Fte_Usar, Brushes.Black, _Columna_X, _Y_Texto)
+                                            _Y_Texto += _Salto_Linea
+                                        Next
 
                                     End If
 
-                                    _Texto = Fx_New_Trae_Valor_Detalle_Row(_Campo,
-                                                                               _TipoDato,
-                                                                               _Es_Descuento,
-                                                                               _Row_Fila_D,
-                                                                               _Texto)
+                                ElseIf _NombreObjeto = "Funcion" Then
 
-                                    'IMPRIME CODIGO DE BARRAS
-                                    If _Codigo_De_Barras Then
+                                    If _Funcion_Bk Then
 
-                                        Dim bm As Bitmap = Nothing
-                                        Dim CodBarras As New PictureBox
-
-                                        Dim iType As BarCode.Code128SubTypes =
-                                            DirectCast([Enum].Parse(GetType(BarCode.Code128SubTypes), "CODE128"), BarCode.Code128SubTypes)
-                                        bm = BarCode.Code128(_Texto, iType, False)
-                                        If Not IsNothing(bm) Then
-                                            CodBarras.Image = bm
-                                        End If
-                                        Dim d = _Detalle_Y
-
-                                        If _Imprimir_Detalle Then
-
-                                            e.Graphics.DrawImage(CodBarras.Image, _Columna_X, _Detalle_Y - 3, _Ancho, _Alto - 2)
-
+                                        If Fx_Imprimir_Funciones_Detalle(_Funcion,
+                                                                            _Texto,
+                                                                            _Tbl_Detalle,
+                                                                            e,
+                                                                            _Fila_Y,
+                                                                            _Columna_X,
+                                                                            _Fte_Usar,
+                                                                            _DrawBrush, _Imprimir_Detalle) Then
+                                            _Salir_del_For = True
+                                            Exit For
                                         End If
 
                                     Else
 
-                                        If _Imprimir_Detalle Then
+                                        Dim _Row_Fila_D As DataRow = _Fila_D
 
-                                            e.Graphics.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+                                        If _SQL_Personalizada Then
+
+                                            Dim _Error As String
+                                            Dim _Idmaeddo = _Fila_D.Item("IDMAEDDO")
+
+                                            _Row_Fila_D = Fx_Funcion_SQL_Personalizada_Detalle(_SqlQuery, _Idmaeddo, _Error)
+
+                                            If String.IsNullOrEmpty(_Error) Then
+                                                _Campo = "CAMPO"
+                                            Else
+                                                _Campo = "_Error"
+                                            End If
+
+                                        End If
+
+                                        _Texto = Fx_New_Trae_Valor_Detalle_Row(_Campo,
+                                                                                   _TipoDato,
+                                                                                   _Es_Descuento,
+                                                                                   _Row_Fila_D,
+                                                                                   _Texto)
+
+                                        'IMPRIME CODIGO DE BARRAS
+                                        If _Codigo_De_Barras Then
+
+                                            Dim bm As Bitmap = Nothing
+                                            Dim CodBarras As New PictureBox
+
+                                            Dim iType As BarCode.Code128SubTypes =
+                                                DirectCast([Enum].Parse(GetType(BarCode.Code128SubTypes), "CODE128"), BarCode.Code128SubTypes)
+                                            bm = BarCode.Code128(_Texto, iType, False)
+                                            If Not IsNothing(bm) Then
+                                                CodBarras.Image = bm
+                                            End If
+                                            Dim d = _Detalle_Y
+
+                                            If _Imprimir_Detalle Then
+
+                                                e.Graphics.DrawImage(CodBarras.Image, _Columna_X, _Detalle_Y - 3, _Ancho, _Alto - 2)
+
+                                            End If
+
+                                        Else
+
+                                            If _Imprimir_Detalle Then
+
+                                                e.Graphics.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+
+                                            End If
 
                                         End If
 
@@ -2695,9 +2736,9 @@ Public Class Clas_Imprimir_Documento
 
                                 End If
 
-                            End If
+                            Else
 
-                        Else
+                            End If
 
                         End If
 
@@ -2851,9 +2892,13 @@ Public Class Clas_Imprimir_Documento
                                                                                _Row_Fila_D,
                                                                                _Texto)
 
-                                    If _Imprimir_Detalle AndAlso _Orden_Detalle = 2 And Not String.IsNullOrEmpty(_Texto) Then
+                                    If _Orden_Detalle = 2 Then
 
-                                        _Detalle_Y += _Alto + 2
+                                        If _Imprimir_Detalle AndAlso Not String.IsNullOrEmpty(_Texto) Then
+
+                                            _Detalle_Y += _Alto + 2
+
+                                        End If
 
                                     End If
 
@@ -3667,6 +3712,7 @@ Public Class Clas_Imprimir_Documento
                 _Campo = _Fila.Item("Campo")
                 _Codigo_De_Barras = _Fila.Item("Codigo_De_Barras")
                 _CodigoQR = _Fila.Item("CodigoQR")
+
                 _Es_Descuento = _Fila.Item("Es_Descuento")
 
 

@@ -23,11 +23,15 @@ Partial Class Frm_Sol_Pro_Bodega_ListaPendientes
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Sol_Pro_Bodega_ListaPendientes))
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
+        Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Mnu_Btn_VerTraza = New DevComponents.DotNetBar.ButtonItem()
+        Me.Mnu_Btn_Ver_Informacion_de_producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.BtnActualizar = New DevComponents.DotNetBar.ButtonItem()
@@ -41,22 +45,20 @@ Partial Class Frm_Sol_Pro_Bodega_ListaPendientes
         Me.Radio3 = New DevComponents.DotNetBar.Command(Me.components)
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.DtpFecharevision = New System.Windows.Forms.DateTimePicker()
-        Me.MenuContextual = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.VerTrazaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.VerEstadisticasDelProductoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Chk_Validar_Usuario_Con_Huella = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.ReflectionImage2 = New DevComponents.DotNetBar.Controls.ReflectionImage()
+        Me.Highlighter1 = New DevComponents.DotNetBar.Validator.Highlighter()
         Me.GroupPanel1.SuspendLayout()
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.MenuContextual.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupPanel1
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.ContextMenuBar1)
         Me.GroupPanel1.Controls.Add(Me.Grilla)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(8, 49)
@@ -92,41 +94,76 @@ Partial Class Frm_Sol_Pro_Bodega_ListaPendientes
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 0
         '
+        'ContextMenuBar1
+        '
+        Me.ContextMenuBar1.AntiAlias = True
+        Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
+        Me.ContextMenuBar1.Location = New System.Drawing.Point(287, 203)
+        Me.ContextMenuBar1.Name = "ContextMenuBar1"
+        Me.ContextMenuBar1.Size = New System.Drawing.Size(330, 25)
+        Me.ContextMenuBar1.Stretch = True
+        Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ContextMenuBar1.TabIndex = 56
+        Me.ContextMenuBar1.TabStop = False
+        Me.ContextMenuBar1.Text = "ContextMenuBar1"
+        '
+        'Menu_Contextual_01
+        '
+        Me.Menu_Contextual_01.AutoExpandOnClick = True
+        Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Mnu_Btn_VerTraza, Me.Mnu_Btn_Ver_Informacion_de_producto})
+        Me.Menu_Contextual_01.Text = "Opciones"
+        '
+        'Mnu_Btn_VerTraza
+        '
+        Me.Mnu_Btn_VerTraza.Image = CType(resources.GetObject("Mnu_Btn_VerTraza.Image"), System.Drawing.Image)
+        Me.Mnu_Btn_VerTraza.ImageAlt = CType(resources.GetObject("Mnu_Btn_VerTraza.ImageAlt"), System.Drawing.Image)
+        Me.Mnu_Btn_VerTraza.Name = "Mnu_Btn_VerTraza"
+        Me.Mnu_Btn_VerTraza.Text = "Ver trazabilidad"
+        '
+        'Mnu_Btn_Ver_Informacion_de_producto
+        '
+        Me.Mnu_Btn_Ver_Informacion_de_producto.Image = CType(resources.GetObject("Mnu_Btn_Ver_Informacion_de_producto.Image"), System.Drawing.Image)
+        Me.Mnu_Btn_Ver_Informacion_de_producto.ImageAlt = CType(resources.GetObject("Mnu_Btn_Ver_Informacion_de_producto.ImageAlt"), System.Drawing.Image)
+        Me.Mnu_Btn_Ver_Informacion_de_producto.Name = "Mnu_Btn_Ver_Informacion_de_producto"
+        Me.Mnu_Btn_Ver_Informacion_de_producto.Text = "Ver información adicional del producto"
+        '
         'Grilla
         '
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.MultiSelect = False
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.Grilla.Size = New System.Drawing.Size(904, 430)
         Me.Grilla.TabIndex = 2
@@ -151,6 +188,7 @@ Partial Class Frm_Sol_Pro_Bodega_ListaPendientes
         Me.BtnActualizar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.BtnActualizar.ForeColor = System.Drawing.Color.Black
         Me.BtnActualizar.Image = CType(resources.GetObject("BtnActualizar.Image"), System.Drawing.Image)
+        Me.BtnActualizar.ImageAlt = CType(resources.GetObject("BtnActualizar.ImageAlt"), System.Drawing.Image)
         Me.BtnActualizar.Name = "BtnActualizar"
         Me.BtnActualizar.Tooltip = "Actualizar"
         '
@@ -159,8 +197,9 @@ Partial Class Frm_Sol_Pro_Bodega_ListaPendientes
         Me.BtnExportarExcel.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.BtnExportarExcel.ForeColor = System.Drawing.Color.Black
         Me.BtnExportarExcel.Image = CType(resources.GetObject("BtnExportarExcel.Image"), System.Drawing.Image)
+        Me.BtnExportarExcel.ImageAlt = CType(resources.GetObject("BtnExportarExcel.ImageAlt"), System.Drawing.Image)
         Me.BtnExportarExcel.Name = "BtnExportarExcel"
-        Me.BtnExportarExcel.Tooltip = "Actualizar"
+        Me.BtnExportarExcel.Tooltip = "Exportar a Excel"
         '
         'BtnxSalir
         '
@@ -169,6 +208,7 @@ Partial Class Frm_Sol_Pro_Bodega_ListaPendientes
         Me.BtnxSalir.Image = CType(resources.GetObject("BtnxSalir.Image"), System.Drawing.Image)
         Me.BtnxSalir.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
         Me.BtnxSalir.Name = "BtnxSalir"
+        Me.BtnxSalir.Visible = False
         '
         'TxtCodigoSol
         '
@@ -179,9 +219,9 @@ Partial Class Frm_Sol_Pro_Bodega_ListaPendientes
         Me.TxtCodigoSol.Border.Class = "TextBoxBorder"
         Me.TxtCodigoSol.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.TxtCodigoSol.DisabledBackColor = System.Drawing.Color.White
-        Me.TxtCodigoSol.FocusHighlightEnabled = True
         Me.TxtCodigoSol.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TxtCodigoSol.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.TxtCodigoSol, True)
         Me.TxtCodigoSol.Location = New System.Drawing.Point(107, 499)
         Me.TxtCodigoSol.MaxLength = 10
         Me.TxtCodigoSol.Name = "TxtCodigoSol"
@@ -259,31 +299,6 @@ Partial Class Frm_Sol_Pro_Bodega_ListaPendientes
         Me.DtpFecharevision.Size = New System.Drawing.Size(216, 22)
         Me.DtpFecharevision.TabIndex = 16
         '
-        'MenuContextual
-        '
-        Me.MenuContextual.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.VerTrazaToolStripMenuItem, Me.ToolStripSeparator1, Me.VerEstadisticasDelProductoToolStripMenuItem})
-        Me.MenuContextual.Name = "MenuContextual"
-        Me.MenuContextual.Size = New System.Drawing.Size(225, 54)
-        '
-        'VerTrazaToolStripMenuItem
-        '
-        Me.VerTrazaToolStripMenuItem.Image = CType(resources.GetObject("VerTrazaToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.VerTrazaToolStripMenuItem.Name = "VerTrazaToolStripMenuItem"
-        Me.VerTrazaToolStripMenuItem.Size = New System.Drawing.Size(224, 22)
-        Me.VerTrazaToolStripMenuItem.Text = "Ver traza"
-        '
-        'ToolStripSeparator1
-        '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(221, 6)
-        '
-        'VerEstadisticasDelProductoToolStripMenuItem
-        '
-        Me.VerEstadisticasDelProductoToolStripMenuItem.Image = Global.BkSpecialPrograms.My.Resources.Resources.graph_sales
-        Me.VerEstadisticasDelProductoToolStripMenuItem.Name = "VerEstadisticasDelProductoToolStripMenuItem"
-        Me.VerEstadisticasDelProductoToolStripMenuItem.Size = New System.Drawing.Size(224, 22)
-        Me.VerEstadisticasDelProductoToolStripMenuItem.Text = "Ver estadísticas del producto"
-        '
         'Chk_Validar_Usuario_Con_Huella
         '
         Me.Chk_Validar_Usuario_Con_Huella.BackColor = System.Drawing.Color.White
@@ -294,6 +309,7 @@ Partial Class Frm_Sol_Pro_Bodega_ListaPendientes
         Me.Chk_Validar_Usuario_Con_Huella.Checked = True
         Me.Chk_Validar_Usuario_Con_Huella.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_Validar_Usuario_Con_Huella.CheckValue = "Y"
+        Me.Chk_Validar_Usuario_Con_Huella.FocusCuesEnabled = False
         Me.Chk_Validar_Usuario_Con_Huella.ForeColor = System.Drawing.Color.Black
         Me.Chk_Validar_Usuario_Con_Huella.Location = New System.Drawing.Point(759, 496)
         Me.Chk_Validar_Usuario_Con_Huella.Name = "Chk_Validar_Usuario_Con_Huella"
@@ -318,12 +334,17 @@ Partial Class Frm_Sol_Pro_Bodega_ListaPendientes
         Me.ReflectionImage2.Size = New System.Drawing.Size(27, 32)
         Me.ReflectionImage2.TabIndex = 19
         '
+        'Highlighter1
+        '
+        Me.Highlighter1.ContainerControl = Me
+        Me.Highlighter1.FocusHighlightColor = DevComponents.DotNetBar.Validator.eHighlightColor.Red
+        Me.Highlighter1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        '
         'Frm_Sol_Pro_Bodega_ListaPendientes
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(921, 575)
-        Me.ControlBox = False
         Me.Controls.Add(Me.ReflectionImage2)
         Me.Controls.Add(Me.Chk_Validar_Usuario_Con_Huella)
         Me.Controls.Add(Me.LabelX2)
@@ -345,9 +366,9 @@ Partial Class Frm_Sol_Pro_Bodega_ListaPendientes
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Productos solicitados a bodega"
         Me.GroupPanel1.ResumeLayout(False)
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.MenuContextual.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -363,12 +384,13 @@ Partial Class Frm_Sol_Pro_Bodega_ListaPendientes
     Friend WithEvents Radio3 As DevComponents.DotNetBar.Command
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents DtpFecharevision As System.Windows.Forms.DateTimePicker
-    Friend WithEvents MenuContextual As System.Windows.Forms.ContextMenuStrip
-    Friend WithEvents VerEstadisticasDelProductoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents BtnExportarExcel As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents VerTrazaToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents Chk_Validar_Usuario_Con_Huella As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents ReflectionImage2 As DevComponents.DotNetBar.Controls.ReflectionImage
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
+    Friend WithEvents Highlighter1 As DevComponents.DotNetBar.Validator.Highlighter
+    Friend WithEvents ContextMenuBar1 As DevComponents.DotNetBar.ContextMenuBar
+    Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Mnu_Btn_VerTraza As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Mnu_Btn_Ver_Informacion_de_producto As DevComponents.DotNetBar.ButtonItem
 End Class

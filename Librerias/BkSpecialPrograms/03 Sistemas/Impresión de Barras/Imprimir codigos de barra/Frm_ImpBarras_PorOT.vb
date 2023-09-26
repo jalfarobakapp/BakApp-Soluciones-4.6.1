@@ -175,7 +175,8 @@ Public Class Frm_ImpBarras_PorOT
             .Columns("FechaVenci").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("CANTIDAD").HeaderText = "Cantidad"
+            .Columns("CANTIDAD").HeaderText = "Cant.Imp."
+            .Columns("CANTIDAD").ToolTipText = "Cantidad de etiquetas a imprimir"
             .Columns("CANTIDAD").Visible = True
             .Columns("CANTIDAD").Width = 60
             .Columns("CANTIDAD").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -380,7 +381,7 @@ Public Class Frm_ImpBarras_PorOT
 
                             Dim _Imp As New Class_Imprimir_Barras
 
-                            _Imp.Sb_Imprimir_Etiqueta_OT(_Puerto, Cmbetiquetas.SelectedValue, _Idpote, _Row_Potl)
+                            _Imp.Sb_Imprimir_Etiqueta_OT(_Puerto, Cmbetiquetas.SelectedValue, _Idpote, _Kopral, _IdpotlPrint)
 
                             _Etiquetas_Imp += 1
 

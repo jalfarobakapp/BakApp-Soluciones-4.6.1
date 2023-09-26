@@ -90,9 +90,11 @@ Public Class Modulo_Ventas
     Private Sub Btn_ProductoSolicitadosBodega_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_ProductoSolicitadosBodega.Click
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Bkp00031") Then
+
             Dim Fm As New Frm_Sol_Pro_Bodega_ListaPendientes
             Fm.ShowDialog(Me)
             Fm.Dispose()
+
         End If
 
     End Sub

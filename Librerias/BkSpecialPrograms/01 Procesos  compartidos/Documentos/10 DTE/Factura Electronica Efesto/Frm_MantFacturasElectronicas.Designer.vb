@@ -61,6 +61,7 @@ Partial Class Frm_MantFacturasElectronicas
         Me.Chk_AceptadoSII = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_EnviadoSII = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_DocFirmado = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Btn_Mnu_Exportar_XML_Hefesto = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -127,7 +128,7 @@ Partial Class Frm_MantFacturasElectronicas
         '
         Me.Menu_Contextual.AutoExpandOnClick = True
         Me.Menu_Contextual.Name = "Menu_Contextual"
-        Me.Menu_Contextual.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_LeyendaDoc, Me.Btn_Ver_Documento, Me.Btn_Firmar_Documento, Me.Btn_Reenviar_SII, Me.Btn_ReConsultar_Trackid, Me.Btn_Reenviar_Correo, Me.Lbl_AEC, Me.Btn_CesionarDTE})
+        Me.Menu_Contextual.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_LeyendaDoc, Me.Btn_Ver_Documento, Me.Btn_Firmar_Documento, Me.Btn_Reenviar_SII, Me.Btn_ReConsultar_Trackid, Me.Btn_Reenviar_Correo, Me.Btn_Mnu_Exportar_XML_Hefesto, Me.Lbl_AEC, Me.Btn_CesionarDTE})
         Me.Menu_Contextual.Text = "Opciones"
         '
         'Lbl_LeyendaDoc
@@ -574,6 +575,13 @@ Partial Class Frm_MantFacturasElectronicas
         Me.Chk_DocFirmado.TabIndex = 48
         Me.Chk_DocFirmado.Text = "Firmado"
         '
+        'Btn_Mnu_Exportar_XML_Hefesto
+        '
+        Me.Btn_Mnu_Exportar_XML_Hefesto.Image = CType(resources.GetObject("Btn_Mnu_Exportar_XML_Hefesto.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Exportar_XML_Hefesto.ImageAlt = CType(resources.GetObject("Btn_Mnu_Exportar_XML_Hefesto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Exportar_XML_Hefesto.Name = "Btn_Mnu_Exportar_XML_Hefesto"
+        Me.Btn_Mnu_Exportar_XML_Hefesto.Text = "Exportar XML"
+        '
         'Frm_MantFacturasElectronicas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -591,7 +599,6 @@ Partial Class Frm_MantFacturasElectronicas
         Me.Controls.Add(Me.MStb_Barra)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
@@ -644,4 +651,5 @@ Partial Class Frm_MantFacturasElectronicas
     Friend WithEvents Chk_DocFirmado As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Lbl_AEC As DevComponents.DotNetBar.LabelItem
     Public WithEvents Btn_CesionarDTE As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_Exportar_XML_Hefesto As DevComponents.DotNetBar.ButtonItem
 End Class

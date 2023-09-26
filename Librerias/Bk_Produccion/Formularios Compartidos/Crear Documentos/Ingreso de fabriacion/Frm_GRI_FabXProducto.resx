@@ -251,6 +251,21 @@
         QmCC
 </value>
   </data>
+  <data name="Txt_Numot.ButtonCustom.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAhJJREFUOE9j
+        gIGFda4Mz7cmf3mxNeUvMp44eRocv9ia/AcmDlT7eccEf6huIFgENABZIwzjMgCI/+wEGQCyGaT58pJo
+        kAEMDzalM5xcUcpwYGkVw74lVQw7F9Uy7FhUD+bf2ZAJciXMIqABAQwkOxvDAJgkMsZlABD/odgAICbd
+        gOdbUj4C/V+2eVG1zORpnQwbFtTIXV+fVbkDlwGoOPXj0ZVlRgktCyLtKjZctSnf+NOuYuNlv9oVobHV
+        EyEG/Pr69sdfHOD1q6cliZ1rYoAavwBxIRBbAnGVTfmm70A6GGwACPT09v+5du36n9y8wj8fP336U1hU
+        +ufEiZN/9l98LG5XuekWUHGWQdJkBkFlEwb9uF4GIL8aiC/CDejs7Plz8eKlPzm5BX/fvXsPpg8fPvJl
+        3s4rLLblm/5al23Q4pXWACc6bgkVkAHWIFegGHDp0mWwxvfvoQYcOfpn04m7wkDFD4A4QSu0noGNT5RB
+        I7CSwboM7J2rKF54+erVnzVr1//58ePH7/UbNv25e+/+ncV7rkgAFW4G4ndAHAvUqAqk04D4M4iPMxB/
+        //p5Z+vxGwq+zdsn2VZs+gdUvA+In0PZj4E4xSJ/GfakDMKnd0zW9YdpLtu4wLpkHZNp5lwG0+z5vCBa
+        I6CcgVNYloEBlCVBuQqUqpBxS1cLKKCW25RvmGtVvI5JRNMeHICogIEBACxQaz11Uc+dAAAAAElFTkSu
+        QmCC
+</value>
+  </data>
   <data name="Btn_Grabar.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAWxJREFUWEdj

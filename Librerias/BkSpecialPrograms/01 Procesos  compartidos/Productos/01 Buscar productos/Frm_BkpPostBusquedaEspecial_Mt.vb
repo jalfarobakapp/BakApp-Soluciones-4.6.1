@@ -831,6 +831,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Finally
             CirProg_Actualizando.Visible = False
             Me.Enabled = True
+            Bar_Menu_Producto.Enabled = CBool(Grilla.RowCount)
             Me.Cursor = Cursors.Default
             Me.Refresh()
             AddHandler Grilla.KeyDown, AddressOf Sb_Grilla_KeyDown

@@ -339,6 +339,11 @@ Public Class Frm_Demonio_New
 
                 Case "SolProdBod"
 
+                    Dim _Impresora_Prod_Sol_Bodega As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                                   "Valor", "Informe = 'Demonio' And Campo = 'Txt_ImpSolProdBod' And NombreEquipo = '" & _NombreEquipo & "'", True)
+
+                    _Cl_Solicitud_Productos_Bodega.Impresora_Prod_Sol_Bodega = _Impresora_Prod_Sol_Bodega
+
                     _Descripcion = _CI_Programacion.Resumen '"Solicitud de productos desde mesón de venta hacia bodega. " & _CI_Programacion.Resumen
                     _IndexImagen = 3
 
@@ -1460,8 +1465,8 @@ Public Class Frm_Demonio_New
 
                 Dim registro As String = "Tarea ejecutada (Facturación automática) a las: " & DateTime.Now.ToString()
 
-                If Not String.IsNullOrWhiteSpace(_Cl_FacturacionAuto.Log_Registro) Then
-                    registro += vbCrLf & _Cl_FacturacionAuto.Log_Registro
+                If Not String.IsNullOrWhiteSpace(_Cl_NVVAutoExterna.Log_Registro) Then
+                    registro += vbCrLf & _Cl_NVVAutoExterna.Log_Registro
                 End If
 
                 RegistrarLog(registro)
