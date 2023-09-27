@@ -42,6 +42,8 @@ Public Class Frm_OfDinamFicha
         Cmb_Concepto.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
         Cmb_Concepto.SelectedValue = ""
 
+        Txt_Valdesc.Enabled = True
+
         If IsNothing(_Row_Maeeres) Then
 
             Dtp_Fioferta.Value = Nothing
@@ -101,7 +103,7 @@ Public Class Frm_OfDinamFicha
             Chk_Desc_Sab.Checked = (_Row_Maeeres.Item("DESC_SAB") = "S")
             Chk_Desc_Dom.Checked = (_Row_Maeeres.Item("DESC_DOM") = "S")
 
-            Me.ActiveControl = Txt_Codigo
+            Me.ActiveControl = Txt_Descriptor
 
         End If
 
@@ -113,7 +115,7 @@ Public Class Frm_OfDinamFicha
             Lbl_Valdesc.Text = "Porcentaje"
         End If
 
-        If Chk_Tipotrat1.Checked Or Chk_Tipotrat2.Checked Then
+        If Chk_Tipotrat3.Checked Or Chk_Tipotrat4.Checked Then
             Lbl_Valdesc.Text = "Monto"
         End If
 

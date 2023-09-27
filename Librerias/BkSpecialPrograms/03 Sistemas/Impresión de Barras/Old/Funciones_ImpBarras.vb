@@ -150,9 +150,9 @@
             _Descripcion_Corta = _RowProducto.Item("NOKOPRRA").ToString.Trim
 
             If Not String.IsNullOrEmpty(_CodAlternativo) Then
-                _Codigo_Alternativo = _CodAlternativo
+                _Codigo_Alternativo = _CodAlternativo.ToString.Trim
             Else
-                _Codigo_Alternativo = _RowProducto.Item("Codigo_Alternativo")
+                _Codigo_Alternativo = _RowProducto.Item("Codigo_Alternativo").ToString.Trim
             End If
 
             _Marca_Pr = _RowProducto.Item("Marca").ToString.Trim
