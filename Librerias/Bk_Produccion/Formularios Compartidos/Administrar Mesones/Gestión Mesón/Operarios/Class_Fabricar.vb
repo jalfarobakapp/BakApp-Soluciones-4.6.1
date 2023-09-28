@@ -663,7 +663,7 @@ Public Class Class_Fabricar
 
                                 If _AsignadoAlPrincipio Then
 
-                                    If Not _ActivaAlPrincipio Then
+                                    If _ActivaAlPrincipio Then
 
                                         Comando = New SqlCommand("Select * From " & _Global_BaseBk & "Zw_Pdp_MesonVsProductos Where Idpotl = " & _Idpotl & " And Codmeson = '" & _CodMesonManda & "'", cn2)
                                         Comando.Transaction = myTrans
@@ -709,7 +709,7 @@ Public Class Class_Fabricar
 
 
                                 Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Pdp_MesonVsProductos Set IdPotpr_Ac2 = " & _Idpotpr & vbCrLf &
-                                               "Where IdPotpr_Ac1 <> 0 And CodMesonManda = '" & _Codmeson & "'"
+                                               "Where IdPotpr_Ac1 <> 0 And CodMesonManda = '" & _Codmeson & "' And Idpotl = " & _Idpotl
                                 Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
                                 Comando.Transaction = myTrans
                                 Comando.ExecuteNonQuery()

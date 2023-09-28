@@ -62,6 +62,7 @@ Partial Class Frm_OfDinamFicha
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Highlighter1 = New DevComponents.DotNetBar.Validator.Highlighter()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Input_Cantmin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_Fioferta, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -134,6 +135,7 @@ Partial Class Frm_OfDinamFicha
         Me.Input_Cantmin.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Cantmin.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Cantmin.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Input_Cantmin, True)
         Me.Input_Cantmin.Location = New System.Drawing.Point(301, 76)
         Me.Input_Cantmin.MaxValue = 999999
         Me.Input_Cantmin.MinValue = 1
@@ -186,6 +188,7 @@ Partial Class Frm_OfDinamFicha
         Me.Dtp_Fioferta.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
         Me.Dtp_Fioferta.ButtonDropDown.Visible = True
         Me.Dtp_Fioferta.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Dtp_Fioferta, True)
         Me.Dtp_Fioferta.IsPopupCalendarOpen = False
         Me.Dtp_Fioferta.Location = New System.Drawing.Point(3, 76)
         '
@@ -238,6 +241,7 @@ Partial Class Frm_OfDinamFicha
         Me.Dtp_Ftoferta.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
         Me.Dtp_Ftoferta.ButtonDropDown.Visible = True
         Me.Dtp_Ftoferta.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Dtp_Ftoferta, True)
         Me.Dtp_Ftoferta.IsPopupCalendarOpen = False
         Me.Dtp_Ftoferta.Location = New System.Drawing.Point(108, 76)
         '
@@ -327,6 +331,7 @@ Partial Class Frm_OfDinamFicha
         Me.Txt_Udad.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Udad.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.Txt_Udad.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Udad, True)
         Me.Txt_Udad.Location = New System.Drawing.Point(214, 76)
         Me.Txt_Udad.MaxLength = 2
         Me.Txt_Udad.Name = "Txt_Udad"
@@ -350,6 +355,7 @@ Partial Class Frm_OfDinamFicha
         Me.Txt_Codigo.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Codigo.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.Txt_Codigo.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Codigo, True)
         Me.Txt_Codigo.Location = New System.Drawing.Point(3, 23)
         Me.Txt_Codigo.MaxLength = 13
         Me.Txt_Codigo.Name = "Txt_Codigo"
@@ -370,6 +376,7 @@ Partial Class Frm_OfDinamFicha
         Me.Txt_Descriptor.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Descriptor.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.Txt_Descriptor.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Descriptor, True)
         Me.Txt_Descriptor.Location = New System.Drawing.Point(170, 23)
         Me.Txt_Descriptor.MaxLength = 50
         Me.Txt_Descriptor.Name = "Txt_Descriptor"
@@ -505,6 +512,7 @@ Partial Class Frm_OfDinamFicha
         Me.Txt_Ecupordesc.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Ecupordesc.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.Txt_Ecupordesc.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Ecupordesc, True)
         Me.Txt_Ecupordesc.Location = New System.Drawing.Point(112, 74)
         Me.Txt_Ecupordesc.Name = "Txt_Ecupordesc"
         Me.Txt_Ecupordesc.PreventEnterBeep = True
@@ -517,6 +525,7 @@ Partial Class Frm_OfDinamFicha
         Me.Cmb_Concepto.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.Cmb_Concepto.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.Cmb_Concepto.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Cmb_Concepto, True)
         Me.Cmb_Concepto.ItemHeight = 16
         Me.Cmb_Concepto.Location = New System.Drawing.Point(535, 74)
         Me.Cmb_Concepto.Name = "Cmb_Concepto"
@@ -569,6 +578,7 @@ Partial Class Frm_OfDinamFicha
         Me.Txt_Valdesc.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Valdesc.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.Txt_Valdesc.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Valdesc, True)
         Me.Txt_Valdesc.Location = New System.Drawing.Point(13, 74)
         Me.Txt_Valdesc.MaxLength = 20
         Me.Txt_Valdesc.Name = "Txt_Valdesc"
@@ -601,6 +611,7 @@ Partial Class Frm_OfDinamFicha
         '
         Me.Chk_Tipotrat4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Tipotrat4.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Chk_Tipotrat4.FocusCuesEnabled = False
         Me.Chk_Tipotrat4.ForeColor = System.Drawing.Color.Black
         Me.Chk_Tipotrat4.Location = New System.Drawing.Point(591, 20)
         Me.Chk_Tipotrat4.Name = "Chk_Tipotrat4"
@@ -617,6 +628,7 @@ Partial Class Frm_OfDinamFicha
         '
         Me.Chk_Tipotrat3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Tipotrat3.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Chk_Tipotrat3.FocusCuesEnabled = False
         Me.Chk_Tipotrat3.ForeColor = System.Drawing.Color.Black
         Me.Chk_Tipotrat3.Location = New System.Drawing.Point(399, 20)
         Me.Chk_Tipotrat3.Name = "Chk_Tipotrat3"
@@ -634,6 +646,7 @@ Partial Class Frm_OfDinamFicha
         Me.Chk_Tipotrat2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Tipotrat2.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Chk_Tipotrat2.Enabled = False
+        Me.Chk_Tipotrat2.FocusCuesEnabled = False
         Me.Chk_Tipotrat2.ForeColor = System.Drawing.Color.Black
         Me.Chk_Tipotrat2.Location = New System.Drawing.Point(214, 20)
         Me.Chk_Tipotrat2.Name = "Chk_Tipotrat2"
@@ -654,6 +667,7 @@ Partial Class Frm_OfDinamFicha
         Me.Chk_Tipotrat1.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_Tipotrat1.CheckValue = "Y"
         Me.Chk_Tipotrat1.Enabled = False
+        Me.Chk_Tipotrat1.FocusCuesEnabled = False
         Me.Chk_Tipotrat1.ForeColor = System.Drawing.Color.Black
         Me.Chk_Tipotrat1.Location = New System.Drawing.Point(13, 20)
         Me.Chk_Tipotrat1.Name = "Chk_Tipotrat1"
@@ -716,6 +730,7 @@ Partial Class Frm_OfDinamFicha
         Me.Txt_Listas.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Listas.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.Txt_Listas.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Listas, True)
         Me.Txt_Listas.Location = New System.Drawing.Point(13, 15)
         Me.Txt_Listas.Name = "Txt_Listas"
         Me.Txt_Listas.PreventEnterBeep = True
@@ -919,6 +934,12 @@ Partial Class Frm_OfDinamFicha
         Me.Btn_Eliminar.Name = "Btn_Eliminar"
         Me.Btn_Eliminar.Tooltip = "Grabar"
         '
+        'Highlighter1
+        '
+        Me.Highlighter1.ContainerControl = Me
+        Me.Highlighter1.FocusHighlightColor = DevComponents.DotNetBar.Validator.eHighlightColor.Red
+        Me.Highlighter1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        '
         'Frm_OfDinamFicha
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -990,4 +1011,5 @@ Partial Class Frm_OfDinamFicha
     Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Input_Cantmin As DevComponents.Editors.IntegerInput
     Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Highlighter1 As DevComponents.DotNetBar.Validator.Highlighter
 End Class

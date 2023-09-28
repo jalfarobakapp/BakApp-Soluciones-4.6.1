@@ -17,6 +17,10 @@ Public Class Frm_Meson_ObsXMaq
 
         Me._Idpotpr = _Idpotpr
 
+        Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_Meson_ObsXMaq_Load(sender As Object, e As EventArgs) Handles MyBase.Load

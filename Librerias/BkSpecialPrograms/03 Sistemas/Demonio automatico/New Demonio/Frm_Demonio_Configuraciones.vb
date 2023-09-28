@@ -644,6 +644,9 @@ Public Class Frm_Demonio_Configuraciones
         _Sql.Sb_Parametro_Informe_Sql(Input_CantCorreo, "Demonio",
                                       Input_CantCorreo.Name, Class_SQLite.Enum_Type._Double,
                                       Input_CantCorreo.Value, _Actualizar, "Correo",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Chk_EnviarSiempreLosCorreosDTE, "Demonio",
+                                      Chk_EnviarSiempreLosCorreosDTE.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_EnviarSiempreLosCorreosDTE.Checked, _Actualizar, "Correo",, False)
 
         'Impresiones
         _Sql.Sb_Parametro_Informe_Sql(Chk_ColaImpDoc, "Demonio",

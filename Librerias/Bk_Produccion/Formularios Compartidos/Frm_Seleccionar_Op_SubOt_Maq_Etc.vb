@@ -41,11 +41,13 @@ Public Class Frm_Seleccionar_Op_SubOt_Maq_Etc
         _Campo_Descripcion = Campo_Descripcion
         _Tbl_Tabla = Tbl_Tabla
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_Seleccionar_Operacion_Lod(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        AddHandler Grilla.RowPostPaint, AddressOf Sb_RowsPostPaint
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         If Not (_Tbl_Tabla Is Nothing) Then
             Sb_Actualizar_Grilla()

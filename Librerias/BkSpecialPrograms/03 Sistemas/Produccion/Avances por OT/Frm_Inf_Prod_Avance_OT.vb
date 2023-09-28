@@ -40,6 +40,8 @@ Public Class Frm_Inf_Prod_Avance_OT
 
         _Numot = String.Empty
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_Inf_Prod_Avance_OT_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -728,9 +730,9 @@ Public Class Frm_Inf_Prod_Avance_OT
 
     Private Sub SuperGridControl1GetCellStyle(ByVal sender As Object, ByVal e As GridGetCellStyleEventArgs)
 
-        Dim panel As GridPanel = e.GridPanel
+        Dim _Grilla As GridPanel = e.GridPanel
 
-        If panel.Name.Equals("Customers") Then
+        If _Grilla.Name.Equals("Customers") Then
             If e.GridCell.GridColumn.Name.Equals("ContactTitle") = True Then
                 If CStr(e.GridCell.Value).Equals("Owner") = True Then
                     e.Style.TextColor = Color.Red
@@ -738,8 +740,54 @@ Public Class Frm_Inf_Prod_Avance_OT
             End If
         End If
 
-        e.Style.TextColor = Color.Black
+        Dim _Cabeza = e.GridCell.GridColumn.Name
+        Dim _Fila As GridRow = _Grilla.Rows(e.GridCell.RowIndex)
+
+        If Global_Thema = Enum_Themas.Oscuro Then
+            e.Style.TextColor = Color.White
+        Else
+            e.Style.TextColor = Color.Black
+        End If
+
+        If _Grilla.Name = "Informe" Then
+
+            If _Cabeza = "NUMOT" Then
+
+                If Global_Thema = Enum_Themas.Oscuro Then ': e.Style.Background.Color1 = Color.Black : e.Style.Background.Color2 = Color.Black
+                    e.Style.Background.Color1 = Color.Black
+                    e.Style.Background.Color2 = Color.Black
+                Else
+                    e.Style.Background.Color1 = Color.White
+                    e.Style.Background.Color2 = Color.White
+                End If
+
+                If Global_Thema = Enum_Themas.Oscuro Then e.Style.TextColor = Amarillo
+
+            End If
+
+        Else
+
+            If _Cabeza = "NUMOT_PERTENECE" Or _Cabeza = "IDPOTL" Or _Cabeza = "IDPOTPR" Or _Cabeza = "NUMDF" Then
+
+                If Global_Thema = Enum_Themas.Oscuro Then ': e.Style.Background.Color1 = Color.Black : e.Style.Background.Color2 = Color.Black
+                    e.Style.Background.Color1 = Color.Black
+                    e.Style.Background.Color2 = Color.Black
+                Else
+                    e.Style.Background.Color1 = Color.White
+                    e.Style.Background.Color2 = Color.White
+                End If
+
+                If Global_Thema = Enum_Themas.Oscuro Then e.Style.TextColor = Amarillo
+
+            End If
+
+        End If
+
+
 
     End Sub
+
+
+
 
 End Class

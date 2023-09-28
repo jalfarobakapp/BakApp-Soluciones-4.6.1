@@ -349,14 +349,14 @@ Partial Class Frm_OfDinamLista
         Me.Btn_Mnu_EditarOferta.Image = CType(resources.GetObject("Btn_Mnu_EditarOferta.Image"), System.Drawing.Image)
         Me.Btn_Mnu_EditarOferta.ImageAlt = CType(resources.GetObject("Btn_Mnu_EditarOferta.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_EditarOferta.Name = "Btn_Mnu_EditarOferta"
-        Me.Btn_Mnu_EditarOferta.Text = "Editar receta"
+        Me.Btn_Mnu_EditarOferta.Text = "Editar oferta"
         '
         'Btn_Mnu_AsociarProductos
         '
         Me.Btn_Mnu_AsociarProductos.Image = CType(resources.GetObject("Btn_Mnu_AsociarProductos.Image"), System.Drawing.Image)
         Me.Btn_Mnu_AsociarProductos.ImageAlt = CType(resources.GetObject("Btn_Mnu_AsociarProductos.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_AsociarProductos.Name = "Btn_Mnu_AsociarProductos"
-        Me.Btn_Mnu_AsociarProductos.Text = "Asociar productos a la receta"
+        Me.Btn_Mnu_AsociarProductos.Text = "Asociar productos a la oferta"
         '
         'Menu_Contextual_02
         '

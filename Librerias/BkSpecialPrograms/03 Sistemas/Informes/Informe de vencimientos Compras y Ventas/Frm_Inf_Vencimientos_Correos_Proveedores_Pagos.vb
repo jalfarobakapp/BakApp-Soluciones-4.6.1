@@ -472,12 +472,15 @@ Public Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
 
             If _Filtro <> "()" Then
 
-                Consulta_sql = "SELECT SUBSTRING(MC.REFANTI,1,3) As Tido,SUBSTRING(MC.REFANTI,5,10) As Nudo," & vbCrLf &
+                Consulta_Sql = "SELECT SUBSTRING(MC.REFANTI,1,3) As Tido,SUBSTRING(MC.REFANTI,5,10) As Nudo," & vbCrLf &
                                 "(Select top 1 TIDO From MAEEDO Where IDMAEEDO = MD.IDRST) As Tidp_P," & vbCrLf &
                                 "(Select top 1 NUDO From MAEEDO Where IDMAEEDO = MD.IDRST) As Nudo_P," & vbCrLf &
                                 "MC.VAASDP" & vbCrLf &
+                                "Into #Paso" & vbCrLf &
                                 "FROM MAEDPCD MD WITH ( NOLOCK ) INNER JOIN MAEDPCE MC ON MD.IDMAEDPCE = MC.IDMAEDPCE " & vbCrLf &
-                                "WHERE IDRST IN " & _Filtro & " AND ARCHIRST = 'MAEEDO' AND TIDP in ('ncv','ncc','ncx')"
+                                "WHERE IDRST IN " & _Filtro & " AND ARCHIRST = 'MAEEDO' AND TIDP in ('ncv','ncc','ncx')" & vbCrLf &
+                                "Select * From #Paso Order By Nudo_P " & vbCrLf &
+                                "Drop Table #Paso"
 
                 _TblNcc = _Sql.Fx_Get_Tablas(Consulta_Sql)
 
