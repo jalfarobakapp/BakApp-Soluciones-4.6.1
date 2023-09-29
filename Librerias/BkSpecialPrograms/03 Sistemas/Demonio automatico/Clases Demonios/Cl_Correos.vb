@@ -19,6 +19,7 @@ Public Class Cl_Correos
     Dim _Input_Tiempo_Correo As Integer
 
     Public Property CantMmail As Integer
+    Public Property EnviarSiempreLosCorreosDTE As Boolean
 
     Public Property Lbl_Estado As String
         Get
@@ -272,7 +273,13 @@ Public Class Cl_Correos
         '              "And Fecha Between Convert(Datetime, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 00:00:00', 102)" & vbCrLf &
         '              "And Convert(Datetime, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 23:59:59', 102)"
 
-        Dim _Filtro_Fecha_Enviar = "And CONVERT(varchar, Fecha, 112) = '" & _Fecha & "'"
+        Dim _Filtro_Fecha_Enviar As String
+
+        If EnviarSiempreLosCorreosDTE Then
+            _Filtro_Fecha_Enviar = "And (CONVERT(varchar, Fecha, 112) = '" & _Fecha & "' Or (Id_Dte <> 0 And Id_Trackid <> 0))"
+        Else
+            _Filtro_Fecha_Enviar = "And CONVERT(varchar, Fecha, 112) = '" & _Fecha & "'"
+        End If
 
         'Se reactivan los correos que se cerraron y por error no pudieron ser enviados
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo Set Enviar = 1 " &
@@ -286,12 +293,6 @@ Public Class Cl_Correos
                        "Left Join TABFU On KOFU = CodFuncionario" & vbCrLf &
                        "Where Enviar = 1 And Enviado = 0 And NombreEquipo In ('','" & _Nombre_Equipo & "') " & _Filtro_Fecha_Enviar & vbCrLf &
                        "Order By Intentos, Id"
-
-        'Consulta_Sql = "Select Top " & CantMmail & " *,Isnull(NOKOFU,'Funcionario?????') As 'Nombre_Funcionario'" & vbCrLf &
-        '               "From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo" & vbCrLf &
-        '               "Left Join TABFU On KOFU = CodFuncionario" & vbCrLf &
-        '               "Where Enviar = 1 And Enviado = 0 And NombreEquipo = '" & _Nombre_Equipo & "' " & _Filtro_Fecha_Enviar & vbCrLf &
-        '               "Order By Intentos, Id"
 
         _Tbl_Correos = _Sql.Fx_Get_Tablas(Consulta_Sql)
 

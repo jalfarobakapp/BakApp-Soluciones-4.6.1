@@ -905,8 +905,13 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
             If _Cabeza = "Codigo_Nodo" Then
 
-                If Global_Thema = Enum_Themas.Oscuro Then : e.Style.Background.Color1 = Color.Black : e.Style.Background.Color2 = Color.Black
-                Else : e.Style.Background.Color1 = Color.White : e.Style.Background.Color2 = Color.White : End If
+                If Global_Thema = Enum_Themas.Oscuro Then ': e.Style.Background.Color1 = Color.Black : e.Style.Background.Color2 = Color.Black
+                    e.Style.Background.Color1 = Color.Black
+                    e.Style.Background.Color2 = Color.Black
+                Else
+                    e.Style.Background.Color1 = Color.White
+                    e.Style.Background.Color2 = Color.White
+                End If
 
                 If Global_Thema = Enum_Themas.Oscuro Then e.Style.TextColor = Amarillo
 
@@ -953,8 +958,16 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             Dim _Fecha_Recep As Date
 
             If _Cabeza = "Codigo" Then
-                If Global_Thema = Enum_Themas.Oscuro Then : e.Style.Background.Color1 = Color.Black : e.Style.Background.Color2 = Color.Black : e.Style.TextColor = Amarillo
-                Else : e.Style.Background.Color1 = Color.White : e.Style.Background.Color2 = Color.White : End If
+
+                If Global_Thema = Enum_Themas.Oscuro Then ': e.Style.Background.Color1 = Color.Black : e.Style.Background.Color2 = Color.Black : e.Style.TextColor = Amarillo
+                    e.Style.Background.Color1 = Color.Black
+                    e.Style.Background.Color2 = Color.Black
+                    e.Style.TextColor = Amarillo
+                Else
+                    e.Style.Background.Color1 = Color.White
+                    e.Style.Background.Color2 = Color.White
+                End If
+
             End If
 
             If _Cabeza = "StockPedidoUd" & _Ud Then

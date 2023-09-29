@@ -330,7 +330,7 @@ Public Class Frm_Meson_Operario
             Dim _Reproceso = _Fila.Cells("Reproceso").Value
 
             If _Fabricar = _Fabricado Then
-                _Fila.DefaultCellStyle.ForeColor = Color.Red
+                _Fila.DefaultCellStyle.ForeColor = Rojo
             End If
 
             If _Estado = "MQ" Then
@@ -338,11 +338,11 @@ Public Class Frm_Meson_Operario
             End If
 
             If _Grado = 1 Then
-                _Fila.DefaultCellStyle.BackColor = Color.Red 'LightCoral
+                _Fila.DefaultCellStyle.BackColor = Rojo 'LightCoral
                 _Fila.DefaultCellStyle.ForeColor = Color.White
             ElseIf _Grado = 2 Then
                 _Fila.DefaultCellStyle.ForeColor = Color.Black
-                _Fila.DefaultCellStyle.BackColor = Color.Yellow 'LightYellow
+                _Fila.DefaultCellStyle.BackColor = Amarillo 'LightYellow
             Else
                 If Global_Thema = Enum_Themas.Oscuro Then
                     _Fila.DefaultCellStyle.BackColor = Color.Black
@@ -356,7 +356,7 @@ Public Class Frm_Meson_Operario
             End If
 
             If _Reproceso Then
-                _Fila.DefaultCellStyle.BackColor = Color.Green
+                _Fila.DefaultCellStyle.BackColor = Verde
                 _Fila.DefaultCellStyle.ForeColor = Color.White
             End If
 
@@ -1311,14 +1311,7 @@ Public Class Frm_Meson_Operario
                 Return False
             End If
 
-            'If _Tipoot = "SERVICIO" Then
-            '    If IsNothing(_TblMesones) Then
-            '        Return False
-            '    End If
-            '    _Grabar = _Cl_Fabricar.Fx_Producto_Fabricado_ServTecnico(Me, _FilaMaquina, True, _TblMesones)
-            'Else
             _Grabar = _Cl_Fabricar.Fx_Producto_Fabricado(Me, _FilaMaquina, True)
-            'End If
 
             If _Grabar Then
 

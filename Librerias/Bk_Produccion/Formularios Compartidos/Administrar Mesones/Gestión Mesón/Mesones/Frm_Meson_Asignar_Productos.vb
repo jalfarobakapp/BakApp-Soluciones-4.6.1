@@ -865,6 +865,10 @@ Public Class Frm_Meson_Asignar_Productos
                 _Fila_01.DefaultCellStyle.BackColor = Color.LightYellow
             End If
 
+            If _Active = "EN ESPERA" Then
+                _Fila_01.DefaultCellStyle.ForeColor = Color.Black
+            End If
+
             If _Active = "EN PROCESO" Then
                 If Global_Thema = Enum_Themas.Oscuro Then
                     If _Fila_01.DefaultCellStyle.BackColor = Color.LightYellow Then

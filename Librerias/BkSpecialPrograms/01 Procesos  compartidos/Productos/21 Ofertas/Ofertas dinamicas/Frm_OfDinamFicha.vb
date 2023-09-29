@@ -42,6 +42,8 @@ Public Class Frm_OfDinamFicha
         Cmb_Concepto.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
         Cmb_Concepto.SelectedValue = ""
 
+        Txt_Valdesc.Enabled = True
+
         If IsNothing(_Row_Maeeres) Then
 
             Dtp_Fioferta.Value = Nothing
@@ -101,7 +103,7 @@ Public Class Frm_OfDinamFicha
             Chk_Desc_Sab.Checked = (_Row_Maeeres.Item("DESC_SAB") = "S")
             Chk_Desc_Dom.Checked = (_Row_Maeeres.Item("DESC_DOM") = "S")
 
-            Me.ActiveControl = Txt_Codigo
+            Me.ActiveControl = Txt_Descriptor
 
         End If
 
@@ -113,7 +115,7 @@ Public Class Frm_OfDinamFicha
             Lbl_Valdesc.Text = "Porcentaje"
         End If
 
-        If Chk_Tipotrat1.Checked Or Chk_Tipotrat2.Checked Then
+        If Chk_Tipotrat3.Checked Or Chk_Tipotrat4.Checked Then
             Lbl_Valdesc.Text = "Monto"
         End If
 
@@ -173,6 +175,42 @@ Public Class Frm_OfDinamFicha
             Txt_Udad.Focus()
             Return
         End If
+
+
+        Dim _FechaServidor As Date = FechaDelServidor()
+
+        Dim resultadoInicio As Integer = Date.Compare(_FechaServidor, Dtp_Fioferta.Value)
+        Dim resultadoFin As Integer = Date.Compare(_FechaServidor, Dtp_Ftoferta.Value)
+
+        If (resultadoInicio >= 0 And resultadoFin <= 0) Or Dtp_Fioferta.Value > _FechaServidor Then
+
+            'La fecha está entre las dos fechas
+
+            Dim _Fs As String = Format(_FechaServidor, "yyyyMMdd")
+            Dim _Fi As String = Format(Dtp_Fioferta.Value, "yyyyMMdd")
+            Dim _Ft As String = Format(Dtp_Ftoferta.Value, "yyyyMMdd")
+
+            Consulta_sql = "Select ELEMENTO Into #Ps1 From MAEDRES Where CODIGO = '" & Txt_Codigo.Text.Trim & "'" & vbCrLf &
+                           "Select * From MAEERES Where CODIGO In" & vbCrLf &
+                           "(Select CODIGO From MAEDRES Where ELEMENTO In (Select ELEMENTO From #Ps1))" & vbCrLf &
+                           "And CODIGO <> '" & Txt_Codigo.Text.Trim & "' And ('" & _Fi & "' Between FIOFERTA And FTOFERTA Or '" & _Ft & "' Between FIOFERTA And FTOFERTA)" & vbCrLf &
+                           "Drop Table #Ps1"
+
+            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            If CBool(_Tbl.Rows.Count) Then
+                MessageBoxEx.Show(Me, "PRODUCTOS YA ACTIVOS EN OTRA OFERTA." & vbCrLf & "NO SE PUEDE ACTIVAR ESTE DESCUENTO." & vbCrLf & vbCrLf &
+                                  "Puedes suceder 2 cosas:" & vbCrLf &
+                                  "- Hay una oferta con productos que ya esta activa." & vbCrLf &
+                                  "- Hay una oferta que se activara en una fecha futura y coincidirá con esta oferta.",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+        End If
+
+
+
 
         Dim _Codigo As String = Txt_Codigo.Text
         Dim _Cantmin As Integer = Input_Cantmin.Value

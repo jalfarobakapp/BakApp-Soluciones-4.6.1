@@ -323,7 +323,13 @@ Public Class Frm_Demonio_New
 
                     Dim _CantCorreo As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
                                                                    "Valor", "Informe = 'Demonio' And Campo = 'Input_CantCorreo' And NombreEquipo = '" & _NombreEquipo & "'", True)
+
+                    Dim _EnviarSiempreLosCorreosDTE As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                                   "Valor", "Informe = 'Demonio' And Campo = 'Chk_EnviarSiempreLosCorreosDTE' And NombreEquipo = '" & _NombreEquipo & "'", False,, False)
+
                     _Cl_Correos.CantMmail = _CantCorreo
+                    _Cl_Correos.EnviarSiempreLosCorreosDTE = _EnviarSiempreLosCorreosDTE
+
                     _Descripcion = "Se enviaran paquetes de " & _CantCorreo & " correos. " & _CI_Programacion.Resumen
                     _IndexImagen = 0
 

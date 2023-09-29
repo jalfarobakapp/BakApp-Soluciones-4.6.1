@@ -718,7 +718,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             Txt_Patente.ButtonCustom2.Visible = True
             _Patente_rvm = _Row_Patente_rvm.Item("Patente")
             Txt_Patente.Text = _Patente_rvm
-            Grupo_BusquedaProducto.Text = "CADENA DE BUSQUEDA DE PRODUCTOS PARA EL VEHICULO: " & _Row_Patente_rvm.Item("Descripcion").ToString.Trim.ToUpper
+            Grupo_BusquedaProducto.Text = "CADENA DE BUSQUEDA DE PRODUCTOS PARA EL VEHICULO: " & _Row_Patente_rvm.Item("Descripcion").ToString.Trim.ToUpper & " (" & _Row_Patente_rvm.Item("ModeloBusqueda").ToString.Trim & ")"
             Txt_Patente.ReadOnly = True
         End If
 
@@ -887,6 +887,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     End Sub
 
+
     Private Function Fx_Tbl_Buscar_Productos(_Empresa As String,
                                              _Sucursal As String,
                                              _Bodega As String,
@@ -959,8 +960,15 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                 _Descripcion_Busqueda = Txtdescripcion.Text.Trim
             End If
 
+            Dim _Descripcion_Busqueda_Patentes As String
+
             If Not IsNothing(_Row_Patente_rvm) Then
-                _Descripcion_Busqueda += Space(1) & _Row_Patente_rvm.Item("DescripcionBusqueda")
+
+                _Descripcion_Busqueda += Space(1) & _Row_Patente_rvm.Item("Marca") '_Row_Patente_rvm.Item("DescripcionBusqueda")
+
+                Dim _ModeloBusqueda As String = _Row_Patente_rvm.Item("ModeloBusqueda")
+                Dim _AFabricacion As String = _Row_Patente_rvm.Item("AFabricacion")
+
             End If
 
 
@@ -993,6 +1001,21 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                         End If
 
                     Next
+
+                    If Not IsNothing(_Row_Patente_rvm) Then
+
+                        Dim _ModeloBusqueda As String = _Row_Patente_rvm.Item("ModeloBusqueda")
+                        Dim _AFabricacion As String = _Row_Patente_rvm.Item("AFabricacion")
+
+                        Dim _Sql_Fl As String = CADENA_A_BUSCAR(RTrim$(_ModeloBusqueda & " " & _AFabricacion), "DescripcionBusqueda LIKE '%")
+
+                        If Not String.IsNullOrEmpty(_Sql_Fl) Then
+                            _Sql_Filtro1 += "And Mp.KOPR IN (Select Codigo From Zw_Prod_Asociacion" & vbCrLf &
+                                            "Where DescripcionBusqueda LIKE '%" & _Sql_Fl & "%')" & vbCrLf
+
+                        End If
+
+                    End If
 
                 End If
 
