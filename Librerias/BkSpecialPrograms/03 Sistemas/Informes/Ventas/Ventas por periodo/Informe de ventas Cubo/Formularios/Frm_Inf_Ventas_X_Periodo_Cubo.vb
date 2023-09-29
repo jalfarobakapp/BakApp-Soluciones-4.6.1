@@ -1026,7 +1026,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                                _Ins_Sin_Asociacion_01 &
                                vbCrLf &
                                vbCrLf &
-                               "Update #Paso1 Set TOTAL = Isnull((Select Sum(VANELI) From " & _Nombre_Tabla_Paso & " Where KOPRCT In" & vbCrLf &
+                               "Update #Paso1 Set TOTAL = Isnull((Select " & _Campo_Mostrar & " From " & _Nombre_Tabla_Paso & " Where KOPRCT In" & vbCrLf &
                                "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
                                "Where Codigo_Nodo = CODIGO" & vbCrLf &
                                _Filtro_Nodos & vbCrLf &

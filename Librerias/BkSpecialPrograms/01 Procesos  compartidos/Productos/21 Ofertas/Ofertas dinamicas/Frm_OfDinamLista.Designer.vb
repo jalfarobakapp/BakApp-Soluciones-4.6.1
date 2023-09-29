@@ -67,7 +67,7 @@ Partial Class Frm_OfDinamLista
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel3.Location = New System.Drawing.Point(9, 0)
         Me.GroupPanel3.Name = "GroupPanel3"
-        Me.GroupPanel3.Size = New System.Drawing.Size(608, 70)
+        Me.GroupPanel3.Size = New System.Drawing.Size(864, 70)
         '
         '
         '
@@ -113,7 +113,7 @@ Partial Class Frm_OfDinamLista
         Me.Txt_BuscaXProducto.ButtonCustom2.Visible = True
         Me.Txt_BuscaXProducto.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_BuscaXProducto.ForeColor = System.Drawing.Color.Black
-        Me.Txt_BuscaXProducto.Location = New System.Drawing.Point(413, 20)
+        Me.Txt_BuscaXProducto.Location = New System.Drawing.Point(663, 20)
         Me.Txt_BuscaXProducto.Name = "Txt_BuscaXProducto"
         Me.Txt_BuscaXProducto.PreventEnterBeep = True
         Me.Txt_BuscaXProducto.ReadOnly = True
@@ -128,7 +128,7 @@ Partial Class Frm_OfDinamLista
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(413, 0)
+        Me.LabelX2.Location = New System.Drawing.Point(663, 0)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(121, 23)
         Me.LabelX2.TabIndex = 101
@@ -150,7 +150,7 @@ Partial Class Frm_OfDinamLista
         Me.Txt_Buscador.Location = New System.Drawing.Point(3, 20)
         Me.Txt_Buscador.Name = "Txt_Buscador"
         Me.Txt_Buscador.PreventEnterBeep = True
-        Me.Txt_Buscador.Size = New System.Drawing.Size(404, 22)
+        Me.Txt_Buscador.Size = New System.Drawing.Size(654, 22)
         Me.Txt_Buscador.TabIndex = 0
         '
         'LabelX7
@@ -175,7 +175,7 @@ Partial Class Frm_OfDinamLista
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(9, 376)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(608, 153)
+        Me.GroupPanel2.Size = New System.Drawing.Size(864, 153)
         '
         '
         '
@@ -245,7 +245,7 @@ Partial Class Frm_OfDinamLista
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla_Productos.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla_Productos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla_Productos.Size = New System.Drawing.Size(602, 130)
+        Me.Grilla_Productos.Size = New System.Drawing.Size(858, 130)
         Me.Grilla_Productos.TabIndex = 1
         '
         'Bar2
@@ -256,7 +256,7 @@ Partial Class Frm_OfDinamLista
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Receta, Me.Btn_ExportarExcel})
         Me.Bar2.Location = New System.Drawing.Point(0, 544)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(627, 41)
+        Me.Bar2.Size = New System.Drawing.Size(885, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 102
@@ -291,7 +291,7 @@ Partial Class Frm_OfDinamLista
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(9, 76)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(608, 294)
+        Me.GroupPanel1.Size = New System.Drawing.Size(864, 294)
         '
         '
         '
@@ -410,14 +410,14 @@ Partial Class Frm_OfDinamLista
         DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla_Recetas.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla_Recetas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla_Recetas.Size = New System.Drawing.Size(602, 271)
+        Me.Grilla_Recetas.Size = New System.Drawing.Size(858, 271)
         Me.Grilla_Recetas.TabIndex = 1
         '
         'Frm_OfDinamLista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(627, 585)
+        Me.ClientSize = New System.Drawing.Size(885, 585)
         Me.Controls.Add(Me.GroupPanel3)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.Bar2)

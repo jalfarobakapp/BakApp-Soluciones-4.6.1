@@ -16,6 +16,8 @@ Public Class Frm_OfDinamLista
         Sb_Formato_Generico_Grilla(Grilla_Recetas, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
         Sb_Formato_Generico_Grilla(Grilla_Productos, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
 
     Private Sub Frm_OfDinamLista_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -27,6 +29,9 @@ Public Class Frm_OfDinamLista
 
         Txt_BuscaXProducto.ButtonCustom2.Visible = False
         Txt_BuscaXProducto.ButtonCustom.Visible = True
+
+        AddHandler Grilla_Recetas.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        AddHandler Grilla_Productos.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
     End Sub
 
@@ -41,7 +46,16 @@ Public Class Frm_OfDinamLista
             _Condicion = "And CODIGO In (Select CODIGO From MAEDRES Where ELEMENTO = '" & Txt_BuscaXProducto.Text & "')"
         End If
 
-        Consulta_sql = "Select * From MAEERES Where TIPORESE = 'din' And CODIGO+DESCRIPTOR Like '%" & _Cadena & "%'" & vbCrLf & _Condicion
+        Consulta_sql = "Select *,DATEDIFF(D,GETDATE(),FTOFERTA) As Dias,CAST(0 As Bit) As Activa,CAST(0 As Int) As 'ProdAsociados'" & vbCrLf &
+                        "Into #Paso" & vbCrLf &
+                        "From MAEERES" & vbCrLf &
+                        "Where TIPORESE = 'din' And CODIGO+DESCRIPTOR Like '%" & _Cadena & "%'" & vbCrLf & _Condicion & vbCrLf &
+                        "Update #Paso Set Activa = 1 Where GETDATE() Between FIOFERTA And FTOFERTA" & vbCrLf &
+                        "Update #Paso Set ProdAsociados = (Select COUNT(*) From MAEDRES Where MAEDRES.CODIGO = #Paso.CODIGO)" & vbCrLf &
+                        "Update #Paso Set Dias = 0 Where Dias < 0" & vbCrLf &
+                        "Select * From #Paso" & vbCrLf &
+                        "Drop Table #Paso"
+
 
         _Tbl_Maeeres = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -57,23 +71,67 @@ Public Class Frm_OfDinamLista
 
             .DataSource = _Tbl_Maeeres
 
-            OcultarEncabezadoGrilla(Grilla_Recetas, True)
+            OcultarEncabezadoGrilla(Grilla_Recetas)
+
+            Dim _DisplayIndex = 0
 
             .Columns("CODIGO").Visible = True
             .Columns("CODIGO").HeaderText = "Código"
             .Columns("CODIGO").Width = 100
-            .Columns("CODIGO").DisplayIndex = 0
+            .Columns("CODIGO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("DESCRIPTOR").Visible = True
             .Columns("DESCRIPTOR").HeaderText = "Nombre del tipo de descuento oferta"
             .Columns("DESCRIPTOR").Width = 300
-            .Columns("DESCRIPTOR").DisplayIndex = 1
+            .Columns("DESCRIPTOR").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            .Columns("LISTAS").Visible = True
-            .Columns("LISTAS").HeaderText = "Listas de precios válidas"
-            .Columns("LISTAS").Width = 140
-            .Columns("LISTAS").DisplayIndex = 2
-            .ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("FIOFERTA").Visible = True
+            .Columns("FIOFERTA").HeaderText = "Fecha inicia"
+            .Columns("FIOFERTA").ToolTipText = "Fecha de inicio de la oferta"
+            .Columns("FIOFERTA").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("FIOFERTA").Width = 100
+            .Columns("FIOFERTA").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("FTOFERTA").Visible = True
+            .Columns("FTOFERTA").HeaderText = "Fecha tope"
+            .Columns("FTOFERTA").ToolTipText = "Fecha de tope de la oferta"
+            .Columns("FTOFERTA").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("FTOFERTA").Width = 100
+            .Columns("FTOFERTA").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Dias").Visible = True
+            .Columns("Dias").HeaderText = "Días expira."
+            .Columns("Dias").ToolTipText = "Días que faltan para que termine la oferta"
+            .Columns("Dias").Width = 70
+            .Columns("Dias").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Dias").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("Dias").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Activa").Visible = True
+            .Columns("Activa").HeaderText = "Activa"
+            .Columns("Activa").Width = 40
+            .Columns("Activa").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("ProdAsociados").Visible = True
+            .Columns("ProdAsociados").HeaderText = "Productos"
+            .Columns("ProdAsociados").ToolTipText = "Productos asociados a la oferta"
+            .Columns("ProdAsociados").Width = 70
+            .Columns("ProdAsociados").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("ProdAsociados").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("ProdAsociados").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            '.Columns("LISTAS").Visible = True
+            '.Columns("LISTAS").HeaderText = "Listas de precios válidas"
+            '.Columns("LISTAS").Width = 140
+            '.Columns("LISTAS").DisplayIndex = 2
+            '.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
 
         End With
 
@@ -99,7 +157,7 @@ Public Class Frm_OfDinamLista
 
             .Columns("NOKOPR").Visible = True
             .Columns("NOKOPR").HeaderText = "Descripción"
-            .Columns("NOKOPR").Width = 390 + 50
+            .Columns("NOKOPR").Width = 680
             .Columns("NOKOPR").DisplayIndex = 1
 
         End With
@@ -127,11 +185,30 @@ Public Class Frm_OfDinamLista
         Fm.Dispose()
 
         If _Grabar Then
+
             If _Eliminado Then
                 Sb_Actualizar_Grilla_Ofertas()
             Else
-                _Fila.Cells("DESCRIPTOR").Value = _Row_Maeeres.Item("DESCRIPTOR")
-                _Fila.Cells("LISTAS").Value = _Row_Maeeres.Item("LISTAS")
+
+                Consulta_sql = "Select *,DATEDIFF(D,GETDATE(),FTOFERTA) As Dias,CAST(0 As Bit) As Activa,CAST(0 As Int) As 'ProdAsociados'" & vbCrLf &
+                        "Into #Paso" & vbCrLf &
+                        "From MAEERES" & vbCrLf &
+                        "Where TIPORESE = 'din' And CODIGO = '" & _Codigo & "'" & vbCrLf &
+                        "Update #Paso Set Activa = 1 Where GETDATE() Between FIOFERTA And FTOFERTA" & vbCrLf &
+                        "Update #Paso Set ProdAsociados = (Select COUNT(*) From MAEDRES Where MAEDRES.CODIGO = #Paso.CODIGO)" & vbCrLf &
+                        "Update #Paso Set Dias = 0 Where Dias < 0" & vbCrLf &
+                        "Select * From #Paso" & vbCrLf &
+                        "Drop Table #Paso"
+
+                Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                _Fila.Cells("DESCRIPTOR").Value = _Row.Item("DESCRIPTOR")
+                _Fila.Cells("FIOFERTA").Value = _Row.Item("FIOFERTA")
+                _Fila.Cells("FTOFERTA").Value = _Row.Item("FTOFERTA")
+                _Fila.Cells("Dias").Value = _Row.Item("Dias")
+                _Fila.Cells("Activa").Value = _Row.Item("Activa")
+                _Fila.Cells("ProdAsociados").Value = _Row.Item("ProdAsociados")
+
             End If
         End If
 
@@ -239,12 +316,18 @@ Public Class Frm_OfDinamLista
 
                 End If
 
+                If String.IsNullOrEmpty(Consulta_sql) Then
+                    Return
+                End If
+
                 If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
                     MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     Return
                 End If
 
                 Sb_Actualizar_Grilla_Productos(_Codigo)
+
+                _Fila.Cells("ProdAsociados").Value = Grilla_Productos.RowCount
 
             End If
 
@@ -271,6 +354,22 @@ Public Class Frm_OfDinamLista
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
             Grilla_Productos.Rows.Remove(_Fila)
         End If
+
+        Consulta_sql = "Select *,DATEDIFF(D,GETDATE(),FTOFERTA) As Dias,CAST(0 As Bit) As Activa,CAST(0 As Int) As 'ProdAsociados'" & vbCrLf &
+        "Into #Paso" & vbCrLf &
+        "From MAEERES" & vbCrLf &
+        "Where TIPORESE = 'din' And CODIGO = '" & _Codigo & "'" & vbCrLf &
+        "Update #Paso Set Activa = 1 Where GETDATE() Between FIOFERTA And FTOFERTA" & vbCrLf &
+        "Update #Paso Set ProdAsociados = (Select COUNT(*) From MAEDRES Where MAEDRES.CODIGO = #Paso.CODIGO)" & vbCrLf &
+        "Update #Paso Set Dias = 0 Where Dias < 0" & vbCrLf &
+        "Select * From #Paso" & vbCrLf &
+        "Drop Table #Paso"
+
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _FilaR As DataGridViewRow = Grilla_Recetas.CurrentRow
+
+        _FilaR.Cells("ProdAsociados").Value = _Row.Item("ProdAsociados")
 
     End Sub
 
