@@ -412,22 +412,32 @@ Public Class Frm_Cms
             '.Columns("Semanas").DisplayIndex = _DisplayIndex
             '_DisplayIndex += 1
 
-            .Columns("Domingos").Width = 30
+            .Columns("Domingos").Width = 40
             .Columns("Domingos").HeaderText = "Dom"
-            .Columns("Domingos").ToolTipText = "Sabados"
+            .Columns("Domingos").ToolTipText = "Domingos"
             .Columns("Domingos").ReadOnly = True
             .Columns("Domingos").Visible = True
             .Columns("Domingos").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Domingos").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Festivos").Width = 30
+            .Columns("Festivos").Width = 40
             .Columns("Festivos").HeaderText = "Fes"
             .Columns("Festivos").ToolTipText = "Festivos"
             .Columns("Festivos").ReadOnly = True
             .Columns("Festivos").Visible = True
             .Columns("Festivos").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Festivos").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("DescuentoSc").Width = 90
+            .Columns("DescuentoSc").HeaderText = "Descuento"
+            .Columns("DescuentoSc").ToolTipText = "Descuento aplicado"
+            .Columns("DescuentoSc").ReadOnly = True
+            .Columns("DescuentoSc").Visible = True
+            .Columns("DescuentoSc").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("DescuentoSc").DefaultCellStyle.Format = "$ ###,##0"
+            .Columns("DescuentoSc").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("TotalPagoSC").Width = 100
@@ -1040,9 +1050,12 @@ Public Class Frm_Cms
                         Dim _Festivos As Double = _FlDSc.Item("Festivos")
                         Dim _DiasTrabMes As Double = _FlDSc.Item("DiasTrabMes")
                         Dim _Semanas As Double = _FlDSc.Item("Semanas")
+                        Dim _DescuentoSc As Double = _FlDSc.Item("DescuentoSc")
 
-                        _ValorDia = _ComBruta / _DiasTrabMes '_DiasHabiles
+                        _ValorDia = _ComBruta / _DiasHabiles
                         _TotalPagoSC = _ValorDia * (_Festivos + _Domingos)
+
+                        _TotalPagoSC = Math.Round(_TotalPagoSC, 0) - _DescuentoSc
 
                         _FlDSc.Item("ValorDia") = _ValorDia
                         _FlDSc.Item("TotalPagoSC") = _TotalPagoSC
@@ -1164,6 +1177,7 @@ Public Class Frm_Cms
                 Dim _Festivos As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("Festivos"), False, 5)
                 Dim _DiasTrabMes As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("DiasTrabMes"), False, 5)
                 Dim _Semanas As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("Semanas"), False, 5)
+                Dim _DescuentoSc As String = De_Num_a_Tx_01(_Fila_DetalleSc.Item("DescuentoSc"), False, 5)
 
                 Consulta_Sql += "Update " & _Global_BaseBk & "Zw_Comisiones_DetSc Set " &
                     "ComBruta = " & _ComBruta &
@@ -1175,6 +1189,7 @@ Public Class Frm_Cms
                     ",Festivos = " & _Festivos &
                     ",DiasTrabMes = " & _DiasTrabMes &
                     ",Semanas = " & _Semanas &
+                    ",DescuentoSc = " & _DescuentoSc &
                     "Where Id = " & _Id_DetSc & vbCrLf
 
             End If
@@ -1269,7 +1284,7 @@ Public Class Frm_Cms
 
         If _Tecla = Keys.Enter Then
 
-            If _Cabeza = "DiasTrabMes" Then
+            If _Cabeza = "DescuentoSc" Or _Cabeza = "DiasTrabMes" Then
 
                 SendKeys.Send("{F2}") 'RIGHt
 
@@ -1292,18 +1307,20 @@ Public Class Frm_Cms
 
         Dim _Cabeza = Grilla_DetalleSc.Columns(Grilla_DetalleSc.CurrentCell.ColumnIndex).Name
 
-        If _Cabeza = "DiasTrabMes" Then
+        If _Cabeza = "DescuentoSc" Then
 
             Dim _DiasTrabMes As Double = _Fila.Cells("DiasTrabMes").Value
             Dim _DiasTrabMesResp As Double = _Fila.Cells("DiasTrabMesResp").Value
 
-            If _DiasTrabMes = _DiasTrabMesResp Then
-                Return
-            End If
+            'If _DiasTrabMes = _DiasTrabMesResp Then
+            '    Return
+            'End If
 
             Sb_ActualizarValoresPorFuncionario(_FilaLin)
 
         End If
+
+        Grilla_DetalleSc.Columns(_Cabeza).ReadOnly = True
 
     End Sub
 

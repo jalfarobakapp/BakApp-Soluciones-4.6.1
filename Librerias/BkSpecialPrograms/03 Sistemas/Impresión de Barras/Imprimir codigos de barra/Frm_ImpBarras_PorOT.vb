@@ -72,10 +72,7 @@ Public Class Frm_ImpBarras_PorOT
         End If
 
         Consulta_sql = "Select * From POTE Where IDPOTE = " & _Idpote & vbCrLf &
-                       "Select *,Cast('' As Varchar(21)) As ALTERNAT,Cast(0 As Int) As CANTIDAD From POTL Where IDPOTE = " & _Idpote & _Condicion_Potl
-
-        Consulta_sql = "Select * From POTE Where IDPOTE = " & _Idpote & vbCrLf &
-                       "Select POTL.*,Ltd.NroLote,Lte.FechaVenci,Cast('' As Varchar(21)) As ALTERNAT,Cast(0 As Int) As CANTIDAD" & vbCrLf &
+                       "Select POTL.*,Cast('' As Varchar(10)) As Nro_CPT,Ltd.NroLote,Lte.FechaVenci,Cast('' As Varchar(21)) As ALTERNAT,Cast(0 As Int) As CANTIDAD" & vbCrLf &
                        "From POTL" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Lotes_Det Ltd On IDPOTL = IdTabla" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Lotes_Enc Lte On Ltd.Id_Lote = Lte.Id_Lote" & vbCrLf &
@@ -160,6 +157,12 @@ Public Class Frm_ImpBarras_PorOT
             .Columns("GLOSA").HeaderText = "Descripción"
             .Columns("GLOSA").Width = 280
             .Columns("GLOSA").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Nro_CPT").Visible = True
+            .Columns("Nro_CPT").HeaderText = "Nro. CPT"
+            .Columns("Nro_CPT").Width = 60
+            .Columns("Nro_CPT").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("NroLote").Visible = True
@@ -275,6 +278,7 @@ Public Class Frm_ImpBarras_PorOT
     End Sub
 
     Private Sub Btn_Conf_ConfEstacion_Click(sender As Object, e As EventArgs) Handles Btn_Conf_ConfEstacion.Click
+
         Dim _Autorizado As Boolean
 
         Dim Fm_Pass As New Frm_Clave_Administrador
@@ -303,14 +307,15 @@ Public Class Frm_ImpBarras_PorOT
             _Global_Row_EstacionBk = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If _Grabar Then
-                'CerrarPorConfigurar = True
                 Me.Close()
             End If
 
         End If
+
     End Sub
 
     Sub Sb_Imprimir_Etiquetas()
+
         Try
             _Etiqueta = Cmbetiquetas.SelectedValue
 
@@ -404,6 +409,7 @@ Public Class Frm_ImpBarras_PorOT
         Catch ex As Exception
             MessageBoxEx.Show(Me, ex.Message, "Problemas de impresión", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End Try
+
     End Sub
 
 End Class

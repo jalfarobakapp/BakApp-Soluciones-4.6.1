@@ -144,10 +144,13 @@ Public Class Frm_St_OperacionesCrear
 
         If Chk_TienePrecio.Checked Then
             If Not CBool(Txt_Costo.Tag) Then
-                MessageBoxEx.Show(Me, "Falta el precio de la operación para la sucursal: " & ModSucursal & "-" & _Global_Row_Modalidad.Item(""),
-                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Txt_Costo.Focus()
-                Return
+                Dim _NomSucursal As String = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", "EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "'")
+
+                If MessageBoxEx.Show(Me, "Falta el precio de la operación para la sucursal: " & ModSucursal & "-" & _NomSucursal & vbCrLf & vbCrLf &
+                                     "¿Confirma el valor cero?", "Grabar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
+                    Txt_Costo.Focus()
+                    Return
+                End If
             End If
         End If
 
@@ -156,8 +159,9 @@ Public Class Frm_St_OperacionesCrear
         End If
 
         If _Nuevo Then
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Operaciones (Operacion,Descripcion,Precio,Externa,CantMayor1,TienePrecio) Values " &
-                           "('" & _Operacion & "','" & _Descripcion & "'," & _Precio & "," & _Externa & "," & _CantMayor1 & "," & _TienePrecio & ")"
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Operaciones (Operacion,Empresa,Descripcion,Precio,Externa,CantMayor1,TienePrecio) Values " &
+                           "('" & _Operacion & "','" & ModEmpresa & "','" & _Descripcion & "'," & _Precio & "," & _Externa & "," & _CantMayor1 & "," & _TienePrecio & ")"
             If Not _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Operacion) Then
                 Return
             End If
@@ -165,6 +169,7 @@ Public Class Frm_St_OperacionesCrear
         End If
 
         If _Editar Then
+
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Operaciones Set " & vbCrLf &
                            "Descripcion = '" & _Descripcion & "'" &
                            ",Externa = " & _Externa &
@@ -175,6 +180,7 @@ Public Class Frm_St_OperacionesCrear
             If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
                 Return
             End If
+
         End If
 
         'Se actualiza el precio por sucursal

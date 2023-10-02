@@ -169,17 +169,51 @@ Public Class Frm_Libro_Compras_Ventas
 
         Dim _Cadena_SII As String = CADENA_A_BUSCAR(_Descripcion, "Tido+Nudo+Endo+Libro+Rut_Proveedor+Razon_Social+Folio+STR(Monto_Total) LIKE '%")
 
-        Dim _Filtro_SII As String = "And Tido+Nudo+Endo+Libro+Rut_Proveedor+Razon_Social+Folio+STR(Monto_Total) LIKE '%" & _Cadena_SII & "%'"
+        Dim _Filtro_SII As String = "And Tido+Nudo+Endo+Libro+Rut_Proveedor+Razon_Social+Cmp.Folio+STR(Monto_Total) LIKE '%" & _Cadena_SII & "%'"
+
+
+        'Consulta_sql = "-- Tabla 0 
+        '                Select * From " & _Global_BaseBk & "Zw_Compras_en_SII
+        '                Where Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
+        '                _Filtro_SII & "
+        '                Order by Libro  
+
+        '                -- Tabla 1
+        '                Select * From " & _Global_BaseBk & "Zw_Compras_en_SII
+        '                Where Libro <> '' And Libro Like '" & _Libro & "%' And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
+        '                _Filtro_SII & "
+        '                Order by Libro
+
+        '                -- Tabla 2
+        '                Update " & _Global_BaseBk & "Zw_Compras_en_SII Set Idmaeedo_GRC = Isnull((Select IDMAEEDO From MAEEDO Where TIDO = 'GRC' And NUDO = Nudo And ENDO = Endo),0)
+        '                Where Libro = '' And Periodo = " & _Periodo & " And Mes = " & _Mes & " And Idmaeedo = 0
+
+        '                Select *,Case When Isnull((Select Top 1 Id From " & _Global_BaseBk & "Zw_DTE_ReccDet Z1 Where Cmp.Rut_Proveedor = Z1.RutEmisor And Z1.Folio = Cmp.Folio And Cmp.TipoDoc = Z1.TipoDTE),0) = 0 Then 'No' Else 'Si' End As TPDF From " & _Global_BaseBk & "Zw_Compras_en_SII Cmp
+        '                Where Libro = '' And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
+        '               _Filtro_SII & "
+
+        '                -- Tabla 3
+        '                Select * From " & _Global_BaseBk & "Zw_Compras_en_SII
+        '                Where Libro <> '' And Libro not Like '" & _Libro & "%' And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
+        '                _Filtro_SII & "
+        '                Order by Libro
+
+        '                -- Tabla 4
+        '                Select * From " & _Global_BaseBk & "Zw_Compras_en_SII
+        '                Where Diferencia <> 0 And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
+        '                _Filtro_SII
 
 
         Consulta_sql = "-- Tabla 0 
-                        Select * From " & _Global_BaseBk & "Zw_Compras_en_SII
+                        Select Case When DteD.[Xml] IS NULL then 'No' Else 'Si' End As 'TPDF',Cmp.*,DteD.[Xml],Cast(0 As Bit) As 'TieneOccRef',Cast('' As Varchar(20)) As 'OccRef' 
+                        From " & _Global_BaseBk & "Zw_Compras_en_SII Cmp
+                        Left Join " & _Global_BaseBk & "Zw_DTE_ReccDet DteD On Cmp.Rut_Proveedor = DteD.RutEmisor And Cmp.Folio = DteD.Folio
                         Where Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
                         _Filtro_SII & "
                         Order by Libro  
 
                         -- Tabla 1
-                        Select * From " & _Global_BaseBk & "Zw_Compras_en_SII
+                        Select * From " & _Global_BaseBk & "Zw_Compras_en_SII Cmp
                         Where Libro <> '' And Libro Like '" & _Libro & "%' And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
                         _Filtro_SII & "
                         Order by Libro
@@ -188,20 +222,23 @@ Public Class Frm_Libro_Compras_Ventas
                         Update " & _Global_BaseBk & "Zw_Compras_en_SII Set Idmaeedo_GRC = Isnull((Select IDMAEEDO From MAEEDO Where TIDO = 'GRC' And NUDO = Nudo And ENDO = Endo),0)
                         Where Libro = '' And Periodo = " & _Periodo & " And Mes = " & _Mes & " And Idmaeedo = 0
 
-                        Select *,Case When Isnull((Select Top 1 Id From " & _Global_BaseBk & "Zw_DTE_ReccDet Z1 Where Cmp.Rut_Proveedor = Z1.RutEmisor And Z1.Folio = Cmp.Folio And Cmp.TipoDoc = Z1.TipoDTE),0) = 0 Then 'No' Else 'Si' End As TPDF From " & _Global_BaseBk & "Zw_Compras_en_SII Cmp
+                        Select Case When DteD.[Xml] IS NULL then 'No' Else 'Si' End As 'TPDF',Cmp.*,DteD.[Xml],Cast(0 As Bit) As 'TieneOccRef',Cast('' As Varchar(20)) As 'OccRef'
+                        From " & _Global_BaseBk & "Zw_Compras_en_SII Cmp
+                        Left Join " & _Global_BaseBk & "Zw_DTE_ReccDet DteD On Cmp.Rut_Proveedor = DteD.RutEmisor And Cmp.Folio = DteD.Folio
                         Where Libro = '' And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
                        _Filtro_SII & "
                        
-                        -- Tabla 3
-                        Select * From " & _Global_BaseBk & "Zw_Compras_en_SII
+                        -- Tabla 3 
+                        Select * From " & _Global_BaseBk & "Zw_Compras_en_SII Cmp
                         Where Libro <> '' And Libro not Like '" & _Libro & "%' And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
                         _Filtro_SII & "
                         Order by Libro
                        
                         -- Tabla 4
-                        Select * From " & _Global_BaseBk & "Zw_Compras_en_SII
+                        Select * From " & _Global_BaseBk & "Zw_Compras_en_SII Cmp
                         Where Diferencia <> 0 And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
                         _Filtro_SII
+
 
         Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
 
@@ -233,6 +270,87 @@ Public Class Frm_Libro_Compras_Ventas
 
         Tab.SelectedTabIndex = _TabIndex
 
+
+        For Each _Fila As DataRow In _Inf_02_Solo_SII.Rows
+
+            If _Fila.Item("TPDF") = "Si" Then
+
+                Dim _Xml As String = _Fila.Item("XML")
+
+                Dim _Archivo_Xml As New XmlDocument()
+                _Archivo_Xml.LoadXml(_Xml)
+
+                Dim fullPath As String = "...\\archivo.xml"
+                File.WriteAllText(fullPath, _Xml)
+
+                Dim _Dset_DTE As New DataSet
+                _Dset_DTE.ReadXml(fullPath)
+
+                Dim _Tbl_Referencia As DataTable
+
+                Try
+                    _Tbl_Referencia = _Dset_DTE.Tables("Referencia")
+                Catch ex As Exception
+                    _Tbl_Referencia = Nothing
+                End Try
+
+                If Not IsNothing(_Tbl_Referencia) Then
+                    For Each _Fl As DataRow In _Tbl_Referencia.Rows
+                        If _Fl.Item("TpoDocRef") = "801" Then
+                            _Fila.Item("TieneOccRef") = True
+                            _Fila.Item("OccRef") = _Fl.Item("FolioRef").ToString.Trim
+                        End If
+                    Next
+                End If
+
+            End If
+
+        Next
+
+        For Each _Fila As DataRow In _Inf_00_SII.Rows
+
+            If _Fila.Item("TPDF") = "Si" Then
+
+                Dim _Xml As String = _Fila.Item("XML")
+
+                Dim _Archivo_Xml As New XmlDocument()
+                _Archivo_Xml.LoadXml(_Xml)
+
+                Dim fullPath As String = "...\\archivo.xml"
+                File.WriteAllText(fullPath, _Xml)
+
+                Dim _Dset_DTE As New DataSet
+                _Dset_DTE.ReadXml(fullPath)
+
+                Dim _Tbl_Referencia As DataTable
+
+                Try
+                    _Tbl_Referencia = _Dset_DTE.Tables("Referencia")
+                Catch ex As Exception
+                    _Tbl_Referencia = Nothing
+                End Try
+
+                If Not IsNothing(_Tbl_Referencia) Then
+                    For Each _Fl As DataRow In _Tbl_Referencia.Rows
+                        If _Fl.Item("TpoDocRef") = "801" Then
+                            _Fila.Item("TieneOccRef") = True
+                            _Fila.Item("OccRef") = _Fl.Item("FolioRef").ToString.Trim
+                        End If
+                    Next
+                End If
+
+            End If
+
+        Next
+
+        Try
+            _Inf_02_Solo_SII.Columns.Remove("XML")
+            _Inf_00_SII.Columns.Remove("XML")
+            File.Delete("...\\archivo.xml")
+        Catch ex As Exception
+
+        End Try
+
     End Sub
 
     Sub Sb_Formato_Grilla_00()
@@ -243,78 +361,106 @@ Public Class Frm_Libro_Compras_Ventas
 
             OcultarEncabezadoGrilla(Grilla_00, False)
 
+            Dim _DisplayIndex = 0
+
             .Columns("TipoDoc").Visible = True
             .Columns("TipoDoc").HeaderText = "TD"
             .Columns("TipoDoc").Width = 30
-            .Columns("TipoDoc").DisplayIndex = 0
+            .Columns("TipoDoc").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Rut_Proveedor").Visible = True
             .Columns("Rut_Proveedor").HeaderText = "Rut Proveedor"
             .Columns("Rut_Proveedor").Width = 80
-            .Columns("Rut_Proveedor").DisplayIndex = 1
+            .Columns("Rut_Proveedor").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Razon_Social").Visible = True
             .Columns("Razon_Social").HeaderText = "Razón Social"
             .Columns("Razon_Social").Width = 200
-            .Columns("Razon_Social").DisplayIndex = 2
+            .Columns("Razon_Social").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Folio").Visible = True
             .Columns("Folio").HeaderText = "Folio"
             .Columns("Folio").Width = 80
-            .Columns("Folio").DisplayIndex = 3
+            .Columns("Folio").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("TPDF").Visible = True
+            .Columns("TPDF").HeaderText = "PDF"
+            .Columns("TPDF").Width = 30
+            .Columns("TPDF").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            'OccRef,FolioRef
+            .Columns("TieneOccRef").Visible = True
+            .Columns("TieneOccRef").HeaderText = "Tiene OC"
+            .Columns("TieneOccRef").ToolTipText = "Tiene OC en referencia del XML"
+            .Columns("TieneOccRef").Width = 40
+            .Columns("TieneOccRef").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Libro").Visible = True
             .Columns("Libro").HeaderText = "Libro"
             .Columns("Libro").Width = 110
-            .Columns("Libro").DisplayIndex = 4
+            .Columns("Libro").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Fecha_Docto").Visible = True
             .Columns("Fecha_Docto").HeaderText = "Fecha"
             .Columns("Fecha_Docto").Width = 80
             .Columns("Fecha_Docto").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("Fecha_Docto").DisplayIndex = 5
+            .Columns("Fecha_Docto").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Monto_Exento").Visible = True
             .Columns("Monto_Exento").HeaderText = "Exento"
             .Columns("Monto_Exento").Width = 80
             .Columns("Monto_Exento").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Monto_Exento").DefaultCellStyle.Format = "$ ###,##.##"
-            .Columns("Monto_Exento").DisplayIndex = 6
+            .Columns("Monto_Exento").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Monto_Neto").Visible = True
             .Columns("Monto_Neto").HeaderText = "Neto"
             .Columns("Monto_Neto").Width = 80
             .Columns("Monto_Neto").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Monto_Neto").DefaultCellStyle.Format = "$ ###,##.##"
-            .Columns("Monto_Neto").DisplayIndex = 7
+            .Columns("Monto_Neto").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Monto_Iva_Recuperable").Visible = True
             .Columns("Monto_Iva_Recuperable").HeaderText = "Iva"
             .Columns("Monto_Iva_Recuperable").Width = 80
             .Columns("Monto_Iva_Recuperable").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Monto_Iva_Recuperable").DefaultCellStyle.Format = "$ ###,##.##"
-            .Columns("Monto_Iva_Recuperable").DisplayIndex = 8
+            .Columns("Monto_Iva_Recuperable").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Valor_Otro_Impuesto").Visible = True
             .Columns("Valor_Otro_Impuesto").HeaderText = "Otro Impuesto"
             .Columns("Valor_Otro_Impuesto").Width = 80
             .Columns("Valor_Otro_Impuesto").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Valor_Otro_Impuesto").DefaultCellStyle.Format = "$ ###,##.##"
-            .Columns("Valor_Otro_Impuesto").DisplayIndex = 9
+            .Columns("Valor_Otro_Impuesto").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Monto_Total").Visible = True
             .Columns("Monto_Total").HeaderText = "Total"
             .Columns("Monto_Total").Width = 80
             .Columns("Monto_Total").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Monto_Total").DefaultCellStyle.Format = "$ ###,##.##"
-            .Columns("Monto_Total").DisplayIndex = 10
+            .Columns("Monto_Total").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Diferencia").Visible = True
             .Columns("Diferencia").HeaderText = "Diferencia"
             .Columns("Diferencia").Width = 80
             .Columns("Diferencia").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Diferencia").DefaultCellStyle.Format = "$ ###,##.##"
-            .Columns("Diferencia").DisplayIndex = 11
+            .Columns("Diferencia").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
         End With
 
@@ -495,6 +641,14 @@ Public Class Frm_Libro_Compras_Ventas
             .Columns("TPDF").HeaderText = "PDF"
             .Columns("TPDF").Width = 30
             .Columns("TPDF").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            'OccRef,FolioRef
+            .Columns("TieneOccRef").Visible = True
+            .Columns("TieneOccRef").HeaderText = "Tiene OC"
+            .Columns("TieneOccRef").ToolTipText = "Tiene OC en referencia del XML"
+            .Columns("TieneOccRef").Width = 40
+            .Columns("TieneOccRef").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Fecha_Docto").Visible = True
@@ -1182,6 +1336,8 @@ Public Class Frm_Libro_Compras_Ventas
         Dim _Idmaeedo_Sugerido As Integer
         Dim _Se_puede_actualizar As Boolean
 
+        Dim _Cabeza = _Grilla.Columns(_Grilla.CurrentCell.ColumnIndex).Name
+
         Select Case Tab.SelectedTabIndex
 
             Case 0, 1, 3, 4
@@ -1194,6 +1350,15 @@ Public Class Frm_Libro_Compras_Ventas
 
                 Dim _Copiar As String = _Fila.Cells("Folio").Value
                 Clipboard.SetText(_Copiar)
+
+                If Tab.SelectedTabIndex = 0 And _Cabeza = "TPDF" Then
+                    If _Fila.Cells("TPDF").Value = "Si" Then
+                        Sb_Ver_PDF(_Fila)
+                    Else
+                        MessageBoxEx.Show(Me, "No hay archivo PDF adjunto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    End If
+                    Return
+                End If
 
             Case 2
 
@@ -1476,6 +1641,11 @@ Public Class Frm_Libro_Compras_Ventas
     Private Sub Btn_VerXMLPDF_Click(sender As Object, e As EventArgs) Handles Btn_VerXMLPDF.Click
 
         Dim _Fila As DataGridViewRow = Grilla_02.Rows(Grilla_02.CurrentRow.Index)
+        Sb_Ver_PDF(_Fila)
+
+    End Sub
+
+    Sub Sb_Ver_PDF(_Fila As DataGridViewRow)
 
         Dim _Folio = _Fila.Cells("Folio").Value
         Dim _TipoDoc = _Fila.Cells("TipoDoc").Value
