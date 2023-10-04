@@ -606,6 +606,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Ofer0004", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ofer0005", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ofer0006", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Ofer0007", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Dte00001", _Objeto, _Formulario)
 
@@ -2650,6 +2651,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.OFERTAS.ToString
             Case "Ofer0006"
                 _DescripcionPermiso = "DESASOCIAR PRODUCTOS DE OFERTAS DINAMICAS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.OFERTAS, 6)
+                _NombreFamiliaPermiso = _Fml.OFERTAS.ToString
+            Case "Ofer0007"
+                _DescripcionPermiso = "PERMITIR SELECCIONAR MAS PRODUCTOS QUE LOS RECOMENDADOS A LEVANTAR DE UNA SOLA VEZ EN UNA OFERTA DINAMICA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.OFERTAS, 6)
                 _NombreFamiliaPermiso = _Fml.OFERTAS.ToString
 

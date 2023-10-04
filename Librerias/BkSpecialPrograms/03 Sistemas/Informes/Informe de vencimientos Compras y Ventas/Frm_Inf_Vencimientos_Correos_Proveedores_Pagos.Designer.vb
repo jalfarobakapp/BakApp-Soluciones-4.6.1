@@ -22,26 +22,30 @@ Partial Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Inf_Vencimientos_Correos_Proveedores_Pagos))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
         Me.Lbl_Mnu_1 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Mnu_Ficha_Entidad = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Ingresar_Correo_Solo_Esta_Ocacion = New DevComponents.DotNetBar.ButtonItem()
+        Me.Grilla_Detalle = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Enviar_Correos = New DevComponents.DotNetBar.ButtonItem()
         Me.Chk_Marcar_todo = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Progreso_correo = New DevComponents.DotNetBar.CircularProgressItem()
         Me.Lbl_Envio_correo = New DevComponents.DotNetBar.LabelItem()
-        Me.Grilla_Detalle = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.Menu_Contextual_02 = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Mnu_EnviarCorreosManual = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_EnviarCorreosDiablito = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla_Detalle, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupPanel1
@@ -51,7 +55,7 @@ Partial Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
         Me.GroupPanel1.Controls.Add(Me.ContextMenuBar1)
         Me.GroupPanel1.Controls.Add(Me.Grilla_Detalle)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(0, 12)
+        Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
         Me.GroupPanel1.Name = "GroupPanel1"
         Me.GroupPanel1.Size = New System.Drawing.Size(677, 402)
         '
@@ -89,10 +93,10 @@ Partial Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
         '
         Me.ContextMenuBar1.AntiAlias = True
         Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01, Me.Menu_Contextual_02})
         Me.ContextMenuBar1.Location = New System.Drawing.Point(34, 59)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
-        Me.ContextMenuBar1.Size = New System.Drawing.Size(153, 25)
+        Me.ContextMenuBar1.Size = New System.Drawing.Size(377, 25)
         Me.ContextMenuBar1.Stretch = True
         Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.ContextMenuBar1.TabIndex = 47
@@ -122,14 +126,55 @@ Partial Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
         'Btn_Mnu_Ficha_Entidad
         '
         Me.Btn_Mnu_Ficha_Entidad.Image = CType(resources.GetObject("Btn_Mnu_Ficha_Entidad.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Ficha_Entidad.ImageAlt = CType(resources.GetObject("Btn_Mnu_Ficha_Entidad.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_Ficha_Entidad.Name = "Btn_Mnu_Ficha_Entidad"
         Me.Btn_Mnu_Ficha_Entidad.Text = "Ver ficha de entidad"
         '
         'Btn_Ingresar_Correo_Solo_Esta_Ocacion
         '
         Me.Btn_Ingresar_Correo_Solo_Esta_Ocacion.Image = CType(resources.GetObject("Btn_Ingresar_Correo_Solo_Esta_Ocacion.Image"), System.Drawing.Image)
+        Me.Btn_Ingresar_Correo_Solo_Esta_Ocacion.ImageAlt = CType(resources.GetObject("Btn_Ingresar_Correo_Solo_Esta_Ocacion.ImageAlt"), System.Drawing.Image)
         Me.Btn_Ingresar_Correo_Solo_Esta_Ocacion.Name = "Btn_Ingresar_Correo_Solo_Esta_Ocacion"
         Me.Btn_Ingresar_Correo_Solo_Esta_Ocacion.Text = "Ingresar correo solo para esta ocasión"
+        '
+        'Grilla_Detalle
+        '
+        Me.Grilla_Detalle.AllowUserToAddRows = False
+        Me.Grilla_Detalle.AllowUserToDeleteRows = False
+        Me.Grilla_Detalle.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Detalle.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        Me.Grilla_Detalle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Detalle.DefaultCellStyle = DataGridViewCellStyle8
+        Me.Grilla_Detalle.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Grilla_Detalle.EnableHeadersVisualStyles = False
+        Me.Grilla_Detalle.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
+        Me.Grilla_Detalle.Location = New System.Drawing.Point(0, 0)
+        Me.Grilla_Detalle.Name = "Grilla_Detalle"
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Detalle.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
+        Me.Grilla_Detalle.RowHeadersVisible = False
+        Me.Grilla_Detalle.Size = New System.Drawing.Size(671, 379)
+        Me.Grilla_Detalle.TabIndex = 3
         '
         'Bar1
         '
@@ -139,7 +184,7 @@ Partial Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Enviar_Correos, Me.Chk_Marcar_todo, Me.Progreso_correo, Me.Lbl_Envio_correo})
         Me.Bar1.Location = New System.Drawing.Point(0, 420)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(681, 41)
+        Me.Bar1.Size = New System.Drawing.Size(701, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 37
@@ -151,6 +196,7 @@ Partial Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
         Me.Btn_Enviar_Correos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Enviar_Correos.ForeColor = System.Drawing.Color.Black
         Me.Btn_Enviar_Correos.Image = CType(resources.GetObject("Btn_Enviar_Correos.Image"), System.Drawing.Image)
+        Me.Btn_Enviar_Correos.ImageAlt = CType(resources.GetObject("Btn_Enviar_Correos.ImageAlt"), System.Drawing.Image)
         Me.Btn_Enviar_Correos.Name = "Btn_Enviar_Correos"
         Me.Btn_Enviar_Correos.Tooltip = "Enviar correos"
         '
@@ -173,50 +219,45 @@ Partial Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
         Me.Lbl_Envio_correo.Text = "Enviando correo a:"
         Me.Lbl_Envio_correo.Visible = False
         '
-        'Grilla_Detalle
+        'Menu_Contextual_02
         '
-        Me.Grilla_Detalle.AllowUserToAddRows = False
-        Me.Grilla_Detalle.AllowUserToDeleteRows = False
-        Me.Grilla_Detalle.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Detalle.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
-        Me.Grilla_Detalle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Detalle.DefaultCellStyle = DataGridViewCellStyle5
-        Me.Grilla_Detalle.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Grilla_Detalle.EnableHeadersVisualStyles = False
-        Me.Grilla_Detalle.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
-        Me.Grilla_Detalle.Location = New System.Drawing.Point(0, 0)
-        Me.Grilla_Detalle.Name = "Grilla_Detalle"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Detalle.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
-        Me.Grilla_Detalle.RowHeadersVisible = False
-        Me.Grilla_Detalle.Size = New System.Drawing.Size(671, 379)
-        Me.Grilla_Detalle.TabIndex = 3
+        Me.Menu_Contextual_02.AutoExpandOnClick = True
+        Me.Menu_Contextual_02.Name = "Menu_Contextual_02"
+        Me.Menu_Contextual_02.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_Mnu_EnviarCorreosManual, Me.Btn_Mnu_EnviarCorreosDiablito})
+        Me.Menu_Contextual_02.Text = "Opciones"
+        '
+        'LabelItem1
+        '
+        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem1.Name = "LabelItem1"
+        Me.LabelItem1.PaddingBottom = 1
+        Me.LabelItem1.PaddingLeft = 10
+        Me.LabelItem1.PaddingTop = 1
+        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem1.Text = "Enviar correos"
+        '
+        'Btn_Mnu_EnviarCorreosManual
+        '
+        Me.Btn_Mnu_EnviarCorreosManual.Image = CType(resources.GetObject("Btn_Mnu_EnviarCorreosManual.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_EnviarCorreosManual.ImageAlt = CType(resources.GetObject("Btn_Mnu_EnviarCorreosManual.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_EnviarCorreosManual.Name = "Btn_Mnu_EnviarCorreosManual"
+        Me.Btn_Mnu_EnviarCorreosManual.Text = "Enviar correo de forma manual (Outlook)"
+        '
+        'Btn_Mnu_EnviarCorreosDiablito
+        '
+        Me.Btn_Mnu_EnviarCorreosDiablito.Image = CType(resources.GetObject("Btn_Mnu_EnviarCorreosDiablito.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_EnviarCorreosDiablito.ImageAlt = CType(resources.GetObject("Btn_Mnu_EnviarCorreosDiablito.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_EnviarCorreosDiablito.Name = "Btn_Mnu_EnviarCorreosDiablito"
+        Me.Btn_Mnu_EnviarCorreosDiablito.Text = "Enviar correo de forma automática (Diablito de envió de correos)"
         '
         'Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(681, 461)
+        Me.ClientSize = New System.Drawing.Size(701, 461)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
@@ -232,8 +273,8 @@ Partial Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
         Me.Text = "MetroForm"
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla_Detalle, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -249,4 +290,8 @@ Partial Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
     Friend WithEvents Btn_Ingresar_Correo_Solo_Esta_Ocacion As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Chk_Marcar_todo As DevComponents.DotNetBar.CheckBoxItem
     Friend WithEvents Grilla_Detalle As DevComponents.DotNetBar.Controls.DataGridViewX
+    Friend WithEvents Menu_Contextual_02 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_Mnu_EnviarCorreosManual As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_EnviarCorreosDiablito As DevComponents.DotNetBar.ButtonItem
 End Class

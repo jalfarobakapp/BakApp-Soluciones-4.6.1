@@ -28,6 +28,8 @@ Public Class Frm_OfDinamFicha
 
         End If
 
+        Sb_Grabar_Parametros_SQL(False)
+
     End Sub
 
     Private Sub Frm_OfDinamFicha_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -256,13 +258,17 @@ Public Class Frm_OfDinamFicha
                        ",'" & _Desc_sab & "','" & _Desc_dom & "',0," & _Tipotrat & "," & _Valdesc & ",'" & _Ecuvaldesc & "')"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+
             Consulta_sql = "Select * From MAEERES Where CODIGO = '" & Txt_Codigo.Text & "' And TIPORESE = 'din'"
             Row_Maeeres = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Sb_Grabar_Parametros_SQL(True)
 
             MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             Grabar = True
             Me.Close()
+
         Else
             MessageBoxEx.Show(Me, _Sql.Pro_Error, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
@@ -304,4 +310,33 @@ Public Class Frm_OfDinamFicha
         End If
 
     End Sub
+
+    Sub Sb_Grabar_Parametros_SQL(_Actualizar As Boolean)
+
+        _Sql.Sb_Parametro_Informe_Sql(Txt_Listas, "Ofertas_Dinamincas",
+                              Txt_Listas.Name, Class_SQLite.Enum_Type._String, Txt_Listas.Text, _Actualizar,, False)
+
+        _Sql.Sb_Parametro_Informe_Sql(Chk_Desc_Lun, "Ofertas_Dinamincas",
+                              Chk_Desc_Lun.Name, Class_SQLite.Enum_Type._Boolean, Chk_Desc_Lun.Checked, _Actualizar,, False)
+
+        _Sql.Sb_Parametro_Informe_Sql(Chk_Desc_Mar, "Ofertas_Dinamincas",
+                      Chk_Desc_Mar.Name, Class_SQLite.Enum_Type._Boolean, Chk_Desc_Mar.Checked, _Actualizar,, False)
+
+        _Sql.Sb_Parametro_Informe_Sql(Chk_Desc_Mie, "Ofertas_Dinamincas",
+                      Chk_Desc_Mie.Name, Class_SQLite.Enum_Type._Boolean, Chk_Desc_Mie.Checked, _Actualizar,, False)
+
+        _Sql.Sb_Parametro_Informe_Sql(Chk_Desc_Jue, "Ofertas_Dinamincas",
+                      Chk_Desc_Jue.Name, Class_SQLite.Enum_Type._Boolean, Chk_Desc_Jue.Checked, _Actualizar,, False)
+
+        _Sql.Sb_Parametro_Informe_Sql(Chk_Desc_Vie, "Ofertas_Dinamincas",
+                      Chk_Desc_Vie.Name, Class_SQLite.Enum_Type._Boolean, Chk_Desc_Vie.Checked, _Actualizar,, False)
+
+        _Sql.Sb_Parametro_Informe_Sql(Chk_Desc_Sab, "Ofertas_Dinamincas",
+                      Chk_Desc_Sab.Name, Class_SQLite.Enum_Type._Boolean, Chk_Desc_Sab.Checked, _Actualizar,, False)
+
+        _Sql.Sb_Parametro_Informe_Sql(Chk_Desc_Dom, "Ofertas_Dinamincas",
+                      Chk_Desc_Dom.Name, Class_SQLite.Enum_Type._Boolean, Chk_Desc_Dom.Checked, _Actualizar,, False)
+
+    End Sub
+
 End Class

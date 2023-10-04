@@ -22,7 +22,8 @@ Public Module Modulo_Permiso
                                      Optional ByRef _Permiso_Presencial As Boolean = False,
                                      Optional _Ds_Matriz_Documentos As Ds_Matriz_Documentos = Nothing,
                                      Optional _Grabar_Log As Boolean = True,
-                                     Optional ByRef _Solicitar_Permiso_Al_Final As Boolean = False) As Boolean
+                                     Optional ByRef _Solicitar_Permiso_Al_Final As Boolean = False,
+                                     Optional _Descripcion_Adicionasl As String = "") As Boolean
 
         Dim _Permiso As Boolean = False
         _Rows_Info_Remota = Nothing
@@ -135,6 +136,7 @@ Public Module Modulo_Permiso
                     _Descripcion_Permiso = _NombrePermiso
                 End If
 
+                _Descripcion_Permiso += _Descripcion_Adicionasl
 
                 Dim _NombreUsuario As String = _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _Func & "'")
 

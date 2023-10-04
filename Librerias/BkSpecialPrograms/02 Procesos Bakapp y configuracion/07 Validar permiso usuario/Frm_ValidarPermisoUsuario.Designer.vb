@@ -52,9 +52,9 @@ Partial Class Frm_ValidarPermisoUsuario
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Autorizar_Permiso, Me.Btn_Permiso_Remoto, Me.Btn_Solicitar_Al_Grabar_Documento, Me.BtnOtorgarPermisoPermanente})
-        Me.Bar1.Location = New System.Drawing.Point(0, 183)
+        Me.Bar1.Location = New System.Drawing.Point(0, 198)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(483, 41)
+        Me.Bar1.Size = New System.Drawing.Size(591, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 25
@@ -243,7 +243,7 @@ Partial Class Frm_ValidarPermisoUsuario
         Me.LblDescripcionPermiso.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblDescripcionPermiso.Location = New System.Drawing.Point(12, 101)
         Me.LblDescripcionPermiso.Name = "LblDescripcionPermiso"
-        Me.LblDescripcionPermiso.Size = New System.Drawing.Size(459, 79)
+        Me.LblDescripcionPermiso.Size = New System.Drawing.Size(567, 90)
         Me.LblDescripcionPermiso.TabIndex = 3
         Me.LblDescripcionPermiso.Text = "Label1 naj akshd ashd kjass dkas kdh askhd kashd kjas kdhaks dhkjash dkas" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
@@ -251,7 +251,7 @@ Partial Class Frm_ValidarPermisoUsuario
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(483, 224)
+        Me.ClientSize = New System.Drawing.Size(591, 239)
         Me.Controls.Add(Me.Context_Menu_Solicitud_Compra)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.ReflectionImage1)

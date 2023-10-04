@@ -13136,6 +13136,12 @@ Public Class Frm_Formulario_Documento
 
         If Not _Row_Bodega_Destino Is Nothing Then
 
+            'Dim _Permiso = "Bo" & ModEmpresa & _Row_Bodega_Destino.Item("KOSU") & _Row_Bodega_Destino.Item("KOBO")
+
+            'If Not Fx_Tiene_Permiso(Me, _Permiso) Then
+            '    Return False
+            'End If
+
             _RowEntidad.Item("SUEN") = _Row_Bodega_Destino.Item("KOSU")
             _TblEncabezado.Rows(0).Item("CodSucEntidad") = _Row_Bodega_Destino.Item("KOSU")
             _TblEncabezado.Rows(0).Item("Bodega_Destino") = _Row_Bodega_Destino.Item("KOBO")

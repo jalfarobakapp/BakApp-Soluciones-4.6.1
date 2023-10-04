@@ -712,8 +712,6 @@ Public Class Frm_Formulario_Lector_Barra
 
     End Function
 
-
-
     Private Sub Frm_Formulario_Lector_Barra_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
