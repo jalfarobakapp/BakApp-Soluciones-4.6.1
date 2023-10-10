@@ -26,6 +26,9 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Crear_OT = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Buscar_OT = New DevComponents.DotNetBar.ButtonItem()
@@ -60,11 +63,15 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Tab_06_Aviso = New DevComponents.DotNetBar.SuperTabItem()
         Me.Tab_07_Entregadas = New DevComponents.DotNetBar.SuperTabItem()
         Me.Tab_08_Cerradas_Hoy = New DevComponents.DotNetBar.SuperTabItem()
+        Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Grilla_SubOt = New DevComponents.DotNetBar.Controls.DataGridViewX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Super_TabS, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupPanel2.SuspendLayout()
+        CType(Me.Grilla_SubOt, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Bar2
@@ -75,7 +82,7 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_OT, Me.Btn_Buscar_OT, Me.BtnActualizar, Me.Btn_Exportar_Excel, Me.Btn_Mantencion_Tecnicos, Me.Btn_Conf_Info_Reportes, Me.Btn_Recetas, Me.Btn_Operaciones})
         Me.Bar2.Location = New System.Drawing.Point(0, 0)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(1135, 41)
+        Me.Bar2.Size = New System.Drawing.Size(962, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 87
@@ -155,7 +162,7 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 80)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(1111, 415)
+        Me.GroupPanel1.Size = New System.Drawing.Size(938, 298)
         '
         '
         '
@@ -258,7 +265,7 @@ Partial Class Frm_St_Ordenes_de_trabajo
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla.Size = New System.Drawing.Size(1105, 392)
+        Me.Grilla.Size = New System.Drawing.Size(932, 275)
         Me.Grilla.TabIndex = 1
         '
         'LabelX4
@@ -270,7 +277,7 @@ Partial Class Frm_St_Ordenes_de_trabajo
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(12, 501)
+        Me.LabelX4.Location = New System.Drawing.Point(12, 589)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(163, 23)
         Me.LabelX4.TabIndex = 90
@@ -291,7 +298,7 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Progeso_Gestion.ForeColor = System.Drawing.Color.Black
         Me.Progeso_Gestion.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Estado_01_Ingreso, Me.Estado_02_Asignar_Tecnico, Me.Estado_03_Presupuesto, Me.Estado_04_Cotizacion, Me.Estado_05_Reparacion_Cierre, Me.Estado_06_Aviso, Me.Estado_07_Entrega, Me.Estado_08_Cierre})
         Me.Progeso_Gestion.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Progeso_Gestion.Location = New System.Drawing.Point(12, 530)
+        Me.Progeso_Gestion.Location = New System.Drawing.Point(12, 618)
         Me.Progeso_Gestion.Name = "Progeso_Gestion"
         Me.Progeso_Gestion.Size = New System.Drawing.Size(955, 45)
         Me.Progeso_Gestion.TabIndex = 91
@@ -397,7 +404,7 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Super_TabS.ReorderTabsEnabled = True
         Me.Super_TabS.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
         Me.Super_TabS.SelectedTabIndex = 0
-        Me.Super_TabS.Size = New System.Drawing.Size(1111, 27)
+        Me.Super_TabS.Size = New System.Drawing.Size(938, 27)
         Me.Super_TabS.TabCloseButtonHot = Nothing
         Me.Super_TabS.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Super_TabS.TabIndex = 120
@@ -452,11 +459,93 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Tab_08_Cerradas_Hoy.Name = "Tab_08_Cerradas_Hoy"
         Me.Tab_08_Cerradas_Hoy.Text = "Cerradas hoy"
         '
+        'GroupPanel2
+        '
+        Me.GroupPanel2.BackColor = System.Drawing.Color.White
+        Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.Controls.Add(Me.Grilla_SubOt)
+        Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel2.Location = New System.Drawing.Point(12, 384)
+        Me.GroupPanel2.Name = "GroupPanel2"
+        Me.GroupPanel2.Size = New System.Drawing.Size(938, 199)
+        '
+        '
+        '
+        Me.GroupPanel2.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel2.Style.BackColorGradientAngle = 90
+        Me.GroupPanel2.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel2.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderBottomWidth = 1
+        Me.GroupPanel2.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel2.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderLeftWidth = 1
+        Me.GroupPanel2.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderRightWidth = 1
+        Me.GroupPanel2.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderTopWidth = 1
+        Me.GroupPanel2.Style.CornerDiameter = 4
+        Me.GroupPanel2.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel2.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel2.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel2.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel2.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel2.TabIndex = 121
+        Me.GroupPanel2.Text = "Sub-Ot de la orden de servicio"
+        '
+        'Grilla_SubOt
+        '
+        Me.Grilla_SubOt.AllowUserToAddRows = False
+        Me.Grilla_SubOt.AllowUserToDeleteRows = False
+        Me.Grilla_SubOt.BackgroundColor = System.Drawing.Color.White
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_SubOt.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        Me.Grilla_SubOt.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_SubOt.DefaultCellStyle = DataGridViewCellStyle5
+        Me.Grilla_SubOt.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Grilla_SubOt.EnableHeadersVisualStyles = False
+        Me.Grilla_SubOt.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
+        Me.Grilla_SubOt.Location = New System.Drawing.Point(0, 0)
+        Me.Grilla_SubOt.MultiSelect = False
+        Me.Grilla_SubOt.Name = "Grilla_SubOt"
+        Me.Grilla_SubOt.ReadOnly = True
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_SubOt.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        Me.Grilla_SubOt.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        Me.Grilla_SubOt.Size = New System.Drawing.Size(932, 176)
+        Me.Grilla_SubOt.TabIndex = 1
+        '
         'Frm_St_Ordenes_de_trabajo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1135, 605)
+        Me.ClientSize = New System.Drawing.Size(962, 693)
+        Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.Super_TabS)
         Me.Controls.Add(Me.Progeso_Gestion)
         Me.Controls.Add(Me.LabelX4)
@@ -477,6 +566,8 @@ Partial Class Frm_St_Ordenes_de_trabajo
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Super_TabS, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupPanel2.ResumeLayout(False)
+        CType(Me.Grilla_SubOt, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -515,4 +606,6 @@ Partial Class Frm_St_Ordenes_de_trabajo
     Friend WithEvents Btn_Crear_OTVariosProductos As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Recetas As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Operaciones As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents Grilla_SubOt As DevComponents.DotNetBar.Controls.DataGridViewX
 End Class

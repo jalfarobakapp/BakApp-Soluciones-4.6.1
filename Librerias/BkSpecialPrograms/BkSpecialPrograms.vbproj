@@ -492,6 +492,18 @@
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Familias\Frm_Familias_Lista.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Monedas\Frm_MonedasFicha.Designer.vb">
+      <DependentUpon>Frm_MonedasFicha.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Monedas\Frm_MonedasFicha.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Monedas\Frm_MonedasLista.Designer.vb">
+      <DependentUpon>Frm_MonedasLista.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Monedas\Frm_MonedasLista.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Precios y Costos\01 Mantención Listas Random\Clas_Imprimir_ListaPrecios.vb" />
     <Compile Include="01 Procesos  compartidos\Precios y Costos\01 Mantención Listas Random\Precios Futuros\Frm_PrecioFuturoRd.Designer.vb">
       <DependentUpon>Frm_PrecioFuturoRd.vb</DependentUpon>
@@ -4203,6 +4215,12 @@
       <DependentUpon>Frm_Familias_Lista.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Mantencion de Tablas\Monedas\Frm_MonedasFicha.resx">
+      <DependentUpon>Frm_MonedasFicha.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Mantencion de Tablas\Monedas\Frm_MonedasLista.resx">
+      <DependentUpon>Frm_MonedasLista.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Precios y Costos\01 Mantención Listas Random\Precios Futuros\Frm_PrecioFuturoRd.resx">
       <DependentUpon>Frm_PrecioFuturoRd.vb</DependentUpon>
     </EmbeddedResource>
@@ -7662,6 +7680,7 @@
     <Content Include="03 Sistemas\Prestashop Web\Sql\SQLQuery Active Productos.sql" />
     <None Include="03 Sistemas\Tesoreria\Pagos\Recursos\Sql\SQLQuery_Revisar_Data_Eliminar_Pago.sql" />
     <None Include="03 Sistemas\Produccion\Recursos\Sql\SQLQuery Informe de OT avance Vs SubOt por Operaciones.sql" />
+    <None Include="03 Sistemas\Servicio Tecnico\Recursos\Consultas SQL\SqlQuery_Lista_OT2.sql" />
     <Content Include="03 Sistemas\Tesoreria\Contabilidad\Recursos\Sql\Nomina de tarjetas de credito a liquidacion.sql" />
     <Content Include="999 Funciones, Clases y Datos\Clases\Documentos\Creacion de documento\Consultas SQL\Crear Htm document.htm" />
     <Content Include="999 Funciones, Clases y Datos\Clases\Documentos\Creacion de documento\Consultas SQL\Crear Htm document_Sp.htm" />

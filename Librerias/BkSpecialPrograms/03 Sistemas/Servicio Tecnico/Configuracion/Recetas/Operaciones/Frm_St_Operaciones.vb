@@ -86,6 +86,13 @@
             .Columns("Externa").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            '.Columns("TienePrecio").Visible = True
+            '.Columns("TienePrecio").HeaderText = "T.Precio"
+            '.Columns("TienePrecio").ToolTipText = "Indica si la operación tiene precio de venta"
+            '.Columns("TienePrecio").Width = 50
+            '.Columns("TienePrecio").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
             '.Columns("Activo").Visible = True
             '.Columns("Activo").HeaderText = "Activa"
             '.Columns("Activo").Width = 50
@@ -94,9 +101,15 @@
 
         End With
 
+        Txt_Buscador.Focus()
+
     End Sub
 
     Private Sub Btn_Crear_Operacion_Click(sender As Object, e As EventArgs) Handles Btn_Crear_Operacion.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Stec0022") Then
+            Return
+        End If
 
         Dim _Grabar As Boolean
 
@@ -151,6 +164,10 @@
 
     Private Sub Btn_Mnu_Editar_Operacion_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Editar_Operacion.Click
 
+        If Not Fx_Tiene_Permiso(Me, "Stec0023") Then
+            Return
+        End If
+
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
         Dim _Id As Integer = _Fila.Cells("Id").Value
         Dim _Operacion As String = _Fila.Cells("Operacion").Value
@@ -173,5 +190,10 @@
         If e.KeyValue = Keys.Enter Or e.KeyValue = Keys.Space Then
             Sb_Actualizar_Grilla()
         End If
+    End Sub
+
+    Private Sub Txt_Buscador_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Buscador.ButtonCustom2Click
+        Txt_Buscador.Text = String.Empty
+        Sb_Actualizar_Grilla()
     End Sub
 End Class

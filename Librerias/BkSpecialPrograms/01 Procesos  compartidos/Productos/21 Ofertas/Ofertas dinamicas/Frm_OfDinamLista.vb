@@ -34,7 +34,7 @@ Public Class Frm_OfDinamLista
         AddHandler Grilla_Productos.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         _Sql.Sb_Parametro_Informe_Sql(Lbl_NroMaxProdXOfertaDinamica, "Ofertas_Dinamincas",
-                                      Lbl_NroMaxProdXOfertaDinamica.Name, Class_SQLite.Enum_Type._Tag, Lbl_NroMaxProdXOfertaDinamica.Tag, False,, False)
+                                      Lbl_NroMaxProdXOfertaDinamica.Name, Class_SQLite.Enum_Type._Tag, Lbl_NroMaxProdXOfertaDinamica.Tag, False,, False, False)
 
         Lbl_NroMaxProdXOfertaDinamica.Text = Lbl_NroMaxProdXOfertaDinamica.Tag
 
@@ -498,6 +498,10 @@ Public Class Frm_OfDinamLista
 
     Private Sub Btn_EditarNroMaxProductos_Click(sender As Object, e As EventArgs) Handles Btn_EditarNroMaxProductos.Click
 
+        If Not Fx_Tiene_Permiso(Me, "Ofer0008") Then
+            Return
+        End If
+
         Dim _Aceptar As Boolean
 
         _Aceptar = InputBox_Bk(Me, "Ingrese la cantidad máxima de productos para seleccionar y asociar a una oferta de una vez",
@@ -509,12 +513,13 @@ Public Class Frm_OfDinamLista
         End If
 
         _Sql.Sb_Parametro_Informe_Sql(Lbl_NroMaxProdXOfertaDinamica, "Ofertas_Dinamincas",
-                                      Lbl_NroMaxProdXOfertaDinamica.Name, Class_SQLite.Enum_Type._Tag, Lbl_NroMaxProdXOfertaDinamica.Tag, True,, False)
+                                      Lbl_NroMaxProdXOfertaDinamica.Name, Class_SQLite.Enum_Type._Tag, Lbl_NroMaxProdXOfertaDinamica.Tag, True,, False, False)
 
         Lbl_NroMaxProdXOfertaDinamica.Text = Lbl_NroMaxProdXOfertaDinamica.Tag
 
         MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Editar máx. selección de productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
     End Sub
+
 
 End Class

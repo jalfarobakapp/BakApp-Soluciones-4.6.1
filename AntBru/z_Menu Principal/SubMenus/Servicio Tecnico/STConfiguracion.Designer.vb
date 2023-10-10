@@ -158,6 +158,7 @@ Partial Class STConfiguracion
         Me.Btn_Conf_Info_Reportes.TileStyle.PaddingTop = 4
         Me.Btn_Conf_Info_Reportes.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Conf_Info_Reportes.TitleText = "BakApp"
+        Me.Btn_Conf_Info_Reportes.Visible = False
         '
         'Btn_Recetas
         '

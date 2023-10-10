@@ -316,11 +316,11 @@ Public Class Menu
     End Sub
 
     Private Sub Btn_Servicio_Tecnico_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Servicio_Tecnico.Click
-
-        Dim NewPanel As Modulo_Servicio_Tecnico = Nothing
-        NewPanel = New Modulo_Servicio_Tecnico(_Fm_Menu_Padre)
-        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
-
+        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Stec0001") Then
+            Dim NewPanel As Modulo_Servicio_Tecnico = Nothing
+            NewPanel = New Modulo_Servicio_Tecnico(_Fm_Menu_Padre)
+            _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+        End If
     End Sub
 
     Private Sub Btn_Actualizar_BakApp_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Actualizar_BakApp.Click

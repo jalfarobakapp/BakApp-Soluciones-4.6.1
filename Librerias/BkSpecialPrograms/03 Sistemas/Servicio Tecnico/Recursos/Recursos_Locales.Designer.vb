@@ -22,7 +22,7 @@ Namespace My.Resources
     '''<summary>
     '''  Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
     Friend Class Recursos_Locales
@@ -67,7 +67,7 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a 
         '''
-        '''SELECT  Id_Ot, Nro_Ot, 
+        '''SELECT  Id_Ot,Sub_Ot,Id_Ot_Padre,Nro_Ot,Pertenece, 
         '''        Empresa, Sucursal, Bodega, 
         '''        CodEntidad, SucEntidad, Rut,
         '''        Isnull((Select Top 1 NOKOEN From MAEEN Where KOEN = CodEntidad And SUEN = SucEntidad),&apos;&apos;) As Cliente, 
@@ -76,12 +76,31 @@ Namespace My.Resources
         '''        DATEDIFF(D,Fecha_Ingreso,Getdate()) AS Dias,
         '''        Fecha_Ingreso As Fecha,
         '''        Fecha_Ingreso As Hora,
-        '''        --CONVERT(VARCHAR, Fecha_Ingreso, 103) Fecha,  
-        '''         [resto de la cadena truncado]&quot;;.
+        '''        --CONVERT(VARCHAR, Fecha_Ingr [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property SqlQuery_Lista_OT() As String
             Get
                 Return ResourceManager.GetString("SqlQuery_Lista_OT", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a 
+        '''SELECT Distinct Id_Ot_Padre,Nro_Ot, 
+        '''        Empresa, Sucursal, Bodega, 
+        '''        CodEntidad, SucEntidad, Rut,
+        '''        Isnull((Select Top 1 NOKOEN From MAEEN Where KOEN = CodEntidad And SUEN = SucEntidad),&apos;&apos;) As Cliente, 
+        '''        Case Chk_Serv_Domicilio When 1 Then &apos;Domicilio&apos; Else &apos;Taller&apos; End As &apos;Lugar&apos;,
+        '''        DATEDIFF(D,Fecha_Ingreso,Getdate()) AS Dias,
+        '''        Cast(Fecha_Ingreso As Date) As Fecha
+        '''        --Fecha_Ingreso As Hora
+        '''Into #Paso1        
+        '''
+        '''FROM   INGETEC_PRB2.dbo.Zw_St_OT_Encabezad [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property SqlQuery_Lista_OT2() As String
+            Get
+                Return ResourceManager.GetString("SqlQuery_Lista_OT2", resourceCulture)
             End Get
         End Property
         
@@ -94,7 +113,7 @@ Namespace My.Resources
         '''
         '''-- ENCABEZADO TABLA (0)
         '''
-        '''SELECT  Id_Ot, Nro_Ot, Empresa, Sucursal, Bodega, CodEntidad, SucEntidad, Rten ,Rut, 
+        '''SELECT  Id_Ot,Nro_Ot,Sub_Ot,Id_Ot_Padre,Empresa,Sucursal,Bodega,CodEntidad,SucEntidad,Rten,Rut, 
         '''        Cast(&apos;&apos; As Varchar(50)) As	Cliente,
         '''        Fecha_Ingreso, 
         '''        Fecha_Compromiso, 
@@ -104,7 +123,7 @@ Namespace My.Resources
         '''        (Select top 1 NombreTabla From #Db_BakApp#Zw_TablaDeCaracterizaciones 
         '''					Where Tabla = &apos;ESTADOS_ST&apos; And CodigoTabla = CodEstado) As &apos;Estado&apos;, 
         '''        CodMaquina,
-        '''        CodMa [resto de la cadena truncado]&quot;;.
+        '''   [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property SqlQuery_Traer_OT() As String
             Get

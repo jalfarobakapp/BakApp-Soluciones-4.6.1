@@ -443,10 +443,6 @@ Public Class Frm_Meson_Asignar_Productos
             Consulta_sql = Replace(Consulta_sql, "#Base_Bakapp#", _Global_BaseBk)
             Consulta_sql = Replace(Consulta_sql, "#Select_Tablas#", _Select_Tablas)
 
-
-
-
-
             _Ds = _Sql.Fx_Get_DataSet(Consulta_sql)
 
             ' Agregar la relación ( campo en común : campo_Relacionado = idCliente )  

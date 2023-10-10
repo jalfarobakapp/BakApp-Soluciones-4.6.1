@@ -1075,6 +1075,18 @@ Public Class Frm_MantFacturasElectronicas
             Return
         End If
 
+        Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
+        Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _FechaServidor As Date = FechaDelServidor()
+        Dim _FechaUltVenci As Date = _Row_Documento.Item("FEULVEDO")
+
+        If _FechaUltVenci <= _FechaServidor Then
+            MessageBoxEx.Show(Me, "Ultimo vencimiento debe ser mayor que la fecha actual" & vbCrLf &
+                              "Fecha ultimo vencimiento: " & FormatDateTime(_FechaUltVenci, DateFormat.ShortDate), "Error al enviar seción", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         Dim Fm As New Frm_Aec_CesionDTE(_Id_Dte, _Idmaeedo)
         Fm.ShowDialog(Me)
         _Id_Aec = Fm.Id_Aec

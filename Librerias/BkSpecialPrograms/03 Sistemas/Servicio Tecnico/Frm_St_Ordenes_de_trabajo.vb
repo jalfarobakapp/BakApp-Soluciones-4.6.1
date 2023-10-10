@@ -7,6 +7,7 @@ Public Class Frm_St_Ordenes_de_trabajo
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_Sql As String
 
+    Dim _Ds As DataSet
     Dim _Tbl_OT As DataTable
     Dim _Correr_a_la_derecha As Boolean
 
@@ -19,7 +20,7 @@ Public Class Frm_St_Ordenes_de_trabajo
         Set(ByVal value As DataTable)
 
             If value Is Nothing Then
-                Sb_Actualizar_Grilla()
+                Sb_Actualizar_Grilla2()
             Else
 
                 Super_TabS.Enabled = False
@@ -66,21 +67,21 @@ Public Class Frm_St_Ordenes_de_trabajo
         'InsertarBotonenGrilla(Grilla, "BtnImagen", "Situación", "Solicitud", 0, _Tipo_Boton.Imagen)
         AddHandler Btn_Crear_OT1Producto.Click, AddressOf Sb_Crear_Nueva_OT
 
-        Sb_Marcar_Grilla()
+        Sb_Marcar_Grilla2()
 
         If _Correr_a_la_derecha Then
             Me.Top += 30
             Me.Left += 30
         End If
 
-        AddHandler Tab_01_Todas.Click, AddressOf Sb_Actualizar_Grilla
-        AddHandler Tab_02_Ingresadas.Click, AddressOf Sb_Actualizar_Grilla
-        AddHandler Tab_03_Asignadas.Click, AddressOf Sb_Actualizar_Grilla
-        AddHandler Tab_04_Presupuesto.Click, AddressOf Sb_Actualizar_Grilla
-        AddHandler Tab_05_Preparacion.Click, AddressOf Sb_Actualizar_Grilla
-        AddHandler Tab_06_Aviso.Click, AddressOf Sb_Actualizar_Grilla
-        AddHandler Tab_07_Entregadas.Click, AddressOf Sb_Actualizar_Grilla
-        AddHandler Tab_08_Cerradas_Hoy.Click, AddressOf Sb_Actualizar_Grilla
+        AddHandler Tab_01_Todas.Click, AddressOf Sb_Actualizar_Grilla2
+        AddHandler Tab_02_Ingresadas.Click, AddressOf Sb_Actualizar_Grilla2
+        AddHandler Tab_03_Asignadas.Click, AddressOf Sb_Actualizar_Grilla2
+        AddHandler Tab_04_Presupuesto.Click, AddressOf Sb_Actualizar_Grilla2
+        AddHandler Tab_05_Preparacion.Click, AddressOf Sb_Actualizar_Grilla2
+        AddHandler Tab_06_Aviso.Click, AddressOf Sb_Actualizar_Grilla2
+        AddHandler Tab_07_Entregadas.Click, AddressOf Sb_Actualizar_Grilla2
+        AddHandler Tab_08_Cerradas_Hoy.Click, AddressOf Sb_Actualizar_Grilla2
 
         'Txt_Informacion.DataBindings.Add(New System.Windows.Forms.Binding("Text", _TblTecnicos, "Informacion", True))
 
@@ -109,8 +110,8 @@ Public Class Frm_St_Ordenes_de_trabajo
             Fm.ShowDialog(Me)
             Fm.Dispose()
 
-            Sb_Actualizar_Grilla()
-            Sb_Marcar_Grilla()
+            Sb_Actualizar_Grilla2()
+            'Sb_Marcar_Grilla()
 
         End If
 
@@ -152,8 +153,8 @@ Public Class Frm_St_Ordenes_de_trabajo
             _Cl_OrdenServicio = Fm.Cl_OrdenServicio
             Fm.Dispose()
 
-            Sb_Actualizar_Grilla()
-            Sb_Marcar_Grilla()
+            Sb_Actualizar_Grilla2()
+            'Sb_Marcar_Grilla()
 
         End If
 
@@ -232,8 +233,99 @@ Public Class Frm_St_Ordenes_de_trabajo
 
     End Sub
 
-    Sub Sb_Marcar_Grilla()
+    Sub Sb_Actualizar_Grilla2()
 
+        Me.Cursor = Cursors.WaitCursor
+
+        Dim _Condicion As String
+
+        'A  - ASIGNADO
+        'C  - COTIZACION
+        'CE - CERRADO 
+        'E  - ENTREGADO
+        'F  - FACTURADO / GDI
+        'I  - INGRESADO
+        'N  - NULA
+        'P  - PRESUPUESTO 
+        'R	- REPARACION Y CIERRE
+        'V(AVISO)
+
+        'Dim Fm_Espera As New Frm_Form_Esperar
+        'Fm_Espera.BarraCircular.IsRunning = True
+        'Fm_Espera.Show()
+
+        Dim _Fecha As Date = FechaDelServidor()
+
+        Dim Dia_1 As String = numero_(_Fecha.Day, 2)
+        Dim Mes_1 As String = numero_(_Fecha.Month, 2)
+        Dim Ano_1 As String = _Fecha.Year
+
+        Dim _Filtro_Fecha = "Fecha_Cierre BETWEEN CONVERT(DATETIME, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 00:00:00', 102)" & vbCrLf &
+                            "And CONVERT(DATETIME, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 23:59:59', 102)" & vbCrLf
+
+        Select Case Super_TabS.SelectedTabIndex
+
+            Case 0 ' Todas
+                GroupPanel1.Text = "Todas las ordenes de trabajo activas"
+                _Condicion = "And (CodEstado In ('A','C','E','F','I','P','R','V') Or (CodEstado In ('CE','N') And " & _Filtro_Fecha & "))" & vbCrLf
+            Case 1 ' Ingresadas
+                GroupPanel1.Text = "Ordenes de trabajo Ingresadas, en espera de asignación a algún técnico."
+                _Condicion = "And CodEstado In ('I')" & vbCrLf
+            Case 2 ' Asignadas tecnico
+                GroupPanel1.Text = "Ordenes de trabajo asignadas a algún técnico, a la espera de una evaluación."
+                _Condicion = "And CodEstado In ('A')" & vbCrLf
+            Case 3 ' Presupuesto
+                GroupPanel1.Text = "Ordenes de trabajo con evaluación realizada por el técnico, presupuesto o cotización creadas"
+                _Condicion = "And CodEstado In ('P')" & vbCrLf
+            Case 4 ' En Reparacion
+                GroupPanel1.Text = "Ordenes de trabajo en reparación"
+                _Condicion = "And CodEstado In ('R')" & vbCrLf
+            Case 5 ' Aviso cliente
+                GroupPanel1.Text = "Todas las ordenes de trabajo reparadas en espera de aviso al cliente"
+                _Condicion = "And CodEstado In ('V')" & vbCrLf
+            Case 6 ' Entregadas
+                GroupPanel1.Text = "Ordenes de trabajo entregadas con factura o guía"
+                _Condicion = "And CodEstado In ('E','F')" & vbCrLf
+            Case 7 ' Cerradas hoy
+                GroupPanel1.Text = "Ordenes de trabajo cerradas hoy"
+                _Condicion = "And CodEstado In ('CE') And " & _Filtro_Fecha & vbCrLf
+
+        End Select
+
+        _Condicion += "And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'" & vbCrLf
+
+        Consulta_Sql = My.Resources.Recursos_Locales.SqlQuery_Lista_OT2
+        Consulta_Sql = Replace(Consulta_Sql, "#Db_BakApp#", _Global_BaseBk)
+        Consulta_Sql = Replace(Consulta_Sql, "#Condicion#", _Condicion)
+
+
+        _Ds = _Sql.Fx_Get_DataSet(Consulta_Sql)
+
+        ' Agregar la relación ( campo en común : campo_Relacionado = idCliente )  
+        ' ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''  
+        ' Table.Rel_Entidad_Documentos.Rel_Documentos_Detalle
+
+        _Ds.Relations.Add("Ot_SubOt",
+                             _Ds.Tables("Table").Columns("Id_Ot_Padre"),
+                             _Ds.Tables("Table1").Columns("Id_Ot_Padre"), False)
+
+        Grilla.DataSource = _Ds
+        Grilla.DataMember = "Table"
+
+        Grilla_SubOt.DataSource = _Ds
+        Grilla_SubOt.DataMember = "Table.Ot_SubOt"
+
+        OcultarEncabezadoGrilla(Grilla, True)
+        OcultarEncabezadoGrilla(Grilla_SubOt, True)
+
+        Sb_Marcar_Grilla2()
+
+        Me.Cursor = Cursors.Default
+
+    End Sub
+
+    Sub Sb_Marcar_Grilla()
+        Return
         With Grilla
 
             .DataSource = _Tbl_OT
@@ -325,6 +417,163 @@ Public Class Frm_St_Ordenes_de_trabajo
         If CBool(Grilla.RowCount) Then
             Grilla.FirstDisplayedScrollingRowIndex = Grilla.RowCount - 1
             Grilla.CurrentCell = Grilla.Rows(Grilla.RowCount - 1).Cells("Nro_Ot")
+        End If
+
+        Me.Refresh()
+
+    End Sub
+
+    Sub Sb_Marcar_Grilla2()
+
+        With Grilla
+
+            Dim _Mas = 0
+
+            If Super_TabS.SelectedTabIndex <> 0 Then
+                _Mas = 120
+            End If
+
+            Dim _DisplayIndex = 0
+
+            .Columns("Nro_Ot").Visible = True
+            .Columns("Nro_Ot").HeaderText = "Número OT"
+            .Columns("Nro_Ot").Width = 80
+            .Columns("Nro_Ot").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            '.Columns("Sub_Ot").Visible = True
+            '.Columns("Sub_Ot").HeaderText = "Sub OT"
+            '.Columns("Sub_Ot").Width = 30
+            '.Columns("Sub_Ot").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
+            .Columns("Rut").Visible = True
+            .Columns("Rut").HeaderText = "Rut"
+            .Columns("Rut").Width = 80
+            .Columns("Rut").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("SucEntidad").Visible = True
+            .Columns("SucEntidad").HeaderText = "Suc."
+            .Columns("SucEntidad").Width = 60
+            .Columns("SucEntidad").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Cliente").Visible = True
+            .Columns("Cliente").HeaderText = "Cliente"
+            .Columns("Cliente").Width = 490
+            .Columns("Cliente").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Lugar").Visible = True
+            .Columns("Lugar").HeaderText = "lugar"
+            .Columns("Lugar").Width = 50
+            .Columns("Lugar").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Fecha").Visible = True
+            .Columns("Fecha").HeaderText = "Fecha"
+            .Columns("Fecha").Width = 70
+            .Columns("Fecha").DefaultCellStyle.Format = "dd/MM/yyyy"
+            .Columns("Fecha").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Fecha").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            '.Columns("Hora").Visible = True
+            '.Columns("Hora").HeaderText = "Hora"
+            '.Columns("Hora").Width = 50
+            '.Columns("Hora").DefaultCellStyle.Format = "hh:mm"
+            '.Columns("Hora").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '.Columns("Hora").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
+            .Columns("Dias").Visible = True
+            .Columns("Dias").HeaderText = "Dias"
+            .Columns("Dias").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Dias").DefaultCellStyle.Format = "###,##"
+            .Columns("Dias").Width = 40
+            .Columns("Dias").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            '.Columns("Estado").Visible = (Super_TabS.SelectedTabIndex = 0)
+            '.Columns("Estado").HeaderText = "Estado"
+            '.Columns("Estado").Width = 120
+            '.Columns("Estado").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
+            '.Columns("Producto").Visible = True
+            '.Columns("Producto").HeaderText = "Producto"
+            '.Columns("Producto").Width = 250 + _Mas - 30
+            '.Columns("Producto").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
+        End With
+
+        With Grilla_SubOt
+
+            Dim _Mas = 0
+
+            If Super_TabS.SelectedTabIndex <> 0 Then
+                _Mas = 120
+            End If
+
+            Dim _DisplayIndex = 0
+
+            .Columns("Nro_Ot").Visible = True
+            .Columns("Nro_Ot").HeaderText = "Número OT"
+            .Columns("Nro_Ot").Width = 80
+            .Columns("Nro_Ot").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Sub_Ot").Visible = True
+            .Columns("Sub_Ot").HeaderText = "Sub OT"
+            .Columns("Sub_Ot").Width = 30
+            .Columns("Sub_Ot").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Producto").Visible = True
+            .Columns("Producto").HeaderText = "Producto"
+            .Columns("Producto").Width = 480 + _Mas
+            .Columns("Producto").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Fecha").Visible = True
+            .Columns("Fecha").HeaderText = "Fecha"
+            .Columns("Fecha").Width = 70
+            .Columns("Fecha").DefaultCellStyle.Format = "dd/MM/yyyy"
+            .Columns("Fecha").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Fecha").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Hora").Visible = True
+            .Columns("Hora").HeaderText = "Hora"
+            .Columns("Hora").Width = 50
+            .Columns("Hora").DefaultCellStyle.Format = "hh:mm"
+            .Columns("Hora").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Hora").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Dias").Visible = True
+            .Columns("Dias").HeaderText = "Dias"
+            .Columns("Dias").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Dias").DefaultCellStyle.Format = "###,##"
+            .Columns("Dias").Width = 40
+            .Columns("Dias").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Estado").Visible = (Super_TabS.SelectedTabIndex = 0)
+            .Columns("Estado").HeaderText = "Estado"
+            .Columns("Estado").Width = 120
+            .Columns("Estado").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+
+
+        End With
+
+        If CBool(Grilla_SubOt.RowCount) Then
+            Grilla_SubOt.FirstDisplayedScrollingRowIndex = Grilla_SubOt.RowCount - 1
+            Grilla_SubOt.CurrentCell = Grilla_SubOt.Rows(Grilla_SubOt.RowCount - 1).Cells("Nro_Ot")
         End If
 
         Me.Refresh()
@@ -617,6 +866,7 @@ Public Class Frm_St_Ordenes_de_trabajo
 
     Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
+        Return
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Sb_Abrir_Documento(_Fila)
 
@@ -624,12 +874,12 @@ Public Class Frm_St_Ordenes_de_trabajo
 
     Private Sub BtnActualizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnActualizar.Click
         _Id_Fila_Activa = Nothing
-        Sb_Actualizar_Grilla()
-        Sb_Marcar_Grilla()
+        Sb_Actualizar_Grilla2()
+        'Sb_Marcar_Grilla()
     End Sub
 
     Private Sub Grilla_CellEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEnter
-
+        Return
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
         If _Id_Fila_Activa <> _Fila.Index Or (_Id_Fila_Activa Is Nothing) Then
@@ -654,8 +904,8 @@ Public Class Frm_St_Ordenes_de_trabajo
         '_TblInforme = Fm.Pro_Tbl_Informe
         Fm.Dispose()
 
-        Sb_Actualizar_Grilla()
-        Sb_Marcar_Grilla()
+        Sb_Actualizar_Grilla2()
+        'Sb_Marcar_Grilla()
 
 
     End Sub
@@ -711,6 +961,24 @@ Public Class Frm_St_Ordenes_de_trabajo
         Dim Fm As New Frm_St_Operaciones
         Fm.ShowDialog(Me)
         Fm.Dispose()
+
+    End Sub
+
+    Private Sub Grilla_SubOt_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_SubOt.CellDoubleClick
+
+        Dim _Fila As DataGridViewRow = Grilla_SubOt.Rows(Grilla_SubOt.CurrentRow.Index)
+        Sb_Abrir_Documento(_Fila)
+
+    End Sub
+
+    Private Sub Grilla_SubOt_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_SubOt.CellEnter
+
+        Dim _Fila As DataGridViewRow = Grilla_SubOt.Rows(Grilla_SubOt.CurrentRow.Index)
+
+        If _Id_Fila_Activa <> _Fila.Index Or (_Id_Fila_Activa Is Nothing) Then
+            _Fila.Cells("Chk_Flujo_Trabajo").Value = False
+            Sb_Actualizar_Estados_De_La_Fila(_Fila)
+        End If
 
     End Sub
 

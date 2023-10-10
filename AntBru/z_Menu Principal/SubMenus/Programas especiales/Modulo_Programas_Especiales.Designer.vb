@@ -63,7 +63,7 @@ Partial Class Modulo_Programas_Especiales
         Me.MetroTilePanel1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.MetroTilePanel1.Location = New System.Drawing.Point(3, 55)
         Me.MetroTilePanel1.Name = "MetroTilePanel1"
-        Me.MetroTilePanel1.Size = New System.Drawing.Size(844, 619)
+        Me.MetroTilePanel1.Size = New System.Drawing.Size(835, 619)
         Me.MetroTilePanel1.TabIndex = 10
         Me.MetroTilePanel1.Text = "MetroTilePanel1"
         '
@@ -523,7 +523,7 @@ Partial Class Modulo_Programas_Especiales
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir, Me.BtnCambiarDeUsuario})
         Me.Bar2.Location = New System.Drawing.Point(0, 527)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(838, 41)
+        Me.Bar2.Size = New System.Drawing.Size(837, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 38
@@ -569,7 +569,7 @@ Partial Class Modulo_Programas_Especiales
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.MetroTilePanel1)
         Me.Name = "Modulo_Programas_Especiales"
-        Me.Size = New System.Drawing.Size(838, 568)
+        Me.Size = New System.Drawing.Size(837, 568)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

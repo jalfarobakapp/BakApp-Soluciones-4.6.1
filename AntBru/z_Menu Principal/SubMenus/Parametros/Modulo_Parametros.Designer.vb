@@ -33,6 +33,7 @@ Partial Class Modulo_Parametros
         Me.Btn_Tablas_Conf_Productos = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Tablas_BakApp = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Btn_Momendas = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -89,7 +90,7 @@ Partial Class Modulo_Parametros
         Me.ContenedorTablas.FixedSize = New System.Drawing.Size(610, 240)
         Me.ContenedorTablas.MultiLine = True
         Me.ContenedorTablas.Name = "ContenedorTablas"
-        Me.ContenedorTablas.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnCreacionEntidad, Me.BtnProductos, Me.Btn_Tablas_Conf_Entidad, Me.Btn_Tablas_Conf_Productos, Me.Btn_Tablas_BakApp})
+        Me.ContenedorTablas.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnCreacionEntidad, Me.BtnProductos, Me.Btn_Tablas_Conf_Entidad, Me.Btn_Tablas_Conf_Productos, Me.Btn_Tablas_BakApp, Me.Btn_Momendas})
         '
         '
         '
@@ -246,6 +247,33 @@ Partial Class Modulo_Parametros
         Me.LabelX1.TabIndex = 39
         Me.LabelX1.Text = "<font color=""#349FCE""><b>PARAMETROS</b></font>"
         '
+        'Btn_Momendas
+        '
+        Me.Btn_Momendas.Image = CType(resources.GetObject("Btn_Momendas.Image"), System.Drawing.Image)
+        Me.Btn_Momendas.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_Momendas.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Momendas.Name = "Btn_Momendas"
+        Me.Btn_Momendas.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Momendas.Text = "<font size=""+4""><b>MONEDAS</b></font><br/><font size=""-1"">Mantención de monedas y" &
+    " tipos de cambio</font>"
+        Me.Btn_Momendas.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Teal
+        Me.Btn_Momendas.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_Momendas.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_Momendas.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_Momendas.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_Momendas.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_Momendas.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_Momendas.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Momendas.TileStyle.PaddingBottom = 4
+        Me.Btn_Momendas.TileStyle.PaddingLeft = 4
+        Me.Btn_Momendas.TileStyle.PaddingRight = 4
+        Me.Btn_Momendas.TileStyle.PaddingTop = 4
+        Me.Btn_Momendas.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Momendas.TitleText = "BakApp"
+        '
         'Modulo_Parametros
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -269,4 +297,5 @@ Partial Class Modulo_Parametros
     Private WithEvents Btn_Tablas_Conf_Entidad As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Tablas_BakApp As DevComponents.DotNetBar.Metro.MetroTileItem
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
+    Private WithEvents Btn_Momendas As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

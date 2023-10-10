@@ -781,7 +781,7 @@ Partial Class Frm_OfDinamFicha
         '
         Me.GroupPanel4.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel4.TabIndex = 3
-        Me.GroupPanel4.Text = "Listas de precio para las que es válida la oferta"
+        Me.GroupPanel4.Text = "Días de la semana en que se debe aplicar el descuento"
         '
         'Chk_Desc_Dom
         '
@@ -932,7 +932,7 @@ Partial Class Frm_OfDinamFicha
         Me.Btn_Eliminar.Image = CType(resources.GetObject("Btn_Eliminar.Image"), System.Drawing.Image)
         Me.Btn_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Eliminar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Eliminar.Name = "Btn_Eliminar"
-        Me.Btn_Eliminar.Tooltip = "Grabar"
+        Me.Btn_Eliminar.Tooltip = "Eliminar"
         '
         'Highlighter1
         '

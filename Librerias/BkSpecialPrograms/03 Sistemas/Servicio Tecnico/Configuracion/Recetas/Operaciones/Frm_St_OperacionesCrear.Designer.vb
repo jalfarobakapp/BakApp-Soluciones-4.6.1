@@ -24,7 +24,6 @@ Partial Class Frm_St_OperacionesCrear
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_St_OperacionesCrear))
         Me.Grupo_Presupuesto = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Chk_TienePrecio = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.Rdb_CantMayor1 = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -33,12 +32,13 @@ Partial Class Frm_St_OperacionesCrear
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.Rdb_Externa = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Interna = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Txt_Costo = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX32 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Operacion = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Descripcion = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_TienePrecio = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Txt_Costo = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX32 = New DevComponents.DotNetBar.LabelX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
@@ -59,13 +59,14 @@ Partial Class Frm_St_OperacionesCrear
         Me.Grupo_Presupuesto.Controls.Add(Me.TableLayoutPanel1)
         Me.Grupo_Presupuesto.Controls.Add(Me.TableLayoutPanel6)
         Me.Grupo_Presupuesto.Controls.Add(Me.Txt_Operacion)
+        Me.Grupo_Presupuesto.Controls.Add(Me.Chk_TienePrecio)
         Me.Grupo_Presupuesto.Controls.Add(Me.Txt_Descripcion)
         Me.Grupo_Presupuesto.Controls.Add(Me.LabelX1)
         Me.Grupo_Presupuesto.Controls.Add(Me.LabelX2)
         Me.Grupo_Presupuesto.DisabledBackColor = System.Drawing.Color.Empty
         Me.Grupo_Presupuesto.Location = New System.Drawing.Point(12, 12)
         Me.Grupo_Presupuesto.Name = "Grupo_Presupuesto"
-        Me.Grupo_Presupuesto.Size = New System.Drawing.Size(594, 128)
+        Me.Grupo_Presupuesto.Size = New System.Drawing.Size(594, 154)
         '
         '
         '
@@ -95,24 +96,6 @@ Partial Class Frm_St_OperacionesCrear
         '
         Me.Grupo_Presupuesto.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Grupo_Presupuesto.TabIndex = 100
-        '
-        'Chk_TienePrecio
-        '
-        Me.Chk_TienePrecio.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_TienePrecio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_TienePrecio.CheckBoxImageChecked = CType(resources.GetObject("Chk_TienePrecio.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_TienePrecio.FocusCuesEnabled = False
-        Me.Chk_TienePrecio.ForeColor = System.Drawing.Color.Black
-        Me.Chk_TienePrecio.Location = New System.Drawing.Point(215, 17)
-        Me.Chk_TienePrecio.Name = "Chk_TienePrecio"
-        Me.Chk_TienePrecio.Size = New System.Drawing.Size(77, 22)
-        Me.Chk_TienePrecio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_TienePrecio.TabIndex = 77
-        Me.Chk_TienePrecio.TabStop = False
-        Me.Chk_TienePrecio.Text = "Tiene precio"
         '
         'TableLayoutPanel1
         '
@@ -254,39 +237,6 @@ Partial Class Frm_St_OperacionesCrear
         Me.Rdb_Interna.TabIndex = 5
         Me.Rdb_Interna.Text = "Interna"
         '
-        'Txt_Costo
-        '
-        Me.Txt_Costo.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_Precio.Border.Class = "TextBoxBorder"
-        Me.Txt_Precio.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Costo.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Costo.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Costo.Location = New System.Drawing.Point(48, 17)
-        Me.Txt_Costo.Name = "Txt_Costo"
-        Me.Txt_Costo.Size = New System.Drawing.Size(100, 22)
-        Me.Txt_Costo.TabIndex = 2
-        Me.Txt_Costo.Text = "0"
-        Me.Txt_Costo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'LabelX32
-        '
-        Me.LabelX32.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX32.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX32.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX32.ForeColor = System.Drawing.Color.Black
-        Me.LabelX32.Location = New System.Drawing.Point(6, 16)
-        Me.LabelX32.Name = "LabelX32"
-        Me.LabelX32.Size = New System.Drawing.Size(45, 23)
-        Me.LabelX32.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
-        Me.LabelX32.TabIndex = 74
-        Me.LabelX32.Text = "Costo"
-        '
         'Txt_Operacion
         '
         Me.Txt_Operacion.BackColor = System.Drawing.Color.White
@@ -361,15 +311,66 @@ Partial Class Frm_St_OperacionesCrear
         Me.LabelX2.TabIndex = 64
         Me.LabelX2.Text = "Código"
         '
+        'Chk_TienePrecio
+        '
+        Me.Chk_TienePrecio.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_TienePrecio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_TienePrecio.CheckBoxImageChecked = CType(resources.GetObject("Chk_TienePrecio.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_TienePrecio.FocusCuesEnabled = False
+        Me.Chk_TienePrecio.ForeColor = System.Drawing.Color.Black
+        Me.Chk_TienePrecio.Location = New System.Drawing.Point(3, 120)
+        Me.Chk_TienePrecio.Name = "Chk_TienePrecio"
+        Me.Chk_TienePrecio.Size = New System.Drawing.Size(77, 22)
+        Me.Chk_TienePrecio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_TienePrecio.TabIndex = 77
+        Me.Chk_TienePrecio.TabStop = False
+        Me.Chk_TienePrecio.Text = "Tiene precio"
+        '
+        'Txt_Costo
+        '
+        Me.Txt_Costo.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Costo.Border.Class = "TextBoxBorder"
+        Me.Txt_Costo.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Costo.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Costo.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Costo.Location = New System.Drawing.Point(48, 17)
+        Me.Txt_Costo.Name = "Txt_Costo"
+        Me.Txt_Costo.Size = New System.Drawing.Size(100, 22)
+        Me.Txt_Costo.TabIndex = 2
+        Me.Txt_Costo.Text = "0"
+        Me.Txt_Costo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'LabelX32
+        '
+        Me.LabelX32.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX32.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX32.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX32.ForeColor = System.Drawing.Color.Black
+        Me.LabelX32.Location = New System.Drawing.Point(6, 16)
+        Me.LabelX32.Name = "LabelX32"
+        Me.LabelX32.Size = New System.Drawing.Size(45, 23)
+        Me.LabelX32.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.LabelX32.TabIndex = 74
+        Me.LabelX32.Text = "Costo"
+        '
         'Bar2
         '
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Eliminar})
-        Me.Bar2.Location = New System.Drawing.Point(0, 236)
+        Me.Bar2.Location = New System.Drawing.Point(0, 175)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(616, 41)
+        Me.Bar2.Size = New System.Drawing.Size(617, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 101
@@ -400,17 +401,15 @@ Partial Class Frm_St_OperacionesCrear
         'Grupo_CostosPrecios
         '
         Me.Grupo_CostosPrecios.BackColor = System.Drawing.Color.White
-        Me.Grupo_CostosPrecios.CanvasColor = System.Drawing.SystemColors.Control
         Me.Grupo_CostosPrecios.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.Grupo_CostosPrecios.Controls.Add(Me.Txt_Costo)
         Me.Grupo_CostosPrecios.Controls.Add(Me.Txt_Precio)
         Me.Grupo_CostosPrecios.Controls.Add(Me.LabelX4)
-        Me.Grupo_CostosPrecios.Controls.Add(Me.Chk_TienePrecio)
         Me.Grupo_CostosPrecios.Controls.Add(Me.LabelX32)
         Me.Grupo_CostosPrecios.DisabledBackColor = System.Drawing.Color.Empty
-        Me.Grupo_CostosPrecios.Location = New System.Drawing.Point(12, 146)
+        Me.Grupo_CostosPrecios.Location = New System.Drawing.Point(666, 18)
         Me.Grupo_CostosPrecios.Name = "Grupo_CostosPrecios"
-        Me.Grupo_CostosPrecios.Size = New System.Drawing.Size(594, 70)
+        Me.Grupo_CostosPrecios.Size = New System.Drawing.Size(462, 70)
         '
         '
         '
@@ -479,13 +478,14 @@ Partial Class Frm_St_OperacionesCrear
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(616, 277)
+        Me.ClientSize = New System.Drawing.Size(617, 216)
         Me.Controls.Add(Me.Grupo_CostosPrecios)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.Grupo_Presupuesto)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Frm_St_OperacionesCrear"

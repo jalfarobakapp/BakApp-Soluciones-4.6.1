@@ -44,28 +44,34 @@ Public Class STConfiguracion
     End Sub
 
     Private Sub Btn_Recetas_Click(sender As Object, e As EventArgs) Handles Btn_Recetas.Click
-        Dim Fm As New Frm_St_Recetas
-        Fm.ShowDialog(_Fm_Menu_Padre)
-        Fm.Dispose()
+        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Stec0025") Then
+            Dim Fm As New Frm_St_Recetas
+            Fm.ShowDialog(_Fm_Menu_Padre)
+            Fm.Dispose()
+        End If
     End Sub
 
     Private Sub Btn_Operaciones_Click(sender As Object, e As EventArgs) Handles Btn_Operaciones.Click
-
-        Dim Fm As New Frm_St_Operaciones
-        Fm.ShowDialog(_Fm_Menu_Padre)
-        Fm.Dispose()
-
+        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Stec0021") Then
+            Dim Fm As New Frm_St_Operaciones
+            Fm.ShowDialog(_Fm_Menu_Padre)
+            Fm.Dispose()
+        End If
     End Sub
 
     Private Sub Btn_FiltroProductos_Click(sender As Object, e As EventArgs) Handles Btn_FiltroProductos.Click
-
-        Dim Fm As New Frm_St_Mant_ProdServTecnico
-        Fm.ShowDialog(_Fm_Menu_Padre)
-        Fm.Dispose()
-
+        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Stec0029") Then
+            Dim Fm As New Frm_St_Mant_ProdServTecnico
+            Fm.ShowDialog(_Fm_Menu_Padre)
+            Fm.Dispose()
+        End If
     End Sub
 
     Private Sub Btn_BodegaServicio_Click(sender As Object, e As EventArgs) Handles Btn_BodegaServicio.Click
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Stec0030") Then
+            Return
+        End If
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
         Dim Consulta_Sql As String

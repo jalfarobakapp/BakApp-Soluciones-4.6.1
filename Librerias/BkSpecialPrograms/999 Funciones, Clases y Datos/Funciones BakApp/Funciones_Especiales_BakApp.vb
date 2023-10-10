@@ -3,7 +3,6 @@ Imports System.Security.Cryptography
 Imports BkSpecialPrograms.Bk_Migrar_Producto
 Imports DevComponents.DotNetBar
 Imports Newtonsoft.Json
-Imports System.Drawing
 Public Module Funciones_Especiales_BakApp
 
     Dim Consulta_sql As String
@@ -1636,10 +1635,23 @@ Public Module Funciones_Especiales_BakApp
                     Return True
                 Else
                     If Not IsNothing(_Formulario) Then
-                        MessageBoxEx.Show(_Formulario, "No existe taza de cambio para la fecha: " & FormatDateTime(_Fecha_Taza, DateFormat.ShortDate) & vbCrLf &
-                                      "Para las monedas: " & vbCrLf & vbCrLf & _Monedas, "Validación",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                        If MessageBoxEx.Show(_Formulario, "No existe tasa de cambio para la fecha: " & FormatDateTime(_Fecha_Taza, DateFormat.ShortDate) & vbCrLf &
+                                      "Para las monedas: " & vbCrLf & vbCrLf & _Monedas & vbCrLf & vbCrLf & "¿Desea ingresar la tasa de cambio?", "Validación",
+                                      MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = DialogResult.Yes Then
+
+                            If Fx_Tiene_Permiso(_Formulario, "Espr0032") Then
+
+                                Dim Fm As New Frm_MonedasLista
+                                Fm.ShowDialog(_Formulario)
+                                Fm.Dispose()
+
+                            End If
+
+                        End If
+
                     End If
+
                 End If
 
             End If

@@ -11969,8 +11969,10 @@ Public Class Frm_Formulario_Documento
                                 _Vizado = False
                             End If
                         Else
-                            If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00090", Nothing) Then
-                                Return
+                            If _Tipo_Documento <> csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra Then
+                                If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00090", Nothing) Then
+                                    Return
+                                End If
                             End If
                         End If
 

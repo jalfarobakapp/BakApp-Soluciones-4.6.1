@@ -88,6 +88,10 @@ Public Class Frm_St_OperacionesCrear
 
     Private Sub Btn_Eliminar_Click(sender As Object, e As EventArgs) Handles Btn_Eliminar.Click
 
+        If Not Fx_Tiene_Permiso(Me, "Stec0024") Then
+            Return
+        End If
+
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_OT_Recetas_Ope", "Operacion  = '" & Txt_Operacion.Text & "'")
 
         If CBool(_Reg) Then
@@ -142,17 +146,17 @@ Public Class Frm_St_OperacionesCrear
             Return
         End If
 
-        If Chk_TienePrecio.Checked Then
-            If Not CBool(Txt_Costo.Tag) Then
-                Dim _NomSucursal As String = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", "EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "'")
+        'If Chk_TienePrecio.Checked Then
+        '    If Not CBool(Txt_Costo.Tag) Then
+        '        Dim _NomSucursal As String = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", "EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "'")
 
-                If MessageBoxEx.Show(Me, "Falta el precio de la operación para la sucursal: " & ModSucursal & "-" & _NomSucursal & vbCrLf & vbCrLf &
-                                     "¿Confirma el valor cero?", "Grabar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
-                    Txt_Costo.Focus()
-                    Return
-                End If
-            End If
-        End If
+        '        If MessageBoxEx.Show(Me, "Falta el precio de la operación para la sucursal: " & ModSucursal & "-" & _NomSucursal & vbCrLf & vbCrLf &
+        '                             "¿Confirma el valor cero?", "Grabar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
+        '            Txt_Costo.Focus()
+        '            Return
+        '        End If
+        '    End If
+        'End If
 
         If Not Chk_TienePrecio.Checked Then
             _Precio = 0
