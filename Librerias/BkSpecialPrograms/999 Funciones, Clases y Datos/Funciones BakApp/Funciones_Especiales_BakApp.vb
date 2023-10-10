@@ -4804,14 +4804,6 @@ Public Module Crear_Documentos_Desde_Otro
 
             End If
 
-            'Else
-
-            '    If MessageBoxEx.Show(_Formulario, "Falta la carpeta de salida para guardar los " & _Tipo_Ruta.ToString & " en esta estación de trabajo" & vbCrLf & vbCrLf &
-            '          "¿Desea ingresar el directorio?", "Validación",
-            '          MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
-            '        Return
-            '    End If
-
         End If
 
         Dim _Permiso As String

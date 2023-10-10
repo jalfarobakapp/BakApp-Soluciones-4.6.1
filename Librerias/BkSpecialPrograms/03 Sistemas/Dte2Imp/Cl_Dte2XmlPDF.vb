@@ -8,6 +8,8 @@ Imports PdfSharp.Pdf.IO
 
 Public Class Cl_Dte2XmlPDF
 
+    Public Property Crear_PDF_En_Directorio As Boolean
+    Public Property Directorio As String
 
     Sub Sb_Imprimir_Regleta(_Formulario As Form,
                             _Dset_DTE As DataSet,
@@ -796,7 +798,8 @@ Public Class Cl_Dte2XmlPDF
                          _Dset_DTE As DataSet,
                          _Nombre_Archivo_PDF As String,
                          _Marca_Agua As String,
-                         _Poner_Marca_de_agua As Boolean)
+                         _Poner_Marca_de_agua As Boolean,
+                         _Abrir_PDF As Boolean)
 
         Try
 
@@ -847,6 +850,10 @@ Public Class Cl_Dte2XmlPDF
                 Dim tf As XTextFormatter                                            ' Objeto para formatear texto
 
                 Dim Archivo As String = AppPath() & "\Data\" & RutEmpresa & "\DTE2PDF\" & _Nombre_Archivo_PDF & _Documento_Id & ".pdf"
+
+                If Crear_PDF_En_Directorio Then
+                    Archivo = Directorio & "\" & _Nombre_Archivo_PDF & _Documento_Id & ".pdf"
+                End If
 
                 Dim Fte_Encabezado_Negrita_16 As XFont = New XFont("Arial", 16, XFontStyle.Bold)   ' Crea la fuente
                 Dim Fte_Encabezado_Negrita_14 As XFont = New XFont("Arial", 14, XFontStyle.Bold)   ' Crea la fuente
@@ -944,7 +951,7 @@ Public Class Cl_Dte2XmlPDF
                     _Fecha_Vencimiento = Tbl_IdDoc.Rows(_Encabezado_Id).Item("FchVenc")
                     _TieneFechaVencimiento = True
                 Catch ex As Exception
-                    If MessageBoxEx.Show(_Formulario, "Documento sin fecha de vencimiento" & vbCrLf &
+                    If _Abrir_PDF AndAlso MessageBoxEx.Show(_Formulario, "Documento sin fecha de vencimiento" & vbCrLf &
                                     "¿Desea ingresar la fecha de vencimiento?", "Validación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                         Try
                             _Fecha_Vencimiento = _Fecha_Emision
@@ -1534,7 +1541,9 @@ Public Class Cl_Dte2XmlPDF
 
                 End If
 
-                Process.Start(Archivo)
+                If _Abrir_PDF Then
+                    Process.Start(Archivo)
+                End If
 
             Next
 

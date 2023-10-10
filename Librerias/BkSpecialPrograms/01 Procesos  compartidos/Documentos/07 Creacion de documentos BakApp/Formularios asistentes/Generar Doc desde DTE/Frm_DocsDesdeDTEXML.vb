@@ -257,7 +257,7 @@ Public Class Frm_DocsDesdeDTEXML
                 Dim _RecepXMLCmp_ImpMarcaAgua As Boolean = Not String.IsNullOrEmpty(_RecepXMLCmp_MarcaAgua)
 
                 Dim Cl_Dte2XmlIPDF As New Cl_Dte2XmlPDF
-                Cl_Dte2XmlIPDF.Sb_Crear_PDF2XML(Me, Ds_Xml, _NombreArchivo, _RecepXMLCmp_MarcaAgua, _RecepXMLCmp_ImpMarcaAgua)
+                Cl_Dte2XmlIPDF.Sb_Crear_PDF2XML(Me, Ds_Xml, _NombreArchivo, _RecepXMLCmp_MarcaAgua, _RecepXMLCmp_ImpMarcaAgua, True)
                 File.Delete(_Archivo & ".XML")
 
             Else

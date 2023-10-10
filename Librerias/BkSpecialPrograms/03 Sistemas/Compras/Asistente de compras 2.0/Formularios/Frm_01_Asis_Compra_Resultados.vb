@@ -9125,11 +9125,16 @@ Drop Table #Paso"
                 _Condicion += "And Refleo = 0" & vbCrLf
             End If
 
-            Consulta_sql = "Select Endo_Utl_Compra,Suendo_Utl_Compra,NOKOEN,Codigo,Descripcion,UD1,UD2,CantComprar,Fecha_Ult_Compra--,NoComprarProvNoTiene" & vbCrLf &
-                            "From " & _Nombre_Tbl_Paso_Informe & vbCrLf &
-                            "Left Join MAEEN On KOEN = Endo_Utl_Compra And SUEN = Suendo_Utl_Compra" & vbCrLf &
-                            "Where CantComprar > 0 And NoComprarProvNoTiene = 1" & vbCrLf & _Condicion & vbCrLf &
-                            "Order By KOEN,SUEN,Fecha_Ult_Compra"
+            Consulta_sql = "Select Endo_Utl_Compra,Suendo_Utl_Compra,NOKOEN,Codigo,Descripcion,UD1,UD2,CantComprar,Fecha_Ult_Compra,CantComprar,Sospecha_Baja_Rotacion,Con_Stock_CriticoUd1,NoComprarProvNoTiene," &
+                           "Isnull(NOKOFM,'') As NOKOFM,Isnull(NOKOPF,'') As NOKOPF,Isnull(NOKOHF,'') As NOKOHF" & vbCrLf &
+                           "From " & _Nombre_Tbl_Paso_Informe & vbCrLf &
+                           "Left Join MAEEN On KOEN = Endo_Utl_Compra And SUEN = Suendo_Utl_Compra" & vbCrLf &
+                           "Left Join MAEPR Mp On Mp.KOPR = Codigo" & vbCrLf &
+                           "Left Join TABFM Sf On Sf.KOFM = Mp.FMPR" & vbCrLf &
+                           "Left Join TABPF Pf On Pf.KOFM = Mp.FMPR And Pf.KOPF = Mp.PFPR" & vbCrLf &
+                           "Left Join TABHF Hf On Hf.KOFM = Mp.FMPR And Hf.KOPF = Mp.PFPR And Hf.KOHF = Mp.HFPR" & vbCrLf &
+                           "Where CantComprar > 0 And NoComprarProvNoTiene = 1" & vbCrLf & _Condicion & vbCrLf &
+                           "Order By KOEN,SUEN,Fecha_Ult_Compra"
 
             Dim _TblDetalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -9158,6 +9163,10 @@ Drop Table #Paso"
                 Dim _CantComprar As String = FormatNumber(_Detalle.Item("CantComprar"), 0)
                 Dim _Fecha_Ult_Compra As String = FormatDateTime(_Detalle.Item("Fecha_Ult_Compra"), DateFormat.ShortDate)
 
+                Dim _Nokofm As String = _Detalle.Item("NOKOFM")
+                Dim _Nokopf As String = _Detalle.Item("NOKOPF")
+                Dim _Nokohf As String = _Detalle.Item("NOKOHF")
+
                 Dim _BColor As String
 
                 If _Alter Then
@@ -9173,15 +9182,15 @@ Drop Table #Paso"
                 _Detalle_Doc +=
                     "<tr" & _BColor & ">" & vbCrLf &
                     "<td align=center style=""width: 150px"">" & _Endo_Utl_Compra & "</td>" & vbCrLf &
-                    "<td align=left style=""width: 100px"">" & _Suendo_Utl_Compra & "</td>" & vbCrLf &
                     "<td align=left style=""width: 380px"">" & _Nokoen & "</td>" & vbCrLf &
                     "<td align=left style=""width: 150px"">" & _Codigo & "</td>" & vbCrLf &
                     "<td align=left style=""width: 600px"">" & _Descripcion & "</td>" & vbCrLf &
                     "<td align=center style=""width: 100px"">" & _Ud & "</td>" & vbCrLf &
                     "<td align=right style=""width: 100px"">" & _CantComprar & "</td>" & vbCrLf &
                     "<td align=center style=""width: 150px"">" & _Fecha_Ult_Compra & "</td>" &
+                    "<td align=left style=""width: 380px"">" & _Nokopf & "</td>" &
                     "</tr>" & vbCrLf
-                ' 
+
             Next
 
             Dim _Total_Deuda As String = FormatCurrency(_Suma_saldo, 0)

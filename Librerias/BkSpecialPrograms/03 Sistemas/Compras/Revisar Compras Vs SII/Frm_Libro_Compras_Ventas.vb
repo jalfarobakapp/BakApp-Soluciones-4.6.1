@@ -1,7 +1,6 @@
 ﻿Imports System.IO
 Imports DevComponents.DotNetBar
 
-
 Public Class Frm_Libro_Compras_Ventas
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -171,39 +170,6 @@ Public Class Frm_Libro_Compras_Ventas
 
         Dim _Filtro_SII As String = "And Tido+Nudo+Endo+Libro+Rut_Proveedor+Razon_Social+Cmp.Folio+STR(Monto_Total) LIKE '%" & _Cadena_SII & "%'"
 
-
-        'Consulta_sql = "-- Tabla 0 
-        '                Select * From " & _Global_BaseBk & "Zw_Compras_en_SII
-        '                Where Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
-        '                _Filtro_SII & "
-        '                Order by Libro  
-
-        '                -- Tabla 1
-        '                Select * From " & _Global_BaseBk & "Zw_Compras_en_SII
-        '                Where Libro <> '' And Libro Like '" & _Libro & "%' And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
-        '                _Filtro_SII & "
-        '                Order by Libro
-
-        '                -- Tabla 2
-        '                Update " & _Global_BaseBk & "Zw_Compras_en_SII Set Idmaeedo_GRC = Isnull((Select IDMAEEDO From MAEEDO Where TIDO = 'GRC' And NUDO = Nudo And ENDO = Endo),0)
-        '                Where Libro = '' And Periodo = " & _Periodo & " And Mes = " & _Mes & " And Idmaeedo = 0
-
-        '                Select *,Case When Isnull((Select Top 1 Id From " & _Global_BaseBk & "Zw_DTE_ReccDet Z1 Where Cmp.Rut_Proveedor = Z1.RutEmisor And Z1.Folio = Cmp.Folio And Cmp.TipoDoc = Z1.TipoDTE),0) = 0 Then 'No' Else 'Si' End As TPDF From " & _Global_BaseBk & "Zw_Compras_en_SII Cmp
-        '                Where Libro = '' And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
-        '               _Filtro_SII & "
-
-        '                -- Tabla 3
-        '                Select * From " & _Global_BaseBk & "Zw_Compras_en_SII
-        '                Where Libro <> '' And Libro not Like '" & _Libro & "%' And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
-        '                _Filtro_SII & "
-        '                Order by Libro
-
-        '                -- Tabla 4
-        '                Select * From " & _Global_BaseBk & "Zw_Compras_en_SII
-        '                Where Diferencia <> 0 And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
-        '                _Filtro_SII
-
-
         Consulta_sql = "-- Tabla 0 
                         Select Case When DteD.[Xml] IS NULL then 'No' Else 'Si' End As 'TPDF',Cmp.*,DteD.[Xml],Cast(0 As Bit) As 'TieneOccRef',Cast('' As Varchar(20)) As 'OccRef' 
                         From " & _Global_BaseBk & "Zw_Compras_en_SII Cmp
@@ -238,7 +204,6 @@ Public Class Frm_Libro_Compras_Ventas
                         Select * From " & _Global_BaseBk & "Zw_Compras_en_SII Cmp
                         Where Diferencia <> 0 And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
                         _Filtro_SII
-
 
         Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
 
@@ -296,9 +261,19 @@ Public Class Frm_Libro_Compras_Ventas
 
                 If Not IsNothing(_Tbl_Referencia) Then
                     For Each _Fl As DataRow In _Tbl_Referencia.Rows
+
                         If _Fl.Item("TpoDocRef") = "801" Then
-                            _Fila.Item("TieneOccRef") = True
-                            _Fila.Item("OccRef") = _Fl.Item("FolioRef").ToString.Trim
+
+                            Dim _Endo As String = _Fila.Item("Endo")
+                            Dim _Nudo As String = _Fl.Item("FolioRef").ToString.Trim.Replace("-", "")
+                            _Nudo = numero_(_Nudo, 10)
+                            Dim _Reg = _Sql.Fx_Cuenta_Registros("MAEEDO", "TIDO = 'OCC' And NUDO = '" & _Nudo & "' And ENDO = '" & _Endo & "'")
+
+                            If CBool(_Reg) Then
+                                _Fila.Item("TieneOccRef") = True
+                                _Fila.Item("OccRef") = _Fl.Item("FolioRef").ToString.Trim
+                            End If
+
                         End If
                     Next
                 End If
@@ -1217,17 +1192,20 @@ Public Class Frm_Libro_Compras_Ventas
     Sub Sb_Refrescar_Grillas()
 
         Btn_Cambiar_Libro.Visible = False
+        Btn_ExportarPDF.Visible = False
 
         Select Case Tab.SelectedTabIndex
             Case 0
                 Sb_Actualizar_Totales_SII(_Inf_00_SII)
                 Sb_Formato_Grilla_00()
+                Btn_ExportarPDF.Visible = True
             Case 1
                 Sb_Actualizar_Totales_SII(_Inf_01_SII_y_Random)
                 Sb_Formato_Grilla_01()
             Case 2
                 Sb_Actualizar_Totales_SII(_Inf_02_Solo_SII)
                 Sb_Formato_Grilla_02()
+                Btn_ExportarPDF.Visible = True
             Case 3
                 Sb_Actualizar_Totales_SII(_Inf_03_SII_Random_Otro_Mes)
                 Btn_Cambiar_Libro.Visible = CBool(_Inf_03_SII_Random_Otro_Mes.Rows.Count)
@@ -1690,7 +1668,7 @@ Public Class Frm_Libro_Compras_Ventas
             Dim _RecepXMLCmp_ImpMarcaAgua As Boolean = Not String.IsNullOrEmpty(_RecepXMLCmp_MarcaAgua)
 
             Dim Cl_Dte2XmlIPDF As New Cl_Dte2XmlPDF
-            Cl_Dte2XmlIPDF.Sb_Crear_PDF2XML(Me, Ds_Xml, _NombreArchivo, _RecepXMLCmp_MarcaAgua, _RecepXMLCmp_ImpMarcaAgua)
+            Cl_Dte2XmlIPDF.Sb_Crear_PDF2XML(Me, Ds_Xml, _NombreArchivo, _RecepXMLCmp_MarcaAgua, _RecepXMLCmp_ImpMarcaAgua, True)
             File.Delete(_Archivo & ".XML")
 
         Else
@@ -1727,6 +1705,30 @@ Public Class Frm_Libro_Compras_Ventas
         Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "PRoveedores Sin PDF")
+
+    End Sub
+
+    Private Sub Btn_ExportarPDF_Click(sender As Object, e As EventArgs) Handles Btn_ExportarPDF.Click
+
+        Dim _Contador As Integer
+
+        If Tab.SelectedTabIndex = 0 Then
+            _Contador = Grilla_00.Rows.Cast(Of DataGridViewRow)().Count(Function(row) row.Cells("TPDF").Value = "Si")
+        End If
+
+        If Tab.SelectedTabIndex = 2 Then
+            _Contador = Grilla_02.Rows.Cast(Of DataGridViewRow)().Count(Function(row) row.Cells("TPDF").Value = "Si")
+        End If
+
+        If _Contador = 0 Then
+            MessageBoxEx.Show(Me, "No existen datos que mostrar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_Libro_DescPDF(_Periodo, _Mes)
+        Fm.SoloEnSII = (Tab.SelectedTabIndex = 2)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 End Class
