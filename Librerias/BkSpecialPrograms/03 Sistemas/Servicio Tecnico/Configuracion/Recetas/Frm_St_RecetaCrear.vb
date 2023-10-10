@@ -50,6 +50,8 @@ Public Class Frm_St_RecetaCrear
             _Id_Rec = _Row_Receta.Item("Id")
         End If
 
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
 
     Private Sub Frm_St_RecetaCrear_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -754,6 +756,10 @@ Public Class Frm_St_RecetaCrear
     End Sub
 
     Private Sub Btn_Eliminar_Click(sender As Object, e As EventArgs) Handles Btn_Eliminar.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Stec0028") Then
+            Return
+        End If
 
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & " Zw_St_OT_OpeXServ", "CodReceta  = '" & Txt_CodReceta.Text & "'")
 

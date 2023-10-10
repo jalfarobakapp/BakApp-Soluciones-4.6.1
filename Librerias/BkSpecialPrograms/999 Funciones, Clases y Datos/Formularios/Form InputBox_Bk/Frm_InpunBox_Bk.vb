@@ -175,8 +175,13 @@ Public Class Frm_InpunBox_Bk
 
                 For Each _Para As String In _Nueva_Descripcion.Split(New Char() {";"c})
                     If Not Fx_Validar_Email(_Para) Then
-                        MessageBoxEx.Show(Me, _Para & vbCrLf & "No es una cuenta de correos valida", "Validación",
+                        If String.IsNullOrWhiteSpace(_Para) Then
+                            MessageBoxEx.Show(Me, "El nombre de uno de los correos no puede estar vacío", "Validación",
                                           MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        Else
+                            MessageBoxEx.Show(Me, _Para & vbCrLf & "No es una cuenta de correos valida", "Validación",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        End If
                         TxtDescripcion.Focus()
                         Return
                     End If
@@ -197,7 +202,7 @@ Public Class Frm_InpunBox_Bk
                 TxtDescripcion.Focus()
             End If
 
-        ElseIf Val(TxtDescripcion.Text) = 0 Then
+        ElseIf IsNumeric(TxtDescripcion.Text) AndAlso Val(TxtDescripcion.Text) = 0 Then
 
             If _Permitir_Valor_Cero Then
                 _Aceptado = True

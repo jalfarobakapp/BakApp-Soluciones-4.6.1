@@ -58,6 +58,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Chk_DbExt_SincronizarPRBD = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Grupo_DbExt = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Chk_QuitarDeEstudioAutomatico = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_NVVAutoExterna = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_IncluirProdExcluidosProvStar = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_IncluirProdBloqueadoProvStar = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -219,7 +220,6 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.ButtonItem7 = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem8 = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem9 = New DevComponents.DotNetBar.ButtonItem()
-        Me.Chk_QuitarDeEstudioAutomatico = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Bar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel6.SuspendLayout()
         Me.Layout_Producto.SuspendLayout()
@@ -785,13 +785,13 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.STabConfiguracion.ControlBox.MenuBox.Name = ""
         Me.STabConfiguracion.ControlBox.Name = ""
         Me.STabConfiguracion.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.STabConfiguracion.ControlBox.MenuBox, Me.STabConfiguracion.ControlBox.CloseBox})
+        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel3)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel2)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel5)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel7)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel1)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel4)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel6)
-        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel3)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel8)
         Me.STabConfiguracion.ForeColor = System.Drawing.Color.Black
         Me.STabConfiguracion.Location = New System.Drawing.Point(14, 298)
@@ -810,9 +810,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.SuperTabControlPanel2.Controls.Add(Me.Chk_DbExt_SincronizarPRBD)
         Me.SuperTabControlPanel2.Controls.Add(Me.Grupo_DbExt)
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 0)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(539, 229)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(539, 256)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.Tab_ConexionExterna
         '
@@ -885,6 +885,23 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         Me.Grupo_DbExt.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Grupo_DbExt.TabIndex = 10021
+        '
+        'Chk_QuitarDeEstudioAutomatico
+        '
+        Me.Chk_QuitarDeEstudioAutomatico.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_QuitarDeEstudioAutomatico.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_QuitarDeEstudioAutomatico.CheckBoxImageChecked = CType(resources.GetObject("Chk_QuitarDeEstudioAutomatico.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_QuitarDeEstudioAutomatico.FocusCuesEnabled = False
+        Me.Chk_QuitarDeEstudioAutomatico.ForeColor = System.Drawing.Color.Black
+        Me.Chk_QuitarDeEstudioAutomatico.Location = New System.Drawing.Point(319, 111)
+        Me.Chk_QuitarDeEstudioAutomatico.Name = "Chk_QuitarDeEstudioAutomatico"
+        Me.Chk_QuitarDeEstudioAutomatico.Size = New System.Drawing.Size(164, 20)
+        Me.Chk_QuitarDeEstudioAutomatico.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_QuitarDeEstudioAutomatico.TabIndex = 10027
+        Me.Chk_QuitarDeEstudioAutomatico.Text = "Quitar de estudio automático"
         '
         'Chk_NVVAutoExterna
         '
@@ -1164,9 +1181,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.SuperTabControlPanel5.Controls.Add(Me.LabelX13)
         Me.SuperTabControlPanel5.Controls.Add(Me.Input_Dias_Advertencia_Rotacion)
         Me.SuperTabControlPanel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(0, 0)
         Me.SuperTabControlPanel5.Name = "SuperTabControlPanel5"
-        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(539, 229)
+        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(539, 256)
         Me.SuperTabControlPanel5.TabIndex = 0
         Me.SuperTabControlPanel5.TabItem = Me.SuperTabItem5
         '
@@ -1266,9 +1283,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.SuperTabControlPanel7.Controls.Add(Me.Label6)
         Me.SuperTabControlPanel7.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel7.Enabled = False
-        Me.SuperTabControlPanel7.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel7.Location = New System.Drawing.Point(0, 0)
         Me.SuperTabControlPanel7.Name = "SuperTabControlPanel7"
-        Me.SuperTabControlPanel7.Size = New System.Drawing.Size(539, 229)
+        Me.SuperTabControlPanel7.Size = New System.Drawing.Size(539, 256)
         Me.SuperTabControlPanel7.TabIndex = 0
         Me.SuperTabControlPanel7.TabItem = Me.SuperTabItem7
         '
@@ -1325,9 +1342,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.SuperTabControlPanel1.Controls.Add(Me.Dtp_Fecha_Vta_Hasta)
         Me.SuperTabControlPanel1.Controls.Add(Me.Btn_Bodega_Vta_Estudio)
         Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 0)
         Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(539, 229)
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(539, 256)
         Me.SuperTabControlPanel1.TabIndex = 0
         Me.SuperTabControlPanel1.TabItem = Me.Tab_CalVnta
         '
@@ -1726,9 +1743,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Restar_Stok_Bodega)
         Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Quitar_Bloqueados_Compra)
         Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 0)
         Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
-        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(539, 229)
+        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(539, 256)
         Me.SuperTabControlPanel4.TabIndex = 0
         Me.SuperTabControlPanel4.TabItem = Me.Tab_Excluir_Incluir
         '
@@ -1933,9 +1950,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.SuperTabControlPanel6.Controls.Add(Me.LabelX4)
         Me.SuperTabControlPanel6.Controls.Add(Me.LabelX3)
         Me.SuperTabControlPanel6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(0, 0)
         Me.SuperTabControlPanel6.Name = "SuperTabControlPanel6"
-        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(539, 229)
+        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(539, 256)
         Me.SuperTabControlPanel6.TabIndex = 0
         Me.SuperTabControlPanel6.TabItem = Me.Tab_Costos_OCC
         '
@@ -3577,23 +3594,6 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.ButtonItem9.Image = CType(resources.GetObject("ButtonItem9.Image"), System.Drawing.Image)
         Me.ButtonItem9.Name = "ButtonItem9"
         Me.ButtonItem9.Text = "Entidades excluidas"
-        '
-        'Chk_QuitarDeEstudioAutomatico
-        '
-        Me.Chk_QuitarDeEstudioAutomatico.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_QuitarDeEstudioAutomatico.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_QuitarDeEstudioAutomatico.CheckBoxImageChecked = CType(resources.GetObject("Chk_QuitarDeEstudioAutomatico.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_QuitarDeEstudioAutomatico.FocusCuesEnabled = False
-        Me.Chk_QuitarDeEstudioAutomatico.ForeColor = System.Drawing.Color.Black
-        Me.Chk_QuitarDeEstudioAutomatico.Location = New System.Drawing.Point(319, 111)
-        Me.Chk_QuitarDeEstudioAutomatico.Name = "Chk_QuitarDeEstudioAutomatico"
-        Me.Chk_QuitarDeEstudioAutomatico.Size = New System.Drawing.Size(164, 20)
-        Me.Chk_QuitarDeEstudioAutomatico.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_QuitarDeEstudioAutomatico.TabIndex = 10027
-        Me.Chk_QuitarDeEstudioAutomatico.Text = "Quitar de estudio automático"
         '
         'Frm_00_Asis_Compra_Menu
         '

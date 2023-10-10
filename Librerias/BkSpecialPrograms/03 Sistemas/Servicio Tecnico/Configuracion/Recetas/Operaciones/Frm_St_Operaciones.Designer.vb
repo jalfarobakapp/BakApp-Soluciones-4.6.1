@@ -93,7 +93,8 @@ Partial Class Frm_St_Operaciones
         Me.Txt_Buscador.Border.Class = "TextBoxBorder"
         Me.Txt_Buscador.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Buscador.ButtonCustom.Image = CType(resources.GetObject("Txt_Buscador.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_Buscador.ButtonCustom.Visible = True
+        Me.Txt_Buscador.ButtonCustom2.Image = CType(resources.GetObject("Txt_Buscador.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Buscador.ButtonCustom2.Visible = True
         Me.Txt_Buscador.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Buscador.ForeColor = System.Drawing.Color.Black
         Me.Txt_Buscador.Location = New System.Drawing.Point(3, 20)
@@ -260,6 +261,7 @@ Partial Class Frm_St_Operaciones
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Frm_St_Operaciones"

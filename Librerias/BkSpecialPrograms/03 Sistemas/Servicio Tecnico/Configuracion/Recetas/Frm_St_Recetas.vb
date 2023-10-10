@@ -111,6 +111,10 @@ Public Class Frm_St_Recetas
 
     Private Sub Btn_Crear_Receta_Click(sender As Object, e As EventArgs) Handles Btn_Crear_Receta.Click
 
+        If Not Fx_Tiene_Permiso(Me, "Stec0026") Then
+            Return
+        End If
+
         Dim _Grabar As Boolean
 
         Dim _Fm As New Frm_St_RecetaCrear("")
@@ -125,6 +129,10 @@ Public Class Frm_St_Recetas
     End Sub
 
     Private Sub Grilla_Recetas_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Recetas.CellDoubleClick
+
+        If Not Fx_Tiene_Permiso(Me, "Stec0027") Then
+            Return
+        End If
 
         Dim _Fila As DataGridViewRow = Grilla_Recetas.CurrentRow
         Dim _Row_Receta As DataRow

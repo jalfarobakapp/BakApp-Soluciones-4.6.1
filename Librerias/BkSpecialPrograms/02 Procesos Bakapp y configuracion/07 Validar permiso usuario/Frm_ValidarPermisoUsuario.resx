@@ -346,7 +346,7 @@
   <data name="Btn_Solicitar_Usuario_Seleccionado.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAbtJREFUSEutlL9KA0EQxjdgo1j5DD5DbCxtbQK3okQRER/AUqzsfICAIDY24gWW
+        wgAADsIBFShKgAAAAbtJREFUSEutlL9KA0EQxjdgo1j5DD5DbCxtbQK3okQRER/AUqzsfICAIDY24gWW
         gyAoWolaCtoIgbyAloKV5pyZ3b2b3Z0kzRW/m9kv3/zZhJwqy3IqShfbqtPPId5D7KnMLEu+SYgiAs2W
         gBIal0G0DKUaCVFEqOF0RlJdjCxm5sNt+kvNePTQOV+V6jmyqA02+wsaywOepHpOIrR2HlbcAIttXMdA
         z6EkrI+RRTtgDMy6wZVUz5HFzFxQg1lkZl6q54giAlvixrZReAOvH0t1MaLogUYvrrEfhFtj3JL8EqnQ
@@ -359,7 +359,7 @@
   <data name="Btn_Solicitar_Usuarios_Todos.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAA3RJREFUSEullU1IVFEUx5WGyVEyK10pfiyUkhYl4SYEKyGjRWQpTudxZlLEIKQk
+        wgAADsIBFShKgAAAA3RJREFUSEullU1IVFEUx5WGyVEyK10pfiyUkhYl4SYEKyGjRWQpTudxZlLEIKQk
         ynHToo0UtDAhpA9xoQlG5DBOBn1ASeEiKMrxo1FRUUnCCKlV5et/nu/Ge89nH7T4ee7HOf//vdd73yTo
         uv5HfBzN91K4O5n744gjPi1y3UuRzW65TmwdZt5GRPfBTIBpah+FUpOpr9nH/TqEdRgYcZUI+n1lpRQq
         CCAftdOo6wI+q6ZVPBFMrKLFibkjk2+XeDlqCLvhBXncns5MUdS8R+0keO1qAOdGTMoqhpn8M2V8LtdD
@@ -380,7 +380,7 @@
   <data name="Btn_Mnu_Remoto_y_esperar.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAA2FJREFUSEutVU1IVFEUHlduTTSEoohatDCDdi6KoCRp4cZyI2RUGoEGIdROSBI1
+        wgAADsIBFShKgAAAA2FJREFUSEutVU1IVFEUHlduTTSEoohatDCDdi6KoCRp4cZyI2RUGoEGIdROSBI1
         I0giUshMQVfaQqbRNMvInyEjodScVJRE0VDxZ/wd3+n77rv3NfOchVAHvnfvOe/e77vn3DNvPCISFfuu
         +2LjrnmzgGbMFzFagOhxEbHXGPk+Ntp+g6hBbMoEwagmszAn8VYYTIzvRzHPjMZDRDhYGAvUADskSMht
         nbpQ3t/NeU710ArWzF6pGgzSz3j81Z+Q1zrNuV7PfbuycSY4Ccnb9Km2cl8MtyK+UOdfJIF0jm7DFWkP
@@ -400,7 +400,7 @@
   <data name="Btn_Remoto_y_no_esperar.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAy5JREFUSEu1Vd9LU1Ecn0++SlAERT3UYxj01j/Ri+BLb9rmiwox0DcfxKFmCElI
+        wgAADsIBFShKgAAAAy5JREFUSEu1Vd9LU1Ecn0++SlAERT3UYxj01j/Ri+BLb9rmiwox0DcfxKFmCElI
         G0xXA31yPYy1fIkIVEZ7DIu1hoEUCibpps1t9/T5fO85p3uvE4zoC599z/dzz/l8zq97F1JKtUV/f39n
         X19fL5BBex/ZAZTO++BeIvN5Z7vxBm1JDOqBQFmLOWhT+MQDw/F5Ge2edjqEr0DHTmABaFEgHA5vT09P
         r7GdSCQO0WcnHo/XWM/OzhYikcg3tnV/jju1GtvATCi+qmd1kkwmX4P/USgUKKDK5TJKpUqlktTFYpFl

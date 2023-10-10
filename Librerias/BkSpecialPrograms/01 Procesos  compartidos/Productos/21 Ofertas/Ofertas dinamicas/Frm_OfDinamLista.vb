@@ -33,6 +33,11 @@ Public Class Frm_OfDinamLista
         AddHandler Grilla_Recetas.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla_Productos.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
+        _Sql.Sb_Parametro_Informe_Sql(Lbl_NroMaxProdXOfertaDinamica, "Ofertas_Dinamincas",
+                                      Lbl_NroMaxProdXOfertaDinamica.Name, Class_SQLite.Enum_Type._Tag, Lbl_NroMaxProdXOfertaDinamica.Tag, False,, False, False)
+
+        Lbl_NroMaxProdXOfertaDinamica.Text = Lbl_NroMaxProdXOfertaDinamica.Tag
+
     End Sub
 
     Sub Sb_Actualizar_Grilla_Ofertas()
@@ -302,6 +307,21 @@ Public Class Frm_OfDinamLista
 
                 Consulta_sql = String.Empty
 
+                If _TblProductos.Rows.Count > CInt(Lbl_NroMaxProdXOfertaDinamica.Tag) Then
+                    If Not Fx_Tiene_Permiso(Me, "Ofer0007",,,,,,,,,,,,,,,, vbCrLf & "MAXIMO DE PRODUCTOS A SELECCIONAR DE UNA SOLA VEZ: " & Lbl_NroMaxProdXOfertaDinamica.Tag) Then
+                        Return
+                    End If
+
+                    Dim _Msg1 = "Esta tratando de incorporar de una sola vez " & _TblProductos.Rows.Count & " productos a la oferta" & vbCrLf &
+                                "El máximo sugerido es de " & CInt(Lbl_NroMaxProdXOfertaDinamica.Tag) & " productos."
+                    Dim _Msg2 = "¿DESEA SEGUIR CON LA GRABACION A PESAR DE LA ADVERTENCIA?" & vbCrLf & vbCrLf
+
+                    If Not Fx_Confirmar_Lectura(_Msg1, _Msg2) Then
+                        Return
+                    End If
+
+                End If
+
                 If Not IsNothing(_TblProductos) Then
 
                     For Each _Flprod As DataRow In _TblProductos.Rows
@@ -475,4 +495,31 @@ Public Class Frm_OfDinamLista
         Txt_Buscador.Text = String.Empty
         Sb_Actualizar_Grilla_Ofertas()
     End Sub
+
+    Private Sub Btn_EditarNroMaxProductos_Click(sender As Object, e As EventArgs) Handles Btn_EditarNroMaxProductos.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Ofer0008") Then
+            Return
+        End If
+
+        Dim _Aceptar As Boolean
+
+        _Aceptar = InputBox_Bk(Me, "Ingrese la cantidad máxima de productos para seleccionar y asociar a una oferta de una vez",
+                               "Editar máx. selección de productos", Lbl_NroMaxProdXOfertaDinamica.Tag, False,, 3, True,
+                               _Tipo_Imagen.Product,, _Tipo_Caracter.Solo_Numeros_Enteros, False)
+
+        If Not _Aceptar Then
+            Return
+        End If
+
+        _Sql.Sb_Parametro_Informe_Sql(Lbl_NroMaxProdXOfertaDinamica, "Ofertas_Dinamincas",
+                                      Lbl_NroMaxProdXOfertaDinamica.Name, Class_SQLite.Enum_Type._Tag, Lbl_NroMaxProdXOfertaDinamica.Tag, True,, False, False)
+
+        Lbl_NroMaxProdXOfertaDinamica.Text = Lbl_NroMaxProdXOfertaDinamica.Tag
+
+        MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Editar máx. selección de productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+    End Sub
+
+
 End Class

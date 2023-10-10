@@ -599,6 +599,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Espr0029", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Espr0030", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Espr0031", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Espr0032", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Espr0033", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ofer0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ofer0002", _Objeto, _Formulario)
@@ -606,6 +608,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Ofer0004", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ofer0005", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ofer0006", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Ofer0007", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Ofer0008", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Dte00001", _Objeto, _Formulario)
 
@@ -853,6 +857,17 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Stec0018", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Stec0019", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Stec0020", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Stec0021", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Stec0022", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Stec0023", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Stec0024", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Stec0025", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Stec0026", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Stec0027", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Stec0028", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Stec0029", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Stec0030", _Objeto, _Formulario)
+
 
         _SqlQuery += Fx_Insertar_Permiso("Scn00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Scn00002", _Objeto, _Formulario)
@@ -2587,7 +2602,7 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.ESPECIALES, 6)
                 _NombreFamiliaPermiso = _Fml.ESPECIALES.ToString
             Case "Espr0024"
-                _DescripcionPermiso = "CARGAR TABLA DE FAMLIAS CON DESCUENTOS DE MTS"
+                _DescripcionPermiso = "CARGAR TABLA DE FAMILIAS CON DESCUENTOS DE MTS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.ESPECIALES, 6)
                 _NombreFamiliaPermiso = _Fml.ESPECIALES.ToString
             Case "Espr0025"
@@ -2614,9 +2629,16 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "INGRESAR A PERMISOS REMOTOS NVV"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.ESPECIALES, 6)
                 _NombreFamiliaPermiso = _Fml.ESPECIALES.ToString
-
             Case "Espr0031"
                 _DescripcionPermiso = "INGRESAR AL REGISTRO DE HUELLAS DIGITALES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.ESPECIALES, 6)
+                _NombreFamiliaPermiso = _Fml.ESPECIALES.ToString
+            Case "Espr0032"
+                _DescripcionPermiso = "DEFINIR TIPOS DE MONEDAS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.ESPECIALES, 6)
+                _NombreFamiliaPermiso = _Fml.ESPECIALES.ToString
+            Case "Espr0033"
+                _DescripcionPermiso = "ELIMINAR MONEDAS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.ESPECIALES, 6)
                 _NombreFamiliaPermiso = _Fml.ESPECIALES.ToString
 
@@ -2652,6 +2674,14 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "DESASOCIAR PRODUCTOS DE OFERTAS DINAMICAS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.OFERTAS, 6)
                 _NombreFamiliaPermiso = _Fml.OFERTAS.ToString
+            Case "Ofer0007"
+                _DescripcionPermiso = "PERMITIR SELECCIONAR MAS PRODUCTOS QUE LOS RECOMENDADOS A LEVANTAR DE UNA SOLA VEZ EN UNA OFERTA DINAMICA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.OFERTAS, 6)
+                _NombreFamiliaPermiso = _Fml.OFERTAS.ToString
+            Case "Ofer0008"
+                _DescripcionPermiso = "EDITAR CANTIDAD MAXIMA DE SELECCION DE PRODUCTOS PARA ASOCIAR A UNA OFERTA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SERVICIO_TECNICO, 6)
+                _NombreFamiliaPermiso = _Fml.SERVICIO_TECNICO.ToString
 
         End Select
 
@@ -3775,6 +3805,47 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "PERMITIR GENERAR ORDENES DE SERVICIO CON DEUDA VENCIDA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.SERVICIO_TECNICO, 6)
                 _NombreFamiliaPermiso = _Fml.SERVICIO_TECNICO.ToString
+            Case "Stec0021"
+                _DescripcionPermiso = "INGRESAR MANTENCION DE OPERACIONES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SERVICIO_TECNICO, 6)
+                _NombreFamiliaPermiso = _Fml.SERVICIO_TECNICO.ToString
+            Case "Stec0022"
+                _DescripcionPermiso = "CREAR NUEVAS OPERACIONES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SERVICIO_TECNICO, 6)
+                _NombreFamiliaPermiso = _Fml.SERVICIO_TECNICO.ToString
+            Case "Stec0023"
+                _DescripcionPermiso = "EDITAR OPERACIONES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SERVICIO_TECNICO, 6)
+                _NombreFamiliaPermiso = _Fml.SERVICIO_TECNICO.ToString
+            Case "Stec0024"
+                _DescripcionPermiso = "ELIMINAR OPERACIONES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SERVICIO_TECNICO, 6)
+                _NombreFamiliaPermiso = _Fml.SERVICIO_TECNICO.ToString
+            Case "Stec0025"
+                _DescripcionPermiso = "INGRESAR MANTENCION DE RECETAS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SERVICIO_TECNICO, 6)
+                _NombreFamiliaPermiso = _Fml.SERVICIO_TECNICO.ToString
+            Case "Stec0026"
+                _DescripcionPermiso = "CREAR NUEVAS RECETAS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SERVICIO_TECNICO, 6)
+                _NombreFamiliaPermiso = _Fml.SERVICIO_TECNICO.ToString
+            Case "Stec0027"
+                _DescripcionPermiso = "EDITAR RECETAS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SERVICIO_TECNICO, 6)
+                _NombreFamiliaPermiso = _Fml.SERVICIO_TECNICO.ToString
+            Case "Stec0028"
+                _DescripcionPermiso = "ELIMINAR RECETAS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SERVICIO_TECNICO, 6)
+                _NombreFamiliaPermiso = _Fml.SERVICIO_TECNICO.ToString
+            Case "Stec0029"
+                _DescripcionPermiso = "INGRESAR MANTENCION DE FILTRO PRODUCTOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SERVICIO_TECNICO, 6)
+                _NombreFamiliaPermiso = _Fml.SERVICIO_TECNICO.ToString
+            Case "Stec0030"
+                _DescripcionPermiso = "INGRESAR MANTENCION DE BODEGAS DE SERVICIO TECNICO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SERVICIO_TECNICO, 6)
+                _NombreFamiliaPermiso = _Fml.SERVICIO_TECNICO.ToString
+
 
         End Select
 

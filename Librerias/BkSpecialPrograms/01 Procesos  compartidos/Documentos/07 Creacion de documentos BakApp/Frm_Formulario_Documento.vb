@@ -11969,8 +11969,10 @@ Public Class Frm_Formulario_Documento
                                 _Vizado = False
                             End If
                         Else
-                            If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00090", Nothing) Then
-                                Return
+                            If _Tipo_Documento <> csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra Then
+                                If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00090", Nothing) Then
+                                    Return
+                                End If
                             End If
                         End If
 
@@ -13135,6 +13137,12 @@ Public Class Frm_Formulario_Documento
         Fm_Bd.Dispose()
 
         If Not _Row_Bodega_Destino Is Nothing Then
+
+            'Dim _Permiso = "Bo" & ModEmpresa & _Row_Bodega_Destino.Item("KOSU") & _Row_Bodega_Destino.Item("KOBO")
+
+            'If Not Fx_Tiene_Permiso(Me, _Permiso) Then
+            '    Return False
+            'End If
 
             _RowEntidad.Item("SUEN") = _Row_Bodega_Destino.Item("KOSU")
             _TblEncabezado.Rows(0).Item("CodSucEntidad") = _Row_Bodega_Destino.Item("KOSU")

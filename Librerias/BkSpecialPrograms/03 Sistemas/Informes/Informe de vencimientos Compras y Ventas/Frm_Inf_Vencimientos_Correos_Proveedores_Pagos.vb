@@ -14,10 +14,10 @@ Public Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
     Dim _Cerrar As Boolean
     Dim _Correo_Manual As Boolean
 
-    Public Sub New(ByVal Id_Correo As Integer,
+    Public Sub New(Id_Correo As Integer,
                    ByRef TblInf As DataTable,
                    ByRef TblEnt As DataTable,
-                   Optional ByVal Correo_Manual As Boolean = False)
+                   Optional Correo_Manual As Boolean = False)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -37,7 +37,7 @@ Public Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
 
     End Sub
 
-    Private Sub Frm_Inf_Vencimientos_Correos_Proveedores_Pagos_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Inf_Vencimientos_Correos_Proveedores_Pagos_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Grilla_Detalle.DataSource = _TblEnt
         Sb_Actualizar_Grilla()
@@ -80,158 +80,174 @@ Public Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
 
         End With
 
-        '
-
-        'im _Problemas = 0
-        Sb_Revisar_Grilla()
-
-
-
     End Sub
 
-    Sub Sb_Revisar_Grilla()
+    Function Fx_Validar_CtadeCorreos(_Correo As String)
 
-        _Correo_Problema = 0
+        Dim _Correo_Valido As Boolean
 
-        For Each _Fila As DataGridViewRow In Grilla_Detalle.Rows
+        If _Correo.Contains(";") Then
 
-            Dim _Correo = Trim(_Fila.Cells("EMAILCOMER").Value)
-            Dim _Correo_Valido As Boolean = Fx_Validar_Email(_Correo)
-            Dim _Chk As Boolean = _Fila.Cells("Chk").Value
+            Dim _Correos = _Correo.Split(";")
 
-            If Global_Thema = Enum_Themas.Oscuro Then
-                If String.IsNullOrEmpty(_Correo) Or Not _Correo_Valido Then
-                    _Fila.DefaultCellStyle.ForeColor = Color.Yellow
-                    If _Chk Then _Correo_Problema += 1
-                Else
-                    _Fila.DefaultCellStyle.ForeColor = Color.White
+            For Each _Cr As String In _Correos
+                _Correo_Valido = Fx_Validar_Email(_Cr)
+                If Not _Correo_Valido Then
+                    _Correo = _Correo
+                    Exit For
                 End If
+            Next
+
+        Else
+
+            _Correo_Valido = Fx_Validar_Email(_Correo)
+
+        End If
+
+        If Not _Correo_Valido Then
+            If String.IsNullOrWhiteSpace(_Correo) Then
+                MessageBoxEx.Show(Me, "El correo no puede estar vacío", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Else
-                If String.IsNullOrEmpty(_Correo) Or Not _Correo_Valido Then
-                    _Fila.DefaultCellStyle.BackColor = Color.Yellow
-                    If _Chk Then _Correo_Problema += 1
-                Else
-                    _Fila.DefaultCellStyle.BackColor = Color.White
-                End If
+                MessageBoxEx.Show(Me, "El correo [" & _Correo & "] no es una cuenta de correo valida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
+            Return False
+        End If
 
-        Next
+        Return True
 
-    End Sub
+    End Function
 
-    Private Sub Btn_Enviar_Correos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Enviar_Correos.Click
+    Private Sub Btn_Enviar_Correos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Enviar_Correos.Click
 
         Dim _Tickeados = 0
+
         For Each _Fila As DataRow In _TblEnt.Rows
             Dim _Chk As Boolean = _Fila.Item("Chk")
             If _Chk Then _Tickeados += 1
         Next
 
-        If CBool(_Tickeados) Then
+        If Not CBool(_Tickeados) Then
+            MessageBoxEx.Show(Me, "No hay registros seleccionados", "Enviar correos", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
 
-            Sb_Revisar_Grilla()
+        ShowContextMenu(Menu_Contextual_02)
 
-            Try
+    End Sub
 
+    Sub Sb_Enviar_Correos(_Correo_Manual As Boolean)
 
-                If CBool(_Correo_Problema) Then
-                    MessageBoxEx.Show(Me, "Existen entidades con problema en el correo, favor corrija antes de enviar la información" & vbCrLf &
+        Try
+
+            If CBool(_Correo_Problema) Then
+                MessageBoxEx.Show(Me, "Existen entidades con problema en el correo, favor corrija antes de enviar la información" & vbCrLf &
                                       "Marcados con amarillo", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    Return
-                End If
+                Return
+            End If
 
-
-                If _Correo_Manual Then
-
-                    Dim Fm As New Frm_Correos_SMTP
-                    Fm.Pro_Filtro_Extra = "And Envio_Automatico = 0" & vbCrLf
-                    Fm.Pro_Seleccionar = True
-                    Fm.ShowDialog(Me)
-
-                    If Fm.Pro_Seleccionado Then
-                        _Id_Correo = Fm.Pro_Row_Fila_Seleccionada.Item("Id")
-                        Fm.Dispose()
-                    Else
-                        MessageBoxEx.Show(Me, "Debe seleccionar un correo por defecto para el cuerpo del mensaje",
-                                          "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                        Fm.Dispose()
-                        Return
-                    End If
-
-                End If
-
-                Grilla_Detalle.Enabled = False
-                Btn_Enviar_Correos.Visible = False
-                Chk_Marcar_todo.Visible = False
-                Me.ControlBox = False
-
-                Progreso_correo.Visible = True
-                Lbl_Envio_correo.Visible = True
-                Me.Refresh()
-
-                Progreso_correo.Maximum = _TblEnt.Rows.Count
-
-                Dim _Correos_Enviados = 0
-                Dim _Correos_Rechazados = 0
+            If Not _Correo_Manual Then
 
                 For Each _Fila As DataRow In _TblEnt.Rows
 
                     Dim _Chk As Boolean = _Fila.Item("Chk")
+                    Dim _Emailcomer As String = _Fila.Item("EMAILCOMER")
 
-                    System.Windows.Forms.Application.DoEvents()
-                    If _Chk Then
-                        Dim _Nokoen = Trim(_Fila.Item("NOKOEN"))
-                        Lbl_Envio_correo.Text = "Enviando correo informativo a: " & _Nokoen
-
-                        If Fx_Enviar_Detalle_Pago_Proveedores_Por_Mail(Me, _Fila, _TblInf) Then
-                            _Correos_Enviados += 1
-                        Else
-                            _Correos_Rechazados += 1
-                        End If
-
-                        Progreso_correo.Value += 1
+                    If _Chk AndAlso Not Fx_Validar_CtadeCorreos(_Emailcomer) Then
+                        Return
                     End If
+
                 Next
 
-                Progreso_correo.Value = 0
+            End If
 
-                If Not _Correo_Manual Then
 
-                    MessageBoxEx.Show(Me, "Correos enviados: " & _Correos_Enviados & vbCrLf &
-                                          "Correos no enviados: " & _Correos_Rechazados, "Envío de correos",
-                                          MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Dim Fm As New Frm_Correos_SMTP
+            If _Correo_Manual Then Fm.Pro_Filtro_Extra = "And Envio_Automatico = 0" & vbCrLf
+            Fm.Pro_Seleccionar = True
+            Fm.ShowDialog(Me)
+
+            If Fm.Pro_Seleccionado Then
+                _Id_Correo = Fm.Pro_Row_Fila_Seleccionada.Item("Id")
+                Fm.Dispose()
+            Else
+                MessageBoxEx.Show(Me, "Debe seleccionar un correo por defecto para el cuerpo del mensaje",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Fm.Dispose()
+                Return
+            End If
+
+            Grilla_Detalle.Enabled = False
+            Btn_Enviar_Correos.Visible = False
+            Chk_Marcar_todo.Visible = False
+            Me.ControlBox = False
+
+            Progreso_correo.Visible = True
+            Lbl_Envio_correo.Visible = True
+            Me.Refresh()
+
+            Progreso_correo.Maximum = _TblEnt.Rows.Count
+
+            Dim _Correos_Enviados = 0
+            Dim _Correos_Rechazados = 0
+
+            For Each _Fila As DataRow In _TblEnt.Rows
+
+                Dim _Chk As Boolean = _Fila.Item("Chk")
+
+                Application.DoEvents()
+
+                If _Chk Then
+
+                    Dim _Nokoen = Trim(_Fila.Item("NOKOEN"))
+
+                    Lbl_Envio_correo.Text = "Enviando correo informativo a: " & _Nokoen
+
+                    If Fx_Enviar_Detalle_Pago_Proveedores_Por_Mail(Me, _Fila, _TblInf, _Correo_Manual) Then
+                        _Correos_Enviados += 1
+                    Else
+                        _Correos_Rechazados += 1
+                    End If
+
+                    Progreso_correo.Value += 1
 
                 End If
 
+            Next
 
-                _Cerrar = True
-                Me.Close()
+            Progreso_correo.Value = 0
 
-            Catch ex As Exception
-                MessageBoxEx.Show(ex.Message)
-            Finally
+            If Not _Correo_Manual Then
 
-                Grilla_Detalle.Enabled = True
-                Btn_Enviar_Correos.Visible = True
-                Chk_Marcar_todo.Visible = True
-                Me.ControlBox = True
+                MessageBoxEx.Show(Me, "Correos enviados: " & _Correos_Enviados & vbCrLf &
+                                  "Correos no enviados: " & _Correos_Rechazados, "Envío de correos",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                Progreso_correo.Visible = False
-                Lbl_Envio_correo.Visible = False
+            End If
 
-            End Try
+            _Cerrar = True
+            Me.Close()
 
-        Else
-            MessageBoxEx.Show(Me, "No hay registros seleccionados", "Enviar correos", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        End If
+        Catch ex As Exception
+            MessageBoxEx.Show(ex.Message)
+        Finally
+
+            Grilla_Detalle.Enabled = True
+            Btn_Enviar_Correos.Visible = True
+            Chk_Marcar_todo.Visible = True
+            Me.ControlBox = True
+
+            Progreso_correo.Visible = False
+            Lbl_Envio_correo.Visible = False
+
+        End Try
 
     End Sub
 
 #Region "ENVIO CORREO PAGO PROVEEDORES"
 
-    Public Function Fx_Enviar_Detalle_Pago_Proveedores_Por_Mail(ByVal _Formulario As Form,
-                                                                ByVal _RowEntidad As DataRow,
-                                                                ByVal _TblInforme As DataTable) As Boolean
+    Public Function Fx_Enviar_Detalle_Pago_Proveedores_Por_Mail(_Formulario As Form,
+                                                                _RowEntidad As DataRow,
+                                                                _TblInforme As DataTable,
+                                                                _Correo_Manual As Boolean) As Boolean
 
 
         Dim Crea_Htm As New Clase_Crear_Documento_Htm
@@ -256,7 +272,7 @@ Public Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
 
                 Dim _Para As String = Trim(_RowEntidad.Item("EMAILCOMER"))
 
-                If Fx_Crear_Informe_Html_Pago_Proveedores(_Ruta, _RowEntidad, _TblInforme, "Informe_cobranza") Then
+                If Fx_Crear_Informe_Html_Pago_Proveedores2(_Ruta, _RowEntidad, _TblInforme, "Informe_cobranza") Then 'If Fx_Crear_Informe_Html_Pago_Proveedores(_Ruta, _RowEntidad, _TblInforme, "Informe_cobranza") Then
 
                     Dim Envio_Occ_Mail As New Class_Outlook
 
@@ -282,8 +298,6 @@ Public Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
                     Consulta_Sql = "Select Top 1 * From TABENDP Where KOENDP = '" & _Emdp & "'"
                     Dim _Row_Tabendp As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
-
-
                     If CBool(_TblCorreo.Rows.Count) Then
 
                         _CuerpoMensaje = _TblCorreo.Rows(0).Item("CuerpoMensaje")
@@ -298,7 +312,6 @@ Public Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
 
                         _Asunto = _TblCorreo.Rows(0).Item("Asunto") & " (" & Trim(_Razon_Social) & ")"
                         _CuerpoMensaje = Replace(_CuerpoMensaje, "<HTML>", _Cuerpo_Html)
-
 
                         If String.IsNullOrEmpty(Trim(_CuerpoMensaje)) Then
                             _CuerpoMensaje = "<HTML>"
@@ -342,36 +355,7 @@ Public Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
                         If _Correo_Manual Then
                             Envio_Occ_Mail.Sb_Crear_Correo_Outlook(_Para, _Adjunto, _Asunto, _CuerpoMensaje, True)
                         Else
-
-
-                            'If CBool(_TblCorreo.Rows.Count) Then
-
-
-                            'Dim _Para As String = String.Empty '"jalfaro@bakapp.cl"
-                            '_Cuerpo = _CuerpoMensaje
-
-                            Dim _Envio_Automatico As Boolean = _TblCorreo.Rows(0).Item("Envio_Automatico")
-
-
-                            If _Envio_Automatico Then
-                                Dim EnviarCorreo As New Frm_Correos_Conf
-                                EnviarCorreo.Fx_Enviar_Mail(_Host,
-                                                            _Remitente,
-                                                            _Contrasena,
-                                                            _Para,
-                                                            _CC,
-                                                            _Asunto,
-                                                            _CuerpoMensaje,
-                                                            Nothing,
-                                                            _Puerto,
-                                                            _SSL,
-                                                            False)
-
-                            Else
-                                Envio_Occ_Mail.Sb_Crear_Correo_Outlook(_Para, _Adjunto, _Asunto, _CuerpoMensaje, _Es_Html)
-                            End If
-
-
+                            Fx_Enviar_Notificacion_Correo_Al_Diablito(_Para, _CC, _Id_Correo, _Asunto, _CuerpoMensaje)
                             Return True
                         End If
 
@@ -392,14 +376,78 @@ Public Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
 
     End Function
 
-    Function Fx_Crear_Informe_Html_Pago_Proveedores(ByVal _Ruta_Archivo As String,
-                                                    ByVal _RowEntidad As DataRow,
-                                                    ByVal _TblDetalle As DataTable,
-                                                    ByVal _Nombre_Archivo_Adjunto As String) As Boolean
+
+    Function Fx_Enviar_Notificacion_Correo_Al_Diablito(_Para As String,
+                                                       _Cc As String,
+                                                       _Id_Correo As Integer,
+                                                       _Asunto As String,
+                                                       _Mensaje As String) As String
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+        Dim Consulta_sql As String
+        Dim _Error = String.Empty
+
+        Try
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos Corr Where Id = " & _Id_Correo
+            Dim _Row_Correo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row_Correo) Then
+                Throw New System.Exception("No existe configuración para el envio de correos")
+            End If
+
+            Dim _Nombre_Correo As String = _Row_Correo.Item("Nombre_Correo")
+
+            If String.IsNullOrEmpty(_Asunto) Then
+                _Asunto = "Correo de notificación de pedido " & RazonEmpresa
+            End If
+
+            _Mensaje = Replace(_Mensaje, "&lt;", "<")
+            _Mensaje = Replace(_Mensaje, "&gt;", ">")
+            _Mensaje = Replace(_Mensaje, "&quot;", """")
+
+            _Mensaje = Replace(_Mensaje, "'", "''")
+
+            If Not String.IsNullOrEmpty(_Nombre_Correo) Then
+
+                Dim _Fecha = "Getdate()"
+
+                Dim _NombreEquipo As String = String.Empty
+
+                _Para = _Para.Trim
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo (NombreEquipo,Id_Correo,Nombre_Correo,CodFuncionario,Asunto," &
+                                    "Para,Cc,Idmaeedo,Tido,Nudo,NombreFormato,Enviar,Mensaje,Fecha,Adjuntar_Documento,Doc_Adjuntos,Id_Acp)" &
+                                    vbCrLf &
+                                    "Values ('" & _NombreEquipo & "'," & _Id_Correo & ",'" & _Nombre_Correo & "','','" & _Asunto & "','" & _Para & "','" & _Cc &
+                                    "',0,'','','',1,'" & _Mensaje & "'," & _Fecha & ",0,'',0)"
+
+                _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+                _Error = _Sql.Pro_Error
+
+                If Not String.IsNullOrEmpty(_Error) Then
+                    Throw New System.Exception(_Error)
+                End If
+
+            End If
+
+        Catch ex As Exception
+            _Error = ex.Message
+        End Try
+
+        Return _Error
+
+    End Function
+
+    Function Fx_Crear_Informe_Html_Pago_Proveedores(_Ruta_Archivo As String,
+                                                    _RowEntidad As DataRow,
+                                                    _TblDetalle As DataTable,
+                                                    _Nombre_Archivo_Adjunto As String) As Boolean
         Try
 
 
-            Consulta_sql = My.Resources.Recursos_Inf_Compras_Vencimiento.Crear_Html_Facturas_Cobranza
+            Consulta_Sql = My.Resources.Recursos_Inf_Compras_Vencimiento.Crear_Html_Facturas_Cobranza
 
             Dim _Documento_Html As String = My.Resources.Recursos_Inf_Compras_Vencimiento.Crear_Html_Facturas_Pago_Proveedores
             Dim _Detalle_Doc, _Ncc_Doc As String
@@ -538,9 +586,157 @@ Public Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
 
     End Function
 
+    Function Fx_Crear_Informe_Html_Pago_Proveedores2(_Ruta_Archivo As String,
+                                                     _RowEntidad As DataRow,
+                                                     _TblDetalle As DataTable,
+                                                     _Nombre_Archivo_Adjunto As String) As Boolean
+        Try
+
+
+            Consulta_Sql = My.Resources.Recursos_Inf_Compras_Vencimiento.Crear_Html_Facturas_Cobranza
+
+            Dim _Documento_Html As String = My.Resources.Recursos_Inf_Compras_Vencimiento.Crear_Html_Facturas_Pago_Proveedores2
+            Dim _Detalle_Doc, _Ncc_Doc As String
+            Dim _Suma_saldo As Double
+
+            Dim _Koen = Trim(_RowEntidad.Item("KOEN"))
+            Dim _Suen = Trim(_RowEntidad.Item("SUEN"))
+            Dim _Nokoen = Trim(_RowEntidad.Item("NOKOEN"))
+
+            _Documento_Html = Replace(_Documento_Html, "#Razon_Social#", _Nokoen)
+
+            Dim _Arr_Idmaeedo(_TblDetalle.Rows.Count - 1) As String
+            Dim _i = 0
+
+            For Each _Detalle As DataRow In _TblDetalle.Rows
+
+                Dim _Chk As Boolean = _Detalle.Item("Chk")
+                Dim _Endo As String = _Detalle.Item("ENDO").ToString.Trim
+                Dim _Suendo As String = _Detalle.Item("SUENDO").ToString.Trim
+                Dim _Idmaedpcd_Ori As Integer = _Detalle.Item("IDMAEDPCD")
+
+                If _Chk And _Endo = _Koen And _Suendo = _Suen Then
+
+                    Dim _Idmaeedo As String = UCase(_Detalle.Item("IDMAEEDO"))
+                    Dim _Libro As String = _Sql.Fx_Trae_Dato("MAEEDO", "LIBRO", "IDMAEEDO = " & _Idmaeedo)
+                    Dim _Tido As String = UCase(_Detalle.Item("TIDO"))
+                    Dim _Nudo As String = _Detalle.Item("NUDO")
+                    Dim _Feemdo As String = FormatDateTime(_Detalle.Item("FEEMDO"), DateFormat.ShortDate)
+
+                    Consulta_Sql = "Select *,VABRDO-VAABDO As Saldo From MAEEDO Where IDMAEEDO = " & _Idmaeedo
+                    Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+                    Dim _Vabrdo As String = FormatCurrency(_Row_Documento.Item("VABRDO"), 0)
+                    Dim _Saldo As String = FormatCurrency(_Row_Documento.Item("Saldo"), 0)
+
+                    Dim _Feve As String
+                    Try
+                        _Feve = FormatDateTime(_Detalle.Item("FEVE"), DateFormat.ShortDate)
+                    Catch ex As Exception
+                        _Feve = String.Empty
+                    End Try
+
+                    Dim _Vave As String = FormatCurrency(_Detalle.Item("VAVE"), 0)
+                    Dim _Vaabve As String = FormatCurrency(_Vave, 0)
+
+                    If _Tido = "FCC" Then
+                        _Tido = "Factura"
+                    ElseIf _Tido = "BLC" Then
+                        _Tido = "Boleta"
+                    End If
+
+                    _Detalle_Doc += "<tr bgcolor=" & Chr(34) & "#D9E1F2" & Chr(34) & ">" & vbCrLf &
+                                    "<td align=center bgcolor=" & Chr(34) & "#D9E1F2" & Chr(34) & ">" & _Tido & "</td>" & vbCrLf &
+                                    "<td align=center bgcolor=" & Chr(34) & "#D9E1F2" & Chr(34) & ">" & _Nudo & "</td>" & vbCrLf &
+                                    "<td align=center bgcolor=" & Chr(34) & "#D9E1F2" & Chr(34) & ">" & _Feemdo & "</td>" & vbCrLf &
+                                    "<td align=right bgcolor=" & Chr(34) & "#D9E1F2" & Chr(34) & ">" & _Vabrdo & "</td>" & vbCrLf &
+                                    "<td align=right></td>" & vbCrLf &
+                                    "<td align=right></td>" & vbCrLf &
+                                    "<td align=right></td>" & vbCrLf &
+                                    "<td align=right></td>" & vbCrLf &
+                                    "<td align=right bgcolor=" & Chr(34) & "#D9E1F2" & Chr(34) & ">" & _Saldo & "</td>" & vbCrLf &
+                                    "</tr>" & vbCrLf
+                    _Suma_saldo += _Detalle.Item("SALDO")
+
+                    _Arr_Idmaeedo(_i) = _Idmaeedo
+
+                    Consulta_Sql = "SELECT CD.IDMAEDPCD,CD.IDMAEDPCE,CD.TIDOPA,CD.ARCHIRST,CD.IDRST,CD.FEASDP,CD.VAASDP,PROPIO.TIDP,PROPIO.NUDP,PROPIO.ENDP,PROPIO.FEEMDP," &
+                                   "PROPIO.FEVEDP,PROPIO.VADP,PROPIO.TIMODP,PROPIO.MODP,PROPIO.TAMODP,PROPIO.TIMODP,PROPIO.REFANTI,CD.TCASIG" & vbCrLf &
+                                   "FROM MAEDPCD AS CD  WITH ( NOLOCK )  " & vbCrLf &
+                                   "LEFT JOIN MAEDPCE AS PROPIO ON CD.IDMAEDPCE=PROPIO.IDMAEDPCE  " & vbCrLf &
+                                   "WHERE CD.ARCHIRST='MAEEDO  '  AND CD.IDRST=" & _Idmaeedo & " ORDER BY CD.FEASDP "
+                    Dim _Tbl_Pagos As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+
+                    For Each _Fl_Pg As DataRow In _Tbl_Pagos.Rows
+
+                        Dim _Idmaedpcd As Integer = _Fl_Pg.Item("IDMAEDPCD")
+                        Dim _Tidp As String = _Fl_Pg.Item("TIDP")
+                        Dim _Vaasdp As String = FormatCurrency(_Fl_Pg.Item("VAASDP"), 0)
+                        Dim _Refanti As String = _Fl_Pg.Item("REFANTI")
+                        Dim _Feasdp As String = FormatDateTime(_Fl_Pg.Item("FEASDP"), DateFormat.ShortDate)
+
+                        Dim _Negrita As String = String.Empty
+
+                        If _Idmaedpcd_Ori = _Idmaedpcd Then
+                            _Negrita = " style=" & Chr(34) & "font-weight: bold;" & Chr(34) & " "
+                            If _Tidp = "PTB" Then
+                                _Refanti = String.Empty
+                            End If
+                        End If
+
+                        _Detalle_Doc += "<tr>" & vbCrLf &
+                                        "<td></td>" & vbCrLf &
+                                        "<td></td>" & vbCrLf &
+                                        "<td></td>" & vbCrLf &
+                                        "<td></td>" & vbCrLf &
+                                        "<td align=center bgcolor=" & Chr(34) & "#F2F2F2" & Chr(34) & _Negrita & ">" & _Tidp & "</td>" & vbCrLf &
+                                        "<td align=center bgcolor=" & Chr(34) & "#F2F2F2" & Chr(34) & _Negrita & ">" & _Feasdp & "</td>" & vbCrLf &
+                                        "<td align=center bgcolor=" & Chr(34) & "#F2F2F2" & Chr(34) & _Negrita & ">" & _Refanti.ToString.Trim & "</td>" & vbCrLf &
+                                        "<td align=right  bgcolor=" & Chr(34) & "#F2F2F2" & Chr(34) & _Negrita & ">" & _Vaasdp & "</td>" & vbCrLf &
+                                        "</tr>"
+
+                    Next
+
+                    _i += 1
+
+                End If
+
+            Next
+
+            Dim _Total_Deuda As String = FormatCurrency(_Suma_saldo, 0)
+
+            _Documento_Html = Replace(_Documento_Html, "#Detalle#", _Detalle_Doc)
+            _Documento_Html = Replace(_Documento_Html, "#Total_deuda#", _Total_Deuda)
+
+            _Documento_Html = Replace(_Documento_Html, "á", "&aacute;")
+            _Documento_Html = Replace(_Documento_Html, "é", "&eacute;")
+            _Documento_Html = Replace(_Documento_Html, "í", "&iacute;")
+            _Documento_Html = Replace(_Documento_Html, "ó", "&oacute;")
+            _Documento_Html = Replace(_Documento_Html, "ú", "&uacute;")
+            _Documento_Html = Replace(_Documento_Html, "ñ", "&ntilde;")
+            _Documento_Html = Replace(_Documento_Html, "Ñ", "&Ntilde;")
+
+            ' Acento en Html
+            'a = &aacute;
+            'é = &eacute;
+            'í = &iacute;
+            'ó = &oacute;
+            'ú = &uacute;
+            'ñ = &ntilde;
+            'Ñ = &Ntilde;
+
+            CrearArchivoTxt(_Ruta_Archivo & "\", _Nombre_Archivo_Adjunto & ".Html", _Documento_Html, False)
+
+            Return True
+        Catch ex As Exception
+            MessageBoxEx.Show(ex.Message, "Error", Windows.Forms.MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.Error)
+        End Try
+
+    End Function
+
 #End Region
 
-    Private Sub Btn_Ingresar_Correo_Solo_Esta_Ocacion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ingresar_Correo_Solo_Esta_Ocacion.Click
+    Private Sub Btn_Ingresar_Correo_Solo_Esta_Ocacion_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ingresar_Correo_Solo_Esta_Ocacion.Click
 
         Dim _Fila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.CurrentRow.Index)
 
@@ -548,25 +744,29 @@ Public Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
         Dim _Correo As String = Trim(_Fila.Cells("EMAILCOMER").Value)
         Dim _Aceptado As Boolean
 
-        _Aceptado = InputBox_Bk(Me, _Nokoen, "Envio de correo de información al proveedor", _Correo, False,
-                            _Tipo_Mayus_Minus.Minusculas, , False, _Tipo_Imagen.Correo, False,
-                            _Tipo_Caracter.Cualquier_caracter, True)
+        _Aceptado = InputBox_Bk(Me, _Nokoen & vbCrLf &
+                                "Puede agregar mas de un correo en la lista separados por [;] punto y coma", "Envio de correo de información al proveedor", _Correo, False,
+                            _Tipo_Mayus_Minus.Minusculas, , True, _Tipo_Imagen.Correo, False, _Tipo_Caracter.Cualquier_caracter, False)
 
         Dim _Koen = _Fila.Cells("KOEN").Value
         Dim _Suen = _Fila.Cells("SUEN").Value
 
-        If _Aceptado Then
+        If Not _Aceptado Then
+            Return
+        End If
 
-            Dim _Correo_Valido As Boolean = Fx_Validar_Email(_Correo)
+        If Not Fx_Validar_CtadeCorreos(_Correo) Then
+            Return
+        End If
 
-            If Not _Correo_Valido Then Return
+        _Fila.Cells("EMAILCOMER").Value = _Correo
 
-            _Fila.Cells("EMAILCOMER").Value = _Correo
+        If Not _Correo.Contains(";") Then
 
             If MessageBoxEx.Show(Me, "¿Desea grabar este correo en la ficha de la entidad permanentemente?" & vbCrLf & vbCrLf &
-                                 _Correo,
-                                 "Grabar correo", MessageBoxButtons.YesNo,
-                                 MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+                             _Correo,
+                             "Grabar correo", MessageBoxButtons.YesNo,
+                             MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
                 Consulta_Sql = "Update MAEEN Set EMAILCOMER = '" & _Correo & "'" & vbCrLf &
                                "Where KOEN = '" & _Koen & "' And SUEN = '" & _Suen & "'"
@@ -583,12 +783,13 @@ Public Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
 
         End If
 
+
         Sb_Actualizar_Grilla()
 
     End Sub
 
 
-    Private Sub Sb_Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
@@ -600,7 +801,7 @@ Public Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
         End If
     End Sub
 
-    Private Sub Btn_Mnu_Ficha_Entidad_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Ficha_Entidad.Click
+    Private Sub Btn_Mnu_Ficha_Entidad_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Ficha_Entidad.Click
 
         Dim _Fila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.CurrentRow.Index)
 
@@ -628,7 +829,7 @@ Public Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
 
     End Sub
 
-    Private Sub Frm_Inf_Vencimientos_Correos_Proveedores_Pagos_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+    Private Sub Frm_Inf_Vencimientos_Correos_Proveedores_Pagos_FormClosing(sender As System.Object, e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
         If Not _Cerrar Then
             If MessageBoxEx.Show(Me, "Si cierra el formulario los correos no se enviaran" & vbCrLf &
                                  "¿Desea salir sin enviar los correos de información?", "Salir sin enviar correos",
@@ -638,13 +839,13 @@ Public Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
         End If
     End Sub
 
-    Private Sub Frm_Inf_Vencimientos_Correos_Proveedores_Pagos_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Inf_Vencimientos_Correos_Proveedores_Pagos_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Sb_Chk_Marcar_todo_CheckedChanged(ByVal sender As System.Object, ByVal e As DevComponents.DotNetBar.CheckBoxChangeEventArgs)
+    Private Sub Sb_Chk_Marcar_todo_CheckedChanged(sender As System.Object, e As DevComponents.DotNetBar.CheckBoxChangeEventArgs)
 
         Dim chk As Boolean = Chk_Marcar_todo.Checked
         For Each _Fila As DataGridViewRow In Grilla_Detalle.Rows
@@ -655,8 +856,15 @@ Public Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
 
     End Sub
 
-    Private Sub Grilla_Detalle_CellMouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles Grilla_Detalle.CellMouseUp
+    Private Sub Grilla_Detalle_CellMouseUp(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles Grilla_Detalle.CellMouseUp
         Grilla_Detalle.EndEdit()
     End Sub
 
+    Private Sub Btn_Mnu_EnviarCorreosManual_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_EnviarCorreosManual.Click
+        Sb_Enviar_Correos(True)
+    End Sub
+
+    Private Sub Btn_Mnu_EnviarCorreosDiablito_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_EnviarCorreosDiablito.Click
+        Sb_Enviar_Correos(False)
+    End Sub
 End Class

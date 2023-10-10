@@ -47,6 +47,10 @@ Partial Class Frm_OfDinamLista
         Me.Menu_Contextual_02 = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_QuitarProducto = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla_Recetas = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_NroMaxProdXOfertaDinamica = New DevComponents.DotNetBar.LabelX()
+        Me.Btn_EditarNroMaxProductos = New DevComponents.DotNetBar.ButtonX()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupPanel3.SuspendLayout()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.Grilla_Productos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -54,6 +58,7 @@ Partial Class Frm_OfDinamLista
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla_Recetas, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TableLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupPanel3
@@ -254,7 +259,7 @@ Partial Class Frm_OfDinamLista
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Receta, Me.Btn_ExportarExcel})
-        Me.Bar2.Location = New System.Drawing.Point(0, 544)
+        Me.Bar2.Location = New System.Drawing.Point(0, 571)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(885, 41)
         Me.Bar2.Stretch = True
@@ -413,11 +418,71 @@ Partial Class Frm_OfDinamLista
         Me.Grilla_Recetas.Size = New System.Drawing.Size(858, 271)
         Me.Grilla_Recetas.TabIndex = 1
         '
+        'LabelX1
+        '
+        Me.LabelX1.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.ForeColor = System.Drawing.Color.Black
+        Me.LabelX1.Location = New System.Drawing.Point(4, 4)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(518, 20)
+        Me.LabelX1.TabIndex = 105
+        Me.LabelX1.Text = "Numero máximo de productos que se podrán seleccionar para ser asociados a una ofe" &
+    "rta de una sola vez"
+        '
+        'Lbl_NroMaxProdXOfertaDinamica
+        '
+        Me.Lbl_NroMaxProdXOfertaDinamica.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_NroMaxProdXOfertaDinamica.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_NroMaxProdXOfertaDinamica.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_NroMaxProdXOfertaDinamica.Location = New System.Drawing.Point(530, 4)
+        Me.Lbl_NroMaxProdXOfertaDinamica.Name = "Lbl_NroMaxProdXOfertaDinamica"
+        Me.Lbl_NroMaxProdXOfertaDinamica.Size = New System.Drawing.Size(48, 20)
+        Me.Lbl_NroMaxProdXOfertaDinamica.TabIndex = 106
+        Me.Lbl_NroMaxProdXOfertaDinamica.Tag = "1"
+        Me.Lbl_NroMaxProdXOfertaDinamica.Text = "1"
+        '
+        'Btn_EditarNroMaxProductos
+        '
+        Me.Btn_EditarNroMaxProductos.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_EditarNroMaxProductos.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_EditarNroMaxProductos.Location = New System.Drawing.Point(601, 535)
+        Me.Btn_EditarNroMaxProductos.Name = "Btn_EditarNroMaxProductos"
+        Me.Btn_EditarNroMaxProductos.Size = New System.Drawing.Size(62, 27)
+        Me.Btn_EditarNroMaxProductos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_EditarNroMaxProductos.TabIndex = 107
+        Me.Btn_EditarNroMaxProductos.Text = "<-- Editar"
+        '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
+        Me.TableLayoutPanel1.ColumnCount = 2
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 90.09901!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.90099!))
+        Me.TableLayoutPanel1.Controls.Add(Me.LabelX1, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Lbl_NroMaxProdXOfertaDinamica, 1, 0)
+        Me.TableLayoutPanel1.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(9, 535)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 1
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(586, 28)
+        Me.TableLayoutPanel1.TabIndex = 108
+        '
         'Frm_OfDinamLista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(885, 585)
+        Me.ClientSize = New System.Drawing.Size(885, 612)
+        Me.Controls.Add(Me.TableLayoutPanel1)
+        Me.Controls.Add(Me.Btn_EditarNroMaxProductos)
         Me.Controls.Add(Me.GroupPanel3)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.Bar2)
@@ -439,6 +504,7 @@ Partial Class Frm_OfDinamLista
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla_Recetas, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -461,4 +527,8 @@ Partial Class Frm_OfDinamLista
     Friend WithEvents Btn_ExportarExcel As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Menu_Contextual_02 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_QuitarProducto As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Lbl_NroMaxProdXOfertaDinamica As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Btn_EditarNroMaxProductos As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
 End Class

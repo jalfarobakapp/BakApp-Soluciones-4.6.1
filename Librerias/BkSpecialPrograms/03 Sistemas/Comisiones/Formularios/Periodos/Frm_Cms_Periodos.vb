@@ -91,6 +91,7 @@ Public Class Frm_Cms_Periodos
         Dim _Id As Integer = _Fila.Cells("Id").Value
 
         Dim Fm As New Frm_Cms(_Id)
+        Fm.Text = "MANTENCION DE COMISIONES POR PERIODO"
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

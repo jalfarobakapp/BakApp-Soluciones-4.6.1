@@ -22,7 +22,7 @@ Namespace My.Resources
     '''<summary>
     '''  Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
     Friend Class Recursos_Inf_Compras_Vencimiento
@@ -131,6 +131,28 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Crear_Html_Facturas_Pago_Proveedores() As String
             Get
                 Return ResourceManager.GetString("Crear_Html_Facturas_Pago_Proveedores", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a &lt;html&gt;
+        '''&lt;head&gt;
+        '''&lt;title&gt;Documento Comercial&lt;/title&gt;
+        '''&lt;meta http-equiv=&apos;Content-Type&apos; content=&apos;text/html; charset=iso-8859-1&apos; /&gt;
+        '''
+        '''&lt;/head&gt;
+        '''&lt;body&gt;
+        ''' &lt;p&gt;
+        ''' &lt;br&gt;
+        ''' &lt;/p&gt;
+        ''' &lt;table border=&quot;0&quot; cellspacing=&quot;2&quot; cellpadding=&quot;2&quot; summary=&quot;Especificaci&amp;oacute;n del Detalle del Documento &quot; style=&quot;width: 1100px; height: 50px&quot;&gt;
+        '''		&lt;tr&gt; 
+        '''			&lt;td bgcolor=&quot;#B4C6E7&quot; style = &quot;width: 130px&quot; align=&quot;left&quot;&gt;&lt;b&gt;&lt;font size=4&gt;PROVEEDOR&lt;/font&gt;&lt;/b&gt;&lt;/td&gt; 
+        '''			&lt;td bgcolor=&quot;#D9E1F2&quot; style = &quot;width:690px&quot; align=&quot;left&quot;&gt;&lt;b&gt;#Razon_Social#&lt;/b&gt;&lt;/ [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Crear_Html_Facturas_Pago_Proveedores2() As String
+            Get
+                Return ResourceManager.GetString("Crear_Html_Facturas_Pago_Proveedores2", resourceCulture)
             End Get
         End Property
         
