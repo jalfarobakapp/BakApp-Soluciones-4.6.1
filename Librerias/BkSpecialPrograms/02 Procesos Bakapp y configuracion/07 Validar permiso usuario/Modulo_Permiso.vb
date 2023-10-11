@@ -23,9 +23,11 @@ Public Module Modulo_Permiso
                                      Optional _Ds_Matriz_Documentos As Ds_Matriz_Documentos = Nothing,
                                      Optional _Grabar_Log As Boolean = True,
                                      Optional ByRef _Solicitar_Permiso_Al_Final As Boolean = False,
-                                     Optional _Descripcion_Adicionasl As String = "") As Boolean
+                                     Optional _Descripcion_Adicionasl As String = "",
+                                     Optional _Idmaeedo As Integer = 0) As Boolean
 
         Dim _Permiso As Boolean = False
+
         _Rows_Info_Remota = Nothing
         _Id_Log_Gestion = 0
 
@@ -155,6 +157,7 @@ Public Module Modulo_Permiso
                 Fm.TopMost = _Formulario.TopMost
                 Fm.Id_DocEnc = _Id_DocEnc
                 Fm.Solicitar_Permiso_Al_Final = _Solicitar_Permiso_Al_Final
+                Fm.Idmaeedo = _Idmaeedo
                 Fm.ShowDialog(_Formulario)
 
                 _Permiso_Presencial = Fm.Pro_Permiso_Presencial

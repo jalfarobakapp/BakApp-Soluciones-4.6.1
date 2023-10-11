@@ -38,6 +38,8 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
         End Set
     End Property
 
+    Dim _PosicionMouse As Point = Cursor.Position
+
     Public Sub New(Funcionario As String, Revisar_Automaticamente_X_Notificacion As Boolean)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -65,6 +67,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
         _Pwfu = Trim(_Sql.Fx_Trae_Dato("TABFU", "PWFU", "KOFU = '" & _Funcionario & "'"))
 
+        AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_Monedas_MouseDown
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         Sb_Actualizar_Grilla()
@@ -434,8 +437,12 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
                 Else
 
-                    LabelItem2.Visible = Not String.IsNullOrWhiteSpace(_CodEntidad)
                     Btn_Ver_deuda_pendiente.Visible = Not String.IsNullOrWhiteSpace(_CodEntidad)
+                    Btn_Ver_Documento.Visible = CBool(_Rows_Info_Remota.Item("Idmaeedo"))
+
+                    LabelItem2.Visible = (Btn_Ver_deuda_pendiente.Visible Or Btn_Ver_Documento.Visible)
+
+                    _PosicionMouse = Cursor.Position
 
                     ShowContextMenu(Menu_Contextual_01)
 
@@ -1154,6 +1161,41 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
+    End Sub
+
+    Private Sub Btn_Ver_Documento_Click(sender As Object, e As EventArgs) Handles Btn_Ver_Documento.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _NroRemota As String = _Fila.Cells("NroRemota").Value
+
+        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Remotas" & vbCrLf &
+                       "Where NroRemota = '" & _NroRemota & "'"
+        Dim _Remota As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Idmaeedo As Integer = _Remota.Item("Idmaeedo")
+
+        Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+        Fm.Bar2.Enabled = False
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+        Windows.Forms.Cursor.Position = New Point(_PosicionMouse.X, _PosicionMouse.Y)
+        ShowContextMenu(Menu_Contextual_01)
+
+    End Sub
+
+    Private Sub Sb_Grilla_Monedas_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+            With sender
+                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+                    '_PosicionMouse = Cursor.Position
+                    Call Grilla_CellDoubleClick(Nothing, Nothing)
+                    'ShowContextMenu(Menu_Contextual_01)
+                End If
+            End With
+        End If
     End Sub
 
 End Class

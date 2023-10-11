@@ -516,7 +516,8 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
 
         Consulta_sql = String.Empty
 
-        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller", "PwTecnico = '" & Txt_PwTecnico.Text.Trim & "'")
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller",
+                                                       "CodFuncionario <> '" & _CodFuncionario & "' And PwTecnico = '" & Txt_PwTecnico.Text.Trim & "'")
 
         If CBool(_Reg) Then
             MessageBoxEx.Show(Me, "La clave de usuario ya esta registrada", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)

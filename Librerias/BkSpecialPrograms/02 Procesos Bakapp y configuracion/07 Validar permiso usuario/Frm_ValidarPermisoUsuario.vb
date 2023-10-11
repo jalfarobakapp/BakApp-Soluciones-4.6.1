@@ -131,6 +131,8 @@ Public Class Frm_ValidarPermisoUsuario
         End Set
     End Property
 
+    Public Property Idmaeedo As Integer
+
     Public Sub New(Optional ByVal CodEntidad As String = "",
                    Optional ByVal CodSucEntidad As String = "")
 
@@ -220,7 +222,7 @@ Public Class Frm_ValidarPermisoUsuario
         Dim _NomEntidad As String = Trim(_Sql.Fx_Trae_Dato("MAEEN", "NOKOEN",
                                               "KOEN = '" & _CodEntidad & "' And SUEN = '" & _CodSucEntidad & "'"))
 
-        _NroRemota = Fx_Solicitar_Remota(FUNCIONARIO, _Codpermiso, "", _Id_DocEnc, _CodEntidad, _NomEntidad, True, _CodSucEntidad)
+        _NroRemota = Fx_Solicitar_Remota(FUNCIONARIO, _Codpermiso, "", _Id_DocEnc, _CodEntidad, _NomEntidad, True, _CodSucEntidad,, Idmaeedo)
 
         If Not String.IsNullOrEmpty(_NroRemota) Then
 

@@ -3155,17 +3155,13 @@ Public Class Frm_Ver_Documento
 
     Private Sub Btn_Cierre_Reactivacion_Documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cierre_Reactivacion_Documento.Click
 
-        If Fx_Tiene_Permiso(Me, "Doc00011") Then
+        Dim _Idmaeedo = _TblEncabezado.Rows(0).Item("IDMAEEDO")
 
-            Dim _Idmaeedo = _TblEncabezado.Rows(0).Item("IDMAEEDO")
+        Dim Fm As New Frm_Cerrar_Abrir_Documentos(_Idmaeedo)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
-            Dim Fm As New Frm_Cerrar_Abrir_Documentos(_Idmaeedo)
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-
-            Sb_Abrir_Documento_Desde_Random_SQL()
-
-        End If
+        Sb_Abrir_Documento_Desde_Random_SQL()
 
     End Sub
 

@@ -381,7 +381,7 @@ Public Class Frm_Cerrar_Abrir_Documentos
             Dim Cerrar_Doc As New Clas_Cerrar_Documento
             Dim _Rows_Usuario_Autoriza As DataRow
 
-            If Not Fx_Tiene_Permiso(Me, "Doc00011",,,,,,,,, _Rows_Usuario_Autoriza) Then
+            If Not Fx_Tiene_Permiso(Me, "Doc00011",,,,,,,,, _Rows_Usuario_Autoriza,,,,,,,, _Idmaeedo) Then
                 Return
             End If
 
@@ -415,7 +415,7 @@ Public Class Frm_Cerrar_Abrir_Documentos
             Dim Cerrar_Doc As New Clas_Cerrar_Documento
             Dim _Rows_Usuario_Autoriza As DataRow
 
-            If Not Fx_Tiene_Permiso(Me, "Doc00055",,,,,,,,, _Rows_Usuario_Autoriza) Then
+            If Not Fx_Tiene_Permiso(Me, "Doc00055",,,,,,,,, _Rows_Usuario_Autoriza,,,,,,,, _Idmaeedo) Then
                 Return
             End If
 
