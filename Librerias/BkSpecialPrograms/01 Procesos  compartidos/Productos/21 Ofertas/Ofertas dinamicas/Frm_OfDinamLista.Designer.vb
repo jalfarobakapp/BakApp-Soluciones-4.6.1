@@ -284,7 +284,7 @@ Partial Class Frm_OfDinamLista
         Me.Btn_ExportarExcel.Image = CType(resources.GetObject("Btn_ExportarExcel.Image"), System.Drawing.Image)
         Me.Btn_ExportarExcel.ImageAlt = CType(resources.GetObject("Btn_ExportarExcel.ImageAlt"), System.Drawing.Image)
         Me.Btn_ExportarExcel.Name = "Btn_ExportarExcel"
-        Me.Btn_ExportarExcel.Tooltip = "Crear nuevo tipo de descuento especial"
+        Me.Btn_ExportarExcel.Tooltip = "Exportar a Excel"
         Me.Btn_ExportarExcel.Visible = False
         '
         'GroupPanel1

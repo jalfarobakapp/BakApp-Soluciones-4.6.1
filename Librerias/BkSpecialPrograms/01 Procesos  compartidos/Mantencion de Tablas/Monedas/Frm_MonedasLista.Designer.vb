@@ -62,7 +62,7 @@ Partial Class Frm_MonedasLista
         Me.Btn_Crear_Moneda.Image = CType(resources.GetObject("Btn_Crear_Moneda.Image"), System.Drawing.Image)
         Me.Btn_Crear_Moneda.ImageAlt = CType(resources.GetObject("Btn_Crear_Moneda.ImageAlt"), System.Drawing.Image)
         Me.Btn_Crear_Moneda.Name = "Btn_Crear_Moneda"
-        Me.Btn_Crear_Moneda.Tooltip = "Crear nuevo tipo de descuento especial"
+        Me.Btn_Crear_Moneda.Tooltip = "Crear nuevo tipo de moneda"
         '
         'Btn_ExportarExcel
         '
@@ -193,7 +193,7 @@ Partial Class Frm_MonedasLista
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ForeColor = System.Drawing.Color.Black
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False

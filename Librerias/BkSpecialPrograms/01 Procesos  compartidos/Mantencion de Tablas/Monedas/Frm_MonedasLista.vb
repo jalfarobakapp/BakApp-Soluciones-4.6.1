@@ -123,4 +123,8 @@
         End If
     End Sub
 
+    Private Sub Btn_Mnu_EditarMoneda_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_EditarMoneda.Click
+        Call Grilla_Monedas_CellDoubleClick(Nothing, Nothing)
+    End Sub
+
 End Class

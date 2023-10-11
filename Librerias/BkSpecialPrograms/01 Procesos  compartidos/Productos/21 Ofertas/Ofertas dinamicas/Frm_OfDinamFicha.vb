@@ -132,8 +132,7 @@ Public Class Frm_OfDinamFicha
         _Filtrar.Descripcion = "NOKOLT"
 
         If _Filtrar.Fx_Filtrar(_Tbl_Listas,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "",
-                               False, True) Then
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "", False, False) Then
 
             _Tbl_Listas = _Filtrar.Pro_Tbl_Filtro
             Txt_Listas.Text = String.Empty
