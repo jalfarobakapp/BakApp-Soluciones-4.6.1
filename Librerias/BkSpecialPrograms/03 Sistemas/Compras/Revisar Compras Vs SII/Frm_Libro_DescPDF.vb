@@ -15,6 +15,7 @@ Public Class Frm_Libro_DescPDF
     Private _Cancelar As Boolean
 
     Public Property SoloEnSII As Boolean
+    Public Property Filtro_SII As String
 
     Public Sub New(_Periodo As Integer, _Mes As Integer)
 
@@ -54,6 +55,7 @@ Public Class Frm_Libro_DescPDF
                         Where Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
                         _CondicionSoloSII & vbCrLf &
                         "And DteD.[Xml] Is Not Null" & vbCrLf &
+                        Filtro_SII &
                         "Order by Libro"
 
         _Tbl_Documentos = _Sql.Fx_Get_Tablas(Consulta_sql)

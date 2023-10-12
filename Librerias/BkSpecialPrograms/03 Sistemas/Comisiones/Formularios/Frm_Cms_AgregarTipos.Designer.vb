@@ -609,7 +609,7 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Btn_Eliminar.Image = CType(resources.GetObject("Btn_Eliminar.Image"), System.Drawing.Image)
         Me.Btn_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Eliminar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Eliminar.Name = "Btn_Eliminar"
-        Me.Btn_Eliminar.Tooltip = "Configuración de asistente de compra"
+        Me.Btn_Eliminar.Tooltip = "Eliminar comisión"
         '
         'Imagenes_16x16
         '

@@ -22,24 +22,24 @@ Partial Class Frm_Cms_Fun
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Cms_Fun))
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Cms_Fun))
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
+        Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_EditarFuncionario = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_QuitarVendedor = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Agregar_Funcionario = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnExportarExcel = New DevComponents.DotNetBar.ButtonItem()
         Me.Chk_MostrarSoloHabilitados = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
-        Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_EditarFuncionario = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_QuitarVendedor = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
+        CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupPanel1
@@ -82,6 +82,41 @@ Partial Class Frm_Cms_Fun
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 157
         Me.GroupPanel1.Text = "FUNCIONARIOS"
+        '
+        'Menu_Contextual
+        '
+        Me.Menu_Contextual.AntiAlias = True
+        Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
+        Me.Menu_Contextual.Location = New System.Drawing.Point(33, 42)
+        Me.Menu_Contextual.Name = "Menu_Contextual"
+        Me.Menu_Contextual.Size = New System.Drawing.Size(412, 25)
+        Me.Menu_Contextual.Stretch = True
+        Me.Menu_Contextual.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Menu_Contextual.TabIndex = 48
+        Me.Menu_Contextual.TabStop = False
+        Me.Menu_Contextual.Text = "ContextMenuBar1"
+        '
+        'Menu_Contextual_01
+        '
+        Me.Menu_Contextual_01.AutoExpandOnClick = True
+        Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_EditarFuncionario, Me.Btn_QuitarVendedor})
+        Me.Menu_Contextual_01.Text = "Opciones"
+        '
+        'Btn_EditarFuncionario
+        '
+        Me.Btn_EditarFuncionario.Image = CType(resources.GetObject("Btn_EditarFuncionario.Image"), System.Drawing.Image)
+        Me.Btn_EditarFuncionario.ImageAlt = CType(resources.GetObject("Btn_EditarFuncionario.ImageAlt"), System.Drawing.Image)
+        Me.Btn_EditarFuncionario.Name = "Btn_EditarFuncionario"
+        Me.Btn_EditarFuncionario.Text = "Editar funcionario"
+        '
+        'Btn_QuitarVendedor
+        '
+        Me.Btn_QuitarVendedor.Image = CType(resources.GetObject("Btn_QuitarVendedor.Image"), System.Drawing.Image)
+        Me.Btn_QuitarVendedor.ImageAlt = CType(resources.GetObject("Btn_QuitarVendedor.ImageAlt"), System.Drawing.Image)
+        Me.Btn_QuitarVendedor.Name = "Btn_QuitarVendedor"
+        Me.Btn_QuitarVendedor.Text = "Quitar vendedor"
         '
         'Grilla
         '
@@ -146,7 +181,7 @@ Partial Class Frm_Cms_Fun
         Me.Btn_Agregar_Funcionario.ImageAlt = CType(resources.GetObject("Btn_Agregar_Funcionario.ImageAlt"), System.Drawing.Image)
         Me.Btn_Agregar_Funcionario.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_Agregar_Funcionario.Name = "Btn_Agregar_Funcionario"
-        Me.Btn_Agregar_Funcionario.Tooltip = "Crear Orden de despacho"
+        Me.Btn_Agregar_Funcionario.Tooltip = "Agregar funcionario"
         '
         'BtnExportarExcel
         '
@@ -155,6 +190,7 @@ Partial Class Frm_Cms_Fun
         Me.BtnExportarExcel.ImageAlt = CType(resources.GetObject("BtnExportarExcel.ImageAlt"), System.Drawing.Image)
         Me.BtnExportarExcel.Name = "BtnExportarExcel"
         Me.BtnExportarExcel.Tooltip = "Exportar a excel (Vista actual)"
+        Me.BtnExportarExcel.Visible = False
         '
         'Chk_MostrarSoloHabilitados
         '
@@ -176,41 +212,6 @@ Partial Class Frm_Cms_Fun
         Me.Chk_MostrarSoloHabilitados.TabIndex = 159
         Me.Chk_MostrarSoloHabilitados.Text = "Mostrar solo funcionarios habilitados para recibir comisiones"
         '
-        'Menu_Contextual
-        '
-        Me.Menu_Contextual.AntiAlias = True
-        Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
-        Me.Menu_Contextual.Location = New System.Drawing.Point(33, 42)
-        Me.Menu_Contextual.Name = "Menu_Contextual"
-        Me.Menu_Contextual.Size = New System.Drawing.Size(412, 25)
-        Me.Menu_Contextual.Stretch = True
-        Me.Menu_Contextual.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Menu_Contextual.TabIndex = 48
-        Me.Menu_Contextual.TabStop = False
-        Me.Menu_Contextual.Text = "ContextMenuBar1"
-        '
-        'Menu_Contextual_01
-        '
-        Me.Menu_Contextual_01.AutoExpandOnClick = True
-        Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_EditarFuncionario, Me.Btn_QuitarVendedor})
-        Me.Menu_Contextual_01.Text = "Opciones"
-        '
-        'Btn_EditarFuncionario
-        '
-        Me.Btn_EditarFuncionario.Image = CType(resources.GetObject("Btn_EditarFuncionario.Image"), System.Drawing.Image)
-        Me.Btn_EditarFuncionario.ImageAlt = CType(resources.GetObject("Btn_EditarFuncionario.ImageAlt"), System.Drawing.Image)
-        Me.Btn_EditarFuncionario.Name = "Btn_EditarFuncionario"
-        Me.Btn_EditarFuncionario.Text = "Editar funcionario"
-        '
-        'Btn_QuitarVendedor
-        '
-        Me.Btn_QuitarVendedor.Image = CType(resources.GetObject("Btn_QuitarVendedor.Image"), System.Drawing.Image)
-        Me.Btn_QuitarVendedor.ImageAlt = CType(resources.GetObject("Btn_QuitarVendedor.ImageAlt"), System.Drawing.Image)
-        Me.Btn_QuitarVendedor.Name = "Btn_QuitarVendedor"
-        Me.Btn_QuitarVendedor.Text = "Quitar vendedor"
-        '
         'Frm_Cms_Fun
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -231,9 +232,9 @@ Partial Class Frm_Cms_Fun
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MetroForm"
         Me.GroupPanel1.ResumeLayout(False)
+        CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

@@ -49,6 +49,9 @@ Public Class Frm_Dte_Configuracion
 
         Input_siimesesexpiranfolios.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'siimesesexpiranfolios' And AmbienteCertificacion = " & _AmbienteCertificacion, True)
         Input_siimesesexpiranfolios_GUIAS.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'siimesesexpiranfolios_GUIAS' And AmbienteCertificacion = " & _AmbienteCertificacion, True)
+        Input_siimesesexpiranfolios_BOLETAS.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'Input_siimesesexpiranfolios_BOLETAS' And AmbienteCertificacion = " & _AmbienteCertificacion, True)
+        Input_siimesesexpiranfolios_NOTASDEBITO.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'Input_siimesesexpiranfolios_NOTASDEBITO' And AmbienteCertificacion = " & _AmbienteCertificacion, True)
+        Input_siimesesexpiranfolios_NOTASCREDITO.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'Input_siimesesexpiranfolios_NOTASCREDITO' And AmbienteCertificacion = " & _AmbienteCertificacion, True)
 
         'If String.IsNullOrEmpty(Txt_Empresa.Text) Then Txt_Empresa.Text = _Global_Row_Configp.Item("EMPRESA")
         'If String.IsNullOrEmpty(Txt_RutEnvia.Text) Then Txt_RutEnvia.Text = _Global_Row_Configp.Item("FIRMAELEC")
@@ -208,6 +211,9 @@ Public Class Frm_Dte_Configuracion
 
         Consulta_sql += Fx_Llenar_Input_Configuracion("siimesesexpiranfolios", Input_siimesesexpiranfolios.Value, "Integer", "ConfGeneral", _AmbienteCertificacion)
         Consulta_sql += Fx_Llenar_Input_Configuracion("siimesesexpiranfolios_GUIAS", Input_siimesesexpiranfolios_GUIAS.Value, "Integer", "ConfGeneral", _AmbienteCertificacion)
+        Consulta_sql += Fx_Llenar_Input_Configuracion("Input_siimesesexpiranfolios_BOLETAS", Input_siimesesexpiranfolios_BOLETAS.Value, "Integer", "ConfGeneral", _AmbienteCertificacion)
+        Consulta_sql += Fx_Llenar_Input_Configuracion("Input_siimesesexpiranfolios_NOTASDEBITO", Input_siimesesexpiranfolios_NOTASDEBITO.Value, "Integer", "ConfGeneral", _AmbienteCertificacion)
+        Consulta_sql += Fx_Llenar_Input_Configuracion("Input_siimesesexpiranfolios_NOTASCREDITO", Input_siimesesexpiranfolios_NOTASCREDITO.Value, "Integer", "ConfGeneral", _AmbienteCertificacion)
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
             MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar configuración", MessageBoxButtons.OK, MessageBoxIcon.Information)

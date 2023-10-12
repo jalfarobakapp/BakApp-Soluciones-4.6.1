@@ -3631,13 +3631,32 @@ Public Module Crear_Documentos_Desde_Otro
             If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_DTE_Configuracion") Then
 
                 Try
-                    If _Tido = "GDV" Then
-                        _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
+
+                    Select Case _Tido
+                        Case "BLV"
+                            _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
+                                 "Campo = 'Input_siimesesexpiranfolios_BOLETAS' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion)
+                        Case "NCV"
+                            _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
+                                 "Campo = 'Input_siimesesexpiranfolios_NOTASCREDITO' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion)
+                        Case "FDV"
+                            _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
+                                 "Campo = 'Input_siimesesexpiranfolios_NOTASDEBITO' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion)
+                        Case "GDV"
+                            _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
                                  "Campo = 'siimesesexpiranfolios_GUIAS' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion)
-                    Else
-                        _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-                                           "Campo = 'siimesesexpiranfolios' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion)
-                    End If
+                        Case Else
+                            _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
+                                    "Campo = 'siimesesexpiranfolios' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion)
+                    End Select
+
+                    'If _Tido = "GDV" Then
+                    '    _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
+                    '             "Campo = 'siimesesexpiranfolios_GUIAS' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion)
+                    'Else
+                    '    _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
+                    '                       "Campo = 'siimesesexpiranfolios' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion)
+                    'End If
 
                 Catch ex As Exception
                     _Meses = 6
