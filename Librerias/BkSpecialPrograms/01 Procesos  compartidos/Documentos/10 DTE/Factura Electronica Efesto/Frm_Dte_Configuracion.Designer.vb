@@ -64,16 +64,25 @@ Partial Class Frm_Dte_Configuracion
         Me.MStb_Barra = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Etiqueta = New DevComponents.DotNetBar.LabelItem()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.LabelX14 = New DevComponents.DotNetBar.LabelX()
-        Me.Input_siimesesexpiranfolios = New DevComponents.Editors.IntegerInput()
         Me.Input_siimesesexpiranfolios_GUIAS = New DevComponents.Editors.IntegerInput()
         Me.LabelX15 = New DevComponents.DotNetBar.LabelX()
+        Me.Input_siimesesexpiranfolios = New DevComponents.Editors.IntegerInput()
+        Me.LabelX14 = New DevComponents.DotNetBar.LabelX()
+        Me.Input_siimesesexpiranfolios_BOLETAS = New DevComponents.Editors.IntegerInput()
+        Me.LabelX16 = New DevComponents.DotNetBar.LabelX()
+        Me.Input_siimesesexpiranfolios_NOTASDEBITO = New DevComponents.Editors.IntegerInput()
+        Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
+        Me.Input_siimesesexpiranfolios_NOTASCREDITO = New DevComponents.Editors.IntegerInput()
+        Me.LabelX18 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.GroupPanel2.SuspendLayout()
         Me.GroupPanel3.SuspendLayout()
-        CType(Me.Input_siimesesexpiranfolios, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Input_siimesesexpiranfolios_GUIAS, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Input_siimesesexpiranfolios, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Input_siimesesexpiranfolios_BOLETAS, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Input_siimesesexpiranfolios_NOTASDEBITO, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Input_siimesesexpiranfolios_NOTASCREDITO, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Bar1
@@ -82,9 +91,9 @@ Partial Class Frm_Dte_Configuracion
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Importar_Datos_Random})
-        Me.Bar1.Location = New System.Drawing.Point(0, 509)
+        Me.Bar1.Location = New System.Drawing.Point(0, 544)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(510, 41)
+        Me.Bar1.Size = New System.Drawing.Size(506, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 42
@@ -736,9 +745,9 @@ Partial Class Frm_Dte_Configuracion
         Me.MStb_Barra.ForeColor = System.Drawing.Color.Black
         Me.MStb_Barra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Etiqueta})
         Me.MStb_Barra.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.MStb_Barra.Location = New System.Drawing.Point(0, 550)
+        Me.MStb_Barra.Location = New System.Drawing.Point(0, 585)
         Me.MStb_Barra.Name = "MStb_Barra"
-        Me.MStb_Barra.Size = New System.Drawing.Size(510, 22)
+        Me.MStb_Barra.Size = New System.Drawing.Size(506, 22)
         Me.MStb_Barra.TabIndex = 46
         Me.MStb_Barra.Text = "MetroStatusBar1"
         '
@@ -750,8 +759,13 @@ Partial Class Frm_Dte_Configuracion
         'GroupPanel3
         '
         Me.GroupPanel3.BackColor = System.Drawing.Color.White
-        Me.GroupPanel3.CanvasColor = System.Drawing.SystemColors.Control
         Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel3.Controls.Add(Me.Input_siimesesexpiranfolios_NOTASCREDITO)
+        Me.GroupPanel3.Controls.Add(Me.LabelX18)
+        Me.GroupPanel3.Controls.Add(Me.Input_siimesesexpiranfolios_NOTASDEBITO)
+        Me.GroupPanel3.Controls.Add(Me.LabelX17)
+        Me.GroupPanel3.Controls.Add(Me.Input_siimesesexpiranfolios_BOLETAS)
+        Me.GroupPanel3.Controls.Add(Me.LabelX16)
         Me.GroupPanel3.Controls.Add(Me.Input_siimesesexpiranfolios_GUIAS)
         Me.GroupPanel3.Controls.Add(Me.LabelX15)
         Me.GroupPanel3.Controls.Add(Me.Input_siimesesexpiranfolios)
@@ -759,7 +773,7 @@ Partial Class Frm_Dte_Configuracion
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel3.Location = New System.Drawing.Point(12, 444)
         Me.GroupPanel3.Name = "GroupPanel3"
-        Me.GroupPanel3.Size = New System.Drawing.Size(486, 59)
+        Me.GroupPanel3.Size = New System.Drawing.Size(486, 89)
         '
         '
         '
@@ -791,52 +805,22 @@ Partial Class Frm_Dte_Configuracion
         Me.GroupPanel3.TabIndex = 47
         Me.GroupPanel3.Text = "Meses para expiración de folios"
         '
-        'LabelX14
-        '
-        Me.LabelX14.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX14.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX14.ForeColor = System.Drawing.Color.Black
-        Me.LabelX14.Location = New System.Drawing.Point(3, 10)
-        Me.LabelX14.Name = "LabelX14"
-        Me.LabelX14.Size = New System.Drawing.Size(112, 23)
-        Me.LabelX14.TabIndex = 33
-        Me.LabelX14.Text = "FCV, BLV, NCV y FDV"
-        '
-        'Input_siimesesexpiranfolios
-        '
-        '
-        '
-        '
-        Me.Input_siimesesexpiranfolios.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Input_siimesesexpiranfolios.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Input_siimesesexpiranfolios.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.Input_siimesesexpiranfolios.Enabled = False
-        Me.Input_siimesesexpiranfolios.Location = New System.Drawing.Point(111, 11)
-        Me.Input_siimesesexpiranfolios.MaxValue = 6
-        Me.Input_siimesesexpiranfolios.MinValue = 6
-        Me.Input_siimesesexpiranfolios.Name = "Input_siimesesexpiranfolios"
-        Me.Input_siimesesexpiranfolios.ShowUpDown = True
-        Me.Input_siimesesexpiranfolios.Size = New System.Drawing.Size(55, 22)
-        Me.Input_siimesesexpiranfolios.TabIndex = 34
-        Me.Input_siimesesexpiranfolios.Value = 6
-        '
         'Input_siimesesexpiranfolios_GUIAS
         '
+        Me.Input_siimesesexpiranfolios_GUIAS.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.Input_siimesesexpiranfolios_GUIAS.BackgroundStyle.Class = "DateTimeInputBackground"
         Me.Input_siimesesexpiranfolios_GUIAS.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_siimesesexpiranfolios_GUIAS.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.Input_siimesesexpiranfolios_GUIAS.Location = New System.Drawing.Point(222, 11)
+        Me.Input_siimesesexpiranfolios_GUIAS.ForeColor = System.Drawing.Color.Black
+        Me.Input_siimesesexpiranfolios_GUIAS.Location = New System.Drawing.Point(390, 12)
         Me.Input_siimesesexpiranfolios_GUIAS.MaxValue = 100
         Me.Input_siimesesexpiranfolios_GUIAS.MinValue = 6
         Me.Input_siimesesexpiranfolios_GUIAS.Name = "Input_siimesesexpiranfolios_GUIAS"
         Me.Input_siimesesexpiranfolios_GUIAS.ShowUpDown = True
-        Me.Input_siimesesexpiranfolios_GUIAS.Size = New System.Drawing.Size(55, 22)
+        Me.Input_siimesesexpiranfolios_GUIAS.Size = New System.Drawing.Size(40, 22)
         Me.Input_siimesesexpiranfolios_GUIAS.TabIndex = 36
         Me.Input_siimesesexpiranfolios_GUIAS.Value = 100
         '
@@ -848,17 +832,150 @@ Partial Class Frm_Dte_Configuracion
         '
         Me.LabelX15.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX15.ForeColor = System.Drawing.Color.Black
-        Me.LabelX15.Location = New System.Drawing.Point(184, 11)
+        Me.LabelX15.Location = New System.Drawing.Point(353, 12)
         Me.LabelX15.Name = "LabelX15"
-        Me.LabelX15.Size = New System.Drawing.Size(39, 23)
+        Me.LabelX15.Size = New System.Drawing.Size(31, 23)
         Me.LabelX15.TabIndex = 35
         Me.LabelX15.Text = "Guías"
+        '
+        'Input_siimesesexpiranfolios
+        '
+        Me.Input_siimesesexpiranfolios.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_siimesesexpiranfolios.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_siimesesexpiranfolios.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_siimesesexpiranfolios.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_siimesesexpiranfolios.Enabled = False
+        Me.Input_siimesesexpiranfolios.ForeColor = System.Drawing.Color.Black
+        Me.Input_siimesesexpiranfolios.Location = New System.Drawing.Point(95, 11)
+        Me.Input_siimesesexpiranfolios.MaxValue = 6
+        Me.Input_siimesesexpiranfolios.MinValue = 6
+        Me.Input_siimesesexpiranfolios.Name = "Input_siimesesexpiranfolios"
+        Me.Input_siimesesexpiranfolios.ShowUpDown = True
+        Me.Input_siimesesexpiranfolios.Size = New System.Drawing.Size(40, 22)
+        Me.Input_siimesesexpiranfolios.TabIndex = 34
+        Me.Input_siimesesexpiranfolios.Value = 6
+        '
+        'LabelX14
+        '
+        Me.LabelX14.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX14.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX14.ForeColor = System.Drawing.Color.Black
+        Me.LabelX14.Location = New System.Drawing.Point(3, 8)
+        Me.LabelX14.Name = "LabelX14"
+        Me.LabelX14.Size = New System.Drawing.Size(90, 23)
+        Me.LabelX14.TabIndex = 33
+        Me.LabelX14.Text = "Facturas"
+        '
+        'Input_siimesesexpiranfolios_BOLETAS
+        '
+        Me.Input_siimesesexpiranfolios_BOLETAS.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_siimesesexpiranfolios_BOLETAS.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_siimesesexpiranfolios_BOLETAS.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_siimesesexpiranfolios_BOLETAS.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_siimesesexpiranfolios_BOLETAS.ForeColor = System.Drawing.Color.Black
+        Me.Input_siimesesexpiranfolios_BOLETAS.Location = New System.Drawing.Point(240, 10)
+        Me.Input_siimesesexpiranfolios_BOLETAS.MaxValue = 100
+        Me.Input_siimesesexpiranfolios_BOLETAS.MinValue = 6
+        Me.Input_siimesesexpiranfolios_BOLETAS.Name = "Input_siimesesexpiranfolios_BOLETAS"
+        Me.Input_siimesesexpiranfolios_BOLETAS.ShowUpDown = True
+        Me.Input_siimesesexpiranfolios_BOLETAS.Size = New System.Drawing.Size(40, 22)
+        Me.Input_siimesesexpiranfolios_BOLETAS.TabIndex = 38
+        Me.Input_siimesesexpiranfolios_BOLETAS.Value = 100
+        '
+        'LabelX16
+        '
+        Me.LabelX16.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX16.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX16.ForeColor = System.Drawing.Color.Black
+        Me.LabelX16.Location = New System.Drawing.Point(148, 11)
+        Me.LabelX16.Name = "LabelX16"
+        Me.LabelX16.Size = New System.Drawing.Size(86, 23)
+        Me.LabelX16.TabIndex = 37
+        Me.LabelX16.Text = "Boletas"
+        '
+        'Input_siimesesexpiranfolios_NOTASDEBITO
+        '
+        Me.Input_siimesesexpiranfolios_NOTASDEBITO.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_siimesesexpiranfolios_NOTASDEBITO.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_siimesesexpiranfolios_NOTASDEBITO.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_siimesesexpiranfolios_NOTASDEBITO.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_siimesesexpiranfolios_NOTASDEBITO.ForeColor = System.Drawing.Color.Black
+        Me.Input_siimesesexpiranfolios_NOTASDEBITO.Location = New System.Drawing.Point(95, 37)
+        Me.Input_siimesesexpiranfolios_NOTASDEBITO.MaxValue = 100
+        Me.Input_siimesesexpiranfolios_NOTASDEBITO.MinValue = 6
+        Me.Input_siimesesexpiranfolios_NOTASDEBITO.Name = "Input_siimesesexpiranfolios_NOTASDEBITO"
+        Me.Input_siimesesexpiranfolios_NOTASDEBITO.ShowUpDown = True
+        Me.Input_siimesesexpiranfolios_NOTASDEBITO.Size = New System.Drawing.Size(40, 22)
+        Me.Input_siimesesexpiranfolios_NOTASDEBITO.TabIndex = 40
+        Me.Input_siimesesexpiranfolios_NOTASDEBITO.Value = 6
+        '
+        'LabelX17
+        '
+        Me.LabelX17.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX17.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX17.ForeColor = System.Drawing.Color.Black
+        Me.LabelX17.Location = New System.Drawing.Point(3, 37)
+        Me.LabelX17.Name = "LabelX17"
+        Me.LabelX17.Size = New System.Drawing.Size(90, 23)
+        Me.LabelX17.TabIndex = 39
+        Me.LabelX17.Text = "Nota de debito"
+        '
+        'Input_siimesesexpiranfolios_NOTASCREDITO
+        '
+        Me.Input_siimesesexpiranfolios_NOTASCREDITO.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_siimesesexpiranfolios_NOTASCREDITO.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_siimesesexpiranfolios_NOTASCREDITO.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_siimesesexpiranfolios_NOTASCREDITO.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_siimesesexpiranfolios_NOTASCREDITO.ForeColor = System.Drawing.Color.Black
+        Me.Input_siimesesexpiranfolios_NOTASCREDITO.Location = New System.Drawing.Point(240, 36)
+        Me.Input_siimesesexpiranfolios_NOTASCREDITO.MaxValue = 100
+        Me.Input_siimesesexpiranfolios_NOTASCREDITO.MinValue = 6
+        Me.Input_siimesesexpiranfolios_NOTASCREDITO.Name = "Input_siimesesexpiranfolios_NOTASCREDITO"
+        Me.Input_siimesesexpiranfolios_NOTASCREDITO.ShowUpDown = True
+        Me.Input_siimesesexpiranfolios_NOTASCREDITO.Size = New System.Drawing.Size(40, 22)
+        Me.Input_siimesesexpiranfolios_NOTASCREDITO.TabIndex = 42
+        Me.Input_siimesesexpiranfolios_NOTASCREDITO.Value = 6
+        '
+        'LabelX18
+        '
+        Me.LabelX18.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX18.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX18.ForeColor = System.Drawing.Color.Black
+        Me.LabelX18.Location = New System.Drawing.Point(148, 37)
+        Me.LabelX18.Name = "LabelX18"
+        Me.LabelX18.Size = New System.Drawing.Size(86, 23)
+        Me.LabelX18.TabIndex = 41
+        Me.LabelX18.Text = "Notas de crédito"
         '
         'Frm_Dte_Configuracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(510, 572)
+        Me.ClientSize = New System.Drawing.Size(506, 607)
         Me.Controls.Add(Me.GroupPanel3)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.GroupPanel1)
@@ -879,8 +996,11 @@ Partial Class Frm_Dte_Configuracion
         Me.GroupPanel1.ResumeLayout(False)
         Me.GroupPanel2.ResumeLayout(False)
         Me.GroupPanel3.ResumeLayout(False)
-        CType(Me.Input_siimesesexpiranfolios, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Input_siimesesexpiranfolios_GUIAS, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Input_siimesesexpiranfolios, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Input_siimesesexpiranfolios_BOLETAS, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Input_siimesesexpiranfolios_NOTASDEBITO, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Input_siimesesexpiranfolios_NOTASCREDITO, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -930,4 +1050,10 @@ Partial Class Frm_Dte_Configuracion
     Friend WithEvents LabelX15 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Input_siimesesexpiranfolios As DevComponents.Editors.IntegerInput
     Friend WithEvents LabelX14 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Input_siimesesexpiranfolios_NOTASDEBITO As DevComponents.Editors.IntegerInput
+    Friend WithEvents LabelX17 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Input_siimesesexpiranfolios_BOLETAS As DevComponents.Editors.IntegerInput
+    Friend WithEvents LabelX16 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Input_siimesesexpiranfolios_NOTASCREDITO As DevComponents.Editors.IntegerInput
+    Friend WithEvents LabelX18 As DevComponents.DotNetBar.LabelX
 End Class

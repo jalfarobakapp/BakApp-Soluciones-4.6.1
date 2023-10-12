@@ -62,7 +62,7 @@ Public Class Dte2Imp_
                                       MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                     Dim Cl_Dte2XmlIPDF As New Cl_Dte2XmlPDF
-                    Cl_Dte2XmlIPDF.Sb_Crear_PDF2XML(FmPrincipal, Ds_Xml, _Nombre_Archivo_XML, "Uso Interno", ChkMarcaAgua.Checked) ' (Me, Ds_Xml, _Nombre_Archivo_XML, "Uso Interno", ChkMarcaAgua.Checked)
+                    Cl_Dte2XmlIPDF.Sb_Crear_PDF2XML(FmPrincipal, Ds_Xml, _Nombre_Archivo_XML, "Uso Interno", ChkMarcaAgua.Checked, True) ' (Me, Ds_Xml, _Nombre_Archivo_XML, "Uso Interno", ChkMarcaAgua.Checked)
                     'Generar(Ds_Xml, _Nombre_Archivo_XML, "Uso Interno", False, ChkMarcaAgua.Checked)
 
                 Else

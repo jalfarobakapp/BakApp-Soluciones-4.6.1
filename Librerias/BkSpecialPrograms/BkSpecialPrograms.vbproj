@@ -1447,6 +1447,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Compras\Revisar Compras Vs SII\Clas_Hefesto_Dte_Libro.vb" />
+    <Compile Include="03 Sistemas\Compras\Revisar Compras Vs SII\Frm_Libro_DescPDF.Designer.vb">
+      <DependentUpon>Frm_Libro_DescPDF.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Compras\Revisar Compras Vs SII\Frm_Libro_DescPDF.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Archivador.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Asistente_Compras.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_Cerrar_Documentos.vb" />
@@ -4691,6 +4697,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Frm_AsisCompra_Proyeccion_Informe.resx">
       <DependentUpon>Frm_AsisCompra_Proyeccion_Informe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Compras\Revisar Compras Vs SII\Frm_Libro_DescPDF.resx">
+      <DependentUpon>Frm_Libro_DescPDF.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Demonio automatico\Frm_Demonio_05_FunConecExt.resx">
       <DependentUpon>Frm_Demonio_05_FunConecExt.vb</DependentUpon>

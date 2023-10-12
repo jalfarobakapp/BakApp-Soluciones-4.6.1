@@ -1,7 +1,6 @@
 ﻿Imports System.IO
 Imports DevComponents.DotNetBar
 
-
 Public Class Frm_Libro_Compras_Ventas
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -165,57 +164,27 @@ Public Class Frm_Libro_Compras_Ventas
 
     Sub Sb_Actualizar_Grillas(_TabIndex As Integer)
 
-        Dim _Descripcion As String = RTrim$(Txt_Descripcion.Text)
+        Try
+            Me.Cursor = Cursors.WaitCursor
 
-        Dim _Cadena_SII As String = CADENA_A_BUSCAR(_Descripcion, "Tido+Nudo+Endo+Libro+Rut_Proveedor+Razon_Social+Folio+STR(Monto_Total) LIKE '%")
+            Dim _Descripcion As String = RTrim$(Txt_Descripcion.Text)
 
-        Dim _Filtro_SII As String = "And Tido+Nudo+Endo+Libro+Rut_Proveedor+Razon_Social+Cmp.Folio+STR(Monto_Total) LIKE '%" & _Cadena_SII & "%'"
+            Dim _Cadena_SII As String = CADENA_A_BUSCAR(_Descripcion, "Tido+Nudo+Endo+Libro+Rut_Proveedor+Razon_Social+Folio+STR(Monto_Total) LIKE '%")
 
+            Dim _Filtro_SII As String = "And Tido+Nudo+Endo+Libro+Rut_Proveedor+Razon_Social+Cmp.Folio+STR(Monto_Total) LIKE '%" & _Cadena_SII & "%'"
 
-        'Consulta_sql = "-- Tabla 0 
-        '                Select * From " & _Global_BaseBk & "Zw_Compras_en_SII
-        '                Where Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
-        '                _Filtro_SII & "
-        '                Order by Libro  
-
-        '                -- Tabla 1
-        '                Select * From " & _Global_BaseBk & "Zw_Compras_en_SII
-        '                Where Libro <> '' And Libro Like '" & _Libro & "%' And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
-        '                _Filtro_SII & "
-        '                Order by Libro
-
-        '                -- Tabla 2
-        '                Update " & _Global_BaseBk & "Zw_Compras_en_SII Set Idmaeedo_GRC = Isnull((Select IDMAEEDO From MAEEDO Where TIDO = 'GRC' And NUDO = Nudo And ENDO = Endo),0)
-        '                Where Libro = '' And Periodo = " & _Periodo & " And Mes = " & _Mes & " And Idmaeedo = 0
-
-        '                Select *,Case When Isnull((Select Top 1 Id From " & _Global_BaseBk & "Zw_DTE_ReccDet Z1 Where Cmp.Rut_Proveedor = Z1.RutEmisor And Z1.Folio = Cmp.Folio And Cmp.TipoDoc = Z1.TipoDTE),0) = 0 Then 'No' Else 'Si' End As TPDF From " & _Global_BaseBk & "Zw_Compras_en_SII Cmp
-        '                Where Libro = '' And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
-        '               _Filtro_SII & "
-
-        '                -- Tabla 3
-        '                Select * From " & _Global_BaseBk & "Zw_Compras_en_SII
-        '                Where Libro <> '' And Libro not Like '" & _Libro & "%' And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
-        '                _Filtro_SII & "
-        '                Order by Libro
-
-        '                -- Tabla 4
-        '                Select * From " & _Global_BaseBk & "Zw_Compras_en_SII
-        '                Where Diferencia <> 0 And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
-        '                _Filtro_SII
-
-
-        Consulta_sql = "-- Tabla 0 
+            Consulta_sql = "-- Tabla 0 
                         Select Case When DteD.[Xml] IS NULL then 'No' Else 'Si' End As 'TPDF',Cmp.*,DteD.[Xml],Cast(0 As Bit) As 'TieneOccRef',Cast('' As Varchar(20)) As 'OccRef' 
                         From " & _Global_BaseBk & "Zw_Compras_en_SII Cmp
                         Left Join " & _Global_BaseBk & "Zw_DTE_ReccDet DteD On Cmp.Rut_Proveedor = DteD.RutEmisor And Cmp.Folio = DteD.Folio
                         Where Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
-                        _Filtro_SII & "
+                            _Filtro_SII & "
                         Order by Libro  
 
                         -- Tabla 1
                         Select * From " & _Global_BaseBk & "Zw_Compras_en_SII Cmp
                         Where Libro <> '' And Libro Like '" & _Libro & "%' And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
-                        _Filtro_SII & "
+                            _Filtro_SII & "
                         Order by Libro
                        
                         -- Tabla 2
@@ -226,129 +195,143 @@ Public Class Frm_Libro_Compras_Ventas
                         From " & _Global_BaseBk & "Zw_Compras_en_SII Cmp
                         Left Join " & _Global_BaseBk & "Zw_DTE_ReccDet DteD On Cmp.Rut_Proveedor = DteD.RutEmisor And Cmp.Folio = DteD.Folio
                         Where Libro = '' And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
-                       _Filtro_SII & "
+                           _Filtro_SII & "
                        
                         -- Tabla 3 
                         Select * From " & _Global_BaseBk & "Zw_Compras_en_SII Cmp
                         Where Libro <> '' And Libro not Like '" & _Libro & "%' And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
-                        _Filtro_SII & "
+                            _Filtro_SII & "
                         Order by Libro
                        
                         -- Tabla 4
                         Select * From " & _Global_BaseBk & "Zw_Compras_en_SII Cmp
                         Where Diferencia <> 0 And Periodo = " & _Periodo & " And Mes = " & _Mes & vbCrLf &
-                        _Filtro_SII
+                            _Filtro_SII
+
+            Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+
+            _Inf_00_SII = _Ds.Tables(0)
+            _Inf_01_SII_y_Random = _Ds.Tables(1)
+            _Inf_02_Solo_SII = _Ds.Tables(2)
+            _Inf_03_SII_Random_Otro_Mes = _Ds.Tables(3)
+            _Inf_04_SII_Random_Direfencias = _Ds.Tables(4)
+
+            Dim _Cadena_Random As String = CADENA_A_BUSCAR(_Descripcion, "TIDO+NUDO+ENDO+LIBRO+NOKOEN+STR(VABRDO) LIKE '%")
+
+            Dim _Filtro_Random As String = "And TIDO+NUDO+ENDO+LIBRO+NOKOEN+STR(VABRDO) LIKE '%" & _Cadena_Random & "%'"
+
+            Dim _Filtro As String = "AND EDO.LIBRO LIKE '" & _Cadena_Random & "%' AND LIBRO NOT IN (Select Libro From " & _Global_BaseBk & "Zw_Compras_en_SII" & ")" & vbCrLf
+
+            Consulta_sql = My.Resources.Recursos_Libros_Compra_Venta.SqlQuery_Libro_Compras
+            Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+            Consulta_sql = Replace(Consulta_sql, "#Libro#", _Libro)
+            Consulta_sql = Replace(Consulta_sql, "#Filtro#", _Filtro & _Filtro_Random)
+
+            _Inf_05_Solo_Random = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            Consulta_sql = My.Resources.Recursos_Libros_Compra_Venta.SqlQuery_Libro_Compras
+            Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+            Consulta_sql = Replace(Consulta_sql, "#Libro#", _Libro)
+            Consulta_sql = Replace(Consulta_sql, "#Filtro#", _Filtro_Random)
+
+            _Inf_06_Libro_Compras = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            Tab.SelectedTabIndex = _TabIndex
 
 
-        Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+            For Each _Fila As DataRow In _Inf_02_Solo_SII.Rows
 
-        _Inf_00_SII = _Ds.Tables(0)
-        _Inf_01_SII_y_Random = _Ds.Tables(1)
-        _Inf_02_Solo_SII = _Ds.Tables(2)
-        _Inf_03_SII_Random_Otro_Mes = _Ds.Tables(3)
-        _Inf_04_SII_Random_Direfencias = _Ds.Tables(4)
+                If _Fila.Item("TPDF") = "Si" Then
 
-        Dim _Cadena_Random As String = CADENA_A_BUSCAR(_Descripcion, "TIDO+NUDO+ENDO+LIBRO+NOKOEN+STR(VABRDO) LIKE '%")
+                    Dim _Xml As String = _Fila.Item("XML")
 
-        Dim _Filtro_Random As String = "And TIDO+NUDO+ENDO+LIBRO+NOKOEN+STR(VABRDO) LIKE '%" & _Cadena_Random & "%'"
+                    Dim _Archivo_Xml As New XmlDocument()
+                    _Archivo_Xml.LoadXml(_Xml)
 
-        Dim _Filtro As String = "AND EDO.LIBRO LIKE '" & _Cadena_Random & "%' AND LIBRO NOT IN (Select Libro From " & _Global_BaseBk & "Zw_Compras_en_SII" & ")" & vbCrLf
+                    Dim fullPath As String = "...\\archivo.xml"
+                    File.WriteAllText(fullPath, _Xml)
 
-        Consulta_sql = My.Resources.Recursos_Libros_Compra_Venta.SqlQuery_Libro_Compras
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
-        Consulta_sql = Replace(Consulta_sql, "#Libro#", _Libro)
-        Consulta_sql = Replace(Consulta_sql, "#Filtro#", _Filtro & _Filtro_Random)
+                    Dim _Dset_DTE As New DataSet
+                    _Dset_DTE.ReadXml(fullPath)
 
-        _Inf_05_Solo_Random = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl_Referencia As DataTable
 
-        Consulta_sql = My.Resources.Recursos_Libros_Compra_Venta.SqlQuery_Libro_Compras
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
-        Consulta_sql = Replace(Consulta_sql, "#Libro#", _Libro)
-        Consulta_sql = Replace(Consulta_sql, "#Filtro#", _Filtro_Random)
+                    Try
+                        _Tbl_Referencia = _Dset_DTE.Tables("Referencia")
+                    Catch ex As Exception
+                        _Tbl_Referencia = Nothing
+                    End Try
 
-        _Inf_06_Libro_Compras = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    If Not IsNothing(_Tbl_Referencia) Then
+                        For Each _Fl As DataRow In _Tbl_Referencia.Rows
 
-        Tab.SelectedTabIndex = _TabIndex
+                            If _Fl.Item("TpoDocRef") = "801" Then
 
+                                Dim _Endo As String = _Fila.Item("Endo")
+                                Dim _Nudo As String = _Fl.Item("FolioRef").ToString.Trim.Replace("-", "")
+                                _Nudo = numero_(_Nudo, 10)
+                                Dim _Reg = _Sql.Fx_Cuenta_Registros("MAEEDO", "TIDO = 'OCC' And NUDO = '" & _Nudo & "' And ENDO = '" & _Endo & "'")
 
-        For Each _Fila As DataRow In _Inf_02_Solo_SII.Rows
+                                If CBool(_Reg) Then
+                                    _Fila.Item("TieneOccRef") = True
+                                    _Fila.Item("OccRef") = _Fl.Item("FolioRef").ToString.Trim
+                                End If
 
-            If _Fila.Item("TPDF") = "Si" Then
+                            End If
+                        Next
+                    End If
 
-                Dim _Xml As String = _Fila.Item("XML")
-
-                Dim _Archivo_Xml As New XmlDocument()
-                _Archivo_Xml.LoadXml(_Xml)
-
-                Dim fullPath As String = "...\\archivo.xml"
-                File.WriteAllText(fullPath, _Xml)
-
-                Dim _Dset_DTE As New DataSet
-                _Dset_DTE.ReadXml(fullPath)
-
-                Dim _Tbl_Referencia As DataTable
-
-                Try
-                    _Tbl_Referencia = _Dset_DTE.Tables("Referencia")
-                Catch ex As Exception
-                    _Tbl_Referencia = Nothing
-                End Try
-
-                If Not IsNothing(_Tbl_Referencia) Then
-                    For Each _Fl As DataRow In _Tbl_Referencia.Rows
-                        If _Fl.Item("TpoDocRef") = "801" Then
-                            _Fila.Item("TieneOccRef") = True
-                            _Fila.Item("OccRef") = _Fl.Item("FolioRef").ToString.Trim
-                        End If
-                    Next
                 End If
 
-            End If
+            Next
 
-        Next
+            For Each _Fila As DataRow In _Inf_00_SII.Rows
 
-        For Each _Fila As DataRow In _Inf_00_SII.Rows
+                If _Fila.Item("TPDF") = "Si" Then
 
-            If _Fila.Item("TPDF") = "Si" Then
+                    Dim _Xml As String = _Fila.Item("XML")
 
-                Dim _Xml As String = _Fila.Item("XML")
+                    Dim _Archivo_Xml As New XmlDocument()
+                    _Archivo_Xml.LoadXml(_Xml)
 
-                Dim _Archivo_Xml As New XmlDocument()
-                _Archivo_Xml.LoadXml(_Xml)
+                    Dim fullPath As String = "...\\archivo.xml"
+                    File.WriteAllText(fullPath, _Xml)
 
-                Dim fullPath As String = "...\\archivo.xml"
-                File.WriteAllText(fullPath, _Xml)
+                    Dim _Dset_DTE As New DataSet
+                    _Dset_DTE.ReadXml(fullPath)
 
-                Dim _Dset_DTE As New DataSet
-                _Dset_DTE.ReadXml(fullPath)
+                    Dim _Tbl_Referencia As DataTable
 
-                Dim _Tbl_Referencia As DataTable
+                    Try
+                        _Tbl_Referencia = _Dset_DTE.Tables("Referencia")
+                    Catch ex As Exception
+                        _Tbl_Referencia = Nothing
+                    End Try
 
-                Try
-                    _Tbl_Referencia = _Dset_DTE.Tables("Referencia")
-                Catch ex As Exception
-                    _Tbl_Referencia = Nothing
-                End Try
+                    If Not IsNothing(_Tbl_Referencia) Then
+                        For Each _Fl As DataRow In _Tbl_Referencia.Rows
+                            If _Fl.Item("TpoDocRef") = "801" Then
+                                _Fila.Item("TieneOccRef") = True
+                                _Fila.Item("OccRef") = _Fl.Item("FolioRef").ToString.Trim
+                            End If
+                        Next
+                    End If
 
-                If Not IsNothing(_Tbl_Referencia) Then
-                    For Each _Fl As DataRow In _Tbl_Referencia.Rows
-                        If _Fl.Item("TpoDocRef") = "801" Then
-                            _Fila.Item("TieneOccRef") = True
-                            _Fila.Item("OccRef") = _Fl.Item("FolioRef").ToString.Trim
-                        End If
-                    Next
                 End If
 
-            End If
+            Next
 
-        Next
+            Try
+                _Inf_02_Solo_SII.Columns.Remove("XML")
+                _Inf_00_SII.Columns.Remove("XML")
+                File.Delete("...\\archivo.xml")
+            Catch ex As Exception
 
-        Try
-            _Inf_02_Solo_SII.Columns.Remove("XML")
-            _Inf_00_SII.Columns.Remove("XML")
-            File.Delete("...\\archivo.xml")
+            End Try
+
         Catch ex As Exception
-
+        Finally
+            Me.Cursor = Cursors.Default
         End Try
 
     End Sub
@@ -1217,17 +1200,20 @@ Public Class Frm_Libro_Compras_Ventas
     Sub Sb_Refrescar_Grillas()
 
         Btn_Cambiar_Libro.Visible = False
+        Btn_ExportarPDF.Visible = False
 
         Select Case Tab.SelectedTabIndex
             Case 0
                 Sb_Actualizar_Totales_SII(_Inf_00_SII)
                 Sb_Formato_Grilla_00()
+                Btn_ExportarPDF.Visible = True
             Case 1
                 Sb_Actualizar_Totales_SII(_Inf_01_SII_y_Random)
                 Sb_Formato_Grilla_01()
             Case 2
                 Sb_Actualizar_Totales_SII(_Inf_02_Solo_SII)
                 Sb_Formato_Grilla_02()
+                Btn_ExportarPDF.Visible = True
             Case 3
                 Sb_Actualizar_Totales_SII(_Inf_03_SII_Random_Otro_Mes)
                 Btn_Cambiar_Libro.Visible = CBool(_Inf_03_SII_Random_Otro_Mes.Rows.Count)
@@ -1690,7 +1676,7 @@ Public Class Frm_Libro_Compras_Ventas
             Dim _RecepXMLCmp_ImpMarcaAgua As Boolean = Not String.IsNullOrEmpty(_RecepXMLCmp_MarcaAgua)
 
             Dim Cl_Dte2XmlIPDF As New Cl_Dte2XmlPDF
-            Cl_Dte2XmlIPDF.Sb_Crear_PDF2XML(Me, Ds_Xml, _NombreArchivo, _RecepXMLCmp_MarcaAgua, _RecepXMLCmp_ImpMarcaAgua)
+            Cl_Dte2XmlIPDF.Sb_Crear_PDF2XML(Me, Ds_Xml, _NombreArchivo, _RecepXMLCmp_MarcaAgua, _RecepXMLCmp_ImpMarcaAgua, True)
             File.Delete(_Archivo & ".XML")
 
         Else
@@ -1727,6 +1713,35 @@ Public Class Frm_Libro_Compras_Ventas
         Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "PRoveedores Sin PDF")
+
+    End Sub
+
+    Private Sub Btn_ExportarPDF_Click(sender As Object, e As EventArgs) Handles Btn_ExportarPDF.Click
+
+        Dim _Contador As Integer
+
+        If Tab.SelectedTabIndex = 0 Then
+            _Contador = Grilla_00.Rows.Cast(Of DataGridViewRow)().Count(Function(row) row.Cells("TPDF").Value = "Si")
+        End If
+
+        If Tab.SelectedTabIndex = 2 Then
+            _Contador = Grilla_02.Rows.Cast(Of DataGridViewRow)().Count(Function(row) row.Cells("TPDF").Value = "Si")
+        End If
+
+        If _Contador = 0 Then
+            MessageBoxEx.Show(Me, "No existen datos que mostrar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Descripcion As String = RTrim$(Txt_Descripcion.Text)
+        Dim _Cadena_SII As String = CADENA_A_BUSCAR(_Descripcion, "Tido+Nudo+Endo+Libro+Rut_Proveedor+Razon_Social+Folio+STR(Monto_Total) LIKE '%")
+        Dim _Filtro_SII As String = "And Tido+Nudo+Endo+Libro+Rut_Proveedor+Razon_Social+Cmp.Folio+STR(Monto_Total) LIKE '%" & _Cadena_SII & "%'"
+
+        Dim Fm As New Frm_Libro_DescPDF(_Periodo, _Mes)
+        Fm.Filtro_SII = _Filtro_SII
+        Fm.SoloEnSII = (Tab.SelectedTabIndex = 2)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 End Class

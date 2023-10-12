@@ -12340,6 +12340,7 @@ Public Class Frm_Formulario_Documento
             Grilla_Encabezado.Enabled = False
             Grilla_Detalle.Enabled = False
 
+            Dim _Permiso_NCV As String
 
             Dim _Fila As DataGridViewRow = Grilla_Encabezado.Rows(0)
             Dim _Cabeza = Grilla_Encabezado.Columns(Grilla_Encabezado.CurrentCell.ColumnIndex).Name
@@ -12643,8 +12644,9 @@ Public Class Frm_Formulario_Documento
                                                         MessageBoxEx.Show(Me, _Msg, "Validación",
                                                              MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
 
-                                                        Sb_Limpiar(Modalidad, True)
-                                                        Return
+                                                        _Requiere_Permiso_NCV = True
+                                                        'Sb_Limpiar(Modalidad, True)
+                                                        'Return
 
                                                     End If
 
@@ -16491,7 +16493,6 @@ Public Class Frm_Formulario_Documento
 
             End If
 
-
             If _Tido <> "NCV" Then
 
                 Dim _Id_DocEnc = _RowMaeedo_Origen.Item("IDMAEEDO")
@@ -16567,6 +16568,9 @@ Public Class Frm_Formulario_Documento
             Dim _FechaUltVencimiento As Date = _Fecha_Emision
             Dim _Forma_pago As String
             Dim _Fecha_Recepcion As Date = NuloPorNro(_RowMaeedo_Origen.Item("FEER"), _Fecha_Emision)
+
+            Dim _ModFechVto As Boolean
+            Dim _ModFechVto_Dias1erVenci As Integer
 
             Dim _Centro_Costo As String
 
@@ -17280,10 +17284,22 @@ Public Class Frm_Formulario_Documento
 
                     If _Prct Then ' Es Concepto
 
-                        Consulta_sql = "Select * From TABCT Where KOCT = '" & _Codigo & "'"
+                        Consulta_sql = "Select * From TABCT" & vbCrLf &
+                                       "Left Join " & _Global_BaseBk & "Zw_Conceptos On KOCT = Koct" & vbCrLf &
+                                       "Where KOCT = '" & _Codigo & "'"
                         Dim _RowConcepto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                         Sb_Agregar_Concepto(_New_Fila, _RowConcepto)
+
+                        If _RowConcepto.Item("ModFechVto") Then
+
+                            If Not _ModFechVto Then
+                                _ModFechVto = True
+                                _ModFechVto_Dias1erVenci = _RowConcepto.Item("ModFechVto_Dias1erVenci")
+                            End If
+
+                        End If
+
 
                     Else
 
@@ -17775,6 +17791,22 @@ Public Class Frm_Formulario_Documento
 
             If _Tido <> "NCV" And _Tido <> "GRD" Then
                 Sb_Recalcular_Descuentos(_Filad, False, False)
+            End If
+
+            If _ModFechVto Then
+
+                'Dim _FechaEmision As Date = _TblEncabezado.Rows(0).Item("FechaEmision")
+
+                _FechaEmision = DateAdd(DateInterval.Day, _ModFechVto_Dias1erVenci, _FechaEmision)
+                _TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento") = _FechaEmision
+                _TblEncabezado.Rows(0).Item("FechaUltVencimiento") = _FechaEmision
+                _TblEncabezado.Rows(0).Item("Cuotas") = 0
+                _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento") = _ModFechVto_Dias1erVenci
+                _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = _ModFechVto_Dias1erVenci
+
+                MessageBoxEx.Show(Me, "Se cambia la fecha de vencimiento del documento a : " & FormatDateTime(_FechaEmision, DateFormat.ShortDate),
+                                  "Concepto especial", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+
             End If
 
             Sb_Marcar_Grilla()

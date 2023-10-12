@@ -42,6 +42,7 @@ Public Class Comisiones
 
     Private Sub Btn_Configuracion_Click(sender As Object, e As EventArgs) Handles Btn_Configuracion.Click
         Dim Fm As New Frm_Cms_Fun
+        Fm.Text = "MANTENCION DE FUNCIONARIOS"
         Fm.ShowDialog(Me)
         Fm.Dispose()
     End Sub

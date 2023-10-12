@@ -483,6 +483,14 @@ Public Class Frm_Cms
         '_Suma_Dias_Pdte_Despacho = _Rows_Pendientes.Item("Pdte_Despacho")
         '_Suma_Dias_Pdte_Cierre = _Rows_Pendientes.Item("Pdte_Cierre")
 
+        If CBool(Grilla_Lineas.RowCount) Then
+
+            Dim _Inx As Integer = Grilla_Lineas.RowCount - 1
+
+            Grilla_Lineas.Focus()
+            Grilla_Lineas.CurrentCell = Grilla_Lineas.Rows(_Inx).Cells("CodFuncionario")
+
+        End If
 
         Me.Refresh()
 
@@ -576,6 +584,7 @@ Public Class Frm_Cms
                     Fm_Espera.Show()
                     Fm.Sb_TraerValoresParaComisiones()
                 Else
+                    Fm.Btn_Importar_Informe.Visible = True
                     Fm.ShowDialog(Me)
                 End If
 
@@ -795,6 +804,21 @@ Public Class Frm_Cms
 
         Dim _SqlQuery = String.Empty
 
+        If CBool(Grilla_Lineas.RowCount) Then
+
+            Dim _Grabar = MessageBoxEx.Show(Me, "¡Desea grabar los datos actualizados hasta ahora antes de incorporar a estos funcionarios?", "Advertencia",
+                                            MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation)
+
+            If _Grabar = DialogResult.Yes Then
+                Call Btn_Grabar_Click(Nothing, Nothing)
+            End If
+
+            If _Grabar = DialogResult.Cancel Then
+                Return
+            End If
+
+        End If
+
         For Each _Fila As DataRow In _Tbl_Funcionarios.Rows
 
             Dim _CodFuncinario As String = _Fila.Item("Codigo")
@@ -998,6 +1022,10 @@ Public Class Frm_Cms
     End Sub
 
     Sub Sb_ActualizarValoresPorFuncionario(_Fila_Lin As DataGridViewRow)
+
+        If IsNothing(_Fila_Lin) Then
+            Return
+        End If
 
         Dim _Id_Lin As Integer = _Fila_Lin.Cells("Id").Value
         Dim _PorcCotizaciones As Double = _Fila_Lin.Cells("PorcCotizaciones").Value
