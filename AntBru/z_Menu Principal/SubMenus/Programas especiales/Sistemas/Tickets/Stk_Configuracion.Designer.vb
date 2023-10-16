@@ -29,9 +29,9 @@ Partial Class Stk_Configuracion
         Me.MetroTilePanel1 = New DevComponents.DotNetBar.Metro.MetroTilePanel()
         Me.ConsultaPreciosContenedor = New DevComponents.DotNetBar.ItemContainer()
         Me.Btn_Agentes = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.Btn_Conf_Info_Reportes = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.Btn_Recetas = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.Btn_Operaciones = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Grupos = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Areas = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Tipos = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -45,7 +45,7 @@ Partial Class Stk_Configuracion
         Me.LabelX1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
         Me.LabelX1.Location = New System.Drawing.Point(3, 0)
         Me.LabelX1.Name = "LabelX1"
-        Me.LabelX1.Size = New System.Drawing.Size(462, 49)
+        Me.LabelX1.Size = New System.Drawing.Size(454, 49)
         Me.LabelX1.TabIndex = 60
         Me.LabelX1.Text = "<font color=""#349FCE""><b>CONFIGURACIONSISTEMA DE TICKETS</b></font>"
         '
@@ -101,7 +101,7 @@ Partial Class Stk_Configuracion
         Me.ConsultaPreciosContenedor.FixedSize = New System.Drawing.Size(700, 400)
         Me.ConsultaPreciosContenedor.MultiLine = True
         Me.ConsultaPreciosContenedor.Name = "ConsultaPreciosContenedor"
-        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Agentes, Me.Btn_Conf_Info_Reportes, Me.Btn_Operaciones, Me.Btn_Recetas})
+        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Agentes, Me.Btn_Grupos, Me.Btn_Areas, Me.Btn_Tipos})
         '
         '
         '
@@ -130,82 +130,81 @@ Partial Class Stk_Configuracion
         Me.Btn_Agentes.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Agentes.TitleText = "BakApp"
         '
-        'Btn_Conf_Info_Reportes
+        'Btn_Grupos
         '
-        Me.Btn_Conf_Info_Reportes.Image = CType(resources.GetObject("Btn_Conf_Info_Reportes.Image"), System.Drawing.Image)
-        Me.Btn_Conf_Info_Reportes.ImageIndent = New System.Drawing.Point(8, -6)
-        Me.Btn_Conf_Info_Reportes.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_Conf_Info_Reportes.Name = "Btn_Conf_Info_Reportes"
-        Me.Btn_Conf_Info_Reportes.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Conf_Info_Reportes.Text = "<font size=""+4""><b>GRUPOS</b></font><br/><font size=""-1"">Mantención de grupos de " &
+        Me.Btn_Grupos.Image = CType(resources.GetObject("Btn_Grupos.Image"), System.Drawing.Image)
+        Me.Btn_Grupos.ImageIndent = New System.Drawing.Point(8, -6)
+        Me.Btn_Grupos.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Grupos.Name = "Btn_Grupos"
+        Me.Btn_Grupos.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Grupos.Text = "<font size=""+4""><b>GRUPOS</b></font><br/><font size=""-1"">Mantención de grupos de " &
     "agentes</font>"
-        Me.Btn_Conf_Info_Reportes.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Teal
-        Me.Btn_Conf_Info_Reportes.TileSize = New System.Drawing.Size(200, 100)
+        Me.Btn_Grupos.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Teal
+        Me.Btn_Grupos.TileSize = New System.Drawing.Size(200, 100)
         '
         '
         '
-        Me.Btn_Conf_Info_Reportes.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
-        Me.Btn_Conf_Info_Reportes.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
-        Me.Btn_Conf_Info_Reportes.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_Conf_Info_Reportes.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
-        Me.Btn_Conf_Info_Reportes.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
-        Me.Btn_Conf_Info_Reportes.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_Conf_Info_Reportes.TileStyle.PaddingBottom = 4
-        Me.Btn_Conf_Info_Reportes.TileStyle.PaddingLeft = 4
-        Me.Btn_Conf_Info_Reportes.TileStyle.PaddingRight = 4
-        Me.Btn_Conf_Info_Reportes.TileStyle.PaddingTop = 4
-        Me.Btn_Conf_Info_Reportes.TileStyle.TextColor = System.Drawing.Color.White
-        Me.Btn_Conf_Info_Reportes.TitleText = "BakApp"
-        Me.Btn_Conf_Info_Reportes.Visible = False
+        Me.Btn_Grupos.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_Grupos.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_Grupos.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_Grupos.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_Grupos.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_Grupos.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Grupos.TileStyle.PaddingBottom = 4
+        Me.Btn_Grupos.TileStyle.PaddingLeft = 4
+        Me.Btn_Grupos.TileStyle.PaddingRight = 4
+        Me.Btn_Grupos.TileStyle.PaddingTop = 4
+        Me.Btn_Grupos.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Grupos.TitleText = "BakApp"
         '
-        'Btn_Recetas
+        'Btn_Areas
         '
-        Me.Btn_Recetas.Image = CType(resources.GetObject("Btn_Recetas.Image"), System.Drawing.Image)
-        Me.Btn_Recetas.ImageIndent = New System.Drawing.Point(8, -6)
-        Me.Btn_Recetas.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_Recetas.Name = "Btn_Recetas"
-        Me.Btn_Recetas.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Recetas.Text = "<font size=""+4""><b>TIPOS</b></font><br/><font size=""-1"">Mantención de tipos de at" &
-    "ención</font>"
-        Me.Btn_Recetas.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Teal
-        Me.Btn_Recetas.TileSize = New System.Drawing.Size(200, 100)
-        '
-        '
-        '
-        Me.Btn_Recetas.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(124, Byte), Integer), CType(CType(73, Byte), Integer))
-        Me.Btn_Recetas.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(124, Byte), Integer), CType(CType(73, Byte), Integer))
-        Me.Btn_Recetas.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_Recetas.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(124, Byte), Integer), CType(CType(73, Byte), Integer))
-        Me.Btn_Recetas.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(124, Byte), Integer), CType(CType(73, Byte), Integer))
-        Me.Btn_Recetas.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_Recetas.TileStyle.PaddingBottom = 4
-        Me.Btn_Recetas.TileStyle.PaddingLeft = 4
-        Me.Btn_Recetas.TileStyle.PaddingRight = 4
-        Me.Btn_Recetas.TileStyle.PaddingTop = 4
-        Me.Btn_Recetas.TileStyle.TextColor = System.Drawing.Color.White
-        Me.Btn_Recetas.TitleText = "BakApp"
-        '
-        'Btn_Operaciones
-        '
-        Me.Btn_Operaciones.Image = CType(resources.GetObject("Btn_Operaciones.Image"), System.Drawing.Image)
-        Me.Btn_Operaciones.ImageIndent = New System.Drawing.Point(8, -6)
-        Me.Btn_Operaciones.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_Operaciones.Name = "Btn_Operaciones"
-        Me.Btn_Operaciones.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Operaciones.Text = "<font size=""+4""><b>AREAS DEPARTAMENTOS</b></font><br/><font size=""-1"">Mantención " &
+        Me.Btn_Areas.Image = CType(resources.GetObject("Btn_Areas.Image"), System.Drawing.Image)
+        Me.Btn_Areas.ImageIndent = New System.Drawing.Point(8, -6)
+        Me.Btn_Areas.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Areas.Name = "Btn_Areas"
+        Me.Btn_Areas.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Areas.Text = "<font size=""+4""><b>AREAS DEPARTAMENTOS</b></font><br/><font size=""-1"">Mantención " &
     "de areas o departamentos encargados</font>"
-        Me.Btn_Operaciones.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Yellow
-        Me.Btn_Operaciones.TileSize = New System.Drawing.Size(200, 100)
+        Me.Btn_Areas.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Yellow
+        Me.Btn_Areas.TileSize = New System.Drawing.Size(200, 100)
         '
         '
         '
-        Me.Btn_Operaciones.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(163, Byte), Integer))
-        Me.Btn_Operaciones.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(163, Byte), Integer))
-        Me.Btn_Operaciones.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(163, Byte), Integer))
-        Me.Btn_Operaciones.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(163, Byte), Integer))
-        Me.Btn_Operaciones.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_Operaciones.TileStyle.TextColor = System.Drawing.Color.White
-        Me.Btn_Operaciones.TitleText = "BakApp"
+        Me.Btn_Areas.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(163, Byte), Integer))
+        Me.Btn_Areas.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(163, Byte), Integer))
+        Me.Btn_Areas.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(163, Byte), Integer))
+        Me.Btn_Areas.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(163, Byte), Integer))
+        Me.Btn_Areas.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Areas.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Areas.TitleText = "BakApp"
+        '
+        'Btn_Tipos
+        '
+        Me.Btn_Tipos.Image = CType(resources.GetObject("Btn_Tipos.Image"), System.Drawing.Image)
+        Me.Btn_Tipos.ImageIndent = New System.Drawing.Point(8, -6)
+        Me.Btn_Tipos.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Tipos.Name = "Btn_Tipos"
+        Me.Btn_Tipos.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Tipos.Text = "<font size=""+4""><b>TIPOS</b></font><br/><font size=""-1"">Mantención de tipos de at" &
+    "ención</font>"
+        Me.Btn_Tipos.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Teal
+        Me.Btn_Tipos.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_Tipos.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(124, Byte), Integer), CType(CType(73, Byte), Integer))
+        Me.Btn_Tipos.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(124, Byte), Integer), CType(CType(73, Byte), Integer))
+        Me.Btn_Tipos.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_Tipos.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(124, Byte), Integer), CType(CType(73, Byte), Integer))
+        Me.Btn_Tipos.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(124, Byte), Integer), CType(CType(73, Byte), Integer))
+        Me.Btn_Tipos.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Tipos.TileStyle.PaddingBottom = 4
+        Me.Btn_Tipos.TileStyle.PaddingLeft = 4
+        Me.Btn_Tipos.TileStyle.PaddingRight = 4
+        Me.Btn_Tipos.TileStyle.PaddingTop = 4
+        Me.Btn_Tipos.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Tipos.TitleText = "BakApp"
         '
         'Stk_Configuracion
         '
@@ -227,7 +226,7 @@ Partial Class Stk_Configuracion
     Friend WithEvents MetroTilePanel1 As DevComponents.DotNetBar.Metro.MetroTilePanel
     Friend WithEvents ConsultaPreciosContenedor As DevComponents.DotNetBar.ItemContainer
     Private WithEvents Btn_Agentes As DevComponents.DotNetBar.Metro.MetroTileItem
-    Private WithEvents Btn_Conf_Info_Reportes As DevComponents.DotNetBar.Metro.MetroTileItem
-    Private WithEvents Btn_Recetas As DevComponents.DotNetBar.Metro.MetroTileItem
-    Private WithEvents Btn_Operaciones As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_Grupos As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_Tipos As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_Areas As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

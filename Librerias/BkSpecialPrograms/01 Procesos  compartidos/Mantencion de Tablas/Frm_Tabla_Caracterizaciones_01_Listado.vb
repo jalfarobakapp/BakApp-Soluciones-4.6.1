@@ -795,11 +795,9 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
                            "Where Tabla = '" & _CodTablaClass & "'" & vbCrLf & _CondiCodigos
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
-            'Fx_Ejecutar_SqlQuery_BaseExterna(Consulta_sql)
-
         End If
 
-        Consulta_sql = _InfoTabla.SQlQueryActualizaDatos '_Arr_Info_Tabla(2)
+        Consulta_sql = _InfoTabla.SQlQueryActualizaDatos
 
         If Not String.IsNullOrEmpty(Trim(Consulta_sql)) Then
             _Sql.Ej_consulta_IDU(Consulta_sql)
@@ -808,9 +806,6 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
         Sb_Actualizar_Grilla("")
 
         MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-        'ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
-        '                       2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
 
     End Sub
 

@@ -440,6 +440,12 @@
     <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Tickets\Stk_Configuracion.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Tickets\Stk_Ticktes.Designer.vb">
+      <DependentUpon>Stk_Ticktes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Tickets\Stk_Ticktes.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="z_Menu Principal\SubMenus\Servicio Tecnico\Modulo_Servicio_Tecnico.Designer.vb">
       <DependentUpon>Modulo_Servicio_Tecnico.vb</DependentUpon>
     </Compile>
@@ -697,6 +703,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Tickets\Stk_Configuracion.resx">
       <DependentUpon>Stk_Configuracion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Tickets\Stk_Ticktes.resx">
+      <DependentUpon>Stk_Ticktes.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Servicio Tecnico\Modulo_Servicio_Tecnico.resx">
       <DependentUpon>Modulo_Servicio_Tecnico.vb</DependentUpon>

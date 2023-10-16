@@ -23,9 +23,9 @@ Partial Class Frm_Tickets_Lista
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Tickets_Lista))
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Crear_Ticket = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -48,7 +48,7 @@ Partial Class Frm_Tickets_Lista
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Ticket})
         Me.Bar2.Location = New System.Drawing.Point(0, 488)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(791, 41)
+        Me.Bar2.Size = New System.Drawing.Size(1086, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 161
@@ -74,7 +74,7 @@ Partial Class Frm_Tickets_Lista
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 6)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(767, 469)
+        Me.GroupPanel1.Size = New System.Drawing.Size(1062, 469)
         '
         '
         '
@@ -146,38 +146,38 @@ Partial Class Frm_Tickets_Lista
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle10.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle11.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle11.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle12.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
-        Me.Grilla.Size = New System.Drawing.Size(761, 446)
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        Me.Grilla.Size = New System.Drawing.Size(1056, 446)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 27
         '
@@ -185,7 +185,7 @@ Partial Class Frm_Tickets_Lista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(791, 529)
+        Me.ClientSize = New System.Drawing.Size(1086, 529)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True

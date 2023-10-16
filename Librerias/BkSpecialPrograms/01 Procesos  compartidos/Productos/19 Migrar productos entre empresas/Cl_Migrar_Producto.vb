@@ -319,6 +319,10 @@ Namespace Bk_Migrar_Producto
                         _Sincronizar = False
                     End If
 
+                    If _NombreTabla = "PDIMEN" Then
+                        _Sincronizar = False
+                    End If
+
                     If _Sincronizar Then
 
                         Consulta &= "INSERT INTO " & _NombreTabla & "("

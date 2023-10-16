@@ -1,8 +1,7 @@
 ﻿Imports BkSpecialPrograms
 Imports DevComponents.DotNetBar
 
-Public Class Stk_Configuracion
-
+Public Class Stk_Ticktes
     Dim _Fm_Menu_Padre As Metro.MetroAppForm
 
     Dim _Menu_Extra As Boolean
@@ -28,27 +27,21 @@ Public Class Stk_Configuracion
         _Fm_Menu_Padre.CloseModalPanel(Me, DevComponents.DotNetBar.Controls.eSlideSide.Left)
     End Sub
 
-    Private Sub Btn_Agentes_Click(sender As Object, e As EventArgs) Handles Btn_Agentes.Click
+    Private Sub Btn_MisTicket_Click(sender As Object, e As EventArgs) Handles Btn_MisTicket.Click
 
-    End Sub
-
-    Private Sub Btn_Grupos_Click(sender As Object, e As EventArgs) Handles Btn_Grupos.Click
-
-    End Sub
-
-    Private Sub Btn_Areas_Click(sender As Object, e As EventArgs) Handles Btn_Areas.Click
-
-        Dim Fm As New Frm_Tickets_Areas
+        Dim Fm As New Frm_Tickets_Lista(FUNCIONARIO, Frm_Tickets_Lista.Enum_Tickets.MisTicket, 0)
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
     End Sub
 
-    Private Sub Btn_Tipos_Click(sender As Object, e As EventArgs) Handles Btn_Tipos.Click
+    Private Sub Btn_TicketAsignados_Click(sender As Object, e As EventArgs) Handles Btn_TicketAsignados.Click
 
-        Dim Fm As New Frm_Tickets_Tipos
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
+    End Sub
 
+    Private Sub Btn_Configuracion_Click(sender As Object, e As EventArgs) Handles Btn_Configuracion.Click
+        Dim NewPanel As Stk_Configuracion = Nothing
+        NewPanel = New Stk_Configuracion(_Fm_Menu_Padre)
+        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
     End Sub
 End Class
