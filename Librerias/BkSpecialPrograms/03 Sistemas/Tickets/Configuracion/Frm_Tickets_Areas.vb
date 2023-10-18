@@ -18,6 +18,8 @@ Public Class Frm_Tickets_Areas
         Sb_Formato_Generico_Grilla(Grilla_Areas, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
         Sb_Formato_Generico_Grilla(Grilla_Tipos, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
 
     Private Sub Frm_Tickets_Areas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -170,37 +172,11 @@ Public Class Frm_Tickets_Areas
         Dim _FilaArea As DataGridViewRow = Grilla_Areas.CurrentRow
 
         Dim _Id_Area As Integer = _FilaArea.Cells("Id").Value
-        Dim _Tbl_TiposSl As DataTable
 
-        Dim _Sql_Filtro_Condicion_Extra = "And Id not In (Select Id_Tipo From " & _Global_BaseBk & "Zw_Stk_AreaVsTipo Where Id_Area = " & _Id_Area & ")"
+        Dim Fm As New Frm_Tickets_Tipos(_Id_Area)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
-        Dim _Filtrar As New Clas_Filtros_Random(Me)
-
-        _Filtrar.Tabla = _Global_BaseBk & "Zw_Stk_Tipos"
-        _Filtrar.Campo = "Id"
-        _Filtrar.Descripcion = "Tipo"
-
-        If _Filtrar.Fx_Filtrar(Nothing,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, _Sql_Filtro_Condicion_Extra, False, False) Then
-            _Tbl_TiposSl = _Filtrar.Pro_Tbl_Filtro
-        Else
-            Return
-        End If
-
-        Consulta_sql = String.Empty
-
-        For Each _Fila As DataRow In _Tbl_TiposSl.Rows
-
-            Dim _Id_Tipo As Integer = _Fila.Item("Codigo")
-            Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_Stk_AreaVsTipo (Id_Area, Id_Tipo) Values (" & _Id_Area & "," & _Id_Tipo & ")" & vbCrLf
-
-        Next
-
-        If String.IsNullOrEmpty(Consulta_sql) Then
-            Return
-        End If
-
-        _Sql.Ej_consulta_IDU(Consulta_sql)
         Call Grilla_Areas_CellEnter(Nothing, Nothing)
 
     End Sub
@@ -214,6 +190,8 @@ Public Class Frm_Tickets_Areas
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Tipos Tp On At.Id_Tipo = Tp.Id" & vbCrLf &
                        "Where Id_Area = " & _Id_Area
 
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id_Area = " & _Id_Area
+
         _Tbl_Tipos = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla_Tipos
@@ -226,8 +204,14 @@ Public Class Frm_Tickets_Areas
 
             .Columns("Tipo").Visible = True
             .Columns("Tipo").HeaderText = "Tipo"
-            .Columns("Tipo").Width = 440
+            .Columns("Tipo").Width = 340
             .Columns("Tipo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Permiso").Visible = True
+            .Columns("Permiso").HeaderText = "Permiso"
+            .Columns("Permiso").Width = 100
+            .Columns("Permiso").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
         End With

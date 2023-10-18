@@ -177,7 +177,6 @@ Partial Class Stk_Ticktes
         Me.Btn_Configuracion.TileStyle.PaddingTop = 4
         Me.Btn_Configuracion.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Configuracion.TitleText = "BakApp"
-        Me.Btn_Configuracion.Visible = False
         '
         'Stk_Ticktes
         '

@@ -247,7 +247,7 @@ Partial Class Frm_St_Recetas
         '
         Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel2.TabIndex = 95
-        Me.GroupPanel2.Text = "Productos asociados a la receta"
+        Me.GroupPanel2.Text = "Servicios asociados a la receta"
         '
         'Grilla_Productos
         '

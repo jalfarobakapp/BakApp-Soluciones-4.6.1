@@ -6,7 +6,7 @@ Public Class Frm_Tickets_Mant
     Dim Consulta_sql As String
 
     Dim _Id_Ticket As Integer
-    Dim _Row_Ticket As DataRow
+    Dim _Cl_Tickets As New Cl_Tickets
 
     Public Sub New(_Id_Ticket As Integer)
 
@@ -17,10 +17,14 @@ Public Class Frm_Tickets_Mant
 
         Me._Id_Ticket = _Id_Ticket
 
-        Consulta_sql = "Select *,NOKOFU From " & _Global_BaseBk & "Zw_Stk_Tickets" & vbCrLf &
-                       "Left Join TABFU On KOFU = CodFuncionario_Crea" & vbCrLf &
-                       "Where Id = " & _Id_Ticket
-        _Row_Ticket = _Sql.Fx_Get_DataRow(Consulta_sql)
+        'Consulta_sql = "Select *,NOKOFU From " & _Global_BaseBk & "Zw_Stk_Tickets" & vbCrLf &
+        '               "Left Join TABFU On KOFU = CodFuncionario_Crea" & vbCrLf &
+        '               "Where Id = " & _Id_Ticket
+        '_Row_Ticket = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        _Cl_Tickets.Tickets.CodFuncionario_Crea = FUNCIONARIO
+
+        _Cl_Tickets.Sb_Llenar_Ticket(_Id_Ticket)
 
     End Sub
 
@@ -32,30 +36,28 @@ Public Class Frm_Tickets_Mant
                                              {"BJ", "Baja"},
                                              {"UR", "Urgente"}}
         Sb_Llenar_Combos(_Arr_Tipo_Entidad, Cmb_Prioridad)
-        Cmb_Prioridad.SelectedValue = ""
 
-        If Not IsNothing(_Row_Ticket) Then
+        Txt_Grupo.Enabled = Chk_Asignado.Checked
+        Txt_Agente.Enabled = Chk_Asignado.Checked
+        Rdb_AsignadoAgente.Enabled = Chk_Asignado.Checked
+        Rdb_AsignadoGrupo.Enabled = Chk_Asignado.Checked
 
-            Txt_CodFuncionario_Crea.Tag = _Row_Ticket.Item("CodFuncionario_Crea")
-            Txt_CodFuncionario_Crea.Text = _Row_Ticket.Item("NOKOFU")
-            Txt_Asunto.Text = _Row_Ticket.Item("Asunto")
-            Cmb_Prioridad.SelectedValue = _Row_Ticket.Item("Prioridad")
-            Txt_Area.Tag = _Row_Ticket.Item("Id_Area")
-            Txt_Area.Text = _Row_Ticket.Item("Area")
-            Txt_Tipo.Tag = _Row_Ticket.Item("Id_Tipo")
-            Txt_Tipo.Text = _Row_Ticket.Item("Tipo")
-            Txt_Descripcion.Text = _Row_Ticket.Item("Descripcion")
-            Chk_Asignar.Checked = _Row_Ticket.Item("Asignar")
-            Txt_Agente.Tag = _Row_Ticket.Item("CodAgente")
-            Txt_Agente.Text = _Row_Ticket.Item("NomAgente")
-            Txt_Grupo.Tag = _Row_Ticket.Item("Id_Grupo")
-            Txt_Grupo.Text = _Row_Ticket.Item("Grupo")
-
-        Else
-
-            Txt_CodFuncionario_Crea.Text = Nombre_funcionario_activo.Trim
-
-        End If
+        With _Cl_Tickets.Tickets
+            Txt_CodFuncionario_Crea.Tag = .CodFuncionario_Crea
+            Txt_CodFuncionario_Crea.Text = _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & .CodFuncionario_Crea & "'")
+            Txt_Asunto.Text = .Asunto
+            Cmb_Prioridad.SelectedValue = .Prioridad
+            Txt_Area.Tag = .Id_Area
+            Txt_Area.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Areas", "Area", "Id = " & .Id_Area)
+            Txt_Tipo.Tag = .Id_Tipo
+            Txt_Tipo.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Tipos", "Tipo", "Id = " & .Id_Tipo)
+            Txt_Descripcion.Text = .Descripcion
+            Chk_Asignado.Checked = .Asignado
+            Txt_Agente.Tag = .CodAgente
+            Txt_Agente.Text = _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & .CodAgente & "'")
+            Txt_Grupo.Tag = .Id_Grupo
+            Txt_Grupo.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Grupos", "Grupo", "Id = " & .Id_Grupo)
+        End With
 
         Me.ActiveControl = Txt_Asunto
 
@@ -63,36 +65,72 @@ Public Class Frm_Tickets_Mant
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
-        If IsNothing(_Row_Ticket) Then
-
-            Dim _Numero As String = Fx_NvoNro_OT()
-
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets (Numero,Estado,Asunto,Descripcion,FechaCreacion) Values " &
-                           "('" & _Numero & "','ING','" & Txt_Asunto.Text.Trim & "','" & Txt_Descripcion.Text & "',Getdate())"
-            _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Ticket)
-
+        If String.IsNullOrWhiteSpace(Txt_Asunto.Text) Then
+            MessageBoxEx.Show(Me, "Falta el asunto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Asunto.Focus()
+            Return
         End If
 
-        Dim _Asignado As Integer = Convert.ToInt32(Chk_Asignar.Checked)
-        Dim _AsignadoGrupo As Integer
-        Dim _AsignadoFuncionario As Integer
+        If String.IsNullOrWhiteSpace(Txt_Descripcion.Text) Then
+            MessageBoxEx.Show(Me, "Falta la descripción del requerimiento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Descripcion.Focus()
+            Return
+        End If
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set " & vbCrLf &
-                       "Id_Area = " & Txt_Area.Tag &
-                       ",Id_Tipo = " & Txt_Tipo.Tag &
-                       ",Prioridad = ''" &
-                       ",CodFuncionario_Crea = '" & FUNCIONARIO & "'" &
-                       ",Asunto = '" & Txt_Asunto.Text & "'" &
-                       ",Descripcion = '" & Txt_Descripcion.Text & "'" &
-                       ",Asignado = " & _Asignado &
-                       ",AsignadoGrupo = " & _AsignadoGrupo &
-                       ",Id_Grupo = 0" &
-                       ",AsignadoFuncionario = " & _AsignadoFuncionario &
-                       ",CodAgente = '" & Txt_Agente.Tag & "'" & vbCrLf &
-                       "Where Id = " & _Id_Ticket
-        If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+        If String.IsNullOrWhiteSpace(Cmb_Prioridad.Text) Then
+            MessageBoxEx.Show(Me, "Falta la Prioridad", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Cmb_Prioridad.Focus()
+            Return
+        End If
+
+        If String.IsNullOrWhiteSpace(Txt_Area.Text) Then
+            MessageBoxEx.Show(Me, "Falta el Area/Departamento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Area.Focus()
+            Return
+        End If
+
+        If String.IsNullOrWhiteSpace(Txt_Tipo.Text) Then
+            MessageBoxEx.Show(Me, "Falta el Tipo de requerimiento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Tipo.Focus()
+            Return
+        End If
+
+        If Chk_Asignado.Checked Then
+            If String.IsNullOrEmpty(Txt_Agente.Text) AndAlso String.IsNullOrEmpty(Txt_Grupo.Text) Then
+                MessageBoxEx.Show(Me, "Debe asignar un grupo de trabajo o agente para este requerimiento." & vbCrLf & vbCrLf &
+                                  "Si no sabe a quien asignar esta labor debe dejar la casilla [ASIGNAR EL REQUERIMINETO A:] destickeada" & vbCrLf &
+                                  "y el administrador del sistema redirigira el requerimiento a quien corresponda",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+        End If
+
+        With _Cl_Tickets.Tickets
+
+            .Asunto = Txt_Asunto.Text.Trim
+            .Descripcion = Txt_Descripcion.Text.Trim
+            .Prioridad = Cmb_Prioridad.SelectedValue
+            .Id_Area = Txt_Area.Tag
+            .Id_Tipo = Txt_Tipo.Tag
+            .Id_Grupo = Txt_Grupo.Tag
+            .CodAgente = Txt_Agente.Tag
+            .Asignado = Chk_Asignado.Checked
+            .AsignadoGrupo = Rdb_AsignadoGrupo.Checked
+            .AsignadoAgente = Rdb_AsignadoAgente.Checked
+
+        End With
+
+        Dim _Msg_Grabar = String.Empty
+
+        If _Cl_Tickets.Tickets.Id = 0 Then
+            _Msg_Grabar = _Cl_Tickets.Fx_Grabar_Nuevo_Tickets()
+        End If
+
+        If String.IsNullOrEmpty(_Msg_Grabar) Then
             MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Me.Close()
+        Else
+            MessageBoxEx.Show(Me, _Msg_Grabar, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
 
     End Sub
@@ -155,29 +193,89 @@ Public Class Frm_Tickets_Mant
 
     End Sub
 
-    Function Fx_NvoNro_OT() As String
 
-        Dim _NvoNro_OT As String
 
-        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+    Private Sub Chk_Asignado_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Asignado.CheckedChanged
 
-        Dim _TblPaso = _Sql.Fx_Get_Tablas("Select Max(Numero) As Numero From " & _Global_BaseBk & "Zw_Stk_Tickets")
+        If Chk_Asignado.Checked Then
 
-        If CBool(_TblPaso.Rows.Count) Then
-
-            Dim _Ult_Nro_OT As String = NuloPorNro(_TblPaso.Rows(0).Item("Numero"), "")
-
-            If String.IsNullOrEmpty(Trim(_Ult_Nro_OT)) Then
-                _Ult_Nro_OT = 1
-            Else
-                _Ult_Nro_OT += 1
+            If String.IsNullOrWhiteSpace(Txt_Area.Text) Then
+                MessageBoxEx.Show(Me, "Falta el Area/Departamento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Chk_Asignado.Checked = False
+                Return
             End If
-            _NvoNro_OT = numero_(Val(_Ult_Nro_OT), 10)
+
+            If String.IsNullOrWhiteSpace(Txt_Tipo.Text) Then
+                MessageBoxEx.Show(Me, "Falta el tipo de requerimiento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Chk_Asignado.Checked = False
+                Return
+            End If
+
         Else
-            _NvoNro_OT = numero_(1, 10)
+            Txt_Grupo.Tag = 0
+            Txt_Agente.Tag = String.Empty
+            Txt_Grupo.Text = String.Empty
+            Txt_Agente.Text = String.Empty
+            Rdb_AsignadoAgente.Checked = False
+            Rdb_AsignadoGrupo.Checked = False
+            Txt_Grupo.Enabled = False
+            Txt_Agente.Enabled = False
+        End If
+        Rdb_AsignadoAgente.Enabled = Chk_Asignado.Checked
+        Rdb_AsignadoGrupo.Enabled = Chk_Asignado.Checked
+    End Sub
+
+    Private Sub Txt_Grupo_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Grupo.ButtonCustomClick
+
+        Dim Fm As New Frm_Tickets_Grupos
+        Fm.ModoSeleccion = True
+        Fm.ShowDialog(Me)
+        If Not IsNothing(Fm.Row_Grupo) Then
+            Txt_Grupo.Tag = Fm.Row_Grupo.Item("Id")
+            Txt_Grupo.Text = Fm.Row_Grupo.Item("Grupo")
+        End If
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Txt_Grupo_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Grupo.ButtonCustom2Click
+        Txt_Grupo.Tag = String.Empty
+        Txt_Grupo.Text = String.Empty
+    End Sub
+
+    Private Sub Txt_Agente_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Agente.ButtonCustomClick
+
+        Dim _Sql_Filtro_Condicion_Extra = String.Empty
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random,
+                               _Sql_Filtro_Condicion_Extra, False, False, True) Then
+            Txt_Agente.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+            Txt_Agente.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
         End If
 
-        Return _NvoNro_OT
+    End Sub
 
-    End Function
+    Private Sub Txt_Agente_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Agente.ButtonCustom2Click
+        Txt_Agente.Tag = String.Empty
+        Txt_Agente.Text = String.Empty
+    End Sub
+
+    Private Sub Rdb_AsignadoGrupo_CheckedChanged(sender As Object, e As EventArgs) Handles Rdb_AsignadoGrupo.CheckedChanged
+        If Rdb_AsignadoGrupo.Checked Then
+            Txt_Agente.Tag = String.Empty
+            Txt_Agente.Text = String.Empty
+        End If
+        Txt_Grupo.Enabled = Rdb_AsignadoGrupo.Checked
+    End Sub
+
+    Private Sub Rdb_AsignadoAgente_CheckedChanged(sender As Object, e As EventArgs) Handles Rdb_AsignadoAgente.CheckedChanged
+        If Rdb_AsignadoAgente.Checked Then
+            Txt_Grupo.Tag = 0
+            Txt_Grupo.Text = String.Empty
+        End If
+        Txt_Agente.Enabled = Rdb_AsignadoAgente.Checked
+    End Sub
 End Class

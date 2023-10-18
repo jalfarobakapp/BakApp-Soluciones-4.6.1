@@ -17,7 +17,7 @@ Public Class Frm_St_Ordenes_de_trabajo
         Get
             Return _Tbl_OT
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
 
             If value Is Nothing Then
                 Sb_Actualizar_Grilla2()
@@ -41,7 +41,7 @@ Public Class Frm_St_Ordenes_de_trabajo
         Get
 
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Correr_a_la_derecha = value
         End Set
     End Property
@@ -53,6 +53,7 @@ Public Class Frm_St_Ordenes_de_trabajo
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_SubOt, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
         Super_TabS.SelectedTabIndex = 0
 
@@ -62,7 +63,7 @@ Public Class Frm_St_Ordenes_de_trabajo
 
     End Sub
 
-    Private Sub Frm_St_Ordenes_de_trabajo_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_St_Ordenes_de_trabajo_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         'InsertarBotonenGrilla(Grilla, "BtnImagen", "Situación", "Solicitud", 0, _Tipo_Boton.Imagen)
         AddHandler Btn_Crear_OT1Producto.Click, AddressOf Sb_Crear_Nueva_OT
@@ -82,6 +83,9 @@ Public Class Frm_St_Ordenes_de_trabajo
         AddHandler Tab_06_Aviso.Click, AddressOf Sb_Actualizar_Grilla2
         AddHandler Tab_07_Entregadas.Click, AddressOf Sb_Actualizar_Grilla2
         AddHandler Tab_08_Cerradas_Hoy.Click, AddressOf Sb_Actualizar_Grilla2
+
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        AddHandler Grilla_SubOt.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         'Txt_Informacion.DataBindings.Add(New System.Windows.Forms.Binding("Text", _TblTecnicos, "Informacion", True))
 
@@ -227,7 +231,7 @@ Public Class Frm_St_Ordenes_de_trabajo
         Consulta_Sql = Replace(Consulta_Sql, "#Db_BakApp#", _Global_BaseBk)
         Consulta_Sql = Replace(Consulta_Sql, "#Condicion#", _Condicion)
 
-        _Tbl_OT = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_OT = _Sql.Fx_Get_Tablas(Consulta_Sql)
 
         Sb_Marcar_Grilla()
 
@@ -584,7 +588,7 @@ Public Class Frm_St_Ordenes_de_trabajo
 
 #Region "EDITAR DOCUMENTO, HACER GESTION"
 
-    Sub Sb_Abrir_Documento(ByVal _Fila As DataGridViewRow)
+    Sub Sb_Abrir_Documento(_Fila As DataGridViewRow)
 
         Dim _Abrir_Documento As Boolean
 
@@ -592,8 +596,8 @@ Public Class Frm_St_Ordenes_de_trabajo
         Dim _Id_Ot_Padre = _Fila.Cells("Id_Ot_Padre").Value
 
         Consulta_Sql = My.Resources.Recursos_Locales.SqlQuery_Traer_OT
-        Consulta_sql = Replace(Consulta_sql, "#Id_Ot#", _Id_Ot)
-        Consulta_sql = Replace(Consulta_sql, "#Db_BakApp#", _Global_BaseBk)
+        Consulta_Sql = Replace(Consulta_Sql, "#Id_Ot#", _Id_Ot)
+        Consulta_Sql = Replace(Consulta_Sql, "#Db_BakApp#", _Global_BaseBk)
         '#Id_Ot# #Db_BakApp#
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -639,7 +643,7 @@ Public Class Frm_St_Ordenes_de_trabajo
 
 #End Region
 
-    Sub Sb_Actualizar_Estados_De_La_Fila(ByVal _Fila_Dg As DataGridViewRow)
+    Sub Sb_Actualizar_Estados_De_La_Fila(_Fila_Dg As DataGridViewRow)
 
         Dim _Id_Ot = _Fila_Dg.Cells("Id_Ot").Value
         Dim _Tbl_Estado As DataTable
@@ -648,11 +652,11 @@ Public Class Frm_St_Ordenes_de_trabajo
 
         If Not _Fila_Dg.Cells("Chk_Flujo_Trabajo").Value Then
 
-            Consulta_sql = "SELECT * FROM " & _Global_BaseBk & "Zw_St_OT_Estados" & Space(1) &
+            Consulta_Sql = "SELECT * FROM " & _Global_BaseBk & "Zw_St_OT_Estados" & Space(1) &
                        "Where Id_Ot = " & _Id_Ot & Space(1) &
                        "Order by Semilla"
 
-            _Tbl_Estado = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Estado = _Sql.Fx_Get_Tablas(Consulta_Sql)
 
 
             Fx_Estados(Estado_01_Ingreso, "Ingresado", "...", "1ra Etapa",
@@ -754,6 +758,7 @@ Public Class Frm_St_Ordenes_de_trabajo
 
 
                 End Select
+
             Next
 
             _Fila_Dg.Cells("Chk_Flujo_Trabajo").Value = True
@@ -816,8 +821,6 @@ Public Class Frm_St_Ordenes_de_trabajo
 
             End Select
 
-            'Sb_Actualizar_Estados()
-
             If Not (_Proximo_Estado Is Nothing) Then
 
                 _Proximo_Estado.Text = Replace(_Proximo_Estado.Text, "...", "Espera...")
@@ -834,13 +837,13 @@ Public Class Frm_St_Ordenes_de_trabajo
 
     End Sub
 
-    Function Fx_Estados(ByVal _St_Etapa As StepItem,
-                       ByVal _Encabezado As String,
-                       ByVal _Espera As String,
-                       ByVal _Etapa As String,
-                       ByVal _Color_Arriba As Color,
-                       ByVal _Color_Abajo As Color,
-                       ByVal _Valor As Integer)
+    Function Fx_Estados(_St_Etapa As StepItem,
+                        _Encabezado As String,
+                        _Espera As String,
+                        _Etapa As String,
+                        _Color_Arriba As Color,
+                        _Color_Abajo As Color,
+                        _Valor As Integer)
 
         Dim _Leyenda As String = "<font size=" & Chr(34) & "+2" & Chr(34) & "><b>" & _Encabezado &
                               "</b></font><br/><font size=" & Chr(34) & "-1" & Chr(34) & ">" & _Espera & "<br/>" & _Etapa & "</font>"
@@ -858,13 +861,13 @@ Public Class Frm_St_Ordenes_de_trabajo
 
     End Function
 
-    Private Sub Frm_St_Ordenes_de_trabajo_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_St_Ordenes_de_trabajo_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
         Return
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
@@ -872,30 +875,30 @@ Public Class Frm_St_Ordenes_de_trabajo
 
     End Sub
 
-    Private Sub BtnActualizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnActualizar.Click
+    Private Sub BtnActualizar_Click(sender As System.Object, e As System.EventArgs) Handles BtnActualizar.Click
         _Id_Fila_Activa = Nothing
         Sb_Actualizar_Grilla2()
         'Sb_Marcar_Grilla()
     End Sub
 
-    Private Sub Grilla_CellEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEnter
-        Return
-        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+    Private Sub Grilla_CellEnter(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEnter
 
-        If _Id_Fila_Activa <> _Fila.Index Or (_Id_Fila_Activa Is Nothing) Then
-            _Fila.Cells("Chk_Flujo_Trabajo").Value = False
-            Sb_Actualizar_Estados_De_La_Fila(_Fila)
-        End If
+        Dim _Fila As DataGridViewRow = Grilla_SubOt.Rows(0)
+
+        'If _Id_Fila_Activa <> _Fila.Index Or (_Id_Fila_Activa Is Nothing) Then
+        '_Fila.Cells("Chk_Flujo_Trabajo").Value = False
+        Sb_Actualizar_Estados_De_La_Fila(_Fila)
+        'End If
 
     End Sub
 
-    Private Sub Btn_Mantencion_Tecnicos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mantencion_Tecnicos.Click
+    Private Sub Btn_Mantencion_Tecnicos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mantencion_Tecnicos.Click
         Dim Fm As New Frm_St_Lista_Tecnicos_Talleres
         Fm.ShowDialog(Me)
         Fm.Dispose()
     End Sub
 
-    Private Sub Btn_Buscar_OT_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Buscar_OT.Click
+    Private Sub Btn_Buscar_OT_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Buscar_OT.Click
 
         Dim _TblInforme As DataTable
 
@@ -910,7 +913,7 @@ Public Class Frm_St_Ordenes_de_trabajo
 
     End Sub
 
-    Private Sub Btn_Conf_Info_Reportes_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Conf_Info_Reportes.Click
+    Private Sub Btn_Conf_Info_Reportes_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Conf_Info_Reportes.Click
         If Fx_Tiene_Permiso(Me, "Stec0015") Then
             Dim Fm As New Frm_St_Notas_Reportes
             Fm.ShowDialog(Me)
@@ -918,7 +921,7 @@ Public Class Frm_St_Ordenes_de_trabajo
         End If
     End Sub
 
-    Private Sub Btn_Exportar_Excel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_Excel.Click
+    Private Sub Btn_Exportar_Excel_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Exportar_Excel.Click
 
         If Fx_Tiene_Permiso(Me, "Stec0018") Then
             ExportarTabla_JetExcel_Tabla(_Tbl_OT, Me, "Ordenes de Trabajo")
@@ -973,12 +976,16 @@ Public Class Frm_St_Ordenes_de_trabajo
 
     Private Sub Grilla_SubOt_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_SubOt.CellEnter
 
-        Dim _Fila As DataGridViewRow = Grilla_SubOt.Rows(Grilla_SubOt.CurrentRow.Index)
+        Try
+            Dim _Fila As DataGridViewRow = Grilla_SubOt.Rows(Grilla_SubOt.CurrentRow.Index)
 
-        If _Id_Fila_Activa <> _Fila.Index Or (_Id_Fila_Activa Is Nothing) Then
+            'If _Id_Fila_Activa <> _Fila.Index Or (_Id_Fila_Activa Is Nothing) Then
             _Fila.Cells("Chk_Flujo_Trabajo").Value = False
             Sb_Actualizar_Estados_De_La_Fila(_Fila)
-        End If
+            'End If
+        Catch ex As Exception
+
+        End Try
 
     End Sub
 

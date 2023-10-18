@@ -44,7 +44,7 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Btn_Crear_OT1Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Crear_OTVariosProductos = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
-        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_FlujoTrabajo = New DevComponents.DotNetBar.LabelX()
         Me.Progeso_Gestion = New DevComponents.DotNetBar.ProgressSteps()
         Me.Estado_01_Ingreso = New DevComponents.DotNetBar.StepItem()
         Me.Estado_02_Asignar_Tecnico = New DevComponents.DotNetBar.StepItem()
@@ -268,20 +268,20 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Grilla.Size = New System.Drawing.Size(932, 275)
         Me.Grilla.TabIndex = 1
         '
-        'LabelX4
+        'Lbl_FlujoTrabajo
         '
-        Me.LabelX4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.LabelX4.BackColor = System.Drawing.Color.White
+        Me.Lbl_FlujoTrabajo.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Lbl_FlujoTrabajo.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(12, 589)
-        Me.LabelX4.Name = "LabelX4"
-        Me.LabelX4.Size = New System.Drawing.Size(163, 23)
-        Me.LabelX4.TabIndex = 90
-        Me.LabelX4.Text = "<font color=""#4E5D30""><b><font color=""#22B14C""><font color=""#0072BC"">WORKFLOW</fo" &
+        Me.Lbl_FlujoTrabajo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_FlujoTrabajo.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_FlujoTrabajo.Location = New System.Drawing.Point(12, 588)
+        Me.Lbl_FlujoTrabajo.Name = "Lbl_FlujoTrabajo"
+        Me.Lbl_FlujoTrabajo.Size = New System.Drawing.Size(163, 23)
+        Me.Lbl_FlujoTrabajo.TabIndex = 90
+        Me.Lbl_FlujoTrabajo.Text = "<font color=""#4E5D30""><b><font color=""#22B14C""><font color=""#0072BC"">WORKFLOW</fo" &
     "nt></font></b></font> (Flujo de trabajo)"
         '
         'Progeso_Gestion
@@ -298,7 +298,7 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Progeso_Gestion.ForeColor = System.Drawing.Color.Black
         Me.Progeso_Gestion.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Estado_01_Ingreso, Me.Estado_02_Asignar_Tecnico, Me.Estado_03_Presupuesto, Me.Estado_04_Cotizacion, Me.Estado_05_Reparacion_Cierre, Me.Estado_06_Aviso, Me.Estado_07_Entrega, Me.Estado_08_Cierre})
         Me.Progeso_Gestion.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Progeso_Gestion.Location = New System.Drawing.Point(12, 618)
+        Me.Progeso_Gestion.Location = New System.Drawing.Point(12, 617)
         Me.Progeso_Gestion.Name = "Progeso_Gestion"
         Me.Progeso_Gestion.Size = New System.Drawing.Size(955, 45)
         Me.Progeso_Gestion.TabIndex = 91
@@ -544,11 +544,11 @@ Partial Class Frm_St_Ordenes_de_trabajo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(962, 693)
+        Me.ClientSize = New System.Drawing.Size(962, 692)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.Super_TabS)
         Me.Controls.Add(Me.Progeso_Gestion)
-        Me.Controls.Add(Me.LabelX4)
+        Me.Controls.Add(Me.Lbl_FlujoTrabajo)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Bar2)
         Me.DoubleBuffered = True
@@ -576,7 +576,7 @@ Partial Class Frm_St_Ordenes_de_trabajo
     Friend WithEvents Btn_Buscar_OT As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Crear_OT As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
-    Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Lbl_FlujoTrabajo As DevComponents.DotNetBar.LabelX
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents BtnActualizar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Exportar_Excel As DevComponents.DotNetBar.ButtonItem

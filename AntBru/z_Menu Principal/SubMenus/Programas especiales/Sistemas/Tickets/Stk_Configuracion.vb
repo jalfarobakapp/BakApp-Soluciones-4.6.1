@@ -34,21 +34,25 @@ Public Class Stk_Configuracion
 
     Private Sub Btn_Grupos_Click(sender As Object, e As EventArgs) Handles Btn_Grupos.Click
 
+        Dim Fm As New Frm_Tickets_Grupos
+        Fm.ShowDialog(_Fm_Menu_Padre)
+        Fm.Dispose()
+
     End Sub
 
     Private Sub Btn_Areas_Click(sender As Object, e As EventArgs) Handles Btn_Areas.Click
 
         Dim Fm As New Frm_Tickets_Areas
-        Fm.ShowDialog(Me)
+        Fm.ShowDialog(_Fm_Menu_Padre)
         Fm.Dispose()
 
     End Sub
 
     Private Sub Btn_Tipos_Click(sender As Object, e As EventArgs) Handles Btn_Tipos.Click
 
-        Dim Fm As New Frm_Tickets_Tipos
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
+        'Dim Fm As New Frm_Tickets_Tipos
+        'Fm.ShowDialog(_Fm_Menu_Padre)
+        'Fm.Dispose()
 
     End Sub
 End Class

@@ -23,12 +23,12 @@ Partial Class Frm_Tickets_Grupos
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Tickets_Grupos))
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Btn_EditarFuncionario = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_QuitarVendedor = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla_Grupos = New DevComponents.DotNetBar.Controls.DataGridViewX()
@@ -47,6 +47,7 @@ Partial Class Frm_Tickets_Grupos
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Btn_SeleccionarGrupo = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Grilla_Grupos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -75,23 +76,23 @@ Partial Class Frm_Tickets_Grupos
         Me.Grilla_Grupos.AllowUserToAddRows = False
         Me.Grilla_Grupos.AllowUserToDeleteRows = False
         Me.Grilla_Grupos.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Grupos.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Grupos.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla_Grupos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Grupos.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Grupos.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla_Grupos.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Grupos.EnableHeadersVisualStyles = False
         Me.Grilla_Grupos.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
@@ -99,16 +100,16 @@ Partial Class Frm_Tickets_Grupos
         Me.Grilla_Grupos.MultiSelect = False
         Me.Grilla_Grupos.Name = "Grilla_Grupos"
         Me.Grilla_Grupos.ReadOnly = True
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Grupos.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Grupos.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla_Grupos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla_Grupos.Size = New System.Drawing.Size(586, 240)
+        Me.Grilla_Grupos.Size = New System.Drawing.Size(509, 240)
         Me.Grilla_Grupos.TabIndex = 1
         '
         'Btn_Mnu_QuitarProducto
@@ -116,7 +117,7 @@ Partial Class Frm_Tickets_Grupos
         Me.Btn_Mnu_QuitarProducto.Image = CType(resources.GetObject("Btn_Mnu_QuitarProducto.Image"), System.Drawing.Image)
         Me.Btn_Mnu_QuitarProducto.ImageAlt = CType(resources.GetObject("Btn_Mnu_QuitarProducto.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_QuitarProducto.Name = "Btn_Mnu_QuitarProducto"
-        Me.Btn_Mnu_QuitarProducto.Text = "Quitar producto de la oferta"
+        Me.Btn_Mnu_QuitarProducto.Text = "Quitar agente del grupo"
         '
         'Menu_Contextual_02
         '
@@ -130,14 +131,14 @@ Partial Class Frm_Tickets_Grupos
         Me.Btn_Mnu_AsociarProductos.Image = CType(resources.GetObject("Btn_Mnu_AsociarProductos.Image"), System.Drawing.Image)
         Me.Btn_Mnu_AsociarProductos.ImageAlt = CType(resources.GetObject("Btn_Mnu_AsociarProductos.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_AsociarProductos.Name = "Btn_Mnu_AsociarProductos"
-        Me.Btn_Mnu_AsociarProductos.Text = "Asociar productos a la oferta"
+        Me.Btn_Mnu_AsociarProductos.Text = "Asociar agentes al grupo"
         '
         'Btn_Mnu_EditarOferta
         '
         Me.Btn_Mnu_EditarOferta.Image = CType(resources.GetObject("Btn_Mnu_EditarOferta.Image"), System.Drawing.Image)
         Me.Btn_Mnu_EditarOferta.ImageAlt = CType(resources.GetObject("Btn_Mnu_EditarOferta.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_EditarOferta.Name = "Btn_Mnu_EditarOferta"
-        Me.Btn_Mnu_EditarOferta.Text = "Editar oferta"
+        Me.Btn_Mnu_EditarOferta.Text = "Editar nombre del grupo"
         '
         'Menu_Contextual_01
         '
@@ -184,10 +185,10 @@ Partial Class Frm_Tickets_Grupos
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Grupo, Me.Btn_ExportarExcel})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Grupo, Me.Btn_SeleccionarGrupo, Me.Btn_ExportarExcel})
         Me.Bar2.Location = New System.Drawing.Point(0, 510)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(611, 41)
+        Me.Bar2.Size = New System.Drawing.Size(536, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 110
@@ -199,23 +200,23 @@ Partial Class Frm_Tickets_Grupos
         Me.Grilla_Agentes.AllowUserToAddRows = False
         Me.Grilla_Agentes.AllowUserToDeleteRows = False
         Me.Grilla_Agentes.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle10.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Agentes.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Agentes.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla_Agentes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle11.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle11.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Agentes.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Agentes.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla_Agentes.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Agentes.EnableHeadersVisualStyles = False
         Me.Grilla_Agentes.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
@@ -223,16 +224,16 @@ Partial Class Frm_Tickets_Grupos
         Me.Grilla_Agentes.MultiSelect = False
         Me.Grilla_Agentes.Name = "Grilla_Agentes"
         Me.Grilla_Agentes.ReadOnly = True
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle12.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Agentes.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Agentes.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla_Agentes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla_Agentes.Size = New System.Drawing.Size(586, 130)
+        Me.Grilla_Agentes.Size = New System.Drawing.Size(509, 130)
         Me.Grilla_Agentes.TabIndex = 1
         '
         'GroupPanel2
@@ -243,7 +244,7 @@ Partial Class Frm_Tickets_Grupos
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(9, 345)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(592, 153)
+        Me.GroupPanel2.Size = New System.Drawing.Size(515, 153)
         '
         '
         '
@@ -273,7 +274,7 @@ Partial Class Frm_Tickets_Grupos
         '
         Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel2.TabIndex = 111
-        Me.GroupPanel2.Text = "Productos que se asocian al tipo de descuento"
+        Me.GroupPanel2.Text = "Agentes asociados al grupo"
         '
         'Txt_Buscador
         '
@@ -291,7 +292,7 @@ Partial Class Frm_Tickets_Grupos
         Me.Txt_Buscador.Location = New System.Drawing.Point(3, 20)
         Me.Txt_Buscador.Name = "Txt_Buscador"
         Me.Txt_Buscador.PreventEnterBeep = True
-        Me.Txt_Buscador.Size = New System.Drawing.Size(580, 22)
+        Me.Txt_Buscador.Size = New System.Drawing.Size(506, 22)
         Me.Txt_Buscador.TabIndex = 0
         '
         'LabelX7
@@ -306,7 +307,7 @@ Partial Class Frm_Tickets_Grupos
         Me.LabelX7.Name = "LabelX7"
         Me.LabelX7.Size = New System.Drawing.Size(404, 23)
         Me.LabelX7.TabIndex = 99
-        Me.LabelX7.Text = "Ingrese algún código o algo de la descripción del descuento especial"
+        Me.LabelX7.Text = "Ingrese algo de la descripción de un grupo o un agente"
         '
         'GroupPanel3
         '
@@ -317,7 +318,7 @@ Partial Class Frm_Tickets_Grupos
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel3.Location = New System.Drawing.Point(9, 0)
         Me.GroupPanel3.Name = "GroupPanel3"
-        Me.GroupPanel3.Size = New System.Drawing.Size(592, 70)
+        Me.GroupPanel3.Size = New System.Drawing.Size(515, 70)
         '
         '
         '
@@ -358,7 +359,7 @@ Partial Class Frm_Tickets_Grupos
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(9, 76)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(592, 263)
+        Me.GroupPanel1.Size = New System.Drawing.Size(515, 263)
         '
         '
         '
@@ -388,24 +389,34 @@ Partial Class Frm_Tickets_Grupos
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 109
-        Me.GroupPanel1.Text = "Nómina de tipos de descuentos especiales"
+        Me.GroupPanel1.Text = "Grupos de trabajo"
+        '
+        'Btn_SeleccionarGrupo
+        '
+        Me.Btn_SeleccionarGrupo.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_SeleccionarGrupo.ForeColor = System.Drawing.Color.Black
+        Me.Btn_SeleccionarGrupo.Image = CType(resources.GetObject("Btn_SeleccionarGrupo.Image"), System.Drawing.Image)
+        Me.Btn_SeleccionarGrupo.ImageAlt = CType(resources.GetObject("Btn_SeleccionarGrupo.ImageAlt"), System.Drawing.Image)
+        Me.Btn_SeleccionarGrupo.Name = "Btn_SeleccionarGrupo"
+        Me.Btn_SeleccionarGrupo.Tooltip = "Seleccionar grupo"
         '
         'Frm_Tickets_Grupos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(611, 551)
+        Me.ClientSize = New System.Drawing.Size(536, 551)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.GroupPanel3)
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Frm_Tickets_Grupos"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MetroForm"
+        Me.Text = "GRUPOS DE TRABAJO"
         CType(Me.Grilla_Grupos, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
@@ -434,4 +445,5 @@ Partial Class Frm_Tickets_Grupos
     Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
     Friend WithEvents GroupPanel3 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents Btn_SeleccionarGrupo As DevComponents.DotNetBar.ButtonItem
 End Class

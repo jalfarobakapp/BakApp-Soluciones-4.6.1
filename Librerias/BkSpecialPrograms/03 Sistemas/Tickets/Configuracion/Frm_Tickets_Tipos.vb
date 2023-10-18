@@ -5,20 +5,28 @@ Public Class Frm_Tickets_Tipos
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
+    Dim _Id_Area As Integer
+    Dim _Row_Area As DataRow
     Dim _Tbl_Tipos As DataTable
 
-    Public Sub New()
+    Public Sub New(_Id_Area As Integer)
 
         ' Esta llamada es exigida por el diseñador.
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
+        Me._Id_Area = _Id_Area
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Areas Where Id = " & _Id_Area
+        _Row_Area = _Sql.Fx_Get_DataRow(Consulta_sql)
+
         Sb_Formato_Generico_Grilla(Grilla_Tipos, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
     End Sub
 
     Private Sub Frm_Tickets_Tipos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Lbl_Area.Text = "AREA: " & _Row_Area.Item("AREA")
 
         Sb_Actualizar_Grilla()
 
@@ -37,7 +45,8 @@ Public Class Frm_Tickets_Tipos
         '_Condicion = "And CODIGO In (Select CODIGO From MAEDRES Where ELEMENTO = '" & Txt_BuscaXProducto.Text & "')"
         'End If
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tipos"
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tipos" & vbCrLf &
+                       "Where Id_Area = " & _Id_Area
         _Tbl_Tipos = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla_Tipos
@@ -50,8 +59,14 @@ Public Class Frm_Tickets_Tipos
 
             .Columns("Tipo").Visible = True
             .Columns("Tipo").HeaderText = "Tipo de requerimiento"
-            .Columns("Tipo").Width = 440
+            .Columns("Tipo").Width = 340
             .Columns("Tipo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Permiso").Visible = True
+            .Columns("Permiso").HeaderText = "Permiso"
+            .Columns("Permiso").Width = 100
+            .Columns("Permiso").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             ''.Columns("Dias").Visible = True
@@ -78,7 +93,7 @@ Public Class Frm_Tickets_Tipos
             Return
         End If
 
-        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tipos", "Tipo = '" & _Tipo & "'")
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tipos", "Id_Area = " & _Id_Area & " And Tipo = '" & _Tipo & "'")
 
         If CBool(_Reg) Then
             MessageBoxEx.Show(Me, "El Tipo de requerimiento ya existe", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -86,8 +101,21 @@ Public Class Frm_Tickets_Tipos
             Return
         End If
 
-        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tipos (Tipo) Values ('" & _Tipo & "')"
-        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+        Dim _Id_Tipo As Integer
+
+        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tipos (Id_Area,Tipo) Values (" & _Id_Area & ",'" & _Tipo.Trim & "')"
+        If _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Tipo) Then
+
+            Dim _CodPermiso As String = "StkTP" & numero_(_Id_Area, 3) & "-" & numero_(_Id_Tipo, 3) '"StkTP001-005"
+            Dim _DescripcionPermiso As String = _Tipo.Trim
+
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tipos Set Permiso = '" & _CodPermiso & "' Where Id = " & _Id_Tipo
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "ZW_Permisos (CodPermiso,DescripcionPermiso,CodFamilia,NombreFamiliaPermiso) Values " &
+                           "('" & _CodPermiso & "','" & _DescripcionPermiso & "','" & "StkTP" & numero_(_Id_Area, 3) & "','Stk-" & _Row_Area.Item("AREA").ToString.Trim & "')"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
             Me.Sb_Actualizar_Grilla()
             BuscarDatoEnGrilla(_Tipo, "Tipo", Grilla_Tipos)
         End If

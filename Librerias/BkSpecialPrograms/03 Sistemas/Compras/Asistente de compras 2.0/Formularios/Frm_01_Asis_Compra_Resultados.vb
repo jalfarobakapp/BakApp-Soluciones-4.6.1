@@ -8344,8 +8344,11 @@ Drop Table #Paso"
                     Dim _MontoMinCompra As Double = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "MontoMinCompra",
                                                                       "CodEntidad = '" & _Fl.Endo & "' And CodSucEntidad = '" & _Fl.Suendo & "'", True)
 
+                    Dim _NoResMtoMinComAsCompraAuto As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "NoResMtoMinComAsCompraAuto",
+                                                                      "CodEntidad = '" & _Fl.Endo & "' And CodSucEntidad = '" & _Fl.Suendo & "'", True)
+
                     If CBool(_MontoMinCompra) Then
-                        If _Fl.Vanedo < _MontoMinCompra Then
+                        If _Fl.Vanedo < _MontoMinCompra AndAlso Not _NoResMtoMinComAsCompraAuto Then
                             _Fl.EnviarMail = False
                             _OrdenesBajoMinimo.Add(_Fl.Idmaeedo)
                         End If
