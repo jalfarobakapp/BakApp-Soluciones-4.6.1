@@ -11991,7 +11991,23 @@ Public Class Frm_Formulario_Documento
                                 _Vizado = False
                             End If
                         Else
-                            If _Tipo_Documento <> csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra Then
+
+                            'Dim _Permiso As String
+
+                            'Select Case _Tipo_Documento
+                            '    Case csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra
+                            '        _Permiso = "Doc00090"
+                            '    Case csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta
+                            '        _Permiso = "Doc00090"
+                            '    Case Else
+
+                            'End Select
+
+                            'If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra Then
+
+                            'End If
+
+                            If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta Then
                                 If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00090", Nothing) Then
                                     Return
                                 End If

@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports BkSpecialPrograms.Bk_Comporamiento_UdMedidas
+Imports DevComponents.DotNetBar
 Public Class Frm_LiquidTJVcredito
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -190,7 +191,7 @@ Public Class Frm_LiquidTJVcredito
 
         With Grilla
 
-            .DataSource = _Dv '_Tbl
+            .DataSource = _Dv
 
             OcultarEncabezadoGrilla(Grilla, False)
 
@@ -587,6 +588,71 @@ Public Class Frm_LiquidTJVcredito
         If _Cl_Pagar.Fx_Crear_Pago_Liquidacion_Tarjetas_Credito(_Tbl_Maedpce.Rows(0), _Tbl_Maedpce.Rows(1), _Tbl) Then
             Call Btn_Limpiar_Click(Nothing, Nothing)
         End If
+
+    End Sub
+
+    Private Sub Btn_ImportarExcel_Click(sender As Object, e As EventArgs) Handles Btn_ImportarExcel.Click
+
+        If IsNothing(_Dv) Then
+            MessageBoxEx.Show(Me, "No hay registros que analizar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If Not CBool(_Dv.Table.Rows.Count) Then
+            MessageBoxEx.Show(Me, "No hay registros que analizar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Txt_Filtrar.Text = String.Empty
+        Chk_MostrarSoloIncluidos.Checked = False
+
+        Dim Fm As New Frm_LiquidImporDtExcel(_Dv.Table)
+        Fm.ShowDialog(Me)
+
+        If Fm.Ls_Liquid_Transbank.Count Then
+            Chk_MostrarSoloIncluidos.Checked = True
+            Txt_TotalValSelec.Tag = Fm.TotalValSelec
+            Txt_TotalValSelec.Text = FormatNumber(Txt_TotalValSelec.Tag, 0)
+        End If
+
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Chk_MarcarTodos_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_MarcarTodos.CheckedChanged
+
+        If IsNothing(_Dv) Then
+            If Chk_MarcarTodos.Checked Then
+                MessageBoxEx.Show(Me, "No hay registros que analizar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End If
+            Chk_MarcarTodos.Checked = False
+            Return
+        End If
+
+        If Not CBool(_Dv.Table.Rows.Count) Then
+            If Chk_MarcarTodos.Checked Then
+                MessageBoxEx.Show(Me, "No hay registros que analizar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End If
+            Chk_MarcarTodos.Checked = False
+            Return
+        End If
+
+        Txt_Filtrar.Text = String.Empty
+        Chk_MostrarSoloIncluidos.Checked = False
+
+        For Each _Fila As DataRow In _Dv.Table.Rows
+
+            _Fila.Item("Incluir") = Chk_MarcarTodos.Checked
+
+            If Chk_MarcarTodos.Checked Then
+                Txt_TotalValSelec.Tag += _Fila.Item("VADP")
+            Else
+                Txt_TotalValSelec.Tag -= _Fila.Item("VADP")
+            End If
+
+        Next
+
+        Txt_TotalValSelec.Text = FormatNumber(Txt_TotalValSelec.Tag, 0)
 
     End Sub
 

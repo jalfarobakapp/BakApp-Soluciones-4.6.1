@@ -2150,6 +2150,12 @@
     <Compile Include="03 Sistemas\Tesoreria\Contabilidad\Formularios compartidos\Frm_BuscarCtasContables.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Tesoreria\Contabilidad\Liquidacion TJV\Frm_LiquidImporDtExcel.Designer.vb">
+      <DependentUpon>Frm_LiquidImporDtExcel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tesoreria\Contabilidad\Liquidacion TJV\Frm_LiquidImporDtExcel.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Tesoreria\Contabilidad\Liquidacion TJV\Frm_LiquidTJVcredito.Designer.vb">
       <DependentUpon>Frm_LiquidTJVcredito.vb</DependentUpon>
     </Compile>
@@ -5480,6 +5486,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tesoreria\Contabilidad\Formularios compartidos\Frm_BuscarCtasContables.resx">
       <DependentUpon>Frm_BuscarCtasContables.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tesoreria\Contabilidad\Liquidacion TJV\Frm_LiquidImporDtExcel.resx">
+      <DependentUpon>Frm_LiquidImporDtExcel.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tesoreria\Contabilidad\Liquidacion TJV\Frm_LiquidTJVcredito.resx">
       <DependentUpon>Frm_LiquidTJVcredito.vb</DependentUpon>
