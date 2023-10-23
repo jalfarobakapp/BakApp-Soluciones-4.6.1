@@ -2150,6 +2150,12 @@
     <Compile Include="03 Sistemas\Tesoreria\Contabilidad\Formularios compartidos\Frm_BuscarCtasContables.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Tesoreria\Contabilidad\Liquidacion TJV\Frm_LiquidImporDtExcel.Designer.vb">
+      <DependentUpon>Frm_LiquidImporDtExcel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tesoreria\Contabilidad\Liquidacion TJV\Frm_LiquidImporDtExcel.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Tesoreria\Contabilidad\Liquidacion TJV\Frm_LiquidTJVcredito.Designer.vb">
       <DependentUpon>Frm_LiquidTJVcredito.vb</DependentUpon>
     </Compile>
@@ -2188,6 +2194,55 @@
       <DependentUpon>Frm_Teneduria_CtaCteEnt.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Tesoreria\Teneduria\Frm_Teneduria_CtaCteEnt.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Cl_Tickets.vb" />
+    <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Agentes.Designer.vb">
+      <DependentUpon>Frm_Tickets_Agentes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Agentes.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Areas.Designer.vb">
+      <DependentUpon>Frm_Tickets_Areas.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Areas.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Grupos.Designer.vb">
+      <DependentUpon>Frm_Tickets_Grupos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Grupos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Tipos.Designer.vb">
+      <DependentUpon>Frm_Tickets_Tipos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Tipos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Mant.Designer.vb">
+      <DependentUpon>Frm_Tickets_Mant.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Mant.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Lista.Designer.vb">
+      <DependentUpon>Frm_Tickets_Lista.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Lista.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Respuesta.Designer.vb">
+      <DependentUpon>Frm_Tickets_Respuesta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Respuesta.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Seguimiento.Designer.vb">
+      <DependentUpon>Frm_Tickets_Seguimiento.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Seguimiento.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Vales despacho\Recursos Vale\Rsc_Vales.Designer.vb">
@@ -5432,6 +5487,9 @@
     <EmbeddedResource Include="03 Sistemas\Tesoreria\Contabilidad\Formularios compartidos\Frm_BuscarCtasContables.resx">
       <DependentUpon>Frm_BuscarCtasContables.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tesoreria\Contabilidad\Liquidacion TJV\Frm_LiquidImporDtExcel.resx">
+      <DependentUpon>Frm_LiquidImporDtExcel.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tesoreria\Contabilidad\Liquidacion TJV\Frm_LiquidTJVcredito.resx">
       <DependentUpon>Frm_LiquidTJVcredito.vb</DependentUpon>
     </EmbeddedResource>
@@ -5617,6 +5675,27 @@
     <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Reportes\Acta_Reparacion_Final.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Acta_Reparacion_Final.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Areas.resx">
+      <DependentUpon>Frm_Tickets_Areas.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Grupos.resx">
+      <DependentUpon>Frm_Tickets_Grupos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Tipos.resx">
+      <DependentUpon>Frm_Tickets_Tipos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_Lista.resx">
+      <DependentUpon>Frm_Tickets_Lista.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_Mant.resx">
+      <DependentUpon>Frm_Tickets_Mant.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_Respuesta.resx">
+      <DependentUpon>Frm_Tickets_Respuesta.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_Seguimiento.resx">
+      <DependentUpon>Frm_Tickets_Seguimiento.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="999 Funciones, Clases y Datos\Formularios\Adjuntar Archivos\Frm_Adjuntar_Arch_Rtf.resx">
       <DependentUpon>Frm_Adjuntar_Arch_Rtf.vb</DependentUpon>

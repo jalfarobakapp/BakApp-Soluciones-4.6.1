@@ -310,6 +310,8 @@ Public Class Frm_Filtro_Especial_Informes
 
         Me.ActiveControl = Txt_Descripcion
 
+        Return
+
     End Sub
 
     Sub Sb_Cargar_Datos()
@@ -432,6 +434,8 @@ Public Class Frm_Filtro_Especial_Informes
         End If
 
         _Dv.Table = _Sql.Fx_Get_DataSet(Consulta_Sql, _Ds_Filtros_Busqueda, "Tbl_Filtro").Tables("Tbl_Filtro")
+
+        Return
 
     End Sub
 

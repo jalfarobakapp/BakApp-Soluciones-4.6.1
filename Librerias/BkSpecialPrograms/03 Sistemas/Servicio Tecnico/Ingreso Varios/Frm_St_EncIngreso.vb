@@ -10,6 +10,7 @@ Public Class Frm_St_EncIngreso
     'Public Property RowEntidad As DataRow
 
     Dim _Cl_OrdenServicio As Cl_OrdenServicio
+    Dim _Nro_GRP As String
 
     Public Property Cl_OrdenServicio As Cl_OrdenServicio
         Get
@@ -368,6 +369,13 @@ Public Class Frm_St_EncIngreso
 
         End If
 
+        _Nro_GRP = String.Empty
+
+        If Not Fx_Ingresar_NroGRP Then
+            Return
+        End If
+
+
         Dim _Id_Ot_Padre As Integer = 0
         Dim _Id_Ot As Integer = 0
         Dim _Nro_Ot As String = String.Empty
@@ -447,71 +455,99 @@ Public Class Frm_St_EncIngreso
 
     Sub Sb_Agregar_GRP(_Id_Ot_Padre As Integer, _Id_Ot As Integer, _Nro_Ot As String)
 
-        Dim _Nro_GRP As String
-        Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese Nro Interno/Guía o Factura del cliente", "Recepción de producto", _Nro_GRP,
-                                              False, _Tipo_Mayus_Minus.Mayusculas, 10)
+        'Dim _Nro_GRP As String
+        'Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese Nro Interno/Guía o Factura del cliente", "Recepción de producto", _Nro_GRP,
+        '                                      False, _Tipo_Mayus_Minus.Mayusculas, 10)
 
-        If Not _Aceptar Then
-            Sb_Agregar_GRP(_Id_Ot_Padre, _Id_Ot, _Nro_Ot)
-            Return
-        End If
+        'If Not _Aceptar Then
+        '    Sb_Agregar_GRP(_Id_Ot_Padre, _Id_Ot, _Nro_Ot)
+        '    Return
+        'End If
 
-        If _Aceptar Then
+        'If _Aceptar Then
 
-            Dim _Endo = _Cl_OrdenServicio.RowEntidad.Item("KOEN")
-            Dim _Suen = _Cl_OrdenServicio.RowEntidad.Item("SUEN")
+        'Dim _Endo = _Cl_OrdenServicio.RowEntidad.Item("KOEN")
+        'Dim _Suen = _Cl_OrdenServicio.RowEntidad.Item("SUEN")
 
-            Dim _Reg = _Sql.Fx_Cuenta_Registros("MAEEDO", "TIDO = 'GRP' And NUDO = '" & numero_(_Nro_GRP, 10) & "' And ENDO = '" & _Endo & "' And SUENDO = '" & _Suen & "'")
+        'Dim _Reg = _Sql.Fx_Cuenta_Registros("MAEEDO",
+        '                                    "TIDO = 'GRP' And NUDO = '" & numero_(_Nro_GRP, 10) & "' And ENDO = '" & _Endo & "' And SUENDO = '" & _Suen & "'")
 
-            If CBool(_Reg) Then
-                MessageBoxEx.Show(Me, "Ya existe una GRP con el Nro: " & _Nro_GRP & vbCrLf &
-                                  "No se puede ingresar otra GRP con el mismo número", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Sb_Agregar_GRP(_Id_Ot_Padre, _Id_Ot, _Nro_Ot)
-                Return
-            End If
+        'If CBool(_Reg) Then
+        '    MessageBoxEx.Show(Me, "Ya existe una GRP con el Nro: " & _Nro_GRP & vbCrLf &
+        '                      "No se puede ingresar otra GRP con el mismo número", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    Sb_Agregar_GRP(_Id_Ot_Padre, _Id_Ot, _Nro_Ot)
+        '    Return
+        'End If
 
-            Dim _Idmaeedo As Integer = Fx_Crear_GRP_PRE(_Id_Ot_Padre, _Id_Ot, _Nro_Ot, _Nro_GRP)
+        Dim _Idmaeedo As Integer = Fx_Crear_GRP_PRE(_Id_Ot_Padre, _Id_Ot, _Nro_Ot, _Nro_GRP)
 
-            If Convert.ToBoolean(_Idmaeedo) Then
+        If Convert.ToBoolean(_Idmaeedo) Then
 
-                MessageBoxEx.Show(Me, "Guía de recepción por prestamos creada correctamente", "Guía de recpción",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBoxEx.Show(Me, "Guía de recepción por prestamos creada correctamente", "Guía de recpción",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                '_Idmaeedo = 339712 ' _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_St_OT_Encabezado", "Idmaeedo_GRP_PRE", "Id_Ot = " & _Id_Ot)
+            '_Idmaeedo = 339712 ' _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_St_OT_Encabezado", "Idmaeedo_GRP_PRE", "Id_Ot = " & _Id_Ot)
 
-                Dim Fm As New Frm_Seleccionar_Formato("GRP")
+            Dim Fm As New Frm_Seleccionar_Formato("GRP")
 
-                If CBool(Fm.Tbl_Formatos.Rows.Count) Then
+            If CBool(Fm.Tbl_Formatos.Rows.Count) Then
 
-                    Dim _NombreFormato = String.Empty
-                    Fm.ShowDialog(Me)
+                Dim _NombreFormato = String.Empty
+                Fm.ShowDialog(Me)
 
-                    If Fm.Formato_Seleccionado Then
-                        _NombreFormato = Fm.Row_Formato_Seleccionado.Item("NombreFormato")
-                        Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
-                                                                           False, True, "", False, 0, False, "")
+                If Fm.Formato_Seleccionado Then
+                    _NombreFormato = Fm.Row_Formato_Seleccionado.Item("NombreFormato")
+                    Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
+                                                                       False, True, "", False, 0, False, "")
 
-                        If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
-                            MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
-                                           MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                        End If
-
+                    If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
+                        MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
+                                       MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     End If
-
-                Else
-
-                    MessageBoxEx.Show(Me, "No existen formatos adicionales para este documento", "Validación",
-                                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                 End If
 
-                Fm.Dispose()
+            Else
+
+                MessageBoxEx.Show(Me, "No existen formatos adicionales para este documento", "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
             End If
 
+            Fm.Dispose()
+
         End If
 
+        'End If
+
     End Sub
+
+    Function Fx_Ingresar_NroGRP() As Boolean
+
+        Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese Nro Interno/Guía o Factura del cliente",
+                                      "Recepción de producto", _Nro_GRP, False, _Tipo_Mayus_Minus.Mayusculas, 10, True)
+
+        If Not _Aceptar Then
+            Return False
+        End If
+
+        Dim _Endo = _Cl_OrdenServicio.RowEntidad.Item("KOEN")
+        Dim _Suen = _Cl_OrdenServicio.RowEntidad.Item("SUEN")
+
+        Dim _Reg = _Sql.Fx_Cuenta_Registros("MAEEDO",
+                                            "TIDO = 'GRP' And NUDO = '" & numero_(_Nro_GRP, 10) & "' And ENDO = '" & _Endo & "' And SUENDO = '" & _Suen & "'")
+
+        If CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "Ya existe una GRP con el Nro: " & _Nro_GRP & vbCrLf &
+                              "No se puede ingresar otra GRP con el mismo número", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            If Not Fx_Ingresar_NroGRP() Then
+                Return False
+            End If
+        End If
+
+        Return True
+
+    End Function
 
     Function Fx_Crear_GRP_PRE(_Id_Ot_Padre As Integer, _Id_Ot As Integer, _Nro_OT As String, _Nro_GRP As String) As Integer
 

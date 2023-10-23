@@ -349,4 +349,12 @@ Public Class Modulo_Programas_Especiales
             _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
         End If
     End Sub
+
+    Private Sub Btn_Tickets_Click(sender As Object, e As EventArgs) Handles Btn_Tickets.Click
+        MessageBoxEx.Show(Me, "En construcción", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        Return
+        Dim NewPanel As Stk_Ticktes = Nothing
+        NewPanel = New Stk_Ticktes(_Fm_Menu_Padre)
+        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+    End Sub
 End Class

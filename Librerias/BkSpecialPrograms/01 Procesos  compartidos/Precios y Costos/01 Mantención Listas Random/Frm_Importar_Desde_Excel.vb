@@ -85,7 +85,7 @@ Public Class Frm_Importar_Desde_Excel
         Dim _Nom_Excel As String
 
         If Rdb_Exportar_Solo_Codigo.Checked Then
-            Consulta_sql = "SELECT 'Caracter [13]' as 'Código'"
+            Consulta_sql = "Select 'Caracter [13]' As 'Código'"
         ElseIf Rdb_Exportar_Valores.Checked Then
 
             Dim _CamposAdicionales = String.Empty

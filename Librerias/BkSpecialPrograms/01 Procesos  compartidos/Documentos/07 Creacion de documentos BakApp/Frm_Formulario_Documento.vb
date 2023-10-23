@@ -4362,6 +4362,21 @@ Public Class Frm_Formulario_Documento
                        "Where KOIM In (Select KOIM From TABIMPR Where KOPR = '" & _Codigo & "')"
         _RowImpuestos = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+        Dim _ExisteCosto As Boolean = CBool(_Sql.Fx_Cuenta_Registros("TABPRE", "KOLT = '" & _ListaCostos & "' And KOPR = '" & _Codigo & "'"))
+        Dim _ExistePrecio As Boolean = CBool(_Sql.Fx_Cuenta_Registros("TABPRE", "KOLT = '" & _ListaPrecios & "' And KOPR = '" & _Codigo & "'"))
+
+        If Not _ExisteCosto Then
+            Consulta_sql = "Insert Into TABPRE (KOLT,KOPR,KOPRRA,KOPRTE) Values " &
+               "('" & _ListaCostos & "','" & _Codigo & "','" & _RowProducto.Item("KOPRRA") & "','" & _RowProducto.Item("KOPRTE") & "')"
+            _Sql.Ej_consulta_IDU(Consulta_sql, False)
+        End If
+
+        If Not _ExistePrecio Then
+            Consulta_sql = "Insert Into TABPRE (KOLT,KOPR,KOPRRA,KOPRTE) Values " &
+               "('" & _ListaPrecios & "','" & _Codigo & "','" & _RowProducto.Item("KOPRRA") & "','" & _RowProducto.Item("KOPRTE") & "')"
+            _Sql.Ej_consulta_IDU(Consulta_sql, False)
+        End If
+
         Consulta_sql = "Select Top 1 *,(Select top 1 MELT From TABPP Where KOLT = '" & _ListaCostos & "') As MELT From TABPRE
                         Where KOLT = '" & _ListaCostos & "' And KOPR = '" & _Codigo & "'"
         _RowCostos = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -4402,7 +4417,14 @@ Public Class Frm_Formulario_Documento
         Dim _Ecuacion As String = NuloPorNro(_RowPrecios.Item("ECUACION").ToString.Trim, "")
         Dim _Ecuacionu2 As String = NuloPorNro(_RowPrecios.Item("ECUACIONU2").ToString.Trim, "")
         Dim _PorIva As Double = _RowProducto.Item("POIVPR")
-        Dim _PorIla As Double = _RowImpuestos.Item("Impuesto")
+
+        Dim _PorIla As Double
+
+        Try
+            _PorIla = NuloPorNro(_RowImpuestos.Item("Impuesto"), 0)
+        Catch ex As Exception
+            _PorIla = 0
+        End Try
 
         Dim _PrecioLinea As Double = NuloPorNro(_RowPrecios.Item("PP0" & _UnTrans & "UD"), 0)
 
@@ -11969,7 +11991,23 @@ Public Class Frm_Formulario_Documento
                                 _Vizado = False
                             End If
                         Else
-                            If _Tipo_Documento <> csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra Then
+
+                            'Dim _Permiso As String
+
+                            'Select Case _Tipo_Documento
+                            '    Case csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra
+                            '        _Permiso = "Doc00090"
+                            '    Case csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta
+                            '        _Permiso = "Doc00090"
+                            '    Case Else
+
+                            'End Select
+
+                            'If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra Then
+
+                            'End If
+
+                            If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta Then
                                 If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00090", Nothing) Then
                                     Return
                                 End If

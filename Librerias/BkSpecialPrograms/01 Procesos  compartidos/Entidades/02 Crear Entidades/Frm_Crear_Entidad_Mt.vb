@@ -1023,6 +1023,7 @@ Public Class Frm_Crear_Entidad_Mt
                                ",RevFincred = " & Convert.ToInt32(Chk_RevCredFincred.Checked) & vbCrLf &
                                _EmailCompras &
                                ",MontoMinCompra = " & Txt_MontoMinCompra.Tag & vbCrLf &
+                               ",NoResMtoMinComAsCompraAuto = " & Convert.ToInt32(Chk_NoResMtoMinComAsCompraAuto.Checked) & vbCrLf &
                                "Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
@@ -1581,6 +1582,8 @@ Public Class Frm_Crear_Entidad_Mt
 
                 Txt_MontoMinCompra.Tag = _Row_Entidades.Item("MontoMinCompra")
                 Txt_MontoMinCompra.Text = FormatNumber(Txt_MontoMinCompra.Tag, 0)
+
+                Chk_NoResMtoMinComAsCompraAuto.Checked = _Row_Entidades.Item("NoResMtoMinComAsCompraAuto")
 
             End If
 
