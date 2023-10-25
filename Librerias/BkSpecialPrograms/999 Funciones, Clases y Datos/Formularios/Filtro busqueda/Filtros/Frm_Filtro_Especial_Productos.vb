@@ -354,6 +354,10 @@ Public Class Frm_Filtro_Especial_Productos
 
         End If
 
+        If Not Rdb_Productos_Algunos.Checked Then
+            Pro_Tbl_Filtro_Productos = Nothing
+        End If
+
         _Aceptar = True
         Me.Close()
 

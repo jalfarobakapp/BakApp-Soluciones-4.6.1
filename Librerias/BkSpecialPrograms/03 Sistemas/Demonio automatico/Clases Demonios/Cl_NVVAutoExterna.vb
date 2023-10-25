@@ -129,15 +129,15 @@ Public Class Cl_NVVAutoExterna
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then Throw New System.Exception(_Sql.Pro_Error)
 
-            Consulta_Sql = "Select Nvd.Id_Det As Id,Cantidad,STFI1,STFI2,
+            Consulta_Sql = "Select Nvd.Id_Det As Id,Cantidad,STFI1,STFI2,STOCNV1,STOCNV2,
 	Case 
 		When Untrans = 1 Then 
 			Case 
 				When STFI1 <=0 Then 0 
 				Else 
 					Case 
-						When (STFI1-Cantidad) >= 0 Then Cantidad 
-						When STFI1 > 0 Then STFI1 
+						When (STFI1-STOCNV1-Cantidad) >= 0 Then Cantidad 
+						When STFI1-STOCNV1 > 0 Then STFI1-STOCNV1  
 						Else 0
 					End 
 				End 
@@ -146,8 +146,8 @@ Public Class Cl_NVVAutoExterna
 				When STFI2 <=0 Then 0 
 				Else 
 					Case 
-						When (STFI2-Cantidad) >= 0 Then Cantidad 
-						When STFI2 > 0 Then STFI2 
+						When (STFI2-STOCNV2-Cantidad) >= 0 Then Cantidad
+						When STFI2-STOCNV2 > 0 Then STFI2-STOCNV2 
 						Else 0
 					End 
 				End 
@@ -157,7 +157,7 @@ From " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Nvd
 Inner Join MAEST On EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR = Codigo
 Where Id_Enc = " & _Id_Enc & "
 
-Update " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Set Stfi1 = STFI1,Stfi2 = STFI2,CantidadDefinitiva = CntPedida
+Update " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Set Stfi1 = STFI1,Stfi2 = STFI2,Stocnv1 = STOCNV1,Stocnv2 = STOCNV2,CantidadDefinitiva = CntPedida
 From #Paso Inner Join " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet On Id = Id_Det
 
 Drop table #Paso"

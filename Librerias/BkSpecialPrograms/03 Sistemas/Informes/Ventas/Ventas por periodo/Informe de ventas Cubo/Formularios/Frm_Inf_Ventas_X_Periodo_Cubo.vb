@@ -609,7 +609,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
         _Fecha_Desde_Origen = Fecha_Desde
 
-        Sb_Formato_Generico_Grilla(Grilla, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
+        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
 
         Tiempo.Enabled = False
         Tiempo.Interval = 1000
@@ -955,14 +955,20 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                     _Filtro_Tipr = "And PRCT = 0"
                 End If
 
-                _Campo_Mostrar = "(Select Count(Distinct " & _Campos & ") From " & _Nombre_Tabla_Paso & " Z2 Where " &
-                                  "FEEMDO BETWEEN " &
-                                  "'" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' And " &
-                                  "'" & Format(Dtp_Fecha_Hasta.Value, "yyyyMMdd") & "' " &
-                                  _Filtro_Tipr & " And " & _Nombre_Tabla_Paso & "." & _Cp_Codigo & " = Z2." & _Cp_Codigo & ")"
+                Dim _Str_Cp_Codigo1 = Replace(_Cp_Codigo, "+", "+" & _Nombre_Tabla_Paso & ".")
+                Dim _Str_Cp_Codigo2 = Replace(_Cp_Codigo, "+", "+Z2.")
+
+                '_Campo_Mostrar = "(Select Count(Distinct " & _Campos & ") From " & _Nombre_Tabla_Paso & " Z2 Where " &
+                '                  "FEEMDO BETWEEN " &
+                '                  "'" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' And " &
+                '                  "'" & Format(Dtp_Fecha_Hasta.Value, "yyyyMMdd") & "' " &
+                '                  _Filtro_Tipr & " And " & _Nombre_Tabla_Paso & "." & _Cp_Codigo & " = Z2." & _Cp_Codigo & ")"
+
+                '_Campo_Mostrar = "(Select Count(Distinct " & _Campos & ") From " & _Nombre_Tabla_Paso & " Z2 Where 1 > 0 " &
+                '                  _SqlFiltro_Detalle & " And " & _Nombre_Tabla_Paso & "." & _Cp_Codigo & " = Z2." & _Cp_Codigo & ")"
 
                 _Campo_Mostrar = "(Select Count(Distinct " & _Campos & ") From " & _Nombre_Tabla_Paso & " Z2 Where 1 > 0 " &
-                                  _SqlFiltro_Detalle & " And " & _Nombre_Tabla_Paso & "." & _Cp_Codigo & " = Z2." & _Cp_Codigo & ")"
+                                  _SqlFiltro_Detalle & " And " & _Nombre_Tabla_Paso & "." & _Str_Cp_Codigo1 & " = Z2." & _Str_Cp_Codigo2 & ")"
 
                 _Distinct = "Distinct "
                 _GroupBy = String.Empty
@@ -1088,10 +1094,18 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                                "Update #Paso1 Set Porc = CASE WHEN TOTAL > 0 THEN ROUND(CASE WHEN (Select TOTAL From #Paso2) > 0 THEN TOTAL/(Select TOTAL From #Paso2) ELSE 0 END,5) ELSE 0 END" & vbCrLf &
                                "Update #Paso1 Set Porc = CASE WHEN TOTAL > 0 THEN ROUND(CASE WHEN (Select TOTAL From #Paso2) > 0 THEN TOTAL/@Total ELSE 0 END,5) ELSE 0 END" & vbCrLf &
                                "Update #Paso1 Set VND = Isnull((Select KOFUEN From MAEEN Where CODIGO = KOEN+SUEN),'???')" & vbCrLf &
-                               "Select * From #Paso1" & vbCrLf &
+                               "Select * From #Paso1 Order By CODIGO" & vbCrLf &
                                "Select * From #Paso2" & vbCrLf &
                                "Drop Table #Paso1" & vbCrLf &
                                "Drop Table #Paso2"
+            End If
+
+            If _Codigo = "Mes+Ano" Then
+                Consulta_sql = Replace(Consulta_sql, _Cp_Codigo & " As CODIGO,",
+                                       "Case When Mes <= 9 Then Rtrim(Ltrim(STR(Ano)))+'0'+Rtrim(LTrim(STR(Mes))) Else Rtrim(Ltrim(STR(Ano)))+Rtrim(LTrim(STR(Mes))) End As CODIGO,")
+                Consulta_sql = Replace(Consulta_sql, "Group By Mes+Ano,Mes_Ano", "Group By Mes,Ano,Mes_Ano")
+                Consulta_sql = Replace(Consulta_sql, "Update #Paso1 Set VND = Isnull((Select KOFUEN From MAEEN Where CODIGO = KOEN+SUEN),'???')", "")
+
             End If
 
             _Sql_Consulta_Grafica_Acumulativa = Consulta_sql

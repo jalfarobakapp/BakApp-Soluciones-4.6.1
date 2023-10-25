@@ -140,7 +140,8 @@ Public Class Frm_Tickets_Areas
     End Sub
 
     Private Sub Grilla_Areas_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Areas.CellDoubleClick
-        Call Btn_Mnu_EditarArea_Click(Nothing, Nothing)
+        Call Btn_Mnu_AsociarTipos_Click(Nothing, Nothing)
+        'Call Btn_Mnu_EditarArea_Click(Nothing, Nothing)
     End Sub
 
     Private Sub Sb_Grilla_Areas_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)

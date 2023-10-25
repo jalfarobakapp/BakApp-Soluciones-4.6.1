@@ -4530,7 +4530,7 @@ Public Class Frm_Formulario_Documento
             End If
 
             If String.IsNullOrEmpty(_CodAlternativo) Then
-                _CodAlternativo = Trim(_Sql.Fx_Trae_Dato("TABCODAL", "KOPRAL", "KOPR = '" & _Codigo & "' And KOEN = '" & _Proveedor & "'"))
+                _CodAlternativo = _Sql.Fx_Trae_Dato("TABCODAL", "KOPRAL", "KOPR = '" & _Codigo & "' And KOEN = '" & _Proveedor & "'")
             End If
 
             If Not String.IsNullOrEmpty(_CodAlternativo) Then

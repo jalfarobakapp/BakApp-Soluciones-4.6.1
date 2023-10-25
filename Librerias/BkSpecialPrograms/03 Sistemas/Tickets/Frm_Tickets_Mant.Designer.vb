@@ -244,6 +244,9 @@ Partial Class Frm_Tickets_Mant
         '
         Me.Chk_Asignado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Asignado.CheckBoxImageChecked = CType(resources.GetObject("Chk_Asignado.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Asignado.Checked = True
+        Me.Chk_Asignado.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_Asignado.CheckValue = "Y"
         Me.Chk_Asignado.FocusCuesEnabled = False
         Me.Chk_Asignado.ForeColor = System.Drawing.Color.Black
         Me.Chk_Asignado.Location = New System.Drawing.Point(3, 313)

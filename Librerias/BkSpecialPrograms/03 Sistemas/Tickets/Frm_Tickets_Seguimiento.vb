@@ -17,12 +17,14 @@ Public Class Frm_Tickets_Seguimiento
 
         Me._Id_Ticket = _Id_Ticket
 
-        Consulta_sql = "Select *" & vbCrLf &
+        Consulta_sql = "Select Stk.*,Ar.Area,Tp.Tipo" & vbCrLf &
                        ",Case Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'AL' Then 'Alta' Else '??' End As NomPrioridad" & vbCrLf &
                        ",Case UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion" & vbCrLf &
                        ",Case Estado When 'ABIE' then 'Abierto' When 'CERR' then 'Cerrado' When 'NULO' then 'Nulo' End As NomEstado" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Stk_Tickets" & vbCrLf &
-                       "Where Id = " & _Id_Ticket
+                       "From " & _Global_BaseBk & "Zw_Stk_Tickets Stk" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Stk_Areas Ar On Stk.Id_Area = Ar.Id" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Stk_Tipos Tp On Tp.Id_Area = Stk.Id_Area And Tp.Id = Stk.Id_Tipo" & vbCrLf &
+                       "Where Stk.Id = " & _Id_Ticket
         _Row_Ticket = _Sql.Fx_Get_DataRow(Consulta_sql)
 
     End Sub
@@ -64,7 +66,10 @@ Public Class Frm_Tickets_Seguimiento
 
     Sub Sb_Actualizar_Grilla()
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Where Id_Ticket = " & _Id_Ticket
+        Consulta_sql = "Select Acc.*,Case Accion When 'MSG' Then 'Mensaje' When 'RSM' Then 'Respuesta' Else '???' End As 'StrAccion',NOKOFU" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Acc" & vbCrLf &
+                       "Left Join TABFU On KOFU = CodFuncionario" & vbCrLf &
+                       "Where Id_Ticket = " & _Id_Ticket
         _Tbl_Acciones = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla_Acciones
@@ -75,10 +80,16 @@ Public Class Frm_Tickets_Seguimiento
 
             Dim _DisplayIndex = 0
 
-            .Columns("Accion").Visible = True
-            .Columns("Accion").HeaderText = "Acción"
-            .Columns("Accion").Width = 100
-            .Columns("Accion").DisplayIndex = _DisplayIndex
+            .Columns("StrAccion").Visible = True
+            .Columns("StrAccion").HeaderText = "Acción"
+            .Columns("StrAccion").Width = 100
+            .Columns("StrAccion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("NOKOFU").Visible = True
+            .Columns("NOKOFU").HeaderText = "De"
+            .Columns("NOKOFU").Width = 100
+            .Columns("NOKOFU").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Descripcion").Visible = True
@@ -90,8 +101,8 @@ Public Class Frm_Tickets_Seguimiento
             .Columns("Fecha").Visible = True
             .Columns("Fecha").HeaderText = "Fecha creación"
             '.Columns("Fecha").ToolTipText = "de tope de la oferta"
-            .Columns("Fecha").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("Fecha").Width = 100
+            '.Columns("Fecha").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Fecha").Width = 110
             .Columns("Fecha").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
