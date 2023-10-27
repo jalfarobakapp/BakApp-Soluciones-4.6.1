@@ -5676,6 +5676,9 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Acta_Reparacion_Final.vb</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Agentes.resx">
+      <DependentUpon>Frm_Tickets_Agentes.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Areas.resx">
       <DependentUpon>Frm_Tickets_Areas.vb</DependentUpon>
     </EmbeddedResource>

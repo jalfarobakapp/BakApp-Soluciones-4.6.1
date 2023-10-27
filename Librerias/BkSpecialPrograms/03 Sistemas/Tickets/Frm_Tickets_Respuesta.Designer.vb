@@ -27,8 +27,8 @@ Partial Class Frm_Tickets_Respuesta
         Me.Txt_Descripcion = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Archivos_Adjuntos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -81,10 +81,11 @@ Partial Class Frm_Tickets_Respuesta
         '
         Me.Txt_Descripcion.Border.Class = "TextBoxBorder"
         Me.Txt_Descripcion.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Descripcion.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Descripcion.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Descripcion.ForeColor = System.Drawing.Color.Black
         Me.Txt_Descripcion.Location = New System.Drawing.Point(3, 3)
-        Me.Txt_Descripcion.MaxLength = 30
+        Me.Txt_Descripcion.MaxLength = 200
         Me.Txt_Descripcion.Multiline = True
         Me.Txt_Descripcion.Name = "Txt_Descripcion"
         Me.Txt_Descripcion.PreventEnterBeep = True
@@ -100,7 +101,7 @@ Partial Class Frm_Tickets_Respuesta
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Archivos_Adjuntos, Me.Btn_Eliminar})
         Me.Bar2.Location = New System.Drawing.Point(0, 220)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(694, 41)
+        Me.Bar2.Size = New System.Drawing.Size(688, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 166
@@ -116,15 +117,6 @@ Partial Class Frm_Tickets_Respuesta
         Me.Btn_Grabar.Name = "Btn_Grabar"
         Me.Btn_Grabar.Tooltip = "Grabar"
         '
-        'Btn_Eliminar
-        '
-        Me.Btn_Eliminar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Eliminar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Eliminar.Image = CType(resources.GetObject("Btn_Eliminar.Image"), System.Drawing.Image)
-        Me.Btn_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Eliminar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Eliminar.Name = "Btn_Eliminar"
-        Me.Btn_Eliminar.Tooltip = "Eliminar comisión"
-        '
         'Btn_Archivos_Adjuntos
         '
         Me.Btn_Archivos_Adjuntos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
@@ -134,11 +126,20 @@ Partial Class Frm_Tickets_Respuesta
         Me.Btn_Archivos_Adjuntos.Name = "Btn_Archivos_Adjuntos"
         Me.Btn_Archivos_Adjuntos.Tooltip = "Archivos adjuntos al documento"
         '
+        'Btn_Eliminar
+        '
+        Me.Btn_Eliminar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Eliminar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Eliminar.Image = CType(resources.GetObject("Btn_Eliminar.Image"), System.Drawing.Image)
+        Me.Btn_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Eliminar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Eliminar.Name = "Btn_Eliminar"
+        Me.Btn_Eliminar.Tooltip = "Eliminar comisión"
+        '
         'Frm_Tickets_Respuesta
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(694, 261)
+        Me.ClientSize = New System.Drawing.Size(688, 261)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel2)
         Me.DoubleBuffered = True

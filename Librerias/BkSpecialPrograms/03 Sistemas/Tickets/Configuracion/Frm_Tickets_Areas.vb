@@ -205,14 +205,8 @@ Public Class Frm_Tickets_Areas
 
             .Columns("Tipo").Visible = True
             .Columns("Tipo").HeaderText = "Tipo"
-            .Columns("Tipo").Width = 340
+            .Columns("Tipo").Width = 440
             .Columns("Tipo").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("Permiso").Visible = True
-            .Columns("Permiso").HeaderText = "Permiso"
-            .Columns("Permiso").Width = 100
-            .Columns("Permiso").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
         End With

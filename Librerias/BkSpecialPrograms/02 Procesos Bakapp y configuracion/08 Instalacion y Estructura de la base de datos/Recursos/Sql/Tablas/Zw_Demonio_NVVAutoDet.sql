@@ -14,6 +14,10 @@ CREATE TABLE [dbo].[Zw_Demonio_NVVAutoDet](
     [Stfi1]		            [float]			NOT NULL DEFAULT (0),
     [Stfi2]		            [float]			NOT NULL DEFAULT (0),
     [CantidadDefinitiva]	[float]			NOT NULL DEFAULT (0),
+    [Stocnv1]	            [float]			NOT NULL DEFAULT (0),
+    [Stocnv2]	            [float]			NOT NULL DEFAULT (0),
+    [StComp1]	            [float]			NOT NULL DEFAULT (0),
+    [StComp2]	            [float]			NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Demonio_NVVAutoDet] PRIMARY KEY CLUSTERED 
 (
 	[Id_Det] ASC

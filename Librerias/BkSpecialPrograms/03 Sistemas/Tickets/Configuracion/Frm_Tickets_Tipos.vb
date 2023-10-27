@@ -106,18 +106,9 @@ Public Class Frm_Tickets_Tipos
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tipos (Id_Area,Tipo) Values (" & _Id_Area & ",'" & _Tipo.Trim & "')"
         If _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Tipo) Then
 
-            Dim _CodPermiso As String = "StkTP" & numero_(_Id_Area, 3) & "-" & numero_(_Id_Tipo, 3) '"StkTP001-005"
-            Dim _DescripcionPermiso As String = _Tipo.Trim
-
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tipos Set Permiso = '" & _CodPermiso & "' Where Id = " & _Id_Tipo
-            _Sql.Ej_consulta_IDU(Consulta_sql)
-
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "ZW_Permisos (CodPermiso,DescripcionPermiso,CodFamilia,NombreFamiliaPermiso) Values " &
-                           "('" & _CodPermiso & "','" & _DescripcionPermiso & "','" & "StkTP" & numero_(_Id_Area, 3) & "','Stk-" & _Row_Area.Item("AREA").ToString.Trim & "')"
-            _Sql.Ej_consulta_IDU(Consulta_sql)
-
             Me.Sb_Actualizar_Grilla()
             BuscarDatoEnGrilla(_Tipo, "Tipo", Grilla_Tipos)
+
         End If
 
     End Sub

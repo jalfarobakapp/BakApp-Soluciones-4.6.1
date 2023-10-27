@@ -23,16 +23,16 @@ Partial Class Frm_Tickets_Seguimiento
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Tickets_Seguimiento))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_EditarFuncionario = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_QuitarVendedor = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla_Acciones = New DevComponents.DotNetBar.Controls.DataGridViewX()
-        Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.GrupoTicket = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Lbl_FUlt_Respuesta = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_FUlt_Mensaje = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Tipo = New DevComponents.DotNetBar.LabelX()
@@ -46,15 +46,15 @@ Partial Class Frm_Tickets_Seguimiento
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
-        Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
-        Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_MensajeRespuesta = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_CambiarEstado = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.Txt_Descripcion = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla_Acciones, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupPanel2.SuspendLayout()
+        Me.GrupoTicket.SuspendLayout()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel3.SuspendLayout()
         Me.SuspendLayout()
@@ -105,9 +105,9 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Menu_Contextual.AntiAlias = True
         Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
-        Me.Menu_Contextual.Location = New System.Drawing.Point(33, 42)
+        Me.Menu_Contextual.Location = New System.Drawing.Point(27, 23)
         Me.Menu_Contextual.Name = "Menu_Contextual"
-        Me.Menu_Contextual.Size = New System.Drawing.Size(412, 25)
+        Me.Menu_Contextual.Size = New System.Drawing.Size(411, 25)
         Me.Menu_Contextual.Stretch = True
         Me.Menu_Contextual.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Menu_Contextual.TabIndex = 48
@@ -140,91 +140,91 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Grilla_Acciones.AllowUserToAddRows = False
         Me.Grilla_Acciones.AllowUserToDeleteRows = False
         Me.Grilla_Acciones.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Acciones.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Acciones.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla_Acciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Acciones.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Acciones.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla_Acciones.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Acciones.EnableHeadersVisualStyles = False
         Me.Grilla_Acciones.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_Acciones.Location = New System.Drawing.Point(0, 0)
         Me.Grilla_Acciones.Name = "Grilla_Acciones"
         Me.Grilla_Acciones.ReadOnly = True
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Acciones.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Acciones.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla_Acciones.Size = New System.Drawing.Size(661, 255)
         Me.Grilla_Acciones.StandardTab = True
         Me.Grilla_Acciones.TabIndex = 27
         '
-        'GroupPanel2
+        'GrupoTicket
         '
-        Me.GroupPanel2.BackColor = System.Drawing.Color.White
-        Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel2.Controls.Add(Me.Lbl_FUlt_Respuesta)
-        Me.GroupPanel2.Controls.Add(Me.Lbl_FUlt_Mensaje)
-        Me.GroupPanel2.Controls.Add(Me.Lbl_Tipo)
-        Me.GroupPanel2.Controls.Add(Me.Lbl_FechaCreacion)
-        Me.GroupPanel2.Controls.Add(Me.Lbl_Area)
-        Me.GroupPanel2.Controls.Add(Me.Lbl_Estado)
-        Me.GroupPanel2.Controls.Add(Me.LabelX6)
-        Me.GroupPanel2.Controls.Add(Me.LabelX5)
-        Me.GroupPanel2.Controls.Add(Me.LabelX4)
-        Me.GroupPanel2.Controls.Add(Me.LabelX3)
-        Me.GroupPanel2.Controls.Add(Me.LabelX2)
-        Me.GroupPanel2.Controls.Add(Me.LabelX1)
-        Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel2.Location = New System.Drawing.Point(12, 5)
-        Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(667, 114)
-        '
-        '
-        '
-        Me.GroupPanel2.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.GroupPanel2.Style.BackColorGradientAngle = 90
-        Me.GroupPanel2.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.GroupPanel2.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderBottomWidth = 1
-        Me.GroupPanel2.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
-        Me.GroupPanel2.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderLeftWidth = 1
-        Me.GroupPanel2.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderRightWidth = 1
-        Me.GroupPanel2.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderTopWidth = 1
-        Me.GroupPanel2.Style.CornerDiameter = 4
-        Me.GroupPanel2.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.GroupPanel2.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
-        Me.GroupPanel2.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
-        Me.GroupPanel2.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        Me.GrupoTicket.BackColor = System.Drawing.Color.White
+        Me.GrupoTicket.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GrupoTicket.Controls.Add(Me.Lbl_FUlt_Respuesta)
+        Me.GrupoTicket.Controls.Add(Me.Lbl_FUlt_Mensaje)
+        Me.GrupoTicket.Controls.Add(Me.Lbl_Tipo)
+        Me.GrupoTicket.Controls.Add(Me.Lbl_FechaCreacion)
+        Me.GrupoTicket.Controls.Add(Me.Lbl_Area)
+        Me.GrupoTicket.Controls.Add(Me.Lbl_Estado)
+        Me.GrupoTicket.Controls.Add(Me.LabelX6)
+        Me.GrupoTicket.Controls.Add(Me.LabelX5)
+        Me.GrupoTicket.Controls.Add(Me.LabelX4)
+        Me.GrupoTicket.Controls.Add(Me.LabelX3)
+        Me.GrupoTicket.Controls.Add(Me.LabelX2)
+        Me.GrupoTicket.Controls.Add(Me.LabelX1)
+        Me.GrupoTicket.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GrupoTicket.Location = New System.Drawing.Point(12, 5)
+        Me.GrupoTicket.Name = "GrupoTicket"
+        Me.GrupoTicket.Size = New System.Drawing.Size(667, 114)
         '
         '
         '
-        Me.GroupPanel2.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GrupoTicket.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GrupoTicket.Style.BackColorGradientAngle = 90
+        Me.GrupoTicket.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GrupoTicket.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GrupoTicket.Style.BorderBottomWidth = 1
+        Me.GrupoTicket.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GrupoTicket.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GrupoTicket.Style.BorderLeftWidth = 1
+        Me.GrupoTicket.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GrupoTicket.Style.BorderRightWidth = 1
+        Me.GrupoTicket.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GrupoTicket.Style.BorderTopWidth = 1
+        Me.GrupoTicket.Style.CornerDiameter = 4
+        Me.GrupoTicket.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GrupoTicket.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GrupoTicket.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GrupoTicket.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
         '
         '
         '
-        Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.GroupPanel2.TabIndex = 162
-        Me.GroupPanel2.Text = "Ticket"
+        Me.GrupoTicket.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GrupoTicket.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GrupoTicket.TabIndex = 162
+        Me.GrupoTicket.Text = "Ticket"
         '
         'Lbl_FUlt_Respuesta
         '
@@ -236,7 +236,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Lbl_FUlt_Respuesta.ForeColor = System.Drawing.Color.Black
         Me.Lbl_FUlt_Respuesta.Location = New System.Drawing.Point(396, 61)
         Me.Lbl_FUlt_Respuesta.Name = "Lbl_FUlt_Respuesta"
-        Me.Lbl_FUlt_Respuesta.Size = New System.Drawing.Size(152, 23)
+        Me.Lbl_FUlt_Respuesta.Size = New System.Drawing.Size(153, 23)
         Me.Lbl_FUlt_Respuesta.TabIndex = 12
         Me.Lbl_FUlt_Respuesta.Text = "Tipo"
         '
@@ -250,7 +250,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Lbl_FUlt_Mensaje.ForeColor = System.Drawing.Color.Black
         Me.Lbl_FUlt_Mensaje.Location = New System.Drawing.Point(396, 32)
         Me.Lbl_FUlt_Mensaje.Name = "Lbl_FUlt_Mensaje"
-        Me.Lbl_FUlt_Mensaje.Size = New System.Drawing.Size(152, 23)
+        Me.Lbl_FUlt_Mensaje.Size = New System.Drawing.Size(153, 23)
         Me.Lbl_FUlt_Mensaje.TabIndex = 11
         Me.Lbl_FUlt_Mensaje.Text = "Tipo"
         '
@@ -264,7 +264,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Lbl_Tipo.ForeColor = System.Drawing.Color.Black
         Me.Lbl_Tipo.Location = New System.Drawing.Point(396, 3)
         Me.Lbl_Tipo.Name = "Lbl_Tipo"
-        Me.Lbl_Tipo.Size = New System.Drawing.Size(152, 23)
+        Me.Lbl_Tipo.Size = New System.Drawing.Size(153, 23)
         Me.Lbl_Tipo.TabIndex = 10
         Me.Lbl_Tipo.Text = "Tipo"
         '
@@ -278,7 +278,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Lbl_FechaCreacion.ForeColor = System.Drawing.Color.Black
         Me.Lbl_FechaCreacion.Location = New System.Drawing.Point(117, 61)
         Me.Lbl_FechaCreacion.Name = "Lbl_FechaCreacion"
-        Me.Lbl_FechaCreacion.Size = New System.Drawing.Size(178, 23)
+        Me.Lbl_FechaCreacion.Size = New System.Drawing.Size(177, 23)
         Me.Lbl_FechaCreacion.TabIndex = 9
         Me.Lbl_FechaCreacion.Text = "Tipo"
         '
@@ -292,7 +292,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Lbl_Area.ForeColor = System.Drawing.Color.Black
         Me.Lbl_Area.Location = New System.Drawing.Point(117, 32)
         Me.Lbl_Area.Name = "Lbl_Area"
-        Me.Lbl_Area.Size = New System.Drawing.Size(178, 23)
+        Me.Lbl_Area.Size = New System.Drawing.Size(177, 23)
         Me.Lbl_Area.TabIndex = 8
         Me.Lbl_Area.Text = "Tipo"
         '
@@ -406,7 +406,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.ButtonItem1, Me.Btn_Eliminar})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_MensajeRespuesta, Me.Btn_CambiarEstado, Me.Btn_Eliminar})
         Me.Bar2.Location = New System.Drawing.Point(0, 536)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(689, 41)
@@ -416,23 +416,23 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Bar2.TabStop = False
         Me.Bar2.Text = "Bar2"
         '
-        'Btn_Grabar
+        'Btn_MensajeRespuesta
         '
-        Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
-        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Grabar.Name = "Btn_Grabar"
-        Me.Btn_Grabar.Tooltip = "Grabar"
+        Me.Btn_MensajeRespuesta.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_MensajeRespuesta.ForeColor = System.Drawing.Color.Black
+        Me.Btn_MensajeRespuesta.Image = CType(resources.GetObject("Btn_MensajeRespuesta.Image"), System.Drawing.Image)
+        Me.Btn_MensajeRespuesta.ImageAlt = CType(resources.GetObject("Btn_MensajeRespuesta.ImageAlt"), System.Drawing.Image)
+        Me.Btn_MensajeRespuesta.Name = "Btn_MensajeRespuesta"
+        Me.Btn_MensajeRespuesta.Text = "Agregar mensaje"
         '
-        'ButtonItem1
+        'Btn_CambiarEstado
         '
-        Me.ButtonItem1.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.ButtonItem1.ForeColor = System.Drawing.Color.Black
-        Me.ButtonItem1.Image = CType(resources.GetObject("ButtonItem1.Image"), System.Drawing.Image)
-        Me.ButtonItem1.ImageAlt = CType(resources.GetObject("ButtonItem1.ImageAlt"), System.Drawing.Image)
-        Me.ButtonItem1.Name = "ButtonItem1"
-        Me.ButtonItem1.Text = "Cambiar Estado"
+        Me.Btn_CambiarEstado.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_CambiarEstado.ForeColor = System.Drawing.Color.Black
+        Me.Btn_CambiarEstado.Image = CType(resources.GetObject("Btn_CambiarEstado.Image"), System.Drawing.Image)
+        Me.Btn_CambiarEstado.ImageAlt = CType(resources.GetObject("Btn_CambiarEstado.ImageAlt"), System.Drawing.Image)
+        Me.Btn_CambiarEstado.Name = "Btn_CambiarEstado"
+        Me.Btn_CambiarEstado.Text = "Cambiar Estado"
         '
         'Btn_Eliminar
         '
@@ -465,7 +465,6 @@ Partial Class Frm_Tickets_Seguimiento
         'GroupPanel3
         '
         Me.GroupPanel3.BackColor = System.Drawing.Color.White
-        Me.GroupPanel3.CanvasColor = System.Drawing.SystemColors.Control
         Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel3.Controls.Add(Me.Txt_Descripcion)
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
@@ -510,7 +509,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.ClientSize = New System.Drawing.Size(689, 577)
         Me.Controls.Add(Me.GroupPanel3)
         Me.Controls.Add(Me.Bar2)
-        Me.Controls.Add(Me.GroupPanel2)
+        Me.Controls.Add(Me.GrupoTicket)
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -525,7 +524,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla_Acciones, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupPanel2.ResumeLayout(False)
+        Me.GrupoTicket.ResumeLayout(False)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel3.ResumeLayout(False)
         Me.ResumeLayout(False)
@@ -538,7 +537,7 @@ Partial Class Frm_Tickets_Seguimiento
     Friend WithEvents Btn_EditarFuncionario As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_QuitarVendedor As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grilla_Acciones As DevComponents.DotNetBar.Controls.DataGridViewX
-    Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents GrupoTicket As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
@@ -552,9 +551,9 @@ Partial Class Frm_Tickets_Seguimiento
     Friend WithEvents Lbl_Area As DevComponents.DotNetBar.LabelX
     Friend WithEvents Lbl_Estado As DevComponents.DotNetBar.LabelX
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
-    Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents ButtonItem1 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_CambiarEstado As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Txt_Descripcion As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents GroupPanel3 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents Btn_MensajeRespuesta As DevComponents.DotNetBar.ButtonItem
 End Class

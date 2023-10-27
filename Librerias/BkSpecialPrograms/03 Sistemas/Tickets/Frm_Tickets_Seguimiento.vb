@@ -7,6 +7,11 @@ Public Class Frm_Tickets_Seguimiento
     Dim _Id_Ticket As Integer
     Dim _Row_Ticket As DataRow
     Dim _Tbl_Acciones As DataTable
+    Dim _Funcionario As String
+
+    'Dim _Cl_Tickets As New Cl_Tickets
+    Dim _Row_UltMensaje As DataRow
+    Public Property Mis_Ticket As Boolean
 
     Public Sub New(_Id_Ticket As Integer)
 
@@ -16,6 +21,7 @@ Public Class Frm_Tickets_Seguimiento
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Me._Id_Ticket = _Id_Ticket
+        Me._Funcionario = _Funcionario
 
         Consulta_sql = "Select Stk.*,Ar.Area,Tp.Tipo" & vbCrLf &
                        ",Case Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'AL' Then 'Alta' Else '??' End As NomPrioridad" & vbCrLf &
@@ -27,9 +33,25 @@ Public Class Frm_Tickets_Seguimiento
                        "Where Stk.Id = " & _Id_Ticket
         _Row_Ticket = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Where Id_Ticket = " & _Id_Ticket & " And Accion = 'MENS'" & vbCrLf &
+                       "Order By Id Desc"
+        _Row_UltMensaje = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        '_Cl_Tickets.Sb_Llenar_Ticket(_Id_Ticket)
+
     End Sub
 
     Private Sub Frm_Tickets_Seguimiento_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        If Mis_Ticket Then
+            Btn_MensajeRespuesta.Text = "Nuevo mensaje"
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set Visto = 1 Where Id_Ticket = " & _Id_Ticket & " And Accion = 'RESP'"
+        Else
+            Btn_MensajeRespuesta.Text = "Responder"
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set Visto = 1 Where Id_Ticket = " & _Id_Ticket & " And Accion = 'MENS'"
+        End If
+
+        _Sql.Ej_consulta_IDU(Consulta_sql)
 
         Lbl_Estado.Text = _Row_Ticket.Item("NomEstado")
         Lbl_Area.Text = _Row_Ticket.Item("Area")
@@ -66,9 +88,11 @@ Public Class Frm_Tickets_Seguimiento
 
     Sub Sb_Actualizar_Grilla()
 
-        Consulta_sql = "Select Acc.*,Case Accion When 'MSG' Then 'Mensaje' When 'RSM' Then 'Respuesta' Else '???' End As 'StrAccion',NOKOFU" & vbCrLf &
+        Consulta_sql = "Select Acc.*,Case Accion When 'MENS' Then 'Mensaje' When 'RESP' Then 'Respuesta' Else '???' End As 'StrAccion'," &
+                       "Case Accion When 'MENS' Then Isnull(Cf.NOKOFU,'') When 'RESP' Then Isnull(Ca.NOKOFU,'') Else '???' End As 'NombreFunAge'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Acc" & vbCrLf &
-                       "Left Join TABFU On KOFU = CodFuncionario" & vbCrLf &
+                       "Left Join TABFU Cf On Cf.KOFU = CodFuncionario" & vbCrLf &
+                       "Left Join TABFU Ca On Ca.KOFU = CodAgente" & vbCrLf &
                        "Where Id_Ticket = " & _Id_Ticket
         _Tbl_Acciones = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -86,15 +110,15 @@ Public Class Frm_Tickets_Seguimiento
             .Columns("StrAccion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("NOKOFU").Visible = True
-            .Columns("NOKOFU").HeaderText = "De"
-            .Columns("NOKOFU").Width = 100
-            .Columns("NOKOFU").DisplayIndex = _DisplayIndex
+            .Columns("NombreFunAge").Visible = True
+            .Columns("NombreFunAge").HeaderText = "De"
+            .Columns("NombreFunAge").Width = 150
+            .Columns("NombreFunAge").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").HeaderText = "Descripción"
-            .Columns("Descripcion").Width = 300
+            .Columns("Descripcion").Width = 250
             .Columns("Descripcion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -118,6 +142,49 @@ Public Class Frm_Tickets_Seguimiento
         Catch ex As Exception
             Txt_Descripcion.Text = String.Empty
         End Try
+
+    End Sub
+
+    Private Sub Btn_MensajeRespuesta_Click(sender As Object, e As EventArgs) Handles Btn_MensajeRespuesta.Click
+
+        Dim _Grabar As Boolean
+        Dim _Id_TicketAc As Integer
+        Dim _Descripcion As String
+
+        Dim _Cl_Tickets As New Cl_Tickets
+        _Cl_Tickets.Sb_Llenar_Ticket(_Id_Ticket)
+
+        _Id_TicketAc = _Cl_Tickets.Fx_Grabar_Nueva_Accion(_Funcionario, Mis_Ticket)
+
+        Dim Fm As New Frm_Tickets_Respuesta(_Id_TicketAc)
+        Fm.ShowDialog(Me)
+        _Grabar = Fm.Grabar
+        _Descripcion = Fm.Txt_Descripcion.Text.Trim
+        Fm.Dispose()
+
+        If Not _Grabar Then
+
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Where Id = " & _Id_TicketAc & vbCrLf &
+                           "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Archivos Where Id_TicketAc = " & _Id_TicketAc
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+            Return
+        End If
+
+        Dim _Campo As String
+
+        If Mis_Ticket Then
+            _Campo = "CodFuncionario"
+        Else
+            _Campo = "CodAgente"
+        End If
+
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set Visto = 1 Where Id_Ticket = " & _Id_Ticket & vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set " &
+                       _Campo & " = '" & FUNCIONARIO & "',Fecha = Getdate(),Descripcion = '" & _Descripcion & "',En_Construccion = 0,Visto = 0" & vbCrLf &
+                       "Where Id = " & _Id_TicketAc
+        _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+        Sb_Actualizar_Grilla()
 
     End Sub
 End Class
