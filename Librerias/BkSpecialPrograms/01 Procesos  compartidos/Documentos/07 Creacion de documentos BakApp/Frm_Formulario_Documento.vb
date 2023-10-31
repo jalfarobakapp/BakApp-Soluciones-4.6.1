@@ -1103,6 +1103,21 @@ Public Class Frm_Formulario_Documento
 
         End If
 
+        If _Global_Row_Configuracion_General.Item("BuscarProdConCodRapido") Then
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Asociacion (Codigo,DescripcionBusqueda)" & vbCrLf &
+                           "Select KOPR,KOPRRA From MAEPR" & vbCrLf &
+                           "Where KOPRRA Not In (Select DescripcionBusqueda From " & _Global_BaseBk & "Zw_Prod_Asociacion)"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+        End If
+
+        If _Global_Row_Configuracion_General.Item("BuscarProdConCodTecnico") Then
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Asociacion (Codigo,DescripcionBusqueda)" & vbCrLf &
+                           "Select KOPR,KOPRTE From MAEPR" & vbCrLf &
+                           "Where KOPRTE Not In (Select DescripcionBusqueda From " & _Global_BaseBk & "Zw_Prod_Asociacion)"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+        End If
+
+
         Consulta_sql = "Select Modalidad, TipoDoc, NombreFormato, Grabar_Con_Huella
                         From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'"
         Dim _RowFormato_Mod As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -6990,6 +7005,7 @@ Public Class Frm_Formulario_Documento
                                 ByRef _Tbl_Productos_Seleccionados_Multiple As DataTable) As DataRow
 
         _Codigo = _Codigo.Trim
+        Dim _RowProducto As DataRow
 
         If _Es_Concepto Then _Seleccion_Multiple = False
 
@@ -6998,7 +7014,17 @@ Public Class Frm_Formulario_Documento
         Dim _CodSucEntidad = _TblEncabezado.Rows(0).Item("CodSucEntidad")
 
         Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
-        Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+        _RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_RowProducto) AndAlso _Global_Row_Configuracion_General.Item("BuscarProdConCodRapido") Then
+            Consulta_sql = "Select * From MAEPR Where KOPRRA = '" & _Codigo & "'"
+            _RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
+        End If
+
+        If IsNothing(_RowProducto) AndAlso _Global_Row_Configuracion_General.Item("BuscarProdConCodTecnico") Then
+            Consulta_sql = "Select * From MAEPR Where KOPRTE = '" & _Codigo & "'"
+            _RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
+        End If
 
         If (_RowProducto Is Nothing) Then
 

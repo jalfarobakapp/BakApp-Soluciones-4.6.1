@@ -113,6 +113,8 @@ CREATE TABLE [dbo].[Zw_Configuracion](
 [Pr_Creacion_Exigir_2daDimension]                       [bit]           NOT NULL DEFAULT (0), 
 [Pr_Creacion_Exigir_3raDimension]                       [bit]           NOT NULL DEFAULT (0), 
 [ValidaMovFisConCodBarra]                               [bit]           NOT NULL DEFAULT (0), 
+[BuscarProdConCodRapido]                                [bit]           NOT NULL DEFAULT (0), 
+[BuscarProdConCodTecnico]                               [bit]           NOT NULL DEFAULT (0), 
 CONSTRAINT [PK_Zw_Configuracion] PRIMARY KEY CLUSTERED 
 (
 	[Modalidad] ASC
