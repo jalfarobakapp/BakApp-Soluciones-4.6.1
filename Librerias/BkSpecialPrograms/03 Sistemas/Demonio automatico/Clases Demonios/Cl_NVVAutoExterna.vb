@@ -129,15 +129,16 @@ Public Class Cl_NVVAutoExterna
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then Throw New System.Exception(_Sql.Pro_Error)
 
-            Consulta_Sql = "Select Nvd.Id_Det As Id,Cantidad,STFI1,STFI2,
+            Consulta_Sql = "Select Nvd.Id_Det As Id,Nvd.Codigo,Cantidad,STFI1,STFI2,STOCNV1,STOCNV2,ISNULL(Pst.StComp1,0) As StComp1,ISNULL(Pst.StComp2,0) As StComp2,
+    (STFI1-STOCNV1-ISNULL(Pst.StComp1,0)) As 'StDisp1',(STFI2-STOCNV2-ISNULL(Pst.StComp2,0)) As 'StDisp2',
 	Case 
 		When Untrans = 1 Then 
 			Case 
 				When STFI1 <=0 Then 0 
 				Else 
 					Case 
-						When (STFI1-Cantidad) >= 0 Then Cantidad 
-						When STFI1 > 0 Then STFI1 
+						When (STFI1-STOCNV1-ISNULL(Pst.StComp1,0)-Cantidad) >= 0 Then Cantidad 
+						When STFI1-STOCNV1-ISNULL(Pst.StComp1,0) > 0 Then STFI1-STOCNV1-ISNULL(Pst.StComp1,0) 
 						Else 0
 					End 
 				End 
@@ -146,8 +147,8 @@ Public Class Cl_NVVAutoExterna
 				When STFI2 <=0 Then 0 
 				Else 
 					Case 
-						When (STFI2-Cantidad) >= 0 Then Cantidad 
-						When STFI2 > 0 Then STFI2 
+						When (STFI2-STOCNV2-ISNULL(Pst.StComp2,0)-Cantidad) >= 0 Then Cantidad 
+						When STFI2-STOCNV2-ISNULL(Pst.StComp2,0) > 0 Then STFI2-STOCNV2-ISNULL(Pst.StComp2,0) 
 						Else 0
 					End 
 				End 
@@ -155,9 +156,11 @@ Public Class Cl_NVVAutoExterna
 Into #Paso
 From " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Nvd
 Inner Join MAEST On EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR = Codigo
+Left Join " & _Global_BaseBk & "Zw_Prod_Stock Pst On EMPRESA = Pst.Empresa And KOSU = Pst.Sucursal And KOBO = Pst.Bodega And KOPR = Pst.Codigo
 Where Id_Enc = " & _Id_Enc & "
 
-Update " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Set Stfi1 = STFI1,Stfi2 = STFI2,CantidadDefinitiva = CntPedida
+Update " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Set Stfi1 = STFI1,Stfi2 = STFI2,Stocnv1 = STOCNV1,Stocnv2 = STOCNV2,
+StComp1 = #Paso.StComp1,StComp2 = #Paso.StComp2,CantidadDefinitiva = CntPedida
 From #Paso Inner Join " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet On Id = Id_Det
 
 Drop table #Paso"

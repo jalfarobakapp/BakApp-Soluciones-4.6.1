@@ -224,6 +224,9 @@ Public Class Frm_Configuracion_Gral
 
             Input_Dias_Para_Hacer_NCV.Value = .Item("Dias_Para_Hacer_NCV")
 
+            Chk_BuscarProdConCodRapido.Checked = .Item("BuscarProdConCodRapido")
+            Chk_BuscarProdConCodTecnico.Checked = .Item("BuscarProdConCodTecnico")
+
         End With
 
         Input_Dias_Para_Hacer_NCV.Enabled = Not _Modalidad_General
@@ -231,6 +234,9 @@ Public Class Frm_Configuracion_Gral
 
         Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.Enabled = Not _Modalidad_General
         Chk_ValidaMovFisConCodBarra.Enabled = Not _Modalidad_General
+
+        Chk_BuscarProdConCodRapido.Enabled = _Modalidad_General
+        Chk_BuscarProdConCodTecnico.Enabled = _Modalidad_General
 
         Chk_Revisar_Tasa_de_Cambio.Enabled = _Modalidad_General
         Chk_Revisar_Taza_Solo_Mon_Extranjeras.Enabled = _Modalidad_General
@@ -498,6 +504,8 @@ Public Class Frm_Configuracion_Gral
                        ",Pr_Creacion_Exigir_2daDimension = " & Convert.ToInt32(Chk_Pr_Creacion_Exigir_2daDimension.Checked) & vbCrLf &
                        ",Pr_Creacion_Exigir_3raDimension = " & Convert.ToInt32(Chk_Pr_Creacion_Exigir_3raDimension.Checked) & vbCrLf &
                        ",ValidaMovFisConCodBarra = " & Convert.ToInt32(Chk_ValidaMovFisConCodBarra.Checked) & vbCrLf &
+                       ",BuscarProdConCodRapido = " & Convert.ToInt32(Chk_BuscarProdConCodRapido.Checked) & vbCrLf &
+                       ",BuscarProdConCodTecnico = " & Convert.ToInt32(Chk_BuscarProdConCodTecnico.Checked) & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then

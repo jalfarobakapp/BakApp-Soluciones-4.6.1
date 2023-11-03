@@ -988,6 +988,10 @@ Public Class Frm_00_Asis_Compra_Menu
                                       Chk_QuitarDeEstudioAutomatico.Name, Class_SQLite.Enum_Type._Boolean, Chk_QuitarDeEstudioAutomatico.Checked, _Actualizar)
 
 
+        ' Chek para que el sistema solo muestre productos asociados a las bodegas seleccionadas de compra o venta
+        _Sql.Sb_Parametro_Informe_Sql(Chk_MostrarProdNoAsocBodegas, "Compras_Asistente",
+                                      Chk_MostrarProdNoAsocBodegas.Name, Class_SQLite.Enum_Type._Boolean, Chk_MostrarProdNoAsocBodegas.Checked, _Actualizar)
+
 
     End Sub
 
@@ -2706,8 +2710,15 @@ Public Class Frm_00_Asis_Compra_Menu
 
                 If Not IsNothing(_TblFiltroProductos_Proveedor) Then
 
-                    _Algunos_Productos = Generar_Filtro_IN(_TblFiltroProductos_Proveedor, "Chk", "Codigo", False, True, "'")
-                    _Algunos_Productos = "And KOPR In " & _Algunos_Productos
+                    '_Filtro_Clalibpr_Todas = Fm.Pro_Filtro_Clalibpr_Todas
+                    '_Filtro_Marcas_Todas = Fm.Pro_Filtro_Marcas_Todas
+                    '_Filtro_Rubro_Todas = Fm.Pro_Filtro_Rubro_Todas
+                    '_Filtro_Super_Familias_Todas = Fm.Pro_Filtro_Super_Familias_Todas
+                    '_Filtro_Zonas_Todas = Fm.Pro_Filtro_Zonas_Todas
+                    If Not _Filtro_Productos_Todos Then
+                        _Algunos_Productos = Generar_Filtro_IN(_TblFiltroProductos_Proveedor, "Chk", "Codigo", False, True, "'")
+                        _Algunos_Productos = "And KOPR In " & _Algunos_Productos
+                    End If
 
                 End If
 
@@ -2721,12 +2732,32 @@ Public Class Frm_00_Asis_Compra_Menu
 
                 End If
 
+                'Con esta sentencia el sistema solo muestra producto
+
+
+
             ElseIf Rdb_Productos_Familias_Marcas_Etc.Checked Then
 
                 Consulta_sql = "Select KOPR From MAEPR Where 1 > 0" & vbCrLf
 
             End If
 
+            Dim _FiltroBodCompra As String = String.Empty
+            Dim _FiltroBodVenta As String = String.Empty
+
+            If Not Chk_MostrarProdNoAsocBodegas.Checked Then
+
+                _FiltroBodCompra = Generar_Filtro_IN(_TblBodCompra, "Chk", "Codigo", False, True, "'")
+                _FiltroBodVenta = Generar_Filtro_IN(_TblBodVenta, "Chk", "Codigo", False, True, "'")
+
+                If _FiltroBodCompra <> "()" Then
+                    _FiltroBodCompra = "And KOPR In (Select KOPR From TABBOPR Where EMPRESA+KOSU+KOBO In " & _FiltroBodCompra & ")"
+                End If
+                If _FiltroBodVenta <> "()" Then
+                    _FiltroBodVenta = "And KOPR In (Select KOPR From TABBOPR Where EMPRESA+KOSU+KOBO In " & _FiltroBodVenta & ")"
+                End If
+
+            End If
 
             '---- FILTROS -------------------------------
 
@@ -2788,7 +2819,9 @@ Public Class Frm_00_Asis_Compra_Menu
                             _Filtro_Marcas & vbCrLf &
                             _Filtro_Rubros & vbCrLf &
                             _Filtro_SuperFamilias & vbCrLf &
-                            _Filtro_Zonas
+                            _Filtro_Zonas & vbCrLf &
+                            _FiltroBodCompra & vbCrLf &
+                            _FiltroBodVenta
 
             Consulta_sql += vbCrLf & "And TIPR In ('FPN','FIN')"
 

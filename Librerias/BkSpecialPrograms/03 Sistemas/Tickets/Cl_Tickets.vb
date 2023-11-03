@@ -45,7 +45,7 @@ Public Class Cl_Tickets
                 .CodAgente = _Row_Ticket.Item("CodAgente")
                 .Estado = _Row_Ticket.Item("Estado")
                 .UltAccion = _Row_Ticket.Item("UltAccion")
-                .FechaCierre = _Row_Ticket.Item("FechaCierre")
+                .FechaCierre = NuloPorNro(_Row_Ticket.Item("FechaCierre"), Now)
 
             End With
 
@@ -77,6 +77,9 @@ Public Class Cl_Tickets
 
         Tickets.Numero = Fx_NvoNro_OT()
         Tickets.Estado = "ABIE"
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Where Id_Area = " & Tickets.Id_Area & " And Id_Tipo = " & Tickets.Id_Tipo
+        Dim _Tbl_Agentes As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
@@ -119,18 +122,32 @@ Public Class Cl_Tickets
                            ",Asignado = " & Convert.ToInt32(Tickets.Asignado) &
                            ",AsignadoGrupo = " & Convert.ToInt32(Tickets.AsignadoGrupo) &
                            ",Id_Grupo = " & Tickets.Id_Grupo &
-                           ",AsignadoAgente = " & Convert.ToInt32(Tickets.AsignadoAgente) &
-                           ",CodAgente = '" & Tickets.CodAgente & "'" & vbCrLf &
                            "Where Id = " & Tickets.Id
             Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
 
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones (Id_Ticket,Accion,Descripcion,Fecha,CodFuncionario) Values " &
-                           "(" & Tickets.Id & ",'MSG','" & Tickets.Descripcion & "',Getdate(),'" & Tickets.CodFuncionario_Crea & "')"
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set " &
+                           "Id_Ticket = " & Tickets.Id &
+                           ",Accion = 'MENS'" &
+                           ",Descripcion = '" & Tickets.Descripcion & "'" &
+                           ",Fecha = Getdate()" &
+                           ",En_Construccion = 0" & vbCrLf &
+                           "Where Id = " & Tickets.New_Id_TicketAc
             Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
+
+            For Each _Fila As DataRow In _Tbl_Agentes.Rows
+
+                Dim _CodAgente As String = _Fila.Item("CodAgente")
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Asignado (Id_Ticket,CodAgente,Activo) Values (" & Tickets.Id & ",'" & _CodAgente & "',1)"
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            Next
 
             myTrans.Commit()
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
@@ -144,6 +161,61 @@ Public Class Cl_Tickets
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
         End Try
+
+    End Function
+
+    Function Fx_Grabar_Nueva_Accion(_CodFuncionario As String, _Mensaje As Boolean) As Integer
+
+        Dim _Accion As String
+
+        If _Mensaje Then
+            _Accion = "MENS"
+        Else
+            _Accion = "RESP"
+        End If
+
+        Dim _Id_TicketAc As Integer
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+        Try
+
+            myTrans = Cn2.BeginTransaction()
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones (Id_Ticket,Accion,Descripcion,Fecha,CodFuncionario,En_Construccion) Values " &
+                           "(" & Tickets.Id & ",'" & _Accion & "','',Getdate(),'" & _CodFuncionario & "',1)"
+            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+            Comando = New System.Data.SqlClient.SqlCommand("Select @@IDENTITY AS 'Identity'", Cn2)
+            Comando.Transaction = myTrans
+            Dim dfd1 As System.Data.SqlClient.SqlDataReader = Comando.ExecuteReader()
+            While dfd1.Read()
+                _Id_TicketAc = dfd1("Identity")
+            End While
+            dfd1.Close()
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        Catch ex As Exception
+
+            _Id_TicketAc = 0
+            myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Id_TicketAc
 
     End Function
 
@@ -170,6 +242,20 @@ Namespace Tickets_Db
         Public Property Estado As String
         Public Property UltAccion As String
         Public Property FechaCierre As DateTime
+        Public Property New_Id_TicketAc As Integer
+
+    End Class
+
+    Public Class Tickets_Acciones
+
+        Public Property Id As Integer
+        Public Property Id_Ticket As Integer
+        Public Property Accion As String
+        Public Property Descripcion As String
+        Public Property Fecha As DateTime
+        Public Property CodFuncionario As String
+        Public Property CodAgente As String
+        Public Property En_Construccion As Boolean
 
     End Class
 

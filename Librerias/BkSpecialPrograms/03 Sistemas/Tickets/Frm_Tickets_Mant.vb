@@ -1,12 +1,15 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports System.Web.Services
+Imports DevComponents.DotNetBar
 
 Public Class Frm_Tickets_Mant
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Dim _Id_Ticket As Integer
     Dim _Cl_Tickets As New Cl_Tickets
+
+    Public Property Grabar As Boolean
+
 
     Public Sub New(_Id_Ticket As Integer)
 
@@ -15,16 +18,15 @@ Public Class Frm_Tickets_Mant
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Me._Id_Ticket = _Id_Ticket
-
         'Consulta_sql = "Select *,NOKOFU From " & _Global_BaseBk & "Zw_Stk_Tickets" & vbCrLf &
         '               "Left Join TABFU On KOFU = CodFuncionario_Crea" & vbCrLf &
         '               "Where Id = " & _Id_Ticket
         '_Row_Ticket = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         _Cl_Tickets.Tickets.CodFuncionario_Crea = FUNCIONARIO
+        _Cl_Tickets.Sb_Llenar_Ticket(0)
 
-        _Cl_Tickets.Sb_Llenar_Ticket(_Id_Ticket)
+        '_Cl_Tickets.Sb_Llenar_Ticket(_Id_Ticket)
 
     End Sub
 
@@ -57,6 +59,7 @@ Public Class Frm_Tickets_Mant
             Txt_Agente.Text = _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & .CodAgente & "'")
             Txt_Grupo.Tag = .Id_Grupo
             Txt_Grupo.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Grupos", "Grupo", "Id = " & .Id_Grupo)
+            .New_Id_TicketAc = _Cl_Tickets.Fx_Grabar_Nueva_Accion(_Cl_Tickets.Tickets.CodFuncionario_Crea, True)
         End With
 
         Me.ActiveControl = Txt_Asunto
@@ -127,7 +130,9 @@ Public Class Frm_Tickets_Mant
         End If
 
         If String.IsNullOrEmpty(_Msg_Grabar) Then
-            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBoxEx.Show(Me, "El ticket se ha creado correctamente, el número de ticket es " & _Cl_Tickets.Tickets.Numero & "." & vbCrLf &
+                              "Guárdelo para fururas referencias", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Grabar = True
             Me.Close()
         Else
             MessageBoxEx.Show(Me, _Msg_Grabar, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -145,7 +150,8 @@ Public Class Frm_Tickets_Mant
         _Filtrar.Pro_Nombre_Encabezado_Informe = "AREA/DEPARTAMENTO"
 
         If _Filtrar.Fx_Filtrar(Nothing,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "", False, False, True, False,, False) Then
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra,
+                               "And Id In (Select Id_Area From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos)", False, False, True, False,, False) Then
 
             Txt_Area.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
             Txt_Area.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
@@ -175,11 +181,13 @@ Public Class Frm_Tickets_Mant
 
         If _Filtrar.Fx_Filtrar(Nothing,
                                Clas_Filtros_Random.Enum_Tabla_Fl._Otra,
-                               "And Id In (Select Id_Tipo From " & _Global_BaseBk & "Zw_Stk_AreaVsTipo Where Id_Area = " & Txt_Area.Tag & ")",
+                               "And Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id_Area = " & Txt_Area.Tag & ")",
                                False, False, True, False,, False) Then
 
             Txt_Tipo.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
             Txt_Tipo.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
+
+            Txt_Descripcion.Focus()
 
         End If
 
@@ -278,4 +286,24 @@ Public Class Frm_Tickets_Mant
         End If
         Txt_Agente.Enabled = Rdb_AsignadoAgente.Checked
     End Sub
+
+    Private Sub Btn_Archivos_Adjuntos_Click(sender As Object, e As EventArgs) Handles Btn_Archivos_Adjuntos.Click
+
+        Dim Fm As New Frm_Adjuntar_Archivos("Zw_Stk_Tickets_Archivos", "Id_TicketAc", _Cl_Tickets.Tickets.New_Id_TicketAc)
+        Fm.Pedir_Permiso = False
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Frm_Tickets_Mant_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+
+        If Not _Grabar Then
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Where Id = " & _Cl_Tickets.Tickets.New_Id_TicketAc & vbCrLf &
+                           "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Archivos Where Id_TicketAc = " & _Cl_Tickets.Tickets.New_Id_TicketAc
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+        End If
+
+    End Sub
+
 End Class

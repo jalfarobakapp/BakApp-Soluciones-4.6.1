@@ -140,7 +140,8 @@ Public Class Frm_Tickets_Areas
     End Sub
 
     Private Sub Grilla_Areas_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Areas.CellDoubleClick
-        Call Btn_Mnu_EditarArea_Click(Nothing, Nothing)
+        Call Btn_Mnu_AsociarTipos_Click(Nothing, Nothing)
+        'Call Btn_Mnu_EditarArea_Click(Nothing, Nothing)
     End Sub
 
     Private Sub Sb_Grilla_Areas_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
@@ -204,14 +205,8 @@ Public Class Frm_Tickets_Areas
 
             .Columns("Tipo").Visible = True
             .Columns("Tipo").HeaderText = "Tipo"
-            .Columns("Tipo").Width = 340
+            .Columns("Tipo").Width = 440
             .Columns("Tipo").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("Permiso").Visible = True
-            .Columns("Permiso").HeaderText = "Permiso"
-            .Columns("Permiso").Width = 100
-            .Columns("Permiso").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
         End With

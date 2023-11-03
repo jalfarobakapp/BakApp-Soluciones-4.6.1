@@ -37,6 +37,10 @@ Public Class Stk_Ticktes
 
     Private Sub Btn_TicketAsignados_Click(sender As Object, e As EventArgs) Handles Btn_TicketAsignados.Click
 
+        Dim Fm As New Frm_Tickets_Lista(FUNCIONARIO, Frm_Tickets_Lista.Enum_Tickets.TicketAsignadosAgente, 0)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
     End Sub
 
     Private Sub Btn_Configuracion_Click(sender As Object, e As EventArgs) Handles Btn_Configuracion.Click

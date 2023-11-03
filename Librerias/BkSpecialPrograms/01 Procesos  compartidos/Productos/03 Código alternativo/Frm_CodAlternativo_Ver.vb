@@ -40,7 +40,10 @@ Public Class Frm_CodAlternativo_Ver
             Chk_Lect_Barras_IngrxCantidad.Checked = _Row.Item("Lect_Barras_IngrxCantidad")
         End If
 
-        AddHandler GrillAlternativos.MouseDown, AddressOf Sb_Grilla_MouseDown
+        If Not ModoSeleccion Then
+            AddHandler GrillAlternativos.MouseDown, AddressOf Sb_Grilla_MouseDown
+        End If
+
         AddHandler GrillAlternativos.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         AddHandler Chk_Lect_Barras_IngrxCantidad.CheckedChanged, AddressOf Chk_Lect_Barras_IngrxCantidad_CheckedChanged
@@ -120,7 +123,7 @@ Public Class Frm_CodAlternativo_Ver
 
     Sub Sb_Eliminar_Linea()
 
-        If Not ModoSeleccion Then Return
+        If ModoSeleccion Then Return
 
         Dim _Fila As DataGridViewRow = GrillAlternativos.Rows(GrillAlternativos.CurrentRow.Index)
 

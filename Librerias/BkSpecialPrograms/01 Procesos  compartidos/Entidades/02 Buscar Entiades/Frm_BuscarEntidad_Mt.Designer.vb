@@ -421,10 +421,11 @@ Partial Class Frm_BuscarEntidad_Mt
         '
         '
         Me.Chk_Solo_Clientes_Del_Vendedor.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Solo_Clientes_Del_Vendedor.FocusCuesEnabled = False
         Me.Chk_Solo_Clientes_Del_Vendedor.ForeColor = System.Drawing.Color.Black
         Me.Chk_Solo_Clientes_Del_Vendedor.Location = New System.Drawing.Point(9, 487)
         Me.Chk_Solo_Clientes_Del_Vendedor.Name = "Chk_Solo_Clientes_Del_Vendedor"
-        Me.Chk_Solo_Clientes_Del_Vendedor.Size = New System.Drawing.Size(340, 23)
+        Me.Chk_Solo_Clientes_Del_Vendedor.Size = New System.Drawing.Size(195, 23)
         Me.Chk_Solo_Clientes_Del_Vendedor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Solo_Clientes_Del_Vendedor.TabIndex = 12
         Me.Chk_Solo_Clientes_Del_Vendedor.Text = "Ver solo clientes del usuario activo"

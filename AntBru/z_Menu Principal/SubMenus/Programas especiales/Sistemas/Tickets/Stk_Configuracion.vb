@@ -30,6 +30,10 @@ Public Class Stk_Configuracion
 
     Private Sub Btn_Agentes_Click(sender As Object, e As EventArgs) Handles Btn_Agentes.Click
 
+        Dim Fm As New Frm_Tickets_Agentes
+        Fm.ShowDialog(_Fm_Menu_Padre)
+        Fm.Dispose()
+
     End Sub
 
     Private Sub Btn_Grupos_Click(sender As Object, e As EventArgs) Handles Btn_Grupos.Click
