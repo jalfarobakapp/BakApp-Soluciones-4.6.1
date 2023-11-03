@@ -195,6 +195,13 @@ Public Class Frm_Conexiones_Prestashop
                             _Filtro_id_product
             Dim _Tbl_Productos_Web As DataTable = _Sql_MySql.Fx_Get_Datatable(Consulta_sql)
 
+            If IsNothing(_Tbl_Productos_Web) Then
+                MessageBoxEx.Show(Me, "Problemas al querer importar los productos desde la conexión a la base de datos MySQL." & vbCrLf &
+                  "Cadena de conexión: " & _Cadena_de_conexion_MySql & vbCrLf & vbCrLf &
+                  "Error: " & _Sql_MySql.Pro_Error, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
             If _Tbl_Productos_Web.Rows.Count Then
 
                 Dim Fm_Ps As New Frm_Precios_Prestashop_Web(Nothing, Frm_Precios_Prestashop_Web.Tipo_Proceso.Actualizar_Cosigos_Alternativos)

@@ -2730,7 +2730,7 @@ Public Class Frm_Demonio_01
 
                     System.Windows.Forms.Application.DoEvents()
 
-                    Lbl_Correo.Text = "Enviados " & _Conteo_envio & " de " & FormatNumber(_Tbl_Correos.Rows.Count, 0) & " (Probelmas(" & _Conteo_Error & "))"
+                    Lbl_Correo.Text = "Enviados " & _Conteo_envio & " de " & FormatNumber(_Tbl_Correos.Rows.Count, 0) & " (Problemas (" & _Conteo_Error & "))"
 
                 End If
 

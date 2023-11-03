@@ -13804,7 +13804,8 @@ Public Class Frm_Formulario_Documento
                 (_Tipo_Documento = csGlobales.Enum_Tipo_Documento.Compra And _Solicitar_Permiso_OCC_SOC) Or
                 _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Traslado_Interno Or
                 _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Nota_Venta_Interna Or
-                _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna Then
+                _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna Or
+                _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Devolucion Then
 
                 If _Tido = "OCC" Then
 

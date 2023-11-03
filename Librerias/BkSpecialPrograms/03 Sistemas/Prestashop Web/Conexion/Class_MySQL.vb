@@ -45,7 +45,7 @@ Public Class Class_MySQL
         Catch ex As Exception
             'MsgBox(ex.Message)
         End Try
-        _Error = String.Empty
+        '_Error = String.Empty
     End Sub
 
     Function Fx_Get_Datatable(ByVal Consulta_sql) As DataTable

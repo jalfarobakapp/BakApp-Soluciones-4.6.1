@@ -366,6 +366,15 @@ Public Class Cl_Correos
                                     Where TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
                     _Row_Documento = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
+                    If Not IsNothing(_Row_Documento) Then
+                        Dim _Esdo = _Row_Documento.Item("ESDO")
+                        If _Esdo = "N" Then
+                            _Error = "El documento " & _Tido & "-" & _Nudo & " esta NULO"
+                        End If
+                    Else
+                        _Error = "No se encontro el documento " & _Tido & "-" & _Nudo
+                    End If
+
                 End If
 
                 If _Adjuntar_Documento Then
@@ -822,7 +831,7 @@ Public Class Cl_Correos
 
                         System.Windows.Forms.Application.DoEvents()
 
-                        _Lbl_Estado = "Enviados " & _Conteo_envio & " de " & FormatNumber(_Tbl_Correos.Rows.Count, 0) & " (Probelmas(" & _Conteo_Error & "))"
+                        _Lbl_Estado = "Enviados " & _Conteo_envio & " de " & FormatNumber(_Tbl_Correos.Rows.Count, 0) & " (Problemas (" & _Conteo_Error & "))"
 
                     End If
 
@@ -1263,105 +1272,110 @@ Public Class Cl_Correos
 
     Sub Sb_Llenar_Variables_Etiquetas_Documento(ByRef _Texto As String, _Idmaeedo As Integer)
 
-        If Convert.ToBoolean(_Idmaeedo) Then
+        Try
+            If Convert.ToBoolean(_Idmaeedo) Then
 
-            ' Esto reemplaza variables antiguas
+                ' Esto reemplaza variables antiguas
 
-            _Texto = Replace(_Texto, "Doc_Razon", "RAZON")
-            _Texto = Replace(_Texto, "RAZON_CLIENTE", "RAZON")
-            _Texto = Replace(_Texto, "FOLIO", "NUDO")
-            _Texto = Replace(_Texto, "Doc_Razon", "RAZON")
-            _Texto = Replace(_Texto, "Doc_Tido", "TIDO")
-            _Texto = Replace(_Texto, "Doc_Nudo", "NUDO")
-            _Texto = Replace(_Texto, "Doc_Feemdo", "FEEMDO")
-            _Texto = Replace(_Texto, "Doc_Vabrdo", "VABRDO")
+                _Texto = Replace(_Texto, "Doc_Razon", "RAZON")
+                _Texto = Replace(_Texto, "RAZON_CLIENTE", "RAZON")
+                _Texto = Replace(_Texto, "FOLIO", "NUDO")
+                _Texto = Replace(_Texto, "Doc_Razon", "RAZON")
+                _Texto = Replace(_Texto, "Doc_Tido", "TIDO")
+                _Texto = Replace(_Texto, "Doc_Nudo", "NUDO")
+                _Texto = Replace(_Texto, "Doc_Feemdo", "FEEMDO")
+                _Texto = Replace(_Texto, "Doc_Vabrdo", "VABRDO")
 
-            _Texto = Replace(_Texto, "<RazonEmpresa>", RazonEmpresa)
-            _Texto = Replace(_Texto, "<EMPRESAEMI>", RazonEmpresa)
-            _Texto = Replace(_Texto, "<RutEmpresa>", RutEmpresa)
-            _Texto = Replace(_Texto, "<RutEmpresaActiva>", RutEmpresaActiva)
+                _Texto = Replace(_Texto, "<RazonEmpresa>", RazonEmpresa)
+                _Texto = Replace(_Texto, "<EMPRESAEMI>", RazonEmpresa)
+                _Texto = Replace(_Texto, "<RutEmpresa>", RutEmpresa)
+                _Texto = Replace(_Texto, "<RutEmpresaActiva>", RutEmpresaActiva)
 
-            Dim _Dv, _Rut, _RutEmpresaCP, _RutEmpresaActivaCP As String
+                Dim _Dv, _Rut, _RutEmpresaCP, _RutEmpresaActivaCP As String
 
-            _Rut = RutEmpresa
-            If _Rut.Contains("-") Then
-                Dim _Rt = Split(_Rut, "-")
-                _Rut = _Rt(0)
+                _Rut = RutEmpresa
+                If _Rut.Contains("-") Then
+                    Dim _Rt = Split(_Rut, "-")
+                    _Rut = _Rt(0)
+                End If
+                Try
+                    _Dv = RutDigito(_Rut)
+                    _Rut = FormatNumber(_Rut, 0) & "-" & _Dv
+                Catch ex As Exception
+                    _Rut = _Rut
+                End Try
+                _RutEmpresaCP = _Rut
+
+                _Rut = RutEmpresaActiva
+                If _Rut.Contains("-") Then
+                    Dim _Rt = Split(_Rut, "-")
+                    _Rut = _Rt(0)
+                End If
+                Try
+                    _Dv = RutDigito(_Rut)
+                    _Rut = FormatNumber(_Rut, 0) & "-" & _Dv
+                Catch ex As Exception
+                    _Rut = _Rut
+                End Try
+                _RutEmpresaActivaCP = _Rut
+
+                _Texto = Replace(_Texto, "<RutEmpresaCP>", _RutEmpresaCP)
+                _Texto = Replace(_Texto, "<RutEmpresaActivaCP>", _RutEmpresaActivaCP)
+
+
+                _Texto = Replace(_Texto, "&lt;", "<")
+                _Texto = Replace(_Texto, "&gt;", ">")
+
+                Consulta_Sql = Replace(My.Resources.Recursos_Ver_Documento.Traer_Documento_Random, "#Idmaeedo#", _Idmaeedo)
+                Dim _Datos_Documento = _Sql.Fx_Get_DataSet(Consulta_Sql)
+
+                Dim _Row_Encabezado = _Datos_Documento.Tables(0).Rows(0)
+
+                Dim _Funciones As New List(Of String)
+                Dim _FuncionesNoEncontradas As New List(Of String)
+
+                Sb_Llenar_Listado_Funciones(0, _Texto, _Funciones)
+
+                For Each _Funcion As String In _Funciones
+
+                    Dim _Row As DataRow
+
+                    _Row = _Row_Encabezado
+                    If Not IsNothing(_Row) Then
+                        If Not Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, True) Then
+                            Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, False)
+                        End If
+                    End If
+
+                    Dim _Endo = _Row_Encabezado.Item("ENDO")
+                    Dim _Suendo = _Row_Encabezado.Item("SUENDO")
+
+                    Dim _Row_Entidad As DataRow = Fx_Traer_Datos_Entidad(_Endo, _Suendo)
+
+                    _Row = _Row_Entidad
+                    If Not IsNothing(_Row) Then
+                        If Not Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, True) Then
+                            Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, False)
+                        End If
+                    End If
+
+                    Consulta_Sql = "Select * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo
+                    Dim _Row_Observaciones As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+                    _Row = _Row_Observaciones
+                    If Not IsNothing(_Row) Then
+                        If Not Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, True) Then
+                            Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, False)
+                        End If
+                    End If
+
+                Next
+
             End If
-            Try
-                _Dv = RutDigito(_Rut)
-                _Rut = FormatNumber(_Rut, 0) & "-" & _Dv
-            Catch ex As Exception
-                _Rut = _Rut
-            End Try
-            _RutEmpresaCP = _Rut
+        Catch ex As Exception
 
-            _Rut = RutEmpresaActiva
-            If _Rut.Contains("-") Then
-                Dim _Rt = Split(_Rut, "-")
-                _Rut = _Rt(0)
-            End If
-            Try
-                _Dv = RutDigito(_Rut)
-                _Rut = FormatNumber(_Rut, 0) & "-" & _Dv
-            Catch ex As Exception
-                _Rut = _Rut
-            End Try
-            _RutEmpresaActivaCP = _Rut
+        End Try
 
-            _Texto = Replace(_Texto, "<RutEmpresaCP>", _RutEmpresaCP)
-            _Texto = Replace(_Texto, "<RutEmpresaActivaCP>", _RutEmpresaActivaCP)
-
-
-            _Texto = Replace(_Texto, "&lt;", "<")
-            _Texto = Replace(_Texto, "&gt;", ">")
-
-            Consulta_Sql = Replace(My.Resources.Recursos_Ver_Documento.Traer_Documento_Random, "#Idmaeedo#", _Idmaeedo)
-            Dim _Datos_Documento = _Sql.Fx_Get_DataSet(Consulta_Sql)
-
-            Dim _Row_Encabezado = _Datos_Documento.Tables(0).Rows(0)
-
-            Dim _Funciones As New List(Of String)
-            Dim _FuncionesNoEncontradas As New List(Of String)
-
-            Sb_Llenar_Listado_Funciones(0, _Texto, _Funciones)
-
-            For Each _Funcion As String In _Funciones
-
-                Dim _Row As DataRow
-
-                _Row = _Row_Encabezado
-                If Not IsNothing(_Row) Then
-                    If Not Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, True) Then
-                        Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, False)
-                    End If
-                End If
-
-                Dim _Endo = _Row_Encabezado.Item("ENDO")
-                Dim _Suendo = _Row_Encabezado.Item("SUENDO")
-
-                Dim _Row_Entidad As DataRow = Fx_Traer_Datos_Entidad(_Endo, _Suendo)
-
-                _Row = _Row_Entidad
-                If Not IsNothing(_Row) Then
-                    If Not Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, True) Then
-                        Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, False)
-                    End If
-                End If
-
-                Consulta_Sql = "Select * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo
-                Dim _Row_Observaciones As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
-
-                _Row = _Row_Observaciones
-                If Not IsNothing(_Row) Then
-                    If Not Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, True) Then
-                        Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, False)
-                    End If
-                End If
-
-            Next
-
-        End If
 
     End Sub
 
