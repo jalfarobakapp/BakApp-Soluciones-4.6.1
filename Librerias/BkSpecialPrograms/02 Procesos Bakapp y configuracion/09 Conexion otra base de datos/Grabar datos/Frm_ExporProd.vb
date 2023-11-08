@@ -283,8 +283,15 @@ Public Class Frm_ExporProd
         Dim _Tbl_MAEPRExterno As DataTable = _Sql2.Fx_Get_Tablas(Consulta_Sql)
 
         Dim idsNotInB = _Tbl_MAEPRLocal.AsEnumerable().Select(Function(r) r.Field(Of String)("KOPR")).Except(_Tbl_MAEPRExterno.AsEnumerable().[Select](Function(r) r.Field(Of String)("KOPR")))
-        Dim _TblLocal As DataTable = (From row In _Tbl_MAEPRLocal.AsEnumerable() Join id In idsNotInB On row.Field(Of String)("KOPR") Equals id Select row).CopyToDataTable()
-        ExportarTabla_JetExcel_Tabla(_TblLocal, Me, "Productos en MAEPR solo en Base local")
+        Dim _TblLocal As DataTable
+
+        Try
+            _TblLocal = (From row In _Tbl_MAEPRLocal.AsEnumerable() Join id In idsNotInB On row.Field(Of String)("KOPR") Equals id Select row).CopyToDataTable()
+            ExportarTabla_JetExcel_Tabla(_TblLocal, Me, "Productos en MAEPR solo en Base local")
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "No se encontraron registros", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End Try
+
 
     End Sub
 
@@ -307,8 +314,15 @@ Public Class Frm_ExporProd
         Dim _Tbl_MAEPRExterno As DataTable = _Sql2.Fx_Get_Tablas(Consulta_Sql)
 
         Dim idsNotInB = _Tbl_MAEPRExterno.AsEnumerable().Select(Function(r) r.Field(Of String)("KOPR")).Except(_Tbl_MAEPRLocal.AsEnumerable().[Select](Function(r) r.Field(Of String)("KOPR")))
-        Dim _TblExterna As DataTable = (From row In _Tbl_MAEPRExterno.AsEnumerable() Join id In idsNotInB On row.Field(Of String)("KOPR") Equals id Select row).CopyToDataTable()
-        ExportarTabla_JetExcel_Tabla(_TblExterna, Me, "Productos en MAEPR solo en Base externa " & _Row_DbExt_Conexion.Item("Nombre_Conexion"))
+
+        Dim _TblExterna As DataTable
+
+        Try
+            _TblExterna = (From row In _Tbl_MAEPRExterno.AsEnumerable() Join id In idsNotInB On row.Field(Of String)("KOPR") Equals id Select row).CopyToDataTable()
+            ExportarTabla_JetExcel_Tabla(_TblExterna, Me, "Productos en MAEPR solo en Base externa " & _Row_DbExt_Conexion.Item("Nombre_Conexion"))
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "No se encontraron registros", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End Try
 
     End Sub
 End Class
