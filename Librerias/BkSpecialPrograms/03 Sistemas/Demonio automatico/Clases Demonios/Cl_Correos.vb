@@ -359,7 +359,7 @@ Public Class Cl_Correos
 
                 Dim _Koen, _Suen As String
 
-                If IsNothing(_Row_Documento) Then
+                If IsNothing(_Row_Documento) AndAlso CBool(_IdMaeedo) Then
 
                     Consulta_Sql = "Select TIDO,NUDO,KOEN,SUEN,NOKOEN,ESDO 
                                     From MAEEDO Inner Join MAEEN On KOEN = ENDO And SUEN = SUENDO 
