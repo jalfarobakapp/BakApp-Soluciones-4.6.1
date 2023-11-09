@@ -14,6 +14,7 @@ Public Class Cl_Tickets
         Tickets.Prioridad = String.Empty
         Tickets.Asunto = String.Empty
         Tickets.Descripcion = String.Empty
+        Tickets.CodProducto = String.Empty
 
     End Sub
 
@@ -78,7 +79,12 @@ Public Class Cl_Tickets
         Tickets.Numero = Fx_NvoNro_OT()
         Tickets.Estado = "ABIE"
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Where Id_Area = " & Tickets.Id_Area & " And Id_Tipo = " & Tickets.Id_Tipo
+        If Tickets.Asignado Then
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Where CodAgente = '" & Tickets.CodAgente & "'"
+        Else
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Where Id_Area = " & Tickets.Id_Area & " And Id_Tipo = " & Tickets.Id_Tipo
+        End If
+
         Dim _Tbl_Agentes As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         Dim myTrans As SqlClient.SqlTransaction
@@ -122,6 +128,7 @@ Public Class Cl_Tickets
                            ",Asignado = " & Convert.ToInt32(Tickets.Asignado) &
                            ",AsignadoGrupo = " & Convert.ToInt32(Tickets.AsignadoGrupo) &
                            ",Id_Grupo = " & Tickets.Id_Grupo &
+                           ",CodProducto = '" & Tickets.CodProducto & "'" &
                            "Where Id = " & Tickets.Id
             Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
             Comando.Transaction = myTrans
@@ -243,6 +250,8 @@ Namespace Tickets_Db
         Public Property UltAccion As String
         Public Property FechaCierre As DateTime
         Public Property New_Id_TicketAc As Integer
+        Public Property Id_Padre As Integer
+        Public Property CodProducto As String
 
     End Class
 

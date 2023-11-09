@@ -32,6 +32,8 @@ Public Class Frm_Tickets_Mant
 
     Private Sub Frm_Tickets_Mant_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Chk_ExigeProducto.Enabled = False
+
         Dim _Arr_Tipo_Entidad(,) As String = {{"", ""},
                                              {"AL", "Alta"},
                                              {"NR", "Normal"},
@@ -98,6 +100,12 @@ Public Class Frm_Tickets_Mant
             Return
         End If
 
+        If Chk_ExigeProducto.Checked AndAlso Txt_Producto.Text = String.Empty Then
+            MessageBoxEx.Show(Me, "Falta el producto asociado al tipo de requerimiento." & vbCrLf &
+                              "El tipo de requerimiento exige un producto asociado.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         If Chk_Asignado.Checked Then
             If String.IsNullOrEmpty(Txt_Agente.Text) AndAlso String.IsNullOrEmpty(Txt_Grupo.Text) Then
                 MessageBoxEx.Show(Me, "Debe asignar un grupo de trabajo o agente para este requerimiento." & vbCrLf & vbCrLf &
@@ -120,6 +128,7 @@ Public Class Frm_Tickets_Mant
             .Asignado = Chk_Asignado.Checked
             .AsignadoGrupo = Rdb_AsignadoGrupo.Checked
             .AsignadoAgente = Rdb_AsignadoAgente.Checked
+            If Chk_ExigeProducto.Checked Then .CodProducto = Txt_Producto.Tag
 
         End With
 
@@ -159,6 +168,17 @@ Public Class Frm_Tickets_Mant
             Txt_Tipo.Tag = 0
             Txt_Tipo.Text = String.Empty
 
+            Txt_Producto.Enabled = False
+            Txt_Producto.Tag = String.Empty
+            Txt_Producto.Text = String.Empty
+
+            Chk_ExigeProducto.Checked = False
+
+            Txt_Area.ButtonCustom.Visible = False
+            Txt_Area.ButtonCustom2.Visible = True
+
+            Txt_Tipo.ButtonCustom.Visible = True
+
             Call Txt_Tipo_ButtonCustomClick(Nothing, Nothing)
 
         End If
@@ -184,24 +204,59 @@ Public Class Frm_Tickets_Mant
                                "And Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id_Area = " & Txt_Area.Tag & ")",
                                False, False, True, False,, False) Then
 
+            Chk_ExigeProducto.Checked = False
+
             Txt_Tipo.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
             Txt_Tipo.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
 
-            Txt_Descripcion.Focus()
+            Dim _ExigeProducto As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Tipos", "ExigeProducto", "Id = " & Txt_Tipo.Tag)
+
+            Chk_ExigeProducto.Checked = _ExigeProducto
+            Lbl_Producto.Enabled = _ExigeProducto
+            Txt_Producto.Enabled = _ExigeProducto
+
+            Txt_Tipo.ButtonCustom.Visible = False
+            Txt_Tipo.ButtonCustom2.Visible = True
+
+            If _ExigeProducto Then
+                Call Txt_Producto_ButtonCustomClick(Nothing, Nothing)
+            Else
+                Txt_Descripcion.Focus()
+            End If
 
         End If
 
     End Sub
 
     Private Sub Txt_Area_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Area.ButtonCustom2Click
-
+        Txt_Area.Tag = String.Empty
+        Txt_Area.Text = String.Empty
+        Txt_Area.ButtonCustom.Visible = True
+        Txt_Area.ButtonCustom2.Visible = False
+        Txt_Tipo.Tag = String.Empty
+        Txt_Tipo.Text = String.Empty
+        Txt_Tipo.ButtonCustom.Visible = False
+        Txt_Tipo.ButtonCustom2.Visible = False
+        Txt_Producto.Tag = String.Empty
+        Txt_Producto.Text = String.Empty
+        Txt_Producto.Enabled = False
+        Chk_ExigeProducto.Checked = False
+        Txt_Producto.ButtonCustom.Visible = False
+        Txt_Producto.ButtonCustom2.Visible = False
     End Sub
 
     Private Sub Txt_Tipo_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Tipo.ButtonCustom2Click
-
+        Txt_Tipo.Tag = String.Empty
+        Txt_Tipo.Text = String.Empty
+        Txt_Tipo.ButtonCustom.Visible = True
+        Txt_Tipo.ButtonCustom2.Visible = False
+        Txt_Producto.Tag = String.Empty
+        Txt_Producto.Text = String.Empty
+        Txt_Producto.Enabled = False
+        Txt_Producto.ButtonCustom.Visible = False
+        Txt_Producto.ButtonCustom2.Visible = False
+        Chk_ExigeProducto.Checked = False
     End Sub
-
-
 
     Private Sub Chk_Asignado_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Asignado.CheckedChanged
 
@@ -253,7 +308,7 @@ Public Class Frm_Tickets_Mant
 
     Private Sub Txt_Agente_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Agente.ButtonCustomClick
 
-        Dim _Sql_Filtro_Condicion_Extra = String.Empty
+        Dim _Sql_Filtro_Condicion_Extra = "And KOFU In (Select CodAgente From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Where Id_Area = " & Txt_Area.Tag & " And Id_Tipo = " & Txt_Tipo.Tag & ")"
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
 
@@ -306,4 +361,75 @@ Public Class Frm_Tickets_Mant
 
     End Sub
 
+    Private Sub Txt_Producto_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Producto.ButtonCustomClick
+
+        Try
+
+            Txt_Producto.Enabled = False
+
+            Dim _Codigo As String = Txt_Producto.Text
+
+            Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
+            Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not IsNothing(_RowProducto) Then
+                If Not String.IsNullOrEmpty(_RowProducto.Item("ATPR").ToString.Trim) Then
+                    MessageBoxEx.Show(Me, "Producto oculto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                Else
+                    Codigo_abuscar = _Codigo
+                    Txt_Producto.Tag = _RowProducto.Item("KOPR")
+                    Txt_Producto.Text = _RowProducto.Item("KOPR").ToString.Trim & "-" & _RowProducto.Item("NOKOPR").ToString.Trim
+                End If
+                Return
+            End If
+
+            Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
+            Fm.Pro_Tipo_Lista = "P"
+            Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
+            Fm.Pro_CodEntidad = String.Empty
+            Fm.Pro_Mostrar_Info = True
+            Fm.BtnCrearProductos.Visible = False
+            Fm.Txtdescripcion.Text = String.Empty
+            Fm.BtnExportaExcel.Visible = False
+            Fm.Pro_Actualizar_Precios = False
+
+            Fm.ShowDialog(Me)
+
+            If Fm.Pro_Seleccionado Then
+
+                _RowProducto = Fm.Pro_RowProducto
+
+                Codigo_abuscar = Fm.Pro_RowProducto.Item("KOPR")
+
+
+                If Not String.IsNullOrEmpty(Trim(Codigo_abuscar)) Then
+                    Txt_Producto.Tag = _RowProducto.Item("KOPR")
+                    Txt_Producto.Text = _RowProducto.Item("KOPR").ToString.Trim & "-" & _RowProducto.Item("NOKOPR").ToString.Trim
+                    Txt_Descripcion.Focus()
+                End If
+
+            End If
+
+            Txt_Producto.ButtonCustom.Visible = Not Fm.Pro_Seleccionado
+            Txt_Producto.ButtonCustom2.Visible = Fm.Pro_Seleccionado
+
+            Fm.Dispose()
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Producto.Tag = String.Empty
+            Txt_Producto.Text = String.Empty
+        Finally
+            Txt_Producto.Enabled = True
+        End Try
+
+    End Sub
+
+    Private Sub Txt_Producto_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Producto.ButtonCustom2Click
+        Txt_Producto.Tag = String.Empty
+        Txt_Producto.Text = String.Empty
+        Txt_Producto.ButtonCustom.Visible = True
+        Txt_Producto.ButtonCustom2.Visible = False
+    End Sub
 End Class

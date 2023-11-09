@@ -23,13 +23,14 @@ Public Class Frm_Tickets_Seguimiento
         Me._Id_Ticket = _Id_Ticket
         Me._Funcionario = _Funcionario
 
-        Consulta_sql = "Select Stk.*,Ar.Area,Tp.Tipo" & vbCrLf &
+        Consulta_sql = "Select Stk.*,Ar.Area,Tp.Tipo,Isnull(NOKOPR,'') As DesProducto" & vbCrLf &
                        ",Case Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'AL' Then 'Alta' Else '??' End As NomPrioridad" & vbCrLf &
                        ",Case UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion" & vbCrLf &
                        ",Case Estado When 'ABIE' then 'Abierto' When 'CERR' then 'Cerrado' When 'NULO' then 'Nulo' End As NomEstado" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stk_Tickets Stk" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Areas Ar On Stk.Id_Area = Ar.Id" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Tipos Tp On Tp.Id_Area = Stk.Id_Area And Tp.Id = Stk.Id_Tipo" & vbCrLf &
+                       "Left Join MAEPR On KOPR = Stk.CodProducto" & vbCrLf &
                        "Where Stk.Id = " & _Id_Ticket
         _Row_Ticket = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -57,6 +58,7 @@ Public Class Frm_Tickets_Seguimiento
         Lbl_Area.Text = _Row_Ticket.Item("Area")
         Lbl_Tipo.Text = _Row_Ticket.Item("Tipo")
         Lbl_FechaCreacion.Text = _Row_Ticket.Item("FechaCreacion")
+        Txt_Producto.Text = _Row_Ticket.Item("CodProducto").ToString.Trim & " - " & _Row_Ticket.Item("DesProducto").ToString.Trim
 
         Dim _Row_UltMensaje As DataRow
         Dim _Row_UltRespuesta As DataRow
@@ -131,6 +133,13 @@ Public Class Frm_Tickets_Seguimiento
             _DisplayIndex += 1
 
         End With
+
+        Try
+            Grilla_Acciones.CurrentCell = Grilla_Acciones.Rows(Grilla_Acciones.RowCount - 1).Cells("StrAccion")
+        Catch ex As Exception
+
+        End Try
+
 
     End Sub
 

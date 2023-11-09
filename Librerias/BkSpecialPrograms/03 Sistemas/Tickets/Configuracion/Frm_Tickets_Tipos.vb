@@ -63,10 +63,11 @@ Public Class Frm_Tickets_Tipos
             .Columns("Tipo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Permiso").Visible = True
-            .Columns("Permiso").HeaderText = "Permiso"
-            .Columns("Permiso").Width = 100
-            .Columns("Permiso").DisplayIndex = _DisplayIndex
+            .Columns("ExigeProducto").Visible = True
+            .Columns("ExigeProducto").HeaderText = "Exige producto"
+            .Columns("ExigeProducto").ToolTipText = "Si esta tickeado, el Ticket exgira la incorporación de un producto para la gestión"
+            .Columns("ExigeProducto").Width = 110
+            .Columns("ExigeProducto").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             ''.Columns("Dias").Visible = True
@@ -86,8 +87,14 @@ Public Class Frm_Tickets_Tipos
 
         Dim _Aceptar As Boolean
         Dim _Tipo As String
+        Dim _Chk As New Controls.CheckBoxX
 
-        _Aceptar = InputBox_Bk(Me, "Ingrese el nombre del tipo de requerimiento", "Crear Tipo", _Tipo, False, _Tipo_Mayus_Minus.Mayusculas, 50, True)
+        _Chk.Checked = False
+        _Chk.Text = "EXIGE INCORPORACION DE PRODUCTO"
+        _Chk.Visible = True
+
+        _Aceptar = InputBox_Bk(Me, "Ingrese el nombre del tipo de requerimiento",
+                               "Crear Tipo", _Tipo, False, _Tipo_Mayus_Minus.Mayusculas, 50, True,,,,,, _Chk)
 
         If Not _Aceptar Then
             Return
@@ -103,7 +110,8 @@ Public Class Frm_Tickets_Tipos
 
         Dim _Id_Tipo As Integer
 
-        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tipos (Id_Area,Tipo) Values (" & _Id_Area & ",'" & _Tipo.Trim & "')"
+        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tipos (Id_Area,Tipo,ExigeProducto) Values " &
+                       "(" & _Id_Area & ",'" & _Tipo.Trim & "'," & Convert.ToInt32(_Chk.Checked) & ")"
         If _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Tipo) Then
 
             Me.Sb_Actualizar_Grilla()
@@ -119,7 +127,13 @@ Public Class Frm_Tickets_Tipos
 
         Dim _Id_Tipo As Integer = _Fila.Cells("Id").Value
         Dim _Tipo As String = _Fila.Cells("Tipo").Value
-        Dim _Tipo_Old As String = _Fila.Cells("Tipo").Value
+        Dim _Tipo_Old As String = _Fila.Cells("ExigeProducto").Value
+
+        Dim _Chk As New Controls.CheckBoxX
+
+        _Chk.Checked = _Fila.Cells("Tipo").Value
+        _Chk.Text = "EXIGE INCORPORACION DE PRODUCTO"
+        _Chk.Visible = True
 
         Dim _Aceptar As Boolean
 
