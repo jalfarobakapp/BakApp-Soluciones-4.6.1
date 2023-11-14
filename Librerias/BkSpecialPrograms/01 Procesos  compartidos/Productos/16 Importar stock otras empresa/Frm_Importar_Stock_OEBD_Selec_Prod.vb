@@ -54,6 +54,16 @@ Public Class Frm_Importar_Stock_OEBD_Selec_Prod
 
     End Sub
 
+    Private Sub Btn_BodegasSincStock_Click(sender As Object, e As EventArgs) Handles Btn_BodegasSincStock.Click
+
+        Dim _Id_Conexion As Integer = _Row_DbExtMaest.Item("Id_Conexion")
+
+        Dim Fm As New Frm_Importar_Stock_OEBD_Bod(_Id_Conexion, _Cadena_ConexionSQL_Server_Origen, _Empresa_Ori)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
     Private Sub Frm_Importar_Stock_OEBD_Selec_Prod_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Sb_Cargar_Datos_Conexion()

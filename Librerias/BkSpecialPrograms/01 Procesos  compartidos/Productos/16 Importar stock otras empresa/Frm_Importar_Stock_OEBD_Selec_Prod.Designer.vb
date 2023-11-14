@@ -37,7 +37,10 @@ Partial Class Frm_Importar_Stock_OEBD_Selec_Prod
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Aceptar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo_Datos_De_Conexion = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Btn_Grabar_Configuracion = New DevComponents.DotNetBar.ButtonX()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Btn_Bodega_Destino = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_Bodega_Origen = New DevComponents.DotNetBar.ButtonX()
         Me.Lbl_Bodega_Destino = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Bodega_Origen = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Nombre_Conexion = New DevComponents.DotNetBar.LabelX()
@@ -45,9 +48,7 @@ Partial Class Frm_Importar_Stock_OEBD_Selec_Prod
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.Btn_Seleccionar_Conexion = New DevComponents.DotNetBar.ButtonX()
-        Me.Btn_Bodega_Origen = New DevComponents.DotNetBar.ButtonX()
-        Me.Btn_Bodega_Destino = New DevComponents.DotNetBar.ButtonX()
-        Me.Btn_Grabar_Configuracion = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_BodegasSincStock = New DevComponents.DotNetBar.ButtonX()
         Me.Grupo_Seleccion_Productos.SuspendLayout()
         Me.TableLayoutPanel6.SuspendLayout()
         Me.Layout_Producto.SuspendLayout()
@@ -359,6 +360,7 @@ Partial Class Frm_Importar_Stock_OEBD_Selec_Prod
         '
         Me.Grupo_Datos_De_Conexion.BackColor = System.Drawing.Color.White
         Me.Grupo_Datos_De_Conexion.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_Datos_De_Conexion.Controls.Add(Me.Btn_BodegasSincStock)
         Me.Grupo_Datos_De_Conexion.Controls.Add(Me.Btn_Grabar_Configuracion)
         Me.Grupo_Datos_De_Conexion.Controls.Add(Me.TableLayoutPanel1)
         Me.Grupo_Datos_De_Conexion.DisabledBackColor = System.Drawing.Color.Empty
@@ -396,6 +398,17 @@ Partial Class Frm_Importar_Stock_OEBD_Selec_Prod
         Me.Grupo_Datos_De_Conexion.TabIndex = 56
         Me.Grupo_Datos_De_Conexion.Text = "Datos de configuración de envio y recepción"
         '
+        'Btn_Grabar_Configuracion
+        '
+        Me.Btn_Grabar_Configuracion.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Grabar_Configuracion.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Grabar_Configuracion.Location = New System.Drawing.Point(6, 93)
+        Me.Btn_Grabar_Configuracion.Name = "Btn_Grabar_Configuracion"
+        Me.Btn_Grabar_Configuracion.Size = New System.Drawing.Size(128, 23)
+        Me.Btn_Grabar_Configuracion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Grabar_Configuracion.TabIndex = 58
+        Me.Btn_Grabar_Configuracion.Text = "Grabar configuración"
+        '
         'TableLayoutPanel1
         '
         Me.TableLayoutPanel1.BackColor = System.Drawing.Color.Transparent
@@ -422,6 +435,30 @@ Partial Class Frm_Importar_Stock_OEBD_Selec_Prod
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(426, 84)
         Me.TableLayoutPanel1.TabIndex = 57
         '
+        'Btn_Bodega_Destino
+        '
+        Me.Btn_Bodega_Destino.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Bodega_Destino.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Bodega_Destino.Image = CType(resources.GetObject("Btn_Bodega_Destino.Image"), System.Drawing.Image)
+        Me.Btn_Bodega_Destino.Location = New System.Drawing.Point(383, 59)
+        Me.Btn_Bodega_Destino.Name = "Btn_Bodega_Destino"
+        Me.Btn_Bodega_Destino.Size = New System.Drawing.Size(40, 21)
+        Me.Btn_Bodega_Destino.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Bodega_Destino.TabIndex = 58
+        Me.Btn_Bodega_Destino.Tooltip = "Seleccionar conexión"
+        '
+        'Btn_Bodega_Origen
+        '
+        Me.Btn_Bodega_Origen.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Bodega_Origen.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Bodega_Origen.Image = CType(resources.GetObject("Btn_Bodega_Origen.Image"), System.Drawing.Image)
+        Me.Btn_Bodega_Origen.Location = New System.Drawing.Point(383, 31)
+        Me.Btn_Bodega_Origen.Name = "Btn_Bodega_Origen"
+        Me.Btn_Bodega_Origen.Size = New System.Drawing.Size(40, 21)
+        Me.Btn_Bodega_Origen.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Bodega_Origen.TabIndex = 58
+        Me.Btn_Bodega_Origen.Tooltip = "Seleccionar conexión"
+        '
         'Lbl_Bodega_Destino
         '
         Me.Lbl_Bodega_Destino.BackColor = System.Drawing.Color.Transparent
@@ -430,9 +467,9 @@ Partial Class Frm_Importar_Stock_OEBD_Selec_Prod
         '
         Me.Lbl_Bodega_Destino.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Bodega_Destino.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Bodega_Destino.Location = New System.Drawing.Point(104, 57)
+        Me.Lbl_Bodega_Destino.Location = New System.Drawing.Point(104, 59)
         Me.Lbl_Bodega_Destino.Name = "Lbl_Bodega_Destino"
-        Me.Lbl_Bodega_Destino.Size = New System.Drawing.Size(273, 24)
+        Me.Lbl_Bodega_Destino.Size = New System.Drawing.Size(273, 22)
         Me.Lbl_Bodega_Destino.TabIndex = 58
         Me.Lbl_Bodega_Destino.Text = "Nombre conexión:"
         '
@@ -444,7 +481,7 @@ Partial Class Frm_Importar_Stock_OEBD_Selec_Prod
         '
         Me.Lbl_Bodega_Origen.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Bodega_Origen.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Bodega_Origen.Location = New System.Drawing.Point(104, 30)
+        Me.Lbl_Bodega_Origen.Location = New System.Drawing.Point(104, 31)
         Me.Lbl_Bodega_Origen.Name = "Lbl_Bodega_Origen"
         Me.Lbl_Bodega_Origen.Size = New System.Drawing.Size(273, 21)
         Me.Lbl_Bodega_Origen.TabIndex = 58
@@ -472,9 +509,9 @@ Partial Class Frm_Importar_Stock_OEBD_Selec_Prod
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(3, 57)
+        Me.LabelX4.Location = New System.Drawing.Point(3, 59)
         Me.LabelX4.Name = "LabelX4"
-        Me.LabelX4.Size = New System.Drawing.Size(95, 24)
+        Me.LabelX4.Size = New System.Drawing.Size(95, 22)
         Me.LabelX4.TabIndex = 3
         Me.LabelX4.Text = "Bodega destino"
         '
@@ -500,7 +537,7 @@ Partial Class Frm_Importar_Stock_OEBD_Selec_Prod
         '
         Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX3.ForeColor = System.Drawing.Color.Black
-        Me.LabelX3.Location = New System.Drawing.Point(3, 30)
+        Me.LabelX3.Location = New System.Drawing.Point(3, 31)
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(95, 21)
         Me.LabelX3.TabIndex = 2
@@ -519,40 +556,16 @@ Partial Class Frm_Importar_Stock_OEBD_Selec_Prod
         Me.Btn_Seleccionar_Conexion.Tooltip = "Seleccionar conexión"
         Me.Btn_Seleccionar_Conexion.Visible = False
         '
-        'Btn_Bodega_Origen
+        'Btn_BodegasSincStock
         '
-        Me.Btn_Bodega_Origen.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Bodega_Origen.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Bodega_Origen.Image = CType(resources.GetObject("Btn_Bodega_Origen.Image"), System.Drawing.Image)
-        Me.Btn_Bodega_Origen.Location = New System.Drawing.Point(383, 30)
-        Me.Btn_Bodega_Origen.Name = "Btn_Bodega_Origen"
-        Me.Btn_Bodega_Origen.Size = New System.Drawing.Size(40, 21)
-        Me.Btn_Bodega_Origen.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Bodega_Origen.TabIndex = 58
-        Me.Btn_Bodega_Origen.Tooltip = "Seleccionar conexión"
-        '
-        'Btn_Bodega_Destino
-        '
-        Me.Btn_Bodega_Destino.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Bodega_Destino.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Bodega_Destino.Image = CType(resources.GetObject("Btn_Bodega_Destino.Image"), System.Drawing.Image)
-        Me.Btn_Bodega_Destino.Location = New System.Drawing.Point(383, 57)
-        Me.Btn_Bodega_Destino.Name = "Btn_Bodega_Destino"
-        Me.Btn_Bodega_Destino.Size = New System.Drawing.Size(40, 21)
-        Me.Btn_Bodega_Destino.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Bodega_Destino.TabIndex = 58
-        Me.Btn_Bodega_Destino.Tooltip = "Seleccionar conexión"
-        '
-        'Btn_Grabar_Configuracion
-        '
-        Me.Btn_Grabar_Configuracion.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Grabar_Configuracion.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Grabar_Configuracion.Location = New System.Drawing.Point(7, 93)
-        Me.Btn_Grabar_Configuracion.Name = "Btn_Grabar_Configuracion"
-        Me.Btn_Grabar_Configuracion.Size = New System.Drawing.Size(128, 23)
-        Me.Btn_Grabar_Configuracion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Grabar_Configuracion.TabIndex = 58
-        Me.Btn_Grabar_Configuracion.Text = "Grabar configuración"
+        Me.Btn_BodegasSincStock.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_BodegasSincStock.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_BodegasSincStock.Location = New System.Drawing.Point(144, 93)
+        Me.Btn_BodegasSincStock.Name = "Btn_BodegasSincStock"
+        Me.Btn_BodegasSincStock.Size = New System.Drawing.Size(288, 23)
+        Me.Btn_BodegasSincStock.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_BodegasSincStock.TabIndex = 59
+        Me.Btn_BodegasSincStock.Text = "Bodegas de sincornización de stock"
         '
         'Frm_Importar_Stock_OEBD_Selec_Prod
         '
@@ -609,4 +622,5 @@ Partial Class Frm_Importar_Stock_OEBD_Selec_Prod
     Friend WithEvents Btn_Bodega_Origen As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Btn_Seleccionar_Conexion As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Btn_Grabar_Configuracion As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Btn_BodegasSincStock As DevComponents.DotNetBar.ButtonX
 End Class
