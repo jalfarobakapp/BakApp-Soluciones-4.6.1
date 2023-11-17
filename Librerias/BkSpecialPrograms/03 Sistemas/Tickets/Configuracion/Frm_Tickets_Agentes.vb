@@ -195,7 +195,7 @@ Public Class Frm_Tickets_Agentes
 
         If _Filtrar.Fx_Filtrar(_Tbl_Tipos,
                                Clas_Filtros_Random.Enum_Tabla_Fl._Otra,
-                               "And Id In (Select Id_Tipo From " & _Global_BaseBk & "Zw_Stk_AreaVsTipo Where Id_Area = " & _Id_Area & ")" & vbCrLf &
+                               "And Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id_Area = " & _Id_Area & ")" & vbCrLf &
                                "And Id Not In (Select Id_Tipo From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Where CodAgente = '" & _CodAgente & "')",
                                False, False, False, False,, False) Then
 

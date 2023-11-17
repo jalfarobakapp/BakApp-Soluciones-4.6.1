@@ -205,8 +205,15 @@ Public Class Frm_Tickets_Areas
 
             .Columns("Tipo").Visible = True
             .Columns("Tipo").HeaderText = "Tipo"
-            .Columns("Tipo").Width = 440
+            .Columns("Tipo").Width = 440 - 110
             .Columns("Tipo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("ExigeProducto").Visible = True
+            .Columns("ExigeProducto").HeaderText = "Exige producto"
+            .Columns("ExigeProducto").ToolTipText = "Si esta tickeado, el Ticket exgira la incorporación de un producto para la gestión"
+            .Columns("ExigeProducto").Width = 110
+            .Columns("ExigeProducto").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
         End With

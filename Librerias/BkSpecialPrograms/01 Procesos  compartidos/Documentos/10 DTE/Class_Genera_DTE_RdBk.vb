@@ -2364,8 +2364,8 @@ Public Class Class_Genera_DTE_RdBk
             _Respuesta = Replace(_Respuesta, "'", "''")
 
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Documentos(Idmaeedo,Tido,Nudo,FechaSolicitud,Xml,Firma," &
-                           "CaratulaXml,AmbienteCertificacion,Procesar,Respuesta) Values " &
-                           "(" & _Idmaeedo & ", '" & _Tido & "', '" & _Nudo & "',Getdate(),'','',''," & _AmbienteCertificacion & ",0,'" & _Respuesta & "')"
+                           "CaratulaXml,AmbienteCertificacion,Procesar,Respuesta,ErrorEnvioDTE) Values " &
+                           "(" & _Idmaeedo & ", '" & _Tido & "', '" & _Nudo & "',Getdate(),'','',''," & _AmbienteCertificacion & ",0,'" & _Respuesta & "',1)"
             _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Dte)
 
             'val.ShowDialog()

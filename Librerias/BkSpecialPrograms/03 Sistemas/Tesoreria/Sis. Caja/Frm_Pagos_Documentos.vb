@@ -2913,22 +2913,6 @@ Public Class Frm_Pagos_Documentos
 
         End If
 
-        'If _Archivos > 0 Then
-        '    Btn_Archivos_Adjuntos.Tooltip = "Archivos adjuntos al documento (" & _Archivos & " archivo(s))"
-        '    If _Archivos > 9 Then
-        '        Btn_Archivos_Adjuntos.Image = Imagenes_32x32.Images.Item("attach-number-9-plus.png")
-        '        Btn_Archivos_Adjuntos.ImageAlt = Imagenes_32x32.Images.Item("attach-number-9-plus.png")
-        '    Else
-        '        Btn_Archivos_Adjuntos.Image = Imagenes_32x32.Images.Item("attach-number-" & _Archivos & ".png")
-        '        Btn_Archivos_Adjuntos.ImageAlt = Imagenes_32x32.Images.Item("attach-number-" & _Archivos & ".png")
-        '    End If
-        'Else
-        '    Btn_Archivos_Adjuntos.Tooltip = "Archivos adjuntos al documento"
-        '    Btn_Archivos_Adjuntos.Image = Imagenes_32x32.Images.Item(4)
-        '    Btn_Archivos_Adjuntos.ImageAlt = Imagenes_32x32.Images.Item(15)
-        'End If
-
-
         If _Archivos > 0 Then
             Btn_Archivos_Adjuntos.Tooltip = "Archivos adjuntos al documento (" & _Archivos & " archivo(s))"
             If _Archivos > 9 Then

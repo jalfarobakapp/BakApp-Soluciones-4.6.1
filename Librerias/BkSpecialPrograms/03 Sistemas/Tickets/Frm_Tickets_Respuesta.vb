@@ -17,6 +17,8 @@ Public Class Frm_Tickets_Respuesta
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         Me._Id_TicketAc = _Id_TicketAc
 
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
 
     Private Sub Frm_Tickets_Respuesta_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -43,9 +45,54 @@ Public Class Frm_Tickets_Respuesta
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
+        Dim _Archivos As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets_Archivos",
+                                                            "Id_TicketAc = " & _Id_TicketAc)
+
+        If _Archivos > 0 Then
+            Btn_Archivos_Adjuntos.Tooltip = "Archivos adjuntos al documento (" & _Archivos & " archivo(s))"
+            If _Archivos > 9 Then
+                Btn_Archivos_Adjuntos.Image = My.Resources.Recursos_Documento.attach_number_9_plus
+                Btn_Archivos_Adjuntos.ImageAlt = My.Resources.Recursos_Documento.attach_number_9_plus___copia
+            Else
+                Select Case _Archivos
+                    Case 0
+                        Btn_Archivos_Adjuntos.Image = My.Resources.Recursos_Documento.document_attach
+                        Btn_Archivos_Adjuntos.ImageAlt = My.Resources.Recursos_Documento.document_attach___copia
+                    Case 1
+                        Btn_Archivos_Adjuntos.Image = My.Resources.Recursos_Documento.attach_number_1
+                        Btn_Archivos_Adjuntos.ImageAlt = My.Resources.Recursos_Documento.attach_number_1___copia
+                    Case 2
+                        Btn_Archivos_Adjuntos.Image = My.Resources.Recursos_Documento.attach_number_2
+                        Btn_Archivos_Adjuntos.ImageAlt = My.Resources.Recursos_Documento.attach_number_2___copia
+                    Case 3
+                        Btn_Archivos_Adjuntos.Image = My.Resources.Recursos_Documento.attach_number_3
+                        Btn_Archivos_Adjuntos.ImageAlt = My.Resources.Recursos_Documento.attach_number_3___copia
+                    Case 4
+                        Btn_Archivos_Adjuntos.Image = My.Resources.Recursos_Documento.attach_number_4
+                        Btn_Archivos_Adjuntos.ImageAlt = My.Resources.Recursos_Documento.attach_number_4___copia
+                    Case 5
+                        Btn_Archivos_Adjuntos.Image = My.Resources.Recursos_Documento.attach_number_5
+                        Btn_Archivos_Adjuntos.ImageAlt = My.Resources.Recursos_Documento.attach_number_5___copia
+                    Case 6
+                        Btn_Archivos_Adjuntos.Image = My.Resources.Recursos_Documento.attach_number_6
+                        Btn_Archivos_Adjuntos.ImageAlt = My.Resources.Recursos_Documento.attach_number_6___copia
+                    Case 7
+                        Btn_Archivos_Adjuntos.Image = My.Resources.Recursos_Documento.attach_number_7
+                        Btn_Archivos_Adjuntos.ImageAlt = My.Resources.Recursos_Documento.attach_number_7___copia
+                    Case 8
+                        Btn_Archivos_Adjuntos.Image = My.Resources.Recursos_Documento.attach_number_8
+                        Btn_Archivos_Adjuntos.ImageAlt = My.Resources.Recursos_Documento.attach_number_8___copia
+                    Case 9
+                        Btn_Archivos_Adjuntos.Image = My.Resources.Recursos_Documento.attach_number_9
+                        Btn_Archivos_Adjuntos.ImageAlt = My.Resources.Recursos_Documento.attach_number_9___copia
+                End Select
+            End If
+        Else
+            Btn_Archivos_Adjuntos.Tooltip = "Archivos adjuntos al documento"
+            Btn_Archivos_Adjuntos.Image = My.Resources.Recursos_Documento.document_attach
+            Btn_Archivos_Adjuntos.ImageAlt = My.Resources.Recursos_Documento.document_attach___copia
+        End If
+
     End Sub
 
-    Private Sub Btn_Eliminar_Click(sender As Object, e As EventArgs) Handles Btn_Eliminar.Click
-
-    End Sub
 End Class

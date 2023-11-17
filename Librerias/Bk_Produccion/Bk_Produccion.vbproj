@@ -536,6 +536,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Formularios Compartidos\Administrar Mesones\Recursos\Sql\SQLQuery Informe DFA en ejecucion x Meson.sql" />
     <None Include="Informes\Recursos\Sql\SQLQuery Informe de OT avance Vs SubOt por Operaciones.sql" />
     <None Include="Informes\Recursos\Sql\SQLQuery Informe de OT avance.sql" />

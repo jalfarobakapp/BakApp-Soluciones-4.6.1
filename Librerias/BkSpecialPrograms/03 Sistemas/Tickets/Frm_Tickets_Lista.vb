@@ -28,6 +28,8 @@ Public Class Frm_Tickets_Lista
 
         Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
 
     Private Sub Frm_Tickets_Lista_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -177,35 +179,7 @@ Public Class Frm_Tickets_Lista
                 _Icono = Imagenes_16x16.Images.Item("menu-more.png")
             End If
 
-            'If _NroDocumento = "X" Then
-            '    _Icono = Imagenes_16x16.Images.Item("warning.png")
-            'End If
-
             _Fila.Cells("BtnImagen_Estado").Value = _Icono
-
-            'If _Anotaciones Then
-            '    _Icono = Imagenes_16x16.Images.Item("note_text.png")
-            'Else
-            '    _Icono = Imagenes_16x16.Images.Item("note.png")
-            'End If
-
-            '_Fila.Cells("BtnImagen_Tag").Value = _Icono
-
-            'If Global_Thema = Enum_Themas.Oscuro Then
-
-            '    _Fila.Cells("Nudo").Style.ForeColor = Color.LightGreen
-
-            '    If _Reserva_NroOCC Then
-            '        _Fila.Cells("Nudo").Style.ForeColor = Color.Gold
-            '    End If
-
-            'Else
-
-            '    If _Reserva_NroOCC Then
-            '        _Fila.Cells("Nudo").Style.BackColor = Color.Yellow
-            '    End If
-
-            'End If
 
         Next
 

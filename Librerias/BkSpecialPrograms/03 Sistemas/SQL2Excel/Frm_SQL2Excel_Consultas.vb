@@ -30,6 +30,8 @@ Public Class Frm_SQL2Excel_Consultas
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
 
+        Me.ActiveControl = Txt_Buscar_Consulta_SQL
+
     End Sub
 
     Sub Sb_Actualizar_Grilla()

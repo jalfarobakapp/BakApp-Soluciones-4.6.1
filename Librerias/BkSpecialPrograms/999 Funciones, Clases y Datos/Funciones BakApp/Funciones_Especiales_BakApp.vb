@@ -1035,20 +1035,20 @@ Public Module Funciones_Especiales_BakApp
 
 
         Texto = Trim(Texto)
-        For x = 1 To Len(Texto)
-            Letra = Mid(Texto, x, 1)
+        For _xx = 1 To Len(Texto)
+            Letra = Mid(Texto, _xx, 1)
             valorAscii = Asc(Letra)
             'txtAscii.Text = valor.ToString
 
-            If x = 1 Then
+            If _xx = 1 Then
                 CadenaRD = (17225 + valorAscii) * 1
-            ElseIf x = 2 Then
+            ElseIf _xx = 2 Then
                 CadenaRD = (1847 + valorAscii) * 8
-            ElseIf x = 3 Then
+            ElseIf _xx = 3 Then
                 CadenaRD = (1217 + valorAscii) * 27
-            ElseIf x = 4 Then
+            ElseIf _xx = 4 Then
                 CadenaRD = (237 + valorAscii) * 64
-            ElseIf x = 5 Then
+            ElseIf _xx = 5 Then
                 CadenaRD = (201 + valorAscii) * 125
             End If
 

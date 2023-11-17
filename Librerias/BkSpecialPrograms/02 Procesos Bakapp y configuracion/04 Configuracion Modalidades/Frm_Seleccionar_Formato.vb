@@ -42,7 +42,7 @@ Public Class Frm_Seleccionar_Formato
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Consulta_sql = "Select TipoDoc,Subtido,NombreFormato From " & _Global_BaseBk & "Zw_Format_01" & Space(1) &
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Format_01" & Space(1) &
                        "Where TipoDoc = '" & Tido & "'-- And NombreFormato <> 'X Defecto'"
         _Tbl_Formatos = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -68,9 +68,13 @@ Public Class Frm_Seleccionar_Formato
 
             OcultarEncabezadoGrilla(Grilla, True)
 
+            Dim _DisplayIndex = 0
+
             .Columns("TipoDoc").Visible = True
             .Columns("TipoDoc").Width = 40
             .Columns("TipoDoc").HeaderText = "Tipo"
+            .Columns("TipoDoc").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             Dim _Subtido = String.Empty
 
@@ -78,11 +82,21 @@ Public Class Frm_Seleccionar_Formato
                 .Columns("Subtido").Visible = True
                 .Columns("Subtido").Width = 40
                 .Columns("Subtido").HeaderText = "SubTD"
+                .Columns("Subtido").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
             End If
 
             .Columns("NombreFormato").Visible = True
-            .Columns("NombreFormato").Width = 330
+            .Columns("NombreFormato").Width = 280
             .Columns("NombreFormato").HeaderText = "Nombre formato"
+            .Columns("NombreFormato").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Es_Picking").Visible = True
+            .Columns("Es_Picking").Width = 50
+            .Columns("Es_Picking").HeaderText = "Picking"
+            .Columns("Es_Picking").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
         End With
 

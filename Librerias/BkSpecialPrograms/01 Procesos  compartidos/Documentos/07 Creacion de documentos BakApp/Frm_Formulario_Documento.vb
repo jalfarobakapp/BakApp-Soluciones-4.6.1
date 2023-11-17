@@ -24781,6 +24781,8 @@ Public Class Frm_Formulario_Documento
                 Dim _Observa As String
                 Dim _DescuentoPorc As Double
 
+                Dim _Bodega As String = Fila.Item("Bodega")
+
                 'If False Then
 
                 '    Dim _Desc1 As Double = Fila.Item("Desc1")
@@ -24809,6 +24811,10 @@ Public Class Frm_Formulario_Documento
 
                 _New_Fila.Cells("Codigo").Value = _Codigo
                 _New_Fila.Cells("Cantidad").Value = _Cantidad
+
+                If Not String.IsNullOrWhiteSpace(_Bodega) Then
+                    _New_Fila.Cells("Bodega").Value = _Bodega
+                End If
 
                 Dim _Precio_Old As Double = _New_Fila.Cells("Precio").Value
 

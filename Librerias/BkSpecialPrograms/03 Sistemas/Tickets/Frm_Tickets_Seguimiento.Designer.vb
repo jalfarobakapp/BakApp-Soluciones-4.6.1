@@ -22,17 +22,24 @@ Partial Class Frm_Tickets_Seguimiento
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Tickets_Seguimiento))
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
-        Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_EditarFuncionario = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_QuitarVendedor = New DevComponents.DotNetBar.ButtonItem()
-        Me.Grilla_Acciones = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.Menu_Contextual_Productos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Lbl_OpcProducto = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Estadisticas_Producto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Consolidar_Stock_X_Producto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_Cambio_Estado = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Anular = New DevComponents.DotNetBar.ButtonItem()
+        Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GrupoTicket = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_Producto = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_FUlt_Respuesta = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_FUlt_Mensaje = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Tipo = New DevComponents.DotNetBar.LabelX()
@@ -48,12 +55,18 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_MensajeRespuesta = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_CambiarEstado = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.Txt_Descripcion = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
+        Me.Btn_Mnu_SolicitarCierre = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_CerrarTicketCrearNuevo = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_CerrarTicket = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_CrearNuevoTicket = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Cerrar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Grilla_Acciones, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GrupoTicket.SuspendLayout()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel3.SuspendLayout()
@@ -64,11 +77,11 @@ Partial Class Frm_Tickets_Seguimiento
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel1.Controls.Add(Me.Menu_Contextual)
-        Me.GroupPanel1.Controls.Add(Me.Grilla_Acciones)
+        Me.GroupPanel1.Controls.Add(Me.Grilla)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(12, 125)
+        Me.GroupPanel1.Location = New System.Drawing.Point(12, 151)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(667, 278)
+        Me.GroupPanel1.Size = New System.Drawing.Size(667, 252)
         '
         '
         '
@@ -104,7 +117,7 @@ Partial Class Frm_Tickets_Seguimiento
         '
         Me.Menu_Contextual.AntiAlias = True
         Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
+        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Productos, Me.Menu_Contextual_Cambio_Estado})
         Me.Menu_Contextual.Location = New System.Drawing.Point(27, 23)
         Me.Menu_Contextual.Name = "Menu_Contextual"
         Me.Menu_Contextual.Size = New System.Drawing.Size(411, 25)
@@ -114,32 +127,67 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Menu_Contextual.TabStop = False
         Me.Menu_Contextual.Text = "ContextMenuBar1"
         '
-        'Menu_Contextual_01
+        'Menu_Contextual_Productos
         '
-        Me.Menu_Contextual_01.AutoExpandOnClick = True
-        Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_EditarFuncionario, Me.Btn_QuitarVendedor})
-        Me.Menu_Contextual_01.Text = "Opciones"
+        Me.Menu_Contextual_Productos.AutoExpandOnClick = True
+        Me.Menu_Contextual_Productos.Name = "Menu_Contextual_Productos"
+        Me.Menu_Contextual_Productos.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_OpcProducto, Me.Btn_Estadisticas_Producto, Me.Btn_Consolidar_Stock_X_Producto, Me.Btn_Copiar})
+        Me.Menu_Contextual_Productos.Text = "Opciones productos"
         '
-        'Btn_EditarFuncionario
+        'Lbl_OpcProducto
         '
-        Me.Btn_EditarFuncionario.Image = CType(resources.GetObject("Btn_EditarFuncionario.Image"), System.Drawing.Image)
-        Me.Btn_EditarFuncionario.ImageAlt = CType(resources.GetObject("Btn_EditarFuncionario.ImageAlt"), System.Drawing.Image)
-        Me.Btn_EditarFuncionario.Name = "Btn_EditarFuncionario"
-        Me.Btn_EditarFuncionario.Text = "Editar funcionario"
+        Me.Lbl_OpcProducto.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.Lbl_OpcProducto.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.Lbl_OpcProducto.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.Lbl_OpcProducto.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.Lbl_OpcProducto.Name = "Lbl_OpcProducto"
+        Me.Lbl_OpcProducto.PaddingBottom = 1
+        Me.Lbl_OpcProducto.PaddingLeft = 10
+        Me.Lbl_OpcProducto.PaddingTop = 1
+        Me.Lbl_OpcProducto.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.Lbl_OpcProducto.Text = "Opciones del producto"
         '
-        'Btn_QuitarVendedor
+        'Btn_Estadisticas_Producto
         '
-        Me.Btn_QuitarVendedor.Image = CType(resources.GetObject("Btn_QuitarVendedor.Image"), System.Drawing.Image)
-        Me.Btn_QuitarVendedor.ImageAlt = CType(resources.GetObject("Btn_QuitarVendedor.ImageAlt"), System.Drawing.Image)
-        Me.Btn_QuitarVendedor.Name = "Btn_QuitarVendedor"
-        Me.Btn_QuitarVendedor.Text = "Quitar vendedor"
+        Me.Btn_Estadisticas_Producto.Image = CType(resources.GetObject("Btn_Estadisticas_Producto.Image"), System.Drawing.Image)
+        Me.Btn_Estadisticas_Producto.ImageAlt = CType(resources.GetObject("Btn_Estadisticas_Producto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Estadisticas_Producto.Name = "Btn_Estadisticas_Producto"
+        Me.Btn_Estadisticas_Producto.Text = "Ver estadísticas del producto/información adicional"
         '
-        'Grilla_Acciones
+        'Btn_Consolidar_Stock_X_Producto
         '
-        Me.Grilla_Acciones.AllowUserToAddRows = False
-        Me.Grilla_Acciones.AllowUserToDeleteRows = False
-        Me.Grilla_Acciones.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Btn_Consolidar_Stock_X_Producto.Image = CType(resources.GetObject("Btn_Consolidar_Stock_X_Producto.Image"), System.Drawing.Image)
+        Me.Btn_Consolidar_Stock_X_Producto.ImageAlt = CType(resources.GetObject("Btn_Consolidar_Stock_X_Producto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Consolidar_Stock_X_Producto.Name = "Btn_Consolidar_Stock_X_Producto"
+        Me.Btn_Consolidar_Stock_X_Producto.Text = "Consolidar stock del producto"
+        Me.Btn_Consolidar_Stock_X_Producto.Visible = False
+        '
+        'Btn_Copiar
+        '
+        Me.Btn_Copiar.Image = CType(resources.GetObject("Btn_Copiar.Image"), System.Drawing.Image)
+        Me.Btn_Copiar.ImageAlt = CType(resources.GetObject("Btn_Copiar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Copiar.Name = "Btn_Copiar"
+        Me.Btn_Copiar.Text = "Copiar (portapapeles)"
+        '
+        'Menu_Contextual_Cambio_Estado
+        '
+        Me.Menu_Contextual_Cambio_Estado.AutoExpandOnClick = True
+        Me.Menu_Contextual_Cambio_Estado.Name = "Menu_Contextual_Cambio_Estado"
+        Me.Menu_Contextual_Cambio_Estado.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_Mnu_CerrarTicket, Me.Btn_Mnu_CerrarTicketCrearNuevo, Me.Btn_Mnu_SolicitarCierre, Me.Btn_Anular})
+        Me.Menu_Contextual_Cambio_Estado.Text = "Opciones cambio de estado"
+        '
+        'Btn_Anular
+        '
+        Me.Btn_Anular.Image = CType(resources.GetObject("Btn_Anular.Image"), System.Drawing.Image)
+        Me.Btn_Anular.ImageAlt = CType(resources.GetObject("Btn_Anular.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Anular.Name = "Btn_Anular"
+        Me.Btn_Anular.Text = "Anular Ticket"
+        '
+        'Grilla
+        '
+        Me.Grilla.AllowUserToAddRows = False
+        Me.Grilla.AllowUserToDeleteRows = False
+        Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
         DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -147,8 +195,8 @@ Partial Class Frm_Tickets_Seguimiento
         DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Acciones.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
-        Me.Grilla_Acciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
         DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -156,13 +204,13 @@ Partial Class Frm_Tickets_Seguimiento
         DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Acciones.DefaultCellStyle = DataGridViewCellStyle5
-        Me.Grilla_Acciones.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Grilla_Acciones.EnableHeadersVisualStyles = False
-        Me.Grilla_Acciones.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
-        Me.Grilla_Acciones.Location = New System.Drawing.Point(0, 0)
-        Me.Grilla_Acciones.Name = "Grilla_Acciones"
-        Me.Grilla_Acciones.ReadOnly = True
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
+        Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Grilla.EnableHeadersVisualStyles = False
+        Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
+        Me.Grilla.Location = New System.Drawing.Point(0, 0)
+        Me.Grilla.Name = "Grilla"
+        Me.Grilla.ReadOnly = True
         DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -170,15 +218,17 @@ Partial Class Frm_Tickets_Seguimiento
         DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Acciones.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
-        Me.Grilla_Acciones.Size = New System.Drawing.Size(661, 255)
-        Me.Grilla_Acciones.StandardTab = True
-        Me.Grilla_Acciones.TabIndex = 27
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        Me.Grilla.Size = New System.Drawing.Size(661, 229)
+        Me.Grilla.StandardTab = True
+        Me.Grilla.TabIndex = 27
         '
         'GrupoTicket
         '
         Me.GrupoTicket.BackColor = System.Drawing.Color.White
         Me.GrupoTicket.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GrupoTicket.Controls.Add(Me.Txt_Producto)
+        Me.GrupoTicket.Controls.Add(Me.LabelX7)
         Me.GrupoTicket.Controls.Add(Me.Lbl_FUlt_Respuesta)
         Me.GrupoTicket.Controls.Add(Me.Lbl_FUlt_Mensaje)
         Me.GrupoTicket.Controls.Add(Me.Lbl_Tipo)
@@ -194,7 +244,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.GrupoTicket.DisabledBackColor = System.Drawing.Color.Empty
         Me.GrupoTicket.Location = New System.Drawing.Point(12, 5)
         Me.GrupoTicket.Name = "GrupoTicket"
-        Me.GrupoTicket.Size = New System.Drawing.Size(667, 114)
+        Me.GrupoTicket.Size = New System.Drawing.Size(667, 140)
         '
         '
         '
@@ -225,6 +275,42 @@ Partial Class Frm_Tickets_Seguimiento
         Me.GrupoTicket.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GrupoTicket.TabIndex = 162
         Me.GrupoTicket.Text = "Ticket"
+        '
+        'Txt_Producto
+        '
+        Me.Txt_Producto.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Producto.Border.Class = "TextBoxBorder"
+        Me.Txt_Producto.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Producto.ButtonCustom.Image = CType(resources.GetObject("Txt_Producto.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Producto.ButtonCustom.Visible = True
+        Me.Txt_Producto.ButtonCustom2.Image = CType(resources.GetObject("Txt_Producto.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Producto.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Producto.Enabled = False
+        Me.Txt_Producto.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Producto.Location = New System.Drawing.Point(117, 90)
+        Me.Txt_Producto.Name = "Txt_Producto"
+        Me.Txt_Producto.PreventEnterBeep = True
+        Me.Txt_Producto.ReadOnly = True
+        Me.Txt_Producto.Size = New System.Drawing.Size(541, 22)
+        Me.Txt_Producto.TabIndex = 14
+        '
+        'LabelX7
+        '
+        Me.LabelX7.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX7.ForeColor = System.Drawing.Color.Black
+        Me.LabelX7.Location = New System.Drawing.Point(3, 90)
+        Me.LabelX7.Name = "LabelX7"
+        Me.LabelX7.Size = New System.Drawing.Size(114, 23)
+        Me.LabelX7.TabIndex = 13
+        Me.LabelX7.Text = "Producto"
         '
         'Lbl_FUlt_Respuesta
         '
@@ -324,7 +410,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.LabelX6.Name = "LabelX6"
         Me.LabelX6.Size = New System.Drawing.Size(89, 23)
         Me.LabelX6.TabIndex = 5
-        Me.LabelX6.Text = "Última respuesta"
+        Me.LabelX6.Text = "Ultima respuesta"
         '
         'LabelX5
         '
@@ -354,7 +440,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(114, 23)
         Me.LabelX4.TabIndex = 3
-        Me.LabelX4.Text = "Tipo"
+        Me.LabelX4.Text = "Tema de ayuda"
         '
         'LabelX3
         '
@@ -406,7 +492,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_MensajeRespuesta, Me.Btn_CambiarEstado, Me.Btn_Eliminar})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_MensajeRespuesta, Me.Btn_CambiarEstado, Me.Btn_CrearNuevoTicket, Me.Btn_Cerrar})
         Me.Bar2.Location = New System.Drawing.Point(0, 536)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(689, 41)
@@ -433,15 +519,6 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Btn_CambiarEstado.ImageAlt = CType(resources.GetObject("Btn_CambiarEstado.ImageAlt"), System.Drawing.Image)
         Me.Btn_CambiarEstado.Name = "Btn_CambiarEstado"
         Me.Btn_CambiarEstado.Text = "Cambiar Estado"
-        '
-        'Btn_Eliminar
-        '
-        Me.Btn_Eliminar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Eliminar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Eliminar.Image = CType(resources.GetObject("Btn_Eliminar.Image"), System.Drawing.Image)
-        Me.Btn_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Eliminar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Eliminar.Name = "Btn_Eliminar"
-        Me.Btn_Eliminar.Tooltip = "Eliminar comisión"
         '
         'Txt_Descripcion
         '
@@ -502,6 +579,98 @@ Partial Class Frm_Tickets_Seguimiento
         Me.GroupPanel3.TabIndex = 168
         Me.GroupPanel3.Text = "Descripción..."
         '
+        'Imagenes_16x16
+        '
+        Me.Imagenes_16x16.ImageStream = CType(resources.GetObject("Imagenes_16x16.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.Imagenes_16x16.TransparentColor = System.Drawing.Color.Transparent
+        Me.Imagenes_16x16.Images.SetKeyName(0, "warning.png")
+        Me.Imagenes_16x16.Images.SetKeyName(1, "ok.png")
+        Me.Imagenes_16x16.Images.SetKeyName(2, "cancel.png")
+        Me.Imagenes_16x16.Images.SetKeyName(3, "delete_button_error.png")
+        Me.Imagenes_16x16.Images.SetKeyName(4, "clock.png")
+        Me.Imagenes_16x16.Images.SetKeyName(5, "clock-import.png")
+        Me.Imagenes_16x16.Images.SetKeyName(6, "clock-info.png")
+        Me.Imagenes_16x16.Images.SetKeyName(7, "tag_green.png")
+        Me.Imagenes_16x16.Images.SetKeyName(8, "note_text.png")
+        Me.Imagenes_16x16.Images.SetKeyName(9, "note.png")
+        Me.Imagenes_16x16.Images.SetKeyName(10, "comment-number-1.png")
+        Me.Imagenes_16x16.Images.SetKeyName(11, "comment-number-2.png")
+        Me.Imagenes_16x16.Images.SetKeyName(12, "comment-number-3.png")
+        Me.Imagenes_16x16.Images.SetKeyName(13, "comment-number-4.png")
+        Me.Imagenes_16x16.Images.SetKeyName(14, "comment-number-5.png")
+        Me.Imagenes_16x16.Images.SetKeyName(15, "comment-number-6.png")
+        Me.Imagenes_16x16.Images.SetKeyName(16, "comment-number-7.png")
+        Me.Imagenes_16x16.Images.SetKeyName(17, "comment-number-8.png")
+        Me.Imagenes_16x16.Images.SetKeyName(18, "comment-number-9.png")
+        Me.Imagenes_16x16.Images.SetKeyName(19, "comment-number-9-plus.png")
+        Me.Imagenes_16x16.Images.SetKeyName(20, "menu-more.png")
+        Me.Imagenes_16x16.Images.SetKeyName(21, "attach-number-1.png")
+        Me.Imagenes_16x16.Images.SetKeyName(22, "attach-number-2.png")
+        Me.Imagenes_16x16.Images.SetKeyName(23, "attach-number-3.png")
+        Me.Imagenes_16x16.Images.SetKeyName(24, "attach-number-4.png")
+        Me.Imagenes_16x16.Images.SetKeyName(25, "attach-number-5.png")
+        Me.Imagenes_16x16.Images.SetKeyName(26, "attach-number-6.png")
+        Me.Imagenes_16x16.Images.SetKeyName(27, "attach-number-7.png")
+        Me.Imagenes_16x16.Images.SetKeyName(28, "attach-number-8.png")
+        Me.Imagenes_16x16.Images.SetKeyName(29, "attach-number-9.png")
+        Me.Imagenes_16x16.Images.SetKeyName(30, "attach-number-9-plus.png")
+        Me.Imagenes_16x16.Images.SetKeyName(31, "user.png")
+        Me.Imagenes_16x16.Images.SetKeyName(32, "people-employee.png")
+        Me.Imagenes_16x16.Images.SetKeyName(33, "people-vendor.png")
+        Me.Imagenes_16x16.Images.SetKeyName(34, "people-customer-man.png")
+        '
+        'Btn_Mnu_SolicitarCierre
+        '
+        Me.Btn_Mnu_SolicitarCierre.Image = CType(resources.GetObject("Btn_Mnu_SolicitarCierre.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_SolicitarCierre.Name = "Btn_Mnu_SolicitarCierre"
+        Me.Btn_Mnu_SolicitarCierre.Text = "Solicitar cierre de Ticket al remitente."
+        '
+        'Btn_Mnu_CerrarTicketCrearNuevo
+        '
+        Me.Btn_Mnu_CerrarTicketCrearNuevo.Image = CType(resources.GetObject("Btn_Mnu_CerrarTicketCrearNuevo.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_CerrarTicketCrearNuevo.Name = "Btn_Mnu_CerrarTicketCrearNuevo"
+        Me.Btn_Mnu_CerrarTicketCrearNuevo.Text = "Cerrar Ticket y crear nuevo Ticket a partir de este para seguir el hilo."
+        '
+        'Btn_Mnu_CerrarTicket
+        '
+        Me.Btn_Mnu_CerrarTicket.Image = CType(resources.GetObject("Btn_Mnu_CerrarTicket.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_CerrarTicket.Name = "Btn_Mnu_CerrarTicket"
+        Me.Btn_Mnu_CerrarTicket.Text = "Cerrar Ticket"
+        '
+        'LabelItem1
+        '
+        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem1.Name = "LabelItem1"
+        Me.LabelItem1.PaddingBottom = 1
+        Me.LabelItem1.PaddingLeft = 10
+        Me.LabelItem1.PaddingTop = 1
+        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem1.Text = "Opciones de cierre"
+        '
+        'Btn_CrearNuevoTicket
+        '
+        Me.Btn_CrearNuevoTicket.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_CrearNuevoTicket.ForeColor = System.Drawing.Color.Black
+        Me.Btn_CrearNuevoTicket.Image = CType(resources.GetObject("Btn_CrearNuevoTicket.Image"), System.Drawing.Image)
+        Me.Btn_CrearNuevoTicket.ImageAlt = CType(resources.GetObject("Btn_CrearNuevoTicket.ImageAlt"), System.Drawing.Image)
+        Me.Btn_CrearNuevoTicket.Name = "Btn_CrearNuevoTicket"
+        Me.Btn_CrearNuevoTicket.Text = "Crear nuevo ticket a partir de este"
+        Me.Btn_CrearNuevoTicket.Visible = False
+        '
+        'Btn_Cerrar
+        '
+        Me.Btn_Cerrar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Cerrar.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Btn_Cerrar.Image = CType(resources.GetObject("Btn_Cerrar.Image"), System.Drawing.Image)
+        Me.Btn_Cerrar.ImageAlt = CType(resources.GetObject("Btn_Cerrar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Cerrar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Cerrar.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
+        Me.Btn_Cerrar.Name = "Btn_Cerrar"
+        Me.Btn_Cerrar.Tooltip = "Cerrar formulario"
+        '
         'Frm_Tickets_Seguimiento
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -523,7 +692,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Text = "MetroForm"
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Grilla_Acciones, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GrupoTicket.ResumeLayout(False)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel3.ResumeLayout(False)
@@ -533,10 +702,7 @@ Partial Class Frm_Tickets_Seguimiento
 
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Menu_Contextual As DevComponents.DotNetBar.ContextMenuBar
-    Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_EditarFuncionario As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_QuitarVendedor As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Grilla_Acciones As DevComponents.DotNetBar.Controls.DataGridViewX
+    Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents GrupoTicket As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
@@ -551,9 +717,24 @@ Partial Class Frm_Tickets_Seguimiento
     Friend WithEvents Lbl_Area As DevComponents.DotNetBar.LabelX
     Friend WithEvents Lbl_Estado As DevComponents.DotNetBar.LabelX
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
-    Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_CambiarEstado As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Txt_Descripcion As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents GroupPanel3 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Btn_MensajeRespuesta As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Imagenes_16x16 As ImageList
+    Friend WithEvents Txt_Producto As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Menu_Contextual_Productos As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Lbl_OpcProducto As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_Estadisticas_Producto As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Consolidar_Stock_X_Producto As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Copiar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Menu_Contextual_Cambio_Estado As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Anular As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_CerrarTicket As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_SolicitarCierre As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_CerrarTicketCrearNuevo As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_CrearNuevoTicket As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Cerrar As DevComponents.DotNetBar.ButtonItem
 End Class
