@@ -28,7 +28,6 @@ Partial Class Frm_Tickets_Respuesta
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Archivos_Adjuntos = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -98,7 +97,7 @@ Partial Class Frm_Tickets_Respuesta
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Archivos_Adjuntos, Me.Btn_Eliminar})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Archivos_Adjuntos})
         Me.Bar2.Location = New System.Drawing.Point(0, 220)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(688, 41)
@@ -125,15 +124,6 @@ Partial Class Frm_Tickets_Respuesta
         Me.Btn_Archivos_Adjuntos.ImageAlt = CType(resources.GetObject("Btn_Archivos_Adjuntos.ImageAlt"), System.Drawing.Image)
         Me.Btn_Archivos_Adjuntos.Name = "Btn_Archivos_Adjuntos"
         Me.Btn_Archivos_Adjuntos.Tooltip = "Archivos adjuntos al documento"
-        '
-        'Btn_Eliminar
-        '
-        Me.Btn_Eliminar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Eliminar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Eliminar.Image = CType(resources.GetObject("Btn_Eliminar.Image"), System.Drawing.Image)
-        Me.Btn_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Eliminar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Eliminar.Name = "Btn_Eliminar"
-        Me.Btn_Eliminar.Tooltip = "Eliminar comisión"
         '
         'Frm_Tickets_Respuesta
         '
@@ -163,6 +153,5 @@ Partial Class Frm_Tickets_Respuesta
     Friend WithEvents Txt_Descripcion As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Archivos_Adjuntos As DevComponents.DotNetBar.ButtonItem
 End Class

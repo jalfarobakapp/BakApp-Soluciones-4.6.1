@@ -26,7 +26,7 @@ Public Class Frm_Tickets_Mant
         _Cl_Tickets.Tickets.CodFuncionario_Crea = FUNCIONARIO
         _Cl_Tickets.Sb_Llenar_Ticket(0)
 
-        '_Cl_Tickets.Sb_Llenar_Ticket(_Id_Ticket)
+        Sb_Color_Botones_Barra(Bar2)
 
     End Sub
 
@@ -431,5 +431,28 @@ Public Class Frm_Tickets_Mant
         Txt_Producto.Text = String.Empty
         Txt_Producto.ButtonCustom.Visible = True
         Txt_Producto.ButtonCustom2.Visible = False
+    End Sub
+
+    Private Sub Btn_Estadisticas_Producto_Click(sender As Object, e As EventArgs) Handles Btn_Estadisticas_Producto.Click
+
+        Dim _Codigo As String = Txt_Producto.Tag
+
+        Dim Fm_Producto As New Frm_BkpPostBusquedaEspecial_Mt()
+        Fm_Producto.Sb_Ver_Informacion_Adicional_producto(Me, _Codigo)
+
+    End Sub
+
+    Private Sub Btn_Copiar_Click(sender As Object, e As EventArgs) Handles Btn_Copiar.Click
+
+        Dim Copiar = Txt_Producto.Text
+        Clipboard.SetText(Copiar)
+
+        ToastNotification.Show(Me, Copiar & vbCrLf & "Esta en el portapapeles", Btn_Copiar.Image,
+                               2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+
+    End Sub
+
+    Private Sub Btn_OpcProducto_Click(sender As Object, e As EventArgs) Handles Btn_OpcProducto.Click
+        ShowContextMenu(Menu_Contextual_Productos)
     End Sub
 End Class

@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports BkSpecialPrograms.Tickets_Db
 
 Public Class Cl_Tickets
 
@@ -76,6 +77,8 @@ Public Class Cl_Tickets
 
     Function Fx_Grabar_Nuevo_Tickets() As String
 
+        'Return "."
+
         Tickets.Numero = Fx_NvoNro_OT()
         Tickets.Estado = "ABIE"
 
@@ -141,6 +144,12 @@ Public Class Cl_Tickets
                            ",Fecha = Getdate()" &
                            ",En_Construccion = 0" & vbCrLf &
                            "Where Id = " & Tickets.New_Id_TicketAc
+            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Archivos Set En_Construccion = 0" & vbCrLf &
+                           "Where Id_TicketAc = " & Tickets.New_Id_TicketAc
             Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
@@ -226,6 +235,119 @@ Public Class Cl_Tickets
 
     End Function
 
+    Function Fx_Cerrar_Ticket(_CodFuncionario As String,
+                              _Descripcion As String,
+                              _Cierra_Ticket As Boolean,
+                              _Solicita_Cierre As Boolean,
+                              _CreaNewTicket As Boolean,
+                              _AnulaTicket As Boolean) As Mensaje_Ticket
+
+        Dim _Mensaje_Ticket As New Tickets_Db.Mensaje_Ticket
+        Dim _Tickets_Acciones As New Tickets_Db.Tickets_Acciones
+
+        With _Tickets_Acciones
+
+            .Descripcion = _Descripcion
+            .CodFuncionario = _CodFuncionario
+
+            If _Cierra_Ticket Then .Accion = "CERR"
+            If _Solicita_Cierre Then .Accion = "SOLC"
+            If _AnulaTicket Then .Accion = "NULO"
+
+            .Cierra_Ticket = _Cierra_Ticket
+            .Solicita_Cierre = _Solicita_Cierre
+            .AnulaTicket = _AnulaTicket
+
+        End With
+
+
+        Dim _Id_TicketAc As Integer
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+        Try
+
+            myTrans = Cn2.BeginTransaction()
+
+            Dim _FechaCierre As String
+
+            If _Cierra_Ticket Then
+                _FechaCierre = ",FechaCierre = Getdate()"
+            End If
+
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set Estado = '" & _Tickets_Acciones.Accion & "'" & _FechaCierre & vbCrLf &
+                           "Where Id = " & Tickets.Id
+
+            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+            If _AnulaTicket Then
+
+                Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Archivos Where Id_Ticket = " & Tickets.Id
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End If
+
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones (Id_Ticket,Accion,Descripcion,Fecha,CodFuncionario,En_Construccion,Cierra_Ticket,Solicita_Cierre,CreaNewTicket,AnulaTicket) Values " &
+                           "(" & Tickets.Id & ",'" & _Tickets_Acciones.Accion & "','" & _Tickets_Acciones.Descripcion & "',Getdate(),'" & _Tickets_Acciones.CodFuncionario & "',0" &
+                           "," & Convert.ToInt32(_Cierra_Ticket) &
+                           "," & Convert.ToInt32(_Solicita_Cierre) &
+                           "," & Convert.ToInt32(_CreaNewTicket) &
+                           "," & Convert.ToInt32(_AnulaTicket) & ")"
+            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+            Comando = New System.Data.SqlClient.SqlCommand("Select @@IDENTITY AS 'Identity'", Cn2)
+            Comando.Transaction = myTrans
+            Dim dfd1 As System.Data.SqlClient.SqlDataReader = Comando.ExecuteReader()
+            While dfd1.Read()
+                _Id_TicketAc = dfd1("Identity")
+            End While
+            dfd1.Close()
+
+            _Tickets_Acciones.Id = _Id_TicketAc
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje_Ticket.EsCorrecto = True
+
+            If _Cierra_Ticket Then _Mensaje_Ticket.Mensaje = "Ticket cerrado correctamente"
+            If _Solicita_Cierre Then _Mensaje_Ticket.Mensaje = "Solicitud de cierre enviada correctamente"
+            If _AnulaTicket Then _Mensaje_Ticket.Mensaje = "Ticket anulado correctamente"
+
+            _Mensaje_Ticket.Tickets_Acciones = _Tickets_Acciones
+
+        Catch ex As Exception
+
+            _Id_TicketAc = 0
+            myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje_Ticket.EsCorrecto = False
+            _Mensaje_Ticket.Mensaje = ex.Message
+            _Mensaje_Ticket.Tickets_Acciones = Nothing
+
+        End Try
+
+        Return _Mensaje_Ticket
+
+    End Function
+
 End Class
 
 Namespace Tickets_Db
@@ -265,6 +387,19 @@ Namespace Tickets_Db
         Public Property CodFuncionario As String
         Public Property CodAgente As String
         Public Property En_Construccion As Boolean
+        Public Property Visto As Boolean
+        Public Property Cierra_Ticket As Boolean
+        Public Property Solicita_Cierre As Boolean
+        Public Property CreaNewTicket As Boolean
+        Public Property AnulaTicket As Boolean
+
+    End Class
+
+    Public Class Mensaje_Ticket
+
+        Public Property EsCorrecto As Boolean
+        Public Property Mensaje As String
+        Public Property Tickets_Acciones As Tickets_Acciones
 
     End Class
 

@@ -17,26 +17,10 @@ Public Class Frm_Adjuntar_Archivos
     Dim _Tabla As String
     Dim _Campo As String
     Dim _Codigo_Id As String
-    Dim _Otra_Condicion As String
-    Dim _Pedir_Permiso As Boolean
 
     Public Property Otra_Condicion As String
-        Get
-            Return _Otra_Condicion
-        End Get
-        Set(value As String)
-            _Otra_Condicion = value
-        End Set
-    End Property
-
     Public Property Pedir_Permiso As Boolean
-        Get
-            Return _Pedir_Permiso
-        End Get
-        Set(value As Boolean)
-            _Pedir_Permiso = value
-        End Set
-    End Property
+    Public Property SoloLectura As Boolean
 
     Public Sub New(Tabla As String, Campo As String, Codigo_Id As String)
 
@@ -64,6 +48,13 @@ Public Class Frm_Adjuntar_Archivos
 
         Listv_Archivos.FullRowSelect = True
         Sb_Actualizar_ListView()
+
+        Btn_Subir_Archivos.Visible = Not SoloLectura
+        Btn_Agregar_Observacion.Visible = Not SoloLectura
+        Btn_Mnu_Eliminar_Archivo.Visible = Not SoloLectura
+        Btn_Eliminar_Archivos.Visible = Not SoloLectura
+        Btn_Subir_Archivos2.Enabled = Not SoloLectura
+        Btn_Agregar_Observacion2.Enabled = Not SoloLectura
 
     End Sub
 

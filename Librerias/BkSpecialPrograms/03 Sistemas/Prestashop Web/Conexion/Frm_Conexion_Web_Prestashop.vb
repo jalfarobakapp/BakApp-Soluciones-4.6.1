@@ -76,11 +76,14 @@ Public Class Frm_Conexion_Web_Prestashop
         Dim _Port = String.Empty
 
         If Not Chk_Puerto_X_Defecto.Checked Then
-            _Port = "Port=" & Num_Puerto.Value & ";"
+            _Port = ";Port=" & Num_Puerto.Value & ";"
         End If
 
-        Dim _Ruta = "Host=" & Txt_Host.Text & ";Database=" & Txt_Base_Datos.Text &
-                    ";Uid=" & Txt_Usuario.Text & ";Password=" & Txt_Clave.Text & ";" & _Port
+        Dim _Ruta = "Host=" & Txt_Host.Text & ";Database=" & Txt_Base_Datos.Text & ";Uid=" & Txt_Usuario.Text & ";Password=" & Txt_Clave.Text & ";" & _Port
+
+        _Ruta = "Host=" & Txt_Host.Text & ";Database=" & Txt_Base_Datos.Text & ";user id=" & Txt_Usuario.Text & ";Password=" & Txt_Clave.Text & _Port
+
+        '_Ruta = "server=" & Txt_Host.Text & ";user id=" & Txt_Usuario.Text & ";password=" & Txt_Clave.Text & ";database=" & Txt_Base_Datos.Text & ";"
         Return _Ruta
 
     End Function

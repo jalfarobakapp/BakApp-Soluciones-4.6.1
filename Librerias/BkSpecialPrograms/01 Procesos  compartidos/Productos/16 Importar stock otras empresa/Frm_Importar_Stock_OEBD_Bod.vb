@@ -114,9 +114,9 @@ Public Class Frm_Importar_Stock_OEBD_Bod
         Cadena_ConexionSQL_Server = _Cadena_ConexionSQL_Server_Origen
 
         Dim Fm_b As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-        Fm_b.Pro_Empresa = _Empresa_Ori
-        Fm_b.Pro_Sucursal = ModSucursal
-        Fm_b.Pro_Bodega = ModBodega
+        Fm_b.Pro_Empresa = _Fila.Cells("Empresa_Ori").Value
+        Fm_b.Pro_Sucursal = _Fila.Cells("Sucursal_Ori").Value
+        Fm_b.Pro_Bodega = _Fila.Cells("Bodega_Ori").Value
         Fm_b.RevisarPermisosBodega = False
         Fm_b.Pedir_Permiso = False
         Fm_b.ShowDialog(Me)
@@ -141,9 +141,9 @@ Public Class Frm_Importar_Stock_OEBD_Bod
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
 
         Dim Fm_b As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-        Fm_b.Pro_Empresa = ModEmpresa
-        Fm_b.Pro_Sucursal = ModSucursal
-        Fm_b.Pro_Bodega = ModBodega
+        Fm_b.Pro_Empresa = _Fila.Cells("Empresa_Des").Value
+        Fm_b.Pro_Sucursal = _Fila.Cells("Sucursal_Des").Value
+        Fm_b.Pro_Bodega = _Fila.Cells("Bodega_Des").Value
         Fm_b.Pedir_Permiso = False
         Fm_b.ShowDialog(Me)
 
