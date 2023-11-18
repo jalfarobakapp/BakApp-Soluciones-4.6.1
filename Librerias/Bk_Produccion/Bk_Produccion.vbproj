@@ -281,6 +281,12 @@
     <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Frm_GRI_ProductosOT.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Lote\Frm_Lote_Ing.Designer.vb">
+      <DependentUpon>Frm_Lote_Ing.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Lote\Frm_Lote_Ing.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Formularios Compartidos\Frm_Buscar_Pistoleando.Designer.vb">
       <DependentUpon>Frm_Buscar_Pistoleando.vb</DependentUpon>
     </Compile>
@@ -479,6 +485,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Frm_GRI_ProductosOT.resx">
       <DependentUpon>Frm_GRI_ProductosOT.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Lote\Frm_Lote_Ing.resx">
+      <DependentUpon>Frm_Lote_Ing.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios Compartidos\Frm_Buscar_Pistoleando.resx">
       <DependentUpon>Frm_Buscar_Pistoleando.vb</DependentUpon>

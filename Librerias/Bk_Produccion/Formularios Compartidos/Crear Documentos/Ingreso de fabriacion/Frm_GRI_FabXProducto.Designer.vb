@@ -46,18 +46,26 @@ Partial Class Frm_GRI_FabXProducto
         Me.Txt_Numot = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX9 = New DevComponents.DotNetBar.LabelX()
         Me.Highlighter1 = New DevComponents.DotNetBar.Validator.Highlighter()
-        Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonX()
-        Me.Btn_Limpiar = New DevComponents.DotNetBar.ButtonX()
+        Me.Bar1 = New DevComponents.DotNetBar.Bar()
+        Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Limpiar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Txt_NroLote = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
+        Me.Line2 = New DevComponents.DotNetBar.Controls.Line()
         Me.Grupo_Producto.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Dtp_Fecha_Ingreso, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Grupo_Producto
         '
         Me.Grupo_Producto.BackColor = System.Drawing.Color.White
         Me.Grupo_Producto.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_Producto.Controls.Add(Me.Line2)
+        Me.Grupo_Producto.Controls.Add(Me.Txt_NroLote)
+        Me.Grupo_Producto.Controls.Add(Me.LabelX5)
         Me.Grupo_Producto.Controls.Add(Me.LabelX12)
         Me.Grupo_Producto.Controls.Add(Me.TableLayoutPanel1)
         Me.Grupo_Producto.Controls.Add(Me.LabelX3)
@@ -71,7 +79,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.Grupo_Producto.Enabled = False
         Me.Grupo_Producto.Location = New System.Drawing.Point(12, 86)
         Me.Grupo_Producto.Name = "Grupo_Producto"
-        Me.Grupo_Producto.Size = New System.Drawing.Size(802, 166)
+        Me.Grupo_Producto.Size = New System.Drawing.Size(802, 222)
         '
         '
         '
@@ -308,11 +316,11 @@ Partial Class Frm_GRI_FabXProducto
         Me.Txt_Descripcion.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Descripcion.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Descripcion.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Descripcion.Location = New System.Drawing.Point(254, 6)
+        Me.Txt_Descripcion.Location = New System.Drawing.Point(264, 6)
         Me.Txt_Descripcion.MaxLength = 50
         Me.Txt_Descripcion.Name = "Txt_Descripcion"
         Me.Txt_Descripcion.ReadOnly = True
-        Me.Txt_Descripcion.Size = New System.Drawing.Size(539, 26)
+        Me.Txt_Descripcion.Size = New System.Drawing.Size(529, 26)
         Me.Txt_Descripcion.TabIndex = 3
         Me.Txt_Descripcion.TabStop = False
         '
@@ -329,11 +337,11 @@ Partial Class Frm_GRI_FabXProducto
         Me.Txt_Codigo.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Codigo.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Codigo.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Codigo.Location = New System.Drawing.Point(83, 6)
+        Me.Txt_Codigo.Location = New System.Drawing.Point(90, 6)
         Me.Txt_Codigo.MaxLength = 13
         Me.Txt_Codigo.Name = "Txt_Codigo"
         Me.Txt_Codigo.ReadOnly = True
-        Me.Txt_Codigo.Size = New System.Drawing.Size(165, 26)
+        Me.Txt_Codigo.Size = New System.Drawing.Size(168, 26)
         Me.Txt_Codigo.TabIndex = 2
         Me.Txt_Codigo.Text = "9998989898980"
         Me.Txt_Codigo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -510,7 +518,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.Txt_Numot.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Numot.ForeColor = System.Drawing.Color.Black
         Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Numot, True)
-        Me.Txt_Numot.Location = New System.Drawing.Point(83, 7)
+        Me.Txt_Numot.Location = New System.Drawing.Point(90, 7)
         Me.Txt_Numot.MaxLength = 10
         Me.Txt_Numot.Name = "Txt_Numot"
         Me.Txt_Numot.Size = New System.Drawing.Size(165, 26)
@@ -541,42 +549,94 @@ Partial Class Frm_GRI_FabXProducto
         Me.Highlighter1.FocusHighlightColor = DevComponents.DotNetBar.Validator.eHighlightColor.Red
         Me.Highlighter1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         '
+        'Bar1
+        '
+        Me.Bar1.AntiAlias = True
+        Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Limpiar})
+        Me.Bar1.Location = New System.Drawing.Point(0, 321)
+        Me.Bar1.Name = "Bar1"
+        Me.Bar1.Size = New System.Drawing.Size(826, 41)
+        Me.Bar1.Stretch = True
+        Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Bar1.TabIndex = 100
+        Me.Bar1.TabStop = False
+        Me.Bar1.Text = "Bar1"
+        '
         'Btn_Grabar
         '
-        Me.Btn_Grabar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Grabar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Btn_Grabar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
-        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Grabar.Location = New System.Drawing.Point(12, 262)
         Me.Btn_Grabar.Name = "Btn_Grabar"
-        Me.Btn_Grabar.Size = New System.Drawing.Size(206, 44)
-        Me.Btn_Grabar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Grabar.TabIndex = 5
-        Me.Btn_Grabar.Text = "Grabar GRI Ingreso de fabriación "
+        Me.Btn_Grabar.Text = "Grabar GRI Ingreso de fabriación"
+        Me.Btn_Grabar.Tooltip = "Seleccionar registro marcado"
         '
         'Btn_Limpiar
         '
-        Me.Btn_Limpiar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Limpiar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Btn_Limpiar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Limpiar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Limpiar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Limpiar.Image = CType(resources.GetObject("Btn_Limpiar.Image"), System.Drawing.Image)
         Me.Btn_Limpiar.ImageAlt = CType(resources.GetObject("Btn_Limpiar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Limpiar.Location = New System.Drawing.Point(224, 262)
+        Me.Btn_Limpiar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_Limpiar.Name = "Btn_Limpiar"
-        Me.Btn_Limpiar.Size = New System.Drawing.Size(55, 44)
-        Me.Btn_Limpiar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Limpiar.TabIndex = 98
-        Me.Btn_Limpiar.TabStop = False
-        Me.Btn_Limpiar.Tooltip = "Limpiar"
+        Me.Btn_Limpiar.Tooltip = "Nuevo, limpiar documento [F5]"
+        '
+        'Txt_NroLote
+        '
+        Me.Txt_NroLote.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_NroLote.Border.Class = "TextBoxBorder"
+        Me.Txt_NroLote.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_NroLote.ButtonCustom.Image = CType(resources.GetObject("Txt_NroLote.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_NroLote.ButtonCustom.Visible = True
+        Me.Txt_NroLote.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_NroLote.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Txt_NroLote.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Txt_NroLote.ForeColor = System.Drawing.Color.Black
+        Me.Txt_NroLote.Location = New System.Drawing.Point(90, 169)
+        Me.Txt_NroLote.MaxLength = 13
+        Me.Txt_NroLote.Name = "Txt_NroLote"
+        Me.Txt_NroLote.ReadOnly = True
+        Me.Txt_NroLote.Size = New System.Drawing.Size(168, 26)
+        Me.Txt_NroLote.TabIndex = 83
+        Me.Txt_NroLote.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'LabelX5
+        '
+        Me.LabelX5.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX5.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX5.ForeColor = System.Drawing.Color.Black
+        Me.LabelX5.Location = New System.Drawing.Point(6, 169)
+        Me.LabelX5.Name = "LabelX5"
+        Me.LabelX5.Size = New System.Drawing.Size(71, 23)
+        Me.LabelX5.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.LabelX5.TabIndex = 84
+        Me.LabelX5.Text = "NRO. LOTE"
+        '
+        'Line2
+        '
+        Me.Line2.BackColor = System.Drawing.Color.Transparent
+        Me.Line2.ForeColor = System.Drawing.Color.Black
+        Me.Line2.Location = New System.Drawing.Point(6, 140)
+        Me.Line2.Name = "Line2"
+        Me.Line2.Size = New System.Drawing.Size(266, 23)
+        Me.Line2.TabIndex = 85
+        Me.Line2.Text = "Line2"
         '
         'Frm_GRI_FabXProducto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(826, 318)
-        Me.Controls.Add(Me.Btn_Limpiar)
-        Me.Controls.Add(Me.Btn_Grabar)
+        Me.ClientSize = New System.Drawing.Size(826, 362)
+        Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.Grupo_Producto)
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True
@@ -593,6 +653,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Dtp_Fecha_Ingreso, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -611,8 +672,6 @@ Partial Class Frm_GRI_FabXProducto
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Lbl_ReferenciaOT As DevComponents.DotNetBar.LabelX
     Friend WithEvents Highlighter1 As DevComponents.DotNetBar.Validator.Highlighter
-    Friend WithEvents Btn_Limpiar As DevComponents.DotNetBar.ButtonX
-    Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Lbl_Saldo As DevComponents.DotNetBar.LabelX
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents LabelX12 As DevComponents.DotNetBar.LabelX
@@ -622,4 +681,10 @@ Partial Class Frm_GRI_FabXProducto
     Friend WithEvents Lbl_Fabricar As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Line1 As DevComponents.DotNetBar.Controls.Line
+    Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
+    Public WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Limpiar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Line2 As DevComponents.DotNetBar.Controls.Line
+    Public WithEvents Txt_NroLote As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
 End Class

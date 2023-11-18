@@ -201,7 +201,6 @@ Public Class Frm_Tickets_Seguimiento
 
         End Try
 
-
     End Sub
 
     Private Sub Grilla_Acciones_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellEnter

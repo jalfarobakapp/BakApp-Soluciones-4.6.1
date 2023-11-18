@@ -181,6 +181,12 @@ Public Class Frm_GRI_FabXProducto
         Dim _Rtu As Double = _Row_Maepr.Item("RLUD")
         Dim _Resultado As Double = _Cantidadv / _Rtu
 
+        If String.IsNullOrEmpty(Txt_NroLote.Text) Then
+            MessageBoxEx.Show(Me, "Falta el numero de lote", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_NroLote.Focus()
+            Return
+        End If
+
         If _Cantidadv = 0 Then
             MessageBoxEx.Show(Me, "Debe ingresar la cantidad", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_Cantidad.Focus()
@@ -247,29 +253,64 @@ Public Class Frm_GRI_FabXProducto
         Sb_BuscarProductos(Txt_Numot.Text)
     End Sub
 
-    'Private Sub Txt_Cantidad_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Txt_Cantidad.Validating
+    Private Sub Txt_NroLote_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_NroLote.ButtonCustomClick
 
-    '    Dim _Ud2 As String = _Row_Maepr.Item("UD02PR")
-    '    Dim _Cantidad As Double = Val(Txt_Cantidad.Text)
-    '    Dim _Rtu As Double = _Row_Maepr.Item("RLUD")
-    '    Dim _Resultado As Double = _Cantidad / _Rtu
+        Dim _Aceptar As Boolean
+        Dim _NroLote As String
 
-    '    If _Cantidad = 0 Then
-    '        MessageBoxEx.Show(Me, "Debe ingresar la cantidad", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-    '        e.Cancel = True
-    '        Return
-    '    End If
+        _Aceptar = InputBox_Bk(Me, "Ingrese el número de Lote", "Número de Lote", _NroLote, False,, 20, True)
 
-    '    If (_Cantidad + _Row_Potl.Item("REALIZADO")) > _Row_Potl.Item("FABRICAR") Then
-    '        MessageBoxEx.Show(Me, "Usted no puede recepcionar más que el SALDO indicado en la orden", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-    '        e.Cancel = True
-    '        Return
-    '    End If
+        If Not _Aceptar Then
+            Return
+        End If
 
-    '    If Not (_Resultado Mod 1 = 0) Then
-    '        MessageBoxEx.Show(Me, "La cantidad ingresada no es divisible por la unidad 2 " & _Ud2 & "-" & _Rtu, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-    '        e.Cancel = True
-    '    End If
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Lotes_Enc Where NroLote = '" & _NroLote & "'"
+        Dim _Row_Lote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-    'End Sub
+        If IsNothing(_Row_Lote) Then
+
+            MessageBoxEx.Show(Me, "El Número de Lote no esta registrado en el sistema" & vbCrLf & vbCrLf &
+                              "A continuación debera ingresar los datos del Lote", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            _Row_Lote = Fx_Ingresar_Lote()
+
+            If IsNothing(_Row_Lote) Then
+                Return
+            End If
+
+        End If
+
+        Txt_NroLote.Text = _NroLote
+
+    End Sub
+
+    Function Fx_Ingresar_Lote() As DataRow
+
+        Dim _Nro_Lote As String
+        Dim _Row_Lote As DataRow
+
+        Dim Fm As New Frm_Lote_Ing(Txt_Codigo.Text)
+        Fm.ShowDialog(Me)
+
+        If Fm.Grabar Then
+
+            _Nro_Lote = Fm.NroLote
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Lotes_Enc Where NroLote = '" & _Nro_Lote & "'"
+            _Row_Lote = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        End If
+
+        Fm.Dispose()
+
+        Return _Row_Lote
+
+    End Function
+
+    Private Sub Txt_NroLote_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_NroLote.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            Call Txt_NroLote_ButtonCustomClick(Nothing, Nothing)
+        End If
+    End Sub
 End Class
