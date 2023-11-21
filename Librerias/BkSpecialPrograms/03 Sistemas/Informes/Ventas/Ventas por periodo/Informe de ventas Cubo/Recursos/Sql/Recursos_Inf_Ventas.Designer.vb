@@ -22,7 +22,7 @@ Namespace My.Resources
     '''<summary>
     '''  Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
     Friend Class Recursos_Inf_Ventas
@@ -168,6 +168,8 @@ Namespace My.Resources
         '''@Meses_R2        Int = #Meses_R2#,
         '''@Total_R1 Float,
         '''@Total_R2 Float,
+        '''@TotalCant_R1 Float,
+        '''@Totalcant_R2 Float,
         '''
         '''@Dias_Actuales   Int   = #Dias_Actuales#,
         '''@Dias_Faltantes  Int,
@@ -178,8 +180,7 @@ Namespace My.Resources
         '''
         '''Set @Dias_Faltantes = @Dias_Total_Mes-@Dias_Actuales
         '''
-        '''CREATE TABLE [dbo].[#Paso](
-        '''    [CODIGO]     [resto de la cadena truncado]&quot;;.
+        '''C [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Comparativo_de_Ventas_Arbol_Asociaciones() As String
             Get

@@ -53,6 +53,7 @@ Namespace Cl_Tarja_Ent
     Public Class CPT_Tarja
 
         Public Property Idmaeddo As Integer
+        Public Property Empresa As String
         Public Property Nro_CPT As String
         Public Property Lote As String
         Public Property Codigo As String

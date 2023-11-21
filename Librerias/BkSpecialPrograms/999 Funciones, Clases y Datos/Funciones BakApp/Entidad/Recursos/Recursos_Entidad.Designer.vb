@@ -22,7 +22,7 @@ Namespace My.Resources
     '''<summary>
     '''  Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
     Friend Class Recursos_Entidad
@@ -71,12 +71,12 @@ Namespace My.Resources
         '''
         '''Select @CodEntidad = &apos;#CodEntidad#&apos;,@SucEntidad = &apos;#SucEntidad#&apos;
         '''
-        '''Select CAST( &apos;&apos; AS Varchar(15)) As &apos;Rut&apos;,
+        '''Select CAST( &apos;&apos; AS Varchar(15)) As &apos;Rut&apos;,CAST( &apos;&apos; AS Varchar(15)) As &apos;RutSP&apos;,
         '''       *, 
         '''       Isnull((Select top 1 NOKOFU From TABFU Where KOFU = KOFUEN),&apos;&apos;) As &apos;VENDEDOR&apos;,
         '''       Isnull((Select top 1 NOKOFU From TABFU Where KOFU = COBRADOR),&apos;&apos;) As &apos;NOMCOBRADOR&apos;,
         '''       Case TIPOSUC When &apos;C&apos; Then &apos;CLIENTE&apos; When &apos;P&apos; Then &apos;PROVEEDOR&apos; Else &apos;AMBOS&apos; End As &apos;TIPOSUCURSAL&apos;,
-        '''       (Select Top 1 NOKOEN From MAEEN [resto de la cadena truncado]&quot;;.
+        '''   [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property SqlQuery_Datos_Entidad() As String
             Get

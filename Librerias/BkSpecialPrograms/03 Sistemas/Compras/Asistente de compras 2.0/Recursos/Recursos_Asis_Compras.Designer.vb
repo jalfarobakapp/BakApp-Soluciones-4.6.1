@@ -123,8 +123,10 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Busca una cadena traducida similar a         
+        '''  Busca una cadena traducida similar a 
         '''Update  #TablaPaso# Set  Bloqueapr = (Select top 1 BLOQUEAPR From MAEPR Where KOPR = #TablaPaso#.Codigo)
+        '''
+        '''--#BloqueaProductosPorProveedor#
         '''
         '''Select *         
         '''From #TablaPaso#
@@ -133,14 +135,11 @@ Namespace My.Resources
         '''Order By #Campo_Orden1# 
         '''
         '''
-        '''--SELECT KOPRCT As Codigo,
-        '''--	   ISNULL(MAEDDO_1.IDMAEDDO,0) AS IDMAEDDO,
-        '''--       ISNULL(MAEDDO_1.IDMAEEDO,0) AS IDMAEEDO,
-        '''--       CASE TIDO 
-        '''--			When &apos;OCC&apos; Then &apos;Ult. Doc. por recepcionar&apos;
-        '''--			When &apos;GRC&apos; Then &apos;Ultima recepción&apos; 
-        '''--			When &apos;GDD&apos; Then &apos;Ultima devolución&apos; 
-        '''--	   END AS Obs,  [resto de la cadena truncado]&quot;;.
+        '''
+        '''	            
+        '''
+        '''                
+        '''                .
         '''</summary>
         Friend Shared ReadOnly Property SQLQuery_Actualizar_Informe_Principal() As String
             Get

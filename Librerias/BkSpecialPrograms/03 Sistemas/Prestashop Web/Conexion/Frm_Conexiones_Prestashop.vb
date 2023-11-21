@@ -194,13 +194,6 @@ Public Class Frm_Conexiones_Prestashop
                             inner join ps_product_lang P4 On P1.id_product = P4.id_product" & vbCrLf &
                             _Filtro_id_product
 
-            Consulta_sql = "Select '" & _Nombre_Pagina & "' As Nombre_Pagina,P1.id_product,reference As Codigo,P4.name as Descripcion,P2.price As Precio,P3.quantity As Cantidad,P1.active 
-                            From ps_product P1 
-                            inner Join ps_product_shop P2 On P1.id_product = P2.id_product
-                            inner Join ps_stock_available P3 On P1.id_product = P3.id_product
-                            inner join ps_product_lang P4 On P1.id_product = P4.id_product" & vbCrLf &
-                            "Where P1.id_product =25"
-
             Dim _Tbl_Productos_Web As DataTable = _Sql_MySql.Fx_Get_Datatable(Consulta_sql)
 
             If IsNothing(_Tbl_Productos_Web) Then

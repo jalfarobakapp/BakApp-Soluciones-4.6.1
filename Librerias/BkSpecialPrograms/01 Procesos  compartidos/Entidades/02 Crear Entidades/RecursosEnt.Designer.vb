@@ -21,7 +21,7 @@ Imports System
 '''<summary>
 '''  Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.
 '''</summary>
-<Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
+<Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0"),  _
  Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
  Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
 Friend Class RecursosEnt
@@ -107,10 +107,10 @@ Friend Class RecursosEnt
     '''<summary>
     '''  Busca una cadena traducida similar a 
     '''
-    '''INSERT INTO MAEEN ( KOEN,TIEN,RTEN,SUEN,TIPOSUC,NOKOEN,SIEN,GIEN,PAEN,CIEN,CMEN,DIEN,ZOEN,FOEN,FAEN,CNEN,KOFUEN,LCEN,LVEN,CRSD,CRCH,CRLT,CRPA,CRTO,CREN,
+    '''INSERT INTO MAEEN (KOEN,TIEN,RTEN,SUEN,TIPOSUC,NOKOEN,SIEN,GIEN,PAEN,CIEN,CMEN,DIEN,ZOEN,FOEN,FAEN,CNEN,KOFUEN,LCEN,LVEN,CRSD,CRCH,CRLT,CRPA,CRTO,CREN,
     '''FEVECREN,FEULTR,NUVECR,DCCR,INCR,POPICR,KOPLCR,CONTAB,SUBAUXI,CONTABVTA,SUBAUXIVTA,CODCC,NUTRANSMI,RUEN,CPEN,OBEN,DIPRVE,EMAIL,CNEN2,COBRADOR,PROTEACUM,
     '''PROTEVIGE,CPOSTAL,HABILITA,CODCONVE,NOTRAEDEUD,NOKOENAMP,BLOQUEADO,DIMOPER,PREFEN,BLOQENCOM,TIPOEN,ACTIEN,TAMAEN,PORPREFEN,CLAVEEN,NVVPIDEPIE,RECEPELECT,
-    '''ACTECO,DIASVENCI,CATTRIB,AGRETIVA,AGRETIIBB,A [resto de la cadena truncado]&quot;;.
+    '''ACTECO,DIASVENCI,CATTRIB,AGRETIVA,AGRETIIBB,AG [resto de la cadena truncado]&quot;;.
     '''</summary>
     Friend Shared ReadOnly Property Insertar_Entidad_MAEEN() As String
         Get

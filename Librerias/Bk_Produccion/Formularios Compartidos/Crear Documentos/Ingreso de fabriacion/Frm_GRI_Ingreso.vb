@@ -33,6 +33,10 @@ Public Class Frm_GRI_Ingreso
 
     Private Sub Btn_ImprimirEtiquetas_Click(sender As Object, e As EventArgs) Handles Btn_ImprimirEtiquetas.Click
 
+        Dim Fm As New Frm_ImpBarras_Tarja
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
         'Dim _Fm As New Frm_BusquedaDocumento_Filtro(False)
         '_Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Todos, "GRI")
         '_Fm.Pro_TipoDoc_Seleccionado = Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Todos
@@ -50,51 +54,51 @@ Public Class Frm_GRI_Ingreso
 
         'If Not (_RowDocumento Is Nothing) Then
 
-        Dim _Aceptar As Boolean
-        Dim _Numot As String
+        'Dim _Aceptar As Boolean
+        'Dim _Numot As String
 
-        _Aceptar = InputBox_Bk(Me, "Numero de OT", "Imprimir etquetas de OT", _Numot, False,, 10, True,,,, False)
+        '_Aceptar = InputBox_Bk(Me, "Numero de OT", "Imprimir etquetas de OT", _Numot, False,, 10, True,,,, False)
 
-        If Not _Aceptar Then
-            Return
-        End If
+        'If Not _Aceptar Then
+        '    Return
+        'End If
 
-        Dim _Nudo As String = Fx_Rellena_ceros(_Numot, 10)
-        Dim _Nro As String
+        'Dim _Nudo As String = Fx_Rellena_ceros(_Numot, 10)
+        'Dim _Nro As String
 
-        _Nro = Replace(_Nudo, "-", ",")
+        '_Nro = Replace(_Nudo, "-", ",")
 
-        Dim _Cadena = Split(_Nro, ",")
+        'Dim _Cadena = Split(_Nro, ",")
 
-        If _Cadena.Length = 2 Then
-            _Nudo = Fx_Rellena_ceros(_Cadena(1), 10)
-        Else
-            _Numot = _Nudo
-        End If
+        'If _Cadena.Length = 2 Then
+        '    _Nudo = Fx_Rellena_ceros(_Cadena(1), 10)
+        'Else
+        '    _Numot = _Nudo
+        'End If
 
-        Consulta_sql = "Select * From POTE Where NUMOT = '" & _Numot & "'"
-        Dim _Row_Pote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+        'Consulta_sql = "Select * From POTE Where NUMOT = '" & _Numot & "'"
+        'Dim _Row_Pote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        If IsNothing(_Row_Pote) Then
-            MessageBoxEx.Show(Me, "No existe la OT Nro: " & _Numot, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            _Numot = String.Empty
-            Return
-        End If
+        'If IsNothing(_Row_Pote) Then
+        '    MessageBoxEx.Show(Me, "No existe la OT Nro: " & _Numot, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    _Numot = String.Empty
+        '    Return
+        'End If
 
-        Dim _Idpote As Integer = _Row_Pote.Item("IDPOTE")
-        Dim _Idpotl As Integer
+        'Dim _Idpote As Integer = _Row_Pote.Item("IDPOTE")
+        'Dim _Idpotl As Integer
 
-        Dim _Row_Potl As DataRow = Fx_Buscar_Potl(_Idpote)
+        'Dim _Row_Potl As DataRow = Fx_Buscar_Potl(_Idpote)
 
-        If IsNothing(_Row_Potl) Then
-            Return
-        End If
+        'If IsNothing(_Row_Potl) Then
+        '    Return
+        'End If
 
-        _Idpotl = _Row_Potl.Item("IDPOTL")
+        '_Idpotl = _Row_Potl.Item("IDPOTL")
 
-        Dim Fm As New Frm_ImpBarras_PorOT(_Idpote, _Idpotl)
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
+        'Dim Fm As New Frm_ImpBarras_PorOT(_Idpote, _Idpotl)
+        'Fm.ShowDialog(Me)
+        'Fm.Dispose()
 
     End Sub
 

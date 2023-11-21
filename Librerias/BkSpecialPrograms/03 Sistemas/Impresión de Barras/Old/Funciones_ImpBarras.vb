@@ -900,6 +900,86 @@
 
 #End Region
 
+#Region "IMPRIMIR TARJA"
+
+    Sub Sb_Imprimir_Tarja(_NombreEtiqueta As String,
+                          _Puerto As String,
+                          _Empresa As String,
+                          _Id_Tarja As Integer)
+
+
+        Consulta_sql = "Select Trj.*,Isnull(Anl.NombreTabla,'') As 'Analista_Str',Isnull(Plt.NombreTabla,'') As 'Planta_Str'" &
+                       ",Isnull(Trn.NombreTabla,'') As 'Turno_Str'" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja Trj" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Anl On Anl.Tabla = 'TARJA_ANALISTA' And Anl.CodigoTabla = Analista" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Plt On Plt.Tabla = 'TARJA_PLANTA' And Plt.CodigoTabla = Planta" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Trn On Trn.Tabla = 'TARJA_TURNO' And Trn.CodigoTabla = Turno" & vbCrLf &
+                       "Where Id = " & _Id_Tarja
+
+        Dim _Row_Tarja As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql) ' Fx_Datos_Ubicacion(_Empresa, _Sucursal, _Bodega, _Id_Mapa, _Codigo_Sector, _CodUbicacion)
+
+        Dim _Fecha_impresion As Date = Now
+        Dim _RowEtiqueta As DataRow = Fx_TraeEtiqueta(_NombreEtiqueta)
+
+        Dim _Texto = _RowEtiqueta.Item("FUNCION")
+
+        Dim _TRJ_ETQ_Nro_CPT As String = "<TRJ>" & _Row_Tarja.Item("Nro_CPT") & "<END>"
+        Dim _TRJ_FechaElab2 As String = FormatDateTime(_Row_Tarja.Item("FechaElab"), DateFormat.ShortDate)
+
+        _Texto = Replace(_Texto, "<TRJ_ETQ_Nro_CPT>", _TRJ_ETQ_Nro_CPT.Trim)
+        _Texto = Replace(_Texto, "<TRJ_FechaElab2>", _TRJ_FechaElab2.Trim)
+
+        Dim _Funciones As New List(Of String)
+        Sb_Llenar_Listado_Funciones(0, _Texto, _Funciones)
+
+        ' Encabezado
+        For Each _Funcion As String In _Funciones
+
+            For Each _Columna As DataColumn In _Row_Tarja.Table.Columns
+
+                If _Funcion.Contains(_Columna.ColumnName) Then
+
+                    '_Funcion = "TRJ_" & _Funcion
+
+                    Dim _Funcion_Buscar = "<" & _Funcion & ">"
+                    Dim _Valor_Funcion = Fx_Parametro_Vs_Variable(_Funcion_Buscar, _Row_Tarja, "TRJ_")
+
+                    If _Funcion_Buscar = "<barcode>" Then
+                        Dim _New_Valor_Funcion = Mid(_Valor_Funcion, 1, 22) & ">6" & Mid(_Valor_Funcion, 23, 1)
+                        _Valor_Funcion = _New_Valor_Funcion
+                        '60503035247121012939710
+                    End If
+                    _Texto = Replace(_Texto, _Funcion_Buscar, _Valor_Funcion)
+                    Exit For
+
+                End If
+
+            Next
+
+        Next
+
+        _Codigo_principal = _Row_Tarja.Item("Codigo")
+        _Codigo_Alternativo = _Row_Tarja.Item("CodAlternativo")
+
+        Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo_principal & "'"
+        Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        _Codigo_tecnico = _RowProducto.Item("KOPRTE")
+        _Codigo_rapido = _RowProducto.Item("KOPRRA")
+        _Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
+        _Descripcion_Corta = _RowProducto.Item("NOKOPRRA").ToString.Trim
+
+        _Descripcion = Replace(_Descripcion, Chr(34), "")
+        _Desc0125 = Mid(_Descripcion, 1, 25)
+        _Desc2650 = Mid(_Descripcion, 26, 50)
+
+        Sb_Imprimir_PRN(_Texto, _Puerto)
+
+    End Sub
+
+#End Region
+
+
 #Region "PROCEDIMIENTOS PRIVADOS"
 
 #Region "TRAER ETIQUETA"
@@ -986,8 +1066,20 @@
         _Texto = Replace(_Texto, "<PRECIO_UD1>", _Precio_ud1)
         _Texto = Replace(_Texto, "<PRECIO_UD2>", _Precio_ud2)
 
-        Dim _vPrecioNetoXRtu As String = Fx_Formato_Numerico(_PrecioNetoXRtu, "9", False)
-        Dim _vPrecioBrutoXRtu As String = Fx_Formato_Numerico(_PrecioBrutoXRtu, "9", False)
+        Dim _vPrecioNetoXRtu As String
+        Dim _vPrecioBrutoXRtu As String
+
+        Try
+            _vPrecioNetoXRtu = Fx_Formato_Numerico(_PrecioNetoXRtu, "9", False)
+        Catch ex As Exception
+            _vPrecioNetoXRtu = "?"
+        End Try
+
+        Try
+            _vPrecioBrutoXRtu = Fx_Formato_Numerico(_PrecioBrutoXRtu, "9", False)
+        Catch ex As Exception
+            _vPrecioBrutoXRtu = "?"
+        End Try
 
         If _Texto.Contains("PBRUTOUD1X6") Or _Texto.Contains("PBRUTOUD1XMULTIPLO") Or _Texto.Contains("PBRUTOUD2XMULTIPLO") Then
 
@@ -1050,8 +1142,21 @@
         Dim _St_PU01_Bruto3 As String = Fx_Formato_Numerico(_PU01_Bruto, "999.999", False)
         Dim _St_PU02_Bruto3 As String = Fx_Formato_Numerico(_PU02_Bruto, "999.999", False)
 
-        Dim _Lc_PrecioEspLC1 As String = Fx_Formato_Numerico(_PrecioLc1, "9", False)
-        Dim _Lc_PrecioEspLC2 As String = Fx_Formato_Numerico(_PrecioLc1, "9.999.999", False)
+        Dim _Lc_PrecioEspLC1 As String
+        Dim _Lc_PrecioEspLC2 As String
+
+        Try
+            _Lc_PrecioEspLC1 = Fx_Formato_Numerico(_PrecioLc1, "9", False)
+        Catch ex As Exception
+            _Lc_PrecioEspLC1 = "?"
+        End Try
+
+        Try
+            _Lc_PrecioEspLC2 = Fx_Formato_Numerico(_PrecioLc1, "9.999.999", False)
+        Catch ex As Exception
+            _Lc_PrecioEspLC2 = "?"
+        End Try
+
 
         Dim _St_PU01_Neto4 As String = Fx_Formato_Numerico(_PU01_Neto, "9.999.999", False)
         Dim _St_PU02_Neto4 As String = Fx_Formato_Numerico(_PU02_Neto, "9.999.999", False)

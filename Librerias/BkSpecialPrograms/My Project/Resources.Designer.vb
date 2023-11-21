@@ -22,7 +22,7 @@ Namespace My.Resources
     '''<summary>
     '''  Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
      Global.Microsoft.VisualBasic.HideModuleNameAttribute()>  _
@@ -92,6 +92,8 @@ Namespace My.Resources
         
         '''<summary>
         '''  Busca una cadena traducida similar a 
+        '''Declare @Empresa char(2)
+        '''Set @Empresa = &apos;#Empresa#&apos;
         '''
         '''-- // Creación de tabla de paso 
         '''
@@ -103,8 +105,7 @@ Namespace My.Resources
         '''
         '''CREATE TABLE [dbo].[Zw_ListaLC_TblPasoListas] (
         ''' [Id]  int IDENTITY(1, 1)     NOT NULL,
-        ''' [Lista]         char(3)      DEFAULT &apos;&apos;,  -- Codigo de la modalidad
-        ''' [NombreLista]   char(30)     DEFAULT &apos;&apos; [resto de la cadena truncado]&quot;;.
+        ''' [Lista]         char(3)      DEFAULT &apos;&apos;,  -- Codigo de  [resto de la cadena truncado]&quot;;.
         '''</summary>
         Public ReadOnly Property Actualiza_Lsita_de_precios_PRECIOS_LC() As String
             Get
@@ -871,20 +872,20 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Busca una cadena traducida similar a Declare @Ila Float, @Codigo Char(13)
+        '''  Busca una cadena traducida similar a Declare @Ila Float, @Codigo Char(13), @Empresa Char(2)
         '''
         '''IF EXISTS (SELECT * FROM sysobjects WHERE name=&apos;#TablaPaso#&apos;) BEGIN
         '''DROP TABLE #TablaPaso#
         '''END
         '''
         '''Set @Codigo = &apos;#Codigo#&apos;
+        '''Set @Empresa = &apos;#Empresa#&apos;
         '''
         '''Set @Ila = (SELECT    SUM(ISNULL(dbo.TABIM.POIM, 0)) AS Impuestos
         '''             FROM         dbo.MAEPR LEFT OUTER JOIN
         '''                          dbo.TABIMPR ON dbo.MAEPR.KOPR = dbo.TABIMPR.KOPR LEFT OUTER JOIN
         '''                          dbo.TABIM ON dbo.TABIMPR.KOIM = dbo.TABIM.KOIM
-        '''             GROUP BY dbo.MAEPR.KOPR, dbo.MAEPR.NOKOPR
-        '''   [resto de la cadena truncado]&quot;;.
+        '''             [resto de la cadena truncado]&quot;;.
         '''</summary>
         Public ReadOnly Property DetalleMcostoPm_eImpuestos() As String
             Get
