@@ -430,10 +430,10 @@ Partial Class Frm_CodAlternativo_Ver
     Friend WithEvents Btn_Ver_Usuario_Con_Este_Permiso As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents TxtDescripcion_Proveedor As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents TxtRTU As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents TxtCodigo As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents Txtdescripcion As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
+    Public WithEvents TxtRTU As DevComponents.DotNetBar.Controls.TextBoxX
+    Public WithEvents TxtCodigo As DevComponents.DotNetBar.Controls.TextBoxX
+    Public WithEvents Txtdescripcion As DevComponents.DotNetBar.Controls.TextBoxX
 End Class

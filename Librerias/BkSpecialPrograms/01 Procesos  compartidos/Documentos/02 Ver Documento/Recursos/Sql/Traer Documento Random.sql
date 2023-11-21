@@ -30,6 +30,8 @@ WHERE  EDO.IDMAEEDO=@Idmaeedo
 SELECT 
               EDD.IDMAEDDO,
               EDD.IDMAEEDO,
+              EDD.ARCHIRST,
+              EDD.IDRST,
 			  EDD.TIDO,
 			  EDD.NUDO,
               SUBSTRING(EDD.NULIDO,4,2) AS ITEM,

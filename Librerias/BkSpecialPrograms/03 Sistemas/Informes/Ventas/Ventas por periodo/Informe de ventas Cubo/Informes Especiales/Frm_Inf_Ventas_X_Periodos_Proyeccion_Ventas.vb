@@ -1,5 +1,4 @@
-'Imports Lib_Bakapp_VarClassFunc
-
+ï»¿
 Public Class Frm_Inf_Ventas_X_Periodos_Proyeccion_Ventas
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -69,10 +68,10 @@ Public Class Frm_Inf_Ventas_X_Periodos_Proyeccion_Ventas
 
     Public Sub New(ByVal Nombre_Tabla_Paso As String)
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
         _Nombre_Tabla_Paso = Nombre_Tabla_Paso
         _Nombre_Tabla_Paso2 = Nombre_Tabla_Paso & "_02"
 

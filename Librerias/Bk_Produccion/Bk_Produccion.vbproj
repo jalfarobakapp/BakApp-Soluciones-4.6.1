@@ -263,6 +263,7 @@
       <DependentUpon>Dfa_Cr.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Cl_Tarja.vb" />
     <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Frm_GRI_FabXProducto.Designer.vb">
       <DependentUpon>Frm_GRI_FabXProducto.vb</DependentUpon>
     </Compile>

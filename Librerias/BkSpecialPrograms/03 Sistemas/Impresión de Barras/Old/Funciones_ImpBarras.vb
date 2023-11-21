@@ -275,7 +275,9 @@
         End If
 
         Datos_Documento.Dispose()
+
         Dim _RowProducto As DataRow
+        Dim _RowDetalle As DataRow
 
         For Each _Fila As DataRow In _TblDetalle.Rows
 
@@ -294,6 +296,8 @@
                 _Nudopa = _Fila.Item("NUDOPA")
 
                 _RowProducto = Fx_DatosProducto(_Codigo_principal, _Lista, _Empresa, _Sucursal, _Bodega, _CodEntidad)
+
+                _RowDetalle = _Fila
 
                 Exit For
 
@@ -362,7 +366,122 @@
 
         _PrecioLc1 = 0
 
+        If _RowDetalle.Item("ARCHIRST").ToString.Trim = "POTL" Then
+
+            Dim _Idpotl As Integer = _RowDetalle.Item("IDRST")
+
+            Sb_Etiquetas_OT(_Texto, _Idpotl, _Kopral)
+
+        End If
+
+        Consulta_sql = "Select Top 1 Id,Enc.Id_Lote,Enc.NroLote,Enc.NroLote As 'NROLOTE_BK',NomTabla,IdTabla,Enc.FechaVenci,Enc.FechaVenci As 'FECHAVENCI_LOTE_BK'" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Lotes_Det Det" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Lotes_Enc Enc On Enc.Id_Lote = Det.Id_Lote" & vbCrLf &
+                       "Where Det.NomTabla = 'MAEDDO' And Det.IdTabla = " & _RowDetalle.Item("IDMAEDDO")
+        Dim _Row_Lote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not IsNothing(_Row_Lote) Then
+
+            _Texto = Replace(_Texto, "<NroLote>", _Row_Lote.Item("NroLote"))
+            _Texto = Replace(_Texto, "<FechaVenci>", Format(_Row_Lote.Item("FechaVenci"), "dd-MM-yyyy"))
+
+            _Texto = Replace(_Texto, "<NROLOTE_BK>", _Row_Lote.Item("NroLote"))
+            _Texto = Replace(_Texto, "<FECHAVENCI_LOTE_BK>", Format(_Row_Lote.Item("FechaVenci"), "dd-MM-yyyy"))
+
+        End If
+
         Sb_Imprimir_PRN(_Texto, _Puerto)
+
+    End Sub
+
+    Sub Sb_Etiquetas_OT(ByRef _Texto As String, _Idpotl As Integer, _Kopral As String)
+
+        Dim _Idpote As Integer
+
+        Consulta_sql = "Select POTL.*,Ltd.NroLote,Lte.FechaVenci,'" & _Kopral & "' As ALTERNAT,'" & _Kopral & "' As CODIGO_ALT" & vbCrLf &
+               "From POTL" & vbCrLf &
+               "Left Join " & _Global_BaseBk & "Zw_Lotes_Det Ltd On IDPOTL = IdTabla" & vbCrLf &
+               "Left Join " & _Global_BaseBk & "Zw_Lotes_Enc Lte On Ltd.Id_Lote = Lte.Id_Lote" & vbCrLf &
+               "Where IDPOTL = " & _Idpotl
+
+        Consulta_sql = "Select * From POTL Where IDPOTL = " & _Idpotl
+
+        Dim _Row_Potl As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row_Potl) Then
+            _Error = "No existe registro de OT Tabla POTL"
+            Return
+        End If
+
+        _Idpote = _Row_Potl.Item("IDPOTE")
+
+        Dim _Fecha_impresion As Date = Now
+
+        '_Texto = Replace(_Texto, "<NUMOT_INT>", _NumotInt)
+
+        Dim _Funciones As New List(Of String)
+        Sb_Llenar_Listado_Funciones(0, _Texto, _Funciones)
+
+        Consulta_sql = "Select * From POTE Where IDPOTE = " & _Idpote
+        Dim _Row_Pote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row_Pote) Then
+            _Error = "No existe registro de OT Tabla POTE"
+            Return
+        End If
+
+        ' Encabezado
+        For Each _Funcion As String In _Funciones
+
+            For Each _Columna As DataColumn In _Row_Pote.Table.Columns
+
+                If _Funcion.Contains(_Columna.ColumnName) Then
+
+                    Dim _Funcion_Buscar = "<" & _Funcion & ">"
+                    Dim _Valor_Funcion = Fx_Parametro_Vs_Variable(_Funcion_Buscar, _Row_Pote)
+
+                    If _Funcion_Buscar = "<barcode>" Then
+                        Dim _New_Valor_Funcion = Mid(_Valor_Funcion, 1, 22) & ">6" & Mid(_Valor_Funcion, 23, 1)
+                        _Valor_Funcion = _New_Valor_Funcion
+                        '60503035247121012939710
+                    End If
+                    _Texto = Replace(_Texto, _Funcion_Buscar, _Valor_Funcion)
+                    Exit For
+
+                End If
+
+            Next
+
+        Next
+
+        ' Descripcion
+
+        _Funciones.Clear()
+
+        Sb_Llenar_Listado_Funciones(0, _Texto, _Funciones)
+
+        For Each _Funcion As String In _Funciones
+
+            For Each _Columna As DataColumn In _Row_Potl.Table.Columns
+
+                If _Funcion.Contains(_Columna.ColumnName) Then
+
+                    Dim _Funcion_Buscar = "<" & _Funcion & ">"
+                    Dim _Valor_Funcion = Fx_Parametro_Vs_Variable(_Funcion_Buscar, _Row_Potl)
+
+                    If _Funcion_Buscar = "<barcode>" Then
+                        Dim _New_Valor_Funcion = Mid(_Valor_Funcion, 1, 22) & ">6" & Mid(_Valor_Funcion, 23, 1)
+                        _Valor_Funcion = _New_Valor_Funcion
+                        '60503035247121012939710
+                    End If
+                    _Texto = Replace(_Texto, _Funcion_Buscar, _Valor_Funcion)
+                    Exit For
+
+                End If
+
+            Next
+
+        Next
 
     End Sub
 

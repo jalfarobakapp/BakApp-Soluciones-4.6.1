@@ -9,8 +9,11 @@ Public Class Frm_GRI_FabXProducto
     Dim _Row_Pote As DataRow
     Dim _Row_Potl As DataRow
     Dim _Row_Maepr As DataRow
+    Dim _Row_Tabcodal As DataRow
 
     Dim _FechaDelServidor As Date
+
+    Dim _Cl_Tarja As New Cl_Tarja
 
     Public Sub New()
 
@@ -24,6 +27,24 @@ Public Class Frm_GRI_FabXProducto
     End Sub
 
     Private Sub Frm_GRI_FabXProducto_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        'Consulta_sql = "Select CodigoTabla As Padre,'' As Hijo" & vbCrLf &
+        '               "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+        '               "Where Tabla = 'TARJA_TURNO'"
+        'Dim _Tbl_Turno As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        'caract_combo(Cmb_Turno)
+        'Cmb_Turno.DataSource = _Tbl_Turno
+        'Cmb_Turno.SelectedValue = "D"
+
+        'Consulta_sql = "Select CodigoTabla As Padre,'' As Hijo" & vbCrLf &
+        '               "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+        '               "Where Tabla = 'TARJA_PLANTA'"
+        'Dim _Tbl_Planta As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        'caract_combo(Cmb_Planta)
+        'Cmb_Planta.DataSource = _Tbl_Planta
+        'Cmb_Planta.SelectedValue = "1"
 
         AddHandler Txt_Cantidad.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_Cantidad.Validated, AddressOf Sb_Txt_Nros_Validated
@@ -118,6 +139,7 @@ Public Class Frm_GRI_FabXProducto
         Txt_Cantidad.Tag = 0
 
         Grupo_Producto.Enabled = True
+        GroupPanel2.Enabled = True
         Txt_Codigo.ButtonCustom.Enabled = True
         Txt_Codigo.Text = _Row_Potl.Item("CODIGO")
         Txt_Descripcion.Text = _Row_Potl.Item("GLOSA")
@@ -129,6 +151,12 @@ Public Class Frm_GRI_FabXProducto
         Consulta_sql = "Select * From MAEPR Where KOPR = '" & Txt_Codigo.Text & "'"
         _Row_Maepr = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+        Dim _Arr(,) As String = {{"", ""},
+                                             {1, _Row_Maepr.Item("UD01PR")},
+                                             {2, _Row_Maepr.Item("UD02PR")}}
+        Sb_Llenar_Combos(_Arr, Cmb_Formato)
+        Cmb_Formato.SelectedValue = ""
+
         Txt_Cantidad.Enabled = True
         Txt_Cantidad.Focus()
 
@@ -139,6 +167,7 @@ Public Class Frm_GRI_FabXProducto
     End Sub
 
     Sub Sb_Limpiar()
+
         Dtp_Fecha_Ingreso.Value = _FechaDelServidor
         Txt_Numot.Text = String.Empty
         Txt_Numot.ReadOnly = False
@@ -151,18 +180,31 @@ Public Class Frm_GRI_FabXProducto
         Txt_Cantidad.Enabled = False
         Txt_Cantidad.Text = String.Empty
         Txt_Cantidad.Tag = 0
-        Btn_Grabar.Enabled = False
+        'Btn_Grabar.Enabled = False
         Lbl_Fabricar.Text = "0"
         Lbl_Realizado.Text = "0"
         Lbl_Saldo.Text = "0"
         Txt_Numot.Focus()
         Grupo_Producto.Text = "DETALLE DE DATOS DE FABRICACION"
+
+        GroupPanel2.Enabled = False
+        Txt_NroLote.Text = String.Empty
+        Txt_Turno.Text = String.Empty
+        Txt_Planta.Text = String.Empty
+        Txt_Analista.Text = String.Empty
+        Txt_CodAlternativo_Pallet.Text = String.Empty
+        Txt_Observaciones.Text = String.Empty
+        Txt_Observaciones.ReadOnly = False
+        Cmb_Formato.DataSource = Nothing
+        'Cmb_Formato.Text = String.Empty
+
         Me.Refresh()
+
     End Sub
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
-        Btn_Grabar.Enabled = False
+        'Btn_Grabar.Enabled = False
 
         Dim _New_Idmaeedo As Integer
         Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
@@ -180,12 +222,6 @@ Public Class Frm_GRI_FabXProducto
         Dim _Cantidadv As Double = Txt_Cantidad.Tag
         Dim _Rtu As Double = _Row_Maepr.Item("RLUD")
         Dim _Resultado As Double = _Cantidadv / _Rtu
-
-        If String.IsNullOrEmpty(Txt_NroLote.Text) Then
-            MessageBoxEx.Show(Me, "Falta el numero de lote", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Txt_NroLote.Focus()
-            Return
-        End If
 
         If _Cantidadv = 0 Then
             MessageBoxEx.Show(Me, "Debe ingresar la cantidad", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -205,9 +241,49 @@ Public Class Frm_GRI_FabXProducto
             Return
         End If
 
+        If String.IsNullOrEmpty(Txt_NroLote.Text) Then
+            MessageBoxEx.Show(Me, "Falta el numero de lote", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_NroLote.Focus()
+            Return
+        End If
+
+        If String.IsNullOrEmpty(Txt_Turno.Text) Then
+            MessageBoxEx.Show(Me, "Falta el turno", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Turno.Focus()
+            Return
+        End If
+
+        If String.IsNullOrEmpty(Txt_Planta.Text) Then
+            MessageBoxEx.Show(Me, "Falta la planta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Planta.Focus()
+            Return
+        End If
+
+        If String.IsNullOrEmpty(Txt_CodAlternativo_Pallet.Text) Then
+            MessageBoxEx.Show(Me, "Falta el pallet", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_CodAlternativo_Pallet.Focus()
+            Return
+        End If
+
+        If String.IsNullOrEmpty(Txt_Analista.Text) Then
+            MessageBoxEx.Show(Me, "Falta el analista", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Analista.Focus()
+            Return
+        End If
+
         If MessageBoxEx.Show(Me, "¿Confirma la grabación por " & Txt_Cantidad.Text & " " & LabelX3.Text & "?", "Confirmar Grabación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
             Txt_Cantidad.Focus()
             Return
+        End If
+
+        _Cl_Tarja._Cl_Tarja_Ent.Codigo = _Row_Maepr.Item("KOPR")
+        _Cl_Tarja._Cl_Tarja_Ent.FechaElab = Dtp_Fecha_Ingreso.Value
+        _Cl_Tarja._Cl_Tarja_Ent.Observaciones = Txt_Observaciones.Text
+
+        If Cmb_Formato.SelectedValue = 1 Then
+            _Cl_Tarja._Cl_Tarja_Ent.Formato = 1
+        Else
+            _Cl_Tarja._Cl_Tarja_Ent.Formato = _Row_Maepr.Item("RLUD")
         End If
 
         Consulta_sql = "Select *," & _Cantidad & " As Cantidad,'" & ModSucursal & "' As Sucursal,'" & ModBodega & "' As Bodega" & vbCrLf &
@@ -222,6 +298,26 @@ Public Class Frm_GRI_FabXProducto
         _New_Idmaeedo = Fm.Fx_Grabar_Documento(False)
         Fm.Dispose()
 
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Lotes_Enc Where NroLote = '" & Txt_NroLote.Text & "'"
+        Dim _Row_Lote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Consulta_sql = "Select top 1 IDMAEDDO From MAEDDO Where IDMAEEDO = " & _New_Idmaeedo
+        Dim _Row_Maeddo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Id_Lote As Integer = _Row_Lote.Item("Id_Lote")
+        Dim _NroLote As String = _Row_Lote.Item("NroLote")
+        Dim _NomTabla As String = "MAEDDO"
+        Dim _Idmaeddo As Integer = _Row_Maeddo.Item("IDMAEDDO")
+
+        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Lotes_Det (Id_Lote,NroLote,NomTabla,IdTabla) Values " &
+                       "(" & _Id_Lote & ",'" & _NroLote & "','" & _NomTabla & "'," & _Idmaeddo & ")"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        _Cl_Tarja._Cl_Tarja_Ent.Idmaeddo = _Idmaeddo
+
+        Dim _Cl_Tarja_Ent As New Cl_Tarja_Ent.Mensaje_Tarja
+        _Cl_Tarja_Ent = _Cl_Tarja.Fx_Grabar_Tarja()
+
         Sb_Imprimir_Documento(Me, _New_Idmaeedo, False, Modalidad)
 
         Sb_Limpiar()
@@ -233,13 +329,13 @@ Public Class Frm_GRI_FabXProducto
     End Sub
 
     Private Sub Sb_Txt_Nros_Validated(sender As Object, e As EventArgs)
-        Btn_Grabar.Enabled = True
+        'Btn_Grabar.Enabled = True
         CType(sender, Controls.TextBoxX).Tag = Val(CType(sender, Controls.TextBoxX).Text)
         CType(sender, Controls.TextBoxX).Text = FormatNumber(CType(sender, Controls.TextBoxX).Tag, 0)
     End Sub
     Private Sub Sb_Txt_Nros_Enter(sender As Object, e As EventArgs)
         CType(sender, Controls.TextBoxX).Text = CType(sender, Controls.TextBoxX).Tag
-        Btn_Grabar.Enabled = False
+        'Btn_Grabar.Enabled = False
     End Sub
 
     Private Sub Txt_Cantidad_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Txt_Cantidad.KeyPress
@@ -273,7 +369,7 @@ Public Class Frm_GRI_FabXProducto
                               "A continuación debera ingresar los datos del Lote", "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
-            _Row_Lote = Fx_Ingresar_Lote()
+            _Row_Lote = Fx_Ingresar_Lote(_NroLote)
 
             If IsNothing(_Row_Lote) Then
                 Return
@@ -281,16 +377,24 @@ Public Class Frm_GRI_FabXProducto
 
         End If
 
+        If _Row_Lote.Item("Codigo").ToString.Trim <> Txt_Codigo.Text.Trim Then
+            MessageBoxEx.Show(Me, "El número de lote no pertence al producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        MessageBoxEx.Show(Me, "Lote aceptado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
         Txt_NroLote.Text = _NroLote
+
+        _Cl_Tarja._Cl_Tarja_Ent.Lote = _NroLote
 
     End Sub
 
-    Function Fx_Ingresar_Lote() As DataRow
+    Function Fx_Ingresar_Lote(_Nro_Lote As String) As DataRow
 
-        Dim _Nro_Lote As String
         Dim _Row_Lote As DataRow
 
-        Dim Fm As New Frm_Lote_Ing(Txt_Codigo.Text)
+        Dim Fm As New Frm_Lote_Ing(_Nro_Lote, Txt_Codigo.Text)
         Fm.ShowDialog(Me)
 
         If Fm.Grabar Then
@@ -312,5 +416,115 @@ Public Class Frm_GRI_FabXProducto
         If e.KeyValue = Keys.Enter Then
             Call Txt_NroLote_ButtonCustomClick(Nothing, Nothing)
         End If
+    End Sub
+
+    Private Sub Txt_CodAlternativo_Pallet_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CodAlternativo_Pallet.ButtonCustomClick
+
+        Dim _Codigo As String = _Row_Maepr.Item("KOPR")
+        Dim _Descripcion As String = _Row_Maepr.Item("NOKOPR")
+        Dim _Rtu As Double = _Row_Maepr.Item("RLUD")
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("TABCODAL", "KOPR = '" & _Codigo & "'")
+
+        If _Reg = 0 Then
+            MessageBoxEx.Show(Me, "Este producto no tiene códigos alternativos asociados", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_CodAlternativo_Ver
+        Fm.TxtCodigo.Text = _Codigo
+        Fm.Txtdescripcion.Text = _Descripcion
+        Fm.TxtRTU.Text = _Rtu
+        Fm.ModoSeleccion = True
+        Fm.ShowDialog(Me)
+        _Row_Tabcodal = Fm.RowTabcodalSeleccionado
+        Fm.Dispose()
+
+        If Not IsNothing(_Row_Tabcodal) Then
+
+            Dim _Kopral As String = _Row_Tabcodal.Item("KOPRAL")
+            Dim _Sacos As Integer = Txt_Cantidad.Tag / _Rtu
+            Dim _SacosXPallet As Integer = _Row_Tabcodal.Item("MULTIPLO")
+            Dim _Ud01Pr As String = _Row_Maepr.Item("UD01PR")
+            Dim _Ud02Pr As String = _Row_Maepr.Item("UD02PR")
+            Dim _Udad As String
+
+            If _Row_Tabcodal.Item("UNIMULTI") = 1 Then
+                _Udad = _Ud01Pr
+            Else
+                _Udad = _Ud02Pr
+            End If
+
+            _Cl_Tarja._Cl_Tarja_Ent.SacosXPallet = _SacosXPallet
+            _Cl_Tarja._Cl_Tarja_Ent.CodAlternativo = _Kopral
+
+            Txt_CodAlternativo_Pallet.Text = _Row_Tabcodal.Item("KOPRAL").ToString.Trim & ", Udad: " & _Udad & " x " & _Sacos & ", Sacos por Pallets: " & _SacosXPallet
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_Turno_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Turno.ButtonCustomClick
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Tabla = _Global_BaseBk & "Zw_TablaDeCaracterizaciones"
+        _Filtrar.Campo = "CodigoTabla"
+        _Filtrar.Descripcion = "NombreTabla"
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "TURNO"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra,
+                               "And Tabla = 'TARJA_TURNO'",
+                               False, False, True, False,, False) Then
+
+            _Cl_Tarja._Cl_Tarja_Ent.Turno = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+            Txt_Turno.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_Planta_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Planta.ButtonCustomClick
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Tabla = _Global_BaseBk & "Zw_TablaDeCaracterizaciones"
+        _Filtrar.Campo = "CodigoTabla"
+        _Filtrar.Descripcion = "NombreTabla"
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "PLANTA"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra,
+                               "And Tabla = 'TARJA_PLANTA'",
+                               False, False, True, False,, False) Then
+
+            _Cl_Tarja._Cl_Tarja_Ent.Planta = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+            Txt_Planta.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_Analista_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Analista.ButtonCustomClick
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Tabla = _Global_BaseBk & "Zw_TablaDeCaracterizaciones"
+        _Filtrar.Campo = "CodigoTabla"
+        _Filtrar.Descripcion = "NombreTabla"
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "ANALISTA"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra,
+                               "And Tabla = 'TARJA_ANALISTA'",
+                               False, False, True, False,, False) Then
+
+            _Cl_Tarja._Cl_Tarja_Ent.Analista = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+            Txt_Analista.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
+
+        End If
+
     End Sub
 End Class

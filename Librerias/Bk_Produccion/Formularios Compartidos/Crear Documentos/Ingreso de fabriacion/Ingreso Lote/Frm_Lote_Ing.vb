@@ -11,7 +11,7 @@ Public Class Frm_Lote_Ing
 
     Dim _Row_Producto As DataRow
 
-    Public Sub New(_CodProducto As String)
+    Public Sub New(_NroLote As String, _CodProducto As String)
 
         ' Esta llamada es exigida por el diseñador.
         InitializeComponent()
@@ -21,6 +21,8 @@ Public Class Frm_Lote_Ing
         Consulta_sql = "Select * From MAEPR Where KOPR = '" & _CodProducto & "'"
         _Row_Producto = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+        Txt_NroLote.Text = _NroLote
+
     End Sub
 
     Private Sub Frm_Lote_Ing_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -28,6 +30,8 @@ Public Class Frm_Lote_Ing
         Me.ActiveControl = Txt_NroLote
 
         Txt_Producto.Text = _Row_Producto.Item("KOPR").ToString.Trim & "-" & _Row_Producto.Item("NOKOPR").ToString.Trim
+
+        Dtp_FechaVenci.Value = DateAdd(DateInterval.Year, 1, FechaDelServidor)
 
     End Sub
 
@@ -118,7 +122,7 @@ Public Class Frm_Lote_Ing
         End If
 
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Lotes_Enc (NroLote,Codigo,FechaVenci) Values " &
-                       "('" & Txt_NroLote.Text & "','" & Txt_Producto.Text & "','" & Format(Dtp_FechaVenci.Value, "yyyyMMdd") & "')"
+                       "('" & Txt_NroLote.Text & "','" & _Row_Producto.Item("KOPR") & "','" & Format(Dtp_FechaVenci.Value, "yyyyMMdd") & "')"
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
             NroLote = Txt_NroLote.Text
             Grabar = True

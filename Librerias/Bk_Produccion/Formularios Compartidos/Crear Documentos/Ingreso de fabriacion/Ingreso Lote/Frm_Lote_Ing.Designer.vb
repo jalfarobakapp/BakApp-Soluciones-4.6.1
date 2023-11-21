@@ -26,12 +26,12 @@ Partial Class Frm_Lote_Ing
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo_Producto = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Txt_Producto = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_NroLote = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.Dtp_FechaVenci = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.Txt_NroLote = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_Producto = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo_Producto.SuspendLayout()
         CType(Me.Dtp_FechaVenci, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -43,7 +43,7 @@ Partial Class Frm_Lote_Ing
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 119)
+        Me.Bar1.Location = New System.Drawing.Point(0, 124)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(827, 41)
         Me.Bar1.Stretch = True
@@ -59,7 +59,6 @@ Partial Class Frm_Lote_Ing
         Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
         Me.Btn_Grabar.Name = "Btn_Grabar"
         Me.Btn_Grabar.Tooltip = "Seleccionar registro marcado"
-        Me.Btn_Grabar.Visible = False
         '
         'Grupo_Producto
         '
@@ -72,7 +71,6 @@ Partial Class Frm_Lote_Ing
         Me.Grupo_Producto.Controls.Add(Me.Txt_Producto)
         Me.Grupo_Producto.Controls.Add(Me.LabelX1)
         Me.Grupo_Producto.DisabledBackColor = System.Drawing.Color.Empty
-        Me.Grupo_Producto.Enabled = False
         Me.Grupo_Producto.Location = New System.Drawing.Point(12, 12)
         Me.Grupo_Producto.Name = "Grupo_Producto"
         Me.Grupo_Producto.Size = New System.Drawing.Size(802, 100)
@@ -107,83 +105,6 @@ Partial Class Frm_Lote_Ing
         Me.Grupo_Producto.TabIndex = 101
         Me.Grupo_Producto.Text = "Detalle"
         '
-        'Txt_Producto
-        '
-        Me.Txt_Producto.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_Producto.Border.Class = "TextBoxBorder"
-        Me.Txt_Producto.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Producto.ButtonCustom.Image = CType(resources.GetObject("Txt_Producto.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_Producto.ButtonCustom.Visible = True
-        Me.Txt_Producto.ButtonCustom2.Image = CType(resources.GetObject("Txt_Producto.ButtonCustom2.Image"), System.Drawing.Image)
-        Me.Txt_Producto.ButtonCustom2.Visible = True
-        Me.Txt_Producto.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Producto.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Producto.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Txt_Producto.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Producto.Location = New System.Drawing.Point(98, 42)
-        Me.Txt_Producto.MaxLength = 50
-        Me.Txt_Producto.Name = "Txt_Producto"
-        Me.Txt_Producto.ReadOnly = True
-        Me.Txt_Producto.Size = New System.Drawing.Size(692, 26)
-        Me.Txt_Producto.TabIndex = 3
-        Me.Txt_Producto.TabStop = False
-        '
-        'LabelX1
-        '
-        Me.LabelX1.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX1.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(3, 42)
-        Me.LabelX1.Name = "LabelX1"
-        Me.LabelX1.Size = New System.Drawing.Size(71, 23)
-        Me.LabelX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
-        Me.LabelX1.TabIndex = 75
-        Me.LabelX1.Text = "PRODUCTO"
-        '
-        'Txt_NroLote
-        '
-        Me.Txt_NroLote.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_NroLote.Border.Class = "TextBoxBorder"
-        Me.Txt_NroLote.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_NroLote.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_NroLote.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_NroLote.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_NroLote.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Txt_NroLote.ForeColor = System.Drawing.Color.Black
-        Me.Txt_NroLote.Location = New System.Drawing.Point(98, 13)
-        Me.Txt_NroLote.MaxLength = 13
-        Me.Txt_NroLote.Name = "Txt_NroLote"
-        Me.Txt_NroLote.ReadOnly = True
-        Me.Txt_NroLote.Size = New System.Drawing.Size(182, 26)
-        Me.Txt_NroLote.TabIndex = 76
-        Me.Txt_NroLote.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'LabelX2
-        '
-        Me.LabelX2.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX2.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(3, 13)
-        Me.LabelX2.Name = "LabelX2"
-        Me.LabelX2.Size = New System.Drawing.Size(71, 23)
-        Me.LabelX2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
-        Me.LabelX2.TabIndex = 77
-        Me.LabelX2.Text = "NRO. LOTE"
-        '
         'LabelX4
         '
         Me.LabelX4.BackColor = System.Drawing.Color.Transparent
@@ -210,7 +131,6 @@ Partial Class Frm_Lote_Ing
         Me.Dtp_FechaVenci.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Dtp_FechaVenci.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
         Me.Dtp_FechaVenci.ButtonDropDown.Visible = True
-        Me.Dtp_FechaVenci.Enabled = False
         Me.Dtp_FechaVenci.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Dtp_FechaVenci.ForeColor = System.Drawing.Color.Black
         Me.Dtp_FechaVenci.Format = DevComponents.Editors.eDateTimePickerFormat.[Long]
@@ -256,11 +176,88 @@ Partial Class Frm_Lote_Ing
         Me.Dtp_FechaVenci.TabStop = False
         Me.Dtp_FechaVenci.Value = New Date(2018, 1, 30, 12, 16, 22, 0)
         '
+        'Txt_NroLote
+        '
+        Me.Txt_NroLote.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_NroLote.Border.Class = "TextBoxBorder"
+        Me.Txt_NroLote.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_NroLote.ButtonCustom.Image = CType(resources.GetObject("Txt_NroLote.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_NroLote.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_NroLote.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Txt_NroLote.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Txt_NroLote.ForeColor = System.Drawing.Color.Black
+        Me.Txt_NroLote.Location = New System.Drawing.Point(98, 13)
+        Me.Txt_NroLote.MaxLength = 13
+        Me.Txt_NroLote.Name = "Txt_NroLote"
+        Me.Txt_NroLote.ReadOnly = True
+        Me.Txt_NroLote.Size = New System.Drawing.Size(182, 26)
+        Me.Txt_NroLote.TabIndex = 76
+        Me.Txt_NroLote.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'LabelX2
+        '
+        Me.LabelX2.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX2.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX2.ForeColor = System.Drawing.Color.Black
+        Me.LabelX2.Location = New System.Drawing.Point(3, 13)
+        Me.LabelX2.Name = "LabelX2"
+        Me.LabelX2.Size = New System.Drawing.Size(71, 23)
+        Me.LabelX2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.LabelX2.TabIndex = 77
+        Me.LabelX2.Text = "NRO. LOTE"
+        '
+        'Txt_Producto
+        '
+        Me.Txt_Producto.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Producto.Border.Class = "TextBoxBorder"
+        Me.Txt_Producto.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Producto.ButtonCustom.Image = CType(resources.GetObject("Txt_Producto.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Producto.ButtonCustom.Visible = True
+        Me.Txt_Producto.ButtonCustom2.Image = CType(resources.GetObject("Txt_Producto.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Producto.ButtonCustom2.Visible = True
+        Me.Txt_Producto.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Producto.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Txt_Producto.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Txt_Producto.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Producto.Location = New System.Drawing.Point(98, 42)
+        Me.Txt_Producto.MaxLength = 50
+        Me.Txt_Producto.Name = "Txt_Producto"
+        Me.Txt_Producto.ReadOnly = True
+        Me.Txt_Producto.Size = New System.Drawing.Size(692, 26)
+        Me.Txt_Producto.TabIndex = 3
+        Me.Txt_Producto.TabStop = False
+        '
+        'LabelX1
+        '
+        Me.LabelX1.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX1.ForeColor = System.Drawing.Color.Black
+        Me.LabelX1.Location = New System.Drawing.Point(3, 42)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(71, 23)
+        Me.LabelX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.LabelX1.TabIndex = 75
+        Me.LabelX1.Text = "PRODUCTO"
+        '
         'Frm_Lote_Ing
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(827, 160)
+        Me.ClientSize = New System.Drawing.Size(827, 165)
         Me.Controls.Add(Me.Grupo_Producto)
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
