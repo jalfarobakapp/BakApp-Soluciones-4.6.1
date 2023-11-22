@@ -1728,6 +1728,12 @@
     <Compile Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_PorOT.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_Tarja.Designer.vb">
+      <DependentUpon>Frm_ImpBarras_Tarja.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_Tarja.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Cl_InfProyStXVnta.vb" />
     <Compile Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Frm_InfProyStXVnta.Designer.vb">
       <DependentUpon>Frm_InfProyStXVnta.vb</DependentUpon>
@@ -4936,6 +4942,9 @@
     <EmbeddedResource Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_PorOT.resx">
       <DependentUpon>Frm_ImpBarras_PorOT.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_Tarja.resx">
+      <DependentUpon>Frm_ImpBarras_Tarja.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Frm_InfProyStXVnta.resx">
       <DependentUpon>Frm_InfProyStXVnta.vb</DependentUpon>
     </EmbeddedResource>
@@ -7716,6 +7725,8 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_ListaPreProducto.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Log_Archivador.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Log_Gestiones.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Lotes_Det.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Lotes_Enc.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_MrVsPro.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Negocios_01_Enc.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Negocios_02_Det.sql" />
@@ -7730,6 +7741,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Pdc_Mesones.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Pdc_MesonVsMaquina.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Pdc_MesonVsOperario.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Pdp_CPT_Tarja.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Pdp_MaquinaVsProductos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Pdp_MesonVsAlertas.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Pdp_MesonVsAlertas_Lectura.sql" />

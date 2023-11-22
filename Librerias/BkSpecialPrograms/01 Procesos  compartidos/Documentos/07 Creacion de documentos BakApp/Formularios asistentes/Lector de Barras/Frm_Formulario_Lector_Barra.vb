@@ -379,6 +379,44 @@ Public Class Frm_Formulario_Lector_Barra
 
         End If
 
+
+        If Txt_Codigo_Barras.Text.Contains("<TRJ>") AndAlso Txt_Codigo_Barras.Text.Contains("<END>") Then
+
+            'Asi debe quedar una etiqueta asociada a una OT para que el sistema la reconozca
+            '01TER04P25000-36<OTD>36459<END>
+
+            If Not Txt_Codigo_Barras.Text.Contains("<END>") Then
+                Txt_Codigo_Barras.Text = String.Empty
+                Sb_Confirmar_Lectura("La etiqueta no contiene la finalización <END>" & vbCrLf &
+                                     "Revise el código o vuelva a leerlo nuevamente", "Validación", eTaskDialogIcon.Stop, Nothing)
+                Return
+            End If
+
+            Dim _CodigoLeido As String = Txt_Codigo_Barras.Text
+
+            Dim _CodPaso As String = Txt_Codigo_Barras.Text
+            Dim _SeparaCod() As String = Split(_CodPaso, "<END>", 2)
+            Dim _Nro_CPT As String
+
+            _Nro_CPT = _SeparaCod(0).Replace("<TRJ>", "")
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja Where Nro_CPT = '" & _Nro_CPT & "'"
+            Dim _CPT_Tarja As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_CPT_Tarja) Then
+                Sb_Confirmar_Lectura("No se encuentra la Tarja Nro: " & _Nro_CPT, "Validación", eTaskDialogIcon.Stop, Nothing)
+                Return
+            End If
+
+            _Tido = _Sql.Fx_Trae_Dato("MAEDDO", "TIDO", "IDMAEDDO = " & _CPT_Tarja.Item("Idmaeddo"))
+            _Nudo = _Sql.Fx_Trae_Dato("MAEDDO", "NUDO", "IDMAEDDO = " & _CPT_Tarja.Item("Idmaeddo"))
+            _Kopral = _CPT_Tarja.Item("CodAlternativo")
+
+
+        End If
+
+
+
         If Chk_LeerSoloUnaVezCodBarra.Checked Then
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_CodQRLogDoc" & vbCrLf &
@@ -802,7 +840,8 @@ Public Class Frm_Formulario_Lector_Barra
                     Dim segundos As Long = DateDiff(DateInterval.Second, _TiempoInicial, _TiempoFinal)
                     If segundos >= 1 Then
                         MessageBoxEx.Show(Me, "Entrada no permitida por teclado" & vbCrLf &
-                                          "Si necesita digitar un código debe marcar la casilla <Ingresar código con el TECLADO> ", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                          "Si necesita digitar un código debe marcar la casilla <Ingresar código con el TECLADO> ",
+                                          "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                         Txt_Codigo_Barras.Text = ""
                         _Evaluando = False
                     End If

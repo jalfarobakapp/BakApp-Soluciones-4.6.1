@@ -35,6 +35,7 @@ Partial Class Frm_InpunBox_Bk
         Me.Chk_1 = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Btn_BuscarCarpeta = New DevComponents.DotNetBar.ButtonX()
         Me.Btn_Calendario = New DevComponents.DotNetBar.ButtonX()
+        Me.Chk_Teclear = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.SuspendLayout()
         '
         'TxtDescripcion
@@ -213,12 +214,30 @@ Partial Class Frm_InpunBox_Bk
         Me.Btn_Calendario.TabIndex = 38
         Me.Btn_Calendario.Text = "Calendario"
         '
+        'Chk_Teclear
+        '
+        Me.Chk_Teclear.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_Teclear.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Teclear.CheckBoxImageChecked = CType(resources.GetObject("Chk_Teclear.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Teclear.FocusCuesEnabled = False
+        Me.Chk_Teclear.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Teclear.Location = New System.Drawing.Point(408, 166)
+        Me.Chk_Teclear.Name = "Chk_Teclear"
+        Me.Chk_Teclear.Size = New System.Drawing.Size(192, 19)
+        Me.Chk_Teclear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Teclear.TabIndex = 131
+        Me.Chk_Teclear.Text = "Ingresar código con el TECLEANDO"
+        '
         'Frm_InpunBox_Bk
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(602, 231)
         Me.ControlBox = False
+        Me.Controls.Add(Me.Chk_Teclear)
         Me.Controls.Add(Me.Btn_Calendario)
         Me.Controls.Add(Me.Btn_BuscarCarpeta)
         Me.Controls.Add(Me.Chk_1)
@@ -254,4 +273,5 @@ Partial Class Frm_InpunBox_Bk
     Public WithEvents Chk_1 As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Btn_BuscarCarpeta As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Btn_Calendario As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Chk_Teclear As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

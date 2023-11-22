@@ -24,27 +24,11 @@ Public Class Frm_GRI_FabXProducto
 
         _FechaDelServidor = FechaDelServidor()
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_GRI_FabXProducto_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-        'Consulta_sql = "Select CodigoTabla As Padre,'' As Hijo" & vbCrLf &
-        '               "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
-        '               "Where Tabla = 'TARJA_TURNO'"
-        'Dim _Tbl_Turno As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        'caract_combo(Cmb_Turno)
-        'Cmb_Turno.DataSource = _Tbl_Turno
-        'Cmb_Turno.SelectedValue = "D"
-
-        'Consulta_sql = "Select CodigoTabla As Padre,'' As Hijo" & vbCrLf &
-        '               "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
-        '               "Where Tabla = 'TARJA_PLANTA'"
-        'Dim _Tbl_Planta As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        'caract_combo(Cmb_Planta)
-        'Cmb_Planta.DataSource = _Tbl_Planta
-        'Cmb_Planta.SelectedValue = "1"
 
         AddHandler Txt_Cantidad.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_Cantidad.Validated, AddressOf Sb_Txt_Nros_Validated
@@ -204,7 +188,15 @@ Public Class Frm_GRI_FabXProducto
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
-        'Btn_Grabar.Enabled = False
+        If String.IsNullOrEmpty(Txt_Numot.Text) Then
+            MessageBoxEx.Show(Me, "Falta la OT", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If IsNothing(_Row_Maepr) Then
+            MessageBoxEx.Show(Me, "Falta el producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Dim _New_Idmaeedo As Integer
         Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
@@ -279,6 +271,7 @@ Public Class Frm_GRI_FabXProducto
         _Cl_Tarja._Cl_Tarja_Ent.Codigo = _Row_Maepr.Item("KOPR")
         _Cl_Tarja._Cl_Tarja_Ent.FechaElab = Dtp_Fecha_Ingreso.Value
         _Cl_Tarja._Cl_Tarja_Ent.Observaciones = Txt_Observaciones.Text
+        _Cl_Tarja._Cl_Tarja_Ent.Udm = Cmb_Formato.Text
 
         If Cmb_Formato.SelectedValue = 1 Then
             _Cl_Tarja._Cl_Tarja_Ent.Formato = 1
@@ -289,6 +282,12 @@ Public Class Frm_GRI_FabXProducto
         Consulta_sql = "Select *," & _Cantidad & " As Cantidad,'" & ModSucursal & "' As Sucursal,'" & ModBodega & "' As Bodega" & vbCrLf &
                        "From POTL Where IDPOTL = " & _Row_Potl.Item("IDPOTL")
         Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        Me.Enabled = False
+        Dim Fm_Espera As New Frm_Form_Esperar
+        Fm_Espera.Pro_Texto = "GRABANDO DATOS DE FABRICACION, POR FAVOR ESPERE"
+        Fm_Espera.BarraCircular.IsRunning = True
+        Fm_Espera.Show()
 
         Dim Fm As New Frm_Formulario_Documento("GRI", csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna,
                                                False, False, False, False, False, False)
@@ -301,9 +300,10 @@ Public Class Frm_GRI_FabXProducto
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Lotes_Enc Where NroLote = '" & Txt_NroLote.Text & "'"
         Dim _Row_Lote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Consulta_sql = "Select top 1 IDMAEDDO From MAEDDO Where IDMAEEDO = " & _New_Idmaeedo
+        Consulta_sql = "Select top 1 IDMAEDDO,NUDO From MAEDDO Where IDMAEEDO = " & _New_Idmaeedo
         Dim _Row_Maeddo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+        Dim _Nudo As String = _Row_Maeddo.Item("NUDO")
         Dim _Id_Lote As Integer = _Row_Lote.Item("Id_Lote")
         Dim _NroLote As String = _Row_Lote.Item("NroLote")
         Dim _NomTabla As String = "MAEDDO"
@@ -318,7 +318,20 @@ Public Class Frm_GRI_FabXProducto
         Dim _Cl_Tarja_Ent As New Cl_Tarja_Ent.Mensaje_Tarja
         _Cl_Tarja_Ent = _Cl_Tarja.Fx_Grabar_Tarja()
 
-        Sb_Imprimir_Documento(Me, _New_Idmaeedo, False, Modalidad)
+        Fm_Espera.Close()
+        Fm_Espera.Dispose()
+        Fm_Espera = Nothing
+
+        MessageBoxEx.Show(Me, "Datos de fabricación ingresados correctamente con el Nro de GRI: " & _Nudo & vbCrLf &
+                          "Tarja ingresada Nro: " & _Cl_Tarja._Cl_Tarja_Ent.Nro_CPT, "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Me.Enabled = True
+        Me.Refresh()
+
+        'Sb_Imprimir_Documento(Me, _New_Idmaeedo, False, Modalidad)
+
+        Dim Fmt As New Frm_ImpBarras_Tarja
+        Fmt.Txt_Nro_CPT.Text = _Cl_Tarja._Cl_Tarja_Ent.Nro_CPT
+        Fmt.ShowDialog(Me)
 
         Sb_Limpiar()
 
@@ -354,7 +367,7 @@ Public Class Frm_GRI_FabXProducto
         Dim _Aceptar As Boolean
         Dim _NroLote As String
 
-        _Aceptar = InputBox_Bk(Me, "Ingrese el número de Lote", "Número de Lote", _NroLote, False,, 20, True)
+        _Aceptar = InputBox_Bk(Me, "Ingrese el número de Lote", "Número de Lote", _NroLote, False,, 20, True,,,,,,,, True)
 
         If Not _Aceptar Then
             Return
@@ -385,6 +398,13 @@ Public Class Frm_GRI_FabXProducto
         MessageBoxEx.Show(Me, "Lote aceptado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         Txt_NroLote.Text = _NroLote
+
+        Txt_Turno.Text = String.Empty
+        Txt_Planta.Text = String.Empty
+        Txt_Analista.Text = String.Empty
+        Txt_CodAlternativo_Pallet.Text = String.Empty
+        Txt_Observaciones.Text = String.Empty
+        Txt_Observaciones.ReadOnly = False
 
         _Cl_Tarja._Cl_Tarja_Ent.Lote = _NroLote
 
@@ -523,6 +543,7 @@ Public Class Frm_GRI_FabXProducto
 
             _Cl_Tarja._Cl_Tarja_Ent.Analista = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
             Txt_Analista.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
+            Txt_Observaciones.Focus()
 
         End If
 

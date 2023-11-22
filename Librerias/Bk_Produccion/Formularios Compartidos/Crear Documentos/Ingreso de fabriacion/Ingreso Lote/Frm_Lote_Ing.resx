@@ -130,6 +130,17 @@
         5mVl3SAAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="Txt_CodAlternativo_Pallet.ButtonCustom.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAATtJREFUOE9j
+        GAZgYZ0rw4JaV4bKNE+GAD9fhuJkL4Z5NW5g8dJoQ4ZUP228ahieb0l+/mJryr+VEzJ/5+QWAOmsvyA+
+        UPzZjgn+YEX41DCAGCC8eiJEEkj/gYntBBqwCGgAPjVwSWx454QAoAFueNWAJP/m5eX/frEl+Q+Y3poM
+        dh4Iww3YkoxTDdgAkLNAkmAahwG41BBwATQM8LkAGJLvYRxkDBJHigWcahgOzUtj2DItg2H9lAyGDVMy
+        4XjNpEyG3toUhpayJAZgqAPlEXIgtZuBeg7MTWNgyMrO88vOyX8G8hspGKQnKyfPjwHIeAoSuHfv/vd7
+        9+59B/L/Ll++8se3b99+dnb2/Ojtm/ATxF64aMkPkBxIDUgt1JCnIAPAtkMMuA8xYAXCgL6+iWgGQNTB
+        XEGZF7Lz/AAvEftz+PhoyQAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="Txt_NroLote.ButtonCustom.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAhJJREFUOE9j

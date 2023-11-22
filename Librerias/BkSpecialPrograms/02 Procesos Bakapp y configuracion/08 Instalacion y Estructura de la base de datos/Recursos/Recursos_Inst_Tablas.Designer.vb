@@ -2115,6 +2115,51 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
+        '''CREATE TABLE [dbo].[Zw_Lotes_Det](
+        '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
+        '''	[Id_Lote]		[int]			NOT NULL Default(0),
+        '''	[NroLote]		[varchar](20)	NOT NULL Default(&apos;&apos;),
+        '''	[NomTabla]		[varchar](20)	NOT NULL Default(&apos;&apos;),
+        '''	[IdTabla]		[int]			NOT NULL Default(0),
+        ''') ON [PRIMARY]
+        '''
+        '''
+        '''
+        '''.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Lotes_Det() As String
+            Get
+                Return ResourceManager.GetString("Zw_Lotes_Det", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Lotes_Enc](
+        '''	[Id_Lote]		[int] IDENTITY(1,1) NOT NULL,
+        '''	[NroLote]		[varchar](20)	NOT NULL Default(&apos;&apos;),
+        '''	[Codigo]		[varchar](13)	NOT NULL Default(&apos;&apos;),
+        '''	[FechaVenci]	[datetime]		NULL,
+        ''' CONSTRAINT [PK_Zw_Lotes_Enc] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[NroLote] ASC,
+        '''	[Codigo] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+        ''') ON [PRIMARY]
+        '''
+        '''
+        '''.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Lotes_Enc() As String
+            Get
+                Return ResourceManager.GetString("Zw_Lotes_Enc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
         '''
         '''CREATE TABLE [dbo].[Zw_MrVsPro](
         '''	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -2414,6 +2459,27 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Zw_Pdc_MesonVsOperario() As String
             Get
                 Return ResourceManager.GetString("Zw_Pdc_MesonVsOperario", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Pdp_CPT_Tarja](
+        '''	[Id]				[int] IDENTITY(1,1) NOT NULL,
+        '''	[Empresa]			[char](2)		NOT NULL Default(&apos;&apos;),
+        '''	[Idmaeddo]			[int]			NOT NULL Default(0),
+        '''	[Nro_CPT]			[varchar](10)	NOT NULL Default(&apos;&apos;),
+        '''	[Lote]				[varchar](20)	NOT NULL Default(&apos;&apos;),
+        '''	[Codigo]			[varchar](13)	NOT NULL Default(&apos;&apos;),
+        '''	[CodAlternativo]	[varchar](21)	NOT NULL Default(&apos;&apos;),
+        '''	[Turno]				[varchar](1)	NOT NULL Default(&apos;&apos;),
+        '''	[Planta]			[varchar](1)	NOT NULL Default(&apos;&apos;),
+        '''	[Udm]				[varchar](2)	NOT  [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Pdp_CPT_Tarja() As String
+            Get
+                Return ResourceManager.GetString("Zw_Pdp_CPT_Tarja", resourceCulture)
             End Get
         End Property
         

@@ -30,14 +30,14 @@ Partial Class Frm_ImpBarras_Tarja
         Me.Cmbetiquetas = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.BtnImprimirEtiqueta = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_imprimir_Archivo = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnLimpiar = New DevComponents.DotNetBar.ButtonItem()
-        Me.BtnBuscarProducto = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnConfiguracion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Conf_PuertoEtiqueta = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Conf_ConfEstacion = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_Nro_CPT = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Observaciones = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX14 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Planta = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -50,8 +50,6 @@ Partial Class Frm_ImpBarras_Tarja
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_Nro_CPT = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Grupo_Puerto.SuspendLayout()
         Me.GroupPanel3.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -187,7 +185,7 @@ Partial Class Frm_ImpBarras_Tarja
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnImprimirEtiqueta, Me.Btn_imprimir_Archivo, Me.BtnLimpiar, Me.BtnBuscarProducto, Me.BtnSalir, Me.BtnConfiguracion})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnImprimirEtiqueta, Me.BtnLimpiar, Me.BtnSalir, Me.BtnConfiguracion})
         Me.Bar1.Location = New System.Drawing.Point(0, 326)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(823, 41)
@@ -206,15 +204,6 @@ Partial Class Frm_ImpBarras_Tarja
         Me.BtnImprimirEtiqueta.Name = "BtnImprimirEtiqueta"
         Me.BtnImprimirEtiqueta.Text = "Imprimir etiquetas"
         '
-        'Btn_imprimir_Archivo
-        '
-        Me.Btn_imprimir_Archivo.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_imprimir_Archivo.ForeColor = System.Drawing.Color.Black
-        Me.Btn_imprimir_Archivo.Image = CType(resources.GetObject("Btn_imprimir_Archivo.Image"), System.Drawing.Image)
-        Me.Btn_imprimir_Archivo.ImageAlt = CType(resources.GetObject("Btn_imprimir_Archivo.ImageAlt"), System.Drawing.Image)
-        Me.Btn_imprimir_Archivo.Name = "Btn_imprimir_Archivo"
-        Me.Btn_imprimir_Archivo.Tooltip = "Imprimir a un archivo"
-        '
         'BtnLimpiar
         '
         Me.BtnLimpiar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
@@ -223,15 +212,6 @@ Partial Class Frm_ImpBarras_Tarja
         Me.BtnLimpiar.ImageAlt = CType(resources.GetObject("BtnLimpiar.ImageAlt"), System.Drawing.Image)
         Me.BtnLimpiar.Name = "BtnLimpiar"
         Me.BtnLimpiar.Tooltip = "Limpiar listado"
-        '
-        'BtnBuscarProducto
-        '
-        Me.BtnBuscarProducto.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.BtnBuscarProducto.ForeColor = System.Drawing.Color.Black
-        Me.BtnBuscarProducto.Image = CType(resources.GetObject("BtnBuscarProducto.Image"), System.Drawing.Image)
-        Me.BtnBuscarProducto.ImageAlt = CType(resources.GetObject("BtnBuscarProducto.ImageAlt"), System.Drawing.Image)
-        Me.BtnBuscarProducto.Name = "BtnBuscarProducto"
-        Me.BtnBuscarProducto.Tooltip = "Buscar productos "
         '
         'BtnSalir
         '
@@ -320,6 +300,43 @@ Partial Class Frm_ImpBarras_Tarja
         Me.GroupPanel2.TabIndex = 102
         Me.GroupPanel2.Text = "DATOS DE LA TARJA"
         '
+        'Txt_Nro_CPT
+        '
+        Me.Txt_Nro_CPT.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Nro_CPT.Border.Class = "TextBoxBorder"
+        Me.Txt_Nro_CPT.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Nro_CPT.ButtonCustom.Image = CType(resources.GetObject("Txt_Nro_CPT.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Nro_CPT.ButtonCustom.Visible = True
+        Me.Txt_Nro_CPT.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Nro_CPT.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Txt_Nro_CPT.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.Txt_Nro_CPT.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Nro_CPT.Location = New System.Drawing.Point(87, 3)
+        Me.Txt_Nro_CPT.MaxLength = 13
+        Me.Txt_Nro_CPT.Name = "Txt_Nro_CPT"
+        Me.Txt_Nro_CPT.Size = New System.Drawing.Size(213, 22)
+        Me.Txt_Nro_CPT.TabIndex = 106
+        Me.Txt_Nro_CPT.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'LabelX1
+        '
+        Me.LabelX1.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX1.ForeColor = System.Drawing.Color.Black
+        Me.LabelX1.Location = New System.Drawing.Point(3, 3)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(87, 23)
+        Me.LabelX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.LabelX1.TabIndex = 107
+        Me.LabelX1.Text = "NRO. TARJA"
+        '
         'Txt_Observaciones
         '
         Me.Txt_Observaciones.BackColor = System.Drawing.Color.White
@@ -366,7 +383,6 @@ Partial Class Frm_ImpBarras_Tarja
         Me.Txt_Planta.Border.Class = "TextBoxBorder"
         Me.Txt_Planta.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Planta.ButtonCustom.Image = CType(resources.GetObject("Txt_Planta.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_Planta.ButtonCustom.Visible = True
         Me.Txt_Planta.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Planta.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Planta.Font = New System.Drawing.Font("Segoe UI", 8.25!)
@@ -388,7 +404,6 @@ Partial Class Frm_ImpBarras_Tarja
         Me.Txt_Turno.Border.Class = "TextBoxBorder"
         Me.Txt_Turno.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Turno.ButtonCustom.Image = CType(resources.GetObject("Txt_Turno.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_Turno.ButtonCustom.Visible = True
         Me.Txt_Turno.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Turno.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Turno.Font = New System.Drawing.Font("Segoe UI", 8.25!)
@@ -410,7 +425,6 @@ Partial Class Frm_ImpBarras_Tarja
         Me.Txt_Analista.Border.Class = "TextBoxBorder"
         Me.Txt_Analista.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Analista.ButtonCustom.Image = CType(resources.GetObject("Txt_Analista.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_Analista.ButtonCustom.Visible = True
         Me.Txt_Analista.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Analista.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Analista.Font = New System.Drawing.Font("Segoe UI", 8.25!)
@@ -464,7 +478,6 @@ Partial Class Frm_ImpBarras_Tarja
         Me.Txt_CodAlternativo_Pallet.Border.Class = "TextBoxBorder"
         Me.Txt_CodAlternativo_Pallet.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_CodAlternativo_Pallet.ButtonCustom.Image = CType(resources.GetObject("Txt_CodAlternativo_Pallet.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_CodAlternativo_Pallet.ButtonCustom.Visible = True
         Me.Txt_CodAlternativo_Pallet.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_CodAlternativo_Pallet.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_CodAlternativo_Pallet.Font = New System.Drawing.Font("Segoe UI", 8.25!)
@@ -485,7 +498,6 @@ Partial Class Frm_ImpBarras_Tarja
         Me.Txt_NroLote.Border.Class = "TextBoxBorder"
         Me.Txt_NroLote.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_NroLote.ButtonCustom.Image = CType(resources.GetObject("Txt_NroLote.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_NroLote.ButtonCustom.Visible = True
         Me.Txt_NroLote.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_NroLote.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_NroLote.Font = New System.Drawing.Font("Segoe UI", 8.25!)
@@ -546,44 +558,6 @@ Partial Class Frm_ImpBarras_Tarja
         Me.LabelX13.TabIndex = 91
         Me.LabelX13.Text = "PALLET"
         '
-        'LabelX1
-        '
-        Me.LabelX1.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX1.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(3, 3)
-        Me.LabelX1.Name = "LabelX1"
-        Me.LabelX1.Size = New System.Drawing.Size(87, 23)
-        Me.LabelX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
-        Me.LabelX1.TabIndex = 107
-        Me.LabelX1.Text = "NRO. TARJA"
-        '
-        'Txt_Nro_CPT
-        '
-        Me.Txt_Nro_CPT.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_Nro_CPT.Border.Class = "TextBoxBorder"
-        Me.Txt_Nro_CPT.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Nro_CPT.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_Nro_CPT.ButtonCustom.Visible = True
-        Me.Txt_Nro_CPT.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Nro_CPT.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Nro_CPT.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.Txt_Nro_CPT.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Nro_CPT.Location = New System.Drawing.Point(87, 3)
-        Me.Txt_Nro_CPT.MaxLength = 13
-        Me.Txt_Nro_CPT.Name = "Txt_Nro_CPT"
-        Me.Txt_Nro_CPT.ReadOnly = True
-        Me.Txt_Nro_CPT.Size = New System.Drawing.Size(213, 22)
-        Me.Txt_Nro_CPT.TabIndex = 106
-        Me.Txt_Nro_CPT.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
         'Frm_ImpBarras_Tarja
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -596,9 +570,11 @@ Partial Class Frm_ImpBarras_Tarja
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Frm_ImpBarras_Tarja"
+        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "CONTROL PRODUCTO TERMINADO"
         Me.Grupo_Puerto.ResumeLayout(False)
@@ -616,9 +592,7 @@ Partial Class Frm_ImpBarras_Tarja
     Friend WithEvents Cmbetiquetas As DevComponents.DotNetBar.Controls.ComboBoxEx
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Friend WithEvents BtnImprimirEtiqueta As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_imprimir_Archivo As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents BtnLimpiar As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents BtnBuscarProducto As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents BtnSalir As DevComponents.DotNetBar.ButtonItem
     Public WithEvents BtnConfiguracion As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Conf_PuertoEtiqueta As DevComponents.DotNetBar.ButtonItem

@@ -785,6 +785,10 @@ Public Class Frm_ImpBarras_PorProducto
 
     End Sub
 
+    Private Sub BtnConfiguracion_Click(sender As Object, e As EventArgs) Handles BtnConfiguracion.Click
+
+    End Sub
+
     Sub Sb_Agregar_Producto(ByRef _Tbl As DataTable,
                              _Codigo As String,
                              _Descripcion As String,

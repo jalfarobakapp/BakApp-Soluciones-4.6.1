@@ -32,6 +32,8 @@ Partial Class Frm_Lote_Ing
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Producto = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_CodAlternativo = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo_Producto.SuspendLayout()
         CType(Me.Dtp_FechaVenci, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -43,7 +45,7 @@ Partial Class Frm_Lote_Ing
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 124)
+        Me.Bar1.Location = New System.Drawing.Point(0, 151)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(827, 41)
         Me.Bar1.Stretch = True
@@ -64,6 +66,8 @@ Partial Class Frm_Lote_Ing
         '
         Me.Grupo_Producto.BackColor = System.Drawing.Color.White
         Me.Grupo_Producto.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_Producto.Controls.Add(Me.Txt_CodAlternativo)
+        Me.Grupo_Producto.Controls.Add(Me.LabelX13)
         Me.Grupo_Producto.Controls.Add(Me.LabelX4)
         Me.Grupo_Producto.Controls.Add(Me.Dtp_FechaVenci)
         Me.Grupo_Producto.Controls.Add(Me.Txt_NroLote)
@@ -73,7 +77,7 @@ Partial Class Frm_Lote_Ing
         Me.Grupo_Producto.DisabledBackColor = System.Drawing.Color.Empty
         Me.Grupo_Producto.Location = New System.Drawing.Point(12, 12)
         Me.Grupo_Producto.Name = "Grupo_Producto"
-        Me.Grupo_Producto.Size = New System.Drawing.Size(802, 100)
+        Me.Grupo_Producto.Size = New System.Drawing.Size(802, 130)
         '
         '
         '
@@ -229,7 +233,7 @@ Partial Class Frm_Lote_Ing
         Me.Txt_Producto.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Producto.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Producto.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Producto.Location = New System.Drawing.Point(98, 42)
+        Me.Txt_Producto.Location = New System.Drawing.Point(98, 45)
         Me.Txt_Producto.MaxLength = 50
         Me.Txt_Producto.Name = "Txt_Producto"
         Me.Txt_Producto.ReadOnly = True
@@ -246,18 +250,55 @@ Partial Class Frm_Lote_Ing
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(3, 42)
+        Me.LabelX1.Location = New System.Drawing.Point(3, 45)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(71, 23)
         Me.LabelX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.LabelX1.TabIndex = 75
         Me.LabelX1.Text = "PRODUCTO"
         '
+        'Txt_CodAlternativo
+        '
+        Me.Txt_CodAlternativo.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CodAlternativo.Border.Class = "TextBoxBorder"
+        Me.Txt_CodAlternativo.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CodAlternativo.ButtonCustom.Image = CType(resources.GetObject("Txt_CodAlternativo_Pallet.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_CodAlternativo.ButtonCustom.Visible = True
+        Me.Txt_CodAlternativo.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CodAlternativo.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Txt_CodAlternativo.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Txt_CodAlternativo.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CodAlternativo.Location = New System.Drawing.Point(98, 77)
+        Me.Txt_CodAlternativo.MaxLength = 13
+        Me.Txt_CodAlternativo.Name = "Txt_CodAlternativo"
+        Me.Txt_CodAlternativo.ReadOnly = True
+        Me.Txt_CodAlternativo.Size = New System.Drawing.Size(692, 26)
+        Me.Txt_CodAlternativo.TabIndex = 98
+        '
+        'LabelX13
+        '
+        Me.LabelX13.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX13.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX13.ForeColor = System.Drawing.Color.Black
+        Me.LabelX13.Location = New System.Drawing.Point(3, 77)
+        Me.LabelX13.Name = "LabelX13"
+        Me.LabelX13.Size = New System.Drawing.Size(89, 23)
+        Me.LabelX13.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.LabelX13.TabIndex = 99
+        Me.LabelX13.Text = "ALTERNATIVO"
+        '
         'Frm_Lote_Ing
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(827, 165)
+        Me.ClientSize = New System.Drawing.Size(827, 192)
         Me.Controls.Add(Me.Grupo_Producto)
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
@@ -266,6 +307,7 @@ Partial Class Frm_Lote_Ing
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Frm_Lote_Ing"
+        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "INGRESO DE NUMERO DE LOTE"
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -284,4 +326,6 @@ Partial Class Frm_Lote_Ing
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Dtp_FechaVenci As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Public WithEvents Txt_CodAlternativo As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX13 As DevComponents.DotNetBar.LabelX
 End Class

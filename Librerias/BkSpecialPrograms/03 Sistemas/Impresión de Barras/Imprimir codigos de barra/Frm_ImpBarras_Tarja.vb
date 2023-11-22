@@ -43,18 +43,50 @@ Public Class Frm_ImpBarras_Tarja
 
         Call Sb_Cmbetiquetas_SelectedIndexChanged(Nothing, Nothing)
 
+        If Not String.IsNullOrEmpty(Txt_Nro_CPT.Text) Then
+            Call Txt_Nro_CPT_ButtonCustomClick(Nothing, Nothing)
+        End If
+
+        Me.ActiveControl = Txt_Nro_CPT
+
     End Sub
 
     Private Sub Txt_Nro_CPT_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Nro_CPT.ButtonCustomClick
 
-        Dim _Nro_CPT As String = Txt_Nro_CPT.Text
+        Dim _Nro_CPT As String = numero_(Txt_Nro_CPT.Text, 10)
 
-        _Nro_CPT = "0000000003"
+        Consulta_sql = "Select Trj.*,Isnull(Anl.NombreTabla,'') As 'Analista_Str',Isnull(Plt.NombreTabla,'') As 'Planta_Str'" &
+                       ",Isnull(Trn.NombreTabla,'') As 'Turno_Str'" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja Trj" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Anl On Anl.Tabla = 'TARJA_ANALISTA' And Anl.CodigoTabla = Analista" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Plt On Plt.Tabla = 'TARJA_PLANTA' And Plt.CodigoTabla = Planta" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Trn On Trn.Tabla = 'TARJA_TURNO' And Trn.CodigoTabla = Turno" & vbCrLf &
+                       "Where Nro_CPT = '" & _Nro_CPT & "'"
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja Where Nro_CPT = '" & _Nro_CPT & "'"
         _Row_Tarja = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+        If IsNothing(_Row_Tarja) Then
+            MessageBoxEx.Show(Me, "No se encontro el registro", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Nro_CPT.SelectAll()
+            Return
+        End If
+
+        Txt_Nro_CPT.Text = _Nro_CPT
         Txt_NroLote.Text = _Row_Tarja.Item("Lote")
+        Txt_Turno.Text = _Row_Tarja.Item("Turno_Str")
+        Txt_Planta.Text = _Row_Tarja.Item("Planta_Str")
+        Txt_Analista.Text = _Row_Tarja.Item("Analista_Str")
+        Txt_Observaciones.Text = _Row_Tarja.Item("Observaciones")
+
+        Consulta_sql = "Select * From TABCODAL Where KOPRAL = '" & _Row_Tarja.Item("CodAlternativo") & "'"
+        Dim _Row_Tabcodal As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _SacosXPallet As Integer = _Row_Tabcodal.Item("MULTIPLO")
+        Dim _Udm As String = _Row_Tarja.Item("Udm")
+        Dim _Formato As Integer = _Row_Tarja.Item("Formato")
+
+        Txt_CodAlternativo_Pallet.Text = _Row_Tabcodal.Item("KOPRAL").ToString.Trim & ", Udad: " & _Udm & " x " & _Formato & ", Sacos por Pallets: " & _SacosXPallet
+
 
     End Sub
 
@@ -77,6 +109,79 @@ Public Class Frm_ImpBarras_Tarja
 
     End Sub
 
+    Private Sub Btn_Conf_PuertoEtiqueta_Click(sender As Object, e As EventArgs) Handles Btn_Conf_PuertoEtiqueta.Click
+
+        If Not Fx_Tiene_Permiso(Me, "7Brr0006") Then Return
+
+        Dim Fm As New Frm_Barras_ConfPuerto("Configuracion_local.xml")
+        Fm.ShowDialog(Me)
+        If Fm.Grabar Then
+            CmbPuerto.SelectedValue = Fm.Puerto
+            Cmbetiquetas.SelectedValue = Fm.Etiqueta
+        End If
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_Conf_ConfEstacion_Click(sender As Object, e As EventArgs) Handles Btn_Conf_ConfEstacion.Click
+
+        Dim _Autorizado As Boolean
+
+        Dim Fm_Pass As New Frm_Clave_Administrador
+        Fm_Pass.ShowDialog(Me)
+        _Autorizado = Fm_Pass.Pro_Autorizado
+        Fm_Pass.Dispose()
+
+        If _Autorizado Then
+
+            Dim _Grabar As Boolean
+
+            Dim _Id = _Global_Row_EstacionBk.Item("Id")
+            Dim Fm As New Frm_RegistrarEquipo(Frm_RegistrarEquipo.Enum_Accion.Editar, _Id, False)
+            Fm.ShowDialog(Me)
+            _Grabar = Fm.Grabar
+            Fm.Dispose()
+
+            Dim _Mod As New Clas_Modalidades
+
+            _Mod.Sb_Actualiza_Formatos_X_Modalidad()
+            _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+
+            Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_EstacionesBkp Where NombreEquipo = '" & _NombreEquipo & "'"
+            _Global_Row_EstacionBk = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If _Grabar Then
+                '_CerrarPorConfigurar = True
+                Me.Close()
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_Nro_CPT_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Nro_CPT.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            Call Txt_Nro_CPT_ButtonCustomClick(Nothing, Nothing)
+        End If
+    End Sub
+
+    Private Sub BtnLimpiar_Click(sender As Object, e As EventArgs) Handles BtnLimpiar.Click
+
+        Txt_Nro_CPT.Text = String.Empty
+        Txt_NroLote.Text = String.Empty
+        Txt_Turno.Text = String.Empty
+        Txt_Planta.Text = String.Empty
+        Txt_Analista.Text = String.Empty
+        Txt_CodAlternativo_Pallet.Text = String.Empty
+        Txt_Observaciones.Text = String.Empty
+        Txt_Observaciones.ReadOnly = False
+        _Row_Tarja = Nothing
+        Txt_Nro_CPT.Focus()
+
+    End Sub
+
     Sub Sb_Imprimir_Etiquetas()
 
         Try
@@ -92,68 +197,70 @@ Public Class Frm_ImpBarras_Tarja
                 Throw New System.Exception("Debe seleccionar un formato de impresión")
             End If
 
+            If IsNothing(_Row_Tarja) Then
+                Beep()
+                ToastNotification.Show(Me, "NO HAY DATOS QUE IMPRIMIR",
+                                      My.Resources.cross,
+                                     1 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
+                Return
+            End If
+
             _CantPorLinea = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tbl_DisenoBarras", "CantPorLinea",
                                       "NombreEtiqueta = '" & Cmbetiquetas.SelectedValue & "'")
 
             If _CantPorLinea = 0 Then _CantPorLinea = 1
 
-            Dim CanXlinea As Double = _CantPorLinea
-            Dim Veces As Double = 1 '_Fila("Cantidad").ToString()
+            Dim _CanXlinea As Integer = _CantPorLinea
+            Dim _Veces As Integer = 1
 
-            If CBool(Veces) Then
+            Dim _Aceptar As Boolean
 
-                If CanXlinea = Veces Or CanXlinea > Veces Then
-                    Veces = 1
-                Else
-                    Dim _ModVeces = Veces Mod 2
-                    Dim _ModCanXlinea = CanXlinea Mod 2
+            _Aceptar = InputBox_Bk(Me, "Ingrese la cantidad de etiquetas que quiere imprimir",
+                                   "Imprimir Etiquetas", _Veces, False,, 2, True, _Tipo_Imagen.Barra,,
+                                   _Tipo_Caracter.Solo_Numeros_Enteros, False)
 
-                    If CanXlinea <> 1 Then
+            If Not _Aceptar Then
+                Return
+            End If
 
-                        If CBool(_ModVeces) Or CBool(_ModCanXlinea) Then
+            If _CanXlinea = _Veces Or _CanXlinea > _Veces Then
+                _Veces = 1
+            Else
+                Dim _ModVeces = _Veces Mod 2
+                Dim _ModCanXlinea = _CanXlinea Mod 2
 
-                            Veces = Math.Round((Veces / CanXlinea), 5)
-                            Dim _Des = Split(Veces, ",")
+                If _CanXlinea <> 1 Then
 
-                            If _Des.Length = 2 Then
-                                Veces = _Des(0) + 1
-                            End If
+                    If CBool(_ModVeces) Or CBool(_ModCanXlinea) Then
 
-                        Else
-                            Veces = Math.Round((Veces / CanXlinea), 0)
+                        _Veces = Math.Round((_Veces / _CanXlinea), 5)
+                        Dim _Des = Split(_Veces, ",")
+
+                        If _Des.Length = 2 Then
+                            _Veces = _Des(0) + 1
                         End If
+
+                    Else
+                        _Veces = Math.Round((_Veces / _CanXlinea), 0)
+                    End If
+                End If
+            End If
+
+            If _Veces < 1 Then _Veces = 1
+
+            For w = 1 To _Veces
+
+                Dim _Imp As New Class_Imprimir_Barras
+
+                _Imp.Sb_Imprimir_Tarja(Cmbetiquetas.SelectedValue, _Puerto, ModEmpresa, _Row_Tarja.Item("Id"))
+
+                If Not String.IsNullOrEmpty(_Imp.Error) Then
+                    If MessageBoxEx.Show(Me, _Imp.Error, "Problema al imprimir", MessageBoxButtons.OKCancel, MessageBoxIcon.Stop) <> DialogResult.OK Then
+                        Return
                     End If
                 End If
 
-                If Veces < 1 Then Veces = 1
-
-                'Dim _Codigo = _Fila.Item("Codigo")
-                'Dim _CodAlternativo = _Fila.Item("CodAlternativo")
-                'Dim _Lista = CmbLista.SelectedValue
-
-                'Dim _Empresa, _Sucursal, _Bodega As String
-                'Dim _ESB() = Split(CmbBodega.SelectedValue, ";")
-
-                '_Empresa = _ESB(0)
-                '_Sucursal = _ESB(1)
-                '_Bodega = _ESB(2)
-
-                For w = 1 To Veces
-
-                    Dim _Imp As New Class_Imprimir_Barras
-
-                    _Imp.Sb_Imprimir_Tarja(Cmbetiquetas.SelectedValue, _Puerto, ModEmpresa, _Row_Tarja.Item("Id"))
-
-                    If Not String.IsNullOrEmpty(_Imp.Error) Then
-                        If MessageBoxEx.Show(Me, _Imp.Error, "Problema al imprimir", MessageBoxButtons.OKCancel, MessageBoxIcon.Stop) <> DialogResult.OK Then
-                            Return
-                        End If
-                    End If
-
-                Next
-
-            End If
-
+            Next
 
         Catch ex As Exception
             MessageBoxEx.Show(Me, ex.Message, "Problema al imprimir", MessageBoxButtons.OK, MessageBoxIcon.Stop)

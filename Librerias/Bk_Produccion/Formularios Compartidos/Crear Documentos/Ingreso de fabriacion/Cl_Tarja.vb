@@ -9,33 +9,32 @@ Public Class Cl_Tarja
 
     Public Sub New()
 
-
+        _Cl_Tarja_Ent.Empresa = ModEmpresa
 
     End Sub
 
     Function Fx_Grabar_Tarja() As Cl_Tarja_Ent.Mensaje_Tarja
 
         Dim _Mensaje_Tarja As New Cl_Tarja_Ent.Mensaje_Tarja
-        Dim _Id As Integer
 
         Try
 
             With _Cl_Tarja_Ent
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja (Idmaeddo,Nro_CPT,Codigo,CodAlternativo,Turno,Planta," &
-                               "Formato,Lote,FechaElab,SacosXPallet,Analista,Observaciones)" & vbCrLf &
-                               "Values (" & .Idmaeddo & ",'','" & .Codigo & "','" & .CodAlternativo & "','" & .Turno &
-                               "','" & .Planta & "','" & .Formato & "','" & .Lote & "','" & .FechaElab &
+                .Nro_CPT = Fx_NvoNro_CPT()
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja (Empresa,Idmaeddo,Nro_CPT,Codigo,CodAlternativo,Turno,Planta," &
+                               "Udm,Formato,Lote,FechaElab,SacosXPallet,Analista,Observaciones)" & vbCrLf &
+                               "Values ('" & .Empresa & "'," & .Idmaeddo & ",'" & .Nro_CPT & "','" & .Codigo & "','" & .CodAlternativo & "','" & .Turno &
+                               "','" & .Planta & "','" & .Udm & "','" & .Formato & "','" & .Lote & "','" & .FechaElab &
                                "'," & .SacosXPallet & ",'" & .Analista & "','" & .Observaciones & "')"
 
             End With
 
-            _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id)
-
-            If CBool(_Id) Then
-
+            If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
                 _Mensaje_Tarja.EsCorrecto = True
-
+            Else
+                Throw New System.Exception(_Sql.Pro_Error)
             End If
 
         Catch ex As Exception
@@ -43,6 +42,26 @@ Public Class Cl_Tarja
         End Try
 
         Return _Mensaje_Tarja
+
+    End Function
+
+    Function Fx_NvoNro_CPT() As String
+
+        Dim _Nro_CPT As String
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Dim _TblPaso = _Sql.Fx_Get_Tablas("Select Max(Nro_CPT) As Numero From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja")
+
+        Dim _Ult_Nro_OT As String = NuloPorNro(_TblPaso.Rows(0).Item("Numero"), "")
+
+        If String.IsNullOrEmpty(Trim(_Ult_Nro_OT)) Then
+            _Ult_Nro_OT = "0000000000"
+        End If
+
+        _Nro_CPT = Fx_Proximo_NroDocumento(_Ult_Nro_OT, 10)
+
+        Return _Nro_CPT
 
     End Function
 
@@ -60,6 +79,7 @@ Namespace Cl_Tarja_Ent
         Public Property CodAlternativo As String
         Public Property Turno As String
         Public Property Planta As String
+        Public Property Udm As String
         Public Property Formato As Integer
         Public Property FechaElab As DateTime
         Public Property SacosXPallet As Integer
