@@ -99,14 +99,16 @@ Public Class Frm_Formulario_Lector_Barra
         End If
 
         Txt_Codigo_Barras.ShortcutsEnabled = False
-        _ListaCodQRUnicosLeidos = New List(Of CodigosDeBarra.CodigosQRLeidos)
-        _ListaCodConDocLeidos = New List(Of CodigosDeBarra.CodigosConDocLeidos)
+
         Chk_LeerSoloUnaVezCodBarra.Checked = _Global_Row_Configuracion_General.Item("LeerSoloUnaVezCodBarra")
         Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
     Private Sub Frm_Formulario_Lector_Barra_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        _ListaCodQRUnicosLeidos = New List(Of CodigosDeBarra.CodigosQRLeidos)
+        _ListaCodConDocLeidos = New List(Of CodigosDeBarra.CodigosConDocLeidos)
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Chk_LeerSoloUnaVezCodBarra.CheckedChanged, AddressOf Chk_LeerSoloUnaVezCodBarra_CheckedChanged
@@ -280,8 +282,14 @@ Public Class Frm_Formulario_Lector_Barra
         Dim _Unimulti As Integer = 1
         Dim _Conmultiplo As Boolean
         Dim _Multiplo As Integer
-        Dim _Tido As String
-        Dim _Nudo As String
+
+        Dim _EsTarjar_Bk = False
+        Dim _EsLote_Bk = False
+
+        Dim _Nro_Tarja = String.Empty
+        Dim _Lote = String.Empty
+        Dim _Tido = String.Empty
+        Dim _Nudo = String.Empty
 
         Dim _CodigoQr As String
         Dim _Kopral As String
@@ -342,45 +350,9 @@ Public Class Frm_Formulario_Lector_Barra
 
         End If
 
-        If Txt_Codigo_Barras.Text.Contains("<OTD>") Then
-
-            'Asi debe quedar una etiqueta asociada a una OT para que el sistema la reconozca
-            '01TER04P25000-36<OTD>36459<END>
-
-            _Tido = "OTD"
-            Dim _CodigoLeido As String = Txt_Codigo_Barras.Text
-
-            Dim _CodPaso As String = Txt_Codigo_Barras.Text
-            Dim _Cola As String
-            Dim _SeparaCod() As String = Split(_CodPaso, "<OTD>", 2)
-
-            _Kopral = _SeparaCod(0)
-            _Cola = _SeparaCod(1)
-
-            Dim _NoContieneEtx = False
-
-            If Not _Cola.Contains("<END>") Then
-                _NoContieneEtx = True
-            Else
-                Dim _Etx = Split(_Cola, "<", 2)
-                If _Etx(1) <> "END>" Then
-                    _NoContieneEtx = True
-                End If
-            End If
-
-            If _NoContieneEtx Then
-                Txt_Codigo_Barras.Text = String.Empty
-                Sb_Confirmar_Lectura("La etiqueta no contiene la finalización <END>" & vbCrLf &
-                                     "Revise el código o vuelva a leerlo nuevamente", "Validación", eTaskDialogIcon.Stop, Nothing)
-                Return
-            End If
-            _Nudo = Replace(_Cola, "<END>", "")
-            _Nudo = numero_(_Nudo, 10)
-
-        End If
-
-
         If Txt_Codigo_Barras.Text.Contains("<TRJ>") AndAlso Txt_Codigo_Barras.Text.Contains("<END>") Then
+
+            _EsTarjar_Bk = True
 
             'Asi debe quedar una etiqueta asociada a una OT para que el sistema la reconozca
             '01TER04P25000-36<OTD>36459<END>
@@ -408,14 +380,28 @@ Public Class Frm_Formulario_Lector_Barra
                 Return
             End If
 
-            _Tido = _Sql.Fx_Trae_Dato("MAEDDO", "TIDO", "IDMAEDDO = " & _CPT_Tarja.Item("Idmaeddo"))
-            _Nudo = _Sql.Fx_Trae_Dato("MAEDDO", "NUDO", "IDMAEDDO = " & _CPT_Tarja.Item("Idmaeddo"))
-            _Kopral = _CPT_Tarja.Item("CodAlternativo")
-
+            _Nro_Tarja = _Nro_CPT
+            _Lote = _CPT_Tarja.Item("Lote")
+            _Kopral = _CPT_Tarja.Item("CodAlternativo_Pallet")
 
         End If
 
+        If String.IsNullOrEmpty(_Kopral) Then
 
+            Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Lotes_Enc Where NroLote = '" & _CodLeido & "'"
+            Dim _Row_Lote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not IsNothing(_Row_Lote) Then
+
+                _EsLote_Bk = True
+
+                _Kopral = _Row_Lote.Item("CodAlternativo")
+                _Lote = _CodLeido
+                _CodLeido = _Kopral
+
+            End If
+
+        End If
 
         If Chk_LeerSoloUnaVezCodBarra.Checked Then
 
@@ -585,7 +571,7 @@ Public Class Frm_Formulario_Lector_Barra
 
                         Dim _CodigosDeBarraTido As New CodigosDeBarra.CodigosConDocLeidos
 
-                        If Not String.IsNullOrEmpty(_Tido) Then
+                        If _EsTarjar_Bk Or _EsLote_Bk Then 'Not String.IsNullOrEmpty(_Tido) Then
 
                             Dim ListaQr As CodigosDeBarra.CodigosConDocLeidos = _ListaCodConDocLeidos.FirstOrDefault(Function(p) p.CodLeido = _CodLeido)
 
@@ -593,6 +579,9 @@ Public Class Frm_Formulario_Lector_Barra
 
                                 _CodigosDeBarraTido.CodLeido = _CodLeido
                                 _CodigosDeBarraTido.Codigo = _Codigo
+                                _CodigosDeBarraTido.Kopral = _Kopral
+                                _CodigosDeBarraTido.Nro_Tarja = _Nro_Tarja
+                                _CodigosDeBarraTido.Lote = _Lote
                                 _CodigosDeBarraTido.Tido = _Tido
                                 _CodigosDeBarraTido.Nudo = _Nudo
 
@@ -777,6 +766,7 @@ Public Class Frm_Formulario_Lector_Barra
                         _ListaBorrar.Add(_CodQr)
                     End If
                 Next
+
                 For Each _CodQrBorrar As CodigosDeBarra.CodigosQRLeidos In _ListaBorrar
                     _ListaCodQRUnicosLeidos.Remove(_CodQrBorrar)
                 Next
@@ -786,6 +776,7 @@ Public Class Frm_Formulario_Lector_Barra
                         _ListaBorrarLeidos.Add(_CodTido)
                     End If
                 Next
+
                 For Each _CodQrBorrar2 As CodigosDeBarra.CodigosConDocLeidos In _ListaBorrarLeidos
                     _ListaCodConDocLeidos.Remove(_CodQrBorrar2)
                 Next
@@ -965,6 +956,9 @@ Namespace CodigosDeBarra
         Public Property Tido As String
         Public Property Nudo As String
         Public Property CodLeido As String
+        Public Property Kopral As String
+        Public Property Nro_Tarja As String
+        Public Property Lote As String
 
     End Class
 

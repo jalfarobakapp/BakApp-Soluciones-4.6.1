@@ -15957,10 +15957,13 @@ Public Class Frm_Formulario_Documento
                 Dim _TidoOri As String = _Codigos.Tido
                 Dim _NudoOri As String = _Codigos.Nudo
                 Dim _CodigoQR As String = String.Empty
-                Dim _Kopral As String = String.Empty
+                Dim _Kopral As String = _Codigos.Kopral
+                Dim _Nro_Tarja As String = _Codigos.Nro_Tarja
+                Dim _Lote As String = _Codigos.Lote
 
-                _SqlQuery += "Insert Into " & _Global_BaseBk & "Zw_Prod_CodQRLogDoc (CodigoQR,Kopral,Tido,Nudo,Idmaeedo,Kopr,CodLeido,TidoOri,NudoOri) Values " &
-                               "('" & _CodigoQR & "','" & _Kopral & "','" & _Tido & "','" & _Nudo & "'," & _Idmaeedo & ",'" & _Kopr & "','" & _CodLeido & "','" & _TidoOri & "','" & _NudoOri & "')" & vbCrLf
+                _SqlQuery += "Insert Into " & _Global_BaseBk & "Zw_Prod_CodQRLogDoc (CodigoQR,Kopral,Tido,Nudo,Idmaeedo,Kopr,CodLeido,TidoOri,NudoOri,Nro_Tarja,Lote) Values " &
+                               "('" & _CodigoQR & "','" & _Kopral & "','" & _Tido & "','" & _Nudo & "'," & _Idmaeedo &
+                               ",'" & _Kopr & "','" & _CodLeido & "','" & _TidoOri & "','" & _NudoOri & "','" & _Nro_Tarja & "','" & _Lote & "')" & vbCrLf
 
             Next
 
@@ -21604,6 +21607,7 @@ Public Class Frm_Formulario_Documento
                 Fm.ShowDialog(Me)
                 _Documento_Aceptado = Fm.Pro_Documento_Aceptado
                 _ListaCodQRUnicosLeidos = Fm.ListaCodQRUnicosLeidos
+                _ListaCodConDocLeidos = Fm.ListaCodConDocLeidos
                 Fm.Dispose()
 
             Else

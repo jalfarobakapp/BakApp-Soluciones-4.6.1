@@ -26,14 +26,14 @@ Partial Class Frm_Lote_Ing
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo_Producto = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_CodAlternativo = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.Dtp_FechaVenci = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.Txt_NroLote = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Producto = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_CodAlternativo = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo_Producto.SuspendLayout()
         CType(Me.Dtp_FechaVenci, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -108,6 +108,43 @@ Partial Class Frm_Lote_Ing
         Me.Grupo_Producto.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Grupo_Producto.TabIndex = 101
         Me.Grupo_Producto.Text = "Detalle"
+        '
+        'Txt_CodAlternativo
+        '
+        Me.Txt_CodAlternativo.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CodAlternativo.Border.Class = "TextBoxBorder"
+        Me.Txt_CodAlternativo.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CodAlternativo.ButtonCustom.Image = CType(resources.GetObject("Txt_CodAlternativo.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_CodAlternativo.ButtonCustom.Visible = True
+        Me.Txt_CodAlternativo.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CodAlternativo.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Txt_CodAlternativo.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Txt_CodAlternativo.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CodAlternativo.Location = New System.Drawing.Point(98, 77)
+        Me.Txt_CodAlternativo.MaxLength = 13
+        Me.Txt_CodAlternativo.Name = "Txt_CodAlternativo"
+        Me.Txt_CodAlternativo.ReadOnly = True
+        Me.Txt_CodAlternativo.Size = New System.Drawing.Size(692, 26)
+        Me.Txt_CodAlternativo.TabIndex = 98
+        '
+        'LabelX13
+        '
+        Me.LabelX13.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX13.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX13.ForeColor = System.Drawing.Color.Black
+        Me.LabelX13.Location = New System.Drawing.Point(3, 77)
+        Me.LabelX13.Name = "LabelX13"
+        Me.LabelX13.Size = New System.Drawing.Size(89, 23)
+        Me.LabelX13.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.LabelX13.TabIndex = 99
+        Me.LabelX13.Text = "ALTERNATIVO"
         '
         'LabelX4
         '
@@ -256,43 +293,6 @@ Partial Class Frm_Lote_Ing
         Me.LabelX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.LabelX1.TabIndex = 75
         Me.LabelX1.Text = "PRODUCTO"
-        '
-        'Txt_CodAlternativo
-        '
-        Me.Txt_CodAlternativo.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_CodAlternativo.Border.Class = "TextBoxBorder"
-        Me.Txt_CodAlternativo.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CodAlternativo.ButtonCustom.Image = CType(resources.GetObject("Txt_CodAlternativo_Pallet.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_CodAlternativo.ButtonCustom.Visible = True
-        Me.Txt_CodAlternativo.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CodAlternativo.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_CodAlternativo.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Txt_CodAlternativo.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CodAlternativo.Location = New System.Drawing.Point(98, 77)
-        Me.Txt_CodAlternativo.MaxLength = 13
-        Me.Txt_CodAlternativo.Name = "Txt_CodAlternativo"
-        Me.Txt_CodAlternativo.ReadOnly = True
-        Me.Txt_CodAlternativo.Size = New System.Drawing.Size(692, 26)
-        Me.Txt_CodAlternativo.TabIndex = 98
-        '
-        'LabelX13
-        '
-        Me.LabelX13.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX13.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX13.ForeColor = System.Drawing.Color.Black
-        Me.LabelX13.Location = New System.Drawing.Point(3, 77)
-        Me.LabelX13.Name = "LabelX13"
-        Me.LabelX13.Size = New System.Drawing.Size(89, 23)
-        Me.LabelX13.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
-        Me.LabelX13.TabIndex = 99
-        Me.LabelX13.Text = "ALTERNATIVO"
         '
         'Frm_Lote_Ing
         '

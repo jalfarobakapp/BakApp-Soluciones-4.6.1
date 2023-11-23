@@ -114,6 +114,7 @@ Public Class Frm_InpunBox_Bk
         Btn_Calendario.Visible = (_Tipo_de_Caracter = _Tipo_Caracter.Fecha)
 
         Chk_Teclear.Visible = NoPermitirEntradaDeTeclado
+        TxtDescripcion.ShortcutsEnabled = Not NoPermitirEntradaDeTeclado
 
     End Sub
 

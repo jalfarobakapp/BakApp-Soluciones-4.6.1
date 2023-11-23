@@ -406,7 +406,12 @@ Public Class Frm_GRI_FabXProducto
         Txt_Observaciones.Text = String.Empty
         Txt_Observaciones.ReadOnly = False
 
+        Consulta_sql = "Select * From TABCODAL Where KOPRAL = '" & _Row_Lote.Item("CodAlternativo") & "'"
+        Dim _Row_Tabcodal As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
         _Cl_Tarja._Cl_Tarja_Ent.Lote = _NroLote
+        _Cl_Tarja._Cl_Tarja_Ent.CodAlternativo = _Row_Lote.Item("CodAlternativo")
+        Cmb_Formato.SelectedValue = _Row_Tabcodal.Item("UNIMULTI")
 
     End Sub
 
@@ -468,6 +473,7 @@ Public Class Frm_GRI_FabXProducto
             Dim _SacosXPallet As Integer = _Row_Tabcodal.Item("MULTIPLO")
             Dim _Ud01Pr As String = _Row_Maepr.Item("UD01PR")
             Dim _Ud02Pr As String = _Row_Maepr.Item("UD02PR")
+            Dim _Txtmulti As String = _Row_Tabcodal.Item("TXTMULTI")
             Dim _Udad As String
 
             If _Row_Tabcodal.Item("UNIMULTI") = 1 Then
@@ -477,9 +483,9 @@ Public Class Frm_GRI_FabXProducto
             End If
 
             _Cl_Tarja._Cl_Tarja_Ent.SacosXPallet = _SacosXPallet
-            _Cl_Tarja._Cl_Tarja_Ent.CodAlternativo = _Kopral
+            _Cl_Tarja._Cl_Tarja_Ent.CodAlternativo_Pallet = _Kopral
 
-            Txt_CodAlternativo_Pallet.Text = _Row_Tabcodal.Item("KOPRAL").ToString.Trim & ", Udad: " & _Udad & " x " & _Sacos & ", Sacos por Pallets: " & _SacosXPallet
+            Txt_CodAlternativo_Pallet.Text = _Row_Tabcodal.Item("KOPRAL").ToString.Trim & ", Udad: " & _Udad & " x " & _Sacos & ", Formato: " & _Txtmulti
 
         End If
 

@@ -23,11 +23,11 @@ Public Class Cl_Tarja
 
                 .Nro_CPT = Fx_NvoNro_CPT()
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja (Empresa,Idmaeddo,Nro_CPT,Codigo,CodAlternativo,Turno,Planta," &
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja (Empresa,Idmaeddo,Nro_CPT,Codigo,CodAlternativo,CodAlternativo_Pallet,Turno,Planta," &
                                "Udm,Formato,Lote,FechaElab,SacosXPallet,Analista,Observaciones)" & vbCrLf &
-                               "Values ('" & .Empresa & "'," & .Idmaeddo & ",'" & .Nro_CPT & "','" & .Codigo & "','" & .CodAlternativo & "','" & .Turno &
+                               "Values ('" & .Empresa & "'," & .Idmaeddo & ",'" & .Nro_CPT & "','" & .Codigo & "','" & .CodAlternativo & "','" & .CodAlternativo_Pallet & "','" & .Turno &
                                "','" & .Planta & "','" & .Udm & "','" & .Formato & "','" & .Lote & "','" & .FechaElab &
-                               "'," & .SacosXPallet & ",'" & .Analista & "','" & .Observaciones & "')"
+                               "'," & .SacosXPallet & ",'" & .Analista & "','" & .Observaciones.Replace("'", "''") & "')"
 
             End With
 
@@ -77,6 +77,7 @@ Namespace Cl_Tarja_Ent
         Public Property Lote As String
         Public Property Codigo As String
         Public Property CodAlternativo As String
+        Public Property CodAlternativo_Pallet As String
         Public Property Turno As String
         Public Property Planta As String
         Public Property Udm As String

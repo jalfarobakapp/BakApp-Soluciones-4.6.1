@@ -24,8 +24,6 @@ Partial Class Frm_GRI_FabXProducto
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_GRI_FabXProducto))
         Me.Grupo_Producto = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Cmb_Formato = New DevComponents.DotNetBar.Controls.ComboBoxEx()
-        Me.LabelX15 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX12 = New DevComponents.DotNetBar.LabelX()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Lbl_Saldo = New DevComponents.DotNetBar.LabelX()
@@ -41,6 +39,8 @@ Partial Class Frm_GRI_FabXProducto
         Me.Txt_Codigo = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Line1 = New DevComponents.DotNetBar.Controls.Line()
+        Me.Cmb_Formato = New DevComponents.DotNetBar.Controls.ComboBoxEx()
+        Me.LabelX15 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_NroLote = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -120,36 +120,6 @@ Partial Class Frm_GRI_FabXProducto
         Me.Grupo_Producto.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Grupo_Producto.TabIndex = 96
         Me.Grupo_Producto.Text = "DETALLE DE DATOS DE FABRICACION"
-        '
-        'Cmb_Formato
-        '
-        Me.Cmb_Formato.DisplayMember = "Text"
-        Me.Cmb_Formato.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.Cmb_Formato.Font = New System.Drawing.Font("Courier New", 12.0!)
-        Me.Cmb_Formato.ForeColor = System.Drawing.Color.Black
-        Me.Cmb_Formato.FormattingEnabled = True
-        Me.Cmb_Formato.ItemHeight = 20
-        Me.Cmb_Formato.Location = New System.Drawing.Point(431, 3)
-        Me.Cmb_Formato.Name = "Cmb_Formato"
-        Me.Cmb_Formato.Size = New System.Drawing.Size(49, 26)
-        Me.Cmb_Formato.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Cmb_Formato.TabIndex = 5
-        '
-        'LabelX15
-        '
-        Me.LabelX15.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX15.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX15.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX15.ForeColor = System.Drawing.Color.Black
-        Me.LabelX15.Location = New System.Drawing.Point(319, 3)
-        Me.LabelX15.Name = "LabelX15"
-        Me.LabelX15.Size = New System.Drawing.Size(106, 26)
-        Me.LabelX15.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
-        Me.LabelX15.TabIndex = 107
-        Me.LabelX15.Text = "FORMATO UDAD."
         '
         'LabelX12
         '
@@ -411,6 +381,37 @@ Partial Class Frm_GRI_FabXProducto
         Me.Line1.Size = New System.Drawing.Size(266, 23)
         Me.Line1.TabIndex = 82
         Me.Line1.Text = "Line1"
+        '
+        'Cmb_Formato
+        '
+        Me.Cmb_Formato.DisplayMember = "Text"
+        Me.Cmb_Formato.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_Formato.Enabled = False
+        Me.Cmb_Formato.Font = New System.Drawing.Font("Courier New", 12.0!)
+        Me.Cmb_Formato.ForeColor = System.Drawing.Color.Black
+        Me.Cmb_Formato.FormattingEnabled = True
+        Me.Cmb_Formato.ItemHeight = 20
+        Me.Cmb_Formato.Location = New System.Drawing.Point(431, 3)
+        Me.Cmb_Formato.Name = "Cmb_Formato"
+        Me.Cmb_Formato.Size = New System.Drawing.Size(49, 26)
+        Me.Cmb_Formato.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Cmb_Formato.TabIndex = 5
+        '
+        'LabelX15
+        '
+        Me.LabelX15.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX15.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX15.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX15.ForeColor = System.Drawing.Color.Black
+        Me.LabelX15.Location = New System.Drawing.Point(319, 3)
+        Me.LabelX15.Name = "LabelX15"
+        Me.LabelX15.Size = New System.Drawing.Size(106, 26)
+        Me.LabelX15.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.LabelX15.TabIndex = 107
+        Me.LabelX15.Text = "FORMATO UDAD."
         '
         'Txt_NroLote
         '

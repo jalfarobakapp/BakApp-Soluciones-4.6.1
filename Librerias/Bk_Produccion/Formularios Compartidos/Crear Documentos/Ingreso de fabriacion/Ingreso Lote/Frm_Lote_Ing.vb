@@ -112,6 +112,12 @@ Public Class Frm_Lote_Ing
             Return
         End If
 
+        If String.IsNullOrEmpty(Txt_CodAlternativo.Text) Then
+            MessageBoxEx.Show(Me, "Falta el código alternativo", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_CodAlternativo.Focus()
+            Return
+        End If
+
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Lotes_Enc",
                                                        "NroLote = '" & Txt_NroLote.Text & "' And Codigo = '" & Txt_Producto.Text & "'")
 
@@ -121,8 +127,9 @@ Public Class Frm_Lote_Ing
             Return
         End If
 
-        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Lotes_Enc (NroLote,Codigo,FechaVenci) Values " &
-                       "('" & Txt_NroLote.Text & "','" & _Row_Producto.Item("KOPR") & "','" & Format(Dtp_FechaVenci.Value, "yyyyMMdd") & "')"
+        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Lotes_Enc (NroLote,Codigo,FechaVenci,CodAlternativo) Values " &
+                       "('" & Txt_NroLote.Text & "','" & _Row_Producto.Item("KOPR") &
+                       "','" & Format(Dtp_FechaVenci.Value, "yyyyMMdd") & "','" & Txt_CodAlternativo.Tag & "')"
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
             NroLote = Txt_NroLote.Text
             Grabar = True
@@ -131,4 +138,38 @@ Public Class Frm_Lote_Ing
 
     End Sub
 
+    Private Sub Txt_CodAlternativo_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CodAlternativo.ButtonCustomClick
+
+        Dim _Codigo As String = _Row_Producto.Item("KOPR")
+        Dim _Descripcion As String = _Row_Producto.Item("NOKOPR")
+        Dim _Rtu As Double = _Row_Producto.Item("RLUD")
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("TABCODAL", "KOPR = '" & _Codigo & "'")
+
+        If _Reg = 0 Then
+            MessageBoxEx.Show(Me, "Este producto no tiene códigos alternativos asociados", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_CodAlternativo_Ver
+        Fm.TxtCodigo.Text = _Codigo
+        Fm.Txtdescripcion.Text = _Descripcion
+        Fm.TxtRTU.Text = _Rtu
+        Fm.ModoSeleccion = True
+        Fm.ShowDialog(Me)
+        Dim _Row_Tabcodal As DataRow = Fm.RowTabcodalSeleccionado
+        Fm.Dispose()
+
+        If Not IsNothing(_Row_Tabcodal) Then
+
+            Dim _Kopral As String = _Row_Tabcodal.Item("KOPRAL")
+            Dim _Nokopral As String = _Row_Tabcodal.Item("NOKOPRAL")
+
+            Txt_CodAlternativo.Tag = _Kopral
+            Txt_CodAlternativo.Text = _Kopral.ToString.Trim & " - " & _Nokopral
+
+        End If
+
+    End Sub
 End Class
