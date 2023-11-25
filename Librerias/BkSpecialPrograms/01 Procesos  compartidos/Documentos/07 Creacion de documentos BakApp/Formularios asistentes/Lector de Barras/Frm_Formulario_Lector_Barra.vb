@@ -278,6 +278,7 @@ Public Class Frm_Formulario_Lector_Barra
 
         Dim _Codigo As String
         Dim _CodLeido As String
+        Dim _CodLeido2 As String
         Dim _Cantidad As Integer = 1
         Dim _Unimulti As Integer = 1
         Dim _Conmultiplo As Boolean
@@ -397,6 +398,7 @@ Public Class Frm_Formulario_Lector_Barra
 
                 _Kopral = _Row_Lote.Item("CodAlternativo")
                 _Lote = _CodLeido
+                _CodLeido2 = _CodLeido
                 _CodLeido = _Kopral
 
             End If
@@ -578,6 +580,7 @@ Public Class Frm_Formulario_Lector_Barra
                             If IsNothing(ListaQr) Then
 
                                 _CodigosDeBarraTido.CodLeido = _CodLeido
+                                _CodigosDeBarraTido.CodLeido2 = _CodLeido2
                                 _CodigosDeBarraTido.Codigo = _Codigo
                                 _CodigosDeBarraTido.Kopral = _Kopral
                                 _CodigosDeBarraTido.Nro_Tarja = _Nro_Tarja
@@ -785,6 +788,7 @@ Public Class Frm_Formulario_Lector_Barra
                 _Fila.Cells("Cantidad").Value = 0
                 _Fila.Cells("Problema").Value = String.Empty
                 _Fila.Cells("Es_Correcto").Value = False
+
             Catch ex As Exception
                 Beep()
             End Try
@@ -959,6 +963,7 @@ Namespace CodigosDeBarra
         Public Property Kopral As String
         Public Property Nro_Tarja As String
         Public Property Lote As String
+        Public Property CodLeido2 As String
 
     End Class
 

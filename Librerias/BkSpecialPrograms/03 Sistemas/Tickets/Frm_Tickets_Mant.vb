@@ -1,5 +1,4 @@
-﻿Imports System.Web.Services
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_Tickets_Mant
 
@@ -9,7 +8,8 @@ Public Class Frm_Tickets_Mant
     Dim _Cl_Tickets As New Cl_Tickets
 
     Public Property Grabar As Boolean
-
+    Public Property Id_Padre As Integer
+    Public Property New_Ticket As Cl_Tickets
 
     Public Sub New(_Id_Ticket As Integer)
 
@@ -31,6 +31,30 @@ Public Class Frm_Tickets_Mant
     End Sub
 
     Private Sub Frm_Tickets_Mant_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        If CBool(Id_Padre) Then
+
+            _Cl_Tickets.Tickets.Id_Padre = Id_Padre
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id = " & Id_Padre
+            Dim _Row_Ticket_Padre As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Row_Ticket_Padre.Item("CodProducto") & "'"
+            Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not IsNothing(_RowProducto) Then
+
+                Txt_Producto.Tag = _RowProducto.Item("KOPR")
+                Txt_Producto.Text = _RowProducto.Item("KOPR").ToString.Trim & "-" & _RowProducto.Item("NOKOPR").ToString.Trim
+
+                Txt_Producto.ButtonCustom.Visible = False
+                Txt_Producto.ButtonCustom2.Visible = False
+
+                Chk_ExigeProducto.Checked = True
+
+            End If
+
+        End If
 
         Chk_ExigeProducto.Enabled = False
 
@@ -141,6 +165,7 @@ Public Class Frm_Tickets_Mant
         If String.IsNullOrEmpty(_Msg_Grabar) Then
             MessageBoxEx.Show(Me, "El ticket se ha creado correctamente, el número de ticket es " & _Cl_Tickets.Tickets.Numero & "." & vbCrLf &
                               "Guárdelo para fururas referencias", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            New_Ticket = _Cl_Tickets
             Grabar = True
             Me.Close()
         Else
@@ -168,11 +193,15 @@ Public Class Frm_Tickets_Mant
             Txt_Tipo.Tag = 0
             Txt_Tipo.Text = String.Empty
 
-            Txt_Producto.Enabled = False
-            Txt_Producto.Tag = String.Empty
-            Txt_Producto.Text = String.Empty
+            If Not CBool(Id_Padre) Then
 
-            Chk_ExigeProducto.Checked = False
+                Txt_Producto.Enabled = False
+                Txt_Producto.Tag = String.Empty
+                Txt_Producto.Text = String.Empty
+
+                Chk_ExigeProducto.Checked = False
+
+            End If
 
             Txt_Area.ButtonCustom.Visible = False
             Txt_Area.ButtonCustom2.Visible = True
@@ -204,10 +233,17 @@ Public Class Frm_Tickets_Mant
                                "And Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id_Area = " & Txt_Area.Tag & ")",
                                False, False, True, False,, False) Then
 
-            Chk_ExigeProducto.Checked = False
-
             Txt_Tipo.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
             Txt_Tipo.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
+
+            If CBool(Id_Padre) Then
+                Txt_Tipo.ButtonCustom.Visible = False
+                Txt_Tipo.ButtonCustom2.Visible = False
+                Txt_Descripcion.Focus()
+                Return
+            End If
+
+            Chk_ExigeProducto.Checked = False
 
             Dim _ExigeProducto As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Tipos", "ExigeProducto", "Id = " & Txt_Tipo.Tag)
 
@@ -401,7 +437,6 @@ Public Class Frm_Tickets_Mant
                 _RowProducto = Fm.Pro_RowProducto
 
                 Codigo_abuscar = Fm.Pro_RowProducto.Item("KOPR")
-
 
                 If Not String.IsNullOrEmpty(Trim(Codigo_abuscar)) Then
                     Txt_Producto.Tag = _RowProducto.Item("KOPR")

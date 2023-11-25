@@ -1,4 +1,5 @@
-﻿Imports BkSpecialPrograms.Frm_Ver_Documento
+﻿Imports BkSpecialPrograms.Frm_Tickets_Lista
+Imports BkSpecialPrograms.Frm_Ver_Documento
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Tickets_Seguimiento
@@ -11,9 +12,10 @@ Public Class Frm_Tickets_Seguimiento
     Dim _Tbl_Acciones As DataTable
     Dim _Funcionario As String
 
-    'Dim _Cl_Tickets As New Cl_Tickets
     Dim _Row_UltMensaje As DataRow
     Public Property Mis_Ticket As Boolean
+    Public Property SoloLectura As Boolean
+    Public Property CorrerALaDerecha As Boolean
 
     Public Sub New(_Id_Ticket As Integer)
 
@@ -50,17 +52,30 @@ Public Class Frm_Tickets_Seguimiento
 
         Me.Text = "TICKET NRO: " & _Row_Ticket.Item("Numero").ToString.Trim & " (" & _Row_Ticket.Item("Id") & ")"
 
-        If Mis_Ticket Then
-            Btn_MensajeRespuesta.Text = "Nuevo mensaje"
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set Visto = 1 Where Id_Ticket = " & _Id_Ticket & " And Accion = 'RESP'"
-            Btn_Mnu_SolicitarCierre.Enabled = False
-        Else
-            Btn_MensajeRespuesta.Text = "Responder"
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set Visto = 1 Where Id_Ticket = " & _Id_Ticket & " And Accion = 'MENS'"
-            Btn_Anular.Enabled = False
+        If CorrerALaDerecha Then
+            Me.Top += 15
+            Me.Left += 15
         End If
 
-        _Sql.Ej_consulta_IDU(Consulta_sql)
+        Btn_MensajeRespuesta.Visible = Not SoloLectura
+        Btn_CambiarEstado.Visible = Not SoloLectura
+        Btn_VerTicketOrigen.Visible = Not SoloLectura
+
+        If Not SoloLectura Then
+
+            If Mis_Ticket Then
+                Btn_MensajeRespuesta.Text = "Nuevo mensaje"
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set Visto = 1 Where Id_Ticket = " & _Id_Ticket & " And Accion = 'RESP'"
+                Btn_Mnu_SolicitarCierre.Enabled = False
+            Else
+                Btn_MensajeRespuesta.Text = "Responder"
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set Visto = 1 Where Id_Ticket = " & _Id_Ticket & " And Accion = 'MENS'"
+                Btn_Anular.Enabled = False
+            End If
+
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        End If
 
         Lbl_Estado.Text = _Row_Ticket.Item("NomEstado")
         Lbl_Area.Text = _Row_Ticket.Item("Area")
@@ -101,7 +116,9 @@ Public Class Frm_Tickets_Seguimiento
 
         Btn_MensajeRespuesta.Visible = Not (_Row_Ticket.Item("Estado") = "CERR" Or _Row_Ticket.Item("Estado") = "NULO")
         Btn_CambiarEstado.Visible = Not (_Row_Ticket.Item("Estado") = "CERR" Or _Row_Ticket.Item("Estado") = "NULO")
-        Btn_CrearNuevoTicket.Visible = Not (_Row_Ticket.Item("Estado") = "CERR" Or _Row_Ticket.Item("Estado") = "NULO")
+        'Btn_CrearNuevoTicket.Visible = Not (_Row_Ticket.Item("Estado") = "CERR" Or _Row_Ticket.Item("Estado") = "NULO")
+
+        Btn_VerTicketOrigen.Visible = CBool(_Row_Ticket.Item("Id_Padre"))
 
     End Sub
 
@@ -339,15 +356,29 @@ Public Class Frm_Tickets_Seguimiento
     End Sub
 
     Private Sub Btn_Mnu_CerrarTicket_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_CerrarTicket.Click
-        Sb_Cerrar_Ticket(True, False, False, False)
+        Sb_Cerrar_Ticket(True, False, False, False, 0)
     End Sub
 
     Private Sub Btn_Mnu_SolicitarCierre_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_SolicitarCierre.Click
-        Sb_Cerrar_Ticket(False, True, False, False)
+        Sb_Cerrar_Ticket(False, True, False, False, 0)
     End Sub
 
     Private Sub Btn_Mnu_CerrarTicketCrearNuevo_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_CerrarTicketCrearNuevo.Click
-        Sb_Cerrar_Ticket(True, False, True, False)
+
+        Dim _Grabar As Boolean
+        Dim _Id_Hijo As Integer
+
+        Dim Fm As New Frm_Tickets_Mant(0)
+        Fm.Id_Padre = _Id_Ticket
+        Fm.ShowDialog(Me)
+        _Grabar = Fm.Grabar
+        _Id_Hijo = Fm.New_Ticket.Tickets.Id
+        Fm.Dispose()
+
+        If _Grabar Then
+            Sb_Cerrar_Ticket(True, False, True, False, _Id_Hijo)
+        End If
+
     End Sub
 
     Private Sub Btn_Anular_Click(sender As Object, e As EventArgs) Handles Btn_Anular.Click
@@ -357,14 +388,15 @@ Public Class Frm_Tickets_Seguimiento
             Return
         End If
 
-        Sb_Cerrar_Ticket(False, False, False, True)
+        Sb_Cerrar_Ticket(False, False, False, True, 0)
 
     End Sub
 
     Sub Sb_Cerrar_Ticket(_Cierra_Ticket As Boolean,
                          _Solicita_Cierre As Boolean,
                          _CreaNewTicket As Boolean,
-                         _AnulaTicket As Boolean)
+                         _AnulaTicket As Boolean,
+                         _Id_Hijo As Integer)
 
         Dim _Aceptar As Boolean
         Dim _Descripcion As String
@@ -376,12 +408,29 @@ Public Class Frm_Tickets_Seguimiento
         If _CreaNewTicket Then _Caption = "Cerrar y crear Ticket"
         If _AnulaTicket Then _Caption = "Anular Ticket"
 
-        _Aceptar = InputBox_Bk(Me, "Ingrese un comentario (obligatorio)", _Caption,
+        If Not _CreaNewTicket Then
+
+            _Aceptar = InputBox_Bk(Me, "Ingrese un comentario (obligatorio)", _Caption,
                                _Descripcion, True, _Tipo_Mayus_Minus.Mayusculas, 200, True,
                                _Tipo_Imagen.Texto, False,,,, Nothing)
 
-        If Not _Aceptar Then
-            Return
+            If Not _Aceptar Then
+                Return
+            End If
+
+        End If
+
+        If _CreaNewTicket Then
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id = " & _Id_Hijo
+            Dim _Row_Ticket_Hijo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _Numero_H As String = _Row_Ticket_Hijo.Item("Numero")
+            Dim _Asunto_H As String = _Row_Ticket_Hijo.Item("Asunto")
+            Dim _Descripcion_H As String = _Row_Ticket_Hijo.Item("Descripcion")
+
+            _Descripcion = "SE GENERA EL TICKET Nro " & _Numero_H & " Asunto: " & _Asunto_H.ToString.Trim
+
         End If
 
         Dim _Cl_Tickets As New Cl_Tickets
@@ -389,7 +438,12 @@ Public Class Frm_Tickets_Seguimiento
 
         Dim _Mensaje_Ticket As New Tickets_Db.Mensaje_Ticket
 
-        _Mensaje_Ticket = _Cl_Tickets.Fx_Cerrar_Ticket(FUNCIONARIO, _Descripcion, False, False, False, True)
+        _Mensaje_Ticket = _Cl_Tickets.Fx_Cerrar_Ticket(FUNCIONARIO,
+                                                       _Descripcion,
+                                                       _Cierra_Ticket,
+                                                       _Solicita_Cierre,
+                                                       _CreaNewTicket,
+                                                       _AnulaTicket)
 
         If Not _Mensaje_Ticket.EsCorrecto Then
             Return
@@ -403,4 +457,15 @@ Public Class Frm_Tickets_Seguimiento
     Private Sub Btn_Cerrar_Click(sender As Object, e As EventArgs) Handles Btn_Cerrar.Click
         Me.Close()
     End Sub
+
+    Private Sub Btn_VerTicketOrigen_Click(sender As Object, e As EventArgs) Handles Btn_VerTicketOrigen.Click
+
+        Dim Fm As New Frm_Tickets_Seguimiento(_Row_Ticket.Item("Id_Padre"))
+        Fm.SoloLectura = True
+        Fm.CorrerALaDerecha = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
 End Class

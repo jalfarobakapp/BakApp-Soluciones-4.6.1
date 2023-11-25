@@ -15952,7 +15952,7 @@ Public Class Frm_Formulario_Documento
 
             For Each _Codigos As CodigosDeBarra.CodigosConDocLeidos In _ListaCodConDocLeidos
 
-                Dim _CodLeido As String = _Codigos.CodLeido
+                Dim _CodLeido As String = _Codigos.CodLeido2
                 Dim _Kopr As String = _Codigos.Codigo
                 Dim _TidoOri As String = _Codigos.Tido
                 Dim _NudoOri As String = _Codigos.Nudo

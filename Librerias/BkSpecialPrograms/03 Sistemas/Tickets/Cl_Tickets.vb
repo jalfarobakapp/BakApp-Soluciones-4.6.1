@@ -132,6 +132,7 @@ Public Class Cl_Tickets
                            ",AsignadoGrupo = " & Convert.ToInt32(Tickets.AsignadoGrupo) &
                            ",Id_Grupo = " & Tickets.Id_Grupo &
                            ",CodProducto = '" & Tickets.CodProducto & "'" &
+                           ",Id_Padre = '" & Tickets.Id_Padre & "'" &
                            "Where Id = " & Tickets.Id
             Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
             Comando.Transaction = myTrans
@@ -245,14 +246,24 @@ Public Class Cl_Tickets
         Dim _Mensaje_Ticket As New Tickets_Db.Mensaje_Ticket
         Dim _Tickets_Acciones As New Tickets_Db.Tickets_Acciones
 
+        Dim _Estado As String
+
         With _Tickets_Acciones
 
             .Descripcion = _Descripcion
             .CodFuncionario = _CodFuncionario
 
-            If _Cierra_Ticket Then .Accion = "CERR"
-            If _Solicita_Cierre Then .Accion = "SOLC"
-            If _AnulaTicket Then .Accion = "NULO"
+            If _Cierra_Ticket Then
+                _Estado = "CERR"
+            End If
+            If _Solicita_Cierre Then
+                _Estado = "SOLC"
+                .Accion = "SOLC"
+            End If
+            If _AnulaTicket Then
+                _Estado = "NULO"
+                .Accion = "NULO"
+            End If
 
             .Cierra_Ticket = _Cierra_Ticket
             .Solicita_Cierre = _Solicita_Cierre
@@ -282,7 +293,7 @@ Public Class Cl_Tickets
                 _FechaCierre = ",FechaCierre = Getdate()"
             End If
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set Estado = '" & _Tickets_Acciones.Accion & "'" & _FechaCierre & vbCrLf &
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set Estado = '" & _Estado & "'" & _FechaCierre & vbCrLf &
                            "Where Id = " & Tickets.Id
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
@@ -299,8 +310,15 @@ Public Class Cl_Tickets
 
             End If
 
+            Dim _Campo_FunAg As String
 
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones (Id_Ticket,Accion,Descripcion,Fecha,CodFuncionario,En_Construccion,Cierra_Ticket,Solicita_Cierre,CreaNewTicket,AnulaTicket) Values " &
+            If Tickets.CodFuncionario_Crea = _CodFuncionario Then
+                _Campo_FunAg = "CodFuncionario"
+            Else
+                _Campo_FunAg = "CodAgente"
+            End If
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones (Id_Ticket,Accion,Descripcion,Fecha," & _Campo_FunAg & ",En_Construccion,Cierra_Ticket,Solicita_Cierre,CreaNewTicket,AnulaTicket) Values " &
                            "(" & Tickets.Id & ",'" & _Tickets_Acciones.Accion & "','" & _Tickets_Acciones.Descripcion & "',Getdate(),'" & _Tickets_Acciones.CodFuncionario & "',0" &
                            "," & Convert.ToInt32(_Cierra_Ticket) &
                            "," & Convert.ToInt32(_Solicita_Cierre) &
