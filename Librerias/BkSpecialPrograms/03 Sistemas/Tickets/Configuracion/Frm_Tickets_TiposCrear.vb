@@ -214,12 +214,6 @@ Public Class Frm_Tickets_TiposCrear
 
         If Chk_Asignado.Checked Then
 
-            If String.IsNullOrWhiteSpace(Txt_Area.Text) Then
-                MessageBoxEx.Show(Me, "Falta el Area/Departamento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Chk_Asignado.Checked = False
-                Return
-            End If
-
             If String.IsNullOrWhiteSpace(Txt_Tipo.Text) Then
                 MessageBoxEx.Show(Me, "Falta el tipo de requerimiento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Chk_Asignado.Checked = False
