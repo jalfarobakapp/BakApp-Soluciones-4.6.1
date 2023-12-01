@@ -24,6 +24,16 @@ Partial Class Frm_Tickets_Mant
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Tickets_Mant))
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
+        Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_EditarFuncionario = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_QuitarVendedor = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_Productos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Lbl_OpcProducto = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Estadisticas_Producto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Consolidar_Stock_X_Producto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_OpcProducto = New DevComponents.DotNetBar.ButtonX()
         Me.Chk_ExigeProducto = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Txt_Agente = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Producto = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -49,19 +59,9 @@ Partial Class Frm_Tickets_Mant
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Archivos_Adjuntos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_OpcProducto = New DevComponents.DotNetBar.ButtonX()
-        Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
-        Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_EditarFuncionario = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_QuitarVendedor = New DevComponents.DotNetBar.ButtonItem()
-        Me.Menu_Contextual_Productos = New DevComponents.DotNetBar.ButtonItem()
-        Me.Lbl_OpcProducto = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_Estadisticas_Producto = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Consolidar_Stock_X_Producto = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel2.SuspendLayout()
-        CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupPanel2
@@ -125,6 +125,95 @@ Partial Class Frm_Tickets_Mant
         Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel2.TabIndex = 165
         Me.GroupPanel2.Text = "Datos del ticket"
+        '
+        'Menu_Contextual
+        '
+        Me.Menu_Contextual.AntiAlias = True
+        Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01, Me.Menu_Contextual_Productos})
+        Me.Menu_Contextual.Location = New System.Drawing.Point(72, 230)
+        Me.Menu_Contextual.Name = "Menu_Contextual"
+        Me.Menu_Contextual.Size = New System.Drawing.Size(411, 25)
+        Me.Menu_Contextual.Stretch = True
+        Me.Menu_Contextual.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Menu_Contextual.TabIndex = 59
+        Me.Menu_Contextual.TabStop = False
+        Me.Menu_Contextual.Text = "ContextMenuBar1"
+        '
+        'Menu_Contextual_01
+        '
+        Me.Menu_Contextual_01.AutoExpandOnClick = True
+        Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_EditarFuncionario, Me.Btn_QuitarVendedor})
+        Me.Menu_Contextual_01.Text = "Opciones"
+        '
+        'Btn_EditarFuncionario
+        '
+        Me.Btn_EditarFuncionario.Image = CType(resources.GetObject("Btn_EditarFuncionario.Image"), System.Drawing.Image)
+        Me.Btn_EditarFuncionario.ImageAlt = CType(resources.GetObject("Btn_EditarFuncionario.ImageAlt"), System.Drawing.Image)
+        Me.Btn_EditarFuncionario.Name = "Btn_EditarFuncionario"
+        Me.Btn_EditarFuncionario.Text = "Editar funcionario"
+        '
+        'Btn_QuitarVendedor
+        '
+        Me.Btn_QuitarVendedor.Image = CType(resources.GetObject("Btn_QuitarVendedor.Image"), System.Drawing.Image)
+        Me.Btn_QuitarVendedor.ImageAlt = CType(resources.GetObject("Btn_QuitarVendedor.ImageAlt"), System.Drawing.Image)
+        Me.Btn_QuitarVendedor.Name = "Btn_QuitarVendedor"
+        Me.Btn_QuitarVendedor.Text = "Quitar vendedor"
+        '
+        'Menu_Contextual_Productos
+        '
+        Me.Menu_Contextual_Productos.AutoExpandOnClick = True
+        Me.Menu_Contextual_Productos.Name = "Menu_Contextual_Productos"
+        Me.Menu_Contextual_Productos.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_OpcProducto, Me.Btn_Estadisticas_Producto, Me.Btn_Consolidar_Stock_X_Producto, Me.Btn_Copiar})
+        Me.Menu_Contextual_Productos.Text = "Opciones productos"
+        '
+        'Lbl_OpcProducto
+        '
+        Me.Lbl_OpcProducto.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.Lbl_OpcProducto.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.Lbl_OpcProducto.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.Lbl_OpcProducto.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.Lbl_OpcProducto.Name = "Lbl_OpcProducto"
+        Me.Lbl_OpcProducto.PaddingBottom = 1
+        Me.Lbl_OpcProducto.PaddingLeft = 10
+        Me.Lbl_OpcProducto.PaddingTop = 1
+        Me.Lbl_OpcProducto.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.Lbl_OpcProducto.Text = "Opciones del producto"
+        '
+        'Btn_Estadisticas_Producto
+        '
+        Me.Btn_Estadisticas_Producto.Image = CType(resources.GetObject("Btn_Estadisticas_Producto.Image"), System.Drawing.Image)
+        Me.Btn_Estadisticas_Producto.ImageAlt = CType(resources.GetObject("Btn_Estadisticas_Producto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Estadisticas_Producto.Name = "Btn_Estadisticas_Producto"
+        Me.Btn_Estadisticas_Producto.Text = "Ver estadísticas del producto/información adicional"
+        '
+        'Btn_Consolidar_Stock_X_Producto
+        '
+        Me.Btn_Consolidar_Stock_X_Producto.Image = CType(resources.GetObject("Btn_Consolidar_Stock_X_Producto.Image"), System.Drawing.Image)
+        Me.Btn_Consolidar_Stock_X_Producto.ImageAlt = CType(resources.GetObject("Btn_Consolidar_Stock_X_Producto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Consolidar_Stock_X_Producto.Name = "Btn_Consolidar_Stock_X_Producto"
+        Me.Btn_Consolidar_Stock_X_Producto.Text = "Consolidar stock del producto"
+        Me.Btn_Consolidar_Stock_X_Producto.Visible = False
+        '
+        'Btn_Copiar
+        '
+        Me.Btn_Copiar.Image = CType(resources.GetObject("Btn_Copiar.Image"), System.Drawing.Image)
+        Me.Btn_Copiar.ImageAlt = CType(resources.GetObject("Btn_Copiar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Copiar.Name = "Btn_Copiar"
+        Me.Btn_Copiar.Text = "Copiar (portapapeles)"
+        '
+        'Btn_OpcProducto
+        '
+        Me.Btn_OpcProducto.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_OpcProducto.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_OpcProducto.Image = CType(resources.GetObject("Btn_OpcProducto.Image"), System.Drawing.Image)
+        Me.Btn_OpcProducto.ImageAlt = CType(resources.GetObject("Btn_OpcProducto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_OpcProducto.Location = New System.Drawing.Point(523, 150)
+        Me.Btn_OpcProducto.Name = "Btn_OpcProducto"
+        Me.Btn_OpcProducto.Size = New System.Drawing.Size(28, 22)
+        Me.Btn_OpcProducto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_OpcProducto.TabIndex = 58
         '
         'Chk_ExigeProducto
         '
@@ -400,6 +489,8 @@ Partial Class Frm_Tickets_Mant
         '
         Me.Txt_Asunto.Border.Class = "TextBoxBorder"
         Me.Txt_Asunto.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Asunto.ButtonCustom.Image = CType(resources.GetObject("Txt_Asunto.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Asunto.ButtonCustom.Visible = True
         Me.Txt_Asunto.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Asunto.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Asunto.ForeColor = System.Drawing.Color.Black
@@ -525,95 +616,6 @@ Partial Class Frm_Tickets_Mant
         Me.Btn_Eliminar.Tooltip = "Eliminar comisión"
         Me.Btn_Eliminar.Visible = False
         '
-        'Btn_OpcProducto
-        '
-        Me.Btn_OpcProducto.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_OpcProducto.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_OpcProducto.Image = CType(resources.GetObject("Btn_OpcProducto.Image"), System.Drawing.Image)
-        Me.Btn_OpcProducto.ImageAlt = CType(resources.GetObject("Btn_OpcProducto.ImageAlt"), System.Drawing.Image)
-        Me.Btn_OpcProducto.Location = New System.Drawing.Point(523, 150)
-        Me.Btn_OpcProducto.Name = "Btn_OpcProducto"
-        Me.Btn_OpcProducto.Size = New System.Drawing.Size(28, 22)
-        Me.Btn_OpcProducto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_OpcProducto.TabIndex = 58
-        '
-        'Menu_Contextual
-        '
-        Me.Menu_Contextual.AntiAlias = True
-        Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01, Me.Menu_Contextual_Productos})
-        Me.Menu_Contextual.Location = New System.Drawing.Point(72, 230)
-        Me.Menu_Contextual.Name = "Menu_Contextual"
-        Me.Menu_Contextual.Size = New System.Drawing.Size(411, 25)
-        Me.Menu_Contextual.Stretch = True
-        Me.Menu_Contextual.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Menu_Contextual.TabIndex = 59
-        Me.Menu_Contextual.TabStop = False
-        Me.Menu_Contextual.Text = "ContextMenuBar1"
-        '
-        'Menu_Contextual_01
-        '
-        Me.Menu_Contextual_01.AutoExpandOnClick = True
-        Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_EditarFuncionario, Me.Btn_QuitarVendedor})
-        Me.Menu_Contextual_01.Text = "Opciones"
-        '
-        'Btn_EditarFuncionario
-        '
-        Me.Btn_EditarFuncionario.Image = CType(resources.GetObject("Btn_EditarFuncionario.Image"), System.Drawing.Image)
-        Me.Btn_EditarFuncionario.ImageAlt = CType(resources.GetObject("Btn_EditarFuncionario.ImageAlt"), System.Drawing.Image)
-        Me.Btn_EditarFuncionario.Name = "Btn_EditarFuncionario"
-        Me.Btn_EditarFuncionario.Text = "Editar funcionario"
-        '
-        'Btn_QuitarVendedor
-        '
-        Me.Btn_QuitarVendedor.Image = CType(resources.GetObject("Btn_QuitarVendedor.Image"), System.Drawing.Image)
-        Me.Btn_QuitarVendedor.ImageAlt = CType(resources.GetObject("Btn_QuitarVendedor.ImageAlt"), System.Drawing.Image)
-        Me.Btn_QuitarVendedor.Name = "Btn_QuitarVendedor"
-        Me.Btn_QuitarVendedor.Text = "Quitar vendedor"
-        '
-        'Menu_Contextual_Productos
-        '
-        Me.Menu_Contextual_Productos.AutoExpandOnClick = True
-        Me.Menu_Contextual_Productos.Name = "Menu_Contextual_Productos"
-        Me.Menu_Contextual_Productos.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_OpcProducto, Me.Btn_Estadisticas_Producto, Me.Btn_Consolidar_Stock_X_Producto, Me.Btn_Copiar})
-        Me.Menu_Contextual_Productos.Text = "Opciones productos"
-        '
-        'Lbl_OpcProducto
-        '
-        Me.Lbl_OpcProducto.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.Lbl_OpcProducto.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.Lbl_OpcProducto.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.Lbl_OpcProducto.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.Lbl_OpcProducto.Name = "Lbl_OpcProducto"
-        Me.Lbl_OpcProducto.PaddingBottom = 1
-        Me.Lbl_OpcProducto.PaddingLeft = 10
-        Me.Lbl_OpcProducto.PaddingTop = 1
-        Me.Lbl_OpcProducto.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.Lbl_OpcProducto.Text = "Opciones del producto"
-        '
-        'Btn_Estadisticas_Producto
-        '
-        Me.Btn_Estadisticas_Producto.Image = CType(resources.GetObject("Btn_Estadisticas_Producto.Image"), System.Drawing.Image)
-        Me.Btn_Estadisticas_Producto.ImageAlt = CType(resources.GetObject("Btn_Estadisticas_Producto.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Estadisticas_Producto.Name = "Btn_Estadisticas_Producto"
-        Me.Btn_Estadisticas_Producto.Text = "Ver estadísticas del producto/información adicional"
-        '
-        'Btn_Consolidar_Stock_X_Producto
-        '
-        Me.Btn_Consolidar_Stock_X_Producto.Image = CType(resources.GetObject("Btn_Consolidar_Stock_X_Producto.Image"), System.Drawing.Image)
-        Me.Btn_Consolidar_Stock_X_Producto.ImageAlt = CType(resources.GetObject("Btn_Consolidar_Stock_X_Producto.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Consolidar_Stock_X_Producto.Name = "Btn_Consolidar_Stock_X_Producto"
-        Me.Btn_Consolidar_Stock_X_Producto.Text = "Consolidar stock del producto"
-        Me.Btn_Consolidar_Stock_X_Producto.Visible = False
-        '
-        'Btn_Copiar
-        '
-        Me.Btn_Copiar.Image = CType(resources.GetObject("Btn_Copiar.Image"), System.Drawing.Image)
-        Me.Btn_Copiar.ImageAlt = CType(resources.GetObject("Btn_Copiar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Copiar.Name = "Btn_Copiar"
-        Me.Btn_Copiar.Text = "Copiar (portapapeles)"
-        '
         'Frm_Tickets_Mant
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -632,8 +634,8 @@ Partial Class Frm_Tickets_Mant
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MANTENCION DE TICKET"
         Me.GroupPanel2.ResumeLayout(False)
-        CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

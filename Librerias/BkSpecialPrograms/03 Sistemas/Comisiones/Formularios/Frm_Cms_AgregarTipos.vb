@@ -125,6 +125,7 @@ Public Class Frm_Cms_AgregarTipos
                 Txt_Descripcion.Text = .Item("Descripcion")
                 Txt_PorcComision.Text = .Item("PorcComision")
                 Chk_TieneSC.Checked = .Item("TieneSC")
+                Chk_MisVentas.Checked = .Item("MisVentas")
             End With
 
             _Tbl_Filtro_Entidad = Fx_Cargar_TblFiltro("Tbl_Filtro_Entidad")
@@ -214,13 +215,12 @@ Public Class Frm_Cms_AgregarTipos
             _Sql.Ej_Insertar_Trae_Identity(Consulta_Sql, _Id_Mis)
         End If
 
-
-
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Comisiones_Mis Set" &
                        " Descripcion = '" & Txt_Descripcion.Text.Trim & "'" &
                        ",PorcComision = " & De_Num_a_Tx_01(_PorcComsion, False, 5) &
                        ",Empresa = " & ModEmpresa &
                        ",TieneSC = " & Convert.ToInt32(Chk_TieneSC.Checked) &
+                       ",MisVentas = " & Convert.ToInt32(Chk_MisVentas.Checked) &
                        "Where Id = " & _Id_Mis &
                        vbCrLf &
                        "Delete " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl" & vbCrLf &

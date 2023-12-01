@@ -78,12 +78,18 @@ Public Class Frm_ImpBarras_Tarja
         Txt_Analista.Text = _Row_Tarja.Item("Analista_Str")
         Txt_Observaciones.Text = _Row_Tarja.Item("Observaciones")
 
-        Consulta_sql = "Select * From TABCODAL Where KOPRAL = '" & _Row_Tarja.Item("CodAlternativo") & "'"
+        Consulta_sql = "Select * From TABCODAL Where KOPRAL = '" & _Row_Tarja.Item("CodAlternativo_Pallet") & "'"
         Dim _Row_Tabcodal As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Dim _SacosXPallet As Integer = _Row_Tabcodal.Item("MULTIPLO")
+        Dim _SacosXPallet As Integer
         Dim _Udm As String = _Row_Tarja.Item("Udm")
         Dim _Formato As Integer = _Row_Tarja.Item("Formato")
+
+        If IsNothing(_Row_Tabcodal) Then
+            Return
+        End If
+
+        _SacosXPallet = _Row_Tabcodal.Item("MULTIPLO")
 
         Txt_CodAlternativo_Pallet.Text = _Row_Tabcodal.Item("KOPRAL").ToString.Trim & ", Udad: " & _Udm & " x " & _Formato & ", Sacos por Pallets: " & _SacosXPallet
 

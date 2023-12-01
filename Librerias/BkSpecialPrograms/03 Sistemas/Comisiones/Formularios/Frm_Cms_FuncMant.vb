@@ -81,7 +81,7 @@ Public Class Frm_Cms_FuncMant
 
             OcultarEncabezadoGrilla(Grilla)
 
-            .Columns("Descripcion").Width = 330
+            .Columns("Descripcion").Width = 330 - 60
             .Columns("Descripcion").HeaderText = "Descripción"
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").ReadOnly = False
@@ -101,6 +101,14 @@ Public Class Frm_Cms_FuncMant
             .Columns("Resumen").Visible = True
             .Columns("Resumen").ReadOnly = False
             .Columns("Resumen").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("MisVentas").Width = 60
+            .Columns("MisVentas").HeaderText = "Mis Ventas"
+            '.Columns("MisVentas").ToolTipText = ""
+            .Columns("MisVentas").Visible = True
+            .Columns("MisVentas").ReadOnly = False
+            .Columns("MisVentas").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("TieneSmeCorr").Width = 60

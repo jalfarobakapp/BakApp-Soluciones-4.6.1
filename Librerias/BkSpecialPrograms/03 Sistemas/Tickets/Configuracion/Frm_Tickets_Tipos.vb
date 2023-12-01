@@ -31,19 +31,11 @@ Public Class Frm_Tickets_Tipos
         Sb_Actualizar_Grilla()
 
         AddHandler Grilla_Tipos.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        AddHandler Grilla_Tipos.MouseDown, AddressOf Sb_Grilla_Tipos_MouseDown
 
     End Sub
 
     Sub Sb_Actualizar_Grilla()
-
-        'Dim _Texto_Busqueda As String = Txt_Buscador.Text.Trim
-        'Dim _Condicion As String = String.Empty
-
-        'Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "CODIGO+DESCRIPTOR Like '%")
-
-        'If Not String.IsNullOrWhiteSpace(Txt_BuscaXProducto.Text) Then
-        '_Condicion = "And CODIGO In (Select CODIGO From MAEDRES Where ELEMENTO = '" & Txt_BuscaXProducto.Text & "')"
-        'End If
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tipos" & vbCrLf &
                        "Where Id_Area = " & _Id_Area
@@ -85,37 +77,19 @@ Public Class Frm_Tickets_Tipos
 
     Private Sub Btn_CrearTipo_Click(sender As Object, e As EventArgs) Handles Btn_CrearTipo.Click
 
-        Dim _Aceptar As Boolean
-        Dim _Tipo As String
-        Dim _Chk As New Controls.CheckBoxX
+        Dim _Grabar As Boolean
+        Dim _Row_Tipo As DataRow
 
-        _Chk.Checked = False
-        _Chk.Text = "EXIGE INCORPORACION DE PRODUCTO"
-        _Chk.Visible = True
+        Dim Fm As New Frm_Tickets_TiposCrear(_Id_Area, 0)
+        Fm.ShowDialog(Me)
+        _Grabar = Fm.Grabar
+        _Row_Tipo = Fm.Row_Tipo
+        Fm.Dispose()
 
-        _Aceptar = InputBox_Bk(Me, "Ingrese el nombre del tipo de requerimiento",
-                               "Crear Tipo", _Tipo, False, _Tipo_Mayus_Minus.Mayusculas, 50, True,,,,,, _Chk)
-
-        If Not _Aceptar Then
-            Return
-        End If
-
-        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tipos", "Id_Area = " & _Id_Area & " And Tipo = '" & _Tipo & "'")
-
-        If CBool(_Reg) Then
-            MessageBoxEx.Show(Me, "El Tipo de requerimiento ya existe", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Call Btn_CrearTipo_Click(Nothing, Nothing)
-            Return
-        End If
-
-        Dim _Id_Tipo As Integer
-
-        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tipos (Id_Area,Tipo,ExigeProducto) Values " &
-                       "(" & _Id_Area & ",'" & _Tipo.Trim & "'," & Convert.ToInt32(_Chk.Checked) & ")"
-        If _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Tipo) Then
+        If _Grabar Then
 
             Me.Sb_Actualizar_Grilla()
-            BuscarDatoEnGrilla(_Tipo, "Tipo", Grilla_Tipos)
+            BuscarDatoEnGrilla(_Row_Tipo.Item("Tipo"), "Tipo", Grilla_Tipos)
 
         End If
 
@@ -127,39 +101,29 @@ Public Class Frm_Tickets_Tipos
 
         Dim _Id_Tipo As Integer = _Fila.Cells("Id").Value
         Dim _Tipo As String = _Fila.Cells("Tipo").Value
-        Dim _Tipo_Old As String = _Fila.Cells("ExigeProducto").Value
+        'Dim _Tipo_Old As String = _Fila.Cells("ExigeProducto").Value
 
-        Dim _Chk As New Controls.CheckBoxX
+        Dim _Grabar As Boolean
+        Dim _Row_Tipo As DataRow
 
-        _Chk.Checked = _Fila.Cells("Tipo").Value
-        _Chk.Text = "EXIGE INCORPORACION DE PRODUCTO"
-        _Chk.Visible = True
+        Dim Fm As New Frm_Tickets_TiposCrear(_Id_Area, _Id_Tipo)
+        Fm.ShowDialog(Me)
+        _Grabar = Fm.Grabar
+        _Row_Tipo = Fm.Row_Tipo
+        Fm.Dispose()
 
-        Dim _Aceptar As Boolean
+        If _Grabar Then
 
-        _Aceptar = InputBox_Bk(Me, "Ingrese el nombre del Tipo de requerimiento", "Editar nombre de Tipo de requerimiento", _Tipo, False,
-                               _Tipo_Mayus_Minus.Mayusculas, 50, True)
+            _Fila.Cells("ExigeProducto").Value = _Row_Tipo.Item("ExigeProducto")
+            _Fila.Cells("RevInventario").Value = _Row_Tipo.Item("RevInventario")
+            _Fila.Cells("AjusInventario").Value = _Row_Tipo.Item("AjusInventario")
+            _Fila.Cells("SobreStock").Value = _Row_Tipo.Item("SobreStock")
+            _Fila.Cells("Asignado").Value = _Row_Tipo.Item("Asignado")
+            _Fila.Cells("AsignadoGrupo").Value = _Row_Tipo.Item("AsignadoGrupo")
+            _Fila.Cells("AsignadoAgente").Value = _Row_Tipo.Item("AsignadoAgente")
+            _Fila.Cells("Id_Grupo").Value = _Row_Tipo.Item("Id_Grupo")
+            _Fila.Cells("CodAgente").Value = _Row_Tipo.Item("CodAgente")
 
-        If Not _Aceptar Then
-            Return
-        End If
-
-        If _Tipo.Trim = _Tipo_Old.Trim Then
-            Return
-        End If
-
-        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tipos", "Tipo = '" & _Tipo & "' And Id <> " & _Id_Tipo)
-
-        If CBool(_Reg) Then
-            MessageBoxEx.Show(Me, "Al nombre del Tipo de requerimiento ya existe", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Call Btn_Mnu_EditarTipo_Click(Nothing, Nothing)
-            Return
-        End If
-
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tipos Set Tipo = '" & _Tipo.Trim & "' Where Id = " & _Id_Tipo
-        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-            _Fila.Cells("Area").Value = _Tipo
-            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Editar", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
 
     End Sub
@@ -181,4 +145,19 @@ Public Class Frm_Tickets_Tipos
 
     End Sub
 
+    Private Sub Sb_Grilla_Tipos_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+            With sender
+                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+                    ShowContextMenu(Menu_Contextual_01)
+                End If
+            End With
+        End If
+    End Sub
+
+    Private Sub Grilla_Tipos_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Tipos.CellDoubleClick
+        Call Btn_Mnu_EditarTipo_Click(Nothing, Nothing)
+    End Sub
 End Class

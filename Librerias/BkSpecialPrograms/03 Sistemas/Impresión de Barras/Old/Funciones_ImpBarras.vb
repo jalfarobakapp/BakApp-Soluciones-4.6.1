@@ -27,6 +27,8 @@
     Dim _PrecioNetoXRtu
     Dim _PrecioBrutoXRtu
     Dim _Rtu
+    Dim _Ud1
+    Dim _Ud2
 
     Dim _Marca_Pr
     Dim _Nodim1
@@ -154,6 +156,9 @@
             Else
                 _Codigo_Alternativo = _RowProducto.Item("Codigo_Alternativo").ToString.Trim
             End If
+
+            _Ud1 = _RowProducto.Item("UD01PR").ToString.Trim
+            _Ud2 = _RowProducto.Item("UD02PR").ToString.Trim
 
             _Marca_Pr = _RowProducto.Item("Marca").ToString.Trim
 
@@ -734,7 +739,6 @@
 #End Region
 
 #Region "IMPRIMIR DESDE OT"
-
     Sub Sb_Imprimir_Etiqueta_OT(_Puerto As String, _NombreEtiqueta As String, _Idpote As Integer, _Kopral As String, _Idpotl As Integer)
 
         _Error = String.Empty
@@ -969,6 +973,9 @@
         _Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
         _Descripcion_Corta = _RowProducto.Item("NOKOPRRA").ToString.Trim
 
+        _Ud1 = _RowProducto.Item("UD01PR").ToString.Trim
+        _Ud2 = _RowProducto.Item("UD02PR").ToString.Trim
+
         _Descripcion = Replace(_Descripcion, Chr(34), "")
         _Desc0125 = Mid(_Descripcion, 1, 25)
         _Desc2650 = Mid(_Descripcion, 26, 50)
@@ -1009,10 +1016,13 @@
 
         'Try
 
-        _Texto = Replace(_Texto, "<CODIGO_PR>", Trim(_Codigo_principal))
-        _Texto = Replace(_Texto, "<CODIGO_TC>", Trim(_Codigo_tecnico))
-        _Texto = Replace(_Texto, "<CODIGO_RA>", Trim(_Codigo_rapido))
-        _Texto = Replace(_Texto, "<CODIGO_ALT>", Trim(_Codigo_Alternativo))
+        _Texto = Replace(_Texto, "<CODIGO_PR>", _Codigo_principal.ToString.Trim)
+        _Texto = Replace(_Texto, "<CODIGO_TC>", _Codigo_tecnico.ToString.Trim)
+        _Texto = Replace(_Texto, "<CODIGO_RA>", _Codigo_rapido.ToString.Trim)
+        _Texto = Replace(_Texto, "<CODIGO_ALT>", _Codigo_Alternativo.ToString.Trim)
+
+        _Texto = Replace(_Texto, "<UD1_PR>", _Ud1.ToString.Trim)
+        _Texto = Replace(_Texto, "<UD2_PR>", _Ud1.ToString.Trim)
 
         Dim _Descripcion_cortamr As String
 

@@ -33,6 +33,9 @@ Public Class Frm_Lote_Ing
 
         Dtp_FechaVenci.Value = DateAdd(DateInterval.Year, 1, FechaDelServidor)
 
+        Txt_Producto.ButtonCustom.Visible = False
+        Txt_Producto.ButtonCustom2.Visible = False
+
     End Sub
 
     Private Sub Txt_Producto_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Producto.ButtonCustomClick

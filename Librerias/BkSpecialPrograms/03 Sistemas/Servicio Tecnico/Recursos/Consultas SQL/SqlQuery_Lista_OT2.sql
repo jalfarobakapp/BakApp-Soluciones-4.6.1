@@ -9,13 +9,13 @@ SELECT Distinct Id_Ot_Padre,Nro_Ot,
         --Fecha_Ingreso As Hora
 Into #Paso1        
 
-FROM   INGETEC_PRB2.dbo.Zw_St_OT_Encabezado
-	Left Join INGETEC_PRB2.dbo.Zw_TablaDeCaracterizaciones TEstado On TEstado.Tabla = 'ESTADOS_ST' And TEstado.CodigoTabla = CodEstado
-		Left Join INGETEC_PRB2.dbo.Zw_TablaDeCaracterizaciones TMaqui On TMaqui.Tabla = 'MAQUINA_ST' And TMaqui.CodigoTabla = CodMaquina
-			Left Join INGETEC_PRB2.dbo.Zw_TablaDeCaracterizaciones TMarca On TMarca.Tabla = 'MARCAS' And TMarca.CodigoTabla = CodMarca
-				Left Join INGETEC_PRB2.dbo.Zw_TablaDeCaracterizaciones TModel On TModel.Tabla = 'MODELOS_ST' And TModel.CodigoTabla = CodModelo
-					Left Join INGETEC_PRB2.dbo.Zw_TablaDeCaracterizaciones TCateg On TCateg.Tabla = 'CATEGOR_ST' And TCateg.CodigoTabla = CodCategoria
-						Left Join INGETEC_PRB2.dbo.Zw_TablaDeCaracterizaciones TEntrega On TEntrega.Tabla = 'ES_ENTREGA_ST' And TEntrega.CodigoTabla = Cod_Estado_Entrega
+FROM   #Db_BakApp#Zw_St_OT_Encabezado
+	Left Join #Db_BakApp#Zw_TablaDeCaracterizaciones TEstado On TEstado.Tabla = 'ESTADOS_ST' And TEstado.CodigoTabla = CodEstado
+		Left Join #Db_BakApp#Zw_TablaDeCaracterizaciones TMaqui On TMaqui.Tabla = 'MAQUINA_ST' And TMaqui.CodigoTabla = CodMaquina
+			Left Join #Db_BakApp#Zw_TablaDeCaracterizaciones TMarca On TMarca.Tabla = 'MARCAS' And TMarca.CodigoTabla = CodMarca
+				Left Join #Db_BakApp#Zw_TablaDeCaracterizaciones TModel On TModel.Tabla = 'MODELOS_ST' And TModel.CodigoTabla = CodModelo
+					Left Join #Db_BakApp#Zw_TablaDeCaracterizaciones TCateg On TCateg.Tabla = 'CATEGOR_ST' And TCateg.CodigoTabla = CodCategoria
+						Left Join #Db_BakApp#Zw_TablaDeCaracterizaciones TEntrega On TEntrega.Tabla = 'ES_ENTREGA_ST' And TEntrega.CodigoTabla = Cod_Estado_Entrega
 
 Where 1 > 0
 #Condicion#
@@ -89,7 +89,7 @@ FROM   #Db_BakApp#Zw_St_OT_Encabezado
 Where 1 > 0
 #Condicion#
 
-Select  * From #Paso1
+Select  * From #Paso1 Order By Nro_Ot
 Select  * From #Paso2
 
 Drop table #Paso1

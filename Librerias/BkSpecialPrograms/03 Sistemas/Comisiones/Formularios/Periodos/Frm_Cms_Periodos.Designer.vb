@@ -22,24 +22,24 @@ Partial Class Frm_Cms_Periodos
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Cms_Periodos))
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Cms_Periodos))
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
+        Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_RevisarPeriodo = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_EditarPeriodo = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_NuevoPeriodo = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnExportarExcel = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
-        Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_RevisarPeriodo = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_EditarPeriodo = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
+        CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupPanel1
@@ -82,6 +82,41 @@ Partial Class Frm_Cms_Periodos
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 157
         Me.GroupPanel1.Text = "PERIODOS"
+        '
+        'Menu_Contextual
+        '
+        Me.Menu_Contextual.AntiAlias = True
+        Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
+        Me.Menu_Contextual.Location = New System.Drawing.Point(196, 77)
+        Me.Menu_Contextual.Name = "Menu_Contextual"
+        Me.Menu_Contextual.Size = New System.Drawing.Size(139, 25)
+        Me.Menu_Contextual.Stretch = True
+        Me.Menu_Contextual.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Menu_Contextual.TabIndex = 46
+        Me.Menu_Contextual.TabStop = False
+        Me.Menu_Contextual.Text = "ContextMenuBar1"
+        '
+        'Menu_Contextual_01
+        '
+        Me.Menu_Contextual_01.AutoExpandOnClick = True
+        Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_RevisarPeriodo, Me.Btn_EditarPeriodo})
+        Me.Menu_Contextual_01.Text = "Opciones"
+        '
+        'Btn_RevisarPeriodo
+        '
+        Me.Btn_RevisarPeriodo.Image = CType(resources.GetObject("Btn_RevisarPeriodo.Image"), System.Drawing.Image)
+        Me.Btn_RevisarPeriodo.ImageAlt = CType(resources.GetObject("Btn_RevisarPeriodo.ImageAlt"), System.Drawing.Image)
+        Me.Btn_RevisarPeriodo.Name = "Btn_RevisarPeriodo"
+        Me.Btn_RevisarPeriodo.Text = "Revisar periodo"
+        '
+        'Btn_EditarPeriodo
+        '
+        Me.Btn_EditarPeriodo.Image = CType(resources.GetObject("Btn_EditarPeriodo.Image"), System.Drawing.Image)
+        Me.Btn_EditarPeriodo.ImageAlt = CType(resources.GetObject("Btn_EditarPeriodo.ImageAlt"), System.Drawing.Image)
+        Me.Btn_EditarPeriodo.Name = "Btn_EditarPeriodo"
+        Me.Btn_EditarPeriodo.Text = "Editar periodo"
         '
         'Grilla
         '
@@ -146,7 +181,7 @@ Partial Class Frm_Cms_Periodos
         Me.Btn_NuevoPeriodo.ImageAlt = CType(resources.GetObject("Btn_NuevoPeriodo.ImageAlt"), System.Drawing.Image)
         Me.Btn_NuevoPeriodo.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_NuevoPeriodo.Name = "Btn_NuevoPeriodo"
-        Me.Btn_NuevoPeriodo.Tooltip = "Crear Orden de despacho"
+        Me.Btn_NuevoPeriodo.Tooltip = "Crear nuevo periodo de comisiones"
         '
         'BtnExportarExcel
         '
@@ -166,41 +201,6 @@ Partial Class Frm_Cms_Periodos
         Me.Btn_Actualizar.Name = "Btn_Actualizar"
         Me.Btn_Actualizar.Tooltip = "Refrescar datos"
         '
-        'Menu_Contextual
-        '
-        Me.Menu_Contextual.AntiAlias = True
-        Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
-        Me.Menu_Contextual.Location = New System.Drawing.Point(196, 77)
-        Me.Menu_Contextual.Name = "Menu_Contextual"
-        Me.Menu_Contextual.Size = New System.Drawing.Size(139, 25)
-        Me.Menu_Contextual.Stretch = True
-        Me.Menu_Contextual.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Menu_Contextual.TabIndex = 46
-        Me.Menu_Contextual.TabStop = False
-        Me.Menu_Contextual.Text = "ContextMenuBar1"
-        '
-        'Menu_Contextual_01
-        '
-        Me.Menu_Contextual_01.AutoExpandOnClick = True
-        Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_RevisarPeriodo, Me.Btn_EditarPeriodo})
-        Me.Menu_Contextual_01.Text = "Opciones"
-        '
-        'Btn_RevisarPeriodo
-        '
-        Me.Btn_RevisarPeriodo.Image = CType(resources.GetObject("Btn_RevisarPeriodo.Image"), System.Drawing.Image)
-        Me.Btn_RevisarPeriodo.ImageAlt = CType(resources.GetObject("Btn_RevisarPeriodo.ImageAlt"), System.Drawing.Image)
-        Me.Btn_RevisarPeriodo.Name = "Btn_RevisarPeriodo"
-        Me.Btn_RevisarPeriodo.Text = "Revisar periodo"
-        '
-        'Btn_EditarPeriodo
-        '
-        Me.Btn_EditarPeriodo.Image = CType(resources.GetObject("Btn_EditarPeriodo.Image"), System.Drawing.Image)
-        Me.Btn_EditarPeriodo.ImageAlt = CType(resources.GetObject("Btn_EditarPeriodo.ImageAlt"), System.Drawing.Image)
-        Me.Btn_EditarPeriodo.Name = "Btn_EditarPeriodo"
-        Me.Btn_EditarPeriodo.Text = "Editar periodo"
-        '
         'Frm_Cms_Periodos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -218,9 +218,9 @@ Partial Class Frm_Cms_Periodos
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MetroForm"
         Me.GroupPanel1.ResumeLayout(False)
+        CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

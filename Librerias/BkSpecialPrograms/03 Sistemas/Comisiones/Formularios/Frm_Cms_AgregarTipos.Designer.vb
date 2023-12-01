@@ -75,6 +75,7 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
+        Me.Chk_MisVentas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -84,6 +85,7 @@ Partial Class Frm_Cms_AgregarTipos
         '
         Me.GroupPanel2.BackColor = System.Drawing.Color.White
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.Controls.Add(Me.Chk_MisVentas)
         Me.GroupPanel2.Controls.Add(Me.Btn_Filtrar_Funcionarios)
         Me.GroupPanel2.Controls.Add(Me.Btn_Filtrar_Suc_Bod)
         Me.GroupPanel2.Controls.Add(Me.Btn_Filtrar_Productos)
@@ -619,6 +621,24 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Imagenes_16x16.Images.SetKeyName(1, "ok.png")
         Me.Imagenes_16x16.Images.SetKeyName(2, "delete.png")
         '
+        'Chk_MisVentas
+        '
+        Me.Chk_MisVentas.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_MisVentas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_MisVentas.CheckBoxImageChecked = CType(resources.GetObject("Chk_MisVentas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_MisVentas.FocusCuesEnabled = False
+        Me.Chk_MisVentas.ForeColor = System.Drawing.Color.Black
+        Me.Chk_MisVentas.Location = New System.Drawing.Point(259, 134)
+        Me.Chk_MisVentas.Name = "Chk_MisVentas"
+        Me.Chk_MisVentas.Size = New System.Drawing.Size(81, 23)
+        Me.Chk_MisVentas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_MisVentas.TabIndex = 124
+        Me.Chk_MisVentas.TabStop = False
+        Me.Chk_MisVentas.Text = "Mis ventas"
+        '
         'Frm_Cms_AgregarTipos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -694,4 +714,5 @@ Partial Class Frm_Cms_AgregarTipos
     Friend WithEvents Btn_Filtrar_Productos As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Btn_Filtrar_Entidades As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Imagenes_16x16 As ImageList
+    Friend WithEvents Chk_MisVentas As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

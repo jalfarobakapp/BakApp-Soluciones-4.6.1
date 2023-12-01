@@ -53,7 +53,6 @@ Partial Class Frm_Crear_Entidad_Mt_Crear_Contactos
         Me.CmbCargo.DisplayMember = "Text"
         Me.CmbCargo.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.CmbCargo.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.CmbCargo.FocusHighlightEnabled = True
         Me.CmbCargo.ForeColor = System.Drawing.Color.Black
         Me.Highlighter1.SetHighlightOnFocus(Me.CmbCargo, True)
         Me.CmbCargo.ItemHeight = 16
@@ -84,7 +83,6 @@ Partial Class Frm_Crear_Entidad_Mt_Crear_Contactos
         Me.CmbActividad.DisplayMember = "Text"
         Me.CmbActividad.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.CmbActividad.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.CmbActividad.FocusHighlightEnabled = True
         Me.CmbActividad.ForeColor = System.Drawing.Color.Black
         Me.Highlighter1.SetHighlightOnFocus(Me.CmbActividad, True)
         Me.CmbActividad.ItemHeight = 16
@@ -112,7 +110,6 @@ Partial Class Frm_Crear_Entidad_Mt_Crear_Contactos
         '
         'TxtEmail
         '
-        Me.TxtEmail.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -121,7 +118,6 @@ Partial Class Frm_Crear_Entidad_Mt_Crear_Contactos
         Me.TxtEmail.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.TxtEmail.DisabledBackColor = System.Drawing.Color.White
         Me.TxtEmail.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.TxtEmail.FocusHighlightEnabled = True
         Me.TxtEmail.ForeColor = System.Drawing.Color.Black
         Me.Highlighter1.SetHighlightOnFocus(Me.TxtEmail, True)
         Me.TxtEmail.Location = New System.Drawing.Point(217, 80)
@@ -148,7 +144,6 @@ Partial Class Frm_Crear_Entidad_Mt_Crear_Contactos
         '
         'TxtFax
         '
-        Me.TxtFax.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -157,7 +152,6 @@ Partial Class Frm_Crear_Entidad_Mt_Crear_Contactos
         Me.TxtFax.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.TxtFax.DisabledBackColor = System.Drawing.Color.White
         Me.TxtFax.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.TxtFax.FocusHighlightEnabled = True
         Me.TxtFax.ForeColor = System.Drawing.Color.Black
         Me.Highlighter1.SetHighlightOnFocus(Me.TxtFax, True)
         Me.TxtFax.Location = New System.Drawing.Point(112, 80)
@@ -184,7 +178,6 @@ Partial Class Frm_Crear_Entidad_Mt_Crear_Contactos
         '
         'TxtTelefono
         '
-        Me.TxtTelefono.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -193,7 +186,6 @@ Partial Class Frm_Crear_Entidad_Mt_Crear_Contactos
         Me.TxtTelefono.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.TxtTelefono.DisabledBackColor = System.Drawing.Color.White
         Me.TxtTelefono.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.TxtTelefono.FocusHighlightEnabled = True
         Me.TxtTelefono.ForeColor = System.Drawing.Color.Black
         Me.Highlighter1.SetHighlightOnFocus(Me.TxtTelefono, True)
         Me.TxtTelefono.Location = New System.Drawing.Point(3, 80)
@@ -220,7 +212,6 @@ Partial Class Frm_Crear_Entidad_Mt_Crear_Contactos
         '
         'TxtRazonSocial
         '
-        Me.TxtRazonSocial.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -229,7 +220,6 @@ Partial Class Frm_Crear_Entidad_Mt_Crear_Contactos
         Me.TxtRazonSocial.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.TxtRazonSocial.DisabledBackColor = System.Drawing.Color.White
         Me.TxtRazonSocial.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.TxtRazonSocial.FocusHighlightEnabled = True
         Me.TxtRazonSocial.ForeColor = System.Drawing.Color.Black
         Me.Highlighter1.SetHighlightOnFocus(Me.TxtRazonSocial, True)
         Me.TxtRazonSocial.Location = New System.Drawing.Point(112, 34)
@@ -256,7 +246,6 @@ Partial Class Frm_Crear_Entidad_Mt_Crear_Contactos
         '
         'TxtRut
         '
-        Me.TxtRut.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -265,7 +254,6 @@ Partial Class Frm_Crear_Entidad_Mt_Crear_Contactos
         Me.TxtRut.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.TxtRut.DisabledBackColor = System.Drawing.Color.White
         Me.TxtRut.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.TxtRut.FocusHighlightEnabled = True
         Me.TxtRut.ForeColor = System.Drawing.Color.Black
         Me.Highlighter1.SetHighlightOnFocus(Me.TxtRut, True)
         Me.TxtRut.Location = New System.Drawing.Point(3, 34)

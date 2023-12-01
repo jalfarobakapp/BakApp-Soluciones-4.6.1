@@ -187,11 +187,12 @@ Public Class Frm_Tickets_Areas
         Dim _FilaArea As DataGridViewRow = Grilla_Areas.CurrentRow
         Dim _Id_Area As Integer = _FilaArea.Cells("Id").Value
 
-        Consulta_sql = "Select At.*,Tp.Tipo From " & _Global_BaseBk & "Zw_Stk_AreaVsTipo At" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_Stk_Tipos Tp On At.Id_Tipo = Tp.Id" & vbCrLf &
-                       "Where Id_Area = " & _Id_Area
-
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id_Area = " & _Id_Area
+        Consulta_sql = "Select *," & vbCrLf &
+                       "Case ExigeProducto When 1 Then " & vbCrLf &
+                       "Case RevInventario When 1 Then 'Revisión de inventario' " & vbCrLf &
+                       "Else Case AjusInventario When 1 Then 'Ajuste de inventario' " & vbCrLf &
+                       "Else Case SobreStock When 1 Then 'Sobre Stock' Else '' End End End Else '' End	As 'Esp_producto'" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id_Area = " & _Id_Area
 
         _Tbl_Tipos = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -205,15 +206,22 @@ Public Class Frm_Tickets_Areas
 
             .Columns("Tipo").Visible = True
             .Columns("Tipo").HeaderText = "Tipo"
-            .Columns("Tipo").Width = 440 - 110
+            .Columns("Tipo").Width = 240
             .Columns("Tipo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("ExigeProducto").Visible = True
-            .Columns("ExigeProducto").HeaderText = "Exige producto"
+            .Columns("ExigeProducto").HeaderText = "Ex.Prod."
             .Columns("ExigeProducto").ToolTipText = "Si esta tickeado, el Ticket exgira la incorporación de un producto para la gestión"
-            .Columns("ExigeProducto").Width = 110
+            .Columns("ExigeProducto").Width = 50
             .Columns("ExigeProducto").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Esp_producto").Visible = True
+            .Columns("Esp_producto").HeaderText = "Especial Productos"
+            .Columns("Esp_producto").ToolTipText = "Acción especial por gestión especialmente para productos"
+            .Columns("Esp_producto").Width = 150
+            .Columns("Esp_producto").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
         End With

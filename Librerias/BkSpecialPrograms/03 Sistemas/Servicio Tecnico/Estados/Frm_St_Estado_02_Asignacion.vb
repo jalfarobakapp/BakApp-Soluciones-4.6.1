@@ -136,6 +136,10 @@ Public Class Frm_St_Estado_02_Asignacion
 
         Dim _Condicion = "And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'" & vbCrLf
 
+        If _Global_Row_Configuracion_General.Item("ServTecnico_Simple") Then
+            _Condicion = String.Empty
+        End If
+
         If _Solo_Este_Tecnico Then
             _Condicion = vbCrLf & "And CodFuncionario = '" & _Tecnico & "'" & vbCrLf
         End If

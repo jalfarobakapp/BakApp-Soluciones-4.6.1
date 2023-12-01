@@ -309,9 +309,17 @@ Public Class Frm_St_Ordenes_de_trabajo
         ' ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''  
         ' Table.Rel_Entidad_Documentos.Rel_Documentos_Detalle
 
+        Dim _Campo_Relation As String
+
+        If _Global_Row_Configuracion_General.Item("ServTecnico_Simple") Then
+            _Campo_Relation = "Nro_Ot"
+        Else
+            _Campo_Relation = "Id_Ot_Padre"
+        End If
+
         _Ds.Relations.Add("Ot_SubOt",
-                             _Ds.Tables("Table").Columns("Id_Ot_Padre"),
-                             _Ds.Tables("Table1").Columns("Id_Ot_Padre"), False)
+                             _Ds.Tables("Table").Columns(_Campo_Relation),
+                             _Ds.Tables("Table1").Columns(_Campo_Relation), False)
 
         Grilla.DataSource = _Ds
         Grilla.DataMember = "Table"
@@ -329,7 +337,7 @@ Public Class Frm_St_Ordenes_de_trabajo
     End Sub
 
     Sub Sb_Marcar_Grilla()
-        Return
+        'Return
         With Grilla
 
             .DataSource = _Tbl_OT
@@ -876,19 +884,25 @@ Public Class Frm_St_Ordenes_de_trabajo
     End Sub
 
     Private Sub BtnActualizar_Click(sender As System.Object, e As System.EventArgs) Handles BtnActualizar.Click
+
         _Id_Fila_Activa = Nothing
+
         Sb_Actualizar_Grilla2()
-        'Sb_Marcar_Grilla()
+
     End Sub
 
     Private Sub Grilla_CellEnter(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEnter
 
-        Dim _Fila As DataGridViewRow = Grilla_SubOt.Rows(0)
+        If CBool(Grilla_SubOt.RowCount) Then
 
-        'If _Id_Fila_Activa <> _Fila.Index Or (_Id_Fila_Activa Is Nothing) Then
-        '_Fila.Cells("Chk_Flujo_Trabajo").Value = False
-        Sb_Actualizar_Estados_De_La_Fila(_Fila)
-        'End If
+            Dim _Fila As DataGridViewRow = Grilla_SubOt.Rows(0)
+
+            'If _Id_Fila_Activa <> _Fila.Index Or (_Id_Fila_Activa Is Nothing) Then
+            '_Fila.Cells("Chk_Flujo_Trabajo").Value = False
+            Sb_Actualizar_Estados_De_La_Fila(_Fila)
+            'End If
+
+        End If
 
     End Sub
 
@@ -943,7 +957,13 @@ Public Class Frm_St_Ordenes_de_trabajo
             Return
         End If
 
-        ShowContextMenu(Menu_Contextual_Garantia)
+        If _Global_Row_Configuracion_General.Item("ServTecnico_Simple") Then
+            Sb_Crear_Nueva_OT()
+        Else
+            Sb_Crear_Nueva_OT_Varios_Productos()
+        End If
+
+        'ShowContextMenu(Menu_Contextual_Garantia)
 
     End Sub
 

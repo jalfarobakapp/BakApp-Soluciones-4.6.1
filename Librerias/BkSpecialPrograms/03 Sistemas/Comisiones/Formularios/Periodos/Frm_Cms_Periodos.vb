@@ -20,6 +20,7 @@ Public Class Frm_Cms_Periodos
 
     Private Sub Frm_Cms_Periodos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Me.Text = "COMISIONES"
         Sb_Actualizar_Grilla()
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
@@ -126,5 +127,9 @@ Public Class Frm_Cms_Periodos
                 End If
             End With
         End If
+    End Sub
+
+    Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click
+        Sb_Actualizar_Grilla()
     End Sub
 End Class

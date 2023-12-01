@@ -131,13 +131,17 @@ Public Class Frm_Tickets_Mant
         End If
 
         If Chk_Asignado.Checked Then
-            If String.IsNullOrEmpty(Txt_Agente.Text) AndAlso String.IsNullOrEmpty(Txt_Grupo.Text) Then
+
+            If (Rdb_AsignadoGrupo.Checked AndAlso String.IsNullOrWhiteSpace(Txt_Grupo.Text)) Or
+               (Rdb_AsignadoAgente.Checked AndAlso String.IsNullOrWhiteSpace(Txt_Agente.Text)) Then
+
                 MessageBoxEx.Show(Me, "Debe asignar un grupo de trabajo o agente para este requerimiento." & vbCrLf & vbCrLf &
                                   "Si no sabe a quien asignar esta labor debe dejar la casilla [ASIGNAR EL REQUERIMINETO A:] destickeada" & vbCrLf &
                                   "y el administrador del sistema redirigira el requerimiento a quien corresponda",
                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
             End If
+
         End If
 
         With _Cl_Tickets.Tickets
@@ -322,6 +326,7 @@ Public Class Frm_Tickets_Mant
         End If
         Rdb_AsignadoAgente.Enabled = Chk_Asignado.Checked
         Rdb_AsignadoGrupo.Enabled = Chk_Asignado.Checked
+
     End Sub
 
     Private Sub Txt_Grupo_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Grupo.ButtonCustomClick

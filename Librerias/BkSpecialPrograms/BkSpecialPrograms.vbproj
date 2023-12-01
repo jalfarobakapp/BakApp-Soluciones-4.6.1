@@ -641,6 +641,12 @@
     <Compile Include="01 Procesos  compartidos\Productos\03 Código alternativo\Frm_LevantarMasivamenteCodAlt.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\03 Informacion Producto\Frm_ComprasSinRecepcionar.Designer.vb">
+      <DependentUpon>Frm_ComprasSinRecepcionar.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\03 Informacion Producto\Frm_ComprasSinRecepcionar.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Productos\03 Informacion Producto\Frm_CumplXProveedor.Designer.vb">
       <DependentUpon>Frm_CumplXProveedor.vb</DependentUpon>
     </Compile>
@@ -2307,6 +2313,12 @@
       <DependentUpon>Frm_Tickets_Tipos.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Tipos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_TiposCrear.Designer.vb">
+      <DependentUpon>Frm_Tickets_TiposCrear.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_TiposCrear.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Tickets\Frm_Tickets_CambEstado.Designer.vb">
@@ -4409,6 +4421,9 @@
     <EmbeddedResource Include="01 Procesos  compartidos\Productos\03 Código alternativo\Frm_LevantarMasivamenteCodAlt.resx">
       <DependentUpon>Frm_LevantarMasivamenteCodAlt.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Productos\03 Informacion Producto\Frm_ComprasSinRecepcionar.resx">
+      <DependentUpon>Frm_ComprasSinRecepcionar.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Productos\03 Informacion Producto\Frm_CumplXProveedor.resx">
       <DependentUpon>Frm_CumplXProveedor.vb</DependentUpon>
     </EmbeddedResource>
@@ -5790,6 +5805,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Tipos.resx">
       <DependentUpon>Frm_Tickets_Tipos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_TiposCrear.resx">
+      <DependentUpon>Frm_Tickets_TiposCrear.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_CambEstado.resx">
       <DependentUpon>Frm_Tickets_CambEstado.vb</DependentUpon>

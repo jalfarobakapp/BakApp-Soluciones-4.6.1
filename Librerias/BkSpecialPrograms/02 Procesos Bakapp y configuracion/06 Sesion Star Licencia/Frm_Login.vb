@@ -208,7 +208,7 @@ Public Class Frm_Login
         Dim _Row_Nom_Equipo As DataRow
         Dim _Dir_Local As String = Application.StartupPath & "\Data\" '"Configuracion_Local"
 
-        Dim _RutEmpresa01 As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Empresas", "Rut", "Empresa = '01'")
+        Dim _RutEmpresa01 As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Empresas", "Rut", "Empresa = '01'").ToString.Trim
 
         Dim _Nombre_Equipo As String = My.Computer.Name
         If Fx_Revisar_Nombre_Equipo_BakApp(_Formulario,
