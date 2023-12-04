@@ -12,6 +12,10 @@ Public Class Frm_InpunBox_Bk
 
     Public Property Chk As Controls.CheckBoxX
 
+    Private _TiempoInicial As DateTime
+    Private _TiempoFinal As DateTime
+    Private _Evaluando As Boolean = False
+
     Public Property Pro_Nueva_Descripcion As String
         Get
             Return _Nueva_Descripcion
@@ -69,6 +73,8 @@ Public Class Frm_InpunBox_Bk
     Public Property BuscarCarpeta As Boolean
     Public Property ConFechaMinima As Boolean
     Public Property FechaMinima As DateTime
+    Public Property NoPermitirEntradaDeTeclado As Boolean
+
     Private Sub Frm_InpunBox_Bk_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         If Global_Thema = Enum_Themas.Oscuro Then
@@ -106,6 +112,9 @@ Public Class Frm_InpunBox_Bk
 
         Btn_BuscarCarpeta.Visible = BuscarCarpeta
         Btn_Calendario.Visible = (_Tipo_de_Caracter = _Tipo_Caracter.Fecha)
+
+        Chk_Teclear.Visible = NoPermitirEntradaDeTeclado
+        TxtDescripcion.ShortcutsEnabled = Not NoPermitirEntradaDeTeclado
 
     End Sub
 
@@ -315,4 +324,49 @@ Public Class Frm_InpunBox_Bk
 
     End Sub
 
+    Private Sub TxtDescripcion_TextChanged(sender As Object, e As EventArgs) Handles TxtDescripcion.TextChanged
+
+        If NoPermitirEntradaDeTeclado AndAlso Not Chk_Teclear.Checked Then
+
+            Dim largo As Long = TxtDescripcion.Text.Length
+
+            If _Evaluando = False And largo >= 1 Then
+                _TiempoInicial = Now
+                _Evaluando = True
+            Else
+                If largo >= 1 Then 'evaluamos el tiempo
+                    _TiempoFinal = Now
+                    Dim segundos As Long = DateDiff(DateInterval.Second, _TiempoInicial, _TiempoFinal)
+                    If segundos >= 1 Then
+                        MessageBoxEx.Show(Me, "Entrada no permitida por teclado" & vbCrLf &
+                                          "Si necesita digitar un código debe marcar la casilla <Ingresar código con el TECLADO> ",
+                                          "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        TxtDescripcion.Text = ""
+                        _Evaluando = False
+                    End If
+                End If
+            End If
+
+            If largo = 0 Then
+                _Evaluando = False
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub Chk_Teclear_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Teclear.CheckedChanged
+
+        If Chk_Teclear.Checked Then
+            If Not Fx_Tiene_Permiso(Me, "Doc00051") Then
+                Chk_Teclear.Checked = False
+            End If
+        End If
+
+        TxtDescripcion.ShortcutsEnabled = Chk_Teclear.Checked
+
+        TxtDescripcion.Text = ""
+        TxtDescripcion.Focus()
+
+    End Sub
 End Class

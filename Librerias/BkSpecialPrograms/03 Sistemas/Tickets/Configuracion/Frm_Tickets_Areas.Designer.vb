@@ -45,6 +45,7 @@ Partial Class Frm_Tickets_Areas
         Me.Menu_Contextual_02 = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_QuitarTipo = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla_Areas = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.Btn_Mnu_EditarTipo = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.Grilla_Tipos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -62,7 +63,7 @@ Partial Class Frm_Tickets_Areas
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_CrearArea, Me.Btn_ExportarExcel})
         Me.Bar2.Location = New System.Drawing.Point(0, 574)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(536, 41)
+        Me.Bar2.Size = New System.Drawing.Size(693, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 114
@@ -96,7 +97,7 @@ Partial Class Frm_Tickets_Areas
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(9, 415)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(516, 153)
+        Me.GroupPanel2.Size = New System.Drawing.Size(672, 153)
         '
         '
         '
@@ -166,7 +167,7 @@ Partial Class Frm_Tickets_Areas
         DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla_Tipos.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
         Me.Grilla_Tipos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla_Tipos.Size = New System.Drawing.Size(510, 130)
+        Me.Grilla_Tipos.Size = New System.Drawing.Size(666, 130)
         Me.Grilla_Tipos.TabIndex = 1
         '
         'GroupPanel3
@@ -178,7 +179,7 @@ Partial Class Frm_Tickets_Areas
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel3.Location = New System.Drawing.Point(9, 0)
         Me.GroupPanel3.Name = "GroupPanel3"
-        Me.GroupPanel3.Size = New System.Drawing.Size(516, 70)
+        Me.GroupPanel3.Size = New System.Drawing.Size(672, 70)
         '
         '
         '
@@ -226,7 +227,7 @@ Partial Class Frm_Tickets_Areas
         Me.Txt_Buscador.Location = New System.Drawing.Point(3, 20)
         Me.Txt_Buscador.Name = "Txt_Buscador"
         Me.Txt_Buscador.PreventEnterBeep = True
-        Me.Txt_Buscador.Size = New System.Drawing.Size(507, 22)
+        Me.Txt_Buscador.Size = New System.Drawing.Size(660, 22)
         Me.Txt_Buscador.TabIndex = 0
         '
         'LabelX7
@@ -252,7 +253,7 @@ Partial Class Frm_Tickets_Areas
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(9, 76)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(516, 333)
+        Me.GroupPanel1.Size = New System.Drawing.Size(672, 333)
         '
         '
         '
@@ -317,13 +318,13 @@ Partial Class Frm_Tickets_Areas
         Me.Btn_Mnu_AsociarTipos.Image = CType(resources.GetObject("Btn_Mnu_AsociarTipos.Image"), System.Drawing.Image)
         Me.Btn_Mnu_AsociarTipos.ImageAlt = CType(resources.GetObject("Btn_Mnu_AsociarTipos.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_AsociarTipos.Name = "Btn_Mnu_AsociarTipos"
-        Me.Btn_Mnu_AsociarTipos.Text = "Asociar tipo de requerimiento al Area/Departamento"
+        Me.Btn_Mnu_AsociarTipos.Text = "Crear nuevo tipo de requerimiento para esta Area"
         '
         'Menu_Contextual_02
         '
         Me.Menu_Contextual_02.AutoExpandOnClick = True
         Me.Menu_Contextual_02.Name = "Menu_Contextual_02"
-        Me.Menu_Contextual_02.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_QuitarTipo})
+        Me.Menu_Contextual_02.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_EditarTipo, Me.Btn_Mnu_QuitarTipo})
         Me.Menu_Contextual_02.Text = "Opciones"
         '
         'Btn_Mnu_QuitarTipo
@@ -371,14 +372,21 @@ Partial Class Frm_Tickets_Areas
         DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla_Areas.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
         Me.Grilla_Areas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla_Areas.Size = New System.Drawing.Size(510, 310)
+        Me.Grilla_Areas.Size = New System.Drawing.Size(666, 310)
         Me.Grilla_Areas.TabIndex = 1
+        '
+        'Btn_Mnu_EditarTipo
+        '
+        Me.Btn_Mnu_EditarTipo.Image = CType(resources.GetObject("Btn_Mnu_EditarTipo.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_EditarTipo.ImageAlt = CType(resources.GetObject("Btn_Mnu_EditarTipo.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_EditarTipo.Name = "Btn_Mnu_EditarTipo"
+        Me.Btn_Mnu_EditarTipo.Text = "Editar tipo de requerimiento"
         '
         'Frm_Tickets_Areas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(536, 615)
+        Me.ClientSize = New System.Drawing.Size(693, 615)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.GroupPanel3)
@@ -419,4 +427,5 @@ Partial Class Frm_Tickets_Areas
     Friend WithEvents Menu_Contextual_02 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_QuitarTipo As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grilla_Areas As DevComponents.DotNetBar.Controls.DataGridViewX
+    Friend WithEvents Btn_Mnu_EditarTipo As DevComponents.DotNetBar.ButtonItem
 End Class

@@ -412,6 +412,12 @@
   <data name="Zw_Log_Gestiones" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_log_gestiones.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="Zw_Lotes_Det" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_Lotes_Det.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Lotes_Enc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_Lotes_Enc.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="Zw_MrVsPro" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_mrvspro.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
@@ -453,6 +459,9 @@
   </data>
   <data name="Zw_Pdc_MesonVsOperario" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_pdc_mesonvsoperario.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Pdp_CPT_Tarja" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_Pdp_CPT_Tarja.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Zw_Pdp_MaquinaVsProductos" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_pdp_maquinavsproductos.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>

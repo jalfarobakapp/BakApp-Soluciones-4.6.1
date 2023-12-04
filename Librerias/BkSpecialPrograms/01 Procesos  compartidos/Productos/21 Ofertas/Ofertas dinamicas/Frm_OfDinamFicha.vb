@@ -52,7 +52,7 @@ Public Class Frm_OfDinamFicha
             Dtp_Ftoferta.Value = Nothing
             Txt_Codigo.Enabled = True
             Txt_Udad.Enabled = True
-            Txt_Udad.Text = String.Empty
+            'Txt_Udad.Text = String.Empty
             Me.ActiveControl = Txt_Codigo
 
         Else
@@ -335,6 +335,9 @@ Public Class Frm_OfDinamFicha
 
         _Sql.Sb_Parametro_Informe_Sql(Chk_Desc_Dom, "Ofertas_Dinamincas",
                       Chk_Desc_Dom.Name, Class_SQLite.Enum_Type._Boolean, Chk_Desc_Dom.Checked, _Actualizar,, False)
+
+        _Sql.Sb_Parametro_Informe_Sql(Txt_Udad, "Ofertas_Dinamincas",
+                              Txt_Udad.Name, Class_SQLite.Enum_Type._String, Txt_Udad.Text, _Actualizar,, False)
 
     End Sub
 

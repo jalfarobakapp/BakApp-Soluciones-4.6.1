@@ -1,5 +1,4 @@
-﻿Imports System.Web.Services
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_Tickets_Mant
 
@@ -9,7 +8,8 @@ Public Class Frm_Tickets_Mant
     Dim _Cl_Tickets As New Cl_Tickets
 
     Public Property Grabar As Boolean
-
+    Public Property Id_Padre As Integer
+    Public Property New_Ticket As Cl_Tickets
 
     Public Sub New(_Id_Ticket As Integer)
 
@@ -31,6 +31,30 @@ Public Class Frm_Tickets_Mant
     End Sub
 
     Private Sub Frm_Tickets_Mant_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        If CBool(Id_Padre) Then
+
+            _Cl_Tickets.Tickets.Id_Padre = Id_Padre
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id = " & Id_Padre
+            Dim _Row_Ticket_Padre As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Row_Ticket_Padre.Item("CodProducto") & "'"
+            Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not IsNothing(_RowProducto) Then
+
+                Txt_Producto.Tag = _RowProducto.Item("KOPR")
+                Txt_Producto.Text = _RowProducto.Item("KOPR").ToString.Trim & "-" & _RowProducto.Item("NOKOPR").ToString.Trim
+
+                Txt_Producto.ButtonCustom.Visible = False
+                Txt_Producto.ButtonCustom2.Visible = False
+
+                Chk_ExigeProducto.Checked = True
+
+            End If
+
+        End If
 
         Chk_ExigeProducto.Enabled = False
 
@@ -107,13 +131,17 @@ Public Class Frm_Tickets_Mant
         End If
 
         If Chk_Asignado.Checked Then
-            If String.IsNullOrEmpty(Txt_Agente.Text) AndAlso String.IsNullOrEmpty(Txt_Grupo.Text) Then
+
+            If (Rdb_AsignadoGrupo.Checked AndAlso String.IsNullOrWhiteSpace(Txt_Grupo.Text)) Or
+               (Rdb_AsignadoAgente.Checked AndAlso String.IsNullOrWhiteSpace(Txt_Agente.Text)) Then
+
                 MessageBoxEx.Show(Me, "Debe asignar un grupo de trabajo o agente para este requerimiento." & vbCrLf & vbCrLf &
                                   "Si no sabe a quien asignar esta labor debe dejar la casilla [ASIGNAR EL REQUERIMINETO A:] destickeada" & vbCrLf &
                                   "y el administrador del sistema redirigira el requerimiento a quien corresponda",
                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
             End If
+
         End If
 
         With _Cl_Tickets.Tickets
@@ -141,6 +169,7 @@ Public Class Frm_Tickets_Mant
         If String.IsNullOrEmpty(_Msg_Grabar) Then
             MessageBoxEx.Show(Me, "El ticket se ha creado correctamente, el número de ticket es " & _Cl_Tickets.Tickets.Numero & "." & vbCrLf &
                               "Guárdelo para fururas referencias", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            New_Ticket = _Cl_Tickets
             Grabar = True
             Me.Close()
         Else
@@ -168,11 +197,15 @@ Public Class Frm_Tickets_Mant
             Txt_Tipo.Tag = 0
             Txt_Tipo.Text = String.Empty
 
-            Txt_Producto.Enabled = False
-            Txt_Producto.Tag = String.Empty
-            Txt_Producto.Text = String.Empty
+            If Not CBool(Id_Padre) Then
 
-            Chk_ExigeProducto.Checked = False
+                Txt_Producto.Enabled = False
+                Txt_Producto.Tag = String.Empty
+                Txt_Producto.Text = String.Empty
+
+                Chk_ExigeProducto.Checked = False
+
+            End If
 
             Txt_Area.ButtonCustom.Visible = False
             Txt_Area.ButtonCustom2.Visible = True
@@ -204,10 +237,33 @@ Public Class Frm_Tickets_Mant
                                "And Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id_Area = " & Txt_Area.Tag & ")",
                                False, False, True, False,, False) Then
 
-            Chk_ExigeProducto.Checked = False
-
             Txt_Tipo.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
             Txt_Tipo.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
+
+            If CBool(Id_Padre) Then
+                Txt_Tipo.ButtonCustom.Visible = False
+                Txt_Tipo.ButtonCustom2.Visible = False
+                Txt_Descripcion.Focus()
+                Return
+            End If
+
+            Dim _Id_Tipo = Txt_Tipo.Tag
+
+            Consulta_sql = "Select  Tp.*,Isnull(Tf.NOKOFU,'') As 'Agente',Isnull(Gr.Grupo,'') As Grupo" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_Stk_Tipos Tp" & vbCrLf &
+                           "Left Join TABFU Tf On Tf.KOFU = Tp.CodAgente" & vbCrLf &
+                           "Left Join " & _Global_BaseBk & "Zw_Stk_Grupos Gr On Tp.Id_Grupo = Gr.Id" & vbCrLf &
+                           "Where Tp.Id = " & _Id_Tipo
+            Dim _Row_Tipo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Chk_ExigeProducto.Checked = _Row_Tipo.Item("ExigeProducto")
+            Chk_Asignado.Checked = _Row_Tipo.Item("Asignado")
+            Txt_Grupo.Tag = _Row_Tipo.Item("Id_Grupo")
+            Txt_Grupo.Text = _Row_Tipo.Item("Grupo")
+            Txt_Agente.Tag = _Row_Tipo.Item("CodAgente")
+            Txt_Agente.Text = _Row_Tipo.Item("Agente").ToString.Trim
+            Rdb_AsignadoAgente.Checked = _Row_Tipo.Item("AsignadoAgente")
+            Rdb_AsignadoGrupo.Checked = _Row_Tipo.Item("AsignadoGrupo")
 
             Dim _ExigeProducto As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Tipos", "ExigeProducto", "Id = " & Txt_Tipo.Tag)
 
@@ -286,6 +342,7 @@ Public Class Frm_Tickets_Mant
         End If
         Rdb_AsignadoAgente.Enabled = Chk_Asignado.Checked
         Rdb_AsignadoGrupo.Enabled = Chk_Asignado.Checked
+
     End Sub
 
     Private Sub Txt_Grupo_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Grupo.ButtonCustomClick
@@ -402,7 +459,6 @@ Public Class Frm_Tickets_Mant
 
                 Codigo_abuscar = Fm.Pro_RowProducto.Item("KOPR")
 
-
                 If Not String.IsNullOrEmpty(Trim(Codigo_abuscar)) Then
                     Txt_Producto.Tag = _RowProducto.Item("KOPR")
                     Txt_Producto.Text = _RowProducto.Item("KOPR").ToString.Trim & "-" & _RowProducto.Item("NOKOPR").ToString.Trim
@@ -455,4 +511,6 @@ Public Class Frm_Tickets_Mant
     Private Sub Btn_OpcProducto_Click(sender As Object, e As EventArgs) Handles Btn_OpcProducto.Click
         ShowContextMenu(Menu_Contextual_Productos)
     End Sub
+
+
 End Class

@@ -22,7 +22,7 @@ Namespace My.Resources
     '''<summary>
     '''  Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
     Friend Class Recursos_cambio_productos
@@ -65,16 +65,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Busca una cadena traducida similar a 
-        '''Declare @CodigoNew Char(13) = &apos;#CodigoNew#&apos;, 
+        '''  Busca una cadena traducida similar a Declare @CodigoNew Char(13) = &apos;#CodigoNew#&apos;, 
         '''        @CodigoOld Char(13) = &apos;#CodigoOld#&apos;,
         '''        @Descripcion Varchar(50) = &apos;#Descripcion#&apos;
         '''
         '''
-        '''Update #Base#ZW_ProductosDescartadosInfCompras    Set Codigo = @CodigoNew Where Codigo = @CodigoOld
-        '''Update #Base#ZW_SOC_Detalle					      Set Codigo = @CodigoNew Where Codigo = @CodigoOld
-        '''Update #Base#Zw_Casi_DocDet				          Set Codigo = @CodigoNew Where Codigo = @CodigoOld
-        '''Update #Base#Zw_Demonio_Prestashop                Set Codigo = @CodigoNew Where [resto de la cadena truncado]&quot;;.
+        '''Delete #Base#ZW_ProductosDescartadosInfCompras     Where Codigo = @CodigoNew
+        '''Delete #Base#ZW_SOC_Detalle					       Where Codigo = @CodigoNew
+        '''Delete #Base#Zw_Casi_DocDet				           Where Codigo = @CodigoNew
+        '''Delete #Base#Zw_Demonio_Prestashop                 Where Codigo = @CodigoNew
+        '''Delete #Base#Zw_Despachos_Doc_Det                  Where Codigo = @Codig [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property SQLQuery_Cambiar_Codigo_Productos_BakApp() As String
             Get

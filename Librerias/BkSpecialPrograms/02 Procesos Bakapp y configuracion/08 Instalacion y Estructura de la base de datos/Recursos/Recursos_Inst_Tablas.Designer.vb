@@ -927,17 +927,15 @@ Namespace My.Resources
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
         '''CREATE TABLE [dbo].[Zw_Demonio_NVVAutoDet](
-        '''	[Id_Det]		[int] 			IDENTITY(1,1) NOT NULL,
-        '''	[Id_Enc]		[int]			NOT NULL DEFAULT (0),
-        '''	[Idmaeddo_Ori]	[int]			NOT NULL DEFAULT (0),
-        '''	[Codigo]		[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Cantidad]		[float]			NOT NULL DEFAULT (0),
-        '''	[Untrans]		[int]			NOT NULL DEFAULT (0),
-        '''	[Descripcion]	[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
-        ''' CONSTRAINT [PK_Zw_Demonio_NVVAutoDet] PRIMARY KEY CLUSTERED 
-        '''(
-        '''	[Id_Det] ASC
-        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUT [resto de la cadena truncado]&quot;;.
+        '''	[Id_Det]		        [int] 			IDENTITY(1,1) NOT NULL,
+        '''	[Id_Enc]		        [int]			NOT NULL DEFAULT (0),
+        '''	[Idmaeddo_Ori]	        [int]			NOT NULL DEFAULT (0),
+        '''	[Codigo]		        [varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Cantidad]		        [float]			NOT NULL DEFAULT (0),
+        '''	[Untrans]		        [int]			NOT NULL DEFAULT (0),
+        '''	[Descripcion]	        [varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Empresa]	            [varchar](2)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Demonio_NVVAutoDet() As String
             Get
@@ -2117,6 +2115,51 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
+        '''CREATE TABLE [dbo].[Zw_Lotes_Det](
+        '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
+        '''	[Id_Lote]		[int]			NOT NULL Default(0),
+        '''	[NroLote]		[varchar](20)	NOT NULL Default(&apos;&apos;),
+        '''	[NomTabla]		[varchar](20)	NOT NULL Default(&apos;&apos;),
+        '''	[IdTabla]		[int]			NOT NULL Default(0),
+        ''') ON [PRIMARY]
+        '''
+        '''
+        '''
+        '''.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Lotes_Det() As String
+            Get
+                Return ResourceManager.GetString("Zw_Lotes_Det", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Lotes_Enc](
+        '''	[Id_Lote]		[int] IDENTITY(1,1) NOT NULL,
+        '''	[NroLote]		[varchar](20)	NOT NULL Default(&apos;&apos;),
+        '''	[Codigo]		[varchar](13)	NOT NULL Default(&apos;&apos;),
+        '''	[FechaVenci]	[datetime]		NULL,
+        ''' CONSTRAINT [PK_Zw_Lotes_Enc] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[NroLote] ASC,
+        '''	[Codigo] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+        ''') ON [PRIMARY]
+        '''
+        '''
+        '''.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Lotes_Enc() As String
+            Get
+                Return ResourceManager.GetString("Zw_Lotes_Enc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
         '''
         '''CREATE TABLE [dbo].[Zw_MrVsPro](
         '''	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -2422,6 +2465,27 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
+        '''CREATE TABLE [dbo].[Zw_Pdp_CPT_Tarja](
+        '''	[Id]				[int] IDENTITY(1,1) NOT NULL,
+        '''	[Empresa]			[char](2)		NOT NULL Default(&apos;&apos;),
+        '''	[Idmaeddo]			[int]			NOT NULL Default(0),
+        '''	[Nro_CPT]			[varchar](10)	NOT NULL Default(&apos;&apos;),
+        '''	[Lote]				[varchar](20)	NOT NULL Default(&apos;&apos;),
+        '''	[Codigo]			[varchar](13)	NOT NULL Default(&apos;&apos;),
+        '''	[CodAlternativo]	[varchar](21)	NOT NULL Default(&apos;&apos;),
+        '''	[Turno]				[varchar](1)	NOT NULL Default(&apos;&apos;),
+        '''	[Planta]			[varchar](1)	NOT NULL Default(&apos;&apos;),
+        '''	[Udm]				[varchar](2)	NOT  [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Pdp_CPT_Tarja() As String
+            Get
+                Return ResourceManager.GetString("Zw_Pdp_CPT_Tarja", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
         '''
         '''CREATE TABLE [dbo].[Zw_Pdp_MaquinaVsProductos](
         '''	[IdMaquina]             [int] IDENTITY(1,1) NOT NULL,
@@ -2506,13 +2570,13 @@ Namespace My.Resources
         '''
         '''
         '''CREATE TABLE [dbo].[Zw_Pdp_MesonVsProductos](
-        '''	[IdMeson]                   [int] IDENTITY(1,1) NOT NULL,
-        '''	[Codmeson]                  [char](13)      NOT NULL DEFAULT (&apos;&apos;),
+        '''	[IdMeson]               [int] IDENTITY(1,1) NOT NULL,
+        '''	[Codmeson]                   [char](13)      NOT NULL DEFAULT (&apos;&apos;),
         '''	[Orden_Meson]               [int]           NOT NULL DEFAULT (0),
         '''	[Estado]                    [char](2)       NOT NULL DEFAULT (&apos;&apos;),
         '''	[Idpotpr]                   [int]           NOT NULL DEFAULT (0),
         '''	[Idpotl]                    [int]           NOT NULL DEFAULT (0),
-        '''	[Idpote]                    [int]            [resto de la cadena truncado]&quot;;.
+        '''	[Idpote]                    [int]           NOT [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Pdp_MesonVsProductos() As String
             Get
@@ -3762,7 +3826,7 @@ Namespace My.Resources
         '''	[Sucursal]	[varchar](3)    NOT NULL DEFAULT (&apos;&apos;),
         '''	[Costo]		[float]         NOT NULL DEFAULT (0),
         '''	[Precio]	[float]         NOT NULL DEFAULT (0),
-        ''' CONSTRAINT [PK_Zw_St_OT_Recetas_Ope_Precios] PRIMARY KEY CLUSTERED 
+        ''' CONSTRAINT [PK_Zw_St_OT_Operaciones_Precios] PRIMARY KEY CLUSTERED 
         '''(
         '''	[Id_Ope] ASC,
         '''	[Empresa] ASC,

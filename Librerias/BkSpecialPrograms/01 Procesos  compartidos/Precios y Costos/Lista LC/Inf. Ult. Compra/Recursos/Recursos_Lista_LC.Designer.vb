@@ -22,7 +22,7 @@ Namespace My.Resources
     '''<summary>
     '''  Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
     Friend Class Recursos_Lista_LC
@@ -66,9 +66,10 @@ Namespace My.Resources
         
         '''<summary>
         '''  Busca una cadena traducida similar a Declare @Fecha_Desde As Datetime,
-        '''		@Fecha_Hasta As Datetime
+        '''		@Fecha_Hasta As Datetime,
+        '''        @Empresa As Char(2)
         '''
-        '''Select @Fecha_Desde = &apos;#Fecha_Desde#&apos;,@Fecha_Hasta = &apos;#Fecha_Hasta#&apos;
+        '''Select @Fecha_Desde = &apos;#Fecha_Desde#&apos;,@Fecha_Hasta = &apos;#Fecha_Hasta#&apos;,@Empresa = &apos;#Empresa#&apos;
         '''
         '''SELECT DISTINCT    Ddo.IDMAEEDO,
         '''				   Ddo.IDMAEDDO,	
@@ -80,9 +81,7 @@ Namespace My.Resources
         '''                   Ddo.ENDO, 
         '''                   Ddo.SUENDO, 
         '''                   dbo.MAEEN.NOKOEN, 
-        '''                   Ddo.KOPRCT, 
-        '''                   Ddo.UDTRPR, 
-        '''    [resto de la cadena truncado]&quot;;.
+        '''                 [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Ult_Compras_GRC() As String
             Get

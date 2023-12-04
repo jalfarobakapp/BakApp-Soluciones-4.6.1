@@ -22,7 +22,7 @@ Namespace My.Resources
     '''<summary>
     '''  Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
     Friend Class Recursos_Proximas_Recepciones
@@ -122,12 +122,10 @@ Namespace My.Resources
         '''Where 1 &gt; 0       
         '''#Filtro#   
         '''    
-        '''       
-        '''Select IDMAEEDO,IDMAEDDO,ENDO,SUENDO,NOKOEN,ENDOFI,SUENDOFI,NOENDOFI,TIDO,NUDO,FEEMDO,FEERLI,FEER,
+        '''Select Ps.IDMAEEDO,IDMAEDDO,Ps.ENDO,Ps.SUENDO,NOKOEN,Ps.ENDOFI,Ps.SUENDOFI,NOENDOFI,Ps.TIDO,Ps.NUDO,OBDO,OCDO,Ps.FEEMDO,FEERLI,Ps.FEER,
         '''       SULIDO,SUCURSAL,BOSULIDO,BODEGA,
         '''       TIPR,KOPRCT,NOKOPR,UD0#Ud#PR,
-        '''       CAPRCO#Ud#,CAPREX#Ud#,SALDO_Ud#Ud#,
-        '''     [resto de la cadena truncado]&quot;;.
+        '''       CAPRCO#Ud#,CA [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property SQLQuery_Sub_Inf_Recep_Desp_Detalle_x_Documentos() As String
             Get
@@ -142,17 +140,16 @@ Namespace My.Resources
         '''Where 1 &gt; 0
         '''#Filtro#
         '''
-        '''Select DISTINCT IDMAEEDO,IDMAEEN,ENDO,SUENDO,NOKOEN,ENDOFI,SUENDOFI,NOENDOFI,TIDO,NUDO,FEEMDO,FEERLI,
+        '''Select DISTINCT IDMAEEDO,IDMAEEN,ENDO,SUENDO,NOKOEN,ENDOFI,SUENDOFI,NOENDOFI,TIDO,NUDO,OBDO,OCDO,FEEMDO,FEERLI,
         '''       SULIDO,SUCURSAL,BOSULIDO,BOSULIDO,BODEGA
         '''From #Tabla_Paso#
         '''Where 1 &gt; 0       
         '''#Filtro#   
         '''    
-        '''       
-        '''Select IDMAEEDO,IDMAEDDO,ENDO,SUENDO,NOKOEN,ENDOFI,SUENDOFI,NOENDOFI,TIDO,NUDO,FEEMDO,FEERLI,
+        '''  /*     
+        '''Select IDMAEEDO,IDMAEDDO,ENDO,SUENDO,NOKOEN,ENDOFI,SUENDOFI,NOENDOFI,TIDO,NUDO,OBDO,OCDO,FEEMDO,FEERLI,
         '''       SULIDO,SUCURSAL,BOSULIDO,BODEGA,
-        '''       TIPR,KOPRCT,NOKOPR,UD0#Ud#PR,
-        '''     [resto de la cadena truncado]&quot;;.
+        '''       TIPR,KOPRCT,N [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property SQLQuery_Sub_Inf_Recep_Desp_Detalle_x_Entiades() As String
             Get

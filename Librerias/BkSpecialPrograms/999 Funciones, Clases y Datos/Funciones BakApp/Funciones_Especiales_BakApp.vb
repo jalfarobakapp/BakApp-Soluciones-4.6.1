@@ -4223,6 +4223,180 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
+    Function Fx_Parametro_Vs_Variable(_Parametro As String, _Row As DataRow, _Sufijo As String) As String
+
+        Dim _Valor
+        Dim _Valor_Devuelto = String.Empty
+        Dim _Type As String
+
+        Try
+
+            Dim _Vl = Split(Replace(Replace(_Parametro, "<", ""), ">", ""), ",")
+
+            Dim _Campo As String = _Vl(0)
+            Dim _Formato As String
+            Dim _Rango_Desde As Integer
+            Dim _Rango_Hasta As Integer
+
+            _Campo = _Campo.Replace(_Sufijo, "")
+
+            If _Parametro.Contains(",") Then
+                If _Vl.Length = 3 Then
+                    Try
+                        _Rango_Desde = _Vl(1)
+                        _Rango_Hasta = _Vl(2)
+                    Catch ex As Exception
+                        Throw New System.Exception(ex.Message)
+                    End Try
+                End If
+                If _Vl.Length = 2 Then
+                    _Formato = _Vl(1).ToUpper
+                End If
+            End If
+
+            _Campo = Replace(_Campo.ToUpper, "DOC_", "").ToUpper
+            _Campo = Replace(_Campo.ToUpper, "DESPACHO_", "").ToUpper
+
+            Try
+
+                _Type = _Row.Item(_Campo).GetType.ToString
+
+                'If _Parametro.ToString.ToUpper.Contains("DOC_") Then
+
+                'If _Parametro.ToString.ToUpper.Contains("DESPACHO_") Then
+
+                '    _Valor = _Row.Item(_Campo)
+
+                'End If
+
+                Select Case _Parametro
+
+                    Case "<Doc_Vanedo,0>"
+
+                        _Valor = FormatCurrency(_Row.Item(_Campo), 0)
+
+                    Case "<Doc_Vanedo,1>"
+
+                        _Valor = FormatCurrency(_Row.Item(_Campo), 1)
+
+                    Case "<Doc_Vanedo,2>"
+
+                        _Valor = FormatCurrency(_Row.Item(_Campo), 2)
+
+                    Case "<Doc_Vabrdo>"
+
+                        _Valor = FormatCurrency(_Row.Item(_Campo), 0)
+
+                    Case "<Doc_Feemdo>", "<Doc_Feemdo,1>"
+
+                        _Valor = FormatDateTime(_Row.Item(_Campo), DateFormat.ShortDate)
+
+                    Case "<Doc_Feemdo,2>"
+
+                        _Valor = FormatDateTime(_Row.Item(_Campo), DateFormat.LongDate)
+
+                    Case Else
+
+                        _Valor = _Row.Item(_Campo)
+
+                End Select
+
+                'End If
+
+                If _Type.Contains("Double") Or _Type.Contains("Int") Then
+
+                    If IsNothing(_Formato) Then
+                        _Valor_Devuelto = FormatNumber(_Valor, 0)
+                    Else
+
+                        If _Formato.ToUpper.Contains("C") Then
+                            Select Case _Formato
+                                Case "C1"
+                                    _Valor_Devuelto = FormatCurrency(_Valor, 1)
+                                Case "C2"
+                                    _Valor_Devuelto = FormatCurrency(_Valor, 2)
+                                Case "C3"
+                                    _Valor_Devuelto = FormatCurrency(_Valor, 3)
+                                Case Else
+                                    _Valor_Devuelto = FormatCurrency(_Valor, 0)
+                            End Select
+                        End If
+
+                        If _Formato.ToUpper.Contains("N") Then
+                            Select Case _Formato
+                                Case "N1"
+                                    _Valor_Devuelto = FormatCurrency(_Valor, 1)
+                                Case "N2"
+                                    _Valor_Devuelto = FormatCurrency(_Valor, 2)
+                                Case "N3"
+                                    _Valor_Devuelto = FormatCurrency(_Valor, 3)
+                                Case Else
+                                    _Valor_Devuelto = FormatCurrency(_Valor, 0)
+                            End Select
+                        End If
+                    End If
+
+                ElseIf _Type.Contains("Date") Then
+
+                    If IsNothing(_Formato) Then
+                        _Valor_Devuelto = Format(_Valor, "dd/MM/yyyy")
+                    Else
+
+                        Try
+                            Select Case _Formato
+                                Case "DD/MM/AAAA"
+                                    _Valor_Devuelto = Format(_Valor, "dd/MM/yyyy")
+                                Case "DD-MM-AAAA"
+                                    _Valor_Devuelto = Format(_Valor, "dd-MM-yyyy")
+                                Case "LONGDATE"
+                                    _Valor_Devuelto = FormatDateTime(_Valor, DateFormat.LongDate)
+                                Case Else
+                                    _Valor_Devuelto = FormatDateTime(_Valor, DateFormat.ShortDate)
+                            End Select
+                        Catch ex As Exception
+                            Throw New System.Exception(ex.Message)
+                        End Try
+
+                    End If
+
+                    '_Valor_Devuelto = NuloPorNro(_Valor, "")
+
+                ElseIf _Type.Contains("Boolean") Then
+                    _Valor_Devuelto = NuloPorNro(_Valor, 0)
+                Else
+
+                    _Valor_Devuelto = NuloPorNro(_Valor, "")
+
+                    If _Rango_Hasta > _Rango_Desde Then
+
+                        _Rango_Hasta = (_Rango_Hasta - _Rango_Desde) + 1
+
+                        _Valor_Devuelto = Mid(_Valor_Devuelto, _Rango_Desde, _Rango_Hasta) & "_"
+
+                    End If
+
+                    _Valor_Devuelto = _Valor_Devuelto.Trim
+
+                End If
+
+                'Dim _Typos As New List(Of String)
+                'For i = 0 To _Row.ItemArray.Length - 1
+                '    _Typos.Add(_Row.Item(i).GetType.ToString)
+                'Next
+                'Dim f = 0
+
+            Catch ex As Exception
+                _Valor_Devuelto = _Campo & " -> Función desconocida"
+            End Try
+
+        Catch ex As Exception
+            _Valor_Devuelto = ex.Message & "... Error en función: " & _Parametro
+        End Try
+
+        Return _Valor_Devuelto
+
+    End Function
+
     Function Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Idmaeedo As Integer) As String
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)

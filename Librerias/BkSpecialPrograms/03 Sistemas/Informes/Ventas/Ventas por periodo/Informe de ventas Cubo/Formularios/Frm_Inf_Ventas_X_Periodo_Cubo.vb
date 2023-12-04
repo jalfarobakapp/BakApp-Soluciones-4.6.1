@@ -814,6 +814,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     Sub Sb_Actualizar_Grilla(_Actualizar_Datos_Informe As Boolean)
 
+        Dim _Codigo As String
+
         Try
 
             If Comisiones Then
@@ -900,8 +902,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
 
             _SqlFiltro_Detalle = Fx_Filtro_Detalle()
-
-            Dim _Codigo
 
             _Codigo = _Row_Vista.Item("CODIGO")
             _Cp_Codigo = _Row_Vista.Item("CODIGO")
@@ -1195,7 +1195,12 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
             Me.Cursor = Cursors.Default
             Me.Enabled = True
+
+            Btn_CumplimientoClientes.Visible = (_Codigo = "KOFULIDO")
+
         End Try
+
+        Me.Refresh()
 
     End Sub
 
@@ -4827,6 +4832,28 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             End Try
 
         End With
+
+    End Sub
+
+    Private Sub Btn_CumplimientoClientes_Click(sender As Object, e As EventArgs) Handles Btn_CumplimientoClientes.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Inf00047") Then
+            Return
+        End If
+
+        Dim _Filtro As String = Generar_Filtro_IN(_Tbl_Informe, "", "CODIGO", False, False, "'")
+
+        If _Filtro = "()" Then
+            MessageBoxEx.Show(Me, "No existe información de venta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Consulta_sql = "Select KOFU From TABFU Where KOFU In " & _Filtro
+        Dim _Tbl_FiltroVendedores As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        Dim Fm As New Frm_Inf_Ventas_CumplClientes(Dtp_Fecha_Desde.Value, Dtp_Fecha_Hasta.Value, _Tbl_FiltroVendedores)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 

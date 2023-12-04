@@ -35,6 +35,10 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Btn_Consolidar_Stock_X_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_Cambio_Estado = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Mnu_CerrarTicket = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_CerrarTicketCrearNuevo = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_SolicitarCierre = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Anular = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GrupoTicket = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -55,15 +59,11 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_MensajeRespuesta = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_CambiarEstado = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Cerrar = New DevComponents.DotNetBar.ButtonItem()
         Me.Txt_Descripcion = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
-        Me.Btn_Mnu_SolicitarCierre = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_CerrarTicketCrearNuevo = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_CerrarTicket = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_CrearNuevoTicket = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Cerrar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_VerTicketOrigen = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -175,6 +175,37 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Menu_Contextual_Cambio_Estado.Name = "Menu_Contextual_Cambio_Estado"
         Me.Menu_Contextual_Cambio_Estado.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_Mnu_CerrarTicket, Me.Btn_Mnu_CerrarTicketCrearNuevo, Me.Btn_Mnu_SolicitarCierre, Me.Btn_Anular})
         Me.Menu_Contextual_Cambio_Estado.Text = "Opciones cambio de estado"
+        '
+        'LabelItem1
+        '
+        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem1.Name = "LabelItem1"
+        Me.LabelItem1.PaddingBottom = 1
+        Me.LabelItem1.PaddingLeft = 10
+        Me.LabelItem1.PaddingTop = 1
+        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem1.Text = "Opciones de cierre"
+        '
+        'Btn_Mnu_CerrarTicket
+        '
+        Me.Btn_Mnu_CerrarTicket.Image = CType(resources.GetObject("Btn_Mnu_CerrarTicket.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_CerrarTicket.Name = "Btn_Mnu_CerrarTicket"
+        Me.Btn_Mnu_CerrarTicket.Text = "Cerrar Ticket"
+        '
+        'Btn_Mnu_CerrarTicketCrearNuevo
+        '
+        Me.Btn_Mnu_CerrarTicketCrearNuevo.Image = CType(resources.GetObject("Btn_Mnu_CerrarTicketCrearNuevo.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_CerrarTicketCrearNuevo.Name = "Btn_Mnu_CerrarTicketCrearNuevo"
+        Me.Btn_Mnu_CerrarTicketCrearNuevo.Text = "Cerrar Ticket y crear nuevo Ticket a partir de este para seguir el hilo."
+        '
+        'Btn_Mnu_SolicitarCierre
+        '
+        Me.Btn_Mnu_SolicitarCierre.Image = CType(resources.GetObject("Btn_Mnu_SolicitarCierre.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_SolicitarCierre.Name = "Btn_Mnu_SolicitarCierre"
+        Me.Btn_Mnu_SolicitarCierre.Text = "Solicitar cierre de Ticket al remitente."
         '
         'Btn_Anular
         '
@@ -492,7 +523,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_MensajeRespuesta, Me.Btn_CambiarEstado, Me.Btn_CrearNuevoTicket, Me.Btn_Cerrar})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_MensajeRespuesta, Me.Btn_CambiarEstado, Me.Btn_VerTicketOrigen, Me.Btn_Cerrar})
         Me.Bar2.Location = New System.Drawing.Point(0, 536)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(689, 41)
@@ -519,6 +550,17 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Btn_CambiarEstado.ImageAlt = CType(resources.GetObject("Btn_CambiarEstado.ImageAlt"), System.Drawing.Image)
         Me.Btn_CambiarEstado.Name = "Btn_CambiarEstado"
         Me.Btn_CambiarEstado.Text = "Cambiar Estado"
+        '
+        'Btn_Cerrar
+        '
+        Me.Btn_Cerrar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Cerrar.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Btn_Cerrar.Image = CType(resources.GetObject("Btn_Cerrar.Image"), System.Drawing.Image)
+        Me.Btn_Cerrar.ImageAlt = CType(resources.GetObject("Btn_Cerrar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Cerrar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Cerrar.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
+        Me.Btn_Cerrar.Name = "Btn_Cerrar"
+        Me.Btn_Cerrar.Tooltip = "Cerrar formulario"
         '
         'Txt_Descripcion
         '
@@ -619,57 +661,14 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Imagenes_16x16.Images.SetKeyName(33, "people-vendor.png")
         Me.Imagenes_16x16.Images.SetKeyName(34, "people-customer-man.png")
         '
-        'Btn_Mnu_SolicitarCierre
+        'Btn_VerTicketOrigen
         '
-        Me.Btn_Mnu_SolicitarCierre.Image = CType(resources.GetObject("Btn_Mnu_SolicitarCierre.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_SolicitarCierre.Name = "Btn_Mnu_SolicitarCierre"
-        Me.Btn_Mnu_SolicitarCierre.Text = "Solicitar cierre de Ticket al remitente."
-        '
-        'Btn_Mnu_CerrarTicketCrearNuevo
-        '
-        Me.Btn_Mnu_CerrarTicketCrearNuevo.Image = CType(resources.GetObject("Btn_Mnu_CerrarTicketCrearNuevo.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_CerrarTicketCrearNuevo.Name = "Btn_Mnu_CerrarTicketCrearNuevo"
-        Me.Btn_Mnu_CerrarTicketCrearNuevo.Text = "Cerrar Ticket y crear nuevo Ticket a partir de este para seguir el hilo."
-        '
-        'Btn_Mnu_CerrarTicket
-        '
-        Me.Btn_Mnu_CerrarTicket.Image = CType(resources.GetObject("Btn_Mnu_CerrarTicket.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_CerrarTicket.Name = "Btn_Mnu_CerrarTicket"
-        Me.Btn_Mnu_CerrarTicket.Text = "Cerrar Ticket"
-        '
-        'LabelItem1
-        '
-        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.LabelItem1.Name = "LabelItem1"
-        Me.LabelItem1.PaddingBottom = 1
-        Me.LabelItem1.PaddingLeft = 10
-        Me.LabelItem1.PaddingTop = 1
-        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem1.Text = "Opciones de cierre"
-        '
-        'Btn_CrearNuevoTicket
-        '
-        Me.Btn_CrearNuevoTicket.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_CrearNuevoTicket.ForeColor = System.Drawing.Color.Black
-        Me.Btn_CrearNuevoTicket.Image = CType(resources.GetObject("Btn_CrearNuevoTicket.Image"), System.Drawing.Image)
-        Me.Btn_CrearNuevoTicket.ImageAlt = CType(resources.GetObject("Btn_CrearNuevoTicket.ImageAlt"), System.Drawing.Image)
-        Me.Btn_CrearNuevoTicket.Name = "Btn_CrearNuevoTicket"
-        Me.Btn_CrearNuevoTicket.Text = "Crear nuevo ticket a partir de este"
-        Me.Btn_CrearNuevoTicket.Visible = False
-        '
-        'Btn_Cerrar
-        '
-        Me.Btn_Cerrar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Cerrar.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Btn_Cerrar.Image = CType(resources.GetObject("Btn_Cerrar.Image"), System.Drawing.Image)
-        Me.Btn_Cerrar.ImageAlt = CType(resources.GetObject("Btn_Cerrar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Cerrar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Cerrar.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
-        Me.Btn_Cerrar.Name = "Btn_Cerrar"
-        Me.Btn_Cerrar.Tooltip = "Cerrar formulario"
+        Me.Btn_VerTicketOrigen.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_VerTicketOrigen.ForeColor = System.Drawing.Color.Black
+        Me.Btn_VerTicketOrigen.Image = CType(resources.GetObject("Btn_VerTicketOrigen.Image"), System.Drawing.Image)
+        Me.Btn_VerTicketOrigen.ImageAlt = CType(resources.GetObject("Btn_VerTicketOrigen.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerTicketOrigen.Name = "Btn_VerTicketOrigen"
+        Me.Btn_VerTicketOrigen.Text = "Ver Ticket origen"
         '
         'Frm_Tickets_Seguimiento
         '
@@ -735,6 +734,6 @@ Partial Class Frm_Tickets_Seguimiento
     Friend WithEvents Btn_Mnu_SolicitarCierre As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_CerrarTicketCrearNuevo As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
-    Friend WithEvents Btn_CrearNuevoTicket As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Cerrar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_VerTicketOrigen As DevComponents.DotNetBar.ButtonItem
 End Class

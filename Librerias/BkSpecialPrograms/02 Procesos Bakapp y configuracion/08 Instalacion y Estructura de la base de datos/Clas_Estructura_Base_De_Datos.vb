@@ -799,6 +799,12 @@ Public Class Clas_Estructura_Base_De_Datos
 
             Case "Zw_Log_Gestiones"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Log_Gestiones
+
+            Case "Zw_Lotes_Enc"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Lotes_Enc
+            Case "Zw_Lotes_Det"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Lotes_Det
+
             Case "Zw_MrVsPro"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_MrVsPro
             Case "Zw_Negocios_01_Enc"
@@ -827,6 +833,8 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Pdc_MesonVsMaquina
             Case "Zw_Pdc_MesonVsOperario"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Pdc_MesonVsOperario
+            Case "Zw_Pdp_CPT_Tarja"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Pdp_CPT_Tarja
             Case "Zw_Pdp_MaquinaVsProductos"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Pdp_MaquinaVsProductos
             Case "Zw_Pdp_MesonVsProductos"

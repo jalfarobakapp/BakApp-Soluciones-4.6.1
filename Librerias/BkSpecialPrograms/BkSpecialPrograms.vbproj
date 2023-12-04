@@ -13,7 +13,7 @@
     <AssemblyName>BkSpecialPrograms</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OptionExplicit>On</OptionExplicit>
     <OptionCompare>Binary</OptionCompare>
     <OptionStrict>Off</OptionStrict>
@@ -178,7 +178,7 @@
     </Reference>
     <Reference Include="MySql.Data, Version=8.2.0.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MySQL\MySQL Connector Net 6.8.3\Assemblies\v4.0\MySql.Data.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MySQL\MySQL Connector NET 8.2.0\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.13.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -208,14 +208,8 @@
     <Reference Include="SautinSoft.RtfToHtml, Version=7.4.5.25, Culture=neutral, PublicKeyToken=c666a5e96a3d5457, processorArchitecture=MSIL">
       <HintPath>..\..\packages\sautinsoft.rtftohtml.7.4.5.25\lib\net40\SautinSoft.RtfToHtml.dll</HintPath>
     </Reference>
-    <Reference Include="Spire.Doc, Version=7.11.0.41040, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FreeSpire.Doc.7.11.0\lib\net40\Spire.Doc.dll</HintPath>
-    </Reference>
-    <Reference Include="Spire.License, Version=1.3.7.40, Culture=neutral, PublicKeyToken=b1144360237c8b3f, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FreeSpire.Doc.7.11.0\lib\net40\Spire.License.dll</HintPath>
-    </Reference>
-    <Reference Include="Spire.Pdf, Version=5.11.0.2040, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FreeSpire.Doc.7.11.0\lib\net40\Spire.Pdf.dll</HintPath>
+    <Reference Include="Spire.Doc, Version=11.6.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FreeSpire.Doc.11.6.0\lib\net40\Spire.Doc.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -645,6 +639,12 @@
       <DependentUpon>Frm_LevantarMasivamenteCodAlt.vb</DependentUpon>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Productos\03 Código alternativo\Frm_LevantarMasivamenteCodAlt.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\03 Informacion Producto\Frm_ComprasSinRecepcionar.Designer.vb">
+      <DependentUpon>Frm_ComprasSinRecepcionar.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\03 Informacion Producto\Frm_ComprasSinRecepcionar.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Productos\03 Informacion Producto\Frm_CumplXProveedor.Designer.vb">
@@ -1734,6 +1734,12 @@
     <Compile Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_PorOT.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_Tarja.Designer.vb">
+      <DependentUpon>Frm_ImpBarras_Tarja.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_Tarja.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Cl_InfProyStXVnta.vb" />
     <Compile Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Frm_InfProyStXVnta.Designer.vb">
       <DependentUpon>Frm_InfProyStXVnta.vb</DependentUpon>
@@ -1777,6 +1783,12 @@
       <DependentUpon>Recursos_Inf_MgProyecion.resx</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Actualizacion de datos del informe\Class_Cronometro.vb" />
+    <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Informes Especiales\Frm_Inf_Ventas_CumplClientes.Designer.vb">
+      <DependentUpon>Frm_Inf_Ventas_CumplClientes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Informes Especiales\Frm_Inf_Ventas_CumplClientes.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Inventario\Inventario parcializado\Formularios\Frm_Crear_Guias_De_Ajuste_De_Stock.Designer.vb">
       <DependentUpon>Frm_Crear_Guias_De_Ajuste_De_Stock.vb</DependentUpon>
     </Compile>
@@ -2301,6 +2313,12 @@
       <DependentUpon>Frm_Tickets_Tipos.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Tipos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_TiposCrear.Designer.vb">
+      <DependentUpon>Frm_Tickets_TiposCrear.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_TiposCrear.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Tickets\Frm_Tickets_CambEstado.Designer.vb">
@@ -4403,6 +4421,9 @@
     <EmbeddedResource Include="01 Procesos  compartidos\Productos\03 Código alternativo\Frm_LevantarMasivamenteCodAlt.resx">
       <DependentUpon>Frm_LevantarMasivamenteCodAlt.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Productos\03 Informacion Producto\Frm_ComprasSinRecepcionar.resx">
+      <DependentUpon>Frm_ComprasSinRecepcionar.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Productos\03 Informacion Producto\Frm_CumplXProveedor.resx">
       <DependentUpon>Frm_CumplXProveedor.vb</DependentUpon>
     </EmbeddedResource>
@@ -4936,6 +4957,9 @@
     <EmbeddedResource Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_PorOT.resx">
       <DependentUpon>Frm_ImpBarras_PorOT.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_Tarja.resx">
+      <DependentUpon>Frm_ImpBarras_Tarja.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Informes\Stock\Proyeccion Stock Segun Venta\Frm_InfProyStXVnta.resx">
       <DependentUpon>Frm_InfProyStXVnta.vb</DependentUpon>
     </EmbeddedResource>
@@ -4960,6 +4984,9 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Recursos_Inf_MgProyecion.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Informes Especiales\Frm_Inf_Ventas_CumplClientes.resx">
+      <DependentUpon>Frm_Inf_Ventas_CumplClientes.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Inventario\Inventario parcializado\Formularios\Frm_Crear_Guias_De_Ajuste_De_Stock.resx">
       <DependentUpon>Frm_Crear_Guias_De_Ajuste_De_Stock.vb</DependentUpon>
@@ -5778,6 +5805,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Tipos.resx">
       <DependentUpon>Frm_Tickets_Tipos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_TiposCrear.resx">
+      <DependentUpon>Frm_Tickets_TiposCrear.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_CambEstado.resx">
       <DependentUpon>Frm_Tickets_CambEstado.vb</DependentUpon>
@@ -7713,6 +7743,8 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_ListaPreProducto.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Log_Archivador.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Log_Gestiones.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Lotes_Det.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Lotes_Enc.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_MrVsPro.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Negocios_01_Enc.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Negocios_02_Det.sql" />
@@ -7727,6 +7759,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Pdc_Mesones.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Pdc_MesonVsMaquina.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Pdc_MesonVsOperario.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Pdp_CPT_Tarja.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Pdp_MaquinaVsProductos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Pdp_MesonVsAlertas.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Pdp_MesonVsAlertas_Lectura.sql" />

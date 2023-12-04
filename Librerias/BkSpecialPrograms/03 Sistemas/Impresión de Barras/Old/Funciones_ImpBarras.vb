@@ -27,6 +27,8 @@
     Dim _PrecioNetoXRtu
     Dim _PrecioBrutoXRtu
     Dim _Rtu
+    Dim _Ud1
+    Dim _Ud2
 
     Dim _Marca_Pr
     Dim _Nodim1
@@ -155,6 +157,9 @@
                 _Codigo_Alternativo = _RowProducto.Item("Codigo_Alternativo").ToString.Trim
             End If
 
+            _Ud1 = _RowProducto.Item("UD01PR").ToString.Trim
+            _Ud2 = _RowProducto.Item("UD02PR").ToString.Trim
+
             _Marca_Pr = _RowProducto.Item("Marca").ToString.Trim
 
             _Ubicacion = _RowProducto.Item("Ubic_Random")
@@ -275,7 +280,9 @@
         End If
 
         Datos_Documento.Dispose()
+
         Dim _RowProducto As DataRow
+        Dim _RowDetalle As DataRow
 
         For Each _Fila As DataRow In _TblDetalle.Rows
 
@@ -294,6 +301,8 @@
                 _Nudopa = _Fila.Item("NUDOPA")
 
                 _RowProducto = Fx_DatosProducto(_Codigo_principal, _Lista, _Empresa, _Sucursal, _Bodega, _CodEntidad)
+
+                _RowDetalle = _Fila
 
                 Exit For
 
@@ -362,7 +371,122 @@
 
         _PrecioLc1 = 0
 
+        If _RowDetalle.Item("ARCHIRST").ToString.Trim = "POTL" Then
+
+            Dim _Idpotl As Integer = _RowDetalle.Item("IDRST")
+
+            Sb_Etiquetas_OT(_Texto, _Idpotl, _Kopral)
+
+        End If
+
+        Consulta_sql = "Select Top 1 Id,Enc.Id_Lote,Enc.NroLote,Enc.NroLote As 'NROLOTE_BK',NomTabla,IdTabla,Enc.FechaVenci,Enc.FechaVenci As 'FECHAVENCI_LOTE_BK'" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Lotes_Det Det" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Lotes_Enc Enc On Enc.Id_Lote = Det.Id_Lote" & vbCrLf &
+                       "Where Det.NomTabla = 'MAEDDO' And Det.IdTabla = " & _RowDetalle.Item("IDMAEDDO")
+        Dim _Row_Lote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not IsNothing(_Row_Lote) Then
+
+            _Texto = Replace(_Texto, "<NroLote>", _Row_Lote.Item("NroLote"))
+            _Texto = Replace(_Texto, "<FechaVenci>", Format(_Row_Lote.Item("FechaVenci"), "dd-MM-yyyy"))
+
+            _Texto = Replace(_Texto, "<NROLOTE_BK>", _Row_Lote.Item("NroLote"))
+            _Texto = Replace(_Texto, "<FECHAVENCI_LOTE_BK>", Format(_Row_Lote.Item("FechaVenci"), "dd-MM-yyyy"))
+
+        End If
+
         Sb_Imprimir_PRN(_Texto, _Puerto)
+
+    End Sub
+
+    Sub Sb_Etiquetas_OT(ByRef _Texto As String, _Idpotl As Integer, _Kopral As String)
+
+        Dim _Idpote As Integer
+
+        Consulta_sql = "Select POTL.*,Ltd.NroLote,Lte.FechaVenci,'" & _Kopral & "' As ALTERNAT,'" & _Kopral & "' As CODIGO_ALT" & vbCrLf &
+               "From POTL" & vbCrLf &
+               "Left Join " & _Global_BaseBk & "Zw_Lotes_Det Ltd On IDPOTL = IdTabla" & vbCrLf &
+               "Left Join " & _Global_BaseBk & "Zw_Lotes_Enc Lte On Ltd.Id_Lote = Lte.Id_Lote" & vbCrLf &
+               "Where IDPOTL = " & _Idpotl
+
+        Consulta_sql = "Select * From POTL Where IDPOTL = " & _Idpotl
+
+        Dim _Row_Potl As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row_Potl) Then
+            _Error = "No existe registro de OT Tabla POTL"
+            Return
+        End If
+
+        _Idpote = _Row_Potl.Item("IDPOTE")
+
+        Dim _Fecha_impresion As Date = Now
+
+        '_Texto = Replace(_Texto, "<NUMOT_INT>", _NumotInt)
+
+        Dim _Funciones As New List(Of String)
+        Sb_Llenar_Listado_Funciones(0, _Texto, _Funciones)
+
+        Consulta_sql = "Select * From POTE Where IDPOTE = " & _Idpote
+        Dim _Row_Pote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row_Pote) Then
+            _Error = "No existe registro de OT Tabla POTE"
+            Return
+        End If
+
+        ' Encabezado
+        For Each _Funcion As String In _Funciones
+
+            For Each _Columna As DataColumn In _Row_Pote.Table.Columns
+
+                If _Funcion.Contains(_Columna.ColumnName) Then
+
+                    Dim _Funcion_Buscar = "<" & _Funcion & ">"
+                    Dim _Valor_Funcion = Fx_Parametro_Vs_Variable(_Funcion_Buscar, _Row_Pote)
+
+                    If _Funcion_Buscar = "<barcode>" Then
+                        Dim _New_Valor_Funcion = Mid(_Valor_Funcion, 1, 22) & ">6" & Mid(_Valor_Funcion, 23, 1)
+                        _Valor_Funcion = _New_Valor_Funcion
+                        '60503035247121012939710
+                    End If
+                    _Texto = Replace(_Texto, _Funcion_Buscar, _Valor_Funcion)
+                    Exit For
+
+                End If
+
+            Next
+
+        Next
+
+        ' Descripcion
+
+        _Funciones.Clear()
+
+        Sb_Llenar_Listado_Funciones(0, _Texto, _Funciones)
+
+        For Each _Funcion As String In _Funciones
+
+            For Each _Columna As DataColumn In _Row_Potl.Table.Columns
+
+                If _Funcion.Contains(_Columna.ColumnName) Then
+
+                    Dim _Funcion_Buscar = "<" & _Funcion & ">"
+                    Dim _Valor_Funcion = Fx_Parametro_Vs_Variable(_Funcion_Buscar, _Row_Potl)
+
+                    If _Funcion_Buscar = "<barcode>" Then
+                        Dim _New_Valor_Funcion = Mid(_Valor_Funcion, 1, 22) & ">6" & Mid(_Valor_Funcion, 23, 1)
+                        _Valor_Funcion = _New_Valor_Funcion
+                        '60503035247121012939710
+                    End If
+                    _Texto = Replace(_Texto, _Funcion_Buscar, _Valor_Funcion)
+                    Exit For
+
+                End If
+
+            Next
+
+        Next
 
     End Sub
 
@@ -615,7 +739,6 @@
 #End Region
 
 #Region "IMPRIMIR DESDE OT"
-
     Sub Sb_Imprimir_Etiqueta_OT(_Puerto As String, _NombreEtiqueta As String, _Idpote As Integer, _Kopral As String, _Idpotl As Integer)
 
         _Error = String.Empty
@@ -781,6 +904,93 @@
 
 #End Region
 
+#Region "IMPRIMIR TARJA"
+
+    Sub Sb_Imprimir_Tarja(_NombreEtiqueta As String,
+                          _Puerto As String,
+                          _Empresa As String,
+                          _Id_Tarja As Integer)
+
+
+        Consulta_sql = "Select Trj.*,Isnull(Anl.NombreTabla,'') As 'Analista_Str',Isnull(Plt.NombreTabla,'') As 'Planta_Str'" &
+                       ",Isnull(Trn.NombreTabla,'') As 'Turno_Str'" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja Trj" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Anl On Anl.Tabla = 'TARJA_ANALISTA' And Anl.CodigoTabla = Analista" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Plt On Plt.Tabla = 'TARJA_PLANTA' And Plt.CodigoTabla = Planta" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Trn On Trn.Tabla = 'TARJA_TURNO' And Trn.CodigoTabla = Turno" & vbCrLf &
+                       "Where Id = " & _Id_Tarja
+
+        Dim _Row_Tarja As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql) ' Fx_Datos_Ubicacion(_Empresa, _Sucursal, _Bodega, _Id_Mapa, _Codigo_Sector, _CodUbicacion)
+
+        Dim _Fecha_impresion As Date = Now
+        Dim _RowEtiqueta As DataRow = Fx_TraeEtiqueta(_NombreEtiqueta)
+
+        Dim _Texto = _RowEtiqueta.Item("FUNCION")
+
+        Dim _FechaStr As String = _Fecha_impresion.ToString("yyMMdd_HHmmss") ' Format(_Fecha_impresion, "yyMMdd:hhmmss")
+
+        Dim _TRJ_ETQ_Nro_CPT As String = "<TRJ>" & _Row_Tarja.Item("Nro_CPT") & "</TRJ><END>"
+        Dim _TRJ_ETQ_Nro_CPT_FFHH1 As String = "<TRJ>" & _Row_Tarja.Item("Nro_CPT") & "</TRJ>" & _FechaStr.ToString.Trim & "<END>"
+        Dim _TRJ_FechaElab2 As String = FormatDateTime(_Row_Tarja.Item("FechaElab"), DateFormat.ShortDate)
+
+        _Texto = Replace(_Texto, "<TRJ_ETQ_Nro_CPT>", _TRJ_ETQ_Nro_CPT.Trim)
+        _Texto = Replace(_Texto, "<TRJ_ETQ_Nro_CPT_FFHH1>", _TRJ_ETQ_Nro_CPT_FFHH1.Trim)
+        _Texto = Replace(_Texto, "<TRJ_FechaElab2>", _TRJ_FechaElab2.Trim)
+
+        Dim _Funciones As New List(Of String)
+        Sb_Llenar_Listado_Funciones(0, _Texto, _Funciones)
+
+        ' Encabezado
+        For Each _Funcion As String In _Funciones
+
+            For Each _Columna As DataColumn In _Row_Tarja.Table.Columns
+
+                If _Funcion.Contains(_Columna.ColumnName) Then
+
+                    '_Funcion = "TRJ_" & _Funcion
+
+                    Dim _Funcion_Buscar = "<" & _Funcion & ">"
+                    Dim _Valor_Funcion = Fx_Parametro_Vs_Variable(_Funcion_Buscar, _Row_Tarja, "TRJ_")
+
+                    If _Funcion_Buscar = "<barcode>" Then
+                        Dim _New_Valor_Funcion = Mid(_Valor_Funcion, 1, 22) & ">6" & Mid(_Valor_Funcion, 23, 1)
+                        _Valor_Funcion = _New_Valor_Funcion
+                        '60503035247121012939710
+                    End If
+                    _Texto = Replace(_Texto, _Funcion_Buscar, _Valor_Funcion)
+                    Exit For
+
+                End If
+
+            Next
+
+        Next
+
+        _Codigo_principal = _Row_Tarja.Item("Codigo")
+        _Codigo_Alternativo = _Row_Tarja.Item("CodAlternativo")
+
+        Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo_principal & "'"
+        Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        _Codigo_tecnico = _RowProducto.Item("KOPRTE")
+        _Codigo_rapido = _RowProducto.Item("KOPRRA")
+        _Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
+        _Descripcion_Corta = _RowProducto.Item("NOKOPRRA").ToString.Trim
+
+        _Ud1 = _RowProducto.Item("UD01PR").ToString.Trim
+        _Ud2 = _RowProducto.Item("UD02PR").ToString.Trim
+
+        _Descripcion = Replace(_Descripcion, Chr(34), "")
+        _Desc0125 = Mid(_Descripcion, 1, 25)
+        _Desc2650 = Mid(_Descripcion, 26, 50)
+
+        Sb_Imprimir_PRN(_Texto, _Puerto)
+
+    End Sub
+
+#End Region
+
+
 #Region "PROCEDIMIENTOS PRIVADOS"
 
 #Region "TRAER ETIQUETA"
@@ -810,10 +1020,13 @@
 
         'Try
 
-        _Texto = Replace(_Texto, "<CODIGO_PR>", Trim(_Codigo_principal))
-        _Texto = Replace(_Texto, "<CODIGO_TC>", Trim(_Codigo_tecnico))
-        _Texto = Replace(_Texto, "<CODIGO_RA>", Trim(_Codigo_rapido))
-        _Texto = Replace(_Texto, "<CODIGO_ALT>", Trim(_Codigo_Alternativo))
+        _Texto = Replace(_Texto, "<CODIGO_PR>", _Codigo_principal.ToString.Trim)
+        _Texto = Replace(_Texto, "<CODIGO_TC>", _Codigo_tecnico.ToString.Trim)
+        _Texto = Replace(_Texto, "<CODIGO_RA>", _Codigo_rapido.ToString.Trim)
+        _Texto = Replace(_Texto, "<CODIGO_ALT>", _Codigo_Alternativo.ToString.Trim)
+
+        _Texto = Replace(_Texto, "<UD1_PR>", _Ud1.ToString.Trim)
+        _Texto = Replace(_Texto, "<UD2_PR>", _Ud1.ToString.Trim)
 
         Dim _Descripcion_cortamr As String
 
@@ -867,8 +1080,20 @@
         _Texto = Replace(_Texto, "<PRECIO_UD1>", _Precio_ud1)
         _Texto = Replace(_Texto, "<PRECIO_UD2>", _Precio_ud2)
 
-        Dim _vPrecioNetoXRtu As String = Fx_Formato_Numerico(_PrecioNetoXRtu, "9", False)
-        Dim _vPrecioBrutoXRtu As String = Fx_Formato_Numerico(_PrecioBrutoXRtu, "9", False)
+        Dim _vPrecioNetoXRtu As String
+        Dim _vPrecioBrutoXRtu As String
+
+        Try
+            _vPrecioNetoXRtu = Fx_Formato_Numerico(_PrecioNetoXRtu, "9", False)
+        Catch ex As Exception
+            _vPrecioNetoXRtu = "?"
+        End Try
+
+        Try
+            _vPrecioBrutoXRtu = Fx_Formato_Numerico(_PrecioBrutoXRtu, "9", False)
+        Catch ex As Exception
+            _vPrecioBrutoXRtu = "?"
+        End Try
 
         If _Texto.Contains("PBRUTOUD1X6") Or _Texto.Contains("PBRUTOUD1XMULTIPLO") Or _Texto.Contains("PBRUTOUD2XMULTIPLO") Then
 
@@ -931,8 +1156,21 @@
         Dim _St_PU01_Bruto3 As String = Fx_Formato_Numerico(_PU01_Bruto, "999.999", False)
         Dim _St_PU02_Bruto3 As String = Fx_Formato_Numerico(_PU02_Bruto, "999.999", False)
 
-        Dim _Lc_PrecioEspLC1 As String = Fx_Formato_Numerico(_PrecioLc1, "9", False)
-        Dim _Lc_PrecioEspLC2 As String = Fx_Formato_Numerico(_PrecioLc1, "9.999.999", False)
+        Dim _Lc_PrecioEspLC1 As String
+        Dim _Lc_PrecioEspLC2 As String
+
+        Try
+            _Lc_PrecioEspLC1 = Fx_Formato_Numerico(_PrecioLc1, "9", False)
+        Catch ex As Exception
+            _Lc_PrecioEspLC1 = "?"
+        End Try
+
+        Try
+            _Lc_PrecioEspLC2 = Fx_Formato_Numerico(_PrecioLc1, "9.999.999", False)
+        Catch ex As Exception
+            _Lc_PrecioEspLC2 = "?"
+        End Try
+
 
         Dim _St_PU01_Neto4 As String = Fx_Formato_Numerico(_PU01_Neto, "9.999.999", False)
         Dim _St_PU02_Neto4 As String = Fx_Formato_Numerico(_PU02_Neto, "9.999.999", False)

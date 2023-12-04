@@ -654,6 +654,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Inf00044", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Inf00045", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Inf00046", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Inf00047", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Invp0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Invp0002", _Objeto, _Formulario)
@@ -2896,6 +2897,11 @@ Public Class Class_Permiso_BakApp
 
             Case "Inf00046"
                 _DescripcionPermiso = "QUITAR EL TICKET VER SOLO NOTAS DE VENTA HABILITADAS PARA FACTURAR"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_VENTA, 6)
+                _NombreFamiliaPermiso = _Fml.INFORMES_DE_VENTA.ToString
+
+            Case "Inf00047"
+                _DescripcionPermiso = "VER INFORME DE CUMPLIMIENTO DE CLIENTES VS CARTERA DEL VENDEDOR"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_VENTA, 6)
                 _NombreFamiliaPermiso = _Fml.INFORMES_DE_VENTA.ToString
 

@@ -1969,6 +1969,22 @@ Public Class Frm_St_Documento
 
     Sub Sb_Estado_03_Presupuesto_Nuevo()
 
+        If _Global_Row_Configuracion_General.Item("ServTecnico_Simple") Then
+
+            Dim Fm As New Frm_St_Estado_03_Presupuesto(_Id_Ot, Frm_St_Estado_03_Presupuesto.Accion.Nuevo)
+            Fm.Pro_DsDocumento = _DsDocumento
+            Fm.Pro_Imagenes_32x32 = Imagenes_32x32
+            Fm.ShowDialog(Me)
+            If Fm.Pro_Grabar Then
+                _Abrir_Documento = True
+                Me.Close()
+            End If
+
+            Fm.Dispose()
+            Return
+
+        End If
+
         Dim _Aceptar As Boolean
         Dim _PwTecnico As String
 
@@ -2022,18 +2038,6 @@ Public Class Frm_St_Documento
         End If
         Fm0.Dispose()
 
-        'Return
-
-        'Dim Fm As New Frm_St_Estado_03_Presupuesto(_Id_Ot, Frm_St_Estado_03_Presupuesto.Accion.Nuevo)
-        'Fm.Pro_DsDocumento = _DsDocumento
-        'Fm.Pro_Imagenes_32x32 = Imagenes_32x32
-        'Fm.ShowDialog(Me)
-        'If Fm.Pro_Grabar Then
-        '    _Abrir_Documento = True
-        '    Me.Close()
-        'End If
-
-        'Fm.Dispose()
 
     End Sub
 
@@ -2125,6 +2129,24 @@ Public Class Frm_St_Documento
 
     Sub Sb_Estado_05_Reparacion_Nuevo()
 
+        If _Global_Row_Configuracion_General.Item("ServTecnico_Simple") Then
+
+            Dim Fm As New Frm_St_Estado_05_Reparacion(Frm_St_Estado_05_Reparacion.Accion.Nuevo)
+            Fm.Pro_RowEntidad = _RowEntidad
+            Fm.Pro_Imagenes_32x32 = Imagenes_32x32
+            Fm.Pro_Id_Ot = _Id_Ot
+            Fm.Pro_DsDocumento = _DsDocumento
+            Fm.ShowDialog(Me)
+            If Fm.Pro_Fijar_Estado Then
+                _Abrir_Documento = True
+                Me.Close()
+            End If
+            Fm.Dispose()
+
+            Return
+
+        End If
+
         Dim _Aceptar As Boolean
         Dim _PwTecnico As String
 
@@ -2168,30 +2190,17 @@ Public Class Frm_St_Documento
             Return
         End If
 
-        Dim Fm As New Frm_St_Estado_05_Reparacion2(Frm_St_Estado_05_Reparacion.Accion.Nuevo)
-        Fm.RowEntidad = _RowEntidad
-        Fm.Id_Ot = _Id_Ot
-        Fm.DsDocumento = _DsDocumento
-        Fm.CodTecnico_Repara = _CodTecnico_Asignado
-        Fm.ShowDialog(Me)
-        If Fm.Fijar_Estado Then
+        Dim Fm0 As New Frm_St_Estado_05_Reparacion2(Frm_St_Estado_05_Reparacion.Accion.Nuevo)
+        Fm0.RowEntidad = _RowEntidad
+        Fm0.Id_Ot = _Id_Ot
+        Fm0.DsDocumento = _DsDocumento
+        Fm0.CodTecnico_Repara = _CodTecnico_Asignado
+        Fm0.ShowDialog(Me)
+        If Fm0.Fijar_Estado Then
             _Abrir_Documento = True
             Me.Close()
         End If
-        Fm.Dispose()
-
-
-        'Dim Fm As New Frm_St_Estado_05_Reparacion(Frm_St_Estado_05_Reparacion.Accion.Nuevo)
-        'Fm.Pro_RowEntidad = _RowEntidad
-        'Fm.Pro_Imagenes_32x32 = Imagenes_32x32
-        'Fm.Pro_Id_Ot = _Id_Ot
-        'Fm.Pro_DsDocumento = _DsDocumento
-        'Fm.ShowDialog(Me)
-        'If Fm.Pro_Fijar_Estado Then
-        '    _Abrir_Documento = True
-        '    Me.Close()
-        'End If
-        'Fm.Dispose()
+        Fm0.Dispose()
 
     End Sub
 

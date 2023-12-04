@@ -22,7 +22,7 @@ Namespace My.Resources
     '''<summary>
     '''  Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
     Friend Class Recursos_LP
@@ -125,7 +125,7 @@ Namespace My.Resources
         '''                           C_FABRIC,C_COMPRA,C_LIBRE,ECUACIONU2,EMG01UD,EMG02UD,EDTMA01UD,EDTMA02UD,
         '''					       FMPR,PFPR,HFPR,MRPR,RUPR,NOKOPR,UD01PR,UD02PR,IVA,Codigo#Otros_Campos1#)
         '''					  
-        '''SELECT                Tp.KOLT,Tp.KOPR,Tp.KOPRRA,Tp.KOPRTE,Tp.ECUACION,Tp.FEVI,Tp.RLUD,Tp [resto de la cadena truncado]&quot;;.
+        '''SELECT Tp.KOLT,Tp.KOPR,Tp.KOPRRA,Tp.KOPRTE,Isnull(Tp.ECUACION,&apos;&apos;),Tp.FEVI,Isnull(Tp.RLUD [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property SQLQuery_Traer_Productos_LP_New() As String
             Get

@@ -50,7 +50,8 @@ Public Module Mod_Fx
                                 Optional _Permitir_Valor_Cero As Boolean = True,
                                 Optional _PasswordChar As String = "",
                                 Optional ByRef _Chk As Controls.CheckBoxX = Nothing,
-                                Optional _BuscarCarpeta As Boolean = False) As Boolean
+                                Optional _BuscarCarpeta As Boolean = False,
+                                Optional _NoPermitirEntradaDeTeclado As Boolean = False) As Boolean
 
         Dim _Aceptado As Boolean
 
@@ -68,6 +69,7 @@ Public Module Mod_Fx
         Fm.Pro_Imagen = _Imagen.ToString
         Fm.Chk = _Chk
         Fm.BuscarCarpeta = _BuscarCarpeta
+        Fm.NoPermitirEntradaDeTeclado = _NoPermitirEntradaDeTeclado
 
         If CBool(_Max_Cant_Caracteres) Then
             Fm.TxtDescripcion.MaxLength = _Max_Cant_Caracteres

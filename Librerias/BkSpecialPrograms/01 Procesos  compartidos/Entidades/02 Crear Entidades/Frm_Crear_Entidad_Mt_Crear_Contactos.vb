@@ -27,18 +27,6 @@ Public Class Frm_Crear_Entidad_Mt_Crear_Contactos
 
         _DatosActualizados = False
 
-        If Global_Thema = Enum_Themas.Oscuro Then
-
-            TxtEmail.FocusHighlightEnabled = False
-            TxtFax.FocusHighlightEnabled = False
-            TxtRazonSocial.FocusHighlightEnabled = False
-            TxtRut.FocusHighlightEnabled = False
-            TxtTelefono.FocusHighlightEnabled = False
-            CmbActividad.FocusHighlightEnabled = False
-            CmbCargo.FocusHighlightEnabled = False
-
-        End If
-
         Sb_Color_Botones_Barra(Bar1)
 
     End Sub

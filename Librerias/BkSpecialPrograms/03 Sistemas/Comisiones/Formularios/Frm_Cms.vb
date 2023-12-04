@@ -1,7 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Security.Cryptography
 Imports DevComponents.DotNetBar
-Imports Spire.Pdf.Exporting.XPS.Schema.Mc
+
 
 Public Class Frm_Cms
 
@@ -226,8 +226,8 @@ Public Class Frm_Cms
             _DisplayIndex += 1
 
             .Columns("SubComBruta").Width = 100 + 20
-            .Columns("SubComBruta").HeaderText = "Com. Neta"
-            .Columns("SubComBruta").ToolTipText = "Comisión Neta"
+            .Columns("SubComBruta").HeaderText = "Total Com. Neta"
+            .Columns("SubComBruta").ToolTipText = "Total de comisión Neta"
             .Columns("SubComBruta").ReadOnly = True
             .Columns("SubComBruta").Visible = True
             .Columns("SubComBruta").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -245,8 +245,8 @@ Public Class Frm_Cms
             _DisplayIndex += 1
 
             .Columns("ComBruta").Width = 100 + 20
-            .Columns("ComBruta").HeaderText = "Com. Bruta"
-            .Columns("ComBruta").ToolTipText = "Comisión Bruta"
+            .Columns("ComBruta").HeaderText = "Total Com. Bruta"
+            .Columns("ComBruta").ToolTipText = "Total de comisión Bruta"
             .Columns("ComBruta").ReadOnly = True
             .Columns("ComBruta").Visible = True
             .Columns("ComBruta").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -1513,5 +1513,23 @@ Public Class Frm_Cms
 
     Private Sub Btn_VerInformeDeLaComsion_Click(sender As Object, e As EventArgs) Handles Btn_VerInformeDeLaComsion.Click
         Sb_ImportarDatosInforme(True)
+    End Sub
+
+    Private Sub BtnExportarExcel_Click(sender As Object, e As EventArgs) Handles BtnExportarExcel.Click
+        ShowContextMenu(Menu_Contextual_03)
+    End Sub
+
+    Private Sub Btn_MnuExcel_VentasDepuradas_Click(sender As Object, e As EventArgs) Handles Btn_MnuExcel_VentasDepuradas.Click
+
+        Consulta_Sql = "Select Det.CodFuncionario As 'Código',NOKOFU As 'Vendedor',SUM(Valor) As 'Total Venta Neta'" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Comisiones_Det Det" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_Comisiones_Mis Mis On Mis.Id = Det.Id_Mis" & vbCrLf &
+                       "Inner Join TABFU On KOFU = Det.CodFuncionario" & vbCrLf &
+                       "Where Id_Enc = " & _Id_Enc & " And Mis.MisVentas = 1" & vbCrLf &
+                       "Group By Det.CodFuncionario,NOKOFU"
+        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+
+        ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Ventas depuradas por vendedor")
+
     End Sub
 End Class
