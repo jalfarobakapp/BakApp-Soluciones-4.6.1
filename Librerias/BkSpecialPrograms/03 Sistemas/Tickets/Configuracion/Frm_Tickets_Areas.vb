@@ -52,13 +52,13 @@ Public Class Frm_Tickets_Areas
 
             .DataSource = _Tbl_Areas
 
-            OcultarEncabezadoGrilla(Grilla_Areas)
+            OcultarEncabezadoGrilla(Grilla_Areas, True)
 
             Dim _DisplayIndex = 0
 
             .Columns("Area").Visible = True
             .Columns("Area").HeaderText = "Area / Departamento"
-            .Columns("Area").Width = 440
+            .Columns("Area").Width = 600
             .Columns("Area").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -140,8 +140,8 @@ Public Class Frm_Tickets_Areas
     End Sub
 
     Private Sub Grilla_Areas_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Areas.CellDoubleClick
-        Call Btn_Mnu_AsociarTipos_Click(Nothing, Nothing)
         'Call Btn_Mnu_EditarArea_Click(Nothing, Nothing)
+        ShowContextMenu(Menu_Contextual_01)
     End Sub
 
     Private Sub Sb_Grilla_Areas_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
@@ -174,11 +174,24 @@ Public Class Frm_Tickets_Areas
 
         Dim _Id_Area As Integer = _FilaArea.Cells("Id").Value
 
-        Dim Fm As New Frm_Tickets_Tipos(_Id_Area)
+        Dim _Grabar As Boolean
+        Dim _Row_Tipo As DataRow
+
+        Dim Fm As New Frm_Tickets_TiposCrear(_Id_Area, 0)
         Fm.ShowDialog(Me)
+        _Grabar = Fm.Grabar
+        _Row_Tipo = Fm.Row_Tipo
         Fm.Dispose()
 
-        Call Grilla_Areas_CellEnter(Nothing, Nothing)
+        If _Grabar Then
+            Sb_Actualizar_Grilla_Tipos(_Id_Area)
+        End If
+
+        'Dim Fm As New Frm_Tickets_Tipos(_Id_Area)
+        'Fm.ShowDialog(Me)
+        'Fm.Dispose()
+
+        'Call Grilla_Areas_CellEnter(Nothing, Nothing)
 
     End Sub
 
@@ -187,6 +200,12 @@ Public Class Frm_Tickets_Areas
         Dim _FilaArea As DataGridViewRow = Grilla_Areas.CurrentRow
         Dim _Id_Area As Integer = _FilaArea.Cells("Id").Value
 
+        Sb_Actualizar_Grilla_Tipos(_Id_Area)
+
+    End Sub
+
+    Sub Sb_Actualizar_Grilla_Tipos(_Id_Area As Integer)
+
         Consulta_sql = "Select *," & vbCrLf &
                        "Case ExigeProducto When 1 Then " & vbCrLf &
                        "Case RevInventario When 1 Then 'Revisión de inventario' " & vbCrLf &
@@ -194,19 +213,30 @@ Public Class Frm_Tickets_Areas
                        "Else Case SobreStock When 1 Then 'Sobre Stock' Else '' End End End Else '' End	As 'Esp_producto'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id_Area = " & _Id_Area
 
+        Consulta_sql = "Select Tp.*,Isnull(Tf.NOKOFU,'') As 'Agente',Isnull(Gr.Grupo,'') As Grupo," & vbCrLf &
+                       "Case AsignadoGrupo When 1 then 'Grupo: ' +Isnull(Gr.Grupo,'') Else " & vbCrLf &
+                       "Case AsignadoAgente When 1 Then 'Agente: ' + Isnull(Tf.NOKOFU,'') Else '' End End As 'AsignadoA'," & vbCrLf &
+                       "Case ExigeProducto When 1 Then " & vbCrLf &
+                       "Case RevInventario When 1 Then 'Revisión de inventario' " & vbCrLf &
+                       "Else Case AjusInventario When 1 Then 'Ajuste de inventario' " & vbCrLf &
+                       "Else Case SobreStock When 1 Then 'Sobre Stock' Else '' End End End Else '' End	As 'Esp_producto'" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Stk_Tipos Tp" & vbCrLf &
+                       "Left Join TABFU Tf On Tf.KOFU = Tp.CodAgente" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Stk_Grupos Gr On Tp.Id_Grupo = Gr.Id" & vbCrLf &
+                       "Where Id_Area = " & _Id_Area
         _Tbl_Tipos = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla_Tipos
 
             .DataSource = _Tbl_Tipos
 
-            OcultarEncabezadoGrilla(Grilla_Tipos)
+            OcultarEncabezadoGrilla(Grilla_Tipos, True)
 
             Dim _DisplayIndex = 0
 
             .Columns("Tipo").Visible = True
             .Columns("Tipo").HeaderText = "Tipo"
-            .Columns("Tipo").Width = 240
+            .Columns("Tipo").Width = 220
             .Columns("Tipo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -220,8 +250,14 @@ Public Class Frm_Tickets_Areas
             .Columns("Esp_producto").Visible = True
             .Columns("Esp_producto").HeaderText = "Especial Productos"
             .Columns("Esp_producto").ToolTipText = "Acción especial por gestión especialmente para productos"
-            .Columns("Esp_producto").Width = 150
+            .Columns("Esp_producto").Width = 130
             .Columns("Esp_producto").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("AsignadoA").Visible = True
+            .Columns("AsignadoA").HeaderText = "Asignado a:"
+            .Columns("AsignadoA").Width = 200
+            .Columns("AsignadoA").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
         End With
@@ -247,5 +283,32 @@ Public Class Frm_Tickets_Areas
             Grilla_Tipos.Rows.Remove(_Fila)
         End If
 
+    End Sub
+
+    Private Sub Btn_Mnu_EditarTipo_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_EditarTipo.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Tipos.CurrentRow
+
+        Dim _Id_Area As Integer = _Fila.Cells("Id_Area").Value
+        Dim _Id_Tipo As Integer = _Fila.Cells("Id").Value
+        Dim _Tipo As String = _Fila.Cells("Tipo").Value
+
+        Dim _Grabar As Boolean
+        Dim _Row_Tipo As DataRow
+
+        Dim Fm As New Frm_Tickets_TiposCrear(_Id_Area, _Id_Tipo)
+        Fm.ShowDialog(Me)
+        _Grabar = Fm.Grabar
+        _Row_Tipo = Fm.Row_Tipo
+        Fm.Dispose()
+
+        If _Grabar Then
+            Sb_Actualizar_Grilla_Tipos(_Id_Area)
+        End If
+
+    End Sub
+
+    Private Sub Grilla_Tipos_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Tipos.CellDoubleClick
+        Call Btn_Mnu_EditarTipo_Click(Nothing, Nothing)
     End Sub
 End Class

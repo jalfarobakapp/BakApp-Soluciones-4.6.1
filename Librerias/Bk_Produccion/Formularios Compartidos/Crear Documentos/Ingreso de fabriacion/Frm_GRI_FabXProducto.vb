@@ -322,6 +322,8 @@ Public Class Frm_GRI_FabXProducto
         Fm_Espera.Dispose()
         Fm_Espera = Nothing
 
+        Sb_Actualizar_Parametros_SQL(True)
+
         MessageBoxEx.Show(Me, "Datos de fabricación ingresados correctamente con el Nro de GRI: " & _Nudo & vbCrLf &
                           "Tarja ingresada Nro: " & _Cl_Tarja._Cl_Tarja_Ent.Nro_CPT, "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Me.Enabled = True
@@ -412,6 +414,8 @@ Public Class Frm_GRI_FabXProducto
         _Cl_Tarja._Cl_Tarja_Ent.Lote = _NroLote
         _Cl_Tarja._Cl_Tarja_Ent.CodAlternativo = _Row_Lote.Item("CodAlternativo")
         Cmb_Formato.SelectedValue = _Row_Tabcodal.Item("UNIMULTI")
+
+        Sb_Actualizar_Parametros_SQL(False)
 
     End Sub
 
@@ -553,5 +557,38 @@ Public Class Frm_GRI_FabXProducto
 
         End If
 
+    End Sub
+
+    Sub Sb_Actualizar_Parametros_SQL(_Actualizar As Boolean)
+
+        Dim _Turno = _Cl_Tarja._Cl_Tarja_Ent.Turno
+        Dim _Planta = _Cl_Tarja._Cl_Tarja_Ent.Planta
+        Dim _Analista = _Cl_Tarja._Cl_Tarja_Ent.Analista
+
+        _Sql.Sb_Parametro_Informe_Sql(_Turno, "Produccion_Tarja",
+                                      "Tarja_Turno", Class_SQL.Enum_Type._String, _Turno, _Actualizar,, True)
+        _Sql.Sb_Parametro_Informe_Sql(_Planta, "Produccion_Tarja",
+                                      "Tarja_Planta", Class_SQL.Enum_Type._String, _Planta, _Actualizar,, True)
+        _Sql.Sb_Parametro_Informe_Sql(_Analista, "Produccion_Tarja",
+                                      "Tarja_Analista", Class_SQL.Enum_Type._String, _Analista, _Actualizar,, True)
+
+        If Not _Actualizar Then
+
+            _Cl_Tarja._Cl_Tarja_Ent.Turno = _Turno
+            _Cl_Tarja._Cl_Tarja_Ent.Planta = _Planta
+            _Cl_Tarja._Cl_Tarja_Ent.Analista = _Analista
+
+            Txt_Turno.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
+                                                "NombreTabla", "Tabla = 'TARJA_TURNO' And CodigoTabla = '" & _Turno & "'")
+            Txt_Planta.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
+                                                "NombreTabla", "Tabla = 'TARJA_PLANTA' And CodigoTabla = '" & _Planta & "'")
+            Txt_Analista.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
+                                                "NombreTabla", "Tabla = 'TARJA_ANALISTA' And CodigoTabla = '" & _Analista & "'")
+        End If
+
+    End Sub
+
+    Private Sub Frm_GRI_FabXProducto_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        Sb_Actualizar_Parametros_SQL(True)
     End Sub
 End Class

@@ -927,10 +927,14 @@
 
         Dim _Texto = _RowEtiqueta.Item("FUNCION")
 
-        Dim _TRJ_ETQ_Nro_CPT As String = "<TRJ>" & _Row_Tarja.Item("Nro_CPT") & "<END>"
+        Dim _FechaStr As String = _Fecha_impresion.ToString("yyMMdd_HHmmss") ' Format(_Fecha_impresion, "yyMMdd:hhmmss")
+
+        Dim _TRJ_ETQ_Nro_CPT As String = "<TRJ>" & _Row_Tarja.Item("Nro_CPT") & "</TRJ><END>"
+        Dim _TRJ_ETQ_Nro_CPT_FFHH1 As String = "<TRJ>" & _Row_Tarja.Item("Nro_CPT") & "</TRJ>" & _FechaStr.ToString.Trim & "<END>"
         Dim _TRJ_FechaElab2 As String = FormatDateTime(_Row_Tarja.Item("FechaElab"), DateFormat.ShortDate)
 
         _Texto = Replace(_Texto, "<TRJ_ETQ_Nro_CPT>", _TRJ_ETQ_Nro_CPT.Trim)
+        _Texto = Replace(_Texto, "<TRJ_ETQ_Nro_CPT_FFHH1>", _TRJ_ETQ_Nro_CPT_FFHH1.Trim)
         _Texto = Replace(_Texto, "<TRJ_FechaElab2>", _TRJ_FechaElab2.Trim)
 
         Dim _Funciones As New List(Of String)

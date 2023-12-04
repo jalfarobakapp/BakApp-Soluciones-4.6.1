@@ -1,4 +1,5 @@
 ﻿Imports DevComponents.DotNetBar
+Imports DevComponents.DotNetBar.SuperGrid
 
 Public Class Frm_Tickets_TiposCrear
 
@@ -37,11 +38,18 @@ Public Class Frm_Tickets_TiposCrear
 
     Private Sub Frm_Tickets_TiposCrear_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Areas Where Id = " & _Id_Area
+        Dim _Row_Area As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Lbl_Area.Text = "AREA: " & _Row_Area.Item("AREA")
+
         If Not IsNothing(Row_Tipo) Then
 
             With Row_Tipo
 
-                Chk_Asignado.Checked = .Item("Asignado")
+                Txt_Tipo.Tag = _Id_Tipo
+                Txt_Tipo.Text = .Item("Tipo")
+
                 Rdb_AsignadoAgente.Checked = .Item("AsignadoAgente")
                 Rdb_AsignadoGrupo.Checked = .Item("AsignadoGrupo")
 
@@ -50,7 +58,7 @@ Public Class Frm_Tickets_TiposCrear
                 Txt_Agente.Tag = .Item("CodAgente")
                 Txt_Agente.Text = .Item("Agente")
 
-                Txt_Tipo.Text = .Item("Tipo")
+                Chk_Asignado.Checked = .Item("Asignado")
 
                 Chk_ExigeProducto.Checked = .Item("ExigeProducto")
                 Rdb_AjusInventario.Checked = .Item("AjusInventario")
@@ -65,6 +73,8 @@ Public Class Frm_Tickets_TiposCrear
         Txt_Grupo.Enabled = Rdb_AsignadoGrupo.Checked
 
         Me.ActiveControl = Txt_Tipo
+
+        AddHandler Chk_Asignado.CheckedChanged, AddressOf Chk_Asignado_CheckedChanged
 
     End Sub
 
@@ -94,7 +104,9 @@ Public Class Frm_Tickets_TiposCrear
         End If
 
         If Chk_Asignado.Checked Then
-            If (Rdb_AsignadoGrupo.Checked AndAlso String.IsNullOrWhiteSpace(Txt_Grupo.Text)) Or
+
+            If (Not Rdb_AsignadoGrupo.Checked AndAlso Not Rdb_AsignadoAgente.Checked) Or
+                (Rdb_AsignadoGrupo.Checked AndAlso String.IsNullOrWhiteSpace(Txt_Grupo.Text)) Or
                   (Rdb_AsignadoAgente.Checked AndAlso String.IsNullOrWhiteSpace(Txt_Agente.Text)) Then
 
                 MessageBoxEx.Show(Me, "Debe asignar un grupo de trabajo o agente para este requerimiento." & vbCrLf & vbCrLf &
@@ -103,20 +115,6 @@ Public Class Frm_Tickets_TiposCrear
                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
             End If
-
-            'If Rdb_AsignadoAgente.Checked Then
-            '    If String.IsNullOrWhiteSpace(Txt_Agente.Text) Then
-            '        MessageBoxEx.Show(Me, "Debe asignar a un Agente", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            '        Return
-            '    End If
-            'End If
-
-            'If Rdb_AsignadoGrupo.Checked Then
-            '    If String.IsNullOrWhiteSpace(Txt_Grupo.Text) Then
-            '        MessageBoxEx.Show(Me, "Debe asignar a un Grupo de trabajo", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            '        Return
-            '    End If
-            'End If
 
         End If
 
@@ -132,6 +130,7 @@ Public Class Frm_Tickets_TiposCrear
 
         Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tipos Set " &
                        "Tipo = '" & Txt_Tipo.Text.Trim & "'" & vbCrLf &
+                       ",ExigeProducto = " & Convert.ToInt32(Chk_ExigeProducto.Checked) & vbCrLf &
                        ",RevInventario = " & Convert.ToInt32(Rdb_RevInventario.Checked) & vbCrLf &
                        ",AjusInventario = " & Convert.ToInt32(Rdb_AjusInventario.Checked) & vbCrLf &
                        ",SobreStock = " & Convert.ToInt32(Rdb_SobreStock.Checked) & vbCrLf &
@@ -161,14 +160,19 @@ Public Class Frm_Tickets_TiposCrear
     End Sub
 
     Private Sub Txt_Grupo_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Grupo.ButtonCustomClick
+
         Dim Fm As New Frm_Tickets_Grupos
         Fm.ModoSeleccion = True
+        Fm.GrupoSeleccionado = Txt_Grupo.Text
         Fm.ShowDialog(Me)
+
         If Not IsNothing(Fm.Row_Grupo) Then
             Txt_Grupo.Tag = Fm.Row_Grupo.Item("Id")
             Txt_Grupo.Text = Fm.Row_Grupo.Item("Grupo")
         End If
+
         Fm.Dispose()
+
     End Sub
 
     Private Sub Txt_Grupo_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Grupo.ButtonCustom2Click
@@ -210,9 +214,9 @@ Public Class Frm_Tickets_TiposCrear
         Txt_Agente.Enabled = Rdb_AsignadoAgente.Checked
     End Sub
 
-    Private Sub Chk_Asignado_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Asignado.CheckedChanged
+    Private Sub Chk_Asignado_CheckedChanged(sender As Object, e As EventArgs)
 
-        If Chk_Asignado.Checked Then
+        If Not Chk_Asignado.Checked Then
 
             If String.IsNullOrWhiteSpace(Txt_Tipo.Text) Then
                 MessageBoxEx.Show(Me, "Falta el tipo de requerimiento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)

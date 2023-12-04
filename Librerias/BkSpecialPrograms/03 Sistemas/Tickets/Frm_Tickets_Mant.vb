@@ -247,7 +247,23 @@ Public Class Frm_Tickets_Mant
                 Return
             End If
 
-            Chk_ExigeProducto.Checked = False
+            Dim _Id_Tipo = Txt_Tipo.Tag
+
+            Consulta_sql = "Select  Tp.*,Isnull(Tf.NOKOFU,'') As 'Agente',Isnull(Gr.Grupo,'') As Grupo" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_Stk_Tipos Tp" & vbCrLf &
+                           "Left Join TABFU Tf On Tf.KOFU = Tp.CodAgente" & vbCrLf &
+                           "Left Join " & _Global_BaseBk & "Zw_Stk_Grupos Gr On Tp.Id_Grupo = Gr.Id" & vbCrLf &
+                           "Where Tp.Id = " & _Id_Tipo
+            Dim _Row_Tipo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Chk_ExigeProducto.Checked = _Row_Tipo.Item("ExigeProducto")
+            Chk_Asignado.Checked = _Row_Tipo.Item("Asignado")
+            Txt_Grupo.Tag = _Row_Tipo.Item("Id_Grupo")
+            Txt_Grupo.Text = _Row_Tipo.Item("Grupo")
+            Txt_Agente.Tag = _Row_Tipo.Item("CodAgente")
+            Txt_Agente.Text = _Row_Tipo.Item("Agente").ToString.Trim
+            Rdb_AsignadoAgente.Checked = _Row_Tipo.Item("AsignadoAgente")
+            Rdb_AsignadoGrupo.Checked = _Row_Tipo.Item("AsignadoGrupo")
 
             Dim _ExigeProducto As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Tipos", "ExigeProducto", "Id = " & Txt_Tipo.Tag)
 
@@ -495,4 +511,6 @@ Public Class Frm_Tickets_Mant
     Private Sub Btn_OpcProducto_Click(sender As Object, e As EventArgs) Handles Btn_OpcProducto.Click
         ShowContextMenu(Menu_Contextual_Productos)
     End Sub
+
+
 End Class

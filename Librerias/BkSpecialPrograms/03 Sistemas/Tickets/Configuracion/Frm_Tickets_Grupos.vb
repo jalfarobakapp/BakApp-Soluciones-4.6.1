@@ -10,6 +10,7 @@ Public Class Frm_Tickets_Grupos
 
     Public Property ModoSeleccion As Boolean
     Public Property Row_Grupo As DataRow
+    Public Property GrupoSeleccionado As String
 
     Public Sub New()
 
@@ -41,6 +42,10 @@ Public Class Frm_Tickets_Grupos
         Btn_SeleccionarGrupo.Visible = ModoSeleccion
 
         Me.ActiveControl = Txt_Buscador
+
+        If ModoSeleccion Then
+            BuscarDatoEnGrilla(GrupoSeleccionado, "Grupo", Grilla_Grupos)
+        End If
 
     End Sub
 

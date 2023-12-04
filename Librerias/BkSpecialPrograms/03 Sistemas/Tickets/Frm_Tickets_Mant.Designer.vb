@@ -24,6 +24,12 @@ Partial Class Frm_Tickets_Mant
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Tickets_Mant))
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.TextBoxX3 = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX9 = New DevComponents.DotNetBar.LabelX()
+        Me.TextBoxX2 = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX8 = New DevComponents.DotNetBar.LabelX()
+        Me.TextBoxX1 = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_EditarFuncionario = New DevComponents.DotNetBar.ButtonItem()
@@ -68,6 +74,12 @@ Partial Class Frm_Tickets_Mant
         '
         Me.GroupPanel2.BackColor = System.Drawing.Color.White
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.Controls.Add(Me.TextBoxX3)
+        Me.GroupPanel2.Controls.Add(Me.LabelX9)
+        Me.GroupPanel2.Controls.Add(Me.TextBoxX2)
+        Me.GroupPanel2.Controls.Add(Me.LabelX8)
+        Me.GroupPanel2.Controls.Add(Me.TextBoxX1)
+        Me.GroupPanel2.Controls.Add(Me.LabelX7)
         Me.GroupPanel2.Controls.Add(Me.Menu_Contextual)
         Me.GroupPanel2.Controls.Add(Me.Btn_OpcProducto)
         Me.GroupPanel2.Controls.Add(Me.Chk_ExigeProducto)
@@ -94,7 +106,7 @@ Partial Class Frm_Tickets_Mant
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(12, 3)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(560, 449)
+        Me.GroupPanel2.Size = New System.Drawing.Size(560, 498)
         '
         '
         '
@@ -126,12 +138,112 @@ Partial Class Frm_Tickets_Mant
         Me.GroupPanel2.TabIndex = 165
         Me.GroupPanel2.Text = "Datos del ticket"
         '
+        'TextBoxX3
+        '
+        Me.TextBoxX3.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.TextBoxX3.Border.Class = "TextBoxBorder"
+        Me.TextBoxX3.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.TextBoxX3.ButtonCustom.Image = CType(resources.GetObject("TextBoxX3.ButtonCustom.Image"), System.Drawing.Image)
+        Me.TextBoxX3.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX3.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.TextBoxX3.DisabledBackColor = System.Drawing.Color.White
+        Me.TextBoxX3.ForeColor = System.Drawing.Color.Black
+        Me.TextBoxX3.Location = New System.Drawing.Point(291, 206)
+        Me.TextBoxX3.Name = "TextBoxX3"
+        Me.TextBoxX3.PreventEnterBeep = True
+        Me.TextBoxX3.ReadOnly = True
+        Me.TextBoxX3.Size = New System.Drawing.Size(101, 22)
+        Me.TextBoxX3.TabIndex = 65
+        '
+        'LabelX9
+        '
+        Me.LabelX9.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX9.ForeColor = System.Drawing.Color.Black
+        Me.LabelX9.Location = New System.Drawing.Point(196, 206)
+        Me.LabelX9.Name = "LabelX9"
+        Me.LabelX9.Size = New System.Drawing.Size(89, 23)
+        Me.LabelX9.TabIndex = 64
+        Me.LabelX9.Text = "Cant. inventariada"
+        '
+        'TextBoxX2
+        '
+        Me.TextBoxX2.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.TextBoxX2.Border.Class = "TextBoxBorder"
+        Me.TextBoxX2.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.TextBoxX2.ButtonCustom.Image = CType(resources.GetObject("TextBoxX2.ButtonCustom.Image"), System.Drawing.Image)
+        Me.TextBoxX2.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX2.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.TextBoxX2.DisabledBackColor = System.Drawing.Color.White
+        Me.TextBoxX2.ForeColor = System.Drawing.Color.Black
+        Me.TextBoxX2.Location = New System.Drawing.Point(89, 206)
+        Me.TextBoxX2.Name = "TextBoxX2"
+        Me.TextBoxX2.PreventEnterBeep = True
+        Me.TextBoxX2.ReadOnly = True
+        Me.TextBoxX2.Size = New System.Drawing.Size(101, 22)
+        Me.TextBoxX2.TabIndex = 63
+        '
+        'LabelX8
+        '
+        Me.LabelX8.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX8.ForeColor = System.Drawing.Color.Black
+        Me.LabelX8.Location = New System.Drawing.Point(3, 205)
+        Me.LabelX8.Name = "LabelX8"
+        Me.LabelX8.Size = New System.Drawing.Size(89, 23)
+        Me.LabelX8.TabIndex = 62
+        Me.LabelX8.Text = "Cant. en bodega"
+        '
+        'TextBoxX1
+        '
+        Me.TextBoxX1.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.TextBoxX1.Border.Class = "TextBoxBorder"
+        Me.TextBoxX1.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.TextBoxX1.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
+        Me.TextBoxX1.ButtonCustom.Visible = True
+        Me.TextBoxX1.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.TextBoxX1.DisabledBackColor = System.Drawing.Color.White
+        Me.TextBoxX1.ForeColor = System.Drawing.Color.Black
+        Me.TextBoxX1.Location = New System.Drawing.Point(89, 178)
+        Me.TextBoxX1.Name = "TextBoxX1"
+        Me.TextBoxX1.PreventEnterBeep = True
+        Me.TextBoxX1.ReadOnly = True
+        Me.TextBoxX1.Size = New System.Drawing.Size(303, 22)
+        Me.TextBoxX1.TabIndex = 61
+        '
+        'LabelX7
+        '
+        Me.LabelX7.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX7.ForeColor = System.Drawing.Color.Black
+        Me.LabelX7.Location = New System.Drawing.Point(3, 178)
+        Me.LabelX7.Name = "LabelX7"
+        Me.LabelX7.Size = New System.Drawing.Size(80, 23)
+        Me.LabelX7.TabIndex = 60
+        Me.LabelX7.Text = "Bodega"
+        '
         'Menu_Contextual
         '
         Me.Menu_Contextual.AntiAlias = True
         Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01, Me.Menu_Contextual_Productos})
-        Me.Menu_Contextual.Location = New System.Drawing.Point(72, 230)
+        Me.Menu_Contextual.Location = New System.Drawing.Point(72, 284)
         Me.Menu_Contextual.Name = "Menu_Contextual"
         Me.Menu_Contextual.Size = New System.Drawing.Size(411, 25)
         Me.Menu_Contextual.Stretch = True
@@ -247,7 +359,7 @@ Partial Class Frm_Tickets_Mant
         Me.Txt_Agente.ButtonCustom2.Visible = True
         Me.Txt_Agente.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Agente.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Agente.Location = New System.Drawing.Point(146, 392)
+        Me.Txt_Agente.Location = New System.Drawing.Point(146, 446)
         Me.Txt_Agente.Name = "Txt_Agente"
         Me.Txt_Agente.PreventEnterBeep = True
         Me.Txt_Agente.ReadOnly = True
@@ -291,7 +403,7 @@ Partial Class Frm_Tickets_Mant
         Me.Txt_Grupo.ButtonCustom2.Visible = True
         Me.Txt_Grupo.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Grupo.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Grupo.Location = New System.Drawing.Point(146, 363)
+        Me.Txt_Grupo.Location = New System.Drawing.Point(146, 417)
         Me.Txt_Grupo.Name = "Txt_Grupo"
         Me.Txt_Grupo.PreventEnterBeep = True
         Me.Txt_Grupo.ReadOnly = True
@@ -321,7 +433,7 @@ Partial Class Frm_Tickets_Mant
         '
         Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX6.ForeColor = System.Drawing.Color.Black
-        Me.LabelX6.Location = New System.Drawing.Point(3, 178)
+        Me.LabelX6.Location = New System.Drawing.Point(3, 234)
         Me.LabelX6.Name = "LabelX6"
         Me.LabelX6.Size = New System.Drawing.Size(80, 23)
         Me.LabelX6.TabIndex = 51
@@ -331,7 +443,7 @@ Partial Class Frm_Tickets_Mant
         '
         Me.Line1.BackColor = System.Drawing.Color.Transparent
         Me.Line1.ForeColor = System.Drawing.Color.Black
-        Me.Line1.Location = New System.Drawing.Point(3, 317)
+        Me.Line1.Location = New System.Drawing.Point(3, 371)
         Me.Line1.Name = "Line1"
         Me.Line1.Size = New System.Drawing.Size(377, 23)
         Me.Line1.TabIndex = 56
@@ -347,7 +459,7 @@ Partial Class Frm_Tickets_Mant
         Me.Rdb_AsignadoGrupo.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_AsignadoGrupo.FocusCuesEnabled = False
         Me.Rdb_AsignadoGrupo.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_AsignadoGrupo.Location = New System.Drawing.Point(3, 363)
+        Me.Rdb_AsignadoGrupo.Location = New System.Drawing.Point(3, 417)
         Me.Rdb_AsignadoGrupo.Name = "Rdb_AsignadoGrupo"
         Me.Rdb_AsignadoGrupo.Size = New System.Drawing.Size(125, 23)
         Me.Rdb_AsignadoGrupo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -366,7 +478,7 @@ Partial Class Frm_Tickets_Mant
         Me.Txt_Descripcion.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Descripcion.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Descripcion.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Descripcion.Location = New System.Drawing.Point(3, 207)
+        Me.Txt_Descripcion.Location = New System.Drawing.Point(3, 261)
         Me.Txt_Descripcion.MaxLength = 200
         Me.Txt_Descripcion.Multiline = True
         Me.Txt_Descripcion.Name = "Txt_Descripcion"
@@ -385,7 +497,7 @@ Partial Class Frm_Tickets_Mant
         Me.Rdb_AsignadoAgente.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_AsignadoAgente.FocusCuesEnabled = False
         Me.Rdb_AsignadoAgente.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_AsignadoAgente.Location = New System.Drawing.Point(3, 391)
+        Me.Rdb_AsignadoAgente.Location = New System.Drawing.Point(3, 445)
         Me.Rdb_AsignadoAgente.Name = "Rdb_AsignadoAgente"
         Me.Rdb_AsignadoAgente.Size = New System.Drawing.Size(137, 23)
         Me.Rdb_AsignadoAgente.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -424,7 +536,7 @@ Partial Class Frm_Tickets_Mant
         Me.Chk_Asignado.CheckBoxImageChecked = CType(resources.GetObject("Chk_Asignado.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Asignado.FocusCuesEnabled = False
         Me.Chk_Asignado.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Asignado.Location = New System.Drawing.Point(3, 335)
+        Me.Chk_Asignado.Location = New System.Drawing.Point(3, 389)
         Me.Chk_Asignado.Name = "Chk_Asignado"
         Me.Chk_Asignado.Size = New System.Drawing.Size(187, 22)
         Me.Chk_Asignado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -579,9 +691,9 @@ Partial Class Frm_Tickets_Mant
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Archivos_Adjuntos, Me.Btn_Eliminar})
-        Me.Bar2.Location = New System.Drawing.Point(0, 471)
+        Me.Bar2.Location = New System.Drawing.Point(0, 511)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(582, 41)
+        Me.Bar2.Size = New System.Drawing.Size(585, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 164
@@ -620,11 +732,12 @@ Partial Class Frm_Tickets_Mant
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(582, 512)
+        Me.ClientSize = New System.Drawing.Size(585, 552)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.Bar2)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -676,4 +789,10 @@ Partial Class Frm_Tickets_Mant
     Friend WithEvents Btn_Estadisticas_Producto As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Consolidar_Stock_X_Producto As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Copiar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents TextBoxX2 As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX8 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents TextBoxX1 As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents TextBoxX3 As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX9 As DevComponents.DotNetBar.LabelX
 End Class

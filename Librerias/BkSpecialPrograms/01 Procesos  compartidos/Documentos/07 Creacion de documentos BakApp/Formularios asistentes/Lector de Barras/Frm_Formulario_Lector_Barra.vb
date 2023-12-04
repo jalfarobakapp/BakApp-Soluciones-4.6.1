@@ -351,27 +351,36 @@ Public Class Frm_Formulario_Lector_Barra
 
         End If
 
-        If Txt_Codigo_Barras.Text.Contains("<TRJ>") AndAlso Txt_Codigo_Barras.Text.Contains("<END>") Then
+        Dim _End = String.Empty
 
-            _EsTarjar_Bk = True
+        If _CodLeido.Length > 5 Then
+            _End = Mid(_CodLeido, _CodLeido.Length - 5, 5)
+        End If
 
-            'Asi debe quedar una etiqueta asociada a una OT para que el sistema la reconozca
-            '01TER04P25000-36<OTD>36459<END>
+        If Txt_Codigo_Barras.Text.Contains("<TRJ>") AndAlso
+           Txt_Codigo_Barras.Text.Contains("</TRJ>") Then
 
-            If Not Txt_Codigo_Barras.Text.Contains("<END>") Then
+            'Asi debe quedar una etiqueta asociada a una TARGA
+            'OPCION 1 : <TRJ>0000000005</TRJ><END>
+            'OPCION 2 : <TRJ>0000000005</TRJ>231201_135236<END> = Numero de tarja entre <TRJ> y </TRJ> fecha y hora yyMMdd_hhmmss
+
+            If _End <> "<END>" Then 'Not Txt_Codigo_Barras.Text.Contains("<END>") Then
                 Txt_Codigo_Barras.Text = String.Empty
                 Sb_Confirmar_Lectura("La etiqueta no contiene la finalización <END>" & vbCrLf &
                                      "Revise el código o vuelva a leerlo nuevamente", "Validación", eTaskDialogIcon.Stop, Nothing)
                 Return
             End If
 
+            _EsTarjar_Bk = True
+
             Dim _CodigoLeido As String = Txt_Codigo_Barras.Text
 
-            Dim _CodPaso As String = Txt_Codigo_Barras.Text
-            Dim _SeparaCod() As String = Split(_CodPaso, "<END>", 2)
+            Dim _CodPaso As String = Txt_Codigo_Barras.Text.Replace("<END>", "")
+            Dim _SeparaCod() As String = Split(_CodPaso, "</TRJ>", 2)
             Dim _Nro_CPT As String
 
             _Nro_CPT = _SeparaCod(0).Replace("<TRJ>", "")
+            _Nro_CPT = _SeparaCod(0).Replace("</TRJ>", "")
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja Where Nro_CPT = '" & _Nro_CPT & "'"
             Dim _CPT_Tarja As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
