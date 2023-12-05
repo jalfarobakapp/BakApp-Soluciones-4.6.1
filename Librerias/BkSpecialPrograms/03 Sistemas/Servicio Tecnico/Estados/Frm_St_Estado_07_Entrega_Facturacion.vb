@@ -98,6 +98,11 @@ Public Class Frm_St_Estado_07_Entrega_Facturacion
 
         Txt_Nota.Text = _Row_Notas.Item("Nota_Etapa_07")
 
+        If _Row_Notas.Item("Chk_No_Se_Pudo_Reparar") Then
+            Txt_Nota.Text += vbCrLf & "MOTIVO: " & _Row_Notas.Item("Motivo_no_reparo")
+            Cmb_Estado_Entrega.SelectedValue = "008"
+        End If
+
         Me.Refresh()
 
     End Sub

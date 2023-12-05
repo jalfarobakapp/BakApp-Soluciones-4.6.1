@@ -115,6 +115,7 @@ CREATE TABLE [dbo].[Zw_Configuracion](
 [ValidaMovFisConCodBarra]                               [bit]           NOT NULL DEFAULT (0), 
 [BuscarProdConCodRapido]                                [bit]           NOT NULL DEFAULT (0), 
 [BuscarProdConCodTecnico]                               [bit]           NOT NULL DEFAULT (0), 
+[ServTecnico_Simple]                                    [bit]           NOT NULL DEFAULT (0), 
 CONSTRAINT [PK_Zw_Configuracion] PRIMARY KEY CLUSTERED 
 (
 	[Modalidad] ASC

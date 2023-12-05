@@ -2511,4 +2511,25 @@ Error_Numero:
         Return rtnvalue
     End Function
 
+    Function Fx_AjustarTexto(texto As String, maximo As Integer) As String
+
+        Dim _Palabras As String()    ' Un arreglo para almacenar las palabras del texto
+        Dim _Linea As String         ' Una variable para construir cada línea
+        Dim _Resultado As String     ' Una variable para almacenar el resultado
+
+        _Palabras = Split(texto, " ") ' Separar el texto por espacios
+
+        For Each palabra In _Palabras ' Recorrer cada palabra
+            If Len(_Linea & palabra) > maximo Then ' Si la línea actual más la palabra supera el máximo
+                _Resultado = _Resultado & _Linea & vbCrLf ' Agregar la línea al resultado con un salto de línea
+                _Linea = "" ' Vaciar la línea
+            End If
+            _Linea = _Linea & palabra & " " ' Agregar la palabra a la línea con un espacio
+        Next
+
+        _Resultado = _Resultado & _Linea ' Agregar la última línea al resultado
+        Fx_AjustarTexto = _Resultado ' Devolver el resultado
+
+    End Function
+
 End Module

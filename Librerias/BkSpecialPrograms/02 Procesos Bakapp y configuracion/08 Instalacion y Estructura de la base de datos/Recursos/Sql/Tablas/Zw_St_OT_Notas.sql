@@ -17,6 +17,9 @@ CREATE TABLE [dbo].[Zw_St_OT_Notas](
 	[Nota_Etapa_06]             [varchar](1000) NOT NULL DEFAULT (''),
 	[Nota_Etapa_07]             [varchar](200)  NOT NULL DEFAULT (''),
 	[Nota_Etapa_08]             [varchar](200)  NOT NULL DEFAULT (''),
+    [AvisoXCorreo]              [bit]           NOT NULL DEFAULT (0),
+    [AvisoXTelefono]            [bit]           NOT NULL DEFAULT (0),
+    [AvisoXMensaje]             [bit]           NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_St_OT_Notas] PRIMARY KEY CLUSTERED 
 (
 	[Id_Ot] ASC
