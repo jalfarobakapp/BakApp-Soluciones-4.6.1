@@ -2043,6 +2043,14 @@ Public Class Frm_St_Documento
 
     Sub Sb_Estado_03_Presupuesto_Editar()
 
+        If _DsDocumento.Tables(3).Rows(0).Item("Chk_No_se_pudo_reparar") Then
+
+            MessageBoxEx.Show(Me, "Motivo: " & _Row_Notas.Item("Motivo_no_reparo"), "NO SE PUDO REPARAR EL PRODUCTO",
+                          MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+
+        End If
+
         Dim _Editar = True
 
         For Each _Fl As DataRow In _Tbl_Estado.Rows
@@ -2097,6 +2105,14 @@ Public Class Frm_St_Documento
     End Sub
 
     Sub Sb_Estado_04_Cotizacion_Lectura()
+
+        If _DsDocumento.Tables(3).Rows(0).Item("Chk_No_se_pudo_reparar") Then
+
+            MessageBoxEx.Show(Me, "Motivo: " & _Row_Notas.Item("Motivo_no_reparo"), "NO SE PUDO REPARAR EL PRODUCTO",
+                          MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+
+        End If
 
         Dim _Editar = True
 
@@ -2206,6 +2222,14 @@ Public Class Frm_St_Documento
 
     Sub Sb_Estado_05_Reparacion_Lectura()
 
+        If _DsDocumento.Tables(3).Rows(0).Item("Chk_No_se_pudo_reparar") Then
+
+            MessageBoxEx.Show(Me, "Motivo: " & _Row_Notas.Item("Motivo_no_reparo"), "NO SE PUDO REPARAR EL PRODUCTO",
+                          MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+
+        End If
+
         Dim _Editar = True
 
         For Each _Fl As DataRow In _Tbl_Estado.Rows
@@ -2223,7 +2247,6 @@ Public Class Frm_St_Documento
         Fm.SoloLectura = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
-
 
         'Dim Fm As New Frm_St_Estado_05_Reparacion(Frm_St_Estado_05_Reparacion.Accion.Editar)
         'Fm.Pro_RowEntidad = _RowEntidad

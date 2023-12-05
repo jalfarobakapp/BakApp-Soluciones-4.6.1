@@ -21,6 +21,8 @@ Public Class Frm_St_Estado_03_Presupuesto2
     Dim _Horas_Mano_de_Obra_Asignado As Double
     Dim Imagenes_32x32 As ImageList
 
+    Dim _Motivo_no_reparo As String
+
     Dim _Accion As Accion
 
     Enum Accion
@@ -124,7 +126,7 @@ Public Class Frm_St_Estado_03_Presupuesto2
         'If _Accion = Accion.Editar Then If _Tbl_DetProd_Srv.Rows.Count = 0 Then Sb_New_OT_Agregar_Fila()
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
-        AddHandler Btn_Fijar_Estado.Click, AddressOf Btn_Fijar_Estado_Click
+        'AddHandler Btn_Fijar_Estado.Click, AddressOf Btn_Fijar_Estado_Click
 
         If _Accion = Accion.Nuevo Then
 
@@ -542,6 +544,39 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
     End Function
 
+    Function Fx_Fijar_Estado_No_Se_Puede_Reparar() As Boolean
+
+        ' --------------------------------------------------- NOTAS ---------------------------------------
+
+        Dim _Texto = "NO SE PUEDO REPARAR EL EQUIPO"
+
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set" & Space(1) &
+                       "CodEstado = 'V'," & vbCrLf &
+                       "CodTecnico_Repara = '" & CodTecnico_Presupuesta & "'," & vbCrLf &
+                       "Horas_Mano_de_Obra_Repara = 0," & vbCrLf &
+                       "Fecha_Cierre = Getdate()" & vbCrLf &
+                       "Where Id_Ot = " & _Id_Ot & vbCrLf & vbCrLf
+
+        Consulta_sql += "Update " & _Global_BaseBk & "Zw_St_OT_Notas Set " & vbCrLf &
+                        "Nota_Etapa_05 = '" & _Texto & "'" & vbCrLf &
+                        ",Motivo_no_reparo = '" & _Motivo_no_reparo & "'" & vbCrLf &
+                        ",Chk_no_se_pudo_reparar = 1" & vbCrLf &
+                        ",Nota_Etapa_06 = '" & _Texto & "'" & vbCrLf &
+                        ",Nota_Etapa_07 = '" & _Texto & "'" & vbCrLf &
+                        "Where Id_Ot = " & _Id_Ot & vbCrLf & vbCrLf
+
+        Consulta_sql += "Delete " & _Global_BaseBk & "Zw_St_OT_Estados " &
+                        "Where Id_Ot = " & _Id_Ot & " And CodEstado In ('R','V','F')" & vbCrLf & vbCrLf
+
+        Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_St_OT_Estados " &
+                        "(Id_Ot,CodEstado,Fecha_Fijacion,CodFuncionario,NomFuncionario) Values " &
+                        "(" & _Id_Ot & ",'R',GetDate(),'" & FUNCIONARIO & "','" & Nombre_funcionario_activo & "')" & vbCrLf & vbCrLf
+
+        Return _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+    End Function
+
+
 #End Region
 
 #Region "EVENTOS GRILLA"
@@ -815,61 +850,6 @@ Public Class Frm_St_Estado_03_Presupuesto2
 
 #End Region
 
-
-#Region "EVENTOS BOTON GRABAR"
-
-    Private Sub Btn_Fijar_Estado_Click(sender As System.Object, e As System.EventArgs)
-
-        Dim _CantProd As Integer = 0
-        Dim _Tbl As DataTable
-
-        If _Accion = Accion.Nuevo Then _Tbl = _Tbl_DetProd
-        If _Accion = Accion.Editar Then _Tbl = _Tbl_DetProd_Srv
-
-        For Each _FlSvr As DataRow In _Tbl.Rows
-
-            If Not String.IsNullOrEmpty(_FlSvr.Item("Codigo")) Then 'If Not _FlSvr.Item("Nuevo_Item") Then
-
-                _CantProd += 1
-
-                If Not String.IsNullOrEmpty(_FlSvr.Item("Codigo")) And _FlSvr.Item("Cantidad") = 0 Then
-                    MessageBoxEx.Show(Me, "No pueden haber productos con cantidad igual o menor a cero", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    Return
-                End If
-
-            End If
-
-        Next
-
-        If Not CBool(_CantProd) Then
-
-            MessageBoxEx.Show(Me, "Falta agregar servicios al presupuesto" & vbCrLf &
-                     "Debe por lo menos ingresar algun servicio de reparación" & vbCrLf & vbCrLf &
-                     "Para agregar un producto debe hacer lo siguiente:" & vbCrLf &
-                     "Debe posicionarse sobre la celda del Código y hacer doble [Enter] para buscar algún producto e ingresarlo al presupuesto",
-                     "Validación", MessageBoxButtons.OK,
-                     MessageBoxIcon.Stop)
-            Return
-        End If
-
-        If String.IsNullOrEmpty(Txt_NroSerie.Text) Then
-            MessageBoxEx.Show(Me, "Falta el numero de serie del producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Txt_NroSerie.Focus()
-            Return
-        End If
-
-        If Fx_Fijar_Estado() Then
-
-            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado",
-                              MessageBoxButtons.OK, MessageBoxIcon.Information)
-            _Grabar = True
-            Me.Close()
-
-        End If
-
-    End Sub
-
-#End Region
 
     Function Fx_Buscar_Receta(_Codigo As String, _Semilla As Integer, ByRef _TieneReceta As Boolean) As Boolean
 
@@ -1214,37 +1194,100 @@ Public Class Frm_St_Estado_03_Presupuesto2
             End If
         End If
 
-        'For Each _Fila As DataRow In _Tbl_DetProd_Srv.Rows
-        '    If _Fila.Item("Nuevo_Item") Then
-        '        If MessageBoxEx.Show(Me, "Existen nuevas filas en el detalle" & vbCrLf &
-        '                             "¿Confirma salir sin Fijar el Estado?", "Datos sin grabar",
-        '                             MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.Yes Then
+    End Sub
 
-        '            For Each _Row As DataGridViewRow In Grilla.Rows
+    Private Sub Btn_Fijar_Estado_Click(sender As Object, e As EventArgs) Handles Btn_Fijar_Estado.Click
 
-        '                Dim _Codigo = NuloPorNro(_Row.Cells("Codigo").Value, "")
-        '                Dim _Nuevo_Item = NuloPorNro(_Row.Cells("Nuevo_Item").Value, False)
+        If Chk_ProductoNoReparable.Checked Then
+            If Fx_Fijar_Estado_No_Se_Puede_Reparar() Then
+                MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+                _Grabar = True
+                Me.Close()
+            End If
+            Return
+        End If
 
-        '                If _Nuevo_Item Then
-        '                    Try
-        '                        Grilla.Rows.RemoveAt(_Row.Index)
-        '                        Grilla.Refresh()
-        '                    Catch ex As Exception
 
-        '                    End Try
-        '                End If
-        '            Next
+        Dim _CantProd As Integer = 0
+        Dim _Tbl As DataTable
 
-        '            Exit For
+        If _Accion = Accion.Nuevo Then _Tbl = _Tbl_DetProd
+        If _Accion = Accion.Editar Then _Tbl = _Tbl_DetProd_Srv
 
-        '        Else
-        '            e.Cancel = True
-        '            Return
-        '        End If
-        '    End If
-        'Next
+        For Each _FlSvr As DataRow In _Tbl.Rows
+
+            If Not String.IsNullOrEmpty(_FlSvr.Item("Codigo")) Then 'If Not _FlSvr.Item("Nuevo_Item") Then
+
+                _CantProd += 1
+
+                If Not String.IsNullOrEmpty(_FlSvr.Item("Codigo")) And _FlSvr.Item("Cantidad") = 0 Then
+                    MessageBoxEx.Show(Me, "No pueden haber productos con cantidad igual o menor a cero", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
+
+            End If
+
+        Next
+
+        If Not CBool(_CantProd) Then
+
+            MessageBoxEx.Show(Me, "Falta agregar servicios al presupuesto" & vbCrLf &
+                     "Debe por lo menos ingresar algun servicio de reparación" & vbCrLf & vbCrLf &
+                     "Para agregar un producto debe hacer lo siguiente:" & vbCrLf &
+                     "Debe posicionarse sobre la celda del Código y hacer doble [Enter] para buscar algún producto e ingresarlo al presupuesto",
+                     "Validación", MessageBoxButtons.OK,
+                     MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If String.IsNullOrEmpty(Txt_NroSerie.Text) Then
+            MessageBoxEx.Show(Me, "Falta el numero de serie del producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_NroSerie.Focus()
+            Return
+        End If
+
+        If Fx_Fijar_Estado() Then
+
+            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+            _Grabar = True
+            Me.Close()
+
+        End If
 
     End Sub
 
+    Private Sub Chk_ProductoNoReparable_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_ProductoNoReparable.CheckedChanged
+
+        If Not Chk_ProductoNoReparable.Checked Then
+            _Motivo_no_reparo = String.Empty
+            Return
+        End If
+
+        Dim _Aceptado As Boolean
+        Dim _Motivo As String = _Motivo_no_reparo
+
+        MessageBoxEx.Show(Me, "A continuación debera ingresar el motivo por el cual el producto no se puede reparar",
+                          "Producto no reparable", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+        _Aceptado = InputBox_Bk(Me, "Motivo por el cual el producto no es reparable", "Producto no reparable",
+                               _Motivo, True, _Tipo_Mayus_Minus.Mayusculas, 300,
+                               True, _Tipo_Imagen.Texto, False)
+
+        If _Aceptado Then
+
+            _Motivo_no_reparo = _Motivo
+
+            Txt_Nota.Text = "NO SE PUDO REALIZAR LA REPARACION."
+            Txt_Nota.ReadOnly = True
+            Txt_Nota.BackColor = Color.LightGray
+            Txt_Nota.FocusHighlightEnabled = False
+
+        Else
+            Chk_ProductoNoReparable.Checked = False
+        End If
+
+    End Sub
 End Class
 

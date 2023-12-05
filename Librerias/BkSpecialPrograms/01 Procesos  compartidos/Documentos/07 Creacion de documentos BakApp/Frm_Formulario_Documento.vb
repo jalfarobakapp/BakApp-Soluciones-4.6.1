@@ -25715,6 +25715,17 @@ Public Class Frm_Formulario_Documento
 
     End Function
 
+    Private Sub Btn_ProximasRecepciones_Click(sender As Object, e As EventArgs) Handles Btn_ProximasRecepciones.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Detalle.CurrentRow
+        Dim _Codigo As String = _Fila.Cells("Codigo").Value
+
+        Dim Fm As New Frm_ComprasSinRecepcionar(_Codigo)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
     Function Fx_Revisar_MinimoCompra() As Boolean
 
         If _Tido = "OCC" Then

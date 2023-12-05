@@ -104,6 +104,8 @@ Public Class Frm_St_Estado_05_Reparacion2
 
         Txt_NroSerie.Text = _Row_Encabezado.Item("NroSerie")
         Txt_Nota.Text = _Row_Notas.Item("Nota_Etapa_05")
+        Chk_No_se_pudo_reparar_el_equipo.Checked = _Row_Notas.Item("Chk_No_se_pudo_reparar")
+        Btn_VerMotivo.Visible = Chk_No_se_pudo_reparar_el_equipo.Checked
 
         Sb_Actualizar_Grilla()
         Sb_Marcar_Grilla()
@@ -556,6 +558,10 @@ Public Class Frm_St_Estado_05_Reparacion2
 
     Private Sub Chk_No_se_pudo_reparar_el_equipo_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_No_se_pudo_reparar_el_equipo.CheckedChanged
 
+        If SoloLectura Then
+            Return
+        End If
+
         If Chk_No_se_pudo_reparar_el_equipo.Checked Then
 
             If Fx_Fijar_Estado_No_Se_Pudo_Reparar() Then
@@ -573,4 +579,10 @@ Public Class Frm_St_Estado_05_Reparacion2
         End If
 
     End Sub
+
+    Private Sub Btn_VerMotivo_Click(sender As Object, e As EventArgs) Handles Btn_VerMotivo.Click
+        MessageBoxEx.Show(Me, _Row_Notas.Item("Motivo_no_reparo"), "Motivo",
+                          MessageBoxButtons.OK, MessageBoxIcon.Information)
+    End Sub
+
 End Class

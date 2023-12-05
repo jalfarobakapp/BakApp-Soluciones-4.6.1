@@ -23,9 +23,9 @@ Partial Class Frm_St_Estado_05_Reparacion2
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_St_Estado_05_Reparacion2))
         Me.Grupo_Presupuesto = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Tecnico_Taller = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -41,6 +41,7 @@ Partial Class Frm_St_Estado_05_Reparacion2
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Nota = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Highlighter1 = New DevComponents.DotNetBar.Validator.Highlighter()
+        Me.Btn_VerMotivo = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo_Presupuesto.SuspendLayout()
         Me.Grupo_Grilla.SuspendLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -174,7 +175,7 @@ Partial Class Frm_St_Estado_05_Reparacion2
         Me.Grupo_Grilla.DisabledBackColor = System.Drawing.Color.Empty
         Me.Grupo_Grilla.Location = New System.Drawing.Point(9, 78)
         Me.Grupo_Grilla.Name = "Grupo_Grilla"
-        Me.Grupo_Grilla.Size = New System.Drawing.Size(608, 283)
+        Me.Grupo_Grilla.Size = New System.Drawing.Size(608, 285)
         '
         '
         '
@@ -210,39 +211,39 @@ Partial Class Frm_St_Estado_05_Reparacion2
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.MultiSelect = False
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla.Size = New System.Drawing.Size(602, 260)
+        Me.Grilla.Size = New System.Drawing.Size(602, 262)
         Me.Grilla.TabIndex = 2
         '
         'Bar2
@@ -250,7 +251,7 @@ Partial Class Frm_St_Estado_05_Reparacion2
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Fijar_Estado})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Fijar_Estado, Me.Btn_VerMotivo})
         Me.Bar2.Location = New System.Drawing.Point(0, 454)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(625, 41)
@@ -287,7 +288,7 @@ Partial Class Frm_St_Estado_05_Reparacion2
         Me.Chk_No_se_pudo_reparar_el_equipo.CheckBoxImageChecked = CType(resources.GetObject("Chk_No_se_pudo_reparar_el_equipo.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_No_se_pudo_reparar_el_equipo.FocusCuesEnabled = False
         Me.Chk_No_se_pudo_reparar_el_equipo.ForeColor = System.Drawing.Color.Black
-        Me.Chk_No_se_pudo_reparar_el_equipo.Location = New System.Drawing.Point(9, 367)
+        Me.Chk_No_se_pudo_reparar_el_equipo.Location = New System.Drawing.Point(9, 369)
         Me.Chk_No_se_pudo_reparar_el_equipo.Name = "Chk_No_se_pudo_reparar_el_equipo"
         Me.Chk_No_se_pudo_reparar_el_equipo.Size = New System.Drawing.Size(263, 16)
         Me.Chk_No_se_pudo_reparar_el_equipo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -300,9 +301,9 @@ Partial Class Frm_St_Estado_05_Reparacion2
         Me.GroupPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel4.Controls.Add(Me.Txt_Nota)
         Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel4.Location = New System.Drawing.Point(9, 389)
+        Me.GroupPanel4.Location = New System.Drawing.Point(9, 391)
         Me.GroupPanel4.Name = "GroupPanel4"
-        Me.GroupPanel4.Size = New System.Drawing.Size(608, 53)
+        Me.GroupPanel4.Size = New System.Drawing.Size(608, 51)
         '
         '
         '
@@ -336,6 +337,7 @@ Partial Class Frm_St_Estado_05_Reparacion2
         '
         'Txt_Nota
         '
+        Me.Txt_Nota.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -359,6 +361,15 @@ Partial Class Frm_St_Estado_05_Reparacion2
         Me.Highlighter1.ContainerControl = Me
         Me.Highlighter1.FocusHighlightColor = DevComponents.DotNetBar.Validator.eHighlightColor.Red
         Me.Highlighter1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        '
+        'Btn_VerMotivo
+        '
+        Me.Btn_VerMotivo.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_VerMotivo.ForeColor = System.Drawing.Color.Black
+        Me.Btn_VerMotivo.Image = CType(resources.GetObject("Btn_VerMotivo.Image"), System.Drawing.Image)
+        Me.Btn_VerMotivo.ImageAlt = CType(resources.GetObject("Btn_VerMotivo.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerMotivo.Name = "Btn_VerMotivo"
+        Me.Btn_VerMotivo.Text = "Ver motivo por no reparación"
         '
         'Frm_St_Estado_05_Reparacion2
         '
@@ -403,4 +414,5 @@ Partial Class Frm_St_Estado_05_Reparacion2
     Friend WithEvents GroupPanel4 As DevComponents.DotNetBar.Controls.GroupPanel
     Public WithEvents Txt_Nota As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Highlighter1 As DevComponents.DotNetBar.Validator.Highlighter
+    Friend WithEvents Btn_VerMotivo As DevComponents.DotNetBar.ButtonItem
 End Class
