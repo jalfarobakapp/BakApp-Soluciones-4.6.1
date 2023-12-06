@@ -1631,7 +1631,8 @@ Public Class Frm_00_Asis_Compra_Menu
                 If Not Auto_GenerarAutomaticamenteOCCProveedores And Not Auto_GenerarAutomaticamenteNVI Then
 
                     If Chk_DbExt_SincronizarPRBD.Checked Or Auto_GenerarAutomaticamenteOCCProveedorStar Then
-                        Sb_Actualizar_Stock_Desde_Una_Empresa_A_Otra(_TblProductos_Con_Reemplazo)
+                        'Sb_Actualizar_Stock_Desde_Una_Empresa_A_Otra(_TblProductos_Con_Reemplazo)
+                        Sb_Actualizar_Stock_Desde_Una_Empresa_A_Otra_Bodegas(_TblProductos_Con_Reemplazo)
                     End If
 
                 End If
@@ -3132,6 +3133,69 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.SoloProductosConStock = _Modo_NVI
         Fm.ShowDialog(Me)
         Fm.Dispose()
+
+    End Sub
+
+    Sub Sb_Actualizar_Stock_Desde_Una_Empresa_A_Otra_Bodegas(_Tbl_Productos As DataTable)
+
+        If Not _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_DbExt_Conexion") Then
+            Return
+        End If
+
+        If Not _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_DbExt_Maest") Then
+            Return
+        End If
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Maest Where Activo = 1"
+        Dim _Tbl_DbExtMaest As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        For Each _Row_DbExtMaest As DataRow In _Tbl_DbExtMaest.Rows
+
+            Dim _Id_Conexion = _Row_DbExtMaest.Item("Id_Conexion")
+
+            Dim _Empresa_Ori = _Row_DbExtMaest.Item("Empresa_Ori")
+            Dim _Sucursal_Ori = _Row_DbExtMaest.Item("Sucursal_Ori")
+            Dim _Bodega_Ori = _Row_DbExtMaest.Item("Bodega_Ori")
+
+            Dim _Empresa_Des = _Row_DbExtMaest.Item("Empresa_Des")
+            Dim _Sucursal_Des = _Row_DbExtMaest.Item("Sucursal_Des")
+            Dim _Bodega_Des = _Row_DbExtMaest.Item("Bodega_Des")
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where Id = " & _Id_Conexion
+            Dim _Row_DnExt As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _Servidor = _Row_DnExt.Item("Servidor")
+            Dim _Puerto = _Row_DnExt.Item("Puerto")
+            Dim _Usuario = _Row_DnExt.Item("Usuario")
+            Dim _Clave = _Row_DnExt.Item("Clave")
+            Dim _BaseDeDatos = _Row_DnExt.Item("BaseDeDatos")
+
+            Dim _ServidorPuerto As String = _Servidor
+
+            If Not String.IsNullOrEmpty(_Puerto) Then
+                _ServidorPuerto = _Servidor & "," & _Puerto
+            End If
+
+            Dim _Cadena_ConexionSQL_Server_Origen = "data " &
+                                            "source = " & _ServidorPuerto & "; " &
+                                            "initial catalog = " & _BaseDeDatos & "; " &
+                                            "user id = " & _Usuario & "; " &
+                                            "password = " & _Clave
+
+            Dim Fm As New Frm_Importar_Stock_OEBD(_Tbl_Productos, _Cadena_ConexionSQL_Server_Origen, "KOPR")
+            Fm.Text = "Actualización de Stock desde una empresa a otra"
+            Fm.Empresa_Ori = _Empresa_Ori
+            Fm.Sucursal_Ori = _Sucursal_Ori
+            Fm.Bodega_Ori = _Bodega_Ori
+            Fm.Empresa_Des = _Empresa_Des
+            Fm.Sucursal_Des = _Sucursal_Des
+            Fm.Bodega_Des = _Bodega_Des
+            Fm.Ejecutar_Automaticamente = True
+            Fm.SoloProductosConStock = _Modo_NVI
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
+        Next
 
     End Sub
 

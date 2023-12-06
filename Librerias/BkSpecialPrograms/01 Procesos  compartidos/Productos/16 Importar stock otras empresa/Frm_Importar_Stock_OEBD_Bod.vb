@@ -19,6 +19,7 @@ Public Class Frm_Importar_Stock_OEBD_Bod
 
         Me._Cadena_ConexionSQL_Server_Origen = _Cadena_ConexionSQL_Server_Origen
         Me._Empresa_Ori = _Empresa_Ori
+        Me._Id_Conexion = Id_Conexion
 
     End Sub
 
@@ -244,10 +245,30 @@ Public Class Frm_Importar_Stock_OEBD_Bod
             Return
         End If
 
-        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DbExt_Maest (Id_Conexion,Empresa_Ori,Sucursal_Ori,Activo,Empresa_Des,Sucursal_Des,Bodega_Des,NombreBod_Ori,NombreBod_Des) Values " &
-                       "(" & _Id_Conexion & ",'" & _Empresa_Ori & "','" & _Sucursal_Ori & "',1,'" & _Empresa_Des & "','" & _Sucursal_Des & "','" & _Bodega_Des & "','" & _NombreBod_Ori & "','" & _NombreBod_Des & "')"
+        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DbExt_Maest (Id_Conexion,Empresa_Ori,Sucursal_Ori,Bodega_Ori,Activo,Empresa_Des,Sucursal_Des,Bodega_Des,NombreBod_Ori,NombreBod_Des) Values " &
+                       "(" & _Id_Conexion & ",'" & _Empresa_Ori & "','" & _Sucursal_Ori & "','" & _Bodega_Ori & "',1,'" & _Empresa_Des & "','" & _Sucursal_Des & "','" & _Bodega_Des & "','" & _NombreBod_Ori & "','" & _NombreBod_Des & "')"
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
             Sb_Actualizar_Grilla()
+        End If
+
+    End Sub
+
+    Private Sub Btn_QuitarVendedor_Click(sender As Object, e As EventArgs) Handles Btn_QuitarVendedor.Click
+
+        If MessageBoxEx.Show(Me, "¿Esta seguro de eliminar este registro?", "Eliminar",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        Dim _Id As Integer = _Fila.Cells("Id").Value
+
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_DbExt_Maest Where Id = " & _Id
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            Sb_Actualizar_Grilla()
+            MessageBoxEx.Show(Me, "Registro eliminado correctamente", "Eliminar",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
 
     End Sub

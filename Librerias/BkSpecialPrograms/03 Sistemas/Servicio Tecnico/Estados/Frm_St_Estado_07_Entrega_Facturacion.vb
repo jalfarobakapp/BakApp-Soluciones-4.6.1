@@ -70,7 +70,9 @@ Public Class Frm_St_Estado_07_Entrega_Facturacion
         End If
 
         If _Accion = Accion.Nuevo Then
+
             Sb_Cargar_Combo("")
+
         ElseIf _Accion = Accion.Editar Then
 
             Dim _Cod_Estado_Entrega = _Row_Encabezado.Item("Cod_Estado_Entrega")
