@@ -42,6 +42,7 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX8 = New DevComponents.DotNetBar.LabelX()
         Me.Highlighter1 = New DevComponents.DotNetBar.Validator.Highlighter()
+        Me.Chk_ProductoNoReparable = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Grupo_Grilla.SuspendLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -57,7 +58,7 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         Me.Grupo_Grilla.DisabledBackColor = System.Drawing.Color.Empty
         Me.Grupo_Grilla.Location = New System.Drawing.Point(9, 80)
         Me.Grupo_Grilla.Name = "Grupo_Grilla"
-        Me.Grupo_Grilla.Size = New System.Drawing.Size(608, 283)
+        Me.Grupo_Grilla.Size = New System.Drawing.Size(608, 261)
         '
         '
         '
@@ -125,7 +126,7 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla.Size = New System.Drawing.Size(602, 260)
+        Me.Grilla.Size = New System.Drawing.Size(602, 238)
         Me.Grilla.TabIndex = 2
         '
         'Bar2
@@ -404,11 +405,29 @@ Partial Class Frm_St_Estado_03_Presupuesto2
         Me.Highlighter1.FocusHighlightColor = DevComponents.DotNetBar.Validator.eHighlightColor.Red
         Me.Highlighter1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         '
+        'Chk_ProductoNoReparable
+        '
+        Me.Chk_ProductoNoReparable.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_ProductoNoReparable.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_ProductoNoReparable.CheckBoxImageChecked = CType(resources.GetObject("Chk_ProductoNoReparable.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_ProductoNoReparable.FocusCuesEnabled = False
+        Me.Chk_ProductoNoReparable.ForeColor = System.Drawing.Color.Black
+        Me.Chk_ProductoNoReparable.Location = New System.Drawing.Point(9, 347)
+        Me.Chk_ProductoNoReparable.Name = "Chk_ProductoNoReparable"
+        Me.Chk_ProductoNoReparable.Size = New System.Drawing.Size(158, 16)
+        Me.Chk_ProductoNoReparable.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_ProductoNoReparable.TabIndex = 104
+        Me.Chk_ProductoNoReparable.Text = "PRODUCTO NO REPARABLE"
+        '
         'Frm_St_Estado_03_Presupuesto2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(627, 561)
+        Me.Controls.Add(Me.Chk_ProductoNoReparable)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.Grupo_Presupuesto)
         Me.Controls.Add(Me.Grupo_Grilla)
@@ -448,4 +467,5 @@ Partial Class Frm_St_Estado_03_Presupuesto2
     Friend WithEvents LabelX8 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Btn_Agregar_Producto As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Highlighter1 As DevComponents.DotNetBar.Validator.Highlighter
+    Friend WithEvents Chk_ProductoNoReparable As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

@@ -127,6 +127,51 @@ Public Class Cl_NVVAutoExterna
                            "Empresa = '" & ModEmpresa & "',Sucursal = '" & _Sucursal & "',Bodega = '" & _Bodega & "' Where Id_Enc = " & _Id_Enc
             _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
+            Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Where Id_Enc = " & _Id_Enc
+            Dim _Tbl_NVVAutoDet As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+
+            Consulta_Sql = "Select * From TABBO Where EMPRESA = '" & ModEmpresa & "' And KOSU = '" & _Sucursal & "'"
+            Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+
+            For Each _FlDet As DataRow In _Tbl_NVVAutoDet.Rows
+
+                Dim _Id_Det As Integer = _FlDet.Item("Id_Det")
+                Dim _Codigo As String = _FlDet.Item("Codigo")
+                Dim _Suc_Mayor As String = String.Empty
+                Dim _Bod_Mayor As String = String.Empty
+
+                Dim _Stfi1_Mayor As Double = 0
+
+                For Each _FlBod As DataRow In _Tbl_Bodegas.Rows
+
+                    Dim _Suc As String = _FlBod.Item("KOSU")
+                    Dim _Bod As String = _FlBod.Item("KOBO")
+
+                    Dim _Stfi1 As Double = _Sql.Fx_Trae_Dato("MAEST", "STFI1",
+                                               "EMPRESA = '" & ModEmpresa & "' " &
+                                               "And KOSU = '" & _Suc & "' " &
+                                               "And KOBO = '" & _Bod & "' " &
+                                               "And KOPR = '" & _Codigo & "'", True)
+
+                    If _Stfi1_Mayor < _Stfi1 Then
+                        _Suc_Mayor = _Suc
+                        _Bod_Mayor = _Bod
+                        _Stfi1_Mayor = _Stfi1
+                    End If
+
+                Next
+
+                If Not String.IsNullOrEmpty(_Bod_Mayor.Trim) Then
+
+                    Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Set " &
+                           "Empresa = '" & ModEmpresa & "',Sucursal = '" & _Suc_Mayor & "',Bodega = '" & _Bod_Mayor & "' Where Id_Det = " & _Id_Det
+                    _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+                End If
+
+            Next
+
+
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then Throw New System.Exception(_Sql.Pro_Error)
 
             Consulta_Sql = "Select Nvd.Id_Det As Id,Nvd.Codigo,Cantidad,STFI1,STFI2,STOCNV1,STOCNV2,STDV1,STDV2,ISNULL(Pst.StComp1,0) As StComp1,ISNULL(Pst.StComp2,0) As StComp2,
@@ -180,6 +225,9 @@ Drop table #Paso"
 
             End If
 
+            ' OJO OJO ACA HAY QUE ARREGALR ESTO SOLAMENTE...
+            ' ACA HAY QUE PONER LA BODEGA QUE VIENE DESDE LA TABLA Zw_Demonio_NVVAutoDet
+            ' EL SISTEMA GRABA LA BODEGA WCM Y NO LA VIRTUAL
 
             Modalidad = Modalidad_NVV
 

@@ -383,6 +383,7 @@ Public Class Frm_St_Estado_05_Reparacion
         End If
 
         If Not Chk_No_se_pudo_reparar_el_equipo.Checked Then
+
             If CBool(_Tbl_DetProd_Cov.Rows.Count) Then
 
                 For Each _Fila As DataRow In _Tbl_DetProd_Cov.Rows
@@ -401,6 +402,7 @@ Public Class Frm_St_Estado_05_Reparacion
                 Next
 
             End If
+
         End If
 
         Return True
@@ -718,7 +720,6 @@ Public Class Frm_St_Estado_05_Reparacion
                      "(" & _Id_Ot & ",'R',GetDate(),'" & FUNCIONARIO & "','" & Nombre_funcionario_activo & "')" & vbCrLf & vbCrLf
 
         Fx_Fijar_Estado_No_Se_Pudo_Reparar = _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
-
 
     End Function
 

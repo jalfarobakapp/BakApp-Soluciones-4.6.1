@@ -70,7 +70,9 @@ Public Class Frm_St_Estado_07_Entrega_Facturacion
         End If
 
         If _Accion = Accion.Nuevo Then
+
             Sb_Cargar_Combo("")
+
         ElseIf _Accion = Accion.Editar Then
 
             Dim _Cod_Estado_Entrega = _Row_Encabezado.Item("Cod_Estado_Entrega")
@@ -97,6 +99,11 @@ Public Class Frm_St_Estado_07_Entrega_Facturacion
         End If
 
         Txt_Nota.Text = _Row_Notas.Item("Nota_Etapa_07")
+
+        If _Row_Notas.Item("Chk_No_Se_Pudo_Reparar") Then
+            Txt_Nota.Text += vbCrLf & "MOTIVO: " & _Row_Notas.Item("Motivo_no_reparo")
+            Cmb_Estado_Entrega.SelectedValue = "008"
+        End If
 
         Me.Refresh()
 

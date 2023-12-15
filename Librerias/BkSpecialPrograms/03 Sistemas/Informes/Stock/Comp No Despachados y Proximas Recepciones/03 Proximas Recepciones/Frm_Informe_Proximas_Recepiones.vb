@@ -1,4 +1,4 @@
-'Imports Lib_Bakapp_VarClassFunc
+ï»¿'Imports Lib_Bakapp_VarClassFunc
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Informe_Proximas_Recepiones
@@ -63,10 +63,10 @@ Public Class Frm_Informe_Proximas_Recepiones
 
     Public Sub New()
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
 
         _Filtro_Marcas_Todas = True
         _Filtro_Super_Familias_Todas = True
@@ -94,11 +94,11 @@ Public Class Frm_Informe_Proximas_Recepiones
 
     Function Fx_Filtros_Productos() As String
 
-        Dim _Filtros, _
-            _Filtro_Rubros, _
-            _Filtro_Marcas, _
-            _Filtro_Zonas, _
-            _Filtro_SuperFamilias, _
+        Dim _Filtros,
+            _Filtro_Rubros,
+            _Filtro_Marcas,
+            _Filtro_Zonas,
+            _Filtro_SuperFamilias,
             _Filtro_ClasLibre As String
 
 
@@ -144,10 +144,10 @@ Public Class Frm_Informe_Proximas_Recepiones
 
         '---------------------------
 
-        _Filtros = _Filtro_ClasLibre & vbCrLf & _
-                   _Filtro_Marcas & vbCrLf & _
-                   _Filtro_Rubros & vbCrLf & _
-                   _Filtro_SuperFamilias & vbCrLf & _
+        _Filtros = _Filtro_ClasLibre & vbCrLf &
+                   _Filtro_Marcas & vbCrLf &
+                   _Filtro_Rubros & vbCrLf &
+                   _Filtro_SuperFamilias & vbCrLf &
                    _Filtro_Zonas
 
         Return _Filtros

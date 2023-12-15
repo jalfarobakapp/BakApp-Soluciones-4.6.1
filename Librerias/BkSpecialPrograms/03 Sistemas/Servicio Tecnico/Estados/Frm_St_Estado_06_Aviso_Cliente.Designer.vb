@@ -24,6 +24,12 @@ Partial Class Frm_St_Estado_06_Aviso_Cliente
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_St_Estado_06_Aviso_Cliente))
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
+        Me.Menu_Contextual_02_Anotaciones = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Anotacion_Telefono = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Anotacion_Mail = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_MensajeTexto = New DevComponents.DotNetBar.ButtonItem()
         Me.Txt_Nota = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Fijar_Estado = New DevComponents.DotNetBar.ButtonItem()
@@ -31,6 +37,7 @@ Partial Class Frm_St_Estado_06_Aviso_Cliente
         Me.Btn_Informacion_Entidad = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Enviar_correo = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel2.SuspendLayout()
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -38,6 +45,7 @@ Partial Class Frm_St_Estado_06_Aviso_Cliente
         '
         Me.GroupPanel2.BackColor = System.Drawing.Color.White
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.Controls.Add(Me.ContextMenuBar1)
         Me.GroupPanel2.Controls.Add(Me.Txt_Nota)
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(10, 12)
@@ -74,8 +82,64 @@ Partial Class Frm_St_Estado_06_Aviso_Cliente
         Me.GroupPanel2.TabIndex = 88
         Me.GroupPanel2.Text = "Nota"
         '
+        'ContextMenuBar1
+        '
+        Me.ContextMenuBar1.AntiAlias = True
+        Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_02_Anotaciones})
+        Me.ContextMenuBar1.Location = New System.Drawing.Point(36, 22)
+        Me.ContextMenuBar1.Name = "ContextMenuBar1"
+        Me.ContextMenuBar1.Size = New System.Drawing.Size(545, 25)
+        Me.ContextMenuBar1.Stretch = True
+        Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ContextMenuBar1.TabIndex = 67
+        Me.ContextMenuBar1.TabStop = False
+        Me.ContextMenuBar1.Text = "ContextMenuBar1"
+        '
+        'Menu_Contextual_02_Anotaciones
+        '
+        Me.Menu_Contextual_02_Anotaciones.AutoExpandOnClick = True
+        Me.Menu_Contextual_02_Anotaciones.Name = "Menu_Contextual_02_Anotaciones"
+        Me.Menu_Contextual_02_Anotaciones.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem2, Me.Btn_Anotacion_Telefono, Me.Btn_Anotacion_Mail, Me.Btn_MensajeTexto})
+        Me.Menu_Contextual_02_Anotaciones.Text = "Opciones marcar"
+        '
+        'LabelItem2
+        '
+        Me.LabelItem2.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem2.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem2.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem2.Name = "LabelItem2"
+        Me.LabelItem2.PaddingBottom = 1
+        Me.LabelItem2.PaddingLeft = 10
+        Me.LabelItem2.PaddingTop = 1
+        Me.LabelItem2.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem2.Text = "Opciones"
+        '
+        'Btn_Anotacion_Telefono
+        '
+        Me.Btn_Anotacion_Telefono.Image = CType(resources.GetObject("Btn_Anotacion_Telefono.Image"), System.Drawing.Image)
+        Me.Btn_Anotacion_Telefono.ImageAlt = CType(resources.GetObject("Btn_Anotacion_Telefono.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Anotacion_Telefono.Name = "Btn_Anotacion_Telefono"
+        Me.Btn_Anotacion_Telefono.Text = "Llamado telefónico"
+        '
+        'Btn_Anotacion_Mail
+        '
+        Me.Btn_Anotacion_Mail.Image = CType(resources.GetObject("Btn_Anotacion_Mail.Image"), System.Drawing.Image)
+        Me.Btn_Anotacion_Mail.ImageAlt = CType(resources.GetObject("Btn_Anotacion_Mail.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Anotacion_Mail.Name = "Btn_Anotacion_Mail"
+        Me.Btn_Anotacion_Mail.Text = "Envío de correo"
+        '
+        'Btn_MensajeTexto
+        '
+        Me.Btn_MensajeTexto.Image = CType(resources.GetObject("Btn_MensajeTexto.Image"), System.Drawing.Image)
+        Me.Btn_MensajeTexto.ImageAlt = CType(resources.GetObject("Btn_MensajeTexto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_MensajeTexto.Name = "Btn_MensajeTexto"
+        Me.Btn_MensajeTexto.Text = "Mensaje de texto"
+        '
         'Txt_Nota
         '
+        Me.Txt_Nota.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -134,7 +198,6 @@ Partial Class Frm_St_Estado_06_Aviso_Cliente
         Me.Btn_Informacion_Entidad.ForeColor = System.Drawing.Color.Red
         Me.Btn_Informacion_Entidad.Image = CType(resources.GetObject("Btn_Informacion_Entidad.Image"), System.Drawing.Image)
         Me.Btn_Informacion_Entidad.Name = "Btn_Informacion_Entidad"
-        Me.Btn_Informacion_Entidad.Tooltip = "Editar OT"
         Me.Btn_Informacion_Entidad.Visible = False
         '
         'Btn_Enviar_correo
@@ -144,6 +207,7 @@ Partial Class Frm_St_Estado_06_Aviso_Cliente
         Me.Btn_Enviar_correo.Image = CType(resources.GetObject("Btn_Enviar_correo.Image"), System.Drawing.Image)
         Me.Btn_Enviar_correo.Name = "Btn_Enviar_correo"
         Me.Btn_Enviar_correo.Tooltip = "Enviar correo"
+        Me.Btn_Enviar_correo.Visible = False
         '
         'Frm_St_Estado_06_Aviso_Cliente
         '
@@ -154,6 +218,7 @@ Partial Class Frm_St_Estado_06_Aviso_Cliente
         Me.Controls.Add(Me.Bar2)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
@@ -164,6 +229,7 @@ Partial Class Frm_St_Estado_06_Aviso_Cliente
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Avisar al cliente"
         Me.GroupPanel2.ResumeLayout(False)
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -175,4 +241,10 @@ Partial Class Frm_St_Estado_06_Aviso_Cliente
     Public WithEvents Btn_Editar As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Informacion_Entidad As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Enviar_correo As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ContextMenuBar1 As DevComponents.DotNetBar.ContextMenuBar
+    Friend WithEvents Menu_Contextual_02_Anotaciones As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem2 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_Anotacion_Telefono As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Anotacion_Mail As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_MensajeTexto As DevComponents.DotNetBar.ButtonItem
 End Class

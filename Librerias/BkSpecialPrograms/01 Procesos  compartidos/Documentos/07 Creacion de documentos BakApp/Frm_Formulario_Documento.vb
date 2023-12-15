@@ -18268,6 +18268,23 @@ Public Class Frm_Formulario_Documento
 
                 Sb_Traer_Producto_Grilla(_New_Fila, _RowProducto, True)
 
+                Dim _Sucursal As String
+                Dim _Bodega As String
+
+                Try
+                    _Sucursal = Fila.Item("Sucursal")
+                    _New_Fila.Cells("Sucursal").Value = _Sucursal
+                Catch ex As Exception
+
+                End Try
+
+                Try
+                    _Bodega = Fila.Item("Bodega")
+                    _New_Fila.Cells("Bodega").Value = _Bodega
+                Catch ex As Exception
+
+                End Try
+
                 _New_Fila.Cells("Codigo").Value = _Codigo
                 _New_Fila.Cells("Cantidad").Value = _Cantidad
 
@@ -25714,6 +25731,17 @@ Public Class Frm_Formulario_Documento
         Return True
 
     End Function
+
+    Private Sub Btn_ProximasRecepciones_Click(sender As Object, e As EventArgs) Handles Btn_ProximasRecepciones.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Detalle.CurrentRow
+        Dim _Codigo As String = _Fila.Cells("Codigo").Value
+
+        Dim Fm As New Frm_ComprasSinRecepcionar(_Codigo)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 
     Function Fx_Revisar_MinimoCompra() As Boolean
 

@@ -8606,10 +8606,6 @@ Drop Table #Paso"
         Dim _CodProveedor_Pstar As String '= "76590920"
         Dim _CodSucProveedor_Pstar As String '= String.Empty
 
-        Dim _EmpPstar As String
-        Dim _SucPstar As String
-        Dim _BodPstar As String
-
         Dim _Id = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
                                                  "Valor",
                                                  "Informe = 'Compras_Asistente' And Campo = 'Txt_DbExt_Nombre_Conexion' And NombreEquipo = '" & _NombreEquipo & "' " &
@@ -8633,24 +8629,40 @@ Drop Table #Paso"
             Return
         End If
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Maest Where Id_Conexion = " & Val(_Id)
-        Dim _RowDbExt_Maest As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+        'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Maest Where Id_Conexion = " & Val(_Id)
+        'Dim _RowDbExt_Maest As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        If Not IsNothing(_RowDbExt_Maest) Then
-            _EmpPstar = _RowDbExt_Maest.Item("Empresa_Des")
-            _SucPstar = _RowDbExt_Maest.Item("Sucursal_Des")
-            _BodPstar = _RowDbExt_Maest.Item("Bodega_Des")
-        End If
+        'If Not IsNothing(_RowDbExt_Maest) Then
+        '    _EmpPstar = _RowDbExt_Maest.Item("Empresa_Des")
+        '    _SucPstar = _RowDbExt_Maest.Item("Sucursal_Des")
+        '    _BodPstar = _RowDbExt_Maest.Item("Bodega_Des")
+        'End If
 
         Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CodProveedor = '',CodSucProveedor = ''"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set StockUd1BodStar = StfiBodExt1,StockUd2BodStar = StfiBodExt2" & vbCrLf &
+        Consulta_sql = "Select Codigo,SUM(StfiBodExt1) As StfiBodExt1,SUM(StfiBodExt2) As StfiBodExt2" & vbCrLf &
+                       "Into #Paso" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Prod_Stock TbSt" & vbCrLf &
+                       "Where Empresa+Sucursal+Bodega In (Select Empresa_Des+Sucursal_Des+Bodega_Des " &
+                            "From " & _Global_BaseBk & "Zw_DbExt_Maest Where Id_Conexion = " & Val(_Id) & ")" & vbCrLf &
+                       "And Codigo In (Select Codigo From " & _Nombre_Tbl_Paso_Informe & ")" & vbCrLf &
+                       "Group By Codigo" & vbCrLf &
+                        vbCrLf &
+                       "Update " & _Nombre_Tbl_Paso_Informe & " Set StockUd1BodStar = StfiBodExt1,StockUd2BodStar = StfiBodExt2" & vbCrLf &
                        "From " & _Nombre_Tbl_Paso_Informe & " Tbps" & vbCrLf &
-                       "Inner Join " & _Global_BaseBk & "Zw_Prod_Stock TbSt On " &
-                       "TbSt.Empresa = '" & _EmpPstar & "' And TbSt.Sucursal = '" & _SucPstar & "' And TbSt.Bodega = '" & _BodPstar & "' And Tbps.Codigo = TbSt.Codigo" & vbCrLf &
-                       "Where Comprar = 1 And (StfiBodExt1+StfiBodExt2) > 0"
+                       "Inner Join #Paso On Tbps.Codigo = #Paso.Codigo" & vbCrLf &
+                       "Where Comprar = 1 And (StfiBodExt1+StfiBodExt2) > 0" & vbCrLf &
+                       vbCrLf &
+                       "Drop Table #Paso"
         _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        'Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set StockUd1BodStar = StfiBodExt1,StockUd2BodStar = StfiBodExt2" & vbCrLf &
+        '               "From " & _Nombre_Tbl_Paso_Informe & " Tbps" & vbCrLf &
+        '               "Inner Join " & _Global_BaseBk & "Zw_Prod_Stock TbSt On " &
+        '               "TbSt.Empresa = '" & _EmpPstar & "' And TbSt.Sucursal = '" & _SucPstar & "' And TbSt.Bodega = '" & _BodPstar & "' And Tbps.Codigo = TbSt.Codigo" & vbCrLf &
+        '               "Where Comprar = 1 And (StfiBodExt1+StfiBodExt2) > 0"
+        '_Sql.Ej_consulta_IDU(Consulta_sql)
 
         Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CantComprar = Case When StockUd1BodStar > CantSugeridaTot then CantSugeridaTot Else StockUd1BodStar End" & vbCrLf &
                        "Where StockUd1BodStar > 0"

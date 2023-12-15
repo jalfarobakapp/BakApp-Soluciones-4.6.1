@@ -877,9 +877,20 @@ Public Class Frm_St_Ordenes_de_trabajo
 
     Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
-        Return
-        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Fila As DataGridViewRow
+
+        If Grilla_SubOt.RowCount > 1 Then
+            MessageBoxEx.Show(Me, "Debe seleccionar una Sub-Ot en la grilla de abajo para ser mostrada",
+                              "OT con mas de un Sub-Ot", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        _Fila = Grilla_SubOt.Rows(0)
         Sb_Abrir_Documento(_Fila)
+
+        'Return
+        'Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        'Sb_Abrir_Documento(_Fila)
 
     End Sub
 

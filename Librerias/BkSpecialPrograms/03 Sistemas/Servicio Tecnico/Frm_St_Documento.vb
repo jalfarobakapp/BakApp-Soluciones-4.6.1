@@ -159,6 +159,8 @@ Public Class Frm_St_Documento
                 _TieneHnosSubOT = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_OT_Encabezado", "Id_Ot_Padre = " & _Id_Ot_Padre)
             End If
 
+            Warning_NoReparable.Visible = _Row_Notas.Item("Chk_No_se_pudo_reparar")
+
         End If
 
         If Trim(_Row_Encabezado.Item("CodEstado")) = "CE" Or Trim(_Row_Encabezado.Item("CodEstado")) = "N" Then
@@ -2043,6 +2045,14 @@ Public Class Frm_St_Documento
 
     Sub Sb_Estado_03_Presupuesto_Editar()
 
+        If _Row_Notas.Item("Chk_No_se_pudo_reparar") Then
+
+            Dim _Motivo As String = Fx_AjustarTexto(_Row_Notas.Item("Motivo_no_reparo"), 50)
+            MessageBoxEx.Show(Me, "Motivo: " & _Motivo, "NO SE PUDO REPARAR EL PRODUCTO", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+
+        End If
+
         Dim _Editar = True
 
         For Each _Fl As DataRow In _Tbl_Estado.Rows
@@ -2097,6 +2107,14 @@ Public Class Frm_St_Documento
     End Sub
 
     Sub Sb_Estado_04_Cotizacion_Lectura()
+
+        If _Row_Notas.Item("Chk_No_se_pudo_reparar") Then
+
+            Dim _Motivo As String = Fx_AjustarTexto(_Row_Notas.Item("Motivo_no_reparo"), 50)
+            MessageBoxEx.Show(Me, "Motivo: " & _Motivo, "NO SE PUDO REPARAR EL PRODUCTO", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+
+        End If
 
         Dim _Editar = True
 
@@ -2206,6 +2224,14 @@ Public Class Frm_St_Documento
 
     Sub Sb_Estado_05_Reparacion_Lectura()
 
+        If _Row_Notas.Item("Chk_No_se_pudo_reparar") Then
+
+            Dim _Motivo As String = Fx_AjustarTexto(_Row_Notas.Item("Motivo_no_reparo"), 50)
+            MessageBoxEx.Show(Me, "Motivo: " & _Motivo, "NO SE PUDO REPARAR EL PRODUCTO", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+
+        End If
+
         Dim _Editar = True
 
         For Each _Fl As DataRow In _Tbl_Estado.Rows
@@ -2223,7 +2249,6 @@ Public Class Frm_St_Documento
         Fm.SoloLectura = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
-
 
         'Dim Fm As New Frm_St_Estado_05_Reparacion(Frm_St_Estado_05_Reparacion.Accion.Editar)
         'Fm.Pro_RowEntidad = _RowEntidad
@@ -3411,4 +3436,13 @@ Public Class Frm_St_Documento
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
         'Sb_New_OT_Grabar_Nueva_OT()
     End Sub
+
+    Private Sub Warning_NoReparable_OptionsClick(sender As Object, e As EventArgs) Handles Warning_NoReparable.OptionsClick
+
+        Dim _Motivo As String = Fx_AjustarTexto(_Row_Notas.Item("Motivo_no_reparo"), 50)
+        MessageBoxEx.Show(Me, "Motivo: " & _Motivo, "NO SE PUDO REPARAR EL PRODUCTO", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+    End Sub
+
+
 End Class

@@ -221,9 +221,9 @@ Partial Class Frm_01_Asis_Compra_Resultados
         '
         Me.RibbonControl1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.RibbonControl1.CaptionVisible = True
-        Me.RibbonControl1.Controls.Add(Me.RibbonPanel2)
-        Me.RibbonControl1.Controls.Add(Me.RibbonPanel1)
         Me.RibbonControl1.Controls.Add(Me.RibbonPanel5)
+        Me.RibbonControl1.Controls.Add(Me.RibbonPanel1)
+        Me.RibbonControl1.Controls.Add(Me.RibbonPanel2)
         Me.RibbonControl1.Controls.Add(Me.RibbonPanel7)
         Me.RibbonControl1.Dock = System.Windows.Forms.DockStyle.Top
         Me.RibbonControl1.ForeColor = System.Drawing.Color.Black
@@ -275,6 +275,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         '
         Me.RibbonPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.RibbonPanel2.TabIndex = 2
+        Me.RibbonPanel2.Visible = False
         '
         'RibbonPanel4
         '
@@ -957,7 +958,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.RibbonPanel5.Location = New System.Drawing.Point(0, 61)
         Me.RibbonPanel5.Name = "RibbonPanel5"
         Me.RibbonPanel5.Padding = New System.Windows.Forms.Padding(3, 0, 3, 2)
-        Me.RibbonPanel5.Size = New System.Drawing.Size(1439, 107)
+        Me.RibbonPanel5.Size = New System.Drawing.Size(1367, 107)
         '
         '
         '
@@ -971,7 +972,6 @@ Partial Class Frm_01_Asis_Compra_Resultados
         '
         Me.RibbonPanel5.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.RibbonPanel5.TabIndex = 3
-        Me.RibbonPanel5.Visible = False
         '
         'RibbonPanel6
         '
@@ -989,7 +989,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.RibbonPanel6.Location = New System.Drawing.Point(3, 0)
         Me.RibbonPanel6.Name = "RibbonPanel6"
         Me.RibbonPanel6.Padding = New System.Windows.Forms.Padding(3, 0, 3, 2)
-        Me.RibbonPanel6.Size = New System.Drawing.Size(1433, 105)
+        Me.RibbonPanel6.Size = New System.Drawing.Size(1361, 105)
         '
         '
         '
@@ -1444,7 +1444,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.RibbonPanel7.Location = New System.Drawing.Point(0, 61)
         Me.RibbonPanel7.Name = "RibbonPanel7"
         Me.RibbonPanel7.Padding = New System.Windows.Forms.Padding(3, 0, 3, 2)
-        Me.RibbonPanel7.Size = New System.Drawing.Size(1439, 107)
+        Me.RibbonPanel7.Size = New System.Drawing.Size(1367, 107)
         '
         '
         '
@@ -1729,7 +1729,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.GroupBox3.Controls.Add(Me.LblStockCritico)
         Me.GroupBox3.Controls.Add(Me.Label5)
         Me.GroupBox3.Controls.Add(Me.Label2)
-        Me.GroupBox3.Location = New System.Drawing.Point(4, 4)
+        Me.GroupBox3.Location = New System.Drawing.Point(4, 11)
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.Size = New System.Drawing.Size(539, 68)
         Me.GroupBox3.TabIndex = 9
@@ -1982,6 +1982,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         '
         'Rb_Proveedores
         '
+        Me.Rb_Proveedores.Checked = True
         Me.Rb_Proveedores.Name = "Rb_Proveedores"
         Me.Rb_Proveedores.Panel = Me.RibbonPanel5
         Me.Rb_Proveedores.Text = "Proveedor(es)"
@@ -1994,7 +1995,6 @@ Partial Class Frm_01_Asis_Compra_Resultados
         '
         'Rb_Opcion_Indicadores
         '
-        Me.Rb_Opcion_Indicadores.Checked = True
         Me.Rb_Opcion_Indicadores.Name = "Rb_Opcion_Indicadores"
         Me.Rb_Opcion_Indicadores.Panel = Me.RibbonPanel2
         Me.Rb_Opcion_Indicadores.Text = "Opciones Incluir/Excluir"
@@ -2285,7 +2285,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         '
         'Frm_01_Asis_Compra_Resultados
         '
-        Me.ClientSize = New System.Drawing.Size(1377, 393)
+        Me.ClientSize = New System.Drawing.Size(1377, 391)
         Me.Controls.Add(Me.ContextMenuBar1)
         Me.Controls.Add(Me.RibbonControl1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)

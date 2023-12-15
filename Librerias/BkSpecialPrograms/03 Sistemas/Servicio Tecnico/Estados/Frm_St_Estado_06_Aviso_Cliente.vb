@@ -81,33 +81,43 @@ Public Class Frm_St_Estado_06_Aviso_Cliente
 
 
     Private Sub Btn_Fijar_Estado_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Fijar_Estado.Click
-        Sb_Fijar_Estado()
+
+        ShowContextMenu(Menu_Contextual_02_Anotaciones)
+
+        'Sb_Fijar_Estado()
     End Sub
 
-    Sub Sb_Fijar_Estado()
+    Sub Sb_Fijar_Estado(_AvisoXCorreo As Boolean,
+                        _AvisoXTelefono As Boolean,
+                        _AvisoXMensaje As Boolean)
 
-        If String.IsNullOrEmpty(Txt_Nota.Text) Then
-            Beep()
-            ToastNotification.Show(Me, "FALTA INGRESAR ALGUN COMENTARIO",
-                                   Imagenes_32x32.Images.Item("warning.png"),
-                                   2 * 1000, eToastGlowColor.Red,
-                                   eToastPosition.MiddleCenter)
+        If String.IsNullOrWhiteSpace(Txt_Nota.Text) Then
+            'Beep()
+            'ToastNotification.Show(Me, "FALTA INGRESAR ALGUN COMENTARIO",
+            '                       Imagenes_32x32.Images.Item("warning.png"),
+            '                       2 * 1000, eToastGlowColor.Red,
+            '                       eToastPosition.MiddleCenter)
+            MessageBoxEx.Show(Me, "Debe ingresar algún comentario en la Nota de aviso al cliente", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_Nota.Focus()
             Return
         End If
 
-        If Fx_Fijar_Estado() Then
+        If Fx_Fijar_Estado(_AvisoXCorreo, _AvisoXTelefono, _AvisoXMensaje) Then
 
             MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Fijar estado",
                               MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             _Fijar_Estado = True
             Me.Close()
+
         End If
 
     End Sub
 
-    Function Fx_Fijar_Estado() As Boolean
+    Function Fx_Fijar_Estado(_AvisoXCorreo As Boolean,
+                             _AvisoXTelefono As Boolean,
+                             _AvisoXMensaje As Boolean) As Boolean
 
         Consulta_sql = String.Empty
 
@@ -118,6 +128,9 @@ Public Class Frm_St_Estado_06_Aviso_Cliente
 
         Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Notas Set " & vbCrLf &
                        "Nota_Etapa_06 = '" & _Nota_Etapa_06 & "'" & vbCrLf &
+                       ",AvisoXCorreo = " & Convert.ToInt32(_AvisoXCorreo) & vbCrLf &
+                       ",AvisoXTelefono = " & Convert.ToInt32(_AvisoXTelefono) & vbCrLf &
+                       ",AvisoXMensaje = " & Convert.ToInt32(_AvisoXMensaje) & vbCrLf &
                        "Where Id_Ot = " & _Id_Ot & vbCrLf & vbCrLf
 
         '**********************************'**********************************
@@ -239,7 +252,7 @@ Public Class Frm_St_Estado_06_Aviso_Cliente
                                  MessageBoxButtons.YesNo,
                                  MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
-                Sb_Fijar_Estado()
+                Sb_Fijar_Estado(True, False, False)
 
             End If
 
@@ -247,4 +260,15 @@ Public Class Frm_St_Estado_06_Aviso_Cliente
 
     End Sub
 
+    Private Sub Btn_Anotacion_Telefono_Click(sender As Object, e As EventArgs) Handles Btn_Anotacion_Telefono.Click
+        Sb_Fijar_Estado(False, True, False)
+    End Sub
+
+    Private Sub Btn_Anotacion_Mail_Click(sender As Object, e As EventArgs) Handles Btn_Anotacion_Mail.Click
+        Sb_Fijar_Estado(True, False, False)
+    End Sub
+
+    Private Sub Btn_MensajeTexto_Click(sender As Object, e As EventArgs) Handles Btn_MensajeTexto.Click
+        Sb_Fijar_Estado(False, False, True)
+    End Sub
 End Class
