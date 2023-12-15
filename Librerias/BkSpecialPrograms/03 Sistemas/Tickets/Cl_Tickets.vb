@@ -15,7 +15,10 @@ Public Class Cl_Tickets
         Tickets.Prioridad = String.Empty
         Tickets.Asunto = String.Empty
         Tickets.Descripcion = String.Empty
-        Tickets.CodProducto = String.Empty
+
+        Tickets.Tickets_Producto = New Tickets_Producto
+        Tickets.Tickets_Producto.Codigo = String.Empty
+        Tickets.Tickets_Producto.Descripcion = String.Empty
 
     End Sub
 
@@ -83,7 +86,15 @@ Public Class Cl_Tickets
         Tickets.Estado = "ABIE"
 
         If Tickets.Asignado Then
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Where CodAgente = '" & Tickets.CodAgente & "'"
+
+            If Tickets.AsignadoGrupo Then
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente Where Id_Grupo = '" & Tickets.Id_Grupo & "'"
+            End If
+
+            If Tickets.AsignadoAgente Then
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Where CodAgente = '" & Tickets.CodAgente & "'"
+            End If
+
         Else
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Where Id_Area = " & Tickets.Id_Area & " And Id_Tipo = " & Tickets.Id_Tipo
         End If
@@ -131,7 +142,6 @@ Public Class Cl_Tickets
                            ",Asignado = " & Convert.ToInt32(Tickets.Asignado) &
                            ",AsignadoGrupo = " & Convert.ToInt32(Tickets.AsignadoGrupo) &
                            ",Id_Grupo = " & Tickets.Id_Grupo &
-                           ",CodProducto = '" & Tickets.CodProducto & "'" &
                            ",Id_Padre = '" & Tickets.Id_Padre & "'" &
                            "Where Id = " & Tickets.Id
             Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
@@ -154,6 +164,32 @@ Public Class Cl_Tickets
             Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
+
+            With Tickets.Tickets_Producto
+
+                If Not String.IsNullOrEmpty(.Codigo) Then
+
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Producto (Id_Ticket,Empresa,Sucursal,Bodega," &
+                                   "Codigo,Descripcion,Rtu,UdMedida,Ud1,Ud2,Stfi1,Stfi2,Cantidad,FechaRev,RevInventario,AjusInventario," &
+                                   "SobreStock) Values " &
+                                   "(" & Tickets.New_Id_TicketAc & ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega &
+                                   "','" & .Codigo & "','" & .Descripcion & "'," & De_Num_a_Tx_01(.Rtu, False, 5) &
+                                   "," & .UdMedida & ",'" & .Ud1 & "','" & .Ud2 &
+                                   "'," & De_Num_a_Tx_01(.Stfi1, False, 5) &
+                                   "," & De_Num_a_Tx_01(.Stfi2, False, 5) &
+                                   "," & De_Num_a_Tx_01(.Cantidad, False, 5) &
+                                   ",'" & Format(.FechaRev, "yyyyMMdd") &
+                                   "'," & Convert.ToInt32(.RevInventario) &
+                                   "," & Convert.ToInt32(.AjusInventario) &
+                                   "," & Convert.ToInt32(.SobreStock) & ")"
+
+                    Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                    Comando.Transaction = myTrans
+                    Comando.ExecuteNonQuery()
+
+                End If
+
+            End With
 
             For Each _Fila As DataRow In _Tbl_Agentes.Rows
 
@@ -373,6 +409,8 @@ Namespace Tickets_Db
     Public Class Tickets
 
         Public Property Id As Integer
+        Public Property Empresa As String
+        Public Property Sucursal As String
         Public Property Numero As String
         Public Property Id_Area As Integer
         Public Property Id_Tipo As Integer
@@ -391,7 +429,7 @@ Namespace Tickets_Db
         Public Property FechaCierre As DateTime
         Public Property New_Id_TicketAc As Integer
         Public Property Id_Padre As Integer
-        Public Property CodProducto As String
+        Public Property Tickets_Producto As Tickets_Producto
 
     End Class
 
@@ -418,6 +456,29 @@ Namespace Tickets_Db
         Public Property EsCorrecto As Boolean
         Public Property Mensaje As String
         Public Property Tickets_Acciones As Tickets_Acciones
+
+    End Class
+
+    Public Class Tickets_Producto
+
+        Public Property Id As Integer
+        Public Property Id_Ticket As Integer
+        Public Property Empresa As String
+        Public Property Sucursal As String
+        Public Property Bodega As String
+        Public Property Codigo As String
+        Public Property Descripcion As String
+        Public Property Rtu As Double
+        Public Property UdMedida As Integer
+        Public Property Ud1 As String
+        Public Property Ud2 As String
+        Public Property Stfi1 As Double
+        Public Property Stfi2 As Double
+        Public Property Cantidad As Double
+        Public Property FechaRev As DateTime
+        Public Property RevInventario As Boolean
+        Public Property AjusInventario As Boolean
+        Public Property SobreStock As Boolean
 
     End Class
 

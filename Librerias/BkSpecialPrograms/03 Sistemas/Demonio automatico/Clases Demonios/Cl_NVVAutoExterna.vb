@@ -226,7 +226,7 @@ Drop table #Paso"
             End If
 
             ' OJO OJO ACA HAY QUE ARREGALR ESTO SOLAMENTE...
-            'ACA HAY QUE PONER LA BODEGA QUE VIENE DESDE LA TABLA Zw_Demonio_NVVAutoDet
+            ' ACA HAY QUE PONER LA BODEGA QUE VIENE DESDE LA TABLA Zw_Demonio_NVVAutoDet
             ' EL SISTEMA GRABA LA BODEGA WCM Y NO LA VIRTUAL
 
             Modalidad = Modalidad_NVV

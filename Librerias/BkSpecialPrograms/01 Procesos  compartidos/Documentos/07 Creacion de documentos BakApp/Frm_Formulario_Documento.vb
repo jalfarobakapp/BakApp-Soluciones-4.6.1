@@ -18268,6 +18268,23 @@ Public Class Frm_Formulario_Documento
 
                 Sb_Traer_Producto_Grilla(_New_Fila, _RowProducto, True)
 
+                Dim _Sucursal As String
+                Dim _Bodega As String
+
+                Try
+                    _Sucursal = Fila.Item("Sucursal")
+                    _New_Fila.Cells("Sucursal").Value = _Sucursal
+                Catch ex As Exception
+
+                End Try
+
+                Try
+                    _Bodega = Fila.Item("Bodega")
+                    _New_Fila.Cells("Bodega").Value = _Bodega
+                Catch ex As Exception
+
+                End Try
+
                 _New_Fila.Cells("Codigo").Value = _Codigo
                 _New_Fila.Cells("Cantidad").Value = _Cantidad
 
