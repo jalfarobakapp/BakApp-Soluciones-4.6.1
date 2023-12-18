@@ -55,7 +55,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.Btn_Limpiar = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_Tipo = New DevComponents.DotNetBar.LabelX()
         Me.Txt_CodAlternativo_Pallet = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Observaciones = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -694,21 +694,21 @@ Partial Class Frm_GRI_FabXProducto
         Me.LabelX10.TabIndex = 90
         Me.LabelX10.Text = "PLANTA"
         '
-        'LabelX13
+        'Lbl_Tipo
         '
-        Me.LabelX13.BackColor = System.Drawing.Color.Transparent
+        Me.Lbl_Tipo.BackColor = System.Drawing.Color.Transparent
         '
         '
         '
-        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX13.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX13.ForeColor = System.Drawing.Color.Black
-        Me.LabelX13.Location = New System.Drawing.Point(6, 67)
-        Me.LabelX13.Name = "LabelX13"
-        Me.LabelX13.Size = New System.Drawing.Size(71, 23)
-        Me.LabelX13.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
-        Me.LabelX13.TabIndex = 91
-        Me.LabelX13.Text = "PALLET"
+        Me.Lbl_Tipo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Tipo.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_Tipo.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Tipo.Location = New System.Drawing.Point(6, 67)
+        Me.Lbl_Tipo.Name = "Lbl_Tipo"
+        Me.Lbl_Tipo.Size = New System.Drawing.Size(71, 23)
+        Me.Lbl_Tipo.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.Lbl_Tipo.TabIndex = 91
+        Me.Lbl_Tipo.Text = "TIPO..."
         '
         'Txt_CodAlternativo_Pallet
         '
@@ -748,7 +748,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.GroupPanel2.Controls.Add(Me.Txt_NroLote)
         Me.GroupPanel2.Controls.Add(Me.LabelX7)
         Me.GroupPanel2.Controls.Add(Me.LabelX10)
-        Me.GroupPanel2.Controls.Add(Me.LabelX13)
+        Me.GroupPanel2.Controls.Add(Me.Lbl_Tipo)
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(12, 260)
         Me.GroupPanel2.Name = "GroupPanel2"
@@ -960,7 +960,7 @@ Partial Class Frm_GRI_FabXProducto
     Public WithEvents Btn_Limpiar As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Txt_NroLote As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents LabelX13 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Lbl_Tipo As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX10 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
     Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel

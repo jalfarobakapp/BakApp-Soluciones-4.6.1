@@ -141,8 +141,101 @@ Public Class Frm_GRI_FabXProducto
         Sb_Llenar_Combos(_Arr, Cmb_Formato)
         Cmb_Formato.SelectedValue = ""
 
+        Sb_TipoIngreso(_Row_Maepr.Item("KOPR"), _Row_Maepr.Item("RLUD"))
+
         Txt_Cantidad.Enabled = True
         Txt_Cantidad.Focus()
+
+    End Sub
+
+    Sub Sb_TipoIngreso(_Codigo As String, _Rtu As Double)
+
+        Dim Rdb_Sacos As New Command
+        Rdb_Sacos.Checked = False
+        Rdb_Sacos.Name = "Rdb_Sacos"
+        Rdb_Sacos.Text = "SACOS"
+
+        Dim Rdb_Pallets As New Command
+        Rdb_Pallets.Checked = False
+        Rdb_Pallets.Name = "Rdb_Pallets"
+        Rdb_Pallets.Text = "PALLETS"
+
+        Dim _Opciones() As Command = {Rdb_Sacos, Rdb_Pallets}
+
+        Dim _Info As New TaskDialogInfo("Ingreso de fabricación",
+                  eTaskDialogIcon.CheckMark2,
+                  "Tipo de ingreso",
+                  "Seleccione su opción",
+                  eTaskDialogButton.Ok + eTaskDialogButton.Cancel,
+                  eTaskDialogBackgroundColor.OliveGreen, _Opciones, Nothing, Nothing, Nothing, Nothing)
+
+        Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
+
+        If _Resultado <> eTaskDialogResult.Ok Then
+            Return
+        End If
+
+        Dim _Tipo As String
+
+        If Rdb_Sacos.Checked Then _Tipo = "SACO"
+        If Rdb_Pallets.Checked Then _Tipo = "PALLET"
+
+        Consulta_sql = "Select Top 1 * From TABCODAL Where KOPR = '" & _Codigo & "' And TXTMULTI = '" & _Tipo & "'"
+        Dim _Row_Tabcodal As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row_Tabcodal) Then
+            MessageBoxEx.Show(Me, "No existe código alternativo para " & _Tipo & " para este producto",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Cantidad As Double
+        Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese la cantidad de " & _Tipo & "S fabricados", "Ingresar cantidad",
+                                              _Cantidad, False,, 5, True,
+                                              _Tipo_Imagen.Product,, _Tipo_Caracter.Solo_Numeros_Enteros, False)
+
+        If Not _Aceptar Then
+            Return
+        End If
+
+        Dim _Unimulti As Integer = _Row_Tabcodal.Item("UNIMULTI")
+        Dim _Multiplo As Integer = _Row_Tabcodal.Item("MULTIPLO")
+        Dim _Cantidad_Fab As Double
+
+        If _Unimulti = 1 Then
+            _Cantidad_Fab = _Multiplo * _Cantidad
+        Else
+            _Cantidad_Fab = _Multiplo * (_Rtu * _Cantidad)
+        End If
+
+        Txt_Cantidad.Text = FormatNumber(_Cantidad_Fab, 0)
+        Txt_Cantidad.Tag = _Cantidad_Fab
+
+
+        Dim _Kopral As String = _Row_Tabcodal.Item("KOPRAL")
+        Dim _Sacos As Integer = Txt_Cantidad.Tag / _Rtu
+        Dim _SacosXPallet As Integer = _Row_Tabcodal.Item("MULTIPLO")
+        Dim _Ud01Pr As String = _Row_Maepr.Item("UD01PR")
+        Dim _Ud02Pr As String = _Row_Maepr.Item("UD02PR")
+        Dim _Txtmulti As String = _Row_Tabcodal.Item("TXTMULTI")
+        Dim _Udad As String
+
+        If _Row_Tabcodal.Item("UNIMULTI") = 1 Then
+            _Udad = _Ud01Pr
+        Else
+            _Udad = _Ud02Pr
+        End If
+
+        _Cl_Tarja._Cl_Tarja_Ent.SacosXPallet = _SacosXPallet
+        _Cl_Tarja._Cl_Tarja_Ent.CodAlternativo_Pallet = _Kopral
+
+        _Cl_Tarja._Cl_Tarja_Ent.Tipo = _Txtmulti.Trim
+        _Cl_Tarja._Cl_Tarja_Ent.CantidadFab = _Cantidad_Fab
+        _Cl_Tarja._Cl_Tarja_Ent.CantidadTipo = _Cantidad
+
+        Txt_CodAlternativo_Pallet.Text = _Row_Tabcodal.Item("KOPRAL").ToString.Trim & ", Udad: " & _Udad & " x " & _Sacos & ", Formato: " & _Txtmulti
+
+        Call Txt_NroLote_ButtonCustomClick(Nothing, Nothing)
 
     End Sub
 
@@ -348,6 +441,7 @@ Public Class Frm_GRI_FabXProducto
         CType(sender, Controls.TextBoxX).Tag = Val(CType(sender, Controls.TextBoxX).Text)
         CType(sender, Controls.TextBoxX).Text = FormatNumber(CType(sender, Controls.TextBoxX).Tag, 0)
     End Sub
+
     Private Sub Sb_Txt_Nros_Enter(sender As Object, e As EventArgs)
         CType(sender, Controls.TextBoxX).Text = CType(sender, Controls.TextBoxX).Tag
         'Btn_Grabar.Enabled = False
@@ -404,7 +498,7 @@ Public Class Frm_GRI_FabXProducto
         Txt_Turno.Text = String.Empty
         Txt_Planta.Text = String.Empty
         Txt_Analista.Text = String.Empty
-        Txt_CodAlternativo_Pallet.Text = String.Empty
+        'Txt_CodAlternativo_Pallet.Text = String.Empty
         Txt_Observaciones.Text = String.Empty
         Txt_Observaciones.ReadOnly = False
 

@@ -35,6 +35,8 @@ Public Class Cl_Tickets
 
             With Tickets
 
+                .Empresa = _Row_Ticket.Item("Empresa")
+                .Sucursal = _Row_Ticket.Item("Sucursal")
                 .Numero = _Row_Ticket.Item("Numero")
                 .Id_Area = _Row_Ticket.Item("Id_Area")
                 .Id_Tipo = _Row_Ticket.Item("Id_Tipo")
@@ -50,9 +52,39 @@ Public Class Cl_Tickets
                 .CodAgente = _Row_Ticket.Item("CodAgente")
                 .Estado = _Row_Ticket.Item("Estado")
                 .UltAccion = _Row_Ticket.Item("UltAccion")
+                .CodFuncionario_Cierra = _Row_Ticket.Item("UltAccion")
                 .FechaCierre = NuloPorNro(_Row_Ticket.Item("FechaCierre"), Now)
+                .Id_Padre = _Row_Ticket.Item("Id_Padre")
 
             End With
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Where Id_Ticket = " & _Id_Ticket
+            Dim _Row_Ticket_Producto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not IsNothing(_Row_Ticket_Producto) Then
+
+                With Tickets.Tickets_Producto
+
+                    .Empresa = _Row_Ticket.Item("Empresa")
+                    .Sucursal = _Row_Ticket.Item("Sucursal")
+                    .Bodega = _Row_Ticket.Item("Bodega")
+                    .Codigo = _Row_Ticket.Item("Codigo")
+                    .Descripcion = _Row_Ticket.Item("Descripcion")
+                    .Rtu = _Row_Ticket.Item("Rtu")
+                    .UdMedida = _Row_Ticket.Item("UdMedida")
+                    .Ud1 = _Row_Ticket.Item("Ud1")
+                    .Ud2 = _Row_Ticket.Item("Ud2")
+                    .Stfi1 = _Row_Ticket.Item("Stfi1")
+                    .Stfi2 = _Row_Ticket.Item("Stfi2")
+                    .Cantidad = _Row_Ticket.Item("Cantidad")
+                    .FechaRev = _Row_Ticket.Item("FechaRev")
+                    .RevInventario = _Row_Ticket.Item("RevInventario")
+                    .AjusInventario = _Row_Ticket.Item("AjusInventario")
+                    .SobreStock = _Row_Ticket.Item("SobreStock")
+
+                End With
+
+            End If
 
         End If
 
@@ -426,9 +458,10 @@ Namespace Tickets_Db
         Public Property CodAgente As String
         Public Property Estado As String
         Public Property UltAccion As String
+        Public Property CodFuncionario_Cierra As String
         Public Property FechaCierre As DateTime
-        Public Property New_Id_TicketAc As Integer
         Public Property Id_Padre As Integer
+        Public Property New_Id_TicketAc As Integer
         Public Property Tickets_Producto As Tickets_Producto
 
     End Class

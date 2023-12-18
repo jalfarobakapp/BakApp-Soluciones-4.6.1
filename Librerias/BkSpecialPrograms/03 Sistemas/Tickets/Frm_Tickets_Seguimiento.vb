@@ -8,9 +8,11 @@ Public Class Frm_Tickets_Seguimiento
     Dim Consulta_sql As String
 
     Dim _Id_Ticket As Integer
-    Dim _Row_Ticket As DataRow
+    'Dim _Row_Ticket As DataRow
     Dim _Tbl_Acciones As DataTable
     Dim _Funcionario As String
+
+    Dim _Ticket As New Cl_Tickets
 
     Dim _Row_UltMensaje As DataRow
     Public Property Mis_Ticket As Boolean
@@ -27,18 +29,21 @@ Public Class Frm_Tickets_Seguimiento
         Me._Id_Ticket = _Id_Ticket
         Me._Funcionario = _Funcionario
 
-        Consulta_sql = "Select Stk.*,Ar.Area,Tp.Tipo,Isnull(NOKOPR,'') As DesProducto" & vbCrLf &
-                       ",Case Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'AL' Then 'Alta' Else '??' End As NomPrioridad" & vbCrLf &
-                       ",Case UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion" & vbCrLf &
-                       ",Case Estado When 'ABIE' then 'Abierto' When 'CERR' then 'Cerrado' When 'NULO' then 'Nulo' End As NomEstado" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Stk_Tickets Stk" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_Stk_Areas Ar On Stk.Id_Area = Ar.Id" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_Stk_Tipos Tp On Tp.Id_Area = Stk.Id_Area And Tp.Id = Stk.Id_Tipo" & vbCrLf &
-                       "Left Join MAEPR On KOPR = Stk.CodProducto" & vbCrLf &
-                       "Where Stk.Id = " & _Id_Ticket
-        _Row_Ticket = _Sql.Fx_Get_DataRow(Consulta_sql)
+        'Consulta_sql = "Select Stk.*,Ar.Area,Tp.Tipo,Isnull(NOKOPR,'') As DesProducto" & vbCrLf &
+        '               ",Case Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'AL' Then 'Alta' Else '??' End As NomPrioridad" & vbCrLf &
+        '               ",Case UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion" & vbCrLf &
+        '               ",Case Estado When 'ABIE' then 'Abierto' When 'CERR' then 'Cerrado' When 'NULO' then 'Nulo' End As NomEstado" & vbCrLf &
+        '               "From " & _Global_BaseBk & "Zw_Stk_Tickets Stk" & vbCrLf &
+        '               "Left Join " & _Global_BaseBk & "Zw_Stk_Areas Ar On Stk.Id_Area = Ar.Id" & vbCrLf &
+        '               "Left Join " & _Global_BaseBk & "Zw_Stk_Tipos Tp On Tp.Id_Area = Stk.Id_Area And Tp.Id = Stk.Id_Tipo" & vbCrLf &
+        '               "Left Join MAEPR On KOPR = Stk.CodProducto" & vbCrLf &
+        '               "Where Stk.Id = " & _Id_Ticket
+        '_Row_Ticket = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Where Id_Ticket = " & _Id_Ticket & " And Accion = 'MENS'" & vbCrLf &
+        _Ticket.Sb_Llenar_Ticket(_Id_Ticket)
+
+        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones" & vbCrLf &
+                       "Where Id_Ticket = " & _Id_Ticket & " And Accion = 'MENS'" & vbCrLf &
                        "Order By Id Desc"
         _Row_UltMensaje = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -50,7 +55,7 @@ Public Class Frm_Tickets_Seguimiento
 
     Private Sub Frm_Tickets_Seguimiento_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Me.Text = "TICKET NRO: " & _Row_Ticket.Item("Numero").ToString.Trim & " (" & _Row_Ticket.Item("Id") & ")"
+        Me.Text = "TICKET NRO: " & _Ticket.Tickets.Numero & " (" & _Ticket.Tickets.Id & ")"
 
         If CorrerALaDerecha Then
             Me.Top += 15
@@ -77,11 +82,21 @@ Public Class Frm_Tickets_Seguimiento
 
         End If
 
-        Lbl_Estado.Text = _Row_Ticket.Item("NomEstado")
-        Lbl_Area.Text = _Row_Ticket.Item("Area")
-        Lbl_Tipo.Text = _Row_Ticket.Item("Tipo")
-        Lbl_FechaCreacion.Text = _Row_Ticket.Item("FechaCreacion")
-        Txt_Producto.Text = _Row_Ticket.Item("CodProducto").ToString.Trim & " - " & _Row_Ticket.Item("DesProducto").ToString.Trim
+        Select Case _Ticket.Tickets.Estado
+            Case "ABIE"
+                Lbl_Estado.Text = "Abierto"
+            Case "CERR"
+                Lbl_Estado.Text = "Cerrado"
+            Case "NULO"
+                Lbl_Estado.Text = "Nulo"
+            Case Else
+                Lbl_Estado.Text = "???"
+        End Select
+
+        Lbl_Area.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Areas", "Area", "Id = " & _Ticket.Tickets.Id_Area)
+        Lbl_Tipo.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Tipos", "Tipo", "Id = " & _Ticket.Tickets.Id_Tipo)
+        Lbl_FechaCreacion.Text = _Ticket.Tickets.FechaCreacion
+        Txt_Producto.Text = _Ticket.Tickets.Tickets_Producto.Codigo & " - " & _Ticket.Tickets.Tickets_Producto.Descripcion
 
         Txt_Producto.Enabled = Not String.IsNullOrEmpty(Txt_Producto.Text)
 
@@ -114,11 +129,11 @@ Public Class Frm_Tickets_Seguimiento
 
         Sb_Actualizar_Grilla()
 
-        Btn_MensajeRespuesta.Visible = Not (_Row_Ticket.Item("Estado") = "CERR" Or _Row_Ticket.Item("Estado") = "NULO")
-        Btn_CambiarEstado.Visible = Not (_Row_Ticket.Item("Estado") = "CERR" Or _Row_Ticket.Item("Estado") = "NULO")
+        Btn_MensajeRespuesta.Visible = Not (_Ticket.Tickets.Estado = "CERR" Or _Ticket.Tickets.Estado = "NULO")
+        Btn_CambiarEstado.Visible = Not (_Ticket.Tickets.Estado = "CERR" Or _Ticket.Tickets.Estado = "NULO")
         'Btn_CrearNuevoTicket.Visible = Not (_Row_Ticket.Item("Estado") = "CERR" Or _Row_Ticket.Item("Estado") = "NULO")
 
-        Btn_VerTicketOrigen.Visible = CBool(_Row_Ticket.Item("Id_Padre"))
+        Btn_VerTicketOrigen.Visible = CBool(_Ticket.Tickets.Id_Padre)
 
     End Sub
 
@@ -334,7 +349,7 @@ Public Class Frm_Tickets_Seguimiento
 
     Private Sub Btn_Estadisticas_Producto_Click(sender As Object, e As EventArgs) Handles Btn_Estadisticas_Producto.Click
 
-        Dim _Codigo As String = _Row_Ticket.Item("CodProducto")
+        Dim _Codigo As String = _Ticket.Tickets.Tickets_Producto.Codigo
 
         Dim Fm_Producto As New Frm_BkpPostBusquedaEspecial_Mt()
         Fm_Producto.Sb_Ver_Informacion_Adicional_producto(Me, _Codigo)
@@ -460,7 +475,7 @@ Public Class Frm_Tickets_Seguimiento
 
     Private Sub Btn_VerTicketOrigen_Click(sender As Object, e As EventArgs) Handles Btn_VerTicketOrigen.Click
 
-        Dim Fm As New Frm_Tickets_Seguimiento(_Row_Ticket.Item("Id_Padre"))
+        Dim Fm As New Frm_Tickets_Seguimiento(_Ticket.Tickets.Id_Padre)
         Fm.SoloLectura = True
         Fm.CorrerALaDerecha = True
         Fm.ShowDialog(Me)
