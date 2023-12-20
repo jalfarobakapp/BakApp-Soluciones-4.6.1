@@ -984,7 +984,10 @@ Public Class Clas_Imprimir_Documento
 
                                 If _Imprimir_Detalle Then
 
-                                    _Texto = Fx_New_Trae_Valor_Detalle_Row(_Campo, _TipoDato, _Es_Descuento, _Fila_D, _Formato_Fx)
+                                    Dim _Moneda_Str As String = _Fila_D.Item("MOPPPR").ToString.Trim
+
+                                    _Texto = Fx_New_Trae_Valor_Detalle_Row(_Campo, _TipoDato, _Es_Descuento,
+                                                                           _Fila_D, _Formato_Fx, _Moneda_Str)
                                     e.Graphics.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
 
                                 End If
@@ -1377,11 +1380,14 @@ Public Class Clas_Imprimir_Documento
                                 MsgBox("aca")
                             End If
 
+                            Dim _Moneda_Str As String = _Row_Encabezado.Item("MODO").ToString.Trim
+
                             _Texto = Fx_New_Trae_Valor_Encabezado_Row(_Campo,
                                                                           _TipoDato,
                                                                           _Es_Descuento,
                                                                           _Row,
-                                                                          _Texto)
+                                                                          _Texto,
+                                                                          _Moneda_Str)
 
                             If _Campo = "_Error" And String.IsNullOrEmpty(_Texto) Then
                                 _Texto = "_Error"
@@ -1625,12 +1631,14 @@ Public Class Clas_Imprimir_Documento
 
                             Else
 
+                                Dim _Moneda_Str As String = _Fila_D.Item("MOPPPR").ToString.Trim
+
                                 _Texto = Fx_New_Trae_Valor_Detalle_Row(_Campo,
                                                                        _TipoDato,
                                                                        _Es_Descuento,
                                                                        _Fila_D,
-                                                                       _Texto)
-
+                                                                       _Texto,
+                                                                       _Moneda_Str)
 
                                 e.Graphics.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
 
@@ -1755,11 +1763,14 @@ Public Class Clas_Imprimir_Documento
                                 MsgBox("aca")
                             End If
 
+                            Dim _Moneda_Str As String = _Row_Encabezado.Item("MODO").ToString.Trim
+
                             _Texto = Fx_New_Trae_Valor_Encabezado_Row(_Campo,
                                                                           _TipoDato,
                                                                           _Es_Descuento,
                                                                           _Row_Encabezado,
-                                                                          _Texto)
+                                                                          _Texto,
+                                                                          _Moneda_Str)
 
                             e.Graphics.DrawString(_Texto, _Fte_Usar, Brushes.Black, _Columna_X, _Fila_Y)
 
@@ -2268,11 +2279,14 @@ Public Class Clas_Imprimir_Documento
 
                 Dim _Text2 As String = _Texto
 
+                Dim _Moneda_Str As String = _Row_Encabezado.Item("MODO").ToString.Trim
+
                 _Texto = Fx_New_Trae_Valor_Encabezado_Row(_Campo,
                                                               _Tipo_de_dato,
                                                               _Es_Decuento,
                                                               _Row_Encabezado,
-                                                              _Formato_Fx)
+                                                              _Formato_Fx,
+                                                              _Moneda_Str)
 
                 'IMPRIME CODIGO DE BARRAS
                 If _Codigo_De_Barras Then
@@ -2470,11 +2484,14 @@ Public Class Clas_Imprimir_Documento
                                 _Row = _Row_Servicio_Tecnico_Enc
                             End If
 
+                            Dim _Moneda_Str As String = _Row_Encabezado.Item("MODO").ToString.Trim
+
                             _Texto = Fx_New_Trae_Valor_Encabezado_Row(_Campo,
                                                                           _TipoDato,
                                                                           _Es_Descuento,
                                                                           _Row,
-                                                                          _Texto)
+                                                                          _Texto,
+                                                                          _Moneda_Str)
 
                             If _Campo = "_Error" And String.IsNullOrEmpty(_Texto) Then
                                 _Texto = "_Error"
@@ -2701,11 +2718,14 @@ Public Class Clas_Imprimir_Documento
 
                                         End If
 
+                                        Dim _Moneda_Str As String = _Fila_D.Item("MOPPPR").ToString.Trim
+
                                         _Texto = Fx_New_Trae_Valor_Detalle_Row(_Campo,
-                                                                                   _TipoDato,
-                                                                                   _Es_Descuento,
-                                                                                   _Row_Fila_D,
-                                                                                   _Texto)
+                                                                               _TipoDato,
+                                                                               _Es_Descuento,
+                                                                               _Row_Fila_D,
+                                                                               _Texto,
+                                                                               _Moneda_Str)
 
                                         'IMPRIME CODIGO DE BARRAS
                                         If _Codigo_De_Barras Then
@@ -2891,11 +2911,14 @@ Public Class Clas_Imprimir_Documento
 
                                     End If
 
+                                    Dim _Moneda_Str As String = _Fila_D.Item("MOPPPR").ToString.Trim
+
                                     _Texto = Fx_New_Trae_Valor_Detalle_Row(_Campo,
-                                                                               _TipoDato,
-                                                                               _Es_Descuento,
-                                                                               _Row_Fila_D,
-                                                                               _Texto)
+                                                                           _TipoDato,
+                                                                           _Es_Descuento,
+                                                                           _Row_Fila_D,
+                                                                           _Texto,
+                                                                           _Moneda_Str)
 
                                     If _Orden_Detalle = 2 Then
 
@@ -3427,7 +3450,8 @@ Public Class Clas_Imprimir_Documento
 
                         Else
 
-                            'Dim _Fx As New Frm_Formato_Creador_Funciones(_IdMaeedo)
+                            Dim _Moneda_Str As String = _Row_Encabezado.Item("MODO").ToString.Trim
+
                             _Texto = Fx_New_Trae_Valor_Encabezado_Row(_Campo,
                                                                           _TipoDato,
                                                                           _Es_Descuento,
@@ -3567,6 +3591,8 @@ Public Class Clas_Imprimir_Documento
                                 End If
 
                             Else
+
+                                'Dim _Moneda_Str As String = _Fila_D.Item("MOPPPR").ToString.Trim
 
                                 _Texto = Fx_New_Trae_Valor_Detalle_Row(_Campo,
                                                                        _TipoDato,
@@ -3773,11 +3799,14 @@ Public Class Clas_Imprimir_Documento
 
                     Else
 
+                        Dim _Moneda_Str As String = _Row_Encabezado.Item("MODO").ToString.Trim
+
                         _Texto = Fx_New_Trae_Valor_Encabezado_Row(_Campo,
-                                                                      _TipoDato,
-                                                                      _Es_Descuento,
-                                                                      _Row_Encabezado,
-                                                                      _Texto)
+                                                                  _TipoDato,
+                                                                  _Es_Descuento,
+                                                                  _Row_Encabezado,
+                                                                  _Texto,
+                                                                  _Moneda_Str)
 
                         e.Graphics.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Fila_Y)
 

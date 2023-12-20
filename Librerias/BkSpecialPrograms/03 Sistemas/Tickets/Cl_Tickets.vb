@@ -65,22 +65,22 @@ Public Class Cl_Tickets
 
                 With Tickets.Tickets_Producto
 
-                    .Empresa = _Row_Ticket.Item("Empresa")
-                    .Sucursal = _Row_Ticket.Item("Sucursal")
-                    .Bodega = _Row_Ticket.Item("Bodega")
-                    .Codigo = _Row_Ticket.Item("Codigo")
-                    .Descripcion = _Row_Ticket.Item("Descripcion")
-                    .Rtu = _Row_Ticket.Item("Rtu")
-                    .UdMedida = _Row_Ticket.Item("UdMedida")
-                    .Ud1 = _Row_Ticket.Item("Ud1")
-                    .Ud2 = _Row_Ticket.Item("Ud2")
-                    .Stfi1 = _Row_Ticket.Item("Stfi1")
-                    .Stfi2 = _Row_Ticket.Item("Stfi2")
-                    .Cantidad = _Row_Ticket.Item("Cantidad")
-                    .FechaRev = _Row_Ticket.Item("FechaRev")
-                    .RevInventario = _Row_Ticket.Item("RevInventario")
-                    .AjusInventario = _Row_Ticket.Item("AjusInventario")
-                    .SobreStock = _Row_Ticket.Item("SobreStock")
+                    .Empresa = _Row_Ticket_Producto.Item("Empresa")
+                    .Sucursal = _Row_Ticket_Producto.Item("Sucursal")
+                    .Bodega = _Row_Ticket_Producto.Item("Bodega")
+                    .Codigo = _Row_Ticket_Producto.Item("Codigo")
+                    .Descripcion = _Row_Ticket_Producto.Item("Descripcion")
+                    .Rtu = _Row_Ticket_Producto.Item("Rtu")
+                    .UdMedida = _Row_Ticket_Producto.Item("UdMedida")
+                    .Ud1 = _Row_Ticket_Producto.Item("Ud1")
+                    .Ud2 = _Row_Ticket_Producto.Item("Ud2")
+                    .Stfi1 = _Row_Ticket_Producto.Item("Stfi1")
+                    .Stfi2 = _Row_Ticket_Producto.Item("Stfi2")
+                    .Cantidad = _Row_Ticket_Producto.Item("Cantidad")
+                    .FechaRev = _Row_Ticket_Producto.Item("FechaRev")
+                    .RevInventario = _Row_Ticket_Producto.Item("RevInventario")
+                    .AjusInventario = _Row_Ticket_Producto.Item("AjusInventario")
+                    .SobreStock = _Row_Ticket_Producto.Item("SobreStock")
 
                 End With
 

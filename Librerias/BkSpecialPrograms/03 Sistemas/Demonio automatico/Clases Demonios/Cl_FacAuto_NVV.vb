@@ -107,6 +107,9 @@
                     Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Fcv
                     Dim _Row_Factura As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
+                    Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
+                    _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Modalidad, _Idmaeedo_Fcv)
+
                     Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
                                    " NombreEquipo = '" & _Nombre_Equipo & "'" &
                                    ",Facturando = 0" &

@@ -449,11 +449,14 @@ Public Class Clas_PDF_Crear_Documento
                             Dim _Formato_Texto As String = _Texto
                             Dim _Formatext = Split(_Formato_Texto, vbCrLf)
 
+                            Dim _Moneda_Str As String = _RowEncabezado.Item("MODO").ToString.Trim
+
                             _Texto = Fx_New_Trae_Valor_Encabezado_Row(_Campo,
                                                                           _TipoDato,
                                                                           _Es_Descuento,
                                                                           _Row,
-                                                                          _Texto)
+                                                                          _Texto,
+                                                                          _Moneda_Str)
 
                             If _Formatext.Length > 1 Then
 
@@ -666,11 +669,14 @@ Public Class Clas_PDF_Crear_Documento
 
                                     End If
 
+                                    Dim _Moneda_Str As String = _Fila_D.Item("MOPPPR").ToString.Trim
+
                                     _Texto = Fx_New_Trae_Valor_Detalle_Row(_Campo,
                                                                            _TipoDato,
                                                                            _Es_Descuento,
                                                                            _Row_Fila_D,
-                                                                           _Texto)
+                                                                           _Texto,
+                                                                           _Moneda_Str)
 
                                     If _Texto.ToString.Contains("Error_") Then _Texto = String.Empty
 
@@ -822,11 +828,14 @@ Public Class Clas_PDF_Crear_Documento
 
                                     End If
 
+                                    Dim _Moneda_Str As String = _Fila_D.Item("MOPPPR").ToString.Trim
+
                                     _Texto = Fx_New_Trae_Valor_Detalle_Row(_Campo,
                                                                            _TipoDato,
                                                                            _Es_Descuento,
                                                                            _Row_Fila_D,
-                                                                           _Texto)
+                                                                           _Texto,
+                                                                           _Moneda_Str)
 
                                     If _Orden_Detalle = 2 And Not String.IsNullOrEmpty(_Texto) Then
 
@@ -1218,11 +1227,14 @@ Public Class Clas_PDF_Crear_Documento
 
                 Dim _Text2 As String = _Texto
 
+                Dim _Moneda_Str As String = _RowEncabezado.Item("MODO").ToString.Trim
+
                 _Texto = Fx_New_Trae_Valor_Encabezado_Row(_Campo,
                                                               _Tipo_de_dato,
                                                               _Es_Decuento,
                                                               _RowEncabezado,
-                                                              _Formato_Fx)
+                                                              _Formato_Fx,
+                                                              _Moneda_Str)
                 'IMPRIME CODIGO DE BARRAS
                 If _Codigo_De_Barras Then
 

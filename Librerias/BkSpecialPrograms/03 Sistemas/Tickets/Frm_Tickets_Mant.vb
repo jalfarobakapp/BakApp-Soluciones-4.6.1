@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports BkSpecialPrograms.Cl_Fincred_Bakapp.Cl_Fincred_SQL
+Imports DevComponents.DotNetBar
 
 Public Class Frm_Tickets_Mant
 
@@ -6,6 +7,7 @@ Public Class Frm_Tickets_Mant
     Dim Consulta_sql As String
 
     Dim _Cl_Tickets As New Cl_Tickets
+    Dim _Cl_Tickets_Padre As New Cl_Tickets
 
     Public Property Grabar As Boolean
     Public Property Id_Padre As Integer
@@ -34,20 +36,62 @@ Public Class Frm_Tickets_Mant
 
         Sb_OcultarDesocultarControles(-95)
 
+        Dim _Arr_Tipo_Entidad(,) As String = {{"", ""},
+                                             {"AL", "Alta"},
+                                             {"NR", "Normal"},
+                                             {"BJ", "Baja"},
+                                             {"UR", "Urgente"}}
+        Sb_Llenar_Combos(_Arr_Tipo_Entidad, Cmb_Prioridad)
+
         If CBool(Id_Padre) Then
 
             _Cl_Tickets.Tickets.Id_Padre = Id_Padre
+            _Cl_Tickets_Padre.Sb_Llenar_Ticket(Id_Padre)
 
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id = " & Id_Padre
-            Dim _Row_Ticket_Padre As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            _Cl_Tickets.Tickets.Prioridad = _Cl_Tickets_Padre.Tickets.Prioridad
 
-            Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Row_Ticket_Padre.Item("CodProducto") & "'"
+            Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Cl_Tickets_Padre.Tickets.Tickets_Producto.Codigo & "'"
             Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If Not IsNothing(_RowProducto) Then
 
-                Txt_Producto.Tag = _RowProducto.Item("KOPR")
-                Txt_Producto.Text = _RowProducto.Item("KOPR").ToString.Trim & "-" & _RowProducto.Item("NOKOPR").ToString.Trim
+                With _Cl_Tickets.Tickets.Tickets_Producto
+
+                    .Codigo = _RowProducto.Item("KOPR")
+                    .Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
+                    .Empresa = ModEmpresa
+                    .Rtu = _RowProducto.Item("RLUD")
+                    .Ud1 = _RowProducto.Item("UD01PR")
+                    .Ud2 = _RowProducto.Item("UD02PR")
+
+                    Txt_Producto.Tag = .Codigo
+                    Txt_Producto.Text = .Codigo.ToString.Trim & "-" & .Descripcion.ToString.Trim
+                    Txt_Descripcion.Focus()
+
+                    Dim _Arr_UdMedida(,) As String = {{"1", .Ud1}, {"2", .Ud2}}
+                    Sb_Llenar_Combos(_Arr_UdMedida, Cmb_UdMedida)
+                    .UdMedida = _Cl_Tickets_Padre.Tickets.Tickets_Producto.UdMedida
+                    Cmb_UdMedida.SelectedValue = .UdMedida
+
+                    .Empresa = _Cl_Tickets_Padre.Tickets.Tickets_Producto.Empresa
+                    .Sucursal = _Cl_Tickets_Padre.Tickets.Tickets_Producto.Sucursal
+                    .Bodega = _Cl_Tickets_Padre.Tickets.Tickets_Producto.Bodega
+                    .FechaRev = _Cl_Tickets_Padre.Tickets.Tickets_Producto.FechaRev
+                    .Stfi1 = _Cl_Tickets_Padre.Tickets.Tickets_Producto.Stfi1
+                    .Stfi2 = _Cl_Tickets_Padre.Tickets.Tickets_Producto.Stfi2
+                    .Cantidad = _Cl_Tickets_Padre.Tickets.Tickets_Producto.Cantidad
+
+                    Txt_Stf.Text = .Stfi1
+                    Txt_Cantidad.Text = .Cantidad
+
+                    Dtp_FechaRev.Value = .FechaRev
+
+                    Dim _Sucursal = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", "EMPRESA = '" & .Empresa & "' And KOSU = '" & .Sucursal & "'")
+                    Dim _Bodega = _Sql.Fx_Trae_Dato("TABBO", "NOKOBO", "EMPRESA = '" & .Empresa & "' And KOSU = '" & .Sucursal & "' And KOBO = '" & .Bodega & "'")
+
+                    Txt_Bodega.Text = _Sucursal.ToString.Trim & " - " & _Bodega.ToString.Trim
+
+                End With
 
                 Txt_Producto.ButtonCustom.Visible = False
                 Txt_Producto.ButtonCustom2.Visible = False
@@ -59,13 +103,6 @@ Public Class Frm_Tickets_Mant
         End If
 
         Chk_ExigeProducto.Enabled = False
-
-        Dim _Arr_Tipo_Entidad(,) As String = {{"", ""},
-                                             {"AL", "Alta"},
-                                             {"NR", "Normal"},
-                                             {"BJ", "Baja"},
-                                             {"UR", "Urgente"}}
-        Sb_Llenar_Combos(_Arr_Tipo_Entidad, Cmb_Prioridad)
 
         Txt_Grupo.Enabled = Chk_Asignado.Checked
         Txt_Agente.Enabled = Chk_Asignado.Checked
@@ -148,21 +185,17 @@ Public Class Frm_Tickets_Mant
 
         With _Cl_Tickets.Tickets
 
-            .Asunto = Txt_Asunto.Text.Trim
-            .Descripcion = Txt_Descripcion.Text.Trim
-            .Prioridad = Cmb_Prioridad.SelectedValue
-            .Id_Area = Txt_Area.Tag
-            .Id_Tipo = Txt_Tipo.Tag
-            .Id_Grupo = Txt_Grupo.Tag
-            .CodAgente = Txt_Agente.Tag
-            .Asignado = Chk_Asignado.Checked
-            .AsignadoGrupo = Rdb_AsignadoGrupo.Checked
-            .AsignadoAgente = Rdb_AsignadoAgente.Checked
-
             If Chk_ExigeProducto.Checked Then
 
+                If Not CBool(Val(Txt_Cantidad.Text)) Then
+                    If MessageBoxEx.Show(Me, "¿Confirma el valor cero para la cantidad inventariada?",
+                                         "Validación", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
+                        Return
+                    End If
+                End If
+
                 .Tickets_Producto.FechaRev = Dtp_FechaRev.Value
-                .Tickets_Producto.Cantidad = Txt_Cantidad.Text
+                .Tickets_Producto.Cantidad = Val(Txt_Cantidad.Text)
 
                 Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets_PorDefecto",
                                    "CodFuncionario = '" & .CodFuncionario_Crea & "' And Asunto = '" & .Asunto & "'")
@@ -184,7 +217,44 @@ Public Class Frm_Tickets_Mant
 
                 End If
 
+                Dim _Descripcion As String = Txt_Descripcion.Text
+                Dim _Ticket_Pr As Tickets_Db.Tickets_Producto = .Tickets_Producto
+                Dim _Descripcion_Pr As String
+
+                _Descripcion_Pr = "PRODUCTO : " & _Ticket_Pr.Codigo.Trim & " - " & _Ticket_Pr.Descripcion.Trim & vbCrLf &
+                                  "BODEGA " & Txt_Bodega.Text & vbCrLf &
+                                  "CANTIDAD EN BODEGA SEGUN SISTEMA: " & Txt_Stf.Text & vbCrLf &
+                                  "CANTIDAD INVENTARIADA: " & Txt_Cantidad.Text & vbCrLf &
+                                  "FECHA REV.: " & Dtp_FechaRev.Value & vbCrLf
+
+                If .Tickets_Producto.AjusInventario Then
+                    Txt_Descripcion.Text = "*** GENERAR AJUSTE DE INVENTARIO." & vbCrLf & _Descripcion_Pr
+                End If
+
+                If .Tickets_Producto.RevInventario Then
+                    Txt_Descripcion.Text = "*** GENERAR REVISION DE INVENTARIO." & vbCrLf & _Descripcion_Pr
+                End If
+
+                If .Tickets_Producto.SobreStock Then
+                    Txt_Descripcion.Text = "*** PRODUCTO CON SOBRE STOCK." & vbCrLf & _Descripcion_Pr
+                End If
+
+                If Not String.IsNullOrEmpty(_Descripcion) Then
+                    Txt_Descripcion.Text += vbCrLf & _Descripcion
+                End If
+
             End If
+
+            .Asunto = Txt_Asunto.Text.Trim
+            .Descripcion = Txt_Descripcion.Text.Trim
+            .Prioridad = Cmb_Prioridad.SelectedValue
+            .Id_Area = Txt_Area.Tag
+            .Id_Tipo = Txt_Tipo.Tag
+            .Id_Grupo = Txt_Grupo.Tag
+            .CodAgente = Txt_Agente.Tag
+            .Asignado = Chk_Asignado.Checked
+            .AsignadoGrupo = Rdb_AsignadoGrupo.Checked
+            .AsignadoAgente = Rdb_AsignadoAgente.Checked
 
         End With
 
@@ -268,12 +338,12 @@ Public Class Frm_Tickets_Mant
             Txt_Tipo.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
             Txt_Tipo.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
 
-            If CBool(Id_Padre) Then
-                Txt_Tipo.ButtonCustom.Visible = False
-                Txt_Tipo.ButtonCustom2.Visible = False
-                Txt_Descripcion.Focus()
-                Return
-            End If
+            'If CBool(Id_Padre) Then
+            '    Txt_Tipo.ButtonCustom.Visible = False
+            '    Txt_Tipo.ButtonCustom2.Visible = False
+            '    Txt_Descripcion.Focus()
+            '    Return
+            'End If
 
             Dim _Id_Tipo = Txt_Tipo.Tag
 
@@ -283,7 +353,6 @@ Public Class Frm_Tickets_Mant
                            "Left Join " & _Global_BaseBk & "Zw_Stk_Grupos Gr On Tp.Id_Grupo = Gr.Id" & vbCrLf &
                            "Where Tp.Id = " & _Id_Tipo
             Dim _Row_Tipo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
             Chk_ExigeProducto.Checked = _Row_Tipo.Item("ExigeProducto")
             Chk_Asignado.Checked = _Row_Tipo.Item("Asignado")
             Txt_Grupo.Tag = _Row_Tipo.Item("Id_Grupo")
@@ -296,22 +365,18 @@ Public Class Frm_Tickets_Mant
             _Cl_Tickets.Tickets.Tickets_Producto.AjusInventario = _Row_Tipo.Item("AjusInventario")
             _Cl_Tickets.Tickets.Tickets_Producto.RevInventario = _Row_Tipo.Item("RevInventario")
             _Cl_Tickets.Tickets.Tickets_Producto.SobreStock = _Row_Tipo.Item("SobreStock")
-
             Dim _ExigeProducto As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Tipos", "ExigeProducto", "Id = " & Txt_Tipo.Tag)
-
             Chk_ExigeProducto.Checked = _ExigeProducto
             Lbl_Producto.Enabled = _ExigeProducto
             Txt_Producto.Enabled = _ExigeProducto
-
             Txt_Tipo.ButtonCustom.Visible = False
             Txt_Tipo.ButtonCustom2.Visible = True
 
-            If _ExigeProducto Then
+            If _ExigeProducto And Not CBool(Id_Padre) Then
                 Call Txt_Producto_ButtonCustomClick(Nothing, Nothing)
             Else
                 Txt_Descripcion.Focus()
             End If
-
         End If
 
     End Sub

@@ -119,25 +119,25 @@ Public Class Frm_ImpresionDoc_Lista
             Dim _DisplayIndex = 0
 
             .Columns("TipoDoc").Visible = True
-            .Columns("TipoDoc").Width = 40
+            .Columns("TipoDoc").Width = 35
             .Columns("TipoDoc").HeaderText = "Tipo"
             .Columns("TipoDoc").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Subtido").Visible = True
-            .Columns("Subtido").Width = 40
+            .Columns("Subtido").Width = 35
             .Columns("Subtido").HeaderText = "Sub TD"
             .Columns("Subtido").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("NombreDocumento").Visible = True
-            .Columns("NombreDocumento").Width = 270
+            .Columns("NombreDocumento").Width = 190
             .Columns("NombreDocumento").HeaderText = "Documento"
             .Columns("NombreDocumento").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("NombreFormato").Visible = True
-            .Columns("NombreFormato").Width = 140
+            .Columns("NombreFormato").Width = 240
             .Columns("NombreFormato").HeaderText = "Nombre formato"
             .Columns("NombreFormato").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -149,7 +149,7 @@ Public Class Frm_ImpresionDoc_Lista
             _DisplayIndex += 1
 
             .Columns("Doc_Electronico").Visible = True
-            .Columns("Doc_Electronico").Width = 80
+            .Columns("Doc_Electronico").Width = 70
             .Columns("Doc_Electronico").HeaderText = "Electrónico"
             .Columns("Doc_Electronico").ReadOnly = False
             .Columns("Doc_Electronico").DisplayIndex = _DisplayIndex

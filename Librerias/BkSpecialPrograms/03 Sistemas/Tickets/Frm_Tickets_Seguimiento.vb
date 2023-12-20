@@ -29,17 +29,6 @@ Public Class Frm_Tickets_Seguimiento
         Me._Id_Ticket = _Id_Ticket
         Me._Funcionario = _Funcionario
 
-        'Consulta_sql = "Select Stk.*,Ar.Area,Tp.Tipo,Isnull(NOKOPR,'') As DesProducto" & vbCrLf &
-        '               ",Case Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'AL' Then 'Alta' Else '??' End As NomPrioridad" & vbCrLf &
-        '               ",Case UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion" & vbCrLf &
-        '               ",Case Estado When 'ABIE' then 'Abierto' When 'CERR' then 'Cerrado' When 'NULO' then 'Nulo' End As NomEstado" & vbCrLf &
-        '               "From " & _Global_BaseBk & "Zw_Stk_Tickets Stk" & vbCrLf &
-        '               "Left Join " & _Global_BaseBk & "Zw_Stk_Areas Ar On Stk.Id_Area = Ar.Id" & vbCrLf &
-        '               "Left Join " & _Global_BaseBk & "Zw_Stk_Tipos Tp On Tp.Id_Area = Stk.Id_Area And Tp.Id = Stk.Id_Tipo" & vbCrLf &
-        '               "Left Join MAEPR On KOPR = Stk.CodProducto" & vbCrLf &
-        '               "Where Stk.Id = " & _Id_Ticket
-        '_Row_Ticket = _Sql.Fx_Get_DataRow(Consulta_sql)
-
         _Ticket.Sb_Llenar_Ticket(_Id_Ticket)
 
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones" & vbCrLf &
@@ -387,7 +376,9 @@ Public Class Frm_Tickets_Seguimiento
         Fm.Id_Padre = _Id_Ticket
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
-        _Id_Hijo = Fm.New_Ticket.Tickets.Id
+        If _Grabar Then
+            _Id_Hijo = Fm.New_Ticket.Tickets.Id
+        End If
         Fm.Dispose()
 
         If _Grabar Then
