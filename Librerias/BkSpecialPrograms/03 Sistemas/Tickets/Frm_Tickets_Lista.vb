@@ -66,13 +66,15 @@ Public Class Frm_Tickets_Lista
                 _Condicion = "And Id In (Select Id_Ticket From " & _Global_BaseBk & "Zw_Stk_Tickets_Asignado Where CodAgente = '" & FUNCIONARIO & "')"
         End Select
 
-        Consulta_sql = "Select *" & vbCrLf &
+        Consulta_sql = "Select Tks.*,TkPrd.Empresa,TkPrd.Sucursal,TkPrd.Bodega,TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr," & vbCrLf &
+                       "Case UdMedida When 1 Then Ud1 Else Ud2 End As 'Udm',Case UdMedida When 1 Then Stfi1 Else Stfi2 End As 'STF',Cantidad" & vbCrLf &
                        ",Case Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'UR' Then 'Urgente' Else '??' End As NomPrioridad" & vbCrLf &
                        ",Case UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion" & vbCrLf &
                        ",Case Estado When 'ABIE' then 'Abierto' When 'CERR' then 'Cerrado' When 'NULO' then 'Nulo' End As NomEstado," & vbCrLf &
                        "(Select COUNT(*) From BAKAPP_PRB.dbo.Zw_Stk_Tickets_Acciones AcMs Where AcMs.Id_Ticket = Tks.Id And AcMs.Accion = 'MENS' And AcMs.Visto = 0) As Mesn_Pdte_Ver," & vbCrLf &
                        "(Select COUNT(*) From BAKAPP_PRB.dbo.Zw_Stk_Tickets_Acciones AcRs Where AcRs.Id_Ticket = Tks.Id And AcRs.Accion = 'RESP' And AcRs.Visto = 0) As Resp_Pdte_Ver" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stk_Tickets Tks" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_Stk_Tickets_Producto TkPrd On Tks.Id = TkPrd.Id_Ticket" & vbCrLf &
                        "Where 1 > 0" & vbCrLf & _Condicion
 
         _Tbl_Tickets = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -99,13 +101,13 @@ Public Class Frm_Tickets_Lista
 
             .Columns("Numero").Visible = True
             .Columns("Numero").HeaderText = "Número"
-            .Columns("Numero").Width = 100
+            .Columns("Numero").Width = 80
             .Columns("Numero").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Asunto").Visible = True
             .Columns("Asunto").HeaderText = "Asunto"
-            .Columns("Asunto").Width = 300
+            .Columns("Asunto").Width = 250
             .Columns("Asunto").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -113,7 +115,7 @@ Public Class Frm_Tickets_Lista
             .Columns("NomEstado").HeaderText = "Estado"
             .Columns("NomEstado").ToolTipText = "Estado del Ticket"
             '.Columns("NomEstado").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("NomEstado").Width = 100
+            .Columns("NomEstado").Width = 80
             .Columns("NomEstado").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -121,7 +123,7 @@ Public Class Frm_Tickets_Lista
             .Columns("NomPrioridad").HeaderText = "Prioridad"
             '.Columns("NomPrioridad").ToolTipText = "Estado del Ticket"
             .Columns("NomPrioridad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("NomPrioridad").Width = 100
+            .Columns("NomPrioridad").Width = 80
             .Columns("NomPrioridad").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -129,7 +131,7 @@ Public Class Frm_Tickets_Lista
             .Columns("UltimaAccion").HeaderText = "Ult. Estado"
             .Columns("UltimaAccion").ToolTipText = "Ultimo Estado"
             '.Columns("UltimaAccion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("UltimaAccion").Width = 100
+            .Columns("UltimaAccion").Width = 80
             .Columns("UltimaAccion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -141,14 +143,43 @@ Public Class Frm_Tickets_Lista
             .Columns("FechaCreacion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            '.Columns("Dias").Visible = True
-            '.Columns("Dias").HeaderText = "Días expira."
-            '.Columns("Dias").ToolTipText = "Días que faltan para que termine la oferta"
-            '.Columns("Dias").Width = 70
-            '.Columns("Dias").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("Dias").DefaultCellStyle.Format = "###,##0.##"
-            '.Columns("Dias").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
+            .Columns("Codigo").Visible = True
+            .Columns("Codigo").HeaderText = "Código"
+            '.Columns("UltimaAccion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Codigo").Width = 100
+            .Columns("Codigo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("DescripcionPr").Visible = True
+            .Columns("DescripcionPr").HeaderText = "Descripción"
+            '.Columns("UltimaAccion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("DescripcionPr").Width = 150
+            .Columns("DescripcionPr").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Udm").Visible = True
+            .Columns("Udm").HeaderText = "Udm"
+            .Columns("Udm").ToolTipText = "Unidad de medida de la operación"
+            '.Columns("UltimaAccion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Udm").Width = 30
+            .Columns("Udm").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("STF").Visible = True
+            .Columns("STF").HeaderText = "Stock"
+            .Columns("STF").ToolTipText = "Stock del producto al momento de la operación"
+            .Columns("STF").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("STF").Width = 50
+            .Columns("STF").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Cantidad").Visible = True
+            .Columns("Cantidad").HeaderText = "Cantidad"
+            .Columns("Cantidad").ToolTipText = "Cantidad inventariada al momento de la operación"
+            .Columns("Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Cantidad").Width = 50
+            .Columns("Cantidad").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
         End With
 

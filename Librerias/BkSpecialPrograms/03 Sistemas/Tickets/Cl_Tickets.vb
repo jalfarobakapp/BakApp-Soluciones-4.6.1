@@ -191,7 +191,7 @@ Public Class Cl_Tickets
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Archivos Set En_Construccion = 0" & vbCrLf &
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Archivos Set Id_Ticket = " & Tickets.Id & ", En_Construccion = 0" & vbCrLf &
                            "Where Id_TicketAc = " & Tickets.New_Id_TicketAc
             Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
             Comando.Transaction = myTrans
@@ -204,7 +204,7 @@ Public Class Cl_Tickets
                     Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Producto (Id_Ticket,Empresa,Sucursal,Bodega," &
                                    "Codigo,Descripcion,Rtu,UdMedida,Ud1,Ud2,Stfi1,Stfi2,Cantidad,FechaRev,RevInventario,AjusInventario," &
                                    "SobreStock) Values " &
-                                   "(" & Tickets.New_Id_TicketAc & ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega &
+                                   "(" & Tickets.Id & ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega &
                                    "','" & .Codigo & "','" & .Descripcion & "'," & De_Num_a_Tx_01(.Rtu, False, 5) &
                                    "," & .UdMedida & ",'" & .Ud1 & "','" & .Ud2 &
                                    "'," & De_Num_a_Tx_01(.Stfi1, False, 5) &

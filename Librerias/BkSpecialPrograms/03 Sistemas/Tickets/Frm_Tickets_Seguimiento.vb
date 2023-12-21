@@ -133,7 +133,8 @@ Public Class Frm_Tickets_Seguimiento
                        "From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Acc" & vbCrLf &
                        "Left Join TABFU Cf On Cf.KOFU = CodFuncionario" & vbCrLf &
                        "Left Join TABFU Ca On Ca.KOFU = CodAgente" & vbCrLf &
-                       "Where Id_Ticket = " & _Id_Ticket
+                       "Where Id_Ticket = " & _Id_Ticket & vbCrLf &
+                       "Order By Fecha"
         _Tbl_Acciones = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla
@@ -474,4 +475,35 @@ Public Class Frm_Tickets_Seguimiento
 
     End Sub
 
+    Private Sub Btn_AgentesAsignados_Click(sender As Object, e As EventArgs) Handles Btn_AgentesAsignados.Click
+
+        Consulta_sql = "Select Asg.*,NOKOFU" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Stk_Tickets_Asignado Asg" & vbCrLf &
+                       "Left Join TABFU On KOFU = Asg.CodAgente " & vbCrLf &
+                       "Where Id_Ticket = " & _Id_Ticket
+        Dim _Tbl_Agentes As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        If Not CBool(_Tbl_Agentes.Rows.Count) Then
+            MessageBoxEx.Show(Me, "No hay agentes asociados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Agentes = String.Empty
+
+        For Each _FlAgente As DataRow In _Tbl_Agentes.Rows
+            If Not String.IsNullOrEmpty(_Agentes) Then
+                _Agentes += vbCrLf
+            End If
+            _Agentes += "- " & _FlAgente.Item("NOKOFU").ToString.Trim
+        Next
+
+        _Agentes = "AGENTE:" & vbCrLf & vbCrLf & _Agentes
+
+        If _Tbl_Agentes.Rows.Count > 1 Then
+            _Agentes = _Agentes.Replace("AGENTE:", "AGENTES:")
+        End If
+
+        MessageBoxEx.Show(Me, _Agentes, "Agentes asociados", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+    End Sub
 End Class

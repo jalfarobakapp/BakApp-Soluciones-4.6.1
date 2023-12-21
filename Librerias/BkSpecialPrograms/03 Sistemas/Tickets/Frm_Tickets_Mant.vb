@@ -666,7 +666,7 @@ Public Class Frm_Tickets_Mant
 
         Lbl_Descripcion.Location = New Point(Lbl_Descripcion.Location.X, Lbl_Descripcion.Location.Y + _Lc)
         Txt_Descripcion.Location = New Point(Txt_Descripcion.Location.X, Txt_Descripcion.Location.Y + _Lc)
-        Line1.Location = New Point(Line1.Location.X, Line1.Location.Y + _Lc)
+        'Line1.Location = New Point(Line1.Location.X, Line1.Location.Y + _Lc)
         Chk_Asignado.Location = New Point(Chk_Asignado.Location.X, Chk_Asignado.Location.Y + _Lc)
         Rdb_AsignadoGrupo.Location = New Point(Rdb_AsignadoGrupo.Location.X, Rdb_AsignadoGrupo.Location.Y + _Lc)
         Rdb_AsignadoAgente.Location = New Point(Rdb_AsignadoAgente.Location.X, Rdb_AsignadoAgente.Location.Y + _Lc)

@@ -24,9 +24,9 @@ Partial Class Frm_Tickets_Seguimiento
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Tickets_Seguimiento))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Productos = New DevComponents.DotNetBar.ButtonItem()
@@ -59,11 +59,12 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_MensajeRespuesta = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_CambiarEstado = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_VerTicketOrigen = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Cerrar = New DevComponents.DotNetBar.ButtonItem()
         Me.Txt_Descripcion = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
-        Me.Btn_VerTicketOrigen = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_AgentesAsignados = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -81,7 +82,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 151)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(667, 252)
+        Me.GroupPanel1.Size = New System.Drawing.Size(667, 230)
         '
         '
         '
@@ -219,38 +220,38 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
-        Me.Grilla.Size = New System.Drawing.Size(661, 229)
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        Me.Grilla.Size = New System.Drawing.Size(661, 207)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 27
         '
@@ -523,7 +524,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_MensajeRespuesta, Me.Btn_CambiarEstado, Me.Btn_VerTicketOrigen, Me.Btn_Cerrar})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_MensajeRespuesta, Me.Btn_CambiarEstado, Me.Btn_VerTicketOrigen, Me.Btn_AgentesAsignados, Me.Btn_Cerrar})
         Me.Bar2.Location = New System.Drawing.Point(0, 536)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(689, 41)
@@ -550,6 +551,15 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Btn_CambiarEstado.ImageAlt = CType(resources.GetObject("Btn_CambiarEstado.ImageAlt"), System.Drawing.Image)
         Me.Btn_CambiarEstado.Name = "Btn_CambiarEstado"
         Me.Btn_CambiarEstado.Text = "Cambiar Estado"
+        '
+        'Btn_VerTicketOrigen
+        '
+        Me.Btn_VerTicketOrigen.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_VerTicketOrigen.ForeColor = System.Drawing.Color.Black
+        Me.Btn_VerTicketOrigen.Image = CType(resources.GetObject("Btn_VerTicketOrigen.Image"), System.Drawing.Image)
+        Me.Btn_VerTicketOrigen.ImageAlt = CType(resources.GetObject("Btn_VerTicketOrigen.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerTicketOrigen.Name = "Btn_VerTicketOrigen"
+        Me.Btn_VerTicketOrigen.Text = "Ver Ticket origen"
         '
         'Btn_Cerrar
         '
@@ -578,7 +588,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Txt_Descripcion.Name = "Txt_Descripcion"
         Me.Txt_Descripcion.PreventEnterBeep = True
         Me.Txt_Descripcion.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.Txt_Descripcion.Size = New System.Drawing.Size(655, 73)
+        Me.Txt_Descripcion.Size = New System.Drawing.Size(655, 99)
         Me.Txt_Descripcion.TabIndex = 166
         '
         'GroupPanel3
@@ -587,9 +597,9 @@ Partial Class Frm_Tickets_Seguimiento
         Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel3.Controls.Add(Me.Txt_Descripcion)
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel3.Location = New System.Drawing.Point(12, 409)
+        Me.GroupPanel3.Location = New System.Drawing.Point(12, 387)
         Me.GroupPanel3.Name = "GroupPanel3"
-        Me.GroupPanel3.Size = New System.Drawing.Size(667, 106)
+        Me.GroupPanel3.Size = New System.Drawing.Size(667, 128)
         '
         '
         '
@@ -661,14 +671,14 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Imagenes_16x16.Images.SetKeyName(33, "people-vendor.png")
         Me.Imagenes_16x16.Images.SetKeyName(34, "people-customer-man.png")
         '
-        'Btn_VerTicketOrigen
+        'Btn_AgentesAsignados
         '
-        Me.Btn_VerTicketOrigen.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_VerTicketOrigen.ForeColor = System.Drawing.Color.Black
-        Me.Btn_VerTicketOrigen.Image = CType(resources.GetObject("Btn_VerTicketOrigen.Image"), System.Drawing.Image)
-        Me.Btn_VerTicketOrigen.ImageAlt = CType(resources.GetObject("Btn_VerTicketOrigen.ImageAlt"), System.Drawing.Image)
-        Me.Btn_VerTicketOrigen.Name = "Btn_VerTicketOrigen"
-        Me.Btn_VerTicketOrigen.Text = "Ver Ticket origen"
+        Me.Btn_AgentesAsignados.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_AgentesAsignados.ForeColor = System.Drawing.Color.Black
+        Me.Btn_AgentesAsignados.Image = CType(resources.GetObject("Btn_AgentesAsignados.Image"), System.Drawing.Image)
+        Me.Btn_AgentesAsignados.ImageAlt = CType(resources.GetObject("Btn_AgentesAsignados.ImageAlt"), System.Drawing.Image)
+        Me.Btn_AgentesAsignados.Name = "Btn_AgentesAsignados"
+        Me.Btn_AgentesAsignados.Tooltip = "Agentes asignados"
         '
         'Frm_Tickets_Seguimiento
         '
@@ -736,4 +746,5 @@ Partial Class Frm_Tickets_Seguimiento
     Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_Cerrar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_VerTicketOrigen As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_AgentesAsignados As DevComponents.DotNetBar.ButtonItem
 End Class
