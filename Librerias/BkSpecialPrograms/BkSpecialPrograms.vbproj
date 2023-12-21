@@ -2114,6 +2114,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Recursos_Produccion.resx</DependentUpon>
     </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Clases\Cl_Imprimir_PDFSt.vb" />
     <Compile Include="03 Sistemas\Servicio Tecnico\Configuracion\Frm_St_Mant_ProdServTecnico.Designer.vb">
       <DependentUpon>Frm_St_Mant_ProdServTecnico.vb</DependentUpon>
     </Compile>

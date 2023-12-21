@@ -25692,7 +25692,7 @@ Public Class Frm_Formulario_Documento
                 _Fincred_Respuesta = Fx_Vaidar_Fincred(0, _Tido, "XXXXXXXXXX",
                                                        _RowEntidad.Item("Rut"),
                                                        _Row_Encabezado_Doc.Item("TotalBrutoDoc"),
-                                                       _Row_Encabezado_Doc.Item("_Fecha_1er_Vencimiento"),
+                                                       _Row_Encabezado_Doc.Item("Fecha_1er_Vencimiento"),
                                                        _RowEntidad.Item("FOEN").ToString.Trim)
 
                 _TblEncabezado.Rows(0).Item("MontoFincred") = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")

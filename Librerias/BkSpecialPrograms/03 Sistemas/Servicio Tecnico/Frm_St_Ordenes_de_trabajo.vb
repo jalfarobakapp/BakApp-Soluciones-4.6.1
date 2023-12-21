@@ -877,6 +877,8 @@ Public Class Frm_St_Ordenes_de_trabajo
 
     Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
+        ShowContextMenu(Menu_Contextual_Ordenes)
+        Return
         Dim _Fila As DataGridViewRow
 
         If Grilla_SubOt.RowCount > 1 Then
@@ -1017,6 +1019,18 @@ Public Class Frm_St_Ordenes_de_trabajo
         Catch ex As Exception
 
         End Try
+
+    End Sub
+
+    Private Sub Btn_ImprimirPDF_Click(sender As Object, e As EventArgs) Handles Btn_ImprimirPDF.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        Dim _Id_Ot = _Fila.Cells("Id_Ot_Padre").Value
+        Dim _Impresora As String
+
+        Dim _Cl_Imprimir_PDFSt As New Cl_Imprimir_PDFSt(_Id_Ot)
+        _Cl_Imprimir_PDFSt.Fx_Imprimir_Archivo(Me, "PDF Cotizaciones OTS", _Impresora)
 
     End Sub
 
