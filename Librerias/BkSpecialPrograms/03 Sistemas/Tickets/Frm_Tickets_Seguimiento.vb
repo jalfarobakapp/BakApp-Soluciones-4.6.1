@@ -191,6 +191,7 @@ Public Class Frm_Tickets_Seguimiento
             Dim _Nombre_Image As String
             Dim _Accion As String = _Fila.Cells("Accion").Value
             Dim _Num_Attach As Integer = _Fila.Cells("Num_Attach").Value
+            Dim _CodFuncionario As String = _Fila.Cells("CodFuncionario").Value
 
             If CBool(_Num_Attach) Then
                 _Nombre_Image = "attach-number-" & _Num_Attach & ".png"
@@ -205,7 +206,7 @@ Public Class Frm_Tickets_Seguimiento
 
             _Fila.Cells("Btn_ImagenAttach").Value = _Icono
 
-            If _Accion = "MENS" Then
+            If _CodFuncionario = FUNCIONARIO Then
                 '_Icono = Imagenes_16x16.Images.Item("user.png")
                 '_Icono = Imagenes_16x16.Images.Item("people-employee.png")
                 _Icono = Imagenes_16x16.Images.Item("people-customer-man.png")

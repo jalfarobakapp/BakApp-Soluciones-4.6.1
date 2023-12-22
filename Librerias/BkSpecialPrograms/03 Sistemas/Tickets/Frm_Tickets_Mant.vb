@@ -36,6 +36,8 @@ Public Class Frm_Tickets_Mant
 
         Sb_OcultarDesocultarControles(-95)
 
+        Dtp_FechaRev.Value = FechaDelServidor()
+
         Dim _Arr_Tipo_Entidad(,) As String = {{"", ""},
                                              {"AL", "Alta"},
                                              {"NR", "Normal"},
@@ -338,45 +340,44 @@ Public Class Frm_Tickets_Mant
             Txt_Tipo.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
             Txt_Tipo.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
 
-            'If CBool(Id_Padre) Then
-            '    Txt_Tipo.ButtonCustom.Visible = False
-            '    Txt_Tipo.ButtonCustom2.Visible = False
-            '    Txt_Descripcion.Focus()
-            '    Return
-            'End If
+            Sb_Llenar_Tipo(Txt_Tipo.Tag)
 
-            Dim _Id_Tipo = Txt_Tipo.Tag
+        End If
 
-            Consulta_sql = "Select  Tp.*,Isnull(Tf.NOKOFU,'') As 'Agente',Isnull(Gr.Grupo,'') As Grupo" & vbCrLf &
-                           "From " & _Global_BaseBk & "Zw_Stk_Tipos Tp" & vbCrLf &
-                           "Left Join TABFU Tf On Tf.KOFU = Tp.CodAgente" & vbCrLf &
-                           "Left Join " & _Global_BaseBk & "Zw_Stk_Grupos Gr On Tp.Id_Grupo = Gr.Id" & vbCrLf &
-                           "Where Tp.Id = " & _Id_Tipo
-            Dim _Row_Tipo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-            Chk_ExigeProducto.Checked = _Row_Tipo.Item("ExigeProducto")
-            Chk_Asignado.Checked = _Row_Tipo.Item("Asignado")
-            Txt_Grupo.Tag = _Row_Tipo.Item("Id_Grupo")
-            Txt_Grupo.Text = _Row_Tipo.Item("Grupo")
-            Txt_Agente.Tag = _Row_Tipo.Item("CodAgente")
-            Txt_Agente.Text = _Row_Tipo.Item("Agente").ToString.Trim
-            Rdb_AsignadoAgente.Checked = _Row_Tipo.Item("AsignadoAgente")
-            Rdb_AsignadoGrupo.Checked = _Row_Tipo.Item("AsignadoGrupo")
+    End Sub
 
-            _Cl_Tickets.Tickets.Tickets_Producto.AjusInventario = _Row_Tipo.Item("AjusInventario")
-            _Cl_Tickets.Tickets.Tickets_Producto.RevInventario = _Row_Tipo.Item("RevInventario")
-            _Cl_Tickets.Tickets.Tickets_Producto.SobreStock = _Row_Tipo.Item("SobreStock")
-            Dim _ExigeProducto As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Tipos", "ExigeProducto", "Id = " & Txt_Tipo.Tag)
-            Chk_ExigeProducto.Checked = _ExigeProducto
-            Lbl_Producto.Enabled = _ExigeProducto
-            Txt_Producto.Enabled = _ExigeProducto
-            Txt_Tipo.ButtonCustom.Visible = False
-            Txt_Tipo.ButtonCustom2.Visible = True
+    Sub Sb_Llenar_Tipo(_Id_Tipo As Integer)
 
-            If _ExigeProducto And Not CBool(Id_Padre) Then
-                Call Txt_Producto_ButtonCustomClick(Nothing, Nothing)
-            Else
-                Txt_Descripcion.Focus()
-            End If
+        Consulta_sql = "Select  Tp.*,Isnull(Tf.NOKOFU,'') As 'Agente',Isnull(Gr.Grupo,'') As Grupo" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Stk_Tipos Tp" & vbCrLf &
+                       "Left Join TABFU Tf On Tf.KOFU = Tp.CodAgente" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Stk_Grupos Gr On Tp.Id_Grupo = Gr.Id" & vbCrLf &
+                       "Where Tp.Id = " & _Id_Tipo
+
+        Dim _Row_Tipo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+        Chk_ExigeProducto.Checked = _Row_Tipo.Item("ExigeProducto")
+        Chk_Asignado.Checked = _Row_Tipo.Item("Asignado")
+        Txt_Grupo.Tag = _Row_Tipo.Item("Id_Grupo")
+        Txt_Grupo.Text = _Row_Tipo.Item("Grupo")
+        Txt_Agente.Tag = _Row_Tipo.Item("CodAgente")
+        Txt_Agente.Text = _Row_Tipo.Item("Agente").ToString.Trim
+        Rdb_AsignadoAgente.Checked = _Row_Tipo.Item("AsignadoAgente")
+        Rdb_AsignadoGrupo.Checked = _Row_Tipo.Item("AsignadoGrupo")
+
+        _Cl_Tickets.Tickets.Tickets_Producto.AjusInventario = _Row_Tipo.Item("AjusInventario")
+        _Cl_Tickets.Tickets.Tickets_Producto.RevInventario = _Row_Tipo.Item("RevInventario")
+        _Cl_Tickets.Tickets.Tickets_Producto.SobreStock = _Row_Tipo.Item("SobreStock")
+        Dim _ExigeProducto As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Tipos", "ExigeProducto", "Id = " & Txt_Tipo.Tag)
+        Chk_ExigeProducto.Checked = _ExigeProducto
+        Lbl_Producto.Enabled = _ExigeProducto
+        Txt_Producto.Enabled = _ExigeProducto
+        Txt_Tipo.ButtonCustom.Visible = False
+        Txt_Tipo.ButtonCustom2.Visible = True
+
+        If _ExigeProducto And Not CBool(Id_Padre) Then
+            Call Txt_Producto_ButtonCustomClick(Nothing, Nothing)
+        Else
+            Txt_Descripcion.Focus()
         End If
 
     End Sub
@@ -396,6 +397,7 @@ Public Class Frm_Tickets_Mant
         Chk_ExigeProducto.Checked = False
         Txt_Producto.ButtonCustom.Visible = False
         Txt_Producto.ButtonCustom2.Visible = False
+        Cmb_UdMedida.DataSource = Nothing
     End Sub
 
     Private Sub Txt_Tipo_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Tipo.ButtonCustom2Click
@@ -409,6 +411,7 @@ Public Class Frm_Tickets_Mant
         Txt_Producto.ButtonCustom.Visible = False
         Txt_Producto.ButtonCustom2.Visible = False
         Chk_ExigeProducto.Checked = False
+        Cmb_UdMedida.DataSource = Nothing
     End Sub
 
     Private Sub Chk_Asignado_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Asignado.CheckedChanged
@@ -614,6 +617,8 @@ Public Class Frm_Tickets_Mant
         Txt_Bodega.Text = String.Empty
         Txt_Stf.Text = String.Empty
 
+        Cmb_UdMedida.DataSource = Nothing
+
         With _Cl_Tickets.Tickets.Tickets_Producto
 
             .Codigo = String.Empty
@@ -736,4 +741,44 @@ Public Class Frm_Tickets_Mant
     Private Sub Cmb_UdMedida_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cmb_UdMedida.SelectedIndexChanged
         _Cl_Tickets.Tickets.Tickets_Producto.UdMedida = Cmb_UdMedida.SelectedValue
     End Sub
+
+    Private Sub Txt_Asunto_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Asunto.ButtonCustomClick
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets_PorDefecto",
+                                                       "CodFuncionario = '" & FUNCIONARIO & "'")
+
+        If Not CBool(_Reg) Then
+
+            MessageBoxEx.Show(Me, "No existen asuntos por defecto para su usuario", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+
+        End If
+
+        Dim _AreaXDefecto As AreaXDefecto.AreaXDefecto
+
+        Dim Fm As New Frm_Tickets_BuscarAsunto(FUNCIONARIO)
+        Fm.ShowDialog(Me)
+        _AreaXDefecto = Fm.AreaXDefecto
+        Fm.Dispose()
+
+        If Not IsNothing(_AreaXDefecto) AndAlso CBool(_AreaXDefecto.Id) Then
+
+            With _AreaXDefecto
+
+                Txt_Asunto.Text = .Asunto
+                Txt_Area.Tag = .Id_Area
+                Txt_Area.Text = .Area
+                Txt_Tipo.Tag = .Id_Tipo
+                Txt_Tipo.Text = .Tipo
+                Cmb_Prioridad.SelectedValue = .Prioridad
+
+                Sb_Llenar_Tipo(.Id_Tipo)
+
+            End With
+
+        End If
+
+    End Sub
+
 End Class

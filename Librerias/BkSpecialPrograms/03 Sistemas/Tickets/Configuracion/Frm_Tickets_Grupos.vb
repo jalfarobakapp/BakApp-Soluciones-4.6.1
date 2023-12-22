@@ -53,16 +53,16 @@ Public Class Frm_Tickets_Grupos
 
         Dim _Texto_Busqueda As String = Txt_Buscador.Text.Trim
 
-        Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "Gr.Grupo+NOKOFU Like '%")
+        Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "Gr.Grupo+Isnull(NOKOFU,'') Like '%")
 
         'If Not String.IsNullOrWhiteSpace(Txt_BuscaXProducto.Text) Then
         '_Condicion = "And CODIGO In (Select CODIGO From MAEDRES Where ELEMENTO = '" & Txt_BuscaXProducto.Text & "')"
         'End If
 
-        Consulta_sql = "Select Distinct Gr.* From BAKAPP_PRB.dbo.Zw_Stk_Grupos Gr" & vbCrLf &
-            "Left Join BAKAPP_PRB.dbo.Zw_Stk_GrupoVsAgente GvsA On GvsA.Id_Grupo = Gr.Id" & vbCrLf &
-            "Left Join TABFU Tf On Tf.KOFU = GvsA.CodAgente" & vbCrLf &
-            "Where Gr.Grupo+NOKOFU Like '%" & _Cadena & "%'"
+        Consulta_sql = "Select Distinct Gr.* From " & _Global_BaseBk & "Zw_Stk_Grupos Gr" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente GvsA On GvsA.Id_Grupo = Gr.Id" & vbCrLf &
+                       "Left Join TABFU Tf On Tf.KOFU = GvsA.CodAgente" & vbCrLf &
+                       "Where Gr.Grupo+Isnull(NOKOFU,'') Like '%" & _Cadena & "%'"
         _Tbl_Grupos = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla_Grupos

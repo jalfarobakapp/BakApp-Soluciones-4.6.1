@@ -206,13 +206,6 @@ Public Class Frm_Tickets_Areas
 
     Sub Sb_Actualizar_Grilla_Tipos(_Id_Area As Integer)
 
-        Consulta_sql = "Select *," & vbCrLf &
-                       "Case ExigeProducto When 1 Then " & vbCrLf &
-                       "Case RevInventario When 1 Then 'Revisión de inventario' " & vbCrLf &
-                       "Else Case AjusInventario When 1 Then 'Ajuste de inventario' " & vbCrLf &
-                       "Else Case SobreStock When 1 Then 'Sobre Stock' Else '' End End End Else '' End	As 'Esp_producto'" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id_Area = " & _Id_Area
-
         Consulta_sql = "Select Tp.*,Isnull(Tf.NOKOFU,'') As 'Agente',Isnull(Gr.Grupo,'') As Grupo," & vbCrLf &
                        "Case AsignadoGrupo When 1 then 'Grupo: ' +Isnull(Gr.Grupo,'') Else " & vbCrLf &
                        "Case AsignadoAgente When 1 Then 'Agente: ' + Isnull(Tf.NOKOFU,'') Else '' End End As 'AsignadoA'," & vbCrLf &
@@ -266,19 +259,23 @@ Public Class Frm_Tickets_Areas
 
     Private Sub Btn_Mnu_QuitarTipo_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_QuitarTipo.Click
 
-        'If Not Fx_Tiene_Permiso(Me, "Ofer0006") Then
-        '    Return
-        'End If
-
         Dim _Fila As DataGridViewRow = Grilla_Tipos.CurrentRow
         Dim _Id As Integer = _Fila.Cells("Id").Value
 
-        If MessageBoxEx.Show(Me, "¿Confirma quitar este Tipo de requerimiento?", "Quitar tipo de requerimiento",
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Id_Tipo = " & _Id)
+
+        If CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "No se puede eliminar este tipo de ticket, ya que tiene ticket asociados",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Confirma eliminar este Tipo de requerimiento?", "Quitar tipo de requerimiento",
                              MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
             Return
         End If
 
-        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_AreaVsTipo Where Id = " & _Id
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Tipos Where Id = " & _Id
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
             Grilla_Tipos.Rows.Remove(_Fila)
         End If
@@ -292,6 +289,15 @@ Public Class Frm_Tickets_Areas
         Dim _Id_Area As Integer = _Fila.Cells("Id_Area").Value
         Dim _Id_Tipo As Integer = _Fila.Cells("Id").Value
         Dim _Tipo As String = _Fila.Cells("Tipo").Value
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Estado = 'ABIE' And Id_Tipo = " & _Id_Tipo)
+
+        If CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "Existen Tickets que están abierto y usan este tipo de requerimiento." & vbCrLf &
+                              "Se mostrara el siguiente formulario, sin embargo el sistema volverá a validar que no hayan Tickets abiertos para que pueda editar",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+
 
         Dim _Grabar As Boolean
         Dim _Row_Tipo As DataRow
@@ -309,6 +315,32 @@ Public Class Frm_Tickets_Areas
     End Sub
 
     Private Sub Grilla_Tipos_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Tipos.CellDoubleClick
-        Call Btn_Mnu_EditarTipo_Click(Nothing, Nothing)
+        ShowContextMenu(Menu_Contextual_02)
+    End Sub
+
+    Private Sub Btn_Mnu_EliminarArea_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_EliminarArea.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Areas.CurrentRow
+        Dim _Id As Integer = _Fila.Cells("Id").Value
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Id_Area = " & _Id)
+
+        If CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "No se puede eliminar esta area de ticket, ya que tiene ticket asociados",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Confirma eliminar el area?", "Quitar tipo de requerimiento",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Areas Where Id = " & _Id & vbCrLf &
+                       "Delete " & _Global_BaseBk & "Zw_Stk_Tipos Where Id_Area = " & _Id
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            Grilla_Areas.Rows.Remove(_Fila)
+        End If
+
     End Sub
 End Class

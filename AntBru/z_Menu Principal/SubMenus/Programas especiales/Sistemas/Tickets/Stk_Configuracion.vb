@@ -52,7 +52,7 @@ Public Class Stk_Configuracion
 
     End Sub
 
-    Private Sub Btn_Tipos_Click(sender As Object, e As EventArgs) Handles Btn_Tipos.Click
+    Private Sub Btn_Tipos_Click(sender As Object, e As EventArgs)
 
         'Dim Fm As New Frm_Tickets_Tipos
         'Fm.ShowDialog(_Fm_Menu_Padre)

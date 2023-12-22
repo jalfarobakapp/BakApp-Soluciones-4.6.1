@@ -87,7 +87,7 @@ Public Class Frm_Tickets_Agentes
         Consulta_sql = "Select Ar.Area,Tp.Tipo From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Ag" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Areas Ar On Ar.Id = Ag.Id_Area" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Tipos Tp On Tp.Id = Ag.Id_Tipo" & vbCrLf &
-                       "Where CodAgente = '" & _CodAgente & "'"
+                       "Where Ag.CodAgente = '" & _CodAgente & "'"
 
         Dim _Tbl_Tipos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -243,7 +243,7 @@ Public Class Frm_Tickets_Agentes
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
                 If Hitest.Type = DataGridViewHitTestType.Cell Then
                     .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
-                    ShowContextMenu(Btn_Mnu_QuitarTipo)
+                    ShowContextMenu(Menu_Contextual_02)
                 End If
             End With
         End If
@@ -270,6 +270,7 @@ Public Class Frm_Tickets_Agentes
     End Sub
 
     Private Sub Btn_Mnu_QuitarTipo_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_QuitarTipo.Click
+
         Dim _Fila As DataGridViewRow = Grilla_Tipos.CurrentRow
         Dim _Id As Integer = _Fila.Cells("Id").Value
 
@@ -282,5 +283,7 @@ Public Class Frm_Tickets_Agentes
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
             Grilla_Tipos.Rows.Remove(_Fila)
         End If
+
     End Sub
+
 End Class

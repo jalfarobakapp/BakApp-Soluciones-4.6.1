@@ -1,5 +1,5 @@
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class Frm_Tickets_Lista
+Partial Class Frm_Tickets_BuscarAsunto
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
     'Form overrides dispose to clean up the component list.
@@ -22,25 +22,16 @@ Partial Class Frm_Tickets_Lista
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Tickets_Lista))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Tickets_BuscarAsunto))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
-        Me.Btn_Crear_Ticket = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_RevisarTicket = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_SeleccionarRegistro = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
-        Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_EditarFuncionario = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_QuitarVendedor = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
-        Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
-        CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -49,56 +40,34 @@ Partial Class Frm_Tickets_Lista
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Ticket, Me.Btn_RevisarTicket, Me.Btn_Actualizar})
-        Me.Bar2.Location = New System.Drawing.Point(0, 488)
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_SeleccionarRegistro})
+        Me.Bar2.Location = New System.Drawing.Point(0, 337)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(1086, 41)
+        Me.Bar2.Size = New System.Drawing.Size(764, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
-        Me.Bar2.TabIndex = 161
+        Me.Bar2.TabIndex = 170
         Me.Bar2.TabStop = False
         Me.Bar2.Text = "Bar2"
         '
-        'Btn_Crear_Ticket
+        'Btn_SeleccionarRegistro
         '
-        Me.Btn_Crear_Ticket.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Crear_Ticket.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Crear_Ticket.Image = CType(resources.GetObject("Btn_Crear_Ticket.Image"), System.Drawing.Image)
-        Me.Btn_Crear_Ticket.ImageAlt = CType(resources.GetObject("Btn_Crear_Ticket.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Crear_Ticket.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Crear_Ticket.Name = "Btn_Crear_Ticket"
-        Me.Btn_Crear_Ticket.Tooltip = "Agregar funcionario"
-        '
-        'Btn_RevisarTicket
-        '
-        Me.Btn_RevisarTicket.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_RevisarTicket.ForeColor = System.Drawing.Color.Black
-        Me.Btn_RevisarTicket.Image = CType(resources.GetObject("Btn_RevisarTicket.Image"), System.Drawing.Image)
-        Me.Btn_RevisarTicket.ImageAlt = CType(resources.GetObject("Btn_RevisarTicket.ImageAlt"), System.Drawing.Image)
-        Me.Btn_RevisarTicket.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_RevisarTicket.Name = "Btn_RevisarTicket"
-        Me.Btn_RevisarTicket.Tooltip = "Revisar Ticket"
-        '
-        'Btn_Actualizar
-        '
-        Me.Btn_Actualizar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Actualizar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Actualizar.Image = CType(resources.GetObject("Btn_Actualizar.Image"), System.Drawing.Image)
-        Me.Btn_Actualizar.ImageAlt = CType(resources.GetObject("Btn_Actualizar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Actualizar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Actualizar.Name = "Btn_Actualizar"
-        Me.Btn_Actualizar.Tooltip = "Refrescar datos"
+        Me.Btn_SeleccionarRegistro.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_SeleccionarRegistro.ForeColor = System.Drawing.Color.Black
+        Me.Btn_SeleccionarRegistro.Image = CType(resources.GetObject("Btn_SeleccionarRegistro.Image"), System.Drawing.Image)
+        Me.Btn_SeleccionarRegistro.ImageAlt = CType(resources.GetObject("Btn_SeleccionarRegistro.ImageAlt"), System.Drawing.Image)
+        Me.Btn_SeleccionarRegistro.Name = "Btn_SeleccionarRegistro"
+        Me.Btn_SeleccionarRegistro.Tooltip = "Seleccionar registro"
         '
         'GroupPanel1
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel1.Controls.Add(Me.Menu_Contextual)
         Me.GroupPanel1.Controls.Add(Me.Grilla)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(12, 6)
+        Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(1062, 469)
+        Me.GroupPanel1.Size = New System.Drawing.Size(741, 314)
         '
         '
         '
@@ -127,43 +96,8 @@ Partial Class Frm_Tickets_Lista
         '
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.GroupPanel1.TabIndex = 160
-        Me.GroupPanel1.Text = "Tickets"
-        '
-        'Menu_Contextual
-        '
-        Me.Menu_Contextual.AntiAlias = True
-        Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
-        Me.Menu_Contextual.Location = New System.Drawing.Point(33, 42)
-        Me.Menu_Contextual.Name = "Menu_Contextual"
-        Me.Menu_Contextual.Size = New System.Drawing.Size(412, 25)
-        Me.Menu_Contextual.Stretch = True
-        Me.Menu_Contextual.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Menu_Contextual.TabIndex = 48
-        Me.Menu_Contextual.TabStop = False
-        Me.Menu_Contextual.Text = "ContextMenuBar1"
-        '
-        'Menu_Contextual_01
-        '
-        Me.Menu_Contextual_01.AutoExpandOnClick = True
-        Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_EditarFuncionario, Me.Btn_QuitarVendedor})
-        Me.Menu_Contextual_01.Text = "Opciones"
-        '
-        'Btn_EditarFuncionario
-        '
-        Me.Btn_EditarFuncionario.Image = CType(resources.GetObject("Btn_EditarFuncionario.Image"), System.Drawing.Image)
-        Me.Btn_EditarFuncionario.ImageAlt = CType(resources.GetObject("Btn_EditarFuncionario.ImageAlt"), System.Drawing.Image)
-        Me.Btn_EditarFuncionario.Name = "Btn_EditarFuncionario"
-        Me.Btn_EditarFuncionario.Text = "Editar funcionario"
-        '
-        'Btn_QuitarVendedor
-        '
-        Me.Btn_QuitarVendedor.Image = CType(resources.GetObject("Btn_QuitarVendedor.Image"), System.Drawing.Image)
-        Me.Btn_QuitarVendedor.ImageAlt = CType(resources.GetObject("Btn_QuitarVendedor.ImageAlt"), System.Drawing.Image)
-        Me.Btn_QuitarVendedor.Name = "Btn_QuitarVendedor"
-        Me.Btn_QuitarVendedor.Text = "Quitar vendedor"
+        Me.GroupPanel1.TabIndex = 169
+        Me.GroupPanel1.Text = "Seleccione el asunto a utilizar"
         '
         'Grilla
         '
@@ -201,41 +135,15 @@ Partial Class Frm_Tickets_Lista
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla.Size = New System.Drawing.Size(1056, 446)
+        Me.Grilla.Size = New System.Drawing.Size(735, 291)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 27
         '
-        'Imagenes_16x16
-        '
-        Me.Imagenes_16x16.ImageStream = CType(resources.GetObject("Imagenes_16x16.ImageStream"), System.Windows.Forms.ImageListStreamer)
-        Me.Imagenes_16x16.TransparentColor = System.Drawing.Color.Transparent
-        Me.Imagenes_16x16.Images.SetKeyName(0, "warning.png")
-        Me.Imagenes_16x16.Images.SetKeyName(1, "ok.png")
-        Me.Imagenes_16x16.Images.SetKeyName(2, "cancel.png")
-        Me.Imagenes_16x16.Images.SetKeyName(3, "delete_button_error.png")
-        Me.Imagenes_16x16.Images.SetKeyName(4, "clock.png")
-        Me.Imagenes_16x16.Images.SetKeyName(5, "clock-import.png")
-        Me.Imagenes_16x16.Images.SetKeyName(6, "clock-info.png")
-        Me.Imagenes_16x16.Images.SetKeyName(7, "tag_green.png")
-        Me.Imagenes_16x16.Images.SetKeyName(8, "note_text.png")
-        Me.Imagenes_16x16.Images.SetKeyName(9, "note.png")
-        Me.Imagenes_16x16.Images.SetKeyName(10, "comment-number-1.png")
-        Me.Imagenes_16x16.Images.SetKeyName(11, "comment-number-2.png")
-        Me.Imagenes_16x16.Images.SetKeyName(12, "comment-number-3.png")
-        Me.Imagenes_16x16.Images.SetKeyName(13, "comment-number-4.png")
-        Me.Imagenes_16x16.Images.SetKeyName(14, "comment-number-5.png")
-        Me.Imagenes_16x16.Images.SetKeyName(15, "comment-number-6.png")
-        Me.Imagenes_16x16.Images.SetKeyName(16, "comment-number-7.png")
-        Me.Imagenes_16x16.Images.SetKeyName(17, "comment-number-8.png")
-        Me.Imagenes_16x16.Images.SetKeyName(18, "comment-number-9.png")
-        Me.Imagenes_16x16.Images.SetKeyName(19, "comment-number-9-plus.png")
-        Me.Imagenes_16x16.Images.SetKeyName(20, "menu-more.png")
-        '
-        'Frm_Tickets_Lista
+        'Frm_Tickets_BuscarAsunto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1086, 529)
+        Me.ClientSize = New System.Drawing.Size(764, 378)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True
@@ -244,26 +152,18 @@ Partial Class Frm_Tickets_Lista
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "Frm_Tickets_Lista"
+        Me.Name = "Frm_Tickets_BuscarAsunto"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MetroForm"
+        Me.Text = "MIS ASUNTOS POR DEFECTO"
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
-        CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
-    Public WithEvents Btn_Crear_Ticket As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_SeleccionarRegistro As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
-    Friend WithEvents Menu_Contextual As DevComponents.DotNetBar.ContextMenuBar
-    Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_EditarFuncionario As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_QuitarVendedor As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
-    Public WithEvents Btn_RevisarTicket As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Imagenes_16x16 As ImageList
-    Public WithEvents Btn_Actualizar As DevComponents.DotNetBar.ButtonItem
 End Class

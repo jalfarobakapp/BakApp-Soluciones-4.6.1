@@ -89,13 +89,30 @@ Public Class Frm_Tickets_TiposCrear
 
     Private Sub Btn_Crear_Agente_Click(sender As Object, e As EventArgs) Handles Btn_Crear_Agente.Click
 
-        If String.IsNullOrEmpty(Txt_Tipo.Text) Then
-            MessageBoxEx.Show(Me, "Debe ingresar el tipo de requerimiento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Txt_Tipo.Focus()
-            Return
+        Dim _Editar As Boolean = CBool(_Id_Tipo)
+
+        If _Editar Then
+
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Estado = 'ABIE'")
+
+            If CBool(_Reg) Then
+                MessageBoxEx.Show(Me, "Existen Tickets que están abierto y usan este tipo de requerimiento." & vbCrLf &
+                              "No es posible editar el tipo de requerimiento hasta que todos los Tickets que lo usan estén cerrados" & vbCrLf & vbCrLf &
+                              "Los dato no han sido modificados",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Me.Close()
+                Return
+            End If
+
         End If
 
-        If Chk_ExigeProducto.Checked Then
+        If String.IsNullOrEmpty(Txt_Tipo.Text) Then
+                MessageBoxEx.Show(Me, "Debe ingresar el tipo de requerimiento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_Tipo.Focus()
+                Return
+            End If
+
+            If Chk_ExigeProducto.Checked Then
             If Not Rdb_AjusInventario.Checked AndAlso Not Rdb_RevInventario.Checked AndAlso Not Rdb_SobreStock.Checked Then
                 MessageBoxEx.Show(Me, "Debe marcar alguna de las opciones para la gestión con productos",
                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -111,14 +128,14 @@ Public Class Frm_Tickets_TiposCrear
 
                 MessageBoxEx.Show(Me, "Debe asignar un grupo de trabajo o agente para este requerimiento." & vbCrLf & vbCrLf &
                                   "Si no sabe a quien asignar esta labor debe dejar la casilla [ASIGNAR EL REQUERIMINETO A:] destickeada" & vbCrLf &
-                                  "y el administrador del sistema redirigira el requerimiento a quien corresponda",
+                                  "y el administrador del sistema redirigirá el requerimiento a quien corresponda",
                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
             End If
 
         End If
 
-        If Not CBool(_Id_Tipo) Then
+        If Not _Editar Then
 
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tipos (Id_Area,Tipo) Values " &
                            "(" & _Id_Area & ",'" & Txt_Tipo.Text.Trim & "')"
@@ -181,7 +198,8 @@ Public Class Frm_Tickets_TiposCrear
     End Sub
 
     Private Sub Txt_Agente_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Agente.ButtonCustomClick
-        Dim _Sql_Filtro_Condicion_Extra = "And KOFU In (Select CodAgente From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Where Id_Area = " & _Id_Area & " And Id_Tipo = " & Txt_Tipo.Tag & ")"
+
+        Dim _Sql_Filtro_Condicion_Extra = "And KOFU In (Select CodAgente From " & _Global_BaseBk & "Zw_Stk_Agentes)"
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
 

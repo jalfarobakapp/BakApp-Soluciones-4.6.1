@@ -97,6 +97,14 @@ Public Class Frm_Tickets_Tipos
 
     Private Sub Btn_Mnu_EditarTipo_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_EditarTipo.Click
 
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Estado = 'ABIE'")
+
+        If CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "Existen Tickets que están abierto y usan este tipo de requerimiento." & vbCrLf &
+                              "Se mostrara el siguiente formulario, sin embargo el sistema volverá a validar que no hayan Tickets abiertos para que pueda editar",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+
         Dim _Fila As DataGridViewRow = Grilla_Tipos.CurrentRow
 
         Dim _Id_Tipo As Integer = _Fila.Cells("Id").Value

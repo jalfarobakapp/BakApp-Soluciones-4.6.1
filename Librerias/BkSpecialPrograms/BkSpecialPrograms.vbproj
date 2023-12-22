@@ -2322,10 +2322,10 @@
     <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_TiposCrear.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_CambEstado.Designer.vb">
-      <DependentUpon>Frm_Tickets_CambEstado.vb</DependentUpon>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_BuscarAsunto.Designer.vb">
+      <DependentUpon>Frm_Tickets_BuscarAsunto.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_CambEstado.vb">
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_BuscarAsunto.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Mant.Designer.vb">
@@ -5810,8 +5810,8 @@
     <EmbeddedResource Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_TiposCrear.resx">
       <DependentUpon>Frm_Tickets_TiposCrear.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_CambEstado.resx">
-      <DependentUpon>Frm_Tickets_CambEstado.vb</DependentUpon>
+    <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_BuscarAsunto.resx">
+      <DependentUpon>Frm_Tickets_BuscarAsunto.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_Lista.resx">
       <DependentUpon>Frm_Tickets_Lista.vb</DependentUpon>

@@ -46,7 +46,7 @@ Partial Class Stk_Ticktes
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(454, 49)
         Me.LabelX1.TabIndex = 63
-        Me.LabelX1.Text = "<font color=""#349FCE""><b>CONFIGURACIONSISTEMA DE TICKETS</b></font>"
+        Me.LabelX1.Text = "<font color=""#349FCE""><b>SISTEMA DE TICKETS</b></font>"
         '
         'Bar2
         '
@@ -115,7 +115,8 @@ Partial Class Stk_Ticktes
         Me.Btn_MisTicket.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.Btn_MisTicket.Name = "Btn_MisTicket"
         Me.Btn_MisTicket.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_MisTicket.Text = "<font size=""+4""><b>MIS TICKETS</b></font>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.Btn_MisTicket.Text = "<font size=""+4""><b>MIS TICKETS</b></font><br/><font size=""-1"">Tickets que yo envi" &
+    "ó</font>"
         Me.Btn_MisTicket.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Yellow
         Me.Btn_MisTicket.TileSize = New System.Drawing.Size(200, 100)
         '

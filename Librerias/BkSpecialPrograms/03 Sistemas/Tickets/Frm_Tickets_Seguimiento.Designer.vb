@@ -60,11 +60,11 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Btn_MensajeRespuesta = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_CambiarEstado = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_VerTicketOrigen = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_AgentesAsignados = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Cerrar = New DevComponents.DotNetBar.ButtonItem()
         Me.Txt_Descripcion = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
-        Me.Btn_AgentesAsignados = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -561,6 +561,15 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Btn_VerTicketOrigen.Name = "Btn_VerTicketOrigen"
         Me.Btn_VerTicketOrigen.Text = "Ver Ticket origen"
         '
+        'Btn_AgentesAsignados
+        '
+        Me.Btn_AgentesAsignados.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_AgentesAsignados.ForeColor = System.Drawing.Color.Black
+        Me.Btn_AgentesAsignados.Image = CType(resources.GetObject("Btn_AgentesAsignados.Image"), System.Drawing.Image)
+        Me.Btn_AgentesAsignados.ImageAlt = CType(resources.GetObject("Btn_AgentesAsignados.ImageAlt"), System.Drawing.Image)
+        Me.Btn_AgentesAsignados.Name = "Btn_AgentesAsignados"
+        Me.Btn_AgentesAsignados.Tooltip = "Agentes asignados"
+        '
         'Btn_Cerrar
         '
         Me.Btn_Cerrar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
@@ -670,15 +679,6 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Imagenes_16x16.Images.SetKeyName(32, "people-employee.png")
         Me.Imagenes_16x16.Images.SetKeyName(33, "people-vendor.png")
         Me.Imagenes_16x16.Images.SetKeyName(34, "people-customer-man.png")
-        '
-        'Btn_AgentesAsignados
-        '
-        Me.Btn_AgentesAsignados.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_AgentesAsignados.ForeColor = System.Drawing.Color.Black
-        Me.Btn_AgentesAsignados.Image = CType(resources.GetObject("Btn_AgentesAsignados.Image"), System.Drawing.Image)
-        Me.Btn_AgentesAsignados.ImageAlt = CType(resources.GetObject("Btn_AgentesAsignados.ImageAlt"), System.Drawing.Image)
-        Me.Btn_AgentesAsignados.Name = "Btn_AgentesAsignados"
-        Me.Btn_AgentesAsignados.Tooltip = "Agentes asignados"
         '
         'Frm_Tickets_Seguimiento
         '

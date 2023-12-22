@@ -23,12 +23,12 @@ Partial Class Frm_Tickets_Areas
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Tickets_Areas))
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_CrearArea = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ExportarExcel = New DevComponents.DotNetBar.ButtonItem()
@@ -43,9 +43,10 @@ Partial Class Frm_Tickets_Areas
         Me.Btn_Mnu_EditarArea = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_AsociarTipos = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_02 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_EditarTipo = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_QuitarTipo = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla_Areas = New DevComponents.DotNetBar.Controls.DataGridViewX()
-        Me.Btn_Mnu_EditarTipo = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_EliminarArea = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.Grilla_Tipos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -134,23 +135,23 @@ Partial Class Frm_Tickets_Areas
         Me.Grilla_Tipos.AllowUserToAddRows = False
         Me.Grilla_Tipos.AllowUserToDeleteRows = False
         Me.Grilla_Tipos.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Tipos.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle13.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle13.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Tipos.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle13
         Me.Grilla_Tipos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Tipos.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle14.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Tipos.DefaultCellStyle = DataGridViewCellStyle14
         Me.Grilla_Tipos.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Tipos.EnableHeadersVisualStyles = False
         Me.Grilla_Tipos.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
@@ -158,14 +159,14 @@ Partial Class Frm_Tickets_Areas
         Me.Grilla_Tipos.MultiSelect = False
         Me.Grilla_Tipos.Name = "Grilla_Tipos"
         Me.Grilla_Tipos.ReadOnly = True
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Tipos.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle15.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle15.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Tipos.RowHeadersDefaultCellStyle = DataGridViewCellStyle15
         Me.Grilla_Tipos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.Grilla_Tipos.Size = New System.Drawing.Size(666, 130)
         Me.Grilla_Tipos.TabIndex = 1
@@ -303,7 +304,7 @@ Partial Class Frm_Tickets_Areas
         '
         Me.Menu_Contextual_01.AutoExpandOnClick = True
         Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_EditarArea, Me.Btn_Mnu_AsociarTipos})
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_AsociarTipos, Me.Btn_Mnu_EditarArea, Me.Btn_Mnu_EliminarArea})
         Me.Menu_Contextual_01.Text = "Opciones"
         '
         'Btn_Mnu_EditarArea
@@ -311,7 +312,7 @@ Partial Class Frm_Tickets_Areas
         Me.Btn_Mnu_EditarArea.Image = CType(resources.GetObject("Btn_Mnu_EditarArea.Image"), System.Drawing.Image)
         Me.Btn_Mnu_EditarArea.ImageAlt = CType(resources.GetObject("Btn_Mnu_EditarArea.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_EditarArea.Name = "Btn_Mnu_EditarArea"
-        Me.Btn_Mnu_EditarArea.Text = "Editar Area/Departamento"
+        Me.Btn_Mnu_EditarArea.Text = "Cambiar nombre de Area/Departamento"
         '
         'Btn_Mnu_AsociarTipos
         '
@@ -327,35 +328,42 @@ Partial Class Frm_Tickets_Areas
         Me.Menu_Contextual_02.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_EditarTipo, Me.Btn_Mnu_QuitarTipo})
         Me.Menu_Contextual_02.Text = "Opciones"
         '
+        'Btn_Mnu_EditarTipo
+        '
+        Me.Btn_Mnu_EditarTipo.Image = CType(resources.GetObject("Btn_Mnu_EditarTipo.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_EditarTipo.ImageAlt = CType(resources.GetObject("Btn_Mnu_EditarTipo.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_EditarTipo.Name = "Btn_Mnu_EditarTipo"
+        Me.Btn_Mnu_EditarTipo.Text = "Editar tipo de requerimiento"
+        '
         'Btn_Mnu_QuitarTipo
         '
         Me.Btn_Mnu_QuitarTipo.Image = CType(resources.GetObject("Btn_Mnu_QuitarTipo.Image"), System.Drawing.Image)
         Me.Btn_Mnu_QuitarTipo.ImageAlt = CType(resources.GetObject("Btn_Mnu_QuitarTipo.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_QuitarTipo.Name = "Btn_Mnu_QuitarTipo"
-        Me.Btn_Mnu_QuitarTipo.Text = "Quitar tipo de requerimiento del area"
+        Me.Btn_Mnu_QuitarTipo.Text = "Eliminar tipo de requerimiento del area"
         '
         'Grilla_Areas
         '
         Me.Grilla_Areas.AllowUserToAddRows = False
         Me.Grilla_Areas.AllowUserToDeleteRows = False
         Me.Grilla_Areas.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle10.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Areas.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle16.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle16.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle16.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Areas.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle16
         Me.Grilla_Areas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle11.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle11.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Areas.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle17.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle17.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle17.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Areas.DefaultCellStyle = DataGridViewCellStyle17
         Me.Grilla_Areas.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Areas.EnableHeadersVisualStyles = False
         Me.Grilla_Areas.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
@@ -363,24 +371,24 @@ Partial Class Frm_Tickets_Areas
         Me.Grilla_Areas.MultiSelect = False
         Me.Grilla_Areas.Name = "Grilla_Areas"
         Me.Grilla_Areas.ReadOnly = True
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle12.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Areas.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle18.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle18.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle18.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Areas.RowHeadersDefaultCellStyle = DataGridViewCellStyle18
         Me.Grilla_Areas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.Grilla_Areas.Size = New System.Drawing.Size(666, 310)
         Me.Grilla_Areas.TabIndex = 1
         '
-        'Btn_Mnu_EditarTipo
+        'Btn_Mnu_EliminarArea
         '
-        Me.Btn_Mnu_EditarTipo.Image = CType(resources.GetObject("Btn_Mnu_EditarTipo.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_EditarTipo.ImageAlt = CType(resources.GetObject("Btn_Mnu_EditarTipo.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_EditarTipo.Name = "Btn_Mnu_EditarTipo"
-        Me.Btn_Mnu_EditarTipo.Text = "Editar tipo de requerimiento"
+        Me.Btn_Mnu_EliminarArea.Image = CType(resources.GetObject("Btn_Mnu_EliminarArea.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_EliminarArea.ImageAlt = CType(resources.GetObject("Btn_Mnu_EliminarArea.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_EliminarArea.Name = "Btn_Mnu_EliminarArea"
+        Me.Btn_Mnu_EliminarArea.Text = "Eliminar area"
         '
         'Frm_Tickets_Areas
         '
@@ -428,4 +436,5 @@ Partial Class Frm_Tickets_Areas
     Friend WithEvents Btn_Mnu_QuitarTipo As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grilla_Areas As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Btn_Mnu_EditarTipo As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_EliminarArea As DevComponents.DotNetBar.ButtonItem
 End Class

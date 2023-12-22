@@ -1,5 +1,4 @@
-﻿Imports DevComponents.DotNetBar
-Public Class Frm_Tickets_Lista
+﻿Public Class Frm_Tickets_Lista
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -35,7 +34,8 @@ Public Class Frm_Tickets_Lista
     Private Sub Frm_Tickets_Lista_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         InsertarBotonenGrilla(Grilla, "BtnImagen_Estado", "Est.", "Img_Estado", 0, _Tipo_Boton.Imagen)
-        'InsertarBotonenGrilla(Grilla, "BtnImagen_Tag", "Tag", "Img_Tag", 1, _Tipo_Boton.Imagen)
+
+        AddHandler Grilla.RowPrePaint, AddressOf Grilla_RowPrePaint
 
         Sb_Actualizar_Grilla()
 
@@ -43,6 +43,12 @@ Public Class Frm_Tickets_Lista
 
         Btn_Crear_Ticket.Visible = (_Tipo_Tickets = Enum_Tickets.MisTicket)
         Btn_RevisarTicket.Visible = Not (_Tipo_Tickets = Enum_Tickets.MisTicket)
+
+        If _Tipo_Tickets = Enum_Tickets.MisTicket Then
+            Me.Text = "MIS TICKETS"
+        Else
+            Me.Text = "TICKET ASIGNADOS A MI COMO AGENTE"
+        End If
 
     End Sub
 
@@ -61,9 +67,10 @@ Public Class Frm_Tickets_Lista
             Case Enum_Tickets.MisTicket
                 _Condicion = "And CodFuncionario_Crea = '" & _Funcionario & "'"
             Case Enum_Tickets.TicketAsignadoGrupo
-                _Condicion = "And Id_Grupo = " & _Id_Grupo
+                _Condicion = "And Id_Grupo = " & _Id_Grupo & " And Estaso <> 'NULO'"
             Case Enum_Tickets.TicketAsignadosAgente
-                _Condicion = "And Id In (Select Id_Ticket From " & _Global_BaseBk & "Zw_Stk_Tickets_Asignado Where CodAgente = '" & FUNCIONARIO & "')"
+                _Condicion = "And Tks.Id In (Select Id_Ticket From " & _Global_BaseBk & "Zw_Stk_Tickets_Asignado " &
+                             "Where CodAgente = '" & FUNCIONARIO & "')  And Estado <> 'NULO'"
         End Select
 
         Consulta_sql = "Select Tks.*,TkPrd.Empresa,TkPrd.Sucursal,TkPrd.Bodega,TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr," & vbCrLf &
@@ -77,7 +84,7 @@ Public Class Frm_Tickets_Lista
                        "Inner Join " & _Global_BaseBk & "Zw_Stk_Tickets_Producto TkPrd On Tks.Id = TkPrd.Id_Ticket" & vbCrLf &
                        "Where 1 > 0" & vbCrLf & _Condicion
 
-        _Tbl_Tickets = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Tickets = _Sql.Fx_Get_Tablas(Consulta_sql, False)
 
         With Grilla
 
@@ -184,10 +191,99 @@ Public Class Frm_Tickets_Lista
         End With
 
 
-        For Each _Fila As DataGridViewRow In Grilla.Rows
+        'For Each _Fila As DataGridViewRow In Grilla.Rows
+
+        '    Dim _Mesn_Pdte_Ver = _Fila.Cells("Mesn_Pdte_Ver").Value
+        '    Dim _Resp_Pdte_Ver = _Fila.Cells("Resp_Pdte_Ver").Value
+
+        '    Dim _Icono As Image
+        '    Dim _Nombre_Image As String
+        '    Dim _Num
+
+        '    If _Tipo_Tickets = Enum_Tickets.MisTicket Then
+        '        _Num = _Resp_Pdte_Ver
+        '    Else
+        '        _Num = _Mesn_Pdte_Ver
+        '    End If
+
+        '    If CBool(_Num) Then
+        '        _Nombre_Image = "comment-number-" & _Num & ".png"
+        '        If _Mesn_Pdte_Ver > 9 Then
+        '            _Nombre_Image = "comment-number-9-plus.png"
+        '        End If
+        '        _Icono = Imagenes_16x16.Images.Item(_Nombre_Image)
+        '        _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+        '    Else
+        '        _Icono = Imagenes_16x16.Images.Item("menu-more.png")
+        '    End If
+
+        '    _Fila.Cells("BtnImagen_Estado").Value = _Icono
+
+        'Next
+
+    End Sub
+
+    Private Sub Btn_Crear_Ticket_Click(sender As Object, e As EventArgs) Handles Btn_Crear_Ticket.Click
+
+        RemoveHandler Grilla.RowPrePaint, AddressOf Grilla_RowPrePaint
+
+        Dim Fm As New Frm_Tickets_Mant(0)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+        AddHandler Grilla.RowPrePaint, AddressOf Grilla_RowPrePaint
+
+        Sb_Actualizar_Grilla()
+
+    End Sub
+
+    Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+
+        Try
+
+            Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+            Dim _Id_Ticket As Integer = _Fila.Cells("Id").Value
+            Dim _Numero As String = _Fila.Cells("Numero").Value
+
+            RemoveHandler Grilla.RowPrePaint, AddressOf Grilla_RowPrePaint
+
+            Dim Fm As New Frm_Tickets_Seguimiento(_Id_Ticket)
+            Fm.Mis_Ticket = (_Tipo_Tickets = Enum_Tickets.MisTicket)
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
+            AddHandler Grilla.RowPrePaint, AddressOf Grilla_RowPrePaint
+
+            Sb_Actualizar_Grilla()
+
+            BuscarDatoEnGrilla(_Numero, "_Numero", Grilla)
+
+        Catch ex As Exception
+
+        End Try
+
+    End Sub
+
+    Private Sub Btn_RevisarTicket_Click(sender As Object, e As EventArgs) Handles Btn_RevisarTicket.Click
+        Call Grilla_CellDoubleClick(Nothing, Nothing)
+    End Sub
+
+    Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click
+        Sb_Actualizar_Grilla()
+    End Sub
+
+    Private Sub Grilla_RowPrePaint(sender As Object, e As DataGridViewRowPrePaintEventArgs)
+
+        'Dim _Columname As String = Grilla.Columns(e.ColumnIndex).Name
+        Dim _Fila As DataGridViewRow = Grilla.Rows(e.RowIndex)
+
+        'If _Columname = "BtnImagen_Estado" Then
+
+        Try
 
             Dim _Mesn_Pdte_Ver = _Fila.Cells("Mesn_Pdte_Ver").Value
             Dim _Resp_Pdte_Ver = _Fila.Cells("Resp_Pdte_Ver").Value
+            Dim _Estado = _Fila.Cells("Estado").Value
 
             Dim _Icono As Image
             Dim _Nombre_Image As String
@@ -199,49 +295,30 @@ Public Class Frm_Tickets_Lista
                 _Num = _Mesn_Pdte_Ver
             End If
 
-            If CBool(_Num) Then
-                _Nombre_Image = "comment-number-" & _Num & ".png"
-                If _Mesn_Pdte_Ver > 9 Then
-                    _Nombre_Image = "comment-number-9-plus.png"
-                End If
-                _Icono = Imagenes_16x16.Images.Item(_Nombre_Image)
-                _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+            If _Estado = "NULO" Then
+                _Icono = Imagenes_16x16.Images.Item("cancel.png")
             Else
-                _Icono = Imagenes_16x16.Images.Item("menu-more.png")
+
+                If CBool(_Num) Then
+                    _Nombre_Image = "comment-number-" & _Num & ".png"
+                    If _Mesn_Pdte_Ver > 9 Then
+                        _Nombre_Image = "comment-number-9-plus.png"
+                    End If
+                    _Icono = Imagenes_16x16.Images.Item(_Nombre_Image)
+                    _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+                Else
+                    _Icono = Imagenes_16x16.Images.Item("menu-more.png")
+                End If
+
             End If
 
             _Fila.Cells("BtnImagen_Estado").Value = _Icono
 
-        Next
+        Catch ex As Exception
+
+        End Try
+
+        'End If
 
     End Sub
-
-    Private Sub Btn_Crear_Ticket_Click(sender As Object, e As EventArgs) Handles Btn_Crear_Ticket.Click
-
-        Dim Fm As New Frm_Tickets_Mant(0)
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
-
-        Sb_Actualizar_Grilla()
-
-    End Sub
-
-    Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
-
-        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
-        Dim _Id_Ticket As Integer = _Fila.Cells("Id").Value
-        Dim _Numero As String = _Fila.Cells("Numero").Value
-
-        Dim Fm As New Frm_Tickets_Seguimiento(_Id_Ticket)
-        Fm.Mis_Ticket = (_Tipo_Tickets = Enum_Tickets.MisTicket)
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
-
-        Sb_Actualizar_Grilla()
-
-        BuscarDatoEnGrilla(_Numero, "_Numero", Grilla)
-
-    End Sub
-
-
 End Class
