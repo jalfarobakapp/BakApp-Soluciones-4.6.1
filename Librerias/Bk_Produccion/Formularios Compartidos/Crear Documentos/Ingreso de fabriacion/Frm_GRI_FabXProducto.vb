@@ -1,4 +1,5 @@
-﻿Imports BkSpecialPrograms
+﻿Imports System.Windows.Forms.VisualStyles.VisualStyleElement
+Imports BkSpecialPrograms
 Imports DevComponents.DotNetBar
 
 Public Class Frm_GRI_FabXProducto
@@ -172,6 +173,14 @@ Public Class Frm_GRI_FabXProducto
         Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
 
         If _Resultado <> eTaskDialogResult.Ok Then
+            Sb_Limpiar()
+            Return
+        End If
+
+        If Not Rdb_Sacos.Checked And Not Rdb_Pallets.Checked Then
+            MessageBoxEx.Show(Me, "Debe seleccionar un tipo de ingreso SACOS o PALLETS",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Sb_TipoIngreso(_Codigo, _Rtu)
             Return
         End If
 
@@ -206,6 +215,12 @@ Public Class Frm_GRI_FabXProducto
             _Cantidad_Fab = _Multiplo * _Cantidad
         Else
             _Cantidad_Fab = _Multiplo * (_Rtu * _Cantidad)
+        End If
+
+        If (_Cantidad_Fab + _Row_Potl.Item("REALIZADO")) > _Row_Potl.Item("FABRICAR") Then
+            MessageBoxEx.Show(Me, "Usted no puede recepcionar más que el SALDO indicado en la orden", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Sb_TipoIngreso(_Codigo, _Rtu)
+            Return
         End If
 
         Txt_Cantidad.Text = FormatNumber(_Cantidad_Fab, 0)
@@ -269,6 +284,10 @@ Public Class Frm_GRI_FabXProducto
         Txt_Turno.Text = String.Empty
         Txt_Planta.Text = String.Empty
         Txt_Analista.Text = String.Empty
+
+        _Cl_Tarja._Cl_Tarja_Ent.Analista = FUNCIONARIO
+        Txt_Analista.Text = Nombre_funcionario_activo.ToString.Trim
+
         Txt_CodAlternativo_Pallet.Text = String.Empty
         Txt_Observaciones.Text = String.Empty
         Txt_Observaciones.ReadOnly = False
@@ -474,11 +493,32 @@ Public Class Frm_GRI_FabXProducto
 
         If IsNothing(_Row_Lote) Then
 
-            MessageBoxEx.Show(Me, "El Número de Lote no esta registrado en el sistema" & vbCrLf & vbCrLf &
-                              "A continuación debera ingresar los datos del Lote", "Validación",
-                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            If MessageBoxEx.Show(Me, "El Número de Lote no esta registrado en el sistema" & vbCrLf & vbCrLf &
+                              "¿Confirma la grabación de este nuevo lote?", "Validación",
+                              MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                Return
+            End If
 
-            _Row_Lote = Fx_Ingresar_Lote(_NroLote)
+            Dim _FechaVencimiento As DateTime = DateAdd(DateInterval.Year, 1, Dtp_Fecha_Ingreso.Value)
+
+            Consulta_sql = "Select Top 1 * From TABCODAL Where KOPR = '" & Txt_Codigo.Text & "' And TXTMULTI = 'SACO'"
+            Dim _Row_Saco As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row_Saco) Then
+                MessageBoxEx.Show(Me, "No existe código alternativo asociado a los SACOS", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Lotes_Enc (NroLote,Codigo,FechaVenci,CodAlternativo) Values " &
+                       "('" & _NroLote & "','" & Txt_Codigo.Text &
+                       "','" & Format(_FechaVencimiento, "yyyyMMdd") & "','" & _Row_Saco.Item("KOPRAL").ToString.Trim & "')"
+            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Lotes_Enc Where NroLote = '" & _NroLote & "'"
+                _Row_Lote = _Sql.Fx_Get_DataRow(Consulta_sql)
+            End If
+
+            '_Row_Lote = Fx_Ingresar_Lote(_NroLote)
 
             If IsNothing(_Row_Lote) Then
                 Return
@@ -657,27 +697,27 @@ Public Class Frm_GRI_FabXProducto
 
         Dim _Turno = _Cl_Tarja._Cl_Tarja_Ent.Turno
         Dim _Planta = _Cl_Tarja._Cl_Tarja_Ent.Planta
-        Dim _Analista = _Cl_Tarja._Cl_Tarja_Ent.Analista
+        'Dim _Analista = _Cl_Tarja._Cl_Tarja_Ent.Analista
 
         _Sql.Sb_Parametro_Informe_Sql(_Turno, "Produccion_Tarja",
                                       "Tarja_Turno", Class_SQL.Enum_Type._String, _Turno, _Actualizar,, True)
         _Sql.Sb_Parametro_Informe_Sql(_Planta, "Produccion_Tarja",
                                       "Tarja_Planta", Class_SQL.Enum_Type._String, _Planta, _Actualizar,, True)
-        _Sql.Sb_Parametro_Informe_Sql(_Analista, "Produccion_Tarja",
-                                      "Tarja_Analista", Class_SQL.Enum_Type._String, _Analista, _Actualizar,, True)
+        '_Sql.Sb_Parametro_Informe_Sql(_Analista, "Produccion_Tarja",
+        '                              "Tarja_Analista", Class_SQL.Enum_Type._String, _Analista, _Actualizar,, True)
 
         If Not _Actualizar Then
 
             _Cl_Tarja._Cl_Tarja_Ent.Turno = _Turno
             _Cl_Tarja._Cl_Tarja_Ent.Planta = _Planta
-            _Cl_Tarja._Cl_Tarja_Ent.Analista = _Analista
+            '   _Cl_Tarja._Cl_Tarja_Ent.Analista = _Analista
 
             Txt_Turno.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
                                                 "NombreTabla", "Tabla = 'TARJA_TURNO' And CodigoTabla = '" & _Turno & "'")
             Txt_Planta.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
                                                 "NombreTabla", "Tabla = 'TARJA_PLANTA' And CodigoTabla = '" & _Planta & "'")
-            Txt_Analista.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
-                                                "NombreTabla", "Tabla = 'TARJA_ANALISTA' And CodigoTabla = '" & _Analista & "'")
+            '   Txt_Analista.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
+            '                                       "NombreTabla", "Tabla = 'TARJA_ANALISTA' And CodigoTabla = '" & _Analista & "'")
         End If
 
     End Sub
@@ -685,4 +725,17 @@ Public Class Frm_GRI_FabXProducto
     Private Sub Frm_GRI_FabXProducto_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         Sb_Actualizar_Parametros_SQL(True)
     End Sub
+
+    Private Sub Txt_Cantidad_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Cantidad.KeyDown
+
+        If e.KeyValue = Keys.Enter Then
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_Cantidad_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Cantidad.ButtonCustomClick
+        Sb_TipoIngreso(_Row_Maepr.Item("KOPR"), _Row_Maepr.Item("RLUD"))
+    End Sub
+
 End Class
