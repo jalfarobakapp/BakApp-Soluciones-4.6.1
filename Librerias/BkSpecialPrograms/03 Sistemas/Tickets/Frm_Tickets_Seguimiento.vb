@@ -206,12 +206,18 @@ Public Class Frm_Tickets_Seguimiento
 
             _Fila.Cells("Btn_ImagenAttach").Value = _Icono
 
-            If _CodFuncionario = FUNCIONARIO Then
-                '_Icono = Imagenes_16x16.Images.Item("user.png")
-                '_Icono = Imagenes_16x16.Images.Item("people-employee.png")
+            If _Accion = "MENS" Then
                 _Icono = Imagenes_16x16.Images.Item("people-customer-man.png")
-            Else
+            ElseIf _Accion = "RESP" Then
                 _Icono = Imagenes_16x16.Images.Item("people-vendor.png")
+            Else
+
+                If _CodFuncionario = FUNCIONARIO Then
+                    _Icono = Imagenes_16x16.Images.Item("people-customer-man.png")
+                Else
+                    _Icono = Imagenes_16x16.Images.Item("people-vendor.png")
+                End If
+
             End If
 
             _Fila.Cells("Btn_ImagenUser").Value = _Icono

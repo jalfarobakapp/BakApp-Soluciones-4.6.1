@@ -290,4 +290,36 @@ Public Class Frm_Tickets_Grupos
     Private Sub Grilla_Grupos_Leave(sender As Object, e As EventArgs) Handles Grilla_Grupos.Leave
         Btn_SeleccionarGrupo.Enabled = False
     End Sub
+
+    Private Sub Btn_Mnu_EliminarGrupo_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_EliminarGrupo.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Grupos.CurrentRow
+        Dim _Id As Integer = _Fila.Cells("Id").Value
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Id_Grupo = " & _Id & " And Estado = 'ABIE'")
+
+        If CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "No se puede eliminar este grupo ya que tiene ticket asociados que aun estan abiertos.",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Confirma eliminar el grupo?", "Quitar tipo de requerimiento",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Dim _Mensaje_Ticket As New Tickets_Db.Mensaje_Ticket
+
+        Dim _Cl_Tickets As New Cl_Tickets
+        _Mensaje_Ticket = _Cl_Tickets.Fx_Eliminar_Grupo(_Id)
+
+        If _Mensaje_Ticket.EsCorrecto Then
+            Grilla_Grupos.Rows.Remove(_Fila)
+        Else
+            MessageBoxEx.Show(Me, _Mensaje_Ticket.Mensaje, "Error al eliminar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
+
+    End Sub
+
 End Class

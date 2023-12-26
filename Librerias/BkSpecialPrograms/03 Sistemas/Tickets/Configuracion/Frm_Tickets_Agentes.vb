@@ -84,7 +84,7 @@ Public Class Frm_Tickets_Agentes
 
         Dim _CodAgente As String = _Fila.Cells("CodAgente").Value
 
-        Consulta_sql = "Select Ar.Area,Tp.Tipo From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Ag" & vbCrLf &
+        Consulta_sql = "Select Ag.Id,Ag.Id_Area,Ag.Id_Tipo,Ar.Area,Tp.Tipo From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Ag" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Areas Ar On Ar.Id = Ag.Id_Area" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Tipos Tp On Tp.Id = Ag.Id_Tipo" & vbCrLf &
                        "Where Ag.CodAgente = '" & _CodAgente & "'"

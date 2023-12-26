@@ -434,6 +434,65 @@ Public Class Cl_Tickets
 
     End Function
 
+    Function Fx_Eliminar_Grupo(_Id_Grupo) As Mensaje_Ticket
+
+        Dim _Mensaje As New Mensaje_Ticket
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+        Try
+
+            myTrans = Cn2.BeginTransaction()
+
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Grupos Where Id = " & _Id_Grupo & vbCrLf &
+                           "Delete " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente Where Id_Grupo = " & _Id_Grupo
+            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+            Consulta_sql = "Select Count(*) As Contar From " & _Global_BaseBk & "Zw_Stk_Tickets" & vbCrLf &
+                           "Where Id_Grupo = " & _Id_Grupo & " And Estado = 'ABIE'"
+            Comando = New System.Data.SqlClient.SqlCommand(Consulta_sql, Cn2)
+            Comando.Transaction = myTrans
+
+            Dim _Contar As Integer
+
+            Dim dfd1 As System.Data.SqlClient.SqlDataReader = Comando.ExecuteReader()
+            While dfd1.Read()
+                _Contar = dfd1("Contar")
+            End While
+            dfd1.Close()
+
+            If CBool(_Contar) Then
+                Throw New System.Exception("No se puede eliminar este grupo ya que tiene ticket asociados que aun están abiertos.")
+            End If
+
+            _Mensaje.EsCorrecto = True
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        Catch ex As Exception
+
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
 End Class
 
 Namespace Tickets_Db

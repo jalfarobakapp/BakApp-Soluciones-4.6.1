@@ -94,7 +94,7 @@ Public Class Frm_Kardex_X_Producto_Lista
 
         If _Mostrar_Kardex_Asociados Then Sb_Ver_Kardex_Productos_Hermanos(_Codigo)
 
-        Me.ActiveControl = Txt_Descripcion
+        Me.ActiveControl = Txt_Codigo
 
     End Sub
 
@@ -104,7 +104,7 @@ Public Class Frm_Kardex_X_Producto_Lista
         Dim _Cadena As String
         Dim _Condicion = String.Empty
 
-        Dim _Tx = Split(Txt_Descripcion.Text, ";")
+        Dim _Tx = Split(Txt_Codigo.Text, ";")
 
         If _Tx.Length > 1 Then
 
@@ -113,8 +113,8 @@ Public Class Frm_Kardex_X_Producto_Lista
                 If _Ver_Kardex_Asociados Then
                     _Condicion += "(MP.KOPR = '" & _Tx(i).Trim & "')" & vbCrLf
                 Else
-                    _Cadena = CADENA_A_BUSCAR(_Tx(i).Trim, "MP.KOPR+NOKOPR LIKE '%")
-                    _Condicion += "(MP.KOPR+NOKOPR LIKE '%" & _Cadena & "%')" & vbCrLf
+                    _Cadena = CADENA_A_BUSCAR(_Tx(i).Trim, "MP.KOPR LIKE '")
+                    _Condicion += "(MP.KOPR LIKE '" & _Cadena & "')" & vbCrLf
                 End If
 
                 If i <> _Tx.Length - 1 Then
@@ -126,9 +126,21 @@ Public Class Frm_Kardex_X_Producto_Lista
             _Condicion = "And (" & _Condicion & ")"
 
         Else
-            _Texto_Busqueda = Txt_Descripcion.Text.Trim
-            _Cadena = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "MP.KOPR+NOKOPR LIKE '%")
-            _Condicion = "And MP.KOPR+NOKOPR LIKE '%" & _Cadena & "%'" & vbCrLf
+
+            If Not String.IsNullOrWhiteSpace(Txt_Codigo.Text.Trim) AndAlso String.IsNullOrWhiteSpace(Txt_Descripcion.Text) Then
+
+                _Texto_Busqueda = Txt_Codigo.Text.Trim
+                _Cadena = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "MP.KOPR LIKE '")
+                _Condicion = "And MP.KOPR LIKE '" & _Cadena & "%'" & vbCrLf
+
+            Else
+
+                _Texto_Busqueda = Txt_Codigo.Text.Trim & Txt_Descripcion.Text
+                _Cadena = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "MP.KOPR+NOKOPR LIKE '%")
+                _Condicion = "And MP.KOPR+NOKOPR LIKE '%" & _Cadena & "%'" & vbCrLf
+
+            End If
+
         End If
 
         Consulta_sql = My.Resources.Recursos_Kardex.Kardex_por_producto
@@ -233,7 +245,7 @@ Public Class Frm_Kardex_X_Producto_Lista
         _Tbl_Detalle_Stock = _Sql.Fx_Get_Tablas(Consulta_sql)
 
 
-        Consulta_sql = "SELECT " & vbCrLf &
+        Consulta_sql = "Select " & vbCrLf &
                        "'ZZ' as EMPRESA," & vbCrLf &
                        "'..' as KOSU," & vbCrLf &
                        "'..' as KOBO," & vbCrLf &
@@ -246,10 +258,15 @@ Public Class Frm_Kardex_X_Producto_Lista
                        "SUM(MST.STDV" & _Unidad & "C) AS STDV" & _Unidad & "C,           -- COMPRAS NO RECEPCIONADAS" & vbCrLf &
                        "SUM(MST.RECENOFAC" & _Unidad & ") AS RECENOFAC" & _Unidad & ",   -- RECEPCIONADO SIN FACTURAR" & vbCrLf &
                        "SUM(MST.STOCNV" & _Unidad & "C) AS STOCNV" & _Unidad & "C,       -- STOCK PEDIDO" & vbCrLf &
+                       "CAST(0 As float) As StTeorico," & vbCrLf &
                        "'' AS DATOSUBIC                                                  -- UBICACION EN BODEGA" & vbCrLf &
-                       "From MAEST MST WITH ( NOLOCK )  " & vbCrLf &
-                       "WHERE MST.KOPR = '" & _Codigo & "' AND MST.EMPRESA = '" & ModEmpresa & "'" & vbCrLf &
-                       "GROUP BY KOPR"
+                       "Into #Paso" & vbCrLf &
+                       "From MAEST MST With (Nolock)  " & vbCrLf &
+                       "Where MST.KOPR = '" & _Codigo & "' AND MST.EMPRESA = '" & ModEmpresa & "'" & vbCrLf &
+                       "Group By KOPR" & vbCrLf &
+                       "Update #Paso Set StTeorico = STFI" & _Unidad & "+STDV" & _Unidad & "C+STOCNV" & _Unidad & "C-STOCNV" & _Unidad & vbCrLf &
+                       "Select * From #Paso" & vbCrLf &
+                       "Drop Table #Paso"
 
         _Tbl_Total_Stock = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -332,6 +349,13 @@ Public Class Frm_Kardex_X_Producto_Lista
             .Columns("STOCNV" & _Unidad & "C").DefaultCellStyle.Format = "###,#0"
             .Columns("STOCNV" & _Unidad & "C").ToolTipText = "Ordenes de compra pendientes [OCI][OCC]"
             .Columns("STOCNV" & _Unidad & "C").Visible = True
+
+            .Columns("StTeorico").HeaderText = "St.Teórico"
+            .Columns("StTeorico").Width = 75
+            .Columns("StTeorico").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("StTeorico").DefaultCellStyle.Format = "###,#0"
+            '.Columns("StTeorico").ToolTipText = "Ordenes de compra pendientes [OCI][OCC]"
+            .Columns("StTeorico").Visible = True
 
             .Columns("DATOSUBIC").HeaderText = "Ubicación"
             .Columns("DATOSUBIC").Width = 160
@@ -527,6 +551,7 @@ Public Class Frm_Kardex_X_Producto_Lista
             If Not CBool(GrillaListaProductos.Rows.Count) Then
                 Sb_Llenar_Stock_Por_Producto(Txt_Descripcion.Text)
             End If
+
         End If
 
     End Sub
@@ -718,8 +743,10 @@ Public Class Frm_Kardex_X_Producto_Lista
 
     Private Sub Btn_Ayuda_Asistente_Busqueda_Click(sender As Object, e As EventArgs) Handles Btn_Ayuda_Asistente_Busqueda.Click
 
-        Dim _Msg = "Para buscar una lista de productos puede digitar los códigos exactos a buscar separados por "";"" (punto y coma)" & vbCrLf &
+        Dim _Msg = "Buscar varios códigos (Campo Código(s)):" & vbCrLf &
+                   "Para buscar una lista de productos puede digitar los códigos exactos a buscar separados por "";"" (punto y coma)" & vbCrLf &
                    "Ejemplo: CODIGO01;CODIGO02;CODIGO03" & vbCrLf & vbCrLf &
+                   "Buscar por descripción (Campo Descripción)" & vbCrLf &
                    "Puede buscar registros por algo de la descripción utilizando algo de la descripción o bien las palabras completas, " &
                    "pero deben ir separadas por espacios entre las palabras" & vbCrLf &
                    "Ejemplo: RUEDA DELANTERA SUZUKI"
@@ -806,4 +833,17 @@ Public Class Frm_Kardex_X_Producto_Lista
         End If
     End Sub
 
+    Private Sub Txt_Codigo_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Codigo.KeyDown
+
+        If e.KeyValue = Keys.Enter Or e.KeyValue = Keys.Space Then
+
+            Sb_Actualizar_Listado(False)
+
+            If Not CBool(GrillaListaProductos.Rows.Count) Then
+                Sb_Llenar_Stock_Por_Producto(Txt_Descripcion.Text)
+            End If
+
+        End If
+
+    End Sub
 End Class

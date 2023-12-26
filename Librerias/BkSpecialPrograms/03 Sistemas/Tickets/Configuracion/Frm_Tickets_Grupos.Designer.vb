@@ -41,13 +41,14 @@ Partial Class Frm_Tickets_Grupos
         Me.Btn_ExportarExcel = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Crear_Grupo = New DevComponents.DotNetBar.ButtonItem()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
+        Me.Btn_SeleccionarGrupo = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla_Agentes = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Buscador = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Btn_SeleccionarGrupo = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_EliminarGrupo = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Grilla_Grupos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -144,7 +145,7 @@ Partial Class Frm_Tickets_Grupos
         '
         Me.Menu_Contextual_01.AutoExpandOnClick = True
         Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_EditarOferta, Me.Btn_Mnu_AsociarProductos})
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_EditarOferta, Me.Btn_Mnu_AsociarProductos, Me.Btn_Mnu_EliminarGrupo})
         Me.Menu_Contextual_01.Text = "Opciones"
         '
         'ContextMenuBar1
@@ -194,6 +195,15 @@ Partial Class Frm_Tickets_Grupos
         Me.Bar2.TabIndex = 110
         Me.Bar2.TabStop = False
         Me.Bar2.Text = "Bar2"
+        '
+        'Btn_SeleccionarGrupo
+        '
+        Me.Btn_SeleccionarGrupo.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_SeleccionarGrupo.ForeColor = System.Drawing.Color.Black
+        Me.Btn_SeleccionarGrupo.Image = CType(resources.GetObject("Btn_SeleccionarGrupo.Image"), System.Drawing.Image)
+        Me.Btn_SeleccionarGrupo.ImageAlt = CType(resources.GetObject("Btn_SeleccionarGrupo.ImageAlt"), System.Drawing.Image)
+        Me.Btn_SeleccionarGrupo.Name = "Btn_SeleccionarGrupo"
+        Me.Btn_SeleccionarGrupo.Tooltip = "Seleccionar grupo"
         '
         'Grilla_Agentes
         '
@@ -391,14 +401,12 @@ Partial Class Frm_Tickets_Grupos
         Me.GroupPanel1.TabIndex = 109
         Me.GroupPanel1.Text = "Grupos de trabajo"
         '
-        'Btn_SeleccionarGrupo
+        'Btn_Mnu_EliminarGrupo
         '
-        Me.Btn_SeleccionarGrupo.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_SeleccionarGrupo.ForeColor = System.Drawing.Color.Black
-        Me.Btn_SeleccionarGrupo.Image = CType(resources.GetObject("Btn_SeleccionarGrupo.Image"), System.Drawing.Image)
-        Me.Btn_SeleccionarGrupo.ImageAlt = CType(resources.GetObject("Btn_SeleccionarGrupo.ImageAlt"), System.Drawing.Image)
-        Me.Btn_SeleccionarGrupo.Name = "Btn_SeleccionarGrupo"
-        Me.Btn_SeleccionarGrupo.Tooltip = "Seleccionar grupo"
+        Me.Btn_Mnu_EliminarGrupo.Image = CType(resources.GetObject("Btn_Mnu_EliminarGrupo.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_EliminarGrupo.ImageAlt = CType(resources.GetObject("Btn_Mnu_EliminarGrupo.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_EliminarGrupo.Name = "Btn_Mnu_EliminarGrupo"
+        Me.Btn_Mnu_EliminarGrupo.Text = "Eliminar Grupo"
         '
         'Frm_Tickets_Grupos
         '
@@ -446,4 +454,5 @@ Partial Class Frm_Tickets_Grupos
     Friend WithEvents GroupPanel3 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Btn_SeleccionarGrupo As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_EliminarGrupo As DevComponents.DotNetBar.ButtonItem
 End Class
