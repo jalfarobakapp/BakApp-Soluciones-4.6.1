@@ -323,6 +323,10 @@ Public Class Cl_Tickets
 
             If _Cierra_Ticket Then
                 _Estado = "CERR"
+                .Accion = "CERR"
+                If _CreaNewTicket Then
+                    .Accion = "CECR"
+                End If
             End If
             If _Solicita_Cierre Then
                 _Estado = "SOLC"
@@ -336,6 +340,12 @@ Public Class Cl_Tickets
             .Cierra_Ticket = _Cierra_Ticket
             .Solicita_Cierre = _Solicita_Cierre
             .AnulaTicket = _AnulaTicket
+
+            ' Acciones y Estados
+            'CERR = Cierra ticket
+            'CECR = Cierra ticket y crea nuevo ticket a partir de este
+            'SOLC = Solicita cierre de ticket
+            'NULO = Anula ticket
 
         End With
 

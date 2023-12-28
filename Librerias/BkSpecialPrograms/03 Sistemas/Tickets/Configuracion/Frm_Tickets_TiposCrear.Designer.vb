@@ -39,7 +39,7 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Txt_Tipo = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
-        Me.Btn_Crear_Agente = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Crear_Tipo = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         Me.Panel_Productos.SuspendLayout()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -63,7 +63,7 @@ Partial Class Frm_Tickets_TiposCrear
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(629, 267)
+        Me.GroupPanel1.Size = New System.Drawing.Size(629, 269)
         '
         '
         '
@@ -197,11 +197,11 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Chk_Asignado.ForeColor = System.Drawing.Color.Black
         Me.Chk_Asignado.Location = New System.Drawing.Point(19, 158)
         Me.Chk_Asignado.Name = "Chk_Asignado"
-        Me.Chk_Asignado.Size = New System.Drawing.Size(187, 22)
+        Me.Chk_Asignado.Size = New System.Drawing.Size(291, 22)
         Me.Chk_Asignado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Asignado.TabIndex = 122
         Me.Chk_Asignado.TabStop = False
-        Me.Chk_Asignado.Text = "ASIGNAR EL REQUERIMINETO A:"
+        Me.Chk_Asignado.Text = "ASIGNAR POR DEFECTO EL REQUERIMINETO A:"
         '
         'Lbl_Area
         '
@@ -347,8 +347,8 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Agente})
-        Me.Bar2.Location = New System.Drawing.Point(0, 292)
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Tipo})
+        Me.Bar2.Location = New System.Drawing.Point(0, 291)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(653, 41)
         Me.Bar2.Stretch = True
@@ -357,20 +357,20 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Bar2.TabStop = False
         Me.Bar2.Text = "Bar2"
         '
-        'Btn_Crear_Agente
+        'Btn_Crear_Tipo
         '
-        Me.Btn_Crear_Agente.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Crear_Agente.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Crear_Agente.Image = CType(resources.GetObject("Btn_Crear_Agente.Image"), System.Drawing.Image)
-        Me.Btn_Crear_Agente.ImageAlt = CType(resources.GetObject("Btn_Crear_Agente.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Crear_Agente.Name = "Btn_Crear_Agente"
-        Me.Btn_Crear_Agente.Tooltip = "Grabar"
+        Me.Btn_Crear_Tipo.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Crear_Tipo.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Crear_Tipo.Image = CType(resources.GetObject("Btn_Crear_Tipo.Image"), System.Drawing.Image)
+        Me.Btn_Crear_Tipo.ImageAlt = CType(resources.GetObject("Btn_Crear_Tipo.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Crear_Tipo.Name = "Btn_Crear_Tipo"
+        Me.Btn_Crear_Tipo.Tooltip = "Grabar"
         '
         'Frm_Tickets_TiposCrear
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(653, 333)
+        Me.ClientSize = New System.Drawing.Size(653, 332)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True
@@ -399,7 +399,7 @@ Partial Class Frm_Tickets_TiposCrear
     Public WithEvents Rdb_AjusInventario As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Rdb_SobreStock As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
-    Friend WithEvents Btn_Crear_Agente As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Crear_Tipo As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Lbl_Area As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_Agente As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Txt_Grupo As DevComponents.DotNetBar.Controls.TextBoxX

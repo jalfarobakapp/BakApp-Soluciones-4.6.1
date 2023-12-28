@@ -32,6 +32,10 @@ Public Class Frm_Tickets_TiposCrear
                            "Where Tp.Id = " & _Id_Tipo
             Row_Tipo = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+        Else
+
+
+
         End If
 
     End Sub
@@ -87,7 +91,7 @@ Public Class Frm_Tickets_TiposCrear
         End If
     End Sub
 
-    Private Sub Btn_Crear_Agente_Click(sender As Object, e As EventArgs) Handles Btn_Crear_Agente.Click
+    Private Sub Btn_Crear_Tipo_Click(sender As Object, e As EventArgs) Handles Btn_Crear_Tipo.Click
 
         Dim _Editar As Boolean = CBool(_Id_Tipo)
 
@@ -107,12 +111,12 @@ Public Class Frm_Tickets_TiposCrear
         End If
 
         If String.IsNullOrEmpty(Txt_Tipo.Text) Then
-                MessageBoxEx.Show(Me, "Debe ingresar el tipo de requerimiento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Txt_Tipo.Focus()
-                Return
-            End If
+            MessageBoxEx.Show(Me, "Debe ingresar el tipo de requerimiento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Tipo.Focus()
+            Return
+        End If
 
-            If Chk_ExigeProducto.Checked Then
+        If Chk_ExigeProducto.Checked Then
             If Not Rdb_AjusInventario.Checked AndAlso Not Rdb_RevInventario.Checked AndAlso Not Rdb_SobreStock.Checked Then
                 MessageBoxEx.Show(Me, "Debe marcar alguna de las opciones para la gestión con productos",
                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -145,7 +149,22 @@ Public Class Frm_Tickets_TiposCrear
 
         End If
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tipos Set " &
+        If Rdb_AsignadoAgente.Checked Then
+            Consulta_sql = Fx_Asignar_Agente(_Id_Area, _Id_Tipo, Txt_Agente.Tag)
+        End If
+
+        If Rdb_AsignadoGrupo.Checked Then
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente Where Id_Grupo = " & Txt_Grupo.Tag
+            Dim _Tbl_Grupo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            For Each _Fl As DataRow In _Tbl_Grupo.Rows
+                Consulta_sql += Fx_Asignar_Agente(_Id_Area, _Id_Tipo, _Fl.Item("CodAgente"))
+            Next
+
+        End If
+
+        Consulta_sql += "Update " & _Global_BaseBk & "Zw_Stk_Tipos Set " &
                        "Tipo = '" & Txt_Tipo.Text.Trim & "'" & vbCrLf &
                        ",ExigeProducto = " & Convert.ToInt32(Chk_ExigeProducto.Checked) & vbCrLf &
                        ",RevInventario = " & Convert.ToInt32(Rdb_RevInventario.Checked) & vbCrLf &
@@ -176,7 +195,31 @@ Public Class Frm_Tickets_TiposCrear
 
     End Sub
 
+    Function Fx_Asignar_Agente(_Id_Area As Integer, _Id_Tipo As Integer, _CodAgente As String) As String
+
+        Dim _Sqr As String
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_AgentesVsTipos",
+                                                       "Id_Area = " & _Id_Area & " And Id_Tipo = " & _Id_Tipo & " And CodAgente = '" & _CodAgente & "'")
+
+        If Not CBool(_Reg) Then
+            _Sqr = "Insert Into " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos (Id_Area,Id_Tipo,CodAgente) Values " &
+           "(" & _Id_Area & "," & _Id_Tipo & ",'" & _CodAgente & "')" & vbCrLf
+        End If
+
+        Return _Sqr
+
+    End Function
+
     Private Sub Txt_Grupo_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Grupo.ButtonCustomClick
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Grupos",
+                                                       "Id In (Select Id_Grupo From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente)")
+
+        If Not CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "No existen grupos para asociar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Dim Fm As New Frm_Tickets_Grupos
         Fm.ModoSeleccion = True
@@ -198,6 +241,13 @@ Public Class Frm_Tickets_TiposCrear
     End Sub
 
     Private Sub Txt_Agente_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Agente.ButtonCustomClick
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Agentes", "")
+
+        If Not CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "No existen agentes que asociar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Dim _Sql_Filtro_Condicion_Extra = "And KOFU In (Select CodAgente From " & _Global_BaseBk & "Zw_Stk_Agentes)"
 
@@ -234,24 +284,25 @@ Public Class Frm_Tickets_TiposCrear
 
     Private Sub Chk_Asignado_CheckedChanged(sender As Object, e As EventArgs)
 
-        If Not Chk_Asignado.Checked Then
+        'If Not Chk_Asignado.Checked Then
 
-            If String.IsNullOrWhiteSpace(Txt_Tipo.Text) Then
-                MessageBoxEx.Show(Me, "Falta el tipo de requerimiento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Chk_Asignado.Checked = False
-                Return
-            End If
+        '    If String.IsNullOrWhiteSpace(Txt_Tipo.Text) Then
+        '        MessageBoxEx.Show(Me, "Falta el tipo de requerimiento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '        Chk_Asignado.Checked = False
+        '        Return
+        '    End If
 
-        Else
-            Txt_Grupo.Tag = 0
-            Txt_Agente.Tag = String.Empty
-            Txt_Grupo.Text = String.Empty
-            Txt_Agente.Text = String.Empty
-            Rdb_AsignadoAgente.Checked = False
-            Rdb_AsignadoGrupo.Checked = False
-            Txt_Grupo.Enabled = False
-            Txt_Agente.Enabled = False
-        End If
+        'End If
+
+        Txt_Grupo.Tag = 0
+        Txt_Agente.Tag = String.Empty
+        Txt_Grupo.Text = String.Empty
+        Txt_Agente.Text = String.Empty
+        Rdb_AsignadoAgente.Checked = False
+        Rdb_AsignadoGrupo.Checked = False
+        Txt_Grupo.Enabled = False
+        Txt_Agente.Enabled = False
+
         Rdb_AsignadoAgente.Enabled = Chk_Asignado.Checked
         Rdb_AsignadoGrupo.Enabled = Chk_Asignado.Checked
 

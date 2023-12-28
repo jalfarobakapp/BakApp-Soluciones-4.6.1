@@ -55,14 +55,11 @@ Public Class Frm_Tickets_Grupos
 
         Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "Gr.Grupo+Isnull(NOKOFU,'') Like '%")
 
-        'If Not String.IsNullOrWhiteSpace(Txt_BuscaXProducto.Text) Then
-        '_Condicion = "And CODIGO In (Select CODIGO From MAEDRES Where ELEMENTO = '" & Txt_BuscaXProducto.Text & "')"
-        'End If
-
         Consulta_sql = "Select Distinct Gr.* From " & _Global_BaseBk & "Zw_Stk_Grupos Gr" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente GvsA On GvsA.Id_Grupo = Gr.Id" & vbCrLf &
                        "Left Join TABFU Tf On Tf.KOFU = GvsA.CodAgente" & vbCrLf &
-                       "Where Gr.Grupo+Isnull(NOKOFU,'') Like '%" & _Cadena & "%'"
+                       "Where Gr.Grupo+Isnull(NOKOFU,'') Like '%" & _Cadena & "%'" & vbCrLf &
+                       "Order by Gr.Grupo"
         _Tbl_Grupos = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla_Grupos
@@ -85,6 +82,13 @@ Public Class Frm_Tickets_Grupos
 
     Private Sub Btn_Crear_Grupo_Click(sender As Object, e As EventArgs) Handles Btn_Crear_Grupo.Click
 
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Agentes", "Activo = 1")
+
+        If Not CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "No existen agentes que asociar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         Dim _Aceptar As Boolean
         Dim _Grupo As String
 
@@ -94,7 +98,7 @@ Public Class Frm_Tickets_Grupos
             Return
         End If
 
-        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Grupos", "Grupo = '" & _Grupo & "'")
+        _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Grupos", "Grupo = '" & _Grupo & "'")
 
         If CBool(_Reg) Then
             MessageBoxEx.Show(Me, "El nombre del Grupo ya existe", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -102,10 +106,47 @@ Public Class Frm_Tickets_Grupos
             Return
         End If
 
+        MessageBoxEx.Show(Me, "A continuación debera asociar agentes al grupo", "Asociar agentes",
+                          MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        Dim _Sql_Filtro_Condicion_Extra = "And KOFU In " &
+                                           "(Select CodAgente From " & _Global_BaseBk & "Zw_Stk_Agentes " &
+                                           "Where Activo = 1)-- And CodAgente Not In (Select CodAgente From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente))"
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra, False, False) Then
+            _Tbl_Agentes = _Filtrar.Pro_Tbl_Filtro
+        End If
+
+        If IsNothing(_Tbl_Agentes) Then
+            MessageBoxEx.Show(Me, "No puede crear un grupo sin agentes asociados", "Validación", MessageBoxButtons.OK,
+                              MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Id_Grupo As Integer
+
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Grupos (Grupo) Values ('" & _Grupo & "')"
-        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-            Me.Sb_Actualizar_Grilla()
-            BuscarDatoEnGrilla(_Grupo, "Grupo", Grilla_Grupos)
+        If _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Grupo) Then
+
+            Consulta_sql = String.Empty
+
+            For Each _Fila As DataRow In _Tbl_Agentes.Rows
+
+                Dim _CodAgente As String = _Fila.Item("Codigo")
+                Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente (Id_Grupo,CodAgente) Values (" & _Id_Grupo & ",'" & _CodAgente & "')" & vbCrLf
+
+            Next
+
+            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+
+                Me.Sb_Actualizar_Grilla()
+                BuscarDatoEnGrilla(_Grupo, "Grupo", Grilla_Grupos)
+
+            End If
+
         End If
 
     End Sub
@@ -154,7 +195,9 @@ Public Class Frm_Tickets_Grupos
         Dim _Id_Grupo As Integer = _FilaArea.Cells("Id").Value
         Dim _Tbl_Agentes As DataTable
 
-        Dim _Sql_Filtro_Condicion_Extra = "And KOFU Not In (Select CodAgente From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente Where Id_Grupo = " & _Id_Grupo & ")"
+        Dim _Sql_Filtro_Condicion_Extra = "And KOFU In " &
+                                           "(Select CodAgente From " & _Global_BaseBk & "Zw_Stk_Agentes " &
+                                           "Where Activo = 1 And CodAgente Not In (Select CodAgente From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente Where Id_Grupo = " & _Id_Grupo & "))"
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
 
@@ -179,6 +222,7 @@ Public Class Frm_Tickets_Grupos
         End If
 
         _Sql.Ej_consulta_IDU(Consulta_sql)
+
         Call Grilla_Grupos_CellEnter(Nothing, Nothing)
 
     End Sub
@@ -207,7 +251,8 @@ Public Class Frm_Tickets_Grupos
 
         Consulta_sql = "Select Gr.*,Tf.NOKOFU From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente Gr" & vbCrLf &
                        "Left Join TABFU Tf On Tf.KOFU = Gr.CodAgente" & vbCrLf &
-                       "Where Id_Grupo = " & _Id_Grupo
+                       "Where Id_Grupo = " & _Id_Grupo & vbCrLf &
+                       "Order by Tf.NOKOFU"
 
         _Tbl_Agentes = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -322,4 +367,9 @@ Public Class Frm_Tickets_Grupos
 
     End Sub
 
+    Private Sub Txt_Buscador_TextChanged(sender As Object, e As EventArgs) Handles Txt_Buscador.TextChanged
+        If String.IsNullOrWhiteSpace(Txt_Buscador.Text) Then
+            Sb_Actualizar_Grilla()
+        End If
+    End Sub
 End Class

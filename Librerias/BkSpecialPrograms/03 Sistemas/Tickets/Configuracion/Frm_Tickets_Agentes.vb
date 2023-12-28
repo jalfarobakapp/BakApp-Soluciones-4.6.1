@@ -14,6 +14,9 @@ Public Class Frm_Tickets_Agentes
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
+        Sb_Formato_Generico_Grilla(Grilla_Agentes, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_Tipos, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
+
     End Sub
 
     Private Sub Frm_Tickets_Agentes_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -31,17 +34,14 @@ Public Class Frm_Tickets_Agentes
 
     Sub Sb_Actualizar_Grilla()
 
-        'Dim _Texto_Busqueda As String = Txt_Buscador.Text.Trim
-        'Dim _Condicion As String = String.Empty
+        Dim _Texto_Busqueda As String = Txt_Buscador.Text.Trim
+        Dim _Condicion As String = String.Empty
 
-        'Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "CODIGO+DESCRIPTOR Like '%")
-
-        'If Not String.IsNullOrWhiteSpace(Txt_BuscaXProducto.Text) Then
-        '_Condicion = "And CODIGO In (Select CODIGO From MAEDRES Where ELEMENTO = '" & Txt_BuscaXProducto.Text & "')"
-        'End If
+        Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "CodAgente+NOKOFU Like '%")
 
         Consulta_sql = "Select Ag.*,NOKOFU From " & _Global_BaseBk & "Zw_Stk_Agentes Ag" & vbCrLf &
-                       "Left Join TABFU On KOFU = Ag.CodAgente"
+                       "Left Join TABFU On KOFU = Ag.CodAgente" & vbCrLf &
+                       "Where CodAgente+NOKOFU Like '%" & _Cadena & "%'"
         _Tbl_Agentes = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla_Agentes
@@ -70,12 +70,6 @@ Public Class Frm_Tickets_Agentes
 
     Private Sub Grilla_Agentes_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Agentes.CellEnter
 
-        Try
-
-        Catch ex As Exception
-
-        End Try
-
         Dim _Fila As DataGridViewRow = Grilla_Agentes.CurrentRow
 
         If IsNothing(_Fila) Then
@@ -84,10 +78,28 @@ Public Class Frm_Tickets_Agentes
 
         Dim _CodAgente As String = _Fila.Cells("CodAgente").Value
 
-        Consulta_sql = "Select Ag.Id,Ag.Id_Area,Ag.Id_Tipo,Ar.Area,Tp.Tipo From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Ag" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_Stk_Areas Ar On Ar.Id = Ag.Id_Area" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_Stk_Tipos Tp On Tp.Id = Ag.Id_Tipo" & vbCrLf &
-                       "Where Ag.CodAgente = '" & _CodAgente & "'"
+        'Consulta_sql = "Select Ag.Id,Ag.Id_Area,Ag.Id_Tipo,Ar.Area,Tp.Tipo From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Ag" & vbCrLf &
+        '               "Left Join " & _Global_BaseBk & "Zw_Stk_Areas Ar On Ar.Id = Ag.Id_Area" & vbCrLf &
+        '               "Left Join " & _Global_BaseBk & "Zw_Stk_Tipos Tp On Tp.Id = Ag.Id_Tipo" & vbCrLf &
+        '               "Where Ag.CodAgente = '" & _CodAgente & "'" & vbCrLf &
+        '               "Order By Ar.Area,Tp.Tipo"
+
+        'Consulta_sql = "SELECT Tipo,Area" & vbCrLf &
+        '               "From " & _Global_BaseBk & "Zw_Stk_Tipos Tp" & vbCrLf &
+        '               "Left Join " & _Global_BaseBk & "Zw_Stk_Areas Ar On Ar.Id = Tp.Id_Area" & vbCrLf &
+        '               "Where Id_Grupo In (Select Id_Grupo From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente " &
+        '               "Where CodAgente = '" & _CodAgente & "') Or CodAgente = '" & _CodAgente & "'"
+
+        Consulta_sql = "Select Tipo,Area,'Como Agente' As Asociado" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Stk_Tipos Tp" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Stk_Areas Ar On Ar.Id = Tp.Id_Area" & vbCrLf &
+                       "Where CodAgente = '" & _CodAgente & "'" & vbCrLf &
+                       "Union" & vbCrLf &
+                       "Select Tipo,Area,'En Grupo: '+Grupo As Asociado" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Stk_Tipos Tp" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Stk_Areas Ar On Ar.Id = Tp.Id_Area" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Stk_Grupos Gr On Gr.Id = Tp.Id_Grupo" & vbCrLf &
+                       "Where Id_Grupo In (Select Id_Grupo From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente Where CodAgente = '" & _CodAgente & "')"
 
         Dim _Tbl_Tipos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -101,14 +113,20 @@ Public Class Frm_Tickets_Agentes
 
             .Columns("Area").Visible = True
             .Columns("Area").HeaderText = "Area"
-            .Columns("Area").Width = 150
+            .Columns("Area").Width = 140
             .Columns("Area").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Tipo").Visible = True
             .Columns("Tipo").HeaderText = "Tipo"
-            .Columns("Tipo").Width = 290
+            .Columns("Tipo").Width = 200
             .Columns("Tipo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Asociado").Visible = True
+            .Columns("Asociado").HeaderText = "Asociado"
+            .Columns("Asociado").Width = 150
+            .Columns("Asociado").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
         End With
@@ -151,6 +169,13 @@ Public Class Frm_Tickets_Agentes
     End Sub
 
     Private Sub Btn_Mnu_AsociarTipos_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_AsociarTipos.Click
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tipos", "")
+
+        If Not CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "No existen tipos de requerimiento que asociar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Dim _Fila As DataGridViewRow = Grilla_Agentes.CurrentRow
         Dim _CodAgente As String = _Fila.Cells("CodAgente").Value
@@ -271,6 +296,18 @@ Public Class Frm_Tickets_Agentes
 
     Private Sub Btn_Mnu_QuitarTipo_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_QuitarTipo.Click
 
+        Dim _Fila_Ag As DataGridViewRow = Grilla_Agentes.CurrentRow
+        Dim _CodAgente As String = _Fila_Ag.Cells("CodAgente").Value
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tipos", "CodAgente = '" & _CodAgente & "'")
+
+        If CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "No se puede quitar este tipo de requerimiento." & vbCrLf &
+                              "El Agente esta asociado por defecto al tipo de requerimiento.",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         Dim _Fila As DataGridViewRow = Grilla_Tipos.CurrentRow
         Dim _Id As Integer = _Fila.Cells("Id").Value
 
@@ -286,4 +323,22 @@ Public Class Frm_Tickets_Agentes
 
     End Sub
 
+    Private Sub Txt_Buscador_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Buscador.KeyDown
+
+        If e.KeyValue = Keys.Enter Then
+            Sb_Actualizar_Grilla()
+        End If
+
+    End Sub
+
+    Private Sub Txt_Buscador_TextChanged(sender As Object, e As EventArgs) Handles Txt_Buscador.TextChanged
+        If String.IsNullOrWhiteSpace(Txt_Buscador.Text) Then
+            Sb_Actualizar_Grilla()
+        End If
+    End Sub
+
+    Private Sub Txt_Buscador_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Buscador.ButtonCustom2Click
+        Txt_Buscador.Text = String.Empty
+        Sb_Actualizar_Grilla()
+    End Sub
 End Class

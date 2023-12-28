@@ -76,7 +76,7 @@ Partial Class Frm_Tickets_Agentes
         Me.Btn_Crear_Agente.Image = CType(resources.GetObject("Btn_Crear_Agente.Image"), System.Drawing.Image)
         Me.Btn_Crear_Agente.ImageAlt = CType(resources.GetObject("Btn_Crear_Agente.ImageAlt"), System.Drawing.Image)
         Me.Btn_Crear_Agente.Name = "Btn_Crear_Agente"
-        Me.Btn_Crear_Agente.Tooltip = "Crear nuevo tipo de descuento especial"
+        Me.Btn_Crear_Agente.Tooltip = "Crear nuevo agente"
         '
         'Btn_ExportarExcel
         '

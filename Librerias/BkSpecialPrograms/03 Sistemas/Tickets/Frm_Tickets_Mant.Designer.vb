@@ -815,7 +815,7 @@ Partial Class Frm_Tickets_Mant
         Me.Btn_Eliminar.Image = CType(resources.GetObject("Btn_Eliminar.Image"), System.Drawing.Image)
         Me.Btn_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Eliminar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Eliminar.Name = "Btn_Eliminar"
-        Me.Btn_Eliminar.Tooltip = "Eliminar comisión"
+        Me.Btn_Eliminar.Tooltip = "Anular Ticket"
         Me.Btn_Eliminar.Visible = False
         '
         'Frm_Tickets_Mant

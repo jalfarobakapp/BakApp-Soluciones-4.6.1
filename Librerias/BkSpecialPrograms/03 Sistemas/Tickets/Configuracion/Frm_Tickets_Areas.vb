@@ -36,16 +36,14 @@ Public Class Frm_Tickets_Areas
 
     Sub Sb_Actualizar_Grilla()
 
-        'Dim _Texto_Busqueda As String = Txt_Buscador.Text.Trim
-        'Dim _Condicion As String = String.Empty
+        Dim _Texto_Busqueda As String = Txt_Buscador.Text.Trim
+        Dim _Condicion As String = String.Empty
 
-        'Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "CODIGO+DESCRIPTOR Like '%")
+        Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "Area+Tipo Like '%")
 
-        'If Not String.IsNullOrWhiteSpace(Txt_BuscaXProducto.Text) Then
-        '_Condicion = "And CODIGO In (Select CODIGO From MAEDRES Where ELEMENTO = '" & Txt_BuscaXProducto.Text & "')"
-        'End If
-
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Areas"
+        Consulta_sql = "Select Distinct Ar.* From " & _Global_BaseBk & "Zw_Stk_Areas Ar" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_Stk_Tipos Tp On Tp.Id_Area = Ar.Id" & vbCrLf &
+                       "Where Area+Tipo Like '%" & _Cadena & "%'"
         _Tbl_Areas = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla_Areas
@@ -203,7 +201,6 @@ Public Class Frm_Tickets_Areas
         Sb_Actualizar_Grilla_Tipos(_Id_Area)
 
     End Sub
-
     Sub Sb_Actualizar_Grilla_Tipos(_Id_Area As Integer)
 
         Consulta_sql = "Select Tp.*,Isnull(Tf.NOKOFU,'') As 'Agente',Isnull(Gr.Grupo,'') As Grupo," & vbCrLf &
@@ -216,7 +213,7 @@ Public Class Frm_Tickets_Areas
                        "From " & _Global_BaseBk & "Zw_Stk_Tipos Tp" & vbCrLf &
                        "Left Join TABFU Tf On Tf.KOFU = Tp.CodAgente" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Grupos Gr On Tp.Id_Grupo = Gr.Id" & vbCrLf &
-                       "Where Id_Area = " & _Id_Area
+                       "Where Tp.Id_Area = " & _Id_Area
         _Tbl_Tipos = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla_Tipos
@@ -342,5 +339,24 @@ Public Class Frm_Tickets_Areas
             Grilla_Areas.Rows.Remove(_Fila)
         End If
 
+    End Sub
+
+    Private Sub Txt_Buscador_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Buscador.KeyDown
+
+        If e.KeyValue = Keys.Enter Then
+            Sb_Actualizar_Grilla()
+        End If
+
+    End Sub
+
+    Private Sub Txt_Buscador_TextChanged(sender As Object, e As EventArgs) Handles Txt_Buscador.TextChanged
+        If String.IsNullOrWhiteSpace(Txt_Buscador.Text) Then
+            Sb_Actualizar_Grilla()
+        End If
+    End Sub
+
+    Private Sub Txt_Buscador_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Buscador.ButtonCustom2Click
+        Txt_Buscador.Text = String.Empty
+        Sb_Actualizar_Grilla()
     End Sub
 End Class

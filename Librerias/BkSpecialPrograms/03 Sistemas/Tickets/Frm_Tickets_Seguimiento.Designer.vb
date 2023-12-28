@@ -207,6 +207,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Btn_Mnu_SolicitarCierre.Image = CType(resources.GetObject("Btn_Mnu_SolicitarCierre.Image"), System.Drawing.Image)
         Me.Btn_Mnu_SolicitarCierre.Name = "Btn_Mnu_SolicitarCierre"
         Me.Btn_Mnu_SolicitarCierre.Text = "Solicitar cierre de Ticket al remitente."
+        Me.Btn_Mnu_SolicitarCierre.Visible = False
         '
         'Btn_Anular
         '

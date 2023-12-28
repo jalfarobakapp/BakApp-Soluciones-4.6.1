@@ -131,6 +131,8 @@ Public Class Frm_Tickets_Mant
 
         Me.ActiveControl = Txt_Asunto
 
+        AddHandler Txt_Cantidad.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros
+
     End Sub
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
@@ -185,7 +187,22 @@ Public Class Frm_Tickets_Mant
 
         End If
 
+        Dim _Reg As Integer
+
+        Dim _TkProducto As Tickets_Db.Tickets_Producto = _Cl_Tickets.Tickets.Tickets_Producto
+
         With _Cl_Tickets.Tickets
+
+            .Asunto = Txt_Asunto.Text.Trim
+            .Descripcion = Txt_Descripcion.Text.Trim
+            .Prioridad = Cmb_Prioridad.SelectedValue
+            .Id_Area = Txt_Area.Tag
+            .Id_Tipo = Txt_Tipo.Tag
+            .Id_Grupo = Txt_Grupo.Tag
+            .CodAgente = Txt_Agente.Tag
+            .Asignado = Chk_Asignado.Checked
+            .AsignadoGrupo = Rdb_AsignadoGrupo.Checked
+            .AsignadoAgente = Rdb_AsignadoAgente.Checked
 
             If Chk_ExigeProducto.Checked Then
 
@@ -199,7 +216,7 @@ Public Class Frm_Tickets_Mant
                 .Tickets_Producto.FechaRev = Dtp_FechaRev.Value
                 .Tickets_Producto.Cantidad = Val(Txt_Cantidad.Text)
 
-                Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets_PorDefecto",
+                _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets_PorDefecto",
                                    "CodFuncionario = '" & .CodFuncionario_Crea & "' And Asunto = '" & .Asunto & "'")
 
                 If _Reg = 0 Then
@@ -247,16 +264,17 @@ Public Class Frm_Tickets_Mant
 
             End If
 
-            .Asunto = Txt_Asunto.Text.Trim
-            .Descripcion = Txt_Descripcion.Text.Trim
-            .Prioridad = Cmb_Prioridad.SelectedValue
-            .Id_Area = Txt_Area.Tag
-            .Id_Tipo = Txt_Tipo.Tag
-            .Id_Grupo = Txt_Grupo.Tag
-            .CodAgente = Txt_Agente.Tag
-            .Asignado = Chk_Asignado.Checked
-            .AsignadoGrupo = Rdb_AsignadoGrupo.Checked
-            .AsignadoAgente = Rdb_AsignadoAgente.Checked
+            _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets",
+                                        "Id_Tipo = " & .Id_Tipo & " And Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto " &
+                                        "Where Empresa = '" & _TkProducto.Empresa & "' And Sucursal = '" & _TkProducto.Sucursal & "' And Bodega = '" & _TkProducto.Bodega & "' And Codigo = '" & _TkProducto.Codigo & "') And Estado = 'ABIE'")
+
+            If CBool(_Reg) Then
+                MessageBoxEx.Show(Me, "No puede volver a enviar un ticket por " & Txt_Area.Text.Trim & " - " & Txt_Tipo.Text.Trim & vbCrLf &
+                                  "Por el producto: " & Txt_Producto.Text.Trim & vbCrLf & vbCrLf &
+                                  "Ya hay un ticket abierto por esta misma solución",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
 
         End With
 
