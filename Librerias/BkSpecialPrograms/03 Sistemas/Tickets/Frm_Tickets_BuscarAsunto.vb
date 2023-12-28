@@ -19,6 +19,8 @@ Public Class Frm_Tickets_BuscarAsunto
 
         Me._CodFuncionario = _CodFuncionario
 
+        Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+
     End Sub
 
     Private Sub Frm_Tickets_BuscarAsunto_Load(sender As Object, e As EventArgs) Handles MyBase.Load

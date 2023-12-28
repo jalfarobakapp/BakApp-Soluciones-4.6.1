@@ -201,7 +201,7 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Chk_Asignado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Asignado.TabIndex = 122
         Me.Chk_Asignado.TabStop = False
-        Me.Chk_Asignado.Text = "ASIGNAR POR DEFECTO EL REQUERIMINETO A:"
+        Me.Chk_Asignado.Text = "ASIGNAR POR DEFECTO EL REQUERIMIENTO A:"
         '
         'Lbl_Area
         '

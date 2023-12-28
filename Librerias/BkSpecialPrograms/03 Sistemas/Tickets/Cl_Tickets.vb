@@ -117,6 +117,8 @@ Public Class Cl_Tickets
         Tickets.Numero = Fx_NvoNro_OT()
         Tickets.Estado = "ABIE"
 
+        Consulta_sql = String.Empty
+
         If Tickets.Asignado Then
 
             If Tickets.AsignadoGrupo Then
@@ -124,14 +126,16 @@ Public Class Cl_Tickets
             End If
 
             If Tickets.AsignadoAgente Then
-                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Where CodAgente = '" & Tickets.CodAgente & "'"
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Agentes Where CodAgente = '" & Tickets.CodAgente & "'"
             End If
 
-        Else
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Where Id_Area = " & Tickets.Id_Area & " And Id_Tipo = " & Tickets.Id_Tipo
         End If
 
-        Dim _Tbl_Agentes As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Agentes As DataTable
+
+        If Not String.IsNullOrEmpty(Consulta_sql) Then
+            _Tbl_Agentes = _Sql.Fx_Get_Tablas(Consulta_sql)
+        End If
 
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
@@ -185,7 +189,8 @@ Public Class Cl_Tickets
                            ",Accion = 'MENS'" &
                            ",Descripcion = '" & Tickets.Descripcion & "'" &
                            ",Fecha = Getdate()" &
-                           ",En_Construccion = 0" & vbCrLf &
+                           ",En_Construccion = 0" &
+                           ",CodFunGestiona = '" & Tickets.CodFuncionario_Crea & "'" & vbCrLf &
                            "Where Id = " & Tickets.New_Id_TicketAc
             Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
             Comando.Transaction = myTrans
@@ -274,8 +279,8 @@ Public Class Cl_Tickets
 
             myTrans = Cn2.BeginTransaction()
 
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones (Id_Ticket,Accion,Descripcion,Fecha,CodFuncionario,En_Construccion) Values " &
-                           "(" & Tickets.Id & ",'" & _Accion & "','',Getdate(),'" & _CodFuncionario & "',1)"
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones (Id_Ticket,Accion,Descripcion,Fecha,CodFuncionario,En_Construccion,CodFunGestiona) Values " &
+                           "(" & Tickets.Id & ",'" & _Accion & "','',Getdate(),'" & _CodFuncionario & "',1,'" & _CodFuncionario & "')"
             Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
@@ -396,12 +401,13 @@ Public Class Cl_Tickets
                 _Campo_FunAg = "CodAgente"
             End If
 
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones (Id_Ticket,Accion,Descripcion,Fecha," & _Campo_FunAg & ",En_Construccion,Cierra_Ticket,Solicita_Cierre,CreaNewTicket,AnulaTicket) Values " &
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones (Id_Ticket,Accion,Descripcion,Fecha," & _Campo_FunAg & ",En_Construccion,Cierra_Ticket,Solicita_Cierre,CreaNewTicket,AnulaTicket,CodFunGestiona) Values " &
                            "(" & Tickets.Id & ",'" & _Tickets_Acciones.Accion & "','" & _Tickets_Acciones.Descripcion & "',Getdate(),'" & _Tickets_Acciones.CodFuncionario & "',0" &
                            "," & Convert.ToInt32(_Cierra_Ticket) &
                            "," & Convert.ToInt32(_Solicita_Cierre) &
                            "," & Convert.ToInt32(_CreaNewTicket) &
-                           "," & Convert.ToInt32(_AnulaTicket) & ")"
+                           "," & Convert.ToInt32(_AnulaTicket) &
+                           ",'" & _Tickets_Acciones.CodFuncionario & "')"
             Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
@@ -421,9 +427,9 @@ Public Class Cl_Tickets
 
             _Mensaje_Ticket.EsCorrecto = True
 
-            If _Cierra_Ticket Then _Mensaje_Ticket.Mensaje = "Ticket cerrado correctamente"
+            If _Cierra_Ticket Then _Mensaje_Ticket.Mensaje = "Ticket #" & Tickets.Numero & " cerrado correctamente"
             If _Solicita_Cierre Then _Mensaje_Ticket.Mensaje = "Solicitud de cierre enviada correctamente"
-            If _AnulaTicket Then _Mensaje_Ticket.Mensaje = "Ticket anulado correctamente"
+            If _AnulaTicket Then _Mensaje_Ticket.Mensaje = "Ticket #" & Tickets.Numero & " anulado correctamente"
 
             _Mensaje_Ticket.Tickets_Acciones = _Tickets_Acciones
 

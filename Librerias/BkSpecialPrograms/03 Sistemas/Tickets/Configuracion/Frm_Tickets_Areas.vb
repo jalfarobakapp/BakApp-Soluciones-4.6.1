@@ -39,11 +39,12 @@ Public Class Frm_Tickets_Areas
         Dim _Texto_Busqueda As String = Txt_Buscador.Text.Trim
         Dim _Condicion As String = String.Empty
 
-        Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "Area+Tipo Like '%")
+        Dim _CadArea As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "Area Like '%")
+        Dim _CadTipo As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "Tipo Like '%")
 
         Consulta_sql = "Select Distinct Ar.* From " & _Global_BaseBk & "Zw_Stk_Areas Ar" & vbCrLf &
-                       "Inner Join " & _Global_BaseBk & "Zw_Stk_Tipos Tp On Tp.Id_Area = Ar.Id" & vbCrLf &
-                       "Where Area+Tipo Like '%" & _Cadena & "%'"
+                       "Left Join " & _Global_BaseBk & "Zw_Stk_Tipos Tp On Tp.Id_Area = Ar.Id" & vbCrLf &
+                       "Where Area Like '%" & _CadArea & "%' Or Tipo Like '%" & _CadTipo & "%'"
         _Tbl_Areas = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla_Areas
@@ -290,9 +291,8 @@ Public Class Frm_Tickets_Areas
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Estado = 'ABIE' And Id_Tipo = " & _Id_Tipo)
 
         If CBool(_Reg) Then
-            MessageBoxEx.Show(Me, "Existen Tickets que están abierto y usan este tipo de requerimiento." & vbCrLf &
-                              "Se mostrara el siguiente formulario, sin embargo el sistema volverá a validar que no hayan Tickets abiertos para que pueda editar",
-                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            MessageBoxEx.Show(Me, "Existen Tickets asignados a este tipo de requerimiento, solo se puede editar la asignación.",
+                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End If
 
 

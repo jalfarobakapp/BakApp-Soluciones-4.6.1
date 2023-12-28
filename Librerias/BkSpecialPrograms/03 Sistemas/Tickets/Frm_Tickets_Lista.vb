@@ -47,12 +47,12 @@
         If _Tipo_Tickets = Enum_Tickets.MisTicket Then
             Me.Text = "MIS TICKETS"
             Chk_TickesAsigMi.Visible = False
-            Chk_TickesTiposMi.Visible = False
+            Chk_TickesMiGrupo.Visible = False
         Else
             Me.Text = "TICKET ASIGNADOS A MI COMO AGENTE"
         End If
 
-        AddHandler Chk_TickesTiposMi.CheckedChanged, AddressOf Chk_TickesTiposMi_CheckedChanged
+        AddHandler Chk_TickesMiGrupo.CheckedChanged, AddressOf Chk_TickesTiposMi_CheckedChanged
 
     End Sub
 
@@ -68,8 +68,10 @@
         '_Condicion = "And CODIGO In (Select CODIGO From MAEDRES Where ELEMENTO = '" & Txt_BuscaXProducto.Text & "')"
         'End If
 
-        If Chk_TickesTiposMi.Visible And Chk_TickesTiposMi.Checked Then
-            _Condicion2 = "Or (Tks.Id_Tipo In (Select Id_Tipo From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Where CodAgente = '" & FUNCIONARIO & "'))"
+        If Chk_TickesMiGrupo.Visible And Chk_TickesMiGrupo.Checked Then
+            _Condicion2 = "Or (Tks.Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tickets " &
+                          "Where Id_Grupo In (Select Id_Grupo From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente " &
+                          "Where CodAgente = '" & FUNCIONARIO & "')))"
         End If
 
         Select Case _Tipo_Tickets
@@ -89,13 +91,13 @@
                        ",Case Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'UR' Then 'Urgente' Else '??' End As NomPrioridad" & vbCrLf &
                        ",Case UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion" & vbCrLf &
                        ",Case Estado When 'ABIE' then 'Abierto' When 'CERR' then 'Cerrado' When 'NULO' then 'Nulo' When 'SOLC' then 'Sol. Cierre' End As NomEstado," & vbCrLf &
-                       "(Select COUNT(*) From BAKAPP_PRB.dbo.Zw_Stk_Tickets_Acciones AcMs Where AcMs.Id_Ticket = Tks.Id And AcMs.Accion = 'MENS' And AcMs.Visto = 0) As Mesn_Pdte_Ver," & vbCrLf &
-                       "(Select COUNT(*) From BAKAPP_PRB.dbo.Zw_Stk_Tickets_Acciones AcRs Where AcRs.Id_Ticket = Tks.Id And AcRs.Accion = 'RESP' And AcRs.Visto = 0) As Resp_Pdte_Ver" & vbCrLf &
+                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcMs Where AcMs.Id_Ticket = Tks.Id And AcMs.Accion = 'MENS' And AcMs.Visto = 0) As Mesn_Pdte_Ver," & vbCrLf &
+                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcRs Where AcRs.Id_Ticket = Tks.Id And AcRs.Accion = 'RESP' And AcRs.Visto = 0) As Resp_Pdte_Ver" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stk_Tickets Tks" & vbCrLf &
-                       "Inner Join " & _Global_BaseBk & "Zw_Stk_Tickets_Producto TkPrd On Tks.Id = TkPrd.Id_Ticket" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets_Producto TkPrd On Tks.Id = TkPrd.Id_Ticket" & vbCrLf &
                        "Where 1 > 0" & vbCrLf & _Condicion
 
-        _Tbl_Tickets = _Sql.Fx_Get_Tablas(Consulta_sql, False)
+        _Tbl_Tickets = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla
 

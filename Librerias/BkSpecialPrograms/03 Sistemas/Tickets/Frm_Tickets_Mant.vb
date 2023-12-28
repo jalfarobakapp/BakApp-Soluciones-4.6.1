@@ -194,7 +194,6 @@ Public Class Frm_Tickets_Mant
         With _Cl_Tickets.Tickets
 
             .Asunto = Txt_Asunto.Text.Trim
-            .Descripcion = Txt_Descripcion.Text.Trim
             .Prioridad = Cmb_Prioridad.SelectedValue
             .Id_Area = Txt_Area.Tag
             .Id_Tipo = Txt_Tipo.Tag
@@ -265,7 +264,7 @@ Public Class Frm_Tickets_Mant
             End If
 
             _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets",
-                                        "Id_Tipo = " & .Id_Tipo & " And Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto " &
+                                        "Id <> " & _Cl_Tickets_Padre.Tickets.Id & " And Id_Tipo = " & .Id_Tipo & " And Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto " &
                                         "Where Empresa = '" & _TkProducto.Empresa & "' And Sucursal = '" & _TkProducto.Sucursal & "' And Bodega = '" & _TkProducto.Bodega & "' And Codigo = '" & _TkProducto.Codigo & "') And Estado = 'ABIE'")
 
             If CBool(_Reg) Then
@@ -275,6 +274,8 @@ Public Class Frm_Tickets_Mant
                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
             End If
+
+            .Descripcion = Txt_Descripcion.Text.Trim
 
         End With
 
@@ -373,6 +374,7 @@ Public Class Frm_Tickets_Mant
                        "Where Tp.Id = " & _Id_Tipo
 
         Dim _Row_Tipo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
         Chk_ExigeProducto.Checked = _Row_Tipo.Item("ExigeProducto")
         Chk_Asignado.Checked = _Row_Tipo.Item("Asignado")
         Txt_Grupo.Tag = _Row_Tipo.Item("Id_Grupo")
@@ -385,7 +387,9 @@ Public Class Frm_Tickets_Mant
         _Cl_Tickets.Tickets.Tickets_Producto.AjusInventario = _Row_Tipo.Item("AjusInventario")
         _Cl_Tickets.Tickets.Tickets_Producto.RevInventario = _Row_Tipo.Item("RevInventario")
         _Cl_Tickets.Tickets.Tickets_Producto.SobreStock = _Row_Tipo.Item("SobreStock")
+
         Dim _ExigeProducto As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Tipos", "ExigeProducto", "Id = " & Txt_Tipo.Tag)
+
         Chk_ExigeProducto.Checked = _ExigeProducto
         Lbl_Producto.Enabled = _ExigeProducto
         Txt_Producto.Enabled = _ExigeProducto
@@ -416,6 +420,7 @@ Public Class Frm_Tickets_Mant
         Txt_Producto.ButtonCustom.Visible = False
         Txt_Producto.ButtonCustom2.Visible = False
         Cmb_UdMedida.DataSource = Nothing
+        Chk_Asignado.Checked = False
     End Sub
 
     Private Sub Txt_Tipo_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Tipo.ButtonCustom2Click
@@ -430,6 +435,7 @@ Public Class Frm_Tickets_Mant
         Txt_Producto.ButtonCustom2.Visible = False
         Chk_ExigeProducto.Checked = False
         Cmb_UdMedida.DataSource = Nothing
+        Chk_Asignado.Checked = False
     End Sub
 
     Private Sub Chk_Asignado_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Asignado.CheckedChanged
@@ -448,6 +454,23 @@ Public Class Frm_Tickets_Mant
                 Return
             End If
 
+            Consulta_sql = "Select  Tp.*,Isnull(Tf.NOKOFU,'') As 'Agente',Isnull(Gr.Grupo,'') As Grupo" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_Stk_Tipos Tp" & vbCrLf &
+                           "Left Join TABFU Tf On Tf.KOFU = Tp.CodAgente" & vbCrLf &
+                           "Left Join " & _Global_BaseBk & "Zw_Stk_Grupos Gr On Tp.Id_Grupo = Gr.Id" & vbCrLf &
+                           "Where Tp.Id = " & Txt_Tipo.Tag
+
+            Dim _Row_Tipo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Chk_ExigeProducto.Checked = _Row_Tipo.Item("ExigeProducto")
+            Chk_Asignado.Checked = _Row_Tipo.Item("Asignado")
+            Txt_Grupo.Tag = _Row_Tipo.Item("Id_Grupo")
+            Txt_Grupo.Text = _Row_Tipo.Item("Grupo")
+            Txt_Agente.Tag = _Row_Tipo.Item("CodAgente")
+            Txt_Agente.Text = _Row_Tipo.Item("Agente").ToString.Trim
+            Rdb_AsignadoAgente.Checked = _Row_Tipo.Item("AsignadoAgente")
+            Rdb_AsignadoGrupo.Checked = _Row_Tipo.Item("AsignadoGrupo")
+
         Else
             Txt_Grupo.Tag = 0
             Txt_Agente.Tag = String.Empty
@@ -458,6 +481,7 @@ Public Class Frm_Tickets_Mant
             Txt_Grupo.Enabled = False
             Txt_Agente.Enabled = False
         End If
+
         Rdb_AsignadoAgente.Enabled = Chk_Asignado.Checked
         Rdb_AsignadoGrupo.Enabled = Chk_Asignado.Checked
 
@@ -465,13 +489,26 @@ Public Class Frm_Tickets_Mant
 
     Private Sub Txt_Grupo_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Grupo.ButtonCustomClick
 
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id = " & Txt_Tipo.Tag
+        Dim _Row_Tipo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not CBool(_Row_Tipo.Item("Id_Grupo")) Then
+            MessageBoxEx.Show(Me, "Este tipo de requerimiento no tiene asociado a ningun grupo de trabajo",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Rdb_AsignadoAgente.Checked = True
+            Return
+        End If
+
+        Dim _Sql_Filtro_Condicion_Extra As String = "And Gr.Id = " & _Row_Tipo.Item("Id_Grupo")
+
         Dim Fm As New Frm_Tickets_Grupos
         Fm.ModoSeleccion = True
+        Fm.Sql_Filtro_Condicion_Extra = _Sql_Filtro_Condicion_Extra
         Fm.ShowDialog(Me)
-        If Not IsNothing(Fm.Row_Grupo) Then
-            Txt_Grupo.Tag = Fm.Row_Grupo.Item("Id")
-            Txt_Grupo.Text = Fm.Row_Grupo.Item("Grupo")
-        End If
+        'If Not IsNothing(Fm.Row_Grupo) Then
+        '    Txt_Grupo.Tag = Fm.Row_Grupo.Item("Id")
+        '    Txt_Grupo.Text = Fm.Row_Grupo.Item("Grupo")
+        'End If
         Fm.Dispose()
 
     End Sub
@@ -483,7 +520,16 @@ Public Class Frm_Tickets_Mant
 
     Private Sub Txt_Agente_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Agente.ButtonCustomClick
 
-        Dim _Sql_Filtro_Condicion_Extra = "And KOFU In (Select CodAgente From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Where Id_Area = " & Txt_Area.Tag & " And Id_Tipo = " & Txt_Tipo.Tag & ")"
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id = " & Txt_Tipo.Tag
+        Dim _Row_Tipo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not CBool(_Row_Tipo.Item("Id_Grupo")) Then
+            MessageBoxEx.Show(Me, "Este tipo de requerimiento solo esta asociado a un agente", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Sql_Filtro_Condicion_Extra = "And KOFU In (Select CodAgente From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente Where Id_Grupo = " & _Row_Tipo.Item("Id_Grupo") & ")"
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
 
@@ -502,11 +548,32 @@ Public Class Frm_Tickets_Mant
     End Sub
 
     Private Sub Rdb_AsignadoGrupo_CheckedChanged(sender As Object, e As EventArgs) Handles Rdb_AsignadoGrupo.CheckedChanged
+
         If Rdb_AsignadoGrupo.Checked Then
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id = " & Txt_Tipo.Tag
+            Dim _Row_Tipo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not CBool(_Row_Tipo.Item("Id_Grupo")) Then
+                MessageBoxEx.Show(Me, "Este tipo de requerimiento no tiene asociado a ningun grupo de trabajo",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Rdb_AsignadoAgente.Checked = True
+                Return
+            End If
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Grupos Where Id = " & _Row_Tipo.Item("Id_Grupo")
+            Dim _Row_Grupo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Txt_Grupo.Tag = _Row_Grupo.Item("Id")
+            Txt_Grupo.Text = _Row_Grupo.Item("Grupo")
+
             Txt_Agente.Tag = String.Empty
             Txt_Agente.Text = String.Empty
+
         End If
+
         Txt_Grupo.Enabled = Rdb_AsignadoGrupo.Checked
+
     End Sub
 
     Private Sub Rdb_AsignadoAgente_CheckedChanged(sender As Object, e As EventArgs) Handles Rdb_AsignadoAgente.CheckedChanged

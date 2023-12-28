@@ -128,14 +128,6 @@ Public Class Frm_Tickets_Seguimiento
 
     Sub Sb_Actualizar_Grilla()
 
-        Consulta_sql = "Select Acc.*,Case Accion When 'MENS' Then 'Mensaje' When 'RESP' Then 'Respuesta' When 'NULO' Then 'Anula' Else '???' End As 'StrAccion',Case Accion When 'MENS' Then Isnull(Cf.NOKOFU,'') When 'NULO' Then Isnull(Cf.NOKOFU,'') When 'RESP' Then Isnull(Ca.NOKOFU,'') Else '???' End As 'NombreFunAge'," & vbCrLf &
-                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Archivos Where Id_TicketAc = Acc.Id) As 'Num_Attach'" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Acc" & vbCrLf &
-                       "Left Join TABFU Cf On Cf.KOFU = CodFuncionario" & vbCrLf &
-                       "Left Join TABFU Ca On Ca.KOFU = CodAgente" & vbCrLf &
-                       "Where Id_Ticket = " & _Id_Ticket & vbCrLf &
-                       "Order By Fecha"
-
         Consulta_sql = "Select Acc.*," & vbCrLf &
                        "Case Accion When 'MENS' Then 'Mensaje' When 'RESP' Then 'Respuesta' When 'NULO' Then 'Anula' When 'SOLC' Then 'Sol. Cierre' When 'CECR' Then 'Cierra y crea nuevo ticket'  Else '???' End As 'StrAccion'," & vbCrLf &
                        "Case Accion When 'MENS' Then Isnull(Cf.NOKOFU,'') When 'NULO' Then Isnull(Cf.NOKOFU,'') When 'RESP' Then Isnull(Ca.NOKOFU,'') When 'SOLC' Then Isnull(Ca.NOKOFU,'') When 'CECR' Then Isnull(Ca.NOKOFU,'') Else '???' End As 'NombreFunAge'," & vbCrLf &
@@ -145,6 +137,16 @@ Public Class Frm_Tickets_Seguimiento
                        "Left Join TABFU Ca On Ca.KOFU = CodAgente" & vbCrLf &
                        "Where Id_Ticket = " & _Id_Ticket & vbCrLf &
                        "Order By Fecha"
+
+        Consulta_sql = "Select Acc.*," & vbCrLf &
+                       "Case Accion When 'MENS' Then 'Mensaje' When 'RESP' Then 'Respuesta' When 'NULO' Then 'Anula' When 'SOLC' Then 'Sol. Cierre' When 'CECR' Then 'Cierra y crea nuevo ticket'  Else '???' End As 'StrAccion'," & vbCrLf &
+                       "Cf.NOKOFU As 'NombreFunAge'," & vbCrLf &
+                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Archivos Where Id_TicketAc = Acc.Id) As 'Num_Attach'" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Acc" & vbCrLf &
+                       "Left Join TABFU Cf On Cf.KOFU = CodFunGestiona" & vbCrLf &
+                       "Where Id_Ticket = " & _Id_Ticket & vbCrLf &
+                       "Order By Fecha"
+
         _Tbl_Acciones = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla
@@ -201,7 +203,7 @@ Public Class Frm_Tickets_Seguimiento
             Dim _Nombre_Image As String
             Dim _Accion As String = _Fila.Cells("Accion").Value
             Dim _Num_Attach As Integer = _Fila.Cells("Num_Attach").Value
-            Dim _CodFuncionario As String = _Fila.Cells("CodFuncionario").Value
+            Dim _CodFuncionario As String = _Fila.Cells("CodFuncionario").Value.ToString.Trim
 
             If CBool(_Num_Attach) Then
                 _Nombre_Image = "attach-number-" & _Num_Attach & ".png"
@@ -216,19 +218,25 @@ Public Class Frm_Tickets_Seguimiento
 
             _Fila.Cells("Btn_ImagenAttach").Value = _Icono
 
-            If _Accion = "MENS" Then
+            If Not String.IsNullOrEmpty(_CodFuncionario) Then
                 _Icono = Imagenes_16x16.Images.Item("people-customer-man.png")
-            ElseIf _Accion = "RESP" Then
-                _Icono = Imagenes_16x16.Images.Item("people-vendor.png")
             Else
-
-                If _CodFuncionario = FUNCIONARIO Then
-                    _Icono = Imagenes_16x16.Images.Item("people-customer-man.png")
-                Else
-                    _Icono = Imagenes_16x16.Images.Item("people-vendor.png")
-                End If
-
+                _Icono = Imagenes_16x16.Images.Item("people-vendor.png")
             End If
+
+            'If _Accion = "MENS" Then
+            '    _Icono = Imagenes_16x16.Images.Item("people-customer-man.png")
+            'ElseIf _Accion = "RESP" Then
+            '    _Icono = Imagenes_16x16.Images.Item("people-vendor.png")
+            'Else
+
+            '    If _CodFuncionario = FUNCIONARIO Then
+            '        _Icono = Imagenes_16x16.Images.Item("people-customer-man.png")
+            '    Else
+            '        _Icono = Imagenes_16x16.Images.Item("people-vendor.png")
+            '    End If
+
+            'End If
 
             _Fila.Cells("Btn_ImagenUser").Value = _Icono
 

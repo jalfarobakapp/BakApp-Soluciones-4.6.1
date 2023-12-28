@@ -251,7 +251,6 @@ Partial Class Frm_Tickets_Mant
         Me.Txt_Agente.ButtonCustom.Image = CType(resources.GetObject("Txt_Agente.ButtonCustom.Image"), System.Drawing.Image)
         Me.Txt_Agente.ButtonCustom.Visible = True
         Me.Txt_Agente.ButtonCustom2.Image = CType(resources.GetObject("Txt_Agente.ButtonCustom2.Image"), System.Drawing.Image)
-        Me.Txt_Agente.ButtonCustom2.Visible = True
         Me.Txt_Agente.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Agente.ForeColor = System.Drawing.Color.Black
         Me.Txt_Agente.Location = New System.Drawing.Point(146, 460)
@@ -273,7 +272,6 @@ Partial Class Frm_Tickets_Mant
         Me.Txt_Grupo.ButtonCustom.Image = CType(resources.GetObject("Txt_Grupo.ButtonCustom.Image"), System.Drawing.Image)
         Me.Txt_Grupo.ButtonCustom.Visible = True
         Me.Txt_Grupo.ButtonCustom2.Image = CType(resources.GetObject("Txt_Grupo.ButtonCustom2.Image"), System.Drawing.Image)
-        Me.Txt_Grupo.ButtonCustom2.Visible = True
         Me.Txt_Grupo.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Grupo.ForeColor = System.Drawing.Color.Black
         Me.Txt_Grupo.Location = New System.Drawing.Point(146, 431)
@@ -391,7 +389,7 @@ Partial Class Frm_Tickets_Mant
         Me.Chk_Asignado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Asignado.TabIndex = 7
         Me.Chk_Asignado.TabStop = False
-        Me.Chk_Asignado.Text = "ASIGNAR EL REQUERIMINETO A:"
+        Me.Chk_Asignado.Text = "ASIGNAR EL REQUERIMIENTO A:"
         '
         'Txt_Area
         '

@@ -32,10 +32,6 @@ Public Class Frm_Tickets_TiposCrear
                            "Where Tp.Id = " & _Id_Tipo
             Row_Tipo = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Else
-
-
-
         End If
 
     End Sub
@@ -80,6 +76,15 @@ Public Class Frm_Tickets_TiposCrear
 
         AddHandler Chk_Asignado.CheckedChanged, AddressOf Chk_Asignado_CheckedChanged
 
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Estado = 'ABIE' And Id_Tipo = " & _Id_Tipo)
+
+        If CBool(_Reg) Then
+            Txt_Tipo.Enabled = False
+            Chk_ExigeProducto.Enabled = False
+            Panel_Productos.Enabled = False
+            Chk_Asignado.Enabled = False
+        End If
+
     End Sub
 
     Private Sub Chk_ExigeProducto_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_ExigeProducto.CheckedChanged
@@ -95,20 +100,20 @@ Public Class Frm_Tickets_TiposCrear
 
         Dim _Editar As Boolean = CBool(_Id_Tipo)
 
-        If _Editar Then
+        'If _Editar Then
 
-            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Estado = 'ABIE'")
+        '    Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Estado = 'ABIE' And Id_Tipo = " & _Id_Tipo)
 
-            If CBool(_Reg) Then
-                MessageBoxEx.Show(Me, "Existen Tickets que están abierto y usan este tipo de requerimiento." & vbCrLf &
-                              "No es posible editar el tipo de requerimiento hasta que todos los Tickets que lo usan estén cerrados" & vbCrLf & vbCrLf &
-                              "Los dato no han sido modificados",
-                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Me.Close()
-                Return
-            End If
+        '    If CBool(_Reg) Then
+        '        MessageBoxEx.Show(Me, "Existen Tickets que están abierto y usan este tipo de requerimiento." & vbCrLf &
+        '                      "No es posible editar el tipo de requerimiento hasta que todos los Tickets que lo usan estén cerrados" & vbCrLf & vbCrLf &
+        '                      "Los dato no han sido modificados",
+        '                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '        Me.Close()
+        '        Return
+        '    End If
 
-        End If
+        'End If
 
         If String.IsNullOrEmpty(Txt_Tipo.Text) Then
             MessageBoxEx.Show(Me, "Debe ingresar el tipo de requerimiento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)

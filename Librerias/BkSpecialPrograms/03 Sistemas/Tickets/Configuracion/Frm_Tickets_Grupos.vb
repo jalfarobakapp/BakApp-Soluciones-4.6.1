@@ -11,6 +11,7 @@ Public Class Frm_Tickets_Grupos
     Public Property ModoSeleccion As Boolean
     Public Property Row_Grupo As DataRow
     Public Property GrupoSeleccionado As String
+    Public Property Sql_Filtro_Condicion_Extra As String
 
     Public Sub New()
 
@@ -21,6 +22,7 @@ Public Class Frm_Tickets_Grupos
 
         Sb_Formato_Generico_Grilla(Grilla_Grupos, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
         Sb_Formato_Generico_Grilla(Grilla_Agentes, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_Tipos, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
         Sb_Color_Botones_Barra(Bar2)
 
@@ -59,6 +61,7 @@ Public Class Frm_Tickets_Grupos
                        "Left Join " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente GvsA On GvsA.Id_Grupo = Gr.Id" & vbCrLf &
                        "Left Join TABFU Tf On Tf.KOFU = GvsA.CodAgente" & vbCrLf &
                        "Where Gr.Grupo+Isnull(NOKOFU,'') Like '%" & _Cadena & "%'" & vbCrLf &
+                       Sql_Filtro_Condicion_Extra & vbCrLf &
                        "Order by Gr.Grupo"
         _Tbl_Grupos = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -272,6 +275,36 @@ Public Class Frm_Tickets_Grupos
 
         End With
 
+        Consulta_sql = "Select Tipo,Area" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Stk_Tipos Tp" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Stk_Areas Ar On Ar.Id = Tp.Id_Area" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Stk_Grupos Gr On Gr.Id = Tp.Id_Grupo" & vbCrLf &
+                       "Where Id_Grupo = " & _Id_Grupo
+
+        Dim _Tbl_Tipos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        With Grilla_Tipos
+
+            .DataSource = _Tbl_Tipos
+
+            OcultarEncabezadoGrilla(Grilla_Tipos)
+
+            Dim _DisplayIndex = 0
+
+            .Columns("Area").Visible = True
+            .Columns("Area").HeaderText = "Area"
+            .Columns("Area").Width = 200
+            .Columns("Area").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Tipo").Visible = True
+            .Columns("Tipo").HeaderText = "Tipo"
+            .Columns("Tipo").Width = 240
+            .Columns("Tipo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+        End With
+
     End Sub
 
     Private Sub Sb_Grilla_Grupos_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
@@ -372,4 +405,6 @@ Public Class Frm_Tickets_Grupos
             Sb_Actualizar_Grilla()
         End If
     End Sub
+
+
 End Class

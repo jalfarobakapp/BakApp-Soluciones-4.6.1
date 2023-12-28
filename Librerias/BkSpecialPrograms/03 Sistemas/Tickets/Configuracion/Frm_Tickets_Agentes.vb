@@ -22,7 +22,7 @@ Public Class Frm_Tickets_Agentes
     Private Sub Frm_Tickets_Agentes_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         AddHandler Grilla_Agentes.MouseDown, AddressOf Sb_Grilla_Agentes_MouseDown
-        AddHandler Grilla_Tipos.MouseDown, AddressOf Sb_Grilla_Tipos_MouseDown
+        'AddHandler Grilla_Tipos.MouseDown, AddressOf Sb_Grilla_Tipos_MouseDown
 
         Sb_Actualizar_Grilla()
 
@@ -77,18 +77,6 @@ Public Class Frm_Tickets_Agentes
         End If
 
         Dim _CodAgente As String = _Fila.Cells("CodAgente").Value
-
-        'Consulta_sql = "Select Ag.Id,Ag.Id_Area,Ag.Id_Tipo,Ar.Area,Tp.Tipo From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Ag" & vbCrLf &
-        '               "Left Join " & _Global_BaseBk & "Zw_Stk_Areas Ar On Ar.Id = Ag.Id_Area" & vbCrLf &
-        '               "Left Join " & _Global_BaseBk & "Zw_Stk_Tipos Tp On Tp.Id = Ag.Id_Tipo" & vbCrLf &
-        '               "Where Ag.CodAgente = '" & _CodAgente & "'" & vbCrLf &
-        '               "Order By Ar.Area,Tp.Tipo"
-
-        'Consulta_sql = "SELECT Tipo,Area" & vbCrLf &
-        '               "From " & _Global_BaseBk & "Zw_Stk_Tipos Tp" & vbCrLf &
-        '               "Left Join " & _Global_BaseBk & "Zw_Stk_Areas Ar On Ar.Id = Tp.Id_Area" & vbCrLf &
-        '               "Where Id_Grupo In (Select Id_Grupo From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente " &
-        '               "Where CodAgente = '" & _CodAgente & "') Or CodAgente = '" & _CodAgente & "'"
 
         Consulta_sql = "Select Tipo,Area,'Como Agente' As Asociado" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stk_Tipos Tp" & vbCrLf &
@@ -168,69 +156,6 @@ Public Class Frm_Tickets_Agentes
 
     End Sub
 
-    Private Sub Btn_Mnu_AsociarTipos_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_AsociarTipos.Click
-
-        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tipos", "")
-
-        If Not CBool(_Reg) Then
-            MessageBoxEx.Show(Me, "No existen tipos de requerimiento que asociar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return
-        End If
-
-        Dim _Fila As DataGridViewRow = Grilla_Agentes.CurrentRow
-        Dim _CodAgente As String = _Fila.Cells("CodAgente").Value
-        Dim _Id_Area As Integer = Fx_Buscar_Area()
-
-        If CBool(_Id_Area) Then
-
-            Dim _Tbl_Tipos As DataTable = Fx_Traer_Tipos(_Id_Area, _CodAgente)
-
-            If IsNothing(_Tbl_Tipos) Then
-                Return
-            End If
-
-            Consulta_sql = String.Empty
-
-            For Each _Fl As DataRow In _Tbl_Tipos.Rows
-
-                Dim _Id_Tipo As Integer = _Fl.Item("Codigo")
-
-                Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos (Id_Area,Id_Tipo,CodAgente) Values (" & _Id_Area & "," & _Id_Tipo & ",'" & _CodAgente & "')" & vbCrLf
-
-            Next
-
-            If Not String.IsNullOrEmpty(Consulta_sql) Then
-                _Sql.Ej_consulta_IDU(Consulta_sql)
-                Call Grilla_Agentes_CellEnter(Nothing, Nothing)
-            End If
-
-        End If
-
-    End Sub
-
-    Function Fx_Traer_Tipos(_Id_Area As Integer, _CodAgente As String) As DataTable
-
-        Dim _Tbl_Tipos As DataTable
-        Dim _Filtrar As New Clas_Filtros_Random(Me)
-
-        _Filtrar.Tabla = _Global_BaseBk & "Zw_Stk_Tipos"
-        _Filtrar.Campo = "Id"
-        _Filtrar.Descripcion = "Tipo"
-        _Filtrar.Pro_Nombre_Encabezado_Informe = "TIPOS DE REQUERIMIENTO"
-
-        If _Filtrar.Fx_Filtrar(_Tbl_Tipos,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra,
-                               "And Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id_Area = " & _Id_Area & ")" & vbCrLf &
-                               "And Id Not In (Select Id_Tipo From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Where CodAgente = '" & _CodAgente & "')",
-                               False, False, False, False,, False) Then
-
-            _Tbl_Tipos = _Filtrar.Pro_Tbl_Filtro
-
-        End If
-
-        Return _Tbl_Tipos
-
-    End Function
 
     Function Fx_Buscar_Area() As Integer
 
@@ -285,40 +210,10 @@ Public Class Frm_Tickets_Agentes
             Return
         End If
 
-        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Agentes Where CodAgente = '" & _CodAgente & "'" & vbCrLf &
-                       "Delete " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Where CodAgente = '" & _CodAgente & "'"
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Agentes Where CodAgente = '" & _CodAgente & "'"
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
             MessageBoxEx.Show(Me, "El Agente se elimino correctamente", "Eliminar", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Sb_Actualizar_Grilla()
-        End If
-
-    End Sub
-
-    Private Sub Btn_Mnu_QuitarTipo_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_QuitarTipo.Click
-
-        Dim _Fila_Ag As DataGridViewRow = Grilla_Agentes.CurrentRow
-        Dim _CodAgente As String = _Fila_Ag.Cells("CodAgente").Value
-
-        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tipos", "CodAgente = '" & _CodAgente & "'")
-
-        If CBool(_Reg) Then
-            MessageBoxEx.Show(Me, "No se puede quitar este tipo de requerimiento." & vbCrLf &
-                              "El Agente esta asociado por defecto al tipo de requerimiento.",
-                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return
-        End If
-
-        Dim _Fila As DataGridViewRow = Grilla_Tipos.CurrentRow
-        Dim _Id As Integer = _Fila.Cells("Id").Value
-
-        If MessageBoxEx.Show(Me, "¿Confirma quitar este Tipo de Ticket?", "Quitar Tipo",
-                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-            Return
-        End If
-
-        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Where Id = " & _Id
-        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-            Grilla_Tipos.Rows.Remove(_Fila)
         End If
 
     End Sub
