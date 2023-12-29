@@ -96,6 +96,10 @@ Public Class Frm_01_Asis_Compra_Resultados
     Public Property Auto_Id_Conexion_Externa As Integer
     Public Property Auto_RowProveedor_NVVExterna As DataRow
     Public Property Auto_NVVAutoExterna As Boolean
+    Public Property IncluirProdBajaRotacion_ProvStar As Boolean
+    Public Property IncluirProdRefleo_ProvStar As Boolean
+    Public Property IncluirProdBajaRotacion_NVI As Boolean
+    Public Property IncluirProdRefleo_NVI As Boolean
 
     Public Property Pro_Tbl_Filtro_Super_Familias() As DataTable
         Get
@@ -8437,9 +8441,11 @@ Drop Table #Paso"
             End If
 
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = _Proceso_Automatico_Ejecutado
-            Chk_Quitar_Ventas_Calzadas.Checked = True
+
             Chk_Mostrar_Solo_Stock_Critico.Checked = True
-            Chk_Quitare_Sospechosos_Stock.Checked = True
+
+            Chk_Quitar_Ventas_Calzadas.Checked = Not IncluirProdBajaRotacion_ProvStar
+            Chk_Quitare_Sospechosos_Stock.Checked = Not IncluirProdRefleo_ProvStar
 
             Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = False
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = True
@@ -8544,13 +8550,14 @@ Drop Table #Paso"
                 Chk_Quitar_Bloqueados_Compra.Checked = _QuitarBloqueadosCompra
             End If
 
-            'Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = True
+
             Chk_Mostrar_Solo_Productos_A_Comprar.Checked = True
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = True
             Chk_Quitar_Comprados.Checked = True
             Chk_Mostrar_Solo_Stock_Critico.Checked = True
-            Chk_Quitar_Ventas_Calzadas.Checked = True
-            Chk_Quitare_Sospechosos_Stock.Checked = True
+
+            Chk_Quitar_Ventas_Calzadas.Checked = Not IncluirProdBajaRotacion_NVI
+            Chk_Quitare_Sospechosos_Stock.Checked = Not IncluirProdRefleo_NVI
 
             Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False, False)
 

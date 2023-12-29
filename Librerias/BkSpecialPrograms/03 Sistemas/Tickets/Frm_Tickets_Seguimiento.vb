@@ -139,7 +139,7 @@ Public Class Frm_Tickets_Seguimiento
                        "Order By Fecha"
 
         Consulta_sql = "Select Acc.*," & vbCrLf &
-                       "Case Accion When 'MENS' Then 'Mensaje' When 'RESP' Then 'Respuesta' When 'NULO' Then 'Anula' When 'SOLC' Then 'Sol. Cierre' When 'CECR' Then 'Cierra y crea nuevo ticket'  Else '???' End As 'StrAccion'," & vbCrLf &
+                       "Case Accion When 'MENS' Then 'Mensaje' When 'RESP' Then 'Respuesta' When 'NULO' Then 'Anula' When 'SOLC' Then 'Sol. Cierre' When 'CERR' Then 'Cierra ticket' When 'CECR' Then 'Cierra y crea nuevo ticket' Else '???' End As 'StrAccion'," & vbCrLf &
                        "Cf.NOKOFU As 'NombreFunAge'," & vbCrLf &
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Archivos Where Id_TicketAc = Acc.Id) As 'Num_Attach'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Acc" & vbCrLf &

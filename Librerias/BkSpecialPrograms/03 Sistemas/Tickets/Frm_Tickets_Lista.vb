@@ -54,6 +54,8 @@
 
         AddHandler Chk_TickesMiGrupo.CheckedChanged, AddressOf Chk_TickesTiposMi_CheckedChanged
 
+        Me.Text += ", Usuario : " & FUNCIONARIO & " - " & Nombre_funcionario_activo
+
     End Sub
 
     Sub Sb_Actualizar_Grilla()
@@ -147,13 +149,13 @@
             .Columns("NomPrioridad").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("UltimaAccion").Visible = True
-            .Columns("UltimaAccion").HeaderText = "Ult. Estado"
-            .Columns("UltimaAccion").ToolTipText = "Ultimo Estado"
-            '.Columns("UltimaAccion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("UltimaAccion").Width = 80
-            .Columns("UltimaAccion").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
+            '.Columns("UltimaAccion").Visible = True
+            '.Columns("UltimaAccion").HeaderText = "Ult. Estado"
+            '.Columns("UltimaAccion").ToolTipText = "Ultimo Estado"
+            ''.Columns("UltimaAccion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '.Columns("UltimaAccion").Width = 80
+            '.Columns("UltimaAccion").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
 
             .Columns("FechaCreacion").Visible = True
             .Columns("FechaCreacion").HeaderText = "Fecha creación"
