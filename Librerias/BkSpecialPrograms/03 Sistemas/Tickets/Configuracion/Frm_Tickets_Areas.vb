@@ -179,7 +179,7 @@ Public Class Frm_Tickets_Areas
         Dim Fm As New Frm_Tickets_TiposCrear(_Id_Area, 0)
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
-        _Row_Tipo = Fm.Row_Tipo
+        _Row_Tipo = Fm._Row_Tipo
         Fm.Dispose()
 
         If _Grabar Then
@@ -302,7 +302,7 @@ Public Class Frm_Tickets_Areas
         Dim Fm As New Frm_Tickets_TiposCrear(_Id_Area, _Id_Tipo)
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
-        _Row_Tipo = Fm.Row_Tipo
+        _Row_Tipo = Fm._Row_Tipo
         Fm.Dispose()
 
         If _Grabar Then

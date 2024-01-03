@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports BkSpecialPrograms.Tickets_Db
+Imports DevComponents.DotNetBar
 Imports DevComponents.DotNetBar.SuperGrid
 
 Public Class Frm_Tickets_TiposCrear
@@ -6,12 +7,11 @@ Public Class Frm_Tickets_TiposCrear
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Dim _Id_Area As Integer
-    Dim _Id_Tipo As Integer
-
     Public Grabar As Boolean
+    Dim Cl_Tickets As New Cl_Tickets
 
-    Public Property Row_Tipo As DataRow
+    Public Property _Row_Tipo As DataRow
+    Public Property Cl_Tipo As New Tickets_Db.Tickets_Tipo
 
     Public Sub New(_Id_Area As Integer, _Id_Tipo As Integer)
 
@@ -20,54 +20,60 @@ Public Class Frm_Tickets_TiposCrear
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Me._Id_Area = _Id_Area
-        Me._Id_Tipo = _Id_Tipo
+        Cl_Tipo = Cl_Tickets.Fx_Llenar_Tipo(_Id_Tipo)
 
-        If CBool(_Id_Tipo) Then
+        'If CBool(_Id_Tipo) Then
 
-            Consulta_sql = "Select  Tp.*,Isnull(Tf.NOKOFU,'') As 'Agente',Isnull(Gr.Grupo,'') As Grupo" & vbCrLf &
-                           "From " & _Global_BaseBk & "Zw_Stk_Tipos Tp" & vbCrLf &
-                           "Left Join TABFU Tf On Tf.KOFU = Tp.CodAgente" & vbCrLf &
-                           "Left Join " & _Global_BaseBk & "Zw_Stk_Grupos Gr On Tp.Id_Grupo = Gr.Id" & vbCrLf &
-                           "Where Tp.Id = " & _Id_Tipo
-            Row_Tipo = _Sql.Fx_Get_DataRow(Consulta_sql)
+        '    Consulta_sql = "Select  Tp.*,Isnull(Tf.NOKOFU,'') As 'Agente',Isnull(Gr.Grupo,'') As Grupo" & vbCrLf &
+        '                   "From " & _Global_BaseBk & "Zw_Stk_Tipos Tp" & vbCrLf &
+        '                   "Left Join TABFU Tf On Tf.KOFU = Tp.CodAgente" & vbCrLf &
+        '                   "Left Join " & _Global_BaseBk & "Zw_Stk_Grupos Gr On Tp.Id_Grupo = Gr.Id" & vbCrLf &
+        '                   "Where Tp.Id = " & _Id_Tipo
+        '    _Row_Tipo = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        End If
+        '    Cl_Tipo.Tipo = _Row_Tipo.Item("Tipo")
+        '    Cl_Tipo.Asignado = _Row_Tipo.Item("Asignado")
+        '    Cl_Tipo.AsignadoAgente = _Row_Tipo.Item("AsignadoAgente")
+        '    Cl_Tipo.AsignadoGrupo = _Row_Tipo.Item("AsignadoGrupo")
+        '    Cl_Tipo.Id_Grupo = _Row_Tipo.Item("Id_Grupo")
+        '    Cl_Tipo.CodAgente = _Row_Tipo.Item("CodAgente")
+
+        '    Cl_Tipo.ExigeProducto = _Row_Tipo.Item("ExigeProducto")
+        '    Cl_Tipo.Inc_Cantidades = _Row_Tipo.Item("Inc_Cantidades")
+        '    Cl_Tipo.Inc_Fecha = _Row_Tipo.Item("Inc_Fecha")
+        '    Cl_Tipo.Inc_Hora = _Row_Tipo.Item("Inc_Hora")
+
+        'End If
 
     End Sub
 
     Private Sub Frm_Tickets_TiposCrear_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Areas Where Id = " & _Id_Area
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Areas Where Id = " & Cl_Tipo.Id_Area
         Dim _Row_Area As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Lbl_Area.Text = "AREA: " & _Row_Area.Item("AREA")
 
-        If Not IsNothing(Row_Tipo) Then
+        With Cl_Tipo
 
-            With Row_Tipo
+            Txt_Tipo.Tag = .Id
+            Txt_Tipo.Text = .Tipo
 
-                Txt_Tipo.Tag = _Id_Tipo
-                Txt_Tipo.Text = .Item("Tipo")
+            Chk_Asignado.Checked = .Asignado
+            Rdb_AsignadoAgente.Checked = .AsignadoAgente
+            Rdb_AsignadoGrupo.Checked = .AsignadoGrupo
 
-                Rdb_AsignadoAgente.Checked = .Item("AsignadoAgente")
-                Rdb_AsignadoGrupo.Checked = .Item("AsignadoGrupo")
+            Txt_Grupo.Tag = .Id_Grupo
+            Txt_Grupo.Text = .Grupo
+            Txt_Agente.Tag = .CodAgente
+            Txt_Agente.Text = .Agente
 
-                Txt_Grupo.Tag = .Item("Id_Grupo")
-                Txt_Grupo.Text = .Item("Grupo")
-                Txt_Agente.Tag = .Item("CodAgente")
-                Txt_Agente.Text = .Item("Agente")
+            Chk_ExigeProducto.Checked = .ExigeProducto
+            Chk_Inc_Cantidades.Checked = .Inc_Cantidades
+            Chk_Inc_Fecha.Checked = .Inc_Fecha
+            Chk_Inc_Hora.Checked = .Inc_Hora
 
-                Chk_Asignado.Checked = .Item("Asignado")
-
-                Chk_ExigeProducto.Checked = .Item("ExigeProducto")
-                Rdb_AjusInventario.Checked = .Item("AjusInventario")
-                Rdb_RevInventario.Checked = .Item("RevInventario")
-                Rdb_SobreStock.Checked = .Item("SobreStock")
-
-            End With
-
-        End If
+        End With
 
         Txt_Agente.Enabled = Rdb_AsignadoAgente.Checked
         Txt_Grupo.Enabled = Rdb_AsignadoGrupo.Checked
@@ -76,7 +82,7 @@ Public Class Frm_Tickets_TiposCrear
 
         AddHandler Chk_Asignado.CheckedChanged, AddressOf Chk_Asignado_CheckedChanged
 
-        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Estado = 'ABIE' And Id_Tipo = " & _Id_Tipo)
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Estado = 'ABIE' And Id_Tipo = " & Cl_Tipo.Id)
 
         If CBool(_Reg) Then
             Txt_Tipo.Enabled = False
@@ -90,15 +96,15 @@ Public Class Frm_Tickets_TiposCrear
     Private Sub Chk_ExigeProducto_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_ExigeProducto.CheckedChanged
         Panel_Productos.Enabled = Chk_ExigeProducto.Checked
         If Not Chk_ExigeProducto.Checked Then
-            Rdb_AjusInventario.Checked = False
-            Rdb_RevInventario.Checked = False
-            Rdb_SobreStock.Checked = False
+            Chk_Inc_Cantidades.Checked = False
+            Chk_Inc_Fecha.Checked = False
+            Chk_Inc_Hora.Checked = False
         End If
     End Sub
 
     Private Sub Btn_Crear_Tipo_Click(sender As Object, e As EventArgs) Handles Btn_Crear_Tipo.Click
 
-        Dim _Editar As Boolean = CBool(_Id_Tipo)
+        Dim _Editar As Boolean = CBool(Cl_Tipo.Id)
 
         'If _Editar Then
 
@@ -121,13 +127,19 @@ Public Class Frm_Tickets_TiposCrear
             Return
         End If
 
-        If Chk_ExigeProducto.Checked Then
-            If Not Rdb_AjusInventario.Checked AndAlso Not Rdb_RevInventario.Checked AndAlso Not Rdb_SobreStock.Checked Then
-                MessageBoxEx.Show(Me, "Debe marcar alguna de las opciones para la gestión con productos",
-                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return
-            End If
+        If Not String.IsNullOrEmpty(Txt_Area_Cie.Text) AndAlso String.IsNullOrEmpty(Txt_Tipo_Cie.Text) Then
+            MessageBoxEx.Show(Me, "Debe ingresar el Tipo (Cierre Ticket)", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Tipo.Focus()
+            Return
         End If
+
+        'If Chk_ExigeProducto.Checked Then
+        '    If Not Rdb_AjusInventario.Checked AndAlso Not Rdb_RevInventario.Checked AndAlso Not Rdb_SobreStock.Checked Then
+        '        MessageBoxEx.Show(Me, "Debe marcar alguna de las opciones para la gestión con productos",
+        '                          "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '        Return
+        '    End If
+        'End If
 
         If Chk_Asignado.Checked Then
 
@@ -144,57 +156,23 @@ Public Class Frm_Tickets_TiposCrear
 
         End If
 
-        If Not _Editar Then
+        Dim _Mensaje_Ticket As Mensaje_Ticket = Cl_Tickets.Fx_Grabar_Tipo(Cl_Tipo)
 
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tipos (Id_Area,Tipo) Values " &
-                           "(" & _Id_Area & ",'" & Txt_Tipo.Text.Trim & "')"
-            If Not _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Tipo) Then
-                Return
-            End If
+        If _Mensaje_Ticket.EsCorrecto Then
 
-        End If
-
-        If Rdb_AsignadoAgente.Checked Then
-            Consulta_sql = Fx_Asignar_Agente(_Id_Area, _Id_Tipo, Txt_Agente.Tag)
-        End If
-
-        If Rdb_AsignadoGrupo.Checked Then
-
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente Where Id_Grupo = " & Txt_Grupo.Tag
-            Dim _Tbl_Grupo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-            For Each _Fl As DataRow In _Tbl_Grupo.Rows
-                Consulta_sql += Fx_Asignar_Agente(_Id_Area, _Id_Tipo, _Fl.Item("CodAgente"))
-            Next
-
-        End If
-
-        Consulta_sql += "Update " & _Global_BaseBk & "Zw_Stk_Tipos Set " &
-                       "Tipo = '" & Txt_Tipo.Text.Trim & "'" & vbCrLf &
-                       ",ExigeProducto = " & Convert.ToInt32(Chk_ExigeProducto.Checked) & vbCrLf &
-                       ",RevInventario = " & Convert.ToInt32(Rdb_RevInventario.Checked) & vbCrLf &
-                       ",AjusInventario = " & Convert.ToInt32(Rdb_AjusInventario.Checked) & vbCrLf &
-                       ",SobreStock = " & Convert.ToInt32(Rdb_SobreStock.Checked) & vbCrLf &
-                       ",Asignado = " & Convert.ToInt32(Chk_Asignado.Checked) & vbCrLf &
-                       ",AsignadoGrupo = " & Convert.ToInt32(Rdb_AsignadoGrupo.Checked) & vbCrLf &
-                       ",AsignadoAgente = " & Convert.ToInt32(Rdb_AsignadoAgente.Checked) & vbCrLf &
-                       ",Id_Grupo = " & Txt_Grupo.Tag & vbCrLf &
-                       ",CodAgente = '" & Txt_Agente.Tag & "'" & vbCrLf &
-                       "Where Id = " & _Id_Tipo
-
-        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
             Grabar = True
-        End If
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id = " & _Id_Tipo
-        Row_Tipo = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id = " & _Mensaje_Ticket.New_Id
+            _Row_Tipo = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        If Not Grabar Then
+            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        Else
+
+            MessageBoxEx.Show(Me, _Mensaje_Ticket.Mensaje, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
-        End If
 
-        MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar",
-                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
 
         Me.Close()
 
@@ -312,4 +290,84 @@ Public Class Frm_Tickets_TiposCrear
         Rdb_AsignadoGrupo.Enabled = Chk_Asignado.Checked
 
     End Sub
+
+    Private Sub Txt_Area_Cie_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Area_Cie.ButtonCustomClick
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Tabla = _Global_BaseBk & "Zw_Stk_Areas"
+        _Filtrar.Campo = "Id"
+        _Filtrar.Descripcion = "Area"
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "AREA/DEPARTAMENTO"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra,
+                               "And Id In (Select Id_Area From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos)", False, False, True, False,, False) Then
+
+            Txt_Area_Cie.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+            Txt_Area_Cie.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
+
+            Txt_Tipo_Cie.Tag = 0
+            Txt_Tipo_Cie.Text = String.Empty
+
+            Txt_Area_Cie.ButtonCustom.Visible = False
+            Txt_Area_Cie.ButtonCustom2.Visible = True
+
+            Txt_Tipo.ButtonCustom.Visible = True
+
+            Call Txt_Tipo_Cie_ButtonCustomClick(Nothing, Nothing)
+
+        End If
+
+
+    End Sub
+
+    Private Sub Txt_Tipo_Cie_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Tipo_Cie.ButtonCustomClick
+
+        If String.IsNullOrEmpty(Txt_Area_Cie.Text) Then
+            MessageBoxEx.Show(Me, "Falta el Area/Departamento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Tabla = _Global_BaseBk & "Zw_Stk_Tipos"
+        _Filtrar.Campo = "Id"
+        _Filtrar.Descripcion = "Tipo"
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "TIPO DE REQUERIMIENTO DEL AREA: " & Txt_Area_Cie.Text
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra,
+                               "And Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id_Area = " & Txt_Area_Cie.Tag & ")",
+                               False, False, True, False,, False) Then
+
+            Txt_Tipo.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+            Txt_Tipo.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_Area_Cie_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Area_Cie.ButtonCustom2Click
+
+        Txt_Area_Cie.Tag = String.Empty
+        Txt_Area_Cie.Text = String.Empty
+        Txt_Area_Cie.ButtonCustom.Visible = True
+        Txt_Area_Cie.ButtonCustom2.Visible = False
+        Txt_Tipo_Cie.Tag = String.Empty
+        Txt_Tipo_Cie.Text = String.Empty
+        Txt_Tipo_Cie.ButtonCustom.Visible = False
+        Txt_Tipo_Cie.ButtonCustom2.Visible = False
+
+    End Sub
+
+    Private Sub Txt_Tipo_Cie_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Tipo_Cie.ButtonCustom2Click
+
+        Txt_Tipo_Cie.Tag = String.Empty
+        Txt_Tipo_Cie.Text = String.Empty
+        Txt_Tipo_Cie.ButtonCustom.Visible = False
+        Txt_Tipo_Cie.ButtonCustom2.Visible = False
+
+    End Sub
+
 End Class

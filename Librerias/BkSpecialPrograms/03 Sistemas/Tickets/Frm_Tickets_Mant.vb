@@ -34,7 +34,7 @@ Public Class Frm_Tickets_Mant
 
     Private Sub Frm_Tickets_Mant_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Sb_OcultarDesocultarControles(-95)
+        'Sb_OcultarDesocultarControles(-95)
 
         Dtp_FechaRev.Value = FechaDelServidor()
 
@@ -79,11 +79,11 @@ Public Class Frm_Tickets_Mant
                     .Sucursal = _Cl_Tickets_Padre.Tickets.Tickets_Producto.Sucursal
                     .Bodega = _Cl_Tickets_Padre.Tickets.Tickets_Producto.Bodega
                     .FechaRev = _Cl_Tickets_Padre.Tickets.Tickets_Producto.FechaRev
-                    .Stfi1 = _Cl_Tickets_Padre.Tickets.Tickets_Producto.Stfi1
-                    .Stfi2 = _Cl_Tickets_Padre.Tickets.Tickets_Producto.Stfi2
+                    .StfiEnBodega = _Cl_Tickets_Padre.Tickets.Tickets_Producto.StfiEnBodega
                     .Cantidad = _Cl_Tickets_Padre.Tickets.Tickets_Producto.Cantidad
+                    .Diferencia = _Cl_Tickets_Padre.Tickets.Tickets_Producto.Diferencia
 
-                    Txt_Stf.Text = .Stfi1
+                    Txt_Stf.Text = .StfiEnBodega
                     Txt_Cantidad.Text = .Cantidad
 
                     Dtp_FechaRev.Value = .FechaRev
@@ -235,32 +235,6 @@ Public Class Frm_Tickets_Mant
 
                 End If
 
-                Dim _Descripcion As String = Txt_Descripcion.Text
-                Dim _Ticket_Pr As Tickets_Db.Tickets_Producto = .Tickets_Producto
-                Dim _Descripcion_Pr As String
-
-                _Descripcion_Pr = "PRODUCTO : " & _Ticket_Pr.Codigo.Trim & " - " & _Ticket_Pr.Descripcion.Trim & vbCrLf &
-                                  "BODEGA " & Txt_Bodega.Text & vbCrLf &
-                                  "CANTIDAD EN BODEGA SEGUN SISTEMA: " & Txt_Stf.Text & vbCrLf &
-                                  "CANTIDAD INVENTARIADA: " & Txt_Cantidad.Text & vbCrLf &
-                                  "FECHA REV.: " & Dtp_FechaRev.Value & vbCrLf
-
-                If .Tickets_Producto.AjusInventario Then
-                    Txt_Descripcion.Text = "*** GENERAR AJUSTE DE INVENTARIO." & vbCrLf & _Descripcion_Pr
-                End If
-
-                If .Tickets_Producto.RevInventario Then
-                    Txt_Descripcion.Text = "*** GENERAR REVISION DE INVENTARIO." & vbCrLf & _Descripcion_Pr
-                End If
-
-                If .Tickets_Producto.SobreStock Then
-                    Txt_Descripcion.Text = "*** PRODUCTO CON SOBRE STOCK." & vbCrLf & _Descripcion_Pr
-                End If
-
-                If Not String.IsNullOrEmpty(_Descripcion) Then
-                    Txt_Descripcion.Text += vbCrLf & _Descripcion
-                End If
-
             End If
 
             _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets",
@@ -384,10 +358,6 @@ Public Class Frm_Tickets_Mant
         Rdb_AsignadoAgente.Checked = _Row_Tipo.Item("AsignadoAgente")
         Rdb_AsignadoGrupo.Checked = _Row_Tipo.Item("AsignadoGrupo")
 
-        _Cl_Tickets.Tickets.Tickets_Producto.AjusInventario = _Row_Tipo.Item("AjusInventario")
-        _Cl_Tickets.Tickets.Tickets_Producto.RevInventario = _Row_Tipo.Item("RevInventario")
-        _Cl_Tickets.Tickets.Tickets_Producto.SobreStock = _Row_Tipo.Item("SobreStock")
-
         Dim _ExigeProducto As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Tipos", "ExigeProducto", "Id = " & Txt_Tipo.Tag)
 
         Chk_ExigeProducto.Checked = _ExigeProducto
@@ -397,7 +367,8 @@ Public Class Frm_Tickets_Mant
         Txt_Tipo.ButtonCustom2.Visible = True
 
         If _ExigeProducto And Not CBool(Id_Padre) Then
-            Call Txt_Producto_ButtonCustomClick(Nothing, Nothing)
+            'Call Txt_Producto_ButtonCustomClick(Nothing, Nothing)
+            Call Btn_VerProducto_Click(Nothing, Nothing)
         Else
             Txt_Descripcion.Focus()
         End If
@@ -711,8 +682,9 @@ Public Class Frm_Tickets_Mant
             .Empresa = String.Empty
             .Sucursal = String.Empty
             .Bodega = String.Empty
-            .Stfi1 = 0
-            .Stfi2 = 0
+            .Cantidad = 0
+            .StfiEnBodega = 0
+            .Diferencia = 0
             .Rtu = 0
             .Ud1 = String.Empty
             .Ud2 = String.Empty
@@ -746,9 +718,9 @@ Public Class Frm_Tickets_Mant
 
     Private Sub Chk_ExigeProducto_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_ExigeProducto.CheckedChanged
         If Chk_ExigeProducto.Checked Then
-            Sb_OcultarDesocultarControles(95)
+            'Sb_OcultarDesocultarControles(95)
         Else
-            Sb_OcultarDesocultarControles(-95)
+            'Sb_OcultarDesocultarControles(-95)
         End If
     End Sub
 
@@ -795,24 +767,7 @@ Public Class Frm_Tickets_Mant
                 .Bodega = Fm_b.Pro_RowBodega.Item("KOBO")
                 Txt_Bodega.Text = Fm_b.Pro_RowBodega.Item("NOKOSU").ToString.Trim & " - " & Fm_b.Pro_RowBodega.Item("NOKOBO").ToString.Trim
 
-                .Stfi1 = _Sql.Fx_Trae_Dato("MAEST",
-                                           "STFI1", "EMPRESA = '" & .Empresa & "' " &
-                                           "And KOSU = '" & .Sucursal & "' " &
-                                           "And KOBO = '" & .Bodega & "' " &
-                                           "And KOPR = '" & .Codigo & "'", True)
-
-                .Stfi2 = _Sql.Fx_Trae_Dato("MAEST",
-                                           "STFI2", "EMPRESA = '" & .Empresa & "' " &
-                                           "And KOSU = '" & .Sucursal & "' " &
-                                           "And KOBO = '" & .Bodega & "' " &
-                                           "And KOPR = '" & .Codigo & "'", True)
-
-                If Cmb_UdMedida.SelectedValue = 1 Then
-                    Txt_Stf.Text = .Stfi1
-                Else
-                    Txt_Stf.Text = .Stfi2
-                End If
-
+                Txt_Stf.Text = 0
                 Txt_Stf.Focus()
 
             End With
@@ -863,6 +818,37 @@ Public Class Frm_Tickets_Mant
             End With
 
         End If
+
+    End Sub
+
+    Private Sub Btn_VerProducto_Click(sender As Object, e As EventArgs) Handles Btn_VerProducto.Click
+
+        Dim Fm As New Frm_Tickets_IngProducto
+
+        Fm.Tickets_Producto.Id = _Cl_Tickets.Tickets.Tickets_Producto.Id
+        Fm.Tickets_Producto.Id_Ticket = _Cl_Tickets.Tickets.Tickets_Producto.Id_Ticket
+        Fm.Tickets_Producto.Codigo = _Cl_Tickets.Tickets.Tickets_Producto.Codigo
+        Fm.Tickets_Producto.Descripcion = _Cl_Tickets.Tickets.Tickets_Producto.Descripcion
+        Fm.Tickets_Producto.Empresa = _Cl_Tickets.Tickets.Tickets_Producto.UdMedida
+        Fm.Tickets_Producto.Sucursal = _Cl_Tickets.Tickets.Tickets_Producto.UdMedida
+        Fm.Tickets_Producto.Bodega = _Cl_Tickets.Tickets.Tickets_Producto.Bodega
+        Fm.Tickets_Producto.UdMedida = _Cl_Tickets.Tickets.Tickets_Producto.UdMedida
+        Fm.Tickets_Producto.Cantidad = _Cl_Tickets.Tickets.Tickets_Producto.Cantidad
+        Fm.Tickets_Producto.StfiEnBodega = _Cl_Tickets.Tickets.Tickets_Producto.StfiEnBodega
+        Fm.Tickets_Producto.Diferencia = _Cl_Tickets.Tickets.Tickets_Producto.Diferencia
+        Fm.Tickets_Producto.Ud1 = _Cl_Tickets.Tickets.Tickets_Producto.Ud1
+        Fm.Tickets_Producto.Ud2 = _Cl_Tickets.Tickets.Tickets_Producto.Ud2
+
+        Fm.ShowDialog(Me)
+
+        If Fm.Grabar Then
+
+            _Cl_Tickets.Tickets.Tickets_Producto = Fm.Tickets_Producto
+            Txt_Descripcion.Text = Fm.Descripcion
+
+        End If
+
+        Fm.Dispose()
 
     End Sub
 

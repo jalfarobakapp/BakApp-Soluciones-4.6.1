@@ -2328,6 +2328,12 @@
     <Compile Include="03 Sistemas\Tickets\Frm_Tickets_BuscarAsunto.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_IngProducto.Designer.vb">
+      <DependentUpon>Frm_Tickets_IngProducto.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_IngProducto.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Mant.Designer.vb">
       <DependentUpon>Frm_Tickets_Mant.vb</DependentUpon>
     </Compile>
@@ -5812,6 +5818,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_BuscarAsunto.resx">
       <DependentUpon>Frm_Tickets_BuscarAsunto.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_IngProducto.resx">
+      <DependentUpon>Frm_Tickets_IngProducto.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_Lista.resx">
       <DependentUpon>Frm_Tickets_Lista.vb</DependentUpon>

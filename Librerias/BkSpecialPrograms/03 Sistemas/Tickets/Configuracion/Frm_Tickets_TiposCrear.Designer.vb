@@ -24,17 +24,21 @@ Partial Class Frm_Tickets_TiposCrear
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Tickets_TiposCrear))
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Panel_Productos = New System.Windows.Forms.TableLayoutPanel()
+        Me.Chk_Inc_Cantidades = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Inc_Hora = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Inc_Fecha = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_Tipo_Cie = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Area_Cie = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Agente = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Grupo = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Line1 = New DevComponents.DotNetBar.Controls.Line()
         Me.Rdb_AsignadoGrupo = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_AsignadoAgente = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Asignado = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Lbl_Area = New DevComponents.DotNetBar.LabelX()
-        Me.Panel_Productos = New System.Windows.Forms.TableLayoutPanel()
-        Me.Rdb_RevInventario = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Rdb_AjusInventario = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Rdb_SobreStock = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_ExigeProducto = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Txt_Tipo = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
@@ -49,21 +53,25 @@ Partial Class Frm_Tickets_TiposCrear
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Panel_Productos)
+        Me.GroupPanel1.Controls.Add(Me.LabelX1)
+        Me.GroupPanel1.Controls.Add(Me.Txt_Tipo_Cie)
+        Me.GroupPanel1.Controls.Add(Me.Txt_Area_Cie)
+        Me.GroupPanel1.Controls.Add(Me.LabelX5)
+        Me.GroupPanel1.Controls.Add(Me.LabelX4)
         Me.GroupPanel1.Controls.Add(Me.Txt_Agente)
         Me.GroupPanel1.Controls.Add(Me.Txt_Grupo)
-        Me.GroupPanel1.Controls.Add(Me.Line1)
         Me.GroupPanel1.Controls.Add(Me.Rdb_AsignadoGrupo)
         Me.GroupPanel1.Controls.Add(Me.Rdb_AsignadoAgente)
         Me.GroupPanel1.Controls.Add(Me.Chk_Asignado)
         Me.GroupPanel1.Controls.Add(Me.Lbl_Area)
-        Me.GroupPanel1.Controls.Add(Me.Panel_Productos)
         Me.GroupPanel1.Controls.Add(Me.Chk_ExigeProducto)
         Me.GroupPanel1.Controls.Add(Me.Txt_Tipo)
         Me.GroupPanel1.Controls.Add(Me.LabelX3)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(629, 269)
+        Me.GroupPanel1.Size = New System.Drawing.Size(580, 377)
         '
         '
         '
@@ -95,6 +103,164 @@ Partial Class Frm_Tickets_TiposCrear
         Me.GroupPanel1.TabIndex = 0
         Me.GroupPanel1.Text = "Ficha tipo"
         '
+        'Panel_Productos
+        '
+        Me.Panel_Productos.BackColor = System.Drawing.Color.Transparent
+        Me.Panel_Productos.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
+        Me.Panel_Productos.ColumnCount = 1
+        Me.Panel_Productos.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.Panel_Productos.Controls.Add(Me.Chk_Inc_Cantidades, 0, 0)
+        Me.Panel_Productos.Controls.Add(Me.Chk_Inc_Hora, 0, 2)
+        Me.Panel_Productos.Controls.Add(Me.Chk_Inc_Fecha, 0, 1)
+        Me.Panel_Productos.ForeColor = System.Drawing.Color.Black
+        Me.Panel_Productos.Location = New System.Drawing.Point(35, 103)
+        Me.Panel_Productos.Name = "Panel_Productos"
+        Me.Panel_Productos.RowCount = 3
+        Me.Panel_Productos.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.Panel_Productos.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.Panel_Productos.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.Panel_Productos.Size = New System.Drawing.Size(200, 63)
+        Me.Panel_Productos.TabIndex = 135
+        '
+        'Chk_Inc_Cantidades
+        '
+        Me.Chk_Inc_Cantidades.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Inc_Cantidades.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Inc_Cantidades.CheckBoxImageChecked = CType(resources.GetObject("Chk_Inc_Cantidades.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Inc_Cantidades.FocusCuesEnabled = False
+        Me.Chk_Inc_Cantidades.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Inc_Cantidades.Location = New System.Drawing.Point(4, 4)
+        Me.Chk_Inc_Cantidades.Name = "Chk_Inc_Cantidades"
+        Me.Chk_Inc_Cantidades.Size = New System.Drawing.Size(113, 13)
+        Me.Chk_Inc_Cantidades.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Inc_Cantidades.TabIndex = 132
+        Me.Chk_Inc_Cantidades.TabStop = False
+        Me.Chk_Inc_Cantidades.Text = "Incluye cantidades"
+        '
+        'Chk_Inc_Hora
+        '
+        Me.Chk_Inc_Hora.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Inc_Hora.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Inc_Hora.CheckBoxImageChecked = CType(resources.GetObject("Chk_Inc_Hora.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Inc_Hora.FocusCuesEnabled = False
+        Me.Chk_Inc_Hora.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Inc_Hora.Location = New System.Drawing.Point(4, 44)
+        Me.Chk_Inc_Hora.Name = "Chk_Inc_Hora"
+        Me.Chk_Inc_Hora.Size = New System.Drawing.Size(113, 15)
+        Me.Chk_Inc_Hora.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Inc_Hora.TabIndex = 134
+        Me.Chk_Inc_Hora.TabStop = False
+        Me.Chk_Inc_Hora.Text = "Incluye hora"
+        '
+        'Chk_Inc_Fecha
+        '
+        Me.Chk_Inc_Fecha.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Inc_Fecha.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Inc_Fecha.CheckBoxImageChecked = CType(resources.GetObject("Chk_Inc_Fecha.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Inc_Fecha.FocusCuesEnabled = False
+        Me.Chk_Inc_Fecha.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Inc_Fecha.Location = New System.Drawing.Point(4, 24)
+        Me.Chk_Inc_Fecha.Name = "Chk_Inc_Fecha"
+        Me.Chk_Inc_Fecha.Size = New System.Drawing.Size(113, 13)
+        Me.Chk_Inc_Fecha.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Inc_Fecha.TabIndex = 133
+        Me.Chk_Inc_Fecha.TabStop = False
+        Me.Chk_Inc_Fecha.Text = "Incluye fecha"
+        '
+        'LabelX1
+        '
+        Me.LabelX1.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.ForeColor = System.Drawing.Color.Black
+        Me.LabelX1.Location = New System.Drawing.Point(19, 269)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(589, 23)
+        Me.LabelX1.TabIndex = 131
+        Me.LabelX1.Text = "Clase de petición que se establecerá al finalizar y abrir un ticket de inmediato " &
+    "con este tipo de requerimiento."
+        '
+        'Txt_Tipo_Cie
+        '
+        Me.Txt_Tipo_Cie.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Tipo_Cie.Border.Class = "TextBoxBorder"
+        Me.Txt_Tipo_Cie.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Tipo_Cie.ButtonCustom.Image = CType(resources.GetObject("Txt_Tipo_Cie.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Tipo_Cie.ButtonCustom.Visible = True
+        Me.Txt_Tipo_Cie.ButtonCustom2.Image = CType(resources.GetObject("Txt_Tipo_Cie.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Tipo_Cie.ButtonCustom2.Visible = True
+        Me.Txt_Tipo_Cie.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Tipo_Cie.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Tipo_Cie.Location = New System.Drawing.Point(162, 326)
+        Me.Txt_Tipo_Cie.Name = "Txt_Tipo_Cie"
+        Me.Txt_Tipo_Cie.PreventEnterBeep = True
+        Me.Txt_Tipo_Cie.ReadOnly = True
+        Me.Txt_Tipo_Cie.Size = New System.Drawing.Size(291, 22)
+        Me.Txt_Tipo_Cie.TabIndex = 128
+        '
+        'Txt_Area_Cie
+        '
+        Me.Txt_Area_Cie.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Area_Cie.Border.Class = "TextBoxBorder"
+        Me.Txt_Area_Cie.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Area_Cie.ButtonCustom.Image = CType(resources.GetObject("Txt_Area_Cie.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Area_Cie.ButtonCustom.Visible = True
+        Me.Txt_Area_Cie.ButtonCustom2.Image = CType(resources.GetObject("Txt_Area_Cie.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Area_Cie.ButtonCustom2.Visible = True
+        Me.Txt_Area_Cie.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Area_Cie.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Area_Cie.Location = New System.Drawing.Point(162, 297)
+        Me.Txt_Area_Cie.Name = "Txt_Area_Cie"
+        Me.Txt_Area_Cie.PreventEnterBeep = True
+        Me.Txt_Area_Cie.ReadOnly = True
+        Me.Txt_Area_Cie.Size = New System.Drawing.Size(291, 22)
+        Me.Txt_Area_Cie.TabIndex = 127
+        '
+        'LabelX5
+        '
+        Me.LabelX5.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX5.ForeColor = System.Drawing.Color.Black
+        Me.LabelX5.Location = New System.Drawing.Point(22, 323)
+        Me.LabelX5.Name = "LabelX5"
+        Me.LabelX5.Size = New System.Drawing.Size(130, 23)
+        Me.LabelX5.TabIndex = 130
+        Me.LabelX5.Text = "Tipo (Cierre Tieckets)"
+        '
+        'LabelX4
+        '
+        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.ForeColor = System.Drawing.Color.Black
+        Me.LabelX4.Location = New System.Drawing.Point(22, 294)
+        Me.LabelX4.Name = "LabelX4"
+        Me.LabelX4.Size = New System.Drawing.Size(134, 23)
+        Me.LabelX4.TabIndex = 129
+        Me.LabelX4.Text = "Area (Cierre Tickets)"
+        '
         'Txt_Agente
         '
         Me.Txt_Agente.BackColor = System.Drawing.Color.White
@@ -109,7 +275,7 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Txt_Agente.ButtonCustom2.Visible = True
         Me.Txt_Agente.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Agente.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Agente.Location = New System.Drawing.Point(162, 215)
+        Me.Txt_Agente.Location = New System.Drawing.Point(162, 241)
         Me.Txt_Agente.Name = "Txt_Agente"
         Me.Txt_Agente.PreventEnterBeep = True
         Me.Txt_Agente.ReadOnly = True
@@ -131,23 +297,13 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Txt_Grupo.ButtonCustom2.Visible = True
         Me.Txt_Grupo.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Grupo.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Grupo.Location = New System.Drawing.Point(162, 186)
+        Me.Txt_Grupo.Location = New System.Drawing.Point(162, 212)
         Me.Txt_Grupo.Name = "Txt_Grupo"
         Me.Txt_Grupo.PreventEnterBeep = True
         Me.Txt_Grupo.ReadOnly = True
         Me.Txt_Grupo.Size = New System.Drawing.Size(291, 22)
         Me.Txt_Grupo.TabIndex = 124
         Me.Txt_Grupo.TabStop = False
-        '
-        'Line1
-        '
-        Me.Line1.BackColor = System.Drawing.Color.Transparent
-        Me.Line1.ForeColor = System.Drawing.Color.Black
-        Me.Line1.Location = New System.Drawing.Point(19, 140)
-        Me.Line1.Name = "Line1"
-        Me.Line1.Size = New System.Drawing.Size(377, 23)
-        Me.Line1.TabIndex = 127
-        Me.Line1.Text = "Line1"
         '
         'Rdb_AsignadoGrupo
         '
@@ -159,7 +315,7 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Rdb_AsignadoGrupo.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_AsignadoGrupo.FocusCuesEnabled = False
         Me.Rdb_AsignadoGrupo.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_AsignadoGrupo.Location = New System.Drawing.Point(19, 186)
+        Me.Rdb_AsignadoGrupo.Location = New System.Drawing.Point(19, 212)
         Me.Rdb_AsignadoGrupo.Name = "Rdb_AsignadoGrupo"
         Me.Rdb_AsignadoGrupo.Size = New System.Drawing.Size(125, 23)
         Me.Rdb_AsignadoGrupo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -177,7 +333,7 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Rdb_AsignadoAgente.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_AsignadoAgente.FocusCuesEnabled = False
         Me.Rdb_AsignadoAgente.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_AsignadoAgente.Location = New System.Drawing.Point(19, 214)
+        Me.Rdb_AsignadoAgente.Location = New System.Drawing.Point(19, 240)
         Me.Rdb_AsignadoAgente.Name = "Rdb_AsignadoAgente"
         Me.Rdb_AsignadoAgente.Size = New System.Drawing.Size(137, 23)
         Me.Rdb_AsignadoAgente.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -195,7 +351,7 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Chk_Asignado.CheckBoxImageChecked = CType(resources.GetObject("Chk_Asignado.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Asignado.FocusCuesEnabled = False
         Me.Chk_Asignado.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Asignado.Location = New System.Drawing.Point(19, 158)
+        Me.Chk_Asignado.Location = New System.Drawing.Point(19, 184)
         Me.Chk_Asignado.Name = "Chk_Asignado"
         Me.Chk_Asignado.Size = New System.Drawing.Size(291, 22)
         Me.Chk_Asignado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -217,80 +373,6 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Lbl_Area.Size = New System.Drawing.Size(516, 23)
         Me.Lbl_Area.TabIndex = 121
         Me.Lbl_Area.Text = "AREA: XXXXXXXXXXWWWWWWWWWYYYYYYYYSSSSSSSS"
-        '
-        'Panel_Productos
-        '
-        Me.Panel_Productos.BackColor = System.Drawing.Color.Transparent
-        Me.Panel_Productos.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
-        Me.Panel_Productos.ColumnCount = 3
-        Me.Panel_Productos.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.Panel_Productos.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.Panel_Productos.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.Panel_Productos.Controls.Add(Me.Rdb_RevInventario, 0, 0)
-        Me.Panel_Productos.Controls.Add(Me.Rdb_AjusInventario, 1, 0)
-        Me.Panel_Productos.Controls.Add(Me.Rdb_SobreStock, 2, 0)
-        Me.Panel_Productos.Enabled = False
-        Me.Panel_Productos.ForeColor = System.Drawing.Color.Black
-        Me.Panel_Productos.Location = New System.Drawing.Point(19, 103)
-        Me.Panel_Productos.Name = "Panel_Productos"
-        Me.Panel_Productos.RowCount = 1
-        Me.Panel_Productos.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.Panel_Productos.Size = New System.Drawing.Size(450, 25)
-        Me.Panel_Productos.TabIndex = 59
-        '
-        'Rdb_RevInventario
-        '
-        Me.Rdb_RevInventario.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Rdb_RevInventario.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_RevInventario.CheckBoxImageChecked = CType(resources.GetObject("Rdb_RevInventario.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Rdb_RevInventario.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_RevInventario.FocusCuesEnabled = False
-        Me.Rdb_RevInventario.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_RevInventario.Location = New System.Drawing.Point(4, 4)
-        Me.Rdb_RevInventario.Name = "Rdb_RevInventario"
-        Me.Rdb_RevInventario.Size = New System.Drawing.Size(131, 17)
-        Me.Rdb_RevInventario.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_RevInventario.TabIndex = 23
-        Me.Rdb_RevInventario.Text = "Revisión de inventario"
-        '
-        'Rdb_AjusInventario
-        '
-        Me.Rdb_AjusInventario.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Rdb_AjusInventario.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_AjusInventario.CheckBoxImageChecked = CType(resources.GetObject("Rdb_AjusInventario.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Rdb_AjusInventario.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_AjusInventario.FocusCuesEnabled = False
-        Me.Rdb_AjusInventario.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_AjusInventario.Location = New System.Drawing.Point(153, 4)
-        Me.Rdb_AjusInventario.Name = "Rdb_AjusInventario"
-        Me.Rdb_AjusInventario.Size = New System.Drawing.Size(119, 17)
-        Me.Rdb_AjusInventario.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_AjusInventario.TabIndex = 22
-        Me.Rdb_AjusInventario.Text = "Ajuste de inventario"
-        '
-        'Rdb_SobreStock
-        '
-        Me.Rdb_SobreStock.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Rdb_SobreStock.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_SobreStock.CheckBoxImageChecked = CType(resources.GetObject("Rdb_SobreStock.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Rdb_SobreStock.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_SobreStock.FocusCuesEnabled = False
-        Me.Rdb_SobreStock.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_SobreStock.Location = New System.Drawing.Point(302, 4)
-        Me.Rdb_SobreStock.Name = "Rdb_SobreStock"
-        Me.Rdb_SobreStock.Size = New System.Drawing.Size(80, 17)
-        Me.Rdb_SobreStock.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_SobreStock.TabIndex = 21
-        Me.Rdb_SobreStock.Text = "Sobre stock"
         '
         'Chk_ExigeProducto
         '
@@ -325,7 +407,7 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Txt_Tipo.MaxLength = 50
         Me.Txt_Tipo.Name = "Txt_Tipo"
         Me.Txt_Tipo.PreventEnterBeep = True
-        Me.Txt_Tipo.Size = New System.Drawing.Size(493, 22)
+        Me.Txt_Tipo.Size = New System.Drawing.Size(440, 22)
         Me.Txt_Tipo.TabIndex = 48
         '
         'LabelX3
@@ -348,9 +430,9 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Tipo})
-        Me.Bar2.Location = New System.Drawing.Point(0, 291)
+        Me.Bar2.Location = New System.Drawing.Point(0, 399)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(653, 41)
+        Me.Bar2.Size = New System.Drawing.Size(602, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 115
@@ -370,7 +452,7 @@ Partial Class Frm_Tickets_TiposCrear
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(653, 332)
+        Me.ClientSize = New System.Drawing.Size(602, 440)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True
@@ -394,17 +476,21 @@ Partial Class Frm_Tickets_TiposCrear
     Friend WithEvents Txt_Tipo As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Chk_ExigeProducto As DevComponents.DotNetBar.Controls.CheckBoxX
-    Friend WithEvents Panel_Productos As TableLayoutPanel
-    Public WithEvents Rdb_RevInventario As DevComponents.DotNetBar.Controls.CheckBoxX
-    Public WithEvents Rdb_AjusInventario As DevComponents.DotNetBar.Controls.CheckBoxX
-    Public WithEvents Rdb_SobreStock As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Crear_Tipo As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Lbl_Area As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_Agente As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Txt_Grupo As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents Line1 As DevComponents.DotNetBar.Controls.Line
     Friend WithEvents Rdb_AsignadoGrupo As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Rdb_AsignadoAgente As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_Asignado As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Txt_Tipo_Cie As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Txt_Area_Cie As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Chk_Inc_Fecha As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_Inc_Cantidades As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_Inc_Hora As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Panel_Productos As TableLayoutPanel
 End Class

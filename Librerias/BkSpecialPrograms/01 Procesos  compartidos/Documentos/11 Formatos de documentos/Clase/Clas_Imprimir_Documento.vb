@@ -2279,7 +2279,13 @@ Public Class Clas_Imprimir_Documento
 
                 Dim _Text2 As String = _Texto
 
-                Dim _Moneda_Str As String = _Row_Encabezado.Item("MODO").ToString.Trim
+                Dim _Moneda_Str As String
+
+                Try
+                    _Moneda_Str = _Row_Encabezado.Item("MODO").ToString.Trim
+                Catch ex As Exception
+                    _Moneda_Str = "$"
+                End Try
 
                 _Texto = Fx_New_Trae_Valor_Encabezado_Row(_Campo,
                                                               _Tipo_de_dato,
@@ -3799,14 +3805,13 @@ Public Class Clas_Imprimir_Documento
 
                     Else
 
-                        Dim _Moneda_Str As String = _Row_Encabezado.Item("MODO").ToString.Trim
+                        'Dim _Moneda_Str As String = _Row_Encabezado.Item("MODO").ToString.Trim
 
                         _Texto = Fx_New_Trae_Valor_Encabezado_Row(_Campo,
                                                                   _TipoDato,
                                                                   _Es_Descuento,
                                                                   _Row_Encabezado,
-                                                                  _Texto,
-                                                                  _Moneda_Str)
+                                                                  _Texto)
 
                         e.Graphics.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Fila_Y)
 

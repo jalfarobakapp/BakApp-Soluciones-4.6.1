@@ -74,13 +74,10 @@ Public Class Cl_Tickets
                     .UdMedida = _Row_Ticket_Producto.Item("UdMedida")
                     .Ud1 = _Row_Ticket_Producto.Item("Ud1")
                     .Ud2 = _Row_Ticket_Producto.Item("Ud2")
-                    .Stfi1 = _Row_Ticket_Producto.Item("Stfi1")
-                    .Stfi2 = _Row_Ticket_Producto.Item("Stfi2")
+                    .StfiEnBodega = _Row_Ticket_Producto.Item("StfiEnBodega")
                     .Cantidad = _Row_Ticket_Producto.Item("Cantidad")
+                    .Diferencia = _Row_Ticket_Producto.Item("Diferencia")
                     .FechaRev = _Row_Ticket_Producto.Item("FechaRev")
-                    .RevInventario = _Row_Ticket_Producto.Item("RevInventario")
-                    .AjusInventario = _Row_Ticket_Producto.Item("AjusInventario")
-                    .SobreStock = _Row_Ticket_Producto.Item("SobreStock")
 
                 End With
 
@@ -89,6 +86,47 @@ Public Class Cl_Tickets
         End If
 
     End Sub
+
+    Function Fx_Llenar_Tipo(_Id_Tipo As Integer) As Tickets_Tipo
+
+        Dim _Tipo As New Tickets_Tipo
+
+        With _Tipo
+
+            .Id = 0
+            .Id_Area = 0
+            .Tipo = String.Empty
+
+            Consulta_sql = "Select  Tp.*,Isnull(Tf.NOKOFU,'') As 'Agente',Isnull(Gr.Grupo,'') As Grupo" & vbCrLf &
+           "From " & _Global_BaseBk & "Zw_Stk_Tipos Tp" & vbCrLf &
+           "Left Join TABFU Tf On Tf.KOFU = Tp.CodAgente" & vbCrLf &
+           "Left Join " & _Global_BaseBk & "Zw_Stk_Grupos Gr On Tp.Id_Grupo = Gr.Id" & vbCrLf &
+           "Where Tp.Id = " & _Id_Tipo
+
+            Dim _Row_Tipo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not IsNothing(_Row_Tipo) Then
+
+                .Id = _Row_Tipo.Item("Id")
+                .Id_Area = _Row_Tipo.Item("Id_Area")
+                .Tipo = _Row_Tipo.Item("Tipo")
+                .Asignado = _Row_Tipo.Item("Asignado")
+                .AsignadoAgente = _Row_Tipo.Item("AsignadoAgente")
+                .AsignadoGrupo = _Row_Tipo.Item("AsignadoGrupo")
+                .Id_Grupo = _Row_Tipo.Item("Id_Grupo")
+                .Grupo = _Row_Tipo.Item("Grupo")
+                .CodAgente = _Row_Tipo.Item("CodAgente")
+                .Agente = _Row_Tipo.Item("Agente")
+                .ExigeProducto = _Row_Tipo.Item("ExigeProducto")
+                .Inc_Cantidades = _Row_Tipo.Item("Inc_Cantidades")
+                .Inc_Fecha = _Row_Tipo.Item("Inc_Fecha")
+                .Inc_Hora = _Row_Tipo.Item("Inc_Hora")
+
+            End If
+
+        End With
+
+    End Function
 
     Function Fx_NvoNro_OT() As String
 
@@ -207,18 +245,15 @@ Public Class Cl_Tickets
                 If Not String.IsNullOrEmpty(.Codigo) Then
 
                     Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Producto (Id_Ticket,Empresa,Sucursal,Bodega," &
-                                   "Codigo,Descripcion,Rtu,UdMedida,Ud1,Ud2,Stfi1,Stfi2,Cantidad,FechaRev,RevInventario,AjusInventario," &
+                                   "Codigo,Descripcion,Rtu,UdMedida,Ud1,Ud2,StfiEnBodega,Cantidad,Diferencia,FechaRev,RevInventario,AjusInventario," &
                                    "SobreStock) Values " &
                                    "(" & Tickets.Id & ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega &
                                    "','" & .Codigo & "','" & .Descripcion & "'," & De_Num_a_Tx_01(.Rtu, False, 5) &
                                    "," & .UdMedida & ",'" & .Ud1 & "','" & .Ud2 &
-                                   "'," & De_Num_a_Tx_01(.Stfi1, False, 5) &
-                                   "," & De_Num_a_Tx_01(.Stfi2, False, 5) &
+                                   "'," & De_Num_a_Tx_01(.StfiEnBodega, False, 5) &
                                    "," & De_Num_a_Tx_01(.Cantidad, False, 5) &
-                                   ",'" & Format(.FechaRev, "yyyyMMdd") &
-                                   "'," & Convert.ToInt32(.RevInventario) &
-                                   "," & Convert.ToInt32(.AjusInventario) &
-                                   "," & Convert.ToInt32(.SobreStock) & ")"
+                                   "," & De_Num_a_Tx_01(.Diferencia, False, 5) &
+                                   ",'" & Format(.FechaRev, "yyyyMMdd") & ")"
 
                     Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                     Comando.Transaction = myTrans
@@ -509,6 +544,110 @@ Public Class Cl_Tickets
 
     End Function
 
+    Function Fx_Grabar_Tipo(Cl_Tipo As Tickets_Db.Tickets_Tipo) As Mensaje_Ticket
+
+        Dim _Mensaje As New Mensaje_Ticket
+
+        If Cl_Tipo.AsignadoAgente Then Consulta_sql = "Select '" & Cl_Tipo.CodAgente & "' As CodAgente"
+        If Cl_Tipo.AsignadoGrupo Then Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente Where Id_Grupo = " & Cl_Tipo.Id_Grupo
+
+        Dim _Tbl_Grupo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+        Try
+
+            myTrans = Cn2.BeginTransaction()
+
+            If Cl_Tipo.Id = 0 Then
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tipos (Id_Area,Tipo) Values " &
+                           "(" & Cl_Tipo.Id_Area & ",'" & Cl_Tipo.Tipo & "')"
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+                Comando = New System.Data.SqlClient.SqlCommand("SELECT @@IDENTITY AS 'Identity'", Cn2)
+                Comando.Transaction = myTrans
+                Dim dfd1 As System.Data.SqlClient.SqlDataReader = Comando.ExecuteReader()
+                While dfd1.Read()
+                    Cl_Tipo.Id = dfd1("Identity")
+                End While
+                dfd1.Close()
+
+            End If
+
+
+            Dim _Cuenta As Integer
+
+            For Each _Fl As DataRow In _Tbl_Grupo.Rows
+
+                Consulta_sql = "Select Count(*) As Cuenta From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos" & vbCrLf &
+                               "Where Id_Area = " & Cl_Tipo.Id_Area & " And Id_Tipo = " & Cl_Tipo.Id & " And CodAgente = '" & _Fl.Item("CodAgente") & "'"
+
+                Comando = New System.Data.SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Dim dfd1 As System.Data.SqlClient.SqlDataReader = Comando.ExecuteReader()
+                While dfd1.Read()
+                    _Cuenta = dfd1("Identity")
+                End While
+                dfd1.Close()
+
+                If CBool(_Cuenta) Then
+
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos (Id_Area,Id_Tipo,CodAgente) Values " &
+                               "(" & Cl_Tipo.Id_Area & "," & Cl_Tipo.Id & ",'" & _Fl.Item("CodAgente") & "')"
+
+                    Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                    Comando.Transaction = myTrans
+                    Comando.ExecuteNonQuery()
+
+                End If
+            Next
+
+            With Cl_Tipo
+
+                Consulta_sql += "Update " & _Global_BaseBk & "Zw_Stk_Tipos Set " &
+                                "Tipo = '" & .Tipo.Trim & "'" & vbCrLf &
+                                ",ExigeProducto = " & Convert.ToInt32(.ExigeProducto) & vbCrLf &
+                                ",Asignado = " & Convert.ToInt32(.Asignado) & vbCrLf &
+                                ",AsignadoGrupo = " & Convert.ToInt32(.AsignadoGrupo) & vbCrLf &
+                                ",AsignadoAgente = " & Convert.ToInt32(.AsignadoAgente) & vbCrLf &
+                                ",Id_Grupo = " & .Id_Grupo & vbCrLf &
+                                ",CodAgente = '" & .CodAgente & "'" & vbCrLf &
+                                ",CieTk_Id_Area = " & .CieTk_Id_Area & vbCrLf &
+                                ",CieTk_Id_Tipo = " & .CieTk_Id_Tipo & vbCrLf &
+                                ",Inc_Cantidades = " & Convert.ToInt32(.Inc_Cantidades) & vbCrLf &
+                                ",Inc_Fecha = " & Convert.ToInt32(.Inc_Fecha) & vbCrLf &
+                                ",Inc_Hora = " & Convert.ToInt32(.Inc_Hora) & vbCrLf &
+                                "Where Id = " & .Id
+
+            End With
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.New_Id = Cl_Tipo.Id
+
+        Catch ex As Exception
+
+            _Mensaje.Mensaje = ex.Message
+            myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+    End Function
+
 End Class
 
 Namespace Tickets_Db
@@ -564,6 +703,7 @@ Namespace Tickets_Db
         Public Property EsCorrecto As Boolean
         Public Property Mensaje As String
         Public Property Tickets_Acciones As Tickets_Acciones
+        Public Property New_Id As Integer
 
     End Class
 
@@ -580,13 +720,31 @@ Namespace Tickets_Db
         Public Property UdMedida As Integer
         Public Property Ud1 As String
         Public Property Ud2 As String
-        Public Property Stfi1 As Double
-        Public Property Stfi2 As Double
+        Public Property StfiEnBodega As Double
         Public Property Cantidad As Double
+        Public Property Diferencia As Double
         Public Property FechaRev As DateTime
-        Public Property RevInventario As Boolean
-        Public Property AjusInventario As Boolean
-        Public Property SobreStock As Boolean
+
+    End Class
+
+    Public Class Tickets_Tipo
+
+        Public Property Id As Integer
+        Public Property Id_Area As Integer
+        Public Property Tipo As String
+        Public Property ExigeProducto As Boolean
+        Public Property Asignado As Boolean
+        Public Property AsignadoGrupo As Boolean
+        Public Property AsignadoAgente As Boolean
+        Public Property Id_Grupo As Integer
+        Public Property Grupo As String
+        Public Property CodAgente As String
+        Public Property Agente As String
+        Public Property CieTk_Id_Area As Integer
+        Public Property CieTk_Id_Tipo As Integer
+        Public Property Inc_Cantidades As Boolean
+        Public Property Inc_Fecha As Boolean
+        Public Property Inc_Hora As Boolean
 
     End Class
 

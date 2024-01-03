@@ -184,7 +184,7 @@ Public Class Frm_Modalidades
 
             _Columna = "NOKOSU"
             .Columns(_Columna).HeaderText = "Sucursal"
-            .Columns(_Columna).Width = 255
+            .Columns(_Columna).Width = 235
             .Columns(_Columna).Visible = True
             .Columns(_Columna).DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -205,14 +205,14 @@ Public Class Frm_Modalidades
 
             _Columna = "ELISTAVEN"
             .Columns(_Columna).HeaderText = "L.Venta"
-            .Columns(_Columna).Width = 60
+            .Columns(_Columna).Width = 70
             .Columns(_Columna).Visible = True
             .Columns(_Columna).DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             _Columna = "ELISTACOM"
             .Columns(_Columna).HeaderText = "L.Compra"
-            .Columns(_Columna).Width = 60
+            .Columns(_Columna).Width = 70
             .Columns(_Columna).Visible = True
             .Columns(_Columna).DisplayIndex = _DisplayIndex
             _DisplayIndex += 1

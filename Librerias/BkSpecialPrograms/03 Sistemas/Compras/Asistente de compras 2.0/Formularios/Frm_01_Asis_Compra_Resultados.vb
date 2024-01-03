@@ -7815,7 +7815,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
 
             Consulta_sql = "Insert Into " & _Nombre_TblPaso_PrBd & "(Codigo,Codigo_Nodo,Descripcion,Codigo_Nodo_Madre,Descripcion_Madre)
-                                    Select Codigo As Kopr, Prod.Codigo_Nodo, NOKOPR,Arbol.Codigo_Madre,NOKOPR As Descripcion_Nodo
+                                    Select Distinct Codigo As Kopr, Prod.Codigo_Nodo, NOKOPR,Arbol.Codigo_Madre,NOKOPR As Descripcion_Nodo
                                     From " & _Global_BaseBk & "Zw_Prod_Asociacion Prod
                                     Inner Join " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Arbol On Prod.Codigo_Nodo = Arbol.Codigo_Nodo
                                     Left Join MAEPR On KOPR = Codigo        
