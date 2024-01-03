@@ -128,10 +128,12 @@ Public Class Frm_Usuarios_Random_Ficha
         Dim CodigoExt As String = Txt_Cod_Ext.Text
         Dim PassWord As String = TraeClaveRD(Txt_Password.Text)
 
-        If Not Fx_Validar_Email(Email) Then
-            MessageBoxEx.Show(Me, "Email incorrecto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Txt_Email.Focus()
-            Return
+        If Not String.IsNullOrWhiteSpace(Email) Then
+            If Not Fx_Validar_Email(Email) Then
+                MessageBoxEx.Show(Me, "Email incorrecto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_Email.Focus()
+                Return
+            End If
         End If
 
         Dim Consulta As String = "Update TABFU Set " & vbCrLf &

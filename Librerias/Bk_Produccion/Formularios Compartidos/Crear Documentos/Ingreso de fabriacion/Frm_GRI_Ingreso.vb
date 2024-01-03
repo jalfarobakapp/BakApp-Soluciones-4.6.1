@@ -24,9 +24,30 @@ Public Class Frm_GRI_Ingreso
             Return
         End If
 
+
+        Dim _Old_Funcionario = FUNCIONARIO
+        Dim _Aceptar As Boolean
+
+        Dim Fml As New Frm_Login
+        Fml.ValidarPermiso = True
+        Fml.Permiso = "Doc00086"
+        Fml.ShowDialog()
+        _Aceptar = Fml.Aceptar
+        Fml.Dispose()
+
+        If Not _Aceptar Then
+            Return
+        End If
+
+        Dim Frm_Modalidad As New Frm_Modalidades(False)
+        Frm_Modalidad.ShowDialog()
+        Frm_Modalidad.Dispose()
+
         Dim Fm As New Frm_GRI_FabXProducto
         Fm.ShowDialog(Me)
         Fm.Dispose()
+
+        FUNCIONARIO = _Old_Funcionario
 
     End Sub
 

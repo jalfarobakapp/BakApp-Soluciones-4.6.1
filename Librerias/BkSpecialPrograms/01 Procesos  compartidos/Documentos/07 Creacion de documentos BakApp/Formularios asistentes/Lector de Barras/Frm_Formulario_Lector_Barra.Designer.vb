@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_Formulario_Lector_Barra
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -39,9 +39,15 @@ Partial Class Frm_Formulario_Lector_Barra
         Me.Chk_Teclear = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Image_QRCode = New DevComponents.DotNetBar.Controls.ReflectionImage()
         Me.Chk_LeerSoloUnaVezCodBarra = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_LeerNormal = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_LeerMayusculas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_LeerMinusculas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TableLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Bar1
@@ -50,7 +56,7 @@ Partial Class Frm_Formulario_Lector_Barra
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Aceptar, Me.Btn_Autorizar_Permiso, Me.Btn_VerCodigosLeidos, Me.Btn_Limpiar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 446)
+        Me.Bar1.Location = New System.Drawing.Point(0, 450)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(648, 41)
         Me.Bar1.Stretch = True
@@ -205,7 +211,7 @@ Partial Class Frm_Formulario_Lector_Barra
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(93, 23)
         Me.LabelX1.TabIndex = 128
-        Me.LabelX1.Text = "Lector de c�digos"
+        Me.LabelX1.Text = "Lector de códigos"
         '
         'Txt_Codigo_Barras
         '
@@ -242,7 +248,7 @@ Partial Class Frm_Formulario_Lector_Barra
         Me.Chk_Teclear.Size = New System.Drawing.Size(204, 23)
         Me.Chk_Teclear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Teclear.TabIndex = 130
-        Me.Chk_Teclear.Text = "Ingresar c�digo con el TECLEANDO"
+        Me.Chk_Teclear.Text = "Ingresar código con el TECLEANDO"
         '
         'Image_QRCode
         '
@@ -276,13 +282,108 @@ Partial Class Frm_Formulario_Lector_Barra
         Me.Chk_LeerSoloUnaVezCodBarra.Size = New System.Drawing.Size(204, 23)
         Me.Chk_LeerSoloUnaVezCodBarra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_LeerSoloUnaVezCodBarra.TabIndex = 132
-        Me.Chk_LeerSoloUnaVezCodBarra.Text = "Solo leer una vez el c�digo de barras"
+        Me.Chk_LeerSoloUnaVezCodBarra.Text = "Solo leer una vez el código de barras"
+        '
+        'Rdb_LeerNormal
+        '
+        Me.Rdb_LeerNormal.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_LeerNormal.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_LeerNormal.CheckBoxImageChecked = CType(resources.GetObject("Rdb_LeerNormal.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_LeerNormal.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_LeerNormal.Checked = True
+        Me.Rdb_LeerNormal.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_LeerNormal.CheckValue = "Y"
+        Me.Rdb_LeerNormal.FocusCuesEnabled = False
+        Me.Rdb_LeerNormal.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_LeerNormal.Location = New System.Drawing.Point(4, 4)
+        Me.Rdb_LeerNormal.Name = "Rdb_LeerNormal"
+        Me.Rdb_LeerNormal.Size = New System.Drawing.Size(60, 20)
+        Me.Rdb_LeerNormal.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_LeerNormal.TabIndex = 134
+        Me.Rdb_LeerNormal.TabStop = False
+        Me.Rdb_LeerNormal.Text = "Normal"
+        '
+        'Rdb_LeerMayusculas
+        '
+        Me.Rdb_LeerMayusculas.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_LeerMayusculas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_LeerMayusculas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_LeerMayusculas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_LeerMayusculas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_LeerMayusculas.FocusCuesEnabled = False
+        Me.Rdb_LeerMayusculas.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_LeerMayusculas.Location = New System.Drawing.Point(83, 4)
+        Me.Rdb_LeerMayusculas.Name = "Rdb_LeerMayusculas"
+        Me.Rdb_LeerMayusculas.Size = New System.Drawing.Size(71, 19)
+        Me.Rdb_LeerMayusculas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_LeerMayusculas.TabIndex = 135
+        Me.Rdb_LeerMayusculas.TabStop = False
+        Me.Rdb_LeerMayusculas.Text = "Mayúsculas"
+        '
+        'Rdb_LeerMinusculas
+        '
+        Me.Rdb_LeerMinusculas.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_LeerMinusculas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_LeerMinusculas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_LeerMinusculas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_LeerMinusculas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_LeerMinusculas.FocusCuesEnabled = False
+        Me.Rdb_LeerMinusculas.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_LeerMinusculas.Location = New System.Drawing.Point(162, 4)
+        Me.Rdb_LeerMinusculas.Name = "Rdb_LeerMinusculas"
+        Me.Rdb_LeerMinusculas.Size = New System.Drawing.Size(72, 19)
+        Me.Rdb_LeerMinusculas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_LeerMinusculas.TabIndex = 136
+        Me.Rdb_LeerMinusculas.TabStop = False
+        Me.Rdb_LeerMinusculas.Text = "Minúsculas"
+        '
+        'LabelX2
+        '
+        Me.LabelX2.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX2.ForeColor = System.Drawing.Color.Black
+        Me.LabelX2.Location = New System.Drawing.Point(277, 417)
+        Me.LabelX2.Name = "LabelX2"
+        Me.LabelX2.Size = New System.Drawing.Size(102, 23)
+        Me.LabelX2.TabIndex = 137
+        Me.LabelX2.Text = "Leer códigos como: "
+        '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
+        Me.TableLayoutPanel1.ColumnCount = 3
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel1.Controls.Add(Me.Rdb_LeerNormal, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Rdb_LeerMayusculas, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Rdb_LeerMinusculas, 2, 0)
+        Me.TableLayoutPanel1.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(385, 417)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 1
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(238, 28)
+        Me.TableLayoutPanel1.TabIndex = 138
         '
         'Frm_Formulario_Lector_Barra
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(648, 487)
+        Me.ClientSize = New System.Drawing.Size(648, 491)
+        Me.Controls.Add(Me.TableLayoutPanel1)
+        Me.Controls.Add(Me.LabelX2)
         Me.Controls.Add(Me.Chk_LeerSoloUnaVezCodBarra)
         Me.Controls.Add(Me.Image_QRCode)
         Me.Controls.Add(Me.Chk_Teclear)
@@ -305,6 +406,7 @@ Partial Class Frm_Formulario_Lector_Barra
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -322,4 +424,9 @@ Partial Class Frm_Formulario_Lector_Barra
     Friend WithEvents Chk_LeerSoloUnaVezCodBarra As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Btn_VerCodigosLeidos As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Limpiar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Rdb_LeerNormal As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Rdb_LeerMayusculas As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Rdb_LeerMinusculas As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
 End Class

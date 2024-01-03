@@ -123,9 +123,10 @@ Public Class Login
         Dim Fm As New Frm_Login
 
         Dim _Auntenficar_Usuario As Boolean
+        Dim _ClaveCorrecta As Boolean
 
         If _Pass_Codificada Then
-            _Auntenficar_Usuario = Fm.Fx_Autentificar_Usuario_Pass_Codificada(Txt_Pass.Text, Lbl_Usuario.Text)
+            _Auntenficar_Usuario = Fm.Fx_Autentificar_Usuario_Pass_Codificada(Txt_Pass.Text, Lbl_Usuario.Text, _ClaveCorrecta)
         Else
             _Auntenficar_Usuario = Fm.Fx_Autentificar_Usuario_Decodificada(_PWFU_Codificada, Lbl_Usuario.Text)
         End If
@@ -281,7 +282,9 @@ Public Class Login
         Else
 
             Me.Enabled = True
-            MessageBoxEx.Show(_Fm_Menu_Padre, "Clave desconocida", "Login", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            If Not _ClaveCorrecta Then
+                MessageBoxEx.Show(_Fm_Menu_Padre, "Clave desconocida", "Login", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End If
             Txt_Pass.SelectAll()
 
         End If

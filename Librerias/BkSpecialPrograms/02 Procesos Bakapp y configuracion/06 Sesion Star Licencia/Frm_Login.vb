@@ -1,32 +1,29 @@
 ﻿Imports DevComponents.DotNetBar
-'Imports Lib_Bakapp_VarClassFunc
+
 
 Public Class Frm_Login
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Dim _CancelarLogin As Boolean
-    Dim _UsuarioActivado As Boolean
-    Dim _RowUsuario As DataRow
-    Dim _AccesoAdministrador As String
+    'Dim _CancelarLogin As Boolean
+    'Dim _UsuarioActivado As Boolean
+    'Dim _RowUsuario As DataRow
+    'Dim _AccesoAdministrador As String
     Dim _Teclado As Boolean
 
-    Public Property Pro_CancelarLogin As Boolean
-        Get
-            Return _CancelarLogin
-        End Get
-        Set(value As Boolean)
-            _CancelarLogin = value
-        End Set
-    End Property
-
+    Public Property RowUsuario As DataRow
+    Public Property Aceptar As Boolean
+    Public Property UsuarioActivado As Boolean
+    Public Property CancelarLogin As Boolean
+    Public Property AccesoAdministrador As String
+    Public Property ValidarPermiso As Boolean
+    Public Property Permiso As String
 
     Public Sub New()
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
-
 
     End Sub
 
@@ -42,20 +39,19 @@ Public Class Frm_Login
     End Sub
 
     Private Sub BtnxAceptar_Click(sender As System.Object, e As System.EventArgs) Handles BtnxAceptar.Click
-        Aceptar()
-    End Sub
 
-    Sub Aceptar()
+        Dim _ClaveCorrecta As Boolean
 
-        If Fx_Autentificar_Usuario_Pass_Codificada(TxtxPassword.Text, Txtxusuario.Text) Then
+        If Fx_Autentificar_Usuario_Pass_Codificada(TxtxPassword.Text, Txtxusuario.Text, _ClaveCorrecta) Then
 
             If Fx_Sesion_Star(Me, FUNCIONARIO, Nombre_funcionario_activo) Then
 
                 Nombre_funcionario_activo = Txtxusuario.Text
                 _Global_Sesion = True
-                _UsuarioActivado = True
-                _CancelarLogin = False
-                _AccesoAdministrador = False
+                UsuarioActivado = True
+                CancelarLogin = False
+                AccesoAdministrador = False
+                Aceptar = True
                 Me.Close()
 
             Else
@@ -64,11 +60,11 @@ Public Class Frm_Login
 
             End If
 
-        Else
+        End If
 
+        If Not _ClaveCorrecta Then
             MessageBoxEx.Show(Me, "Clave desconocida", "Login", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             _Global_Sesion = False
-
         End If
 
     End Sub
@@ -101,7 +97,8 @@ Public Class Frm_Login
     End Function
 
     Public Function Fx_Autentificar_Usuario_Pass_Codificada(_Pass_Codificada As String,
-                                                            _Usuario As String) As Boolean
+                                                            _Usuario As String,
+                                                            ByRef _ClaveCorrecta As Boolean) As Boolean
 
         If Not String.IsNullOrEmpty(_Usuario) Then
 
@@ -110,41 +107,57 @@ Public Class Frm_Login
             Consulta_sql = "Select * From TABFU Where PWFU = '" & _Pwfu & "'"
             _RowUsuario = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-            FUNCIONARIO = _RowUsuario.Item("KOFU") '_Sql.Fx_Trae_Dato("TABFU", "KOFU", "PWFU = '" & TraeClaveRD(_Pass) & "'")
-            Nombre_funcionario_activo = _RowUsuario.Item("NOKOFU") '_Sql.Fx_Trae_Dato(, "NOKOFU", "TABFU", "PWFU = '" & TraeClaveRD(_Usuario) & "'")
+            If Not IsNothing(_RowUsuario) Then
+                _ClaveCorrecta = True
+            End If
 
-            Dim inactivo As Boolean = _RowUsuario.Item("INACTIVO") '_Sql.Fx_Trae_Dato(, "INACTIVO", "TABFU", "PWFU = '" & TraeClaveRD(_Pass) & "'")
+            Dim inactivo As Boolean = _RowUsuario.Item("INACTIVO")
 
             If inactivo = True Then
                 MessageBoxEx.Show(Me, "Usuario Inactivo en Sistema", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 _RowUsuario = Nothing
-            Else
-                Return True
+                Return False
             End If
+
+            If ValidarPermiso Then
+                If Not Fx_Tiene_Permiso(Me, Permiso, _RowUsuario.Item("KOFU"),, False,,,, False, True) Then
+                    _RowUsuario = Nothing
+                    Return False
+                End If
+            End If
+
+            If Not Fx_ValidarSiTieneModalidades(_RowUsuario.Item("KOFU")) Then
+                Return False
+            End If
+
+            FUNCIONARIO = _RowUsuario.Item("KOFU")
+            Nombre_funcionario_activo = _RowUsuario.Item("NOKOFU")
 
         Else
             _RowUsuario = Nothing
             Return False
         End If
 
+        Return True
+
     End Function
 
 
     Private Sub BtnCancelar_Click(sender As System.Object, e As System.EventArgs) Handles BtnCancelar.Click
 
-        If Not _AccesoAdministrador Then
+        If Not AccesoAdministrador Then
 
             If Not _Global_Sesion Then
 
-                _CancelarLogin = False
+                CancelarLogin = False
 
             Else
 
-                _CancelarLogin = True
+                CancelarLogin = True
 
             End If
 
-            _RowUsuario = Nothing
+            RowUsuario = Nothing
 
         End If
 
@@ -316,6 +329,52 @@ Public Class Frm_Login
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
             'End
             Return False
+        End If
+
+        Return True
+
+    End Function
+
+    Function Fx_ValidarSiTieneModalidades(_Kofu As String) As Boolean
+
+        Consulta_sql = "Select Distinct Ce.EMPRESA As Padre,Ce.EMPRESA+' - '+Cp.RAZON As Hijo
+                        Into #Paso
+                        From CONFIEST Ce
+                        Inner Join CONFIGP Cp On Cp.EMPRESA = Ce.EMPRESA 
+                        Where MODALIDAD <> '  '
+                        Order by Ce.EMPRESA
+
+                        Select Ce.EMPRESA,Cp.RAZON,'MO-' + MODALIDAD As PERMISO,MODALIDAD,Ts.NOKOSU,Tb.NOKOBO,ESUCURSAL,EBODEGA,ECAJA,ELISTAVEN,
+                               NLISTAVEN,ELISTACOM,NLISTACOM,ELISTAINT,NLISTAINT
+                        Into #Paso1
+                        From CONFIEST Ce
+                        Inner Join CONFIGP Cp On Cp.EMPRESA = Ce.EMPRESA 
+                        Left Join TABSU Ts On Ts.EMPRESA = Ce.EMPRESA And Ts.KOSU = Ce.ESUCURSAL
+                        Left Join TABBO Tb On Tb.EMPRESA = Ce.EMPRESA And Tb.KOSU = Ce.ESUCURSAL And Tb.KOBO = Ce.EBODEGA
+                        Where MODALIDAD <> '  '
+                        Order by Ce.EMPRESA,MODALIDAD
+
+                        Select * From #Paso
+                        Where Padre In (Select EMPRESA From #Paso1
+                        Where PERMISO In (Select KOOP From MAEUS Where KOUS = '" & _Kofu & "' And KOOP Like 'MO-%'))
+
+                        --Select * From #Paso1
+                        --Where PERMISO In (Select KOOP From MAEUS Where KOUS = '" & _Kofu & "' And KOOP Like 'MO-%')
+
+                        Drop Table #Paso
+                        Drop Table #Paso1"
+
+        Dim _Tbl_Modalidades As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        If Not CBool(_Tbl_Modalidades.Rows.Count) Then
+
+            MessageBoxEx.Show(Me, "El usuario no tiene modalidades asociadas." & vbCrLf &
+                              "Informe de esta situación al administrador del sistema." & vbCrLf &
+                              "El usuario debe tener por lo menos permiso para poder usar una modalidad en el sistema Random",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            Return False
+
         End If
 
         Return True

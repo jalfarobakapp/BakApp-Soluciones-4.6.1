@@ -87,17 +87,17 @@ Public Class Cl_Tickets
 
     End Sub
 
-    Function Fx_Llenar_Tipo(_Id_Tipo As Integer) As Tickets_Tipo
+    Function Fx_Llenar_Tipo(_Id_Area As Integer, _Id_Tipo As Integer) As Tickets_Tipo
 
         Dim _Tipo As New Tickets_Tipo
 
         With _Tipo
 
-            .Id = 0
-            .Id_Area = 0
+            .Id = _Id_Tipo
+            .Id_Area = _Id_Area
             .Tipo = String.Empty
 
-            Consulta_sql = "Select  Tp.*,Isnull(Tf.NOKOFU,'') As 'Agente',Isnull(Gr.Grupo,'') As Grupo" & vbCrLf &
+            Consulta_sql = "Select Tp.*,Isnull(Tf.NOKOFU,'') As 'Agente',Isnull(Gr.Grupo,'') As Grupo" & vbCrLf &
            "From " & _Global_BaseBk & "Zw_Stk_Tipos Tp" & vbCrLf &
            "Left Join TABFU Tf On Tf.KOFU = Tp.CodAgente" & vbCrLf &
            "Left Join " & _Global_BaseBk & "Zw_Stk_Grupos Gr On Tp.Id_Grupo = Gr.Id" & vbCrLf &
@@ -110,14 +110,16 @@ Public Class Cl_Tickets
                 .Id = _Row_Tipo.Item("Id")
                 .Id_Area = _Row_Tipo.Item("Id_Area")
                 .Tipo = _Row_Tipo.Item("Tipo")
+                .ExigeProducto = _Row_Tipo.Item("ExigeProducto")
                 .Asignado = _Row_Tipo.Item("Asignado")
-                .AsignadoAgente = _Row_Tipo.Item("AsignadoAgente")
                 .AsignadoGrupo = _Row_Tipo.Item("AsignadoGrupo")
+                .AsignadoAgente = _Row_Tipo.Item("AsignadoAgente")
                 .Id_Grupo = _Row_Tipo.Item("Id_Grupo")
                 .Grupo = _Row_Tipo.Item("Grupo")
                 .CodAgente = _Row_Tipo.Item("CodAgente")
                 .Agente = _Row_Tipo.Item("Agente")
-                .ExigeProducto = _Row_Tipo.Item("ExigeProducto")
+                .CieTk_Id_Area = _Row_Tipo.Item("CieTk_Id_Area")
+                .CieTk_Id_Tipo = _Row_Tipo.Item("CieTk_Id_Tipo")
                 .Inc_Cantidades = _Row_Tipo.Item("Inc_Cantidades")
                 .Inc_Fecha = _Row_Tipo.Item("Inc_Fecha")
                 .Inc_Hora = _Row_Tipo.Item("Inc_Hora")
@@ -125,6 +127,8 @@ Public Class Cl_Tickets
             End If
 
         End With
+
+        Return _Tipo
 
     End Function
 
@@ -582,6 +586,13 @@ Public Class Cl_Tickets
                 End While
                 dfd1.Close()
 
+                'Else
+
+                '    Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos Where Id_Area = " & Cl_Tipo.Id_Area & " And Id_Tipo = " & Cl_Tipo.Id
+                '    Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                '    Comando.Transaction = myTrans
+                '    Comando.ExecuteNonQuery()
+
             End If
 
 
@@ -596,11 +607,11 @@ Public Class Cl_Tickets
                 Comando.Transaction = myTrans
                 Dim dfd1 As System.Data.SqlClient.SqlDataReader = Comando.ExecuteReader()
                 While dfd1.Read()
-                    _Cuenta = dfd1("Identity")
+                    _Cuenta = dfd1("Cuenta")
                 End While
                 dfd1.Close()
 
-                If CBool(_Cuenta) Then
+                If Not CBool(_Cuenta) Then
 
                     Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos (Id_Area,Id_Tipo,CodAgente) Values " &
                                "(" & Cl_Tipo.Id_Area & "," & Cl_Tipo.Id & ",'" & _Fl.Item("CodAgente") & "')"
@@ -614,7 +625,7 @@ Public Class Cl_Tickets
 
             With Cl_Tipo
 
-                Consulta_sql += "Update " & _Global_BaseBk & "Zw_Stk_Tipos Set " &
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tipos Set " &
                                 "Tipo = '" & .Tipo.Trim & "'" & vbCrLf &
                                 ",ExigeProducto = " & Convert.ToInt32(.ExigeProducto) & vbCrLf &
                                 ",Asignado = " & Convert.ToInt32(.Asignado) & vbCrLf &
@@ -629,6 +640,10 @@ Public Class Cl_Tickets
                                 ",Inc_Hora = " & Convert.ToInt32(.Inc_Hora) & vbCrLf &
                                 "Where Id = " & .Id
 
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
             End With
 
             myTrans.Commit()
@@ -639,12 +654,15 @@ Public Class Cl_Tickets
 
         Catch ex As Exception
 
+            _Mensaje.EsCorrecto = False
             _Mensaje.Mensaje = ex.Message
             myTrans.Rollback()
 
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
         End Try
+
+        Return _Mensaje
 
     End Function
 

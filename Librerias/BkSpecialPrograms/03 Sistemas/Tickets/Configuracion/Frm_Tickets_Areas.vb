@@ -16,7 +16,7 @@ Public Class Frm_Tickets_Areas
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Sb_Formato_Generico_Grilla(Grilla_Areas, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
-        Sb_Formato_Generico_Grilla(Grilla_Tipos, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_Tipos, 18, New Font("Tahoma", 7), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
         Sb_Color_Botones_Barra(Bar2)
 
@@ -206,11 +206,7 @@ Public Class Frm_Tickets_Areas
 
         Consulta_sql = "Select Tp.*,Isnull(Tf.NOKOFU,'') As 'Agente',Isnull(Gr.Grupo,'') As Grupo," & vbCrLf &
                        "Case AsignadoGrupo When 1 then 'Grupo: ' +Isnull(Gr.Grupo,'') Else " & vbCrLf &
-                       "Case AsignadoAgente When 1 Then 'Agente: ' + Isnull(Tf.NOKOFU,'') Else '' End End As 'AsignadoA'," & vbCrLf &
-                       "Case ExigeProducto When 1 Then " & vbCrLf &
-                       "Case RevInventario When 1 Then 'Revisión de inventario' " & vbCrLf &
-                       "Else Case AjusInventario When 1 Then 'Ajuste de inventario' " & vbCrLf &
-                       "Else Case SobreStock When 1 Then 'Sobre Stock' Else '' End End End Else '' End	As 'Esp_producto'" & vbCrLf &
+                       "Case AsignadoAgente When 1 Then 'Agente: ' + Isnull(Tf.NOKOFU,'') Else '' End End As 'AsignadoA'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stk_Tipos Tp" & vbCrLf &
                        "Left Join TABFU Tf On Tf.KOFU = Tp.CodAgente" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Grupos Gr On Tp.Id_Grupo = Gr.Id" & vbCrLf &
@@ -238,16 +234,16 @@ Public Class Frm_Tickets_Areas
             .Columns("ExigeProducto").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Esp_producto").Visible = True
-            .Columns("Esp_producto").HeaderText = "Especial Productos"
-            .Columns("Esp_producto").ToolTipText = "Acción especial por gestión especialmente para productos"
-            .Columns("Esp_producto").Width = 130
-            .Columns("Esp_producto").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
+            '.Columns("Esp_producto").Visible = True
+            '.Columns("Esp_producto").HeaderText = "Especial Productos"
+            '.Columns("Esp_producto").ToolTipText = "Acción especial por gestión especialmente para productos"
+            '.Columns("Esp_producto").Width = 130
+            '.Columns("Esp_producto").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
 
             .Columns("AsignadoA").Visible = True
             .Columns("AsignadoA").HeaderText = "Asignado a:"
-            .Columns("AsignadoA").Width = 200
+            .Columns("AsignadoA").Width = 330
             .Columns("AsignadoA").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 

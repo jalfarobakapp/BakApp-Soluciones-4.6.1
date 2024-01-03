@@ -89,7 +89,7 @@
         End Select
 
         Consulta_sql = "Select Tks.*,TkPrd.Empresa,TkPrd.Sucursal,TkPrd.Bodega,TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr," & vbCrLf &
-                       "Case UdMedida When 1 Then Ud1 Else Ud2 End As 'Udm',Case UdMedida When 1 Then Stfi1 Else Stfi2 End As 'STF',Cantidad" & vbCrLf &
+                       "Case UdMedida When 1 Then Ud1 Else Ud2 End As 'Udm',StfiEnBodega,Cantidad,Diferencia" & vbCrLf &
                        ",Case Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'UR' Then 'Urgente' Else '??' End As NomPrioridad" & vbCrLf &
                        ",Case UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion" & vbCrLf &
                        ",Case Estado When 'ABIE' then 'Abierto' When 'CERR' then 'Cerrado' When 'NULO' then 'Nulo' When 'SOLC' then 'Sol. Cierre' End As NomEstado," & vbCrLf &
@@ -187,12 +187,12 @@
             .Columns("Udm").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("STF").Visible = True
-            .Columns("STF").HeaderText = "Stock"
-            .Columns("STF").ToolTipText = "Stock del producto al momento de la operación"
-            .Columns("STF").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("STF").Width = 50
-            .Columns("STF").DisplayIndex = _DisplayIndex
+            .Columns("StfiEnBodega").Visible = True
+            .Columns("StfiEnBodega").HeaderText = "Stock Bod."
+            .Columns("StfiEnBodega").ToolTipText = "Stock físico en bodega del producto al momento de la gestión"
+            .Columns("StfiEnBodega").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("StfiEnBodega").Width = 50
+            .Columns("StfiEnBodega").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Cantidad").Visible = True
@@ -201,6 +201,14 @@
             .Columns("Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Cantidad").Width = 50
             .Columns("Cantidad").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Diferencia").Visible = True
+            .Columns("Diferencia").HeaderText = "Diferencia"
+            .Columns("Diferencia").ToolTipText = "Diferencia entre el stock en bodega y la cantidad inventariada"
+            .Columns("Diferencia").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Diferencia").Width = 50
+            .Columns("Diferencia").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
         End With

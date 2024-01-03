@@ -47,6 +47,8 @@ Public Class Frm_Modalidades
 
         caract_combo(Cmb_Modalidades)
 
+        GroupPanel1.Text = "Se muestran solo las Modalidades asignadas al usurio"
+
         Consulta_Sql = "Select Distinct Ce.EMPRESA As Padre,Ce.EMPRESA+' - '+Cp.RAZON As Hijo
                         Into #Paso
                         From CONFIEST Ce
@@ -75,6 +77,8 @@ Public Class Frm_Modalidades
                         Drop Table #Paso1"
 
         If _Configuracion_Modalidad Then
+
+            GroupPanel1.Text = "Modalidades"
 
             Consulta_Sql = "Select Distinct Ce.EMPRESA As Padre,Ce.EMPRESA+' - '+Cp.RAZON As Hijo
                             Into #Paso

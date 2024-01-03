@@ -31,6 +31,28 @@ Public Class Frm_Usuarios_Random
         Consulta_sql = "Select *,Cast('' As Varchar(5)) As ClaveDC From TABFU" & vbCrLf &
                        "Where KOFU+NOKOFU LIKE '%" & _Cadena & "%'" & vbCrLf &
                        "Order By KOFU"
+
+        Consulta_sql = "Select *,Cast('' As Varchar(5)) As ClaveDC,CAST(0 As Int) As Modalidades" & vbCrLf &
+                       "Into #Paso" & vbCrLf &
+                       "From TABFU" & vbCrLf &
+                       "Where KOFU+NOKOFU LIKE '%" & _Cadena & "%'" & vbCrLf &
+                       "Order By KOFU" & vbCrLf &
+                       vbCrLf &
+                       "Select Ce.EMPRESA,Cp.RAZON,'MO-' + MODALIDAD As PERMISO,MODALIDAD" & vbCrLf &
+                       "Into #Paso1" & vbCrLf &
+                       "From CONFIEST Ce" & vbCrLf &
+                       "Inner Join CONFIGP Cp On Cp.EMPRESA = Ce.EMPRESA " & vbCrLf &
+                       "Left Join TABSU Ts On Ts.EMPRESA = Ce.EMPRESA And Ts.KOSU = Ce.ESUCURSAL" & vbCrLf &
+                       "Left Join TABBO Tb On Tb.EMPRESA = Ce.EMPRESA And Tb.KOSU = Ce.ESUCURSAL And Tb.KOBO = Ce.EBODEGA" & vbCrLf &
+                       "Where MODALIDAD <> '  '" & vbCrLf &
+                       "Order by Ce.EMPRESA,MODALIDAD" & vbCrLf &
+                       vbCrLf &
+                       "Update #Paso Set Modalidades = (Select COUNT(*) From MAEUS Where KOOP In (Select PERMISO From #Paso1) And KOUS = #Paso.KOFU)" & vbCrLf &
+                       "Select * From #Paso" & vbCrLf &
+                       vbCrLf &
+                       "Drop Table #Paso" & vbCrLf &
+                       "Drop Table #Paso1"
+
         Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla
@@ -48,7 +70,7 @@ Public Class Frm_Usuarios_Random
             .Columns("KOFU").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("NOKOFU").Width = 400
+            .Columns("NOKOFU").Width = 320
             .Columns("NOKOFU").HeaderText = "Nombre funcionario"
             .Columns("NOKOFU").Visible = True
             .Columns("NOKOFU").Frozen = True
@@ -61,6 +83,15 @@ Public Class Frm_Usuarios_Random
             .Columns("ClaveDC").Frozen = True
             .Columns("ClaveDC").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
+
+            .Columns("Modalidades").Width = 80
+            .Columns("Modalidades").HeaderText = "Modalidades"
+            .Columns("Modalidades").ToolTipText = "Modalidades asignadas"
+            .Columns("Modalidades").Visible = True
+            .Columns("Modalidades").Frozen = True
+            .Columns("Modalidades").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
         End With
 
         For Each Fila As DataRow In _Tbl.Rows

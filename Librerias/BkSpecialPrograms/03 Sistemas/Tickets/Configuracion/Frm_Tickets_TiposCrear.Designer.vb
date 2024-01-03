@@ -432,7 +432,7 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Tipo})
         Me.Bar2.Location = New System.Drawing.Point(0, 399)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(602, 41)
+        Me.Bar2.Size = New System.Drawing.Size(608, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 115
@@ -452,7 +452,7 @@ Partial Class Frm_Tickets_TiposCrear
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(602, 440)
+        Me.ClientSize = New System.Drawing.Size(608, 440)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True

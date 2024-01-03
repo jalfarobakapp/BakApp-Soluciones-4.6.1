@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+ï»¿Imports DevComponents.DotNetBar
 'Imports Lib_Bakapp_VarClassFunc
 'Imports BkSpecialPrograms
 
@@ -25,11 +25,11 @@ Public Class Frm_02_Detalle_Producto_Actual
 
         Try
 
-            Consulta_sql = "SELECT Semilla,SemillaUbicacion, CodigoLeidoArchTxt," & vbCrLf & _
-                           "UbicacionBodega,Nro_Hoja,Item_Hoja, Fila, Columna, DescripcionProducto, " & vbCrLf & _
-                           "FechaInventario, CantidadInventariada As Cantidad, Observaciones, Responsable,Contador_1,Contador_2" & vbCrLf & _
-                           "FROM ZW_TmpInvProductosInventariados" & vbCrLf & _
-                           "WHERE (Codproducto in ('','@@DESCONOCIDO') " & vbCrLf & _
+            Consulta_sql = "SELECT Semilla,SemillaUbicacion, CodigoLeidoArchTxt," & vbCrLf &
+                           "UbicacionBodega,Nro_Hoja,Item_Hoja, Fila, Columna, DescripcionProducto, " & vbCrLf &
+                           "FechaInventario, CantidadInventariada As Cantidad, Observaciones, Responsable,Contador_1,Contador_2" & vbCrLf &
+                           "FROM ZW_TmpInvProductosInventariados" & vbCrLf &
+                           "WHERE (Codproducto in ('','@@DESCONOCIDO') " & vbCrLf &
                            "And IdInventario = " & _IdInventario
 
             GrillaHistoriaProducto.DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
@@ -55,11 +55,11 @@ Public Class Frm_02_Detalle_Producto_Actual
 
     Public Sub New()
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
-       Sb_Formato_Generico_Grilla(GrillaHistoriaProducto, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
+        Sb_Formato_Generico_Grilla(GrillaHistoriaProducto, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
 
     End Sub
 
@@ -151,17 +151,17 @@ Public Class Frm_02_Detalle_Producto_Actual
                         Dim _Columna As String = row.Cells("Columna").Value
 
                         Dim Observacion_Producto As String
-                        Observacion_Producto = UCase(InputBox("OBSERVACION POR RECONTEO" & vbCrLf & vbCrLf & _
-                                                        "SECTOR: " & _Ubicaion & vbCrLf & _
-                                                        "FILA: " & _Fila & vbCrLf & _
-                                                        "COLUMNA: " & _Columna, "Reconteo", _
+                        Observacion_Producto = UCase(InputBox("OBSERVACION POR RECONTEO" & vbCrLf & vbCrLf &
+                                                        "SECTOR: " & _Ubicaion & vbCrLf &
+                                                        "FILA: " & _Fila & vbCrLf &
+                                                        "COLUMNA: " & _Columna, "Reconteo",
                                                         "Producto recontado ..."))
 
 
 
-                        Consulta_sql = "Update ZW_TmpInvProductosInventariados Set Recontado = 1" & vbCrLf & _
-                                       ",Cantidad_Recontada = " & _Cant_Recont & vbCrLf & _
-                                       ",Obs_Actualizacion = '" & Trim(Observacion_Producto) & "'" & vbCrLf & _
+                        Consulta_sql = "Update ZW_TmpInvProductosInventariados Set Recontado = 1" & vbCrLf &
+                                       ",Cantidad_Recontada = " & _Cant_Recont & vbCrLf &
+                                       ",Obs_Actualizacion = '" & Trim(Observacion_Producto) & "'" & vbCrLf &
                                        "Where Semilla = " & _Semilla
 
                         _Suma_Cantidad += _Cant_Recont
@@ -183,13 +183,13 @@ Public Class Frm_02_Detalle_Producto_Actual
                     'Recontado = 1," & vbCrLf & _
                     '              "Cerrado = 1," & vbCrLf & _
                     '             "Levantado = 0," & vbCrLf & _
-                    Consulta_sql = "Update ZW_TmpInvFotoInventario Set" & vbCrLf & _
-                                   "Levantado = " & CInt(L_) & "," & vbCrLf & _
-                                   "Cant_Inventariada = " & _Suma_Cantidad & "," & vbCrLf & _
-                                   "Dif_Inv_Cantidad = " & _Suma_Cantidad & " - StFisicoUd1," & vbCrLf & _
-                                   "Total_Costo_Foto = Case When " & _Suma_Cantidad & " < 0 Then 0 Else " & _Suma_Cantidad & " End * PPP," & vbCrLf & _
-                                   "Total_Costo_Inv = " & _Suma_Cantidad & " * PPP" & vbCrLf & _
-                                   "Where IdInventario = " & _IdInventario & vbCrLf & _
+                    Consulta_sql = "Update ZW_TmpInvFotoInventario Set" & vbCrLf &
+                                   "Levantado = " & CInt(L_) & "," & vbCrLf &
+                                   "Cant_Inventariada = " & _Suma_Cantidad & "," & vbCrLf &
+                                   "Dif_Inv_Cantidad = " & _Suma_Cantidad & " - StFisicoUd1," & vbCrLf &
+                                   "Total_Costo_Foto = Case When " & _Suma_Cantidad & " < 0 Then 0 Else " & _Suma_Cantidad & " End * PPP," & vbCrLf &
+                                   "Total_Costo_Inv = " & _Suma_Cantidad & " * PPP" & vbCrLf &
+                                   "Where IdInventario = " & _IdInventario & vbCrLf &
                                    "And CodigoPR = '" & _Codigo & "'"
 
 
@@ -204,11 +204,11 @@ Public Class Frm_02_Detalle_Producto_Actual
                 myTrans.Commit()
                 SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
 
-                MessageBoxEx.Show("Producto actualizado correctamente", _
+                MessageBoxEx.Show("Producto actualizado correctamente",
                                    "Recontar producto", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                MessageBoxEx.Show("El producto esta CERRADO y RECONTADO" & vbCrLf & _
-                                  "Perdio la condición de estar LEVANTADO", "Marcar producto", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                MessageBoxEx.Show("El producto esta CERRADO y RECONTADO" & vbCrLf &
+                                  "Perdio la condiciÃ³n de estar LEVANTADO", "Marcar producto", MessageBoxButtons.OK, MessageBoxIcon.Warning)
 
                 _Recontado = True
                 ChkCerrado.Checked = True
@@ -220,11 +220,11 @@ Public Class Frm_02_Detalle_Producto_Actual
             Catch ex As Exception
 
                 My.Computer.FileSystem.WriteAllText("ArchivoSalida", ex.Message & vbCrLf & ex.StackTrace, False)
-                MessageBoxEx.Show(ex.Message, "Error", _
+                MessageBoxEx.Show(ex.Message, "Error",
                                   Windows.Forms.MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.Stop)
                 myTrans.Rollback()
 
-                MessageBoxEx.Show("Transaccion desecha", "Problema", _
+                MessageBoxEx.Show("Transaccion desecha", "Problema",
                                   Windows.Forms.MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.Stop)
                 SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
 
@@ -239,20 +239,20 @@ Public Class Frm_02_Detalle_Producto_Actual
     Sub Ver_Detalle_Del_Producto()
 
 
-        Consulta_sql = "SELECT Semilla,Recontado,UbicacionBodega,Isnull(Nro_Hoja,'') as Nro_Hoja," & vbCrLf & _
-                       "Isnull(Item_Hoja,'') as Item_Hoja,Columna,Fila," & vbCrLf & _
-                       "FechaInventario AS Fecha," & vbCrLf & _
-                       "CONVERT(Char(8), FechaInventario, 108) AS Hora," & vbCrLf & _
-                       "CantidadInventariada as 'Cantidad'," & vbCrLf & _
-                       "Cantidad_Recontada as 'Cant_Recont'," & vbCrLf & _
-                       "Responsable,(Select top 1 NOKOFU From TABFU Where KOFU = Responsable) as Digitador," & vbCrLf & _
-                       "Contador_1,Contador_2, Observaciones," & vbCrLf & _
-                       "Actualizado_por,Obs_Actualizacion" & vbCrLf & _
-                       "FROM dbo.ZW_TmpInvProductosInventariados" & vbCrLf & _
-                       "Where CodEmpresa = '" & _Empresa & "' And" & vbCrLf & _
-                       "CodSucursal = '" & _Sucursal & "' And" & vbCrLf & _
-                       "CodBodega = '" & _Bodega & "' And" & vbCrLf & _
-                       "Fecha_Inventario_Gral = '" & Format(_FechaInv, "yyyyMMdd") & "' And " & vbCrLf & _
+        Consulta_sql = "SELECT Semilla,Recontado,UbicacionBodega,Isnull(Nro_Hoja,'') as Nro_Hoja," & vbCrLf &
+                       "Isnull(Item_Hoja,'') as Item_Hoja,Columna,Fila," & vbCrLf &
+                       "FechaInventario AS Fecha," & vbCrLf &
+                       "CONVERT(Char(8), FechaInventario, 108) AS Hora," & vbCrLf &
+                       "CantidadInventariada as 'Cantidad'," & vbCrLf &
+                       "Cantidad_Recontada as 'Cant_Recont'," & vbCrLf &
+                       "Responsable,(Select top 1 NOKOFU From TABFU Where KOFU = Responsable) as Digitador," & vbCrLf &
+                       "Contador_1,Contador_2, Observaciones," & vbCrLf &
+                       "Actualizado_por,Obs_Actualizacion" & vbCrLf &
+                       "FROM dbo.ZW_TmpInvProductosInventariados" & vbCrLf &
+                       "Where CodEmpresa = '" & _Empresa & "' And" & vbCrLf &
+                       "CodSucursal = '" & _Sucursal & "' And" & vbCrLf &
+                       "CodBodega = '" & _Bodega & "' And" & vbCrLf &
+                       "Fecha_Inventario_Gral = '" & Format(_FechaInv, "yyyyMMdd") & "' And " & vbCrLf &
                        "Codproducto = '" & _Codigo & "'"
 
         '"CONVERT(Char(8),FechaInventario, 105) AS Fecha," & vbCrLf & _
@@ -334,7 +334,7 @@ Public Class Frm_02_Detalle_Producto_Actual
 
 
             If .RowCount = 0 Then
-                MessageBoxEx.Show("No existen datos que mostrar", _
+                MessageBoxEx.Show("No existen datos que mostrar",
                           "Detalle del producto", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
 
@@ -358,7 +358,7 @@ Public Class Frm_02_Detalle_Producto_Actual
         Fm.Text = "INGRESE CLAVE DE DIGITADOR DEL DOCUMENTO"
         Fm.ShowDialog(Me)
 
-        If Not Fm.Pro_CancelarLogin Then
+        If Not Fm.CancelarLogin Then
 
             Dim Fm_Inv As New Frm_01_HojaConteo
             With Fm_Inv
@@ -371,7 +371,7 @@ Public Class Frm_02_Detalle_Producto_Actual
                 .ShowDialog(Me)
             End With
         Else
-            MessageBox.Show("Sin acceso!!", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBox.Show("Sin acceso!!", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
     End Sub
 End Class

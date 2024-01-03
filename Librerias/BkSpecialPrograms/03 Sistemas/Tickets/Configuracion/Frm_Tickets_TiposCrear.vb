@@ -20,30 +20,7 @@ Public Class Frm_Tickets_TiposCrear
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Cl_Tipo = Cl_Tickets.Fx_Llenar_Tipo(_Id_Tipo)
-
-        'If CBool(_Id_Tipo) Then
-
-        '    Consulta_sql = "Select  Tp.*,Isnull(Tf.NOKOFU,'') As 'Agente',Isnull(Gr.Grupo,'') As Grupo" & vbCrLf &
-        '                   "From " & _Global_BaseBk & "Zw_Stk_Tipos Tp" & vbCrLf &
-        '                   "Left Join TABFU Tf On Tf.KOFU = Tp.CodAgente" & vbCrLf &
-        '                   "Left Join " & _Global_BaseBk & "Zw_Stk_Grupos Gr On Tp.Id_Grupo = Gr.Id" & vbCrLf &
-        '                   "Where Tp.Id = " & _Id_Tipo
-        '    _Row_Tipo = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-        '    Cl_Tipo.Tipo = _Row_Tipo.Item("Tipo")
-        '    Cl_Tipo.Asignado = _Row_Tipo.Item("Asignado")
-        '    Cl_Tipo.AsignadoAgente = _Row_Tipo.Item("AsignadoAgente")
-        '    Cl_Tipo.AsignadoGrupo = _Row_Tipo.Item("AsignadoGrupo")
-        '    Cl_Tipo.Id_Grupo = _Row_Tipo.Item("Id_Grupo")
-        '    Cl_Tipo.CodAgente = _Row_Tipo.Item("CodAgente")
-
-        '    Cl_Tipo.ExigeProducto = _Row_Tipo.Item("ExigeProducto")
-        '    Cl_Tipo.Inc_Cantidades = _Row_Tipo.Item("Inc_Cantidades")
-        '    Cl_Tipo.Inc_Fecha = _Row_Tipo.Item("Inc_Fecha")
-        '    Cl_Tipo.Inc_Hora = _Row_Tipo.Item("Inc_Hora")
-
-        'End If
+        Cl_Tipo = Cl_Tickets.Fx_Llenar_Tipo(_Id_Area, _Id_Tipo)
 
     End Sub
 
@@ -73,6 +50,12 @@ Public Class Frm_Tickets_TiposCrear
             Chk_Inc_Fecha.Checked = .Inc_Fecha
             Chk_Inc_Hora.Checked = .Inc_Hora
 
+            Txt_Area_Cie.Tag = .CieTk_Id_Area
+            Txt_Area_Cie.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Areas", "Area", "Id = " & .CieTk_Id_Area)
+
+            Txt_Tipo_Cie.Tag = .CieTk_Id_Area
+            Txt_Tipo_Cie.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Tipos", "Tipo", "Id = " & .CieTk_Id_Tipo)
+
         End With
 
         Txt_Agente.Enabled = Rdb_AsignadoAgente.Checked
@@ -95,11 +78,9 @@ Public Class Frm_Tickets_TiposCrear
 
     Private Sub Chk_ExigeProducto_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_ExigeProducto.CheckedChanged
         Panel_Productos.Enabled = Chk_ExigeProducto.Checked
-        If Not Chk_ExigeProducto.Checked Then
-            Chk_Inc_Cantidades.Checked = False
-            Chk_Inc_Fecha.Checked = False
-            Chk_Inc_Hora.Checked = False
-        End If
+        Chk_Inc_Cantidades.Checked = Chk_ExigeProducto.Checked
+        Chk_Inc_Fecha.Checked = Chk_ExigeProducto.Checked
+        Chk_Inc_Hora.Checked = Chk_ExigeProducto.Checked
     End Sub
 
     Private Sub Btn_Crear_Tipo_Click(sender As Object, e As EventArgs) Handles Btn_Crear_Tipo.Click
@@ -156,6 +137,32 @@ Public Class Frm_Tickets_TiposCrear
 
         End If
 
+        With Cl_Tipo
+
+            .Tipo = Txt_Tipo.Text.Trim
+            .Asignado = Chk_Asignado.Checked
+            .AsignadoAgente = Rdb_AsignadoAgente.Checked
+            .AsignadoGrupo = Rdb_AsignadoGrupo.Checked
+            .CodAgente = Txt_Agente.Tag
+            .Id_Grupo = Txt_Grupo.Tag
+            .ExigeProducto = Chk_ExigeProducto.Checked
+            .Inc_Cantidades = Chk_Inc_Cantidades.Checked
+            .Inc_Fecha = Chk_Inc_Fecha.Checked
+            .Inc_Hora = Chk_Inc_Hora.Checked
+            .CieTk_Id_Area = Val(Txt_Area_Cie.Tag)
+            .CieTk_Id_Tipo = Val(Txt_Tipo_Cie.Tag)
+
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tipos", "Tipo = '" & .Tipo & "' And Id <> " & .Id)
+
+            If CBool(_Reg) Then
+                MessageBoxEx.Show(Me, "Ya existe un tipo de requerimiento con este nombre." & vbCrLf &
+                                  "Los nombre de los tipos de requerimientos son únicos por sistema",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+        End With
+
         Dim _Mensaje_Ticket As Mensaje_Ticket = Cl_Tickets.Fx_Grabar_Tipo(Cl_Tipo)
 
         If _Mensaje_Ticket.EsCorrecto Then
@@ -174,6 +181,7 @@ Public Class Frm_Tickets_TiposCrear
 
         End If
 
+        Grabar = True
         Me.Close()
 
     End Sub
@@ -341,8 +349,8 @@ Public Class Frm_Tickets_TiposCrear
                                "And Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id_Area = " & Txt_Area_Cie.Tag & ")",
                                False, False, True, False,, False) Then
 
-            Txt_Tipo.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
-            Txt_Tipo.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
+            Txt_Tipo_Cie.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+            Txt_Tipo_Cie.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
 
         End If
 
