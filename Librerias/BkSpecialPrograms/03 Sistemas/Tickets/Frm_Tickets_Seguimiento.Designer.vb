@@ -24,9 +24,9 @@ Partial Class Frm_Tickets_Seguimiento
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Tickets_Seguimiento))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Productos = New DevComponents.DotNetBar.ButtonItem()
@@ -38,8 +38,12 @@ Partial Class Frm_Tickets_Seguimiento
         Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Mnu_CerrarTicket = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_CerrarTicketCrearNuevo = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_RechazarTicket = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_SolicitarCierre = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Anular = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_Mensajes = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Mnu_EnviarMensajeRespuesta = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GrupoTicket = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Producto = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -118,10 +122,10 @@ Partial Class Frm_Tickets_Seguimiento
         '
         Me.Menu_Contextual.AntiAlias = True
         Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Productos, Me.Menu_Contextual_Cambio_Estado})
+        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Productos, Me.Menu_Contextual_Cambio_Estado, Me.Menu_Contextual_Mensajes})
         Me.Menu_Contextual.Location = New System.Drawing.Point(27, 23)
         Me.Menu_Contextual.Name = "Menu_Contextual"
-        Me.Menu_Contextual.Size = New System.Drawing.Size(411, 25)
+        Me.Menu_Contextual.Size = New System.Drawing.Size(534, 25)
         Me.Menu_Contextual.Stretch = True
         Me.Menu_Contextual.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Menu_Contextual.TabIndex = 48
@@ -202,6 +206,13 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Btn_Mnu_CerrarTicketCrearNuevo.Name = "Btn_Mnu_CerrarTicketCrearNuevo"
         Me.Btn_Mnu_CerrarTicketCrearNuevo.Text = "Cerrar Ticket y crear nuevo Ticket a partir de este para seguir el hilo."
         '
+        'Btn_Mnu_RechazarTicket
+        '
+        Me.Btn_Mnu_RechazarTicket.Image = CType(resources.GetObject("Btn_Mnu_RechazarTicket.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_RechazarTicket.ImageAlt = CType(resources.GetObject("Btn_Mnu_RechazarTicket.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_RechazarTicket.Name = "Btn_Mnu_RechazarTicket"
+        Me.Btn_Mnu_RechazarTicket.Text = "Rechazar Ticket"
+        '
         'Btn_Mnu_SolicitarCierre
         '
         Me.Btn_Mnu_SolicitarCierre.Image = CType(resources.GetObject("Btn_Mnu_SolicitarCierre.Image"), System.Drawing.Image)
@@ -216,42 +227,69 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Btn_Anular.Name = "Btn_Anular"
         Me.Btn_Anular.Text = "Anular Ticket"
         '
+        'Menu_Contextual_Mensajes
+        '
+        Me.Menu_Contextual_Mensajes.AutoExpandOnClick = True
+        Me.Menu_Contextual_Mensajes.Name = "Menu_Contextual_Mensajes"
+        Me.Menu_Contextual_Mensajes.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem2, Me.Btn_Mnu_EnviarMensajeRespuesta, Me.Btn_Mnu_RechazarTicket})
+        Me.Menu_Contextual_Mensajes.Text = "Opciones de mensaje"
+        '
+        'LabelItem2
+        '
+        Me.LabelItem2.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem2.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem2.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem2.Name = "LabelItem2"
+        Me.LabelItem2.PaddingBottom = 1
+        Me.LabelItem2.PaddingLeft = 10
+        Me.LabelItem2.PaddingTop = 1
+        Me.LabelItem2.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem2.Text = "Opciones de mensajes"
+        '
+        'Btn_Mnu_EnviarMensajeRespuesta
+        '
+        Me.Btn_Mnu_EnviarMensajeRespuesta.Image = CType(resources.GetObject("Btn_Mnu_EnviarMensajeRespuesta.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_EnviarMensajeRespuesta.ImageAlt = CType(resources.GetObject("Btn_Mnu_EnviarMensajeRespuesta.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_EnviarMensajeRespuesta.Name = "Btn_Mnu_EnviarMensajeRespuesta"
+        Me.Btn_Mnu_EnviarMensajeRespuesta.Text = "Enviar mensaje"
+        '
         'Grilla
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla.Size = New System.Drawing.Size(661, 207)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 27
@@ -426,7 +464,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Lbl_Estado.ForeColor = System.Drawing.Color.Black
         Me.Lbl_Estado.Location = New System.Drawing.Point(117, 3)
         Me.Lbl_Estado.Name = "Lbl_Estado"
-        Me.Lbl_Estado.Size = New System.Drawing.Size(123, 23)
+        Me.Lbl_Estado.Size = New System.Drawing.Size(162, 23)
         Me.Lbl_Estado.TabIndex = 7
         Me.Lbl_Estado.Text = "Tipo"
         '
@@ -748,4 +786,8 @@ Partial Class Frm_Tickets_Seguimiento
     Friend WithEvents Btn_Cerrar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_VerTicketOrigen As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_AgentesAsignados As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Menu_Contextual_Mensajes As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem2 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_Mnu_EnviarMensajeRespuesta As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_RechazarTicket As DevComponents.DotNetBar.ButtonItem
 End Class

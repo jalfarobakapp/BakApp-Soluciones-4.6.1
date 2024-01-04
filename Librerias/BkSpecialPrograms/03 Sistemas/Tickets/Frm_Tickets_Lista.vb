@@ -180,7 +180,7 @@
             _DisplayIndex += 1
 
             .Columns("Udm").Visible = True
-            .Columns("Udm").HeaderText = "Udm"
+            .Columns("Udm").HeaderText = "UM"
             .Columns("Udm").ToolTipText = "Unidad de medida de la operación"
             '.Columns("UltimaAccion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             .Columns("Udm").Width = 30
@@ -191,7 +191,7 @@
             .Columns("StfiEnBodega").HeaderText = "Stock Bod."
             .Columns("StfiEnBodega").ToolTipText = "Stock físico en bodega del producto al momento de la gestión"
             .Columns("StfiEnBodega").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("StfiEnBodega").Width = 50
+            .Columns("StfiEnBodega").Width = 60
             .Columns("StfiEnBodega").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -199,7 +199,7 @@
             .Columns("Cantidad").HeaderText = "Cantidad"
             .Columns("Cantidad").ToolTipText = "Cantidad inventariada al momento de la operación"
             .Columns("Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Cantidad").Width = 50
+            .Columns("Cantidad").Width = 60
             .Columns("Cantidad").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -207,7 +207,7 @@
             .Columns("Diferencia").HeaderText = "Diferencia"
             .Columns("Diferencia").ToolTipText = "Diferencia entre el stock en bodega y la cantidad inventariada"
             .Columns("Diferencia").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Diferencia").Width = 50
+            .Columns("Diferencia").Width = 60
             .Columns("Diferencia").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 

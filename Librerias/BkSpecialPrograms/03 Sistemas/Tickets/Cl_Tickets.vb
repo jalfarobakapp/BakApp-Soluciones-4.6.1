@@ -249,15 +249,14 @@ Public Class Cl_Tickets
                 If Not String.IsNullOrEmpty(.Codigo) Then
 
                     Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Producto (Id_Ticket,Empresa,Sucursal,Bodega," &
-                                   "Codigo,Descripcion,Rtu,UdMedida,Ud1,Ud2,StfiEnBodega,Cantidad,Diferencia,FechaRev,RevInventario,AjusInventario," &
-                                   "SobreStock) Values " &
+                                   "Codigo,Descripcion,Rtu,UdMedida,Ud1,Ud2,StfiEnBodega,Cantidad,Diferencia,FechaRev) Values " &
                                    "(" & Tickets.Id & ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega &
                                    "','" & .Codigo & "','" & .Descripcion & "'," & De_Num_a_Tx_01(.Rtu, False, 5) &
                                    "," & .UdMedida & ",'" & .Ud1 & "','" & .Ud2 &
                                    "'," & De_Num_a_Tx_01(.StfiEnBodega, False, 5) &
                                    "," & De_Num_a_Tx_01(.Cantidad, False, 5) &
                                    "," & De_Num_a_Tx_01(.Diferencia, False, 5) &
-                                   ",'" & Format(.FechaRev, "yyyyMMdd") & ")"
+                                   ",'" & Format(.FechaRev, "yyyyMMdd HH:mm") & "')"
 
                     Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                     Comando.Transaction = myTrans
@@ -293,7 +292,7 @@ Public Class Cl_Tickets
 
     End Function
 
-    Function Fx_Grabar_Nueva_Accion(_CodFuncionario As String, _Mensaje As Boolean) As Integer
+    Function Fx_Grabar_Nueva_Accion(_CodFuncionario As String, _Mensaje As Boolean, _Rechazar As Boolean) As Integer
 
         Dim _Accion As String
 
@@ -301,6 +300,10 @@ Public Class Cl_Tickets
             _Accion = "MENS"
         Else
             _Accion = "RESP"
+        End If
+
+        If _Rechazar Then
+            _Accion = "RECH"
         End If
 
         Dim _Id_TicketAc As Integer
@@ -345,6 +348,63 @@ Public Class Cl_Tickets
         End Try
 
         Return _Id_TicketAc
+
+    End Function
+
+    Function Fx_Grabar_Nueva_Accion2(_Tk_Accion As Tickets_Db.Tickets_Acciones) As Tickets_Db.Mensaje_Ticket
+
+        Dim _Mensaje As New Mensaje_Ticket
+
+        Dim _Id_TicketAc As Integer
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+        Try
+
+            myTrans = Cn2.BeginTransaction()
+
+            With _Tk_Accion
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones (Id_Ticket,Accion,Descripcion,Fecha,CodAgente,CodFuncionario,En_Construccion,CodFunGestiona) Values " &
+                           "(" & .Id_Ticket & ",'" & .Accion & "','',Getdate(),'" & .CodAgente & "','" & .CodFuncionario & "',1,'" & .CodFunGestiona & "')"
+
+            End With
+
+            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+            Comando = New System.Data.SqlClient.SqlCommand("Select @@IDENTITY AS 'Identity'", Cn2)
+            Comando.Transaction = myTrans
+            Dim dfd1 As System.Data.SqlClient.SqlDataReader = Comando.ExecuteReader()
+            While dfd1.Read()
+                _Id_TicketAc = dfd1("Identity")
+            End While
+            dfd1.Close()
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.New_Id = _Id_TicketAc
+
+        Catch ex As Exception
+
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje
 
     End Function
 
@@ -693,6 +753,7 @@ Namespace Tickets_Db
         Public Property CodFuncionario_Cierra As String
         Public Property FechaCierre As DateTime
         Public Property Id_Padre As Integer
+        Public Property Rechazado As Boolean
         Public Property New_Id_TicketAc As Integer
         Public Property Tickets_Producto As Tickets_Producto
 
@@ -713,6 +774,7 @@ Namespace Tickets_Db
         Public Property Solicita_Cierre As Boolean
         Public Property CreaNewTicket As Boolean
         Public Property AnulaTicket As Boolean
+        Public Property CodFunGestiona As String
 
     End Class
 

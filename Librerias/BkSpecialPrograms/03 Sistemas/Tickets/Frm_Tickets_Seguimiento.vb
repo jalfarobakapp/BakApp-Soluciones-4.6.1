@@ -129,17 +129,14 @@ Public Class Frm_Tickets_Seguimiento
     Sub Sb_Actualizar_Grilla()
 
         Consulta_sql = "Select Acc.*," & vbCrLf &
-                       "Case Accion When 'MENS' Then 'Mensaje' When 'RESP' Then 'Respuesta' When 'NULO' Then 'Anula' When 'SOLC' Then 'Sol. Cierre' When 'CECR' Then 'Cierra y crea nuevo ticket'  Else '???' End As 'StrAccion'," & vbCrLf &
-                       "Case Accion When 'MENS' Then Isnull(Cf.NOKOFU,'') When 'NULO' Then Isnull(Cf.NOKOFU,'') When 'RESP' Then Isnull(Ca.NOKOFU,'') When 'SOLC' Then Isnull(Ca.NOKOFU,'') When 'CECR' Then Isnull(Ca.NOKOFU,'') Else '???' End As 'NombreFunAge'," & vbCrLf &
-                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Archivos Where Id_TicketAc = Acc.Id) As 'Num_Attach'" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Acc" & vbCrLf &
-                       "Left Join TABFU Cf On Cf.KOFU = CodFuncionario" & vbCrLf &
-                       "Left Join TABFU Ca On Ca.KOFU = CodAgente" & vbCrLf &
-                       "Where Id_Ticket = " & _Id_Ticket & vbCrLf &
-                       "Order By Fecha"
-
-        Consulta_sql = "Select Acc.*," & vbCrLf &
-                       "Case Accion When 'MENS' Then 'Mensaje' When 'RESP' Then 'Respuesta' When 'NULO' Then 'Anula' When 'SOLC' Then 'Sol. Cierre' When 'CERR' Then 'Cierra ticket' When 'CECR' Then 'Cierra y crea nuevo ticket' Else '???' End As 'StrAccion'," & vbCrLf &
+                       "Case Accion When 'MENS' Then 'Mensaje' " &
+                       "When 'RESP' Then 'Respuesta' " &
+                       "When 'NULO' Then 'Anula' " &
+                       "When 'SOLC' Then 'Sol. Cierre' " &
+                       "When 'CERR' Then 'Cierra ticket' " &
+                       "When 'CECR' Then 'Cierra y crea nuevo ticket' " &
+                       "When 'RECH' Then 'Rechazado' " &
+                       "Else '???' End As 'StrAccion'," & vbCrLf &
                        "Cf.NOKOFU As 'NombreFunAge'," & vbCrLf &
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Archivos Where Id_TicketAc = Acc.Id) As 'Num_Attach'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Acc" & vbCrLf &
@@ -263,16 +260,62 @@ Public Class Frm_Tickets_Seguimiento
 
     Private Sub Btn_MensajeRespuesta_Click(sender As Object, e As EventArgs) Handles Btn_MensajeRespuesta.Click
 
+        If Mis_Ticket Then
+            Sb_Agregar_Mensaje_Respuesta(False)
+            Return
+        End If
+
+        If _Ticket.Tickets.Rechazado Then
+            Sb_Agregar_Mensaje_Respuesta(False)
+        Else
+            ShowContextMenu(Menu_Contextual_Mensajes)
+        End If
+
+    End Sub
+
+    Sub Sb_Agregar_Mensaje_Respuesta(_RechazarTicket As Boolean)
+
         Dim _Grabar As Boolean
-        Dim _Id_TicketAc As Integer
         Dim _Descripcion As String
 
         Dim _Cl_Tickets As New Cl_Tickets
-        _Cl_Tickets.Sb_Llenar_Ticket(_Id_Ticket)
+        '_Cl_Tickets.Sb_Llenar_Ticket(_Id_Ticket)
 
-        _Id_TicketAc = _Cl_Tickets.Fx_Grabar_Nueva_Accion(_Funcionario, Mis_Ticket)
+        Dim _Tk_Accion As New Tickets_Db.Tickets_Acciones
 
-        Dim Fm As New Frm_Tickets_Respuesta(_Id_TicketAc)
+        With _Tk_Accion
+
+            .Id_Ticket = _Id_Ticket
+
+            If Mis_Ticket Then
+                .CodFuncionario = FUNCIONARIO
+                .Accion = "MENS"
+            Else
+                .CodAgente = FUNCIONARIO
+                .Accion = "RESP"
+            End If
+
+            If _RechazarTicket Then
+                .Accion = "RECH"
+            End If
+
+            .CodFunGestiona = FUNCIONARIO
+            .Descripcion = ""
+
+        End With
+
+        Dim _Mensaje_Ticket As New Tickets_Db.Mensaje_Ticket
+
+        _Mensaje_Ticket = _Cl_Tickets.Fx_Grabar_Nueva_Accion2(_Tk_Accion)
+
+        If Not _Mensaje_Ticket.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje_Ticket.Mensaje, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        _Tk_Accion.Id = _Mensaje_Ticket.New_Id
+
+        Dim Fm As New Frm_Tickets_Respuesta(_Tk_Accion.Id)
 
         If Mis_Ticket Then
             Fm.Text = "NUEVO MENSAJE"
@@ -287,27 +330,43 @@ Public Class Frm_Tickets_Seguimiento
 
         If Not _Grabar Then
 
-            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Where Id = " & _Id_TicketAc & vbCrLf &
-                           "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Archivos Where Id_TicketAc = " & _Id_TicketAc
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Where Id = " & _Tk_Accion.Id & vbCrLf &
+                           "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Archivos Where Id_TicketAc = " & _Tk_Accion.Id
             _Sql.Ej_consulta_IDU(Consulta_sql)
+
             Return
+
         End If
 
-        Dim _Campo As String
+        Consulta_sql = String.Empty
 
-        If Mis_Ticket Then
-            _Campo = "CodFuncionario"
-        Else
-            _Campo = "CodAgente"
+        If _RechazarTicket Then
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set Rechazado = 1 Where Id = " & _Id_Ticket & vbCrLf
         End If
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set Visto = 1 Where Id_Ticket = " & _Id_Ticket & vbCrLf &
-                       "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set " &
-                       _Campo & " = '" & FUNCIONARIO & "',Fecha = Getdate(),Descripcion = '" & _Descripcion & "',En_Construccion = 0,Visto = 0" & vbCrLf &
-                       "Where Id = " & _Id_TicketAc
+        Consulta_sql += "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set UltAccion = '" & _Tk_Accion.Accion & "' Where Id = " & _Id_Ticket & vbCrLf &
+                        "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set Visto = 1 Where Id_Ticket = " & _Id_Ticket & vbCrLf &
+                        "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set " &
+                        "Fecha = Getdate(),Descripcion = '" & _Descripcion & "',En_Construccion = 0,Visto = 0" & vbCrLf &
+                        "Where Id = " & _Tk_Accion.Id
         _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
-        Sb_Actualizar_Grilla()
+        If _RechazarTicket Then
+
+            MessageBoxEx.Show(Me, "Ticket Rechazado, se ha enviado la confirmación al remitente",
+                              "Rechazar Ticket", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Me.Close()
+        Else
+
+            If MessageBoxEx.Show(Me, "Mensaje enviado correctamente" & vbCrLf & vbCrLf & "¿Desea cerrar el formulario?",
+                                 "Información",
+                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                Me.Close()
+            Else
+                Sb_Actualizar_Grilla()
+            End If
+
+        End If
 
     End Sub
 
@@ -530,5 +589,13 @@ Public Class Frm_Tickets_Seguimiento
 
         MessageBoxEx.Show(Me, _Agentes, "Agentes asociados", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
+    End Sub
+
+    Private Sub Btn_Mnu_RechazarTicket_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_RechazarTicket.Click
+        Sb_Agregar_Mensaje_Respuesta(True)
+    End Sub
+
+    Private Sub Btn_Mnu_EnviarMensajeRespuesta_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_EnviarMensajeRespuesta.Click
+        Sb_Agregar_Mensaje_Respuesta(False)
     End Sub
 End Class

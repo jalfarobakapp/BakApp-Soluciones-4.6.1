@@ -71,7 +71,7 @@ Partial Class Frm_Tickets_TiposCrear
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(580, 377)
+        Me.GroupPanel1.Size = New System.Drawing.Size(580, 380)
         '
         '
         '
@@ -430,7 +430,7 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Tipo})
-        Me.Bar2.Location = New System.Drawing.Point(0, 399)
+        Me.Bar2.Location = New System.Drawing.Point(0, 401)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(608, 41)
         Me.Bar2.Stretch = True
@@ -452,7 +452,7 @@ Partial Class Frm_Tickets_TiposCrear
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(608, 440)
+        Me.ClientSize = New System.Drawing.Size(608, 442)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True

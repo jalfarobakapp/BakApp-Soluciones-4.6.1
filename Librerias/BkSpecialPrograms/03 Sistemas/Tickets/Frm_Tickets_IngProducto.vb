@@ -30,7 +30,12 @@ Public Class Frm_Tickets_IngProducto
             Consulta_sql = "Select * From MAEPR Where KOPR = '" & .Codigo & "'"
             _Row_Producto = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-            Txt_Bodega.Text = .Bodega
+            Dim _Sucursal As String = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU",
+                                      "EMPRESA = '" & .Empresa & "' And KOSU = '" & .Sucursal & "'")
+            Dim _Bodega As String = _Sql.Fx_Trae_Dato("TABBO", "NOKOBO",
+                                    "EMPRESA = '" & .Empresa & "' And KOSU = '" & .Sucursal & "' And KOBO = '" & .Bodega & "'")
+
+            Txt_Bodega.Text = _Sucursal.ToString.Trim & " - " & _Bodega.ToString.Trim
             Txt_Producto.Text = .Codigo & " - " & .Descripcion
 
             Dim _Arr_Tipo_Entidad(,) As String = {{"1", .Ud1}, {"2", .Ud2}}
@@ -45,6 +50,13 @@ Public Class Frm_Tickets_IngProducto
             Dtp_HoraRev.Value = .FechaRev
 
         End With
+
+        Txt_Producto.Enabled = True
+
+        Txt_Producto.ButtonCustom.Visible = IsNothing(_Row_Producto)
+        Txt_Producto.ButtonCustom2.Visible = Not IsNothing(_Row_Producto)
+
+        Me.ActiveControl = Txt_Cantidad
 
     End Sub
 
@@ -70,7 +82,7 @@ Public Class Frm_Tickets_IngProducto
                           "CANTIDAD EN BODEGA SEGUN SISTEMA: " & .StfiEnBodega & vbCrLf &
                           "CANTIDAD INVENTARIADA: " & .Cantidad & vbCrLf &
                           "DIFERENCIA: " & .Cantidad & vbCrLf &
-                          "FECHA Y HORA DE REV.: " & Dtp_FechaRev.Value
+                          "FECHA Y HORA DE REV.: " & _FechaRev.ToShortDateString & " - " & _FechaRev.ToShortTimeString
 
         End With
 
