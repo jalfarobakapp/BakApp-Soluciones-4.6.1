@@ -5,8 +5,10 @@ Public Class Cl_Imprimir_PDFSt
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
-    Private _Ds_Ot As DataSet
+
     Private prtSettings As PrinterSettings
+
+    Public Property Ds_Ot As DataSet
 
 #Region "FUENTES"
 
@@ -28,11 +30,13 @@ Public Class Cl_Imprimir_PDFSt
     Private _Filas_X_Documento As Integer
     Private _Item As Integer
     Private _Pagina As Integer
+
 #End Region
+
     Public Sub New(_Id_Ot As Integer)
 
         Dim _Fuentes As New Fuentes_Impresion.ListaFuentes
-        Sb_Cargar_OrdenDeServicio(_Id_Ot)
+        'Sb_Cargar_OrdenDeServicio(_Id_Ot)
 
     End Sub
 
@@ -119,21 +123,21 @@ Public Class Cl_Imprimir_PDFSt
         End Try
     End Function
 
-    Sub Sb_Cargar_OrdenDeServicio(_Id_Ot As Integer)
+    'Sub Sb_Cargar_OrdenDeServicio(_Id_Ot As Integer)
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Encabezado" & vbCrLf &
-                       "Inner Join MAEEN On KOEN = CodEntidad And SUEN = SucEntidad" & vbCrLf &
-                       "WHERE Id_Ot = " & _Id_Ot & vbCrLf &
-                       "Select OtEnc.Sub_Ot,OtDet.*,Edo.VABRDO,Edo.VANEDO,VAIVDO,Ddo.*,1 As Contador,Cast(0 As Bit) As Impreso" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_St_OT_Doc_Asociados OtDet" & vbCrLf &
-                       "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Idmaeedo" & vbCrLf &
-                       "Inner Join MAEDDO Ddo on Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_St_OT_Encabezado OtEnc On OtEnc.Id_Ot = OtDet.Id_Ot" & vbCrLf &
-                       "Where OtDet.Id_Ot In (Select Id_Ot From " & _Global_BaseBk & "Zw_St_OT_Encabezado Where Id_Ot_Padre = " & _Id_Ot & ") And Edo.TIDO = 'COV'"
+    '    Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Encabezado" & vbCrLf &
+    '                   "Inner Join MAEEN On KOEN = CodEntidad And SUEN = SucEntidad" & vbCrLf &
+    '                   "WHERE Id_Ot = " & _Id_Ot & vbCrLf &
+    '                   "Select OtEnc.Sub_Ot,OtDet.*,Edo.VABRDO,Edo.VANEDO,VAIVDO,Ddo.*,1 As Contador,Cast(0 As Bit) As Impreso" & vbCrLf &
+    '                   "From " & _Global_BaseBk & "Zw_St_OT_Doc_Asociados OtDet" & vbCrLf &
+    '                   "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Idmaeedo" & vbCrLf &
+    '                   "Inner Join MAEDDO Ddo on Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
+    '                   "Left Join " & _Global_BaseBk & "Zw_St_OT_Encabezado OtEnc On OtEnc.Id_Ot = OtDet.Id_Ot" & vbCrLf &
+    '                   "Where OtDet.Id_Ot In (Select Id_Ot From " & _Global_BaseBk & "Zw_St_OT_Encabezado Where Id_Ot_Padre = " & _Id_Ot & ") And Edo.TIDO = 'COV'"
 
-        _Ds_Ot = _Sql.Fx_Get_DataSet(Consulta_sql)
+    '    Ds_Ot = _Sql.Fx_Get_DataSet(Consulta_sql)
 
-    End Sub
+    'End Sub
 
     Private Sub Sb_Print_PrintPage_Portada_OT(sender As Object, e As PrintPageEventArgs)
 
@@ -150,8 +154,8 @@ Public Class Cl_Imprimir_PDFSt
             _xPos = 20
             _yPos += 20
 
-            Dim _Row_Encabezado As DataRow = _Ds_Ot.Tables(0).Rows(0)
-            Dim _Tbl_Detalle As DataTable = _Ds_Ot.Tables(1)
+            Dim _Row_Encabezado As DataRow = Ds_Ot.Tables(0).Rows(0)
+            Dim _Tbl_Detalle As DataTable = Ds_Ot.Tables(1)
 
             Dim _Nro_Ot = _Row_Encabezado.Item("Nro_Ot")
             Dim _Referencia '= _Row_Pote.Item("REFERENCIA")
@@ -191,6 +195,7 @@ Public Class Cl_Imprimir_PDFSt
 
             Dim _Font_Detalle_Curr_1_B As Font = Fx_Fuente(_Enum_Fuentes.Courier_New, 6, FontStyle.Bold)
             Dim _Font_Detalle_Curr_2_B As Font = Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold)
+            Dim _Font_Detalle_Curr_3_B As Font = Fx_Fuente(_Enum_Fuentes.Courier_New, 10, FontStyle.Bold)
 
             e.Graphics.DrawString("ORDEN DE SERVICIO", Fx_Fuente(_Enum_Fuentes.Times_New_Roman, 18, FontStyle.Bold),
                                   Brushes.Black, _xPos + 300, _yPos)
@@ -248,7 +253,7 @@ Public Class Cl_Imprimir_PDFSt
             _yPos += 30
 
             e.Graphics.DrawString("Sub OT", _Font_Detalle_Curr_2_B, Brushes.Black, _xPos, _yPos)
-            e.Graphics.DrawString("Cotización", _Font_Detalle_Curr_2_B, Brushes.Black, _xPos + 70, _yPos)
+            e.Graphics.DrawString("Documento", _Font_Detalle_Curr_2_B, Brushes.Black, _xPos + 70, _yPos)
             e.Graphics.DrawString("Descripción del servicio", _Font_Detalle_Curr_2_B, Brushes.Black, _xPos + 200, _yPos)
             e.Graphics.DrawString("Total neto", _Font_Detalle_Curr_2_B, Brushes.Black, _xPos + 580, _yPos)
 
@@ -261,7 +266,9 @@ Public Class Cl_Imprimir_PDFSt
 
             Dim _Contador = 0
 
-
+            Dim _TotalNeto As Double = 0
+            Dim _TotalIva As Double = 0
+            Dim _TotalBruto As Double = 0
 
             ' imprimimos la cadena
 
@@ -285,13 +292,19 @@ Public Class Cl_Imprimir_PDFSt
                     Dim _Sub_Ot = Trim(_Fila.Item("Sub_Ot"))
                     Dim _Nokopr = Trim(_Fila.Item("NOKOPR"))
                     Dim _Vaneli = _Fila.Item("VANELI")
+                    Dim _Vaivli = _Fila.Item("VAIVLI")
+                    Dim _Vabrli = _Fila.Item("VABRLI")
+
+                    _TotalNeto += _Vaneli
+                    _TotalIva += _Vaivli
+                    _TotalBruto += _Vabrli
 
                     e.Graphics.DrawString(_Sub_Ot, _Font_Detalle_Curr_2_R, Brushes.Black, _xPos, _yPos)
                     e.Graphics.DrawString(_Tido & "-" & _Nudo, _Font_Detalle_Curr_2_R, Brushes.Black, _xPos + 50, _yPos)
                     e.Graphics.DrawString(_Nokopr, _Font_Detalle_Curr_2_R, Brushes.Black, _xPos + 180, _yPos)
 
-                    Dim _Cantidad = Fx_Formato_Numerico(_Vaneli, "999.999", False)
-                    e.Graphics.DrawString(_Cantidad, _Font_Detalle_Curr_2_R, Brushes.Black, _xPos + 550, _yPos)
+                    Dim _Vaneli_Str = Fx_Formato_Numerico(_Vaneli, "9.999.999", False)
+                    e.Graphics.DrawString(_Vaneli_Str, _Font_Detalle_Curr_2_R, Brushes.Black, _xPos + 550, _yPos)
 
                     _yPos += 20
 
@@ -316,8 +329,19 @@ Public Class Cl_Imprimir_PDFSt
 
             '_yPos += (20 - _Item) * 30
 
-            'e.Graphics.DrawString(StrDup(200, "_"), _Font_Enc_2, Brushes.Black, _xPos, _yPos)
-            '_yPos += 30
+            e.Graphics.DrawString(StrDup(200, "_"), _Font_Enc_2, Brushes.Black, _xPos, _yPos)
+            _yPos += 30
+
+            Dim _Neto_Str = Fx_Formato_Numerico(_TotalNeto, "9.999.999", False)
+            Dim _Iva_Str = Fx_Formato_Numerico(_TotalIva, "9.999.999", False)
+            Dim _Bruto_Str = Fx_Formato_Numerico(_TotalBruto, "9.999.999", False)
+
+            e.Graphics.DrawString("Total Neto  :" & _Neto_Str, _Font_Detalle_Curr_2_B, Brushes.Black, _xPos + 480, _yPos)
+            _yPos += 15
+            e.Graphics.DrawString("Iva         :" & _Iva_Str, _Font_Detalle_Curr_2_B, Brushes.Black, _xPos + 480, _yPos)
+            _yPos += 15
+            e.Graphics.DrawString("Total Bruto :" & _Bruto_Str, _Font_Detalle_Curr_2_B, Brushes.Black, _xPos + 480, _yPos)
+            _yPos += 15
 
             'e.Graphics.DrawString("OBSERVACIONES:", _Font_Detalle_Curr_2_B, Brushes.Black, _xPos, _yPos)
             '_yPos += 15

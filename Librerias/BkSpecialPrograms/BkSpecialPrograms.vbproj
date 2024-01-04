@@ -2163,6 +2163,12 @@
     <Compile Include="03 Sistemas\Servicio Tecnico\Estados\OperacionesXServicio\Frm_OperacionesXServicio.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Frm_St_CotizacionesxOT.Designer.vb">
+      <DependentUpon>Frm_St_CotizacionesxOT.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Frm_St_CotizacionesxOT.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Servicio Tecnico\Gestion Taller\Frm_St_GestionTaller.Designer.vb">
       <DependentUpon>Frm_St_GestionTaller.vb</DependentUpon>
     </Compile>
@@ -5245,6 +5251,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Estados\OperacionesXServicio\Frm_OperacionesXServicio.resx">
       <DependentUpon>Frm_OperacionesXServicio.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Frm_St_CotizacionesxOT.resx">
+      <DependentUpon>Frm_St_CotizacionesxOT.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Gestion Taller\Frm_St_GestionTaller.resx">
       <DependentUpon>Frm_St_GestionTaller.vb</DependentUpon>

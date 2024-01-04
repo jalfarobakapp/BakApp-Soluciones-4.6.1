@@ -43,6 +43,9 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Menu_Contextual_Garantia = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Crear_OT1Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Crear_OTVariosProductos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_Ordenes = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_AbrirOrden = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_VerDocumentos = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Lbl_FlujoTrabajo = New DevComponents.DotNetBar.LabelX()
         Me.Progeso_Gestion = New DevComponents.DotNetBar.ProgressSteps()
@@ -65,8 +68,6 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Tab_08_Cerradas_Hoy = New DevComponents.DotNetBar.SuperTabItem()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla_SubOt = New DevComponents.DotNetBar.Controls.DataGridViewX()
-        Me.Menu_Contextual_Ordenes = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_ImprimirPDF = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -97,6 +98,7 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Btn_Crear_OT.FontBold = True
         Me.Btn_Crear_OT.ForeColor = System.Drawing.Color.Black
         Me.Btn_Crear_OT.Image = CType(resources.GetObject("Btn_Crear_OT.Image"), System.Drawing.Image)
+        Me.Btn_Crear_OT.ImageAlt = CType(resources.GetObject("Btn_Crear_OT.ImageAlt"), System.Drawing.Image)
         Me.Btn_Crear_OT.Name = "Btn_Crear_OT"
         Me.Btn_Crear_OT.Text = "Crear O.T."
         '
@@ -228,6 +230,27 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Btn_Crear_OTVariosProductos.Image = CType(resources.GetObject("Btn_Crear_OTVariosProductos.Image"), System.Drawing.Image)
         Me.Btn_Crear_OTVariosProductos.Name = "Btn_Crear_OTVariosProductos"
         Me.Btn_Crear_OTVariosProductos.Text = "Crear Orden con varios productos"
+        '
+        'Menu_Contextual_Ordenes
+        '
+        Me.Menu_Contextual_Ordenes.AutoExpandOnClick = True
+        Me.Menu_Contextual_Ordenes.Name = "Menu_Contextual_Ordenes"
+        Me.Menu_Contextual_Ordenes.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_AbrirOrden, Me.Btn_Mnu_VerDocumentos})
+        Me.Menu_Contextual_Ordenes.Text = "Opciones OT"
+        '
+        'Btn_Mnu_AbrirOrden
+        '
+        Me.Btn_Mnu_AbrirOrden.Image = CType(resources.GetObject("Btn_Mnu_AbrirOrden.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_AbrirOrden.ImageAlt = CType(resources.GetObject("Btn_Mnu_AbrirOrden.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_AbrirOrden.Name = "Btn_Mnu_AbrirOrden"
+        Me.Btn_Mnu_AbrirOrden.Text = "Ver orden de servicio"
+        '
+        'Btn_Mnu_VerDocumentos
+        '
+        Me.Btn_Mnu_VerDocumentos.Image = CType(resources.GetObject("Btn_Mnu_VerDocumentos.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_VerDocumentos.ImageAlt = CType(resources.GetObject("Btn_Mnu_VerDocumentos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_VerDocumentos.Name = "Btn_Mnu_VerDocumentos"
+        Me.Btn_Mnu_VerDocumentos.Text = "Ver documentos asociados (Codizaciones/Notas de Venta)"
         '
         'Grilla
         '
@@ -542,18 +565,6 @@ Partial Class Frm_St_Ordenes_de_trabajo
         Me.Grilla_SubOt.Size = New System.Drawing.Size(932, 176)
         Me.Grilla_SubOt.TabIndex = 1
         '
-        'Menu_Contextual_Ordenes
-        '
-        Me.Menu_Contextual_Ordenes.AutoExpandOnClick = True
-        Me.Menu_Contextual_Ordenes.Name = "Menu_Contextual_Ordenes"
-        Me.Menu_Contextual_Ordenes.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_ImprimirPDF})
-        Me.Menu_Contextual_Ordenes.Text = "ButtonItem1"
-        '
-        'Btn_ImprimirPDF
-        '
-        Me.Btn_ImprimirPDF.Name = "Btn_ImprimirPDF"
-        Me.Btn_ImprimirPDF.Text = "Imprmir corizaciones en PDF"
-        '
         'Frm_St_Ordenes_de_trabajo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -623,5 +634,6 @@ Partial Class Frm_St_Ordenes_de_trabajo
     Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Grilla_SubOt As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Menu_Contextual_Ordenes As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_ImprimirPDF As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_AbrirOrden As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_VerDocumentos As DevComponents.DotNetBar.ButtonItem
 End Class

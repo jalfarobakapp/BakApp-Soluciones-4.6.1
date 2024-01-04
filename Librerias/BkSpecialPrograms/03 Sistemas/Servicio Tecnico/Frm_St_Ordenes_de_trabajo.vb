@@ -87,6 +87,8 @@ Public Class Frm_St_Ordenes_de_trabajo
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla_SubOt.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
+        AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
+
         'Txt_Informacion.DataBindings.Add(New System.Windows.Forms.Binding("Text", _TblTecnicos, "Informacion", True))
 
     End Sub
@@ -877,8 +879,6 @@ Public Class Frm_St_Ordenes_de_trabajo
 
     Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
-        ShowContextMenu(Menu_Contextual_Ordenes)
-        Return
         Dim _Fila As DataGridViewRow
 
         If Grilla_SubOt.RowCount > 1 Then
@@ -889,10 +889,6 @@ Public Class Frm_St_Ordenes_de_trabajo
 
         _Fila = Grilla_SubOt.Rows(0)
         Sb_Abrir_Documento(_Fila)
-
-        'Return
-        'Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
-        'Sb_Abrir_Documento(_Fila)
 
     End Sub
 
@@ -1022,15 +1018,43 @@ Public Class Frm_St_Ordenes_de_trabajo
 
     End Sub
 
-    Private Sub Btn_ImprimirPDF_Click(sender As Object, e As EventArgs) Handles Btn_ImprimirPDF.Click
+
+    Private Sub Sb_Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+            With sender
+                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+
+                    Btn_Mnu_AbrirOrden.Enabled = (Grilla_SubOt.RowCount = 1)
+                    ShowContextMenu(Menu_Contextual_Ordenes)
+
+                End If
+            End With
+        End If
+    End Sub
+
+    Private Sub Btn_Mnu_AbrirOrden_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_AbrirOrden.Click
+        Call Grilla_CellDoubleClick(Nothing, Nothing)
+    End Sub
+
+    Private Sub Btn_Mnu_VerDocumentos_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_VerDocumentos.Click
 
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
-
         Dim _Id_Ot = _Fila.Cells("Id_Ot_Padre").Value
-        Dim _Impresora As String
 
-        Dim _Cl_Imprimir_PDFSt As New Cl_Imprimir_PDFSt(_Id_Ot)
-        _Cl_Imprimir_PDFSt.Fx_Imprimir_Archivo(Me, "PDF Cotizaciones OTS", _Impresora)
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_OT_Doc_Asociados",
+                              "Id_Ot In (Select Id_Ot From " & _Global_BaseBk & "Zw_St_OT_Encabezado " &
+                              "Where Id_Ot_Padre = " & _Id_Ot & ")")
+
+        If Not CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "No hay documentos asociados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_St_CotizacionesxOT(_Id_Ot)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 
