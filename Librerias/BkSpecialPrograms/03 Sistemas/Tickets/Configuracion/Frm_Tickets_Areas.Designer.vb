@@ -47,6 +47,7 @@ Partial Class Frm_Tickets_Areas
         Me.Btn_Mnu_EditarTipo = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_QuitarTipo = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla_Areas = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.Btn_Cerrar = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.Grilla_Tipos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -61,7 +62,7 @@ Partial Class Frm_Tickets_Areas
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_CrearArea, Me.Btn_ExportarExcel})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_CrearArea, Me.Btn_ExportarExcel, Me.Btn_Cerrar})
         Me.Bar2.Location = New System.Drawing.Point(0, 574)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(693, 41)
@@ -390,6 +391,17 @@ Partial Class Frm_Tickets_Areas
         Me.Grilla_Areas.Size = New System.Drawing.Size(666, 310)
         Me.Grilla_Areas.TabIndex = 1
         '
+        'Btn_Cerrar
+        '
+        Me.Btn_Cerrar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Cerrar.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Btn_Cerrar.Image = CType(resources.GetObject("Btn_Cerrar.Image"), System.Drawing.Image)
+        Me.Btn_Cerrar.ImageAlt = CType(resources.GetObject("Btn_Cerrar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Cerrar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Cerrar.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
+        Me.Btn_Cerrar.Name = "Btn_Cerrar"
+        Me.Btn_Cerrar.Tooltip = "Cerrar formulario"
+        '
         'Frm_Tickets_Areas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -437,4 +449,5 @@ Partial Class Frm_Tickets_Areas
     Friend WithEvents Grilla_Areas As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Btn_Mnu_EditarTipo As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_EliminarArea As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Cerrar As DevComponents.DotNetBar.ButtonItem
 End Class

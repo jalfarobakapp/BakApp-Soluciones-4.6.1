@@ -48,4 +48,10 @@ Public Class Stk_Ticktes
         NewPanel = New Stk_Configuracion(_Fm_Menu_Padre)
         _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
     End Sub
+
+    Private Sub BtnCambiarDeUsuario_Click(sender As Object, e As EventArgs) Handles BtnCambiarDeUsuario.Click
+        Dim NewPanel As Login = Nothing
+        NewPanel = New Login(_Fm_Menu_Padre)
+        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Right)
+    End Sub
 End Class

@@ -162,7 +162,7 @@ Public Class Frm_Tickets_Seguimiento
 
             .Columns("StrAccion").Visible = True
             .Columns("StrAccion").HeaderText = "Acción"
-            .Columns("StrAccion").Width = 60
+            .Columns("StrAccion").Width = 70
             .Columns("StrAccion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -174,7 +174,7 @@ Public Class Frm_Tickets_Seguimiento
 
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").HeaderText = "Descripción"
-            .Columns("Descripcion").Width = 250
+            .Columns("Descripcion").Width = 240
             .Columns("Descripcion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -202,38 +202,37 @@ Public Class Frm_Tickets_Seguimiento
             Dim _Num_Attach As Integer = _Fila.Cells("Num_Attach").Value
             Dim _CodFuncionario As String = _Fila.Cells("CodFuncionario").Value.ToString.Trim
 
+            Dim _Imagenes_List As ImageList
+
+            If Global_Thema = Enum_Themas.Oscuro Then
+                _Imagenes_List = Imagenes_16x16_Dark
+            Else
+                _Imagenes_List = Imagenes_16x16
+            End If
+
             If CBool(_Num_Attach) Then
                 _Nombre_Image = "attach-number-" & _Num_Attach & ".png"
                 If _Num_Attach > 9 Then
                     _Nombre_Image = "attach-number-9-plus.png"
                 End If
-                _Icono = Imagenes_16x16.Images.Item(_Nombre_Image)
+                _Icono = _Imagenes_List.Images.Item(_Nombre_Image)
                 _Fila.DefaultCellStyle.BackColor = Color.LightYellow
             Else
-                _Icono = Imagenes_16x16.Images.Item("menu-more.png")
+                _Icono = _Imagenes_List.Images.Item("menu-more.png")
             End If
 
             _Fila.Cells("Btn_ImagenAttach").Value = _Icono
 
             If Not String.IsNullOrEmpty(_CodFuncionario) Then
-                _Icono = Imagenes_16x16.Images.Item("people-customer-man.png")
+                _Icono = _Imagenes_List.Images.Item("people-customer-man.png")
             Else
-                _Icono = Imagenes_16x16.Images.Item("people-vendor.png")
+                _Icono = _Imagenes_List.Images.Item("people-vendor.png")
+                If _Accion = "RECH" Then
+                    _Icono = _Imagenes_List.Images.Item("people-vendor-error.png")
+                    _Fila.Cells("Accion").Style.ForeColor = Rojo
+                End If
+
             End If
-
-            'If _Accion = "MENS" Then
-            '    _Icono = Imagenes_16x16.Images.Item("people-customer-man.png")
-            'ElseIf _Accion = "RESP" Then
-            '    _Icono = Imagenes_16x16.Images.Item("people-vendor.png")
-            'Else
-
-            '    If _CodFuncionario = FUNCIONARIO Then
-            '        _Icono = Imagenes_16x16.Images.Item("people-customer-man.png")
-            '    Else
-            '        _Icono = Imagenes_16x16.Images.Item("people-vendor.png")
-            '    End If
-
-            'End If
 
             _Fila.Cells("Btn_ImagenUser").Value = _Icono
 
@@ -244,6 +243,8 @@ Public Class Frm_Tickets_Seguimiento
         Catch ex As Exception
 
         End Try
+
+        Grilla.Refresh()
 
     End Sub
 

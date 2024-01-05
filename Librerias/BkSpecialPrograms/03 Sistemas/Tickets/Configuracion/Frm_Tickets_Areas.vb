@@ -8,6 +8,9 @@ Public Class Frm_Tickets_Areas
     Dim _Tbl_Areas As DataTable
     Dim _Tbl_Tipos As DataTable
 
+    Public Property ModoSeleccion As Boolean
+    Public Property Id_Tipo_Seleccionado As Integer
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -26,11 +29,18 @@ Public Class Frm_Tickets_Areas
 
         Sb_Actualizar_Grilla()
 
-        AddHandler Grilla_Areas.MouseDown, AddressOf Sb_Grilla_Areas_MouseDown
-        AddHandler Grilla_Tipos.MouseDown, AddressOf Sb_Grilla_Tipos_MouseDown
+        If Not ModoSeleccion Then
+
+            AddHandler Grilla_Areas.MouseDown, AddressOf Sb_Grilla_Areas_MouseDown
+            AddHandler Grilla_Tipos.MouseDown, AddressOf Sb_Grilla_Tipos_MouseDown
+
+        End If
 
         AddHandler Grilla_Areas.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla_Tipos.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
+        Btn_CrearArea.Visible = Not ModoSeleccion
+        Btn_ExportarExcel.Visible = Not ModoSeleccion
 
     End Sub
 
@@ -139,7 +149,11 @@ Public Class Frm_Tickets_Areas
     End Sub
 
     Private Sub Grilla_Areas_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Areas.CellDoubleClick
-        'Call Btn_Mnu_EditarArea_Click(Nothing, Nothing)
+        If ModoSeleccion Then
+            MessageBoxEx.Show(Me, "Debe seleccionar un tipo de requerimient de la lista de abajo",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
         ShowContextMenu(Menu_Contextual_01)
     End Sub
 
@@ -308,7 +322,16 @@ Public Class Frm_Tickets_Areas
     End Sub
 
     Private Sub Grilla_Tipos_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Tipos.CellDoubleClick
+
+        If ModoSeleccion Then
+            Dim _Fila As DataGridViewRow = Grilla_Tipos.CurrentRow
+            Id_Tipo_Seleccionado = _Fila.Cells("Id").Value
+            Me.Close()
+            Return
+        End If
+
         ShowContextMenu(Menu_Contextual_02)
+
     End Sub
 
     Private Sub Btn_Mnu_EliminarArea_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_EliminarArea.Click
@@ -354,5 +377,9 @@ Public Class Frm_Tickets_Areas
     Private Sub Txt_Buscador_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Buscador.ButtonCustom2Click
         Txt_Buscador.Text = String.Empty
         Sb_Actualizar_Grilla()
+    End Sub
+
+    Private Sub Btn_Cerrar_Click(sender As Object, e As EventArgs) Handles Btn_Cerrar.Click
+        Me.Close()
     End Sub
 End Class

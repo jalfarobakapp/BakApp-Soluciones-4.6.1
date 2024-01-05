@@ -92,7 +92,7 @@
                        "Case UdMedida When 1 Then Ud1 Else Ud2 End As 'Udm',StfiEnBodega,Cantidad,Diferencia" & vbCrLf &
                        ",Case Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'UR' Then 'Urgente' Else '??' End As NomPrioridad" & vbCrLf &
                        ",Case UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion" & vbCrLf &
-                       ",Case Estado When 'ABIE' then 'Abierto' When 'CERR' then 'Cerrado' When 'NULO' then 'Nulo' When 'SOLC' then 'Sol. Cierre' End As NomEstado," & vbCrLf &
+                       ",Case Estado When 'ABIE' then Case When Rechazado = 1 Then 'Abierto (Rechazado)' else 'Abierto' End When 'CERR' then 'Cerrado' When 'NULO' then 'Nulo' When 'SOLC' then 'Sol. Cierre' End As NomEstado," & vbCrLf &
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcMs Where AcMs.Id_Ticket = Tks.Id And AcMs.Accion = 'MENS' And AcMs.Visto = 0) As Mesn_Pdte_Ver," & vbCrLf &
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcRs Where AcRs.Id_Ticket = Tks.Id And AcRs.Accion = 'RESP' And AcRs.Visto = 0) As Resp_Pdte_Ver" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stk_Tickets Tks" & vbCrLf &
@@ -129,7 +129,7 @@
 
             .Columns("Asunto").Visible = True
             .Columns("Asunto").HeaderText = "Asunto"
-            .Columns("Asunto").Width = 250
+            .Columns("Asunto").Width = 230
             .Columns("Asunto").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -137,7 +137,7 @@
             .Columns("NomEstado").HeaderText = "Estado"
             .Columns("NomEstado").ToolTipText = "Estado del Ticket"
             '.Columns("NomEstado").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("NomEstado").Width = 80
+            .Columns("NomEstado").Width = 120
             .Columns("NomEstado").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -218,7 +218,8 @@
 
             Dim _Mesn_Pdte_Ver = _Fila.Cells("Mesn_Pdte_Ver").Value
             Dim _Resp_Pdte_Ver = _Fila.Cells("Resp_Pdte_Ver").Value
-            Dim _Estado = _Fila.Cells("Estado").Value
+            Dim _Estado As String = _Fila.Cells("Estado").Value
+            Dim _Rechazado As Boolean = _Fila.Cells("Rechazado").Value
 
             Dim _Icono As Image
             Dim _Nombre_Image As String
@@ -230,8 +231,16 @@
                 _Num = _Mesn_Pdte_Ver
             End If
 
+            Dim _Imagenes_List As ImageList
+
+            If Global_Thema = Enum_Themas.Oscuro Then
+                _Imagenes_List = Imagenes_16x16_Dark
+            Else
+                _Imagenes_List = Imagenes_16x16
+            End If
+
             If _Estado = "NULO" Then
-                _Icono = Imagenes_16x16.Images.Item("cancel.png")
+                _Icono = _Imagenes_List.Images.Item("cancel.png")
             Else
 
                 If CBool(_Num) Then
@@ -239,15 +248,29 @@
                     If _Mesn_Pdte_Ver > 9 Then
                         _Nombre_Image = "comment-number-9-plus.png"
                     End If
-                    _Icono = Imagenes_16x16.Images.Item(_Nombre_Image)
-                    _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+                    _Icono = _Imagenes_List.Images.Item(_Nombre_Image)
+
+                    If Global_Thema = Enum_Themas.Oscuro Then
+                        _Fila.DefaultCellStyle.ForeColor = Amarillo
+                    Else
+                        _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+                    End If
+
                 Else
-                    _Icono = Imagenes_16x16.Images.Item("menu-more.png")
+                    _Icono = _Imagenes_List.Images.Item("menu-more.png")
                 End If
 
             End If
 
             _Fila.Cells("BtnImagen_Estado").Value = _Icono
+
+            If _Estado = "ABIE" AndAlso Not _Rechazado Then
+                _Fila.Cells("NomEstado").Style.ForeColor = Verde
+            End If
+
+            If _Estado = "ABIE" AndAlso _Rechazado Then
+                _Fila.Cells("NomEstado").Style.ForeColor = Rojo
+            End If
 
         Next
 

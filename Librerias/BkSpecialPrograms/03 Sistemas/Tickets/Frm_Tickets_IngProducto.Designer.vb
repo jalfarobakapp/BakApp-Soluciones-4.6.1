@@ -54,9 +54,9 @@ Partial Class Frm_Tickets_IngProducto
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Archivos_Adjuntos, Me.Btn_Eliminar})
-        Me.Bar2.Location = New System.Drawing.Point(0, 254)
+        Me.Bar2.Location = New System.Drawing.Point(0, 222)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(534, 41)
+        Me.Bar2.Size = New System.Drawing.Size(536, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 165
@@ -133,8 +133,8 @@ Partial Class Frm_Tickets_IngProducto
         '
         Me.Txt_StfiEnBodega.Border.Class = "TextBoxBorder"
         Me.Txt_StfiEnBodega.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_StfiEnBodega.ButtonCustom.Image = CType(resources.GetObject("Txt_Stf.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_StfiEnBodega.ButtonCustom2.Image = CType(resources.GetObject("Txt_Stf.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_StfiEnBodega.ButtonCustom.Image = CType(resources.GetObject("Txt_StfiEnBodega.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_StfiEnBodega.ButtonCustom2.Image = CType(resources.GetObject("Txt_StfiEnBodega.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_StfiEnBodega.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_StfiEnBodega.ForeColor = System.Drawing.Color.Black
         Me.Txt_StfiEnBodega.Location = New System.Drawing.Point(107, 98)
@@ -263,7 +263,7 @@ Partial Class Frm_Tickets_IngProducto
         '
         Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX6.ForeColor = System.Drawing.Color.Black
-        Me.LabelX6.Location = New System.Drawing.Point(12, 183)
+        Me.LabelX6.Location = New System.Drawing.Point(12, 154)
         Me.LabelX6.Name = "LabelX6"
         Me.LabelX6.Size = New System.Drawing.Size(89, 23)
         Me.LabelX6.TabIndex = 176
@@ -281,7 +281,7 @@ Partial Class Frm_Tickets_IngProducto
         Me.Dtp_FechaRev.ButtonDropDown.Visible = True
         Me.Dtp_FechaRev.ForeColor = System.Drawing.Color.Black
         Me.Dtp_FechaRev.IsPopupCalendarOpen = False
-        Me.Dtp_FechaRev.Location = New System.Drawing.Point(107, 183)
+        Me.Dtp_FechaRev.Location = New System.Drawing.Point(107, 154)
         '
         '
         '
@@ -329,17 +329,18 @@ Partial Class Frm_Tickets_IngProducto
         '
         Me.Txt_Diferencia.Border.Class = "TextBoxBorder"
         Me.Txt_Diferencia.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Diferencia.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_Diferencia.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Diferencia.ButtonCustom.Image = CType(resources.GetObject("Txt_Diferencia.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Diferencia.ButtonCustom2.Image = CType(resources.GetObject("Txt_Diferencia.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_Diferencia.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Diferencia.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Diferencia.Location = New System.Drawing.Point(107, 155)
+        Me.Txt_Diferencia.Location = New System.Drawing.Point(330, 126)
         Me.Txt_Diferencia.Name = "Txt_Diferencia"
         Me.Txt_Diferencia.PreventEnterBeep = True
         Me.Txt_Diferencia.ReadOnly = True
         Me.Txt_Diferencia.Size = New System.Drawing.Size(86, 22)
         Me.Txt_Diferencia.TabIndex = 180
         Me.Txt_Diferencia.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.Txt_Diferencia.Visible = False
         '
         'LabelX1
         '
@@ -349,11 +350,12 @@ Partial Class Frm_Tickets_IngProducto
         '
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(12, 155)
+        Me.LabelX1.Location = New System.Drawing.Point(235, 126)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(89, 23)
         Me.LabelX1.TabIndex = 179
         Me.LabelX1.Text = "Diferencia"
+        Me.LabelX1.Visible = False
         '
         'LabelX2
         '
@@ -363,7 +365,7 @@ Partial Class Frm_Tickets_IngProducto
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(12, 212)
+        Me.LabelX2.Location = New System.Drawing.Point(12, 183)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(89, 23)
         Me.LabelX2.TabIndex = 182
@@ -382,7 +384,7 @@ Partial Class Frm_Tickets_IngProducto
         Me.Dtp_HoraRev.ForeColor = System.Drawing.Color.Black
         Me.Dtp_HoraRev.Format = DevComponents.Editors.eDateTimePickerFormat.ShortTime
         Me.Dtp_HoraRev.IsPopupCalendarOpen = False
-        Me.Dtp_HoraRev.Location = New System.Drawing.Point(139, 212)
+        Me.Dtp_HoraRev.Location = New System.Drawing.Point(139, 183)
         '
         '
         '
@@ -427,7 +429,7 @@ Partial Class Frm_Tickets_IngProducto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(534, 295)
+        Me.ClientSize = New System.Drawing.Size(536, 263)
         Me.Controls.Add(Me.LabelX2)
         Me.Controls.Add(Me.Dtp_HoraRev)
         Me.Controls.Add(Me.Txt_Diferencia)
@@ -447,6 +449,7 @@ Partial Class Frm_Tickets_IngProducto
         Me.Controls.Add(Me.Bar2)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False

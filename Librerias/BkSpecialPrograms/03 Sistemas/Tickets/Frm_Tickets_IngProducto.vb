@@ -56,7 +56,7 @@ Public Class Frm_Tickets_IngProducto
         Txt_Producto.ButtonCustom.Visible = IsNothing(_Row_Producto)
         Txt_Producto.ButtonCustom2.Visible = Not IsNothing(_Row_Producto)
 
-        Me.ActiveControl = Txt_Cantidad
+        Me.ActiveControl = Txt_StfiEnBodega
 
     End Sub
 
@@ -70,19 +70,32 @@ Public Class Frm_Tickets_IngProducto
         ' Convertir la cadena en un objeto DateTime
         Dim _FechaRev As DateTime = DateTime.Parse(_FechaHora)
 
+        If _Fecha = "01/01/0001" Or _Fecha = "01-01-0001" Then
+            MessageBoxEx.Show(Me, "Falta la fecha", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Dtp_FechaRev.Focus()
+            Return
+        End If
+        If _Hora = "0:00:00" Then
+            MessageBoxEx.Show(Me, "Falta la hora" & vbCrLf &
+                              "La hora no puede ser 00:00", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Dtp_HoraRev.Focus()
+            Return
+        End If
+
         With Tickets_Producto
 
             .Cantidad = Txt_Cantidad.Text
             .StfiEnBodega = Txt_StfiEnBodega.Text
             .Diferencia = Txt_StfiEnBodega.Text - Txt_Cantidad.Text
+            .UdMedida = Cmb_UdMedida.SelectedValue
             .FechaRev = _FechaRev
 
-            Descripcion = "PRODUCTO : " & .Codigo & " - " & .Descripcion.Trim & vbCrLf &
-                          "BODEGA " & Txt_Bodega.Text & vbCrLf &
-                          "CANTIDAD EN BODEGA SEGUN SISTEMA: " & .StfiEnBodega & vbCrLf &
-                          "CANTIDAD INVENTARIADA: " & .Cantidad & vbCrLf &
-                          "DIFERENCIA: " & .Cantidad & vbCrLf &
-                          "FECHA Y HORA DE REV.: " & _FechaRev.ToShortDateString & " - " & _FechaRev.ToShortTimeString
+            Descripcion = "PRODUCTO : " & .Codigo.Trim & " - " & .Descripcion.Trim & vbCrLf &
+                          "BODEGA : " & Txt_Bodega.Text & vbCrLf &
+                          "CANTIDAD EN BODEGA SEGUN SISTEMA : " & .StfiEnBodega & vbCrLf &
+                          "CANTIDAD INVENTARIADA : " & .Cantidad & vbCrLf &
+                          "DIFERENCIA : " & .Diferencia & vbCrLf &
+                          "FECHA Y HORA : " & _FechaRev.ToShortDateString & " - " & _FechaRev.ToShortTimeString
 
         End With
 

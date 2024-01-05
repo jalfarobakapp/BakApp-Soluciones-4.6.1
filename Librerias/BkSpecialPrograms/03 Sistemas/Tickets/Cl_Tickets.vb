@@ -55,6 +55,7 @@ Public Class Cl_Tickets
                 .CodFuncionario_Cierra = _Row_Ticket.Item("UltAccion")
                 .FechaCierre = NuloPorNro(_Row_Ticket.Item("FechaCierre"), Now)
                 .Id_Padre = _Row_Ticket.Item("Id_Padre")
+                .Rechazado = _Row_Ticket.Item("Rechazado")
 
             End With
 
