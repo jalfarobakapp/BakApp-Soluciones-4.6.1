@@ -1005,6 +1005,33 @@ Public Class Clas_Estructura_Base_De_Datos
             Case "Zw_St_OT_Recetas_Prod"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_St_OT_Recetas_Prod
 
+            Case "Zw_Stk_Agentes"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stk_Agentes
+            Case "Zw_Stk_AgentesVsTipos"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stk_AgentesVsTipos
+            Case "Zw_Stk_Areas"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stk_Areas
+            Case "Zw_Stk_Grupos"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stk_Grupos
+            Case "Zw_Stk_GrupoVsAgente"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stk_GrupoVsAgente
+            Case "Zw_Stk_Tickets"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stk_Tickets
+            Case "Zw_Stk_Tickets_Acciones"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stk_Tickets_Acciones
+            Case "Zw_Stk_Tickets_Archivos"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stk_Tickets_Archivos
+            Case "Zw_Stk_Tickets_Asignado"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stk_Tickets_Asignado
+            Case "Zw_Stk_Tickets_PorDefecto"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stk_Tickets_PorDefecto
+            Case "Zw_Stk_Tickets_Producto"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stk_Tickets_Producto
+            Case "Zw_Stk_Tipos"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stk_Tipos
+            Case "Zw_Stk_Tipos_Grupos"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stk_Tipos_Grupos
+
             Case "Zw_TablaDeCaracterizaciones"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_TablaDeCaracterizaciones
             Case "Zw_Tablas_Equivalentes_Rd_Bk"

@@ -114,6 +114,9 @@
                 _Precio_ud1 = _RowProducto.Item("Precio_ud1")
                 _Precio_ud2 = _RowProducto.Item("Precio_ud2")
 
+                _Ud1 = _RowProducto.Item("UD01PR").ToString.Trim
+                _Ud2 = _RowProducto.Item("UD02PR").ToString.Trim
+
                 _PU01_Neto = _RowProducto.Item("PU01_Neto")
                 _PU02_Neto = _RowProducto.Item("PU02_Neto")
                 _PU01_Bruto = _RowProducto.Item("PU01_Bruto")
@@ -348,6 +351,9 @@
 
         _Precio_ud1 = _RowProducto.Item("Precio_ud1")
         _Precio_ud2 = _RowProducto.Item("Precio_ud2")
+
+        _Ud1 = _RowProducto.Item("UD01PR").ToString.Trim
+        _Ud2 = _RowProducto.Item("UD02PR").ToString.Trim
 
         _PU01_Neto = _RowProducto.Item("PU01_Neto")
         _PU02_Neto = _RowProducto.Item("PU02_Neto")
@@ -1026,7 +1032,7 @@
         _Texto = Replace(_Texto, "<CODIGO_ALT>", _Codigo_Alternativo.ToString.Trim)
 
         _Texto = Replace(_Texto, "<UD1_PR>", _Ud1.ToString.Trim)
-        _Texto = Replace(_Texto, "<UD2_PR>", _Ud1.ToString.Trim)
+        _Texto = Replace(_Texto, "<UD2_PR>", _Ud2.ToString.Trim)
 
         Dim _Descripcion_cortamr As String
 

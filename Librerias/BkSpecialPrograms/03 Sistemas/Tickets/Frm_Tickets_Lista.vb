@@ -1,5 +1,4 @@
-﻿Imports DevComponents.DotNetBar
-Public Class Frm_Tickets_Lista
+﻿Public Class Frm_Tickets_Lista
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -35,7 +34,8 @@ Public Class Frm_Tickets_Lista
     Private Sub Frm_Tickets_Lista_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         InsertarBotonenGrilla(Grilla, "BtnImagen_Estado", "Est.", "Img_Estado", 0, _Tipo_Boton.Imagen)
-        'InsertarBotonenGrilla(Grilla, "BtnImagen_Tag", "Tag", "Img_Tag", 1, _Tipo_Boton.Imagen)
+
+        'AddHandler Grilla.RowPrePaint, AddressOf Grilla_RowPrePaint
 
         Sb_Actualizar_Grilla()
 
@@ -44,12 +44,25 @@ Public Class Frm_Tickets_Lista
         Btn_Crear_Ticket.Visible = (_Tipo_Tickets = Enum_Tickets.MisTicket)
         Btn_RevisarTicket.Visible = Not (_Tipo_Tickets = Enum_Tickets.MisTicket)
 
+        If _Tipo_Tickets = Enum_Tickets.MisTicket Then
+            Me.Text = "MIS TICKETS"
+            Chk_TickesAsigMi.Visible = False
+            Chk_TickesMiGrupo.Visible = False
+        Else
+            Me.Text = "TICKET ASIGNADOS A MI COMO AGENTE"
+        End If
+
+        AddHandler Chk_TickesMiGrupo.CheckedChanged, AddressOf Chk_TickesTiposMi_CheckedChanged
+
+        Me.Text += ", Usuario : " & FUNCIONARIO & " - " & Nombre_funcionario_activo
+
     End Sub
 
     Sub Sb_Actualizar_Grilla()
 
         'Dim _Texto_Busqueda As String = Txt_Buscador.Text.Trim
         Dim _Condicion As String = String.Empty
+        Dim _Condicion2 As String = String.Empty
 
         'Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "CODIGO+DESCRIPTOR Like '%")
 
@@ -57,22 +70,33 @@ Public Class Frm_Tickets_Lista
         '_Condicion = "And CODIGO In (Select CODIGO From MAEDRES Where ELEMENTO = '" & Txt_BuscaXProducto.Text & "')"
         'End If
 
+        If Chk_TickesMiGrupo.Visible And Chk_TickesMiGrupo.Checked Then
+            _Condicion2 = "Or (Tks.Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tickets " &
+                          "Where Id_Grupo In (Select Id_Grupo From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente " &
+                          "Where CodAgente = '" & FUNCIONARIO & "')))"
+        End If
+
         Select Case _Tipo_Tickets
             Case Enum_Tickets.MisTicket
                 _Condicion = "And CodFuncionario_Crea = '" & _Funcionario & "'"
             Case Enum_Tickets.TicketAsignadoGrupo
                 _Condicion = "And Id_Grupo = " & _Id_Grupo
+                _Condicion += vbCrLf & "And Estado <> 'NULO'"
             Case Enum_Tickets.TicketAsignadosAgente
-                _Condicion = "And Id In (Select Id_Ticket From " & _Global_BaseBk & "Zw_Stk_Tickets_Asignado Where CodAgente = '" & FUNCIONARIO & "')"
+                _Condicion = "And (Tks.Id In (Select Id_Ticket From " & _Global_BaseBk & "Zw_Stk_Tickets_Asignado " &
+                             "Where CodAgente = '" & FUNCIONARIO & "') " & _Condicion2 & ")"
+                _Condicion += vbCrLf & "And Estado <> 'NULO'"
         End Select
 
-        Consulta_sql = "Select *" & vbCrLf &
+        Consulta_sql = "Select Tks.*,TkPrd.Empresa,TkPrd.Sucursal,TkPrd.Bodega,TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr," & vbCrLf &
+                       "Case UdMedida When 1 Then Ud1 Else Ud2 End As 'Udm',StfiEnBodega,Cantidad,Diferencia" & vbCrLf &
                        ",Case Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'UR' Then 'Urgente' Else '??' End As NomPrioridad" & vbCrLf &
                        ",Case UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion" & vbCrLf &
-                       ",Case Estado When 'ABIE' then 'Abierto' When 'CERR' then 'Cerrado' When 'NULO' then 'Nulo' End As NomEstado," & vbCrLf &
-                       "(Select COUNT(*) From BAKAPP_PRB.dbo.Zw_Stk_Tickets_Acciones AcMs Where AcMs.Id_Ticket = Tks.Id And AcMs.Accion = 'MENS' And AcMs.Visto = 0) As Mesn_Pdte_Ver," & vbCrLf &
-                       "(Select COUNT(*) From BAKAPP_PRB.dbo.Zw_Stk_Tickets_Acciones AcRs Where AcRs.Id_Ticket = Tks.Id And AcRs.Accion = 'RESP' And AcRs.Visto = 0) As Resp_Pdte_Ver" & vbCrLf &
+                       ",Case Estado When 'ABIE' then Case When Rechazado = 1 Then 'Abierto (Rechazado)' else 'Abierto' End When 'CERR' then 'Cerrado' When 'NULO' then 'Nulo' When 'SOLC' then 'Sol. Cierre' End As NomEstado," & vbCrLf &
+                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcMs Where AcMs.Id_Ticket = Tks.Id And AcMs.Accion = 'MENS' And AcMs.Visto = 0) As Mesn_Pdte_Ver," & vbCrLf &
+                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcRs Where AcRs.Id_Ticket = Tks.Id And AcRs.Accion = 'RESP' And AcRs.Visto = 0) As Resp_Pdte_Ver" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stk_Tickets Tks" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets_Producto TkPrd On Tks.Id = TkPrd.Id_Ticket" & vbCrLf &
                        "Where 1 > 0" & vbCrLf & _Condicion
 
         _Tbl_Tickets = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -81,7 +105,7 @@ Public Class Frm_Tickets_Lista
 
             .DataSource = _Tbl_Tickets
 
-            OcultarEncabezadoGrilla(Grilla)
+            OcultarEncabezadoGrilla(Grilla, True)
 
             Dim _DisplayIndex = 0
 
@@ -99,13 +123,13 @@ Public Class Frm_Tickets_Lista
 
             .Columns("Numero").Visible = True
             .Columns("Numero").HeaderText = "Número"
-            .Columns("Numero").Width = 100
+            .Columns("Numero").Width = 80
             .Columns("Numero").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Asunto").Visible = True
             .Columns("Asunto").HeaderText = "Asunto"
-            .Columns("Asunto").Width = 300
+            .Columns("Asunto").Width = 230
             .Columns("Asunto").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -113,7 +137,7 @@ Public Class Frm_Tickets_Lista
             .Columns("NomEstado").HeaderText = "Estado"
             .Columns("NomEstado").ToolTipText = "Estado del Ticket"
             '.Columns("NomEstado").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("NomEstado").Width = 100
+            .Columns("NomEstado").Width = 120
             .Columns("NomEstado").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -121,17 +145,17 @@ Public Class Frm_Tickets_Lista
             .Columns("NomPrioridad").HeaderText = "Prioridad"
             '.Columns("NomPrioridad").ToolTipText = "Estado del Ticket"
             .Columns("NomPrioridad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("NomPrioridad").Width = 100
+            .Columns("NomPrioridad").Width = 80
             .Columns("NomPrioridad").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("UltimaAccion").Visible = True
-            .Columns("UltimaAccion").HeaderText = "Ult. Estado"
-            .Columns("UltimaAccion").ToolTipText = "Ultimo Estado"
-            '.Columns("UltimaAccion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("UltimaAccion").Width = 100
-            .Columns("UltimaAccion").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
+            '.Columns("UltimaAccion").Visible = True
+            '.Columns("UltimaAccion").HeaderText = "Ult. Estado"
+            '.Columns("UltimaAccion").ToolTipText = "Ultimo Estado"
+            ''.Columns("UltimaAccion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '.Columns("UltimaAccion").Width = 80
+            '.Columns("UltimaAccion").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
 
             .Columns("FechaCreacion").Visible = True
             .Columns("FechaCreacion").HeaderText = "Fecha creación"
@@ -141,14 +165,51 @@ Public Class Frm_Tickets_Lista
             .Columns("FechaCreacion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            '.Columns("Dias").Visible = True
-            '.Columns("Dias").HeaderText = "Días expira."
-            '.Columns("Dias").ToolTipText = "Días que faltan para que termine la oferta"
-            '.Columns("Dias").Width = 70
-            '.Columns("Dias").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("Dias").DefaultCellStyle.Format = "###,##0.##"
-            '.Columns("Dias").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
+            .Columns("Codigo").Visible = True
+            .Columns("Codigo").HeaderText = "Código"
+            '.Columns("UltimaAccion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Codigo").Width = 100
+            .Columns("Codigo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("DescripcionPr").Visible = True
+            .Columns("DescripcionPr").HeaderText = "Descripción"
+            '.Columns("UltimaAccion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("DescripcionPr").Width = 150
+            .Columns("DescripcionPr").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Udm").Visible = True
+            .Columns("Udm").HeaderText = "UM"
+            .Columns("Udm").ToolTipText = "Unidad de medida de la operación"
+            '.Columns("UltimaAccion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Udm").Width = 30
+            .Columns("Udm").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("StfiEnBodega").Visible = True
+            .Columns("StfiEnBodega").HeaderText = "Stock Bod."
+            .Columns("StfiEnBodega").ToolTipText = "Stock físico en bodega del producto al momento de la gestión"
+            .Columns("StfiEnBodega").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("StfiEnBodega").Width = 60
+            .Columns("StfiEnBodega").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Cantidad").Visible = True
+            .Columns("Cantidad").HeaderText = "Cantidad"
+            .Columns("Cantidad").ToolTipText = "Cantidad inventariada al momento de la operación"
+            .Columns("Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Cantidad").Width = 60
+            .Columns("Cantidad").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Diferencia").Visible = True
+            .Columns("Diferencia").HeaderText = "Diferencia"
+            .Columns("Diferencia").ToolTipText = "Diferencia entre el stock en bodega y la cantidad inventariada"
+            .Columns("Diferencia").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Diferencia").Width = 60
+            .Columns("Diferencia").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
         End With
 
@@ -157,6 +218,8 @@ Public Class Frm_Tickets_Lista
 
             Dim _Mesn_Pdte_Ver = _Fila.Cells("Mesn_Pdte_Ver").Value
             Dim _Resp_Pdte_Ver = _Fila.Cells("Resp_Pdte_Ver").Value
+            Dim _Estado As String = _Fila.Cells("Estado").Value
+            Dim _Rechazado As Boolean = _Fila.Cells("Rechazado").Value
 
             Dim _Icono As Image
             Dim _Nombre_Image As String
@@ -168,18 +231,46 @@ Public Class Frm_Tickets_Lista
                 _Num = _Mesn_Pdte_Ver
             End If
 
-            If CBool(_Num) Then
-                _Nombre_Image = "comment-number-" & _Num & ".png"
-                If _Mesn_Pdte_Ver > 9 Then
-                    _Nombre_Image = "comment-number-9-plus.png"
-                End If
-                _Icono = Imagenes_16x16.Images.Item(_Nombre_Image)
-                _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+            Dim _Imagenes_List As ImageList
+
+            If Global_Thema = Enum_Themas.Oscuro Then
+                _Imagenes_List = Imagenes_16x16_Dark
             Else
-                _Icono = Imagenes_16x16.Images.Item("menu-more.png")
+                _Imagenes_List = Imagenes_16x16
+            End If
+
+            If _Estado = "NULO" Then
+                _Icono = _Imagenes_List.Images.Item("cancel.png")
+            Else
+
+                If CBool(_Num) Then
+                    _Nombre_Image = "comment-number-" & _Num & ".png"
+                    If _Mesn_Pdte_Ver > 9 Then
+                        _Nombre_Image = "comment-number-9-plus.png"
+                    End If
+                    _Icono = _Imagenes_List.Images.Item(_Nombre_Image)
+
+                    If Global_Thema = Enum_Themas.Oscuro Then
+                        _Fila.DefaultCellStyle.ForeColor = Amarillo
+                    Else
+                        _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+                    End If
+
+                Else
+                    _Icono = _Imagenes_List.Images.Item("menu-more.png")
+                End If
+
             End If
 
             _Fila.Cells("BtnImagen_Estado").Value = _Icono
+
+            If _Estado = "ABIE" AndAlso Not _Rechazado Then
+                _Fila.Cells("NomEstado").Style.ForeColor = Verde
+            End If
+
+            If _Estado = "ABIE" AndAlso _Rechazado Then
+                _Fila.Cells("NomEstado").Style.ForeColor = Rojo
+            End If
 
         Next
 
@@ -187,9 +278,13 @@ Public Class Frm_Tickets_Lista
 
     Private Sub Btn_Crear_Ticket_Click(sender As Object, e As EventArgs) Handles Btn_Crear_Ticket.Click
 
+        'RemoveHandler Grilla.RowPrePaint, AddressOf Grilla_RowPrePaint
+
         Dim Fm As New Frm_Tickets_Mant(0)
         Fm.ShowDialog(Me)
         Fm.Dispose()
+
+        'AddHandler Grilla.RowPrePaint, AddressOf Grilla_RowPrePaint
 
         Sb_Actualizar_Grilla()
 
@@ -197,20 +292,90 @@ Public Class Frm_Tickets_Lista
 
     Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
-        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
-        Dim _Id_Ticket As Integer = _Fila.Cells("Id").Value
-        Dim _Numero As String = _Fila.Cells("Numero").Value
+        Try
 
-        Dim Fm As New Frm_Tickets_Seguimiento(_Id_Ticket)
-        Fm.Mis_Ticket = (_Tipo_Tickets = Enum_Tickets.MisTicket)
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
+            Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+            Dim _Id_Ticket As Integer = _Fila.Cells("Id").Value
+            Dim _Numero As String = _Fila.Cells("Numero").Value
 
-        Sb_Actualizar_Grilla()
+            'RemoveHandler Grilla.RowPrePaint, AddressOf Grilla_RowPrePaint
 
-        BuscarDatoEnGrilla(_Numero, "_Numero", Grilla)
+            Dim Fm As New Frm_Tickets_Seguimiento(_Id_Ticket)
+            Fm.Mis_Ticket = (_Tipo_Tickets = Enum_Tickets.MisTicket)
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
+            'AddHandler Grilla.RowPrePaint, AddressOf Grilla_RowPrePaint
+
+            Sb_Actualizar_Grilla()
+
+            BuscarDatoEnGrilla(_Numero, "_Numero", Grilla)
+
+        Catch ex As Exception
+
+        End Try
 
     End Sub
 
+    Private Sub Btn_RevisarTicket_Click(sender As Object, e As EventArgs) Handles Btn_RevisarTicket.Click
+        Call Grilla_CellDoubleClick(Nothing, Nothing)
+    End Sub
 
+    Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click
+        Sb_Actualizar_Grilla()
+    End Sub
+
+    Private Sub Chk_TickesTiposMi_CheckedChanged(sender As Object, e As EventArgs)
+        Sb_Actualizar_Grilla()
+    End Sub
+
+    'Private Sub Grilla_RowPrePaint(sender As Object, e As DataGridViewRowPrePaintEventArgs)
+
+    '    'Dim _Columname As String = Grilla.Columns(e.ColumnIndex).Name
+    '    Dim _Fila As DataGridViewRow = Grilla.Rows(e.RowIndex)
+
+    '    'If _Columname = "BtnImagen_Estado" Then
+
+    '    Try
+
+    '        Dim _Mesn_Pdte_Ver = _Fila.Cells("Mesn_Pdte_Ver").Value
+    '        Dim _Resp_Pdte_Ver = _Fila.Cells("Resp_Pdte_Ver").Value
+    '        Dim _Estado = _Fila.Cells("Estado").Value
+
+    '        Dim _Icono As Image
+    '        Dim _Nombre_Image As String
+    '        Dim _Num
+
+    '        If _Tipo_Tickets = Enum_Tickets.MisTicket Then
+    '            _Num = _Resp_Pdte_Ver
+    '        Else
+    '            _Num = _Mesn_Pdte_Ver
+    '        End If
+
+    '        If _Estado = "NULO" Then
+    '            _Icono = Imagenes_16x16.Images.Item("cancel.png")
+    '        Else
+
+    '            If CBool(_Num) Then
+    '                _Nombre_Image = "comment-number-" & _Num & ".png"
+    '                If _Mesn_Pdte_Ver > 9 Then
+    '                    _Nombre_Image = "comment-number-9-plus.png"
+    '                End If
+    '                _Icono = Imagenes_16x16.Images.Item(_Nombre_Image)
+    '                _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+    '            Else
+    '                _Icono = Imagenes_16x16.Images.Item("menu-more.png")
+    '            End If
+
+    '        End If
+
+    '        _Fila.Cells("BtnImagen_Estado").Value = _Icono
+
+    '    Catch ex As Exception
+
+    '    End Try
+
+    '    'End If
+
+    'End Sub
 End Class

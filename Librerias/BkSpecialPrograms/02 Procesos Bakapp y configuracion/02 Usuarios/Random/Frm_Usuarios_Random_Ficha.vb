@@ -48,10 +48,10 @@ Public Class Frm_Usuarios_Random_Ficha
             Return
         End If
 
-        If String.IsNullOrEmpty(Trim(Txt_Direccion.Text)) Then
-            MessageBoxEx.Show(Me, "Email no puede estar vacio", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return
-        End If
+        'If String.IsNullOrEmpty(Trim(Txt_Direccion.Text)) Then
+        '    MessageBoxEx.Show(Me, "Email no puede estar vacio", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    Return
+        'End If
 
         If _Accion = Enum_Accion.Editar Then
             EditarFuncionario()
@@ -128,10 +128,12 @@ Public Class Frm_Usuarios_Random_Ficha
         Dim CodigoExt As String = Txt_Cod_Ext.Text
         Dim PassWord As String = TraeClaveRD(Txt_Password.Text)
 
-        If Not Fx_Validar_Email(Email) Then
-            MessageBoxEx.Show(Me, "Email incorrecto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Txt_Email.Focus()
-            Return
+        If Not String.IsNullOrWhiteSpace(Email) Then
+            If Not Fx_Validar_Email(Email) Then
+                MessageBoxEx.Show(Me, "Email incorrecto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_Email.Focus()
+                Return
+            End If
         End If
 
         Dim Consulta As String = "Update TABFU Set " & vbCrLf &
@@ -159,7 +161,7 @@ Public Class Frm_Usuarios_Random_Ficha
 
     Private Sub LlenarInfoFuncionario(Codigo As String)
 
-        Dim Consulta As String = "Select NOKOFU,RTFU,DIFU,CIFU,CMFU,MODALIDAD,EMAIL,EMAILSUP,CODEXTERN,FOFU,PWFU " & vbCrLf &
+        Consulta_sql = "Select NOKOFU,RTFU,DIFU,CIFU,CMFU,MODALIDAD,EMAIL,EMAILSUP,CODEXTERN,FOFU,PWFU " & vbCrLf &
                                  "From TABFU Where KOFU='" & Codigo & "'"
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -179,8 +181,8 @@ Public Class Frm_Usuarios_Random_Ficha
     Private Sub Btn_Eliminar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Eliminar.Click
 
         Dim Codigo As String = Txt_Codigo.Text
-        Dim Consulta As String = "UPDATE TABFU SET INACTIVO=1 WHERE KOFU='" & Codigo & "'"
-        _Sql.Fx_Ejecutar_Consulta(Consulta)
+        Consulta_sql = "UPDATE TABFU SET INACTIVO=1 WHERE KOFU='" & Codigo & "'"
+        _Sql.Fx_Ejecutar_Consulta(Consulta_sql)
         MsgBox("Funcionario Eliminado")
 
     End Sub

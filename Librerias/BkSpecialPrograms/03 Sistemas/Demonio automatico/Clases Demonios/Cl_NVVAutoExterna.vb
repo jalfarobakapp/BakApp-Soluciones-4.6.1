@@ -244,6 +244,9 @@ Drop table #Paso"
 
             If CBool(_New_Idmaeedo) Then
 
+                Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
+                _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Modalidad, _New_Idmaeedo)
+
                 Consulta_Sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
                 Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 

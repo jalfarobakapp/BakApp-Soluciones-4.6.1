@@ -25,6 +25,7 @@ Partial Class Stk_Ticktes
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Stk_Ticktes))
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
+        Me.BtnCambiarDeUsuario = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
         Me.MetroTilePanel1 = New DevComponents.DotNetBar.Metro.MetroTilePanel()
         Me.ConsultaPreciosContenedor = New DevComponents.DotNetBar.ItemContainer()
@@ -46,14 +47,14 @@ Partial Class Stk_Ticktes
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(454, 49)
         Me.LabelX1.TabIndex = 63
-        Me.LabelX1.Text = "<font color=""#349FCE""><b>CONFIGURACIONSISTEMA DE TICKETS</b></font>"
+        Me.LabelX1.Text = "<font color=""#349FCE""><b>SISTEMA DE TICKETS</b></font>"
         '
         'Bar2
         '
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir, Me.BtnCambiarDeUsuario})
         Me.Bar2.Location = New System.Drawing.Point(0, 198)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(648, 41)
@@ -62,6 +63,16 @@ Partial Class Stk_Ticktes
         Me.Bar2.TabIndex = 62
         Me.Bar2.TabStop = False
         Me.Bar2.Text = "Bar2"
+        '
+        'BtnCambiarDeUsuario
+        '
+        Me.BtnCambiarDeUsuario.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.BtnCambiarDeUsuario.ForeColor = System.Drawing.Color.Black
+        Me.BtnCambiarDeUsuario.Image = CType(resources.GetObject("BtnCambiarDeUsuario.Image"), System.Drawing.Image)
+        Me.BtnCambiarDeUsuario.ImageAlt = CType(resources.GetObject("BtnCambiarDeUsuario.ImageAlt"), System.Drawing.Image)
+        Me.BtnCambiarDeUsuario.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.BtnCambiarDeUsuario.Name = "BtnCambiarDeUsuario"
+        Me.BtnCambiarDeUsuario.Tooltip = "Cambiar de usuario"
         '
         'BtnSalir
         '
@@ -115,7 +126,8 @@ Partial Class Stk_Ticktes
         Me.Btn_MisTicket.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.Btn_MisTicket.Name = "Btn_MisTicket"
         Me.Btn_MisTicket.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_MisTicket.Text = "<font size=""+4""><b>MIS TICKETS</b></font>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.Btn_MisTicket.Text = "<font size=""+4""><b>MIS TICKETS</b></font><br/><font size=""-1"">Tickets que yo envi" &
+    "ó</font>"
         Me.Btn_MisTicket.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Yellow
         Me.Btn_MisTicket.TileSize = New System.Drawing.Size(200, 100)
         '
@@ -200,4 +212,5 @@ Partial Class Stk_Ticktes
     Private WithEvents Btn_MisTicket As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Configuracion As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_TicketAsignados As DevComponents.DotNetBar.Metro.MetroTileItem
+    Friend WithEvents BtnCambiarDeUsuario As DevComponents.DotNetBar.ButtonItem
 End Class

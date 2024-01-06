@@ -172,6 +172,40 @@ Public Module Modulo_Permiso
 
                 If _Permiso Then
 
+                    If _Permiso_Presencial And _Codpermiso = "Bkp00039" Then
+
+                        Consulta_Sql = "Select * From " & _Global_BaseBk & "ZW_PermisosVsUsuarios 
+                                        Where CodUsuario = '" & Fm.Pro_Rows_Usuario_Autoriza.Item("KOFU") & "' And CodPermiso = 'Bkp00039'"
+
+                        Dim _Row_Permisos As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+                        Dim _Dscto_Global As Double = _Ds_Matriz_Documentos.Tables("Encabezado_Doc").Rows(0).Item("TotalDsctoReal_Porc")
+
+                        _Dscto_Global = Math.Round(_Dscto_Global / 100, 4)
+                        Dim _Valor_Dscto As Double = Math.Round(_Row_Permisos.Item("Valor_Dscto") / 100, 4)
+
+                        If _Valor_Dscto >= _Dscto_Global Then
+
+                            If MessageBoxEx.Show(_Formulario, "¿Confirma dar un " & FormatPercent(_Dscto_Global, 2) & " de descuento global para el documento?",
+                                             "Confirmar descuento global",
+                                             MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
+                                             MessageBoxDefaultButton.Button1, _Formulario.TopMost) <> DialogResult.Yes Then
+                                _Permiso = False
+                                _Grabar_Log = False
+                            End If
+
+                        Else
+
+                            MessageBoxEx.Show(_Formulario, "Descuento global según documento " & FormatPercent(_Dscto_Global, 2) & " %" & Environment.NewLine &
+                                              "Descuento máximo permitido para el usuario " & FUNCIONARIO.Trim & ": " & FormatPercent(_Valor_Dscto, 2),
+                                              "PERMISO DENEGADO", MessageBoxButtons.OK, MessageBoxIcon.Stop,
+                                              MessageBoxDefaultButton.Button1, _Formulario.TopMost)
+                            _Permiso = False
+                            _Grabar_Log = False
+
+                        End If
+
+                    End If
+
                     If (Fm.Pro_Rows_Usuario_Autoriza Is Nothing) Then
 
                         Consulta_Sql = "Select top 1 *  From TABFU Where KOFU = '" & _Func & "'"

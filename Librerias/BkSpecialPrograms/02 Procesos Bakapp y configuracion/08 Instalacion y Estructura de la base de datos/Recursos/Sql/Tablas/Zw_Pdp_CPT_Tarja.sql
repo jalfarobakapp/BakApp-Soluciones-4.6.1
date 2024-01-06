@@ -16,6 +16,9 @@ CREATE TABLE [dbo].[Zw_Pdp_CPT_Tarja](
 	[SacosXPallet]		[int]			NOT NULL Default(0),
 	[Analista]			[varchar](3)	NOT NULL Default(''),
 	[Observaciones]		[varchar](200)	NOT NULL Default(''),
+	[Tipo]		        [varchar](10)	NOT NULL Default(''),
+    [CantidadTipo]		[float]			NOT NULL Default(0),
+    [CantidadFab]		[float]			NOT NULL Default(0),
  CONSTRAINT [PK_Zw_Pdp_CPT_Tarja] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

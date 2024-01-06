@@ -64,6 +64,8 @@ Partial Class Frm_Kardex_X_Producto_Lista
         Me.Mnu_Ver_Kardex_Stock = New DevComponents.DotNetBar.ButtonItem()
         Me.Mnu_Btn_Cambiar_Ubicacion = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_Codigo = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Btn_Ayuda_Asistente_Busqueda = New DevComponents.DotNetBar.ButtonX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Descripcion = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -290,7 +292,7 @@ Partial Class Frm_Kardex_X_Producto_Lista
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnKardex, Me.ChkMostrarOcultos})
-        Me.Bar2.Location = New System.Drawing.Point(0, 554)
+        Me.Bar2.Location = New System.Drawing.Point(0, 587)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(789, 41)
         Me.Bar2.Stretch = True
@@ -331,7 +333,7 @@ Partial Class Frm_Kardex_X_Producto_Lista
         Me.GroupPanel1.Controls.Add(Me.ContextMenuBar1)
         Me.GroupPanel1.Controls.Add(Me.GrillaListaProductos)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(4, 65)
+        Me.GroupPanel1.Location = New System.Drawing.Point(4, 99)
         Me.GroupPanel1.Name = "GroupPanel1"
         Me.GroupPanel1.Size = New System.Drawing.Size(777, 284)
         '
@@ -456,13 +458,15 @@ Partial Class Frm_Kardex_X_Producto_Lista
         '
         Me.GroupPanel2.BackColor = System.Drawing.Color.White
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.Controls.Add(Me.LabelX1)
+        Me.GroupPanel2.Controls.Add(Me.Txt_Codigo)
         Me.GroupPanel2.Controls.Add(Me.Btn_Ayuda_Asistente_Busqueda)
         Me.GroupPanel2.Controls.Add(Me.LabelX2)
         Me.GroupPanel2.Controls.Add(Me.Txt_Descripcion)
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(4, 2)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(777, 57)
+        Me.GroupPanel2.Size = New System.Drawing.Size(777, 91)
         '
         '
         '
@@ -494,11 +498,42 @@ Partial Class Frm_Kardex_X_Producto_Lista
         Me.GroupPanel2.TabIndex = 53
         Me.GroupPanel2.Text = "Buscar producto por código o descripción"
         '
+        'LabelX1
+        '
+        Me.LabelX1.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.ForeColor = System.Drawing.Color.Black
+        Me.LabelX1.Location = New System.Drawing.Point(3, 5)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(68, 23)
+        Me.LabelX1.TabIndex = 18
+        Me.LabelX1.Text = "Código(s)"
+        '
+        'Txt_Codigo
+        '
+        Me.Txt_Codigo.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Codigo.Border.Class = "TextBoxBorder"
+        Me.Txt_Codigo.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Codigo.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Codigo.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Codigo, True)
+        Me.Txt_Codigo.Location = New System.Drawing.Point(77, 6)
+        Me.Txt_Codigo.Name = "Txt_Codigo"
+        Me.Txt_Codigo.PreventEnterBeep = True
+        Me.Txt_Codigo.Size = New System.Drawing.Size(608, 22)
+        Me.Txt_Codigo.TabIndex = 17
+        '
         'Btn_Ayuda_Asistente_Busqueda
         '
         Me.Btn_Ayuda_Asistente_Busqueda.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Ayuda_Asistente_Busqueda.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Ayuda_Asistente_Busqueda.Location = New System.Drawing.Point(693, 6)
+        Me.Btn_Ayuda_Asistente_Busqueda.Location = New System.Drawing.Point(691, 33)
         Me.Btn_Ayuda_Asistente_Busqueda.Name = "Btn_Ayuda_Asistente_Busqueda"
         Me.Btn_Ayuda_Asistente_Busqueda.Size = New System.Drawing.Size(75, 22)
         Me.Btn_Ayuda_Asistente_Busqueda.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -513,7 +548,7 @@ Partial Class Frm_Kardex_X_Producto_Lista
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(3, 5)
+        Me.LabelX2.Location = New System.Drawing.Point(3, 32)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(68, 23)
         Me.LabelX2.TabIndex = 13
@@ -529,9 +564,8 @@ Partial Class Frm_Kardex_X_Producto_Lista
         Me.Txt_Descripcion.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Descripcion.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Descripcion.ForeColor = System.Drawing.Color.Black
-        Me.Highlighter1.SetHighlightColor(Me.Txt_Descripcion, DevComponents.DotNetBar.Validator.eHighlightColor.Green)
         Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Descripcion, True)
-        Me.Txt_Descripcion.Location = New System.Drawing.Point(77, 6)
+        Me.Txt_Descripcion.Location = New System.Drawing.Point(77, 33)
         Me.Txt_Descripcion.Name = "Txt_Descripcion"
         Me.Txt_Descripcion.PreventEnterBeep = True
         Me.Txt_Descripcion.Size = New System.Drawing.Size(608, 22)
@@ -626,7 +660,7 @@ Partial Class Frm_Kardex_X_Producto_Lista
         Me.GroupPanel3.Controls.Add(Me.Grilla_Detalle_Stock)
         Me.GroupPanel3.Controls.Add(Me.Grilla_Total_Stock)
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel3.Location = New System.Drawing.Point(4, 355)
+        Me.GroupPanel3.Location = New System.Drawing.Point(4, 389)
         Me.GroupPanel3.Name = "GroupPanel3"
         Me.GroupPanel3.Size = New System.Drawing.Size(777, 193)
         '
@@ -668,6 +702,7 @@ Partial Class Frm_Kardex_X_Producto_Lista
         '
         Me.Rdb_Ud2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_Ud2.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Ud2.FocusCuesEnabled = False
         Me.Rdb_Ud2.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Ud2.Location = New System.Drawing.Point(77, 146)
         Me.Rdb_Ud2.Name = "Rdb_Ud2"
@@ -688,6 +723,7 @@ Partial Class Frm_Kardex_X_Producto_Lista
         Me.Rdb_Ud1.Checked = True
         Me.Rdb_Ud1.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Ud1.CheckValue = "Y"
+        Me.Rdb_Ud1.FocusCuesEnabled = False
         Me.Rdb_Ud1.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Ud1.Location = New System.Drawing.Point(0, 146)
         Me.Rdb_Ud1.Name = "Rdb_Ud1"
@@ -700,13 +736,14 @@ Partial Class Frm_Kardex_X_Producto_Lista
         'Highlighter1
         '
         Me.Highlighter1.ContainerControl = Me
+        Me.Highlighter1.FocusHighlightColor = DevComponents.DotNetBar.Validator.eHighlightColor.Green
         Me.Highlighter1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         '
         'Frm_Kardex_X_Producto_Lista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(789, 595)
+        Me.ClientSize = New System.Drawing.Size(789, 628)
         Me.Controls.Add(Me.GroupPanel3)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.GroupPanel1)
@@ -772,4 +809,6 @@ Partial Class Frm_Kardex_X_Producto_Lista
     Friend WithEvents Mnu_Btn_Cambiar_Ubicacion As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Highlighter1 As DevComponents.DotNetBar.Validator.Highlighter
     Friend WithEvents ButtonItem1 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
+    Public WithEvents Txt_Codigo As DevComponents.DotNetBar.Controls.TextBoxX
 End Class

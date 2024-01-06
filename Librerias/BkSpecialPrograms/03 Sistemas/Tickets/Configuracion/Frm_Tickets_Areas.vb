@@ -8,6 +8,9 @@ Public Class Frm_Tickets_Areas
     Dim _Tbl_Areas As DataTable
     Dim _Tbl_Tipos As DataTable
 
+    Public Property ModoSeleccion As Boolean
+    Public Property Id_Tipo_Seleccionado As Integer
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -16,7 +19,7 @@ Public Class Frm_Tickets_Areas
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Sb_Formato_Generico_Grilla(Grilla_Areas, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
-        Sb_Formato_Generico_Grilla(Grilla_Tipos, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_Tipos, 18, New Font("Tahoma", 7), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
         Sb_Color_Botones_Barra(Bar2)
 
@@ -26,26 +29,32 @@ Public Class Frm_Tickets_Areas
 
         Sb_Actualizar_Grilla()
 
-        AddHandler Grilla_Areas.MouseDown, AddressOf Sb_Grilla_Areas_MouseDown
-        AddHandler Grilla_Tipos.MouseDown, AddressOf Sb_Grilla_Tipos_MouseDown
+        If Not ModoSeleccion Then
+
+            AddHandler Grilla_Areas.MouseDown, AddressOf Sb_Grilla_Areas_MouseDown
+            AddHandler Grilla_Tipos.MouseDown, AddressOf Sb_Grilla_Tipos_MouseDown
+
+        End If
 
         AddHandler Grilla_Areas.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla_Tipos.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
+        Btn_CrearArea.Visible = Not ModoSeleccion
+        Btn_ExportarExcel.Visible = Not ModoSeleccion
 
     End Sub
 
     Sub Sb_Actualizar_Grilla()
 
-        'Dim _Texto_Busqueda As String = Txt_Buscador.Text.Trim
-        'Dim _Condicion As String = String.Empty
+        Dim _Texto_Busqueda As String = Txt_Buscador.Text.Trim
+        Dim _Condicion As String = String.Empty
 
-        'Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "CODIGO+DESCRIPTOR Like '%")
+        Dim _CadArea As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "Area Like '%")
+        Dim _CadTipo As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "Tipo Like '%")
 
-        'If Not String.IsNullOrWhiteSpace(Txt_BuscaXProducto.Text) Then
-        '_Condicion = "And CODIGO In (Select CODIGO From MAEDRES Where ELEMENTO = '" & Txt_BuscaXProducto.Text & "')"
-        'End If
-
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Areas"
+        Consulta_sql = "Select Distinct Ar.* From " & _Global_BaseBk & "Zw_Stk_Areas Ar" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Stk_Tipos Tp On Tp.Id_Area = Ar.Id" & vbCrLf &
+                       "Where Area Like '%" & _CadArea & "%' Or Tipo Like '%" & _CadTipo & "%'"
         _Tbl_Areas = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla_Areas
@@ -140,7 +149,11 @@ Public Class Frm_Tickets_Areas
     End Sub
 
     Private Sub Grilla_Areas_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Areas.CellDoubleClick
-        'Call Btn_Mnu_EditarArea_Click(Nothing, Nothing)
+        If ModoSeleccion Then
+            MessageBoxEx.Show(Me, "Debe seleccionar un tipo de requerimient de la lista de abajo",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
         ShowContextMenu(Menu_Contextual_01)
     End Sub
 
@@ -180,7 +193,7 @@ Public Class Frm_Tickets_Areas
         Dim Fm As New Frm_Tickets_TiposCrear(_Id_Area, 0)
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
-        _Row_Tipo = Fm.Row_Tipo
+        _Row_Tipo = Fm._Row_Tipo
         Fm.Dispose()
 
         If _Grabar Then
@@ -203,27 +216,15 @@ Public Class Frm_Tickets_Areas
         Sb_Actualizar_Grilla_Tipos(_Id_Area)
 
     End Sub
-
     Sub Sb_Actualizar_Grilla_Tipos(_Id_Area As Integer)
-
-        Consulta_sql = "Select *," & vbCrLf &
-                       "Case ExigeProducto When 1 Then " & vbCrLf &
-                       "Case RevInventario When 1 Then 'Revisión de inventario' " & vbCrLf &
-                       "Else Case AjusInventario When 1 Then 'Ajuste de inventario' " & vbCrLf &
-                       "Else Case SobreStock When 1 Then 'Sobre Stock' Else '' End End End Else '' End	As 'Esp_producto'" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id_Area = " & _Id_Area
 
         Consulta_sql = "Select Tp.*,Isnull(Tf.NOKOFU,'') As 'Agente',Isnull(Gr.Grupo,'') As Grupo," & vbCrLf &
                        "Case AsignadoGrupo When 1 then 'Grupo: ' +Isnull(Gr.Grupo,'') Else " & vbCrLf &
-                       "Case AsignadoAgente When 1 Then 'Agente: ' + Isnull(Tf.NOKOFU,'') Else '' End End As 'AsignadoA'," & vbCrLf &
-                       "Case ExigeProducto When 1 Then " & vbCrLf &
-                       "Case RevInventario When 1 Then 'Revisión de inventario' " & vbCrLf &
-                       "Else Case AjusInventario When 1 Then 'Ajuste de inventario' " & vbCrLf &
-                       "Else Case SobreStock When 1 Then 'Sobre Stock' Else '' End End End Else '' End	As 'Esp_producto'" & vbCrLf &
+                       "Case AsignadoAgente When 1 Then 'Agente: ' + Isnull(Tf.NOKOFU,'') Else '' End End As 'AsignadoA'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stk_Tipos Tp" & vbCrLf &
                        "Left Join TABFU Tf On Tf.KOFU = Tp.CodAgente" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Grupos Gr On Tp.Id_Grupo = Gr.Id" & vbCrLf &
-                       "Where Id_Area = " & _Id_Area
+                       "Where Tp.Id_Area = " & _Id_Area
         _Tbl_Tipos = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla_Tipos
@@ -247,16 +248,16 @@ Public Class Frm_Tickets_Areas
             .Columns("ExigeProducto").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Esp_producto").Visible = True
-            .Columns("Esp_producto").HeaderText = "Especial Productos"
-            .Columns("Esp_producto").ToolTipText = "Acción especial por gestión especialmente para productos"
-            .Columns("Esp_producto").Width = 130
-            .Columns("Esp_producto").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
+            '.Columns("Esp_producto").Visible = True
+            '.Columns("Esp_producto").HeaderText = "Especial Productos"
+            '.Columns("Esp_producto").ToolTipText = "Acción especial por gestión especialmente para productos"
+            '.Columns("Esp_producto").Width = 130
+            '.Columns("Esp_producto").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
 
             .Columns("AsignadoA").Visible = True
             .Columns("AsignadoA").HeaderText = "Asignado a:"
-            .Columns("AsignadoA").Width = 200
+            .Columns("AsignadoA").Width = 330
             .Columns("AsignadoA").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -266,19 +267,23 @@ Public Class Frm_Tickets_Areas
 
     Private Sub Btn_Mnu_QuitarTipo_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_QuitarTipo.Click
 
-        'If Not Fx_Tiene_Permiso(Me, "Ofer0006") Then
-        '    Return
-        'End If
-
         Dim _Fila As DataGridViewRow = Grilla_Tipos.CurrentRow
         Dim _Id As Integer = _Fila.Cells("Id").Value
 
-        If MessageBoxEx.Show(Me, "¿Confirma quitar este Tipo de requerimiento?", "Quitar tipo de requerimiento",
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Id_Tipo = " & _Id)
+
+        If CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "No se puede eliminar este tipo de ticket, ya que tiene ticket asociados",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Confirma eliminar este Tipo de requerimiento?", "Quitar tipo de requerimiento",
                              MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
             Return
         End If
 
-        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_AreaVsTipo Where Id = " & _Id
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Tipos Where Id = " & _Id
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
             Grilla_Tipos.Rows.Remove(_Fila)
         End If
@@ -293,13 +298,21 @@ Public Class Frm_Tickets_Areas
         Dim _Id_Tipo As Integer = _Fila.Cells("Id").Value
         Dim _Tipo As String = _Fila.Cells("Tipo").Value
 
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Estado = 'ABIE' And Id_Tipo = " & _Id_Tipo)
+
+        If CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "Existen Tickets asignados a este tipo de requerimiento, solo se puede editar la asignación.",
+                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+
+
         Dim _Grabar As Boolean
         Dim _Row_Tipo As DataRow
 
         Dim Fm As New Frm_Tickets_TiposCrear(_Id_Area, _Id_Tipo)
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
-        _Row_Tipo = Fm.Row_Tipo
+        _Row_Tipo = Fm._Row_Tipo
         Fm.Dispose()
 
         If _Grabar Then
@@ -309,6 +322,64 @@ Public Class Frm_Tickets_Areas
     End Sub
 
     Private Sub Grilla_Tipos_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Tipos.CellDoubleClick
-        Call Btn_Mnu_EditarTipo_Click(Nothing, Nothing)
+
+        If ModoSeleccion Then
+            Dim _Fila As DataGridViewRow = Grilla_Tipos.CurrentRow
+            Id_Tipo_Seleccionado = _Fila.Cells("Id").Value
+            Me.Close()
+            Return
+        End If
+
+        ShowContextMenu(Menu_Contextual_02)
+
+    End Sub
+
+    Private Sub Btn_Mnu_EliminarArea_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_EliminarArea.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Areas.CurrentRow
+        Dim _Id As Integer = _Fila.Cells("Id").Value
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Id_Area = " & _Id)
+
+        If CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "No se puede eliminar esta area de ticket, ya que tiene ticket asociados",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Confirma eliminar el area?", "Quitar tipo de requerimiento",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Areas Where Id = " & _Id & vbCrLf &
+                       "Delete " & _Global_BaseBk & "Zw_Stk_Tipos Where Id_Area = " & _Id
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            Grilla_Areas.Rows.Remove(_Fila)
+        End If
+
+    End Sub
+
+    Private Sub Txt_Buscador_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Buscador.KeyDown
+
+        If e.KeyValue = Keys.Enter Then
+            Sb_Actualizar_Grilla()
+        End If
+
+    End Sub
+
+    Private Sub Txt_Buscador_TextChanged(sender As Object, e As EventArgs) Handles Txt_Buscador.TextChanged
+        If String.IsNullOrWhiteSpace(Txt_Buscador.Text) Then
+            Sb_Actualizar_Grilla()
+        End If
+    End Sub
+
+    Private Sub Txt_Buscador_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Buscador.ButtonCustom2Click
+        Txt_Buscador.Text = String.Empty
+        Sb_Actualizar_Grilla()
+    End Sub
+
+    Private Sub Btn_Cerrar_Click(sender As Object, e As EventArgs) Handles Btn_Cerrar.Click
+        Me.Close()
     End Sub
 End Class

@@ -126,6 +126,16 @@ Public Class Frm_Formulario_Lector_Barra
 
         Btn_VerCodigosLeidos.Visible = Chk_LeerSoloUnaVezCodBarra.Checked
 
+        Sb_Parametros_Informe_Sql(False)
+
+        If Rdb_LeerNormal.Checked Then Txt_Codigo_Barras.CharacterCasing = CharacterCasing.Normal
+        If Rdb_LeerMinusculas.Checked Then Txt_Codigo_Barras.CharacterCasing = CharacterCasing.Lower
+        If Rdb_LeerMayusculas.Checked Then Txt_Codigo_Barras.CharacterCasing = CharacterCasing.Upper
+
+        AddHandler Rdb_LeerNormal.CheckedChanged, AddressOf Rdb_Leer_CheckedChanged
+        AddHandler Rdb_LeerMinusculas.CheckedChanged, AddressOf Rdb_Leer_CheckedChanged
+        AddHandler Rdb_LeerMayusculas.CheckedChanged, AddressOf Rdb_Leer_CheckedChanged
+
     End Sub
 
     Private Sub Sb_Formato_Grilla_Detalle()
@@ -823,6 +833,8 @@ Public Class Frm_Formulario_Lector_Barra
             _Documento_Aceptado = False
         End If
 
+        Sb_Parametros_Informe_Sql(True)
+
     End Sub
 
     Private _TiempoInicial As DateTime
@@ -948,6 +960,35 @@ Public Class Frm_Formulario_Lector_Barra
         Sb_Formato_Grilla_Detalle()
 
         MessageBoxEx.Show(Me, "Lista limpia", "Limpiar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+    End Sub
+
+    Private Sub Rdb_Leer_CheckedChanged(sender As Object, e As EventArgs)
+
+        If sender.Checked Then
+            If Rdb_LeerNormal.Checked Then Txt_Codigo_Barras.CharacterCasing = CharacterCasing.Normal
+            If Rdb_LeerMinusculas.Checked Then Txt_Codigo_Barras.CharacterCasing = CharacterCasing.Lower
+            If Rdb_LeerMayusculas.Checked Then Txt_Codigo_Barras.CharacterCasing = CharacterCasing.Upper
+        End If
+
+    End Sub
+
+
+    Sub Sb_Parametros_Informe_Sql(_Actualizar As Boolean)
+
+        Dim _Informe = "Lector_Barras"
+        Dim _FechaHoy As Date = FormatDateTime(FechaDelServidor, DateFormat.ShortDate)
+        Dim _Fecha_Hoy = Format(_FechaHoy, "dd-MM-yyyy")
+
+
+        'Dejar texto por defecto: Normal. Minúsculas o Mayúsculas
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_LeerNormal, _Informe, Rdb_LeerNormal.Name,
+                                                 Class_SQLite.Enum_Type._Boolean, Rdb_LeerNormal.Checked, _Actualizar, "LectorBarras")
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_LeerMinusculas, _Informe, Rdb_LeerMinusculas.Name,
+                                                 Class_SQLite.Enum_Type._Boolean, Rdb_LeerMinusculas.Checked, _Actualizar, "LectorBarras")
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_LeerMayusculas, _Informe, Rdb_LeerMayusculas.Name,
+                                                Class_SQLite.Enum_Type._Boolean, Rdb_LeerMayusculas.Checked, _Actualizar, "LectorBarras")
+
 
     End Sub
 

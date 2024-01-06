@@ -2776,7 +2776,8 @@ Public Module Modulo_Precios_Costos
 
     Function Fx_Formato_Numerico(_Valor As String,
                                  _Formato As String,
-                                 _Es_Descuento As Boolean) As String
+                                 _Es_Descuento As Boolean,
+                                 Optional _Moneda_Str As String = "$") As String
 
         Dim _Cant_Caracteres As Integer = Len(_Formato)
         Dim _Moneda As Boolean
@@ -2819,7 +2820,7 @@ Public Module Modulo_Precios_Costos
 
             _Moneda = True
             _Relleno = " "
-            _Cant_Caracteres -= 1
+            _Cant_Caracteres -= _Moneda_Str.Length '1
 
         End If
 
@@ -2838,8 +2839,7 @@ Public Module Modulo_Precios_Costos
         End If
 
         If _Moneda Then
-            '_Valor = Mid(_Precio, 1, Len(_Precio) - 1)
-            _Valor = "$" & _Precio
+            _Valor = _Moneda_Str & _Precio
         Else
             If _Es_Prcentaje Then
                 _Valor = _Precio & "%"
@@ -2851,6 +2851,8 @@ Public Module Modulo_Precios_Costos
         Fx_Formato_Numerico = _Valor
 
     End Function
+
+
 
     Enum Enum_Tipo_Lista
         Compra

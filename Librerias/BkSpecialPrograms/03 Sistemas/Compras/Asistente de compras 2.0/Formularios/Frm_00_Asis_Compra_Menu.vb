@@ -992,6 +992,22 @@ Public Class Frm_00_Asis_Compra_Menu
         _Sql.Sb_Parametro_Informe_Sql(Chk_MostrarProdNoAsocBodegas, "Compras_Asistente",
                                       Chk_MostrarProdNoAsocBodegas.Name, Class_SQLite.Enum_Type._Boolean, Chk_MostrarProdNoAsocBodegas.Checked, _Actualizar)
 
+        ' Chek incluir productos con baja rotación para compras del proveedor Star
+        _Sql.Sb_Parametro_Informe_Sql(Chk_IncluirProdBajaRotacionProvStar, "Compras_Asistente",
+                                      Chk_IncluirProdBajaRotacionProvStar.Name, Class_SQLite.Enum_Type._Boolean, Chk_IncluirProdBajaRotacionProvStar.Checked, _Actualizar)
+
+        ' Chek incluir productos con refleos para compras del proveedor Star
+        _Sql.Sb_Parametro_Informe_Sql(Chk_IncluirProdRefleoProvStar, "Compras_Asistente",
+                                      Chk_IncluirProdRefleoProvStar.Name, Class_SQLite.Enum_Type._Boolean, Chk_IncluirProdRefleoProvStar.Checked, _Actualizar)
+
+        ' Chek incluir productos con baja rotación para pedidos internos NVI
+        _Sql.Sb_Parametro_Informe_Sql(Chk_IncluirProdBajaRotacionNVI, "Compras_Asistente",
+                                      Chk_IncluirProdBajaRotacionNVI.Name, Class_SQLite.Enum_Type._Boolean, Chk_IncluirProdBajaRotacionNVI.Checked, _Actualizar)
+
+        ' Chek incluir productos con refleos para pedidos internos NVI
+        _Sql.Sb_Parametro_Informe_Sql(Chk_IncluirProdRefleoNVI, "Compras_Asistente",
+                                      Chk_IncluirProdRefleoNVI.Name, Class_SQLite.Enum_Type._Boolean, Chk_IncluirProdRefleoNVI.Checked, _Actualizar)
+
 
     End Sub
 
@@ -2360,10 +2376,16 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Auto_Correo_NoEnviarCorreos = Rdb_OccProvEnviarCorreoNoEnviar.Checked
 
         If Auto_GenerarAutomaticamenteNVI Then
+
             Fm.Auto_CorreoCc = Txt_CorreoCc_NVI.Text
             Fm.Auto_Id_Correo = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Id", "Nombre_Correo = '" & Txt_CtaCorreoEnvioAutomatizado_NVI.Text & "'")
             Fm.Auto_NombreFormato_PDF = Txt_NombreFormato_PDF_NVI.Text
+
+            Fm.IncluirProdBajaRotacion_NVI = Chk_IncluirProdBajaRotacionNVI.Checked
+            Fm.IncluirProdRefleo_NVI = Chk_IncluirProdRefleoNVI.Checked
+
         Else
+
             Fm.Auto_CorreoCc = Txt_CorreoCc_OCC.Text
             Fm.Auto_Id_Correo = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Id", "Nombre_Correo = '" & Txt_CtaCorreoEnvioAutomatizado_OCC.Text & "'")
             Fm.Auto_NombreFormato_PDF = Txt_NombreFormato_PDF_OCC.Text
@@ -2373,6 +2395,10 @@ Public Class Frm_00_Asis_Compra_Menu
             Fm.Auto_EnviarListadoProveedoresSinStock = Chk_EnviarListadoProveedoresSinStock.Checked
             Fm.Input_DiasMarcarProvQueNoTiene = Input_DiasMarcarProvQueNoTiene.Value
             Fm.Auto_DespacharA_OCC = Txt_DespacharA_OCC.Text
+
+            Fm.IncluirProdBajaRotacion_ProvStar = Chk_IncluirProdBajaRotacionProvStar.Checked
+            Fm.IncluirProdRefleo_ProvStar = Chk_IncluirProdRefleoProvStar.Checked
+
         End If
 
         Fm.Auto_NVVAutoExterna = Chk_NVVAutoExterna.Checked

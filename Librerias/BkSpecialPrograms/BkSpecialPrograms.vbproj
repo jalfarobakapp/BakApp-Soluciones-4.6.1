@@ -2114,6 +2114,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Recursos_Produccion.resx</DependentUpon>
     </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Clases\Cl_Imprimir_PDFSt.vb" />
     <Compile Include="03 Sistemas\Servicio Tecnico\Configuracion\Frm_St_Mant_ProdServTecnico.Designer.vb">
       <DependentUpon>Frm_St_Mant_ProdServTecnico.vb</DependentUpon>
     </Compile>
@@ -2160,6 +2161,12 @@
       <DependentUpon>Frm_OperacionesXServicio.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Servicio Tecnico\Estados\OperacionesXServicio\Frm_OperacionesXServicio.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Frm_St_CotizacionesxOT.Designer.vb">
+      <DependentUpon>Frm_St_CotizacionesxOT.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Frm_St_CotizacionesxOT.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Servicio Tecnico\Gestion Taller\Frm_St_GestionTaller.Designer.vb">
@@ -2321,10 +2328,16 @@
     <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_TiposCrear.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_CambEstado.Designer.vb">
-      <DependentUpon>Frm_Tickets_CambEstado.vb</DependentUpon>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_BuscarAsunto.Designer.vb">
+      <DependentUpon>Frm_Tickets_BuscarAsunto.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_CambEstado.vb">
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_BuscarAsunto.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_IngProducto.Designer.vb">
+      <DependentUpon>Frm_Tickets_IngProducto.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_IngProducto.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Mant.Designer.vb">
@@ -5239,6 +5252,9 @@
     <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Estados\OperacionesXServicio\Frm_OperacionesXServicio.resx">
       <DependentUpon>Frm_OperacionesXServicio.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Frm_St_CotizacionesxOT.resx">
+      <DependentUpon>Frm_St_CotizacionesxOT.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Gestion Taller\Frm_St_GestionTaller.resx">
       <DependentUpon>Frm_St_GestionTaller.vb</DependentUpon>
     </EmbeddedResource>
@@ -5809,8 +5825,11 @@
     <EmbeddedResource Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_TiposCrear.resx">
       <DependentUpon>Frm_Tickets_TiposCrear.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_CambEstado.resx">
-      <DependentUpon>Frm_Tickets_CambEstado.vb</DependentUpon>
+    <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_BuscarAsunto.resx">
+      <DependentUpon>Frm_Tickets_BuscarAsunto.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_IngProducto.resx">
+      <DependentUpon>Frm_Tickets_IngProducto.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_Lista.resx">
       <DependentUpon>Frm_Tickets_Lista.vb</DependentUpon>
@@ -7812,6 +7831,19 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\ZW_SOC_Log.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\ZW_SOC_Obs.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_SQL_Querys.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Agentes.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_AgentesVsTipos.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Areas.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Grupos.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_GrupoVsAgente.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tickets.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tickets_Acciones.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tickets_Archivos.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tickets_Asignado.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tickets_PorDefecto.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tickets_Producto.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tipos.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tipos_Grupos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_Conf_Info_Reportes.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_Conf_Tecnicos_Taller.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_OT_Accesorios.sql" />

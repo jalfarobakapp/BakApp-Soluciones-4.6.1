@@ -10,6 +10,7 @@ Public Class Frm_Lote_Ing
     Public Property Grabar As Boolean
 
     Dim _Row_Producto As DataRow
+    Dim _Row_Tabcodal As DataRow
 
     Public Sub New(_NroLote As String, _CodProducto As String)
 
@@ -35,6 +36,19 @@ Public Class Frm_Lote_Ing
 
         Txt_Producto.ButtonCustom.Visible = False
         Txt_Producto.ButtonCustom2.Visible = False
+
+        Consulta_sql = "Select Top 1 * From TABCODAL Where KOPR = '" & _Row_Producto.Item("KOPR") & "' And TXTMULTI = 'SACO'"
+        _Row_Tabcodal = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not IsNothing(_Row_Tabcodal) Then
+
+            Dim _Kopral As String = _Row_Tabcodal.Item("KOPRAL")
+            Dim _Nokopral As String = _Row_Tabcodal.Item("NOKOPRAL")
+
+            Txt_CodAlternativo.Tag = _Kopral
+            Txt_CodAlternativo.Text = _Kopral.ToString.Trim & " - " & _Nokopral.Trim
+
+        End If
 
     End Sub
 
@@ -161,7 +175,7 @@ Public Class Frm_Lote_Ing
         Fm.TxtRTU.Text = _Rtu
         Fm.ModoSeleccion = True
         Fm.ShowDialog(Me)
-        Dim _Row_Tabcodal As DataRow = Fm.RowTabcodalSeleccionado
+        _Row_Tabcodal = Fm.RowTabcodalSeleccionado
         Fm.Dispose()
 
         If Not IsNothing(_Row_Tabcodal) Then

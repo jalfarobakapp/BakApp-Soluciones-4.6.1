@@ -12477,7 +12477,7 @@ Public Class Frm_Formulario_Documento
 
                 End If
 
-                Dim _Tido_Relacionado As String = Mid(_CodEntidad, 1, 3)
+                Dim _Tido_Relacionado As String = Mid(_CodEntidad, 1, 3).ToUpper
                 Dim _Nudo_Relacionado As String = Mid(_CodEntidad, 4, 13)
 
                 Dim _Row_Doc_Relacionado As DataRow
@@ -13449,7 +13449,7 @@ Public Class Frm_Formulario_Documento
 
         Dim UsuarioActivo = FUNCIONARIO
 
-        If Frm_Login.Pro_CancelarLogin Then
+        If Frm_Login.CancelarLogin Then
             FUNCIONARIO = UsuarioActivo
             Exit Sub
         End If
@@ -25692,7 +25692,7 @@ Public Class Frm_Formulario_Documento
                 _Fincred_Respuesta = Fx_Vaidar_Fincred(0, _Tido, "XXXXXXXXXX",
                                                        _RowEntidad.Item("Rut"),
                                                        _Row_Encabezado_Doc.Item("TotalBrutoDoc"),
-                                                       _Row_Encabezado_Doc.Item("_Fecha_1er_Vencimiento"),
+                                                       _Row_Encabezado_Doc.Item("Fecha_1er_Vencimiento"),
                                                        _RowEntidad.Item("FOEN").ToString.Trim)
 
                 _TblEncabezado.Rows(0).Item("MontoFincred") = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")

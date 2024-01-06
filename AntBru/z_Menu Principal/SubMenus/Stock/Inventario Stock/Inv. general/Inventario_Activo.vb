@@ -54,7 +54,7 @@ Public Class Inventario_Activo
         Fm.Text = "INGRESE CLAVE DE DIGITADOR DEL DOCUMENTO"
         Fm.ShowDialog(Me)
 
-        If Not Fm.Pro_CancelarLogin Then
+        If Not Fm.CancelarLogin Then
 
             Dim Fm_Inv As New Frm_01_HojaConteo
             With Fm_Inv

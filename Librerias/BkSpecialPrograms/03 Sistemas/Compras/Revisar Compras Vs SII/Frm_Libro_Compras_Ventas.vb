@@ -1291,17 +1291,19 @@ Public Class Frm_Libro_Compras_Ventas
 
     Sub Sb_Cambiar_Al_Libro_De_Compras(_Idmaeedo As Integer, _Libro As String)
 
-        'Dim _Num_Siguiente As String
-
         Dim _LibroEdo As String = _Sql.Fx_Trae_Dato("MAEEDO", "LIBRO", "IDMAEEDO = " & _Idmaeedo)
         Dim _SucLibro As String = Mid(_LibroEdo, 7, 3)
 
         Dim _Ult_Libro = _Sql.Fx_Trae_Dato("MAEEDO", "MAX(LIBRO)", "LIBRO LIKE '" & _Libro & "%' And LIBRO LIKE '%" & _SucLibro & "%'")
 
-        Dim _Libro_Campo = Split(_Ult_Libro, " ", 2)
+        If String.IsNullOrWhiteSpace(_Ult_Libro) Then
+            _Ult_Libro = _Libro & _SucLibro & "00000"
+        End If
+
+        Dim _Libro_Campo = Split(_Ult_Libro, _SucLibro, 2)
         Dim _Libro_Nex = numero_(CInt(_Libro_Campo(1)) + 1, 5)
 
-        Dim _New_Libro = _Libro_Campo(0) & " " & _Libro_Nex
+        Dim _New_Libro = _Libro_Campo(0) & _SucLibro & _Libro_Nex
 
         Consulta_sql = "Update MAEEDO Set LIBRO = '" & _New_Libro & "'" & Space(1) &
                        "Where IDMAEEDO = " & _Idmaeedo & vbCrLf & vbCrLf &

@@ -31,7 +31,6 @@ Partial Class Stk_Configuracion
         Me.Btn_Agentes = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Grupos = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Areas = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.Btn_Tipos = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -45,9 +44,9 @@ Partial Class Stk_Configuracion
         Me.LabelX1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
         Me.LabelX1.Location = New System.Drawing.Point(3, 0)
         Me.LabelX1.Name = "LabelX1"
-        Me.LabelX1.Size = New System.Drawing.Size(454, 49)
+        Me.LabelX1.Size = New System.Drawing.Size(541, 49)
         Me.LabelX1.TabIndex = 60
-        Me.LabelX1.Text = "<font color=""#349FCE""><b>CONFIGURACIONSISTEMA DE TICKETS</b></font>"
+        Me.LabelX1.Text = "<font color=""#349FCE""><b>CONFIGURACION SISTEMA DE TICKETS</b></font>"
         '
         'Bar2
         '
@@ -55,7 +54,7 @@ Partial Class Stk_Configuracion
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir})
-        Me.Bar2.Location = New System.Drawing.Point(0, 293)
+        Me.Bar2.Location = New System.Drawing.Point(0, 188)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(641, 41)
         Me.Bar2.Stretch = True
@@ -101,7 +100,7 @@ Partial Class Stk_Configuracion
         Me.ConsultaPreciosContenedor.FixedSize = New System.Drawing.Size(700, 400)
         Me.ConsultaPreciosContenedor.MultiLine = True
         Me.ConsultaPreciosContenedor.Name = "ConsultaPreciosContenedor"
-        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Agentes, Me.Btn_Grupos, Me.Btn_Areas, Me.Btn_Tipos})
+        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Agentes, Me.Btn_Grupos, Me.Btn_Areas})
         '
         '
         '
@@ -179,33 +178,6 @@ Partial Class Stk_Configuracion
         Me.Btn_Areas.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Areas.TitleText = "BakApp"
         '
-        'Btn_Tipos
-        '
-        Me.Btn_Tipos.Image = CType(resources.GetObject("Btn_Tipos.Image"), System.Drawing.Image)
-        Me.Btn_Tipos.ImageIndent = New System.Drawing.Point(8, -6)
-        Me.Btn_Tipos.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_Tipos.Name = "Btn_Tipos"
-        Me.Btn_Tipos.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Tipos.Text = "<font size=""+4""><b>TIPOS</b></font><br/><font size=""-1"">Mantención de tipos de at" &
-    "ención</font>"
-        Me.Btn_Tipos.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Teal
-        Me.Btn_Tipos.TileSize = New System.Drawing.Size(200, 100)
-        '
-        '
-        '
-        Me.Btn_Tipos.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(124, Byte), Integer), CType(CType(73, Byte), Integer))
-        Me.Btn_Tipos.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(124, Byte), Integer), CType(CType(73, Byte), Integer))
-        Me.Btn_Tipos.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_Tipos.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(124, Byte), Integer), CType(CType(73, Byte), Integer))
-        Me.Btn_Tipos.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(124, Byte), Integer), CType(CType(73, Byte), Integer))
-        Me.Btn_Tipos.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_Tipos.TileStyle.PaddingBottom = 4
-        Me.Btn_Tipos.TileStyle.PaddingLeft = 4
-        Me.Btn_Tipos.TileStyle.PaddingRight = 4
-        Me.Btn_Tipos.TileStyle.PaddingTop = 4
-        Me.Btn_Tipos.TileStyle.TextColor = System.Drawing.Color.White
-        Me.Btn_Tipos.TitleText = "BakApp"
-        '
         'Stk_Configuracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -214,7 +186,7 @@ Partial Class Stk_Configuracion
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.MetroTilePanel1)
         Me.Name = "Stk_Configuracion"
-        Me.Size = New System.Drawing.Size(641, 334)
+        Me.Size = New System.Drawing.Size(641, 229)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -227,6 +199,5 @@ Partial Class Stk_Configuracion
     Friend WithEvents ConsultaPreciosContenedor As DevComponents.DotNetBar.ItemContainer
     Private WithEvents Btn_Agentes As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Grupos As DevComponents.DotNetBar.Metro.MetroTileItem
-    Private WithEvents Btn_Tipos As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Areas As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

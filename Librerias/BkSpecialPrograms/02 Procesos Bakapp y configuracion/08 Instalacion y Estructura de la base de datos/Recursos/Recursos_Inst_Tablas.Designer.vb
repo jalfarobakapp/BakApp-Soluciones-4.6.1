@@ -996,11 +996,11 @@ Namespace My.Resources
         '''	[Idmaeedo]				[int]           NOT NULL DEFAULT (0),
         '''	[CodTipoDespacho]		[int]           NOT NULL DEFAULT (0),
         '''	[TipoDespacho]			[varchar](50)   NOT NULL DEFAULT (&apos;&apos;),
-        '''	[TipoPagoDesp]			[varchar](50)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodTipoPagoDesp]		[int]           NOT NULL DEFAULT (0),
+        '''    [TipoPagoDesp]			[varchar](50)   NOT NULL DEFAULT (&apos;&apos;),
         '''	[DireccionDesp]			[varchar](50)   NOT NULL DEFAULT (&apos;&apos;),
         '''	[TransporteDesp]		[varchar](50)   NOT NULL DEFAULT (&apos;&apos;),
-        '''	[ObservacionesDesp]		[varchar](250)  NOT NULL DEFAULT (&apos;&apos;),
-        '''	[CodDoc [resto de la cadena truncado]&quot;;.
+        '''	[Observ [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Despacho_Simple() As String
             Get
@@ -2137,19 +2137,16 @@ Namespace My.Resources
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
         '''CREATE TABLE [dbo].[Zw_Lotes_Enc](
-        '''	[Id_Lote]		[int] IDENTITY(1,1) NOT NULL,
-        '''	[NroLote]		[varchar](20)	NOT NULL Default(&apos;&apos;),
-        '''	[Codigo]		[varchar](13)	NOT NULL Default(&apos;&apos;),
-        '''	[FechaVenci]	[datetime]		NULL,
+        '''	[Id_Lote]		    [int] IDENTITY(1,1) NOT NULL,
+        '''	[NroLote]		    [varchar](20)	NOT NULL Default(&apos;&apos;),
+        '''	[Codigo]		    [varchar](13)	NOT NULL Default(&apos;&apos;),
+        '''	[FechaVenci]	    [datetime]		NULL,
+        '''    [CodAlternativo]	[varchar](13)	NOT NULL Default(&apos;&apos;),
         ''' CONSTRAINT [PK_Zw_Lotes_Enc] PRIMARY KEY CLUSTERED 
         '''(
         '''	[NroLote] ASC,
         '''	[Codigo] ASC
-        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-        ''') ON [PRIMARY]
-        '''
-        '''
-        '''.
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON  [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Lotes_Enc() As String
             Get
@@ -3944,6 +3941,299 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Zw_St_OT_Recetas_Prod() As String
             Get
                 Return ResourceManager.GetString("Zw_St_OT_Recetas_Prod", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Stk_Agentes](
+        '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
+        '''	[CodAgente]		[varchar](30)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Activo]		[bit]				NOT NULL DEFAULT (0),
+        ''' CONSTRAINT [PK_Zw_Stk_Agentes] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+        ''') ON [PRIMARY]
+        '''
+        '''
+        '''
+        '''.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Stk_Agentes() As String
+            Get
+                Return ResourceManager.GetString("Zw_Stk_Agentes", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Stk_AgentesVsTipos](
+        '''	[Id]			[int]		IDENTITY(1,1) NOT NULL,
+        '''	[Id_Area]		[int]		NOT NULL DEFAULT (0),
+        '''	[Id_Tipo]		[int]		NOT NULL DEFAULT (0),
+        '''	[CodAgente]		[char](3)	NOT NULL DEFAULT (&apos;&apos;),
+        ''' CONSTRAINT [PK_Zw_Stk_AgentesVsTipos] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+        ''') ON [PRIMARY]
+        '''
+        '''
+        '''
+        '''.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Stk_AgentesVsTipos() As String
+            Get
+                Return ResourceManager.GetString("Zw_Stk_AgentesVsTipos", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Stk_Areas](
+        '''	[Id]	[int]			IDENTITY(1,1) NOT NULL,
+        '''	[Area]	[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        ''' CONSTRAINT [PK_Zw_Stk_Areas] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+        ''') ON [PRIMARY]
+        '''
+        '''
+        '''
+        '''.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Stk_Areas() As String
+            Get
+                Return ResourceManager.GetString("Zw_Stk_Areas", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Stk_Grupos](
+        '''	[Id]		[int]			IDENTITY(1,1) NOT NULL,
+        '''	[Grupo]		[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Id_Area]	[int]			NOT NULL DEFAULT (0),
+        '''	[Id_Tipo]	[int]			NOT NULL DEFAULT (0),
+        ''' CONSTRAINT [PK_Zw_Stk_Grupos] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+        ''') ON [PRIMARY]
+        '''
+        '''
+        '''
+        '''.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Stk_Grupos() As String
+            Get
+                Return ResourceManager.GetString("Zw_Stk_Grupos", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Stk_GrupoVsAgente](
+        '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
+        '''	[Id_Grupo]		[int]		NOT NULL DEFAULT (0),
+        '''	[CodAgente]		[char](3)	NOT NULL DEFAULT (&apos;&apos;),
+        ''' CONSTRAINT [PK_Zw_Stk_GrupoVsAgente] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+        ''') ON [PRIMARY]
+        '''
+        '''
+        '''.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Stk_GrupoVsAgente() As String
+            Get
+                Return ResourceManager.GetString("Zw_Stk_GrupoVsAgente", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Stk_Tickets](
+        '''	[Id]					[int] IDENTITY(1,1) NOT NULL,
+        '''	[Empresa]				[char](2) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]				[varchar](2) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Numero]				[varchar](10) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Id_Area]				[int] NOT NULL DEFAULT (0),
+        '''	[Id_Tipo]				[int] NOT NULL DEFAULT (0),
+        '''	[Prioridad]				[varchar](2) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[FechaCreacion]			[datetime] NULL,
+        '''	[CodFuncionario_Crea]	[varchar](3) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Asunto]				[varchar](50) NOT [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Stk_Tickets() As String
+            Get
+                Return ResourceManager.GetString("Zw_Stk_Tickets", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''
+        '''CREATE TABLE [dbo].[Zw_Stk_Tickets_Acciones](
+        '''	[Id]				[int] IDENTITY(1,1) NOT NULL,
+        '''	[Id_Ticket]			[int] NOT NULL DEFAULT (0),
+        '''	[Accion]			[varchar](4) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Descripcion]		[varchar](max) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Fecha]				[datetime] NULL,
+        '''	[CodFuncionario]	[varchar](3) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodAgente]			[varchar](3) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[En_Construccion]	[bit] NOT NULL DEFAULT (0),
+        '''	[Visto]				[bit] NOT NULL DEFAULT (0),
+        '''	[Cierra_Ticket]		[bit] NOT NULL  [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Stk_Tickets_Acciones() As String
+            Get
+                Return ResourceManager.GetString("Zw_Stk_Tickets_Acciones", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Stk_Tickets_Archivos](
+        '''	[Id]				[int] IDENTITY(1,1) NOT NULL,
+        '''	[Id_Ticket]			[int]			NOT NULL DEFAULT (0),
+        '''	[Id_TicketAc]		[int]			NOT NULL DEFAULT (0),
+        '''	[Nombre_Archivo]	[varchar](200)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Archivo]			[image]			NULL,
+        '''	[Fecha]				[datetime]		NOT NULL,
+        '''	[CodFuncionario]	[char](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[En_Construccion]	[bit]			NOT NULL DEFAULT (0),
+        ''' CONSTRAINT [PK_Zw_Stk_Tickets_Archivos] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id] ASC
+        ''')WITH (PAD_I [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Stk_Tickets_Archivos() As String
+            Get
+                Return ResourceManager.GetString("Zw_Stk_Tickets_Archivos", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Stk_Tickets_Asignado](
+        '''	[Id]			[int]			IDENTITY(1,1) NOT NULL,
+        '''	[Id_Ticket]		[int]			NOT NULL DEFAULT (0),
+        '''	[CodAgente]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Activo]		[bit]			NOT NULL DEFAULT (0),
+        ''' CONSTRAINT [PK_Zw_Stk_Tickets_Asignado] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+        ''') ON [PRIMARY]
+        '''
+        '''
+        '''
+        '''.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Stk_Tickets_Asignado() As String
+            Get
+                Return ResourceManager.GetString("Zw_Stk_Tickets_Asignado", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Stk_Tickets_PorDefecto](
+        '''	[Id]				[int] IDENTITY(1,1) NOT NULL,
+        '''	[CodFuncionario]	[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Asunto]			[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Id_Area]			[int]			NOT NULL DEFAULT (0),
+        '''	[Id_Tipo]			[int]			NOT NULL DEFAULT (0),
+        '''	[Prioridad]			[varchar](2)	NOT NULL DEFAULT (&apos;&apos;),
+        ''' CONSTRAINT [PK_Zw_Stk_Tickets_PorDefecto] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Stk_Tickets_PorDefecto() As String
+            Get
+                Return ResourceManager.GetString("Zw_Stk_Tickets_PorDefecto", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Stk_Tickets_Producto](
+        '''	[Id]				[int] IDENTITY(1,1) NOT NULL,
+        '''	[Id_Ticket]			[int]			NOT NULL DEFAULT (0),
+        '''	[Empresa]			[char](2)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]			[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Bodega]			[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo]			[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Descripcion]		[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Rtu]				[float]			NOT NULL DEFAULT (0),
+        '''	[UdMedida]			[int]			NOT NULL DEFAULT (0),
+        '''	[Ud1]				[varchar](2)	 [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Stk_Tickets_Producto() As String
+            Get
+                Return ResourceManager.GetString("Zw_Stk_Tickets_Producto", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''
+        '''CREATE TABLE [dbo].[Zw_Stk_Tipos](
+        '''	[Id]				[int] IDENTITY(1,1) NOT NULL,
+        '''	[Id_Area]			[int]			NOT NULL DEFAULT (0),
+        '''	[Tipo]				[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[ExigeProducto]		[bit]			NOT NULL DEFAULT (0),
+        '''	[RevInventario]		[bit]			NOT NULL DEFAULT (0),
+        '''	[AjusInventario]	[bit]			NOT NULL DEFAULT (0),
+        '''	[SobreStock]		[bit]			NOT NULL DEFAULT (0),
+        '''	[Asignado]			[bit]			NOT NULL DEFAULT (0),
+        '''	[AsignadoGrupo]		[bit]			NOT NULL DEFAULT (0),
+        '''	[AsignadoAgente]	[bit]			NOT NULL DEF [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Stk_Tipos() As String
+            Get
+                Return ResourceManager.GetString("Zw_Stk_Tipos", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Stk_Tipos_Grupos](
+        '''	[Id]		[int] IDENTITY(1,1) NOT NULL,
+        '''	[Id_Area]	[int]				NOT NULL DEFAULT (0),
+        '''	[Id_Tipo]	[int]				NOT NULL DEFAULT (0),
+        '''	[Id_Grupo]	[int]				NOT NULL DEFAULT (0),
+        ''' CONSTRAINT [PK_Zw_Stk_Tipos_Grupos] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+        ''') ON [PRIMARY]
+        '''
+        '''
+        '''
+        '''.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Stk_Tipos_Grupos() As String
+            Get
+                Return ResourceManager.GetString("Zw_Stk_Tipos_Grupos", resourceCulture)
             End Get
         End Property
         

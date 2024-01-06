@@ -54,6 +54,7 @@ Public Class Frm_St_Estado_04_Cotizaciones
 
         InsertarBotonenGrilla(Grilla, "Btn_Ver", "Ver", "Ver", 0, _Tipo_Boton.Boton)
         InsertarBotonenGrilla(Grilla, "Btn_Accion", "Cambiar estado", "", 1, _Tipo_Boton.Boton)
+
         Sb_Actualizar_Grilla()
 
         If _Accion = Accion.Nuevo Then

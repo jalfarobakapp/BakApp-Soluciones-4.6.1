@@ -357,6 +357,8 @@ Public Class Frm_Formato_Creador_Funciones
             Dim _Tbl As DataTable
             Dim _Row As DataRow
 
+            Dim _Es_Documento As Boolean
+
             If Chk_Sol_Bodega.Checked Then
                 _Row = _Row_Prod_SolBodega
             Else
@@ -366,6 +368,7 @@ Public Class Frm_Formato_Creador_Funciones
                 Else
                     _Tbl = _Tbl_Maeddo
                     _Row = _Row_Maeedo
+                    _Es_Documento = True
                 End If
             End If
 
@@ -379,6 +382,12 @@ Public Class Frm_Formato_Creador_Funciones
 
                 _Row = _Tbl.Rows(0)
                 Dim _Campo As String = Txt_Columna.Text
+
+                Dim _Moneda_Str As String = "$"
+
+                If _Es_Documento Then
+                    _Moneda_Str = _Row.Item("MOPPPR").ToString.Trim
+                End If
 
                 If Chk_Query_Personalizada.Checked Then
 
@@ -401,12 +410,19 @@ Public Class Frm_Formato_Creador_Funciones
                                                       Cmb_Tipo_Dato.SelectedValue,
                                                       Chk_Es_Descuento.Checked,
                                                       _Row,
-                                                      Txt_Formato.Text)
+                                                      Txt_Formato.Text,
+                                                      _Moneda_Str)
 
             Else
 
                 Dim _Tido As String = _Row_Maeedo.Item("TIDO")
                 Dim _Campo As String = Txt_Columna.Text
+
+                Dim _Moneda_Str As String = "$"
+
+                If _Es_Documento Then
+                    _Moneda_Str = _Row.Item("MODO").ToString.Trim
+                End If
 
                 If _Campo.Contains("STEC_") Then
 
@@ -436,11 +452,13 @@ Public Class Frm_Formato_Creador_Funciones
                 If IsNothing(_Row) Then
                     _Dato = "No existe información Para la Query, pruebe con otro documento o entidad"
                 Else
+
                     _Dato = Fx_New_Trae_Valor_Encabezado_Row(_Campo,
                                                              Cmb_Tipo_Dato.SelectedValue,
                                                              Chk_Es_Descuento.Checked,
                                                              _Row,
-                                                             Txt_Formato.Text)
+                                                             Txt_Formato.Text,
+                                                             _Moneda_Str)
 
                 End If
 

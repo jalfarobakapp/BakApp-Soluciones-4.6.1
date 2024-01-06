@@ -55,7 +55,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.Btn_Limpiar = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_Tipo = New DevComponents.DotNetBar.LabelX()
         Me.Txt_CodAlternativo_Pallet = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Observaciones = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -270,7 +270,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX3.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX3.ForeColor = System.Drawing.Color.Black
-        Me.LabelX3.Location = New System.Drawing.Point(264, 38)
+        Me.LabelX3.Location = New System.Drawing.Point(280, 37)
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(31, 26)
         Me.LabelX3.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
@@ -285,15 +285,18 @@ Partial Class Frm_GRI_FabXProducto
         '
         Me.Txt_Cantidad.Border.Class = "TextBoxBorder"
         Me.Txt_Cantidad.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Cantidad.ButtonCustom.Image = CType(resources.GetObject("Txt_Cantidad.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Cantidad.ButtonCustom.Visible = True
         Me.Txt_Cantidad.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Cantidad.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Cantidad.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Cantidad.ForeColor = System.Drawing.Color.Black
         Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Cantidad, True)
-        Me.Txt_Cantidad.Location = New System.Drawing.Point(161, 38)
+        Me.Txt_Cantidad.Location = New System.Drawing.Point(156, 38)
         Me.Txt_Cantidad.MaxLength = 13
         Me.Txt_Cantidad.Name = "Txt_Cantidad"
-        Me.Txt_Cantidad.Size = New System.Drawing.Size(97, 26)
+        Me.Txt_Cantidad.ReadOnly = True
+        Me.Txt_Cantidad.Size = New System.Drawing.Size(116, 26)
         Me.Txt_Cantidad.TabIndex = 4
         Me.Txt_Cantidad.Text = "15000"
         Me.Txt_Cantidad.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
@@ -326,11 +329,11 @@ Partial Class Frm_GRI_FabXProducto
         Me.Txt_Descripcion.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Descripcion.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Descripcion.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Descripcion.Location = New System.Drawing.Point(264, 6)
+        Me.Txt_Descripcion.Location = New System.Drawing.Point(280, 6)
         Me.Txt_Descripcion.MaxLength = 50
         Me.Txt_Descripcion.Name = "Txt_Descripcion"
         Me.Txt_Descripcion.ReadOnly = True
-        Me.Txt_Descripcion.Size = New System.Drawing.Size(529, 26)
+        Me.Txt_Descripcion.Size = New System.Drawing.Size(513, 26)
         Me.Txt_Descripcion.TabIndex = 3
         Me.Txt_Descripcion.TabStop = False
         '
@@ -351,7 +354,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.Txt_Codigo.MaxLength = 13
         Me.Txt_Codigo.Name = "Txt_Codigo"
         Me.Txt_Codigo.ReadOnly = True
-        Me.Txt_Codigo.Size = New System.Drawing.Size(168, 26)
+        Me.Txt_Codigo.Size = New System.Drawing.Size(182, 26)
         Me.Txt_Codigo.TabIndex = 2
         Me.Txt_Codigo.Text = "9998989898980"
         Me.Txt_Codigo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -694,21 +697,21 @@ Partial Class Frm_GRI_FabXProducto
         Me.LabelX10.TabIndex = 90
         Me.LabelX10.Text = "PLANTA"
         '
-        'LabelX13
+        'Lbl_Tipo
         '
-        Me.LabelX13.BackColor = System.Drawing.Color.Transparent
+        Me.Lbl_Tipo.BackColor = System.Drawing.Color.Transparent
         '
         '
         '
-        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX13.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX13.ForeColor = System.Drawing.Color.Black
-        Me.LabelX13.Location = New System.Drawing.Point(6, 67)
-        Me.LabelX13.Name = "LabelX13"
-        Me.LabelX13.Size = New System.Drawing.Size(71, 23)
-        Me.LabelX13.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
-        Me.LabelX13.TabIndex = 91
-        Me.LabelX13.Text = "PALLET"
+        Me.Lbl_Tipo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Tipo.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_Tipo.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Tipo.Location = New System.Drawing.Point(6, 67)
+        Me.Lbl_Tipo.Name = "Lbl_Tipo"
+        Me.Lbl_Tipo.Size = New System.Drawing.Size(71, 23)
+        Me.Lbl_Tipo.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.Lbl_Tipo.TabIndex = 91
+        Me.Lbl_Tipo.Text = "TIPO..."
         '
         'Txt_CodAlternativo_Pallet
         '
@@ -748,7 +751,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.GroupPanel2.Controls.Add(Me.Txt_NroLote)
         Me.GroupPanel2.Controls.Add(Me.LabelX7)
         Me.GroupPanel2.Controls.Add(Me.LabelX10)
-        Me.GroupPanel2.Controls.Add(Me.LabelX13)
+        Me.GroupPanel2.Controls.Add(Me.Lbl_Tipo)
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(12, 260)
         Me.GroupPanel2.Name = "GroupPanel2"
@@ -960,7 +963,7 @@ Partial Class Frm_GRI_FabXProducto
     Public WithEvents Btn_Limpiar As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Txt_NroLote As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents LabelX13 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Lbl_Tipo As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX10 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
     Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel

@@ -249,9 +249,17 @@ Module Mod_Imprimir
         _Palabra1 = Mid(_Palabra, 1, 50)
         _Palabra2 = Mid(_Palabra, 51, 100)
 
+        Dim _Komo As String = _Row_Maeedo.Item("MODO")
+
+        Dim _Nokomo As String = _Sql.Fx_Trae_Dato("TABMO", "NOKOMO", "KOMO = '" & _Komo & "'").ToLower.Trim
+
+        If _Komo = "US$" Then
+            _Nokomo = "dolares"
+        End If
+
         If String.IsNullOrEmpty(_Palabra2) Then
             If Len(_Palabra1) <= 44 Then
-                _Palabra1 += "pesos"
+                _Palabra1 += _Nokomo '"pesos"
             End If
         End If
 
@@ -269,11 +277,11 @@ Module Mod_Imprimir
 
         If Not String.IsNullOrEmpty(_Palabra2) Then
             If Len(_Palabra2) <= 44 Then
-                _Palabra2 += "pesos"
+                _Palabra2 += _Nokomo '"pesos"
             End If
         Else
             If Len(_Palabra1) > 44 Then
-                _Palabra2 += "pesos"
+                _Palabra2 += _Nokomo '"pesos"
             End If
         End If
 
@@ -379,11 +387,12 @@ Module Mod_Imprimir
 
     End Function
 
-    Function Fx_New_Trae_Valor_Detalle_Row(ByVal _Campo As String, _
-                                      ByVal _Tipo_de_dato As String, _
-                                      ByVal _Es_Descuento As Boolean, _
-                                      ByVal _RowDetalle As DataRow, _
-                                      Optional ByVal _Formato As String = "")
+    Function Fx_New_Trae_Valor_Detalle_Row(ByVal _Campo As String,
+                                      ByVal _Tipo_de_dato As String,
+                                      ByVal _Es_Descuento As Boolean,
+                                      ByVal _RowDetalle As DataRow,
+                                      Optional ByVal _Formato As String = "",
+                                      Optional _Moneda_Str As String = "$")
 
         Dim _Valor As String
         Dim _Prct As Boolean
@@ -417,7 +426,7 @@ Module Mod_Imprimir
                 If _Prct And (_Campo = "Bk_Cant_Trans" Or _Campo = "CAPRCO1" Or _Campo = "CAPRCO2") Then
                     _Valor = String.Empty
                 Else
-                    _Valor = Fx_Formato_Numerico(_Valor, _Formato, _Es_Descuento)
+                    _Valor = Fx_Formato_Numerico(_Valor, _Formato, _Es_Descuento, _Moneda_Str)
                 End If
 
             Case "C"
@@ -471,7 +480,8 @@ Module Mod_Imprimir
                                               _Tipo_de_dato As String,
                                               _Es_Descuento As Boolean,
                                               _RowEncabezado As DataRow,
-                                              Optional ByVal _Formato As String = "")
+                                              Optional ByVal _Formato As String = "",
+                                              Optional _Moneda_Str As String = "$")
 
         Dim _Valor As String = String.Empty
 
@@ -500,7 +510,13 @@ Module Mod_Imprimir
 
             Case "N"
 
-                _Valor = Fx_Formato_Numerico(_Valor, _Formato, _Es_Descuento)
+                'Dim _Moneda_Str As String = "$"
+
+                'If _Formato.Contains("$") Then
+                '    _Moneda_Str = _RowEncabezado.Item("MODO").ToString.Trim
+                'End If
+
+                _Valor = Fx_Formato_Numerico(_Valor, _Formato, _Es_Descuento, _Moneda_Str)
 
             Case "C"
 

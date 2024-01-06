@@ -47,6 +47,8 @@ Public Class Frm_Modalidades
 
         caract_combo(Cmb_Modalidades)
 
+        GroupPanel1.Text = "Se muestran solo las Modalidades asignadas al usurio"
+
         Consulta_Sql = "Select Distinct Ce.EMPRESA As Padre,Ce.EMPRESA+' - '+Cp.RAZON As Hijo
                         Into #Paso
                         From CONFIEST Ce
@@ -75,6 +77,8 @@ Public Class Frm_Modalidades
                         Drop Table #Paso1"
 
         If _Configuracion_Modalidad Then
+
+            GroupPanel1.Text = "Modalidades"
 
             Consulta_Sql = "Select Distinct Ce.EMPRESA As Padre,Ce.EMPRESA+' - '+Cp.RAZON As Hijo
                             Into #Paso
@@ -184,7 +188,7 @@ Public Class Frm_Modalidades
 
             _Columna = "NOKOSU"
             .Columns(_Columna).HeaderText = "Sucursal"
-            .Columns(_Columna).Width = 255
+            .Columns(_Columna).Width = 235
             .Columns(_Columna).Visible = True
             .Columns(_Columna).DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -205,14 +209,14 @@ Public Class Frm_Modalidades
 
             _Columna = "ELISTAVEN"
             .Columns(_Columna).HeaderText = "L.Venta"
-            .Columns(_Columna).Width = 60
+            .Columns(_Columna).Width = 70
             .Columns(_Columna).Visible = True
             .Columns(_Columna).DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             _Columna = "ELISTACOM"
             .Columns(_Columna).HeaderText = "L.Compra"
-            .Columns(_Columna).Width = 60
+            .Columns(_Columna).Width = 70
             .Columns(_Columna).Visible = True
             .Columns(_Columna).DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
