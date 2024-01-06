@@ -31,9 +31,9 @@ Public Class Frm_GRI_FabXProducto
 
     Private Sub Frm_GRI_FabXProducto_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        AddHandler Txt_Cantidad.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
-        AddHandler Txt_Cantidad.Validated, AddressOf Sb_Txt_Nros_Validated
-        AddHandler Txt_Cantidad.Enter, AddressOf Sb_Txt_Nros_Enter
+        'AddHandler Txt_Cantidad.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
+        'AddHandler Txt_Cantidad.Validated, AddressOf Sb_Txt_Nros_Validated
+        'AddHandler Txt_Cantidad.Enter, AddressOf Sb_Txt_Nros_Enter
 
         ActiveControl = Txt_Numot
         Sb_Limpiar()
@@ -537,7 +537,7 @@ Public Class Frm_GRI_FabXProducto
 
         Txt_Turno.Text = String.Empty
         Txt_Planta.Text = String.Empty
-        Txt_Analista.Text = String.Empty
+        'Txt_Analista.Text = String.Empty
         'Txt_CodAlternativo_Pallet.Text = String.Empty
         Txt_Observaciones.Text = String.Empty
         Txt_Observaciones.ReadOnly = False

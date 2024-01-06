@@ -120,11 +120,10 @@
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Txt_Cantidad.ButtonCustom.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAACbSURBVDhPY6AYeHn7MniDsI8fadjbD6yXITsn/3pObsE/cjBILwOI8ZdMANILN+DZ8+coGAj+
-        XLh48W9Kavrf/v6Jf+PiEv6C+MgAxYDzFy/9Q8ZAoT8g8dt37vwNj4j69+LFCxAXBRBlAAiADABScD4M
-        jBQDiA5EgtEYn4g/GskBYAMoTsqhYREMYWGRDGHhJGKgHpBeCgEDAwBBf5a0UPwEwwAAAABJRU5ErkJg
-        gg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAJtJREFUOE9j
+        oBh4efsyeIOwjx9p2NsPrJchOyf/ek5uwT9yMEgvA4jxl0wA0gs34Nnz5ygYCP5cuHjxb0pq+t/+/ol/
+        4+IS/oL4yADFgPMXL/1DxkChPyDx23fu/A2PiPr34sULEBcFEGUACIAMAFJwPgyMFAOIDkSC0RifiD8a
+        yQFgAyhOyqFhEQxhYZEMYeEkYqAekF4KAQMDAEF/lrRQ/ATDAAAAAElFTkSuQmCC
 </value>
   </data>
   <metadata name="Highlighter1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">

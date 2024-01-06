@@ -877,7 +877,6 @@ Partial Class Frm_GRI_FabXProducto
         Me.Txt_Analista.Border.Class = "TextBoxBorder"
         Me.Txt_Analista.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Analista.ButtonCustom.Image = CType(resources.GetObject("Txt_Analista.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_Analista.ButtonCustom.Visible = True
         Me.Txt_Analista.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Analista.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Analista.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))

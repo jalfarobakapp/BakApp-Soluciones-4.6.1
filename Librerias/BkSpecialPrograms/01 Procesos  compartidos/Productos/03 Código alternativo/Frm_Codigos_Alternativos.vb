@@ -64,7 +64,7 @@ Public Class Frm_Codigos_Alternativos
 
             Dim _DisplayIndex = 0
 
-            .Columns("KOPRAL").Width = 120
+            .Columns("KOPRAL").Width = 130
             .Columns("KOPRAL").HeaderText = "Alternativo"
             .Columns("KOPRAL").Visible = True
             .Columns("KOPRAL").DisplayIndex = _DisplayIndex

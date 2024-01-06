@@ -8,6 +8,8 @@ Public Class Frm_ImpBarras_Tarja
     Dim _Puerto, _Etiqueta As String
     Dim _Row_Tarja As DataRow
 
+    Dim _Veces As Integer
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -79,6 +81,14 @@ Public Class Frm_ImpBarras_Tarja
         Txt_Analista.Text = _Row_Tarja.Item("Analista_Str")
         Txt_Observaciones.Text = _Row_Tarja.Item("Observaciones")
         Lbl_Tipo.Text = _Row_Tarja.Item("Tipo")
+
+        _Veces = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones", "Valor", "Tabla = 'TARJA_MULTIMPETIQU' And CodigoTabla = 'MULTETIQ'", True, False)
+
+        If _Veces = 0 Then _Veces = 1
+
+        Dim _CantidadTipo As Double = _Row_Tarja.Item("CantidadTipo")
+
+        _Veces = _Veces * _CantidadTipo
 
         Consulta_sql = "Select * From TABCODAL Where KOPRAL = '" & _Row_Tarja.Item("CodAlternativo_Pallet") & "'"
         Dim _Row_Tabcodal As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -224,7 +234,7 @@ Public Class Frm_ImpBarras_Tarja
             If _CantPorLinea = 0 Then _CantPorLinea = 1
 
             Dim _CanXlinea As Integer = _CantPorLinea
-            Dim _Veces As Integer = 1
+            'Dim _Veces As Integer = 
 
             Dim _Aceptar As Boolean
 
