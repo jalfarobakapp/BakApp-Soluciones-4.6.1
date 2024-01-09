@@ -608,7 +608,7 @@ Public Class Frm_Tickets_Mant
 
     Private Sub Btn_VerProducto_Click(sender As Object, e As EventArgs) Handles Btn_VerProducto.Click
 
-        Dim Fm As New Frm_Tickets_IngProducto
+        Dim Fm As New Frm_Tickets_IngProducto(_Cl_Tickets.Tickets.Id_Tipo)
 
         Fm.Tickets_Producto.Id = _Cl_Tickets.Tickets.Tickets_Producto.Id
         Fm.Tickets_Producto.Id_Ticket = _Cl_Tickets.Tickets.Tickets_Producto.Id_Ticket

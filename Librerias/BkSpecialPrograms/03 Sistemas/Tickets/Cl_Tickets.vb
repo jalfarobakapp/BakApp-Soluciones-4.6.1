@@ -267,16 +267,20 @@ Public Class Cl_Tickets
 
             End With
 
-            For Each _Fila As DataRow In _Tbl_Agentes.Rows
+            If Not IsNothing(_Tbl_Agentes) Then
 
-                Dim _CodAgente As String = _Fila.Item("CodAgente")
+                For Each _Fila As DataRow In _Tbl_Agentes.Rows
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Asignado (Id_Ticket,CodAgente,Activo) Values (" & Tickets.Id & ",'" & _CodAgente & "',1)"
-                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
-                Comando.Transaction = myTrans
-                Comando.ExecuteNonQuery()
+                    Dim _CodAgente As String = _Fila.Item("CodAgente")
 
-            Next
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Asignado (Id_Ticket,CodAgente,Activo) Values (" & Tickets.Id & ",'" & _CodAgente & "',1)"
+                    Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                    Comando.Transaction = myTrans
+                    Comando.ExecuteNonQuery()
+
+                Next
+
+            End If
 
             myTrans.Commit()
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)

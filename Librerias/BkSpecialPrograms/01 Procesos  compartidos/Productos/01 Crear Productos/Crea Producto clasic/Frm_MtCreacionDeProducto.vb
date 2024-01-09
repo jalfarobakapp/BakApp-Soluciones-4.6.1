@@ -338,6 +338,10 @@ Public Class Frm_MtCreacionDeProducto
         AddHandler Chk_Tratalote.CheckedChanged, AddressOf Chk_Tratalote_CheckedChanged
         AddHandler Chk_Lotecaja.CheckedChanged, AddressOf Chk_Lotecaja_CheckedChanged
 
+        AddHandler GrillaEmpresa.CellMouseUp, AddressOf Grilla_CellMouseUp
+        AddHandler GrillaBodegas.CellMouseUp, AddressOf Grilla_CellMouseUp
+        AddHandler GrillaListaDePrecios.CellMouseUp, AddressOf Grilla_CellMouseUp
+
     End Sub
 
     Sub Sb_Limpiar()
@@ -2172,6 +2176,10 @@ Sigue_Loop_01:
             Cmb_Rupr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
             Cmb_Rupr.SelectedValue = _Rubro
         End If
+    End Sub
+
+    Private Sub Grilla_CellMouseUp(sender As Object, e As DataGridViewCellMouseEventArgs)
+        sender.EndEdit()
     End Sub
 
     Private Sub ButtonX2_Click(sender As System.Object, e As System.EventArgs) Handles ButtonX2.Click
