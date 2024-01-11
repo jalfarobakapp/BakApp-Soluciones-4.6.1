@@ -56,7 +56,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Tipo = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_CodAlternativo_Pallet = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Descripcion_Kopral = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Observaciones = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX14 = New DevComponents.DotNetBar.LabelX()
@@ -713,26 +713,26 @@ Partial Class Frm_GRI_FabXProducto
         Me.Lbl_Tipo.TabIndex = 91
         Me.Lbl_Tipo.Text = "TIPO..."
         '
-        'Txt_CodAlternativo_Pallet
+        'Txt_Descripcion_Kopral
         '
-        Me.Txt_CodAlternativo_Pallet.BackColor = System.Drawing.Color.White
+        Me.Txt_Descripcion_Kopral.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Txt_CodAlternativo_Pallet.Border.Class = "TextBoxBorder"
-        Me.Txt_CodAlternativo_Pallet.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CodAlternativo_Pallet.ButtonCustom.Image = CType(resources.GetObject("Txt_CodAlternativo_Pallet.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_CodAlternativo_Pallet.ButtonCustom.Visible = True
-        Me.Txt_CodAlternativo_Pallet.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CodAlternativo_Pallet.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_CodAlternativo_Pallet.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Txt_CodAlternativo_Pallet.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CodAlternativo_Pallet.Location = New System.Drawing.Point(90, 67)
-        Me.Txt_CodAlternativo_Pallet.MaxLength = 13
-        Me.Txt_CodAlternativo_Pallet.Name = "Txt_CodAlternativo_Pallet"
-        Me.Txt_CodAlternativo_Pallet.ReadOnly = True
-        Me.Txt_CodAlternativo_Pallet.Size = New System.Drawing.Size(703, 26)
-        Me.Txt_CodAlternativo_Pallet.TabIndex = 9
+        Me.Txt_Descripcion_Kopral.Border.Class = "TextBoxBorder"
+        Me.Txt_Descripcion_Kopral.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Descripcion_Kopral.ButtonCustom.Image = CType(resources.GetObject("Txt_CodAlternativo_Pallet.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Descripcion_Kopral.ButtonCustom.Visible = True
+        Me.Txt_Descripcion_Kopral.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Descripcion_Kopral.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Txt_Descripcion_Kopral.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Txt_Descripcion_Kopral.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Descripcion_Kopral.Location = New System.Drawing.Point(90, 67)
+        Me.Txt_Descripcion_Kopral.MaxLength = 13
+        Me.Txt_Descripcion_Kopral.Name = "Txt_Descripcion_Kopral"
+        Me.Txt_Descripcion_Kopral.ReadOnly = True
+        Me.Txt_Descripcion_Kopral.Size = New System.Drawing.Size(703, 26)
+        Me.Txt_Descripcion_Kopral.TabIndex = 9
         '
         'GroupPanel2
         '
@@ -747,7 +747,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.GroupPanel2.Controls.Add(Me.Txt_Analista)
         Me.GroupPanel2.Controls.Add(Me.LabelX17)
         Me.GroupPanel2.Controls.Add(Me.LabelX5)
-        Me.GroupPanel2.Controls.Add(Me.Txt_CodAlternativo_Pallet)
+        Me.GroupPanel2.Controls.Add(Me.Txt_Descripcion_Kopral)
         Me.GroupPanel2.Controls.Add(Me.Txt_NroLote)
         Me.GroupPanel2.Controls.Add(Me.LabelX7)
         Me.GroupPanel2.Controls.Add(Me.LabelX10)
@@ -966,7 +966,7 @@ Partial Class Frm_GRI_FabXProducto
     Friend WithEvents LabelX10 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
     Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
-    Public WithEvents Txt_CodAlternativo_Pallet As DevComponents.DotNetBar.Controls.TextBoxX
+    Public WithEvents Txt_Descripcion_Kopral As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX17 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Cmb_Formato As DevComponents.DotNetBar.Controls.ComboBoxEx
     Friend WithEvents LabelX15 As DevComponents.DotNetBar.LabelX

@@ -45,7 +45,7 @@ Partial Class Frm_ImpBarras_Tarja
         Me.Txt_Analista = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_CodAlternativo_Pallet = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Descripcion_Kopral = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_NroLote = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
@@ -260,7 +260,7 @@ Partial Class Frm_ImpBarras_Tarja
         Me.GroupPanel2.Controls.Add(Me.Txt_Analista)
         Me.GroupPanel2.Controls.Add(Me.LabelX17)
         Me.GroupPanel2.Controls.Add(Me.LabelX5)
-        Me.GroupPanel2.Controls.Add(Me.Txt_CodAlternativo_Pallet)
+        Me.GroupPanel2.Controls.Add(Me.Txt_Descripcion_Kopral)
         Me.GroupPanel2.Controls.Add(Me.Txt_NroLote)
         Me.GroupPanel2.Controls.Add(Me.LabelX7)
         Me.GroupPanel2.Controls.Add(Me.LabelX10)
@@ -469,25 +469,25 @@ Partial Class Frm_ImpBarras_Tarja
         Me.LabelX5.TabIndex = 84
         Me.LabelX5.Text = "NRO. LOTE"
         '
-        'Txt_CodAlternativo_Pallet
+        'Txt_Descripcion_Kopral
         '
-        Me.Txt_CodAlternativo_Pallet.BackColor = System.Drawing.Color.White
+        Me.Txt_Descripcion_Kopral.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Txt_CodAlternativo_Pallet.Border.Class = "TextBoxBorder"
-        Me.Txt_CodAlternativo_Pallet.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CodAlternativo_Pallet.ButtonCustom.Image = CType(resources.GetObject("Txt_CodAlternativo_Pallet.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_CodAlternativo_Pallet.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CodAlternativo_Pallet.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_CodAlternativo_Pallet.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.Txt_CodAlternativo_Pallet.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CodAlternativo_Pallet.Location = New System.Drawing.Point(87, 99)
-        Me.Txt_CodAlternativo_Pallet.MaxLength = 13
-        Me.Txt_CodAlternativo_Pallet.Name = "Txt_CodAlternativo_Pallet"
-        Me.Txt_CodAlternativo_Pallet.ReadOnly = True
-        Me.Txt_CodAlternativo_Pallet.Size = New System.Drawing.Size(703, 22)
-        Me.Txt_CodAlternativo_Pallet.TabIndex = 9
+        Me.Txt_Descripcion_Kopral.Border.Class = "TextBoxBorder"
+        Me.Txt_Descripcion_Kopral.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Descripcion_Kopral.ButtonCustom.Image = CType(resources.GetObject("Txt_CodAlternativo_Pallet.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Descripcion_Kopral.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Descripcion_Kopral.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Txt_Descripcion_Kopral.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.Txt_Descripcion_Kopral.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Descripcion_Kopral.Location = New System.Drawing.Point(87, 99)
+        Me.Txt_Descripcion_Kopral.MaxLength = 13
+        Me.Txt_Descripcion_Kopral.Name = "Txt_Descripcion_Kopral"
+        Me.Txt_Descripcion_Kopral.ReadOnly = True
+        Me.Txt_Descripcion_Kopral.Size = New System.Drawing.Size(703, 22)
+        Me.Txt_Descripcion_Kopral.TabIndex = 9
         '
         'Txt_NroLote
         '
@@ -605,7 +605,7 @@ Partial Class Frm_ImpBarras_Tarja
     Public WithEvents Txt_Analista As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX17 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
-    Public WithEvents Txt_CodAlternativo_Pallet As DevComponents.DotNetBar.Controls.TextBoxX
+    Public WithEvents Txt_Descripcion_Kopral As DevComponents.DotNetBar.Controls.TextBoxX
     Public WithEvents Txt_NroLote As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX10 As DevComponents.DotNetBar.LabelX

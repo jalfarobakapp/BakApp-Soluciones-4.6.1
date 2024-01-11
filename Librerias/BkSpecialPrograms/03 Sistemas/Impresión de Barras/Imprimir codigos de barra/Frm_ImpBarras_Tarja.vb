@@ -57,10 +57,10 @@ Public Class Frm_ImpBarras_Tarja
 
         Dim _Nro_CPT As String = numero_(Txt_Nro_CPT.Text, 10)
 
-        Consulta_sql = "Select Trj.*,Isnull(Anl.NombreTabla,'') As 'Analista_Str',Isnull(Plt.NombreTabla,'') As 'Planta_Str'" &
+        Consulta_sql = "Select Trj.*,Isnull(NOKOFU,'') As 'Analista_Str',Isnull(Plt.NombreTabla,'') As 'Planta_Str'" &
                        ",Isnull(Trn.NombreTabla,'') As 'Turno_Str',Isnull(Bar.NombreTabla,0) As SemillaBar" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja Trj" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Anl On Anl.Tabla = 'TARJA_ANALISTA' And Anl.CodigoTabla = Analista" & vbCrLf &
+                       "Left Join TABFU On KOFU = Analista" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Plt On Plt.Tabla = 'TARJA_PLANTA' And Plt.CodigoTabla = Planta" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Trn On Trn.Tabla = 'TARJA_TURNO' And Trn.CodigoTabla = Turno" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Bar On Bar.Tabla = 'TARJA_CODBARRA' And Bar.CodigoTabla = Tipo" & vbCrLf &
@@ -78,11 +78,13 @@ Public Class Frm_ImpBarras_Tarja
         Txt_NroLote.Text = _Row_Tarja.Item("Lote")
         Txt_Turno.Text = _Row_Tarja.Item("Turno_Str")
         Txt_Planta.Text = _Row_Tarja.Item("Planta_Str")
-        Txt_Analista.Text = _Row_Tarja.Item("Analista_Str")
+        Txt_Analista.Text = _Row_Tarja.Item("Analista_Str").ToString.Trim
         Txt_Observaciones.Text = _Row_Tarja.Item("Observaciones")
         Lbl_Tipo.Text = _Row_Tarja.Item("Tipo")
+        Txt_Descripcion_Kopral.Text = _Row_Tarja.Item("Descripcion_Kopral")
 
-        _Veces = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones", "Valor", "Tabla = 'TARJA_MULTIMPETIQU' And CodigoTabla = 'MULTETIQ'", True, False)
+        _Veces = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
+                                   "Valor", "Tabla = 'TARJA_MULTIMPETIQU' And CodigoTabla = '" & Lbl_Tipo.Text & "'", True, False)
 
         If _Veces = 0 Then _Veces = 1
 
@@ -90,23 +92,12 @@ Public Class Frm_ImpBarras_Tarja
 
         _Veces = _Veces * _CantidadTipo
 
-        Consulta_sql = "Select * From TABCODAL Where KOPRAL = '" & _Row_Tarja.Item("CodAlternativo_Pallet") & "'"
-        Dim _Row_Tabcodal As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-        Dim _SacosXPallet As Integer
         Dim _Udm As String = _Row_Tarja.Item("Udm")
         Dim _Formato As Integer = _Row_Tarja.Item("Formato")
 
-        If IsNothing(_Row_Tabcodal) Then
-            Return
-        End If
-
-        _SacosXPallet = _Row_Tabcodal.Item("MULTIPLO")
-
-        Txt_CodAlternativo_Pallet.Text = _Row_Tabcodal.Item("KOPRAL").ToString.Trim & ", Udad: " & _Udm & " x " & _Formato & ", Sacos por Pallets: " & _SacosXPallet
-
         If CBool(_Row_Tarja.Item("SemillaBar")) Then
-            Dim _NombreEtiqueta As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tbl_DisenoBarras", "NombreEtiqueta", "Semilla = " & _Row_Tarja.Item("SemillaBar"))
+            Dim _NombreEtiqueta As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tbl_DisenoBarras",
+                                            "NombreEtiqueta", "Semilla = " & _Row_Tarja.Item("SemillaBar"))
             Cmbetiquetas.SelectedValue = _NombreEtiqueta
         End If
 
@@ -196,7 +187,7 @@ Public Class Frm_ImpBarras_Tarja
         Txt_Turno.Text = String.Empty
         Txt_Planta.Text = String.Empty
         Txt_Analista.Text = String.Empty
-        Txt_CodAlternativo_Pallet.Text = String.Empty
+        Txt_Descripcion_Kopral.Text = String.Empty
         Txt_Observaciones.Text = String.Empty
         Txt_Observaciones.ReadOnly = False
         Lbl_Tipo.Text = "TIPO..."

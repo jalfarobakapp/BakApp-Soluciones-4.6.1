@@ -118,11 +118,20 @@ Public Class Frm_Tickets_Seguimiento
 
         Sb_Actualizar_Grilla()
 
-        Btn_MensajeRespuesta.Visible = Not (_Ticket.Tickets.Estado = "CERR" Or _Ticket.Tickets.Estado = "NULO")
-        Btn_CambiarEstado.Visible = Not (_Ticket.Tickets.Estado = "CERR" Or _Ticket.Tickets.Estado = "NULO")
-        'Btn_CrearNuevoTicket.Visible = Not (_Row_Ticket.Item("Estado") = "CERR" Or _Row_Ticket.Item("Estado") = "NULO")
-
         Btn_VerTicketOrigen.Visible = CBool(_Ticket.Tickets.Id_Padre)
+
+        If Not SoloLectura Then
+
+            Btn_MensajeRespuesta.Visible = Not (_Ticket.Tickets.Estado = "CERR" Or _Ticket.Tickets.Estado = "NULO")
+            Btn_CambiarEstado.Visible = Not (_Ticket.Tickets.Estado = "CERR" Or _Ticket.Tickets.Estado = "NULO")
+
+            Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Toma (Id_Ticket,CodFuncionario,FechaToma,NombreEquipo) " &
+                           "Values (" & _Id_Ticket & ",'" & FUNCIONARIO & "',Getdate(),'" & _NombreEquipo & "')"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        End If
 
     End Sub
 
@@ -599,4 +608,15 @@ Public Class Frm_Tickets_Seguimiento
     Private Sub Btn_Mnu_EnviarMensajeRespuesta_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_EnviarMensajeRespuesta.Click
         Sb_Agregar_Mensaje_Respuesta(False)
     End Sub
+
+    Private Sub Frm_Tickets_Seguimiento_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Toma" & vbCrLf &
+                       "Where CodFuncionario = '" & FUNCIONARIO & "' And NombreEquipo = '" & _NombreEquipo & "'"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+    End Sub
+
 End Class

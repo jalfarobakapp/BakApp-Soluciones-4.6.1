@@ -9,8 +9,9 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
     Dim _CodSucEntidad As String
 
     Dim _Tbl_Producto As DataTable
+    Dim _Dv As New DataView
 
-    Dim m_comboBox As ComboBox
+    'Dim m_comboBox As ComboBox
 
     Public Sub New(_CodEntidad As String, _CodSucEntidad As String)
 
@@ -36,6 +37,10 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
 
         Me.ActiveControl = Txt_Buscador
 
+        AddHandler Rdb_VerProd_Todos.CheckedChanged, AddressOf Rdb_VerProd_CheckedChanged
+        AddHandler Rdb_VerProd_ConMultiplos.CheckedChanged, AddressOf Rdb_VerProd_CheckedChanged
+        AddHandler Rdb_VerProd_SinMultiplos.CheckedChanged, AddressOf Rdb_VerProd_CheckedChanged
+
     End Sub
 
     Sub Sb_Actualizar_Grilla()
@@ -43,28 +48,35 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
         Dim _Texto_Busqueda As String = Txt_Buscador.Text.Trim
         Dim _Condicion As String = String.Empty
 
-        Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "KOPR+NOKOPR Like '%")
+        If Rdb_VerProd_Todos.Checked Then _Condicion = String.Empty
+        If Rdb_VerProd_ConMultiplos.Checked Then _Condicion = "And MultiploCompra <> 0"
+        If Rdb_VerProd_SinMultiplos.Checked Then _Condicion = "And MultiploCompra = 0"
+
+        'Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "KOPR+NOKOPR Like '%")
 
         Consulta_Sql = "Select Cast(0 As Bit) As Editado,PrMc.*," & vbCrLf &
                        "PrMc.UdCompra As UdCompra_Ori,PrMc.MultiploCompra As MultiploCompra_Ori," &
                        "Case UdCompra When 2 Then UD02PR Else UD01PR End As UnCm,UD01PR,UD02PR,1 As Ud1,2 As Ud2,NOKOPR" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Entidades_ProdMinCompra PrMc" & vbCrLf &
                        "Inner Join MAEPR On KOPR = PrMc.Codigo" & vbCrLf &
-                       "Where CodEntidad = '" & _CodEntidad & "'" & vbCrLf &
-                       "And KOPR+NOKOPR Like '%" & _Cadena & "%'"
+                       "Where CodEntidad = '" & _CodEntidad & "'" & vbCrLf & _Condicion
+        '"And KOPR+NOKOPR Like '%" & _Cadena & "%'" & vbCrLf & _Condicion
 
-        _Tbl_Producto = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Ds As New DataSet
+
+        _Dv.Table = _Sql.Fx_Get_DataSet(Consulta_Sql, _Ds, "Tbl").Tables("Tbl")
+
+        _Tbl_Producto = _Dv.Table '_Sql.Fx_Get_Tablas(Consulta_Sql)
 
         With Grilla
 
-            .DataSource = _Tbl_Producto
+            .DataSource = _Dv '_Tbl_Producto
 
-            ' Elimina la columna de ComboBox del DataGridView
-            Dim comboColumn As New DataGridViewComboBoxColumn()
-            comboColumn.Name = "UdCompra2"
-            comboColumn.HeaderText = "UdCompra2"
-            Grilla.Columns.Add(comboColumn)
-
+            '' Elimina la columna de ComboBox del DataGridView
+            'Dim comboColumn As New DataGridViewComboBoxColumn()
+            'comboColumn.Name = "UdCompra2"
+            'comboColumn.HeaderText = "UdCompra2"
+            'Grilla.Columns.Add(comboColumn)
 
             OcultarEncabezadoGrilla(Grilla, True)
 
@@ -83,16 +95,16 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
             _DisplayIndex += 1
 
             .Columns("NOKOPR").HeaderText = "Descripción"
-            .Columns("NOKOPR").Width = 330
+            .Columns("NOKOPR").Width = 320
             .Columns("NOKOPR").Visible = True
             .Columns("NOKOPR").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("UdCompra2").HeaderText = "Ud"
-            .Columns("UdCompra2").Width = 40
-            .Columns("UdCompra2").Visible = True
-            .Columns("UdCompra2").ReadOnly = False
-            .Columns("UdCompra2").DisplayIndex = _DisplayIndex
+            .Columns("UdCompra").HeaderText = "Ud"
+            .Columns("UdCompra").Width = 40
+            .Columns("UdCompra").Visible = True
+            '.Columns("UdCompra").ReadOnly = False
+            .Columns("UdCompra").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("UnCm").HeaderText = "UM"
@@ -112,38 +124,41 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
 
         End With
 
-        Dim i As Integer = 0
+        'Dim i As Integer = 0
 
-        For Each fila As DataGridViewRow In Grilla.Rows
+        'For Each fila As DataGridViewRow In Grilla.Rows
 
-            If Not fila.IsNewRow AndAlso Not fila.Cells("Ud1").Value Is Nothing AndAlso Not fila.Cells("Ud2").Value Is Nothing Then
+        '    If Not fila.IsNewRow AndAlso Not fila.Cells("Ud1").Value Is Nothing AndAlso Not fila.Cells("Ud2").Value Is Nothing Then
 
-                Dim celdaComboBox As DataGridViewComboBoxCell = CType(Grilla.Rows(i).Cells("UdCompra2"), DataGridViewComboBoxCell)
+        '        Dim celdaComboBox As DataGridViewComboBoxCell = CType(Grilla.Rows(i).Cells("UdCompra2"), DataGridViewComboBoxCell)
 
-                Dim valorColumna0 As String = fila.Cells("Ud1").Value.ToString
-                Dim valorColumna1 As String = fila.Cells("Ud2").Value.ToString
+        '        Dim valorColumna0 As String = fila.Cells("Ud1").Value.ToString
+        '        Dim valorColumna1 As String = fila.Cells("Ud2").Value.ToString
 
-                celdaComboBox.Items.AddRange({valorColumna0, valorColumna1})
+        '        celdaComboBox.Items.AddRange({valorColumna0, valorColumna1})
 
-                ' Reemplaza "NombreDeTuColumna" con el índice real de la columna
-                Dim comboCell As DataGridViewComboBoxCell = CType(fila.Cells("UdCompra2"), DataGridViewComboBoxCell)
-                celdaComboBox.Value = fila.Cells("UdCompra").Value.ToString
-                i += 1
+        '        ' Reemplaza "NombreDeTuColumna" con el índice real de la columna
+        '        Dim comboCell As DataGridViewComboBoxCell = CType(fila.Cells("UdCompra2"), DataGridViewComboBoxCell)
+        '        celdaComboBox.Value = fila.Cells("UdCompra").Value.ToString
+        '        i += 1
 
-            Else
+        '    Else
 
-                ' Sal del bucle si encuentras una fila vacía o nueva
-                Exit For
+        '        ' Sal del bucle si encuentras una fila vacía o nueva
+        '        Exit For
 
-            End If
+        '    End If
 
-        Next
+        'Next
+
+        Sb_Filtrar_Busqueda()
 
     End Sub
 
     Private Sub Txt_Buscador_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Buscador.KeyDown
         If e.KeyValue = Keys.Enter Then
-            Sb_Actualizar_Grilla()
+            Sb_Filtrar_Busqueda()
+            'Sb_Actualizar_Grilla()
         End If
     End Sub
 
@@ -175,8 +190,10 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
         If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql) Then
             MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problema al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         Else
-            'Txt_Buscador.Text = String.Empty
+
+            If Not Rdb_VerProd_Todos.Checked Then Rdb_VerProd_Todos.Checked = True
             Sb_Actualizar_Grilla()
+
             MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
 
@@ -206,7 +223,8 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
 
     Private Sub Txt_Buscador_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Buscador.ButtonCustom2Click
         Txt_Buscador.Text = String.Empty
-        Sb_Actualizar_Grilla()
+        Sb_Filtrar_Busqueda()
+        'Sb_Actualizar_Grilla()
     End Sub
     Private Sub Sb_Grilla_Tipos_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
@@ -222,6 +240,10 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
 
     Private Sub Btn_Mnu_SeleccionarProductos_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_SeleccionarProductos.Click
 
+        If Not Fx_RevisarSiHayDatosEditados() Then
+            Return
+        End If
+
         'If Not Fx_Tiene_Permiso(Me, "CfEnt030") Then Return
 
         Dim _Sql_Filtro_Condicion_Extra = "And TIPR In ('FPN','FIN') And KOPR Not In " &
@@ -236,12 +258,14 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
                                Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
                                False, False, False, False,, False) Then
 
+            _Tbl = _Filtrar.Pro_Tbl_Filtro
+
             For Each _Fila As DataRow In _Tbl.Rows
 
                 Dim _Codigo As String = _Fila.Item("Codigo")
 
-                Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Entidades_ProdMinCompra (CodEntidad,UdCompra) Values " &
-                               "('" & _CodEntidad & "',1,'" & _Codigo & "',1)"
+                Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Entidades_ProdMinCompra (CodEntidad,Codigo,UdCompra) Values " &
+                               "('" & _CodEntidad & "','" & _Codigo & "',1)"
                 _Sql.Ej_consulta_IDU(Consulta_Sql)
 
             Next
@@ -254,14 +278,11 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
 
     Private Sub Btn_TraerProductosFCCGRCOCC_Click(sender As Object, e As EventArgs) Handles Btn_TraerProductosFCCGRCOCC.Click
 
-        Dim _Filtro As String
-        '= Generar_Filtro_IN(_Tbl_Producto, "", "Codigo", False, False, "'")
+        If Not Fx_RevisarSiHayDatosEditados() Then
+            Return
+        End If
 
-        'If _Filtro <> "()" Then
-        '    _Filtro = "And KOPRCT Not In " & _Filtro
-        'Else
-        '    _Filtro = String.Empty
-        'End If
+        Dim _Filtro As String
 
         Consulta_Sql = "Select Distinct KOPRCT" & vbCrLf &
                        "From MAEDDO Where TIDO In ('OCC','GRC','FCC') And ENDO = '" & _CodEntidad & "'" & vbCrLf &
@@ -287,7 +308,7 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql) Then
             Sb_Actualizar_Grilla()
-            MessageBoxEx.Show(Me, "Se han insertado correctamente " & _Tbl.Rows.Count & " producto(s)", "Insertar productos",
+            MessageBoxEx.Show(Me, "Se han insertado correctamente " & FormatNumber(_Tbl.Rows.Count, 0) & " producto(s)", "Insertar productos",
                               MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
             MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problemas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -296,6 +317,10 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
     End Sub
 
     Private Sub Btn_TraerProductosTabcodal_Click(sender As Object, e As EventArgs) Handles Btn_TraerProductosTabcodal.Click
+
+        If Not Fx_RevisarSiHayDatosEditados() Then
+            Return
+        End If
 
         Dim _Filtro As String
 
@@ -325,7 +350,7 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql) Then
             Txt_Buscador.Text = String.Empty
             Sb_Actualizar_Grilla()
-            MessageBoxEx.Show(Me, "Se han insertado correctamente " & _Tbl.Rows.Count & " producto(s)", "Insertar productos",
+            MessageBoxEx.Show(Me, "Se han insertado correctamente " & FormatNumber(_Tbl.Rows.Count, 0) & " producto(s)", "Insertar productos",
                               MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
             MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problemas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -392,20 +417,20 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
 
         End If
 
-        If _Cabeza = "UdCompra2" Then
+        'If _Cabeza = "UdCompra2" Then
 
-            Try
-                If e.Control.GetType Is GetType(DataGridViewComboBoxEditingControl) Then
-                    m_comboBox = DirectCast(e.Control, ComboBox)
-                    ' Instalamos el controlador para el evento SelectedValueChanged
-                    AddHandler m_comboBox.SelectedValueChanged, AddressOf ComboBoxOnSelectedValueChanged
-                End If
-            Catch ex As Exception
-                MessageBox.Show(ex.Message, "vb.net",
-                 MessageBoxButtons.OK, MessageBoxIcon.Error)
-            End Try
+        '    Try
+        '        If e.Control.GetType Is GetType(DataGridViewComboBoxEditingControl) Then
+        '            m_comboBox = DirectCast(e.Control, ComboBox)
+        '            ' Instalamos el controlador para el evento SelectedValueChanged
+        '            AddHandler m_comboBox.SelectedValueChanged, AddressOf ComboBoxOnSelectedValueChanged
+        '        End If
+        '    Catch ex As Exception
+        '        MessageBox.Show(ex.Message, "vb.net",
+        '         MessageBoxButtons.OK, MessageBoxIcon.Error)
+        '    End Try
 
-        End If
+        'End If
 
     End Sub
 
@@ -418,10 +443,10 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
 
         Select Case _Cabeza
 
-            Case "UnCm", "UdCompra2", "MultiploCompra"
+            Case "UnCm", "UdCompra", "MultiploCompra"
 
-                If _Cabeza = "UnCm" Or _Cabeza = "UdCompra2" Then
-                    _Fila.Cells("UdCompra").Value = _Fila.Cells("UdCompra2").Value
+                If _Cabeza = "UnCm" Or _Cabeza = "UdCompra" Then
+                    '_Fila.Cells("UdCompra").Value = _Fila.Cells("UdCompra2").Value
                     Grilla.Columns(_Cabeza).ReadOnly = False
                 End If
 
@@ -448,16 +473,117 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
         'End If
     End Sub
 
-    Private Sub Grilla_RowValidated(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.RowValidated
-        Try
-            If m_comboBox IsNot Nothing Then
-                'Desinstalamos el controlador de eventos 
-                RemoveHandler m_comboBox.SelectedValueChanged,
-                AddressOf ComboBoxOnSelectedValueChanged
+    'Private Sub Grilla_RowValidated(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.RowValidated
+    '    Try
+    '        If m_comboBox IsNot Nothing Then
+    '            'Desinstalamos el controlador de eventos 
+    '            RemoveHandler m_comboBox.SelectedValueChanged,
+    '            AddressOf ComboBoxOnSelectedValueChanged
+    '        End If
+    '    Catch ex As Exception
+    '        MessageBox.Show(ex.Message, "vb.net",
+    '        MessageBoxButtons.OK, MessageBoxIcon.Error)
+    '    End Try
+    'End Sub
+
+    Private Sub Btn_QuitarConValorCero_Click(sender As Object, e As EventArgs) Handles Btn_QuitarConValorCero.Click
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Entidades_ProdMinCompra", "CodEntidad = '" & _CodEntidad & "'")
+
+        If Not CBool(_Tbl_Producto.Rows.Count) Then
+            MessageBoxEx.Show(Me, "No hay registros que quitar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Tbl_PrEdit As DataTable = Fx_Crea_Tabla_Con_Filtro(_Tbl_Producto, "Editado = 1", "Codigo")
+
+        _Tbl_PrEdit = Fx_Crea_Tabla_Con_Filtro(_Tbl_Producto, "UdCompra <> UdCompra_Ori Or MultiploCompra <> MultiploCompra_Ori", "Codigo")
+
+        If CBool(_Tbl_PrEdit.Rows.Count) Then
+            If MessageBoxEx.Show(Me, "hay registros actualizados, si sigue no se grabaran esos cambios." & vbCrLf & vbCrLf &
+                                 "¿Desea seguir con la eliminación?", "Grabar",
+                                 MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
+                Return
             End If
-        Catch ex As Exception
-            MessageBox.Show(ex.Message, "vb.net",
-            MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Confirma quitar los productos con cantidad cero?", "Quitar productos",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Consulta_Sql = "Delete " & _Global_BaseBk & "Zw_Entidades_ProdMinCompra" & vbCrLf &
+                       "Where CodEntidad = '" & _CodEntidad & "' And MultiploCompra = 0"
+        If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
+            Sb_Actualizar_Grilla()
+            MessageBoxEx.Show(Me, "Registros eliminados correctamente", "Quitar productos",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+
     End Sub
+
+    Private Sub Txt_Buscador_TextChanged(sender As Object, e As EventArgs) Handles Txt_Buscador.TextChanged
+        If String.IsNullOrEmpty(Txt_Buscador.Text) Then
+            Sb_Filtrar_Busqueda()
+            'Sb_Actualizar_Grilla()
+        End If
+    End Sub
+
+    Private Sub Frm_Crear_Entidad_Mt_ProdCanMinXProv_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+
+        'Dim _Tbl_PrEdit As DataTable = Fx_Crea_Tabla_Con_Filtro(_Tbl_Producto, "Editado = 1", "Codigo")
+
+        '_Tbl_PrEdit = Fx_Crea_Tabla_Con_Filtro(_Tbl_Producto, "UdCompra <> UdCompra_Ori Or MultiploCompra <> MultiploCompra_Ori", "Codigo")
+
+        'If CBool(_Tbl_PrEdit.Rows.Count) Then
+        '    If MessageBoxEx.Show(Me, "hay registros actualizados, los cambios no se guardaran si cierra el formulario." & vbCrLf & vbCrLf &
+        '                         "¿Confirma cerrar el formularion sin grabar?", "Salir sin grabar",
+        '                         MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
+        '        e.Cancel = True
+        '    End If
+        'End If
+
+        If Not Fx_RevisarSiHayDatosEditados() Then
+            e.Cancel = True
+        End If
+
+    End Sub
+
+    Function Fx_RevisarSiHayDatosEditados() As Boolean
+
+        Dim _Tbl_PrEdit As DataTable = Fx_Crea_Tabla_Con_Filtro(_Tbl_Producto, "Editado = 1", "Codigo")
+
+        _Tbl_PrEdit = Fx_Crea_Tabla_Con_Filtro(_Tbl_Producto, "UdCompra <> UdCompra_Ori Or MultiploCompra <> MultiploCompra_Ori", "Codigo")
+
+        If CBool(_Tbl_PrEdit.Rows.Count) Then
+            If MessageBoxEx.Show(Me, "hay registros actualizados, los cambios no se guardaran." & vbCrLf & vbCrLf &
+                                 "¿Confirma continuar sin grabar sin grabar?", "Salir sin grabar",
+                                 MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
+                Return False
+            End If
+        End If
+
+        Return True
+
+    End Function
+
+    Private Sub Rdb_VerProd_CheckedChanged(sender As Object, e As EventArgs)
+        If CType(sender, Controls.CheckBoxX).Checked Then
+            Sb_Filtrar_Busqueda()
+            'Sb_Actualizar_Grilla()
+        End If
+    End Sub
+
+    Sub Sb_Filtrar_Busqueda()
+
+        Dim _Condicion As String
+
+        If Rdb_VerProd_Todos.Checked Then _Condicion = String.Empty
+        If Rdb_VerProd_ConMultiplos.Checked Then _Condicion = "And MultiploCompra <> 0"
+        If Rdb_VerProd_SinMultiplos.Checked Then _Condicion = "And MultiploCompra = 0"
+
+        _Dv.RowFilter = String.Format("Codigo+NOKOPR Like '%{0}%' " & _Condicion, Txt_Buscador.Text)
+
+    End Sub
+
 End Class

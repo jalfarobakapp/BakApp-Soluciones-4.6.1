@@ -30,6 +30,7 @@ Partial Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_AgregarProductos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ExportarExcel = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_QuitarConValorCero = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
@@ -43,11 +44,17 @@ Partial Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Buscador = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Rdb_VerProd_Todos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_VerProd_ConMultiplos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_VerProd_SinMultiplos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel3.SuspendLayout()
+        Me.TableLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Bar1
@@ -55,8 +62,8 @@ Partial Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_AgregarProductos, Me.Btn_ExportarExcel})
-        Me.Bar1.Location = New System.Drawing.Point(0, 478)
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_AgregarProductos, Me.Btn_ExportarExcel, Me.Btn_QuitarConValorCero})
+        Me.Bar1.Location = New System.Drawing.Point(0, 510)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(654, 41)
         Me.Bar1.Stretch = True
@@ -89,6 +96,14 @@ Partial Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
         Me.Btn_ExportarExcel.ImageAlt = CType(resources.GetObject("Btn_ExportarExcel.ImageAlt"), System.Drawing.Image)
         Me.Btn_ExportarExcel.Name = "Btn_ExportarExcel"
         Me.Btn_ExportarExcel.Text = "Exportar a Excel"
+        '
+        'Btn_QuitarConValorCero
+        '
+        Me.Btn_QuitarConValorCero.ForeColor = System.Drawing.Color.Black
+        Me.Btn_QuitarConValorCero.Image = CType(resources.GetObject("Btn_QuitarConValorCero.Image"), System.Drawing.Image)
+        Me.Btn_QuitarConValorCero.ImageAlt = CType(resources.GetObject("Btn_QuitarConValorCero.ImageAlt"), System.Drawing.Image)
+        Me.Btn_QuitarConValorCero.Name = "Btn_QuitarConValorCero"
+        Me.Btn_QuitarConValorCero.Text = "Quitar productos con valor cero"
         '
         'GroupPanel1
         '
@@ -129,7 +144,7 @@ Partial Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 55
-        Me.GroupPanel1.Text = "Detalle de productos bloqueados para comprar"
+        Me.GroupPanel1.Text = "Detalle de productos"
         '
         'Menu_Contextual
         '
@@ -305,13 +320,107 @@ Partial Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
         Me.LabelX7.Name = "LabelX7"
         Me.LabelX7.Size = New System.Drawing.Size(404, 23)
         Me.LabelX7.TabIndex = 99
-        Me.LabelX7.Text = "Ingrese algo de la descripción de un agente o tipo"
+        Me.LabelX7.Text = "Ingrese algo de la descripción o código"
+        '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel1.ColumnCount = 3
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.24723!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 37.63838!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 39.11439!))
+        Me.TableLayoutPanel1.Controls.Add(Me.Rdb_VerProd_Todos, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Rdb_VerProd_ConMultiplos, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Rdb_VerProd_SinMultiplos, 2, 0)
+        Me.TableLayoutPanel1.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(84, 465)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 1
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(272, 28)
+        Me.TableLayoutPanel1.TabIndex = 140
+        '
+        'Rdb_VerProd_Todos
+        '
+        Me.Rdb_VerProd_Todos.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_VerProd_Todos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_VerProd_Todos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_VerProd_Todos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_VerProd_Todos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_VerProd_Todos.Checked = True
+        Me.Rdb_VerProd_Todos.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_VerProd_Todos.CheckValue = "Y"
+        Me.Rdb_VerProd_Todos.FocusCuesEnabled = False
+        Me.Rdb_VerProd_Todos.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_VerProd_Todos.Location = New System.Drawing.Point(3, 3)
+        Me.Rdb_VerProd_Todos.Name = "Rdb_VerProd_Todos"
+        Me.Rdb_VerProd_Todos.Size = New System.Drawing.Size(57, 19)
+        Me.Rdb_VerProd_Todos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_VerProd_Todos.TabIndex = 134
+        Me.Rdb_VerProd_Todos.TabStop = False
+        Me.Rdb_VerProd_Todos.Text = "Todos"
+        '
+        'Rdb_VerProd_ConMultiplos
+        '
+        Me.Rdb_VerProd_ConMultiplos.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_VerProd_ConMultiplos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_VerProd_ConMultiplos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_VerProd_ConMultiplos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_VerProd_ConMultiplos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_VerProd_ConMultiplos.FocusCuesEnabled = False
+        Me.Rdb_VerProd_ConMultiplos.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_VerProd_ConMultiplos.Location = New System.Drawing.Point(66, 3)
+        Me.Rdb_VerProd_ConMultiplos.Name = "Rdb_VerProd_ConMultiplos"
+        Me.Rdb_VerProd_ConMultiplos.Size = New System.Drawing.Size(94, 19)
+        Me.Rdb_VerProd_ConMultiplos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_VerProd_ConMultiplos.TabIndex = 135
+        Me.Rdb_VerProd_ConMultiplos.TabStop = False
+        Me.Rdb_VerProd_ConMultiplos.Text = "Con multiplos"
+        '
+        'Rdb_VerProd_SinMultiplos
+        '
+        Me.Rdb_VerProd_SinMultiplos.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_VerProd_SinMultiplos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_VerProd_SinMultiplos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_VerProd_SinMultiplos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_VerProd_SinMultiplos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_VerProd_SinMultiplos.FocusCuesEnabled = False
+        Me.Rdb_VerProd_SinMultiplos.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_VerProd_SinMultiplos.Location = New System.Drawing.Point(168, 3)
+        Me.Rdb_VerProd_SinMultiplos.Name = "Rdb_VerProd_SinMultiplos"
+        Me.Rdb_VerProd_SinMultiplos.Size = New System.Drawing.Size(101, 19)
+        Me.Rdb_VerProd_SinMultiplos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_VerProd_SinMultiplos.TabIndex = 136
+        Me.Rdb_VerProd_SinMultiplos.TabStop = False
+        Me.Rdb_VerProd_SinMultiplos.Text = "Sin multiplos"
+        '
+        'LabelX2
+        '
+        Me.LabelX2.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX2.ForeColor = System.Drawing.Color.Black
+        Me.LabelX2.Location = New System.Drawing.Point(7, 465)
+        Me.LabelX2.Name = "LabelX2"
+        Me.LabelX2.Size = New System.Drawing.Size(102, 23)
+        Me.LabelX2.TabIndex = 139
+        Me.LabelX2.Text = "Ver productos:"
         '
         'Frm_Crear_Entidad_Mt_ProdCanMinXProv
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(654, 519)
+        Me.ClientSize = New System.Drawing.Size(654, 551)
+        Me.Controls.Add(Me.TableLayoutPanel1)
+        Me.Controls.Add(Me.LabelX2)
         Me.Controls.Add(Me.GroupPanel3)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.GroupPanel1)
@@ -324,12 +433,13 @@ Partial Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
         Me.Name = "Frm_Crear_Entidad_Mt_ProdCanMinXProv"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MetroForm"
+        Me.Text = "MANTENCION DE PRODUCTOS CON MULTIPLOS A COMPRAR POR PROVEEDORES"
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel3.ResumeLayout(False)
+        Me.TableLayoutPanel1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -351,4 +461,10 @@ Partial Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
     Friend WithEvents Btn_TraerProductosFCCGRCOCC As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_TraerProductosTabcodal As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_SeleccionarProductos As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_QuitarConValorCero As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents Rdb_VerProd_Todos As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Rdb_VerProd_ConMultiplos As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Rdb_VerProd_SinMultiplos As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
 End Class

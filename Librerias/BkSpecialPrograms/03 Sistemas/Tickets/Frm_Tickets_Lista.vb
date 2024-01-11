@@ -1,4 +1,6 @@
-﻿Public Class Frm_Tickets_Lista
+﻿Imports DevComponents.DotNetBar
+
+Public Class Frm_Tickets_Lista
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -274,6 +276,12 @@
 
         Next
 
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Toma" & vbCrLf &
+                       "Where CodFuncionario = '" & FUNCIONARIO & "' And NombreEquipo = '" & _NombreEquipo & "'"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
     End Sub
 
     Private Sub Btn_Crear_Ticket_Click(sender As Object, e As EventArgs) Handles Btn_Crear_Ticket.Click
@@ -298,9 +306,42 @@
             Dim _Id_Ticket As Integer = _Fila.Cells("Id").Value
             Dim _Numero As String = _Fila.Cells("Numero").Value
 
-            'RemoveHandler Grilla.RowPrePaint, AddressOf Grilla_RowPrePaint
+            Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Toma" & vbCrLf &
+                           "Where CodFuncionario = '" & FUNCIONARIO & "' And NombreEquipo = '" & _NombreEquipo & "'"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            Consulta_sql = "Select Top 1 KOFU,NOKOFU,Tm.NombreEquipo,Isnull(Alias,'') As Alias From " & vbCrLf &
+                           _Global_BaseBk & "Zw_Stk_Tickets_Toma Tm " & vbCrLf &
+                           "Inner Join TABFU On KOFU = CodFuncionario" & vbCrLf &
+                           "Left Join " & _Global_BaseBk & "Zw_EstacionesBkp EstB On EstB.NombreEquipo = Tm.NombreEquipo" & vbCrLf &
+                           "Where Id_Ticket = " & _Id_Ticket & " And CodFuncionario = '" & FUNCIONARIO & "'"
+            Dim _Row_Tomado As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _SoloLectura = False
+
+            If Not IsNothing(_Row_Tomado) Then
+
+                Dim _UsuarioToma As String = _Row_Tomado.Item("KOFU") & " - " & _Row_Tomado.Item("NOKOFU").ToString.Trim
+
+                If Not String.IsNullOrEmpty(_Row_Tomado.Item("Alias").ToString.Trim) Then
+                    _NombreEquipo = _NombreEquipo.ToString.Trim & " (" & _Row_Tomado.Item("Alias") & ")"
+                End If
+
+                If MessageBoxEx.Show(Me, "El Ticket se encuentra tomado por el usuario: " & _UsuarioToma & vbCrLf &
+                                  "En el equipo: " & _NombreEquipo & vbCrLf & vbCrLf &
+                                  "Solo podrá ver el Ticket en modo de lectura" & vbCrLf & vbCrLf &
+                                  "¿Desea abrirlo de todas maneras?", "Ticket tomado",
+                                  MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
+                    Return
+                End If
+                _SoloLectura = True
+
+            End If
 
             Dim Fm As New Frm_Tickets_Seguimiento(_Id_Ticket)
+            Fm.SoloLectura = _SoloLectura
             Fm.Mis_Ticket = (_Tipo_Tickets = Enum_Tickets.MisTicket)
             Fm.ShowDialog(Me)
             Fm.Dispose()
@@ -327,6 +368,16 @@
 
     Private Sub Chk_TickesTiposMi_CheckedChanged(sender As Object, e As EventArgs)
         Sb_Actualizar_Grilla()
+    End Sub
+
+    Private Sub Frm_Tickets_Lista_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Toma" & vbCrLf &
+                       "Where CodFuncionario = '" & FUNCIONARIO & "' And NombreEquipo = '" & _NombreEquipo & "'"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
     End Sub
 
     'Private Sub Grilla_RowPrePaint(sender As Object, e As DataGridViewRowPrePaintEventArgs)

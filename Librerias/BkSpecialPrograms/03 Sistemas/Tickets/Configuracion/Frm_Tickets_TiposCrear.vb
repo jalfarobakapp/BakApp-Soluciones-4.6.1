@@ -74,6 +74,11 @@ Public Class Frm_Tickets_TiposCrear
             Chk_Asignado.Enabled = False
         End If
 
+        Panel_Productos.Enabled = Chk_ExigeProducto.Checked
+        Chk_Inc_Cantidades.Enabled = Chk_ExigeProducto.Checked
+        Chk_Inc_Fecha.Enabled = Chk_ExigeProducto.Checked
+        Chk_Inc_Hora.Enabled = Chk_ExigeProducto.Checked
+
     End Sub
 
     Private Sub Chk_ExigeProducto_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_ExigeProducto.CheckedChanged
