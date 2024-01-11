@@ -8636,15 +8636,6 @@ Drop Table #Paso"
             Return
         End If
 
-        'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Maest Where Id_Conexion = " & Val(_Id)
-        'Dim _RowDbExt_Maest As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-        'If Not IsNothing(_RowDbExt_Maest) Then
-        '    _EmpPstar = _RowDbExt_Maest.Item("Empresa_Des")
-        '    _SucPstar = _RowDbExt_Maest.Item("Sucursal_Des")
-        '    _BodPstar = _RowDbExt_Maest.Item("Bodega_Des")
-        'End If
-
         Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CodProveedor = '',CodSucProveedor = ''"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
@@ -8664,13 +8655,6 @@ Drop Table #Paso"
                        "Drop Table #Paso"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-        'Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set StockUd1BodStar = StfiBodExt1,StockUd2BodStar = StfiBodExt2" & vbCrLf &
-        '               "From " & _Nombre_Tbl_Paso_Informe & " Tbps" & vbCrLf &
-        '               "Inner Join " & _Global_BaseBk & "Zw_Prod_Stock TbSt On " &
-        '               "TbSt.Empresa = '" & _EmpPstar & "' And TbSt.Sucursal = '" & _SucPstar & "' And TbSt.Bodega = '" & _BodPstar & "' And Tbps.Codigo = TbSt.Codigo" & vbCrLf &
-        '               "Where Comprar = 1 And (StfiBodExt1+StfiBodExt2) > 0"
-        '_Sql.Ej_consulta_IDU(Consulta_sql)
-
         Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CantComprar = Case When StockUd1BodStar > CantSugeridaTot then CantSugeridaTot Else StockUd1BodStar End" & vbCrLf &
                        "Where StockUd1BodStar > 0"
         _Sql.Ej_consulta_IDU(Consulta_sql)
@@ -8681,8 +8665,29 @@ Drop Table #Paso"
                        "Where Comprar = 1 And CantComprar > 0 And StockUd1BodStar >= CantComprar"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
+        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CantComprarOri = CantComprar"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set " & vbCrLf &
+                       "UdCompra = Minc.UdCompra" &
+                       ",MinCompra = Minc.MinCompra" &
+                       ",MultiploCompra = Minc.MultiploCompra" & vbCrLf &
+                       "From " & _Nombre_Tbl_Paso_Informe & " Ps" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_Entidades_ProdMinCompra " &
+                       "Minc On Ps.CodProveedor = Minc.CodEntidad " &
+                       "And Ps.CodSucProveedor = Minc.CodSucEntidad And Ps.Codigo = Minc.Codigo"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CantComprarMinXProv = Case When CantComprar <= MinCompra Then MinCompra Else CEILING((CantComprar*1.0)/(MinCompra*1.0))*MinCompra End"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
         Consulta_sql = "Delete " & _Nombre_Tbl_Paso_Informe & " Where CodProveedor = '' And CodSucProveedor = ''"
         _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        If Chk_CompMinXProveedores.Checked Then
+            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CantComprar = CantComprarMinXProv"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+        End If
 
         BtnProceso_Prov_Auto_Especial.Enabled = False
         BtnProceso_Prov_Auto.Enabled = False
@@ -9670,8 +9675,6 @@ Drop Table #Paso"
                             End If
 
                         Next
-
-                        'MessageBoxEx.Show(Me, "No hay productos que pedir a otras bodegas", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                         Return
 

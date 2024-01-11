@@ -1,51 +1,28 @@
-Public Class Frm_Cantidades_Selec_Ud
+ï»¿Public Class Frm_Cantidades_Selec_Ud
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
     Dim _Fila As DataGridViewRow
-    Dim _UnTrans As Integer
-    Dim _UdTrans As String
-
-    Dim _Seleccionada As Boolean
 
     Public Property UnTrans As Integer
-        Get
-            Return _UnTrans
-        End Get
-        Set(value As Integer)
-            _UnTrans = value
-        End Set
-    End Property
-
     Public Property UdTrans As String
-        Get
-            Return _UdTrans
-        End Get
-        Set(value As String)
-            _UdTrans = value
-        End Set
-    End Property
-
     Public Property Seleccionada As Boolean
-        Get
-            Return _Seleccionada
-        End Get
-        Set(value As Boolean)
-            _Seleccionada = value
-        End Set
-    End Property
+
 
     Public Sub New(Fila As DataGridViewRow)
 
-        ' Esta llamada es exigida por el diseñador.
+        ' Esta llamada es exigida por el diseÃ±ador.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
 
         _Fila = Fila
 
         Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 9), Color.AliceBlue, ScrollBars.None, False, True, False)
+
+        'Me.StartPosition = FormStartPosition.Manual
+        'Me.Location = New Point(Me.Width + Cursor.Position.X, Cursor.Position.Y)
 
     End Sub
 
@@ -67,7 +44,7 @@ Public Class Frm_Cantidades_Selec_Ud
 
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").Width = 140
-            .Columns("Descripcion").HeaderText = "Descripción"
+            .Columns("Descripcion").HeaderText = "DescripciÃ³n"
             .Columns("Descripcion").DisplayIndex = _DisplayIndex
             .Columns("Descripcion").ReadOnly = True
             _DisplayIndex += 1
@@ -93,9 +70,9 @@ Public Class Frm_Cantidades_Selec_Ud
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
-        _Seleccionada = True
-        _UnTrans = _Fila.Cells("UnTrans").Value
-        _UdTrans = _Fila.Cells("UdTrans").Value
+        Seleccionada = True
+        UnTrans = _Fila.Cells("UnTrans").Value
+        UdTrans = _Fila.Cells("UdTrans").Value
 
         Me.Close()
 

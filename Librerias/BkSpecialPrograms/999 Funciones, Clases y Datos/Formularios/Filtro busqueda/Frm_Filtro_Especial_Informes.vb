@@ -679,48 +679,54 @@ Public Class Frm_Filtro_Especial_Informes
 
     Private Sub Sb_Buscar_En_Grilla_Dataview(_Descripcion_a_buscar As String)
 
-        _Descripcion_a_buscar = Replace(_Descripcion_a_buscar, vbTab, "")
+        Try
 
-        Dim _Descripcion As String = Replace(_Descripcion_a_buscar, "'", "")
+            _Descripcion_a_buscar = Replace(_Descripcion_a_buscar, vbTab, "")
 
-        If IsNothing(_Descripcion) Then _Descripcion = String.Empty
+            Dim _Descripcion As String = Replace(_Descripcion_a_buscar, "'", "")
 
-        Dim _Contiene_Punto_Coma As Boolean = _Descripcion.Contains(";")
-        Dim _Lista_Descripciones() As String
+            If IsNothing(_Descripcion) Then _Descripcion = String.Empty
 
-        Dim _Lista_productos_A_Buscar As String = String.Empty
+            Dim _Contiene_Punto_Coma As Boolean = _Descripcion.Contains(";")
+            Dim _Lista_Descripciones() As String
 
-        If _Contiene_Punto_Coma Then
+            Dim _Lista_productos_A_Buscar As String = String.Empty
 
-            Cmb_Filtro_Codigo.SelectedValue = "I"
+            If _Contiene_Punto_Coma Then
 
-            _Lista_Descripciones = Split(_Descripcion, ";")
+                Cmb_Filtro_Codigo.SelectedValue = "I"
 
-            For i = 0 To _Lista_Descripciones.Length - 1
-                If i = 0 Then
-                    _Lista_productos_A_Buscar += Fx_Descripcion(_Lista_Descripciones(i))
-                Else
-                    _Lista_productos_A_Buscar += Fx_Descripcion(_Lista_Descripciones(i), " Or ")
-                End If
-            Next
+                _Lista_Descripciones = Split(_Descripcion, ";")
 
-        Else
+                For i = 0 To _Lista_Descripciones.Length - 1
+                    If i = 0 Then
+                        _Lista_productos_A_Buscar += Fx_Descripcion(_Lista_Descripciones(i))
+                    Else
+                        _Lista_productos_A_Buscar += Fx_Descripcion(_Lista_Descripciones(i), " Or ")
+                    End If
+                Next
 
-            Cmb_Filtro_Codigo.SelectedValue = "C"
+            Else
 
-            _Lista_Descripciones = Split(_Descripcion, " ")
+                Cmb_Filtro_Codigo.SelectedValue = "C"
 
-            For i = 0 To _Lista_Descripciones.Length - 1
-                If i = 0 Then
-                    _Lista_productos_A_Buscar += Fx_Descripcion(_Lista_Descripciones(i))
-                Else
-                    _Lista_productos_A_Buscar += Fx_Descripcion(_Lista_Descripciones(i), " And ")
-                End If
-            Next
+                _Lista_Descripciones = Split(_Descripcion, " ")
 
-        End If
+                For i = 0 To _Lista_Descripciones.Length - 1
+                    If i = 0 Then
+                        _Lista_productos_A_Buscar += Fx_Descripcion(_Lista_Descripciones(i))
+                    Else
+                        _Lista_productos_A_Buscar += Fx_Descripcion(_Lista_Descripciones(i), " And ")
+                    End If
+                Next
 
-        _Dv.RowFilter = _Lista_productos_A_Buscar
+            End If
+
+            _Dv.RowFilter = _Lista_productos_A_Buscar
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End Try
 
     End Sub
 

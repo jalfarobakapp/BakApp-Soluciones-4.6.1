@@ -538,6 +538,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\14 Exportar documentos\Cl_ExpotarDoc.vb" />
+    <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_ProdCanMinXProv.Designer.vb">
+      <DependentUpon>Frm_Crear_Entidad_Mt_ProdCanMinXProv.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_ProdCanMinXProv.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_ProdExcluidosCompra.Designer.vb">
       <DependentUpon>Frm_Crear_Entidad_Mt_ProdExcluidosCompra.vb</DependentUpon>
     </Compile>
@@ -4381,6 +4387,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Asociacion de documentos a OCC\Frm_RecargosXProd.resx">
       <DependentUpon>Frm_RecargosXProd.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_ProdCanMinXProv.resx">
+      <DependentUpon>Frm_Crear_Entidad_Mt_ProdCanMinXProv.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_ProdExcluidosCompra.resx">
       <DependentUpon>Frm_Crear_Entidad_Mt_ProdExcluidosCompra.vb</DependentUpon>
