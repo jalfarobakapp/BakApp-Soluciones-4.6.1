@@ -13,6 +13,7 @@ Public Class Frm_Tickets_Seguimiento
     Dim _Funcionario As String
 
     Dim _Ticket As New Cl_Tickets
+    Dim _Tipo As New Tickets_Db.Tickets_Tipo
 
     Dim _Row_UltMensaje As DataRow
     Public Property Mis_Ticket As Boolean
@@ -52,7 +53,7 @@ Public Class Frm_Tickets_Seguimiento
         End If
 
         Btn_MensajeRespuesta.Visible = Not SoloLectura
-        Btn_CambiarEstado.Visible = Not SoloLectura
+        Btn_GestionarAcciones.Visible = Not SoloLectura
         Btn_VerTicketOrigen.Visible = Not SoloLectura
 
         If Not SoloLectura Then
@@ -123,7 +124,7 @@ Public Class Frm_Tickets_Seguimiento
         If Not SoloLectura Then
 
             Btn_MensajeRespuesta.Visible = Not (_Ticket.Tickets.Estado = "CERR" Or _Ticket.Tickets.Estado = "NULO")
-            Btn_CambiarEstado.Visible = Not (_Ticket.Tickets.Estado = "CERR" Or _Ticket.Tickets.Estado = "NULO")
+            Btn_GestionarAcciones.Visible = Not (_Ticket.Tickets.Estado = "CERR" Or _Ticket.Tickets.Estado = "NULO")
 
             Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
@@ -132,6 +133,8 @@ Public Class Frm_Tickets_Seguimiento
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
         End If
+
+        _Tipo = _Ticket.Fx_Llenar_Tipo(_Ticket.Tickets.Id_Area, _Ticket.Tickets.Id_Tipo)
 
     End Sub
 
@@ -277,8 +280,6 @@ Public Class Frm_Tickets_Seguimiento
 
         If _Ticket.Tickets.Rechazado Then
             Sb_Agregar_Mensaje_Respuesta(False)
-        Else
-            ShowContextMenu(Menu_Contextual_Mensajes)
         End If
 
     End Sub
@@ -427,10 +428,6 @@ Public Class Frm_Tickets_Seguimiento
 
     End Sub
 
-    Private Sub Btn_CambiarEstado_Click(sender As Object, e As EventArgs) Handles Btn_CambiarEstado.Click
-        ShowContextMenu(Menu_Contextual_Cambio_Estado)
-    End Sub
-
     Private Sub Btn_Estadisticas_Producto_Click(sender As Object, e As EventArgs) Handles Btn_Estadisticas_Producto.Click
 
         Dim _Codigo As String = _Ticket.Tickets.Tickets_Producto.Codigo
@@ -455,7 +452,20 @@ Public Class Frm_Tickets_Seguimiento
     End Sub
 
     Private Sub Btn_Mnu_CerrarTicket_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_CerrarTicket.Click
+
+
+        If Not Mis_Ticket Then
+
+            If Not _Tipo.CerrarAgenteSinPerm Then
+                If Not Fx_Tiene_Permiso(Me, "") Then
+                    Return
+                End If
+            End If
+
+        End If
+
         Sb_Cerrar_Ticket(True, False, False, False, 0)
+
     End Sub
 
     Private Sub Btn_Mnu_SolicitarCierre_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_SolicitarCierre.Click
@@ -504,7 +514,10 @@ Public Class Frm_Tickets_Seguimiento
 
         Dim _Caption As String
 
-        If _Cierra_Ticket Then _Caption = "Cerrar Ticket"
+        If _Cierra_Ticket Then
+            _Caption = "Cerrar Ticket"
+            _Descripcion = _Tipo.RespuestaXDefecto.Trim
+        End If
         If _Solicita_Cierre Then _Caption = "Solicitar cierre"
         If _CreaNewTicket Then _Caption = "Cerrar y crear Ticket"
         If _AnulaTicket Then _Caption = "Anular Ticket"
@@ -617,6 +630,10 @@ Public Class Frm_Tickets_Seguimiento
                        "Where CodFuncionario = '" & FUNCIONARIO & "' And NombreEquipo = '" & _NombreEquipo & "'"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
+    End Sub
+
+    Private Sub Btn_GestionarAcciones_Click(sender As Object, e As EventArgs) Handles Btn_GestionarAcciones.Click
+        ShowContextMenu(Menu_Contextual_Cambio_Estado)
     End Sub
 
 End Class

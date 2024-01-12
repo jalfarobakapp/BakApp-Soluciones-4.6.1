@@ -83,14 +83,19 @@ Public Class Frm_ImpBarras_Tarja
         Lbl_Tipo.Text = _Row_Tarja.Item("Tipo")
         Txt_Descripcion_Kopral.Text = _Row_Tarja.Item("Descripcion_Kopral")
 
+        Dim _CantidadTipo As Double = _Row_Tarja.Item("CantidadTipo")
+
+        ' Si Veces = 0 Se imprime 1
+        ' Si veces > 1 Se imprime xveces * CantidadTipo
+
         _Veces = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
                                    "Valor", "Tabla = 'TARJA_MULTIMPETIQU' And CodigoTabla = '" & Lbl_Tipo.Text & "'", True, False)
 
-        If _Veces = 0 Then _Veces = 1
-
-        Dim _CantidadTipo As Double = _Row_Tarja.Item("CantidadTipo")
-
-        _Veces = _Veces * _CantidadTipo
+        If CBool(_Veces) Then
+            _Veces = _Veces * _CantidadTipo
+        Else
+            _Veces = 1
+        End If
 
         Dim _Udm As String = _Row_Tarja.Item("Udm")
         Dim _Formato As Integer = _Row_Tarja.Item("Formato")
@@ -225,7 +230,6 @@ Public Class Frm_ImpBarras_Tarja
             If _CantPorLinea = 0 Then _CantPorLinea = 1
 
             Dim _CanXlinea As Integer = _CantPorLinea
-            'Dim _Veces As Integer = 
 
             Dim _Aceptar As Boolean
 

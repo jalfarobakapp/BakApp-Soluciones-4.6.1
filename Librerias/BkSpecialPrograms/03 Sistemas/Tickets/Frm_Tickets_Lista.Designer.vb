@@ -41,6 +41,18 @@ Partial Class Frm_Tickets_Lista
         Me.Chk_TickesAsigMi = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_TickesMiGrupo = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Imagenes_16x16_Dark = New System.Windows.Forms.ImageList(Me.components)
+        Me.Lbl_OpcProducto = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Estadisticas_Producto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Consolidar_Stock_X_Producto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Mnu_CerrarTicket = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_CerrarTicketCrearNuevo = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_SolicitarCierre = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Anular = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Mnu_EnviarMensajeRespuesta = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_RechazarTicket = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -53,7 +65,7 @@ Partial Class Frm_Tickets_Lista
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Ticket, Me.Btn_RevisarTicket, Me.Btn_Actualizar})
-        Me.Bar2.Location = New System.Drawing.Point(0, 582)
+        Me.Bar2.Location = New System.Drawing.Point(0, 613)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(1206, 41)
         Me.Bar2.Stretch = True
@@ -101,7 +113,7 @@ Partial Class Frm_Tickets_Lista
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(1182, 532)
+        Me.GroupPanel1.Size = New System.Drawing.Size(1182, 572)
         '
         '
         '
@@ -204,7 +216,7 @@ Partial Class Frm_Tickets_Lista
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla.Size = New System.Drawing.Size(1176, 509)
+        Me.Grilla.Size = New System.Drawing.Size(1176, 549)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 27
         '
@@ -248,7 +260,7 @@ Partial Class Frm_Tickets_Lista
         Me.Chk_TickesAsigMi.Enabled = False
         Me.Chk_TickesAsigMi.FocusCuesEnabled = False
         Me.Chk_TickesAsigMi.ForeColor = System.Drawing.Color.Black
-        Me.Chk_TickesAsigMi.Location = New System.Drawing.Point(12, 550)
+        Me.Chk_TickesAsigMi.Location = New System.Drawing.Point(12, 590)
         Me.Chk_TickesAsigMi.Name = "Chk_TickesAsigMi"
         Me.Chk_TickesAsigMi.Size = New System.Drawing.Size(169, 17)
         Me.Chk_TickesAsigMi.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -268,7 +280,7 @@ Partial Class Frm_Tickets_Lista
         Me.Chk_TickesMiGrupo.CheckValue = "Y"
         Me.Chk_TickesMiGrupo.FocusCuesEnabled = False
         Me.Chk_TickesMiGrupo.ForeColor = System.Drawing.Color.Black
-        Me.Chk_TickesMiGrupo.Location = New System.Drawing.Point(187, 550)
+        Me.Chk_TickesMiGrupo.Location = New System.Drawing.Point(187, 590)
         Me.Chk_TickesMiGrupo.Name = "Chk_TickesMiGrupo"
         Me.Chk_TickesMiGrupo.Size = New System.Drawing.Size(251, 17)
         Me.Chk_TickesMiGrupo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -301,11 +313,112 @@ Partial Class Frm_Tickets_Lista
         Me.Imagenes_16x16_Dark.Images.SetKeyName(19, "comment-number-2.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(20, "comment-number-1.png")
         '
+        'Lbl_OpcProducto
+        '
+        Me.Lbl_OpcProducto.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.Lbl_OpcProducto.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.Lbl_OpcProducto.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.Lbl_OpcProducto.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.Lbl_OpcProducto.Name = "Lbl_OpcProducto"
+        Me.Lbl_OpcProducto.PaddingBottom = 1
+        Me.Lbl_OpcProducto.PaddingLeft = 10
+        Me.Lbl_OpcProducto.PaddingTop = 1
+        Me.Lbl_OpcProducto.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.Lbl_OpcProducto.Text = "Opciones del producto"
+        '
+        'Btn_Estadisticas_Producto
+        '
+        Me.Btn_Estadisticas_Producto.Image = CType(resources.GetObject("Btn_Estadisticas_Producto.Image"), System.Drawing.Image)
+        Me.Btn_Estadisticas_Producto.ImageAlt = CType(resources.GetObject("Btn_Estadisticas_Producto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Estadisticas_Producto.Name = "Btn_Estadisticas_Producto"
+        Me.Btn_Estadisticas_Producto.Text = "Ver estadísticas del producto/información adicional"
+        '
+        'Btn_Consolidar_Stock_X_Producto
+        '
+        Me.Btn_Consolidar_Stock_X_Producto.Image = CType(resources.GetObject("Btn_Consolidar_Stock_X_Producto.Image"), System.Drawing.Image)
+        Me.Btn_Consolidar_Stock_X_Producto.ImageAlt = CType(resources.GetObject("Btn_Consolidar_Stock_X_Producto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Consolidar_Stock_X_Producto.Name = "Btn_Consolidar_Stock_X_Producto"
+        Me.Btn_Consolidar_Stock_X_Producto.Text = "Consolidar stock del producto"
+        Me.Btn_Consolidar_Stock_X_Producto.Visible = False
+        '
+        'Btn_Copiar
+        '
+        Me.Btn_Copiar.Image = CType(resources.GetObject("Btn_Copiar.Image"), System.Drawing.Image)
+        Me.Btn_Copiar.ImageAlt = CType(resources.GetObject("Btn_Copiar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Copiar.Name = "Btn_Copiar"
+        Me.Btn_Copiar.Text = "Copiar (portapapeles)"
+        '
+        'LabelItem1
+        '
+        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem1.Name = "LabelItem1"
+        Me.LabelItem1.PaddingBottom = 1
+        Me.LabelItem1.PaddingLeft = 10
+        Me.LabelItem1.PaddingTop = 1
+        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem1.Text = "Opciones de cierre"
+        '
+        'Btn_Mnu_CerrarTicket
+        '
+        Me.Btn_Mnu_CerrarTicket.Image = CType(resources.GetObject("Btn_Mnu_CerrarTicket.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_CerrarTicket.Name = "Btn_Mnu_CerrarTicket"
+        Me.Btn_Mnu_CerrarTicket.Text = "Cerrar Ticket"
+        '
+        'Btn_Mnu_CerrarTicketCrearNuevo
+        '
+        Me.Btn_Mnu_CerrarTicketCrearNuevo.Image = CType(resources.GetObject("Btn_Mnu_CerrarTicketCrearNuevo.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_CerrarTicketCrearNuevo.Name = "Btn_Mnu_CerrarTicketCrearNuevo"
+        Me.Btn_Mnu_CerrarTicketCrearNuevo.Text = "Cerrar Ticket y crear nuevo Ticket a partir de este para seguir el hilo."
+        '
+        'Btn_Mnu_SolicitarCierre
+        '
+        Me.Btn_Mnu_SolicitarCierre.Image = CType(resources.GetObject("Btn_Mnu_SolicitarCierre.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_SolicitarCierre.Name = "Btn_Mnu_SolicitarCierre"
+        Me.Btn_Mnu_SolicitarCierre.Text = "Solicitar cierre de Ticket al remitente."
+        Me.Btn_Mnu_SolicitarCierre.Visible = False
+        '
+        'Btn_Anular
+        '
+        Me.Btn_Anular.Image = CType(resources.GetObject("Btn_Anular.Image"), System.Drawing.Image)
+        Me.Btn_Anular.ImageAlt = CType(resources.GetObject("Btn_Anular.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Anular.Name = "Btn_Anular"
+        Me.Btn_Anular.Text = "Anular Ticket"
+        '
+        'LabelItem2
+        '
+        Me.LabelItem2.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem2.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem2.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem2.Name = "LabelItem2"
+        Me.LabelItem2.PaddingBottom = 1
+        Me.LabelItem2.PaddingLeft = 10
+        Me.LabelItem2.PaddingTop = 1
+        Me.LabelItem2.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem2.Text = "Opciones de mensajes"
+        '
+        'Btn_Mnu_EnviarMensajeRespuesta
+        '
+        Me.Btn_Mnu_EnviarMensajeRespuesta.Image = CType(resources.GetObject("Btn_Mnu_EnviarMensajeRespuesta.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_EnviarMensajeRespuesta.ImageAlt = CType(resources.GetObject("Btn_Mnu_EnviarMensajeRespuesta.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_EnviarMensajeRespuesta.Name = "Btn_Mnu_EnviarMensajeRespuesta"
+        Me.Btn_Mnu_EnviarMensajeRespuesta.Text = "Enviar mensaje"
+        '
+        'Btn_Mnu_RechazarTicket
+        '
+        Me.Btn_Mnu_RechazarTicket.Image = CType(resources.GetObject("Btn_Mnu_RechazarTicket.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_RechazarTicket.ImageAlt = CType(resources.GetObject("Btn_Mnu_RechazarTicket.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_RechazarTicket.Name = "Btn_Mnu_RechazarTicket"
+        Me.Btn_Mnu_RechazarTicket.Text = "Rechazar Ticket"
+        '
         'Frm_Tickets_Lista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1206, 623)
+        Me.ClientSize = New System.Drawing.Size(1206, 654)
         Me.Controls.Add(Me.Chk_TickesMiGrupo)
         Me.Controls.Add(Me.Chk_TickesAsigMi)
         Me.Controls.Add(Me.Bar2)
@@ -341,4 +454,16 @@ Partial Class Frm_Tickets_Lista
     Public WithEvents Chk_TickesAsigMi As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Chk_TickesMiGrupo As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Imagenes_16x16_Dark As ImageList
+    Friend WithEvents Lbl_OpcProducto As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_Estadisticas_Producto As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Consolidar_Stock_X_Producto As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Copiar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_Mnu_CerrarTicket As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_CerrarTicketCrearNuevo As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_SolicitarCierre As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Anular As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem2 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_Mnu_EnviarMensajeRespuesta As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_RechazarTicket As DevComponents.DotNetBar.ButtonItem
 End Class

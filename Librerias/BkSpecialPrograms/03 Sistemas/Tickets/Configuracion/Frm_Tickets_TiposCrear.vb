@@ -56,6 +56,11 @@ Public Class Frm_Tickets_TiposCrear
             Txt_Tipo_Cie.Tag = .CieTk_Id_Area
             Txt_Tipo_Cie.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Tipos", "Tipo", "Id = " & .CieTk_Id_Tipo)
 
+            Chk_BodModalXDefecto.Checked = .BodModalXDefecto
+            Chk_PreguntaCreaNewTicket.Checked = .PreguntaCreaNewTicket
+            Chk_CerrarAgenteSinPerm.Checked = .CerrarAgenteSinPerm
+            Txt_RespuestaXDefecto.Text = .RespuestaXDefecto
+
         End With
 
         Txt_Agente.Enabled = Rdb_AsignadoAgente.Checked
@@ -78,6 +83,7 @@ Public Class Frm_Tickets_TiposCrear
         Chk_Inc_Cantidades.Enabled = Chk_ExigeProducto.Checked
         Chk_Inc_Fecha.Enabled = Chk_ExigeProducto.Checked
         Chk_Inc_Hora.Enabled = Chk_ExigeProducto.Checked
+        Chk_BodModalXDefecto.Enabled = Chk_ExigeProducto.Checked
 
     End Sub
 
@@ -86,6 +92,8 @@ Public Class Frm_Tickets_TiposCrear
         Chk_Inc_Cantidades.Checked = Chk_ExigeProducto.Checked
         Chk_Inc_Fecha.Checked = Chk_ExigeProducto.Checked
         Chk_Inc_Hora.Checked = Chk_ExigeProducto.Checked
+        Chk_BodModalXDefecto.Enabled = Chk_ExigeProducto.Checked
+        Chk_BodModalXDefecto.Checked = Chk_ExigeProducto.Checked
     End Sub
 
     Private Sub Btn_Crear_Tipo_Click(sender As Object, e As EventArgs) Handles Btn_Crear_Tipo.Click
@@ -156,6 +164,11 @@ Public Class Frm_Tickets_TiposCrear
             .Inc_Hora = Chk_Inc_Hora.Checked
             .CieTk_Id_Area = Val(Txt_Area_Cie.Tag)
             .CieTk_Id_Tipo = Val(Txt_Tipo_Cie.Tag)
+
+            .BodModalXDefecto = Chk_BodModalXDefecto.Checked
+            .PreguntaCreaNewTicket = Chk_PreguntaCreaNewTicket.Checked
+            .CerrarAgenteSinPerm = Chk_CerrarAgenteSinPerm.Checked
+            .RespuestaXDefecto = Txt_RespuestaXDefecto.Text
 
             Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tipos", "Tipo = '" & .Tipo & "' And Id <> " & .Id)
 
