@@ -542,6 +542,7 @@ Public Class Class_SQL
         _Date
         _ComboBox
         _Tag
+        _Switch
     End Enum
 
     Sub Sb_Parametro_Informe_Sql(ByRef _Objeto As Object,
@@ -593,7 +594,7 @@ Public Class Class_SQL
                         _Valor = _Valor_x_defecto
                     Case Enum_Type._Double
                         _Valor = De_Txt_a_Num_01(_Valor_x_defecto)
-                    Case Enum_Type._Boolean
+                    Case Enum_Type._Boolean, Enum_Type._Switch
                         _Valor = CBool(_Valor_x_defecto)
                     Case Enum_Type._Date
                         _Valor = CDate(_Valor_x_defecto)
@@ -630,6 +631,8 @@ Public Class Class_SQL
                                     _Valor = CDate(_Objeto.Value)
                                 Case Enum_Type._Boolean
                                     _Valor = _Objeto.Checked
+                                Case Enum_Type._Switch
+                                    _Valor = _Objeto.Value
                                 Case Enum_Type._ComboBox
                                     _Valor = _Objeto.SelectedValue
                             End Select
@@ -649,7 +652,7 @@ Public Class Class_SQL
                             _Valor = _Row_Fila.Item("Valor")
                         Case Enum_Type._Double
                             _Valor = De_Txt_a_Num_01(_Row_Fila.Item("Valor"))
-                        Case Enum_Type._Boolean
+                        Case Enum_Type._Boolean, Enum_Type._Switch
                             _Valor = CBool(_Row_Fila.Item("Valor"))
                         Case Enum_Type._Date
                             _Valor = CDate(_Row_Fila.Item("Valor"))
@@ -676,6 +679,8 @@ Public Class Class_SQL
                             _Objeto.Value = CDate(_Valor)
                         Case Enum_Type._Boolean
                             _Objeto.Checked = _Valor
+                        Case Enum_Type._Switch
+                            _Objeto.Value = _Valor
                         Case Enum_Type._ComboBox
                             _Objeto.SelectedValue = _Valor
                     End Select

@@ -237,6 +237,8 @@ Public Class Frm_01_Asis_Compra_Resultados
         End Set
     End Property
 
+    Public Property InformeDeComprasAgrupadoporAsociacion As Boolean
+
     Public Sub New(_Modalidad_Estudio As String)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -434,11 +436,13 @@ Public Class Frm_01_Asis_Compra_Resultados
         Rd_Costo_Lista_Proveedor.Enabled = _Modo_OCC
         Cmb_Lista_Costos.Enabled = _Modo_OCC
 
-        If Modo_NVI Then
-            BtnProceso_Prov_Auto_Especial.Enabled = False
-        End If
+        If Modo_NVI Then BtnProceso_Prov_Auto_Especial.Enabled = False
 
-        Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, True, True) ', (Not Modo_NVI And Not Modo_OCC))
+        Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, True, True, Chk_MarcarFilas.Checked)
+
+        If InformeDeComprasAgrupadoporAsociacion Then
+            Timer_InformeDeComprasAgrupadoporAsociacion.Start()
+        End If
 
     End Sub
 
@@ -5584,10 +5588,15 @@ Public Class Frm_01_Asis_Compra_Resultados
         Fm.Pro_Porc_Crecimiento = Input_Porc_Crecimiento.Value
         Fm.Rdb_Rot_Mediana.Checked = Rdb_Rot_Mediana.Checked
         Fm.Rdb_Rot_Promedio.Checked = Rdb_Rot_Promedio.Checked
+        Fm.InformeDeComprasAgrupadoporAsociacion = InformeDeComprasAgrupadoporAsociacion
         Fm.ShowDialog(Me)
         Rdb_Rot_Mediana.Checked = Fm.Rdb_Rot_Mediana.Checked
         Rdb_Rot_Promedio.Checked = Fm.Rdb_Rot_Promedio.Checked
         Fm.Dispose()
+
+        If InformeDeComprasAgrupadoporAsociacion() Then
+            Me.Close()
+        End If
 
     End Sub
 
@@ -9260,6 +9269,10 @@ Drop Table #Paso"
 
     End Function
 
+    Private Sub Timer_InformeDeComprasAgrupadoporAsociacion_Tick(sender As Object, e As EventArgs) Handles Timer_InformeDeComprasAgrupadoporAsociacion.Tick
+        Timer_InformeDeComprasAgrupadoporAsociacion.Stop()
+        Call Btn_Agrupar_rotacion_de_reemplazos_Click(Nothing, Nothing)
+    End Sub
 
     Sub Sb_Estudio_NVI_Auto(ByRef _Generar_NVI As GeneraOccAuto.Generar_Doc_Auto)
 
