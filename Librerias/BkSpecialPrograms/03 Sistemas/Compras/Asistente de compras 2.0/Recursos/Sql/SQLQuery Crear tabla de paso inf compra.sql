@@ -190,7 +190,6 @@ CREATE TABLE [dbo].[#TablaPaso#](
     [ProductoExcluido]          [Bit]          DEFAULT (0),
     [NoComprarProvNoTiene]      [Bit]          DEFAULT (0),
     [UdCompra]                  [Int]          DEFAULT (0),
-    [MinCompra]                 [Float]        DEFAULT (0),
     [MultiploCompra]            [Float]        DEFAULT (0),
     [CantComprarMinXProv]       [Float]        DEFAULT (0),
 	CONSTRAInt [PK_Zw_#TablaPaso#_Codigo] PRIMARY KEY CLUSTERED 

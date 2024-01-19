@@ -156,7 +156,7 @@ Public Class Frm_TrabMaq_Sin_Cerrar
 
         End With
 
-        InsertarBotonenGrilla(Grilla_Maquinas_Meson, "Btn_Accion", "Cerrar", "Gest.", 0, _Tipo_Boton.Boton)
+        Sb_InsertarBotonenGrilla(Grilla_Maquinas_Meson, "Btn_Accion", "Cerrar", "Gest.", 0, _Tipo_Boton.Boton)
 
         Sb_Tiempo_En_Mesones_y_Maquinas(Grilla_Maquinas_Meson, "Fecha_Hora_Inicio", "Tiempo_En_Maquina")
 

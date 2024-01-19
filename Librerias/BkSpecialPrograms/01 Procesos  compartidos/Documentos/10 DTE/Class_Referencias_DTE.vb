@@ -191,7 +191,7 @@ Public Class Class_Referencias_DTE
                 If Not _Estado = DataRowState.Deleted Then
 
                     Dim _CodigoTabla = _Row_Mevento.Item("Codigo")
-                    Dim _NombreTabla = Trim(_Row_Mevento.Item("Descripcion"))
+                    Dim _NombreTabla = _Row_Mevento.Item("Descripcion").ToString.Trim
 
                     Dim _Tidopa = _Fl.Item("Tidopa")
                     Dim _Idrse = _Fl.Item("Idmaeedo_Dori")
@@ -236,16 +236,18 @@ Public Class Class_Referencias_DTE
 
                     If Convert.ToBoolean(_Idmaeddo_Dori) Then
 
+                        Dim _InsertarRegistro = True
+
                         If _Tidopa = "GRD" Then
 
                             Dim _Idrst = _Sql.Fx_Trae_Dato("MAEDDO", "IDRST", "IDMAEDDO = " & _Idmaeddo_Dori)
 
-                            _Idrse = _Sql.Fx_Trae_Dato("MAEDDO", "IDMAEEDO", "IDMAEDDO = " & _Idrst)
-                            _Tidopa = _Sql.Fx_Trae_Dato("MAEEDO", "TIDO", "IDMAEEDO = " & _Idrse)
+                            _Idrse = _Sql.Fx_Trae_Dato("MAEDDO", "IDMAEEDO", "IDMAEDDO = " & _Idrst, True)
+                            _Tidopa = _Sql.Fx_Trae_Dato("MAEEDO", "TIDO", "IDMAEEDO = " & _Idrse, False)
+
+                            _InsertarRegistro = CBool(_Idrse)
 
                         End If
-
-                        Dim _InsertarRegistro = True
 
                         If CBool(_Tbl_Mevento_Edo.Rows.Count) Then
                             For Each _FlMv As DataRow In _Tbl_Mevento_Edo.Rows
@@ -292,7 +294,6 @@ Public Class Class_Referencias_DTE
                         End If
 
                     End If
-
 
                 End If
 

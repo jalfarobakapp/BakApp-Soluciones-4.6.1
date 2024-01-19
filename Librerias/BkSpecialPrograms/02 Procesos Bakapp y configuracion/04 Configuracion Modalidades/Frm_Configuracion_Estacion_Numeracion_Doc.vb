@@ -303,7 +303,7 @@ Public Class Frm_Configuracion_Estacion_Numeracion_Doc
 
             OcultarEncabezadoGrilla(Grilla, True)
 
-            InsertarBotonenGrilla(Grilla, "Btn_Edit", "Editar", "Editar", 0, _Tipo_Boton.Boton)
+            Sb_InsertarBotonenGrilla(Grilla, "Btn_Edit", "Editar", "Editar", 0, _Tipo_Boton.Boton)
 
             _DisplayIndex = 1
             .Columns("Btn_Edit").Frozen = True
@@ -580,9 +580,9 @@ Public Class Frm_Configuracion_Estacion_Numeracion_Doc
 
         End With
 
-        InsertarBotonenGrilla(Grilla, "Btn_Folder", "...", "Carpe..", _DisplayIndex, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla, "Btn_Folder", "...", "Carpe..", _DisplayIndex, _Tipo_Boton.Imagen)
         _DisplayIndex += 1
-        InsertarBotonenGrilla(Grilla, "Btn_Cmb", "Grabar", "Grabar", _DisplayIndex, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla, "Btn_Cmb", "Grabar", "Grabar", _DisplayIndex, _Tipo_Boton.Imagen)
 
         For Each _Row As DataGridViewRow In Grilla.Rows
 

@@ -1392,61 +1392,61 @@ Error_Numero:
         Combo_Box
     End Enum
 
-    Function InsertarBotonenGrilla(Grilla As Object,
-                                  NombreBoton As String,
-                                  TextoBoton As String,
-                                  NombreColumna As String,
-                                  Nrocolumna As Integer,
-                                  Optional TipoBoton As _Tipo_Boton = _Tipo_Boton.Boton)
+    Function Sb_InsertarBotonenGrilla(_Grilla As Object,
+                                      _Name As String,
+                                      _Text As String,
+                                      _HeaderText As String,
+                                      _Nrocolumna As Integer,
+                                      Optional TipoBoton As _Tipo_Boton = _Tipo_Boton.Boton)
 
-        Dim column As Object
+        Dim _Column As Object
 
         Select Case TipoBoton
             Case _Tipo_Boton.Boton
 
-                column = New DataGridViewButtonColumn()
+                _Column = New DataGridViewButtonColumn()
 
-                With column
-                    .Name = NombreBoton
-                    .HeaderText = NombreColumna
-                    .Text = TextoBoton
+                With _Column
+                    .Name = _Name
+                    .HeaderText = _HeaderText
+                    .Text = _Text
                     .UseColumnTextForButtonValue = True
                     .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
                 End With
 
             Case _Tipo_Boton.Imagen
 
-                column = New DataGridViewImageColumn
+                _Column = New DataGridViewImageColumn
 
-                With column
-                    .Name = NombreBoton
-                    .HeaderText = NombreColumna
+                With _Column
+                    .Name = _Name
+                    .HeaderText = _HeaderText
                     .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
                 End With
 
             Case _Tipo_Boton.Texto
 
-                column = New DataGridViewTextBoxColumn
+                _Column = New DataGridViewTextBoxColumn
 
-                With column
-                    .Name = NombreBoton
-                    .HeaderText = NombreColumna
+                With _Column
+                    .Name = _Name
+                    .HeaderText = _HeaderText
                     '.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
                 End With
 
             Case _Tipo_Boton.Combo_Box
 
-                column = New DataGridViewComboBoxColumn
+                _Column = New DataGridViewComboBoxColumn
 
-                With column
-                    .Name = NombreBoton
-                    .HeaderText = NombreColumna
+                With _Column
+                    .Name = _Name
+                    .HeaderText = _HeaderText
                     .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
                 End With
 
         End Select
 
-        Grilla.Columns.Insert(Nrocolumna, column) 'Está en la segunda fila
+        _Grilla.Columns.Insert(_Nrocolumna, _Column) 'Está en la segunda fila
 
     End Function
 

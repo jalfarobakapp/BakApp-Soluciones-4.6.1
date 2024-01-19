@@ -35,7 +35,7 @@ Public Class Frm_Tickets_Lista
 
     Private Sub Frm_Tickets_Lista_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        InsertarBotonenGrilla(Grilla, "BtnImagen_Estado", "Est.", "Img_Estado", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla, "BtnImagen_Estado", "Est.", "Img_Estado", 0, _Tipo_Boton.Imagen)
 
         'AddHandler Grilla.RowPrePaint, AddressOf Grilla_RowPrePaint
 

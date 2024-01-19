@@ -9,7 +9,8 @@ Public Class Frm_GRI_ProductosOT
     Public Property Tbl_Productos As DataTable
     Public Property FilaSeleccionada As DataRow
     Public Property MarcarFilasSinSaldo As Boolean
-
+    Public Property CreaNuevaOTExtra As Boolean
+    Public Property Numot_Extra As String
 
     Public Sub New()
 
@@ -19,6 +20,8 @@ Public Class Frm_GRI_ProductosOT
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
+
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
@@ -40,6 +43,8 @@ Public Class Frm_GRI_ProductosOT
 
             Dim _DisplayIndex = 0
 
+            Sb_InsertarBotonenGrilla(Grilla, "Btn_Opciones", "Opciones...", "Opciones", 0, _Tipo_Boton.Boton)
+
             .Columns("NREG").Width = 50
             .Columns("NREG").HeaderText = "SubOt"
             .Columns("NREG").ReadOnly = True
@@ -54,7 +59,7 @@ Public Class Frm_GRI_ProductosOT
             .Columns("CODIGO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("GLOSA").Width = 350
+            .Columns("GLOSA").Width = 280
             .Columns("GLOSA").HeaderText = "Nombre producto"
             .Columns("GLOSA").ReadOnly = True
             .Columns("GLOSA").Visible = True
@@ -78,12 +83,22 @@ Public Class Frm_GRI_ProductosOT
             _DisplayIndex += 1
 
             .Columns("SALDO").Visible = True
-            .Columns("SALDO").HeaderText = "Saldo"
+            .Columns("SALDO").HeaderText = "Saldo KG"
             .Columns("SALDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("SALDO").Width = 80
             .Columns("SALDO").DefaultCellStyle.Format = "###,##0.##"
             .Columns("SALDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
+
+            .Columns("SALDO2").Visible = True
+            .Columns("SALDO2").HeaderText = "Saldo SC"
+            .Columns("SALDO2").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("SALDO2").Width = 80
+            .Columns("SALDO2").DefaultCellStyle.Format = "###,###.##"
+            .Columns("SALDO2").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            '.Columns("Btn_Edit").DisplayIndex = True
 
         End With
 
@@ -110,6 +125,12 @@ Public Class Frm_GRI_ProductosOT
         Dim _Idpotl As Integer = _Fila.Cells("IDPOTL").Value
 
         Consulta_sql = "Select * From POTL Where IDPOTL = " & _Idpotl
+
+        Consulta_sql = "Select POTL.*,(FABRICAR-REALIZADO) As SALDO,Case RLUD When 1 Then 0 Else (FABRICAR-REALIZADO)/RLUD End As SALDO2,RLUD" & vbCrLf &
+                       "From POTL" & vbCrLf &
+                       "Inner Join MAEPR On KOPR = CODIGO" & vbCrLf &
+                       "Where IDPOTL = " & _Idpotl
+
         FilaSeleccionada = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Me.Close()
@@ -136,5 +157,122 @@ Public Class Frm_GRI_ProductosOT
                 Call Grilla_CellDoubleClick(Nothing, Nothing)
             End If
         End If
+    End Sub
+
+    Private Sub Btn_CrearOTExtra_Click(sender As Object, e As EventArgs) Handles Btn_CrearOTExtra.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        Dim _Codigo As String = _Fila.Cells("CODIGO").Value
+        Dim _Descripcion As String = _Fila.Cells("GLOSA").Value.ToString.Trim
+        Dim _NumOtRef As String = _Fila.Cells("NUMOT").Value
+        Dim _SubOt As String = _Fila.Cells("NREG").Value
+        Dim _Kilos As Integer
+        Dim _Idpotl As Integer = _Fila.Cells("IDPOTL").Value
+        Dim _Realizado As Integer = _Fila.Cells("REALIZADO").Value
+
+        If _Realizado = 0 Then
+            MessageBoxEx.Show(Me, "Solo se puede crear una OT Extra a productos que tengan el campo REALIZADO mayor a cero",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Aceptar As Boolean
+
+        Dim _Maxscoteextra As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
+                                                          "Valor",
+                                                          "Tabla = 'TARJA_MAXSCOTEXTRA' And CodigoTabla = 'MAXSCOCEXTRA'", True)
+        Dim _MsgMax As String
+
+        If CBool(_Maxscoteextra) Then
+            _MsgMax = vbCrLf & "Cantidad máxima a fabricar: " & FormatNumber(_Maxscoteextra, 0) & " Kilos"
+        End If
+
+        _Aceptar = InputBox_Bk(Me, "Ingrese la cantidad de kilos a fabricar" & vbCrLf &
+                               "Sub-OT: " & _SubOt & vbCrLf & "Producto: " & _Codigo & " - " & _Descripcion & _MsgMax,
+                               "Crear nueva OT por saldo de fabricación.", _Kilos, False, ,,
+                               True, _Tipo_Imagen.Product,, _Tipo_Caracter.Solo_Numeros_Enteros, False)
+
+        If Not _Aceptar Then
+            Return
+        End If
+
+        If CBool(_Maxscoteextra) Then
+
+            If _Kilos > _Maxscoteextra Then
+                MessageBoxEx.Show(Me, "No puede exceder la cantidad máxima para crear OT por diferencias" & vbCrLf &
+                                  "Cantidad máxima autorizada es de : " & FormatNumber(_Maxscoteextra, 0) & " Kilos",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Call Btn_CrearOTExtra_Click(Nothing, Nothing)
+                Return
+            End If
+
+        End If
+
+        If MessageBoxEx.Show(Me, "Confirma crear una nueva OT" & vbCrLf & vbCrLf &
+                             "Producto: " & _Codigo.Trim & " - " & _Descripcion.Trim & vbCrLf &
+                             "Cantidad: " & FormatNumber(_Kilos, 0) & " Kilos",
+                             "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        '--(@NumOtRef char(10), @USUARIO char(3), @ENVIA_FECHA DATE, @KILOS INT,@IDPOTL INT    
+
+        Dim _Fecha As DateTime = FechaDelServidor()
+
+
+        Consulta_sql = "EXEC Genero_OT_Diferencia  '" & _NumOtRef & "','" & FUNCIONARIO & "','" & Format(_Fecha, "dd/MM/yyyy") & "'," & _Kilos & "," & _Idpotl
+
+        Dim _Row_Respuesta As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+        If IsNothing(_Row_Respuesta) Then
+            MessageBoxEx.Show(Me, _Sql.Pro_Error & vbCrLf &
+                              "Consulta: " & Consulta_sql, "Problema al llamar al procedimiento almacenado",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        CreaNuevaOTExtra = True
+        Numot_Extra = _Row_Respuesta.Item("RESULTADO")
+
+        Dim _Mensaje1 = "Se creo la OT " & Numot_Extra
+        Dim _Mensaje2 = "Nueva OT por Saldo de fabricación" & vbCrLf & vbCrLf &
+                        "Producto: " & _Codigo.Trim & " - " & _Descripcion.Trim & vbCrLf &
+                        "Cantidad: " & FormatNumber(_Kilos, 0)
+
+        Dim iconoAlerta As Icon = SystemIcons.Warning
+        Dim _ImagenFoot As Image = iconoAlerta.ToBitmap()
+
+        ' Cambiar el tamaño del icono a 64x64 píxeles (puedes ajustar el tamaño según tus necesidades)
+        Dim nuevoTamaño As New Size(16, 16)
+        Dim iconoRedimensionado As Image = _ImagenFoot.GetThumbnailImage(nuevoTamaño.Width, nuevoTamaño.Height, Nothing, IntPtr.Zero)
+
+        _ImagenFoot = iconoRedimensionado
+
+        Dim _Info As New TaskDialogInfo("Alerta",
+                   eTaskDialogIcon.Information2,
+                  _Mensaje1, _Mensaje2,
+                  eTaskDialogButton.Ok, eTaskDialogBackgroundColor.Red, Nothing, Nothing,
+                  Nothing, "Se cerrara este formulario y se gestionara la nueva OT", _ImagenFoot, True)
+
+        Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
+
+        Me.Close()
+
+    End Sub
+
+    Private Sub Grilla_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellClick
+
+        Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+
+        If _Cabeza = "Btn_Opciones" Then
+            ShowContextMenu(Menu_Contextual_01)
+        End If
+
+    End Sub
+
+    Private Sub Btn_Fabricar_Click(sender As Object, e As EventArgs) Handles Btn_Fabricar.Click
+        Call Grilla_CellDoubleClick(Nothing, Nothing)
     End Sub
 End Class

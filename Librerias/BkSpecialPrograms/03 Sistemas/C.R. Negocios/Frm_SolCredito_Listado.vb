@@ -77,7 +77,7 @@ Public Class Frm_SolCredito_Listado
         St_Extra.Text = String.Empty
 
 
-        InsertarBotonenGrilla(Grilla_Inf, "BtnImagen", "Situación", "Solicitud", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla_Inf, "BtnImagen", "Situación", "Solicitud", 0, _Tipo_Boton.Imagen)
         Sb_Actualizar_Grilla("", False)
 
         LblBarraEstado.Text = "Usuario activo: " & Nombre_funcionario_activo

@@ -5346,6 +5346,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Formularios\Frm_00_Asis_Compra_Menu.resx">
       <DependentUpon>Frm_00_Asis_Compra_Menu.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Formularios\Frm_01_Asis_Compra_Resultados.resx">
       <DependentUpon>Frm_01_Asis_Compra_Resultados.vb</DependentUpon>

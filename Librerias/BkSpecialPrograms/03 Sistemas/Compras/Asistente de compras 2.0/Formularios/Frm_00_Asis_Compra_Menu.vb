@@ -1046,6 +1046,10 @@ Public Class Frm_00_Asis_Compra_Menu
         _Sql.Sb_Parametro_Informe_Sql(Sw_BlocConfiguracion, "Compras_Asistente",
                                       Sw_BlocConfiguracion.Name, Class_SQLite.Enum_Type._Switch, True, _Actualizar)
 
+        ' Chek dejar las cantidades multiplos a comprar por proveedores
+        _Sql.Sb_Parametro_Informe_Sql(Chk_CompMinXProveedores, "Compras_Asistente",
+                                      Chk_CompMinXProveedores.Name, Class_SQLite.Enum_Type._Switch, Chk_CompMinXProveedores.Checked, _Actualizar)
+
     End Sub
 
     'Sub Sb_Actualizar_Revisar_Sqlite()
@@ -2452,6 +2456,8 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Chk_QuitarProdExcluidos.Checked = Chk_QuitarProdExcluidos.Checked
         Fm.Chk_MarcarFilas.Checked = Chk_MarcarFilas.Checked
         Fm.InformeDeComprasAgrupadoporAsociacion = Chk_InformeDeComprasAgrupadoporAsociacion.Checked
+
+        Fm.Chk_CompMinXProveedores.Checked = Chk_CompMinXProveedores.Checked
 
         Fm.ShowDialog(Me)
         Fm.Dispose()

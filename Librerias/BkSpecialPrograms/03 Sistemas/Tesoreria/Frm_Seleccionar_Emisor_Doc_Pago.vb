@@ -40,7 +40,7 @@ Public Class Frm_Seleccionar_Emisor_Doc_Pago
 
     Private Sub Frm_Seleccionar_TipoPago_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
-        InsertarBotonenGrilla(Grilla, "BtnImagen", "Est.", "Estado", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla, "BtnImagen", "Est.", "Estado", 0, _Tipo_Boton.Imagen)
 
         Sb_Actualizar_Grilla()
 

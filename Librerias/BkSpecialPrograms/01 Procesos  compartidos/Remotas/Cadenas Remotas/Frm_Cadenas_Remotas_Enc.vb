@@ -110,8 +110,8 @@ Public Class Frm_Cadenas_Remotas_Lista
 
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-        InsertarBotonenGrilla(Grilla, "BtnImagen_Estado", "Est.", "Img_Estado", 0, _Tipo_Boton.Imagen)
-        InsertarBotonenGrilla(Grilla, "BtnImagen_Tag", "Tag", "Img_Tag", 1, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla, "BtnImagen_Estado", "Est.", "Img_Estado", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla, "BtnImagen_Tag", "Tag", "Img_Tag", 1, _Tipo_Boton.Imagen)
 
         Sb_Cargar_Sucursales()
 

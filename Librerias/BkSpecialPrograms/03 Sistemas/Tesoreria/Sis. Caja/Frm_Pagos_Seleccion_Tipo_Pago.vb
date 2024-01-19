@@ -55,7 +55,7 @@ Public Class Frm_Pagos_Seleccion_Tipo_Pago
 
         Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 10), Color.AliceBlue, ScrollBars.Vertical, False, True, False)
 
-        InsertarBotonenGrilla(Grilla, "BtnImagen", "Est.", "Estado", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla, "BtnImagen", "Est.", "Estado", 0, _Tipo_Boton.Imagen)
 
         AddHandler Grilla.CellDoubleClick, AddressOf Sb_Seleccionar_Pago
         AddHandler Btn_Aceptar.Click, AddressOf Sb_Seleccionar_Pago

@@ -54,7 +54,7 @@ Public Class Frm_Remotas_Revisar_Documentos_En_Espera
         Me.Text = "Documentos en espera, usuario: " & Nombre_funcionario_activo
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
-        InsertarBotonenGrilla(Grilla, "BtnImagen", "Est.", "Estado", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla, "BtnImagen", "Est.", "Estado", 0, _Tipo_Boton.Imagen)
         Sb_Actualizar_Grilla()
 
     End Sub

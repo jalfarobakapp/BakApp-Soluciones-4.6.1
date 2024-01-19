@@ -73,7 +73,7 @@ Public Class Frm_Demonio_03_Doc_Impresos_X_Estacion
         AddHandler DtpFecharevision.ValueChanged, AddressOf Sb_Actualizar_Grilla
         AddHandler Cmb_Tido.SelectedIndexChanged, AddressOf Sb_Actualizar_Grilla
 
-        InsertarBotonenGrilla(Grilla, "BtnImagen", "Est.", "Estado", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla, "BtnImagen", "Est.", "Estado", 0, _Tipo_Boton.Imagen)
 
         Sb_Actualizar_Grilla()
 

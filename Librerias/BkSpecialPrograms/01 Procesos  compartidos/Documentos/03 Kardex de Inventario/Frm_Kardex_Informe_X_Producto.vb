@@ -102,7 +102,7 @@ Public Class Frm_Kardex_Informe_X_Producto
         Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
         _Row_Producto = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        InsertarBotonenGrilla(GrillaKardex, "Orden", "I", "Or", 0, _Tipo_Boton.Texto)
+        Sb_InsertarBotonenGrilla(GrillaKardex, "Orden", "I", "Or", 0, _Tipo_Boton.Texto)
 
         If Fx_Tiene_Permiso(Me, "NO00001", , False) Then
             TxtPrecioUnitario.PasswordChar = "*"

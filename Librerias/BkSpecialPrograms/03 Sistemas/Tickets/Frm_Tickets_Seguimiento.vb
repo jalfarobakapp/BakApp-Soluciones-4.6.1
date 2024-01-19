@@ -114,8 +114,8 @@ Public Class Frm_Tickets_Seguimiento
             Lbl_FUlt_Respuesta.Text = _Row_UltRespuesta.Item("Fecha")
         End If
 
-        InsertarBotonenGrilla(Grilla, "Btn_ImagenAttach", "Est.", "ImagenAttach", 0, _Tipo_Boton.Imagen)
-        InsertarBotonenGrilla(Grilla, "Btn_ImagenUser", "Est.", "ImagenUser", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla, "Btn_ImagenAttach", "Est.", "ImagenAttach", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla, "Btn_ImagenUser", "Est.", "ImagenUser", 0, _Tipo_Boton.Imagen)
 
         Sb_Actualizar_Grilla()
 
@@ -474,6 +474,18 @@ Public Class Frm_Tickets_Seguimiento
 
     Private Sub Btn_Mnu_CerrarTicketCrearNuevo_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_CerrarTicketCrearNuevo.Click
 
+        If Not Mis_Ticket Then
+
+            If _Ticket.Tickets.Rechazado Then
+                If MessageBoxEx.Show(Me, "Este ticket fue rechazado." & vbCrLf &
+                                  "¿Confirma crear un nuevo Ticket a partir de este, esto revertira el rechazo?",
+                                     "Ticket Rechazado", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                    Return
+                End If
+            End If
+
+        End If
+
         Dim _Grabar As Boolean
         Dim _Id_Hijo As Integer
 
@@ -633,7 +645,12 @@ Public Class Frm_Tickets_Seguimiento
     End Sub
 
     Private Sub Btn_GestionarAcciones_Click(sender As Object, e As EventArgs) Handles Btn_GestionarAcciones.Click
+
+        Btn_Mnu_RechazarTicket.Visible = Not Mis_Ticket
+        Btn_Mnu_RechazarTicket.Enabled = Not _Ticket.Tickets.Rechazado
+
         ShowContextMenu(Menu_Contextual_Cambio_Estado)
+
     End Sub
 
 End Class

@@ -95,7 +95,7 @@ Public Class Frm_St_Estado_05_Reparacion2
 
     Private Sub Frm_St_Estado_05_Reparacion2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        InsertarBotonenGrilla(Grilla, "BtnImagen", "Situación", "Solicitud", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla, "BtnImagen", "Situación", "Solicitud", 0, _Tipo_Boton.Imagen)
 
         Dim _CodFuncionario = _Row_Encabezado.Item("CodTecnico_Asignado")
 

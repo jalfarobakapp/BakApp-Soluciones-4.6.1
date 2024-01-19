@@ -55,7 +55,7 @@ Public Class Frm_Archivos_Adjuntos
 
         _Id_Reclamo = _Cl_Reclamo.Id_Reclamo
 
-        InsertarBotonenGrilla(Grilla_Archivos, "BtnImagen", "TD", "TD", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla_Archivos, "BtnImagen", "TD", "TD", 0, _Tipo_Boton.Imagen)
 
         Sb_Actualizar_Grilla()
 

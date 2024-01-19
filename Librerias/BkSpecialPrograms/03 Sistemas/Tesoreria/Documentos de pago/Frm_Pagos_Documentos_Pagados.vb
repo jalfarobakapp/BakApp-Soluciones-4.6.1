@@ -24,7 +24,7 @@ Public Class Frm_Pagos_Documentos_Pagados
 
     Private Sub Frm_Pagos_Documentos_Pagados_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
-        InsertarBotonenGrilla(Grilla_Encabezado, "BtnImagen", "-", "Imagen", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla_Encabezado, "BtnImagen", "-", "Imagen", 0, _Tipo_Boton.Imagen)
 
         AddHandler Grilla_Detalle.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla_Detalle.MouseDown, AddressOf Sb_Grilla_MouseDown

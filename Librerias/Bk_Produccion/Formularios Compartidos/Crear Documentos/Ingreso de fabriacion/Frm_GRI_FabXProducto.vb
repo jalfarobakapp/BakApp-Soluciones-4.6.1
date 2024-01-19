@@ -46,7 +46,7 @@ Public Class Frm_GRI_FabXProducto
         End If
     End Sub
 
-    Sub Sb_BuscarOt(ByRef _Numot As String)
+    Sub Sb_BuscarOt(_Numot As String)
 
         If Not String.IsNullOrEmpty(_Numot) Then
 
@@ -62,6 +62,8 @@ Public Class Frm_GRI_FabXProducto
             Else
                 _Numot = _Nudo
             End If
+
+            Txt_Numot.Text = _Numot
 
             Consulta_sql = "Select * From POTE Where NUMOT = '" & _Numot & "'"
             _Row_Pote = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -79,7 +81,7 @@ Public Class Frm_GRI_FabXProducto
                 Return
             End If
 
-            Txt_Numot.ReadOnly = True
+            'Txt_Numot.ReadOnly = True
             Txt_Numot.ButtonCustom.Visible = True
             Lbl_ReferenciaOT.Text = "REFERENCIA: " & _Row_Pote.Item("REFERENCIA")
 
@@ -91,7 +93,12 @@ Public Class Frm_GRI_FabXProducto
 
     Sub Sb_BuscarProductos(_Numot As String)
 
-        Consulta_sql = "Select *,(FABRICAR-REALIZADO) As SALDO From POTL" & vbCrLf &
+        Dim _CreaNuevaOTExtra As Boolean
+        Dim _Numot_Extra As String
+
+        Consulta_sql = "Select POTL.*,(FABRICAR-REALIZADO) As SALDO,Case RLUD When 1 Then 0 Else (FABRICAR-REALIZADO)/RLUD End As SALDO2,RLUD" & vbCrLf &
+                       "From POTL" & vbCrLf &
+                       "Inner Join MAEPR On KOPR = CODIGO" & vbCrLf &
                        "Where NUMOT='" & _Numot & "' And EMPRESA = '" & ModEmpresa & "' And LILG <> 'IM' " &
                        "And Exists (Select TABBOPR.* From TABBOPR " &
                        "Where TABBOPR.KOPR = POTL.CODIGO And TABBOPR.KOSU = '" & ModSucursal & "' AND TABBOPR.KOBO = '" & ModBodega & "')"
@@ -104,13 +111,25 @@ Public Class Frm_GRI_FabXProducto
         Fm.Tbl_Productos = _Tbl_Productos
         Fm.ShowDialog(Me)
         _Row_Potl = Fm.FilaSeleccionada
+        _CreaNuevaOTExtra = Fm.CreaNuevaOTExtra
+        _Numot_Extra = Fm.Numot_Extra
         Fm.Dispose()
+
+        Txt_Numot.ReadOnly = True
+
+        If _CreaNuevaOTExtra Then
+            Sb_Limpiar()
+            Txt_Numot.Text = _Numot_Extra
+            Sb_BuscarProductos(_Numot_Extra)
+            Return
+        End If
+
 
         If IsNothing(_Row_Potl) Then
             If String.IsNullOrEmpty(Txt_Codigo.Text) Then
                 Grupo_Producto.Text = "DETALLE DE DATOS DE FABRICACION"
-                MessageBoxEx.Show(Me, "Debe seleccionar algun producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Txt_Numot.Text = String.Empty
+                MessageBoxEx.Show(Me, "Debe seleccionar algún producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                'Txt_Numot.Text = String.Empty
                 Txt_Numot.ButtonCustom.Visible = False
                 Txt_Numot.Focus()
             Else
@@ -131,7 +150,14 @@ Public Class Frm_GRI_FabXProducto
 
         Lbl_Fabricar.Text = FormatNumber(_Row_Potl.Item("FABRICAR"), 0)
         Lbl_Realizado.Text = FormatNumber(_Row_Potl.Item("REALIZADO"), 0)
-        Lbl_Saldo.Text = FormatNumber(_Row_Potl.Item("FABRICAR") - _Row_Potl.Item("REALIZADO"), 0)
+        'Lbl_Saldo.Text = FormatNumber(_Row_Potl.Item("FABRICAR") - _Row_Potl.Item("REALIZADO"), 0)
+        Lbl_Saldo.Text = FormatNumber(_Row_Potl.Item("SALDO"), 0)
+
+        If _Row_Potl.Item("RLUD") <> 1 Then
+            LabelX16.Text = FormatNumber(_Row_Potl.Item("SALDO2"), 0)
+            Panel_SC.Visible = True
+        End If
+
 
         Consulta_sql = "Select * From MAEPR Where KOPR = '" & Txt_Codigo.Text & "'"
         _Row_Maepr = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -313,8 +339,8 @@ Public Class Frm_GRI_FabXProducto
     Sub Sb_Limpiar()
 
         Dtp_Fecha_Ingreso.Value = _FechaDelServidor
-        Txt_Numot.Text = String.Empty
         Txt_Numot.ReadOnly = False
+        Txt_Numot.Text = String.Empty
         Txt_Numot.ButtonCustom.Visible = False
         Grupo_Producto.Enabled = False
         Txt_Codigo.Text = String.Empty
@@ -345,6 +371,8 @@ Public Class Frm_GRI_FabXProducto
         Txt_Observaciones.ReadOnly = False
         Cmb_Formato.DataSource = Nothing
         'Cmb_Formato.Text = String.Empty
+
+        Panel_SC.Visible = False
 
         Me.Refresh()
 
@@ -427,7 +455,9 @@ Public Class Frm_GRI_FabXProducto
             Return
         End If
 
-        If MessageBoxEx.Show(Me, "¿Confirma la grabación por " & Txt_Cantidad.Text & " " & LabelX3.Text & "?", "Confirmar Grabación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+        If MessageBoxEx.Show(Me, "¿Confirma la grabación por " & _Cl_Tarja._Cl_Tarja_Ent.CantidadTipo & " (" & _Cl_Tarja._Cl_Tarja_Ent.Tipo & ") " & vbCrLf &
+                                "Equivalente a " & Txt_Cantidad.Text & " " & LabelX3.Text & "?",
+                             "Confirmar Grabación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
             Txt_Cantidad.Focus()
             Return
         End If
@@ -535,7 +565,11 @@ Public Class Frm_GRI_FabXProducto
         Dim _Aceptar As Boolean
         Dim _NroLote As String
 
-        _Aceptar = InputBox_Bk(Me, "Ingrese el número de Lote", "Número de Lote", _NroLote, False,, 20, True,,,,,,,, True)
+        Dim _NoPermitirEntradaDeTeclado As Boolean = CBool(_Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
+                                                          "Valor",
+                                                          "Tabla = 'TARJA_INGLOTES' And CodigoTabla = 'INGLOTES'", True))
+
+        _Aceptar = InputBox_Bk(Me, "Ingrese el número de Lote", "Número de Lote", _NroLote, False,, 20, True,,,,,,,, _NoPermitirEntradaDeTeclado)
 
         If Not _Aceptar Then
             Return

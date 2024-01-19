@@ -272,6 +272,10 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
 
             Sb_Actualizar_Grilla()
 
+            MessageBoxEx.Show(Me, "Se han insertado correctamente " & FormatNumber(_Tbl.Rows.Count, 0) & " producto(s)" & vbCrLf &
+                              "No es necesario grabar para confirmar esta acción", "Insertar productos",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+
         End If
 
     End Sub
@@ -308,7 +312,8 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql) Then
             Sb_Actualizar_Grilla()
-            MessageBoxEx.Show(Me, "Se han insertado correctamente " & FormatNumber(_Tbl.Rows.Count, 0) & " producto(s)", "Insertar productos",
+            MessageBoxEx.Show(Me, "Se han insertado correctamente " & FormatNumber(_Tbl.Rows.Count, 0) & " producto(s)" & vbCrLf &
+                              "No es necesario grabar para confirmar esta acción", "Insertar productos",
                               MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
             MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problemas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -350,7 +355,8 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql) Then
             Txt_Buscador.Text = String.Empty
             Sb_Actualizar_Grilla()
-            MessageBoxEx.Show(Me, "Se han insertado correctamente " & FormatNumber(_Tbl.Rows.Count, 0) & " producto(s)", "Insertar productos",
+            MessageBoxEx.Show(Me, "Se han insertado correctamente " & FormatNumber(_Tbl.Rows.Count, 0) & " producto(s)" & vbCrLf &
+                              "No es necesario grabar para confirmar esta acción", "Insertar productos",
                               MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
             MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problemas", MessageBoxButtons.OK, MessageBoxIcon.Stop)

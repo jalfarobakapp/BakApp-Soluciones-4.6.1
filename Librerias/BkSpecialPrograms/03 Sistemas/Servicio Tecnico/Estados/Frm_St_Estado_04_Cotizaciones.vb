@@ -52,8 +52,8 @@ Public Class Frm_St_Estado_04_Cotizaciones
 
     Private Sub Frm_St_Estado_04_Cotizaciones_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        InsertarBotonenGrilla(Grilla, "Btn_Ver", "Ver", "Ver", 0, _Tipo_Boton.Boton)
-        InsertarBotonenGrilla(Grilla, "Btn_Accion", "Cambiar estado", "", 1, _Tipo_Boton.Boton)
+        Sb_InsertarBotonenGrilla(Grilla, "Btn_Ver", "Ver", "Ver", 0, _Tipo_Boton.Boton)
+        Sb_InsertarBotonenGrilla(Grilla, "Btn_Accion", "Cambiar estado", "", 1, _Tipo_Boton.Boton)
 
         Sb_Actualizar_Grilla()
 

@@ -64,18 +64,23 @@ Partial Class Frm_GRI_FabXProducto
         Me.Txt_Turno = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Analista = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
+        Me.Panel_SC = New System.Windows.Forms.TableLayoutPanel()
+        Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX16 = New DevComponents.DotNetBar.LabelX()
         Me.Grupo_Producto.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Dtp_Fecha_Ingreso, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
+        Me.Panel_SC.SuspendLayout()
         Me.SuspendLayout()
         '
         'Grupo_Producto
         '
         Me.Grupo_Producto.BackColor = System.Drawing.Color.White
         Me.Grupo_Producto.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_Producto.Controls.Add(Me.Panel_SC)
         Me.Grupo_Producto.Controls.Add(Me.LabelX12)
         Me.Grupo_Producto.Controls.Add(Me.TableLayoutPanel1)
         Me.Grupo_Producto.Controls.Add(Me.LabelX3)
@@ -193,7 +198,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.LabelX11.Size = New System.Drawing.Size(82, 19)
         Me.LabelX11.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.LabelX11.TabIndex = 82
-        Me.LabelX11.Text = "SALDO"
+        Me.LabelX11.Text = "SALDO KG"
         '
         'Lbl_Realizado
         '
@@ -721,7 +726,7 @@ Partial Class Frm_GRI_FabXProducto
         '
         Me.Txt_Descripcion_Kopral.Border.Class = "TextBoxBorder"
         Me.Txt_Descripcion_Kopral.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Descripcion_Kopral.ButtonCustom.Image = CType(resources.GetObject("Txt_CodAlternativo_Pallet.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Descripcion_Kopral.ButtonCustom.Image = CType(resources.GetObject("Txt_Descripcion_Kopral.ButtonCustom.Image"), System.Drawing.Image)
         Me.Txt_Descripcion_Kopral.ButtonCustom.Visible = True
         Me.Txt_Descripcion_Kopral.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Descripcion_Kopral.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
@@ -905,6 +910,55 @@ Partial Class Frm_GRI_FabXProducto
         Me.LabelX17.TabIndex = 101
         Me.LabelX17.Text = "ANALISTA"
         '
+        'Panel_SC
+        '
+        Me.Panel_SC.BackColor = System.Drawing.Color.Transparent
+        Me.Panel_SC.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
+        Me.Panel_SC.ColumnCount = 2
+        Me.Panel_SC.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.9011!))
+        Me.Panel_SC.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.0989!))
+        Me.Panel_SC.Controls.Add(Me.LabelX16, 1, 0)
+        Me.Panel_SC.Controls.Add(Me.LabelX13, 0, 0)
+        Me.Panel_SC.Location = New System.Drawing.Point(555, 111)
+        Me.Panel_SC.Name = "Panel_SC"
+        Me.Panel_SC.RowCount = 1
+        Me.Panel_SC.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.Panel_SC.Size = New System.Drawing.Size(182, 27)
+        Me.Panel_SC.TabIndex = 83
+        '
+        'LabelX13
+        '
+        Me.LabelX13.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX13.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX13.ForeColor = System.Drawing.Color.Black
+        Me.LabelX13.Location = New System.Drawing.Point(4, 4)
+        Me.LabelX13.Name = "LabelX13"
+        Me.LabelX13.Size = New System.Drawing.Size(81, 19)
+        Me.LabelX13.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.LabelX13.TabIndex = 84
+        Me.LabelX13.Text = "SALDO SC"
+        '
+        'LabelX16
+        '
+        Me.LabelX16.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX16.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX16.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX16.ForeColor = System.Drawing.Color.Black
+        Me.LabelX16.Location = New System.Drawing.Point(92, 4)
+        Me.LabelX16.Name = "LabelX16"
+        Me.LabelX16.Size = New System.Drawing.Size(82, 19)
+        Me.LabelX16.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.LabelX16.TabIndex = 84
+        Me.LabelX16.Text = "0"
+        Me.LabelX16.TextAlignment = System.Drawing.StringAlignment.Far
+        '
         'Frm_GRI_FabXProducto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -930,6 +984,7 @@ Partial Class Frm_GRI_FabXProducto
         CType(Me.Dtp_Fecha_Ingreso, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel2.ResumeLayout(False)
+        Me.Panel_SC.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -975,4 +1030,7 @@ Partial Class Frm_GRI_FabXProducto
     Public WithEvents Txt_Analista As DevComponents.DotNetBar.Controls.TextBoxX
     Public WithEvents Txt_Observaciones As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX14 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Panel_SC As TableLayoutPanel
+    Friend WithEvents LabelX16 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX13 As DevComponents.DotNetBar.LabelX
 End Class

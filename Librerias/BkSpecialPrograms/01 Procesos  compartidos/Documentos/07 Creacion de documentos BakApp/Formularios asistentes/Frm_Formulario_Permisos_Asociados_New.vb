@@ -93,10 +93,10 @@ Public Class Frm_Formulario_Permisos_Asociados_New
             Btn_Ver_Infor_Morosidad_Cupo.Visible = True
         End If
 
-        InsertarBotonenGrilla(Grilla, "Btn_Estado", "Est.", "Btn_Estado", 0, _Tipo_Boton.Imagen)
-        InsertarBotonenGrilla(Grilla, "Btn_Accion", "Opciones...", "Btn_Accion", 1, _Tipo_Boton.Boton)
+        Sb_InsertarBotonenGrilla(Grilla, "Btn_Estado", "Est.", "Btn_Estado", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla, "Btn_Accion", "Opciones...", "Btn_Accion", 1, _Tipo_Boton.Boton)
 
-        InsertarBotonenGrilla(Grilla, "Txt_Hay_Funcionario", "Hay", "Txt_Hay_Funcionario", 2, _Tipo_Boton.Texto)
+        Sb_InsertarBotonenGrilla(Grilla, "Txt_Hay_Funcionario", "Hay", "Txt_Hay_Funcionario", 2, _Tipo_Boton.Texto)
 
         Sb_Acualizar_Grilla()
 

@@ -48,7 +48,7 @@ Public Class Frm_Meson_Asignar_Productos
         AddHandler Rdb_Ver_Suspendidas.CheckedChanged, AddressOf Sb_Rdb_Ver_CheckedChanged
         AddHandler Rdb_Ver_Todas.CheckedChanged, AddressOf Sb_Rdb_Ver_CheckedChanged
 
-        InsertarBotonenGrilla(Grilla_Potpr, "Btn_Ico", "Ico", "Inf.", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla_Potpr, "Btn_Ico", "Ico", "Inf.", 0, _Tipo_Boton.Imagen)
 
         Sb_Actualizar_Grillas()
 

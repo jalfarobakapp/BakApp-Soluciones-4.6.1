@@ -52,7 +52,7 @@ Public Class Frm_Rc_05_Validacion
 
         _Id_Reclamo = _Cl_Reclamo.Pro_Row_Reclamo.Item("Id_Reclamo")
 
-        InsertarBotonenGrilla(Grilla_Archivos, "BtnImagen", "TD", "TD", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla_Archivos, "BtnImagen", "TD", "TD", 0, _Tipo_Boton.Imagen)
 
         Sb_Actualizar_Grilla()
 

@@ -73,7 +73,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
         End If
 
-        InsertarBotonenGrilla(Grilla_Maedpce, "Btn_Ico", "Ico", "Inf.", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla_Maedpce, "Btn_Ico", "Ico", "Inf.", 0, _Tipo_Boton.Imagen)
 
         Sb_Tabla_Maedpce()
         Sb_Nueva_Linea_De_Pago()
