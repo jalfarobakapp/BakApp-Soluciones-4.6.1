@@ -56,48 +56,6 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.BtnSeleccionarProductos = New DevComponents.DotNetBar.ButtonX()
         Me.Input_Productos_Ranking = New DevComponents.Editors.IntegerInput()
         Me.STabConfiguracion = New DevComponents.DotNetBar.SuperTabControl()
-        Me.SuperTabControlPanel8 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.SbTab_ConfAutomatizacion = New DevComponents.DotNetBar.SuperTabControl()
-        Me.SuperTabControlPanel9 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Chk_CompMinXProveedores = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Txt_DespacharA_OCC = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX31 = New DevComponents.DotNetBar.LabelX()
-        Me.Rdb_OccProvEnviarCorreoNoEnviar = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Rdb_OccProvEnviarCorreoSoloCc = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.LabelX29 = New DevComponents.DotNetBar.LabelX()
-        Me.Rdb_OccProvEnviarCorreoTodos = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Txt_NombreFormato_PDF_OCC = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Txt_CorreoCc_OCC = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX22 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_CtaCorreoEnvioAutomatizado_OCC = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX21 = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX23 = New DevComponents.DotNetBar.LabelX()
-        Me.SubTabConfAuto_OCC = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel10 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Chk_IncluirProdRefleoNVI = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_IncluirProdBajaRotacionNVI = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.LabelX25 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_NombreFormato_PDF_NVI = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Btn_Bodega_NVI_Estudio = New DevComponents.DotNetBar.ButtonX()
-        Me.Txt_CorreoCc_NVI = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Txt_CtaCorreoEnvioAutomatizado_NVI = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX27 = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX28 = New DevComponents.DotNetBar.LabelX()
-        Me.SubTabConfAuto_NVI = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel11 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.LabelX30 = New DevComponents.DotNetBar.LabelX()
-        Me.Input_DiasMarcarProvQueNoTiene = New DevComponents.Editors.IntegerInput()
-        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Txt_CtaCorreoAvisoOCCMinCompra = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX26 = New DevComponents.DotNetBar.LabelX()
-        Me.Chk_EnviarListadoProveedoresSinStock = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Txt_CtaCorreoAvisoProveedoresSinStock = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX24 = New DevComponents.DotNetBar.LabelX()
-        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.Tab_Automatizacion = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Chk_DbExt_SincronizarPRBD = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Grupo_DbExt = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -121,17 +79,6 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.LabelX20 = New DevComponents.DotNetBar.LabelX()
         Me.Chk_SumerStockExternoAlFisico = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Tab_ConexionExterna = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel5 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.ReflectionImage1 = New DevComponents.DotNetBar.Controls.ReflectionImage()
-        Me.Chk_Advertir_Rotacion = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.LabelX12 = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
-        Me.Input_Dias_Advertencia_Rotacion = New DevComponents.Editors.IntegerInput()
-        Me.SuperTabItem5 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel7 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
-        Me.Chk_Cargar_Rotacion_Estacional = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.SuperTabItem7 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Dtp_Fecha_Vta_Desde = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.Input_Ultimos_Meses_Vta_Promedio = New DevComponents.Editors.IntegerInput()
@@ -202,6 +149,59 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Input_Tiempo_Reposicion = New DevComponents.Editors.IntegerInput()
         Me.Chk_IncluirUltCXprov = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Tab_Indicadores = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel8 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.SbTab_ConfAutomatizacion = New DevComponents.DotNetBar.SuperTabControl()
+        Me.SuperTabControlPanel9 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Chk_CompMinXProveedores = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Txt_DespacharA_OCC = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX31 = New DevComponents.DotNetBar.LabelX()
+        Me.Rdb_OccProvEnviarCorreoNoEnviar = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_OccProvEnviarCorreoSoloCc = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX29 = New DevComponents.DotNetBar.LabelX()
+        Me.Rdb_OccProvEnviarCorreoTodos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Txt_NombreFormato_PDF_OCC = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_CorreoCc_OCC = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX22 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_CtaCorreoEnvioAutomatizado_OCC = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX21 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX23 = New DevComponents.DotNetBar.LabelX()
+        Me.SubTabConfAuto_OCC = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel10 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Chk_IncluirProdRefleoNVI = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_IncluirProdBajaRotacionNVI = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX25 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_NombreFormato_PDF_NVI = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Btn_Bodega_NVI_Estudio = New DevComponents.DotNetBar.ButtonX()
+        Me.Txt_CorreoCc_NVI = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_CtaCorreoEnvioAutomatizado_NVI = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX27 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX28 = New DevComponents.DotNetBar.LabelX()
+        Me.SubTabConfAuto_NVI = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel11 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.LabelX30 = New DevComponents.DotNetBar.LabelX()
+        Me.Input_DiasMarcarProvQueNoTiene = New DevComponents.Editors.IntegerInput()
+        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Txt_CtaCorreoAvisoOCCMinCompra = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX26 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_EnviarListadoProveedoresSinStock = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Txt_CtaCorreoAvisoProveedoresSinStock = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX24 = New DevComponents.DotNetBar.LabelX()
+        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.Tab_Automatizacion = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel5 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.ReflectionImage1 = New DevComponents.DotNetBar.Controls.ReflectionImage()
+        Me.Chk_Advertir_Rotacion = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX12 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
+        Me.Input_Dias_Advertencia_Rotacion = New DevComponents.Editors.IntegerInput()
+        Me.SuperTabItem5 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel7 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_Cargar_Rotacion_Estacional = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.SuperTabItem7 = New DevComponents.DotNetBar.SuperTabItem()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.Rdb_RotMeses = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_RotDias = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -238,21 +238,8 @@ Partial Class Frm_00_Asis_Compra_Menu
         CType(Me.Input_Productos_Ranking, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.STabConfiguracion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.STabConfiguracion.SuspendLayout()
-        Me.SuperTabControlPanel8.SuspendLayout()
-        CType(Me.SbTab_ConfAutomatizacion, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SbTab_ConfAutomatizacion.SuspendLayout()
-        Me.SuperTabControlPanel9.SuspendLayout()
-        Me.GroupPanel1.SuspendLayout()
-        Me.SuperTabControlPanel10.SuspendLayout()
-        Me.GroupPanel2.SuspendLayout()
-        Me.SuperTabControlPanel11.SuspendLayout()
-        Me.GroupPanel3.SuspendLayout()
-        CType(Me.Input_DiasMarcarProvQueNoTiene, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel2.SuspendLayout()
         Me.Grupo_DbExt.SuspendLayout()
-        Me.SuperTabControlPanel5.SuspendLayout()
-        CType(Me.Input_Dias_Advertencia_Rotacion, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SuperTabControlPanel7.SuspendLayout()
         Me.SuperTabControlPanel1.SuspendLayout()
         CType(Me.Dtp_Fecha_Vta_Desde, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Input_Ultimos_Meses_Vta_Promedio, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -273,6 +260,19 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.TableLayoutPanel5.SuspendLayout()
         CType(Me.Input_Dias_a_Abastecer, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Input_Tiempo_Reposicion, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuperTabControlPanel8.SuspendLayout()
+        CType(Me.SbTab_ConfAutomatizacion, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SbTab_ConfAutomatizacion.SuspendLayout()
+        Me.SuperTabControlPanel9.SuspendLayout()
+        Me.GroupPanel1.SuspendLayout()
+        Me.SuperTabControlPanel10.SuspendLayout()
+        Me.GroupPanel2.SuspendLayout()
+        Me.SuperTabControlPanel11.SuspendLayout()
+        Me.GroupPanel3.SuspendLayout()
+        CType(Me.Input_DiasMarcarProvQueNoTiene, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuperTabControlPanel5.SuspendLayout()
+        CType(Me.Input_Dias_Advertencia_Rotacion, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuperTabControlPanel7.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
         Me.Grupo_Productos.SuspendLayout()
         Me.SuspendLayout()
@@ -300,9 +300,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Bar.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_GrabarConfiguracion, Me.BtnProcesarInf, Me.Chk_Procesar_Uno_A_Uno, Me.Btn_Imprimir_Maestra, Me.Btn_Cancelar, Me.Circular_Progress1})
-        Me.Bar.Location = New System.Drawing.Point(0, 658)
+        Me.Bar.Location = New System.Drawing.Point(0, 602)
         Me.Bar.Name = "Bar"
-        Me.Bar.Size = New System.Drawing.Size(571, 41)
+        Me.Bar.Size = New System.Drawing.Size(824, 41)
         Me.Bar.Stretch = True
         Me.Bar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar.TabIndex = 13
@@ -807,804 +807,24 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.STabConfiguracion.ControlBox.Name = ""
         Me.STabConfiguracion.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.STabConfiguracion.ControlBox.MenuBox, Me.STabConfiguracion.ControlBox.CloseBox})
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel3)
-        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel8)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel2)
-        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel5)
-        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel7)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel1)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel4)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel6)
+        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel8)
+        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel5)
+        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel7)
         Me.STabConfiguracion.ForeColor = System.Drawing.Color.Black
         Me.STabConfiguracion.Location = New System.Drawing.Point(14, 316)
         Me.STabConfiguracion.Name = "STabConfiguracion"
         Me.STabConfiguracion.ReorderTabsEnabled = True
         Me.STabConfiguracion.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
         Me.STabConfiguracion.SelectedTabIndex = 0
-        Me.STabConfiguracion.Size = New System.Drawing.Size(544, 294)
+        Me.STabConfiguracion.Size = New System.Drawing.Size(802, 251)
         Me.STabConfiguracion.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.STabConfiguracion.TabIndex = 49
-        Me.STabConfiguracion.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Tab_Indicadores, Me.Tab_Costos_OCC, Me.Tab_Excluir_Incluir, Me.Tab_CalVnta, Me.SuperTabItem7, Me.SuperTabItem5, Me.Tab_ConexionExterna, Me.Tab_Automatizacion})
+        Me.STabConfiguracion.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Tab_Indicadores, Me.Tab_Costos_OCC, Me.Tab_Excluir_Incluir, Me.Tab_CalVnta, Me.Tab_ConexionExterna, Me.Tab_Automatizacion, Me.SuperTabItem7, Me.SuperTabItem5})
         Me.STabConfiguracion.Text = "SuperTabControl2"
-        '
-        'SuperTabControlPanel8
-        '
-        Me.SuperTabControlPanel8.Controls.Add(Me.SbTab_ConfAutomatizacion)
-        Me.SuperTabControlPanel8.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel8.Location = New System.Drawing.Point(0, 0)
-        Me.SuperTabControlPanel8.Name = "SuperTabControlPanel8"
-        Me.SuperTabControlPanel8.Size = New System.Drawing.Size(544, 294)
-        Me.SuperTabControlPanel8.TabIndex = 0
-        Me.SuperTabControlPanel8.TabItem = Me.Tab_Automatizacion
-        '
-        'SbTab_ConfAutomatizacion
-        '
-        Me.SbTab_ConfAutomatizacion.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        '
-        '
-        '
-        Me.SbTab_ConfAutomatizacion.ControlBox.CloseBox.Name = ""
-        '
-        '
-        '
-        Me.SbTab_ConfAutomatizacion.ControlBox.MenuBox.Name = ""
-        Me.SbTab_ConfAutomatizacion.ControlBox.Name = ""
-        Me.SbTab_ConfAutomatizacion.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SbTab_ConfAutomatizacion.ControlBox.MenuBox, Me.SbTab_ConfAutomatizacion.ControlBox.CloseBox})
-        Me.SbTab_ConfAutomatizacion.Controls.Add(Me.SuperTabControlPanel9)
-        Me.SbTab_ConfAutomatizacion.Controls.Add(Me.SuperTabControlPanel10)
-        Me.SbTab_ConfAutomatizacion.Controls.Add(Me.SuperTabControlPanel11)
-        Me.SbTab_ConfAutomatizacion.ForeColor = System.Drawing.Color.Black
-        Me.SbTab_ConfAutomatizacion.Location = New System.Drawing.Point(6, 7)
-        Me.SbTab_ConfAutomatizacion.Name = "SbTab_ConfAutomatizacion"
-        Me.SbTab_ConfAutomatizacion.ReorderTabsEnabled = True
-        Me.SbTab_ConfAutomatizacion.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.SbTab_ConfAutomatizacion.SelectedTabIndex = 1
-        Me.SbTab_ConfAutomatizacion.Size = New System.Drawing.Size(527, 232)
-        Me.SbTab_ConfAutomatizacion.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.SbTab_ConfAutomatizacion.TabIndex = 116
-        Me.SbTab_ConfAutomatizacion.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SubTabConfAuto_OCC, Me.SubTabConfAuto_NVI, Me.SuperTabItem1})
-        Me.SbTab_ConfAutomatizacion.Text = "SuperTabControl1"
-        '
-        'SuperTabControlPanel9
-        '
-        Me.SuperTabControlPanel9.Controls.Add(Me.GroupPanel1)
-        Me.SuperTabControlPanel9.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel9.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel9.Name = "SuperTabControlPanel9"
-        Me.SuperTabControlPanel9.Size = New System.Drawing.Size(527, 205)
-        Me.SuperTabControlPanel9.TabIndex = 1
-        Me.SuperTabControlPanel9.TabItem = Me.SubTabConfAuto_OCC
-        '
-        'GroupPanel1
-        '
-        Me.GroupPanel1.BackColor = System.Drawing.Color.White
-        Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel1.Controls.Add(Me.Chk_CompMinXProveedores)
-        Me.GroupPanel1.Controls.Add(Me.Txt_DespacharA_OCC)
-        Me.GroupPanel1.Controls.Add(Me.LabelX31)
-        Me.GroupPanel1.Controls.Add(Me.Rdb_OccProvEnviarCorreoNoEnviar)
-        Me.GroupPanel1.Controls.Add(Me.Rdb_OccProvEnviarCorreoSoloCc)
-        Me.GroupPanel1.Controls.Add(Me.LabelX29)
-        Me.GroupPanel1.Controls.Add(Me.Rdb_OccProvEnviarCorreoTodos)
-        Me.GroupPanel1.Controls.Add(Me.Txt_NombreFormato_PDF_OCC)
-        Me.GroupPanel1.Controls.Add(Me.Txt_CorreoCc_OCC)
-        Me.GroupPanel1.Controls.Add(Me.LabelX22)
-        Me.GroupPanel1.Controls.Add(Me.Txt_CtaCorreoEnvioAutomatizado_OCC)
-        Me.GroupPanel1.Controls.Add(Me.LabelX21)
-        Me.GroupPanel1.Controls.Add(Me.LabelX23)
-        Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(3, 3)
-        Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(521, 199)
-        '
-        '
-        '
-        Me.GroupPanel1.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.GroupPanel1.Style.BackColorGradientAngle = 90
-        Me.GroupPanel1.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.GroupPanel1.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel1.Style.BorderBottomWidth = 1
-        Me.GroupPanel1.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
-        Me.GroupPanel1.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel1.Style.BorderLeftWidth = 1
-        Me.GroupPanel1.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel1.Style.BorderRightWidth = 1
-        Me.GroupPanel1.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel1.Style.BorderTopWidth = 1
-        Me.GroupPanel1.Style.CornerDiameter = 4
-        Me.GroupPanel1.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.GroupPanel1.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
-        Me.GroupPanel1.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
-        Me.GroupPanel1.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
-        '
-        '
-        '
-        Me.GroupPanel1.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.GroupPanel1.TabIndex = 10022
-        '
-        'Chk_CompMinXProveedores
-        '
-        Me.Chk_CompMinXProveedores.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_CompMinXProveedores.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_CompMinXProveedores.CheckBoxImageChecked = CType(resources.GetObject("Chk_CompMinXProveedores.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_CompMinXProveedores.Checked = True
-        Me.Chk_CompMinXProveedores.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Chk_CompMinXProveedores.CheckValue = "Y"
-        Me.Chk_CompMinXProveedores.FocusCuesEnabled = False
-        Me.Chk_CompMinXProveedores.ForeColor = System.Drawing.Color.Black
-        Me.Chk_CompMinXProveedores.Location = New System.Drawing.Point(0, 146)
-        Me.Chk_CompMinXProveedores.Name = "Chk_CompMinXProveedores"
-        Me.Chk_CompMinXProveedores.Size = New System.Drawing.Size(241, 23)
-        Me.Chk_CompMinXProveedores.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_CompMinXProveedores.TabIndex = 57
-        Me.Chk_CompMinXProveedores.Text = "Comprar múltiplos mínimos por proveedores"
-        '
-        'Txt_DespacharA_OCC
-        '
-        Me.Txt_DespacharA_OCC.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_DespacharA_OCC.Border.Class = "TextBoxBorder"
-        Me.Txt_DespacharA_OCC.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_DespacharA_OCC.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_DespacharA_OCC.ForeColor = System.Drawing.Color.Black
-        Me.HelpProvider1.SetHelpString(Me.Txt_DespacharA_OCC, "Esta definición se grabara en las observaciones del documento")
-        Me.Txt_DespacharA_OCC.Location = New System.Drawing.Point(106, 118)
-        Me.Txt_DespacharA_OCC.Name = "Txt_DespacharA_OCC"
-        Me.Txt_DespacharA_OCC.PreventEnterBeep = True
-        Me.HelpProvider1.SetShowHelp(Me.Txt_DespacharA_OCC, True)
-        Me.Txt_DespacharA_OCC.Size = New System.Drawing.Size(406, 22)
-        Me.Txt_DespacharA_OCC.TabIndex = 10031
-        '
-        'LabelX31
-        '
-        Me.LabelX31.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LabelX31.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX31.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX31.ForeColor = System.Drawing.Color.Black
-        Me.LabelX31.Location = New System.Drawing.Point(1, 117)
-        Me.LabelX31.Name = "LabelX31"
-        Me.LabelX31.SingleLineColor = System.Drawing.Color.Transparent
-        Me.LabelX31.Size = New System.Drawing.Size(87, 23)
-        Me.LabelX31.TabIndex = 10030
-        Me.LabelX31.Text = "Despachar a"
-        '
-        'Rdb_OccProvEnviarCorreoNoEnviar
-        '
-        Me.Rdb_OccProvEnviarCorreoNoEnviar.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Rdb_OccProvEnviarCorreoNoEnviar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_OccProvEnviarCorreoNoEnviar.CheckBoxImageChecked = CType(resources.GetObject("Rdb_OccProvEnviarCorreoNoEnviar.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Rdb_OccProvEnviarCorreoNoEnviar.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_OccProvEnviarCorreoNoEnviar.FocusCuesEnabled = False
-        Me.Rdb_OccProvEnviarCorreoNoEnviar.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_OccProvEnviarCorreoNoEnviar.Location = New System.Drawing.Point(258, 91)
-        Me.Rdb_OccProvEnviarCorreoNoEnviar.Name = "Rdb_OccProvEnviarCorreoNoEnviar"
-        Me.Rdb_OccProvEnviarCorreoNoEnviar.Size = New System.Drawing.Size(129, 20)
-        Me.Rdb_OccProvEnviarCorreoNoEnviar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_OccProvEnviarCorreoNoEnviar.TabIndex = 10029
-        Me.Rdb_OccProvEnviarCorreoNoEnviar.Text = "No enviar correos"
-        '
-        'Rdb_OccProvEnviarCorreoSoloCc
-        '
-        Me.Rdb_OccProvEnviarCorreoSoloCc.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Rdb_OccProvEnviarCorreoSoloCc.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_OccProvEnviarCorreoSoloCc.CheckBoxImageChecked = CType(resources.GetObject("Rdb_OccProvEnviarCorreoSoloCc.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Rdb_OccProvEnviarCorreoSoloCc.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_OccProvEnviarCorreoSoloCc.FocusCuesEnabled = False
-        Me.Rdb_OccProvEnviarCorreoSoloCc.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_OccProvEnviarCorreoSoloCc.Location = New System.Drawing.Point(160, 91)
-        Me.Rdb_OccProvEnviarCorreoSoloCc.Name = "Rdb_OccProvEnviarCorreoSoloCc"
-        Me.Rdb_OccProvEnviarCorreoSoloCc.Size = New System.Drawing.Size(92, 20)
-        Me.Rdb_OccProvEnviarCorreoSoloCc.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_OccProvEnviarCorreoSoloCc.TabIndex = 10028
-        Me.Rdb_OccProvEnviarCorreoSoloCc.Text = "Solo a mail Cc"
-        '
-        'LabelX29
-        '
-        Me.LabelX29.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LabelX29.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX29.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX29.ForeColor = System.Drawing.Color.Black
-        Me.LabelX29.Location = New System.Drawing.Point(0, 88)
-        Me.LabelX29.Name = "LabelX29"
-        Me.LabelX29.SingleLineColor = System.Drawing.Color.Transparent
-        Me.LabelX29.Size = New System.Drawing.Size(87, 23)
-        Me.LabelX29.TabIndex = 10027
-        Me.LabelX29.Text = "Enviar correo a"
-        '
-        'Rdb_OccProvEnviarCorreoTodos
-        '
-        Me.Rdb_OccProvEnviarCorreoTodos.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Rdb_OccProvEnviarCorreoTodos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_OccProvEnviarCorreoTodos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_OccProvEnviarCorreoTodos.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Rdb_OccProvEnviarCorreoTodos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_OccProvEnviarCorreoTodos.Checked = True
-        Me.Rdb_OccProvEnviarCorreoTodos.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Rdb_OccProvEnviarCorreoTodos.CheckValue = "Y"
-        Me.Rdb_OccProvEnviarCorreoTodos.FocusCuesEnabled = False
-        Me.Rdb_OccProvEnviarCorreoTodos.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_OccProvEnviarCorreoTodos.Location = New System.Drawing.Point(106, 91)
-        Me.Rdb_OccProvEnviarCorreoTodos.Name = "Rdb_OccProvEnviarCorreoTodos"
-        Me.Rdb_OccProvEnviarCorreoTodos.Size = New System.Drawing.Size(48, 20)
-        Me.Rdb_OccProvEnviarCorreoTodos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_OccProvEnviarCorreoTodos.TabIndex = 10026
-        Me.Rdb_OccProvEnviarCorreoTodos.Text = "Todos"
-        '
-        'Txt_NombreFormato_PDF_OCC
-        '
-        Me.Txt_NombreFormato_PDF_OCC.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_NombreFormato_PDF_OCC.Border.Class = "TextBoxBorder"
-        Me.Txt_NombreFormato_PDF_OCC.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_NombreFormato_PDF_OCC.ButtonCustom.Image = CType(resources.GetObject("Txt_NombreFormato_PDF_OCC.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_NombreFormato_PDF_OCC.ButtonCustom.Visible = True
-        Me.Txt_NombreFormato_PDF_OCC.ButtonCustom2.Image = CType(resources.GetObject("Txt_NombreFormato_PDF_OCC.ButtonCustom2.Image"), System.Drawing.Image)
-        Me.Txt_NombreFormato_PDF_OCC.ButtonCustom2.Visible = True
-        Me.Txt_NombreFormato_PDF_OCC.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_NombreFormato_PDF_OCC.ForeColor = System.Drawing.Color.Black
-        Me.Txt_NombreFormato_PDF_OCC.Location = New System.Drawing.Point(106, 35)
-        Me.Txt_NombreFormato_PDF_OCC.Name = "Txt_NombreFormato_PDF_OCC"
-        Me.Txt_NombreFormato_PDF_OCC.PreventEnterBeep = True
-        Me.Txt_NombreFormato_PDF_OCC.ReadOnly = True
-        Me.Txt_NombreFormato_PDF_OCC.Size = New System.Drawing.Size(406, 22)
-        Me.Txt_NombreFormato_PDF_OCC.TabIndex = 10016
-        '
-        'Txt_CorreoCc_OCC
-        '
-        Me.Txt_CorreoCc_OCC.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_CorreoCc_OCC.Border.Class = "TextBoxBorder"
-        Me.Txt_CorreoCc_OCC.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CorreoCc_OCC.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CorreoCc_OCC.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CorreoCc_OCC.Location = New System.Drawing.Point(106, 63)
-        Me.Txt_CorreoCc_OCC.Name = "Txt_CorreoCc_OCC"
-        Me.Txt_CorreoCc_OCC.PreventEnterBeep = True
-        Me.Txt_CorreoCc_OCC.Size = New System.Drawing.Size(406, 22)
-        Me.Txt_CorreoCc_OCC.TabIndex = 10014
-        '
-        'LabelX22
-        '
-        Me.LabelX22.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LabelX22.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX22.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX22.ForeColor = System.Drawing.Color.Black
-        Me.LabelX22.Location = New System.Drawing.Point(0, 62)
-        Me.LabelX22.Name = "LabelX22"
-        Me.LabelX22.SingleLineColor = System.Drawing.Color.Transparent
-        Me.LabelX22.Size = New System.Drawing.Size(87, 23)
-        Me.LabelX22.TabIndex = 10013
-        Me.LabelX22.Text = "Mail info. Cc OCC"
-        '
-        'Txt_CtaCorreoEnvioAutomatizado_OCC
-        '
-        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.Border.Class = "TextBoxBorder"
-        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.ButtonCustom.Image = CType(resources.GetObject("Txt_CtaCorreoEnvioAutomatizado_OCC.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.ButtonCustom.Visible = True
-        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.ButtonCustom2.Image = CType(resources.GetObject("Txt_CtaCorreoEnvioAutomatizado_OCC.ButtonCustom2.Image"), System.Drawing.Image)
-        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.ButtonCustom2.Visible = True
-        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.Location = New System.Drawing.Point(106, 7)
-        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.Name = "Txt_CtaCorreoEnvioAutomatizado_OCC"
-        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.PreventEnterBeep = True
-        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.ReadOnly = True
-        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.Size = New System.Drawing.Size(406, 22)
-        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.TabIndex = 90
-        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.Tag = "9999"
-        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.WatermarkText = "Sino hay correo en esta casilla no se enviaran correos..."
-        '
-        'LabelX21
-        '
-        Me.LabelX21.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LabelX21.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX21.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX21.ForeColor = System.Drawing.Color.Black
-        Me.LabelX21.Location = New System.Drawing.Point(0, 7)
-        Me.LabelX21.Name = "LabelX21"
-        Me.LabelX21.SingleLineColor = System.Drawing.Color.Transparent
-        Me.LabelX21.Size = New System.Drawing.Size(87, 23)
-        Me.LabelX21.TabIndex = 10012
-        Me.LabelX21.Text = "Correo de envío"
-        '
-        'LabelX23
-        '
-        Me.LabelX23.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX23.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX23.ForeColor = System.Drawing.Color.Black
-        Me.LabelX23.Location = New System.Drawing.Point(0, 35)
-        Me.LabelX23.Name = "LabelX23"
-        Me.LabelX23.Size = New System.Drawing.Size(97, 22)
-        Me.LabelX23.TabIndex = 10015
-        Me.LabelX23.Text = "Fomato imp. PDF"
-        '
-        'SubTabConfAuto_OCC
-        '
-        Me.SubTabConfAuto_OCC.AttachedControl = Me.SuperTabControlPanel9
-        Me.SubTabConfAuto_OCC.GlobalItem = False
-        Me.SubTabConfAuto_OCC.Name = "SubTabConfAuto_OCC"
-        Me.SubTabConfAuto_OCC.Text = "OCC proveedores"
-        '
-        'SuperTabControlPanel10
-        '
-        Me.SuperTabControlPanel10.Controls.Add(Me.GroupPanel2)
-        Me.SuperTabControlPanel10.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel10.Location = New System.Drawing.Point(0, 0)
-        Me.SuperTabControlPanel10.Name = "SuperTabControlPanel10"
-        Me.SuperTabControlPanel10.Size = New System.Drawing.Size(527, 232)
-        Me.SuperTabControlPanel10.TabIndex = 0
-        Me.SuperTabControlPanel10.TabItem = Me.SubTabConfAuto_NVI
-        '
-        'GroupPanel2
-        '
-        Me.GroupPanel2.BackColor = System.Drawing.Color.White
-        Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel2.Controls.Add(Me.Chk_IncluirProdRefleoNVI)
-        Me.GroupPanel2.Controls.Add(Me.Chk_IncluirProdBajaRotacionNVI)
-        Me.GroupPanel2.Controls.Add(Me.LabelX25)
-        Me.GroupPanel2.Controls.Add(Me.Txt_NombreFormato_PDF_NVI)
-        Me.GroupPanel2.Controls.Add(Me.Btn_Bodega_NVI_Estudio)
-        Me.GroupPanel2.Controls.Add(Me.Txt_CorreoCc_NVI)
-        Me.GroupPanel2.Controls.Add(Me.Txt_CtaCorreoEnvioAutomatizado_NVI)
-        Me.GroupPanel2.Controls.Add(Me.LabelX27)
-        Me.GroupPanel2.Controls.Add(Me.LabelX28)
-        Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel2.Location = New System.Drawing.Point(3, 3)
-        Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(521, 199)
-        '
-        '
-        '
-        Me.GroupPanel2.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.GroupPanel2.Style.BackColorGradientAngle = 90
-        Me.GroupPanel2.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.GroupPanel2.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderBottomWidth = 1
-        Me.GroupPanel2.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
-        Me.GroupPanel2.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderLeftWidth = 1
-        Me.GroupPanel2.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderRightWidth = 1
-        Me.GroupPanel2.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderTopWidth = 1
-        Me.GroupPanel2.Style.CornerDiameter = 4
-        Me.GroupPanel2.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.GroupPanel2.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
-        Me.GroupPanel2.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
-        Me.GroupPanel2.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
-        '
-        '
-        '
-        Me.GroupPanel2.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.GroupPanel2.TabIndex = 10023
-        '
-        'Chk_IncluirProdRefleoNVI
-        '
-        Me.Chk_IncluirProdRefleoNVI.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_IncluirProdRefleoNVI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_IncluirProdRefleoNVI.CheckBoxImageChecked = CType(resources.GetObject("Chk_IncluirProdRefleoNVI.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_IncluirProdRefleoNVI.FocusCuesEnabled = False
-        Me.Chk_IncluirProdRefleoNVI.ForeColor = System.Drawing.Color.Black
-        Me.Chk_IncluirProdRefleoNVI.Location = New System.Drawing.Point(3, 150)
-        Me.Chk_IncluirProdRefleoNVI.Name = "Chk_IncluirProdRefleoNVI"
-        Me.Chk_IncluirProdRefleoNVI.Size = New System.Drawing.Size(165, 20)
-        Me.Chk_IncluirProdRefleoNVI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_IncluirProdRefleoNVI.TabIndex = 10031
-        Me.Chk_IncluirProdRefleoNVI.Text = "Incluir productos con refleos"
-        '
-        'Chk_IncluirProdBajaRotacionNVI
-        '
-        Me.Chk_IncluirProdBajaRotacionNVI.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_IncluirProdBajaRotacionNVI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_IncluirProdBajaRotacionNVI.CheckBoxImageChecked = CType(resources.GetObject("Chk_IncluirProdBajaRotacionNVI.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_IncluirProdBajaRotacionNVI.FocusCuesEnabled = False
-        Me.Chk_IncluirProdBajaRotacionNVI.ForeColor = System.Drawing.Color.Black
-        Me.Chk_IncluirProdBajaRotacionNVI.Location = New System.Drawing.Point(3, 131)
-        Me.Chk_IncluirProdBajaRotacionNVI.Name = "Chk_IncluirProdBajaRotacionNVI"
-        Me.Chk_IncluirProdBajaRotacionNVI.Size = New System.Drawing.Size(287, 20)
-        Me.Chk_IncluirProdBajaRotacionNVI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_IncluirProdBajaRotacionNVI.TabIndex = 10030
-        Me.Chk_IncluirProdBajaRotacionNVI.Text = "Incluir productos con sospecha de baja rotación"
-        '
-        'LabelX25
-        '
-        Me.LabelX25.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LabelX25.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX25.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX25.ForeColor = System.Drawing.Color.Black
-        Me.LabelX25.Location = New System.Drawing.Point(0, 65)
-        Me.LabelX25.Name = "LabelX25"
-        Me.LabelX25.SingleLineColor = System.Drawing.Color.Transparent
-        Me.LabelX25.Size = New System.Drawing.Size(103, 23)
-        Me.LabelX25.TabIndex = 10018
-        Me.LabelX25.Text = "Mail info. aviso NVI"
-        '
-        'Txt_NombreFormato_PDF_NVI
-        '
-        Me.Txt_NombreFormato_PDF_NVI.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_NombreFormato_PDF_NVI.Border.Class = "TextBoxBorder"
-        Me.Txt_NombreFormato_PDF_NVI.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_NombreFormato_PDF_NVI.ButtonCustom.Image = CType(resources.GetObject("Txt_NombreFormato_PDF_NVI.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_NombreFormato_PDF_NVI.ButtonCustom.Visible = True
-        Me.Txt_NombreFormato_PDF_NVI.ButtonCustom2.Image = CType(resources.GetObject("Txt_NombreFormato_PDF_NVI.ButtonCustom2.Image"), System.Drawing.Image)
-        Me.Txt_NombreFormato_PDF_NVI.ButtonCustom2.Visible = True
-        Me.Txt_NombreFormato_PDF_NVI.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_NombreFormato_PDF_NVI.ForeColor = System.Drawing.Color.Black
-        Me.Txt_NombreFormato_PDF_NVI.Location = New System.Drawing.Point(106, 34)
-        Me.Txt_NombreFormato_PDF_NVI.Name = "Txt_NombreFormato_PDF_NVI"
-        Me.Txt_NombreFormato_PDF_NVI.PreventEnterBeep = True
-        Me.Txt_NombreFormato_PDF_NVI.ReadOnly = True
-        Me.Txt_NombreFormato_PDF_NVI.Size = New System.Drawing.Size(406, 22)
-        Me.Txt_NombreFormato_PDF_NVI.TabIndex = 10016
-        '
-        'Btn_Bodega_NVI_Estudio
-        '
-        Me.Btn_Bodega_NVI_Estudio.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Bodega_NVI_Estudio.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Bodega_NVI_Estudio.Image = CType(resources.GetObject("Btn_Bodega_NVI_Estudio.Image"), System.Drawing.Image)
-        Me.Btn_Bodega_NVI_Estudio.ImageAlt = CType(resources.GetObject("Btn_Bodega_NVI_Estudio.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Bodega_NVI_Estudio.Location = New System.Drawing.Point(106, 96)
-        Me.Btn_Bodega_NVI_Estudio.Name = "Btn_Bodega_NVI_Estudio"
-        Me.Btn_Bodega_NVI_Estudio.Size = New System.Drawing.Size(201, 29)
-        Me.Btn_Bodega_NVI_Estudio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Bodega_NVI_Estudio.TabIndex = 10017
-        Me.Btn_Bodega_NVI_Estudio.Text = "Bodegas de estudio de stock NVI"
-        '
-        'Txt_CorreoCc_NVI
-        '
-        Me.Txt_CorreoCc_NVI.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_CorreoCc_NVI.Border.Class = "TextBoxBorder"
-        Me.Txt_CorreoCc_NVI.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CorreoCc_NVI.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CorreoCc_NVI.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CorreoCc_NVI.Location = New System.Drawing.Point(106, 62)
-        Me.Txt_CorreoCc_NVI.Name = "Txt_CorreoCc_NVI"
-        Me.Txt_CorreoCc_NVI.PreventEnterBeep = True
-        Me.Txt_CorreoCc_NVI.Size = New System.Drawing.Size(406, 22)
-        Me.Txt_CorreoCc_NVI.TabIndex = 10014
-        '
-        'Txt_CtaCorreoEnvioAutomatizado_NVI
-        '
-        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.Border.Class = "TextBoxBorder"
-        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.ButtonCustom.Image = CType(resources.GetObject("Txt_CtaCorreoEnvioAutomatizado_NVI.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.ButtonCustom.Visible = True
-        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.ButtonCustom2.Image = CType(resources.GetObject("Txt_CtaCorreoEnvioAutomatizado_NVI.ButtonCustom2.Image"), System.Drawing.Image)
-        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.ButtonCustom2.Visible = True
-        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.Location = New System.Drawing.Point(106, 7)
-        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.Name = "Txt_CtaCorreoEnvioAutomatizado_NVI"
-        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.PreventEnterBeep = True
-        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.ReadOnly = True
-        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.Size = New System.Drawing.Size(406, 22)
-        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.TabIndex = 90
-        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.Tag = "9999"
-        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.WatermarkText = "Sino hay correo en esta casilla no se enviaran correos..."
-        '
-        'LabelX27
-        '
-        Me.LabelX27.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LabelX27.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX27.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX27.ForeColor = System.Drawing.Color.Black
-        Me.LabelX27.Location = New System.Drawing.Point(0, 7)
-        Me.LabelX27.Name = "LabelX27"
-        Me.LabelX27.SingleLineColor = System.Drawing.Color.Transparent
-        Me.LabelX27.Size = New System.Drawing.Size(87, 23)
-        Me.LabelX27.TabIndex = 10012
-        Me.LabelX27.Text = "Correo de envío"
-        '
-        'LabelX28
-        '
-        Me.LabelX28.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX28.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX28.ForeColor = System.Drawing.Color.Black
-        Me.LabelX28.Location = New System.Drawing.Point(0, 37)
-        Me.LabelX28.Name = "LabelX28"
-        Me.LabelX28.Size = New System.Drawing.Size(97, 22)
-        Me.LabelX28.TabIndex = 10015
-        Me.LabelX28.Text = "Fomato imp. PDF"
-        '
-        'SubTabConfAuto_NVI
-        '
-        Me.SubTabConfAuto_NVI.AttachedControl = Me.SuperTabControlPanel10
-        Me.SubTabConfAuto_NVI.GlobalItem = False
-        Me.SubTabConfAuto_NVI.Name = "SubTabConfAuto_NVI"
-        Me.SubTabConfAuto_NVI.Text = "NVI solicitudes internas"
-        '
-        'SuperTabControlPanel11
-        '
-        Me.SuperTabControlPanel11.Controls.Add(Me.GroupPanel3)
-        Me.SuperTabControlPanel11.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel11.Location = New System.Drawing.Point(0, 0)
-        Me.SuperTabControlPanel11.Name = "SuperTabControlPanel11"
-        Me.SuperTabControlPanel11.Size = New System.Drawing.Size(527, 232)
-        Me.SuperTabControlPanel11.TabIndex = 0
-        Me.SuperTabControlPanel11.TabItem = Me.SuperTabItem1
-        '
-        'GroupPanel3
-        '
-        Me.GroupPanel3.BackColor = System.Drawing.Color.White
-        Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel3.Controls.Add(Me.LabelX30)
-        Me.GroupPanel3.Controls.Add(Me.Input_DiasMarcarProvQueNoTiene)
-        Me.GroupPanel3.Controls.Add(Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo)
-        Me.GroupPanel3.Controls.Add(Me.Txt_CtaCorreoAvisoOCCMinCompra)
-        Me.GroupPanel3.Controls.Add(Me.LabelX26)
-        Me.GroupPanel3.Controls.Add(Me.Chk_EnviarListadoProveedoresSinStock)
-        Me.GroupPanel3.Controls.Add(Me.Txt_CtaCorreoAvisoProveedoresSinStock)
-        Me.GroupPanel3.Controls.Add(Me.LabelX24)
-        Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel3.Location = New System.Drawing.Point(3, 3)
-        Me.GroupPanel3.Name = "GroupPanel3"
-        Me.GroupPanel3.Size = New System.Drawing.Size(521, 199)
-        '
-        '
-        '
-        Me.GroupPanel3.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.GroupPanel3.Style.BackColorGradientAngle = 90
-        Me.GroupPanel3.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.GroupPanel3.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel3.Style.BorderBottomWidth = 1
-        Me.GroupPanel3.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
-        Me.GroupPanel3.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel3.Style.BorderLeftWidth = 1
-        Me.GroupPanel3.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel3.Style.BorderRightWidth = 1
-        Me.GroupPanel3.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel3.Style.BorderTopWidth = 1
-        Me.GroupPanel3.Style.CornerDiameter = 4
-        Me.GroupPanel3.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.GroupPanel3.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
-        Me.GroupPanel3.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
-        Me.GroupPanel3.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
-        '
-        '
-        '
-        Me.GroupPanel3.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.GroupPanel3.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.GroupPanel3.TabIndex = 10023
-        '
-        'LabelX30
-        '
-        Me.LabelX30.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LabelX30.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX30.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX30.ForeColor = System.Drawing.Color.Black
-        Me.LabelX30.Location = New System.Drawing.Point(0, 105)
-        Me.LabelX30.Name = "LabelX30"
-        Me.LabelX30.SingleLineColor = System.Drawing.Color.Transparent
-        Me.LabelX30.Size = New System.Drawing.Size(100, 23)
-        Me.LabelX30.TabIndex = 10036
-        Me.LabelX30.Text = "Días sin recepción"
-        '
-        'Input_DiasMarcarProvQueNoTiene
-        '
-        Me.Input_DiasMarcarProvQueNoTiene.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Input_DiasMarcarProvQueNoTiene.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Input_DiasMarcarProvQueNoTiene.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Input_DiasMarcarProvQueNoTiene.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.Input_DiasMarcarProvQueNoTiene.ForeColor = System.Drawing.Color.Black
-        Me.Input_DiasMarcarProvQueNoTiene.Location = New System.Drawing.Point(107, 106)
-        Me.Input_DiasMarcarProvQueNoTiene.MaxValue = 90
-        Me.Input_DiasMarcarProvQueNoTiene.MinValue = 0
-        Me.Input_DiasMarcarProvQueNoTiene.Name = "Input_DiasMarcarProvQueNoTiene"
-        Me.Input_DiasMarcarProvQueNoTiene.ShowUpDown = True
-        Me.Input_DiasMarcarProvQueNoTiene.Size = New System.Drawing.Size(49, 22)
-        Me.Input_DiasMarcarProvQueNoTiene.TabIndex = 10035
-        Me.Input_DiasMarcarProvQueNoTiene.Value = 14
-        '
-        'Chk_EnviarListadoOCCConMinimoCompraXCorreo
-        '
-        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnviarListadoOCCConMinimoCompraXCorreo.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.FocusCuesEnabled = False
-        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.ForeColor = System.Drawing.Color.Black
-        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.Location = New System.Drawing.Point(107, 28)
-        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.Name = "Chk_EnviarListadoOCCConMinimoCompraXCorreo"
-        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.Size = New System.Drawing.Size(241, 20)
-        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.TabIndex = 10032
-        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.Text = "Enviar por correo listado con OCC con mínimo de compra al correo Cc"
-        '
-        'Txt_CtaCorreoAvisoOCCMinCompra
-        '
-        Me.Txt_CtaCorreoAvisoOCCMinCompra.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_CtaCorreoAvisoOCCMinCompra.Border.Class = "TextBoxBorder"
-        Me.Txt_CtaCorreoAvisoOCCMinCompra.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CtaCorreoAvisoOCCMinCompra.ButtonCustom.Image = CType(resources.GetObject("Txt_CtaCorreoAvisoOCCMinCompra.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_CtaCorreoAvisoOCCMinCompra.ButtonCustom.Visible = True
-        Me.Txt_CtaCorreoAvisoOCCMinCompra.ButtonCustom2.Image = CType(resources.GetObject("Txt_CtaCorreoAvisoOCCMinCompra.ButtonCustom2.Image"), System.Drawing.Image)
-        Me.Txt_CtaCorreoAvisoOCCMinCompra.ButtonCustom2.Visible = True
-        Me.Txt_CtaCorreoAvisoOCCMinCompra.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CtaCorreoAvisoOCCMinCompra.ForeColor = System.Drawing.Color.Black
-        Me.HelpProvider1.SetHelpString(Me.Txt_CtaCorreoAvisoOCCMinCompra, resources.GetString("Txt_CtaCorreoAvisoOCCMinCompra.HelpString"))
-        Me.Txt_CtaCorreoAvisoOCCMinCompra.Location = New System.Drawing.Point(107, 3)
-        Me.Txt_CtaCorreoAvisoOCCMinCompra.Name = "Txt_CtaCorreoAvisoOCCMinCompra"
-        Me.Txt_CtaCorreoAvisoOCCMinCompra.PreventEnterBeep = True
-        Me.Txt_CtaCorreoAvisoOCCMinCompra.ReadOnly = True
-        Me.HelpProvider1.SetShowHelp(Me.Txt_CtaCorreoAvisoOCCMinCompra, True)
-        Me.Txt_CtaCorreoAvisoOCCMinCompra.Size = New System.Drawing.Size(406, 22)
-        Me.Txt_CtaCorreoAvisoOCCMinCompra.TabIndex = 10033
-        Me.Txt_CtaCorreoAvisoOCCMinCompra.Tag = "9999"
-        Me.Txt_CtaCorreoAvisoOCCMinCompra.WatermarkText = "Sino hay correo en esta casilla no se enviaran correos..."
-        '
-        'LabelX26
-        '
-        Me.LabelX26.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LabelX26.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX26.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX26.ForeColor = System.Drawing.Color.Black
-        Me.LabelX26.Location = New System.Drawing.Point(0, 3)
-        Me.LabelX26.Name = "LabelX26"
-        Me.LabelX26.SingleLineColor = System.Drawing.Color.Transparent
-        Me.LabelX26.Size = New System.Drawing.Size(100, 48)
-        Me.LabelX26.TabIndex = 10034
-        Me.LabelX26.Text = "Correo aviso" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "OCC sin mínimo" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "de compra"
-        '
-        'Chk_EnviarListadoProveedoresSinStock
-        '
-        Me.Chk_EnviarListadoProveedoresSinStock.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_EnviarListadoProveedoresSinStock.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_EnviarListadoProveedoresSinStock.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnviarListadoProveedoresSinStock.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_EnviarListadoProveedoresSinStock.FocusCuesEnabled = False
-        Me.Chk_EnviarListadoProveedoresSinStock.ForeColor = System.Drawing.Color.Black
-        Me.Chk_EnviarListadoProveedoresSinStock.Location = New System.Drawing.Point(107, 85)
-        Me.Chk_EnviarListadoProveedoresSinStock.Name = "Chk_EnviarListadoProveedoresSinStock"
-        Me.Chk_EnviarListadoProveedoresSinStock.Size = New System.Drawing.Size(268, 20)
-        Me.Chk_EnviarListadoProveedoresSinStock.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_EnviarListadoProveedoresSinStock.TabIndex = 10014
-        Me.Chk_EnviarListadoProveedoresSinStock.Text = "Enviar por correo listado con proveedores sin stock"
-        '
-        'Txt_CtaCorreoAvisoProveedoresSinStock
-        '
-        Me.Txt_CtaCorreoAvisoProveedoresSinStock.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_CtaCorreoAvisoProveedoresSinStock.Border.Class = "TextBoxBorder"
-        Me.Txt_CtaCorreoAvisoProveedoresSinStock.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CtaCorreoAvisoProveedoresSinStock.ButtonCustom.Image = CType(resources.GetObject("Txt_CtaCorreoAvisoProveedoresSinStock.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_CtaCorreoAvisoProveedoresSinStock.ButtonCustom.Visible = True
-        Me.Txt_CtaCorreoAvisoProveedoresSinStock.ButtonCustom2.Image = CType(resources.GetObject("Txt_CtaCorreoAvisoProveedoresSinStock.ButtonCustom2.Image"), System.Drawing.Image)
-        Me.Txt_CtaCorreoAvisoProveedoresSinStock.ButtonCustom2.Visible = True
-        Me.Txt_CtaCorreoAvisoProveedoresSinStock.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CtaCorreoAvisoProveedoresSinStock.ForeColor = System.Drawing.Color.Black
-        Me.HelpProvider1.SetHelpString(Me.Txt_CtaCorreoAvisoProveedoresSinStock, resources.GetString("Txt_CtaCorreoAvisoProveedoresSinStock.HelpString"))
-        Me.Txt_CtaCorreoAvisoProveedoresSinStock.Location = New System.Drawing.Point(107, 62)
-        Me.Txt_CtaCorreoAvisoProveedoresSinStock.Name = "Txt_CtaCorreoAvisoProveedoresSinStock"
-        Me.Txt_CtaCorreoAvisoProveedoresSinStock.PreventEnterBeep = True
-        Me.Txt_CtaCorreoAvisoProveedoresSinStock.ReadOnly = True
-        Me.HelpProvider1.SetShowHelp(Me.Txt_CtaCorreoAvisoProveedoresSinStock, True)
-        Me.Txt_CtaCorreoAvisoProveedoresSinStock.Size = New System.Drawing.Size(406, 22)
-        Me.Txt_CtaCorreoAvisoProveedoresSinStock.TabIndex = 10030
-        Me.Txt_CtaCorreoAvisoProveedoresSinStock.Tag = "9999"
-        Me.Txt_CtaCorreoAvisoProveedoresSinStock.WatermarkText = "Sino hay correo en esta casilla no se enviaran correos..."
-        '
-        'LabelX24
-        '
-        Me.LabelX24.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LabelX24.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX24.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX24.ForeColor = System.Drawing.Color.Black
-        Me.LabelX24.Location = New System.Drawing.Point(0, 57)
-        Me.LabelX24.Name = "LabelX24"
-        Me.LabelX24.SingleLineColor = System.Drawing.Color.Transparent
-        Me.LabelX24.Size = New System.Drawing.Size(100, 48)
-        Me.LabelX24.TabIndex = 10031
-        Me.LabelX24.Text = "Correo aviso" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Proveedores" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "sin stock"
-        '
-        'SuperTabItem1
-        '
-        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel11
-        Me.SuperTabItem1.GlobalItem = False
-        Me.SuperTabItem1.Name = "SuperTabItem1"
-        Me.SuperTabItem1.Text = "Otras opciones"
-        '
-        'Tab_Automatizacion
-        '
-        Me.Tab_Automatizacion.AttachedControl = Me.SuperTabControlPanel8
-        Me.Tab_Automatizacion.GlobalItem = False
-        Me.Tab_Automatizacion.Name = "Tab_Automatizacion"
-        Me.Tab_Automatizacion.Text = "Conf. Automatización"
         '
         'SuperTabControlPanel2
         '
@@ -1613,7 +833,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 0)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(544, 294)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(802, 251)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.Tab_ConexionExterna
         '
@@ -1658,7 +878,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Grupo_DbExt.DisabledBackColor = System.Drawing.Color.Empty
         Me.Grupo_DbExt.Location = New System.Drawing.Point(7, 34)
         Me.Grupo_DbExt.Name = "Grupo_DbExt"
-        Me.Grupo_DbExt.Size = New System.Drawing.Size(523, 230)
+        Me.Grupo_DbExt.Size = New System.Drawing.Size(782, 230)
         '
         '
         '
@@ -1699,9 +919,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Chk_IncluirProdRefleoProvStar.CheckBoxImageChecked = CType(resources.GetObject("Chk_IncluirProdRefleoProvStar.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_IncluirProdRefleoProvStar.FocusCuesEnabled = False
         Me.Chk_IncluirProdRefleoProvStar.ForeColor = System.Drawing.Color.Black
-        Me.Chk_IncluirProdRefleoProvStar.Location = New System.Drawing.Point(219, 130)
+        Me.Chk_IncluirProdRefleoProvStar.Location = New System.Drawing.Point(527, 90)
         Me.Chk_IncluirProdRefleoProvStar.Name = "Chk_IncluirProdRefleoProvStar"
-        Me.Chk_IncluirProdRefleoProvStar.Size = New System.Drawing.Size(165, 20)
+        Me.Chk_IncluirProdRefleoProvStar.Size = New System.Drawing.Size(246, 20)
         Me.Chk_IncluirProdRefleoProvStar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_IncluirProdRefleoProvStar.TabIndex = 10029
         Me.Chk_IncluirProdRefleoProvStar.Text = "Incluir productos con refleos"
@@ -1716,9 +936,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Chk_IncluirProdBajaRotacionProvStar.CheckBoxImageChecked = CType(resources.GetObject("Chk_IncluirProdBajaRotacionProvStar.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_IncluirProdBajaRotacionProvStar.FocusCuesEnabled = False
         Me.Chk_IncluirProdBajaRotacionProvStar.ForeColor = System.Drawing.Color.Black
-        Me.Chk_IncluirProdBajaRotacionProvStar.Location = New System.Drawing.Point(219, 111)
+        Me.Chk_IncluirProdBajaRotacionProvStar.Location = New System.Drawing.Point(527, 71)
         Me.Chk_IncluirProdBajaRotacionProvStar.Name = "Chk_IncluirProdBajaRotacionProvStar"
-        Me.Chk_IncluirProdBajaRotacionProvStar.Size = New System.Drawing.Size(287, 20)
+        Me.Chk_IncluirProdBajaRotacionProvStar.Size = New System.Drawing.Size(252, 20)
         Me.Chk_IncluirProdBajaRotacionProvStar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_IncluirProdBajaRotacionProvStar.TabIndex = 10028
         Me.Chk_IncluirProdBajaRotacionProvStar.Text = "Incluir productos con sospecha de baja rotación"
@@ -1733,7 +953,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Chk_QuitarDeEstudioAutomatico.CheckBoxImageChecked = CType(resources.GetObject("Chk_QuitarDeEstudioAutomatico.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_QuitarDeEstudioAutomatico.FocusCuesEnabled = False
         Me.Chk_QuitarDeEstudioAutomatico.ForeColor = System.Drawing.Color.Black
-        Me.Chk_QuitarDeEstudioAutomatico.Location = New System.Drawing.Point(2, 151)
+        Me.Chk_QuitarDeEstudioAutomatico.Location = New System.Drawing.Point(527, 49)
         Me.Chk_QuitarDeEstudioAutomatico.Name = "Chk_QuitarDeEstudioAutomatico"
         Me.Chk_QuitarDeEstudioAutomatico.Size = New System.Drawing.Size(164, 20)
         Me.Chk_QuitarDeEstudioAutomatico.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1750,7 +970,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Chk_NVVAutoExterna.CheckBoxImageChecked = CType(resources.GetObject("Chk_NVVAutoExterna.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_NVVAutoExterna.FocusCuesEnabled = False
         Me.Chk_NVVAutoExterna.ForeColor = System.Drawing.Color.Black
-        Me.Chk_NVVAutoExterna.Location = New System.Drawing.Point(283, 177)
+        Me.Chk_NVVAutoExterna.Location = New System.Drawing.Point(285, 116)
         Me.Chk_NVVAutoExterna.Name = "Chk_NVVAutoExterna"
         Me.Chk_NVVAutoExterna.Size = New System.Drawing.Size(210, 20)
         Me.Chk_NVVAutoExterna.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1767,7 +987,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Chk_IncluirProdExcluidosProvStar.CheckBoxImageChecked = CType(resources.GetObject("Chk_IncluirProdExcluidosProvStar.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_IncluirProdExcluidosProvStar.FocusCuesEnabled = False
         Me.Chk_IncluirProdExcluidosProvStar.ForeColor = System.Drawing.Color.Black
-        Me.Chk_IncluirProdExcluidosProvStar.Location = New System.Drawing.Point(2, 130)
+        Me.Chk_IncluirProdExcluidosProvStar.Location = New System.Drawing.Point(527, 28)
         Me.Chk_IncluirProdExcluidosProvStar.Name = "Chk_IncluirProdExcluidosProvStar"
         Me.Chk_IncluirProdExcluidosProvStar.Size = New System.Drawing.Size(160, 20)
         Me.Chk_IncluirProdExcluidosProvStar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1784,7 +1004,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Chk_IncluirProdBloqueadoProvStar.CheckBoxImageChecked = CType(resources.GetObject("Chk_IncluirProdBloqueadoProvStar.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_IncluirProdBloqueadoProvStar.FocusCuesEnabled = False
         Me.Chk_IncluirProdBloqueadoProvStar.ForeColor = System.Drawing.Color.Black
-        Me.Chk_IncluirProdBloqueadoProvStar.Location = New System.Drawing.Point(2, 111)
+        Me.Chk_IncluirProdBloqueadoProvStar.Location = New System.Drawing.Point(527, 9)
         Me.Chk_IncluirProdBloqueadoProvStar.Name = "Chk_IncluirProdBloqueadoProvStar"
         Me.Chk_IncluirProdBloqueadoProvStar.Size = New System.Drawing.Size(165, 20)
         Me.Chk_IncluirProdBloqueadoProvStar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1804,7 +1024,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Txt_ProvParaNVVExterna.ButtonCustom2.Visible = True
         Me.Txt_ProvParaNVVExterna.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_ProvParaNVVExterna.ForeColor = System.Drawing.Color.Black
-        Me.Txt_ProvParaNVVExterna.Location = New System.Drawing.Point(53, 197)
+        Me.Txt_ProvParaNVVExterna.Location = New System.Drawing.Point(55, 136)
         Me.Txt_ProvParaNVVExterna.Name = "Txt_ProvParaNVVExterna"
         Me.Txt_ProvParaNVVExterna.PreventEnterBeep = True
         Me.Txt_ProvParaNVVExterna.ReadOnly = True
@@ -1849,7 +1069,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Btn_Buscar_Txt_ProvParaNVVExterna.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Buscar_Txt_ProvParaNVVExterna.Image = CType(resources.GetObject("Btn_Buscar_Txt_ProvParaNVVExterna.Image"), System.Drawing.Image)
         Me.Btn_Buscar_Txt_ProvParaNVVExterna.ImageAlt = CType(resources.GetObject("Btn_Buscar_Txt_ProvParaNVVExterna.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Buscar_Txt_ProvParaNVVExterna.Location = New System.Drawing.Point(2, 197)
+        Me.Btn_Buscar_Txt_ProvParaNVVExterna.Location = New System.Drawing.Point(4, 136)
         Me.Btn_Buscar_Txt_ProvParaNVVExterna.Name = "Btn_Buscar_Txt_ProvParaNVVExterna"
         Me.Btn_Buscar_Txt_ProvParaNVVExterna.Size = New System.Drawing.Size(46, 22)
         Me.Btn_Buscar_Txt_ProvParaNVVExterna.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1882,7 +1102,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         Me.LabelX32.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX32.ForeColor = System.Drawing.Color.Black
-        Me.LabelX32.Location = New System.Drawing.Point(1, 177)
+        Me.LabelX32.Location = New System.Drawing.Point(3, 116)
         Me.LabelX32.Name = "LabelX32"
         Me.LabelX32.SingleLineColor = System.Drawing.Color.Transparent
         Me.LabelX32.Size = New System.Drawing.Size(305, 23)
@@ -2010,160 +1230,6 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Tab_ConexionExterna.Name = "Tab_ConexionExterna"
         Me.Tab_ConexionExterna.Text = "Bod.Ext. Prov. Especial"
         '
-        'SuperTabControlPanel5
-        '
-        Me.SuperTabControlPanel5.Controls.Add(Me.ReflectionImage1)
-        Me.SuperTabControlPanel5.Controls.Add(Me.Chk_Advertir_Rotacion)
-        Me.SuperTabControlPanel5.Controls.Add(Me.LabelX12)
-        Me.SuperTabControlPanel5.Controls.Add(Me.LabelX13)
-        Me.SuperTabControlPanel5.Controls.Add(Me.Input_Dias_Advertencia_Rotacion)
-        Me.SuperTabControlPanel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(0, 0)
-        Me.SuperTabControlPanel5.Name = "SuperTabControlPanel5"
-        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(544, 294)
-        Me.SuperTabControlPanel5.TabIndex = 0
-        Me.SuperTabControlPanel5.TabItem = Me.SuperTabItem5
-        '
-        'ReflectionImage1
-        '
-        Me.ReflectionImage1.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.ReflectionImage1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.ReflectionImage1.BackgroundStyle.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
-        Me.ReflectionImage1.ForeColor = System.Drawing.Color.Black
-        Me.ReflectionImage1.Image = CType(resources.GetObject("ReflectionImage1.Image"), System.Drawing.Image)
-        Me.ReflectionImage1.Location = New System.Drawing.Point(401, 14)
-        Me.ReflectionImage1.Name = "ReflectionImage1"
-        Me.ReflectionImage1.Size = New System.Drawing.Size(98, 78)
-        Me.ReflectionImage1.TabIndex = 112
-        '
-        'Chk_Advertir_Rotacion
-        '
-        Me.Chk_Advertir_Rotacion.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Advertir_Rotacion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Advertir_Rotacion.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Advertir_Rotacion.Location = New System.Drawing.Point(20, 30)
-        Me.Chk_Advertir_Rotacion.Name = "Chk_Advertir_Rotacion"
-        Me.Chk_Advertir_Rotacion.Size = New System.Drawing.Size(245, 23)
-        Me.Chk_Advertir_Rotacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Advertir_Rotacion.TabIndex = 108
-        Me.Chk_Advertir_Rotacion.Text = "Advertir rotación"
-        '
-        'LabelX12
-        '
-        Me.LabelX12.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX12.ForeColor = System.Drawing.Color.Black
-        Me.LabelX12.Location = New System.Drawing.Point(250, 59)
-        Me.LabelX12.Name = "LabelX12"
-        Me.LabelX12.Size = New System.Drawing.Size(149, 23)
-        Me.LabelX12.TabIndex = 111
-        Me.LabelX12.Text = "días desde el último estudio"
-        '
-        'LabelX13
-        '
-        Me.LabelX13.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX13.ForeColor = System.Drawing.Color.Black
-        Me.LabelX13.Location = New System.Drawing.Point(20, 58)
-        Me.LabelX13.Name = "LabelX13"
-        Me.LabelX13.Size = New System.Drawing.Size(156, 23)
-        Me.LabelX13.TabIndex = 109
-        Me.LabelX13.Text = "Advierte cuando tenga más de"
-        '
-        'Input_Dias_Advertencia_Rotacion
-        '
-        Me.Input_Dias_Advertencia_Rotacion.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Input_Dias_Advertencia_Rotacion.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Input_Dias_Advertencia_Rotacion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Input_Dias_Advertencia_Rotacion.ButtonClear.Visible = True
-        Me.Input_Dias_Advertencia_Rotacion.FocusHighlightEnabled = True
-        Me.Input_Dias_Advertencia_Rotacion.ForeColor = System.Drawing.Color.Black
-        Me.Input_Dias_Advertencia_Rotacion.Location = New System.Drawing.Point(177, 59)
-        Me.Input_Dias_Advertencia_Rotacion.MaxValue = 365
-        Me.Input_Dias_Advertencia_Rotacion.MinValue = 1
-        Me.Input_Dias_Advertencia_Rotacion.Name = "Input_Dias_Advertencia_Rotacion"
-        Me.Input_Dias_Advertencia_Rotacion.ShowUpDown = True
-        Me.Input_Dias_Advertencia_Rotacion.Size = New System.Drawing.Size(67, 22)
-        Me.Input_Dias_Advertencia_Rotacion.TabIndex = 110
-        Me.Input_Dias_Advertencia_Rotacion.Value = 7
-        '
-        'SuperTabItem5
-        '
-        Me.SuperTabItem5.AttachedControl = Me.SuperTabControlPanel5
-        Me.SuperTabItem5.GlobalItem = False
-        Me.SuperTabItem5.Name = "SuperTabItem5"
-        Me.SuperTabItem5.Text = "Advertir Rotación"
-        Me.SuperTabItem5.Visible = False
-        '
-        'SuperTabControlPanel7
-        '
-        Me.SuperTabControlPanel7.Controls.Add(Me.LabelX10)
-        Me.SuperTabControlPanel7.Controls.Add(Me.Chk_Cargar_Rotacion_Estacional)
-        Me.SuperTabControlPanel7.Controls.Add(Me.Dtp_Fecha_Vta_Desde_Estacional)
-        Me.SuperTabControlPanel7.Controls.Add(Me.Label7)
-        Me.SuperTabControlPanel7.Controls.Add(Me.Dtp_Fecha_Estacional_Hasta)
-        Me.SuperTabControlPanel7.Controls.Add(Me.Label6)
-        Me.SuperTabControlPanel7.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel7.Enabled = False
-        Me.SuperTabControlPanel7.Location = New System.Drawing.Point(0, 0)
-        Me.SuperTabControlPanel7.Name = "SuperTabControlPanel7"
-        Me.SuperTabControlPanel7.Size = New System.Drawing.Size(544, 294)
-        Me.SuperTabControlPanel7.TabIndex = 0
-        Me.SuperTabControlPanel7.TabItem = Me.SuperTabItem7
-        '
-        'LabelX10
-        '
-        Me.LabelX10.AutoSize = True
-        Me.LabelX10.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX10.ForeColor = System.Drawing.Color.Black
-        Me.LabelX10.Location = New System.Drawing.Point(11, 42)
-        Me.LabelX10.Name = "LabelX10"
-        Me.LabelX10.Size = New System.Drawing.Size(185, 17)
-        Me.LabelX10.TabIndex = 52
-        Me.LabelX10.Text = "<b>Rango de fecha rotación estacional</b>"
-        '
-        'Chk_Cargar_Rotacion_Estacional
-        '
-        Me.Chk_Cargar_Rotacion_Estacional.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Cargar_Rotacion_Estacional.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Cargar_Rotacion_Estacional.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Cargar_Rotacion_Estacional.Location = New System.Drawing.Point(12, 12)
-        Me.Chk_Cargar_Rotacion_Estacional.Name = "Chk_Cargar_Rotacion_Estacional"
-        Me.Chk_Cargar_Rotacion_Estacional.Size = New System.Drawing.Size(241, 23)
-        Me.Chk_Cargar_Rotacion_Estacional.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Cargar_Rotacion_Estacional.TabIndex = 51
-        Me.Chk_Cargar_Rotacion_Estacional.Text = "Cargar rotación estacional para los productos"
-        '
-        'SuperTabItem7
-        '
-        Me.SuperTabItem7.AttachedControl = Me.SuperTabControlPanel7
-        Me.SuperTabItem7.GlobalItem = False
-        Me.SuperTabItem7.Name = "SuperTabItem7"
-        Me.SuperTabItem7.Text = "Rotación estacional"
-        Me.SuperTabItem7.Visible = False
-        '
         'SuperTabControlPanel1
         '
         Me.SuperTabControlPanel1.CanvasColor = System.Drawing.Color.Empty
@@ -2181,7 +1247,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 0)
         Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(544, 294)
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(802, 251)
         Me.SuperTabControlPanel1.TabIndex = 0
         Me.SuperTabControlPanel1.TabItem = Me.Tab_CalVnta
         '
@@ -2601,7 +1667,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 0)
         Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
-        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(544, 294)
+        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(802, 251)
         Me.SuperTabControlPanel4.TabIndex = 0
         Me.SuperTabControlPanel4.TabItem = Me.Tab_Excluir_Incluir
         '
@@ -2808,7 +1874,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.SuperTabControlPanel6.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel6.Location = New System.Drawing.Point(0, 0)
         Me.SuperTabControlPanel6.Name = "SuperTabControlPanel6"
-        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(544, 294)
+        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(802, 251)
         Me.SuperTabControlPanel6.TabIndex = 0
         Me.SuperTabControlPanel6.TabItem = Me.Tab_Costos_OCC
         '
@@ -3045,7 +2111,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(544, 267)
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(802, 224)
         Me.SuperTabControlPanel3.TabIndex = 1
         Me.SuperTabControlPanel3.TabItem = Me.Tab_Indicadores
         '
@@ -3062,7 +2128,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Chk_MarcarFilas.CheckValue = "Y"
         Me.Chk_MarcarFilas.FocusCuesEnabled = False
         Me.Chk_MarcarFilas.ForeColor = System.Drawing.Color.Black
-        Me.Chk_MarcarFilas.Location = New System.Drawing.Point(12, 232)
+        Me.Chk_MarcarFilas.Location = New System.Drawing.Point(12, 199)
         Me.Chk_MarcarFilas.Name = "Chk_MarcarFilas"
         Me.Chk_MarcarFilas.Size = New System.Drawing.Size(82, 23)
         Me.Chk_MarcarFilas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -3418,6 +2484,940 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Tab_Indicadores.Name = "Tab_Indicadores"
         Me.Tab_Indicadores.Text = "Indicadores"
         '
+        'SuperTabControlPanel8
+        '
+        Me.SuperTabControlPanel8.Controls.Add(Me.SbTab_ConfAutomatizacion)
+        Me.SuperTabControlPanel8.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel8.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel8.Name = "SuperTabControlPanel8"
+        Me.SuperTabControlPanel8.Size = New System.Drawing.Size(802, 251)
+        Me.SuperTabControlPanel8.TabIndex = 0
+        Me.SuperTabControlPanel8.TabItem = Me.Tab_Automatizacion
+        '
+        'SbTab_ConfAutomatizacion
+        '
+        Me.SbTab_ConfAutomatizacion.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        '
+        '
+        '
+        Me.SbTab_ConfAutomatizacion.ControlBox.CloseBox.Name = ""
+        '
+        '
+        '
+        Me.SbTab_ConfAutomatizacion.ControlBox.MenuBox.Name = ""
+        Me.SbTab_ConfAutomatizacion.ControlBox.Name = ""
+        Me.SbTab_ConfAutomatizacion.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SbTab_ConfAutomatizacion.ControlBox.MenuBox, Me.SbTab_ConfAutomatizacion.ControlBox.CloseBox})
+        Me.SbTab_ConfAutomatizacion.Controls.Add(Me.SuperTabControlPanel9)
+        Me.SbTab_ConfAutomatizacion.Controls.Add(Me.SuperTabControlPanel10)
+        Me.SbTab_ConfAutomatizacion.Controls.Add(Me.SuperTabControlPanel11)
+        Me.SbTab_ConfAutomatizacion.ForeColor = System.Drawing.Color.Black
+        Me.SbTab_ConfAutomatizacion.Location = New System.Drawing.Point(6, 7)
+        Me.SbTab_ConfAutomatizacion.Name = "SbTab_ConfAutomatizacion"
+        Me.SbTab_ConfAutomatizacion.ReorderTabsEnabled = True
+        Me.SbTab_ConfAutomatizacion.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.SbTab_ConfAutomatizacion.SelectedTabIndex = 1
+        Me.SbTab_ConfAutomatizacion.Size = New System.Drawing.Size(527, 212)
+        Me.SbTab_ConfAutomatizacion.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.SbTab_ConfAutomatizacion.TabIndex = 116
+        Me.SbTab_ConfAutomatizacion.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SubTabConfAuto_OCC, Me.SubTabConfAuto_NVI, Me.SuperTabItem1})
+        Me.SbTab_ConfAutomatizacion.Text = "SuperTabControl1"
+        '
+        'SuperTabControlPanel9
+        '
+        Me.SuperTabControlPanel9.Controls.Add(Me.GroupPanel1)
+        Me.SuperTabControlPanel9.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel9.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel9.Name = "SuperTabControlPanel9"
+        Me.SuperTabControlPanel9.Size = New System.Drawing.Size(527, 185)
+        Me.SuperTabControlPanel9.TabIndex = 1
+        Me.SuperTabControlPanel9.TabItem = Me.SubTabConfAuto_OCC
+        '
+        'GroupPanel1
+        '
+        Me.GroupPanel1.BackColor = System.Drawing.Color.White
+        Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Chk_CompMinXProveedores)
+        Me.GroupPanel1.Controls.Add(Me.Txt_DespacharA_OCC)
+        Me.GroupPanel1.Controls.Add(Me.LabelX31)
+        Me.GroupPanel1.Controls.Add(Me.Rdb_OccProvEnviarCorreoNoEnviar)
+        Me.GroupPanel1.Controls.Add(Me.Rdb_OccProvEnviarCorreoSoloCc)
+        Me.GroupPanel1.Controls.Add(Me.LabelX29)
+        Me.GroupPanel1.Controls.Add(Me.Rdb_OccProvEnviarCorreoTodos)
+        Me.GroupPanel1.Controls.Add(Me.Txt_NombreFormato_PDF_OCC)
+        Me.GroupPanel1.Controls.Add(Me.Txt_CorreoCc_OCC)
+        Me.GroupPanel1.Controls.Add(Me.LabelX22)
+        Me.GroupPanel1.Controls.Add(Me.Txt_CtaCorreoEnvioAutomatizado_OCC)
+        Me.GroupPanel1.Controls.Add(Me.LabelX21)
+        Me.GroupPanel1.Controls.Add(Me.LabelX23)
+        Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel1.Location = New System.Drawing.Point(3, 3)
+        Me.GroupPanel1.Name = "GroupPanel1"
+        Me.GroupPanel1.Size = New System.Drawing.Size(521, 179)
+        '
+        '
+        '
+        Me.GroupPanel1.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel1.Style.BackColorGradientAngle = 90
+        Me.GroupPanel1.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel1.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderBottomWidth = 1
+        Me.GroupPanel1.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel1.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderLeftWidth = 1
+        Me.GroupPanel1.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderRightWidth = 1
+        Me.GroupPanel1.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderTopWidth = 1
+        Me.GroupPanel1.Style.CornerDiameter = 4
+        Me.GroupPanel1.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel1.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel1.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel1.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel1.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel1.TabIndex = 10022
+        '
+        'Chk_CompMinXProveedores
+        '
+        Me.Chk_CompMinXProveedores.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_CompMinXProveedores.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_CompMinXProveedores.CheckBoxImageChecked = CType(resources.GetObject("Chk_CompMinXProveedores.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_CompMinXProveedores.Checked = True
+        Me.Chk_CompMinXProveedores.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_CompMinXProveedores.CheckValue = "Y"
+        Me.Chk_CompMinXProveedores.FocusCuesEnabled = False
+        Me.Chk_CompMinXProveedores.ForeColor = System.Drawing.Color.Black
+        Me.Chk_CompMinXProveedores.Location = New System.Drawing.Point(0, 146)
+        Me.Chk_CompMinXProveedores.Name = "Chk_CompMinXProveedores"
+        Me.Chk_CompMinXProveedores.Size = New System.Drawing.Size(241, 23)
+        Me.Chk_CompMinXProveedores.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_CompMinXProveedores.TabIndex = 57
+        Me.Chk_CompMinXProveedores.Text = "Comprar múltiplos mínimos por proveedores"
+        '
+        'Txt_DespacharA_OCC
+        '
+        Me.Txt_DespacharA_OCC.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_DespacharA_OCC.Border.Class = "TextBoxBorder"
+        Me.Txt_DespacharA_OCC.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_DespacharA_OCC.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_DespacharA_OCC.ForeColor = System.Drawing.Color.Black
+        Me.HelpProvider1.SetHelpString(Me.Txt_DespacharA_OCC, "Esta definición se grabara en las observaciones del documento")
+        Me.Txt_DespacharA_OCC.Location = New System.Drawing.Point(106, 118)
+        Me.Txt_DespacharA_OCC.Name = "Txt_DespacharA_OCC"
+        Me.Txt_DespacharA_OCC.PreventEnterBeep = True
+        Me.HelpProvider1.SetShowHelp(Me.Txt_DespacharA_OCC, True)
+        Me.Txt_DespacharA_OCC.Size = New System.Drawing.Size(406, 22)
+        Me.Txt_DespacharA_OCC.TabIndex = 10031
+        '
+        'LabelX31
+        '
+        Me.LabelX31.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LabelX31.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX31.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX31.ForeColor = System.Drawing.Color.Black
+        Me.LabelX31.Location = New System.Drawing.Point(1, 117)
+        Me.LabelX31.Name = "LabelX31"
+        Me.LabelX31.SingleLineColor = System.Drawing.Color.Transparent
+        Me.LabelX31.Size = New System.Drawing.Size(87, 23)
+        Me.LabelX31.TabIndex = 10030
+        Me.LabelX31.Text = "Despachar a"
+        '
+        'Rdb_OccProvEnviarCorreoNoEnviar
+        '
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.CheckBoxImageChecked = CType(resources.GetObject("Rdb_OccProvEnviarCorreoNoEnviar.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.FocusCuesEnabled = False
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.Location = New System.Drawing.Point(258, 91)
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.Name = "Rdb_OccProvEnviarCorreoNoEnviar"
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.Size = New System.Drawing.Size(129, 20)
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.TabIndex = 10029
+        Me.Rdb_OccProvEnviarCorreoNoEnviar.Text = "No enviar correos"
+        '
+        'Rdb_OccProvEnviarCorreoSoloCc
+        '
+        Me.Rdb_OccProvEnviarCorreoSoloCc.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_OccProvEnviarCorreoSoloCc.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_OccProvEnviarCorreoSoloCc.CheckBoxImageChecked = CType(resources.GetObject("Rdb_OccProvEnviarCorreoSoloCc.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_OccProvEnviarCorreoSoloCc.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_OccProvEnviarCorreoSoloCc.FocusCuesEnabled = False
+        Me.Rdb_OccProvEnviarCorreoSoloCc.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_OccProvEnviarCorreoSoloCc.Location = New System.Drawing.Point(160, 91)
+        Me.Rdb_OccProvEnviarCorreoSoloCc.Name = "Rdb_OccProvEnviarCorreoSoloCc"
+        Me.Rdb_OccProvEnviarCorreoSoloCc.Size = New System.Drawing.Size(92, 20)
+        Me.Rdb_OccProvEnviarCorreoSoloCc.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_OccProvEnviarCorreoSoloCc.TabIndex = 10028
+        Me.Rdb_OccProvEnviarCorreoSoloCc.Text = "Solo a mail Cc"
+        '
+        'LabelX29
+        '
+        Me.LabelX29.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LabelX29.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX29.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX29.ForeColor = System.Drawing.Color.Black
+        Me.LabelX29.Location = New System.Drawing.Point(0, 88)
+        Me.LabelX29.Name = "LabelX29"
+        Me.LabelX29.SingleLineColor = System.Drawing.Color.Transparent
+        Me.LabelX29.Size = New System.Drawing.Size(87, 23)
+        Me.LabelX29.TabIndex = 10027
+        Me.LabelX29.Text = "Enviar correo a"
+        '
+        'Rdb_OccProvEnviarCorreoTodos
+        '
+        Me.Rdb_OccProvEnviarCorreoTodos.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_OccProvEnviarCorreoTodos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_OccProvEnviarCorreoTodos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_OccProvEnviarCorreoTodos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_OccProvEnviarCorreoTodos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_OccProvEnviarCorreoTodos.Checked = True
+        Me.Rdb_OccProvEnviarCorreoTodos.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_OccProvEnviarCorreoTodos.CheckValue = "Y"
+        Me.Rdb_OccProvEnviarCorreoTodos.FocusCuesEnabled = False
+        Me.Rdb_OccProvEnviarCorreoTodos.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_OccProvEnviarCorreoTodos.Location = New System.Drawing.Point(106, 91)
+        Me.Rdb_OccProvEnviarCorreoTodos.Name = "Rdb_OccProvEnviarCorreoTodos"
+        Me.Rdb_OccProvEnviarCorreoTodos.Size = New System.Drawing.Size(48, 20)
+        Me.Rdb_OccProvEnviarCorreoTodos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_OccProvEnviarCorreoTodos.TabIndex = 10026
+        Me.Rdb_OccProvEnviarCorreoTodos.Text = "Todos"
+        '
+        'Txt_NombreFormato_PDF_OCC
+        '
+        Me.Txt_NombreFormato_PDF_OCC.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_NombreFormato_PDF_OCC.Border.Class = "TextBoxBorder"
+        Me.Txt_NombreFormato_PDF_OCC.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_NombreFormato_PDF_OCC.ButtonCustom.Image = CType(resources.GetObject("Txt_NombreFormato_PDF_OCC.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_NombreFormato_PDF_OCC.ButtonCustom.Visible = True
+        Me.Txt_NombreFormato_PDF_OCC.ButtonCustom2.Image = CType(resources.GetObject("Txt_NombreFormato_PDF_OCC.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_NombreFormato_PDF_OCC.ButtonCustom2.Visible = True
+        Me.Txt_NombreFormato_PDF_OCC.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_NombreFormato_PDF_OCC.ForeColor = System.Drawing.Color.Black
+        Me.Txt_NombreFormato_PDF_OCC.Location = New System.Drawing.Point(106, 35)
+        Me.Txt_NombreFormato_PDF_OCC.Name = "Txt_NombreFormato_PDF_OCC"
+        Me.Txt_NombreFormato_PDF_OCC.PreventEnterBeep = True
+        Me.Txt_NombreFormato_PDF_OCC.ReadOnly = True
+        Me.Txt_NombreFormato_PDF_OCC.Size = New System.Drawing.Size(406, 22)
+        Me.Txt_NombreFormato_PDF_OCC.TabIndex = 10016
+        '
+        'Txt_CorreoCc_OCC
+        '
+        Me.Txt_CorreoCc_OCC.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CorreoCc_OCC.Border.Class = "TextBoxBorder"
+        Me.Txt_CorreoCc_OCC.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CorreoCc_OCC.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CorreoCc_OCC.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CorreoCc_OCC.Location = New System.Drawing.Point(106, 63)
+        Me.Txt_CorreoCc_OCC.Name = "Txt_CorreoCc_OCC"
+        Me.Txt_CorreoCc_OCC.PreventEnterBeep = True
+        Me.Txt_CorreoCc_OCC.Size = New System.Drawing.Size(406, 22)
+        Me.Txt_CorreoCc_OCC.TabIndex = 10014
+        '
+        'LabelX22
+        '
+        Me.LabelX22.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LabelX22.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX22.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX22.ForeColor = System.Drawing.Color.Black
+        Me.LabelX22.Location = New System.Drawing.Point(0, 62)
+        Me.LabelX22.Name = "LabelX22"
+        Me.LabelX22.SingleLineColor = System.Drawing.Color.Transparent
+        Me.LabelX22.Size = New System.Drawing.Size(87, 23)
+        Me.LabelX22.TabIndex = 10013
+        Me.LabelX22.Text = "Mail info. Cc OCC"
+        '
+        'Txt_CtaCorreoEnvioAutomatizado_OCC
+        '
+        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.Border.Class = "TextBoxBorder"
+        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.ButtonCustom.Image = CType(resources.GetObject("Txt_CtaCorreoEnvioAutomatizado_OCC.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.ButtonCustom.Visible = True
+        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.ButtonCustom2.Image = CType(resources.GetObject("Txt_CtaCorreoEnvioAutomatizado_OCC.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.ButtonCustom2.Visible = True
+        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.Location = New System.Drawing.Point(106, 7)
+        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.Name = "Txt_CtaCorreoEnvioAutomatizado_OCC"
+        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.PreventEnterBeep = True
+        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.ReadOnly = True
+        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.Size = New System.Drawing.Size(406, 22)
+        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.TabIndex = 90
+        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.Tag = "9999"
+        Me.Txt_CtaCorreoEnvioAutomatizado_OCC.WatermarkText = "Sino hay correo en esta casilla no se enviaran correos..."
+        '
+        'LabelX21
+        '
+        Me.LabelX21.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LabelX21.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX21.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX21.ForeColor = System.Drawing.Color.Black
+        Me.LabelX21.Location = New System.Drawing.Point(0, 7)
+        Me.LabelX21.Name = "LabelX21"
+        Me.LabelX21.SingleLineColor = System.Drawing.Color.Transparent
+        Me.LabelX21.Size = New System.Drawing.Size(87, 23)
+        Me.LabelX21.TabIndex = 10012
+        Me.LabelX21.Text = "Correo de envío"
+        '
+        'LabelX23
+        '
+        Me.LabelX23.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX23.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX23.ForeColor = System.Drawing.Color.Black
+        Me.LabelX23.Location = New System.Drawing.Point(0, 35)
+        Me.LabelX23.Name = "LabelX23"
+        Me.LabelX23.Size = New System.Drawing.Size(97, 22)
+        Me.LabelX23.TabIndex = 10015
+        Me.LabelX23.Text = "Fomato imp. PDF"
+        '
+        'SubTabConfAuto_OCC
+        '
+        Me.SubTabConfAuto_OCC.AttachedControl = Me.SuperTabControlPanel9
+        Me.SubTabConfAuto_OCC.GlobalItem = False
+        Me.SubTabConfAuto_OCC.Name = "SubTabConfAuto_OCC"
+        Me.SubTabConfAuto_OCC.Text = "OCC proveedores"
+        '
+        'SuperTabControlPanel10
+        '
+        Me.SuperTabControlPanel10.Controls.Add(Me.GroupPanel2)
+        Me.SuperTabControlPanel10.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel10.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel10.Name = "SuperTabControlPanel10"
+        Me.SuperTabControlPanel10.Size = New System.Drawing.Size(527, 212)
+        Me.SuperTabControlPanel10.TabIndex = 0
+        Me.SuperTabControlPanel10.TabItem = Me.SubTabConfAuto_NVI
+        '
+        'GroupPanel2
+        '
+        Me.GroupPanel2.BackColor = System.Drawing.Color.White
+        Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.Controls.Add(Me.Chk_IncluirProdRefleoNVI)
+        Me.GroupPanel2.Controls.Add(Me.Chk_IncluirProdBajaRotacionNVI)
+        Me.GroupPanel2.Controls.Add(Me.LabelX25)
+        Me.GroupPanel2.Controls.Add(Me.Txt_NombreFormato_PDF_NVI)
+        Me.GroupPanel2.Controls.Add(Me.Btn_Bodega_NVI_Estudio)
+        Me.GroupPanel2.Controls.Add(Me.Txt_CorreoCc_NVI)
+        Me.GroupPanel2.Controls.Add(Me.Txt_CtaCorreoEnvioAutomatizado_NVI)
+        Me.GroupPanel2.Controls.Add(Me.LabelX27)
+        Me.GroupPanel2.Controls.Add(Me.LabelX28)
+        Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel2.Location = New System.Drawing.Point(3, 3)
+        Me.GroupPanel2.Name = "GroupPanel2"
+        Me.GroupPanel2.Size = New System.Drawing.Size(521, 179)
+        '
+        '
+        '
+        Me.GroupPanel2.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel2.Style.BackColorGradientAngle = 90
+        Me.GroupPanel2.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel2.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderBottomWidth = 1
+        Me.GroupPanel2.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel2.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderLeftWidth = 1
+        Me.GroupPanel2.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderRightWidth = 1
+        Me.GroupPanel2.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderTopWidth = 1
+        Me.GroupPanel2.Style.CornerDiameter = 4
+        Me.GroupPanel2.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel2.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel2.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel2.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel2.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel2.TabIndex = 10023
+        '
+        'Chk_IncluirProdRefleoNVI
+        '
+        Me.Chk_IncluirProdRefleoNVI.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_IncluirProdRefleoNVI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_IncluirProdRefleoNVI.CheckBoxImageChecked = CType(resources.GetObject("Chk_IncluirProdRefleoNVI.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_IncluirProdRefleoNVI.FocusCuesEnabled = False
+        Me.Chk_IncluirProdRefleoNVI.ForeColor = System.Drawing.Color.Black
+        Me.Chk_IncluirProdRefleoNVI.Location = New System.Drawing.Point(3, 150)
+        Me.Chk_IncluirProdRefleoNVI.Name = "Chk_IncluirProdRefleoNVI"
+        Me.Chk_IncluirProdRefleoNVI.Size = New System.Drawing.Size(165, 20)
+        Me.Chk_IncluirProdRefleoNVI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_IncluirProdRefleoNVI.TabIndex = 10031
+        Me.Chk_IncluirProdRefleoNVI.Text = "Incluir productos con refleos"
+        '
+        'Chk_IncluirProdBajaRotacionNVI
+        '
+        Me.Chk_IncluirProdBajaRotacionNVI.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_IncluirProdBajaRotacionNVI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_IncluirProdBajaRotacionNVI.CheckBoxImageChecked = CType(resources.GetObject("Chk_IncluirProdBajaRotacionNVI.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_IncluirProdBajaRotacionNVI.FocusCuesEnabled = False
+        Me.Chk_IncluirProdBajaRotacionNVI.ForeColor = System.Drawing.Color.Black
+        Me.Chk_IncluirProdBajaRotacionNVI.Location = New System.Drawing.Point(3, 131)
+        Me.Chk_IncluirProdBajaRotacionNVI.Name = "Chk_IncluirProdBajaRotacionNVI"
+        Me.Chk_IncluirProdBajaRotacionNVI.Size = New System.Drawing.Size(287, 20)
+        Me.Chk_IncluirProdBajaRotacionNVI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_IncluirProdBajaRotacionNVI.TabIndex = 10030
+        Me.Chk_IncluirProdBajaRotacionNVI.Text = "Incluir productos con sospecha de baja rotación"
+        '
+        'LabelX25
+        '
+        Me.LabelX25.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LabelX25.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX25.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX25.ForeColor = System.Drawing.Color.Black
+        Me.LabelX25.Location = New System.Drawing.Point(0, 65)
+        Me.LabelX25.Name = "LabelX25"
+        Me.LabelX25.SingleLineColor = System.Drawing.Color.Transparent
+        Me.LabelX25.Size = New System.Drawing.Size(103, 23)
+        Me.LabelX25.TabIndex = 10018
+        Me.LabelX25.Text = "Mail info. aviso NVI"
+        '
+        'Txt_NombreFormato_PDF_NVI
+        '
+        Me.Txt_NombreFormato_PDF_NVI.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_NombreFormato_PDF_NVI.Border.Class = "TextBoxBorder"
+        Me.Txt_NombreFormato_PDF_NVI.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_NombreFormato_PDF_NVI.ButtonCustom.Image = CType(resources.GetObject("Txt_NombreFormato_PDF_NVI.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_NombreFormato_PDF_NVI.ButtonCustom.Visible = True
+        Me.Txt_NombreFormato_PDF_NVI.ButtonCustom2.Image = CType(resources.GetObject("Txt_NombreFormato_PDF_NVI.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_NombreFormato_PDF_NVI.ButtonCustom2.Visible = True
+        Me.Txt_NombreFormato_PDF_NVI.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_NombreFormato_PDF_NVI.ForeColor = System.Drawing.Color.Black
+        Me.Txt_NombreFormato_PDF_NVI.Location = New System.Drawing.Point(106, 34)
+        Me.Txt_NombreFormato_PDF_NVI.Name = "Txt_NombreFormato_PDF_NVI"
+        Me.Txt_NombreFormato_PDF_NVI.PreventEnterBeep = True
+        Me.Txt_NombreFormato_PDF_NVI.ReadOnly = True
+        Me.Txt_NombreFormato_PDF_NVI.Size = New System.Drawing.Size(406, 22)
+        Me.Txt_NombreFormato_PDF_NVI.TabIndex = 10016
+        '
+        'Btn_Bodega_NVI_Estudio
+        '
+        Me.Btn_Bodega_NVI_Estudio.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Bodega_NVI_Estudio.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Bodega_NVI_Estudio.Image = CType(resources.GetObject("Btn_Bodega_NVI_Estudio.Image"), System.Drawing.Image)
+        Me.Btn_Bodega_NVI_Estudio.ImageAlt = CType(resources.GetObject("Btn_Bodega_NVI_Estudio.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Bodega_NVI_Estudio.Location = New System.Drawing.Point(106, 96)
+        Me.Btn_Bodega_NVI_Estudio.Name = "Btn_Bodega_NVI_Estudio"
+        Me.Btn_Bodega_NVI_Estudio.Size = New System.Drawing.Size(201, 29)
+        Me.Btn_Bodega_NVI_Estudio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Bodega_NVI_Estudio.TabIndex = 10017
+        Me.Btn_Bodega_NVI_Estudio.Text = "Bodegas de estudio de stock NVI"
+        '
+        'Txt_CorreoCc_NVI
+        '
+        Me.Txt_CorreoCc_NVI.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CorreoCc_NVI.Border.Class = "TextBoxBorder"
+        Me.Txt_CorreoCc_NVI.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CorreoCc_NVI.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CorreoCc_NVI.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CorreoCc_NVI.Location = New System.Drawing.Point(106, 62)
+        Me.Txt_CorreoCc_NVI.Name = "Txt_CorreoCc_NVI"
+        Me.Txt_CorreoCc_NVI.PreventEnterBeep = True
+        Me.Txt_CorreoCc_NVI.Size = New System.Drawing.Size(406, 22)
+        Me.Txt_CorreoCc_NVI.TabIndex = 10014
+        '
+        'Txt_CtaCorreoEnvioAutomatizado_NVI
+        '
+        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.Border.Class = "TextBoxBorder"
+        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.ButtonCustom.Image = CType(resources.GetObject("Txt_CtaCorreoEnvioAutomatizado_NVI.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.ButtonCustom.Visible = True
+        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.ButtonCustom2.Image = CType(resources.GetObject("Txt_CtaCorreoEnvioAutomatizado_NVI.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.ButtonCustom2.Visible = True
+        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.Location = New System.Drawing.Point(106, 7)
+        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.Name = "Txt_CtaCorreoEnvioAutomatizado_NVI"
+        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.PreventEnterBeep = True
+        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.ReadOnly = True
+        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.Size = New System.Drawing.Size(406, 22)
+        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.TabIndex = 90
+        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.Tag = "9999"
+        Me.Txt_CtaCorreoEnvioAutomatizado_NVI.WatermarkText = "Sino hay correo en esta casilla no se enviaran correos..."
+        '
+        'LabelX27
+        '
+        Me.LabelX27.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LabelX27.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX27.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX27.ForeColor = System.Drawing.Color.Black
+        Me.LabelX27.Location = New System.Drawing.Point(0, 7)
+        Me.LabelX27.Name = "LabelX27"
+        Me.LabelX27.SingleLineColor = System.Drawing.Color.Transparent
+        Me.LabelX27.Size = New System.Drawing.Size(87, 23)
+        Me.LabelX27.TabIndex = 10012
+        Me.LabelX27.Text = "Correo de envío"
+        '
+        'LabelX28
+        '
+        Me.LabelX28.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX28.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX28.ForeColor = System.Drawing.Color.Black
+        Me.LabelX28.Location = New System.Drawing.Point(0, 37)
+        Me.LabelX28.Name = "LabelX28"
+        Me.LabelX28.Size = New System.Drawing.Size(97, 22)
+        Me.LabelX28.TabIndex = 10015
+        Me.LabelX28.Text = "Fomato imp. PDF"
+        '
+        'SubTabConfAuto_NVI
+        '
+        Me.SubTabConfAuto_NVI.AttachedControl = Me.SuperTabControlPanel10
+        Me.SubTabConfAuto_NVI.GlobalItem = False
+        Me.SubTabConfAuto_NVI.Name = "SubTabConfAuto_NVI"
+        Me.SubTabConfAuto_NVI.Text = "NVI solicitudes internas"
+        '
+        'SuperTabControlPanel11
+        '
+        Me.SuperTabControlPanel11.Controls.Add(Me.GroupPanel3)
+        Me.SuperTabControlPanel11.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel11.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel11.Name = "SuperTabControlPanel11"
+        Me.SuperTabControlPanel11.Size = New System.Drawing.Size(527, 212)
+        Me.SuperTabControlPanel11.TabIndex = 0
+        Me.SuperTabControlPanel11.TabItem = Me.SuperTabItem1
+        '
+        'GroupPanel3
+        '
+        Me.GroupPanel3.BackColor = System.Drawing.Color.White
+        Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel3.Controls.Add(Me.LabelX30)
+        Me.GroupPanel3.Controls.Add(Me.Input_DiasMarcarProvQueNoTiene)
+        Me.GroupPanel3.Controls.Add(Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo)
+        Me.GroupPanel3.Controls.Add(Me.Txt_CtaCorreoAvisoOCCMinCompra)
+        Me.GroupPanel3.Controls.Add(Me.LabelX26)
+        Me.GroupPanel3.Controls.Add(Me.Chk_EnviarListadoProveedoresSinStock)
+        Me.GroupPanel3.Controls.Add(Me.Txt_CtaCorreoAvisoProveedoresSinStock)
+        Me.GroupPanel3.Controls.Add(Me.LabelX24)
+        Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel3.Location = New System.Drawing.Point(3, 3)
+        Me.GroupPanel3.Name = "GroupPanel3"
+        Me.GroupPanel3.Size = New System.Drawing.Size(521, 182)
+        '
+        '
+        '
+        Me.GroupPanel3.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel3.Style.BackColorGradientAngle = 90
+        Me.GroupPanel3.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel3.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderBottomWidth = 1
+        Me.GroupPanel3.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel3.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderLeftWidth = 1
+        Me.GroupPanel3.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderRightWidth = 1
+        Me.GroupPanel3.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderTopWidth = 1
+        Me.GroupPanel3.Style.CornerDiameter = 4
+        Me.GroupPanel3.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel3.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel3.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel3.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel3.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel3.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel3.TabIndex = 10023
+        '
+        'LabelX30
+        '
+        Me.LabelX30.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LabelX30.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX30.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX30.ForeColor = System.Drawing.Color.Black
+        Me.LabelX30.Location = New System.Drawing.Point(0, 105)
+        Me.LabelX30.Name = "LabelX30"
+        Me.LabelX30.SingleLineColor = System.Drawing.Color.Transparent
+        Me.LabelX30.Size = New System.Drawing.Size(100, 23)
+        Me.LabelX30.TabIndex = 10036
+        Me.LabelX30.Text = "Días sin recepción"
+        '
+        'Input_DiasMarcarProvQueNoTiene
+        '
+        Me.Input_DiasMarcarProvQueNoTiene.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_DiasMarcarProvQueNoTiene.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_DiasMarcarProvQueNoTiene.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_DiasMarcarProvQueNoTiene.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_DiasMarcarProvQueNoTiene.ForeColor = System.Drawing.Color.Black
+        Me.Input_DiasMarcarProvQueNoTiene.Location = New System.Drawing.Point(107, 106)
+        Me.Input_DiasMarcarProvQueNoTiene.MaxValue = 90
+        Me.Input_DiasMarcarProvQueNoTiene.MinValue = 0
+        Me.Input_DiasMarcarProvQueNoTiene.Name = "Input_DiasMarcarProvQueNoTiene"
+        Me.Input_DiasMarcarProvQueNoTiene.ShowUpDown = True
+        Me.Input_DiasMarcarProvQueNoTiene.Size = New System.Drawing.Size(49, 22)
+        Me.Input_DiasMarcarProvQueNoTiene.TabIndex = 10035
+        Me.Input_DiasMarcarProvQueNoTiene.Value = 14
+        '
+        'Chk_EnviarListadoOCCConMinimoCompraXCorreo
+        '
+        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnviarListadoOCCConMinimoCompraXCorreo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.FocusCuesEnabled = False
+        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.ForeColor = System.Drawing.Color.Black
+        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.Location = New System.Drawing.Point(107, 28)
+        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.Name = "Chk_EnviarListadoOCCConMinimoCompraXCorreo"
+        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.Size = New System.Drawing.Size(241, 20)
+        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.TabIndex = 10032
+        Me.Chk_EnviarListadoOCCConMinimoCompraXCorreo.Text = "Enviar por correo listado con OCC con mínimo de compra al correo Cc"
+        '
+        'Txt_CtaCorreoAvisoOCCMinCompra
+        '
+        Me.Txt_CtaCorreoAvisoOCCMinCompra.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CtaCorreoAvisoOCCMinCompra.Border.Class = "TextBoxBorder"
+        Me.Txt_CtaCorreoAvisoOCCMinCompra.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CtaCorreoAvisoOCCMinCompra.ButtonCustom.Image = CType(resources.GetObject("Txt_CtaCorreoAvisoOCCMinCompra.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_CtaCorreoAvisoOCCMinCompra.ButtonCustom.Visible = True
+        Me.Txt_CtaCorreoAvisoOCCMinCompra.ButtonCustom2.Image = CType(resources.GetObject("Txt_CtaCorreoAvisoOCCMinCompra.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_CtaCorreoAvisoOCCMinCompra.ButtonCustom2.Visible = True
+        Me.Txt_CtaCorreoAvisoOCCMinCompra.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CtaCorreoAvisoOCCMinCompra.ForeColor = System.Drawing.Color.Black
+        Me.HelpProvider1.SetHelpString(Me.Txt_CtaCorreoAvisoOCCMinCompra, resources.GetString("Txt_CtaCorreoAvisoOCCMinCompra.HelpString"))
+        Me.Txt_CtaCorreoAvisoOCCMinCompra.Location = New System.Drawing.Point(107, 3)
+        Me.Txt_CtaCorreoAvisoOCCMinCompra.Name = "Txt_CtaCorreoAvisoOCCMinCompra"
+        Me.Txt_CtaCorreoAvisoOCCMinCompra.PreventEnterBeep = True
+        Me.Txt_CtaCorreoAvisoOCCMinCompra.ReadOnly = True
+        Me.HelpProvider1.SetShowHelp(Me.Txt_CtaCorreoAvisoOCCMinCompra, True)
+        Me.Txt_CtaCorreoAvisoOCCMinCompra.Size = New System.Drawing.Size(406, 22)
+        Me.Txt_CtaCorreoAvisoOCCMinCompra.TabIndex = 10033
+        Me.Txt_CtaCorreoAvisoOCCMinCompra.Tag = "9999"
+        Me.Txt_CtaCorreoAvisoOCCMinCompra.WatermarkText = "Sino hay correo en esta casilla no se enviaran correos..."
+        '
+        'LabelX26
+        '
+        Me.LabelX26.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LabelX26.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX26.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX26.ForeColor = System.Drawing.Color.Black
+        Me.LabelX26.Location = New System.Drawing.Point(0, 3)
+        Me.LabelX26.Name = "LabelX26"
+        Me.LabelX26.SingleLineColor = System.Drawing.Color.Transparent
+        Me.LabelX26.Size = New System.Drawing.Size(100, 48)
+        Me.LabelX26.TabIndex = 10034
+        Me.LabelX26.Text = "Correo aviso" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "OCC sin mínimo" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "de compra"
+        '
+        'Chk_EnviarListadoProveedoresSinStock
+        '
+        Me.Chk_EnviarListadoProveedoresSinStock.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EnviarListadoProveedoresSinStock.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EnviarListadoProveedoresSinStock.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnviarListadoProveedoresSinStock.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EnviarListadoProveedoresSinStock.FocusCuesEnabled = False
+        Me.Chk_EnviarListadoProveedoresSinStock.ForeColor = System.Drawing.Color.Black
+        Me.Chk_EnviarListadoProveedoresSinStock.Location = New System.Drawing.Point(107, 85)
+        Me.Chk_EnviarListadoProveedoresSinStock.Name = "Chk_EnviarListadoProveedoresSinStock"
+        Me.Chk_EnviarListadoProveedoresSinStock.Size = New System.Drawing.Size(268, 20)
+        Me.Chk_EnviarListadoProveedoresSinStock.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EnviarListadoProveedoresSinStock.TabIndex = 10014
+        Me.Chk_EnviarListadoProveedoresSinStock.Text = "Enviar por correo listado con proveedores sin stock"
+        '
+        'Txt_CtaCorreoAvisoProveedoresSinStock
+        '
+        Me.Txt_CtaCorreoAvisoProveedoresSinStock.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CtaCorreoAvisoProveedoresSinStock.Border.Class = "TextBoxBorder"
+        Me.Txt_CtaCorreoAvisoProveedoresSinStock.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CtaCorreoAvisoProveedoresSinStock.ButtonCustom.Image = CType(resources.GetObject("Txt_CtaCorreoAvisoProveedoresSinStock.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_CtaCorreoAvisoProveedoresSinStock.ButtonCustom.Visible = True
+        Me.Txt_CtaCorreoAvisoProveedoresSinStock.ButtonCustom2.Image = CType(resources.GetObject("Txt_CtaCorreoAvisoProveedoresSinStock.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_CtaCorreoAvisoProveedoresSinStock.ButtonCustom2.Visible = True
+        Me.Txt_CtaCorreoAvisoProveedoresSinStock.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CtaCorreoAvisoProveedoresSinStock.ForeColor = System.Drawing.Color.Black
+        Me.HelpProvider1.SetHelpString(Me.Txt_CtaCorreoAvisoProveedoresSinStock, resources.GetString("Txt_CtaCorreoAvisoProveedoresSinStock.HelpString"))
+        Me.Txt_CtaCorreoAvisoProveedoresSinStock.Location = New System.Drawing.Point(107, 62)
+        Me.Txt_CtaCorreoAvisoProveedoresSinStock.Name = "Txt_CtaCorreoAvisoProveedoresSinStock"
+        Me.Txt_CtaCorreoAvisoProveedoresSinStock.PreventEnterBeep = True
+        Me.Txt_CtaCorreoAvisoProveedoresSinStock.ReadOnly = True
+        Me.HelpProvider1.SetShowHelp(Me.Txt_CtaCorreoAvisoProveedoresSinStock, True)
+        Me.Txt_CtaCorreoAvisoProveedoresSinStock.Size = New System.Drawing.Size(406, 22)
+        Me.Txt_CtaCorreoAvisoProveedoresSinStock.TabIndex = 10030
+        Me.Txt_CtaCorreoAvisoProveedoresSinStock.Tag = "9999"
+        Me.Txt_CtaCorreoAvisoProveedoresSinStock.WatermarkText = "Sino hay correo en esta casilla no se enviaran correos..."
+        '
+        'LabelX24
+        '
+        Me.LabelX24.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LabelX24.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX24.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX24.ForeColor = System.Drawing.Color.Black
+        Me.LabelX24.Location = New System.Drawing.Point(0, 57)
+        Me.LabelX24.Name = "LabelX24"
+        Me.LabelX24.SingleLineColor = System.Drawing.Color.Transparent
+        Me.LabelX24.Size = New System.Drawing.Size(100, 48)
+        Me.LabelX24.TabIndex = 10031
+        Me.LabelX24.Text = "Correo aviso" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Proveedores" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "sin stock"
+        '
+        'SuperTabItem1
+        '
+        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel11
+        Me.SuperTabItem1.GlobalItem = False
+        Me.SuperTabItem1.Name = "SuperTabItem1"
+        Me.SuperTabItem1.Text = "Otras opciones"
+        '
+        'Tab_Automatizacion
+        '
+        Me.Tab_Automatizacion.AttachedControl = Me.SuperTabControlPanel8
+        Me.Tab_Automatizacion.GlobalItem = False
+        Me.Tab_Automatizacion.Name = "Tab_Automatizacion"
+        Me.Tab_Automatizacion.Text = "Conf. Automatización"
+        '
+        'SuperTabControlPanel5
+        '
+        Me.SuperTabControlPanel5.Controls.Add(Me.ReflectionImage1)
+        Me.SuperTabControlPanel5.Controls.Add(Me.Chk_Advertir_Rotacion)
+        Me.SuperTabControlPanel5.Controls.Add(Me.LabelX12)
+        Me.SuperTabControlPanel5.Controls.Add(Me.LabelX13)
+        Me.SuperTabControlPanel5.Controls.Add(Me.Input_Dias_Advertencia_Rotacion)
+        Me.SuperTabControlPanel5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel5.Name = "SuperTabControlPanel5"
+        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(802, 251)
+        Me.SuperTabControlPanel5.TabIndex = 0
+        Me.SuperTabControlPanel5.TabItem = Me.SuperTabItem5
+        '
+        'ReflectionImage1
+        '
+        Me.ReflectionImage1.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.ReflectionImage1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.ReflectionImage1.BackgroundStyle.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.ReflectionImage1.ForeColor = System.Drawing.Color.Black
+        Me.ReflectionImage1.Image = CType(resources.GetObject("ReflectionImage1.Image"), System.Drawing.Image)
+        Me.ReflectionImage1.Location = New System.Drawing.Point(401, 14)
+        Me.ReflectionImage1.Name = "ReflectionImage1"
+        Me.ReflectionImage1.Size = New System.Drawing.Size(98, 78)
+        Me.ReflectionImage1.TabIndex = 112
+        '
+        'Chk_Advertir_Rotacion
+        '
+        Me.Chk_Advertir_Rotacion.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Advertir_Rotacion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Advertir_Rotacion.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Advertir_Rotacion.Location = New System.Drawing.Point(20, 30)
+        Me.Chk_Advertir_Rotacion.Name = "Chk_Advertir_Rotacion"
+        Me.Chk_Advertir_Rotacion.Size = New System.Drawing.Size(245, 23)
+        Me.Chk_Advertir_Rotacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Advertir_Rotacion.TabIndex = 108
+        Me.Chk_Advertir_Rotacion.Text = "Advertir rotación"
+        '
+        'LabelX12
+        '
+        Me.LabelX12.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX12.ForeColor = System.Drawing.Color.Black
+        Me.LabelX12.Location = New System.Drawing.Point(250, 59)
+        Me.LabelX12.Name = "LabelX12"
+        Me.LabelX12.Size = New System.Drawing.Size(149, 23)
+        Me.LabelX12.TabIndex = 111
+        Me.LabelX12.Text = "días desde el último estudio"
+        '
+        'LabelX13
+        '
+        Me.LabelX13.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX13.ForeColor = System.Drawing.Color.Black
+        Me.LabelX13.Location = New System.Drawing.Point(20, 58)
+        Me.LabelX13.Name = "LabelX13"
+        Me.LabelX13.Size = New System.Drawing.Size(156, 23)
+        Me.LabelX13.TabIndex = 109
+        Me.LabelX13.Text = "Advierte cuando tenga más de"
+        '
+        'Input_Dias_Advertencia_Rotacion
+        '
+        Me.Input_Dias_Advertencia_Rotacion.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_Dias_Advertencia_Rotacion.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_Dias_Advertencia_Rotacion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_Dias_Advertencia_Rotacion.ButtonClear.Visible = True
+        Me.Input_Dias_Advertencia_Rotacion.FocusHighlightEnabled = True
+        Me.Input_Dias_Advertencia_Rotacion.ForeColor = System.Drawing.Color.Black
+        Me.Input_Dias_Advertencia_Rotacion.Location = New System.Drawing.Point(177, 59)
+        Me.Input_Dias_Advertencia_Rotacion.MaxValue = 365
+        Me.Input_Dias_Advertencia_Rotacion.MinValue = 1
+        Me.Input_Dias_Advertencia_Rotacion.Name = "Input_Dias_Advertencia_Rotacion"
+        Me.Input_Dias_Advertencia_Rotacion.ShowUpDown = True
+        Me.Input_Dias_Advertencia_Rotacion.Size = New System.Drawing.Size(67, 22)
+        Me.Input_Dias_Advertencia_Rotacion.TabIndex = 110
+        Me.Input_Dias_Advertencia_Rotacion.Value = 7
+        '
+        'SuperTabItem5
+        '
+        Me.SuperTabItem5.AttachedControl = Me.SuperTabControlPanel5
+        Me.SuperTabItem5.GlobalItem = False
+        Me.SuperTabItem5.Name = "SuperTabItem5"
+        Me.SuperTabItem5.Text = "Advertir Rotación"
+        Me.SuperTabItem5.Visible = False
+        '
+        'SuperTabControlPanel7
+        '
+        Me.SuperTabControlPanel7.Controls.Add(Me.LabelX10)
+        Me.SuperTabControlPanel7.Controls.Add(Me.Chk_Cargar_Rotacion_Estacional)
+        Me.SuperTabControlPanel7.Controls.Add(Me.Dtp_Fecha_Vta_Desde_Estacional)
+        Me.SuperTabControlPanel7.Controls.Add(Me.Label7)
+        Me.SuperTabControlPanel7.Controls.Add(Me.Dtp_Fecha_Estacional_Hasta)
+        Me.SuperTabControlPanel7.Controls.Add(Me.Label6)
+        Me.SuperTabControlPanel7.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel7.Enabled = False
+        Me.SuperTabControlPanel7.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel7.Name = "SuperTabControlPanel7"
+        Me.SuperTabControlPanel7.Size = New System.Drawing.Size(802, 251)
+        Me.SuperTabControlPanel7.TabIndex = 0
+        Me.SuperTabControlPanel7.TabItem = Me.SuperTabItem7
+        '
+        'LabelX10
+        '
+        Me.LabelX10.AutoSize = True
+        Me.LabelX10.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX10.ForeColor = System.Drawing.Color.Black
+        Me.LabelX10.Location = New System.Drawing.Point(11, 42)
+        Me.LabelX10.Name = "LabelX10"
+        Me.LabelX10.Size = New System.Drawing.Size(185, 17)
+        Me.LabelX10.TabIndex = 52
+        Me.LabelX10.Text = "<b>Rango de fecha rotación estacional</b>"
+        '
+        'Chk_Cargar_Rotacion_Estacional
+        '
+        Me.Chk_Cargar_Rotacion_Estacional.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Cargar_Rotacion_Estacional.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Cargar_Rotacion_Estacional.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Cargar_Rotacion_Estacional.Location = New System.Drawing.Point(12, 12)
+        Me.Chk_Cargar_Rotacion_Estacional.Name = "Chk_Cargar_Rotacion_Estacional"
+        Me.Chk_Cargar_Rotacion_Estacional.Size = New System.Drawing.Size(241, 23)
+        Me.Chk_Cargar_Rotacion_Estacional.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Cargar_Rotacion_Estacional.TabIndex = 51
+        Me.Chk_Cargar_Rotacion_Estacional.Text = "Cargar rotación estacional para los productos"
+        '
+        'SuperTabItem7
+        '
+        Me.SuperTabItem7.AttachedControl = Me.SuperTabControlPanel7
+        Me.SuperTabItem7.GlobalItem = False
+        Me.SuperTabItem7.Name = "SuperTabItem7"
+        Me.SuperTabItem7.Text = "Rotación estacional"
+        Me.SuperTabItem7.Visible = False
+        '
         'TableLayoutPanel3
         '
         Me.TableLayoutPanel3.BackColor = System.Drawing.Color.Transparent
@@ -3427,7 +3427,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_RotMeses, 1, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_RotDias, 0, 0)
         Me.TableLayoutPanel3.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel3.Location = New System.Drawing.Point(868, 279)
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(886, 129)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
         Me.TableLayoutPanel3.RowCount = 1
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -3494,7 +3494,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Grupo_Productos.DisabledBackColor = System.Drawing.Color.Empty
         Me.Grupo_Productos.Location = New System.Drawing.Point(14, 0)
         Me.Grupo_Productos.Name = "Grupo_Productos"
-        Me.Grupo_Productos.Size = New System.Drawing.Size(544, 310)
+        Me.Grupo_Productos.Size = New System.Drawing.Size(792, 310)
         '
         '
         '
@@ -3597,7 +3597,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX5.ForeColor = System.Drawing.Color.Black
-        Me.LabelX5.Location = New System.Drawing.Point(18, 261)
+        Me.LabelX5.Location = New System.Drawing.Point(6, 260)
         Me.LabelX5.Name = "LabelX5"
         Me.LabelX5.SingleLineColor = System.Drawing.Color.Transparent
         Me.LabelX5.Size = New System.Drawing.Size(87, 23)
@@ -3663,7 +3663,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Chk_Incluir_Servicios.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Incluir_Servicios.Enabled = False
         Me.Chk_Incluir_Servicios.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Incluir_Servicios.Location = New System.Drawing.Point(867, 248)
+        Me.Chk_Incluir_Servicios.Location = New System.Drawing.Point(885, 98)
         Me.Chk_Incluir_Servicios.Name = "Chk_Incluir_Servicios"
         Me.Chk_Incluir_Servicios.Size = New System.Drawing.Size(170, 23)
         Me.Chk_Incluir_Servicios.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -3684,9 +3684,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.MetroStatusBar1.ForeColor = System.Drawing.Color.Black
         Me.MetroStatusBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Barra_Progreso, Me.Lbl_Status})
         Me.MetroStatusBar1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.MetroStatusBar1.Location = New System.Drawing.Point(0, 699)
+        Me.MetroStatusBar1.Location = New System.Drawing.Point(0, 643)
         Me.MetroStatusBar1.Name = "MetroStatusBar1"
-        Me.MetroStatusBar1.Size = New System.Drawing.Size(571, 22)
+        Me.MetroStatusBar1.Size = New System.Drawing.Size(824, 22)
         Me.MetroStatusBar1.TabIndex = 52
         Me.MetroStatusBar1.Text = "MetroStatusBar1"
         '
@@ -3723,7 +3723,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Chk_Sumar_Vta_Ult_Year.Enabled = False
         Me.Chk_Sumar_Vta_Ult_Year.FocusCuesEnabled = False
         Me.Chk_Sumar_Vta_Ult_Year.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Sumar_Vta_Ult_Year.Location = New System.Drawing.Point(14, 616)
+        Me.Chk_Sumar_Vta_Ult_Year.Location = New System.Drawing.Point(14, 573)
         Me.Chk_Sumar_Vta_Ult_Year.Name = "Chk_Sumar_Vta_Ult_Year"
         Me.Chk_Sumar_Vta_Ult_Year.Size = New System.Drawing.Size(293, 22)
         Me.Chk_Sumar_Vta_Ult_Year.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -3783,7 +3783,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         Me.Sw_BlocConfiguracion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Sw_BlocConfiguracion.ForeColor = System.Drawing.Color.Black
-        Me.Sw_BlocConfiguracion.Location = New System.Drawing.Point(434, 616)
+        Me.Sw_BlocConfiguracion.Location = New System.Drawing.Point(434, 573)
         Me.Sw_BlocConfiguracion.Name = "Sw_BlocConfiguracion"
         Me.Sw_BlocConfiguracion.OffText = "Bloqueada"
         Me.Sw_BlocConfiguracion.OnText = "Desbloqueda"
@@ -3802,7 +3802,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         Me.LabelX33.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX33.ForeColor = System.Drawing.Color.Black
-        Me.LabelX33.Location = New System.Drawing.Point(357, 616)
+        Me.LabelX33.Location = New System.Drawing.Point(357, 573)
         Me.LabelX33.Name = "LabelX33"
         Me.LabelX33.Size = New System.Drawing.Size(71, 17)
         Me.LabelX33.TabIndex = 117
@@ -3812,7 +3812,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(571, 721)
+        Me.ClientSize = New System.Drawing.Size(824, 665)
         Me.Controls.Add(Me.LabelX33)
         Me.Controls.Add(Me.Sw_BlocConfiguracion)
         Me.Controls.Add(Me.Chk_Sumar_Vta_Ult_Year)
@@ -3841,22 +3841,8 @@ Partial Class Frm_00_Asis_Compra_Menu
         CType(Me.Input_Productos_Ranking, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.STabConfiguracion, System.ComponentModel.ISupportInitialize).EndInit()
         Me.STabConfiguracion.ResumeLayout(False)
-        Me.SuperTabControlPanel8.ResumeLayout(False)
-        CType(Me.SbTab_ConfAutomatizacion, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SbTab_ConfAutomatizacion.ResumeLayout(False)
-        Me.SuperTabControlPanel9.ResumeLayout(False)
-        Me.GroupPanel1.ResumeLayout(False)
-        Me.SuperTabControlPanel10.ResumeLayout(False)
-        Me.GroupPanel2.ResumeLayout(False)
-        Me.SuperTabControlPanel11.ResumeLayout(False)
-        Me.GroupPanel3.ResumeLayout(False)
-        CType(Me.Input_DiasMarcarProvQueNoTiene, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel2.ResumeLayout(False)
         Me.Grupo_DbExt.ResumeLayout(False)
-        Me.SuperTabControlPanel5.ResumeLayout(False)
-        CType(Me.Input_Dias_Advertencia_Rotacion, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SuperTabControlPanel7.ResumeLayout(False)
-        Me.SuperTabControlPanel7.PerformLayout()
         Me.SuperTabControlPanel1.ResumeLayout(False)
         CType(Me.Dtp_Fecha_Vta_Desde, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Input_Ultimos_Meses_Vta_Promedio, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3882,6 +3868,20 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.TableLayoutPanel5.PerformLayout()
         CType(Me.Input_Dias_a_Abastecer, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Input_Tiempo_Reposicion, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SuperTabControlPanel8.ResumeLayout(False)
+        CType(Me.SbTab_ConfAutomatizacion, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SbTab_ConfAutomatizacion.ResumeLayout(False)
+        Me.SuperTabControlPanel9.ResumeLayout(False)
+        Me.GroupPanel1.ResumeLayout(False)
+        Me.SuperTabControlPanel10.ResumeLayout(False)
+        Me.GroupPanel2.ResumeLayout(False)
+        Me.SuperTabControlPanel11.ResumeLayout(False)
+        Me.GroupPanel3.ResumeLayout(False)
+        CType(Me.Input_DiasMarcarProvQueNoTiene, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SuperTabControlPanel5.ResumeLayout(False)
+        CType(Me.Input_Dias_Advertencia_Rotacion, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SuperTabControlPanel7.ResumeLayout(False)
+        Me.SuperTabControlPanel7.PerformLayout()
         Me.TableLayoutPanel3.ResumeLayout(False)
         Me.Grupo_Productos.ResumeLayout(False)
         Me.ResumeLayout(False)

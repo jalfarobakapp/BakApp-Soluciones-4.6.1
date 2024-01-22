@@ -44,10 +44,7 @@ Public Class Frm_ImpBarras_ListaEtiquetas
 
     Sub Sb_Crear_etiqueta()
 
-        Dim Fm As New Frm_ImpBarras_EdicionEtiquetas
-        Fm._NombreEtiqueta = String.Empty
-        Fm._Funcion = String.Empty
-        Fm._CantPorLinea = 1
+        Dim Fm As New Frm_ImpBarras_EdicionEtiquetas(0)
         Fm.TxtNombreEtiqueta.ReadOnly = False
         Fm.ShowDialog(Me)
         Fm.Dispose()
@@ -62,14 +59,15 @@ Public Class Frm_ImpBarras_ListaEtiquetas
     Sub Sb_Editar_Etiqueta()
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
-        Dim _NombreEtiqueta = _Fila.Cells("NombreEtiqueta").Value
-        Dim _Funcion = _Fila.Cells("FUNCION").Value
-        Dim _CantPorLinea = _Fila.Cells("CantPorLinea").Value
+        Dim _Semilla As Integer = _Fila.Cells("Semilla").Value
+        Dim _NombreEtiqueta As String = _Fila.Cells("NombreEtiqueta").Value
+        Dim _Funcion As String = _Fila.Cells("FUNCION").Value
+        Dim _CantPorLinea As Integer = _Fila.Cells("CantPorLinea").Value
 
-        Dim Fm As New Frm_ImpBarras_EdicionEtiquetas
-        Fm._NombreEtiqueta = _NombreEtiqueta
-        Fm._Funcion = _Funcion
-        Fm._CantPorLinea = _CantPorLinea
+        Dim Fm As New Frm_ImpBarras_EdicionEtiquetas(_Semilla)
+        'Fm._NombreEtiqueta = _NombreEtiqueta
+        'Fm._Funcion = _Funcion
+        'Fm._CantPorLinea = _CantPorLinea
         Fm.TxtNombreEtiqueta.ReadOnly = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
@@ -157,7 +155,11 @@ Public Class Frm_ImpBarras_ListaEtiquetas
 
                 OcultarEncabezadoGrilla(Grilla)
 
-                .Columns("NombreEtiqueta").Width = 420
+                .Columns("Semilla").Width = 30
+                .Columns("Semilla").HeaderText = "ID"
+                .Columns("Semilla").Visible = True
+
+                .Columns("NombreEtiqueta").Width = 420 - 30
                 .Columns("NombreEtiqueta").HeaderText = "Nombre etiqueta"
                 .Columns("NombreEtiqueta").Visible = True
 

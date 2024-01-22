@@ -331,6 +331,9 @@
   <data name="Zw_Entidades_ProdExcluidos" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Sql\Tablas\Zw_Entidades_ProdExcluidos.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="Zw_Entidades_ProdMinCompra" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_Entidades_ProdMinCompra.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="Zw_Entidad_Cia_Seguros" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_entidad_cia_seguros.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

@@ -1563,6 +1563,29 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
+        '''CREATE TABLE [dbo].[Zw_Entidades_ProdMinCompra](
+        '''	[Id]				[int] IDENTITY(1,1) NOT NULL,
+        '''	[CodEntidad]		[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodSucEntidad]		[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo]			[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[UdCompra]			[int]			NOT NULL DEFAULT (0),
+        '''	[MultiploCompra]	[float]			NOT NULL DEFAULT (0),
+        ''' CONSTRAINT [PK_Zw_Entidades_ProdMinCompra] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[CodEntidad] ASC,
+        '''	[CodSucEntidad] ASC,
+        '''	[Codigo] ASC
+        ''')WITH (PAD_INDEX = OFF [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Entidades_ProdMinCompra() As String
+            Get
+                Return ResourceManager.GetString("Zw_Entidades_ProdMinCompra", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
         '''CREATE TABLE [dbo].[Zw_Estaciones_CashDro](
         '''	[NombreEquipo]					[nchar](50)		NOT NULL DEFAULT (&apos;&apos;),
         '''	[Funcionario]					[char](3)		NOT NULL DEFAULT (&apos;&apos;),
@@ -2116,12 +2139,17 @@ Namespace My.Resources
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
         '''CREATE TABLE [dbo].[Zw_Lotes_Det](
-        '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
-        '''	[Id_Lote]		[int]			NOT NULL Default(0),
-        '''	[NroLote]		[varchar](20)	NOT NULL Default(&apos;&apos;),
-        '''	[NomTabla]		[varchar](20)	NOT NULL Default(&apos;&apos;),
-        '''	[IdTabla]		[int]			NOT NULL Default(0),
+        '''	[Id] [int] IDENTITY(1,1) NOT NULL,
+        '''	[Id_Lote] [int] NOT NULL,
+        '''	[NroLote] [varchar](20) NOT NULL,
+        '''	[NomTabla] [varchar](20) NOT NULL,
+        '''	[IdTabla] [int] NOT NULL,
+        ''' CONSTRAINT [PK_Zw_Lotes_Det] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
         ''') ON [PRIMARY]
+        '''GO
         '''
         '''
         '''
@@ -2463,16 +2491,15 @@ Namespace My.Resources
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
         '''CREATE TABLE [dbo].[Zw_Pdp_CPT_Tarja](
-        '''	[Id]				[int] IDENTITY(1,1) NOT NULL,
-        '''	[Empresa]			[char](2)		NOT NULL Default(&apos;&apos;),
-        '''	[Idmaeddo]			[int]			NOT NULL Default(0),
-        '''	[Nro_CPT]			[varchar](10)	NOT NULL Default(&apos;&apos;),
-        '''	[Lote]				[varchar](20)	NOT NULL Default(&apos;&apos;),
-        '''	[Codigo]			[varchar](13)	NOT NULL Default(&apos;&apos;),
-        '''	[CodAlternativo]	[varchar](21)	NOT NULL Default(&apos;&apos;),
-        '''	[Turno]				[varchar](1)	NOT NULL Default(&apos;&apos;),
-        '''	[Planta]			[varchar](1)	NOT NULL Default(&apos;&apos;),
-        '''	[Udm]				[varchar](2)	NOT  [resto de la cadena truncado]&quot;;.
+        '''	[Id]				    [int] IDENTITY(1,1) NOT NULL,
+        '''	[Empresa]			    [char](2)		NOT NULL Default(&apos;&apos;),
+        '''	[Idmaeddo]			    [int]			NOT NULL Default(0),
+        '''	[Nro_CPT]			    [varchar](10)	NOT NULL Default(&apos;&apos;),
+        '''	[Lote]				    [varchar](20)	NOT NULL Default(&apos;&apos;),
+        '''	[Codigo]			    [varchar](13)	NOT NULL Default(&apos;&apos;),
+        '''	[CodAlternativo]	    [varchar](21)	NOT NULL Default(&apos;&apos;),
+        '''	[CodAlternativo_Pallet]	[varchar](21)	NOT NULL Default(&apos;&apos;),
+        '''	[Turno]				    [varchar](1)	NOT  [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Pdp_CPT_Tarja() As String
             Get

@@ -9298,7 +9298,7 @@ Drop Table #Paso"
 
     Private Sub ButtonItem1_Click(sender As Object, e As EventArgs) Handles ButtonItem1.Click
 
-        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CantComprar = CantComprarMinXProv Where CantComprarMinXProv > 0"
+        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CantComprar = CantComprarOri"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
         Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False, Chk_MarcarFilas.Checked)
