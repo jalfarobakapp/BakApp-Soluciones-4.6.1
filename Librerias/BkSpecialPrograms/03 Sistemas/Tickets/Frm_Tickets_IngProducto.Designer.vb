@@ -123,7 +123,7 @@ Partial Class Frm_Tickets_IngProducto
         Me.Lbl_Cantidad.Name = "Lbl_Cantidad"
         Me.Lbl_Cantidad.Size = New System.Drawing.Size(89, 23)
         Me.Lbl_Cantidad.TabIndex = 173
-        Me.Lbl_Cantidad.Text = "Cant. inventariada"
+        Me.Lbl_Cantidad.Text = "Stock físico"
         '
         'Txt_StfiEnBodega
         '
@@ -156,7 +156,7 @@ Partial Class Frm_Tickets_IngProducto
         Me.Lbl_StfiEnBodega.Name = "Lbl_StfiEnBodega"
         Me.Lbl_StfiEnBodega.Size = New System.Drawing.Size(89, 23)
         Me.Lbl_StfiEnBodega.TabIndex = 171
-        Me.Lbl_StfiEnBodega.Text = "Cant. en bodega"
+        Me.Lbl_StfiEnBodega.Text = "Stock en bodega"
         '
         'Txt_Bodega
         '

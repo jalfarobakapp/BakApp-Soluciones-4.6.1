@@ -42,7 +42,11 @@ Public Class Frm_GRI_FabXProducto
 
     Private Sub Txt_Numot_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Numot.KeyDown
         If e.KeyValue = Keys.Enter Then
-            Sb_BuscarOt(Txt_Numot.Text)
+            If String.IsNullOrEmpty(Txt_Numot.Text.Trim) Then
+                Call Btn_BuscarOT_Click(Nothing, Nothing)
+            Else
+                Sb_BuscarOt(Txt_Numot.Text)
+            End If
         End If
     End Sub
 
@@ -86,6 +90,8 @@ Public Class Frm_GRI_FabXProducto
             Lbl_ReferenciaOT.Text = "REFERENCIA: " & _Row_Pote.Item("REFERENCIA")
 
             Sb_BuscarProductos(_Numot)
+
+            Txt_Numot.Text = _Numot
 
         End If
 
@@ -530,7 +536,19 @@ Public Class Frm_GRI_FabXProducto
         Fmt.Txt_Nro_CPT.Text = _Cl_Tarja._Cl_Tarja_Ent.Nro_CPT
         Fmt.ShowDialog(Me)
 
+        Dim _Numot = String.Empty
+
+        If _Cl_Tarja._Cl_Tarja_Ent.Tipo = "MAXI-SACO" Then
+            _Numot = Txt_Numot.Text
+        End If
+
         Sb_Limpiar()
+
+        Txt_Numot.Text = _Numot
+
+        If Not String.IsNullOrEmpty(_Numot) Then
+            Txt_Numot.Focus()
+        End If
 
         ' Falta agregar los siguientes campos
         ' MAEEDO: NUVEDO = 0,ESFADO = '',DESPACHO = 0
@@ -835,6 +853,25 @@ Public Class Frm_GRI_FabXProducto
 
     Private Sub Txt_Cantidad_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Cantidad.ButtonCustomClick
         Sb_TipoIngreso(_Row_Maepr.Item("KOPR"), _Row_Maepr.Item("RLUD"))
+    End Sub
+
+    Private Sub Btn_BuscarOT_Click(sender As Object, e As EventArgs) Handles Btn_BuscarOT.Click
+
+        Dim _Seleccionada As Boolean
+        Dim _Numot As String
+
+        Dim Fm As New Frm_BuscarOT
+        Fm.ShowDialog(Me)
+        _Seleccionada = Fm.Seleccionada
+        _Numot = Fm.Numot
+        Fm.Dispose()
+
+        If _Seleccionada Then
+            Sb_Limpiar()
+            Txt_Numot.Text = _Numot
+            Sb_BuscarOt(_Numot)
+        End If
+
     End Sub
 
 End Class

@@ -179,47 +179,11 @@ Public Class Frm_Tickets_Mant
 
             .Asunto = Txt_Asunto.Text.Trim
             .Prioridad = Cmb_Prioridad.SelectedValue
-            '.Id_Area = Txt_Area.Tag
-            '.Id_Tipo = Txt_Tipo.Tag
             .Id_Grupo = Txt_Grupo.Tag
             .CodAgente = Txt_Agente.Tag
             .Asignado = Chk_Asignado.Checked
             .AsignadoGrupo = Rdb_AsignadoGrupo.Checked
             .AsignadoAgente = Rdb_AsignadoAgente.Checked
-
-            'If Chk_ExigeProducto.Checked Then
-
-            '    'If Not CBool(Val(Txt_Cantidad.Text)) Then
-            '    '    If MessageBoxEx.Show(Me, "¿Confirma el valor cero para la cantidad inventariada?",
-            '    '                         "Validación", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
-            '    '        Return
-            '    '    End If
-            '    'End If
-
-            '    '.Tickets_Producto.FechaRev = Dtp_FechaRev.Value
-            '    '.Tickets_Producto.Cantidad = Val(Txt_Cantidad.Text)
-
-            '    _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets_PorDefecto",
-            '                       "CodFuncionario = '" & .CodFuncionario_Crea & "' And Asunto = '" & .Asunto & "'")
-
-            '    If _Reg = 0 Then
-
-            '        If MessageBoxEx.Show(Me, "¿Desea dejar este tipo de Ticket grabado como plantilla para el futuro?",
-            '                          "Grabar plantilla de Tickets", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-
-            '            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_PorDefecto " &
-            '                           "(CodFuncionario,Asunto,Id_Area,Id_Tipo,Prioridad) Values " &
-            '                           "('" & .CodFuncionario_Crea & "','" & .Asunto & "'," & .Id_Area & "," & .Id_Tipo & ",'" & .Prioridad & "')"
-            '            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-            '                MessageBoxEx.Show(Me, "El tipo de Ticket quedo guardado para que pueda usar la plantilla en ticket futuros",
-            '                                  "Grabar plantilla de Tickets", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            '            End If
-
-            '        End If
-
-            '    End If
-
-            'End If
 
             _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets",
                                         "Id <> " & _Cl_Tickets_Padre.Tickets.Id & " And Id_Tipo = " & .Id_Tipo & " And Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto " &
@@ -245,13 +209,18 @@ Public Class Frm_Tickets_Mant
 
         If String.IsNullOrEmpty(_Msg_Grabar) Then
 
-            If Chk_ExigeProducto.Checked Then
+            Dim _Tipo As New Tickets_Db.Tickets_Tipo
+
+            _Tipo = _Cl_Tickets.Fx_Llenar_Tipo(_Cl_Tickets.Tickets.Id_Area, _Cl_Tickets.Tickets.Id_Tipo)
+
+            If Chk_ExigeProducto.Checked And _Tipo.PreguntaCreaNewTicket Then
 
                 If MessageBoxEx.Show(Me, "El ticket se ha creado correctamente, el número de ticket es " & _Cl_Tickets.Tickets.Numero & "." & vbCrLf & vbCrLf &
                                      "¿Desea agregar otro Ticket con las mismas definiciones, pero con otro producto?" & vbCrLf &
-                              "Crear nuevo Ticket", "Grabar", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
+                                     "Crear nuevo Ticket", "Grabar", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
 
                     _Cl_Tickets.Tickets.Id = 0
+                    _Cl_Tickets.Tickets.New_Id_TicketAc = _Cl_Tickets.Fx_Grabar_Nueva_Accion(_Cl_Tickets.Tickets.CodFuncionario_Crea, True, False)
 
                     With _Cl_Tickets.Tickets.Tickets_Producto
 
@@ -416,6 +385,7 @@ Public Class Frm_Tickets_Mant
                         "Where Empresa = '" & .Empresa & "' And Sucursal = '" & .Sucursal & "' And Bodega = '" & .Bodega & "' And Codigo = '" & .Codigo & "') And Estado = 'ABIE'")
 
                 If CBool(_Reg) Then
+
                     MessageBoxEx.Show(Me, "No puede volver a enviar un ticket por " & Txt_AreaTipo.Text.Trim & vbCrLf &
                                   "Por el producto: " & .Codigo.Trim & vbCrLf & vbCrLf &
                                   "Ya hay un ticket abierto por esta misma solución",
@@ -435,6 +405,8 @@ Public Class Frm_Tickets_Mant
                         .Bodega = String.Empty
 
                     End With
+
+                    Sb_Llenar_Tipo(_Cl_Tickets.Tickets.Id_Tipo)
 
                     Return
 
@@ -708,7 +680,7 @@ Public Class Frm_Tickets_Mant
             Fm.Tickets_Producto.UdMedida = _Cl_Tickets_Padre.Tickets.Tickets_Producto.UdMedida
             Fm.Cmb_UdMedida.Enabled = False
         Else
-            Fm.Tickets_Producto.UdMedida = 2 '_Cl_Tickets.Tickets.Tickets_Producto.UdMedida
+            Fm.Tickets_Producto.UdMedida = 2
         End If
 
         Fm.Tickets_Producto.Cantidad = _Cl_Tickets.Tickets.Tickets_Producto.Cantidad
@@ -785,6 +757,7 @@ Public Class Frm_Tickets_Mant
         Txt_AreaTipo.ButtonCustom.Visible = True
         Txt_AreaTipo.ButtonCustom2.Visible = False
 
+        If Chk_ExigeProducto.Checked Then Txt_Asunto.Text = String.Empty
         Chk_ExigeProducto.Checked = False
         Btn_VerProducto.Enabled = False
 

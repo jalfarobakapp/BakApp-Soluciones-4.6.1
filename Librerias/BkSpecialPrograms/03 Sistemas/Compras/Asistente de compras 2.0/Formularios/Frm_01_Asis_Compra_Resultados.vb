@@ -8315,7 +8315,9 @@ Public Class Frm_01_Asis_Compra_Resultados
             Chk_Mostrar_Solo_Productos_A_Comprar.Checked = True
             Chk_Mostrar_Solo_Stock_Critico.Checked = True
 
-            Sb_PonerMultiploDeCompraPorProveedor()
+            If Chk_CompMinXProveedores.Checked Then
+                Sb_PonerMultiploDeCompraPorProveedor()
+            End If
 
             Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False, False)
 
@@ -8472,6 +8474,9 @@ Drop Table #Paso"
             Dim _CodEntidad As String = _RowProveedor.Item("KOEN")
             Dim _SucEntidad As String = _RowProveedor.Item("SUEN")
 
+            If Chk_CompMinXProveedores.Checked Then
+                Sb_PonerMultiploDeCompraPorProveedor()
+            End If
 
             Sb_Genarar_OCC_Automaticas_Por_Proveedor(_CodEntidad, _SucEntidad, _Generar_OCC)
 
@@ -8565,7 +8570,6 @@ Drop Table #Paso"
                 Chk_Quitar_Bloqueados_Compra.Checked = _QuitarBloqueadosCompra
             End If
 
-
             Chk_Mostrar_Solo_Productos_A_Comprar.Checked = True
             Chk_Mostrar_Solo_a_Comprar_Cant_Mayor_Cero.Checked = True
             Chk_Quitar_Comprados.Checked = True
@@ -8573,6 +8577,10 @@ Drop Table #Paso"
 
             Chk_Quitar_Ventas_Calzadas.Checked = Not IncluirProdBajaRotacion_NVI
             Chk_Quitare_Sospechosos_Stock.Checked = Not IncluirProdRefleo_NVI
+
+            If Chk_CompMinXProveedores.Checked Then
+                Sb_PonerMultiploDeCompraPorProveedor()
+            End If
 
             Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False, False)
 
@@ -8695,16 +8703,16 @@ Drop Table #Paso"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
         Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set " & vbCrLf &
-                           "UdCompra = Minc.UdCompra" &
-                           ",MultiploCompra = Minc.MultiploCompra" & vbCrLf &
-                           "From " & _Nombre_Tbl_Paso_Informe & " Ps" & vbCrLf &
-                           "Inner Join " & _Global_BaseBk & "Zw_Entidades_ProdMinCompra " &
-                           "Minc On Ps.CodProveedor = Minc.CodEntidad " &
-                           "And Ps.CodSucProveedor = Minc.CodSucEntidad And Ps.Codigo = Minc.Codigo"
+                       "UdCompra = Minc.UdCompra" &
+                       ",MultiploCompra = Minc.MultiploCompra" & vbCrLf &
+                       "From " & _Nombre_Tbl_Paso_Informe & " Ps" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_Entidades_ProdMinCompra " &
+                       "Minc On Ps.CodProveedor = Minc.CodEntidad " &
+                       "And Ps.CodSucProveedor = Minc.CodSucEntidad And Ps.Codigo = Minc.Codigo"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
         Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CantComprarMinXProv = Case When CantComprar <= MultiploCompra Then MultiploCompra Else CEILING((CantComprar*1.0)/(MultiploCompra*1.0))*MultiploCompra End" & vbCrLf &
-                           "Where MultiploCompra > 0"
+                       "Where MultiploCompra > 0"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
         Consulta_sql = "Delete " & _Nombre_Tbl_Paso_Informe & " Where CodProveedor = '' And CodSucProveedor = ''"

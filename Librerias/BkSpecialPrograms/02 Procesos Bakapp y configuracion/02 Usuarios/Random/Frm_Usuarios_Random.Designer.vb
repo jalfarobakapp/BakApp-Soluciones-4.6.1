@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Usuarios_Random
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -37,8 +37,6 @@ Partial Class Frm_Usuarios_Random
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Exportar_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Crear = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Editar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -112,14 +110,14 @@ Partial Class Frm_Usuarios_Random
         '
         Me.Btn_Config_Impresora_Diablito.Image = CType(resources.GetObject("Btn_Config_Impresora_Diablito.Image"), System.Drawing.Image)
         Me.Btn_Config_Impresora_Diablito.Name = "Btn_Config_Impresora_Diablito"
-        Me.Btn_Config_Impresora_Diablito.Text = "Impresión hacia diablito (servidor de impresiones)"
-        Me.Btn_Config_Impresora_Diablito.Tooltip = "Configurar mis salidas de impresión al diablito"
+        Me.Btn_Config_Impresora_Diablito.Text = "ImpresiÃ³n hacia diablito (servidor de impresiones)"
+        Me.Btn_Config_Impresora_Diablito.Tooltip = "Configurar mis salidas de impresiÃ³n al diablito"
         '
         'Grilla
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
-        Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Grilla.BackgroundColor = System.Drawing.Color.White
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -130,7 +128,7 @@ Partial Class Frm_Usuarios_Random
         Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
         DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
@@ -193,7 +191,7 @@ Partial Class Frm_Usuarios_Random
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 15
-        Me.GroupPanel1.Text = "Buscar categoria por descripción"
+        Me.GroupPanel1.Text = "Buscar categoria por descripciÃ³n"
         '
         'LabelX2
         '
@@ -207,7 +205,7 @@ Partial Class Frm_Usuarios_Random
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(68, 23)
         Me.LabelX2.TabIndex = 13
-        Me.LabelX2.Text = "Descripción"
+        Me.LabelX2.Text = "DescripciÃ³n"
         '
         'Txt_Descripcion
         '
@@ -231,7 +229,7 @@ Partial Class Frm_Usuarios_Random
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Exportar_Excel, Me.Btn_Crear, Me.Btn_Editar, Me.Btn_Eliminar})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Exportar_Excel, Me.Btn_Crear})
         Me.Bar1.Location = New System.Drawing.Point(0, 569)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(613, 41)
@@ -256,25 +254,6 @@ Partial Class Frm_Usuarios_Random
         Me.Btn_Crear.Image = CType(resources.GetObject("Btn_Crear.Image"), System.Drawing.Image)
         Me.Btn_Crear.Name = "Btn_Crear"
         Me.Btn_Crear.Text = "Crear"
-        '
-        'Btn_Editar
-        '
-        Me.Btn_Editar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Editar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Editar.Image = CType(resources.GetObject("Btn_Editar.Image"), System.Drawing.Image)
-        Me.Btn_Editar.Name = "Btn_Editar"
-        Me.Btn_Editar.Text = "Editar"
-        Me.Btn_Editar.Visible = False
-        '
-        'Btn_Eliminar
-        '
-        Me.Btn_Eliminar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Eliminar.Enabled = False
-        Me.Btn_Eliminar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Eliminar.Image = CType(resources.GetObject("Btn_Eliminar.Image"), System.Drawing.Image)
-        Me.Btn_Eliminar.Name = "Btn_Eliminar"
-        Me.Btn_Eliminar.Text = "Eliminar"
-        Me.Btn_Eliminar.Visible = False
         '
         'Frm_Usuarios_Random
         '
@@ -313,7 +292,5 @@ Partial Class Frm_Usuarios_Random
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Exportar_Excel As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Crear As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Editar As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Config_Impresora_Diablito As DevComponents.DotNetBar.ButtonItem
 End Class

@@ -582,7 +582,6 @@ Public Class Frm_Kardex_Informe_X_Producto
             GrillaKardex.FirstDisplayedScrollingRowIndex = GrillaKardex.RowCount - 1
             GrillaKardex.CurrentCell = GrillaKardex.Rows(GrillaKardex.RowCount - 1).Cells("NUDO")
         End If
-
     End Sub
 
     Private Sub Frm_DocumentoKardex_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown

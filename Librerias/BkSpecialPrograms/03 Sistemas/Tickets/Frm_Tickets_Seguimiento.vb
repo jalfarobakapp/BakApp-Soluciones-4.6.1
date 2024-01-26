@@ -19,6 +19,8 @@ Public Class Frm_Tickets_Seguimiento
     Public Property Mis_Ticket As Boolean
     Public Property SoloLectura As Boolean
     Public Property CorrerALaDerecha As Boolean
+    Public Property TicketSucesor As Boolean
+    Public Property TicketAntecesor As Boolean
 
     Public Sub New(_Id_Ticket As Integer)
 
@@ -54,7 +56,7 @@ Public Class Frm_Tickets_Seguimiento
 
         Btn_MensajeRespuesta.Visible = Not SoloLectura
         Btn_GestionarAcciones.Visible = Not SoloLectura
-        Btn_VerTicketOrigen.Visible = Not SoloLectura
+        'Btn_VerTicketOrigen.Visible = Not SoloLectura
 
         If Not SoloLectura Then
 
@@ -119,7 +121,7 @@ Public Class Frm_Tickets_Seguimiento
 
         Sb_Actualizar_Grilla()
 
-        Btn_VerTicketOrigen.Visible = CBool(_Ticket.Tickets.Id_Padre)
+        'Btn_VerTicketOrigen.Visible = CBool(_Ticket.Tickets.Id_Padre)
 
         If Not SoloLectura Then
 
@@ -584,15 +586,7 @@ Public Class Frm_Tickets_Seguimiento
         Me.Close()
     End Sub
 
-    Private Sub Btn_VerTicketOrigen_Click(sender As Object, e As EventArgs) Handles Btn_VerTicketOrigen.Click
 
-        Dim Fm As New Frm_Tickets_Seguimiento(_Ticket.Tickets.Id_Padre)
-        Fm.SoloLectura = True
-        Fm.CorrerALaDerecha = True
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
-
-    End Sub
 
     Private Sub Btn_AgentesAsignados_Click(sender As Object, e As EventArgs) Handles Btn_AgentesAsignados.Click
 
@@ -648,8 +642,57 @@ Public Class Frm_Tickets_Seguimiento
 
         Btn_Mnu_RechazarTicket.Visible = Not Mis_Ticket
         Btn_Mnu_RechazarTicket.Enabled = Not _Ticket.Tickets.Rechazado
+        Btn_Mnu_CerrarTicketCrearNuevo.Visible = Not Mis_Ticket
+
+        If Btn_Mnu_CerrarTicketCrearNuevo.Visible Then Btn_Mnu_CerrarTicketCrearNuevo.Visible = Not _Tipo.CerrarAgenteSinPerm
 
         ShowContextMenu(Menu_Contextual_Cambio_Estado)
+
+    End Sub
+
+    Private Sub Btn_Mnu_TkAntecesor_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_TkAntecesor.Click
+
+        If Not CBool(_Ticket.Tickets.Id_Padre) Then
+            MessageBoxEx.Show(Me, "Este Ticket no tiene Ticket de Origen", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_Tickets_Seguimiento(_Ticket.Tickets.Id_Padre)
+        Fm.SoloLectura = True
+        Fm.CorrerALaDerecha = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_Mnu_TkSucesor_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_TkSucesor.Click
+
+        Dim _Id_Sucesor As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Tickets",
+                                                       "Id", "Id_Padre = " & _Ticket.Tickets.Id, True)
+
+        If Not CBool(_Id_Sucesor) Then
+            MessageBoxEx.Show(Me, "Este Ticket no tiene Ticket Sucesor", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_Tickets_Seguimiento(_Id_Sucesor)
+        Fm.SoloLectura = True
+        Fm.CorrerALaDerecha = True
+        Fm.Top = Me.Top + 15
+        Fm.Left = Me.Left + 15
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_VerTicketOrigen_Click(sender As Object, e As EventArgs) Handles Btn_VerTicketOrigen.Click
+
+        Btn_Mnu_TkAntecesor.Visible = True
+        Btn_Mnu_TkSucesor.Visible = True
+
+        ShowContextMenu(Menu_Contextual_Ticker_Traza)
 
     End Sub
 

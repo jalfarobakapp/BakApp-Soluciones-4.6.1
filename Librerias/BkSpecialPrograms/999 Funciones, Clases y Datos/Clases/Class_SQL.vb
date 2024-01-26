@@ -94,6 +94,48 @@ Public Class Class_SQL
 
     End Function
 
+    Function Ej_Insertar_Trae_Identity_Str(ConsultaSql As String,
+                                           ByRef _Identity As String,
+                                           Optional MostrarError As Boolean = True) As Boolean
+        Try
+            'Abrimos la conexión con la base de datos
+
+            Sb_Abrir_Conexion(_Cn)
+            'System.Windows.Forms.Application.DoEvents()
+            Dim cmd As System.Data.SqlClient.SqlCommand
+            cmd = New System.Data.SqlClient.SqlCommand()
+            cmd.CommandType = CommandType.Text
+            cmd.CommandText = ConsultaSql
+            cmd.CommandTimeout = 0
+            cmd.Connection = _Cn
+
+            cmd.ExecuteNonQuery()
+            'Cerramos la conexión con la base de datos
+
+            cmd = New SqlCommand("SELECT @@IDENTITY AS 'Identity'", _Cn)
+
+            Dim dfd1 As SqlDataReader = cmd.ExecuteReader()
+            While dfd1.Read()
+                _Identity = dfd1("Identity")
+            End While
+            dfd1.Close()
+
+            Sb_Cerrar_Conexion(_Cn)
+
+            System.Windows.Forms.Application.DoEvents()
+            Return True
+        Catch ex As Exception
+            _Error = ex.Message
+            If MostrarError = True Then
+                MsgBox("No se realizo la operación: Insert, Update o Delete..." _
+                       , MsgBoxStyle.Critical, "Modificar tabla")
+                MsgBox(ex.Message)
+            End If
+            Return False
+        End Try
+
+    End Function
+
     Function Fx_Get_Tablas(_Consulta_sql As String,
                            Optional _Mostrar_Error As Boolean = True) As DataTable
 

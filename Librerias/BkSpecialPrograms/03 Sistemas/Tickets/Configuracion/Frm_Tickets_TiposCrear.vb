@@ -364,7 +364,7 @@ Public Class Frm_Tickets_TiposCrear
 
         If _Filtrar.Fx_Filtrar(Nothing,
                                Clas_Filtros_Random.Enum_Tabla_Fl._Otra,
-                               "And Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id_Area = " & Txt_Area_Cie.Tag & ")",
+                               "And Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id_Area = " & Txt_Area_Cie.Tag & " And Id <> " & Cl_Tipo.Id & ")",
                                False, False, True, False,, False) Then
 
             Txt_Tipo_Cie.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")

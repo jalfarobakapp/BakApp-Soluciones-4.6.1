@@ -24,6 +24,9 @@ Partial Class Frm_GRI_FabXProducto
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_GRI_FabXProducto))
         Me.Grupo_Producto = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Panel_SC = New System.Windows.Forms.TableLayoutPanel()
+        Me.LabelX16 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX12 = New DevComponents.DotNetBar.LabelX()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Lbl_Saldo = New DevComponents.DotNetBar.LabelX()
@@ -64,16 +67,14 @@ Partial Class Frm_GRI_FabXProducto
         Me.Txt_Turno = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Analista = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
-        Me.Panel_SC = New System.Windows.Forms.TableLayoutPanel()
-        Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX16 = New DevComponents.DotNetBar.LabelX()
+        Me.Btn_BuscarOT = New DevComponents.DotNetBar.ButtonX()
         Me.Grupo_Producto.SuspendLayout()
+        Me.Panel_SC.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Dtp_Fecha_Ingreso, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
-        Me.Panel_SC.SuspendLayout()
         Me.SuspendLayout()
         '
         'Grupo_Producto
@@ -125,6 +126,56 @@ Partial Class Frm_GRI_FabXProducto
         Me.Grupo_Producto.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Grupo_Producto.TabIndex = 96
         Me.Grupo_Producto.Text = "DETALLE DE DATOS DE FABRICACION"
+        '
+        'Panel_SC
+        '
+        Me.Panel_SC.BackColor = System.Drawing.Color.Transparent
+        Me.Panel_SC.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
+        Me.Panel_SC.ColumnCount = 2
+        Me.Panel_SC.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.9011!))
+        Me.Panel_SC.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.0989!))
+        Me.Panel_SC.Controls.Add(Me.LabelX16, 1, 0)
+        Me.Panel_SC.Controls.Add(Me.LabelX13, 0, 0)
+        Me.Panel_SC.ForeColor = System.Drawing.Color.Black
+        Me.Panel_SC.Location = New System.Drawing.Point(555, 111)
+        Me.Panel_SC.Name = "Panel_SC"
+        Me.Panel_SC.RowCount = 1
+        Me.Panel_SC.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.Panel_SC.Size = New System.Drawing.Size(182, 27)
+        Me.Panel_SC.TabIndex = 83
+        '
+        'LabelX16
+        '
+        Me.LabelX16.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX16.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX16.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX16.ForeColor = System.Drawing.Color.Black
+        Me.LabelX16.Location = New System.Drawing.Point(92, 4)
+        Me.LabelX16.Name = "LabelX16"
+        Me.LabelX16.Size = New System.Drawing.Size(82, 19)
+        Me.LabelX16.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.LabelX16.TabIndex = 84
+        Me.LabelX16.Text = "0"
+        Me.LabelX16.TextAlignment = System.Drawing.StringAlignment.Far
+        '
+        'LabelX13
+        '
+        Me.LabelX13.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX13.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX13.ForeColor = System.Drawing.Color.Black
+        Me.LabelX13.Location = New System.Drawing.Point(4, 4)
+        Me.LabelX13.Name = "LabelX13"
+        Me.LabelX13.Size = New System.Drawing.Size(81, 19)
+        Me.LabelX13.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.LabelX13.TabIndex = 84
+        Me.LabelX13.Text = "SALDO SC"
         '
         'LabelX12
         '
@@ -463,6 +514,7 @@ Partial Class Frm_GRI_FabXProducto
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Btn_BuscarOT)
         Me.GroupPanel1.Controls.Add(Me.Lbl_ReferenciaOT)
         Me.GroupPanel1.Controls.Add(Me.LabelX4)
         Me.GroupPanel1.Controls.Add(Me.Dtp_Fecha_Ingreso)
@@ -910,54 +962,16 @@ Partial Class Frm_GRI_FabXProducto
         Me.LabelX17.TabIndex = 101
         Me.LabelX17.Text = "ANALISTA"
         '
-        'Panel_SC
+        'Btn_BuscarOT
         '
-        Me.Panel_SC.BackColor = System.Drawing.Color.Transparent
-        Me.Panel_SC.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
-        Me.Panel_SC.ColumnCount = 2
-        Me.Panel_SC.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.9011!))
-        Me.Panel_SC.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.0989!))
-        Me.Panel_SC.Controls.Add(Me.LabelX16, 1, 0)
-        Me.Panel_SC.Controls.Add(Me.LabelX13, 0, 0)
-        Me.Panel_SC.Location = New System.Drawing.Point(555, 111)
-        Me.Panel_SC.Name = "Panel_SC"
-        Me.Panel_SC.RowCount = 1
-        Me.Panel_SC.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.Panel_SC.Size = New System.Drawing.Size(182, 27)
-        Me.Panel_SC.TabIndex = 83
-        '
-        'LabelX13
-        '
-        Me.LabelX13.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX13.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX13.ForeColor = System.Drawing.Color.Black
-        Me.LabelX13.Location = New System.Drawing.Point(4, 4)
-        Me.LabelX13.Name = "LabelX13"
-        Me.LabelX13.Size = New System.Drawing.Size(81, 19)
-        Me.LabelX13.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
-        Me.LabelX13.TabIndex = 84
-        Me.LabelX13.Text = "SALDO SC"
-        '
-        'LabelX16
-        '
-        Me.LabelX16.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX16.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX16.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX16.ForeColor = System.Drawing.Color.Black
-        Me.LabelX16.Location = New System.Drawing.Point(92, 4)
-        Me.LabelX16.Name = "LabelX16"
-        Me.LabelX16.Size = New System.Drawing.Size(82, 19)
-        Me.LabelX16.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
-        Me.LabelX16.TabIndex = 84
-        Me.LabelX16.Text = "0"
-        Me.LabelX16.TextAlignment = System.Drawing.StringAlignment.Far
+        Me.Btn_BuscarOT.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_BuscarOT.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_BuscarOT.Location = New System.Drawing.Point(260, 7)
+        Me.Btn_BuscarOT.Name = "Btn_BuscarOT"
+        Me.Btn_BuscarOT.Size = New System.Drawing.Size(75, 26)
+        Me.Btn_BuscarOT.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_BuscarOT.TabIndex = 97
+        Me.Btn_BuscarOT.Text = "Buscar OT..."
         '
         'Frm_GRI_FabXProducto
         '
@@ -979,12 +993,12 @@ Partial Class Frm_GRI_FabXProducto
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "INGRESO DE PRODUCTOS Y COMPONENTES FABRICADOS A BODEGA"
         Me.Grupo_Producto.ResumeLayout(False)
+        Me.Panel_SC.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Dtp_Fecha_Ingreso, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel2.ResumeLayout(False)
-        Me.Panel_SC.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -1033,4 +1047,5 @@ Partial Class Frm_GRI_FabXProducto
     Friend WithEvents Panel_SC As TableLayoutPanel
     Friend WithEvents LabelX16 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX13 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Btn_BuscarOT As DevComponents.DotNetBar.ButtonX
 End Class

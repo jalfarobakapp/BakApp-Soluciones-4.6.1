@@ -377,6 +377,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="OT\Frm_BuscarOT.Designer.vb">
+      <DependentUpon>Frm_BuscarOT.vb</DependentUpon>
+    </Compile>
+    <Compile Include="OT\Frm_BuscarOT.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="OT\Ver Orden de trabajo\Frm_Impresion_Pruebas_SubOT.Designer.vb">
       <DependentUpon>Frm_Impresion_Pruebas_SubOT.vb</DependentUpon>
     </Compile>
@@ -535,6 +541,9 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OT\Frm_BuscarOT.resx">
+      <DependentUpon>Frm_BuscarOT.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OT\Ver Orden de trabajo\Frm_Impresion_Pruebas_SubOT.resx">
       <DependentUpon>Frm_Impresion_Pruebas_SubOT.vb</DependentUpon>

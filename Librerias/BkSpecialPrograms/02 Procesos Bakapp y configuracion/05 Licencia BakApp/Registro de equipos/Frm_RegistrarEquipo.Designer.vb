@@ -52,11 +52,6 @@ Partial Class Frm_RegistrarEquipo
         Me.Txt_KeyReg = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Line1 = New DevComponents.DotNetBar.Controls.Line()
         Me.STab = New DevComponents.DotNetBar.SuperTabControl()
-        Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Chk_DTEMonitorAmbienteCertificacion = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_EsDTEMonitor = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Tab_Configuraciones = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Tab_EstTrabajo = New DevComponents.DotNetBar.SuperTabItem()
@@ -81,11 +76,14 @@ Partial Class Frm_RegistrarEquipo
         Me.List_Impresoras = New System.Windows.Forms.ListBox()
         Me.Btn_Agregar_Impresoras = New DevComponents.DotNetBar.ButtonX()
         Me.Tab_Impresoras = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Chk_DTEMonitorAmbienteCertificacion = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_EsDTEMonitor = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Tab_Configuraciones = New DevComponents.DotNetBar.SuperTabItem()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.STab, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.STab.SuspendLayout()
-        Me.SuperTabControlPanel3.SuspendLayout()
-        Me.GroupPanel3.SuspendLayout()
         Me.SuperTabControlPanel1.SuspendLayout()
         Me.GroupPanel2.SuspendLayout()
         Me.SuperTabControlPanel2.SuspendLayout()
@@ -94,6 +92,8 @@ Partial Class Frm_RegistrarEquipo
         Me.SuperTabControlPanel4.SuspendLayout()
         Me.GroupPanel5.SuspendLayout()
         Me.Grupo_Funcionarios.SuspendLayout()
+        Me.SuperTabControlPanel3.SuspendLayout()
+        Me.GroupPanel3.SuspendLayout()
         Me.SuspendLayout()
         '
         'LblNombreEquipo
@@ -461,8 +461,8 @@ Partial Class Frm_RegistrarEquipo
         Me.STab.ControlBox.MenuBox.Name = ""
         Me.STab.ControlBox.Name = ""
         Me.STab.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.STab.ControlBox.MenuBox, Me.STab.ControlBox.CloseBox})
-        Me.STab.Controls.Add(Me.SuperTabControlPanel1)
         Me.STab.Controls.Add(Me.SuperTabControlPanel2)
+        Me.STab.Controls.Add(Me.SuperTabControlPanel1)
         Me.STab.Controls.Add(Me.SuperTabControlPanel4)
         Me.STab.Controls.Add(Me.SuperTabControlPanel3)
         Me.STab.ForeColor = System.Drawing.Color.Black
@@ -476,99 +476,6 @@ Partial Class Frm_RegistrarEquipo
         Me.STab.TabIndex = 7
         Me.STab.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Tab_EstTrabajo, Me.Tab_Empresas, Me.Tab_Configuraciones, Me.Tab_Impresoras})
         Me.STab.Text = "SuperTabControl1"
-        '
-        'SuperTabControlPanel3
-        '
-        Me.SuperTabControlPanel3.Controls.Add(Me.GroupPanel3)
-        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(553, 249)
-        Me.SuperTabControlPanel3.TabIndex = 0
-        Me.SuperTabControlPanel3.TabItem = Me.Tab_Configuraciones
-        '
-        'GroupPanel3
-        '
-        Me.GroupPanel3.BackColor = System.Drawing.Color.White
-        Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel3.Controls.Add(Me.Chk_DTEMonitorAmbienteCertificacion)
-        Me.GroupPanel3.Controls.Add(Me.Chk_EsDTEMonitor)
-        Me.GroupPanel3.Controls.Add(Me.Chk_Buscar_Actualizacion_En_FTP)
-        Me.GroupPanel3.Controls.Add(Me.Chk_Tiene_Lector_Huella)
-        Me.GroupPanel3.Controls.Add(Me.Line1)
-        Me.GroupPanel3.Controls.Add(Me.Cmb_Lector_Huella)
-        Me.GroupPanel3.Controls.Add(Me.Lbl_Lector_Huella)
-        Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GroupPanel3.Location = New System.Drawing.Point(0, 0)
-        Me.GroupPanel3.Name = "GroupPanel3"
-        Me.GroupPanel3.Size = New System.Drawing.Size(553, 249)
-        '
-        '
-        '
-        Me.GroupPanel3.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.GroupPanel3.Style.BackColorGradientAngle = 90
-        Me.GroupPanel3.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.GroupPanel3.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel3.Style.BorderBottomWidth = 1
-        Me.GroupPanel3.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
-        Me.GroupPanel3.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel3.Style.BorderLeftWidth = 1
-        Me.GroupPanel3.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel3.Style.BorderRightWidth = 1
-        Me.GroupPanel3.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel3.Style.BorderTopWidth = 1
-        Me.GroupPanel3.Style.CornerDiameter = 4
-        Me.GroupPanel3.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.GroupPanel3.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
-        Me.GroupPanel3.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
-        Me.GroupPanel3.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
-        '
-        '
-        '
-        Me.GroupPanel3.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.GroupPanel3.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.GroupPanel3.TabIndex = 8
-        '
-        'Chk_DTEMonitorAmbienteCertificacion
-        '
-        Me.Chk_DTEMonitorAmbienteCertificacion.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_DTEMonitorAmbienteCertificacion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_DTEMonitorAmbienteCertificacion.ForeColor = System.Drawing.Color.Black
-        Me.Chk_DTEMonitorAmbienteCertificacion.Location = New System.Drawing.Point(3, 140)
-        Me.Chk_DTEMonitorAmbienteCertificacion.Name = "Chk_DTEMonitorAmbienteCertificacion"
-        Me.Chk_DTEMonitorAmbienteCertificacion.Size = New System.Drawing.Size(266, 23)
-        Me.Chk_DTEMonitorAmbienteCertificacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_DTEMonitorAmbienteCertificacion.TabIndex = 52
-        Me.Chk_DTEMonitorAmbienteCertificacion.Text = "DTE Monitor en Ambiente Certificación"
-        '
-        'Chk_EsDTEMonitor
-        '
-        Me.Chk_EsDTEMonitor.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_EsDTEMonitor.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_EsDTEMonitor.ForeColor = System.Drawing.Color.Black
-        Me.Chk_EsDTEMonitor.Location = New System.Drawing.Point(3, 119)
-        Me.Chk_EsDTEMonitor.Name = "Chk_EsDTEMonitor"
-        Me.Chk_EsDTEMonitor.Size = New System.Drawing.Size(148, 23)
-        Me.Chk_EsDTEMonitor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_EsDTEMonitor.TabIndex = 51
-        Me.Chk_EsDTEMonitor.Text = "Es DTE Monitor"
-        '
-        'Tab_Configuraciones
-        '
-        Me.Tab_Configuraciones.AttachedControl = Me.SuperTabControlPanel3
-        Me.Tab_Configuraciones.GlobalItem = False
-        Me.Tab_Configuraciones.Name = "Tab_Configuraciones"
-        Me.Tab_Configuraciones.Text = "Otras configuraciones"
         '
         'SuperTabControlPanel1
         '
@@ -883,9 +790,9 @@ Partial Class Frm_RegistrarEquipo
         '
         Me.SuperTabControlPanel4.Controls.Add(Me.GroupPanel5)
         Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 0)
         Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
-        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(553, 249)
+        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(553, 276)
         Me.SuperTabControlPanel4.TabIndex = 0
         Me.SuperTabControlPanel4.TabItem = Me.Tab_Impresoras
         '
@@ -901,7 +808,7 @@ Partial Class Frm_RegistrarEquipo
         Me.GroupPanel5.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupPanel5.Location = New System.Drawing.Point(0, 0)
         Me.GroupPanel5.Name = "GroupPanel5"
-        Me.GroupPanel5.Size = New System.Drawing.Size(553, 249)
+        Me.GroupPanel5.Size = New System.Drawing.Size(553, 276)
         '
         '
         '
@@ -1025,6 +932,99 @@ Partial Class Frm_RegistrarEquipo
         Me.Tab_Impresoras.Name = "Tab_Impresoras"
         Me.Tab_Impresoras.Text = "Impresoras diablito"
         '
+        'SuperTabControlPanel3
+        '
+        Me.SuperTabControlPanel3.Controls.Add(Me.GroupPanel3)
+        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(553, 276)
+        Me.SuperTabControlPanel3.TabIndex = 0
+        Me.SuperTabControlPanel3.TabItem = Me.Tab_Configuraciones
+        '
+        'GroupPanel3
+        '
+        Me.GroupPanel3.BackColor = System.Drawing.Color.White
+        Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel3.Controls.Add(Me.Chk_DTEMonitorAmbienteCertificacion)
+        Me.GroupPanel3.Controls.Add(Me.Chk_EsDTEMonitor)
+        Me.GroupPanel3.Controls.Add(Me.Chk_Buscar_Actualizacion_En_FTP)
+        Me.GroupPanel3.Controls.Add(Me.Chk_Tiene_Lector_Huella)
+        Me.GroupPanel3.Controls.Add(Me.Line1)
+        Me.GroupPanel3.Controls.Add(Me.Cmb_Lector_Huella)
+        Me.GroupPanel3.Controls.Add(Me.Lbl_Lector_Huella)
+        Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GroupPanel3.Location = New System.Drawing.Point(0, 0)
+        Me.GroupPanel3.Name = "GroupPanel3"
+        Me.GroupPanel3.Size = New System.Drawing.Size(553, 276)
+        '
+        '
+        '
+        Me.GroupPanel3.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel3.Style.BackColorGradientAngle = 90
+        Me.GroupPanel3.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel3.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderBottomWidth = 1
+        Me.GroupPanel3.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel3.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderLeftWidth = 1
+        Me.GroupPanel3.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderRightWidth = 1
+        Me.GroupPanel3.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderTopWidth = 1
+        Me.GroupPanel3.Style.CornerDiameter = 4
+        Me.GroupPanel3.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel3.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel3.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel3.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel3.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel3.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel3.TabIndex = 8
+        '
+        'Chk_DTEMonitorAmbienteCertificacion
+        '
+        Me.Chk_DTEMonitorAmbienteCertificacion.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_DTEMonitorAmbienteCertificacion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_DTEMonitorAmbienteCertificacion.ForeColor = System.Drawing.Color.Black
+        Me.Chk_DTEMonitorAmbienteCertificacion.Location = New System.Drawing.Point(3, 140)
+        Me.Chk_DTEMonitorAmbienteCertificacion.Name = "Chk_DTEMonitorAmbienteCertificacion"
+        Me.Chk_DTEMonitorAmbienteCertificacion.Size = New System.Drawing.Size(266, 23)
+        Me.Chk_DTEMonitorAmbienteCertificacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_DTEMonitorAmbienteCertificacion.TabIndex = 52
+        Me.Chk_DTEMonitorAmbienteCertificacion.Text = "DTE Monitor en Ambiente Certificación"
+        '
+        'Chk_EsDTEMonitor
+        '
+        Me.Chk_EsDTEMonitor.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EsDTEMonitor.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EsDTEMonitor.ForeColor = System.Drawing.Color.Black
+        Me.Chk_EsDTEMonitor.Location = New System.Drawing.Point(3, 119)
+        Me.Chk_EsDTEMonitor.Name = "Chk_EsDTEMonitor"
+        Me.Chk_EsDTEMonitor.Size = New System.Drawing.Size(148, 23)
+        Me.Chk_EsDTEMonitor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EsDTEMonitor.TabIndex = 51
+        Me.Chk_EsDTEMonitor.Text = "Es DTE Monitor"
+        '
+        'Tab_Configuraciones
+        '
+        Me.Tab_Configuraciones.AttachedControl = Me.SuperTabControlPanel3
+        Me.Tab_Configuraciones.GlobalItem = False
+        Me.Tab_Configuraciones.Name = "Tab_Configuraciones"
+        Me.Tab_Configuraciones.Text = "Otras configuraciones"
+        '
         'Frm_RegistrarEquipo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1046,9 +1046,6 @@ Partial Class Frm_RegistrarEquipo
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.STab, System.ComponentModel.ISupportInitialize).EndInit()
         Me.STab.ResumeLayout(False)
-        Me.SuperTabControlPanel3.ResumeLayout(False)
-        Me.GroupPanel3.ResumeLayout(False)
-        Me.GroupPanel3.PerformLayout()
         Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.GroupPanel2.ResumeLayout(False)
         Me.GroupPanel2.PerformLayout()
@@ -1060,6 +1057,9 @@ Partial Class Frm_RegistrarEquipo
         Me.SuperTabControlPanel4.ResumeLayout(False)
         Me.GroupPanel5.ResumeLayout(False)
         Me.Grupo_Funcionarios.ResumeLayout(False)
+        Me.SuperTabControlPanel3.ResumeLayout(False)
+        Me.GroupPanel3.ResumeLayout(False)
+        Me.GroupPanel3.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub

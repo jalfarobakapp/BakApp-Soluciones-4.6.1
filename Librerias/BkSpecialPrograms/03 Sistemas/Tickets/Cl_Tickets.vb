@@ -545,7 +545,7 @@ Public Class Cl_Tickets
 
             _Mensaje_Ticket.EsCorrecto = True
 
-            If _Cierra_Ticket Then _Mensaje_Ticket.Mensaje = "Ticket #" & Tickets.Numero & " cerrado correctamente"
+            If _Cierra_Ticket Then _Mensaje_Ticket.Mensaje = "Ticket " & Tickets.Numero & " cerrado correctamente"
             If _Solicita_Cierre Then _Mensaje_Ticket.Mensaje = "Solicitud de cierre enviada correctamente"
             If _AnulaTicket Then _Mensaje_Ticket.Mensaje = "Ticket #" & Tickets.Numero & " anulado correctamente"
 
