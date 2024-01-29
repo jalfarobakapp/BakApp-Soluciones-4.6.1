@@ -2517,6 +2517,9 @@ Error_Numero:
         Dim _Linea As String         ' Una variable para construir cada línea
         Dim _Resultado As String     ' Una variable para almacenar el resultado
 
+        texto = texto.Replace("  ", "")
+        texto = texto.Replace(Str(13), "")
+
         _Palabras = Split(texto, " ") ' Separar el texto por espacios
 
         For Each palabra In _Palabras ' Recorrer cada palabra

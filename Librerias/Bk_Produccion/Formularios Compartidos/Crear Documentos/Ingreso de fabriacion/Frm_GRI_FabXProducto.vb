@@ -16,6 +16,8 @@ Public Class Frm_GRI_FabXProducto
 
     Dim _Cl_Tarja As New Cl_Tarja
 
+    Dim LotePlantaTurno As Boolean
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -37,6 +39,8 @@ Public Class Frm_GRI_FabXProducto
 
         ActiveControl = Txt_Numot
         Sb_Limpiar()
+
+        LotePlantaTurno = True
 
     End Sub
 
@@ -365,8 +369,14 @@ Public Class Frm_GRI_FabXProducto
 
         GroupPanel2.Enabled = False
         Txt_NroLote.Text = String.Empty
-        Txt_Turno.Text = String.Empty
-        Txt_Planta.Text = String.Empty
+
+        If Not LotePlantaTurno Then
+            Txt_Turno.Text = String.Empty
+            _Cl_Tarja._Cl_Tarja_Ent.Turno = String.Empty
+            Txt_Planta.Text = String.Empty
+            _Cl_Tarja._Cl_Tarja_Ent.Planta = String.Empty
+        End If
+
         Txt_Analista.Text = String.Empty
 
         _Cl_Tarja._Cl_Tarja_Ent.Analista = FUNCIONARIO
@@ -580,6 +590,24 @@ Public Class Frm_GRI_FabXProducto
 
     Private Sub Txt_NroLote_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_NroLote.ButtonCustomClick
 
+        If LotePlantaTurno Then
+
+            If String.IsNullOrEmpty(Txt_Turno.Text) Then Call Txt_Turno_ButtonCustomClick(Nothing, Nothing)
+            If String.IsNullOrEmpty(Txt_Turno.Text) Then
+                MessageBoxEx.Show(Me, "Falta el TURNO para generar el número de Lote", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            If String.IsNullOrEmpty(Txt_Planta.Text) Then Call Txt_Planta_ButtonCustomClick(Nothing, Nothing)
+            If String.IsNullOrEmpty(Txt_Planta.Text) Then
+                MessageBoxEx.Show(Me, "Falta la PLANTA para generar el número de Lote", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+        End If
+
         Dim _Aceptar As Boolean
         Dim _NroLote As String
 
@@ -591,6 +619,10 @@ Public Class Frm_GRI_FabXProducto
 
         If Not _Aceptar Then
             Return
+        End If
+
+        If LotePlantaTurno Then
+            _NroLote = _Cl_Tarja._Cl_Tarja_Ent.Turno & "" & _Cl_Tarja._Cl_Tarja_Ent.Planta & _NroLote
         End If
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Lotes_Enc Where NroLote = '" & _NroLote & "'"
@@ -645,12 +677,12 @@ Public Class Frm_GRI_FabXProducto
 
         MessageBoxEx.Show(Me, "Lote aceptado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
+        If LotePlantaTurno Then
+            Sb_Actualizar_Parametros_SQL(True)
+        End If
+
         Txt_NroLote.Text = _NroLote
 
-        Txt_Turno.Text = String.Empty
-        Txt_Planta.Text = String.Empty
-        'Txt_Analista.Text = String.Empty
-        'Txt_CodAlternativo_Pallet.Text = String.Empty
         Txt_Observaciones.Text = String.Empty
         Txt_Observaciones.ReadOnly = False
 
@@ -666,7 +698,13 @@ Public Class Frm_GRI_FabXProducto
             Cmb_Formato.SelectedValue = _Row_Tabcodal.Item("UNIMULTI")
         End If
 
-        Sb_Actualizar_Parametros_SQL(False)
+        If Not LotePlantaTurno Then
+            Txt_Turno.Text = String.Empty
+            _Cl_Tarja._Cl_Tarja_Ent.Turno = String.Empty
+            Txt_Planta.Text = String.Empty
+            _Cl_Tarja._Cl_Tarja_Ent.Planta = String.Empty
+            Sb_Actualizar_Parametros_SQL(False)
+        End If
 
     End Sub
 
@@ -763,6 +801,13 @@ Public Class Frm_GRI_FabXProducto
             _Cl_Tarja._Cl_Tarja_Ent.Turno = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
             Txt_Turno.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
 
+            If Not String.IsNullOrEmpty(Txt_NroLote.Text) Then
+                MessageBoxEx.Show(Me, "Se borra el Número de lote, debe ingresarlo nuevamente", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_NroLote.Text = String.Empty
+                Txt_NroLote.Focus()
+            End If
+
         End If
 
     End Sub
@@ -783,6 +828,13 @@ Public Class Frm_GRI_FabXProducto
 
             _Cl_Tarja._Cl_Tarja_Ent.Planta = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
             Txt_Planta.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
+
+            If Not String.IsNullOrEmpty(Txt_NroLote.Text) Then
+                MessageBoxEx.Show(Me, "Se borra el Número de lote, debe ingresarlo nuevamente", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_NroLote.Text = String.Empty
+                Txt_NroLote.Focus()
+            End If
 
         End If
 

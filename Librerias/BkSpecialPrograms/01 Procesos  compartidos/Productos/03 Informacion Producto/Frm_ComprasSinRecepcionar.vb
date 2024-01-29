@@ -1,4 +1,5 @@
 ﻿Imports DevComponents.DotNetBar
+Imports MySql.Data.Authentication
 
 Public Class Frm_ComprasSinRecepcionar
 
@@ -9,6 +10,9 @@ Public Class Frm_ComprasSinRecepcionar
 
     Dim _Tbl_Stock As DataTable
     Dim _Tbl_Documentos As DataTable
+
+    Public Property Tido As String
+    Public Property SegundaUnidad As Boolean
 
     Public Sub New(_Codigo As String)
 
@@ -22,22 +26,58 @@ Public Class Frm_ComprasSinRecepcionar
         Sb_Formato_Generico_Grilla(Grilla_Stock, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
         Sb_Formato_Generico_Grilla(Grilla_Detalle, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_ComprasSinRecepcionar_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Rdb_Ud1.Checked = Not SegundaUnidad
+        Rdb_Ud2.Checked = SegundaUnidad
 
         Sb_Actualizar_Grilla()
 
         AddHandler Grilla_Stock.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla_Detalle.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
-    End Sub
+        AddHandler Rdb_Ud1.CheckedChanged, AddressOf Rdb_Ud_CheckedChanged
+        AddHandler Rdb_Ud2.CheckedChanged, AddressOf Rdb_Ud_CheckedChanged
 
+    End Sub
     Sub Sb_Actualizar_Grilla()
+
+        If Tido = "NVI" Then
+
+            Consulta_sql = "Select Distinct EMPRESA+KOSU+KOBO As Cod,* From TABBO" & vbCrLf &
+                           "Where EMPRESA+KOSU+KOBO" & vbCrLf &
+                           "In (" & vbCrLf &
+                           "Select SUBSTRING(CodPermiso, 5, 10)" & vbCrLf &
+                           "From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
+                           "Where CodUsuario = '" & FUNCIONARIO & "'" & Space(1) &
+                           "And CodPermiso In (Select CodPermiso From " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Bodega_NVI'))" & vbCrLf &
+                           "Or (EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' And KOBO = '" & ModBodega & "')"
+
+        Else
+
+            Consulta_sql = "Select Distinct EMPRESA+KOSU+KOBO As Cod,* From TABBO" & vbCrLf &
+                           "Where EMPRESA+KOSU+KOBO" & vbCrLf &
+                           "In (" & vbCrLf &
+                           "Select SUBSTRING(CodPermiso, 3, 10)" & vbCrLf &
+                           "From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
+                           "Where CodUsuario = '" & FUNCIONARIO & "'" & Space(1) &
+                           "And CodPermiso In (Select CodPermiso From " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Bodega'))" & vbCrLf &
+                           "Or (EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' And KOBO = '" & ModBodega & "')"
+
+        End If
+
+        Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        Dim _Filtro As String = Generar_Filtro_IN(_Tbl_Bodegas, "", "Cod", False, False, "'")
+
 
         Consulta_sql = "Select Mst.*,Mst.KOSU+'-'+Mst.KOBO As 'SUC_BOD',Tb.NOKOBO From MAEST Mst" & vbCrLf &
                        "Left Join TABBO Tb On Mst.EMPRESA = Tb.EMPRESA And Mst.KOSU = Tb.KOSU And Mst.KOBO = Tb.KOBO" & vbCrLf &
-                       "Where KOPR = '" & _Codigo & "'"
+                       "Where KOPR = '" & _Codigo & "' And Mst.EMPRESA+Mst.KOSU+Mst.KOBO In " & _Filtro
         _Tbl_Stock = _Sql.Fx_Get_Tablas(Consulta_sql)
 
 
@@ -190,6 +230,12 @@ Public Class Frm_ComprasSinRecepcionar
 
     Private Sub Grilla_Stock_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Stock.CellEnter
 
+        Dim _Fila As DataGridViewRow = Grilla_Stock.CurrentRow
+
+        Dim _Empresa As String = _Fila.Cells("EMPRESA").Value
+        Dim _Sucursal As String = _Fila.Cells("KOSU").Value
+        Dim _Bodega As String = _Fila.Cells("KOBO").Value
+
         Dim _Ud As Integer
 
         If Rdb_Ud1.Checked Then
@@ -199,7 +245,8 @@ Public Class Frm_ComprasSinRecepcionar
         End If
 
         Consulta_sql = "Select *,CAPRCO" & _Ud & "-CAPREX" & _Ud & " As SALDO_Ud" & _Ud & vbCrLf &
-                       "From MAEDDO Where TIDO In ('FCC','OCC') And KOPRCT = '" & _Codigo & "' And ESLIDO = ''"
+                       "From MAEDDO Where TIDO In ('FCC','OCC') And KOPRCT = '" & _Codigo & "' And ESLIDO = ''" & vbCrLf &
+                       "And EMPRESA = '" & _Empresa & "' And SULIDO = '" & _Sucursal & "' And BOSULIDO = '" & _Bodega & "'"
         _Tbl_Documentos = _Sql.Fx_Get_Tablas(Consulta_sql)
 
 
@@ -209,35 +256,72 @@ Public Class Frm_ComprasSinRecepcionar
 
             OcultarEncabezadoGrilla(Grilla_Detalle, False)
 
-            .Columns("BOSULIDO").Width = 35
-            .Columns("BOSULIDO").HeaderText = "Bod"
-            .Columns("BOSULIDO").Visible = True
+            Dim _DisplayIndex = 0
 
-            .Columns("KOPRCT").Width = 95
-            .Columns("KOPRCT").HeaderText = "Código"
-            .Columns("KOPRCT").Visible = True
+            .Columns("TIDO").Width = 35
+            .Columns("TIDO").HeaderText = "TD"
+            .Columns("TIDO").Visible = True
+            .Columns("TIDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            .Columns("NOKOPR").Width = 195
-            .Columns("NOKOPR").HeaderText = "Descripción"
-            .Columns("NOKOPR").Visible = True
+            .Columns("NUDO").Width = 95
+            .Columns("NUDO").HeaderText = "Número"
+            .Columns("NUDO").Visible = True
+            .Columns("NUDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("UD0" & _Ud & "PR").Width = 30
+            .Columns("UD0" & _Ud & "PR").HeaderText = "UD"
+            .Columns("UD0" & _Ud & "PR").Visible = True
+            .Columns("UD0" & _Ud & "PR").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            '.Columns("NOKOPR").Width = 195
+            '.Columns("NOKOPR").HeaderText = "Descripción"
+            '.Columns("NOKOPR").Visible = True
 
             .Columns("CAPRCO" & _Ud).Width = 70
             .Columns("CAPRCO" & _Ud).HeaderText = "Cant."
+            .Columns("CAPRCO" & _Ud).ToolTipText = "Cantidad del documento"
             .Columns("CAPRCO" & _Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("CAPRCO" & _Ud).DefaultCellStyle.Format = "###,##"
             .Columns("CAPRCO" & _Ud).Visible = True
+            .Columns("CAPRCO" & _Ud).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("CAPREX" & _Ud).Width = 70
-            .Columns("CAPREX" & _Ud).HeaderText = "xx" 'Mid(_Campo_Recep_Desp, 1, 5) & "."
+            .Columns("CAPREX" & _Ud).HeaderText = "Recep."
+            .Columns("CAPRCO" & _Ud).ToolTipText = "Cantidad recepcionada"
             .Columns("CAPREX" & _Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("CAPREX" & _Ud).DefaultCellStyle.Format = "###,##"
             .Columns("CAPREX" & _Ud).Visible = True
+            .Columns("CAPREX" & _Ud).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("SALDO_Ud" & _Ud).Width = 70
             .Columns("SALDO_Ud" & _Ud).HeaderText = "Pend."
+            .Columns("SALDO_Ud" & _Ud).ToolTipText = "Cantidad de saldo pendiente"
             .Columns("SALDO_Ud" & _Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("SALDO_Ud" & _Ud).DefaultCellStyle.Format = "###,##"
             .Columns("SALDO_Ud" & _Ud).Visible = True
+            .Columns("SALDO_Ud" & _Ud).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("FEEMLI").Width = 80
+            .Columns("FEEMLI").HeaderText = "F.Emisión"
+            .Columns("FEEMLI").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("FEEMLI").DefaultCellStyle.Format = "dd/MM/yyyy"
+            .Columns("FEEMLI").Visible = True
+            .Columns("FEEMLI").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("FEERLI").Width = 80
+            .Columns("FEERLI").HeaderText = "F.Recepción"
+            .Columns("FEERLI").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("FEERLI").DefaultCellStyle.Format = "dd/MM/yyyy"
+            .Columns("FEERLI").Visible = True
+            .Columns("FEERLI").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             '.Columns("MODO").HeaderText = "TM."
             '.Columns("MODO").Visible = True
@@ -251,7 +335,6 @@ Public Class Frm_ComprasSinRecepcionar
             '.Columns("PPPRNE").Visible = True
             ''.Columns("PPPRNE").DisplayIndex = 12
 
-
             '.Columns("STFI" & _Ud).Width = 70
             '.Columns("STFI" & _Ud).HeaderText = "Stock"
             '.Columns("STFI" & _Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -262,4 +345,19 @@ Public Class Frm_ComprasSinRecepcionar
 
     End Sub
 
+    Private Sub Rdb_Ud_CheckedChanged(sender As Object, e As EventArgs)
+        If sender.Checked Then
+            Sb_Actualizar_Grilla()
+        End If
+    End Sub
+
+    Private Sub Btn_Salir_Click(sender As Object, e As EventArgs) Handles Btn_Salir.Click
+        Me.Close()
+    End Sub
+
+    Private Sub Frm_ComprasSinRecepcionar_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        If e.KeyValue = Keys.Escape Then
+            Me.Close()
+        End If
+    End Sub
 End Class

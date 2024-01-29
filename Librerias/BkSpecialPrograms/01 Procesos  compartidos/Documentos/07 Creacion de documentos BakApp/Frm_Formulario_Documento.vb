@@ -2,6 +2,7 @@
 Imports System.Threading
 Imports BkSpecialPrograms.Bk_Comporamiento_UdMedidas
 Imports DevComponents.DotNetBar
+Imports MySql.Data.Authentication
 
 Public Class Frm_Formulario_Documento
 
@@ -4888,8 +4889,12 @@ Public Class Frm_Formulario_Documento
 
         If Not _Desde_Otro_Documento And Not IsNothing(_RowProductoObs) Then
             If Not String.IsNullOrEmpty(_RowProductoObs.Item("MENSAJE01")) Then
-                MessageBoxEx.Show(Me, _RowProductoObs.Item("MENSAJE01").ToString.Trim, "Mensaje asociado al producto",
+
+                Dim _Msg As String = Fx_AjustarTexto(_RowProductoObs.Item("MENSAJE01"), 50).ToString.Trim
+
+                MessageBoxEx.Show(Me, _Msg, "Mensaje asociado al producto",
                                   MessageBoxButtons.OK, MessageBoxIcon.Information)
+
             End If
         End If
 
@@ -25737,7 +25742,49 @@ Public Class Frm_Formulario_Documento
         Dim _Fila As DataGridViewRow = Grilla_Detalle.CurrentRow
         Dim _Codigo As String = _Fila.Cells("Codigo").Value
 
+        If _Tido = "NVI" Then
+
+            Consulta_sql = "Select Distinct EMPRESA+KOSU+KOBO As Cod,* From TABBO" & vbCrLf &
+                           "Where EMPRESA+KOSU+KOBO" & vbCrLf &
+                           "In (" & vbCrLf &
+                           "Select SUBSTRING(CodPermiso, 5, 10)" & vbCrLf &
+                           "From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
+                           "Where CodUsuario = '" & FUNCIONARIO & "'" & Space(1) &
+                           "And CodPermiso In (Select CodPermiso From " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Bodega_NVI'))" & vbCrLf &
+                           "Or (EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' And KOBO = '" & ModBodega & "')"
+
+        Else
+
+            Consulta_sql = "Select Distinct EMPRESA+KOSU+KOBO As Cod,* From TABBO" & vbCrLf &
+                           "Where EMPRESA+KOSU+KOBO" & vbCrLf &
+                           "In (" & vbCrLf &
+                           "Select SUBSTRING(CodPermiso, 3, 10)" & vbCrLf &
+                           "From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
+                           "Where CodUsuario = '" & FUNCIONARIO & "'" & Space(1) &
+                           "And CodPermiso In (Select CodPermiso From " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Bodega'))" & vbCrLf &
+                           "Or (EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' And KOBO = '" & ModBodega & "')"
+
+        End If
+
+        Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        Dim _Filtro As String = Generar_Filtro_IN(_Tbl_Bodegas, "", "Cod", False, False, "'")
+
+
+        Consulta_sql = "Select *" & vbCrLf &
+                       "From MAEDDO Where TIDO In ('FCC','OCC') And KOPRCT = '" & _Codigo & "' And ESLIDO = ''" & vbCrLf &
+                       "And EMPRESA+SULIDO+BOSULIDO In " & _Filtro
+        Dim _Tbl_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        If Not CBool(_Tbl_Documentos.Rows.Count) Then
+            MessageBoxEx.Show(Me, "No hay pedidos pendientes por recepcionar para este producto", "Información",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         Dim Fm As New Frm_ComprasSinRecepcionar(_Codigo)
+        Fm.Tido = _Tido
+        'Fm.SegundaUnidad = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
