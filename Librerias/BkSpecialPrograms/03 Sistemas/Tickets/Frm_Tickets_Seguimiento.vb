@@ -22,6 +22,9 @@ Public Class Frm_Tickets_Seguimiento
     Public Property TicketSucesor As Boolean
     Public Property TicketAntecesor As Boolean
 
+    Public Property vTop As Integer
+    Public Property vLeft As Integer
+
     Public Sub New(_Id_Ticket As Integer)
 
         ' Esta llamada es exigida por el diseñador.
@@ -50,8 +53,8 @@ Public Class Frm_Tickets_Seguimiento
         Me.Text = "TICKET NRO: " & _Ticket.Tickets.Numero & " (" & _Ticket.Tickets.Id & ")"
 
         If CorrerALaDerecha Then
-            Me.Top += 15
-            Me.Left += 15
+            Me.Top = vTop
+            Me.Left = vLeft
         End If
 
         Btn_MensajeRespuesta.Visible = Not SoloLectura
@@ -355,6 +358,8 @@ Public Class Frm_Tickets_Seguimiento
 
         If _RechazarTicket Then
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set Rechazado = 1 Where Id = " & _Id_Ticket & vbCrLf
+        Else
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set Rechazado = 0 Where Id = " & _Id_Ticket & vbCrLf
         End If
 
         Consulta_sql += "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set UltAccion = '" & _Tk_Accion.Accion & "' Where Id = " & _Id_Ticket & vbCrLf &
@@ -369,6 +374,7 @@ Public Class Frm_Tickets_Seguimiento
             MessageBoxEx.Show(Me, "Ticket Rechazado, se ha enviado la confirmación al remitente",
                               "Rechazar Ticket", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Me.Close()
+
         Else
 
             If MessageBoxEx.Show(Me, "Mensaje enviado correctamente" & vbCrLf & vbCrLf & "¿Desea cerrar el formulario?",
@@ -455,7 +461,6 @@ Public Class Frm_Tickets_Seguimiento
 
     Private Sub Btn_Mnu_CerrarTicket_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_CerrarTicket.Click
 
-
         If Not Mis_Ticket Then
 
             If Not _Tipo.CerrarAgenteSinPerm Then
@@ -530,7 +535,9 @@ Public Class Frm_Tickets_Seguimiento
 
         If _Cierra_Ticket Then
             _Caption = "Cerrar Ticket"
-            _Descripcion = _Tipo.RespuestaXDefecto.Trim
+            If Not Mis_Ticket Then
+                _Descripcion = _Tipo.RespuestaXDefecto.Trim
+            End If
         End If
         If _Solicita_Cierre Then _Caption = "Solicitar cierre"
         If _CreaNewTicket Then _Caption = "Cerrar y crear Ticket"
@@ -646,6 +653,8 @@ Public Class Frm_Tickets_Seguimiento
 
         If Btn_Mnu_CerrarTicketCrearNuevo.Visible Then Btn_Mnu_CerrarTicketCrearNuevo.Visible = Not _Tipo.CerrarAgenteSinPerm
 
+        Btn_Anular.Visible = (Grilla.RowCount = 1)
+
         ShowContextMenu(Menu_Contextual_Cambio_Estado)
 
     End Sub
@@ -661,6 +670,8 @@ Public Class Frm_Tickets_Seguimiento
         Dim Fm As New Frm_Tickets_Seguimiento(_Ticket.Tickets.Id_Padre)
         Fm.SoloLectura = True
         Fm.CorrerALaDerecha = True
+        Fm.vTop = Me.Top + 15
+        Fm.vLeft = Me.Left + 15
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
@@ -680,8 +691,8 @@ Public Class Frm_Tickets_Seguimiento
         Dim Fm As New Frm_Tickets_Seguimiento(_Id_Sucesor)
         Fm.SoloLectura = True
         Fm.CorrerALaDerecha = True
-        Fm.Top = Me.Top + 15
-        Fm.Left = Me.Left + 15
+        Fm.vTop = Me.Top + 15
+        Fm.vLeft = Me.Left + 15
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

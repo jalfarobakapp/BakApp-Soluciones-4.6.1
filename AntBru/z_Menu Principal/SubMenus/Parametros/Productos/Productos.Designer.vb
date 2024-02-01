@@ -43,11 +43,12 @@ Partial Class Productos
         Me.Btn_Kardex_Inventario = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_ImagenesXProductos = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_ImpAdicionalXProd = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Ofertas = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Radio1 = New DevComponents.DotNetBar.Command(Me.components)
         Me.Radio2 = New DevComponents.DotNetBar.Command(Me.components)
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Radio3 = New DevComponents.DotNetBar.Command(Me.components)
-        Me.Btn_Ofertas = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Multiplos = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -113,7 +114,7 @@ Partial Class Productos
         Me.MnuEspecialProductos.FixedSize = New System.Drawing.Size(850, 500)
         Me.MnuEspecialProductos.MultiLine = True
         Me.MnuEspecialProductos.Name = "MnuEspecialProductos"
-        Me.MnuEspecialProductos.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Maestra_Productos, Me.Btn_CodAlternativo, Me.Btn_CambiarCodProducto, Me.BtnUbicProductos, Me.BtnUnificarProductos, Me.BtnConsolidarStock, Me.Btn_Tablas, Me.BtnCP_Matriz, Me.Btn_Arbol_Clasificaciones, Me.Btn_AjustePM, Me.BtnRankingProductos, Me.Btn_Kardex_Inventario, Me.Btn_ImagenesXProductos, Me.Btn_ImpAdicionalXProd, Me.Btn_Ofertas})
+        Me.MnuEspecialProductos.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Maestra_Productos, Me.Btn_CodAlternativo, Me.Btn_CambiarCodProducto, Me.BtnUbicProductos, Me.BtnUnificarProductos, Me.BtnConsolidarStock, Me.Btn_Tablas, Me.BtnCP_Matriz, Me.Btn_Arbol_Clasificaciones, Me.Btn_AjustePM, Me.BtnRankingProductos, Me.Btn_Kardex_Inventario, Me.Btn_ImagenesXProductos, Me.Btn_ImpAdicionalXProd, Me.Btn_Ofertas, Me.Btn_Multiplos})
         '
         '
         '
@@ -480,6 +481,33 @@ Partial Class Productos
         Me.Btn_ImpAdicionalXProd.TileStyle.PaddingTop = 4
         Me.Btn_ImpAdicionalXProd.TileStyle.TextColor = System.Drawing.Color.White
         '
+        'Btn_Ofertas
+        '
+        Me.Btn_Ofertas.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Ofertas.Image = CType(resources.GetObject("Btn_Ofertas.Image"), System.Drawing.Image)
+        Me.Btn_Ofertas.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_Ofertas.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Ofertas.Name = "Btn_Ofertas"
+        Me.Btn_Ofertas.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Ofertas.Text = "<font size=""+4""><b>OFERTAS DINAMICAS</b></font><br/><font size=""-1"">Mantención de" &
+    " códigos alternativos por productos</font>"
+        Me.Btn_Ofertas.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Green
+        Me.Btn_Ofertas.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_Ofertas.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(93, Byte), Integer))
+        Me.Btn_Ofertas.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(93, Byte), Integer))
+        Me.Btn_Ofertas.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_Ofertas.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(93, Byte), Integer))
+        Me.Btn_Ofertas.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(93, Byte), Integer))
+        Me.Btn_Ofertas.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Ofertas.TileStyle.PaddingBottom = 4
+        Me.Btn_Ofertas.TileStyle.PaddingLeft = 4
+        Me.Btn_Ofertas.TileStyle.PaddingRight = 4
+        Me.Btn_Ofertas.TileStyle.PaddingTop = 4
+        Me.Btn_Ofertas.TileStyle.TextColor = System.Drawing.Color.White
+        '
         'Radio1
         '
         Me.Radio1.Checked = True
@@ -510,32 +538,28 @@ Partial Class Productos
         Me.Radio3.Name = "Radio3"
         Me.Radio3.Text = "Con movimientos hoy"
         '
-        'Btn_Ofertas
+        'Btn_Multiplos
         '
-        Me.Btn_Ofertas.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Ofertas.Image = CType(resources.GetObject("Btn_Ofertas.Image"), System.Drawing.Image)
-        Me.Btn_Ofertas.ImageIndent = New System.Drawing.Point(8, -10)
-        Me.Btn_Ofertas.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_Ofertas.Name = "Btn_Ofertas"
-        Me.Btn_Ofertas.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Ofertas.Text = "<font size=""+4""><b>OFERTAS DINAMICAS</b></font><br/><font size=""-1"">Mantención de" &
-    " códigos alternativos por productos</font>"
-        Me.Btn_Ofertas.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Green
-        Me.Btn_Ofertas.TileSize = New System.Drawing.Size(200, 100)
+        Me.Btn_Multiplos.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Multiplos.Image = CType(resources.GetObject("Btn_Multiplos.Image"), System.Drawing.Image)
+        Me.Btn_Multiplos.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_Multiplos.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Multiplos.Name = "Btn_Multiplos"
+        Me.Btn_Multiplos.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Multiplos.Text = "<font size=""+4""><b>MULTIPLOS PARA COMPRAR</b></font><br/><font size=""-1"">Múltiplo" &
+    "s y mínimos de compras para comprar por productos</font>"
+        Me.Btn_Multiplos.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Yellowish
+        Me.Btn_Multiplos.TileSize = New System.Drawing.Size(200, 100)
         '
         '
         '
-        Me.Btn_Ofertas.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(93, Byte), Integer))
-        Me.Btn_Ofertas.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(93, Byte), Integer))
-        Me.Btn_Ofertas.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_Ofertas.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(93, Byte), Integer))
-        Me.Btn_Ofertas.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(93, Byte), Integer))
-        Me.Btn_Ofertas.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_Ofertas.TileStyle.PaddingBottom = 4
-        Me.Btn_Ofertas.TileStyle.PaddingLeft = 4
-        Me.Btn_Ofertas.TileStyle.PaddingRight = 4
-        Me.Btn_Ofertas.TileStyle.PaddingTop = 4
-        Me.Btn_Ofertas.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Multiplos.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_Multiplos.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Multiplos.TileStyle.PaddingBottom = 4
+        Me.Btn_Multiplos.TileStyle.PaddingLeft = 4
+        Me.Btn_Multiplos.TileStyle.PaddingRight = 4
+        Me.Btn_Multiplos.TileStyle.PaddingTop = 4
+        Me.Btn_Multiplos.TileStyle.TextColor = System.Drawing.Color.White
         '
         'Productos
         '
@@ -574,4 +598,5 @@ Partial Class Productos
     Private WithEvents Btn_ImagenesXProductos As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_ImpAdicionalXProd As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Ofertas As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_Multiplos As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

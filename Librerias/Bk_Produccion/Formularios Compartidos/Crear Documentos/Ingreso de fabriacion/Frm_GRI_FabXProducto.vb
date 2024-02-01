@@ -93,6 +93,8 @@ Public Class Frm_GRI_FabXProducto
             Txt_Numot.ButtonCustom.Visible = True
             Lbl_ReferenciaOT.Text = "REFERENCIA: " & _Row_Pote.Item("REFERENCIA")
 
+            Dtp_Fiot.Value = _Row_Pote.Item("FIOT")
+
             Sb_BuscarProductos(_Numot)
 
             Txt_Numot.Text = _Numot
@@ -130,6 +132,7 @@ Public Class Frm_GRI_FabXProducto
         If _CreaNuevaOTExtra Then
             Sb_Limpiar()
             Txt_Numot.Text = _Numot_Extra
+            Dtp_Fiot.Value = _Sql.Fx_Trae_Dato("POTE", "FIOT", "NUMOT = '" & _Numot_Extra & "'")
             Sb_BuscarProductos(_Numot_Extra)
             Return
         End If
@@ -349,6 +352,7 @@ Public Class Frm_GRI_FabXProducto
     Sub Sb_Limpiar()
 
         Dtp_Fecha_Ingreso.Value = _FechaDelServidor
+        Dtp_Fiot.Value = Nothing
         Txt_Numot.ReadOnly = False
         Txt_Numot.Text = String.Empty
         Txt_Numot.ButtonCustom.Visible = False
@@ -500,13 +504,30 @@ Public Class Frm_GRI_FabXProducto
         Fm_Espera.BarraCircular.IsRunning = True
         Fm_Espera.Show()
 
+        Dim _FechaEmision As DateTime
+
+        If Chk_FechaEmiFiot.Checked Then
+            _FechaEmision = Dtp_Fiot.Value
+        Else
+            _FechaEmision = Dtp_Fecha_Ingreso.Value
+        End If
+
         Dim Fm As New Frm_Formulario_Documento("GRI", csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna,
                                                False, False, False, False, False, False)
 
         Fm.Pro_RowEntidad = _Row_Entidad
-        Fm.Sb_Crear_Documento_Interno_Con_Tabla3Potl(Me, _Tbl_Productos, Dtp_Fecha_Ingreso.Value, "CODIGO", "Cantidad", "C_FABRIC", _Observaciones, False, False, 1)
+        Fm.Sb_Crear_Documento_Interno_Con_Tabla3Potl(Me, _Tbl_Productos, _FechaEmision, "CODIGO", "Cantidad", "C_FABRIC", _Observaciones, False, False, 1)
         _New_Idmaeedo = Fm.Fx_Grabar_Documento(False)
         Fm.Dispose()
+
+        If Not CBool(_New_Idmaeedo) Then
+            Fm_Espera.Close()
+            Fm_Espera.Dispose()
+            Fm_Espera = Nothing
+            Me.Enabled = True
+            Me.Refresh()
+            Return
+        End If
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Lotes_Enc Where NroLote = '" & Txt_NroLote.Text & "'"
         Dim _Row_Lote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -622,7 +643,7 @@ Public Class Frm_GRI_FabXProducto
         End If
 
         If LotePlantaTurno Then
-            _NroLote = _Cl_Tarja._Cl_Tarja_Ent.Turno & "" & _Cl_Tarja._Cl_Tarja_Ent.Planta & _NroLote
+            _NroLote = _Cl_Tarja._Cl_Tarja_Ent.Planta & "" & _Cl_Tarja._Cl_Tarja_Ent.Turno & _NroLote
         End If
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Lotes_Enc Where NroLote = '" & _NroLote & "'"

@@ -200,7 +200,13 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
     End Sub
 
     Private Sub Btn_AgregarProductos_Click(sender As Object, e As EventArgs) Handles Btn_AgregarProductos.Click
-        ShowContextMenu(Menu_Contextual_02)
+
+        If String.IsNullOrEmpty(_CodEntidad) Then
+            Call Btn_Mnu_SeleccionarProductos_Click(Nothing, Nothing)
+        Else
+            ShowContextMenu(Menu_Contextual_02)
+        End If
+
     End Sub
 
     Private Sub Btn_ExportarExcel_Click(sender As Object, e As EventArgs) Handles Btn_ExportarExcel.Click

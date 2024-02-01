@@ -52,11 +52,19 @@ Public Class Frm_Tickets_Lista
             Chk_TickesMiGrupo.Visible = False
         Else
             Me.Text = "TICKET ASIGNADOS A MI COMO AGENTE"
+            Tab_Nulas.Visible = False
         End If
 
         AddHandler Chk_TickesMiGrupo.CheckedChanged, AddressOf Chk_TickesTiposMi_CheckedChanged
 
         Me.Text += ", Usuario : " & FUNCIONARIO & " - " & Nombre_funcionario_activo
+
+        AddHandler Tab_TodasActivas.Click, AddressOf Sb_Actualizar_Grilla
+        AddHandler Tab_ActivasRechazadas.Click, AddressOf Sb_Actualizar_Grilla
+        AddHandler Tab_Cerradas.Click, AddressOf Sb_Actualizar_Grilla
+        AddHandler Tab_CerradasAceptadas.Click, AddressOf Sb_Actualizar_Grilla
+        AddHandler Tab_CerradasRechazadas.Click, AddressOf Sb_Actualizar_Grilla
+        AddHandler Tab_Nulas.Click, AddressOf Sb_Actualizar_Grilla
 
     End Sub
 
@@ -90,11 +98,34 @@ Public Class Frm_Tickets_Lista
                 _Condicion += vbCrLf & "And Estado <> 'NULO'"
         End Select
 
+        Dim _Tbas = Super_TabS.SelectedTab
+
+        Select Case _Tbas.Name
+            Case "Tab_TodasActivas"
+                _Condicion += vbCrLf & "And Estado = 'ABIE' And Rechazado = 0"
+            Case "Tab_ActivasRechazadas"
+                _Condicion += vbCrLf & "And Estado = 'ABIE' And Rechazado = 1"
+            Case "Tab_Cerradas"
+                _Condicion += vbCrLf & "And Estado = 'CERR' And Rechazado = 0 And Aceptado = 0"
+            Case "Tab_CerradasAceptadas"
+                _Condicion += vbCrLf & "And Estado = 'CERR' And Aceptado = 1"
+            Case "Tab_CerradasRechazadas"
+                _Condicion += vbCrLf & "And Estado = 'CERR' And Rechazado = 1"
+            Case "Tab_Nulas"
+                _Condicion += vbCrLf & "And Estado = 'NULO'"
+        End Select
+
+
         Consulta_sql = "Select Tks.*,TkPrd.Empresa,TkPrd.Sucursal,TkPrd.Bodega,TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr," & vbCrLf &
                        "Case UdMedida When 1 Then Ud1 Else Ud2 End As 'Udm',StfiEnBodega,Cantidad,Diferencia" & vbCrLf &
                        ",Case Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'UR' Then 'Urgente' Else '??' End As NomPrioridad" & vbCrLf &
                        ",Case UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion" & vbCrLf &
-                       ",Case Estado When 'ABIE' then Case When Rechazado = 1 Then 'Abierto (Rechazado)' else 'Abierto' End When 'CERR' then 'Cerrado' When 'NULO' then 'Nulo' When 'SOLC' then 'Sol. Cierre' End As NomEstado," & vbCrLf &
+                       ",Case Estado 
+                       When 'ABIE' Then 
+                            Case When Rechazado = 1 Then 'Abierto (Rechazado)' Else 'Abierto' End 
+                       When 'CERR' Then 
+                            Case When Rechazado = 1 Then 'Cerrado (Rechazado)' When Aceptado = 1 Then 'Cerrado (Aceptado)' Else 'Cerrado' End 
+                       When 'NULO' then 'Nulo' When 'SOLC' then 'Sol. Cierre' End As NomEstado," & vbCrLf &
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcMs Where AcMs.Id_Ticket = Tks.Id And AcMs.Accion = 'MENS' And AcMs.Visto = 0) As Mesn_Pdte_Ver," & vbCrLf &
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcRs Where AcRs.Id_Ticket = Tks.Id And AcRs.Accion = 'RESP' And AcRs.Visto = 0) As Resp_Pdte_Ver" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stk_Tickets Tks" & vbCrLf &
@@ -167,6 +198,19 @@ Public Class Frm_Tickets_Lista
             .Columns("FechaCreacion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            If _Tbas.Name.Contains("Cerradas") Then
+
+                .Columns("FechaCierre").Visible = True
+                .Columns("FechaCierre").HeaderText = "Fecha cierre"
+                '.Columns("FechaCreacion").ToolTipText = "de tope de la oferta"
+                .Columns("FechaCierre").DefaultCellStyle.Format = "dd/MM/yyyy"
+                .Columns("FechaCierre").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                .Columns("FechaCierre").Width = 70
+                .Columns("FechaCierre").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+
+            End If
+
             .Columns("Codigo").Visible = True
             .Columns("Codigo").HeaderText = "Código"
             '.Columns("UltimaAccion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
@@ -221,7 +265,9 @@ Public Class Frm_Tickets_Lista
             Dim _Mesn_Pdte_Ver = _Fila.Cells("Mesn_Pdte_Ver").Value
             Dim _Resp_Pdte_Ver = _Fila.Cells("Resp_Pdte_Ver").Value
             Dim _Estado As String = _Fila.Cells("Estado").Value
+            Dim _Aceptado As Boolean = _Fila.Cells("Aceptado").Value
             Dim _Rechazado As Boolean = _Fila.Cells("Rechazado").Value
+            Dim _Prioridad As String = _Fila.Cells("Prioridad").Value
 
             Dim _Icono As Image
             Dim _Nombre_Image As String
@@ -266,12 +312,26 @@ Public Class Frm_Tickets_Lista
 
             _Fila.Cells("BtnImagen_Estado").Value = _Icono
 
-            If _Estado = "ABIE" AndAlso Not _Rechazado Then
-                _Fila.Cells("NomEstado").Style.ForeColor = Verde
+            If _Aceptado Then _Fila.Cells("NomEstado").Style.ForeColor = Verde
+            If _Rechazado Then _Fila.Cells("NomEstado").Style.ForeColor = Rojo
+
+            _Fila.Cells("NomPrioridad").Style.ForeColor = Color.White
+
+            If _Prioridad = "AL" Then
+                _Fila.Cells("NomPrioridad").Style.BackColor = Color.Orange
             End If
 
-            If _Estado = "ABIE" AndAlso _Rechazado Then
-                _Fila.Cells("NomEstado").Style.ForeColor = Rojo
+            If _Prioridad = "BJ" Then
+                _Fila.Cells("NomPrioridad").Style.ForeColor = Color.Black
+                _Fila.Cells("NomPrioridad").Style.BackColor = Amarillo
+            End If
+
+            If _Prioridad = "NR" Then
+                _Fila.Cells("NomPrioridad").Style.BackColor = Verde
+            End If
+
+            If _Prioridad = "UR" Then
+                _Fila.Cells("NomPrioridad").Style.BackColor = Rojo
             End If
 
         Next

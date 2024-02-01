@@ -156,7 +156,7 @@ Partial Class Frm_Tickets_IngProducto
         Me.Lbl_StfiEnBodega.Name = "Lbl_StfiEnBodega"
         Me.Lbl_StfiEnBodega.Size = New System.Drawing.Size(89, 23)
         Me.Lbl_StfiEnBodega.TabIndex = 171
-        Me.Lbl_StfiEnBodega.Text = "Stock en bodega"
+        Me.Lbl_StfiEnBodega.Text = "Stock sistema"
         '
         'Txt_Bodega
         '

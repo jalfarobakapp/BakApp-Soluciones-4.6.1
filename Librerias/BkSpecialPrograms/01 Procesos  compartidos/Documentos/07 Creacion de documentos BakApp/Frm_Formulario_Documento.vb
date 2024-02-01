@@ -18638,6 +18638,7 @@ Public Class Frm_Formulario_Documento
                 _New_Fila.Cells("Bodega").Value = _Bodega
                 _New_Fila.Cells("Codigo").Value = _Codigo
                 _New_Fila.Cells("Cantidad").Value = _Cantidad
+                _New_Fila.Cells("FechaEmision").Value = _FechaEmision
 
                 If Not String.IsNullOrEmpty(_Descripcion) Then
                     _New_Fila.Cells("Descripcion").Value = _Descripcion

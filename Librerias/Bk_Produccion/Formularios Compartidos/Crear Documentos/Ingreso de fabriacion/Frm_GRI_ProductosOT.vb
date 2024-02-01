@@ -168,6 +168,7 @@ Public Class Frm_GRI_ProductosOT
         Dim _NumOtRef As String = _Fila.Cells("NUMOT").Value
         Dim _SubOt As String = _Fila.Cells("NREG").Value
         Dim _Kilos As Integer
+        Dim _Idpote As Integer = _Fila.Cells("IDPOTE").Value
         Dim _Idpotl As Integer = _Fila.Cells("IDPOTL").Value
         Dim _Realizado As Integer = _Fila.Cells("REALIZADO").Value
 
@@ -218,7 +219,7 @@ Public Class Frm_GRI_ProductosOT
 
         '--(@NumOtRef char(10), @USUARIO char(3), @ENVIA_FECHA DATE, @KILOS INT,@IDPOTL INT    
 
-        Dim _Fecha As DateTime = FechaDelServidor()
+        Dim _Fecha As DateTime = _Sql.Fx_Trae_Dato("POTE", "FIOT", "IDPOTE = " & _Idpote) 'FechaDelServidor()
 
 
         Consulta_sql = "EXEC Genero_OT_Diferencia  '" & _NumOtRef & "','" & FUNCIONARIO & "','" & Format(_Fecha, "dd/MM/yyyy") & "'," & _Kilos & "," & _Idpotl

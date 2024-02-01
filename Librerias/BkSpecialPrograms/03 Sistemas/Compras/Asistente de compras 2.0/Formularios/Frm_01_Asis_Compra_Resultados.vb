@@ -3363,6 +3363,10 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         Sb_Actualizar_Rotacion("", _Actualizar_Rotacion)
 
+        'If Chk_CompMinXProveedores.Checked Then
+        '    Sb_PonerMultiploDeCompraPorProveedor(False)
+        'End If
+
         'Sb_Actualizar_Ult3ComprasXprodVsProveedor()
 
         Sb_Grilla_Actualizar_Informe(Grilla)
@@ -8316,7 +8320,7 @@ Public Class Frm_01_Asis_Compra_Resultados
             Chk_Mostrar_Solo_Stock_Critico.Checked = True
 
             If Chk_CompMinXProveedores.Checked Then
-                Sb_PonerMultiploDeCompraPorProveedor()
+                Sb_PonerMultiploDeCompraPorProveedor(True)
             End If
 
             Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False, False)
@@ -8475,7 +8479,7 @@ Drop Table #Paso"
             Dim _SucEntidad As String = _RowProveedor.Item("SUEN")
 
             If Chk_CompMinXProveedores.Checked Then
-                Sb_PonerMultiploDeCompraPorProveedor()
+                Sb_PonerMultiploDeCompraPorProveedor(True)
             End If
 
             Sb_Genarar_OCC_Automaticas_Por_Proveedor(_CodEntidad, _SucEntidad, _Generar_OCC)
@@ -8579,7 +8583,7 @@ Drop Table #Paso"
             Chk_Quitare_Sospechosos_Stock.Checked = Not IncluirProdRefleo_NVI
 
             If Chk_CompMinXProveedores.Checked Then
-                Sb_PonerMultiploDeCompraPorProveedor()
+                Sb_PonerMultiploDeCompraPorProveedor(False)
             End If
 
             Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False, False)
@@ -8697,7 +8701,7 @@ Drop Table #Paso"
 
     End Sub
 
-    Sub Sb_PonerMultiploDeCompraPorProveedor()
+    Sub Sb_PonerMultiploDeCompraPorProveedor(_BorrarSinProveedores As Boolean)
 
         Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CantComprarOri = CantComprar"
         _Sql.Ej_consulta_IDU(Consulta_sql)
@@ -8715,13 +8719,23 @@ Drop Table #Paso"
                        "Where MultiploCompra > 0"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-        Consulta_sql = "Delete " & _Nombre_Tbl_Paso_Informe & " Where CodProveedor = '' And CodSucProveedor = ''"
-        _Sql.Ej_consulta_IDU(Consulta_sql)
+        If _BorrarSinProveedores Then
+            Consulta_sql = "Delete " & _Nombre_Tbl_Paso_Informe & " Where CodProveedor = '' And CodSucProveedor = ''"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+        End If
 
         If Chk_CompMinXProveedores.Checked Then
             Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CantComprar = CantComprarMinXProv Where CantComprarMinXProv > 0"
             _Sql.Ej_consulta_IDU(Consulta_sql)
         End If
+
+        'Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set " &
+        '               "Con_Stock_CriticoUd1 = 1" &
+        '               ",Con_Stock_CriticoUd2 = 1" & vbCrLf &
+        '               ",Stock_CriticoUd1_Rd = Stock_Fisico_Ud1" & vbCrLf &
+        '               ",Stock_CriticoUd2_Rd = Stock_Fisico_Ud2" & vbCrLf &
+        '               "Where CantComprarMinXProv > 0"
+        '_Sql.Ej_consulta_IDU(Consulta_sql)
 
     End Sub
 
@@ -9296,10 +9310,11 @@ Drop Table #Paso"
 
     Private Sub Btn_PonerMultXProveedores_Click(sender As Object, e As EventArgs) Handles Btn_PonerMultXProveedores.Click
 
-        Sb_PonerMultiploDeCompraPorProveedor()
+        Sb_PonerMultiploDeCompraPorProveedor(False)
         Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False, Chk_MarcarFilas.Checked)
 
-        MessageBoxEx.Show(Me, "Cantidades actualizadas", "Poner multiplo por cantidades segpun proveedores",
+        MessageBoxEx.Show(Me, "Cantidades actualizadas" & vbCrLf &
+                          "Poner multiplo por cantidades según proveedores", "Información",
                           MessageBoxButtons.OK, MessageBoxIcon.Information)
 
     End Sub
