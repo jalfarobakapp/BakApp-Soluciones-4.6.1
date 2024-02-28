@@ -1226,10 +1226,12 @@ Public Class Frm_Formulario_Documento
                 If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Guia_Traslado_Interno Or
                    _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Nota_Venta_Interna Or
                    _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna Then
+                    _RowEntidad.Item("KOEN") = RutEmpresa
                     _RowEntidad.Item("SUEN") = String.Empty
                 End If
 
                 If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna Then
+                    _RowEntidad.Item("KOEN") = RutEmpresa
                     _RowEntidad.Item("SUEN") = ModSucursal
                 End If
 
@@ -20482,6 +20484,10 @@ Public Class Frm_Formulario_Documento
         Dim _Necesita_Permiso As Boolean
         Dim _Autorizado As Boolean
         Dim _Revisar_Stock_FcvBlv As Boolean
+
+        If RutEmpresa.Trim = _RowEntidad.Item("KOEN").ToString.Trim Then
+            Return
+        End If
 
         _RowEntidad = Fx_Traer_Datos_Entidad_Tabla(_RowEntidad.Item("KOEN"), _RowEntidad.Item("SUEN")).Rows(0)
 

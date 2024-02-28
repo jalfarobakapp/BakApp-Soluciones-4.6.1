@@ -38,6 +38,7 @@ Public Class Frm_InvMargenes_
         Sb_Formato_Generico_Grilla(Grilla_Mrg_Asociaciones, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
         Sb_Formato_Generico_Grilla(Grilla_Mrg_Super_Familias, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
         Sb_Formato_Generico_Grilla(Grilla_Mrg_Vendedores, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
+        Sb_Formato_Generico_Grilla(Grilla_Mrg_Sucursal_Linea, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
 
         AddHandler Grilla_Mrg_Asociaciones.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla_Mrg_Productos.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
@@ -78,6 +79,7 @@ Public Class Frm_InvMargenes_
         Tab_Clasificaciones_Bk.Visible = False
         Tab_Vendedores.Visible = False
         Tab_Super_Familias.Visible = False
+        Tab_Sucursal_Linea.Visible = False
 
         Btn_Excel_Detalle.Visible = False
         Btn_Excel_Resumen.Visible = False
@@ -283,6 +285,60 @@ Public Class Frm_InvMargenes_
             .Columns("Nom_SuperFamilia").Width = 350
             .Columns("Nom_SuperFamilia").HeaderText = "Descripción"
             .Columns("Nom_SuperFamilia").Visible = True
+
+            .Columns("CantidadUd1").Width = 80
+            .Columns("CantidadUd1").HeaderText = "Cant. Ud1"
+            .Columns("CantidadUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("CantidadUd1").DefaultCellStyle.Format = "###,##.##"
+            .Columns("CantidadUd1").Visible = True
+
+            .Columns("TotalCosto").Width = 90
+            .Columns("TotalCosto").HeaderText = "Total Costo"
+            .Columns("TotalCosto").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("TotalCosto").DefaultCellStyle.Format = "$ ###,##"
+            .Columns("TotalCosto").Visible = True
+
+            .Columns("TotalPrecio").Width = 90
+            .Columns("TotalPrecio").HeaderText = "Total Precio"
+            .Columns("TotalPrecio").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("TotalPrecio").DefaultCellStyle.Format = "$ ###,##"
+            .Columns("TotalPrecio").Visible = True
+
+            .Columns("Total_Mrg").Width = 80
+            .Columns("Total_Mrg").HeaderText = "Total Margen"
+            .Columns("Total_Mrg").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Total_Mrg").DefaultCellStyle.Format = "$ ###,##"
+            .Columns("Total_Mrg").Visible = True
+
+            .Columns("Porc_Markup").Width = 80
+            .Columns("Porc_Markup").HeaderText = "Margen %"
+            .Columns("Porc_Markup").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Porc_Markup").DefaultCellStyle.Format = "% ##0.##"
+            .Columns("Porc_Markup").Visible = True
+
+            '.Columns("Porc_Margen").Width = 70
+            '.Columns("Porc_Margen").HeaderText = "Margen Costo %"
+            '.Columns("Porc_Margen").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            '.Columns("Porc_Margen").DefaultCellStyle.Format = "###,##.##"
+            '.Columns("Porc_Margen").Visible = True
+
+        End With
+
+    End Sub
+
+    Sub Sb_Formato_Grilla_Sucursal_Linea()
+
+        With Grilla_Mrg_Sucursal_Linea
+
+            OcultarEncabezadoGrilla(Grilla_Mrg_Sucursal_Linea, False)
+
+            .Columns("Sulido").Width = 90
+            .Columns("Sulido").HeaderText = "Código"
+            .Columns("Sulido").Visible = True
+
+            .Columns("Nosulido").Width = 350
+            .Columns("Nosulido").HeaderText = "Descripción"
+            .Columns("Nosulido").Visible = True
 
             .Columns("CantidadUd1").Width = 80
             .Columns("CantidadUd1").HeaderText = "Cant. Ud1"
@@ -720,13 +776,15 @@ Public Class Frm_InvMargenes_
         _Ds_Informe.Tables(1).TableName = "MargenXAsociacion"
         _Ds_Informe.Tables(2).TableName = "MargenXVendedor"
         _Ds_Informe.Tables(3).TableName = "MargenXSuperFamilia"
-        _Ds_Informe.Tables(4).TableName = "Detalle_Venta"
+        _Ds_Informe.Tables(4).TableName = "MargenXSucursalLinea"
+        _Ds_Informe.Tables(5).TableName = "Detalle_Venta"
 
-        _Ds_Informe.Tables(5).TableName = "Excel_MargenXProducto"
-        _Ds_Informe.Tables(6).TableName = "Excel_MargenXAsociacion"
-        _Ds_Informe.Tables(7).TableName = "Excel_MargenXVendedor"
-        _Ds_Informe.Tables(8).TableName = "Excel_MargenXSuperFamilia"
-        _Ds_Informe.Tables(9).TableName = "Excel_Detalle_Venta"
+        _Ds_Informe.Tables(6).TableName = "Excel_MargenXProducto"
+        _Ds_Informe.Tables(7).TableName = "Excel_MargenXAsociacion"
+        _Ds_Informe.Tables(8).TableName = "Excel_MargenXVendedor"
+        _Ds_Informe.Tables(9).TableName = "Excel_MargenXSuperFamilia"
+        _Ds_Informe.Tables(10).TableName = "Excel_Detalle_Venta"
+        _Ds_Informe.Tables(11).TableName = "Excel_MargenXSucursal"
 
 
         ' Agregar la relación ( campo en común : campo_Relacionado = idCliente )  
@@ -754,12 +812,14 @@ Public Class Frm_InvMargenes_
         Grilla_Mrg_Asociaciones.DataSource = _Ds_Informe.Tables("MargenXAsociacion")
         Grilla_Mrg_Vendedores.DataSource = _Ds_Informe.Tables("MargenXVendedor")
         Grilla_Mrg_Super_Familias.DataSource = _Ds_Informe.Tables("MargenXSuperFamilia")
+        Grilla_Mrg_Sucursal_Linea.DataSource = _Ds_Informe.Tables("MargenXSucursalLinea")
 
 
         OcultarEncabezadoGrilla(Grilla_Mrg_Productos, True)
         OcultarEncabezadoGrilla(Grilla_Mrg_Asociaciones, True)
         OcultarEncabezadoGrilla(Grilla_Mrg_Vendedores, True)
         OcultarEncabezadoGrilla(Grilla_Mrg_Super_Familias, True)
+        OcultarEncabezadoGrilla(Grilla_Mrg_Sucursal_Linea, True)
 
         If CBool(Grilla_Mrg_Productos.RowCount) Then
 
@@ -767,6 +827,7 @@ Public Class Frm_InvMargenes_
             Sb_Formato_Grilla_Asociaciones()
             Sb_Formato_Grilla_Vendedores()
             Sb_Formato_Grilla_Super_Familias()
+            Sb_Formato_Grilla_Sucursal_Linea()
 
             Fm_Espera.Dispose()
 
@@ -777,6 +838,7 @@ Public Class Frm_InvMargenes_
             Tab_Clasificaciones_Bk.Visible = Chk_Incluye_Clasificaciones.Checked
             Tab_Vendedores.Visible = True
             Tab_Super_Familias.Visible = True
+            Tab_Sucursal_Linea.Visible = True
 
             Btn_Excel_Detalle.Visible = True
             Btn_Excel_Resumen.Visible = True
@@ -1166,6 +1228,10 @@ Public Class Frm_InvMargenes_
 
         If SuperTabControl1.SelectedTabIndex = 4 Then
             _Tbl = _Ds_Informe.Tables("Excel_MargenXSuperFamilia")
+        End If
+
+        If SuperTabControl1.SelectedTabIndex = 5 Then
+            _Tbl = _Ds_Informe.Tables("Excel_MargenXSucursal")
         End If
 
         If IsNothing(_Tbl) Then

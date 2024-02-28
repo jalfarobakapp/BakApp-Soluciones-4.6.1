@@ -23,6 +23,8 @@ Select @Funcionario = '#_Funcionario_Activo#',
 --  BEGIN TRANSACTION
     
 CREATE TABLE #Zw_TblDetalle_Venta(
+     Empresa           Char(2)     default '',  -- Empresa
+     Sulido            Char(3)     default '',  -- Sucursal
      Tido              Char(3)     default '',  -- Tipo de documento
      Nudo              Char(10)    default '',  -- Numero de documento
      Feemli            Date        default Getdate(), -- Fecha de emisión de docuemto
@@ -74,11 +76,11 @@ CREATE TABLE #Zw_TblDetalle_Venta(
              GROUP BY dbo.MAEPR.KOPR, dbo.MAEPR.NOKOPR 
    
   
-   Insert INTO #Zw_TblDetalle_Venta (Tido,Nudo,Feemli,Nulido,Koprct,Nokopr,CantidadUd1,CostoUnit,PNetoUnit,
+   Insert INTO #Zw_TblDetalle_Venta (Empresa,Sulido,Tido,Nudo,Feemli,Nulido,Koprct,Nokopr,CantidadUd1,CostoUnit,PNetoUnit,
                             Porct_Ila,Porct_Iva,Ila,Iva,Funcionario,Vendedor,
                             Marca,Rubro,ClasLibre,Zona,SuperFamilia,Familia,SubFamilia,Precio_Cambiado)       
 
-   Select   DDO.TIDO,DDO.NUDO,FEEMLI,NULIDO,KOPRCT AS 'Codigo',DDO.NOKOPR AS 'Descripcion',
+   Select   DDO.EMPRESA,DDO.SULIDO,DDO.TIDO,DDO.NUDO,FEEMLI,NULIDO,KOPRCT AS 'Codigo',DDO.NOKOPR AS 'Descripcion',
             ROUND(CASE 
                     WHEN DDO.TIDO IN ('NCE','NCV','NCX','NCZ','NEV') 
                     THEN - 1 * CAPRCO1
@@ -375,10 +377,34 @@ From #Zw_TblDetalle_Venta
 Group By SuperFamilia,Nom_SuperFamilia
 Order by SuperFamilia,Nom_SuperFamilia
 
+Select Empresa,Sulido,NOKOSU As Nosulido,
+	   COUNT(Tido) as Documentos, 
+       Round(SUM(CantidadUd1),2) as 'CantidadUd1',
+       Round(SUM(TotalCosto),0) as 'TotalCosto',
+       Round(SUM(TotalPrecio),0) as 'TotalPrecio',
+       Round(SUM(Total_Mrg),2) as 'Total_Mrg', 
+       Case When Round(SUM(TotalPrecio),0) <> 0 then
+              Round(100 * ((Round(SUM(TotalPrecio),0)-Round(SUM(TotalCosto),0))/Round(SUM(TotalPrecio),0)),3)
+              Else 100 End
+       As 'Porc_Markup',--'% Markup',      
+       Case When Round(SUM(TotalCosto),0) <> 0 then
+              Round(100 * ((Round(SUM(TotalPrecio),0)-Round(SUM(TotalCosto),0))/Round(SUM(TotalCosto),0)),3)
+              Else 0 End 
+       As 'Porc_Margen',--'% Margen',
+       Cast(0 As Float) As Grupo_Mg,    
+	   Cast(0 As Float) As Grupo_Mk    
+	
+Into #Zw_TblMargenXSucursalLinea
+From #Zw_TblDetalle_Venta
+Left Join TABSU On EMPRESA = Empresa And KOSU = Sulido
+Group By Empresa,Sulido,NOKOSU
+Order by Empresa,Sulido
+
 Update #Zw_TblMargenXProducto Set Porc_Markup = 0,Porc_Margen = 0
 Update #Zw_TblMargenXAsociacion Set Porc_Markup = 0,Porc_Margen = 0
 Update #Zw_TblMargenXVendedor Set Porc_Markup = 0,Porc_Margen = 0
 Update #Zw_TblMargenXSuperFamilia Set Porc_Markup = 0,Porc_Margen = 0
+Update #Zw_TblMargenXSucursalLinea Set Porc_Markup = 0,Porc_Margen = 0
 
 Update #Zw_TblMargenXProducto Set Porc_Markup = Round(Total_Mrg/TotalPrecio,4) Where TotalPrecio <> 0
 Update #Zw_TblMargenXProducto Set Porc_Margen = Round(Total_Mrg/TotalCosto,4) Where TotalCosto <> 0
@@ -388,6 +414,8 @@ Update #Zw_TblMargenXVendedor Set Porc_Markup = Round(Total_Mrg/TotalPrecio,4) W
 Update #Zw_TblMargenXVendedor Set Porc_Margen = Round(Total_Mrg/TotalCosto,4) Where TotalCosto <> 0
 Update #Zw_TblMargenXSuperFamilia Set Porc_Markup = Round(Total_Mrg/TotalPrecio,4) Where TotalPrecio <> 0
 Update #Zw_TblMargenXSuperFamilia Set Porc_Margen = Round(Total_Mrg/TotalCosto,4) Where TotalCosto <> 0
+Update #Zw_TblMargenXSucursalLinea Set Porc_Markup = Round(Total_Mrg/TotalPrecio,4) Where TotalPrecio <> 0
+Update #Zw_TblMargenXSucursalLinea Set Porc_Margen = Round(Total_Mrg/TotalCosto,4) Where TotalCosto <> 0
 
 Update #Zw_TblDetalle_Venta Set Porc_Margen = Porc_Margen/100,Porc_Markup =Porc_Markup/100
 
@@ -399,6 +427,9 @@ Update #Zw_TblMargenXVendedor Set Porc_Margen = Round(Porc_Margen,4) * -1 Where 
 Update #Zw_TblMargenXVendedor Set Porc_Markup = Round(Porc_Markup,4) * -1 Where Total_Mrg < 0 And Porc_Markup > 0
 Update #Zw_TblMargenXSuperFamilia Set Porc_Margen = Round(Porc_Margen,4) * -1 Where Total_Mrg < 0 And Porc_Margen > 0
 Update #Zw_TblMargenXSuperFamilia Set Porc_Markup = Round(Porc_Markup,4) * -1 Where Total_Mrg < 0 And Porc_Markup > 0
+Update #Zw_TblMargenXSucursalLinea Set Porc_Margen = Round(Porc_Margen,4) * -1 Where Total_Mrg < 0 And Porc_Margen > 0
+Update #Zw_TblMargenXSucursalLinea Set Porc_Markup = Round(Porc_Markup,4) * -1 Where Total_Mrg < 0 And Porc_Markup > 0
+
 Update #Zw_TblDetalle_Venta Set Porc_Margen = Round(Porc_Margen,4) * -1 Where Total_Mrg < 0 And Porc_Margen > 0
 Update #Zw_TblDetalle_Venta Set Porc_Markup = Round(Porc_Markup,4) * -1 Where Total_Mrg < 0 And Porc_Markup > 0
 
@@ -418,6 +449,7 @@ Update #Zw_TblDetalle_Venta Set Porc_Markup = Round(Porc_Markup,4) * -1 Where To
   Select * From #Zw_TblMargenXAsociacion
   Select * From #Zw_TblMargenXVendedor 
   Select * From #Zw_TblMargenXSuperFamilia
+  Select * From #Zw_TblMargenXSucursalLinea
 
   Select * From #Zw_TblDetalle_Venta Order by Tido, Nudo
 
@@ -464,6 +496,12 @@ Order By SuperFamilia
         Marca,Nom_Marca,ClasLibre,Nom_ClasLibre,Zona,Nom_Zona,Rubro,Nom_Rubro 
         From #Zw_TblDetalle_Venta
  Order by Tido, Nudo
+
+ Select Sulido As 'Código',NOKOSU As 'Descripción', Documentos, CantidadUd1 As 'CantUd1', TotalCosto As 'Total Costo', TotalPrecio As 'Total Precio',  
+       Total_Mrg As 'Total Margen', Porc_Markup As 'Margen'
+From #Zw_TblMargenXSucursalLinea
+Left Join TABSU On EMPRESA = Empresa And KOSU = Sulido
+Order By Sulido
 
 
   Drop Table #Zw_TblDetalle_Venta
