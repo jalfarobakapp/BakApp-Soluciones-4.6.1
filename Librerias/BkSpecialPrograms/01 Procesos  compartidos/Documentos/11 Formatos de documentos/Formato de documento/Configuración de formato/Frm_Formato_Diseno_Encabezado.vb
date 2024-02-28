@@ -1446,7 +1446,7 @@ Public Class Frm_Formato_Diseno_Encabezado
 
         Next
 
-        _AltoMax += 2
+        '_AltoMax += 2
 
         _NroLineaXPag = Math.Round(_Lineas_PP / _AltoMax)
 

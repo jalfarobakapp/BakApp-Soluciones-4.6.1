@@ -44,6 +44,8 @@ Public Class Frm_AsisCompra_Proyeccion
         End Get
     End Property
 
+    Public Property InformeDeComprasAgrupadoporAsociacion As Boolean
+
     Public Sub New(Sql_Consulta_Actualiza_Stock As String,
                    Clas_Asistente_Compras As Clas_Asistente_Compras)
 
@@ -69,13 +71,16 @@ Public Class Frm_AsisCompra_Proyeccion
 
         Cmb_Tiempo_Reposicion_Dias_Meses.Enabled = False
 
-        Sb_Parametros_Informe_Conf_Local(True)
+        'Sb_Parametros_Informe_Conf_Local(True)
+        Sb_Parametros_Informe_Sql(False)
 
         Me.WindowState = FormWindowState.Normal
 
     End Sub
 
     Private Sub BtnProcesarInf_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnProcesarInf.Click
+
+        Sb_Parametros_Informe_Sql(True)
 
         If Rdb_Ud1_Compra.Checked Then
             _Ud = 1
@@ -85,114 +90,125 @@ Public Class Frm_AsisCompra_Proyeccion
 
         Dim _Padre_Asociacion_Productos = Txt_Padre_Asociacion_Productos.Tag
 
-        If Not String.IsNullOrEmpty(Txt_Padre_Asociacion_Productos.Text) Then
+        If String.IsNullOrEmpty(Txt_Padre_Asociacion_Productos.Text) Then
 
-            Dim _Filtro_Nodos As String
-
-            Consulta_sql = "Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
-                           "Where Identificacdor_NodoPadre = " & _Padre_Asociacion_Productos
-            _Tbl_Nodos = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-            _Filtro_Nodos = Generar_Filtro_IN(_Tbl_Nodos, "", "Codigo_Nodo", False, False, "'")
-
-
-            _Identificador_NodoPadre = _Padre_Asociacion_Productos
-
-            Dim _Tiempo_Reposicion = Input_Tiempo_Reposicion.Value * Cmb_Tiempo_Reposicion_Dias_Meses.SelectedValue
-            _Dias_Abastecer = Input_Dias_a_Abastecer.Value * Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue + _Tiempo_Reposicion
-
-
-            Dim _Fecha_Fin = DateAdd(DateInterval.Day, _Dias_Abastecer, Now.Date)
-
-            _Dias_Abastecer = Fx_Cuenta_Dias(Now.Date, _Fecha_Fin, Opcion_Dias.Habiles)
-            Dim _Sabados As Integer = Fx_Cuenta_Dias(Now.Date, _Fecha_Fin, Opcion_Dias.Sabado)
-            Dim _Domingos As Integer = Fx_Cuenta_Dias(Now.Date, _Fecha_Fin, Opcion_Dias.Domingo)
-
-            _Dias_Proyeccion = _Dias_Abastecer
-
-
-            Dim _Campos As Integer
-
-            Select Case Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue
-                Case 1
-                    _Dias_Proyeccion = 1 : _Campos = 60 '_Dias_Abastecer
-                Case 7
-                    _Dias_Proyeccion = 5 : _Campos = 20
-                Case 30
-                    _Dias_Proyeccion = 22 : _Campos = 12
-            End Select
-
-            If Chk_Sabado.Checked Then
-                _Dias_Abastecer += _Sabados
-                Select Case Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue
-                    Case 7
-                        _Dias_Proyeccion += 1
-                    Case 30
-                        _Dias_Proyeccion += 2
-                End Select
-            End If
-
-            If Chk_Domingo.Checked Then
-                _Dias_Abastecer += _Domingos
-                Select Case Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue
-                    Case 7
-                        _Dias_Proyeccion += 1
-                    Case 30
-                        _Dias_Proyeccion += 2
-                End Select
-            End If
-
-            _Marca_Proyeccion = _Tiempo_Reposicion / Cmb_Tiempo_Reposicion_Dias_Meses.SelectedValue ' _Valor '_Dias_Proyeccion '_Mes_Marca = _Tiempo_Reposicion / _Dias_Mes
-
-            _Porc_Creciminto = Input_Porc_Crecimiento.Value
-
-            Dim _RotCalculo As String
-
-            If Rdb_Rot_Mediana.Checked Then
-                _RotCalculo = "D"
-            End If
-
-            If Rdb_Rot_Promedio.Checked Then
-                _RotCalculo = "P"
-            End If
-
-            Me.Enabled = False
-
-            Dim Fm As New Frm_AsisCompra_Proyeccion_Informe(_Tabla_Paso,
-                                                            _Identificador_NodoPadre,
-                                                            _Ud,
-                                                            _Filtro_Nodos,
-                                                            _Porc_Creciminto,
-                                                            _Dias_Proyeccion,
-                                                            _Marca_Proyeccion,
-                                                            _Dias_Abastecer,
-                                                            _Campos,
-                                                            _RotCalculo,
-                                                            _Sql_Consulta_Actualiza_Stock,
-                                                            _Clas_Asistente_Compras)
-
-            Fm.Pro_Input_Redondeo = Input_Proyeccion_Redondeo.Value
-            Select Case Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue
-                Case 1
-                    Fm.Pro_Proyeccion = Frm_AsisCompra_Proyeccion_Informe.Enum_Proyeccion.Diaria
-                Case 7
-                    Fm.Pro_Proyeccion = Frm_AsisCompra_Proyeccion_Informe.Enum_Proyeccion.Semanal
-                Case 30
-                    Fm.Pro_Proyeccion = Frm_AsisCompra_Proyeccion_Informe.Enum_Proyeccion.Mensual
-            End Select
-
-            Fm.Rdb_Proyeccion_Promedio_Diario.Checked = Rdb_Rot_Promedio.Checked
-            Fm.Rdb_Proyeccion_Rotacion_Diaria.Checked = Rdb_Rot_Mediana.Checked
-
-            Fm.ShowDialog(Me)
-            Input_Proyeccion_Redondeo.Value = Fm.Pro_Input_Redondeo
-            Fm.Dispose()
-
-        Else
             MessageBoxEx.Show(Me, "Debe indicar la agrupación de asociación de productos", "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
+            Return
+
         End If
+
+
+        Dim _Filtro_Nodos As String
+
+        Consulta_sql = "Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
+                       "Where Identificacdor_NodoPadre = " & _Padre_Asociacion_Productos
+        _Tbl_Nodos = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        _Filtro_Nodos = Generar_Filtro_IN(_Tbl_Nodos, "", "Codigo_Nodo", False, False, "'")
+
+        If _Filtro_Nodos = "()" Then _Filtro_Nodos = "('')"
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Tabla_Paso, "Codigo_Nodo In " & _Filtro_Nodos)
+
+        If Not CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "No existen datos que mostrar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+
+        _Identificador_NodoPadre = _Padre_Asociacion_Productos
+
+        Dim _Tiempo_Reposicion = Input_Tiempo_Reposicion.Value * Cmb_Tiempo_Reposicion_Dias_Meses.SelectedValue
+        _Dias_Abastecer = Input_Dias_a_Abastecer.Value * Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue + _Tiempo_Reposicion
+
+
+        Dim _Fecha_Fin = DateAdd(DateInterval.Day, _Dias_Abastecer, Now.Date)
+
+        _Dias_Abastecer = Fx_Cuenta_Dias(Now.Date, _Fecha_Fin, Opcion_Dias.Habiles)
+        Dim _Sabados As Integer = Fx_Cuenta_Dias(Now.Date, _Fecha_Fin, Opcion_Dias.Sabado)
+        Dim _Domingos As Integer = Fx_Cuenta_Dias(Now.Date, _Fecha_Fin, Opcion_Dias.Domingo)
+
+        _Dias_Proyeccion = _Dias_Abastecer
+
+
+        Dim _Campos As Integer
+
+        Select Case Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue
+            Case 1
+                _Dias_Proyeccion = 1 : _Campos = 60 '_Dias_Abastecer
+            Case 7
+                _Dias_Proyeccion = 5 : _Campos = 20
+            Case 30
+                _Dias_Proyeccion = 22 : _Campos = 12
+        End Select
+
+        If Chk_Sabado.Checked Then
+            _Dias_Abastecer += _Sabados
+            Select Case Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue
+                Case 7
+                    _Dias_Proyeccion += 1
+                Case 30
+                    _Dias_Proyeccion += 2
+            End Select
+        End If
+
+        If Chk_Domingo.Checked Then
+            _Dias_Abastecer += _Domingos
+            Select Case Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue
+                Case 7
+                    _Dias_Proyeccion += 1
+                Case 30
+                    _Dias_Proyeccion += 2
+            End Select
+        End If
+
+        _Marca_Proyeccion = _Tiempo_Reposicion / Cmb_Tiempo_Reposicion_Dias_Meses.SelectedValue ' _Valor '_Dias_Proyeccion '_Mes_Marca = _Tiempo_Reposicion / _Dias_Mes
+
+        _Porc_Creciminto = Input_Porc_Crecimiento.Value
+
+        Dim _RotCalculo As String
+
+        If Rdb_Rot_Mediana.Checked Then
+            _RotCalculo = "D"
+        End If
+
+        If Rdb_Rot_Promedio.Checked Then
+            _RotCalculo = "P"
+        End If
+
+        Me.Enabled = False
+
+        Dim Fm As New Frm_AsisCompra_Proyeccion_Informe(_Tabla_Paso,
+                                                        _Identificador_NodoPadre,
+                                                        _Ud,
+                                                        _Filtro_Nodos,
+                                                        _Porc_Creciminto,
+                                                        _Dias_Proyeccion,
+                                                        _Marca_Proyeccion,
+                                                        _Dias_Abastecer,
+                                                        _Campos,
+                                                        _RotCalculo,
+                                                        _Sql_Consulta_Actualiza_Stock,
+                                                        _Clas_Asistente_Compras)
+
+        Fm.Pro_Input_Redondeo = Input_Proyeccion_Redondeo.Value
+        Select Case Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue
+            Case 1
+                Fm.Pro_Proyeccion = Frm_AsisCompra_Proyeccion_Informe.Enum_Proyeccion.Diaria
+            Case 7
+                Fm.Pro_Proyeccion = Frm_AsisCompra_Proyeccion_Informe.Enum_Proyeccion.Semanal
+            Case 30
+                Fm.Pro_Proyeccion = Frm_AsisCompra_Proyeccion_Informe.Enum_Proyeccion.Mensual
+        End Select
+
+        Fm.Rdb_Proyeccion_Promedio_Diario.Checked = Rdb_Rot_Promedio.Checked
+        Fm.Rdb_Proyeccion_Rotacion_Diaria.Checked = Rdb_Rot_Mediana.Checked
+
+        Fm.ShowDialog(Me)
+        Input_Proyeccion_Redondeo.Value = Fm.Pro_Input_Redondeo
+        Fm.Dispose()
 
         Me.Enabled = True
 
@@ -243,57 +259,28 @@ Public Class Frm_AsisCompra_Proyeccion
 
     End Sub
 
-    'Sub Sb_Parametros_Informe_Sql(ByVal _Actualizar As Boolean)
+    Sub Sb_Parametros_Informe_Sql(ByVal _Actualizar As Boolean)
 
-    '    Dim _FechaHoy As Date = FormatDateTime(FechaDelServidor, DateFormat.ShortDate)
-    '    Dim _Fecha_Hoy = Format(_FechaHoy, "dd-MM-yyyy")
+        Dim _FechaHoy As Date = FormatDateTime(FechaDelServidor, DateFormat.ShortDate)
+        Dim _Fecha_Hoy = Format(_FechaHoy, "dd-MM-yyyy")
 
+        '  Redondeo
+        _Sql.Sb_Parametro_Informe_Sql(Input_Proyeccion_Redondeo, "Compras_Asistente",
+                                                 Input_Proyeccion_Redondeo.Name, Class_SQLite.Enum_Type._Double, Input_Proyeccion_Redondeo.Value, _Actualizar)
 
-    '    '   Tiempo para aprobicionamiento
-    '    _Sql.Sb_Parametro_Informe_Sql(Cmb_Metodo_Abastecer_Dias_Meses, "Compras_Asistente", Cmb_Metodo_Abastecer_Dias_Meses.Name,
-    '                                             Class_SQLite.Enum_Type._ComboBox, Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue, _Actualizar)
-    '    _Sql.Sb_Parametro_Informe_Sql(Input_Dias_a_Abastecer, "Compras_Asistente",
-    '                                             Input_Dias_a_Abastecer.Name, Class_SQLite.Enum_Type._Double, Input_Dias_a_Abastecer.Value, _Actualizar)
+        '  Redondeo
+        _Sql.Sb_Parametro_Informe_Sql(Txt_Padre_Asociacion_Productos, "Compras_Asistente",
+                                      Txt_Padre_Asociacion_Productos.Name, Class_SQLite.Enum_Type._Tag,
+                                      Txt_Padre_Asociacion_Productos.Tag, _Actualizar)
 
-    '    '   Tiempo de reposición (Lead Time, _Actualizar)
-    '    _Sql.Sb_Parametro_Informe_Sql(Cmb_Tiempo_Reposicion_Dias_Meses, "Compras_Asistente",
-    '                                             Cmb_Tiempo_Reposicion_Dias_Meses.Name, Class_SQLite.Enum_Type._ComboBox, Cmb_Tiempo_Reposicion_Dias_Meses.SelectedValue, _Actualizar)
-    '    _Sql.Sb_Parametro_Informe_Sql(Input_Tiempo_Reposicion, "Compras_Asistente",
-    '                                             Input_Tiempo_Reposicion.Name, Class_SQLite.Enum_Type._Double, Input_Tiempo_Reposicion.Value, _Actualizar)
+        If IsNothing(Txt_Padre_Asociacion_Productos.Tag) Then
+            Txt_Padre_Asociacion_Productos.Tag = String.Empty
+        Else
+            Txt_Padre_Asociacion_Productos.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TblArbol_Asociaciones",
+                                              "Descripcion", "Codigo_Nodo = " & Val(Txt_Padre_Asociacion_Productos.Tag))
+        End If
 
-    '    '   Considera Sabado
-    '    _Sql.Sb_Parametro_Informe_Sql(Chk_Sabado, "Compras_Asistente",
-    '                                             Chk_Sabado.Name, Class_SQLite.Enum_Type._Boolean, Chk_Sabado.Checked, _Actualizar)
-    '    '   Considera Domingo
-    '    _Sql.Sb_Parametro_Informe_Sql(Chk_Domingo, "Compras_Asistente",
-    '                                             Chk_Domingo.Name, Class_SQLite.Enum_Type._Boolean, Chk_Domingo.Checked, _Actualizar)
-
-    '    '   Unidad de compra UD1
-    '    _Sql.Sb_Parametro_Informe_Sql(Rdb_Ud1_Compra, "Compras_Asistente",
-    '                                             Rdb_Ud1_Compra.Name, Class_SQLite.Enum_Type._Boolean, Rdb_Ud1_Compra.Checked, _Actualizar)
-    '    '   Unidad de compra UD1
-    '    _Sql.Sb_Parametro_Informe_Sql(Rdb_Ud2_Compra, "Compras_Asistente",
-    '                                             Rdb_Ud2_Compra.Name, Class_SQLite.Enum_Type._Boolean, Rdb_Ud2_Compra.Checked, _Actualizar)
-
-    '    '   Ticket Solo Stock critico
-    '    _Sql.Sb_Parametro_Informe_Sql(Chk_Mostrar_Solo_Stock_Critico, "Compras_Asistente",
-    '                                             Chk_Mostrar_Solo_Stock_Critico.Name, Class_SQLite.Enum_Type._Boolean, Chk_Mostrar_Solo_Stock_Critico.Checked, _Actualizar)
-
-
-    '    '  Redondeo
-    '    _Sql.Sb_Parametro_Informe_Sql(Input_Proyeccion_Redondeo, "Compras_Asistente",
-    '                                             Input_Proyeccion_Redondeo.Name, Class_SQLite.Enum_Type._Double, Input_Proyeccion_Redondeo.Value, _Actualizar)
-
-
-    '    '  Redondeo
-    '    _Sql.Sb_Parametro_Informe_Sql(Txt_Padre_Asociacion_Productos, "Compras_Asistente",
-    '                                             Txt_Padre_Asociacion_Productos.Name, Class_SQLite.Enum_Type._String, Txt_Padre_Asociacion_Productos.Tag, _Actualizar)
-
-    '    Txt_Padre_Asociacion_Productos.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TblArbol_Asociaciones",
-    '                                                            "Descripcion", "Codigo_Nodo = " & Txt_Padre_Asociacion_Productos.Tag)
-
-
-    'End Sub
+    End Sub
 
     Sub Sb_Parametros_Informe_Conf_Local(_Abrir As Boolean)
 
@@ -430,6 +417,10 @@ Public Class Frm_AsisCompra_Proyeccion
 
     Private Sub Btn_Padre_Asociacion_Productos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Padre_Asociacion_Productos.Click
 
+        If Not Fx_Tiene_Permiso(Me, "Comp0099") Then
+            Return
+        End If
+
         Dim _Identificacdor_NodoPadre As Integer
         Dim _Nodo_Raiz_Asociados As Integer = _Global_Row_Configuracion_General.Item("Nodo_Raiz_Asociados")
 
@@ -441,7 +432,7 @@ Public Class Frm_AsisCompra_Proyeccion
         If Fm.Pro_Aceptar Then
 
             Txt_Padre_Asociacion_Productos.Tag = Fm.Pro_Row_Nodo_Seleccionado.Item("Codigo_Nodo")
-            Txt_Padre_Asociacion_Productos.Text = Trim(Fm.Pro_Row_Nodo_Seleccionado.Item("Descripcion"))
+            Txt_Padre_Asociacion_Productos.Text = Fm.Pro_Row_Nodo_Seleccionado.Item("Descripcion").ToString.Trim
 
         End If
         Fm.Dispose()
@@ -449,7 +440,16 @@ Public Class Frm_AsisCompra_Proyeccion
     End Sub
 
     Private Sub Frm_AsisCompra_Proyeccion_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
-        Sb_Parametros_Informe_Conf_Local(False)
+        Sb_Parametros_Informe_Sql(True)
     End Sub
 
+    Private Sub Frm_AsisCompra_Proyeccion_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        If InformeDeComprasAgrupadoporAsociacion Then
+            If MessageBoxEx.Show(Me, "Si cierra el formulario tendrá que recargar nuevamente el estudio del proceso" & vbCrLf & vbCrLf &
+                                 "¿Esta seguro de cerra este formulario?", "Confirmación de cierre de formulario",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Warning) <> DialogResult.Yes Then
+                e.Cancel = True
+            End If
+        End If
+    End Sub
 End Class

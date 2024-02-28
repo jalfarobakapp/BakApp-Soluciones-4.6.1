@@ -28,20 +28,20 @@ Partial Class Frm_Tickets_IngProducto
         Me.Btn_Archivos_Adjuntos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.Txt_Cantidad = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX9 = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_Cantidad = New DevComponents.DotNetBar.LabelX()
         Me.Txt_StfiEnBodega = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX8 = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_StfiEnBodega = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Bodega = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Producto = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Lbl_Producto = New DevComponents.DotNetBar.LabelX()
         Me.Cmb_UdMedida = New DevComponents.DotNetBar.Controls.ComboBoxEx()
-        Me.Lbl_LUnimulti = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_UdMedida = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_FechaRev = New DevComponents.DotNetBar.LabelX()
         Me.Dtp_FechaRev = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.Txt_Diferencia = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_HoraRev = New DevComponents.DotNetBar.LabelX()
         Me.Dtp_HoraRev = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_FechaRev, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -111,19 +111,19 @@ Partial Class Frm_Tickets_IngProducto
         Me.Txt_Cantidad.TabIndex = 174
         Me.Txt_Cantidad.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'LabelX9
+        'Lbl_Cantidad
         '
-        Me.LabelX9.BackColor = System.Drawing.Color.Transparent
+        Me.Lbl_Cantidad.BackColor = System.Drawing.Color.Transparent
         '
         '
         '
-        Me.LabelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX9.ForeColor = System.Drawing.Color.Black
-        Me.LabelX9.Location = New System.Drawing.Point(12, 126)
-        Me.LabelX9.Name = "LabelX9"
-        Me.LabelX9.Size = New System.Drawing.Size(89, 23)
-        Me.LabelX9.TabIndex = 173
-        Me.LabelX9.Text = "Cant. inventariada"
+        Me.Lbl_Cantidad.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Cantidad.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Cantidad.Location = New System.Drawing.Point(12, 126)
+        Me.Lbl_Cantidad.Name = "Lbl_Cantidad"
+        Me.Lbl_Cantidad.Size = New System.Drawing.Size(89, 23)
+        Me.Lbl_Cantidad.TabIndex = 173
+        Me.Lbl_Cantidad.Text = "Stock físico"
         '
         'Txt_StfiEnBodega
         '
@@ -144,19 +144,19 @@ Partial Class Frm_Tickets_IngProducto
         Me.Txt_StfiEnBodega.TabIndex = 172
         Me.Txt_StfiEnBodega.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'LabelX8
+        'Lbl_StfiEnBodega
         '
-        Me.LabelX8.BackColor = System.Drawing.Color.Transparent
+        Me.Lbl_StfiEnBodega.BackColor = System.Drawing.Color.Transparent
         '
         '
         '
-        Me.LabelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX8.ForeColor = System.Drawing.Color.Black
-        Me.LabelX8.Location = New System.Drawing.Point(12, 98)
-        Me.LabelX8.Name = "LabelX8"
-        Me.LabelX8.Size = New System.Drawing.Size(89, 23)
-        Me.LabelX8.TabIndex = 171
-        Me.LabelX8.Text = "Cant. en bodega"
+        Me.Lbl_StfiEnBodega.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_StfiEnBodega.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_StfiEnBodega.Location = New System.Drawing.Point(12, 98)
+        Me.Lbl_StfiEnBodega.Name = "Lbl_StfiEnBodega"
+        Me.Lbl_StfiEnBodega.Size = New System.Drawing.Size(89, 23)
+        Me.Lbl_StfiEnBodega.TabIndex = 171
+        Me.Lbl_StfiEnBodega.Text = "Stock sistema"
         '
         'Txt_Bodega
         '
@@ -241,33 +241,33 @@ Partial Class Frm_Tickets_IngProducto
         Me.Cmb_UdMedida.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Cmb_UdMedida.TabIndex = 178
         '
-        'Lbl_LUnimulti
+        'Lbl_UdMedida
         '
-        Me.Lbl_LUnimulti.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Lbl_LUnimulti.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Lbl_LUnimulti.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_LUnimulti.Location = New System.Drawing.Point(13, 69)
-        Me.Lbl_LUnimulti.Name = "Lbl_LUnimulti"
-        Me.Lbl_LUnimulti.Size = New System.Drawing.Size(40, 23)
-        Me.Lbl_LUnimulti.TabIndex = 177
-        Me.Lbl_LUnimulti.Text = "Unidad"
-        '
-        'LabelX6
-        '
-        Me.LabelX6.BackColor = System.Drawing.Color.Transparent
+        Me.Lbl_UdMedida.BackColor = System.Drawing.Color.Transparent
         '
         '
         '
-        Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX6.ForeColor = System.Drawing.Color.Black
-        Me.LabelX6.Location = New System.Drawing.Point(12, 154)
-        Me.LabelX6.Name = "LabelX6"
-        Me.LabelX6.Size = New System.Drawing.Size(89, 23)
-        Me.LabelX6.TabIndex = 176
-        Me.LabelX6.Text = "Fecha de revisión"
+        Me.Lbl_UdMedida.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_UdMedida.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_UdMedida.Location = New System.Drawing.Point(13, 69)
+        Me.Lbl_UdMedida.Name = "Lbl_UdMedida"
+        Me.Lbl_UdMedida.Size = New System.Drawing.Size(40, 23)
+        Me.Lbl_UdMedida.TabIndex = 177
+        Me.Lbl_UdMedida.Text = "Unidad"
+        '
+        'Lbl_FechaRev
+        '
+        Me.Lbl_FechaRev.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_FechaRev.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_FechaRev.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_FechaRev.Location = New System.Drawing.Point(12, 154)
+        Me.Lbl_FechaRev.Name = "Lbl_FechaRev"
+        Me.Lbl_FechaRev.Size = New System.Drawing.Size(89, 23)
+        Me.Lbl_FechaRev.TabIndex = 176
+        Me.Lbl_FechaRev.Text = "Fecha de revisión"
         '
         'Dtp_FechaRev
         '
@@ -357,19 +357,19 @@ Partial Class Frm_Tickets_IngProducto
         Me.LabelX1.Text = "Diferencia"
         Me.LabelX1.Visible = False
         '
-        'LabelX2
+        'Lbl_HoraRev
         '
-        Me.LabelX2.BackColor = System.Drawing.Color.Transparent
+        Me.Lbl_HoraRev.BackColor = System.Drawing.Color.Transparent
         '
         '
         '
-        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(12, 183)
-        Me.LabelX2.Name = "LabelX2"
-        Me.LabelX2.Size = New System.Drawing.Size(89, 23)
-        Me.LabelX2.TabIndex = 182
-        Me.LabelX2.Text = "Fecha de revisión"
+        Me.Lbl_HoraRev.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_HoraRev.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_HoraRev.Location = New System.Drawing.Point(12, 183)
+        Me.Lbl_HoraRev.Name = "Lbl_HoraRev"
+        Me.Lbl_HoraRev.Size = New System.Drawing.Size(89, 23)
+        Me.Lbl_HoraRev.TabIndex = 182
+        Me.Lbl_HoraRev.Text = "Fecha de revisión"
         '
         'Dtp_HoraRev
         '
@@ -430,21 +430,21 @@ Partial Class Frm_Tickets_IngProducto
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(536, 263)
-        Me.Controls.Add(Me.LabelX2)
+        Me.Controls.Add(Me.Lbl_HoraRev)
         Me.Controls.Add(Me.Dtp_HoraRev)
         Me.Controls.Add(Me.Txt_Diferencia)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Txt_Cantidad)
-        Me.Controls.Add(Me.LabelX9)
+        Me.Controls.Add(Me.Lbl_Cantidad)
         Me.Controls.Add(Me.Txt_StfiEnBodega)
-        Me.Controls.Add(Me.LabelX8)
+        Me.Controls.Add(Me.Lbl_StfiEnBodega)
         Me.Controls.Add(Me.Txt_Bodega)
         Me.Controls.Add(Me.LabelX7)
         Me.Controls.Add(Me.Txt_Producto)
         Me.Controls.Add(Me.Lbl_Producto)
         Me.Controls.Add(Me.Cmb_UdMedida)
-        Me.Controls.Add(Me.Lbl_LUnimulti)
-        Me.Controls.Add(Me.LabelX6)
+        Me.Controls.Add(Me.Lbl_UdMedida)
+        Me.Controls.Add(Me.Lbl_FechaRev)
         Me.Controls.Add(Me.Dtp_FechaRev)
         Me.Controls.Add(Me.Bar2)
         Me.DoubleBuffered = True
@@ -469,19 +469,19 @@ Partial Class Frm_Tickets_IngProducto
     Public WithEvents Btn_Archivos_Adjuntos As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Txt_Cantidad As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents LabelX9 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Lbl_Cantidad As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_StfiEnBodega As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents LabelX8 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Lbl_StfiEnBodega As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_Bodega As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_Producto As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Lbl_Producto As DevComponents.DotNetBar.LabelX
     Public WithEvents Cmb_UdMedida As DevComponents.DotNetBar.Controls.ComboBoxEx
-    Friend WithEvents Lbl_LUnimulti As DevComponents.DotNetBar.LabelX
-    Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Lbl_UdMedida As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Lbl_FechaRev As DevComponents.DotNetBar.LabelX
     Friend WithEvents Dtp_FechaRev As DevComponents.Editors.DateTimeAdv.DateTimeInput
     Friend WithEvents Txt_Diferencia As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Lbl_HoraRev As DevComponents.DotNetBar.LabelX
     Friend WithEvents Dtp_HoraRev As DevComponents.Editors.DateTimeAdv.DateTimeInput
 End Class

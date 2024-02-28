@@ -48,7 +48,7 @@ Public Class Frm_Vales_Listado_Espera
         'Lbl_Impresora.Text = _Fila.Item("Impresora_pred")
         _Tiempo_Actualizacion = _Fila.Item("Segundos_Actualizacion")
 
-        InsertarBotonenGrilla(Grilla, "BtnImagen", "Est", "Imagen", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla, "BtnImagen", "Est", "Imagen", 0, _Tipo_Boton.Imagen)
 
         Sb_Actualizar_Listado(Fx_SQL_Filtro)
 

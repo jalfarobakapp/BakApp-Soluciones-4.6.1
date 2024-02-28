@@ -12,6 +12,8 @@ Public Class Frm_GRI_Ingreso
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_GRI_Ingreso_Load(sender As Object, e As EventArgs) Handles MyBase.Load

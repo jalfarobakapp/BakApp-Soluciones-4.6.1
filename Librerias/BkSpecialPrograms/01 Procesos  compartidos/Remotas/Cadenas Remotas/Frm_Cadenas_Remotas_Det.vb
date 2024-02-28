@@ -46,7 +46,7 @@ Public Class Frm_Cadenas_Remotas_Det
 
     Private Sub Frm_Cadenas_Remotas_Det_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        InsertarBotonenGrilla(Grilla, "BtnImagen", "Est.", "Img_Estado", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla, "BtnImagen", "Est.", "Img_Estado", 0, _Tipo_Boton.Imagen)
         Sb_Acualizar_Grilla()
 
         AddHandler Grilla.CellEnter, AddressOf Sb_Grilla_CellEnter

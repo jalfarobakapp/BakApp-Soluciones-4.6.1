@@ -136,6 +136,7 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Entidades", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Entidad_Cia_Seguros", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Entidades_ProdExcluidos", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Entidades_ProdMinCompra", _Modificar, Lbl_Eventos)
 
             'CNFIGURACION DE ESTACIONES DE TRABAJO
             .Sb_Revisar_Tabla2(Me, "Zw_Estaciones_Poswi", _Modificar, Lbl_Eventos)

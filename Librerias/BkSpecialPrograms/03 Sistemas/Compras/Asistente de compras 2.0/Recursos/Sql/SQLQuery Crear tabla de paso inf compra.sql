@@ -76,6 +76,7 @@ CREATE TABLE [dbo].[#TablaPaso#](
 	[Stock_ProyectadoUd2_Rd]    [Float]        DEFAULT (0),
 	[TStock]                    [Float]        DEFAULT (0),
 	[CantComprar]               [Float]        DEFAULT (0),
+	[CantComprarOri]            [Float]        DEFAULT (0),
 	[DiasdeAvas_Rd]             [Float]        DEFAULT (0),
 	[MesesAvas_Rd]              [Float]        DEFAULT (0),
 	[Dias_Avastecer]            [Float]        DEFAULT (0),
@@ -188,7 +189,9 @@ CREATE TABLE [dbo].[#TablaPaso#](
     [StockUd2BodStar]           [Float]        DEFAULT (0),
     [ProductoExcluido]          [Bit]          DEFAULT (0),
     [NoComprarProvNoTiene]      [Bit]          DEFAULT (0),
-
+    [UdCompra]                  [Int]          DEFAULT (0),
+    [MultiploCompra]            [Float]        DEFAULT (0),
+    [CantComprarMinXProv]       [Float]        DEFAULT (0),
 	CONSTRAInt [PK_Zw_#TablaPaso#_Codigo] PRIMARY KEY CLUSTERED 
 (
 	[Codigo] ASC,

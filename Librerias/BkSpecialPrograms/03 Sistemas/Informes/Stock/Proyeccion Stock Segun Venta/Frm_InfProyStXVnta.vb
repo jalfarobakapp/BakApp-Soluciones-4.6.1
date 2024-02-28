@@ -357,7 +357,10 @@ Public Class Frm_InfProyStXVnta
     End Sub
 
     Private Sub Btn_Excel_Click(sender As Object, e As EventArgs) Handles Btn_Excel.Click
-        MessageBoxEx.Show(Me, "En Construcción...", "Bakapp", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        'MessageBoxEx.Show(Me, "En Construcción...", "Bakapp", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+
+        ExportarTabla_JetExcel_Tabla(_Tbl_Informe, Me, "Informe proyeccion")
+
     End Sub
 
     Private Sub Btn_Bodega_Vta_Estudio_Click(sender As Object, e As EventArgs) Handles Btn_Bodega_Vta_Estudio.Click

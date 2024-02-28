@@ -22,15 +22,20 @@ Partial Class Frm_GRI_ProductosOT
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_GRI_ProductosOT))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_GRI_ProductosOT))
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
+        Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Fabricar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_CrearOTExtra = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel4.SuspendLayout()
+        CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -39,11 +44,12 @@ Partial Class Frm_GRI_ProductosOT
         '
         Me.GroupPanel4.BackColor = System.Drawing.Color.White
         Me.GroupPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel4.Controls.Add(Me.Menu_Contextual)
         Me.GroupPanel4.Controls.Add(Me.Grilla)
         Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel4.Location = New System.Drawing.Point(12, 12)
         Me.GroupPanel4.Name = "GroupPanel4"
-        Me.GroupPanel4.Size = New System.Drawing.Size(812, 298)
+        Me.GroupPanel4.Size = New System.Drawing.Size(909, 298)
         '
         '
         '
@@ -74,6 +80,41 @@ Partial Class Frm_GRI_ProductosOT
         Me.GroupPanel4.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel4.TabIndex = 98
         Me.GroupPanel4.Text = "Seleccione ocn doble clic"
+        '
+        'Menu_Contextual
+        '
+        Me.Menu_Contextual.AntiAlias = True
+        Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
+        Me.Menu_Contextual.Location = New System.Drawing.Point(239, 125)
+        Me.Menu_Contextual.Name = "Menu_Contextual"
+        Me.Menu_Contextual.Size = New System.Drawing.Size(329, 25)
+        Me.Menu_Contextual.Stretch = True
+        Me.Menu_Contextual.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Menu_Contextual.TabIndex = 56
+        Me.Menu_Contextual.TabStop = False
+        Me.Menu_Contextual.Text = "ContextMenuBar1"
+        '
+        'Menu_Contextual_01
+        '
+        Me.Menu_Contextual_01.AutoExpandOnClick = True
+        Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Fabricar, Me.Btn_CrearOTExtra})
+        Me.Menu_Contextual_01.Text = "Opciones"
+        '
+        'Btn_Fabricar
+        '
+        Me.Btn_Fabricar.Image = CType(resources.GetObject("Btn_Fabricar.Image"), System.Drawing.Image)
+        Me.Btn_Fabricar.ImageAlt = CType(resources.GetObject("Btn_Fabricar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Fabricar.Name = "Btn_Fabricar"
+        Me.Btn_Fabricar.Text = "Seleccionar producto para fabricar"
+        '
+        'Btn_CrearOTExtra
+        '
+        Me.Btn_CrearOTExtra.Image = CType(resources.GetObject("Btn_CrearOTExtra.Image"), System.Drawing.Image)
+        Me.Btn_CrearOTExtra.ImageAlt = CType(resources.GetObject("Btn_CrearOTExtra.ImageAlt"), System.Drawing.Image)
+        Me.Btn_CrearOTExtra.Name = "Btn_CrearOTExtra"
+        Me.Btn_CrearOTExtra.Text = "Crear OT Extra a partir de este producto"
         '
         'Grilla
         '
@@ -112,7 +153,7 @@ Partial Class Frm_GRI_ProductosOT
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla.Size = New System.Drawing.Size(806, 275)
+        Me.Grilla.Size = New System.Drawing.Size(903, 275)
         Me.Grilla.TabIndex = 1
         '
         'Bar1
@@ -123,7 +164,7 @@ Partial Class Frm_GRI_ProductosOT
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
         Me.Bar1.Location = New System.Drawing.Point(0, 325)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(836, 41)
+        Me.Bar1.Size = New System.Drawing.Size(933, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 99
@@ -143,11 +184,12 @@ Partial Class Frm_GRI_ProductosOT
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(836, 366)
+        Me.ClientSize = New System.Drawing.Size(933, 366)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.GroupPanel4)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
@@ -157,6 +199,7 @@ Partial Class Frm_GRI_ProductosOT
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MetroForm"
         Me.GroupPanel4.ResumeLayout(False)
+        CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -167,4 +210,8 @@ Partial Class Frm_GRI_ProductosOT
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Public WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Menu_Contextual As DevComponents.DotNetBar.ContextMenuBar
+    Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_CrearOTExtra As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Fabricar As DevComponents.DotNetBar.ButtonItem
 End Class

@@ -66,7 +66,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         Get
             Return _Proyeccion
         End Get
-        Set(ByVal value As Enum_Proyeccion)
+        Set(value As Enum_Proyeccion)
             _Proyeccion = value
         End Set
     End Property
@@ -74,22 +74,22 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         Get
             Return Input_Redondeo.Value
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             Input_Redondeo.Value = value
         End Set
     End Property
 
-    Public Sub New(ByVal Tabla_Paso As String,
-                   ByVal Identificador_NodoPadre As String,
-                   ByVal Ud As Integer,
-                   ByVal Filtro_Nodos As String,
-                   ByVal Porc_Creciminto As Integer,
-                   ByVal Dias_Proyeccion As Integer,
-                   ByVal Marca_Proyeccion As Integer,
-                   ByVal Dias_Abastecer As Integer,
-                   ByVal Campos As Integer,
-                   ByVal RotCalculo As String,
-                   ByVal Sql_Consulta_Actualiza_Stock As String,
+    Public Sub New(Tabla_Paso As String,
+                   Identificador_NodoPadre As String,
+                   Ud As Integer,
+                   Filtro_Nodos As String,
+                   Porc_Creciminto As Integer,
+                   Dias_Proyeccion As Integer,
+                   Marca_Proyeccion As Integer,
+                   Dias_Abastecer As Integer,
+                   Campos As Integer,
+                   RotCalculo As String,
+                   Sql_Consulta_Actualiza_Stock As String,
                    ByRef Clas_Asistente_Compras As Clas_Asistente_Compras)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -118,7 +118,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     End Sub
 
-    Private Sub Frm_AsisCompra_Proyeccion_Informe_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+    Private Sub Frm_AsisCompra_Proyeccion_Informe_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
                        "Where Codigo_Nodo = " & _Identificador_NodoPadre
@@ -261,7 +261,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     End Sub
 
-    Sub Sb_Marcar_Super_Grilla(ByVal _Grilla As GridPanel)
+    Sub Sb_Marcar_Super_Grilla(_Grilla As GridPanel)
 
         _Fecha_Servidor = FormatDateTime(FechaDelServidor(), DateFormat.ShortDate)
 
@@ -602,11 +602,11 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     End Sub
 
-    Private Sub Btn_Actualizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Actualizar.Click
+    Private Sub Btn_Actualizar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Actualizar.Click
         Sb_Actualizar_SuperGrid()
     End Sub
 
-    Sub Sb_Revisar_Info_Producto(ByVal _Fila As Object)
+    Sub Sb_Revisar_Info_Producto(_Fila As Object)
 
         Dim _FilTro_Nodos = "(" & _Fila.Cells("Codigo_Nodo").Value & ")"
 
@@ -656,11 +656,11 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     End Sub
 
-    Private Sub Btn_Exportar_Excel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_Excel.Click
+    Private Sub Btn_Exportar_Excel_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Exportar_Excel.Click
         ExportarTabla_JetExcel_Tabla(_TblInforme, Me, "Proyección Compras")
     End Sub
 
-    Private Sub Btn_Informe_Proximas_Recepciones_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Informe_Proximas_Recepciones.Click
+    Private Sub Btn_Informe_Proximas_Recepciones_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informe_Proximas_Recepciones.Click
         If Fx_Tiene_Permiso(Me, "Inc00003") Then
             Dim Fm As New Frm_Informe_Proximas_Recepiones
             Fm.ShowDialog(Me)
@@ -668,7 +668,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         End If
     End Sub
 
-    Private Sub Sb_Grilla_ColumnHeaderMouseClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellMouseEventArgs)
+    Private Sub Sb_Grilla_ColumnHeaderMouseClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs)
         Try
             Me.Enabled = False
             Me.Cursor = Cursors.WaitCursor
@@ -682,7 +682,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     End Sub
 
-    Private Sub Btn_Estadisticas_Producto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Estadisticas_Producto.Click
+    Private Sub Btn_Estadisticas_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Estadisticas_Producto.Click
 
         'Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
@@ -745,7 +745,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     End Sub
 
-    Private Sub Btn_Actualizar_Rotacion_Producto_Actual_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Actualizar_Rotacion_Producto_Actual.Click
+    Private Sub Btn_Actualizar_Rotacion_Producto_Actual_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Actualizar_Rotacion_Producto_Actual.Click
 
         Dim _Fila As GridRow = TryCast(Super_Grilla.ActiveRow, GridRow)
 
@@ -775,7 +775,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     End Sub
 
-    Private Sub Btn_Infor_Rotacion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Infor_Rotacion.Click
+    Private Sub Btn_Infor_Rotacion_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Infor_Rotacion.Click
 
         'Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
@@ -790,7 +790,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     End Sub
 
-    Private Sub Btn_Ver_documento_origen_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ver_documento_origen.Click
+    Private Sub Btn_Ver_documento_origen_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_documento_origen.Click
         'Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
         If _HitColumn.IsSelected = True Then
@@ -808,7 +808,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     End Sub
 
-    Private Sub SuperGridControl1CellValueChanged(ByVal sender As Object, ByVal e As GridCellValueChangedEventArgs)
+    Private Sub SuperGridControl1CellValueChanged(sender As Object, e As GridCellValueChangedEventArgs)
         Dim panel As GridPanel = e.GridPanel
 
         'Si el valor de una celda en el panel' Detalles del pedido 'ha cambiado
@@ -819,10 +819,10 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         End If
     End Sub
 
-    Private Sub UpdateDetailsFooter(ByVal panel As GridPanel,
-                                    ByVal _CNeto As String,
-                                    ByVal _CIva As String,
-                                    ByVal _CTotal As String)
+    Private Sub UpdateDetailsFooter(panel As GridPanel,
+                                    _CNeto As String,
+                                    _CIva As String,
+                                    _CTotal As String)
         If panel.Footer Is Nothing Then
             panel.Footer = New GridFooter()
         End If
@@ -841,8 +841,8 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         panel.Footer.Text = _Pie_Pag 'String.Format("Total sales <font color=""Green""><i>{0:C}</i></font>", _Total_Neto)
     End Sub
 
-    Private Function TotalRows(ByVal rows As IEnumerable(Of GridElement),
-                               ByVal _Campo As String) As Double
+    Private Function TotalRows(rows As IEnumerable(Of GridElement),
+                               _Campo As String) As Double
         Dim total As Decimal = 0
 
         For Each item As GridContainer In rows
@@ -873,7 +873,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     End Function
 
-    Private Function Fx_Tbl_Occ_Fcc(ByVal _CodigoNodo As String, ByVal _Tido As String) As DataTable
+    Private Function Fx_Tbl_Occ_Fcc(_CodigoNodo As String, _Tido As String) As DataTable
 
         Consulta_sql = "Select KOPRCT As Codigo,IDMAEEDO,TIDO,NUDO,ENDO,SUENDO,(Select Top 1 NOKOEN From MAEEN Where KOEN+SUEN = ENDO+SUENDO) As Razon," &
                           "UD01PR,CAPRCO1,CAPREX1,(CAPRCO1-(CAPRAD1+CAPREX1)) As Saldo, FEERLI " &
@@ -886,7 +886,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     End Function
 
-    Private Sub SuperGridControl1GetCellStyle(ByVal sender As Object, ByVal e As GridGetCellStyleEventArgs)
+    Private Sub SuperGridControl1GetCellStyle(sender As Object, e As GridGetCellStyleEventArgs)
 
         Dim _Grilla As GridPanel = e.GridPanel
 
@@ -1054,7 +1054,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     End Sub
 
-    Sub Sb_Ocultar_encabezados_Super_Grilla(ByVal _Grilla As GridPanel)
+    Sub Sb_Ocultar_encabezados_Super_Grilla(_Grilla As GridPanel)
 
         With _Grilla
 
@@ -1095,7 +1095,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     End Sub
 
-    Private Sub SuperGridControl1DataBindingComplete(ByVal sender As Object, ByVal e As GridDataBindingCompleteEventArgs)
+    Private Sub SuperGridControl1DataBindingComplete(sender As Object, e As GridDataBindingCompleteEventArgs)
 
         Dim panel As GridPanel = e.GridPanel
 
@@ -1117,7 +1117,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     End Sub
 
-    Private Sub SuperGridControl1SelectionChanged(ByVal sender As Object, ByVal e As GridEventArgs)
+    Private Sub SuperGridControl1SelectionChanged(sender As Object, e As GridEventArgs)
 
         Dim panel As GridPanel = e.GridPanel 'superGridControl1.PrimaryGrid
         Dim items As SelectedElementCollection = panel.GetSelectedElements()
@@ -1138,7 +1138,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         ' TbxCellText.Text = s
     End Sub
 
-    Sub Sb_Formato_Grilla_Asociados(ByVal _Grilla As GridPanel)
+    Sub Sb_Formato_Grilla_Asociados(_Grilla As GridPanel)
 
         Dim _Duracion As String
         Dim _Campos As Integer
@@ -1444,7 +1444,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     End Sub
 
-    Sub Sb_Formato_Grilla_Productos(ByVal _Grilla As GridPanel)
+    Sub Sb_Formato_Grilla_Productos(_Grilla As GridPanel)
 
         Dim _Duracion As String
         Dim _Campos As Integer
@@ -1574,7 +1574,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     End Sub
 
-    Sub Sb_Formato_Grilla_Documentos(ByVal _Grilla As GridPanel)
+    Sub Sb_Formato_Grilla_Documentos(_Grilla As GridPanel)
 
         Dim _Duracion As String
         Dim _Campos As Integer
@@ -1673,7 +1673,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     End Sub
 
-    Private Sub Super_Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As DevComponents.DotNetBar.SuperGrid.GridCellDoubleClickEventArgs) Handles Super_Grilla.CellDoubleClick
+    Private Sub Super_Grilla_CellDoubleClick(sender As System.Object, e As DevComponents.DotNetBar.SuperGrid.GridCellDoubleClickEventArgs) Handles Super_Grilla.CellDoubleClick
 
         _Panel_Activo = CType(sender, SuperGridControl).ActiveGrid
 
@@ -1705,7 +1705,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     End Sub
 
-    Private Sub Super_Grilla_CellMouseDown(ByVal sender As System.Object, ByVal e As DevComponents.DotNetBar.SuperGrid.GridCellMouseEventArgs) Handles Super_Grilla.CellMouseDown
+    Private Sub Super_Grilla_CellMouseDown(sender As System.Object, e As DevComponents.DotNetBar.SuperGrid.GridCellMouseEventArgs) Handles Super_Grilla.CellMouseDown
 
         If e.Button = Windows.Forms.MouseButtons.Right Then
             _Panel_Activo = CType(sender, SuperGridControl).ActiveGrid

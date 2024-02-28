@@ -1,5 +1,7 @@
 ﻿Imports System.IO
 Imports DevComponents.DotNetBar
+Imports MySql.Data.Authentication
+Imports Org.BouncyCastle.Math.EC
 
 Public Class Frm_Libro_Compras_Ventas
 
@@ -169,7 +171,7 @@ Public Class Frm_Libro_Compras_Ventas
 
             Dim _Descripcion As String = RTrim$(Txt_Descripcion.Text)
 
-            Dim _Cadena_SII As String = CADENA_A_BUSCAR(_Descripcion, "Tido+Nudo+Endo+Libro+Rut_Proveedor+Razon_Social+Folio+STR(Monto_Total) LIKE '%")
+            Dim _Cadena_SII As String = CADENA_A_BUSCAR(_Descripcion, "Tido+Nudo+Endo+Libro+Rut_Proveedor+Razon_Social+Cmp.Folio+STR(Monto_Total) LIKE '%")
 
             Dim _Filtro_SII As String = "And Tido+Nudo+Endo+Libro+Rut_Proveedor+Razon_Social+Cmp.Folio+STR(Monto_Total) LIKE '%" & _Cadena_SII & "%'"
 
@@ -1268,24 +1270,65 @@ Public Class Frm_Libro_Compras_Ventas
 
         Me.Cursor = Cursors.WaitCursor
         Me.Enabled = False
+        Dim _Caption As String = "Error!"
 
-        For Each _Fila As DataRow In _Inf_03_SII_Random_Otro_Mes.Rows
+        Try
 
-            Dim _Idmaeedo = _Fila.Item("IDMAEEDO")
-            Sb_Cambiar_Al_Libro_De_Compras(_Idmaeedo, _Libro)
+            Dim _Filtro_Idmaeedo As String = Generar_Filtro_IN(_Inf_03_SII_Random_Otro_Mes, "", "Idmaeedo", True, False)
 
-        Next
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("MAEEDO", "IDMAEEDO In " & _Filtro_Idmaeedo)
 
-        Sb_Actualizar_Grillas(0)
-        Tab.SelectedTabIndex = 0
-        Sb_Refrescar_Grillas()
+            If _Reg < _Inf_03_SII_Random_Otro_Mes.Rows.Count Then
+                _Caption = "Validación"
+                Throw New System.Exception("Existen documentos que fueron eliminados y vueltos ingresar al sistema." & vbCrLf &
+                                      "Debe volver a ejecutar el importador de compras de documentos para este mes.")
 
-        Me.Enabled = True
-        Me.Cursor = Cursors.Default
+            End If
 
-        MessageBoxEx.Show(Me, "Los documentos se ingresaron al final del libro del periodo: " & _Periodo & "-" & _Mes,
-                          "Cambiar documentos de libro", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            For Each _Fila As DataRow In _Inf_03_SII_Random_Otro_Mes.Rows
 
+                Dim _Idmaeedo = _Fila.Item("IDMAEEDO")
+                Dim _Tido = _Fila.Item("Tido")
+                Dim _Nudo = _Fila.Item("Nudo")
+
+                Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
+                Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                If IsNothing(_Row_Documento) Then
+
+                    _Caption = "Validación"
+
+                    Throw New System.Exception("El documento " & _Tido & " - " & _Nudo & vbCrLf &
+                                      "No se encontro en la base de datos, vuelva a ejecutar el importador de documentos para este mes" & vbCrLf &
+                                      "El motivo puede ser que el documento se elimino y se volvio a ingresar al sistema nuevamente.")
+
+                    'MessageBoxEx.Show(Me, "El documento " & _Tido & " - " & _Nudo & vbCrLf &
+                    '                  "No se encontro en la base de datos, vuelva a ejecutar el importador de documentos para este mes" & vbCrLf &
+                    '                  "El motivo puede ser que el documento se elimino y se volvio a ingresar al sistema nuevamente.",
+                    '                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    'Me.Cursor = Cursors.WaitCursor
+                    'Me.Enabled = True
+                    'Return
+                End If
+
+                Sb_Cambiar_Al_Libro_De_Compras(_Idmaeedo, _Libro)
+
+            Next
+
+            Sb_Actualizar_Grillas(0)
+            Tab.SelectedTabIndex = 0
+            Sb_Refrescar_Grillas()
+
+            MessageBoxEx.Show(Me, "Los documentos se ingresaron al final del libro del periodo: " & _Periodo & "-" & _Mes,
+                              "Cambiar documentos de libro", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, _Caption, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        Finally
+            Me.Enabled = True
+            Me.Cursor = Cursors.Default
+        End Try
 
     End Sub
 
@@ -1293,6 +1336,15 @@ Public Class Frm_Libro_Compras_Ventas
 
         Dim _LibroEdo As String = _Sql.Fx_Trae_Dato("MAEEDO", "LIBRO", "IDMAEEDO = " & _Idmaeedo)
         Dim _SucLibro As String = Mid(_LibroEdo, 7, 3)
+
+        Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
+        Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row_Documento) Then
+            Return
+        End If
+
+        _SucLibro = _Row_Documento.Item("SUDO")
 
         Dim _Ult_Libro = _Sql.Fx_Trae_Dato("MAEEDO", "MAX(LIBRO)", "LIBRO LIKE '" & _Libro & "%' And LIBRO LIKE '%" & _SucLibro & "%'")
 

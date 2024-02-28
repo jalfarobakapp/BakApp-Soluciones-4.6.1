@@ -47,7 +47,7 @@ Public Class Frm_Demonio_05_FunConecExt
 
         Me.Text = "Servidor de impresiones: " & _NombreEquipo
 
-        InsertarBotonenGrilla(Grilla, "BtnImagen", "Est.", "Estado", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla, "BtnImagen", "Est.", "Estado", 0, _Tipo_Boton.Imagen)
         Sb_Actualizar_Grilla()
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint

@@ -257,6 +257,7 @@ Public Class Frm_Crear_Entidad_Mt
 
         Chk_Libera_NVV.Visible = _Existe_Tbl_Entidades_Bakapp
         Btn_ProductosExcluidos.Visible = False
+        Btn_ProdCanMinCompra.Visible = False
 
         If _Crear_Entidad Then
 
@@ -298,6 +299,10 @@ Public Class Frm_Crear_Entidad_Mt
 
             If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Entidades_ProdExcluidos") Then
                 Btn_ProductosExcluidos.Visible = True
+            End If
+
+            If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Entidades_ProdMinCompra") Then
+                Btn_ProdCanMinCompra.Visible = True
             End If
 
         End If
@@ -2363,6 +2368,14 @@ Public Class Frm_Crear_Entidad_Mt
     Private Sub Btn_ProductosExcluidos_Click(sender As Object, e As EventArgs) Handles Btn_ProductosExcluidos.Click
 
         Dim Fm As New Frm_Crear_Entidad_Mt_ProdExcluidosCompra(TxtxCodEntidad.Text, TxtxSucursal.Text)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_ProdCanMinCompra_Click(sender As Object, e As EventArgs) Handles Btn_ProdCanMinCompra.Click
+
+        Dim Fm As New Frm_Crear_Entidad_Mt_ProdCanMinXProv(TxtxCodEntidad.Text, TxtxSucursal.Text)
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

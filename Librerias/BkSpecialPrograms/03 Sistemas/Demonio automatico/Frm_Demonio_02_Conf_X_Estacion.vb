@@ -189,7 +189,7 @@ Public Class Frm_Demonio_02_Conf_X_Estacion
 
             End With
 
-            InsertarBotonenGrilla(Grilla, "Btn_Fl_Func", "Configuración ...", "Filtro Funcionarios", 7, _Tipo_Boton.Boton)
+            Sb_InsertarBotonenGrilla(Grilla, "Btn_Fl_Func", "Configuración ...", "Filtro Funcionarios", 7, _Tipo_Boton.Boton)
 
         Catch ex As Exception
             MsgBox(ex.Message)

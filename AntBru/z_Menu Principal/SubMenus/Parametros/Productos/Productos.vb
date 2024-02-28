@@ -278,4 +278,12 @@ Public Class Productos
         End If
 
     End Sub
+
+    Private Sub Btn_Multiplos_Click(sender As Object, e As EventArgs) Handles Btn_Multiplos.Click
+
+        Dim Fm As New Frm_Crear_Entidad_Mt_ProdCanMinXProv("", "")
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class

@@ -118,6 +118,7 @@ Public Class Frm_00_Asis_Compra_Menu
         AddHandler Rdb_Productos_Seleccionar.CheckedChanged, AddressOf Sb_Habilitar_Deshabilitar_RDB
         AddHandler Rdb_Productos_Todos.CheckedChanged, AddressOf Sb_Habilitar_Deshabilitar_RDB
         AddHandler Rdb_Productos_Vendidos_Los_Ultimos_Dias.CheckedChanged, AddressOf Sb_Habilitar_Deshabilitar_RDB
+        AddHandler Rdb_Productos_Clasificacion.CheckedChanged, AddressOf Sb_Habilitar_Deshabilitar_RDB
 
         Sb_Habilitar_Deshabilitar_RDB()
         Input_Productos_Ranking.MaxValue = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Ranking", "")
@@ -157,6 +158,15 @@ Public Class Frm_00_Asis_Compra_Menu
 
         _Filtro_Productos_Todos = True
         Btn_GrabarConfiguracion.Visible = _Modo_ConfAuto
+
+        Rdb_Productos_Clasificacion.Enabled = CBool(_Global_Row_Configuracion_General.Item("Nodo_Raiz_Asociados"))
+        Chk_InformeDeComprasAgrupadoporAsociacion.Visible = Rdb_Productos_Clasificacion.Enabled
+
+        STabConfiguracion.Enabled = Sw_BlocConfiguracion.Value
+        Grupo_Productos.Enabled = Sw_BlocConfiguracion.Value
+        Chk_Procesar_Uno_A_Uno.Enabled = Sw_BlocConfiguracion.Value
+
+        AddHandler Sw_BlocConfiguracion.ValueChanged, AddressOf Sw_BlocConfiguracion_ValueChanged
 
     End Sub
 
@@ -456,8 +466,6 @@ Public Class Frm_00_Asis_Compra_Menu
         _Sql.Sb_Parametro_Informe_Sql(Rdb_Productos_Todos, "Compras_Asistente", Rdb_Productos_Todos.Name,
                                       Class_SQLite.Enum_Type._Boolean, Rdb_Productos_Todos.Checked, _Actualizar, "Seleccion_Productos")
 
-        'Rdb_Productos_Todos.Checked = CBool(_Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", Rdb_Productos_Todos.Name, "Valor", True))
-        '   Vendidos los ultimos, 7, 30 ,60 dias. etc
         _Sql.Sb_Parametro_Informe_Sql(Rdb_Productos_Vendidos_Los_Ultimos_Dias, "Compras_Asistente",
                                       Rdb_Productos_Vendidos_Los_Ultimos_Dias.Name,
                                       Class_SQLite.Enum_Type._Boolean, Rdb_Productos_Vendidos_Los_Ultimos_Dias.Checked, _Actualizar, "Seleccion_Productos")
@@ -475,6 +483,27 @@ Public Class Frm_00_Asis_Compra_Menu
         '   Seleccionar productos
         _Sql.Sb_Parametro_Informe_Sql(Rdb_Productos_Seleccionar, "Compras_Asistente",
                                              Rdb_Productos_Seleccionar.Name, Class_SQLite.Enum_Type._Boolean, Rdb_Productos_Seleccionar.Checked, _Actualizar, "Seleccion_Productos")
+
+        '   Seleccionar productos Clasificación especial Bakapp
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_Productos_Clasificacion, "Compras_Asistente",
+                                      Rdb_Productos_Clasificacion.Name, Class_SQLite.Enum_Type._Boolean, Rdb_Productos_Clasificacion.Checked, _Actualizar, "Seleccion_Productos")
+
+        _Sql.Sb_Parametro_Informe_Sql(Txt_Padre_Asociacion_Productos, "Compras_Asistente",
+                                      Txt_Padre_Asociacion_Productos.Name, Class_SQLite.Enum_Type._Tag,
+                                      Txt_Padre_Asociacion_Productos.Tag, _Actualizar)
+
+        ' Ejecutar Informe De Compras Agrupadopor Asociacion automáticamente
+        _Sql.Sb_Parametro_Informe_Sql(Chk_InformeDeComprasAgrupadoporAsociacion, "Compras_Asistente",
+                                      Chk_InformeDeComprasAgrupadoporAsociacion.Name, Class_SQLite.Enum_Type._Boolean, Chk_InformeDeComprasAgrupadoporAsociacion.Checked, _Actualizar, "Seleccion_Productos")
+
+
+
+        If IsNothing(Txt_Padre_Asociacion_Productos.Tag) Then
+            Txt_Padre_Asociacion_Productos.Tag = String.Empty
+        Else
+            Txt_Padre_Asociacion_Productos.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TblArbol_Asociaciones",
+                                              "Descripcion", "Codigo_Nodo = " & Val(Txt_Padre_Asociacion_Productos.Tag))
+        End If
 
         '   Seleccionar productos por familias, marcas, etc...
         _Sql.Sb_Parametro_Informe_Sql(Rdb_Productos_Familias_Marcas_Etc, "Compras_Asistente",
@@ -1008,6 +1037,18 @@ Public Class Frm_00_Asis_Compra_Menu
         _Sql.Sb_Parametro_Informe_Sql(Chk_IncluirProdRefleoNVI, "Compras_Asistente",
                                       Chk_IncluirProdRefleoNVI.Name, Class_SQLite.Enum_Type._Boolean, Chk_IncluirProdRefleoNVI.Checked, _Actualizar)
 
+        ' Chek para marcar o no marcar filas
+        _Sql.Sb_Parametro_Informe_Sql(Chk_MarcarFilas, "Compras_Asistente",
+                                      Chk_MarcarFilas.Name, Class_SQLite.Enum_Type._Boolean, True, _Actualizar)
+
+
+        ' Chek para marcar o no marcar filas
+        _Sql.Sb_Parametro_Informe_Sql(Sw_BlocConfiguracion, "Compras_Asistente",
+                                      Sw_BlocConfiguracion.Name, Class_SQLite.Enum_Type._Switch, True, _Actualizar)
+
+        ' Chek dejar las cantidades multiplos a comprar por proveedores
+        _Sql.Sb_Parametro_Informe_Sql(Chk_CompMinXProveedores, "Compras_Asistente",
+                                      Chk_CompMinXProveedores.Name, Class_SQLite.Enum_Type._Switch, Chk_CompMinXProveedores.Checked, _Actualizar)
 
     End Sub
 
@@ -2277,6 +2318,10 @@ Public Class Frm_00_Asis_Compra_Menu
             MessageBoxEx.Show(Me, "No existe información", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
 
+        STabConfiguracion.Enabled = Sw_BlocConfiguracion.Value
+        Grupo_Productos.Enabled = Sw_BlocConfiguracion.Value
+        Chk_Procesar_Uno_A_Uno.Enabled = Sw_BlocConfiguracion.Value
+
     End Sub
 
     Sub Sb_Procesar_Informe(_Filtro_Productos As String)
@@ -2409,6 +2454,10 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Modo_NVI = _Modo_NVI
 
         Fm.Chk_QuitarProdExcluidos.Checked = Chk_QuitarProdExcluidos.Checked
+        Fm.Chk_MarcarFilas.Checked = Chk_MarcarFilas.Checked
+        Fm.InformeDeComprasAgrupadoporAsociacion = Chk_InformeDeComprasAgrupadoporAsociacion.Checked
+
+        Fm.Chk_CompMinXProveedores.Checked = Chk_CompMinXProveedores.Checked
 
         Fm.ShowDialog(Me)
         Fm.Dispose()
@@ -2535,6 +2584,10 @@ Public Class Frm_00_Asis_Compra_Menu
 
             BtnSeleccionarProductos.Enabled = True
 
+        ElseIf Rdb_Productos_Clasificacion.Checked Then
+
+            Txt_Padre_Asociacion_Productos.Enabled = True
+
         ElseIf Rdb_Productos_Familias_Marcas_Etc.Checked Then
 
             Btn_Seleccionar_Productos_X_Clasificacion_RD.Enabled = True
@@ -2629,6 +2682,8 @@ Public Class Frm_00_Asis_Compra_Menu
         Input_Productos_Ranking.Enabled = _Habilitar
 
         BtnSeleccionarProductos.Enabled = _Habilitar
+        Txt_Padre_Asociacion_Productos.Enabled = _Habilitar
+
         Btn_Seleccionar_Productos_X_Clasificacion_RD.Enabled = _Habilitar
         Btn_Filtrar_ProdProveedor.Enabled = _Habilitar
 
@@ -2657,6 +2712,9 @@ Public Class Frm_00_Asis_Compra_Menu
     End Function
 
     Function Fx_Traer_Productos() As DataTable
+
+        Dim _Tbl As DataTable
+        Dim _Caption As String = "Transaccion desecha"
 
         Try
 
@@ -2705,15 +2763,24 @@ Public Class Frm_00_Asis_Compra_Menu
             ElseIf Rdb_Productos_Seleccionar.Checked Then
 
                 If (_TblFiltroProductos Is Nothing) Or _TblFiltroProductos.Rows.Count = 0 Then
-                    MessageBoxEx.Show(Me, "Esta marcada la opción [Seleccionar productos]." & vbCrLf &
-                                      "No se selecciono ningún producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    Return Nothing
+                    _Caption = "Validación"
+                    Throw New System.Exception("Esta marcada la opción [Seleccionar productos]." & vbCrLf &
+                                               "No se selecciono ningún producto")
                 End If
 
                 _Filtro_Productos = Generar_Filtro_IN(_TblFiltroProductos, "", "Codigo", False, False, "'")
 
                 Consulta_sql = "Select KOPR From MAEPR Where KOPR In " & _Filtro_Productos & vbCrLf
 
+
+            ElseIf Rdb_Productos_Clasificacion.Checked Then
+
+                If String.IsNullOrEmpty(Txt_Padre_Asociacion_Productos.Text.Trim) Then
+                    _Caption = "Validación"
+                    Throw New System.Exception("Falta seleccionar la clasificación")
+                End If
+
+                Consulta_sql = "Select KOPR From MAEPR Where KOPR In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo_Nodo = " & Txt_Padre_Asociacion_Productos.Tag & ")" & vbCrLf
 
             ElseIf Rdb_Productos_Ranking.Checked Then
 
@@ -2725,9 +2792,8 @@ Public Class Frm_00_Asis_Compra_Menu
             ElseIf Rdb_Productos_Proveedor.Checked Then
 
                 If (_RowProveedor Is Nothing) Then
-                    MessageBoxEx.Show(Me, "Falta seleccionar al proveedor", "Validación",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    Return Nothing
+                    _Caption = "Validación"
+                    Throw New System.Exception("Falta seleccionar al proveedor")
                 End If
 
                 Dim _Endo As String = _RowProveedor.Item("KOEN")
@@ -2852,7 +2918,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
             Consulta_sql += vbCrLf & "And TIPR In ('FPN','FIN')"
 
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
 
             Dim _Count = _Tbl.Rows.Count
 
@@ -2860,15 +2926,11 @@ Public Class Frm_00_Asis_Compra_Menu
                 _Tbl = Nothing
             End If
 
-            Return _Tbl
-
-
         Catch ex As Exception
-            'MsgBox(ex.Message)
-            'myTrans.Rollback()
-            MessageBoxEx.Show(Me, ex.Message, "Transaccion desecha", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
+            MessageBoxEx.Show(Me, ex.Message, _Caption, MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+
+        Return _Tbl
 
     End Function
 
@@ -3811,4 +3873,39 @@ Public Class Frm_00_Asis_Compra_Menu
         End If
 
     End Sub
+
+    Private Sub Txt_Padre_Asociacion_Productos_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Padre_Asociacion_Productos.ButtonCustomClick
+
+        Dim _Nodo_Raiz_Asociados As Integer = _Global_Row_Configuracion_General.Item("Nodo_Raiz_Asociados")
+
+        Dim Fm As New Frm_Arbol_Asociacion_05_Busqueda(
+        Frm_Arbol_Asociacion_05_Busqueda.Enum_Tipo_De_Carpeta.Clas_Unica_Padres_Seleccion, False)
+        Fm.Pro_Identificacdor_NodoPadre = _Nodo_Raiz_Asociados
+        Fm.ShowDialog(Me)
+
+        If Fm.Pro_Aceptar Then
+
+            Txt_Padre_Asociacion_Productos.Tag = Fm.Pro_Row_Nodo_Seleccionado.Item("Codigo_Nodo")
+            Txt_Padre_Asociacion_Productos.Text = Trim(Fm.Pro_Row_Nodo_Seleccionado.Item("Descripcion"))
+
+        End If
+
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Sw_BlocConfiguracion_ValueChanged(sender As Object, e As EventArgs)
+
+        If Not Fx_Tiene_Permiso(Me, "Comp0100") Then
+            RemoveHandler Sw_BlocConfiguracion.ValueChanged, AddressOf Sw_BlocConfiguracion_ValueChanged
+            Sw_BlocConfiguracion.Value = Not Sw_BlocConfiguracion.Value
+            AddHandler Sw_BlocConfiguracion.ValueChanged, AddressOf Sw_BlocConfiguracion_ValueChanged
+        End If
+
+        STabConfiguracion.Enabled = Sw_BlocConfiguracion.Value
+        Grupo_Productos.Enabled = Sw_BlocConfiguracion.Value
+        Chk_Procesar_Uno_A_Uno.Enabled = Sw_BlocConfiguracion.Value
+
+    End Sub
+
 End Class

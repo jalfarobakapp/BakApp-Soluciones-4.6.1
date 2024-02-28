@@ -24,6 +24,9 @@ Partial Class Frm_GRI_FabXProducto
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_GRI_FabXProducto))
         Me.Grupo_Producto = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Panel_SC = New System.Windows.Forms.TableLayoutPanel()
+        Me.LabelX16 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX12 = New DevComponents.DotNetBar.LabelX()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Lbl_Saldo = New DevComponents.DotNetBar.LabelX()
@@ -44,6 +47,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.Txt_NroLote = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Btn_BuscarOT = New DevComponents.DotNetBar.ButtonX()
         Me.Lbl_ReferenciaOT = New DevComponents.DotNetBar.LabelX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.Dtp_Fecha_Ingreso = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
@@ -56,7 +60,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Tipo = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_CodAlternativo_Pallet = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Descripcion_Kopral = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Observaciones = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX14 = New DevComponents.DotNetBar.LabelX()
@@ -64,18 +68,24 @@ Partial Class Frm_GRI_FabXProducto
         Me.Txt_Turno = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Analista = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX18 = New DevComponents.DotNetBar.LabelX()
+        Me.Dtp_Fiot = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.Chk_FechaEmiFiot = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Grupo_Producto.SuspendLayout()
+        Me.Panel_SC.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Dtp_Fecha_Ingreso, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
+        CType(Me.Dtp_Fiot, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Grupo_Producto
         '
         Me.Grupo_Producto.BackColor = System.Drawing.Color.White
         Me.Grupo_Producto.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_Producto.Controls.Add(Me.Panel_SC)
         Me.Grupo_Producto.Controls.Add(Me.LabelX12)
         Me.Grupo_Producto.Controls.Add(Me.TableLayoutPanel1)
         Me.Grupo_Producto.Controls.Add(Me.LabelX3)
@@ -87,7 +97,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.Grupo_Producto.Controls.Add(Me.Line1)
         Me.Grupo_Producto.DisabledBackColor = System.Drawing.Color.Empty
         Me.Grupo_Producto.Enabled = False
-        Me.Grupo_Producto.Location = New System.Drawing.Point(12, 86)
+        Me.Grupo_Producto.Location = New System.Drawing.Point(12, 94)
         Me.Grupo_Producto.Name = "Grupo_Producto"
         Me.Grupo_Producto.Size = New System.Drawing.Size(802, 168)
         '
@@ -120,6 +130,56 @@ Partial Class Frm_GRI_FabXProducto
         Me.Grupo_Producto.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Grupo_Producto.TabIndex = 96
         Me.Grupo_Producto.Text = "DETALLE DE DATOS DE FABRICACION"
+        '
+        'Panel_SC
+        '
+        Me.Panel_SC.BackColor = System.Drawing.Color.Transparent
+        Me.Panel_SC.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
+        Me.Panel_SC.ColumnCount = 2
+        Me.Panel_SC.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.9011!))
+        Me.Panel_SC.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.0989!))
+        Me.Panel_SC.Controls.Add(Me.LabelX16, 1, 0)
+        Me.Panel_SC.Controls.Add(Me.LabelX13, 0, 0)
+        Me.Panel_SC.ForeColor = System.Drawing.Color.Black
+        Me.Panel_SC.Location = New System.Drawing.Point(555, 111)
+        Me.Panel_SC.Name = "Panel_SC"
+        Me.Panel_SC.RowCount = 1
+        Me.Panel_SC.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.Panel_SC.Size = New System.Drawing.Size(182, 27)
+        Me.Panel_SC.TabIndex = 83
+        '
+        'LabelX16
+        '
+        Me.LabelX16.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX16.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX16.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX16.ForeColor = System.Drawing.Color.Black
+        Me.LabelX16.Location = New System.Drawing.Point(92, 4)
+        Me.LabelX16.Name = "LabelX16"
+        Me.LabelX16.Size = New System.Drawing.Size(82, 19)
+        Me.LabelX16.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.LabelX16.TabIndex = 84
+        Me.LabelX16.Text = "0"
+        Me.LabelX16.TextAlignment = System.Drawing.StringAlignment.Far
+        '
+        'LabelX13
+        '
+        Me.LabelX13.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX13.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX13.ForeColor = System.Drawing.Color.Black
+        Me.LabelX13.Location = New System.Drawing.Point(4, 4)
+        Me.LabelX13.Name = "LabelX13"
+        Me.LabelX13.Size = New System.Drawing.Size(81, 19)
+        Me.LabelX13.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.LabelX13.TabIndex = 84
+        Me.LabelX13.Text = "SALDO SC"
         '
         'LabelX12
         '
@@ -193,7 +253,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.LabelX11.Size = New System.Drawing.Size(82, 19)
         Me.LabelX11.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.LabelX11.TabIndex = 82
-        Me.LabelX11.Text = "SALDO"
+        Me.LabelX11.Text = "SALDO KG"
         '
         'Lbl_Realizado
         '
@@ -458,6 +518,10 @@ Partial Class Frm_GRI_FabXProducto
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Chk_FechaEmiFiot)
+        Me.GroupPanel1.Controls.Add(Me.LabelX18)
+        Me.GroupPanel1.Controls.Add(Me.Dtp_Fiot)
+        Me.GroupPanel1.Controls.Add(Me.Btn_BuscarOT)
         Me.GroupPanel1.Controls.Add(Me.Lbl_ReferenciaOT)
         Me.GroupPanel1.Controls.Add(Me.LabelX4)
         Me.GroupPanel1.Controls.Add(Me.Dtp_Fecha_Ingreso)
@@ -466,7 +530,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 6)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(802, 74)
+        Me.GroupPanel1.Size = New System.Drawing.Size(802, 82)
         '
         '
         '
@@ -497,6 +561,17 @@ Partial Class Frm_GRI_FabXProducto
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 94
         '
+        'Btn_BuscarOT
+        '
+        Me.Btn_BuscarOT.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_BuscarOT.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_BuscarOT.Location = New System.Drawing.Point(260, 7)
+        Me.Btn_BuscarOT.Name = "Btn_BuscarOT"
+        Me.Btn_BuscarOT.Size = New System.Drawing.Size(75, 26)
+        Me.Btn_BuscarOT.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_BuscarOT.TabIndex = 97
+        Me.Btn_BuscarOT.Text = "Buscar OT..."
+        '
         'Lbl_ReferenciaOT
         '
         Me.Lbl_ReferenciaOT.BackColor = System.Drawing.Color.Transparent
@@ -506,7 +581,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.Lbl_ReferenciaOT.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_ReferenciaOT.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Lbl_ReferenciaOT.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_ReferenciaOT.Location = New System.Drawing.Point(3, 39)
+        Me.Lbl_ReferenciaOT.Location = New System.Drawing.Point(3, 54)
         Me.Lbl_ReferenciaOT.Name = "Lbl_ReferenciaOT"
         Me.Lbl_ReferenciaOT.Size = New System.Drawing.Size(790, 23)
         Me.Lbl_ReferenciaOT.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
@@ -522,12 +597,12 @@ Partial Class Frm_GRI_FabXProducto
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(500, 7)
+        Me.LabelX4.Location = New System.Drawing.Point(583, 7)
         Me.LabelX4.Name = "LabelX4"
-        Me.LabelX4.Size = New System.Drawing.Size(49, 23)
+        Me.LabelX4.Size = New System.Drawing.Size(106, 23)
         Me.LabelX4.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.LabelX4.TabIndex = 95
-        Me.LabelX4.Text = "FECHA"
+        Me.LabelX4.Text = "FECHA INGRESO"
         '
         'Dtp_Fecha_Ingreso
         '
@@ -542,9 +617,8 @@ Partial Class Frm_GRI_FabXProducto
         Me.Dtp_Fecha_Ingreso.Enabled = False
         Me.Dtp_Fecha_Ingreso.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Dtp_Fecha_Ingreso.ForeColor = System.Drawing.Color.Black
-        Me.Dtp_Fecha_Ingreso.Format = DevComponents.Editors.eDateTimePickerFormat.[Long]
         Me.Dtp_Fecha_Ingreso.IsPopupCalendarOpen = False
-        Me.Dtp_Fecha_Ingreso.Location = New System.Drawing.Point(555, 7)
+        Me.Dtp_Fecha_Ingreso.Location = New System.Drawing.Point(694, 7)
         '
         '
         '
@@ -579,7 +653,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.Dtp_Fecha_Ingreso.MonthCalendar.TodayButtonVisible = True
         Me.Dtp_Fecha_Ingreso.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
         Me.Dtp_Fecha_Ingreso.Name = "Dtp_Fecha_Ingreso"
-        Me.Dtp_Fecha_Ingreso.Size = New System.Drawing.Size(238, 25)
+        Me.Dtp_Fecha_Ingreso.Size = New System.Drawing.Size(99, 25)
         Me.Dtp_Fecha_Ingreso.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Dtp_Fecha_Ingreso.TabIndex = 1
         Me.Dtp_Fecha_Ingreso.TabStop = False
@@ -637,7 +711,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Limpiar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 481)
+        Me.Bar1.Location = New System.Drawing.Point(0, 490)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(826, 41)
         Me.Bar1.Stretch = True
@@ -713,26 +787,26 @@ Partial Class Frm_GRI_FabXProducto
         Me.Lbl_Tipo.TabIndex = 91
         Me.Lbl_Tipo.Text = "TIPO..."
         '
-        'Txt_CodAlternativo_Pallet
+        'Txt_Descripcion_Kopral
         '
-        Me.Txt_CodAlternativo_Pallet.BackColor = System.Drawing.Color.White
+        Me.Txt_Descripcion_Kopral.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Txt_CodAlternativo_Pallet.Border.Class = "TextBoxBorder"
-        Me.Txt_CodAlternativo_Pallet.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_CodAlternativo_Pallet.ButtonCustom.Image = CType(resources.GetObject("Txt_CodAlternativo_Pallet.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_CodAlternativo_Pallet.ButtonCustom.Visible = True
-        Me.Txt_CodAlternativo_Pallet.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CodAlternativo_Pallet.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_CodAlternativo_Pallet.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Txt_CodAlternativo_Pallet.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CodAlternativo_Pallet.Location = New System.Drawing.Point(90, 67)
-        Me.Txt_CodAlternativo_Pallet.MaxLength = 13
-        Me.Txt_CodAlternativo_Pallet.Name = "Txt_CodAlternativo_Pallet"
-        Me.Txt_CodAlternativo_Pallet.ReadOnly = True
-        Me.Txt_CodAlternativo_Pallet.Size = New System.Drawing.Size(703, 26)
-        Me.Txt_CodAlternativo_Pallet.TabIndex = 9
+        Me.Txt_Descripcion_Kopral.Border.Class = "TextBoxBorder"
+        Me.Txt_Descripcion_Kopral.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Descripcion_Kopral.ButtonCustom.Image = CType(resources.GetObject("Txt_Descripcion_Kopral.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Descripcion_Kopral.ButtonCustom.Visible = True
+        Me.Txt_Descripcion_Kopral.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Descripcion_Kopral.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Txt_Descripcion_Kopral.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Txt_Descripcion_Kopral.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Descripcion_Kopral.Location = New System.Drawing.Point(90, 67)
+        Me.Txt_Descripcion_Kopral.MaxLength = 13
+        Me.Txt_Descripcion_Kopral.Name = "Txt_Descripcion_Kopral"
+        Me.Txt_Descripcion_Kopral.ReadOnly = True
+        Me.Txt_Descripcion_Kopral.Size = New System.Drawing.Size(703, 26)
+        Me.Txt_Descripcion_Kopral.TabIndex = 9
         '
         'GroupPanel2
         '
@@ -747,13 +821,13 @@ Partial Class Frm_GRI_FabXProducto
         Me.GroupPanel2.Controls.Add(Me.Txt_Analista)
         Me.GroupPanel2.Controls.Add(Me.LabelX17)
         Me.GroupPanel2.Controls.Add(Me.LabelX5)
-        Me.GroupPanel2.Controls.Add(Me.Txt_CodAlternativo_Pallet)
+        Me.GroupPanel2.Controls.Add(Me.Txt_Descripcion_Kopral)
         Me.GroupPanel2.Controls.Add(Me.Txt_NroLote)
         Me.GroupPanel2.Controls.Add(Me.LabelX7)
         Me.GroupPanel2.Controls.Add(Me.LabelX10)
         Me.GroupPanel2.Controls.Add(Me.Lbl_Tipo)
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel2.Location = New System.Drawing.Point(12, 260)
+        Me.GroupPanel2.Location = New System.Drawing.Point(12, 268)
         Me.GroupPanel2.Name = "GroupPanel2"
         Me.GroupPanel2.Size = New System.Drawing.Size(802, 209)
         '
@@ -877,7 +951,6 @@ Partial Class Frm_GRI_FabXProducto
         Me.Txt_Analista.Border.Class = "TextBoxBorder"
         Me.Txt_Analista.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Analista.ButtonCustom.Image = CType(resources.GetObject("Txt_Analista.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_Analista.ButtonCustom.Visible = True
         Me.Txt_Analista.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Analista.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Analista.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -906,11 +979,104 @@ Partial Class Frm_GRI_FabXProducto
         Me.LabelX17.TabIndex = 101
         Me.LabelX17.Text = "ANALISTA"
         '
+        'LabelX18
+        '
+        Me.LabelX18.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX18.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX18.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX18.ForeColor = System.Drawing.Color.Black
+        Me.LabelX18.Location = New System.Drawing.Point(397, 7)
+        Me.LabelX18.Name = "LabelX18"
+        Me.LabelX18.Size = New System.Drawing.Size(67, 23)
+        Me.LabelX18.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.LabelX18.TabIndex = 99
+        Me.LabelX18.Text = "FECHA OT"
+        '
+        'Dtp_Fiot
+        '
+        Me.Dtp_Fiot.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_Fiot.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_Fiot.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fiot.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_Fiot.ButtonDropDown.Visible = True
+        Me.Dtp_Fiot.Enabled = False
+        Me.Dtp_Fiot.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Dtp_Fiot.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_Fiot.IsPopupCalendarOpen = False
+        Me.Dtp_Fiot.Location = New System.Drawing.Point(469, 7)
+        '
+        '
+        '
+        Me.Dtp_Fiot.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_Fiot.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fiot.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_Fiot.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_Fiot.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_Fiot.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Fiot.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_Fiot.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_Fiot.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_Fiot.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_Fiot.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fiot.MonthCalendar.DisplayMonth = New Date(2018, 1, 1, 0, 0, 0, 0)
+        Me.Dtp_Fiot.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_Fiot.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_Fiot.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_Fiot.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_Fiot.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Fiot.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_Fiot.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fiot.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_Fiot.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_Fiot.Name = "Dtp_Fiot"
+        Me.Dtp_Fiot.Size = New System.Drawing.Size(99, 25)
+        Me.Dtp_Fiot.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_Fiot.TabIndex = 98
+        Me.Dtp_Fiot.TabStop = False
+        Me.Dtp_Fiot.Value = New Date(2018, 1, 30, 12, 16, 22, 0)
+        '
+        'Chk_FechaEmiFiot
+        '
+        Me.Chk_FechaEmiFiot.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_FechaEmiFiot.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_FechaEmiFiot.CheckBoxImageChecked = CType(resources.GetObject("Chk_FechaEmiFiot.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_FechaEmiFiot.Checked = True
+        Me.Chk_FechaEmiFiot.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_FechaEmiFiot.CheckValue = "Y"
+        Me.Chk_FechaEmiFiot.Enabled = False
+        Me.Chk_FechaEmiFiot.FocusCuesEnabled = False
+        Me.Chk_FechaEmiFiot.ForeColor = System.Drawing.Color.Black
+        Me.Chk_FechaEmiFiot.Location = New System.Drawing.Point(397, 36)
+        Me.Chk_FechaEmiFiot.Name = "Chk_FechaEmiFiot"
+        Me.Chk_FechaEmiFiot.Size = New System.Drawing.Size(179, 14)
+        Me.Chk_FechaEmiFiot.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_FechaEmiFiot.TabIndex = 100
+        Me.Chk_FechaEmiFiot.TabStop = False
+        Me.Chk_FechaEmiFiot.Text = "Fecha de emisión fecha de la OT"
+        '
         'Frm_GRI_FabXProducto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(826, 522)
+        Me.ClientSize = New System.Drawing.Size(826, 531)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.Grupo_Producto)
@@ -926,11 +1092,13 @@ Partial Class Frm_GRI_FabXProducto
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "INGRESO DE PRODUCTOS Y COMPONENTES FABRICADOS A BODEGA"
         Me.Grupo_Producto.ResumeLayout(False)
+        Me.Panel_SC.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Dtp_Fecha_Ingreso, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel2.ResumeLayout(False)
+        CType(Me.Dtp_Fiot, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -967,7 +1135,7 @@ Partial Class Frm_GRI_FabXProducto
     Friend WithEvents LabelX10 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
     Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
-    Public WithEvents Txt_CodAlternativo_Pallet As DevComponents.DotNetBar.Controls.TextBoxX
+    Public WithEvents Txt_Descripcion_Kopral As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX17 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Cmb_Formato As DevComponents.DotNetBar.Controls.ComboBoxEx
     Friend WithEvents LabelX15 As DevComponents.DotNetBar.LabelX
@@ -976,4 +1144,11 @@ Partial Class Frm_GRI_FabXProducto
     Public WithEvents Txt_Analista As DevComponents.DotNetBar.Controls.TextBoxX
     Public WithEvents Txt_Observaciones As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX14 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Panel_SC As TableLayoutPanel
+    Friend WithEvents LabelX16 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX13 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Btn_BuscarOT As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents LabelX18 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Dtp_Fiot As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Friend WithEvents Chk_FechaEmiFiot As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

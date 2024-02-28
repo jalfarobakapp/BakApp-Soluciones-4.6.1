@@ -40,7 +40,7 @@ Public Class Frm_SolCredito_Archivos_Adjuntos
 
         Me.Text = "Número de negocio: " & _NroNegocio
 
-        InsertarBotonenGrilla(Grilla_Archivos, "BtnImagen", "TD", "TD", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla_Archivos, "BtnImagen", "TD", "TD", 0, _Tipo_Boton.Imagen)
 
         Sb_Actualizar_Grilla()
 

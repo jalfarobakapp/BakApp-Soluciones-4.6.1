@@ -5,22 +5,44 @@ Public Class Frm_ImpBarras_EdicionEtiquetas
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Public _NombreEtiqueta, _Funcion As String
-    Public _CantPorLinea As Integer
-    Public _Grabado As Boolean
 
+    Dim _Row_Etiqueta As DataRow
     Dim _Color_Selection As Color = Color.Black
+    Dim _Semilla As Integer
+
+    Public Property Grabar As Boolean
+
+    Public Sub New(_Semilla As Integer)
+
+        ' Llamada necesaria para el Diseñador de Windows Forms.
+        InitializeComponent()
+
+        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+
+        Sb_Color_Botones_Barra(Bar1)
+
+        Me._Semilla = _Semilla
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Tbl_DisenoBarras Where Semilla = " & _Semilla
+        _Row_Etiqueta = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+    End Sub
 
     Private Sub Frm_ImpBarras_EdicionEtiquetas_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        TxtFuncion.Text = _Funcion
-        TxtNombreEtiqueta.Text = _NombreEtiqueta
-        CmbCantPorLinea.Text = _CantPorLinea
+        CmbCantPorLinea.Text = 1
 
-        AddHandler BtnGrabar.Click, AddressOf Sb_Grabar
+        If Not IsNothing(_Row_Etiqueta) Then
+
+            TxtFuncion.Text = _Row_Etiqueta.Item("FUNCION")
+            TxtNombreEtiqueta.Text = _Row_Etiqueta.Item("NombreEtiqueta")
+            CmbCantPorLinea.Text = _Row_Etiqueta.Item("CantPorLinea")
+
+        End If
+
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_Mouse_Clic_Boton_derecho_Grilla
-
 
         Sb_Actualizar_Grilla()
 
@@ -46,7 +68,7 @@ Public Class Frm_ImpBarras_EdicionEtiquetas
 
         With Grilla
 
-            Grilla.DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+            Grilla.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
 
             OcultarEncabezadoGrilla(Grilla, True)
 
@@ -69,32 +91,6 @@ Public Class Frm_ImpBarras_EdicionEtiquetas
     End Sub
 #End Region
 
-#Region "GRABAR"
-
-    Sub Sb_Grabar()
-
-        If String.IsNullOrEmpty(Trim(TxtNombreEtiqueta.Text)) Then
-            MessageBoxEx.Show(Me, "Falta nombre de etiqueta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            TxtNombreEtiqueta.Focus()
-            Return
-        End If
-
-        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Tbl_DisenoBarras Where NombreEtiqueta = '" & TxtNombreEtiqueta.Text & "'" & vbCrLf &
-                       "INSERT INTO " & _Global_BaseBk & "Zw_Tbl_DisenoBarras (NombreEtiqueta,FUNCION,CantPorLinea) VALUES ('" &
-                       TxtNombreEtiqueta.Text & "','" & TxtFuncion.Text & "'," & CmbCantPorLinea.Text & ")"
-        If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
-            _Grabado = True
-            Beep()
-            ToastNotification.Show(Me, "ETIQUETA GUARDADA CORRECTAMENTE",
-                                  My.Resources.save,
-                                 2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
-            'Me.Close()
-        End If
-
-
-    End Sub
-
-#End Region
 
 #Region "CAMBIAR COLOR DE PALABRA EN TEXTO"
 
@@ -191,15 +187,7 @@ Public Class Frm_ImpBarras_EdicionEtiquetas
 
     End Sub
 
-    Public Sub New()
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
-        InitializeComponent()
-
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
-        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
-
-    End Sub
 
     Private Sub Mnu_CopiarToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Mnu_CopiarToolStripMenuItem.Click
         Dim _Columna = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -235,4 +223,35 @@ Public Class Frm_ImpBarras_EdicionEtiquetas
 
     End Sub
 
+    Private Sub BtnGrabar_Click(sender As Object, e As EventArgs) Handles BtnGrabar.Click
+
+        If String.IsNullOrEmpty(Trim(TxtNombreEtiqueta.Text)) Then
+            MessageBoxEx.Show(Me, "Falta nombre de etiqueta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            TxtNombreEtiqueta.Focus()
+            Return
+        End If
+
+        If CBool(_Semilla) Then
+
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Tbl_DisenoBarras Set" & vbCrLf &
+                           "FUNCION = '" & TxtFuncion.Text & "'" & vbCrLf &
+                           ",CantPorLinea = " & CmbCantPorLinea.Text & vbCrLf &
+                           "Where Semilla = " & _Semilla
+
+        Else
+
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Tbl_DisenoBarras Where NombreEtiqueta = '" & TxtNombreEtiqueta.Text & "'" & vbCrLf &
+                           "Insert Into " & _Global_BaseBk & "Zw_Tbl_DisenoBarras (NombreEtiqueta,FUNCION,CantPorLinea) VALUES ('" &
+                           TxtNombreEtiqueta.Text & "','" & TxtFuncion.Text & "'," & CmbCantPorLinea.Text & ")"
+
+        End If
+
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+
+            Grabar = True
+            MessageBoxEx.Show(Me, "Dato actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        End If
+
+    End Sub
 End Class

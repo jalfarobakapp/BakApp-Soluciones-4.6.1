@@ -225,7 +225,7 @@ Partial Class Frm_AsisCompra_Proyeccion
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnProcesarInf, Me.Btn_Arbol_Asociaciones})
-        Me.Bar1.Location = New System.Drawing.Point(0, 399)
+        Me.Bar1.Location = New System.Drawing.Point(0, 386)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(395, 41)
         Me.Bar1.Stretch = True
@@ -580,7 +580,7 @@ Partial Class Frm_AsisCompra_Proyeccion
         Me.GroupPanel3.Controls.Add(Me.Rdb_Proyeccion_Rotacion_Efectiva)
         Me.GroupPanel3.Controls.Add(Me.Rdb_Rot_Mediana)
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel3.Location = New System.Drawing.Point(12, 327)
+        Me.GroupPanel3.Location = New System.Drawing.Point(12, 314)
         Me.GroupPanel3.Name = "GroupPanel3"
         Me.GroupPanel3.Size = New System.Drawing.Size(373, 57)
         '
@@ -664,7 +664,7 @@ Partial Class Frm_AsisCompra_Proyeccion
         Me.Input_Proyeccion_Redondeo.ButtonClear.Visible = True
         Me.Input_Proyeccion_Redondeo.FocusHighlightEnabled = True
         Me.Input_Proyeccion_Redondeo.ForeColor = System.Drawing.Color.Black
-        Me.Input_Proyeccion_Redondeo.Location = New System.Drawing.Point(87, 20)
+        Me.Input_Proyeccion_Redondeo.Location = New System.Drawing.Point(87, 5)
         Me.Input_Proyeccion_Redondeo.MaxValue = 10000
         Me.Input_Proyeccion_Redondeo.MinValue = 1
         Me.Input_Proyeccion_Redondeo.Name = "Input_Proyeccion_Redondeo"
@@ -682,7 +682,7 @@ Partial Class Frm_AsisCompra_Proyeccion
         Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel4.Location = New System.Drawing.Point(12, 253)
         Me.GroupPanel4.Name = "GroupPanel4"
-        Me.GroupPanel4.Size = New System.Drawing.Size(373, 68)
+        Me.GroupPanel4.Size = New System.Drawing.Size(373, 55)
         '
         '
         '
@@ -719,7 +719,7 @@ Partial Class Frm_AsisCompra_Proyeccion
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.ForeColor = System.Drawing.Color.Black
-        Me.Label1.Location = New System.Drawing.Point(3, 27)
+        Me.Label1.Location = New System.Drawing.Point(3, 12)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(78, 13)
         Me.Label1.TabIndex = 128
@@ -729,7 +729,7 @@ Partial Class Frm_AsisCompra_Proyeccion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(395, 440)
+        Me.ClientSize = New System.Drawing.Size(395, 427)
         Me.Controls.Add(Me.Cmb_Padre_Asociacion_Productos)
         Me.Controls.Add(Me.GroupPanel4)
         Me.Controls.Add(Me.GroupPanel3)

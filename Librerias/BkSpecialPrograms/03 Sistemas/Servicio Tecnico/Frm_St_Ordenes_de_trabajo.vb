@@ -68,6 +68,7 @@ Public Class Frm_St_Ordenes_de_trabajo
         'InsertarBotonenGrilla(Grilla, "BtnImagen", "Situación", "Solicitud", 0, _Tipo_Boton.Imagen)
         AddHandler Btn_Crear_OT1Producto.Click, AddressOf Sb_Crear_Nueva_OT
 
+        'Sb_Actualizar_Grilla2()
         Sb_Marcar_Grilla2()
 
         If _Correr_a_la_derecha Then

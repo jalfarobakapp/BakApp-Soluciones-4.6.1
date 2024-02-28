@@ -109,7 +109,7 @@ Public Class Frm_Meson_Operario
         AddHandler Grilla_Productos_En_Meson.MouseDown, AddressOf Sb_Grilla_MouseDown
         AddHandler Grilla_Maquinas_Meson.MouseDown, AddressOf Sb_Grilla_Maquinas_Meson_MouseDown
 
-        InsertarBotonenGrilla(Grilla_Productos_En_Meson, "Btn_Ico", "Ico", "Inf.", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla_Productos_En_Meson, "Btn_Ico", "Ico", "Inf.", 0, _Tipo_Boton.Imagen)
 
         Sb_Actualizar_Grillas()
 

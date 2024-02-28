@@ -195,7 +195,7 @@ Public Class Cl_Correos
             Dim _Imprimir_Picking = _Fila.Item("Imprimir_Picking")
 
             _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Filtros_X_Estacion" & vbCrLf &
-                            "Where NombreEquipo = '" & _Nombre_Equipo & "' And Nombre_Correo <> '' And (Correo_Para <> '' Or Para_Maeenmail = 1) And TipoDoc = '" & _Tido & "'"
+                            "Where NombreEquipo = '" & _Nombre_Equipo & "' And Nombre_Correo <> '' And (Correo_Para <> '' Or Para_Maeenmail = 1) And TipoDoc = '" & _Tido & "' And Codigo = 'JPT'"
             Dim _TblFiltroFunc As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
 
             If CBool(_TblFiltroFunc.Rows.Count) Then
@@ -223,7 +223,7 @@ Public Class Cl_Correos
                     If Not IsNothing(_Row_Correo) Then
 
                         Dim _Asunto = _Row_Correo.Item("Asunto")
-                        Dim _CuerpoMensaje = _Row_Correo.Item("CuerpoMensaje")
+                        Dim _CuerpoMensaje = _Row_Correo.Item("CuerpoMensaje").ToString.Replace("'", "''")
 
                         If Not String.IsNullOrEmpty(_Correo_Para) Or _Para_Maeenmail Then
 

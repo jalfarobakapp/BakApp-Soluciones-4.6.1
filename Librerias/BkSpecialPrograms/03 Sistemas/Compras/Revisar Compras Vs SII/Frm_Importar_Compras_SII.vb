@@ -350,7 +350,7 @@ Public Class Frm_Importar_Compras_SII
     Private Function Fx_Tido(_TipoDoc As Integer) As String
 
         Select Case _TipoDoc
-            Case 33, 34
+            Case 33, 34, 56
                 Return "FCC"
             Case 39 '"BLV", "BSV"
                 Return "BLC"

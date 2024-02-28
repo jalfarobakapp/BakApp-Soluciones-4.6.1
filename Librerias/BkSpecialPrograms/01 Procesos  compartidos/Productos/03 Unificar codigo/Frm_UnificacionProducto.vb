@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+锘縄mports DevComponents.DotNetBar
 'Imports Lib_Bakapp_VarClassFunc
 Imports System.Data.SqlClient
 
@@ -13,12 +13,12 @@ Public Class Frm_UnificacionProducto
 
 #Region "FUNCIONES"
 
-    Sub BuscarProductos(ByVal Codigo As String, _
-                        ByVal TxtCodigo As TextBox, _
-                        ByVal TxtDescripcion As TextBox, _
-                        ByVal TxtRtu As TextBox, _
-                        ByVal TxtUd1 As TextBox, _
-                        ByVal TxtUd2 As TextBox, _
+    Sub BuscarProductos(ByVal Codigo As String,
+                        ByVal TxtCodigo As TextBox,
+                        ByVal TxtDescripcion As TextBox,
+                        ByVal TxtRtu As TextBox,
+                        ByVal TxtUd1 As TextBox,
+                        ByVal TxtUd2 As TextBox,
                         ByVal _Tbl_InfProducto As DataTable)
 
         If Not _Tbl_InfProducto Is Nothing Then
@@ -192,11 +192,11 @@ Public Class Frm_UnificacionProducto
 
             OcultarEncabezadoGrilla(GrillaProductosCambiar, False)
 
-            .Columns("CodOld").HeaderText = "C骴igo"
+            .Columns("CodOld").HeaderText = "C贸digo"
             .Columns("CodOld").Width = 100
             .Columns("CodOld").Visible = True
 
-            .Columns("DescripcionOld").HeaderText = "Descripci髇"
+            .Columns("DescripcionOld").HeaderText = "Descripci贸n"
             .Columns("DescripcionOld").Width = 320
             .Columns("DescripcionOld").Visible = True
 
@@ -242,16 +242,16 @@ Public Class Frm_UnificacionProducto
 
 
         If String.IsNullOrEmpty(Trim(TxtCodigoDestino.Text)) Or GrillaProductosCambiar.RowCount = 0 Then
-            MessageBoxEx.Show("No existen datos que procesar", "Validaci髇", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show("No existen datos que procesar", "Validaci贸n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
-        Dim info As New TaskDialogInfo("DVERTENCIA!", _
-                                     eTaskDialogIcon.ShieldStop, _
-                                     "MPORTANTE!", _
-                                     "Esta acci髇 reemplaza el c骴igo antiguo por el nuevo en todos sus movimientos de existencia y a demas deja el c骴igo anterior como alternativo para el nuevo c骴igo, es decir, los c骴igos anteriores al leerlos con el sistema automaticamente te llevaran al nuevo c骴igo." & vbCrLf & _
-                                     "Esta acci髇 requiere de mucha seguridad, ya que la transacci髇 es irreversible" & vbCrLf & vbCrLf & _
-                                     "緿ESEA REALIZAR EL CAMBIO?" & vbCrLf, _
+        Dim info As New TaskDialogInfo("隆ADVERTENCIA!",
+                                     eTaskDialogIcon.ShieldStop,
+                                     "隆IMPORTANTE!",
+                                     "Esta acci贸n reemplaza el c贸digo antiguo por el nuevo en todos sus movimientos de existencia y a demas deja el c贸digo anterior como alternativo para el nuevo c贸digo, es decir, los c贸digos anteriores al leerlos con el sistema automaticamente te llevaran al nuevo c贸digo." & vbCrLf &
+                                     "Esta acci贸n requiere de mucha seguridad, ya que la transacci贸n es irreversible" & vbCrLf & vbCrLf &
+                                     "驴DESEA REALIZAR EL CAMBIO?" & vbCrLf,
                                      eTaskDialogButton.Yes + eTaskDialogButton.No _
                                      , eTaskDialogBackgroundColor.Red, Nothing, Nothing, Nothing, Nothing, Nothing)
         Dim result As eTaskDialogResult = TaskDialog.Show(info)
@@ -262,8 +262,8 @@ Public Class Frm_UnificacionProducto
 
             Dim dlg As System.Windows.Forms.DialogResult =
                                 MessageBoxEx.Show(Me,
-                                "緿esea reemplazar la[s] descripci髇[es] del [los] producto[s]?",
-                                "Reemplazar descripci髇", MessageBoxButtons.YesNo)
+                                "驴Desea reemplazar la[s] descripci贸n[es] del [los] producto[s]?",
+                                "Reemplazar descripci贸n", MessageBoxButtons.YesNo)
 
             If dlg = System.Windows.Forms.DialogResult.Yes Then
                 _Cambiar_Descripcion = True
@@ -288,8 +288,8 @@ Public Class Frm_UnificacionProducto
 
                 If Not Fila.Item("Unificado") Then
                     If Not ChkNoPreguntar.Checked Then
-                        If MsgBox("Esta seguro de reemplazar este producto:" & vbCrLf & "C骴igo: " & TxtCodigoDestino.Text & vbCrLf &
-                             "Descripci髇: " & TxtDescripcionDestino.Text, MsgBoxStyle.Exclamation + MsgBoxStyle.YesNo) = MsgBoxResult.No Then
+                        If MsgBox("Esta seguro de reemplazar este producto:" & vbCrLf & "C贸digo: " & TxtCodigoDestino.Text & vbCrLf &
+                             "Descripci贸n: " & TxtDescripcionDestino.Text, MsgBoxStyle.Exclamation + MsgBoxStyle.YesNo) = MsgBoxResult.No Then
                             _Cambiar = False
                         End If
                     End If
@@ -370,7 +370,7 @@ Public Class Frm_UnificacionProducto
         If Not String.IsNullOrEmpty(Trim(_Codigo)) Then
 
             If _Codigo = Trim(TxtCodigoDestino.Text) Then
-                MessageBoxEx.Show("No puede asignar el mismo producto de destino en la lista", _
+                MessageBoxEx.Show("No puede asignar el mismo producto de destino en la lista",
                          "Unificar producto", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
@@ -416,15 +416,15 @@ Public Class Frm_UnificacionProducto
 
                 GrillaProductosCambiar.Refresh()
 
-                Consulta_sql = _
-                "INSERT INTO Tmp_UnificadosHitory (CodNew, CodOld, DescripcionOld, Ud1Old, Ud2Old, RtuOld, Responzable)" & vbCrLf & _
-                "VALUES ('" & TxtCodigoDestino.Text & "','" & CodigoOld & "','" & DescripcionOld & _
+                Consulta_sql =
+                "INSERT INTO Tmp_UnificadosHitory (CodNew, CodOld, DescripcionOld, Ud1Old, Ud2Old, RtuOld, Responzable)" & vbCrLf &
+                "VALUES ('" & TxtCodigoDestino.Text & "','" & CodigoOld & "','" & DescripcionOld &
                 "','" & Ud1Old & "','" & Ud2Old & "'," & RtuOld & ",'" & FUNCIONARIO & "')"
 
             Else
 
-                MessageBoxEx.Show("Estos productos tienen distinta R.T.U." & _
-                         "Por lo tanto no pueden ser unificados", _
+                MessageBoxEx.Show("Estos productos tienen distinta R.T.U." &
+                         "Por lo tanto no pueden ser unificados",
                          "Unificar producto", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
 
@@ -444,12 +444,12 @@ Public Class Frm_UnificacionProducto
 
     Public Sub New()
 
-        ' Llamada necesaria para el Dise馻dor de Windows Forms.
+        ' Llamada necesaria para el Dise帽ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicializaci髇 despu閟 de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaci贸n despu茅s de la llamada a InitializeComponent().
         LimpiarTxt()
-       Sb_Formato_Generico_Grilla(GrillaProductosCambiar, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
+        Sb_Formato_Generico_Grilla(GrillaProductosCambiar, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
     End Sub
 
     Private Sub BtnCreaProducClassic_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnCreaProducClassic.Click
@@ -480,7 +480,7 @@ Public Class Frm_UnificacionProducto
     Private Sub BtnCreaProducMatriz_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnCreaProducMatriz.Click
         Dim Nro As String = "Prod007"
         If Fx_Tiene_Permiso(Me, Nro) Then
-            MessageBoxEx.Show(Me, "En construcci髇")
+            MessageBoxEx.Show(Me, "En construcci贸n")
             '    Dim Fm As New Frm_CreaProductos_01
             '    Fm.VieneDesdeSolicitud = False
             '    Fm.Show()
@@ -549,15 +549,15 @@ Public Class Frm_UnificacionProducto
 
                 'Incorporar_Producto(_Codigo)
 
-                Dim Reg As Integer =_Sql.Fx_Cuenta_Registros("MAEPR", "KOPR = '" & _CodNew & "'")
+                Dim Reg As Integer = _Sql.Fx_Cuenta_Registros("MAEPR", "KOPR = '" & _CodNew & "'")
 
                 If CBool(Reg) Then
 
                     If _Cancelar_LevMasivo Then
 
-                        Dim dlg As System.Windows.Forms.DialogResult = _
-                                        MessageBoxEx.Show(Me, _
-                                        "縀sta seguro de cancelar esta acci髇, esto quitara todo lo incorporado?", _
+                        Dim dlg As System.Windows.Forms.DialogResult =
+                                        MessageBoxEx.Show(Me,
+                                        "驴Esta seguro de cancelar esta acci贸n, esto quitara todo lo incorporado?",
                                         "Cancelar", MessageBoxButtons.YesNo)
 
                         If dlg = System.Windows.Forms.DialogResult.Yes Then
@@ -571,7 +571,7 @@ Public Class Frm_UnificacionProducto
 
                     End If
 
-                    Consulta_sql = "SELECT KOPR,NOKOPR,RLUD,UD01PR,UD02PR" & vbCrLf & _
+                    Consulta_sql = "SELECT KOPR,NOKOPR,RLUD,UD01PR,UD02PR" & vbCrLf &
                                    "FROM MAEPR WHERE KOPR = '" & _CodigoOld & "'"
                     Dim TblPr = _Sql.Fx_Get_Tablas(Consulta_Sql)
 
@@ -601,7 +601,7 @@ Public Class Frm_UnificacionProducto
             Progreso_Porc.Value = 0
 
             If _Levantado Then
-                MessageBoxEx.Show(Filas & "Productos correctamente indorporados", _
+                MessageBoxEx.Show(Filas & "Productos correctamente indorporados",
                                   "Unificar productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             End If

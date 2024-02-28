@@ -664,9 +664,7 @@ Public Class Frm_BuscarEntidad_Mt
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
                 If Hitest.Type = DataGridViewHitTestType.Cell Then
                     .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
-
                     ShowContextMenu(Menu_Contextual_01)
-
                 End If
             End With
         End If

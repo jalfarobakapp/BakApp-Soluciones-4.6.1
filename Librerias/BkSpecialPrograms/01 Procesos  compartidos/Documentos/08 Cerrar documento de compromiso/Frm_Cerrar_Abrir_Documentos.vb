@@ -37,8 +37,8 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
     Private Sub Frm_Cerrar_Documento_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
-        InsertarBotonenGrilla(Grilla_Encabezado, "BtnImagen", "Est.", "Estado", 0, _Tipo_Boton.Imagen)
-        InsertarBotonenGrilla(Grilla_Detalle, "BtnImagen", "Est.", "Estado", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla_Encabezado, "BtnImagen", "Est.", "Estado", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla_Detalle, "BtnImagen", "Est.", "Estado", 0, _Tipo_Boton.Imagen)
 
         AddHandler Grilla_Detalle.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla_Detalle.CellEnter, AddressOf Sb_Grilla_Detalle_CellEnter

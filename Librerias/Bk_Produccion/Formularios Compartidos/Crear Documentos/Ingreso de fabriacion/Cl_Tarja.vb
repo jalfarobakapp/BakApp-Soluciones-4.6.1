@@ -24,13 +24,14 @@ Public Class Cl_Tarja
                 .Nro_CPT = Fx_NvoNro_CPT()
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja (Empresa,Idmaeddo,Nro_CPT,Codigo,CodAlternativo,CodAlternativo_Pallet,Turno,Planta," &
-                               "Udm,Formato,Lote,FechaElab,SacosXPallet,Analista,Observaciones,Tipo,CantidadTipo,CantidadFab)" & vbCrLf &
+                               "Udm,Formato,Lote,FechaElab,SacosXPallet,Analista,Observaciones,Tipo,CantidadTipo,CantidadFab,Descripcion_Kopral)" & vbCrLf &
                                "Values ('" & .Empresa & "'," & .Idmaeddo & ",'" & .Nro_CPT & "','" & .Codigo & "','" & .CodAlternativo & "','" & .CodAlternativo_Pallet & "','" & .Turno &
                                "','" & .Planta & "','" & .Udm & "','" & .Formato & "','" & .Lote & "','" & .FechaElab &
                                "'," & .SacosXPallet & ",'" & .Analista & "','" & .Observaciones.Replace("'", "''") &
                                "','" & .Tipo &
                                "'," & De_Num_a_Tx_01(.CantidadTipo, False, 5) &
-                               "," & De_Num_a_Tx_01(.CantidadFab, False, 5) & ")"
+                               "," & De_Num_a_Tx_01(.CantidadFab, False, 5) &
+                               ",'" & .Descripcion_Kopral & "')"
 
             End With
 
@@ -73,7 +74,6 @@ End Class
 Namespace Cl_Tarja_Ent
 
     Public Class CPT_Tarja
-
         Public Property Idmaeddo As Integer
         Public Property Empresa As String
         Public Property Nro_CPT As String
@@ -92,7 +92,7 @@ Namespace Cl_Tarja_Ent
         Public Property Tipo As String
         Public Property CantidadTipo As Double
         Public Property CantidadFab As Double
-
+        Public Property Descripcion_Kopral As String
     End Class
 
     Public Class Mensaje_Tarja

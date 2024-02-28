@@ -5,18 +5,23 @@ Public Class Frm_Tickets_IngProducto
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
+    Dim _Id_Tipo As Integer
+
     Public Property Tickets_Producto As New Tickets_Db.Tickets_Producto
     Public Property Grabar As Boolean
     Public Property Descripcion As String
 
     Dim _Row_Producto As DataRow
+    Dim _Row_Tipo As DataRow
 
-    Public Sub New()
+    Public Sub New(_Id_Tipo As Integer)
 
         ' Esta llamada es exigida por el diseñador.
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+
+        Me._Id_Tipo = _Id_Tipo
 
     End Sub
 
@@ -51,6 +56,22 @@ Public Class Frm_Tickets_IngProducto
 
         End With
 
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id = " & _Id_Tipo
+        _Row_Tipo = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Lbl_Cantidad.Enabled = _Row_Tipo.Item("Inc_Cantidades")
+        Txt_Cantidad.Enabled = _Row_Tipo.Item("Inc_Cantidades")
+        Lbl_StfiEnBodega.Enabled = _Row_Tipo.Item("Inc_Cantidades")
+        Txt_StfiEnBodega.Enabled = _Row_Tipo.Item("Inc_Cantidades")
+        Lbl_UdMedida.Enabled = _Row_Tipo.Item("Inc_Cantidades")
+        Cmb_UdMedida.Enabled = _Row_Tipo.Item("Inc_Cantidades")
+
+        Lbl_FechaRev.Enabled = _Row_Tipo.Item("Inc_Fecha")
+        Dtp_FechaRev.Enabled = _Row_Tipo.Item("Inc_Fecha")
+
+        Lbl_HoraRev.Enabled = _Row_Tipo.Item("Inc_Hora")
+        Dtp_HoraRev.Enabled = _Row_Tipo.Item("Inc_Hora")
+
         Txt_Producto.Enabled = True
 
         Txt_Producto.ButtonCustom.Visible = IsNothing(_Row_Producto)
@@ -70,14 +91,19 @@ Public Class Frm_Tickets_IngProducto
         ' Convertir la cadena en un objeto DateTime
         Dim _FechaRev As DateTime = DateTime.Parse(_FechaHora)
 
-        If _Fecha = "01/01/0001" Or _Fecha = "01-01-0001" Then
+        Dim _CantidadesStr = String.Empty
+        Dim _FechaRevStr = String.Empty
+        Dim _HoraStr = String.Empty
+
+        If _Row_Tipo.Item("Inc_Fecha") AndAlso (_Fecha = "01/01/0001" Or _Fecha = "01-01-0001") Then
             MessageBoxEx.Show(Me, "Falta la fecha", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Dtp_FechaRev.Focus()
             Return
         End If
-        If _Hora = "0:00:00" Then
+
+        If _Row_Tipo.Item("Inc_Hora") AndAlso _Hora = "0:00:00" Then
             MessageBoxEx.Show(Me, "Falta la hora" & vbCrLf &
-                              "La hora no puede ser 00:00", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                          "La hora no puede ser 00:00", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Dtp_HoraRev.Focus()
             Return
         End If
@@ -90,12 +116,24 @@ Public Class Frm_Tickets_IngProducto
             .UdMedida = Cmb_UdMedida.SelectedValue
             .FechaRev = _FechaRev
 
+            If _Row_Tipo.Item("Inc_Cantidades") Then
+                _CantidadesStr = "BODEGA : " & Txt_Bodega.Text & vbCrLf &
+                                 "UNIDAD :" & Cmb_UdMedida.Text & vbCrLf &
+                                 "CANTIDAD EN BODEGA SEGUN SISTEMA  " & .StfiEnBodega & vbCrLf &
+                                 "CANTIDAD INVENTARIADA  " & .Cantidad & vbCrLf &
+                                 "DIFERENCIA : " & .Diferencia & vbCrLf
+            End If
+
+            If _Row_Tipo.Item("Inc_Fecha") Then _FechaRevStr = "FECHA : " & _FechaRev.ToShortDateString
+            If _Row_Tipo.Item("Inc_Hora") Then _HoraStr = "HORA : " & _FechaRev.ToShortTimeString
+
+            If _Row_Tipo.Item("Inc_Fecha") AndAlso _Row_Tipo.Item("Inc_Hora") Then
+                _FechaRevStr = "FECHA Y HORA : " & _FechaRev.ToShortDateString & " - " & _FechaRev.ToShortTimeString
+                _HoraStr = String.Empty
+            End If
+
             Descripcion = "PRODUCTO : " & .Codigo.Trim & " - " & .Descripcion.Trim & vbCrLf &
-                          "BODEGA : " & Txt_Bodega.Text & vbCrLf &
-                          "CANTIDAD EN BODEGA SEGUN SISTEMA : " & .StfiEnBodega & vbCrLf &
-                          "CANTIDAD INVENTARIADA : " & .Cantidad & vbCrLf &
-                          "DIFERENCIA : " & .Diferencia & vbCrLf &
-                          "FECHA Y HORA : " & _FechaRev.ToShortDateString & " - " & _FechaRev.ToShortTimeString
+                          _CantidadesStr & _FechaRevStr & _HoraStr
 
         End With
 

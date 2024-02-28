@@ -614,7 +614,8 @@ Public Class Frm_Kardex_X_Producto_Lista
         Dim _Tbl_Productos_Hermanos As DataTable = Fx_Tbl_Productos_Hermanos(_Codigo)
         Dim _Filtro_Prod_Hermanos = Generar_Filtro_IN(_Tbl_Productos_Hermanos, "", "KOPR", False, False, "", False)
 
-        Txt_Descripcion.Text = Replace(_Filtro_Prod_Hermanos, ",", ";")
+        Txt_Descripcion.Text = String.Empty
+        Txt_Codigo.Text = Replace(_Filtro_Prod_Hermanos, ",", ";")
 
         Sb_Actualizar_Listado(True)
 

@@ -36,7 +36,7 @@ Public Class Frm_Adjuntar_Archivos_X_Productos
 
         Me.Text = "Producto: " & Trim(_Row_Producto.Item("KOPR")) & " - " & Trim(_Row_Producto.Item("NOKOPR"))
 
-        InsertarBotonenGrilla(Grilla_Archivos, "BtnImagen", "TD", "TD", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla_Archivos, "BtnImagen", "TD", "TD", 0, _Tipo_Boton.Imagen)
 
         Sb_Actualizar_Grilla()
 

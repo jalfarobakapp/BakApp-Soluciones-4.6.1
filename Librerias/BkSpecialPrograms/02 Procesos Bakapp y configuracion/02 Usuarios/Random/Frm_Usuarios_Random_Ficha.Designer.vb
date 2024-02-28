@@ -39,7 +39,6 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Txt_Telefono = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
@@ -48,13 +47,16 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Txt_EmailSup = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX12 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
-        Me.Cmb_Mod = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.Txt_Cod_Ext = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Comuna = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX24 = New DevComponents.DotNetBar.LabelX()
         Me.Btn_Buscar_Comuna = New DevComponents.DotNetBar.ButtonX()
         Me.Txt_Password = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Lbl_111 = New DevComponents.DotNetBar.LabelX()
+        Me.Highlighter1 = New DevComponents.DotNetBar.Validator.Highlighter()
+        Me.Txt_Modalidad = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Chk_Parafirma = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Inactivo = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TableLayoutPanel2.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -87,8 +89,8 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Txt_Codigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Codigo.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Codigo.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Codigo.FocusHighlightEnabled = True
         Me.Txt_Codigo.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Codigo, True)
         Me.Txt_Codigo.Location = New System.Drawing.Point(157, 13)
         Me.Txt_Codigo.Name = "Txt_Codigo"
         Me.Txt_Codigo.Size = New System.Drawing.Size(64, 22)
@@ -105,8 +107,8 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Txt_Rut.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Rut.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Rut.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Rut.FocusHighlightEnabled = True
         Me.Txt_Rut.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Rut, True)
         Me.Txt_Rut.Location = New System.Drawing.Point(454, 12)
         Me.Txt_Rut.Name = "Txt_Rut"
         Me.Txt_Rut.Size = New System.Drawing.Size(184, 22)
@@ -238,8 +240,8 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Txt_Nombre.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Nombre.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Nombre.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Nombre.FocusHighlightEnabled = True
         Me.Txt_Nombre.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Nombre, True)
         Me.Txt_Nombre.Location = New System.Drawing.Point(157, 41)
         Me.Txt_Nombre.Name = "Txt_Nombre"
         Me.Txt_Nombre.Size = New System.Drawing.Size(481, 22)
@@ -273,12 +275,12 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Txt_Direccion.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower
         Me.Txt_Direccion.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Direccion.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Direccion.FocusHighlightEnabled = True
         Me.Txt_Direccion.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Direccion, True)
         Me.Txt_Direccion.Location = New System.Drawing.Point(157, 69)
         Me.Txt_Direccion.Name = "Txt_Direccion"
         Me.Txt_Direccion.Size = New System.Drawing.Size(481, 22)
-        Me.Txt_Direccion.TabIndex = 2
+        Me.Txt_Direccion.TabIndex = 3
         '
         'Txt_Telefono
         '
@@ -291,20 +293,20 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Txt_Telefono.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Telefono.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Telefono.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Telefono.FocusHighlightEnabled = True
         Me.Txt_Telefono.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Telefono, True)
         Me.Txt_Telefono.Location = New System.Drawing.Point(120, 153)
         Me.Txt_Telefono.Name = "Txt_Telefono"
         Me.Txt_Telefono.Size = New System.Drawing.Size(170, 22)
-        Me.Txt_Telefono.TabIndex = 56
+        Me.Txt_Telefono.TabIndex = 6
         '
         'Bar1
         '
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Eliminar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 273)
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
+        Me.Bar1.Location = New System.Drawing.Point(0, 323)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(649, 41)
         Me.Bar1.Stretch = True
@@ -320,14 +322,6 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
         Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Grabar.Name = "Btn_Grabar"
-        '
-        'Btn_Eliminar
-        '
-        Me.Btn_Eliminar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Eliminar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Eliminar.Image = CType(resources.GetObject("Btn_Eliminar.Image"), System.Drawing.Image)
-        Me.Btn_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Eliminar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Eliminar.Name = "Btn_Eliminar"
         '
         'LabelX6
         '
@@ -409,12 +403,12 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Txt_Email.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Email.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Email.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Email.FocusHighlightEnabled = True
         Me.Txt_Email.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Email, True)
         Me.Txt_Email.Location = New System.Drawing.Point(391, 153)
         Me.Txt_Email.Name = "Txt_Email"
         Me.Txt_Email.Size = New System.Drawing.Size(247, 22)
-        Me.Txt_Email.TabIndex = 124
+        Me.Txt_Email.TabIndex = 7
         '
         'Txt_EmailSup
         '
@@ -427,12 +421,12 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Txt_EmailSup.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_EmailSup.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_EmailSup.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_EmailSup.FocusHighlightEnabled = True
         Me.Txt_EmailSup.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_EmailSup, True)
         Me.Txt_EmailSup.Location = New System.Drawing.Point(391, 181)
         Me.Txt_EmailSup.Name = "Txt_EmailSup"
         Me.Txt_EmailSup.Size = New System.Drawing.Size(247, 22)
-        Me.Txt_EmailSup.TabIndex = 126
+        Me.Txt_EmailSup.TabIndex = 9
         '
         'LabelX12
         '
@@ -469,19 +463,6 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.LabelX13.TabIndex = 127
         Me.LabelX13.Text = "Modalidad:"
         '
-        'Cmb_Mod
-        '
-        Me.Cmb_Mod.DisplayMember = "Text"
-        Me.Cmb_Mod.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.Cmb_Mod.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Cmb_Mod.FocusHighlightEnabled = True
-        Me.Cmb_Mod.ForeColor = System.Drawing.Color.Black
-        Me.Cmb_Mod.ItemHeight = 16
-        Me.Cmb_Mod.Location = New System.Drawing.Point(120, 181)
-        Me.Cmb_Mod.Name = "Cmb_Mod"
-        Me.Cmb_Mod.Size = New System.Drawing.Size(106, 22)
-        Me.Cmb_Mod.TabIndex = 128
-        '
         'Txt_Cod_Ext
         '
         Me.Txt_Cod_Ext.BackColor = System.Drawing.Color.White
@@ -493,12 +474,12 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Txt_Cod_Ext.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Cod_Ext.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Cod_Ext.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Cod_Ext.FocusHighlightEnabled = True
         Me.Txt_Cod_Ext.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Cod_Ext, True)
         Me.Txt_Cod_Ext.Location = New System.Drawing.Point(120, 209)
         Me.Txt_Cod_Ext.Name = "Txt_Cod_Ext"
         Me.Txt_Cod_Ext.Size = New System.Drawing.Size(261, 22)
-        Me.Txt_Cod_Ext.TabIndex = 129
+        Me.Txt_Cod_Ext.TabIndex = 10
         '
         'Txt_Comuna
         '
@@ -511,13 +492,14 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Txt_Comuna.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Comuna.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Comuna.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Comuna, True)
         Me.Txt_Comuna.Location = New System.Drawing.Point(157, 97)
         Me.Txt_Comuna.MaxLength = 200
         Me.Txt_Comuna.Name = "Txt_Comuna"
         Me.Txt_Comuna.PreventEnterBeep = True
         Me.Txt_Comuna.ReadOnly = True
         Me.Txt_Comuna.Size = New System.Drawing.Size(375, 22)
-        Me.Txt_Comuna.TabIndex = 151
+        Me.Txt_Comuna.TabIndex = 4
         '
         'LabelX24
         '
@@ -543,7 +525,7 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Btn_Buscar_Comuna.Name = "Btn_Buscar_Comuna"
         Me.Btn_Buscar_Comuna.Size = New System.Drawing.Size(97, 22)
         Me.Btn_Buscar_Comuna.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Buscar_Comuna.TabIndex = 149
+        Me.Btn_Buscar_Comuna.TabIndex = 5
         Me.Btn_Buscar_Comuna.Text = "Buscar comuna..."
         '
         'Txt_Password
@@ -557,12 +539,12 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Txt_Password.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Password.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Password.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Password.FocusHighlightEnabled = True
         Me.Txt_Password.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Password, True)
         Me.Txt_Password.Location = New System.Drawing.Point(120, 237)
         Me.Txt_Password.Name = "Txt_Password"
         Me.Txt_Password.Size = New System.Drawing.Size(170, 22)
-        Me.Txt_Password.TabIndex = 153
+        Me.Txt_Password.TabIndex = 11
         '
         'Lbl_111
         '
@@ -581,18 +563,83 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Lbl_111.TabIndex = 152
         Me.Lbl_111.Text = "Password:"
         '
+        'Highlighter1
+        '
+        Me.Highlighter1.ContainerControl = Me
+        Me.Highlighter1.FocusHighlightColor = DevComponents.DotNetBar.Validator.eHighlightColor.Green
+        Me.Highlighter1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        '
+        'Txt_Modalidad
+        '
+        Me.Txt_Modalidad.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Modalidad.Border.Class = "TextBoxBorder"
+        Me.Txt_Modalidad.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Modalidad.ButtonCustom.Image = CType(resources.GetObject("Txt_Modalidad.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Modalidad.ButtonCustom.Visible = True
+        Me.Txt_Modalidad.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.Txt_Modalidad.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Modalidad.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Txt_Modalidad.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Modalidad, True)
+        Me.Txt_Modalidad.Location = New System.Drawing.Point(120, 181)
+        Me.Txt_Modalidad.Name = "Txt_Modalidad"
+        Me.Txt_Modalidad.ReadOnly = True
+        Me.Txt_Modalidad.Size = New System.Drawing.Size(101, 22)
+        Me.Txt_Modalidad.TabIndex = 8
+        '
+        'Chk_Parafirma
+        '
+        Me.Chk_Parafirma.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Parafirma.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Parafirma.CheckBoxImageChecked = CType(resources.GetObject("Chk_Parafirma.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Parafirma.FocusCuesEnabled = False
+        Me.Chk_Parafirma.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Parafirma.Location = New System.Drawing.Point(12, 275)
+        Me.Chk_Parafirma.Name = "Chk_Parafirma"
+        Me.Chk_Parafirma.Size = New System.Drawing.Size(139, 15)
+        Me.Chk_Parafirma.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Parafirma.TabIndex = 12
+        Me.Chk_Parafirma.TabStop = False
+        Me.Chk_Parafirma.Text = "Desactivame para firma"
+        '
+        'Chk_Inactivo
+        '
+        Me.Chk_Inactivo.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Inactivo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Inactivo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Inactivo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Inactivo.FocusCuesEnabled = False
+        Me.Chk_Inactivo.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Inactivo.Location = New System.Drawing.Point(12, 296)
+        Me.Chk_Inactivo.Name = "Chk_Inactivo"
+        Me.Chk_Inactivo.Size = New System.Drawing.Size(124, 21)
+        Me.Chk_Inactivo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Inactivo.TabIndex = 13
+        Me.Chk_Inactivo.TabStop = False
+        Me.Chk_Inactivo.Text = "Bloquear funcionario"
+        '
         'Frm_Usuarios_Random_Ficha
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(649, 314)
+        Me.ClientSize = New System.Drawing.Size(649, 364)
+        Me.Controls.Add(Me.Chk_Inactivo)
+        Me.Controls.Add(Me.Chk_Parafirma)
+        Me.Controls.Add(Me.Txt_Modalidad)
         Me.Controls.Add(Me.Txt_Password)
         Me.Controls.Add(Me.Lbl_111)
         Me.Controls.Add(Me.Txt_Comuna)
         Me.Controls.Add(Me.LabelX24)
         Me.Controls.Add(Me.Btn_Buscar_Comuna)
         Me.Controls.Add(Me.Txt_Cod_Ext)
-        Me.Controls.Add(Me.Cmb_Mod)
         Me.Controls.Add(Me.LabelX13)
         Me.Controls.Add(Me.Txt_EmailSup)
         Me.Controls.Add(Me.LabelX12)
@@ -642,7 +689,6 @@ Partial Class Frm_Usuarios_Random_Ficha
     Friend WithEvents Txt_Telefono As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Txt_Direccion As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
@@ -652,11 +698,14 @@ Partial Class Frm_Usuarios_Random_Ficha
     Public WithEvents Txt_EmailSup As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX12 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX13 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents Cmb_Mod As DevComponents.DotNetBar.Controls.ComboBoxEx
     Friend WithEvents Txt_Cod_Ext As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Txt_Comuna As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX24 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Btn_Buscar_Comuna As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Txt_Password As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Lbl_111 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Highlighter1 As DevComponents.DotNetBar.Validator.Highlighter
+    Friend WithEvents Txt_Modalidad As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Chk_Parafirma As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_Inactivo As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

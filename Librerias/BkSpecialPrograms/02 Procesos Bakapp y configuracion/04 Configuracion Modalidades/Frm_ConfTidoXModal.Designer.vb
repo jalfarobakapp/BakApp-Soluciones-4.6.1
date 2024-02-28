@@ -132,7 +132,7 @@ Partial Class Frm_ConfTidoXModal
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.54812!))
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.45188!))
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 61.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 62.0!))
         Me.TableLayoutPanel2.Controls.Add(Me.Btn_BuscarFormatoImpPDF_Quitar, 3, 1)
         Me.TableLayoutPanel2.Controls.Add(Me.BuscarFormatoImpNormal_Quitar, 3, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.Btn_BuscarFormatoImpPDF, 2, 1)
@@ -155,7 +155,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Btn_BuscarFormatoImpPDF_Quitar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_BuscarFormatoImpPDF_Quitar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarFormatoImpPDF_Quitar.Image = CType(resources.GetObject("Btn_BuscarFormatoImpPDF_Quitar.Image"), System.Drawing.Image)
-        Me.Btn_BuscarFormatoImpPDF_Quitar.Location = New System.Drawing.Point(554, 30)
+        Me.Btn_BuscarFormatoImpPDF_Quitar.Location = New System.Drawing.Point(553, 30)
         Me.Btn_BuscarFormatoImpPDF_Quitar.Name = "Btn_BuscarFormatoImpPDF_Quitar"
         Me.Btn_BuscarFormatoImpPDF_Quitar.Size = New System.Drawing.Size(28, 21)
         Me.Btn_BuscarFormatoImpPDF_Quitar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -167,7 +167,7 @@ Partial Class Frm_ConfTidoXModal
         Me.BuscarFormatoImpNormal_Quitar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.BuscarFormatoImpNormal_Quitar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.BuscarFormatoImpNormal_Quitar.Image = CType(resources.GetObject("BuscarFormatoImpNormal_Quitar.Image"), System.Drawing.Image)
-        Me.BuscarFormatoImpNormal_Quitar.Location = New System.Drawing.Point(554, 3)
+        Me.BuscarFormatoImpNormal_Quitar.Location = New System.Drawing.Point(553, 3)
         Me.BuscarFormatoImpNormal_Quitar.Name = "BuscarFormatoImpNormal_Quitar"
         Me.BuscarFormatoImpNormal_Quitar.Size = New System.Drawing.Size(28, 21)
         Me.BuscarFormatoImpNormal_Quitar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -179,7 +179,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Btn_BuscarFormatoImpPDF.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_BuscarFormatoImpPDF.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarFormatoImpPDF.Image = CType(resources.GetObject("Btn_BuscarFormatoImpPDF.Image"), System.Drawing.Image)
-        Me.Btn_BuscarFormatoImpPDF.Location = New System.Drawing.Point(509, 30)
+        Me.Btn_BuscarFormatoImpPDF.Location = New System.Drawing.Point(508, 30)
         Me.Btn_BuscarFormatoImpPDF.Name = "Btn_BuscarFormatoImpPDF"
         Me.Btn_BuscarFormatoImpPDF.Size = New System.Drawing.Size(39, 22)
         Me.Btn_BuscarFormatoImpPDF.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -219,7 +219,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Btn_BuscarFormatoImpNormal.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_BuscarFormatoImpNormal.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarFormatoImpNormal.Image = CType(resources.GetObject("Btn_BuscarFormatoImpNormal.Image"), System.Drawing.Image)
-        Me.Btn_BuscarFormatoImpNormal.Location = New System.Drawing.Point(509, 3)
+        Me.Btn_BuscarFormatoImpNormal.Location = New System.Drawing.Point(508, 3)
         Me.Btn_BuscarFormatoImpNormal.Name = "Btn_BuscarFormatoImpNormal"
         Me.Btn_BuscarFormatoImpNormal.Size = New System.Drawing.Size(39, 21)
         Me.Btn_BuscarFormatoImpNormal.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -240,7 +240,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Txt_Nombreformato.Name = "Txt_Nombreformato"
         Me.Txt_Nombreformato.PreventEnterBeep = True
         Me.Txt_Nombreformato.ReadOnly = True
-        Me.Txt_Nombreformato.Size = New System.Drawing.Size(391, 22)
+        Me.Txt_Nombreformato.Size = New System.Drawing.Size(390, 22)
         Me.Txt_Nombreformato.TabIndex = 9
         '
         'Txt_NombreFormato_PDF
@@ -257,7 +257,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Txt_NombreFormato_PDF.Name = "Txt_NombreFormato_PDF"
         Me.Txt_NombreFormato_PDF.PreventEnterBeep = True
         Me.Txt_NombreFormato_PDF.ReadOnly = True
-        Me.Txt_NombreFormato_PDF.Size = New System.Drawing.Size(391, 22)
+        Me.Txt_NombreFormato_PDF.Size = New System.Drawing.Size(390, 22)
         Me.Txt_NombreFormato_PDF.TabIndex = 10
         '
         'Btn_InfNumeracion
@@ -279,7 +279,7 @@ Partial Class Frm_ConfTidoXModal
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.72285!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.27715!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 43.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 62.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 63.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.Lbl_AvisoSaldoFolios, 1, 11)
         Me.TableLayoutPanel1.Controls.Add(Me.Input_AvisoSaldoFolios, 0, 11)
         Me.TableLayoutPanel1.Controls.Add(Me.Lbl_DiasAvisoExpiraFolio, 1, 10)
@@ -337,7 +337,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Lbl_AvisoSaldoFolios.ForeColor = System.Drawing.Color.Black
         Me.Lbl_AvisoSaldoFolios.Location = New System.Drawing.Point(113, 289)
         Me.Lbl_AvisoSaldoFolios.Name = "Lbl_AvisoSaldoFolios"
-        Me.Lbl_AvisoSaldoFolios.Size = New System.Drawing.Size(391, 20)
+        Me.Lbl_AvisoSaldoFolios.Size = New System.Drawing.Size(390, 20)
         Me.Lbl_AvisoSaldoFolios.TabIndex = 101
         Me.Lbl_AvisoSaldoFolios.Text = "Número de documentos que quedan para dar aviso por los folios DTE."
         '
@@ -369,7 +369,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Lbl_DiasAvisoExpiraFolio.ForeColor = System.Drawing.Color.Black
         Me.Lbl_DiasAvisoExpiraFolio.Location = New System.Drawing.Point(113, 263)
         Me.Lbl_DiasAvisoExpiraFolio.Name = "Lbl_DiasAvisoExpiraFolio"
-        Me.Lbl_DiasAvisoExpiraFolio.Size = New System.Drawing.Size(391, 20)
+        Me.Lbl_DiasAvisoExpiraFolio.Size = New System.Drawing.Size(390, 20)
         Me.Lbl_DiasAvisoExpiraFolio.TabIndex = 100
         Me.Lbl_DiasAvisoExpiraFolio.Text = "Días de aviso para que expiren los folios DTE."
         '
@@ -383,7 +383,7 @@ Partial Class Frm_ConfTidoXModal
         Me.LabelX16.ForeColor = System.Drawing.Color.Black
         Me.LabelX16.Location = New System.Drawing.Point(113, 237)
         Me.LabelX16.Name = "LabelX16"
-        Me.LabelX16.Size = New System.Drawing.Size(391, 20)
+        Me.LabelX16.Size = New System.Drawing.Size(390, 20)
         Me.LabelX16.TabIndex = 104
         Me.LabelX16.Text = "Timbrar eléctronicamente siempre por Random ."
         '
@@ -410,7 +410,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Btn_BuscarFormatoCorreo_Quitar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_BuscarFormatoCorreo_Quitar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarFormatoCorreo_Quitar.Image = CType(resources.GetObject("Btn_BuscarFormatoCorreo_Quitar.Image"), System.Drawing.Image)
-        Me.Btn_BuscarFormatoCorreo_Quitar.Location = New System.Drawing.Point(553, 211)
+        Me.Btn_BuscarFormatoCorreo_Quitar.Location = New System.Drawing.Point(552, 211)
         Me.Btn_BuscarFormatoCorreo_Quitar.Name = "Btn_BuscarFormatoCorreo_Quitar"
         Me.Btn_BuscarFormatoCorreo_Quitar.Size = New System.Drawing.Size(28, 20)
         Me.Btn_BuscarFormatoCorreo_Quitar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -422,7 +422,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Btn_BuscarCorreo_Quitar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_BuscarCorreo_Quitar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarCorreo_Quitar.Image = CType(resources.GetObject("Btn_BuscarCorreo_Quitar.Image"), System.Drawing.Image)
-        Me.Btn_BuscarCorreo_Quitar.Location = New System.Drawing.Point(553, 185)
+        Me.Btn_BuscarCorreo_Quitar.Location = New System.Drawing.Point(552, 185)
         Me.Btn_BuscarCorreo_Quitar.Name = "Btn_BuscarCorreo_Quitar"
         Me.Btn_BuscarCorreo_Quitar.Size = New System.Drawing.Size(28, 20)
         Me.Btn_BuscarCorreo_Quitar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -443,7 +443,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Txt_NombreFormato_Correo.Name = "Txt_NombreFormato_Correo"
         Me.Txt_NombreFormato_Correo.PreventEnterBeep = True
         Me.Txt_NombreFormato_Correo.ReadOnly = True
-        Me.Txt_NombreFormato_Correo.Size = New System.Drawing.Size(391, 22)
+        Me.Txt_NombreFormato_Correo.Size = New System.Drawing.Size(390, 22)
         Me.Txt_NombreFormato_Correo.TabIndex = 23
         '
         'LabelX14
@@ -470,7 +470,7 @@ Partial Class Frm_ConfTidoXModal
         Me.LabelX13.ForeColor = System.Drawing.Color.Black
         Me.LabelX13.Location = New System.Drawing.Point(113, 159)
         Me.LabelX13.Name = "LabelX13"
-        Me.LabelX13.Size = New System.Drawing.Size(391, 20)
+        Me.LabelX13.Size = New System.Drawing.Size(390, 20)
         Me.LabelX13.TabIndex = 24
         Me.LabelX13.Text = "Enviar correos despues de grabar documento"
         '
@@ -488,7 +488,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Txt_Id_Correo.Name = "Txt_Id_Correo"
         Me.Txt_Id_Correo.PreventEnterBeep = True
         Me.Txt_Id_Correo.ReadOnly = True
-        Me.Txt_Id_Correo.Size = New System.Drawing.Size(391, 22)
+        Me.Txt_Id_Correo.Size = New System.Drawing.Size(390, 22)
         Me.Txt_Id_Correo.TabIndex = 22
         '
         'LabelX12
@@ -501,7 +501,7 @@ Partial Class Frm_ConfTidoXModal
         Me.LabelX12.ForeColor = System.Drawing.Color.Black
         Me.LabelX12.Location = New System.Drawing.Point(113, 133)
         Me.LabelX12.Name = "LabelX12"
-        Me.LabelX12.Size = New System.Drawing.Size(391, 20)
+        Me.LabelX12.Size = New System.Drawing.Size(390, 20)
         Me.LabelX12.TabIndex = 20
         Me.LabelX12.Text = "Obliga a ingresar transportista"
         '
@@ -565,7 +565,7 @@ Partial Class Frm_ConfTidoXModal
         Me.LabelX8.ForeColor = System.Drawing.Color.Black
         Me.LabelX8.Location = New System.Drawing.Point(113, 107)
         Me.LabelX8.Name = "LabelX8"
-        Me.LabelX8.Size = New System.Drawing.Size(391, 20)
+        Me.LabelX8.Size = New System.Drawing.Size(390, 20)
         Me.LabelX8.TabIndex = 19
         Me.LabelX8.Text = "Obliga grabar despacho cuando hay bodegas distintas en el detalle del documento"
         '
@@ -702,7 +702,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Btn_BuscarCorreo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_BuscarCorreo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarCorreo.Image = CType(resources.GetObject("Btn_BuscarCorreo.Image"), System.Drawing.Image)
-        Me.Btn_BuscarCorreo.Location = New System.Drawing.Point(510, 185)
+        Me.Btn_BuscarCorreo.Location = New System.Drawing.Point(509, 185)
         Me.Btn_BuscarCorreo.Name = "Btn_BuscarCorreo"
         Me.Btn_BuscarCorreo.Size = New System.Drawing.Size(31, 20)
         Me.Btn_BuscarCorreo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -732,7 +732,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Btn_BuscarFormatoCorreo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_BuscarFormatoCorreo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarFormatoCorreo.Image = CType(resources.GetObject("Btn_BuscarFormatoCorreo.Image"), System.Drawing.Image)
-        Me.Btn_BuscarFormatoCorreo.Location = New System.Drawing.Point(510, 211)
+        Me.Btn_BuscarFormatoCorreo.Location = New System.Drawing.Point(509, 211)
         Me.Btn_BuscarFormatoCorreo.Name = "Btn_BuscarFormatoCorreo"
         Me.Btn_BuscarFormatoCorreo.Size = New System.Drawing.Size(31, 20)
         Me.Btn_BuscarFormatoCorreo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled

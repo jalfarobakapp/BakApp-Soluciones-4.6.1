@@ -57,7 +57,7 @@ Public Class Frm_St_Estado_07_Entrega_Facturacion
     Private Sub Frm_St_Estado_07_Entrega_Facturacion_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         _Es_Garantia = _Row_Encabezado.Item("Chk_Serv_Garantia")
-        InsertarBotonenGrilla(Grilla, "Btn_Ver", "Ver", "Ver", 0, _Tipo_Boton.Boton)
+        Sb_InsertarBotonenGrilla(Grilla, "Btn_Ver", "Ver", "Ver", 0, _Tipo_Boton.Boton)
 
         Sb_Actualizar_Grilla()
 

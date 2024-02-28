@@ -5929,7 +5929,10 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
-    Sub Sb_Confirmar_Lectura(_Mensaje1 As String, _Mensaje2 As String, _TaskDialogIcon As eTaskDialogIcon, _FooterText As String)
+    Sub Sb_Confirmar_Lectura(_Mensaje1 As String,
+                             _Mensaje2 As String,
+                             _TaskDialogIcon As eTaskDialogIcon,
+                             _FooterText As String)
 
         Dim Chk_Confirmar_Lectura As New Command
         Chk_Confirmar_Lectura.Checked = False

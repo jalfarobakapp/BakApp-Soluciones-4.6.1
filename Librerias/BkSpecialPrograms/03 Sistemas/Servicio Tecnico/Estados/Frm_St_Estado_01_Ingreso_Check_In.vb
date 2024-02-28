@@ -38,8 +38,8 @@ Public Class Frm_St_Estado_01_Ingreso_Check_In
     End Sub
     Private Sub Frm_St_Estado_01_Asignacion_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
-        InsertarBotonenGrilla(Grill_Check_In, "BtnImagen", "Situación", "Solicitud", 0, _Tipo_Boton.Imagen)
-        InsertarBotonenGrilla(Grilla_Accesorios, "BtnImagen", "Situación", "Solicitud", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grill_Check_In, "BtnImagen", "Situación", "Solicitud", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla_Accesorios, "BtnImagen", "Situación", "Solicitud", 0, _Tipo_Boton.Imagen)
 
         Sb_Formato_Generico_Grilla(Grill_Check_In, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
         Sb_Formato_Generico_Grilla(Grilla_Accesorios, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)

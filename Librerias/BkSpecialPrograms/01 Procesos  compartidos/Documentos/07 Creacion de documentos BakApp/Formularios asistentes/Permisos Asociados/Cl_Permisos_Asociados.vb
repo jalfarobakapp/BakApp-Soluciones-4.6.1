@@ -589,7 +589,8 @@ Public Class Cl_Permisos_Asociados
                         Else
 
                             If Not IsNothing(_Row_Tabfujefe) Then
-                                _Error = "El Jefe " & _CodJefe & " - " & Trim(_Row_Tabfujefe.Item("NOKOFU")) & " no tiene un valor asignado para poder dar permisos"
+                                _Error = "El Jefe " & _CodJefe & " - " & Trim(_Row_Tabfujefe.Item("NOKOFU")) & " no tiene un valor asignado para poder dar permisos" & vbCrLf &
+                                         "Revise el permiso: Comp0092" & vbCrLf
                             Else
                                 _Error = "No existe el Jefe: " & _CodJefe
                             End If

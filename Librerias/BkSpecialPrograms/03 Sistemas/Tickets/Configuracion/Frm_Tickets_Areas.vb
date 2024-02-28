@@ -150,7 +150,7 @@ Public Class Frm_Tickets_Areas
 
     Private Sub Grilla_Areas_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Areas.CellDoubleClick
         If ModoSeleccion Then
-            MessageBoxEx.Show(Me, "Debe seleccionar un tipo de requerimient de la lista de abajo",
+            MessageBoxEx.Show(Me, "Debe seleccionar un tipo de requerimiento de la lista de abajo",
                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
