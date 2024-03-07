@@ -96,7 +96,8 @@ Namespace My.Resources
         '''        --Fecha_Ingreso As Hora
         '''Into #Paso1        
         '''
-        '''FROM   INGETEC_PRB2.dbo.Zw_St_OT_Encabezad [resto de la cadena truncado]&quot;;.
+        '''FROM   #Db_BakApp#Zw_St_OT_Encabezado
+        '''	Le [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property SqlQuery_Lista_OT2() As String
             Get

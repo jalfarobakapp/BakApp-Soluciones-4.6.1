@@ -4225,20 +4225,23 @@ Public Class Frm_Formulario_Documento
 
                 If _TblTabbopr.Rows.Count = 1 Then
 
+                    Dim _Bodega_Str As String = _Sql.Fx_Trae_Dato("TABBO", "Ltrim(Rtrim(KOBO))+' - '+Ltrim(Rtrim(NOKOBO))",
+                                                "EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal & "' And KOBO = '" & _Bodega & "'")
+
                     _Sucursal = _TblTabbopr.Rows(0).Item("KOSU")
                     _Bodega = _TblTabbopr.Rows(0).Item("KOBO")
                     _Asociado_Bodega = True
-
-                    MessageBoxEx.Show(Me, "Producto se asignara a bodega: " & _Bodega & vbCrLf &
-                                      "(" & _TblTabbopr.Rows(0).Item("NOKOBO").ToString.Trim & ")", "Asignación automática",
-                                                                                                    MessageBoxButtons.OK, MessageBoxIcon.Information)
                     _Pedir_Permiso = True
+
+                    MessageBoxEx.Show(Me, "Este producto no esta asignado a la bodega " & _Bodega_Str & vbCrLf & vbCrLf &
+                                      "Producto se asignara a bodega: " & _Bodega & " - " & _TblTabbopr.Rows(0).Item("NOKOBO").ToString.Trim, "Asignación automática",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
 
                 Else
 
                     MessageBoxEx.Show(Me, "Este producto no esta asignado a la bodega " & _Bodega & vbCrLf &
                                       "Debe seleccionar una bodega para la línea del documento", "Validación",
-                                                                                                 MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                                      MessageBoxButtons.OK, MessageBoxIcon.Warning)
 
                     Dim _Row_Bodega As DataRow
                     Dim _Stock_Insuficiente As Boolean

@@ -77,12 +77,19 @@
   <ItemGroup>
     <Reference Include="DevComponents.DotNetBar.Keyboard, Version=11.7.0.0, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL" />
     <Reference Include="DevComponents.DotNetBar2, Version=11.7.0.0, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL" />
+    <Reference Include="DotNetZip, Version=1.16.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetZip.1.16.0\lib\net40\DotNetZip.dll</HintPath>
+    </Reference>
     <Reference Include="HEFESTO.FIRMA.DOCUMENTO, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.FIRMA.DOC.FORM\HEFESTO.FIRMA.DOCUMENTO\bin\Debug\HEFESTO.FIRMA.DOCUMENTO.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -96,7 +103,6 @@
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
-    <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
     <Import Include="System.Data" />
     <Import Include="System.Drawing" />
@@ -105,6 +111,115 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="03 Conexion Empresas\ConexionBK.Designer.vb">
+      <DependentUpon>ConexionBK.xsd</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="03 Conexion Empresas\Frm_ConexionBD.Designer.vb">
+      <DependentUpon>Frm_ConexionBD.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Conexion Empresas\Frm_ConexionBD.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Conexion Empresas\Multiempresa Random\Frm_Multiempresa_Random.designer.vb">
+      <DependentUpon>Frm_Multiempresa_Random.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Conexion Empresas\Multiempresa Random\Frm_Multiempresa_Random.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="06 Sesion Star Licencia\Frm_Login.Designer.vb">
+      <DependentUpon>Frm_Login.vb</DependentUpon>
+    </Compile>
+    <Compile Include="06 Sesion Star Licencia\Frm_Login.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="06 Sesion Star Licencia\Frm_Modalidades.designer.vb">
+      <DependentUpon>Frm_Modalidades.vb</DependentUpon>
+    </Compile>
+    <Compile Include="06 Sesion Star Licencia\Frm_Modalidades.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="06 Sesion Star Licencia\Frm_Modalidad_Mt.Designer.vb">
+      <DependentUpon>Frm_Modalidad_Mt.vb</DependentUpon>
+    </Compile>
+    <Compile Include="06 Sesion Star Licencia\Frm_Modalidad_Mt.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="07 Validar permiso usuario\Administrador\Frm_Clave_Administrador.Designer.vb">
+      <DependentUpon>Frm_Clave_Administrador.vb</DependentUpon>
+    </Compile>
+    <Compile Include="07 Validar permiso usuario\Administrador\Frm_Clave_Administrador.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="07 Validar permiso usuario\Class_Permiso_BakApp.vb" />
+    <Compile Include="07 Validar permiso usuario\Class_Permiso_Random.vb" />
+    <Compile Include="07 Validar permiso usuario\Frm_InpunBox_Bk.Designer.vb">
+      <DependentUpon>Frm_InpunBox_Bk.vb</DependentUpon>
+    </Compile>
+    <Compile Include="07 Validar permiso usuario\Frm_InpunBox_Bk.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="07 Validar permiso usuario\Frm_ValidarPermiso.Designer.vb">
+      <DependentUpon>Frm_ValidarPermiso.vb</DependentUpon>
+    </Compile>
+    <Compile Include="07 Validar permiso usuario\Frm_ValidarPermiso.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="07 Validar permiso usuario\Frm_ValidarPermisoUsuario.Designer.vb">
+      <DependentUpon>Frm_ValidarPermisoUsuario.vb</DependentUpon>
+    </Compile>
+    <Compile Include="07 Validar permiso usuario\Frm_ValidarPermisoUsuario.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="07 Validar permiso usuario\Lista\Frm_Permisos_Usuario_Lista.Designer.vb">
+      <DependentUpon>Frm_Permisos_Usuario_Lista.vb</DependentUpon>
+    </Compile>
+    <Compile Include="07 Validar permiso usuario\Lista\Frm_Permisos_Usuario_Lista.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="07 Validar permiso usuario\Lista\Frm_Permisos_Usuario_Mis_Jefes.designer.vb">
+      <DependentUpon>Frm_Permisos_Usuario_Mis_Jefes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="07 Validar permiso usuario\Lista\Frm_Permisos_Usuario_Mis_Jefes.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="07 Validar permiso usuario\Lista\Frm_Permisos_Usuario_Permisos.Designer.vb">
+      <DependentUpon>Frm_Permisos_Usuario_Permisos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="07 Validar permiso usuario\Lista\Frm_Permisos_Usuario_Permisos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="07 Validar permiso usuario\Lista\Frm_Permisos_Usuario_Porc_Dscto.designer.vb">
+      <DependentUpon>Frm_Permisos_Usuario_Porc_Dscto.vb</DependentUpon>
+    </Compile>
+    <Compile Include="07 Validar permiso usuario\Lista\Frm_Permisos_Usuario_Porc_Dscto.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="07 Validar permiso usuario\Modulo_Permiso.vb" />
+    <Compile Include="07 Validar permiso usuario\Mod_Fx.vb" />
+    <Compile Include="Clases\Class_Conectar_Base_BakApp.vb" />
+    <Compile Include="Clases\Class_Genera_DTE_RdBk.vb" />
+    <Compile Include="Clases\Class_Referencias_DTE.vb" />
+    <Compile Include="Clases\Class_SQL.vb" />
+    <Compile Include="Clases\Clas_Modalidades.vb" />
+    <Compile Include="Clases\DataSet Bakapp\DatosBakApp.Designer.vb">
+      <DependentUpon>DatosBakApp.xsd</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Clases\DataSet Bakapp\DatosBakApp.vb">
+      <DependentUpon>DatosBakApp.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Clases\Entidad\Recursos\Recursos_Entidad.Designer.vb">
+      <DependentUpon>Recursos_Entidad.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Clases\Funciones_Comunes.vb" />
+    <Compile Include="Clases\Funciones_Especiales_BakApp.vb" />
+    <Compile Include="Clases\Hefesto\Otros\Encabezado.vb" />
+    <Compile Include="Clases\Mod_Variables_Globales.vb" />
     <Compile Include="Demonio\DteMonitor.designer.vb">
       <DependentUpon>DteMonitor.vb</DependentUpon>
     </Compile>
@@ -112,6 +227,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Demonio\Clas_Demonio.vb" />
+    <Compile Include="DTE Monitor\Frm_Demonio_DTEMonitor.Designer.vb">
+      <DependentUpon>Frm_Demonio_DTEMonitor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DTE Monitor\Frm_Demonio_DTEMonitor.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -128,8 +249,60 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Recursos DTE\Recursos\Recursos_DTE.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Recursos_DTE.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="03 Conexion Empresas\Frm_ConexionBD.resx">
+      <DependentUpon>Frm_ConexionBD.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Conexion Empresas\Multiempresa Random\Frm_Multiempresa_Random.resx">
+      <DependentUpon>Frm_Multiempresa_Random.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="06 Sesion Star Licencia\Frm_Login.resx">
+      <DependentUpon>Frm_Login.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="06 Sesion Star Licencia\Frm_Modalidades.resx">
+      <DependentUpon>Frm_Modalidades.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="06 Sesion Star Licencia\Frm_Modalidad_Mt.resx">
+      <DependentUpon>Frm_Modalidad_Mt.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="07 Validar permiso usuario\Administrador\Frm_Clave_Administrador.resx">
+      <DependentUpon>Frm_Clave_Administrador.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="07 Validar permiso usuario\Frm_InpunBox_Bk.resx">
+      <DependentUpon>Frm_InpunBox_Bk.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="07 Validar permiso usuario\Frm_ValidarPermiso.resx">
+      <DependentUpon>Frm_ValidarPermiso.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="07 Validar permiso usuario\Frm_ValidarPermisoUsuario.resx">
+      <DependentUpon>Frm_ValidarPermisoUsuario.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="07 Validar permiso usuario\Lista\Frm_Permisos_Usuario_Lista.resx">
+      <DependentUpon>Frm_Permisos_Usuario_Lista.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="07 Validar permiso usuario\Lista\Frm_Permisos_Usuario_Mis_Jefes.resx">
+      <DependentUpon>Frm_Permisos_Usuario_Mis_Jefes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="07 Validar permiso usuario\Lista\Frm_Permisos_Usuario_Permisos.resx">
+      <DependentUpon>Frm_Permisos_Usuario_Permisos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="07 Validar permiso usuario\Lista\Frm_Permisos_Usuario_Porc_Dscto.resx">
+      <DependentUpon>Frm_Permisos_Usuario_Porc_Dscto.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Clases\Entidad\Recursos\Recursos_Entidad.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Recursos_Entidad.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DTE Monitor\Frm_Demonio_DTEMonitor.resx">
+      <DependentUpon>Frm_Demonio_DTEMonitor.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
@@ -140,9 +313,36 @@
     <EmbeddedResource Include="Demonio\DteMonitor.resx">
       <DependentUpon>DteMonitor.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Recursos DTE\Recursos\Recursos_DTE.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <LastGenOutput>Recursos_DTE.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="03 Conexion Empresas\ConexionBK.xsc">
+      <DependentUpon>ConexionBK.xsd</DependentUpon>
+    </None>
+    <None Include="03 Conexion Empresas\ConexionBK.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ConexionBK.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="03 Conexion Empresas\ConexionBK.xss">
+      <DependentUpon>ConexionBK.xsd</DependentUpon>
+    </None>
     <None Include="app.config" />
+    <None Include="Clases\DataSet Bakapp\DatosBakApp.xsc">
+      <DependentUpon>DatosBakApp.xsd</DependentUpon>
+    </None>
+    <None Include="Clases\DataSet Bakapp\DatosBakApp.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DatosBakApp.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Clases\DataSet Bakapp\DatosBakApp.xss">
+      <DependentUpon>DatosBakApp.xsd</DependentUpon>
+    </None>
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -153,6 +353,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -197,7 +398,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Clases\Entidad\Recursos\Sql\Datos\SqlQuery_Datos_Entidad.sql" />
     <Content Include="internet-update.ico" />
+    <Content Include="Recursos DTE\Recursos\SQLQuery_Genera_Encabezado_DTE_RdBk.xml" />
+    <Content Include="Recursos DTE\Recursos\SQLQuery_Genera_Encabezado_DTE_RdBkBOLETA.xml" />
+    <Content Include="Recursos DTE\Recursos\SQLQuery_Genera_Timbre_Electronico_DTE_RdBk.xml" />
     <None Include="bin\Debug\Procedimientos\Auditoria compras y stock - copia.sql" />
     <None Include="bin\Debug\Procedimientos\Auditoria compras y stock.sql" />
     <None Include="bin\Debug\Procedimientos\Detalle Occ vs Nvv.sql" />
@@ -242,9 +447,45 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Librerias\BkSpecialPrograms\BkSpecialPrograms.vbproj">
-      <Project>{b1123a46-6005-434a-9458-b58e8d51ee34}</Project>
-      <Name>BkSpecialPrograms</Name>
+    <ProjectReference Include="..\..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.ACUSE.RECIBO.FACTURA\Hefesto.Acuse.Recibo.Factura.csproj">
+      <Project>{9529083e-df30-4122-a4fc-4ffb214f15b5}</Project>
+      <Name>Hefesto.Acuse.Recibo.Factura</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.CONSULTA.TRACKID\HEFESTO.CONSULTA.TRACKID.csproj">
+      <Project>{7eaa3266-f348-45c7-adcb-b4b9efa1e19e}</Project>
+      <Name>HEFESTO.CONSULTA.TRACKID</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.DTE.ENVIO.SETDTE\HEFESTO.DTE.AUTENTICACION.ENT\HEFESTO.DTE.AUTENTICACION.ENT.csproj">
+      <Project>{6d1e9c54-ba9f-4e37-bbd8-592cfb5ba8c6}</Project>
+      <Name>HEFESTO.DTE.AUTENTICACION.ENT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.DTE.ENVIO.SETDTE\HEFESTO.DTE.AUTENTICACION\HEFESTO.DTE.AUTENTICACION.csproj">
+      <Project>{d6edae47-ae7f-4a42-bc8c-5ee83d5a1e1e}</Project>
+      <Name>HEFESTO.DTE.AUTENTICACION</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.DTE.ENVIO.SETDTE\HEFESTO.ENVIO.SETDTE.CLIENTE\HEFESTO.ENVIO.SETDTE.CLIENTE.csproj">
+      <Project>{0e857171-0fa8-4d20-959d-e2b9555015aa}</Project>
+      <Name>HEFESTO.ENVIO.SETDTE.CLIENTE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.DTE.ENVIO.SETDTE\HEFESTO.ENVIO.SETDTE.FORM\HEFESTO.ENVIO.SETDTE.FORM.csproj">
+      <Project>{e3e05ec7-7d5e-4d0d-807b-166250c5eebb}</Project>
+      <Name>HEFESTO.ENVIO.SETDTE.FORM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.FIRMA.DOC.FORM\HEFESTO.FIRMA.DOC.FORM\HEFESTO.FIRMA.DOC.FORM.csproj">
+      <Project>{e30ead6e-db52-4d07-a5d3-37af75b1ec42}</Project>
+      <Name>HEFESTO.FIRMA.DOC.FORM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\RunDteBK\Factura Electronica DTE Efesto\HefestoCesionV12\HefestoCesionV12.csproj">
+      <Project>{3f91f195-975a-4f79-854b-7026cadb8a67}</Project>
+      <Name>HefestoCesionV12</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\RunDteBK\Factura Electronica DTE Efesto\HEFSIILIBDTES BOLETAS ELECTRÓNICAS 2022\HEFSIILIBDTES\HEFSIILIBDTES.csproj">
+      <Project>{ad94e747-4598-499c-8ea3-f6013acffcd5}</Project>
+      <Name>HEFSIILIBDTES</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\RunDteBK\Factura Electronica DTE Efesto\HEFSIIREGCOMPRAVENTAS\HEFESTO.SII.V2020.BG.QUERY.LIB\HEFSIIREGCOMPRAVENTAS.LIB.csproj">
+      <Project>{965eb04b-532a-4d19-b2c2-a3f5495cde87}</Project>
+      <Name>HEFSIIREGCOMPRAVENTAS.LIB</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

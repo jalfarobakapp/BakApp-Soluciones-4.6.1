@@ -51,6 +51,10 @@ Partial Class Frm_FacturacionElectronica
         Me.LabelX8 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Id_Aec = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Btn_AEC = New DevComponents.DotNetBar.ButtonX()
+        Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Btn_Acuse_ConsultarVersion = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_ConsultaEstadoDocumentoCedible = New DevComponents.DotNetBar.ButtonX()
+        Me.GroupPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Btn_Consumo_Folios
@@ -440,11 +444,76 @@ Partial Class Frm_FacturacionElectronica
         Me.Btn_AEC.TabIndex = 27
         Me.Btn_AEC.Text = "Enviar Cesion AEC"
         '
+        'GroupPanel1
+        '
+        Me.GroupPanel1.BackColor = System.Drawing.Color.White
+        Me.GroupPanel1.CanvasColor = System.Drawing.SystemColors.Control
+        Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Btn_ConsultaEstadoDocumentoCedible)
+        Me.GroupPanel1.Controls.Add(Me.Btn_Acuse_ConsultarVersion)
+        Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel1.Location = New System.Drawing.Point(422, 115)
+        Me.GroupPanel1.Name = "GroupPanel1"
+        Me.GroupPanel1.Size = New System.Drawing.Size(434, 174)
+        '
+        '
+        '
+        Me.GroupPanel1.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel1.Style.BackColorGradientAngle = 90
+        Me.GroupPanel1.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel1.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderBottomWidth = 1
+        Me.GroupPanel1.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel1.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderLeftWidth = 1
+        Me.GroupPanel1.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderRightWidth = 1
+        Me.GroupPanel1.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderTopWidth = 1
+        Me.GroupPanel1.Style.CornerDiameter = 4
+        Me.GroupPanel1.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel1.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel1.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel1.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel1.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel1.TabIndex = 30
+        Me.GroupPanel1.Text = "Acuse de recibo"
+        '
+        'Btn_Acuse_ConsultarVersion
+        '
+        Me.Btn_Acuse_ConsultarVersion.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Acuse_ConsultarVersion.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Acuse_ConsultarVersion.Location = New System.Drawing.Point(3, 9)
+        Me.Btn_Acuse_ConsultarVersion.Name = "Btn_Acuse_ConsultarVersion"
+        Me.Btn_Acuse_ConsultarVersion.Size = New System.Drawing.Size(197, 23)
+        Me.Btn_Acuse_ConsultarVersion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Acuse_ConsultarVersion.TabIndex = 2
+        Me.Btn_Acuse_ConsultarVersion.Text = "Consultar version"
+        '
+        'Btn_ConsultaEstadoDocumentoCedible
+        '
+        Me.Btn_ConsultaEstadoDocumentoCedible.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_ConsultaEstadoDocumentoCedible.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_ConsultaEstadoDocumentoCedible.Location = New System.Drawing.Point(3, 38)
+        Me.Btn_ConsultaEstadoDocumentoCedible.Name = "Btn_ConsultaEstadoDocumentoCedible"
+        Me.Btn_ConsultaEstadoDocumentoCedible.Size = New System.Drawing.Size(197, 23)
+        Me.Btn_ConsultaEstadoDocumentoCedible.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_ConsultaEstadoDocumentoCedible.TabIndex = 3
+        Me.Btn_ConsultaEstadoDocumentoCedible.Text = "Consultar estado documentos cedible"
+        '
         'Frm_FacturacionElectronica
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(653, 521)
+        Me.ClientSize = New System.Drawing.Size(878, 521)
+        Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.LabelX8)
         Me.Controls.Add(Me.Txt_Id_Aec)
         Me.Controls.Add(Me.Btn_AEC)
@@ -478,6 +547,7 @@ Partial Class Frm_FacturacionElectronica
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Name = "Frm_FacturacionElectronica"
         Me.Text = "MetroForm"
+        Me.GroupPanel1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -511,4 +581,7 @@ Partial Class Frm_FacturacionElectronica
     Friend WithEvents LabelX8 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_Id_Aec As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Btn_AEC As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents Btn_Acuse_ConsultarVersion As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Btn_ConsultaEstadoDocumentoCedible As DevComponents.DotNetBar.ButtonX
 End Class

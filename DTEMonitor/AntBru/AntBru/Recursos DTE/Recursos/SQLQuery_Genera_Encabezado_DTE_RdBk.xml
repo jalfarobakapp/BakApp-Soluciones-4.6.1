@@ -1,0 +1,33 @@
+<Documento ID="#ID#">
+<Encabezado>
+<IdDoc>
+<TipoDTE>#TipoDTE#</TipoDTE>
+<Folio>#Folio#</Folio>
+<FchEmis>#FchEmis#</FchEmis>#FormaDePago##IndServicio##IndTraslado#
+</IdDoc>
+<Emisor>
+<RUTEmisor>#RUTEmisor#</RUTEmisor>
+<RznSoc>#RznSoc#</RznSoc>
+<GiroEmis>#GiroEmis#</GiroEmis>
+<Acteco>#Acteco#</Acteco>
+<DirOrigen>#DirOrigen#</DirOrigen>
+<CmnaOrigen>#CmnaOrigen#</CmnaOrigen>
+<CiudadOrigen>#CiudadOrigen#</CiudadOrigen>
+</Emisor>
+<Receptor>
+<RUTRecep>#RUTRecep#</RUTRecep>
+<RznSocRecep>#RznSocRecep#</RznSocRecep>
+<GiroRecep>#GiroRecep#</GiroRecep>
+<DirRecep>#DirRecep#</DirRecep>
+<CmnaRecep>#CmnaRecep#</CmnaRecep>
+<CiudadRecep>#CiudadRecep#</CiudadRecep>
+</Receptor>#Transporte#
+  <Totales>
+#Totales_Netos#
+<MntTotal>#MntTotal#</MntTotal>
+</Totales>
+</Encabezado>#Detalle#
+#Timbre_Electronico#
+<TmstFirma></TmstFirma>
+</Documento>  
+

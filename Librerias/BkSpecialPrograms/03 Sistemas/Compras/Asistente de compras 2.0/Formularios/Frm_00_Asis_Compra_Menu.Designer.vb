@@ -806,9 +806,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.STabConfiguracion.ControlBox.MenuBox.Name = ""
         Me.STabConfiguracion.ControlBox.Name = ""
         Me.STabConfiguracion.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.STabConfiguracion.ControlBox.MenuBox, Me.STabConfiguracion.ControlBox.CloseBox})
+        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel1)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel3)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel2)
-        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel1)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel4)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel6)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel8)
@@ -1630,9 +1630,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.SuperTabControlPanel1.Controls.Add(Me.Dtp_Fecha_Vta_Hasta)
         Me.SuperTabControlPanel1.Controls.Add(Me.Btn_Bodega_Vta_Estudio)
         Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(802, 251)
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(802, 224)
         Me.SuperTabControlPanel1.TabIndex = 0
         Me.SuperTabControlPanel1.TabItem = Me.Tab_CalVnta
         '
@@ -3538,7 +3538,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Chk_InformeDeComprasAgrupadoporAsociacion.ForeColor = System.Drawing.Color.Black
         Me.Chk_InformeDeComprasAgrupadoporAsociacion.Location = New System.Drawing.Point(395, 102)
         Me.Chk_InformeDeComprasAgrupadoporAsociacion.Name = "Chk_InformeDeComprasAgrupadoporAsociacion"
-        Me.Chk_InformeDeComprasAgrupadoporAsociacion.Size = New System.Drawing.Size(126, 23)
+        Me.Chk_InformeDeComprasAgrupadoporAsociacion.Size = New System.Drawing.Size(192, 23)
         Me.Chk_InformeDeComprasAgrupadoporAsociacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_InformeDeComprasAgrupadoporAsociacion.TabIndex = 10015
         Me.Chk_InformeDeComprasAgrupadoporAsociacion.Text = "Ejec comprar proyec."

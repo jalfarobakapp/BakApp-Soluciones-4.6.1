@@ -465,12 +465,6 @@
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_Dte_ConsumoFolios.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_FacturacionElectronica.Designer.vb">
-      <DependentUpon>Frm_FacturacionElectronica.vb</DependentUpon>
-    </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_FacturacionElectronica.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_Folios_Caf.Designer.vb">
       <DependentUpon>Frm_Folios_Caf.vb</DependentUpon>
     </Compile>
@@ -720,6 +714,12 @@
       <DependentUpon>Frm_OfDinamLista.vb</DependentUpon>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Productos\21 Ofertas\Ofertas dinamicas\Frm_OfDinamLista.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\22 Media y promedio de venta\Frm_MediaYPromedioXProd_Estudio.Designer.vb">
+      <DependentUpon>Frm_MediaYPromedioXProd_Estudio.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\22 Media y promedio de venta\Frm_MediaYPromedioXProd_Estudio.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="02 Procesos Bakapp y configuracion\01 Actualizacion BakApp\Clas_Actualiza_BakApp_Sql.vb" />
@@ -1614,12 +1614,6 @@
     </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\Procedimientos\Ds_Config_Picking.vb">
       <DependentUpon>Ds_Config_Picking.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="03 Sistemas\Demonio DTE Monitor\Frm_Demonio_DTEMonitor.Designer.vb">
-      <DependentUpon>Frm_Demonio_DTEMonitor.vb</DependentUpon>
-    </Compile>
-    <Compile Include="03 Sistemas\Demonio DTE Monitor\Frm_Demonio_DTEMonitor.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Despachos\Clases\Clas_Despacho.vb" />
     <Compile Include="03 Sistemas\Despachos\Clases\Clas_Despacho_Fx.vb" />
@@ -4350,9 +4344,6 @@
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_Dte_ConsumoFolios.resx">
       <DependentUpon>Frm_Dte_ConsumoFolios.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_FacturacionElectronica.resx">
-      <DependentUpon>Frm_FacturacionElectronica.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_Folios_Caf.aa.resx">
       <DependentUpon>Frm_Folios_Caf.vb</DependentUpon>
     </EmbeddedResource>
@@ -4478,6 +4469,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Productos\21 Ofertas\Ofertas dinamicas\Frm_OfDinamLista.resx">
       <DependentUpon>Frm_OfDinamLista.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Productos\22 Media y promedio de venta\Frm_MediaYPromedioXProd_Estudio.resx">
+      <DependentUpon>Frm_MediaYPromedioXProd_Estudio.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random.resx">
       <DependentUpon>Frm_Usuarios_Random.vb</DependentUpon>
@@ -4918,9 +4912,6 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Recursos_NewDemonio.Designer.vb</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Demonio DTE Monitor\Frm_Demonio_DTEMonitor.resx">
-      <DependentUpon>Frm_Demonio_DTEMonitor.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Despachos\Configuracion\Frm_Despacho_Configuracion.resx">
       <DependentUpon>Frm_Despacho_Configuracion.vb</DependentUpon>
@@ -7853,6 +7844,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tickets_Asignado.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tickets_PorDefecto.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tickets_Producto.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tickets_Toma.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tipos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tipos_Grupos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_Conf_Info_Reportes.sql" />
@@ -8164,6 +8156,7 @@
   <ItemGroup>
     <Folder Include="01 Procesos  compartidos\Productos\01 Buscar productos\New ProdFind\" />
     <Folder Include="03 Sistemas\Comisiones\Recursos\" />
+    <Folder Include="03 Sistemas\Demonio DTE Monitor\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

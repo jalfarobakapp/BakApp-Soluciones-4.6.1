@@ -6,8 +6,8 @@ Imports System.Threading
 Imports System.Xml.Schema
 Imports System.Xml.XPath
 Imports DevComponents.DotNetBar
-Imports HEFESTO.FIRMA.DOC.FORM
-Imports HEFESTO.FIRMA.DOCUMENTO
+'Imports HEFESTO.FIRMA.DOC.FORM
+'Imports HEFESTO.FIRMA.DOCUMENTO
 Imports HefestoCesionV12
 Imports Ionic.Zip
 
@@ -2105,317 +2105,317 @@ Public Class Class_Genera_DTE_RdBk
 
     End Function
 
-    Function Fx_Timbrar_Y_Enviar_DTE_SII_Hefesto(ByRef _Id_Dte As Integer, _Formulario As Form) As Boolean
+    'Function Fx_Timbrar_Y_Enviar_DTE_SII_Hefesto(ByRef _Id_Dte As Integer, _Formulario As Form) As Boolean
 
-        _Trackid = String.Empty
-        _Respuesta = String.Empty
+    '    _Trackid = String.Empty
+    '    _Respuesta = String.Empty
 
-        _Id_Dte = Fx_Timbrar_Documento_Hefesto(_Formulario)
+    '    _Id_Dte = Fx_Timbrar_Documento_Hefesto(_Formulario)
 
-        If CBool(_Id_Dte) Then
+    '    If CBool(_Id_Dte) Then
 
-            Return True
+    '        Return True
 
-            'If Fx_Enviar_DTE_Al_SII(_Id_Dte, _Trackid) Then
+    '        'If Fx_Enviar_DTE_Al_SII(_Id_Dte, _Trackid) Then
 
-            '    If IsNumeric(_Trackid) Then
+    '        '    If IsNumeric(_Trackid) Then
 
-            '        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Trackid = '" & _Trackid & "' Where Id_Dte = " & _Id_Dte
-            '        _Sql.Ej_consulta_IDU(Consulta_sql)
+    '        '        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Trackid = '" & _Trackid & "' Where Id_Dte = " & _Id_Dte
+    '        '        _Sql.Ej_consulta_IDU(Consulta_sql)
 
-            '        If Fx_Consultar_Trackid(_Trackid, _Respuesta) Then
+    '        '        If Fx_Consultar_Trackid(_Trackid, _Respuesta) Then
 
-            '            Dim _Estado = String.Empty
-            '            Dim _Glosa = String.Empty
+    '        '            Dim _Estado = String.Empty
+    '        '            Dim _Glosa = String.Empty
 
-            '            Dim _Aceptados As Integer
-            '            Dim _Informados As Integer
-            '            Dim _Rechazados As Integer
-            '            Dim _Reparos As Integer
+    '        '            Dim _Aceptados As Integer
+    '        '            Dim _Informados As Integer
+    '        '            Dim _Rechazados As Integer
+    '        '            Dim _Reparos As Integer
 
-            '            Sb_Revisar_Respuesta_Trackid(_Respuesta, _Estado, _Glosa, _Aceptados, _Informados, _Rechazados, _Reparos)
+    '        '            Sb_Revisar_Respuesta_Trackid(_Respuesta, _Estado, _Glosa, _Aceptados, _Informados, _Rechazados, _Reparos)
 
-            '            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Trackid (Id_Dte,Idmaeedo,Trackid,Informado,Aceptado,Rechazado," &
-            '                            "Reparo,Estado,Glosa,Respuesta) Values " &
-            '                            "(" & _Id_Dte & "," & _Idmaeedo & ",'" & _Trackid & "'," & _Informados & "," & _Aceptados & "," & _Rechazados &
-            '                            "," & _Reparos & ",'" & _Estado & "','" & _Glosa & "','" & _Respuesta & "')"
-            '            _Sql.Ej_consulta_IDU(Consulta_sql)
+    '        '            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Trackid (Id_Dte,Idmaeedo,Trackid,Informado,Aceptado,Rechazado," &
+    '        '                            "Reparo,Estado,Glosa,Respuesta) Values " &
+    '        '                            "(" & _Id_Dte & "," & _Idmaeedo & ",'" & _Trackid & "'," & _Informados & "," & _Aceptados & "," & _Rechazados &
+    '        '                            "," & _Reparos & ",'" & _Estado & "','" & _Glosa & "','" & _Respuesta & "')"
+    '        '            _Sql.Ej_consulta_IDU(Consulta_sql)
 
-            '            If CBool(_Aceptados) Or CBool(_Reparos) Then
+    '        '            If CBool(_Aceptados) Or CBool(_Reparos) Then
 
-            '                Dim _Koen = _Maeedo.Rows(0).Item("ENDO")
-            '                Dim _Suen = _Maeedo.Rows(0).Item("SUENDO")
+    '        '                Dim _Koen = _Maeedo.Rows(0).Item("ENDO")
+    '        '                Dim _Suen = _Maeedo.Rows(0).Item("SUENDO")
 
-            '                Dim _Para = _Maeen.Rows(0).Item("EMAIL").ToString.Trim
-            '                Dim _EnvioCorreo As String = Fx_Enviar_Notificacion_Correo_Al_Diablito(_Idmaeedo, _Para, "")
+    '        '                Dim _Para = _Maeen.Rows(0).Item("EMAIL").ToString.Trim
+    '        '                Dim _EnvioCorreo As String = Fx_Enviar_Notificacion_Correo_Al_Diablito(_Idmaeedo, _Para, "")
 
-            '                If Not String.IsNullOrEmpty(_EnvioCorreo) Then
-            '                    Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "Zw_DTE_Trackid", _Iddte, "Email_DTE_Error", _EnvioCorreo, "", "", _Koen, _Suen, False, "")
-            '                End If
+    '        '                If Not String.IsNullOrEmpty(_EnvioCorreo) Then
+    '        '                    Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "Zw_DTE_Trackid", _Iddte, "Email_DTE_Error", _EnvioCorreo, "", "", _Koen, _Suen, False, "")
+    '        '                End If
 
-            '            End If
+    '        '            End If
 
-            '            Return True
+    '        '            Return True
 
-            '        End If
+    '        '        End If
 
-            '    Else
+    '        '    Else
 
-            '        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Respuesta = '" & _Trackid & "' Where Id_Dte = " & _Id_Dte
-            '        _Sql.Ej_consulta_IDU(Consulta_sql)
+    '        '        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Respuesta = '" & _Trackid & "' Where Id_Dte = " & _Id_Dte
+    '        '        _Sql.Ej_consulta_IDU(Consulta_sql)
 
-            '    End If
+    '        '    End If
 
-            'End If
+    '        'End If
 
-        End If
+    '    End If
 
-        Return False
+    '    Return False
 
-    End Function
+    'End Function
 
-    Function Fx_Timbrar_Documento_Hefesto(_Formulario As Form) As Integer
+    'Function Fx_Timbrar_Documento_Hefesto(_Formulario As Form) As Integer
 
-        _Errores.Clear()
+    '    _Errores.Clear()
 
-        Dim _Id_Dte As Integer
+    '    Dim _Id_Dte As Integer
 
-        Dim _uriCaf As String
-        Dim _uriDte As String
-        Dim _RutaArchivo As String
-        Dim _Nombre_Archivo_Xml As String
+    '    Dim _uriCaf As String
+    '    Dim _uriDte As String
+    '    Dim _RutaArchivo As String
+    '    Dim _Nombre_Archivo_Xml As String
 
-        Dim _Tido As String = _Maeedo.Rows(0).Item("TIDO")
-        Dim _Nudo As String = _Maeedo.Rows.Item(0).Item("NUDO")
+    '    Dim _Tido As String = _Maeedo.Rows(0).Item("TIDO")
+    '    Dim _Nudo As String = _Maeedo.Rows.Item(0).Item("NUDO")
 
-        Dim _Xml As String
-        _Xml = Fx_Crear_Archivo_XML(_Formulario)
+    '    Dim _Xml As String
+    '    _Xml = Fx_Crear_Archivo_XML(_Formulario)
 
-        If String.IsNullOrEmpty(_Xml) Then
-            Return 0
-        End If
+    '    If String.IsNullOrEmpty(_Xml) Then
+    '        Return 0
+    '    End If
 
-        Dim _Td As Integer = Fx_Tipo_DTE_VS_TIDO(_Tido)
+    '    Dim _Td As Integer = Fx_Tipo_DTE_VS_TIDO(_Tido)
 
-        Dim _ID As String = "F" & CInt(_Maeedo.Rows(0).Item("NUDO")) & "T" & _Td
-        Dim _a1 = "<Documento ID=""" & _ID & """>"
+    '    Dim _ID As String = "F" & CInt(_Maeedo.Rows(0).Item("NUDO")) & "T" & _Td
+    '    Dim _a1 = "<Documento ID=""" & _ID & """>"
 
-        _Xml = Replace(_Xml, _a1, "<DTE version=""1.0"">" & vbCrLf & _a1)
-        _Xml = Replace(_Xml, "</Documento>", "</Documento>" & vbCrLf & "</DTE>")
+    '    _Xml = Replace(_Xml, _a1, "<DTE version=""1.0"">" & vbCrLf & _a1)
+    '    _Xml = Replace(_Xml, "</Documento>", "</Documento>" & vbCrLf & "</DTE>")
 
-        Dim _Fullpath = AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Documentos"
+    '    Dim _Fullpath = AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Documentos"
 
-        If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto") Then
-            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto")
-        End If
+    '    If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto") Then
+    '        System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto")
+    '    End If
 
-        If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF") Then
-            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF")
-        End If
+    '    If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF") Then
+    '        System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF")
+    '    End If
 
-        If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido) Then
-            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido)
-        End If
+    '    If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido) Then
+    '        System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido)
+    '    End If
 
-        Dim _Dir = AppPath() & "\Data\" & RutEmpresaActiva
+    '    Dim _Dir = AppPath() & "\Data\" & RutEmpresaActiva
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Caf" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And TD = '" & _Td & "' And RNG_D <= " & CInt(_Nudo) & " And RNG_H >= " & CInt(_Nudo)
-        Dim _Row_CAF As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+    '    Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Caf" & vbCrLf &
+    '                   "Where Empresa = '" & ModEmpresa & "' And TD = '" & _Td & "' And RNG_D <= " & CInt(_Nudo) & " And RNG_H >= " & CInt(_Nudo)
+    '    Dim _Row_CAF As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        If IsNothing(_Row_CAF) Then
-            _Errores.Add("No existe archivo CAF")
-            Return 0
-        End If
+    '    If IsNothing(_Row_CAF) Then
+    '        _Errores.Add("No existe archivo CAF")
+    '        Return 0
+    '    End If
 
-        Dim _XmlCAF As String = _Row_CAF.Item("CAF")
+    '    Dim _XmlCAF As String = _Row_CAF.Item("CAF")
 
-        Try
-            File.Delete(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml")
-        Catch ex As Exception
-            _Errores.Add(ex.Message)
-            Return 0
-        End Try
+    '    Try
+    '        File.Delete(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml")
+    '    Catch ex As Exception
+    '        _Errores.Add(ex.Message)
+    '        Return 0
+    '    End Try
 
-        Dim oSW As New System.IO.StreamWriter(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml")
-        oSW.WriteLine(_XmlCAF)
-        oSW.Close()
+    '    Dim oSW As New System.IO.StreamWriter(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml")
+    '    oSW.WriteLine(_XmlCAF)
+    '    oSW.Close()
 
-        _uriCaf = AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml" 'AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\FCV\FoliosSII7659092061192022161442.xml"
+    '    _uriCaf = AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml" 'AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\FCV\FoliosSII7659092061192022161442.xml"
 
-        If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando") Then
-            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando")
-        End If
+    '    If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando") Then
+    '        System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando")
+    '    End If
 
-        _RutaArchivo = AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando"
-        _Nombre_Archivo_Xml = _Tido & "-" & _Nudo & "_DTE.xml"
+    '    _RutaArchivo = AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando"
+    '    _Nombre_Archivo_Xml = _Tido & "-" & _Nudo & "_DTE.xml"
 
-        oSW = New System.IO.StreamWriter(_RutaArchivo & "\" & _Nombre_Archivo_Xml)
-        oSW.WriteLine(_Xml)
-        oSW.Close()
+    '    oSW = New System.IO.StreamWriter(_RutaArchivo & "\" & _Nombre_Archivo_Xml)
+    '    oSW.WriteLine(_Xml)
+    '    oSW.Close()
 
-        _uriDte = _RutaArchivo & "\" & _Nombre_Archivo_Xml
+    '    _uriDte = _RutaArchivo & "\" & _Nombre_Archivo_Xml
 
-        'Consulta_sql = "Select * From CONFIGP"
-        'Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+    '    'Consulta_sql = "Select * From CONFIGP"
+    '    'Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Dim _RutEmisor As String '= _Row_ConfEmpresa.Item("RutEmisor")
-        Dim _RutEnvia As String '= _Row_ConfEmpresa.Item("RutEnvia")
-        Dim _RutReceptor As String '= _Row_ConfEmpresa.Item("RutReceptor")
-        Dim _FchResol As String '= Format(_Row_ConfEmpresa.Item("FchResol"), "yyyy-MM-dd")
-        Dim _NroResol As String '= _Row_ConfEmpresa.Item("NroResol")
-        Dim _TpoDTE As String
-        Dim _Cn As String '= _Row_ConfEmpresa.Item("Cn").ToString.Trim
+    '    Dim _RutEmisor As String '= _Row_ConfEmpresa.Item("RutEmisor")
+    '    Dim _RutEnvia As String '= _Row_ConfEmpresa.Item("RutEnvia")
+    '    Dim _RutReceptor As String '= _Row_ConfEmpresa.Item("RutReceptor")
+    '    Dim _FchResol As String '= Format(_Row_ConfEmpresa.Item("FchResol"), "yyyy-MM-dd")
+    '    Dim _NroResol As String '= _Row_ConfEmpresa.Item("NroResol")
+    '    Dim _TpoDTE As String
+    '    Dim _Cn As String '= _Row_ConfEmpresa.Item("Cn").ToString.Trim
 
-        Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa' And AmbienteCertificacion = " & _AmbienteCertificacion
-        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+    '    Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
+    '                   "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
+    '                   "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa' And AmbienteCertificacion = " & _AmbienteCertificacion
+    '    Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-        If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
-            _Errores.Add("Faltan los datos de configuración DTE para la empresa")
-            Return 0
-        End If
+    '    If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
+    '        _Errores.Add("Faltan los datos de configuración DTE para la empresa")
+    '        Return 0
+    '    End If
 
-        For Each _Fila As DataRow In _Tbl_ConfEmpresa.Rows
+    '    For Each _Fila As DataRow In _Tbl_ConfEmpresa.Rows
 
-            Dim _Campo As String = _Fila.Item("Campo").ToString.Trim
+    '        Dim _Campo As String = _Fila.Item("Campo").ToString.Trim
 
-            If _Campo = "RutEmisor" Then _RutEmisor = _Fila.Item("Valor")
-            If _Campo = "RutEnvia" Then _RutEnvia = _Fila.Item("Valor")
-            If _Campo = "RutReceptor" Then _RutReceptor = _Fila.Item("Valor")
-            If _Campo = "FchResol" Then _FchResol = _Fila.Item("Valor")
-            If _Campo = "NroResol" Then _NroResol = _Fila.Item("Valor")
-            If _Campo = "Cn" Then _Cn = _Fila.Item("Valor")
+    '        If _Campo = "RutEmisor" Then _RutEmisor = _Fila.Item("Valor")
+    '        If _Campo = "RutEnvia" Then _RutEnvia = _Fila.Item("Valor")
+    '        If _Campo = "RutReceptor" Then _RutReceptor = _Fila.Item("Valor")
+    '        If _Campo = "FchResol" Then _FchResol = _Fila.Item("Valor")
+    '        If _Campo = "NroResol" Then _NroResol = _Fila.Item("Valor")
+    '        If _Campo = "Cn" Then _Cn = _Fila.Item("Valor")
 
-        Next
+    '    Next
 
-        If _AmbienteCertificacion Then
-            _NroResol = "0"
-            '    _FchResol = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-            '                                  "Empresa = '" & ModEmpresa & "' And Campo = 'FchResol' And AmbienteCertificacion = 1")
-        End If
+    '    If _AmbienteCertificacion Then
+    '        _NroResol = "0"
+    '        '    _FchResol = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
+    '        '                                  "Empresa = '" & ModEmpresa & "' And Campo = 'FchResol' And AmbienteCertificacion = 1")
+    '    End If
 
-        Dim ClsFirmarDocumento As New HEFFirmarDocumento
+    '    Dim ClsFirmarDocumento As New HEFFirmarDocumento
 
-        With ClsFirmarDocumento
+    '    With ClsFirmarDocumento
 
-            .Fullpath = _Fullpath
+    '        .Fullpath = _Fullpath
 
-            If _Tido = "BLV" Then
-                .TipoDTE = "39"
-            End If
+    '        If _Tido = "BLV" Then
+    '            .TipoDTE = "39"
+    '        End If
 
-            If Not .CargarDocumento(_uriDte) Then
+    '        If Not .CargarDocumento(_uriDte) Then
 
-                Try
-                    Dim _Dte2 As XDocument
-                    _Dte2 = XDocument.Load(_uriDte, LoadOptions.None)
-                Catch ex As Exception
-                    _Errores.Add(ex.Message)
-                End Try
+    '            Try
+    '                Dim _Dte2 As XDocument
+    '                _Dte2 = XDocument.Load(_uriDte, LoadOptions.None)
+    '            Catch ex As Exception
+    '                _Errores.Add(ex.Message)
+    '            End Try
 
-                _Errores.Add("Error al querer firma el documento: " & _uriDte)
-                Return 0
+    '            _Errores.Add("Error al querer firma el documento: " & _uriDte)
+    '            Return 0
 
-            End If
+    '        End If
 
-            _TpoDTE = .TipoDTE
+    '        _TpoDTE = .TipoDTE
 
-            If Not .CrearEnvioDte(_RutEmisor, _RutEnvia, _RutReceptor, _FchResol, _NroResol, _TpoDTE) Then
-                MessageBoxEx.Show(Me, .Error, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return 0
-            End If
+    '        If Not .CrearEnvioDte(_RutEmisor, _RutEnvia, _RutReceptor, _FchResol, _NroResol, _TpoDTE) Then
+    '            MessageBoxEx.Show(Me, .Error, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+    '            Return 0
+    '        End If
 
-            .CN = _Cn '"JUAN PABLO SIERRALTA OREZZOLI"
-            .uriCaf = _uriCaf
-            .uriDte = _uriDte
+    '        .CN = _Cn '"JUAN PABLO SIERRALTA OREZZOLI"
+    '        .uriCaf = _uriCaf
+    '        .uriDte = _uriDte
 
-            If _Tido = "BLV" Then
-                .uriSchemaDte = _Path & "\Schemas\BOLETAS\EnvioBOLETA_v11.xsd"
-            Else
-                .uriSchemaDte = _Path & "\Schemas\DTE_v10.xsd"
-            End If
+    '        If _Tido = "BLV" Then
+    '            .uriSchemaDte = _Path & "\Schemas\BOLETAS\EnvioBOLETA_v11.xsd"
+    '        Else
+    '            .uriSchemaDte = _Path & "\Schemas\DTE_v10.xsd"
+    '        End If
 
-            .uriSchemaDteSf = _Path & "\Schemas\DTE_v10_Sf.xsd"
-            .uriSchemaEnvioDteSf = _Path & "\Schemas\EnvioDTE_v10_Sf.xsd"
-            .uriSchemaEnvioDte = _Path & "\Schemas\EnvioDTE_v10.xsd"
+    '        .uriSchemaDteSf = _Path & "\Schemas\DTE_v10_Sf.xsd"
+    '        .uriSchemaEnvioDteSf = _Path & "\Schemas\EnvioDTE_v10_Sf.xsd"
+    '        .uriSchemaEnvioDte = _Path & "\Schemas\EnvioDTE_v10.xsd"
 
-        End With
+    '    End With
 
-        Dim ArchivoFirmado As String = Path.GetFileName(Path.ChangeExtension(_uriDte, ".Firmado.xml"))
+    '    Dim ArchivoFirmado As String = Path.GetFileName(Path.ChangeExtension(_uriDte, ".Firmado.xml"))
 
-        Dim Respuesta As HEFESTO.FIRMA.DOCUMENTO.HEFRespuesta = ClsFirmarDocumento.FirmarArchivo()
-        Dim FirmaStr As String
+    '    Dim Respuesta As HEFESTO.FIRMA.DOCUMENTO.HEFRespuesta = ClsFirmarDocumento.FirmarArchivo()
+    '    Dim FirmaStr As String
 
-        If Not Respuesta.esCorrecto Then
+    '    If Not Respuesta.esCorrecto Then
 
-            Dim val As Validacion = New Validacion()
+    '        Dim val As Validacion = New Validacion()
 
-            val.errores = Respuesta.Mensaje
-            _Errores.Add(val.errores)
+    '        val.errores = Respuesta.Mensaje
+    '        _Errores.Add(val.errores)
 
-            Dim _Respuesta As String
+    '        Dim _Respuesta As String
 
-            For Each _Er As String In _Errores
-                _Respuesta += _Er.Trim & "; "
-            Next
+    '        For Each _Er As String In _Errores
+    '            _Respuesta += _Er.Trim & "; "
+    '        Next
 
-            _Respuesta = Replace(_Respuesta, "'", "''")
+    '        _Respuesta = Replace(_Respuesta, "'", "''")
 
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Documentos(Idmaeedo,Tido,Nudo,FechaSolicitud,Xml,Firma," &
-                           "CaratulaXml,AmbienteCertificacion,Procesar,Respuesta,ErrorEnvioDTE) Values " &
-                           "(" & _Idmaeedo & ", '" & _Tido & "', '" & _Nudo & "',Getdate(),'','',''," & _AmbienteCertificacion & ",0,'" & _Respuesta & "',1)"
-            _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Dte)
+    '        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Documentos(Idmaeedo,Tido,Nudo,FechaSolicitud,Xml,Firma," &
+    '                       "CaratulaXml,AmbienteCertificacion,Procesar,Respuesta,ErrorEnvioDTE) Values " &
+    '                       "(" & _Idmaeedo & ", '" & _Tido & "', '" & _Nudo & "',Getdate(),'','',''," & _AmbienteCertificacion & ",0,'" & _Respuesta & "',1)"
+    '        _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Dte)
 
-            'val.ShowDialog()
-            Return _Id_Dte
+    '        'val.ShowDialog()
+    '        Return _Id_Dte
 
-        End If
+    '    End If
 
-        Dim uriDocumentoFirmado As String = Respuesta.Resultado.ToString()
-        Dim name As String = _RutaArchivo & "\" & ArchivoFirmado
-        If File.Exists(name) Then File.Delete(name)
-        File.Copy(uriDocumentoFirmado, name)
+    '    Dim uriDocumentoFirmado As String = Respuesta.Resultado.ToString()
+    '    Dim name As String = _RutaArchivo & "\" & ArchivoFirmado
+    '    If File.Exists(name) Then File.Delete(name)
+    '    File.Copy(uriDocumentoFirmado, name)
 
-        Dim _Dte As XDocument
-        Dim _DteResultado As String
-        Dim _Firma As XElement
+    '    Dim _Dte As XDocument
+    '    Dim _DteResultado As String
+    '    Dim _Firma As XElement
 
-        Dim _Fullpath2 = _Fullpath & "\DTEResultado.xml"
-        Dim _Fullpath3 = _Fullpath & "\SETDTEResultado.xml"
+    '    Dim _Fullpath2 = _Fullpath & "\DTEResultado.xml"
+    '    Dim _Fullpath3 = _Fullpath & "\SETDTEResultado.xml"
 
-        _Dte = XDocument.Load(_Fullpath2, LoadOptions.None)
+    '    _Dte = XDocument.Load(_Fullpath2, LoadOptions.None)
 
-        _DteResultado = My.Computer.FileSystem.ReadAllText(_Fullpath3)
+    '    _DteResultado = My.Computer.FileSystem.ReadAllText(_Fullpath3)
 
 
-        Dim ns = _Dte.Root.GetDefaultNamespace
-        Dim _nsManager = New XmlNamespaceManager(New NameTable())
+    '    Dim ns = _Dte.Root.GetDefaultNamespace
+    '    Dim _nsManager = New XmlNamespaceManager(New NameTable())
 
-        _nsManager.AddNamespace("d", "http://www.sii.cl/SiiDte")
-        _Firma = _Dte.XPathSelectElement("/d:DTE/d:Documento/d:TED", _nsManager)
+    '    _nsManager.AddNamespace("d", "http://www.sii.cl/SiiDte")
+    '    _Firma = _Dte.XPathSelectElement("/d:DTE/d:Documento/d:TED", _nsManager)
 
-        If _Tido = "BLV" Then
-            _Firma = _Dte.XPathSelectElement("/DTE/Documento/TED", _nsManager)
-        End If
+    '    If _Tido = "BLV" Then
+    '        _Firma = _Dte.XPathSelectElement("/DTE/Documento/TED", _nsManager)
+    '    End If
 
-        Dim _DteXml As String = _Dte.Document.ToString
-        Dim _CaratulaCml As String = _DteResultado
+    '    Dim _DteXml As String = _Dte.Document.ToString
+    '    Dim _CaratulaCml As String = _DteResultado
 
-        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Documentos(Idmaeedo,Tido,Nudo,FechaSolicitud,Xml,Firma," &
-                       "CaratulaXml,AmbienteCertificacion,Procesar) Values " &
-                     "(" & _Idmaeedo & ", '" & _Tido & "', '" & _Nudo & "',Getdate(),'" & _DteXml & "','" & _Firma.ToString &
-                     "','" & _CaratulaCml & "'," & _AmbienteCertificacion & ",1)"
-        _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Dte)
+    '    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Documentos(Idmaeedo,Tido,Nudo,FechaSolicitud,Xml,Firma," &
+    '                   "CaratulaXml,AmbienteCertificacion,Procesar) Values " &
+    '                 "(" & _Idmaeedo & ", '" & _Tido & "', '" & _Nudo & "',Getdate(),'" & _DteXml & "','" & _Firma.ToString &
+    '                 "','" & _CaratulaCml & "'," & _AmbienteCertificacion & ",1)"
+    '    _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Dte)
 
-        If CBool(_Id_Dte) Then
-            Fx_Timbrar_Documento_Hefesto2(_Formulario, _Id_Dte)
-        End If
+    '    If CBool(_Id_Dte) Then
+    '        Fx_Timbrar_Documento_Hefesto2(_Formulario, _Id_Dte)
+    '    End If
 
-        Return _Id_Dte
+    '    Return _Id_Dte
 
-    End Function
+    'End Function
 
     ''' <summary>
     ''' Esta funcion permite crear la CaratulaXml para enviarle el correo al cliente
@@ -2423,229 +2423,229 @@ Public Class Class_Genera_DTE_RdBk
     ''' <param name="_Formulario"></param> Formulario principal
     ''' <param name="_Id_Dte"></param> Id_Dte del envio
     ''' <returns></returns>
-    Function Fx_Timbrar_Documento_Hefesto2(_Formulario As Form, _Id_Dte As Integer) As String
+    'Function Fx_Timbrar_Documento_Hefesto2(_Formulario As Form, _Id_Dte As Integer) As String
 
-        Dim _Error As String
+    '    Dim _Error As String
 
-        _Errores.Clear()
+    '    _Errores.Clear()
 
-        Dim _uriCaf As String
-        Dim _uriDte As String
-        Dim _RutaArchivo As String
-        Dim _Nombre_Archivo_Xml As String
+    '    Dim _uriCaf As String
+    '    Dim _uriDte As String
+    '    Dim _RutaArchivo As String
+    '    Dim _Nombre_Archivo_Xml As String
 
-        Dim _Tido As String = _Maeedo.Rows(0).Item("TIDO")
-        Dim _Nudo As String = _Maeedo.Rows.Item(0).Item("NUDO")
+    '    Dim _Tido As String = _Maeedo.Rows(0).Item("TIDO")
+    '    Dim _Nudo As String = _Maeedo.Rows.Item(0).Item("NUDO")
 
-        Dim _Xml As String
-        _Xml = Fx_Crear_Archivo_XML(_Formulario)
+    '    Dim _Xml As String
+    '    _Xml = Fx_Crear_Archivo_XML(_Formulario)
 
-        If String.IsNullOrEmpty(_Xml) Then
-            Return 0
-        End If
+    '    If String.IsNullOrEmpty(_Xml) Then
+    '        Return 0
+    '    End If
 
-        Dim _Td As Integer = Fx_Tipo_DTE_VS_TIDO(_Tido)
+    '    Dim _Td As Integer = Fx_Tipo_DTE_VS_TIDO(_Tido)
 
-        Dim _ID As String = "F" & CInt(_Maeedo.Rows(0).Item("NUDO")) & "T" & _Td
-        Dim _a1 = "<Documento ID=""" & _ID & """>"
+    '    Dim _ID As String = "F" & CInt(_Maeedo.Rows(0).Item("NUDO")) & "T" & _Td
+    '    Dim _a1 = "<Documento ID=""" & _ID & """>"
 
-        _Xml = Replace(_Xml, _a1, "<DTE version=""1.0"">" & vbCrLf & _a1)
-        _Xml = Replace(_Xml, "</Documento>", "</Documento>" & vbCrLf & "</DTE>")
+    '    _Xml = Replace(_Xml, _a1, "<DTE version=""1.0"">" & vbCrLf & _a1)
+    '    _Xml = Replace(_Xml, "</Documento>", "</Documento>" & vbCrLf & "</DTE>")
 
-        Dim _Fullpath = AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Documentos"
+    '    Dim _Fullpath = AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Documentos"
 
-        If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto") Then
-            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto")
-        End If
+    '    If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto") Then
+    '        System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto")
+    '    End If
 
-        If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF") Then
-            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF")
-        End If
+    '    If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF") Then
+    '        System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF")
+    '    End If
 
-        If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido) Then
-            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido)
-        End If
+    '    If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido) Then
+    '        System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido)
+    '    End If
 
-        Dim _Dir = AppPath() & "\Data\" & RutEmpresaActiva
+    '    Dim _Dir = AppPath() & "\Data\" & RutEmpresaActiva
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Caf" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And TD = '" & _Td & "' And RNG_D <= " & CInt(_Nudo) & " And RNG_H >= " & CInt(_Nudo)
-        Dim _Row_CAF As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+    '    Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Caf" & vbCrLf &
+    '                   "Where Empresa = '" & ModEmpresa & "' And TD = '" & _Td & "' And RNG_D <= " & CInt(_Nudo) & " And RNG_H >= " & CInt(_Nudo)
+    '    Dim _Row_CAF As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        If IsNothing(_Row_CAF) Then
-            _Errores.Add("No existe archivo CAF")
-            Return 0
-        End If
+    '    If IsNothing(_Row_CAF) Then
+    '        _Errores.Add("No existe archivo CAF")
+    '        Return 0
+    '    End If
 
-        Dim _XmlCAF As String = _Row_CAF.Item("CAF")
+    '    Dim _XmlCAF As String = _Row_CAF.Item("CAF")
 
-        Try
-            File.Delete(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml")
-        Catch ex As Exception
-            _Errores.Add(ex.Message)
-            Return 0
-        End Try
+    '    Try
+    '        File.Delete(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml")
+    '    Catch ex As Exception
+    '        _Errores.Add(ex.Message)
+    '        Return 0
+    '    End Try
 
-        Dim oSW As New System.IO.StreamWriter(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml")
-        oSW.WriteLine(_XmlCAF)
-        oSW.Close()
+    '    Dim oSW As New System.IO.StreamWriter(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml")
+    '    oSW.WriteLine(_XmlCAF)
+    '    oSW.Close()
 
-        _uriCaf = AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml" 'AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\FCV\FoliosSII7659092061192022161442.xml"
+    '    _uriCaf = AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml" 'AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\FCV\FoliosSII7659092061192022161442.xml"
 
-        If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando") Then
-            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando")
-        End If
+    '    If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando") Then
+    '        System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando")
+    '    End If
 
-        _RutaArchivo = AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando"
-        _Nombre_Archivo_Xml = _Tido & "-" & _Nudo & "_DTE.xml"
+    '    _RutaArchivo = AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando"
+    '    _Nombre_Archivo_Xml = _Tido & "-" & _Nudo & "_DTE.xml"
 
-        oSW = New System.IO.StreamWriter(_RutaArchivo & "\" & _Nombre_Archivo_Xml)
-        oSW.WriteLine(_Xml)
-        oSW.Close()
+    '    oSW = New System.IO.StreamWriter(_RutaArchivo & "\" & _Nombre_Archivo_Xml)
+    '    oSW.WriteLine(_Xml)
+    '    oSW.Close()
 
-        _uriDte = _RutaArchivo & "\" & _Nombre_Archivo_Xml
+    '    _uriDte = _RutaArchivo & "\" & _Nombre_Archivo_Xml
 
-        Consulta_sql = "Select * From CONFIGP"
-        Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+    '    Consulta_sql = "Select * From CONFIGP"
+    '    Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Dim _RutEmisor As String '= _Row_ConfEmpresa.Item("RutEmisor")
-        Dim _RutEnvia As String '= _Row_ConfEmpresa.Item("RutEnvia")
-        Dim _RutReceptor As String '= _Row_ConfEmpresa.Item("RutReceptor")
-        Dim _FchResol As String '= Format(_Row_ConfEmpresa.Item("FchResol"), "yyyy-MM-dd")
-        Dim _NroResol As String '= _Row_ConfEmpresa.Item("NroResol")
-        Dim _TpoDTE As String
-        Dim _Cn As String '= _Row_ConfEmpresa.Item("Cn").ToString.Trim
+    '    Dim _RutEmisor As String '= _Row_ConfEmpresa.Item("RutEmisor")
+    '    Dim _RutEnvia As String '= _Row_ConfEmpresa.Item("RutEnvia")
+    '    Dim _RutReceptor As String '= _Row_ConfEmpresa.Item("RutReceptor")
+    '    Dim _FchResol As String '= Format(_Row_ConfEmpresa.Item("FchResol"), "yyyy-MM-dd")
+    '    Dim _NroResol As String '= _Row_ConfEmpresa.Item("NroResol")
+    '    Dim _TpoDTE As String
+    '    Dim _Cn As String '= _Row_ConfEmpresa.Item("Cn").ToString.Trim
 
-        Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa'"
-        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+    '    Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
+    '                   "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
+    '                   "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa'"
+    '    Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-        If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
-            _Errores.Add("Faltan los datos de configuración DTE para la empresa")
-            Return 0
-        End If
+    '    If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
+    '        _Errores.Add("Faltan los datos de configuración DTE para la empresa")
+    '        Return 0
+    '    End If
 
-        For Each _Fila As DataRow In _Tbl_ConfEmpresa.Rows
+    '    For Each _Fila As DataRow In _Tbl_ConfEmpresa.Rows
 
-            Dim _Campo As String = _Fila.Item("Campo").ToString.Trim
+    '        Dim _Campo As String = _Fila.Item("Campo").ToString.Trim
 
-            If _Campo = "RutEmisor" Then _RutEmisor = _Fila.Item("Valor")
-            If _Campo = "RutEnvia" Then _RutEnvia = _Fila.Item("Valor")
-            If _Campo = "RutReceptor" Then _RutReceptor = _Fila.Item("Valor")
-            If _Campo = "FchResol" Then _FchResol = _Fila.Item("Valor")
-            If _Campo = "NroResol" Then _NroResol = _Fila.Item("Valor")
-            If _Campo = "Cn" Then _Cn = _Fila.Item("Valor")
+    '        If _Campo = "RutEmisor" Then _RutEmisor = _Fila.Item("Valor")
+    '        If _Campo = "RutEnvia" Then _RutEnvia = _Fila.Item("Valor")
+    '        If _Campo = "RutReceptor" Then _RutReceptor = _Fila.Item("Valor")
+    '        If _Campo = "FchResol" Then _FchResol = _Fila.Item("Valor")
+    '        If _Campo = "NroResol" Then _NroResol = _Fila.Item("Valor")
+    '        If _Campo = "Cn" Then _Cn = _Fila.Item("Valor")
 
-        Next
+    '    Next
 
-        If _AmbienteCertificacion Then
-            _NroResol = "0"
-            _FchResol = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-                                          "Empresa = '" & ModEmpresa & "' And Campo = 'FchResol' And AmbienteCertificacion = 1")
-        End If
+    '    If _AmbienteCertificacion Then
+    '        _NroResol = "0"
+    '        _FchResol = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
+    '                                      "Empresa = '" & ModEmpresa & "' And Campo = 'FchResol' And AmbienteCertificacion = 1")
+    '    End If
 
-        Dim ClsFirmarDocumento As New HEFFirmarDocumento
+    '    Dim ClsFirmarDocumento As New HEFFirmarDocumento
 
-        With ClsFirmarDocumento
+    '    With ClsFirmarDocumento
 
-            .Fullpath = _Fullpath
+    '        .Fullpath = _Fullpath
 
-            If _Tido = "BLV" Then
-                .TipoDTE = "39"
-            Else
-                Dim _Row_Maeen_Receptor As DataRow = Maeen.Rows(0)
-                _RutReceptor = Trim(_Row_Maeen_Receptor.Item("RTEN")) & "-" & Trim(RutDigito(_Row_Maeen_Receptor.Item("RTEN")))
-            End If
+    '        If _Tido = "BLV" Then
+    '            .TipoDTE = "39"
+    '        Else
+    '            Dim _Row_Maeen_Receptor As DataRow = Maeen.Rows(0)
+    '            _RutReceptor = Trim(_Row_Maeen_Receptor.Item("RTEN")) & "-" & Trim(RutDigito(_Row_Maeen_Receptor.Item("RTEN")))
+    '        End If
 
-            If Not .CargarDocumento(_uriDte) Then
+    '        If Not .CargarDocumento(_uriDte) Then
 
-                Try
-                    Dim _Dte2 As XDocument
-                    _Dte2 = XDocument.Load(_uriDte, LoadOptions.None)
-                Catch ex As Exception
-                    _Errores.Add(ex.Message)
-                End Try
+    '            Try
+    '                Dim _Dte2 As XDocument
+    '                _Dte2 = XDocument.Load(_uriDte, LoadOptions.None)
+    '            Catch ex As Exception
+    '                _Errores.Add(ex.Message)
+    '            End Try
 
-                _Errores.Add("Error al querer firma el documento: " & _uriDte)
-                Return 0
+    '            _Errores.Add("Error al querer firma el documento: " & _uriDte)
+    '            Return 0
 
-            End If
+    '        End If
 
-            _TpoDTE = .TipoDTE
+    '        _TpoDTE = .TipoDTE
 
-            If Not .CrearEnvioDte(_RutEmisor, _RutEnvia, _RutReceptor, _FchResol, _NroResol, _TpoDTE) Then
-                MessageBoxEx.Show(Me, .Error, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return 0
-            End If
+    '        If Not .CrearEnvioDte(_RutEmisor, _RutEnvia, _RutReceptor, _FchResol, _NroResol, _TpoDTE) Then
+    '            MessageBoxEx.Show(Me, .Error, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+    '            Return 0
+    '        End If
 
-            .CN = _Cn '"JUAN PABLO SIERRALTA OREZZOLI"
-            .uriCaf = _uriCaf
-            .uriDte = _uriDte
+    '        .CN = _Cn '"JUAN PABLO SIERRALTA OREZZOLI"
+    '        .uriCaf = _uriCaf
+    '        .uriDte = _uriDte
 
-            If _Tido = "BLV" Then
-                .uriSchemaDte = _Path & "\Schemas\BOLETAS\EnvioBOLETA_v11.xsd"
-            Else
-                .uriSchemaDte = _Path & "\Schemas\DTE_v10.xsd"
-            End If
+    '        If _Tido = "BLV" Then
+    '            .uriSchemaDte = _Path & "\Schemas\BOLETAS\EnvioBOLETA_v11.xsd"
+    '        Else
+    '            .uriSchemaDte = _Path & "\Schemas\DTE_v10.xsd"
+    '        End If
 
-            .uriSchemaDteSf = _Path & "\Schemas\DTE_v10_Sf.xsd"
-            .uriSchemaEnvioDteSf = _Path & "\Schemas\EnvioDTE_v10_Sf.xsd"
-            .uriSchemaEnvioDte = _Path & "\Schemas\EnvioDTE_v10.xsd"
+    '        .uriSchemaDteSf = _Path & "\Schemas\DTE_v10_Sf.xsd"
+    '        .uriSchemaEnvioDteSf = _Path & "\Schemas\EnvioDTE_v10_Sf.xsd"
+    '        .uriSchemaEnvioDte = _Path & "\Schemas\EnvioDTE_v10.xsd"
 
-        End With
+    '    End With
 
-        Dim ArchivoFirmado As String = Path.GetFileName(Path.ChangeExtension(_uriDte, ".Firmado.xml"))
+    '    Dim ArchivoFirmado As String = Path.GetFileName(Path.ChangeExtension(_uriDte, ".Firmado.xml"))
 
-        Dim Respuesta As HEFESTO.FIRMA.DOCUMENTO.HEFRespuesta = ClsFirmarDocumento.FirmarArchivo()
-        Dim FirmaStr As String
+    '    Dim Respuesta As HEFESTO.FIRMA.DOCUMENTO.HEFRespuesta = ClsFirmarDocumento.FirmarArchivo()
+    '    Dim FirmaStr As String
 
-        If Not Respuesta.esCorrecto Then
-            Dim val As Validacion = New Validacion()
-            val.errores = Respuesta.Mensaje
-            _Errores.Add(val.errores)
-            val.ShowDialog()
-            Return _Errores(0)
-        End If
+    '    If Not Respuesta.esCorrecto Then
+    '        Dim val As Validacion = New Validacion()
+    '        val.errores = Respuesta.Mensaje
+    '        _Errores.Add(val.errores)
+    '        val.ShowDialog()
+    '        Return _Errores(0)
+    '    End If
 
-        Dim uriDocumentoFirmado As String = Respuesta.Resultado.ToString()
-        Dim name As String = _RutaArchivo & "\" & ArchivoFirmado
-        If File.Exists(name) Then File.Delete(name)
-        File.Copy(uriDocumentoFirmado, name)
+    '    Dim uriDocumentoFirmado As String = Respuesta.Resultado.ToString()
+    '    Dim name As String = _RutaArchivo & "\" & ArchivoFirmado
+    '    If File.Exists(name) Then File.Delete(name)
+    '    File.Copy(uriDocumentoFirmado, name)
 
-        Dim _Dte As XDocument
-        Dim _DteResultado As String
-        Dim _Firma As XElement
+    '    Dim _Dte As XDocument
+    '    Dim _DteResultado As String
+    '    Dim _Firma As XElement
 
-        Dim _Fullpath2 = _Fullpath & "\DTEResultado.xml"
-        Dim _Fullpath3 = _Fullpath & "\SETDTEResultado.xml"
+    '    Dim _Fullpath2 = _Fullpath & "\DTEResultado.xml"
+    '    Dim _Fullpath3 = _Fullpath & "\SETDTEResultado.xml"
 
-        _Dte = XDocument.Load(_Fullpath2, LoadOptions.None)
+    '    _Dte = XDocument.Load(_Fullpath2, LoadOptions.None)
 
-        _DteResultado = My.Computer.FileSystem.ReadAllText(_Fullpath3)
+    '    _DteResultado = My.Computer.FileSystem.ReadAllText(_Fullpath3)
 
 
-        Dim ns = _Dte.Root.GetDefaultNamespace
-        Dim _nsManager = New XmlNamespaceManager(New NameTable())
+    '    Dim ns = _Dte.Root.GetDefaultNamespace
+    '    Dim _nsManager = New XmlNamespaceManager(New NameTable())
 
-        _nsManager.AddNamespace("d", "http://www.sii.cl/SiiDte")
-        _Firma = _Dte.XPathSelectElement("/d:DTE/d:Documento/d:TED", _nsManager)
+    '    _nsManager.AddNamespace("d", "http://www.sii.cl/SiiDte")
+    '    _Firma = _Dte.XPathSelectElement("/d:DTE/d:Documento/d:TED", _nsManager)
 
-        If _Tido = "BLV" Then
-            _Firma = _Dte.XPathSelectElement("/DTE/Documento/TED", _nsManager)
-        End If
+    '    If _Tido = "BLV" Then
+    '        _Firma = _Dte.XPathSelectElement("/DTE/Documento/TED", _nsManager)
+    '    End If
 
-        Dim _DteXml As String = _Dte.Document.ToString
-        Dim _CaratulaCml As String = _DteResultado
+    '    Dim _DteXml As String = _Dte.Document.ToString
+    '    Dim _CaratulaCml As String = _DteResultado
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set CaratulaXmlEmail = '" & _CaratulaCml & "' Where Id_Dte = " & _Id_Dte
-        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+    '    Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set CaratulaXmlEmail = '" & _CaratulaCml & "' Where Id_Dte = " & _Id_Dte
+    '    _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
-        _Error = _Sql.Pro_Error
+    '    _Error = _Sql.Pro_Error
 
-        Return _Error
+    '    Return _Error
 
-    End Function
+    'End Function
 
     Function Fx_Enviar_Notificacion_Correo_Al_Diablito(_Idmaeedo As Integer, _Para As String, _Cc As String, _Id_Trackid As Integer) As String
 

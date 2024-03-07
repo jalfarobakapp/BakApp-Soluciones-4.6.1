@@ -2149,7 +2149,7 @@ Namespace My.Resources
         '''	[Id] ASC
         ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
         ''') ON [PRIMARY]
-        '''GO
+        '''
         '''
         '''
         '''
@@ -4215,6 +4215,27 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Zw_Stk_Tickets_Producto() As String
             Get
                 Return ResourceManager.GetString("Zw_Stk_Tickets_Producto", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Stk_Tickets_Toma](
+        '''	[Id]				[int]			IDENTITY(1,1) NOT NULL,
+        '''	[Id_Ticket]			[int]			NOT NULL DEFAULT (0),
+        '''	[CodFuncionario]	[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[FechaToma]			[datetime]		NULL,
+        '''	[NombreEquipo]		[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        ''' CONSTRAINT [PK_Zw_Stk_Tickets_Toma] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+        ''') ON [PRIMA [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Stk_Tickets_Toma() As String
+            Get
+                Return ResourceManager.GetString("Zw_Stk_Tickets_Toma", resourceCulture)
             End Get
         End Property
         
